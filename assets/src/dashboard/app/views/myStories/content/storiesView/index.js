@@ -153,7 +153,7 @@ function StoriesView({
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
-          global.navigator.clipboard.writeText(story.link);
+          window.navigator.clipboard.writeText(story.link);
 
           addToast({
             message: {

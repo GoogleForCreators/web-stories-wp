@@ -27,7 +27,7 @@ describe('createKeyframeEffect', () => {
       };
 
       const mockKeyframeEffect = jest.fn();
-      global.KeyframeEffect = mockKeyframeEffect;
+      window.KeyframeEffect = mockKeyframeEffect;
 
       createKeyframeEffect('target', 'keyframes', timings);
       expect(mockKeyframeEffect).toHaveBeenCalledWith('target', 'keyframes', {
@@ -41,7 +41,7 @@ describe('createKeyframeEffect', () => {
       };
 
       const mockKeyframeEffect = jest.fn();
-      global.KeyframeEffect = mockKeyframeEffect;
+      window.KeyframeEffect = mockKeyframeEffect;
 
       createKeyframeEffect('target', 'keyframes', timings);
       expect(mockKeyframeEffect).toHaveBeenCalledWith(
@@ -61,7 +61,7 @@ describe('createKeyframeEffect', () => {
       };
 
       const mockKeyframeEffect = jest.fn();
-      global.KeyframeEffect = mockKeyframeEffect;
+      window.KeyframeEffect = mockKeyframeEffect;
 
       createKeyframeEffect('target', 'keyframes', timings);
       expect(mockKeyframeEffect).toHaveBeenCalledWith(

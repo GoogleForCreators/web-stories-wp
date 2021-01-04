@@ -23,7 +23,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
  * Internal dependencies
  */
 import queryString from 'query-string';
-import groupBy from '../../utils/groupBy';
+import { groupBy } from '../../utils';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
 export default function useCategoriesApi(dataAdapter, { categoryApi }) {

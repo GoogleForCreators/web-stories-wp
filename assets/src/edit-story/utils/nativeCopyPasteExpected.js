@@ -34,7 +34,7 @@ function nativeCopyPasteExpected() {
     return true;
   }
 
-  const selection = global.getSelection();
+  const selection = window.getSelection();
   const range = selection.rangeCount ? selection.getRangeAt(0) : null;
 
   return Boolean(range && !range.collapsed);

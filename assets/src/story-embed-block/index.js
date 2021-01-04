@@ -25,7 +25,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { initializeTracking } from '../tracking';
 import { name, settings } from './block';
 
-__webpack_public_path__ = global.webStoriesEmbedBlockSettings.publicPath;
+__webpack_public_path__ = window.webStoriesEmbedBlockSettings.publicPath;
 
 registerBlockType(name, settings);
 

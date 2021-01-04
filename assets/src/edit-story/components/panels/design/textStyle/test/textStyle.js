@@ -124,7 +124,7 @@ describe('Panels/TextStyle', () => {
   const paddingRatioLockLabel = 'Toggle padding ratio lock';
 
   beforeEach(() => {
-    global.fetch.resetMocks();
+    window.fetch.resetMocks();
 
     unlockPaddingTextElement = {
       id: '1',

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as getCurrentYAxis } from './getCurrentYAxis';
 export { default as titleFormatted } from './titleFormatted';
 export { default as groupBy } from './groupBy';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
@@ -43,7 +42,6 @@ export {
 } from '../../edit-story/components/canvas/gridview/useGridViewKeys';
 export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';
 // TODO use these shared utils to structure image resources mirroring editor
-export { default as getTypeFromMime } from '../../edit-story/app/media/utils/getTypeFromMime';
 export { default as getResourceFromLocalFile } from '../../edit-story/app/media/utils/getResourceFromLocalFile';
 export {
   createContext,

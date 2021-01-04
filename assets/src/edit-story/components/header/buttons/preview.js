@@ -71,7 +71,7 @@ function Preview() {
     // the saving operation. That way we will not bust the popup timeout.
     let popup;
     try {
-      popup = global.open('about:blank', PREVIEW_TARGET);
+      popup = window.open('about:blank', PREVIEW_TARGET);
       if (popup) {
         popup.document.write('<!DOCTYPE html><html><head>');
         popup.document.write('<title>');

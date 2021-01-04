@@ -21,7 +21,7 @@ import wpAdapter from '../wpAdapter';
 
 describe('wpAdapter', () => {
   afterEach(() => {
-    global.fetch.mockClear();
+    window.fetch.mockClear();
   });
 
   it('calls fetch with options for GET request', () => {
@@ -33,8 +33,8 @@ describe('wpAdapter', () => {
 
     wpAdapter.get('https://stories.google.com').catch(() => {});
 
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+    expect(window.fetch).toHaveBeenCalledWith(
       'https://stories.google.com?_locale=user',
       {
         credentials: 'include',
@@ -54,8 +54,8 @@ describe('wpAdapter', () => {
       .post('https://stories.google.com', { data: 'Carlos' })
       .catch(() => {});
 
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+    expect(window.fetch).toHaveBeenCalledWith(
       'https://stories.google.com?_locale=user',
       {
         body: JSON.stringify('Carlos'),
@@ -78,8 +78,8 @@ describe('wpAdapter', () => {
 
     wpAdapter.deleteRequest('https://stories.google.com').catch(() => {});
 
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+    expect(window.fetch).toHaveBeenCalledWith(
       'https://stories.google.com?_method=DELETE&_locale=user',
       {
         body: undefined,

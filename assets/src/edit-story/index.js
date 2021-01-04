@@ -30,7 +30,7 @@ import { updateSettings } from '../date';
 import App from './app';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
-__webpack_public_path__ = global.webStoriesEditorSettings.publicPath;
+__webpack_public_path__ = window.webStoriesEditorSettings.publicPath;
 
 /**
  * Initializes the web stories editor.
