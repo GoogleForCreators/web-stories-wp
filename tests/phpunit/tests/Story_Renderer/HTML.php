@@ -354,6 +354,23 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::print_bookend
+	 */
+	public function test_print_bookend_filter() {
+		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		add_filter( 'web_stories_share_providers', '__return_empty_array' );
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
+		remove_filter( 'web_stories_share_providers', '__return_empty_array' );
+		
+		$this->assertContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
+		$this->assertSame( $source, $actual );
+	}
+
+	/**
 	 * Helper to setup renderer.
 	 *
 	 * @param WP_Post $post Post Object.
