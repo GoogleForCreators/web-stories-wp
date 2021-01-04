@@ -342,6 +342,10 @@ class KSES extends \WP_UnitTestCase {
 				'<amp-story-animation layout="nodisplay" trigger="visibility"><script type="application/json">[{"selector":"#anim-9d7bb1a9-8839-4629-b26c-d1863e675c36","keyframes":{"transform":["translate3d(-110.30303%, 0px, 0)","none"]},"fill":"forwards","duration":600,"delay":0,"easing":"cubic-bezier(0.4, 0.4, 0.0, 1)"}]</script></amp-story-animation>',
 				'<amp-story-animation layout="nodisplay" trigger="visibility"><script type="application/json">[{"selector":"#anim-9d7bb1a9-8839-4629-b26c-d1863e675c36","keyframes":{"transform":["translate3d(-110.30303%, 0px, 0)","none"]},"fill":"forwards","duration":600,"delay":0,"easing":"cubic-bezier(0.4, 0.4, 0.0, 1)"}]</script></amp-story-animation>',
 			],
+			'Page Attachment'      => [
+				'<amp-story-page-attachment layout="nodisplay" href="https://www.example.com" data-cta-text="Read more" data-title="My title" theme="dark"></amp-story-page-attachment>',
+				'<amp-story-page-attachment layout="nodisplay" href="https://www.example.com" data-cta-text="Read more" data-title="My title" theme="dark"></amp-story-page-attachment>',
+			],
 		];
 	}
 }
