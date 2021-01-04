@@ -358,12 +358,15 @@ class HTML extends WP_UnitTestCase {
 	 */
 	public function test_print_bookend_filter() {
 		add_filter( 'web_stories_share_providers', '__return_empty_array' );
+
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
 		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
+		
+		$this->assertNotContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $source, $actual );
 
 		remove_filter( 'web_stories_share_providers', '__return_empty_array' );
