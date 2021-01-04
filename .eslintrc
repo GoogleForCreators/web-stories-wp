@@ -210,7 +210,10 @@
     "document": true,
     "wp": "readonly",
     "process": "readonly",
-    "__webpack_public_path__": true
+    "__webpack_public_path__": true,
+    "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
+    "WEB_STORIES_DISABLE_PREVENT": "readonly",
+    "WEB_STORIES_ENV": "readonly"
   },
   "settings": {
     "jsdoc": {
