@@ -18,6 +18,7 @@
  * External dependencies
  */
 const path = require('path');
+const webpack = require('webpack');
 
 /**
  * WordPress dependencies
@@ -45,9 +46,14 @@ function getConfig(group, { coverage = false } = {}) {
       },
       // WP's DependencyExtractionWebpackPlugin is not needed for tests and
       // otherwise has some failures.
-      plugins: webpackConfig.plugins.filter(
-        (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
-      ),
+      plugins: [
+        ...webpackConfig.plugins.filter(
+          (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+        ),
+        new webpack.DefinePlugin({
+          'process.env.RTL_SKIP_AUTO_CLEANUP': false,
+        }),
+      ],
     }))[0];
   if (coverage) {
     config.module.rules.push({
