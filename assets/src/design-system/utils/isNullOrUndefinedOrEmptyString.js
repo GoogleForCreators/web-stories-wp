@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
 
-export const focusableOutlineCSS = (accent) => css`
-  border: solid 2px transparent;
-  &:focus {
-    border: solid 2px ${accent};
-    outline: none;
-  }
-`;
+export const isNullOrUndefinedOrEmptyString = (val) =>
+  val === null || val === undefined || val === '';

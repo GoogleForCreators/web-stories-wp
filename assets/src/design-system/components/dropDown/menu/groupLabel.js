@@ -13,39 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import MULTIPLE_VALUE from '../multipleValue';
+import { THEME_CONSTANTS } from '../../../theme';
+import { ListItemLabel, ListItemLabelDisplayText } from './components';
 
-function printRGB(r, g, b) {
-  const hex = (v) => v.toString(16).padStart(2, '0');
-  return `${hex(r)}${hex(g)}${hex(b)}`.toUpperCase();
-}
-
-function getPreviewText(pattern) {
-  if (!pattern || pattern === MULTIPLE_VALUE) {
+const GroupLabel = ({ label }) => {
+  if (!label) {
     return null;
   }
-  switch (pattern.type) {
-    case 'radial':
-      return __('Radial', 'web-stories');
-    case 'linear':
-      return __('Linear', 'web-stories');
-    case 'solid':
-    default: {
-      const {
-        color: { r, g, b },
-      } = pattern;
-      return printRGB(r, g, b);
-    }
-  }
-}
+  return (
+    <ListItemLabel id={`dropDownMenuLabel-${label}`} role="presentation">
+      <ListItemLabelDisplayText
+        as="span"
+        size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.EXTRA_SMALL}
+      >
+        {label}
+      </ListItemLabelDisplayText>
+    </ListItemLabel>
+  );
+};
 
-export default getPreviewText;
+GroupLabel.propTypes = {
+  label: PropTypes.string,
+};
+
+export default GroupLabel;

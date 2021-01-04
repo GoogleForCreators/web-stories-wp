@@ -13,15 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { Text } from '../typography';
 
-export const focusableOutlineCSS = (accent) => css`
-  border: solid 2px transparent;
-  &:focus {
-    border: solid 2px ${accent};
-    outline: none;
-  }
+export const DropDownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
+
+export const Hint = styled(Text)`
+  margin-top: 12px;
+  padding-left: 2px;
+  color: ${({ theme, hasError }) =>
+    hasError ? theme.colors.fg.negative : theme.colors.fg.tertiary};
+`;
+Hint.propTypes = {
+  hasError: PropTypes.bool,
+};
