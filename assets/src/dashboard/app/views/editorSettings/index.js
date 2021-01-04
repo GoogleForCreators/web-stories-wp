@@ -180,7 +180,7 @@ function EditorSettings() {
     [updateSettings]
   );
 
-  const handleUpdateAdLoader = useCallback(
+  const handleUpdateAdNetwork = useCallback(
     (newAdNetwork) => updateSettings({ adNetwork: newAdNetwork }),
     [updateSettings]
   );
@@ -382,7 +382,7 @@ function EditorSettings() {
             {canManageSettings && (
               <>
                 <AdNetworkSettings
-                  handleUpdate={handleUpdateAdLoader}
+                  handleUpdate={handleUpdateAdNetwork}
                   adNetwork={adNetwork}
                 />
                 {AD_NETWORK_TYPE.ADSENSE === adNetwork && (

@@ -86,7 +86,6 @@ class Ad_Manager {
 						"data-slot": "<?php echo esc_js( $slot ); ?>"
 					}
 				}
-
 			</script>
 		</amp-story-auto-ads>
 		<?php
