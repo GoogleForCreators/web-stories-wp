@@ -15,20 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-/**
- * Internal dependencies
- */
-
-/**
- * Internal dependencies
- */
-/**
  * WordPress dependencies
  */
 import { withSelect, select } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
+
+/**
+ * Internal dependencies
+ */
 import { forEach } from '../utils/globals';
 import name from '../store/name';
 import WebStoriesModal from '../components/Modal';
@@ -59,6 +53,7 @@ const prepareShortCode = () => {
  * @param {Function} select Store selector.
  * @return {{categories: Array}}
  */
+// eslint-disable-next-line no-shadow
 const mapSelectToProps = (select) => {
   return {
     modalOpen: select(name).getModal(),

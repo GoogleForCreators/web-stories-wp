@@ -17,10 +17,19 @@ exports[`TinyMCE Controls Modal modal is opened and view is circle 1`] = `
     field="title"
   />
   <TinyMCEToggle
+    field="excerpt"
+  />
+  <TinyMCEToggle
     field="author"
   />
   <TinyMCEToggle
     field="date"
+  />
+  <TinyMCEToggle
+    field="image_align"
+  />
+  <TinyMCEToggle
+    field="archive_link"
   />
   <Range
     label="Number of Stories"
@@ -73,10 +82,19 @@ exports[`TinyMCE Controls Modal modal is opened and view is non-circle 1`] = `
     field="title"
   />
   <TinyMCEToggle
+    field="excerpt"
+  />
+  <TinyMCEToggle
     field="author"
   />
   <TinyMCEToggle
     field="date"
+  />
+  <TinyMCEToggle
+    field="image_align"
+  />
+  <TinyMCEToggle
+    field="archive_link"
   />
   <Range
     label="Number of Stories"

@@ -15,12 +15,6 @@
  */
 
 /**
- * Import dependencies.
- */
-/**
- * WordPress dependencies
- */
-/**
  * WordPress dependencies
  */
 import { render } from '@wordpress/element';
@@ -29,17 +23,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import '../../../node_modules/@wordpress/components/build-style/style.css';
-/**
- * Internal dependencies
- */
 import name from './store/name';
 import WebStoryMCEStore from './store';
 import WebStoriesModal from './containers/Modal';
 import { webStoriesData } from './utils/globals';
+import { setFields } from './utils/';
 
 const { _ } = window;
 
@@ -69,7 +58,7 @@ const { _ } = window;
    * Subscribe to state change in store.
    */
   WebStoryMCEStore.subscribe(() => RenderModal());
-
+  //eslint-disable-next-line no-undef
   tinymce.PluginManager.add('web_stories', function (editor) {
     editor.addButton('web_stories', {
       text: __('Web Stories', 'web-stories'),

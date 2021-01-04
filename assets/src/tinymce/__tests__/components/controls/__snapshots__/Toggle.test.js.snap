@@ -13,40 +13,6 @@ exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with readonly att
       <input
         checked={true}
         className="components-form-toggle__input"
-        id="inspector-toggle-control-1"
-        onChange={[Function]}
-        type="checkbox"
-      />
-      <span
-        className="components-form-toggle__track"
-      />
-      <span
-        className="components-form-toggle__thumb"
-      />
-    </span>
-    <label
-      className="components-toggle-control__label"
-      htmlFor="inspector-toggle-control-1"
-    >
-      Test Control
-    </label>
-  </div>
-</div>
-`;
-
-exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with readonly attrs true 1`] = `
-<div
-  className="components-base-control components-toggle-control css-wdf2ti-Wrapper e1puf3u0"
->
-  <div
-    className="components-base-control__field css-11vcxb9-StyledField e1puf3u1"
-  >
-    <span
-      className="components-form-toggle is-checked"
-    >
-      <input
-        checked={true}
-        className="components-form-toggle__input"
         id="inspector-toggle-control-0"
         onChange={[Function]}
         type="checkbox"
@@ -62,8 +28,10 @@ exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with readonly att
       className="components-toggle-control__label"
       htmlFor="inspector-toggle-control-0"
     >
-      Test Control (Readonly)
+      Test Control
     </label>
   </div>
 </div>
 `;
+
+exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with readonly attrs true 1`] = `null`;
