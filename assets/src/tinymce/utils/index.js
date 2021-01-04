@@ -88,13 +88,17 @@ export const SetDefaultStateSetting = () => {
 
   forEach(views, (value) => {
     const { value: viewValue } = value;
-    const { title, author, date } = fields[viewValue];
+    const { title, author, date, excerpt, image_align, archive_link } = fields[
+      viewValue
+    ];
 
     State[viewValue] = {
       title: title,
       author: author,
       date: date,
-      image_align: false,
+      image_align: image_align,
+      excerpt: excerpt,
+      archive_link: archive_link,
       number: 5,
       columns: 1,
       view: viewValue,

@@ -40,7 +40,18 @@ import TinyMCEToggle from './controls/Toggle';
 
 const WebStoriesModal = (props) => {
   const { modalOpen, settings, prepareShortCode } = props;
-  const { author, date, title, number, columns, order, view } = settings;
+  const {
+    author,
+    date,
+    title,
+    number,
+    columns,
+    order,
+    view,
+    excerpt,
+    image_align,
+    archive_link,
+  } = settings;
   const { views, orderlist } = webStoriesData;
 
   return (
@@ -60,15 +71,23 @@ const WebStoriesModal = (props) => {
               label={__('Select View Type', 'web-stories')}
               value={view}
               options={views}
-              onChange={(view_type) => dispatch(name).setCurrentView(view_type)}
+              onChange={(view_type) => {
+                dispatch(name).setCurrentView(view_type);
+              }}
             />
           )}
 
           <TinyMCEToggle field={'title'} fieldObj={title} />
 
+          <TinyMCEToggle field={'excerpt'} fieldObj={excerpt} />
+
           <TinyMCEToggle field={'author'} fieldObj={author} />
 
           <TinyMCEToggle field={'date'} fieldObj={date} />
+
+          <TinyMCEToggle field={'image_align'} fieldObj={image_align} />
+
+          <TinyMCEToggle field={'archive_link'} fieldObj={archive_link} />
 
           <RangeControl
             label={__('Number of Stories', 'web-stories')}
@@ -143,6 +162,9 @@ WebStoriesModal.propTypes = {
   settings: PropTypes.shape({
     author: StateFulFieldShape,
     title: StateFulFieldShape,
+    excerpt: StateFulFieldShape,
+    image_align: StateFulFieldShape,
+    archive_link: StateFulFieldShape,
     date: StateFulFieldShape,
     number: PropTypes.number,
     columns: PropTypes.number,

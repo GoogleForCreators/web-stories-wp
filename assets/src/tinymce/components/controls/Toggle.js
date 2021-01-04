@@ -42,18 +42,22 @@ const TinyMCEToggle = ({ fieldObj, field }) => {
   const { show, readonly: isReadonly, label } = fieldObj;
 
   return (
-    <ToggleControl
-      label={!isReadonly ? label : label + __(' (Readonly)', 'web-stories')}
-      checked={show}
-      onChange={() => {
-        updateViewSettings({
-          fieldObj: fieldObj,
-          field: field,
-          isReadonly: isReadonly,
-        });
-      }}
-      readonly={isReadonly}
-    />
+    <>
+      {!isReadonly && (
+        <ToggleControl
+          label={label}
+          checked={show}
+          onChange={() => {
+            updateViewSettings({
+              fieldObj: fieldObj,
+              field: field,
+              isReadonly: isReadonly,
+            });
+          }}
+          readonly={isReadonly}
+        />
+      )}
+    </>
   );
 };
 

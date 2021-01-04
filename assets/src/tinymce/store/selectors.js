@@ -74,3 +74,7 @@ export function getCurrentViewSettings(state) {
 
   return state.settings[currentView];
 }
+
+export function getState(state) {
+  return state;
+}
