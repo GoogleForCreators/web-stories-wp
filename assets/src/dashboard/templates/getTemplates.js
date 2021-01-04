@@ -25,8 +25,8 @@ export async function loadTemplate(title, imageBaseUrl) {
   );
 
   const template = {
-    ...data,
-    pages: (data.pages || []).map((page) => ({
+    ...data.default,
+    pages: (data.default.pages || []).map((page) => ({
       ...page,
       elements: page.elements?.map((elem) => {
         if (elem?.resource?.sizes) {
