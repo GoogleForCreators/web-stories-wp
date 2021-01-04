@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
 import { AD_NETWORK_TYPE } from '../../constants';
 
 export const ACTION_TYPES = {
