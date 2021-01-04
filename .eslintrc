@@ -356,9 +356,7 @@
         ".storybook/*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",
-        "tests/e2e/config/*.js",
-        "assets/src/dashboard/karma-tests.cjs",
-        "assets/src/edit-story/karma-tests.cjs"
+        "tests/e2e/config/*.js"
       ],
       "extends": [
         "plugin:node/recommended",

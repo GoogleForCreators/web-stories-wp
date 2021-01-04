@@ -57,11 +57,11 @@ module.exports = function (config) {
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'karma-puppeteer-client'],
+    frameworks: ['jasmine', 'karma-puppeteer-client', 'webpack'],
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'assets/src/edit-story/karma-tests.cjs', watched: false },
+      { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
       { pattern: 'karma/fixture/init.js', watched: false },
       {
         pattern: '__static__/**/*',
@@ -79,7 +79,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'assets/src/edit-story/karma-tests.cjs': ['webpack', 'sourcemap'],
+      'assets/src/edit-story/**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
     proxies: {
