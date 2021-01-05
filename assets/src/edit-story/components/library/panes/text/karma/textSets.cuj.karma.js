@@ -66,13 +66,13 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       expect(fixture.editor.library.text.textSets.length).toBeTruthy()
     );
 
-    const textSet = fixture.editor.library.text.textSets[0];
+    const textSet = fixture.editor.library.text.textSets[1];
     const page = fixture.editor.canvas.fullbleed.container;
 
+    textSet.scrollIntoView();
     await fixture.events.mouse.moveRel(textSet, 25, 25);
     await fixture.events.mouse.down();
-
-    await fixture.events.mouse.moveRel(page, 50, 100);
+    await fixture.events.mouse.moveRel(page, 50, 100, { steps: 20 });
     await fixture.snapshot('Text set dragged');
     await fixture.events.mouse.up();
 
