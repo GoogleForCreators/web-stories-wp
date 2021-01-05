@@ -42,8 +42,12 @@ const TargetBox = styled.div`
   position: absolute;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  max-width: 100%;
-  max-height: 100%;
+  ${({ isDragging }) =>
+    !isDragging &&
+    `
+      max-width: 100%;
+      max-height: 100%;
+    `};
   top: 0;
   z-index: 1;
 `;
@@ -69,6 +73,7 @@ function LibraryMoveable({
   const targetBoxRef = useRef(null);
   const targetBoxSize = useRef(null);
   const overlayRef = useRef(null);
+  const moveable = useRef(null);
 
   const { pageSize } = useLayout(({ state }) => ({
     pageSize: state.canvasPageSize,
@@ -200,6 +205,10 @@ function LibraryMoveable({
     }
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
+    // Update moveable to take the new size of the target for snapping.
+    if (moveable.current) {
+      moveable.current.updateRect();
+    }
   };
 
   const onDragEnd = ({ inputEvent }) => {
@@ -265,6 +274,7 @@ function LibraryMoveable({
         onClick={onClick}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
+        isDragging={isDragging || hover}
       />
       {(isDragging || active || hover) && (
         <>
@@ -277,6 +287,7 @@ function LibraryMoveable({
             }}
           />
           <Moveable
+            ref={moveable}
             className="default-moveable"
             target={targetBoxRef.current}
             edge={true}
