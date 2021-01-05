@@ -51,21 +51,7 @@ const BASIC_SHAPE = {
 };
 
 describe('getElementProperties', () => {
-  it('should modify x,y to be within page boundary by default', () => {
-    const outOfBoundsX = PAGE_WIDTH + BASIC_SHAPE.width;
-    const outOfBoundsY = FULLBLEED_HEIGHT + BASIC_SHAPE.height;
-
-    const result = getElementProperties(BASIC_SHAPE.type, {
-      ...BASIC_SHAPE,
-      x: outOfBoundsX,
-      y: outOfBoundsY,
-    });
-
-    expect(result.x).toBe(PAGE_WIDTH - BASIC_SHAPE.width);
-    expect(result.y).toBe(Math.floor(FULLBLEED_HEIGHT - BASIC_SHAPE.height));
-  });
-
-  it('should keey x,y unmodified if already within page boundary', () => {
+  it('should keep x,y unmodified', () => {
     const inboundsX = 50;
     const inboundsY = 25;
 
