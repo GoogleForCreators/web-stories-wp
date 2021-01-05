@@ -92,12 +92,12 @@ describe('Page output', () => {
         'aspect-ratio',
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
-      expect(layer.firstElementChild.className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(layer.firstElementChild.firstElementChild.className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(layer.firstElementChild).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(
+        layer.firstElementChild.firstElementChild
+      ).toHaveClass('page-safe-area', { exact: true });
     });
 
     it('should render the layer for background', () => {
@@ -121,12 +121,12 @@ describe('Page output', () => {
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
       expect(bgLayer.children).toHaveLength(1);
-      expect(bgLayer.children[0].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(bgLayer.children[0].children[0].className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(bgLayer.children[0]).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(bgLayer.children[0].children[0]).toHaveClass('page-safe-area', {
+        exact: true,
+      });
     });
 
     it('should render the layer for background with overlay', () => {

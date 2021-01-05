@@ -15,19 +15,13 @@
  */
 
 /**
- * WordPress dependencies
+ * See https://craig.is/killing/mice#keys for the supported key codes.
  */
-import { __ } from '@wordpress/i18n';
+const keys = {
+  undo: 'mod+z',
+  redo: 'shift+mod+z',
+  delete: ['del', 'backspace'],
+  clone: 'mod+d',
+};
 
-/**
- * Internal dependencies
- */
-import { ReactComponent as AnimationTabIcon } from './animation.svg';
-
-function AnimationIcon() {
-  return (
-    <AnimationTabIcon aria-label={__('Animation library', 'web-stories')} />
-  );
-}
-
-export default AnimationIcon;
+export default keys;

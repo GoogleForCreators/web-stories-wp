@@ -26,7 +26,6 @@ import { useFeatures } from 'flagged';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
-import { AnimationPane, AnimationIcon } from './panes/animation';
 import { MediaPane, MediaIcon } from './panes/media/local';
 import { Media3pPane, Media3pIcon } from './panes/media/media3p';
 import { ShapesPane, ShapesIcon } from './panes/shapes';
@@ -40,7 +39,6 @@ const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
 const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
 const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
 const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
-const ANIM = { icon: AnimationIcon, Pane: AnimationPane, id: 'animation' };
 const PAGE_LAYOUTS = {
   icon: PageLayoutsIcon,
   Pane: PageLayoutsPane,
@@ -54,11 +52,7 @@ function LibraryProvider({ children }) {
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
-  const {
-    showAnimationTab,
-    showElementsTab,
-    showPageLayoutsTab,
-  } = useFeatures();
+  const { showElementsTab, showPageLayoutsTab } = useFeatures();
 
   // Order here is important, as it denotes the actual visual order of elements.
   const tabs = useMemo(
@@ -68,10 +62,9 @@ function LibraryProvider({ children }) {
       ...(tab === TEXT.id ? [TEXT] : [{ icon: TextIcon, id: 'text' }]),
       SHAPES,
       ...(showElementsTab ? [ELEMS] : []),
-      ...(showAnimationTab ? [ANIM] : []),
       ...(showPageLayoutsTab ? [PAGE_LAYOUTS] : []),
     ],
-    [showAnimationTab, showElementsTab, showPageLayoutsTab, tab]
+    [showElementsTab, showPageLayoutsTab, tab]
   );
 
   const state = useMemo(

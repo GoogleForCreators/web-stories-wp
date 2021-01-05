@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
 import { createNewStory } from '../../../utils';
@@ -43,7 +38,5 @@ describe('Inserting Media from Media Library', () => {
     );
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
-
-    await percySnapshot(page, 'Inserting Image from Media Library');
   });
 });

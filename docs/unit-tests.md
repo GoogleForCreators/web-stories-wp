@@ -95,17 +95,11 @@ describe('sum', () => {
 });
 ```
 
-This will be reported as "it adds 1 + 2 to equal 3".
+This will be reported as "sum > (it) adds 1 + 2 to equal 3".
 
 ### Snapshot Testing
 
 Try to avoid using snapshots when rendering components works just as well. If needed, use `toMatchInlineSnapshot`.
-
-### Visual Regression Testing
-
-Some tests use image snapshots / screenshots for checking the desired output.
-
-To debug failing image snapshot tests, look out for a `Image Snapshots Diff Output.zip` file uploaded by the GitHub Actions workflow.
 
 ### Code Coverage
 

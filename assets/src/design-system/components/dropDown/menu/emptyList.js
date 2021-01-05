@@ -13,24 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { Pane } from '../shared';
-import paneId from './paneId';
+import { NoOptionsContainer, NoOptionsMessage } from './components';
 
-function AnimationPane(props) {
+const EmptyList = ({ emptyText }) => {
+  if (!emptyText) {
+    return null;
+  }
   return (
-    <Pane id={paneId} {...props}>
-      {__('Coming soon', 'web-stories')}
-    </Pane>
+    <NoOptionsContainer>
+      <NoOptionsMessage>{emptyText} </NoOptionsMessage>
+    </NoOptionsContainer>
   );
-}
+};
 
-export default AnimationPane;
+EmptyList.propTypes = {
+  emptyText: PropTypes.string,
+};
+
+export default EmptyList;

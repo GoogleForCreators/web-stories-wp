@@ -30,7 +30,7 @@ describe('InfiniteScroller', () => {
 
     const loadingComponent = getByTestId('load-more-on-scroll');
 
-    expect(loadingComponent).toBeDefined();
+    expect(loadingComponent).toBeInTheDocument();
   });
 
   it('should show all data loaded message when `allDataLoadedMessage` is true', () => {
@@ -44,6 +44,6 @@ describe('InfiniteScroller', () => {
 
     const allDataLoaded = getByText('All data has been fetched');
 
-    expect(allDataLoaded).toBeDefined();
+    expect(allDataLoaded).toBeInTheDocument();
   });
 });

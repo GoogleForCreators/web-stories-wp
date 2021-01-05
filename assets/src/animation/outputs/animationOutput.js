@@ -33,9 +33,36 @@ function AnimationOutput({ config }) {
         type="application/json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
-            configs.map((conf) => ({
-              ...conf,
-            }))
+            // Only print the actual items needed for the animations,
+            // as defined by the prop types.
+            // Prevents printing the `element` prop which `config` can have.
+            configs.map(
+              ({
+                selector,
+                animation,
+                keyframes,
+                delay,
+                direction,
+                duration,
+                easing,
+                endDelay,
+                fill,
+                iterationStart,
+                iterations,
+              }) => ({
+                selector,
+                animation,
+                keyframes,
+                delay,
+                direction,
+                duration,
+                easing,
+                endDelay,
+                fill,
+                iterationStart,
+                iterations,
+              })
+            )
           ),
         }}
       />
