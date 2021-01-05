@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: npm cii
+        run: npm ci
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
