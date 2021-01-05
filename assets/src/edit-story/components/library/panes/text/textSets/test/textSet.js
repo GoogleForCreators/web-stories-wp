@@ -260,6 +260,9 @@ describe('TextSets', () => {
     insertTextSet.mockImplementation((elements) => elements);
     const { queryAllByRole } = setup(SET);
     const sets = queryAllByRole('listitem');
+
+    // Disable reason: it suggests to use toBeInDocument but here we really need the length instead.
+    // eslint-disable-next-line jest-dom/prefer-in-document
     expect(sets).toHaveLength(1);
     // Last child is always the moveable targetBox.
     fireEvent.click(sets[0].lastChild);
