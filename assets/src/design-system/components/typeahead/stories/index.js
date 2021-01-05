@@ -19,7 +19,7 @@
  */
 import { action } from '@storybook/addon-actions';
 import { boolean, number, select, text } from '@storybook/addon-knobs';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useState } from 'react';
 
 /**
@@ -28,7 +28,7 @@ import { useState } from 'react';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
 import { Text } from '../../typography';
-import { Typeahead } from '..';
+import { Typeahead } from '../';
 import {
   basicDropDownOptions,
   nestedDropDownOptions,
@@ -148,7 +148,7 @@ export const NoOptionsMenu = () => {
 
   return (
     <Container>
-      <DropDown
+      <Typeahead
         emptyText={'No options available'}
         options={[]}
         hasError={boolean('hasError')}
@@ -176,7 +176,7 @@ export const ReallyLongLabelsMenu = () => {
 
   return (
     <Container narrow>
-      <DropDown
+      <Typeahead
         emptyText={'No options available'}
         options={reallyLongOptions}
         hasError={boolean('hasError')}
@@ -204,7 +204,7 @@ export const SubMenus = () => {
 
   return (
     <Container>
-      <DropDown
+      <Typeahead
         emptyText={'No options available'}
         options={nestedDropDownOptions}
         hasError={boolean('hasError')}

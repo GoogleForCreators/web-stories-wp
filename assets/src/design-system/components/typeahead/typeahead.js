@@ -39,7 +39,7 @@ import {
   DEFAULT_ARIA_CLEAR_LABEL,
   DEFAULT_ARIA_INPUT_LABEL,
 } from './constants';
-import { TypeaheadInput } from './input';
+import TypeaheadInput from './input';
 import useTypeahead from './useTypeahead';
 
 // focus should stay on input until arrows are used
