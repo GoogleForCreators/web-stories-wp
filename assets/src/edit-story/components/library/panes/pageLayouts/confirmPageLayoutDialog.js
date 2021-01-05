@@ -65,9 +65,6 @@ function ConfirmPageLayoutDialog(props) {
 ConfirmPageLayoutDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  page: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default ConfirmPageLayoutDialog;
