@@ -40,16 +40,14 @@ function getConfig(group, { coverage = false } = {}) {
       entry: undefined,
       mode: 'development',
       devtool: 'inline-source-map',
-      output: {
-        ...webpackConfig.output,
-        path: path.resolve(process.cwd(), 'assets', 'testjs'),
-      },
-      // WP's DependencyExtractionWebpackPlugin is not needed for tests and
-      // otherwise has some failures.
       plugins: [
+        // WP's DependencyExtractionWebpackPlugin is not needed for tests and
+        // otherwise has some failures.
         ...webpackConfig.plugins.filter(
           (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
         ),
+        // React Testing Library checks for this variable, but webpack does
+        // no longer polyfill `process` in the browser.
         new webpack.DefinePlugin({
           'process.env.RTL_SKIP_AUTO_CLEANUP': false,
         }),
