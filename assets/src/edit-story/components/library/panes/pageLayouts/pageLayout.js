@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -29,6 +29,7 @@ import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
+import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 
 const PageLayoutWrapper = styled.div`
   position: relative;
@@ -81,49 +82,76 @@ const PageLayoutTitle = styled.div`
 `;
 
 function PageLayout(props) {
-  const { page, pageSize, onClick } = props;
+  const { page, pageSize, onConfirm, requiresConfirmation } = props;
 
   const [isActive, setIsActive] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   const containElem = useRef(null);
 
   useFocusOut(containElem, () => setIsActive(false), []);
 
+  const handleClick = useCallback(() => {
+    if (requiresConfirmation) {
+      setIsConfirming(true);
+    } else {
+      onConfirm();
+    }
+  }, [setIsConfirming, onConfirm, requiresConfirmation]);
+
+  const handleCloseDialog = useCallback(() => {
+    setIsConfirming(false);
+  }, [setIsConfirming]);
+
+  const handleConfirmDialog = useCallback(() => {
+    onConfirm();
+    setIsConfirming(false);
+  }, [onConfirm, setIsConfirming]);
+
   return (
-    <PageLayoutWrapper pageSize={pageSize} role="listitem">
-      <PreviewPageWrapper pageSize={pageSize}>
-        <PreviewErrorBoundary>
-          <PreviewPage
-            pageSize={pageSize}
-            page={page}
-            animationState={
-              isActive
-                ? STORY_ANIMATION_STATE.PLAYING
-                : STORY_ANIMATION_STATE.RESET
-            }
-          />
-        </PreviewErrorBoundary>
-      </PreviewPageWrapper>
-      <HoverControls
-        ref={containElem}
-        pageSize={pageSize}
-        onFocus={() => setIsActive(true)}
-        onMouseEnter={() => setIsActive(true)}
-        onMouseLeave={() => setIsActive(false)}
-        onClick={onClick}
-        isActive={isActive}
-        aria-label={page.title}
-        tabIndex="0"
-      >
-        <PageLayoutTitle>{page.title}</PageLayoutTitle>
-      </HoverControls>
-    </PageLayoutWrapper>
+    <>
+      <PageLayoutWrapper pageSize={pageSize} role="listitem">
+        <PreviewPageWrapper pageSize={pageSize}>
+          <PreviewErrorBoundary>
+            <PreviewPage
+              pageSize={pageSize}
+              page={page}
+              animationState={
+                isActive
+                  ? STORY_ANIMATION_STATE.PLAYING
+                  : STORY_ANIMATION_STATE.RESET
+              }
+            />
+          </PreviewErrorBoundary>
+        </PreviewPageWrapper>
+        <HoverControls
+          ref={containElem}
+          pageSize={pageSize}
+          onFocus={() => setIsActive(true)}
+          onMouseEnter={() => setIsActive(true)}
+          onMouseLeave={() => setIsActive(false)}
+          onClick={handleClick}
+          isActive={isActive}
+          aria-label={page.title}
+          tabIndex="0"
+        >
+          <PageLayoutTitle>{page.title}</PageLayoutTitle>
+        </HoverControls>
+      </PageLayoutWrapper>
+      {isConfirming && (
+        <ConfirmPageLayoutDialog
+          onConfirm={handleConfirmDialog}
+          onClose={handleCloseDialog}
+        />
+      )}
+    </>
   );
 }
 
 PageLayout.propTypes = {
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  requiresConfirmation: PropTypes.bool.isRequired,
 };
 
 export default PageLayout;

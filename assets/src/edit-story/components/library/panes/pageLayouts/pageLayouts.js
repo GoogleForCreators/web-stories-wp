@@ -30,6 +30,7 @@ import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { UnitsProvider } from '../../../../units';
 import { useStory } from '../../../../app';
 import { duplicatePage } from '../../../../elements';
+import isDefaultPage from '../../../../utils/isDefaultPage';
 import PageLayout from './pageLayout';
 
 const PAGE_LAYOUT_PANE_WIDTH = 158;
@@ -55,13 +56,14 @@ const PageLayoutsRow = styled.div`
 function PageLayouts(props) {
   const { pages, parentRef } = props;
 
-  const { replaceCurrentPage } = useStory(
-    ({ actions: { replaceCurrentPage } }) => ({
+  const { replaceCurrentPage, currentPage } = useStory(
+    ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
       replaceCurrentPage,
+      currentPage,
     })
   );
 
-  const copyPage = useCallback(
+  const handleApplyPageLayout = useCallback(
     (page) => {
       const duplicatedPage = duplicatePage(page);
       replaceCurrentPage({ page: duplicatedPage });
@@ -85,6 +87,10 @@ function PageLayouts(props) {
     ),
     overscan: 2,
   });
+
+  const requiresConfirmation = useMemo(() => !isDefaultPage(currentPage), [
+    currentPage,
+  ]);
 
   return (
     <UnitsProvider
@@ -113,7 +119,8 @@ function PageLayouts(props) {
                     key={page.id}
                     page={page}
                     pageSize={pageSize}
-                    onClick={() => copyPage(page)}
+                    onConfirm={() => handleApplyPageLayout(page)}
+                    requiresConfirmation={requiresConfirmation}
                   />
                 );
               })}
