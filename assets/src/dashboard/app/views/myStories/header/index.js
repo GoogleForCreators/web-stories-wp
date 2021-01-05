@@ -40,6 +40,7 @@ import {
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
+  STORY_STATUS,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -101,6 +102,13 @@ function Header({
       <HeaderToggleButtonContainer>
         <ToggleButtonGroup
           buttons={STORY_STATUSES.map((storyStatus) => {
+            if (
+              storyStatus.status === STORY_STATUS.PRIVATE &&
+              (!totalStoriesByStatus.private ||
+                totalStoriesByStatus.private < 1)
+            ) {
+              return null;
+            }
             return {
               handleClick: () => {
                 handleClick(storyStatus.value);
@@ -119,7 +127,7 @@ function Header({
                   : ''
               }`,
             };
-          })}
+          }).filter(Boolean)}
         />
       </HeaderToggleButtonContainer>
     );

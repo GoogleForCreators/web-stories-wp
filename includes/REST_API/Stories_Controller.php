@@ -343,6 +343,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			'publish' => 'publish',
 			'future'  => 'future',
 			'draft'   => 'draft',
+			'private' => 'private',
 		];
 
 		$statuses_count = [];

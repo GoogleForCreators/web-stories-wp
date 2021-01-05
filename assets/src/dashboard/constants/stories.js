@@ -116,6 +116,7 @@ export const STORY_STATUS = {
   DRAFT: 'draft',
   FUTURE: 'future',
   PUBLISH: 'publish',
+  PRIVATE: 'private',
 };
 
 export const STORY_ITEM_CENTER_ACTION_LABELS = {
@@ -139,6 +140,11 @@ export const STORY_STATUSES = [
     label: __('Published', 'web-stories'),
     value: STORY_STATUS.PUBLISHED_AND_FUTURE,
     status: STORY_STATUS.PUBLISHED_AND_FUTURE,
+  },
+  {
+    label: __('Private', 'web-stories'),
+    value: STORY_STATUS.PRIVATE,
+    status: STORY_STATUS.PRIVATE,
   },
 ];
 
