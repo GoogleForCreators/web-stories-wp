@@ -41,7 +41,12 @@ jest.mock('../../../../form/dropDown');
 jest.mock('../../../../form/advancedDropDown');
 jest.mock('../../../../form/color/color');
 
-const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
+const DEFAULT_PADDING = {
+  horizontal: 0,
+  vertical: 0,
+  locked: true,
+  hasHiddenPadding: false,
+};
 
 function Wrapper({ children }) {
   return (
@@ -183,6 +188,7 @@ describe('Panels/TextStyle', () => {
       height: 171,
       lineHeight: 1,
       padding: {
+        hasHiddenPadding: false,
         horizontal: 0,
         locked: true,
         vertical: 0,

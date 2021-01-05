@@ -80,6 +80,7 @@ function PaddingControls({
   // Only if true for all selected elements, will the toggle be true
   // (Note that this behavior is different from aspect lock ratio)
   const lockPadding = padding.locked === true;
+  const hasHiddenPadding = padding.hasHiddenPadding === true;
 
   const handleChange = useCallback(
     (newPadding, submit = false) => {
@@ -127,10 +128,8 @@ function PaddingControls({
         onChange: (value) =>
           handleChange({
             horizontal:
-              value +
-              (padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
-            vertical:
-              value + (padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+              value + (hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+            vertical: value + (hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
           }),
 
         stretch: true,
@@ -141,8 +140,7 @@ function PaddingControls({
         onChange: (value) =>
           handleChange({
             horizontal:
-              value +
-              (padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+              value + (hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
           }),
       };
 
@@ -151,8 +149,10 @@ function PaddingControls({
       <Label>{__('Padding', 'web-stories')}</Label>
       <BoxedNumeric
         value={
-          padding.horizontal -
-          (padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0)
+          typeof padding.horizontal === 'number'
+            ? padding.horizontal -
+              (hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0)
+            : padding.horizontal
         }
         {...firstInputProperties}
       />
@@ -173,7 +173,7 @@ function PaddingControls({
                   horizontal: padding.horizontal,
                   vertical:
                     padding.horizontal +
-                    (padding.hasHiddenPadding
+                    (hasHiddenPadding
                       ? HIDDEN_PADDING.vertical - HIDDEN_PADDING.horizontal
                       : 0),
                 },
@@ -189,14 +189,15 @@ function PaddingControls({
           <BoxedNumeric
             suffix={_x('V', 'The Vertical padding', 'web-stories')}
             value={
-              padding.vertical -
-              (padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0)
+              typeof padding.vertical === 'number'
+                ? padding.vertical -
+                  (hasHiddenPadding ? HIDDEN_PADDING.vertical : 0)
+                : padding.vertical
             }
             onChange={(value) =>
               handleChange({
                 vertical:
-                  value +
-                  (padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+                  value + (hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
               })
             }
             aria-label={__('Vertical padding', 'web-stories')}
