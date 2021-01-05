@@ -33,6 +33,7 @@ import { Rectangle } from '../../../icons';
 import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { Label } from '../../form';
+import { useStory } from '../../../app';
 
 const MAX_NUMBER_FOR_BADGE = 99;
 
@@ -76,6 +77,11 @@ const Row = styled.div`
   font-size: ${({ theme }) => theme.fonts.body2.size};
   width: calc(100% - 10px);
   max-width: 210px;
+  ${({ onClick }) =>
+    Boolean(onClick) &&
+    `&:hover {
+      cursor: pointer;
+    }`}
 `;
 
 const HelperText = styled.span`
@@ -139,6 +145,12 @@ function annotateNumber(number) {
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
+  const { setSelectedElementsById, setCurrentPage } = useStory(
+    ({ actions }) => ({
+      setSelectedElementsById: actions.setSelectedElementsById,
+      setCurrentPage: actions.setCurrentPage,
+    })
+  );
 
   const { highPriority, recommended, pages } = useMemo(
     () =>
@@ -194,14 +206,37 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
+  const getOnClick = useCallback(
+    ({ elementId, pageId, elements }) => {
+      if (!elementId && !pageId && !elements) {
+        return undefined;
+      }
+      return () => {
+        if (pageId) {
+          setCurrentPage({ pageId });
+        }
+        if (Array.isArray(elements)) {
+          setSelectedElementsById({ elementIds: elements.map(({ id }) => id) });
+        } else if (elementId) {
+          setSelectedElementsById({ elementIds: [elementId] });
+        }
+      };
+    },
+    [setCurrentPage, setSelectedElementsById]
+  );
+
   const renderRow = useCallback(
-    ({ message, help, id, pageGroup }) => (
-      <Row key={`guidance-${id}`} pageGroup={pageGroup}>
+    ({ message, help, id, pageGroup, ...args }) => (
+      <Row
+        onClick={getOnClick(args)}
+        key={`guidance-${id}`}
+        pageGroup={pageGroup}
+      >
         {message}
         <HelperText>{help}</HelperText>
       </Row>
     ),
-    []
+    [getOnClick]
   );
 
   const renderPageGroupedRow = useCallback(

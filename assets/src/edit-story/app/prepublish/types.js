@@ -21,8 +21,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import StoryPropTypes from '../../types';
 import { PRE_PUBLISH_MESSAGE_TYPES } from './constants';
 
+/**
+ * @typedef {import('../../types').Page} Page
+ * @typedef {import('../../types').Element} Element
+ */
 /**
  * Guidance return object
  *
@@ -30,6 +35,8 @@ import { PRE_PUBLISH_MESSAGE_TYPES } from './constants';
  * @property {string} type The type/severity of the message [error, warning, guidance]
  * @property {string} message The main text describing the error
  * @property {string} help The descriptive text describing the error
+ * @property {Page[]} [pages] The page objects containing elements which failed checks
+ * @property {Element[]} [elements] The element objects which failed checks
  * @property {string} [pageId] The ID of the page being checked
  * @property {string} [elementId] The ID of the element being checked
  * @property {string} [storyId] The ID of the story element being checked
@@ -42,7 +49,8 @@ export const GuidancePropType = PropTypes.shape({
     PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
   ]).isRequired,
-  pageId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  pages: PropTypes.arrayOf(StoryPropTypes.page),
+  elements: PropTypes.arrayOf(StoryPropTypes.element),
   page: PropTypes.number,
   elementId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   storyId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

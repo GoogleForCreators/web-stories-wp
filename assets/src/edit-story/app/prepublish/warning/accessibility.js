@@ -496,18 +496,16 @@ export function videoElementMissingCaptions(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function pageTooManyLinks(page) {
-  let linkCount = 0;
-  page.elements.forEach((element) => {
-    if (element.link?.url?.length) {
-      linkCount += 1;
-    }
+  const elementsWithLinks = page.elements.filter((element) => {
+    return Boolean(element.link?.url?.length);
   });
 
-  if (linkCount > MAX_PAGE_LINKS) {
+  if (elementsWithLinks.length > MAX_PAGE_LINKS) {
     return {
       message: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.MAIN_TEXT,
       help: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.HELPER_TEXT,
       pageId: page.id,
+      elements: elementsWithLinks,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }

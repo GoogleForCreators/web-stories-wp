@@ -51,6 +51,7 @@ export function pageTooMuchText(page) {
   if (characterCount > MAX_PAGE_CHARACTER_COUNT) {
     return {
       pageId: page.id,
+      elements: page.elements.filter((element) => element.type === 'text'),
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       message: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT,
       help: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.HELPER_TEXT,
