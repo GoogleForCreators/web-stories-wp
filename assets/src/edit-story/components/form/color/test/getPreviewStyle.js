@@ -56,8 +56,10 @@ describe('getPreviewStyle', () => {
   it('should return transparent for transparent solid', () => {
     const pattern = createSolid(255, 0, 255, 0);
     const result = getPreviewStyle(pattern);
-    expect(result).toStrictEqual({});
-    expect(generatePatternStylesMock).not.toHaveBeenCalled();
+    expect(result).toStrictEqual({ backgroundColor: 'red' });
+    expect(generatePatternStylesMock).toHaveBeenCalledWith(
+      createSolid(255, 0, 255)
+    );
   });
 
   it('should return fully opaque style for non-transparent solid', () => {
