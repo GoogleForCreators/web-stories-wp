@@ -54,7 +54,7 @@ function ConfirmPageLayoutDialog(props) {
     >
       <DialogBody>
         {__(
-          'Applying page layout will clear any existing changes to this page including elements or background color. Do you wish to proceed?',
+          'Applying page layout will clear all existing design elements and background colors on this page. Want to keep going?',
           'web-stories'
         )}
       </DialogBody>
