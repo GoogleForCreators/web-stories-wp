@@ -54,7 +54,8 @@ class ErrorBoundary extends Component {
 }
 
 const shouldDisableErrorBoundaries =
-  typeof WEB_STORIES_DISABLE_ERROR_BOUNDARIES !== 'undefined' && WEB_STORIES_DISABLE_ERROR_BOUNDARIES === 'true';
+  typeof WEB_STORIES_DISABLE_ERROR_BOUNDARIES !== 'undefined' &&
+  WEB_STORIES_DISABLE_ERROR_BOUNDARIES === 'true';
 export default shouldDisableErrorBoundaries
   ? ({ children }) => children
   : ErrorBoundary;
