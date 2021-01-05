@@ -288,7 +288,7 @@ function LibraryMoveable({
           />
           <Moveable
             ref={moveable}
-            className="default-moveable"
+            className="default-moveable hide-handles"
             target={targetBoxRef.current}
             edge={true}
             draggable={true}
