@@ -43,7 +43,7 @@ describe('Template Details <RelatedGrid />', () => {
   });
 
   it('should not render a grid of related templates when there are no related templates', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryByRole } = renderWithProviders(
       <LayoutProvider>
         <RelatedGrid
           pageSize={{ width: 200, height: 350 }}
@@ -56,8 +56,8 @@ describe('Template Details <RelatedGrid />', () => {
       </LayoutProvider>
     );
 
-    const gridItems = queryAllByRole('listitem');
+    const gridItems = queryByRole('listitem');
 
-    expect(gridItems).toHaveLength(0);
+    expect(gridItems).not.toBeInTheDocument();
   });
 });

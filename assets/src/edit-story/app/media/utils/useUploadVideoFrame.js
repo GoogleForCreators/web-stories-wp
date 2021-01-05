@@ -46,16 +46,14 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const processData = async (id, src) => {
     try {
       const obj = await getFirstFrameOfVideo(src);
+      obj.name = getFileName(src) + '-poster.jpeg';
       const {
         id: posterId,
         source_url: poster,
         media_details: { width: posterWidth, height: posterHeight },
-      } = await uploadFile(obj);
-      // Meta data cannot be sent as part of upload.
-      await updateMedia(posterId, {
-        meta: {
-          web_stories_is_poster: true,
-        },
+      } = await uploadFile(obj, {
+        post: id,
+        media_source: 'poster-generation',
       });
       await updateMedia(id, {
         featured_media: posterId,
@@ -96,6 +94,15 @@ function useUploadVideoFrame({ updateMediaElement }) {
       // TODO Display error message to user as video poster upload has as failed.
     }
   };
+
+  /**
+   * Helper function get the file name without the extension from a url.
+   *
+   * @param {string} url URL to file.
+   * @return {string} File name without the extension.
+   */
+  const getFileName = (url) =>
+    url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
 
   /**
    * Uploads the video's first frame as an attachment.

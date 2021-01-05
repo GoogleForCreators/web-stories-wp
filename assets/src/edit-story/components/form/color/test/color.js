@@ -51,13 +51,6 @@ describe('<Color />', () => {
     expect(opacityInput).toBeInTheDocument();
   });
 
-  it('should not render opacity input when disabled', () => {
-    const { colorPreview, opacityInput } = arrange({ hasOpacity: false });
-
-    expect(colorPreview).toBeInTheDocument();
-    expect(opacityInput).toBeNull();
-  });
-
   it('should update via `applyOpacityChange` when opacity changes', () => {
     const { opacityInput, onChange } = arrange({
       value: createSolid(255, 0, 0),

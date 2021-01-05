@@ -91,6 +91,33 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::replace_html_head
+	 * @covers ::get_html_head_markup
+	 */
+	public function test_replace_html_head_invalid() {
+		$start_tag = '<meta name="web-stories-replace-head-start " />';
+		$end_tag   = '<meta name="web-stories-replace-head-end" />';
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
+			]
+		);
+
+		$actual = $this->setup_renderer( $post );
+
+		$this->assertContains( 'FOO', $actual );
+		$this->assertContains( 'BAZ', $actual );
+		$this->assertNotContains( 'BAR', $actual );
+		$this->assertNotContains( $start_tag, $actual );
+		$this->assertNotContains( $end_tag, $actual );
+		$this->assertContains( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
+		$this->assertContains( '<meta name="amp-story-generator-version" content="', $actual );
+		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
+	}
+
+	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
@@ -135,7 +162,7 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::add_poster_images
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images() {
@@ -158,7 +185,7 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::add_poster_images
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images_overrides_existing_poster() {
@@ -180,7 +207,7 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::add_poster_images
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images_no_fallback_image_added() {
@@ -199,7 +226,7 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::add_poster_images
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 * @covers ::remove_amp_attr
 	 */
 	public function test_add_poster_images_no_poster_no_amp() {
@@ -230,7 +257,7 @@ class HTML extends WP_UnitTestCase {
 		$actual = $this->setup_renderer( $post );
 
 		$this->assertContains( 'transformed="self;v=1"', $actual );
-		$this->assertContains( 'AMP optimization could not be completed', $actual );
+		$this->assertNotContains( 'AMP optimization could not be completed', $actual );
 	}
 
 	/**

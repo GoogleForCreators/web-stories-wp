@@ -19,8 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { useFeatures } from 'flagged';
 import { useDebouncedCallback } from 'use-debounce/lib';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 /**
  * WordPress dependencies
@@ -36,6 +36,7 @@ import { useStory } from '../../app/story';
 
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { Error, Warning } from '../../../design-system/icons/alert';
+import usePrevious from '../../utils/usePrevious';
 import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
@@ -49,12 +50,12 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
   } = useAPI();
-  const { selectedElementIds, currentPage } = useStory(({ state }) => ({
+  const { selectedElementIds, currentPage, story } = useStory(({ state }) => ({
     selectedElementIds: state.selectedElementIds,
     currentPage: state.currentPage,
+    story: { ...state.story, pages: state.pages },
   }));
 
-  const { showPrePublishTab } = useFeatures();
   const { checklist, refreshChecklist } = usePrepublishChecklist();
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,
@@ -78,7 +79,7 @@ function InspectorProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
-  const tabRef = useRef(tab);
+  const prevTab = usePrevious(tab);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
@@ -92,24 +93,23 @@ function InspectorProvider({ children }) {
     []
   );
 
-  useEffect(() => {
-    tabRef.current = tab;
+  useDeepCompareEffect(() => {
     if (tab === PREPUBLISH) {
       refreshChecklistDebounced();
     }
-  }, [tab, refreshChecklistDebounced, refreshChecklist]);
+  }, [story, refreshChecklistDebounced]);
 
   useEffect(() => {
-    if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
+    if (selectedElementIds.length > 0 && prevTab === DOCUMENT) {
       setTab(DESIGN);
     }
-  }, [selectedElementIds]);
+  }, [selectedElementIds, prevTab]);
 
   useEffect(() => {
-    if (tabRef.current === DOCUMENT) {
+    if (prevTab === DOCUMENT) {
       setTab(DESIGN);
     }
-  }, [currentPage]);
+  }, [currentPage, prevTab]);
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
@@ -156,16 +156,13 @@ function InspectorProvider({ children }) {
           title: __('Document', 'web-stories'),
           Pane: DocumentInspector,
         },
-        ...(showPrePublishTab
-          ? [
-              {
-                icon: checklist.length > 0 ? prepublishAlert : undefined,
-                id: PREPUBLISH,
-                title: __('Checklist', 'web-stories'),
-                Pane: PrepublishInspector,
-              },
-            ]
-          : []),
+
+        {
+          icon: checklist.length > 0 ? prepublishAlert : undefined,
+          id: PREPUBLISH,
+          title: __('Checklist', 'web-stories'),
+          Pane: PrepublishInspector,
+        },
       ],
     },
   };

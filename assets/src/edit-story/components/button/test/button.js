@@ -42,7 +42,7 @@ describe('Button', () => {
       );
       expect(
         getByRole('button', { name: "I'm a Primary button" })
-      ).toBeDefined();
+      ).toBeInTheDocument();
     });
 
     it('should simulate a click on <Primary /> button', () => {
@@ -83,7 +83,7 @@ describe('Button', () => {
       );
       expect(
         getByRole('button', { name: "I'm a Secondary button" })
-      ).toBeDefined();
+      ).toBeInTheDocument();
     });
 
     it('should simulate a click on <Secondary /> button', () => {
@@ -124,7 +124,7 @@ describe('Button', () => {
       );
       expect(
         getByRole('button', { name: "I'm an Outline button" })
-      ).toBeDefined();
+      ).toBeInTheDocument();
     });
 
     it('should simulate a click on <Outline /> button', () => {

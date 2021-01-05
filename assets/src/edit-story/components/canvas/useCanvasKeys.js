@@ -47,9 +47,15 @@ function useCanvasKeys(ref) {
     updateSelectedElements,
     setSelectedElementsById,
     currentPage,
+    selectedElementAnimations,
   } = useStory(
     ({
-      state: { selectedElementIds, selectedElements, currentPage },
+      state: {
+        selectedElementIds,
+        selectedElements,
+        currentPage,
+        selectedElementAnimations,
+      },
       actions: {
         arrangeSelection,
         clearSelection,
@@ -67,6 +73,7 @@ function useCanvasKeys(ref) {
         deleteSelectedElements,
         updateSelectedElements,
         setSelectedElementsById,
+        selectedElementAnimations,
       };
     }
   );
@@ -194,19 +201,31 @@ function useCanvasKeys(ref) {
     if (selectedElements.length === 0) {
       return;
     }
+    const elementIdTransferMap = {};
     const clonedElements = selectedElements
       // Filter out the background element (never makes sense to clone that)
       .filter(({ isBackground }) => !isBackground)
       .map(({ id, x, y, ...rest }) => {
+        elementIdTransferMap[id] = uuidv4();
         return {
           ...getPastedCoordinates(x, y),
-          id: uuidv4(),
+          id: elementIdTransferMap[id],
           basedOn: id,
           ...rest,
         };
       });
-    addPastedElements(clonedElements);
-  }, [addPastedElements, selectedElements]);
+    const clonedAnimations = selectedElementAnimations
+      .map((animation) => ({
+        ...animation,
+        id: uuidv4(),
+        targets: animation.targets
+          .map((id) => elementIdTransferMap[id])
+          .filter((v) => v),
+      }))
+      .filter((animation) => animation.targets.length > 0);
+
+    addPastedElements(clonedElements, clonedAnimations);
+  }, [addPastedElements, selectedElements, selectedElementAnimations]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 }

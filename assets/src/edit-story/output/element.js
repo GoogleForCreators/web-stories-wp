@@ -27,10 +27,8 @@ import {
   getBorderPositionCSS,
   getBorderRadius,
   getBorderStyle,
-  isOutsideBorder,
   shouldDisplayBorder,
-} from '../components/elementBorder/utils';
-import ElementBorder from '../components/elementBorder/output';
+} from '../utils/elementBorder';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import { BACKGROUND_TEXT_MODE } from '../constants';
 
@@ -39,7 +37,6 @@ function OutputElement({ element }) {
     id,
     opacity,
     type,
-    borderRadius,
     border,
     backgroundColor,
     backgroundTextMode,
@@ -66,14 +63,13 @@ function OutputElement({ element }) {
         top: `${y}%`,
         width: `${width}%`,
         height: `${height}%`,
-        ...(isOutsideBorder(border)
+        ...(shouldDisplayBorder(element)
           ? getBorderPositionCSS({
               ...border,
               width: `${width}%`,
               height: `${height}%`,
               posTop: `${y}%`,
               posLeft: `${x}%`,
-              skipOutsideBorder: false,
             })
           : null),
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
@@ -87,9 +83,7 @@ function OutputElement({ element }) {
           box={box}
           id={'el-' + id}
           style={{
-            ...(isOutsideBorder(border)
-              ? getBorderStyle({ ...border, borderRadius, opacity })
-              : null),
+            ...(shouldDisplayBorder(element) ? getBorderStyle(element) : null),
             pointerEvents: 'initial',
             width: '100%',
             height: '100%',
@@ -97,7 +91,7 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
-            ...getBorderRadius({ border, borderRadius }),
+            ...getBorderRadius(element),
             ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
               ? bgStyles
               : null),
@@ -118,11 +112,6 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
-        {!isOutsideBorder(border) && shouldDisplayBorder(element) && (
-          <ElementBorder
-            border={{ ...element.border, borderRadius, opacity }}
-          />
-        )}
       </StoryAnimation.AMPWrapper>
     </div>
   );

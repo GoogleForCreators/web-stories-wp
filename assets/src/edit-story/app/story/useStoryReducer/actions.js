@@ -131,6 +131,9 @@ const updateStory = (dispatch) => ({ properties }) =>
 const updateAnimationState = (dispatch) => ({ animationState }) =>
   dispatch({ type: types.UPDATE_ANIMATION_STATE, payload: { animationState } });
 
+const addAnimations = (dispatch) => ({ animations }) =>
+  dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -160,6 +163,7 @@ export const exposedActions = {
   removeElementFromSelection,
   toggleElementInSelection,
   updateAnimationState,
+  addAnimations,
   updateStory,
 };
 

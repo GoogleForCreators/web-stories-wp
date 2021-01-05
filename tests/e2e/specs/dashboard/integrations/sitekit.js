@@ -15,13 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-/**
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
 /**
  * Internal dependencies
  */
@@ -47,7 +44,9 @@ describe('Site Kit integration with dashboard', () => {
       text: 'Editor Settings',
     });
 
-    await percySnapshot(page, 'Stories Dashboard with Site Kit');
+    await page.waitForResponse((response) =>
+      response.url().includes('web-stories/v1/media')
+    );
 
     await expect(page).toMatch(
       'Site Kit by Google has already enabled Google Analytics for your Web Stories'

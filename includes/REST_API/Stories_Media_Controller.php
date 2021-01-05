@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Media;
 use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_REST_Request;
@@ -61,11 +62,60 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
+		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
 		$response = parent::get_items( $request );
+		remove_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
 			$response = rest_get_server()->envelope_response( $response, false );
 		}
+		return $response;
+	}
+
+	/**
+	 * Creates a single attachment.
+	 *
+	 * Override the existing method so we can set parent id.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
+	 */
+	public function create_item( $request ) {
+		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
+		// Hence we are working around this here.
+		$parent_post = ! empty( $request['post'] ) ? (int) $request['post'] : null;
+		unset( $request['post'] );
+
+		if ( ! $parent_post ) {
+			return parent::create_item( $request );
+		}
+
+		$response = parent::create_item( $request );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$data              = $response->get_data();
+		$post_id           = $data['id'];
+		$attachment_before = $this->get_post( $post_id );
+		if ( is_wp_error( $attachment_before ) ) {
+			return $attachment_before;
+		}
+
+		$args   = [
+			'ID'          => $post_id,
+			'post_parent' => $parent_post,
+		];
+		$result = wp_update_post( $args, true );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		$data['post'] = $parent_post;
+		$response->set_data( $data );
+
 		return $response;
 	}
 
@@ -124,5 +174,38 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 */
 	protected function get_media_types() {
 		return $this->get_allowed_mime_types();
+	}
+
+	/**
+	 * Filters the current query to hide all automatically extracted poster image attachments.
+	 *
+	 * Reduces unnecessary noise in the media library.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param \WP_Query $query WP_Query instance, passed by reference.
+	 *
+	 * @return void
+	 */
+	public function filter_poster_attachments( &$query ) {
+		$post_type = (array) $query->get( 'post_type' );
+
+		if ( ! in_array( 'any', $post_type, true ) && ! in_array( 'attachment', $post_type, true ) ) {
+			return;
+		}
+
+		$tax_query = $query->get( 'tax_query' );
+		if ( is_string( $tax_query ) || empty( $tax_query ) ) {
+			$tax_query = [];
+		}
+
+		$tax_query[] = [
+			'taxonomy' => Media::STORY_MEDIA_TAXONOMY,
+			'field'    => 'slug',
+			'terms'    => [ 'poster-generation' ],
+			'operator' => 'NOT IN',
+		];
+
+		$query->set( 'tax_query', $tax_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 	}
 }

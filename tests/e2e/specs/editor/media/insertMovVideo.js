@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
 import { createNewStory, clickButton } from '../../../utils';
@@ -42,9 +37,7 @@ describe('Inserting .mov from dialog', () => {
     );
 
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
-    await percySnapshot(page, 'Avoid inserting .mov files');
 
-    const closeBtnSelector = '.media-modal-close';
-    await page.click(closeBtnSelector);
+    expect(page).toClick('.media-modal-close');
   });
 });

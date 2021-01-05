@@ -1,5 +1,9 @@
-/* Loading Indicator */
+.block-editor-block-list__block[data-type='web-stories/embed'] .wp-block {
+  height: auto;
+  overflow: hidden;
+}
 
+/* Loading Indicator */
 .wp-block-web-stories-embed.is-loading {
   display: flex;
   flex-direction: column;
@@ -30,6 +34,12 @@
   amp-story-player {
   width: inherit;
   height: inherit;
+}
+.wp-block-web-stories-embed.alignleft .components-resizable-box__container {
+  margin-right: auto;
+}
+.wp-block-web-stories-embed.alignright .components-resizable-box__container {
+  margin-left: auto;
 }
 .wp-block-web-stories-embed.aligncenter .components-resizable-box__container {
   margin: auto;

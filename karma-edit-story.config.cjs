@@ -144,6 +144,8 @@ module.exports = function (config) {
       jasmine: {
         timeoutInterval: 10000,
       },
+      useIframe: false,
+      runInParent: true,
     },
 
     coverageIstanbulReporter: {
@@ -170,11 +172,19 @@ module.exports = function (config) {
     // Allow not having any tests
     failOnEmptyTestSuite: false,
 
+    // Prevent duplicate logging to console
+    browserConsoleLogOptions: {
+      terminal: false,
+    },
+
     // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
     browserNoActivityTimeout: 100000,
 
     // Wait a bit longer for browser to reconnect.
     browserDisconnectTimeout: 10000,
+
+    // Custom context file.
+    customClientContextFile: 'karma/fixture/client_with_context.html',
   });
 };
 

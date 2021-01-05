@@ -19,7 +19,7 @@
  */
 import React from 'react';
 import { FlagsProvider } from 'flagged';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -175,7 +175,7 @@ export default class Fixture {
    *
    * @return {Promise} Yields when the editor rendering is complete.
    */
-  render() {
+  async render() {
     const root = document.querySelector('test-root');
 
     // see http://reactcommunity.org/react-modal/accessibility/
@@ -196,9 +196,14 @@ export default class Fixture {
     this._container = container;
     this._screen = screen;
 
-    // @todo: find a stable way to wait for the story to fully render. Can be
-    // implemented via `waitFor`.
-    return Promise.resolve();
+    // Check to see if Google Sans font is loaded.
+    await waitFor(async () => {
+      const font = '12px "Google Sans"';
+      await document.fonts.load(font, '');
+      if (!document.fonts.check(font, '')) {
+        throw new Error('Not ready: Google Sans font could not be loaded');
+      }
+    });
   }
 
   restore() {

@@ -95,6 +95,9 @@ export function mediaElementSizeOnPage(element) {
 /**
  * If there is only one video on the page, check it for its size on the page.
  *
+ * Note: when using this check, make sure not to check video elements individually to avoid
+ * duplicate checks.
+ *
  * @param {Page} page The page being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */

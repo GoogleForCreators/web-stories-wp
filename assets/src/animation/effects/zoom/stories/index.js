@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { StoryAnimation } from '../../../components';
-import { ANIMATION_EFFECTS } from '../../../constants';
+import { ANIMATION_EFFECTS, SCALE_DIRECTION } from '../../../constants';
 import { AMPStoryWrapper } from '../../../storybookUtils';
 
 export default {
@@ -29,15 +29,13 @@ const animations = [
   {
     targets: ['e1'],
     type: ANIMATION_EFFECTS.ZOOM,
-    zoomFrom: 0.25,
-    zoomTo: 1,
+    scaleDirection: SCALE_DIRECTION.SCALE_IN,
     duration: 4000,
   },
   {
     targets: ['e2'],
     type: ANIMATION_EFFECTS.ZOOM,
-    zoomFrom: 1,
-    zoomTo: 0.25,
+    scaleDirection: SCALE_DIRECTION.SCALE_OUT,
     duration: 4000,
   },
 ];

@@ -41,11 +41,8 @@ function getPreviewText(pattern) {
     case 'solid':
     default: {
       const {
-        color: { r, g, b, a },
+        color: { r, g, b },
       } = pattern;
-      if (a === 0) {
-        return null;
-      }
       return printRGB(r, g, b);
     }
   }

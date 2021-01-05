@@ -24,11 +24,7 @@ import { css } from 'styled-components';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { calcFontMetrics, generateFontFamily } from '../text/util';
-import {
-  getBorderStyle,
-  isOutsideBorder,
-  getBorderRadius,
-} from '../../components/elementBorder/utils';
+import { getBorderStyle, getBorderRadius } from '../../utils/elementBorder';
 
 export const elementFillContent = css`
   position: absolute;
@@ -59,12 +55,13 @@ export const elementWithBorderRadius = css`
   ${(props) => getBorderRadius(props)}
 `;
 
-export const elementWithOutsideBorder = css`
-  ${({ border, borderRadius }) =>
-    isOutsideBorder({ position: border?.position }) &&
+export const elementWithBorder = css`
+  ${({ border, borderRadius, width, height }) =>
     getBorderStyle({
-      ...border,
+      border,
       borderRadius,
+      width,
+      height,
     })}
   background-clip: padding-box;
 `;

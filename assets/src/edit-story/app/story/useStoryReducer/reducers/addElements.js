@@ -15,6 +15,11 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { exclusion } from './utils';
+
+/**
  * Add elements to current page.
  *
  * Elements are expected to a be list of element objects with at least an id property.
@@ -39,22 +44,15 @@ function addElements(state, { elements }) {
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const oldPage = state.pages[pageIndex];
-  const existingIds = oldPage.elements.map(({ id }) => id);
-  const filteredElements = elements.filter(
-    ({ id }) => !existingIds.includes(id)
-  );
-  // Use only last of multiple elements with same id by turning into an object and getting the values.
-  const deduplicatedElements = Object.values(
-    Object.fromEntries(filteredElements.map((element) => [element.id, element]))
-  );
+  const newElements = exclusion(oldPage.elements, elements);
 
-  if (deduplicatedElements.length === 0) {
+  if (newElements.length === 0) {
     return state;
   }
 
   const newPage = {
     ...oldPage,
-    elements: [...oldPage.elements, ...deduplicatedElements],
+    elements: [...oldPage.elements, ...newElements],
   };
 
   const newPages = [
@@ -63,7 +61,7 @@ function addElements(state, { elements }) {
     ...state.pages.slice(pageIndex + 1),
   ];
 
-  const newSelection = deduplicatedElements.map(({ id }) => id);
+  const newSelection = newElements.map(({ id }) => id);
 
   return {
     ...state,

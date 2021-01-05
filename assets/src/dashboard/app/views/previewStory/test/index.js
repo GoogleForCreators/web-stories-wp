@@ -94,7 +94,7 @@ describe('Preview Story within Dashboard', function () {
     const {
       getByRole,
       getAllByRole,
-      queryAllByTestId,
+      queryByTestId,
       getByText,
     } = renderPreviewInContext({
       previewMarkup: '',
@@ -107,7 +107,7 @@ describe('Preview Story within Dashboard', function () {
     expect(closeButtons).toHaveLength(2);
 
     expect(getByRole('dialog')).toBeInTheDocument();
-    expect(queryAllByTestId('preview-iframe')).toHaveLength(0);
+    expect(queryByTestId('preview-iframe')).not.toBeInTheDocument();
     expect(getByText('error message title')).toBeInTheDocument();
 
     fireEvent.click(closeButtons[0]);
