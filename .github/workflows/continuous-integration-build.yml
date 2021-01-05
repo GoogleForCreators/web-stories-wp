@@ -52,9 +52,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # TODO: Use npm ci
-          # See https://github.com/npm/cli/issues/1905
-          npm install
+          npm ci
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true

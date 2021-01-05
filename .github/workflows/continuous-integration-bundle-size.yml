@@ -20,10 +20,7 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Install dependencies
-        run: |
-          # TODO: Use npm ci
-          # See https://github.com/npm/cli/issues/1905
-          npm install
+        run: npm ci
         env:
           CI: true
 

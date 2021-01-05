@@ -34,12 +34,10 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
-        # TODO: Use npm ci
-        # See https://github.com/npm/cli/issues/1905
-        # TODO: Remove need for `npm install puppeteer`.
+      # TODO: Remove need for `npm install puppeteer`.
       - name: Install dependencies
         run: |
-          npm install
+          npm ci
           npm install puppeteer
         env:
           CI: true

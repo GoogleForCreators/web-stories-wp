@@ -30,10 +30,7 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: |
-          # TODO: Use npm ci
-          # See https://github.com/npm/cli/issues/1905
-          npm install
+        run: npm ci
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true

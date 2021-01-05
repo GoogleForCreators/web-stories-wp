@@ -70,15 +70,10 @@ jobs:
             ${{ runner.os }}-composer-
             ${{ runner.os }}-
 
-        # TODO: Use npm ci
-        # See https://github.com/npm/cli/issues/1905
-        # TODO: Remove need for `npm install puppeteer`.
+      # TODO: Remove need for `npm install puppeteer`.
       - name: Install dependencies
         run: |
-          # Ensure latest version of npm 7
-          # See https://github.com/npm/cli/issues/2147
-          npm i -g npm@7
-          npm install
+          npm ci
           npm install puppeteer
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
