@@ -37,6 +37,13 @@ class Media extends \WP_UnitTestCase {
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_SQUARE_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
+
+		$this->assertSame( 10, has_action( 'rest_api_init', [ $media, 'rest_api_init' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $media, 'wp_prepare_attachment_for_js' ] ) );
+		$this->assertSame( 10, has_action( 'delete_attachment', [ $media, 'delete_video_poster' ] ) );
+		$this->assertSame( 10, has_filter( 'ajax_query_attachments_args', [ $media, 'filter_ajax_query_attachments_args' ] ) );
+		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media, 'filter_poster_attachments' ] ) );
+		$this->assertSame( 10, has_filter( 'rest_attachment_query', [ $media, 'filter_rest_poster_attachments' ] ) );
 	}
 	/**
 	 * @covers ::rest_api_init
