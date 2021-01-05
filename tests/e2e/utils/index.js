@@ -27,4 +27,5 @@ export { default as addTextElement } from './addTextElement';
 export { default as insertStoryTitle } from './insertStoryTitle';
 export { default as setAnalyticsCode } from './setAnalyticsCode';
 export { default as clickButton } from './clickButton';
+export { default as uploadFile } from './uploadFile';
 export { default as insertBlock } from './insertBlock';

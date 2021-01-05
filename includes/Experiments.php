@@ -276,17 +276,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2092
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showAnimationTab',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable animations tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */
@@ -330,6 +319,17 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #798
+			 * Creation date: 2020-11-02
+			 */
+			[
+				'name'        => 'enableSVG',
+				'label'       => __( 'SVG upload', 'web-stories' ),
+				'description' => __( 'Enable SVG upload', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
 			 * Author: @swissspidy
 			 * Issue: #3134
 			 * Creation date: 2020-10-28
@@ -348,7 +348,7 @@ class Experiments {
 			[
 				'name'        => 'eyeDropper',
 				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**

@@ -14,12 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Determines if the current platform is a Mac or not.
- *
- * @return {boolean} True if platform is a Mac.
- */
-export function isPlatformMacOS() {
-  const { platform } = global.navigator;
-  return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
-}
+export const isNullOrUndefinedOrEmptyString = (val) =>
+  val === null || val === undefined || val === '';

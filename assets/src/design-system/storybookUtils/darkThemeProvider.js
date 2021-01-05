@@ -15,7 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+
+import { ThemeProvider } from 'styled-components';
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
-export { default as AnimationPane } from './animationPane';
-export { default as AnimationIcon } from './animationIcon';
+import { theme } from '../theme';
+
+export const DarkThemeProvider = ({ children }) => (
+  <ThemeProvider theme={theme}>{children}</ThemeProvider>
+);
+
+DarkThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
