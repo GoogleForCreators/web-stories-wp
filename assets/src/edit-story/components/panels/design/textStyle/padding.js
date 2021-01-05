@@ -71,39 +71,59 @@ function PaddingControls({
   pushUpdateForObject,
   pushUpdate,
 }) {
-  const padding = useCommonObjectValue(
-    selectedElements,
+  const displayPadding = useCommonObjectValue(
+    // Map over all elements and update display
+    // values to not include hidden padding
+    // if hidden padding is present
+    selectedElements.map((el) => ({
+      ...el,
+      padding: {
+        ...el.padding,
+        horizontal:
+          el.padding.horizontal -
+          (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+        vertical:
+          el.padding.vertical -
+          (el.padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+      },
+    })),
     'padding',
     DEFAULT_PADDING
   );
 
   // Only if true for all selected elements, will the toggle be true
   // (Note that this behavior is different from aspect lock ratio)
-  const lockPadding = padding.locked === true;
-  const hasHiddenPadding = padding.hasHiddenPadding === true;
+  const lockPadding = displayPadding.locked === true;
 
   const handleChange = useCallback(
-    (newPadding, submit = false) => {
-      pushUpdate(({ x, y, width, height }) => {
+    (updater, submit = false) => {
+      pushUpdate((el) => {
         const updates = {};
+        const newPadding = updater(el);
+        const { x, y, width, height } = el;
 
         if ('horizontal' in newPadding) {
-          updates.x = x - (newPadding.horizontal - padding.horizontal || 0);
+          updates.x = x - (newPadding.horizontal - el.padding.horizontal || 0);
           updates.width =
-            width + (newPadding.horizontal - padding.horizontal || 0) * 2;
+            width + (newPadding.horizontal - el.padding.horizontal || 0) * 2;
         }
 
         if ('vertical' in newPadding) {
-          updates.y = y - (newPadding.vertical - padding.vertical || 0);
+          updates.y = y - (newPadding.vertical - el.padding.vertical || 0);
           updates.height =
-            height + (newPadding.vertical - padding.vertical || 0) * 2;
+            height + (newPadding.vertical - el.padding.vertical || 0) * 2;
         }
 
         return updates;
       });
-      pushUpdateForObject('padding', newPadding, DEFAULT_PADDING, submit);
+      pushUpdateForObject(
+        'padding',
+        (v) => updater({ padding: v }),
+        DEFAULT_PADDING,
+        submit
+      );
     },
-    [pushUpdate, pushUpdateForObject, padding]
+    [pushUpdate, pushUpdateForObject]
   );
 
   usePresubmitHandler(
@@ -126,10 +146,15 @@ function PaddingControls({
         ),
         'aria-label': __('Horizontal & Vertical padding', 'web-stories'),
         onChange: (value) =>
-          handleChange({
-            horizontal:
-              value + (hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
-            vertical: value + (hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+          handleChange((el) => {
+            return {
+              horizontal:
+                value +
+                (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+              vertical:
+                value +
+                (el.padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+            };
           }),
 
         stretch: true,
@@ -138,9 +163,12 @@ function PaddingControls({
         suffix: _x('H', 'The Horizontal padding', 'web-stories'),
         'aria-label': __('Horizontal padding', 'web-stories'),
         onChange: (value) =>
-          handleChange({
-            horizontal:
-              value + (hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+          handleChange((el) => {
+            return {
+              horizontal:
+                value +
+                (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+            };
           }),
       };
 
@@ -148,12 +176,7 @@ function PaddingControls({
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
       <BoxedNumeric
-        value={
-          typeof padding.horizontal === 'number'
-            ? padding.horizontal -
-              (hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0)
-            : padding.horizontal
-        }
+        value={displayPadding.horizontal}
         {...firstInputProperties}
       />
       <Space />
@@ -163,20 +186,21 @@ function PaddingControls({
         value={lockPadding}
         onChange={() =>
           handleChange(
-            lockPadding
-              ? {
-                  locked: false,
-                }
-              : {
-                  locked: true,
-                  // When setting the lock, set both dimensions to the value of horizontal
-                  horizontal: padding.horizontal,
-                  vertical:
-                    padding.horizontal +
-                    (hasHiddenPadding
-                      ? HIDDEN_PADDING.vertical - HIDDEN_PADDING.horizontal
-                      : 0),
-                },
+            (el) =>
+              lockPadding
+                ? {
+                    locked: false,
+                  }
+                : {
+                    locked: true,
+                    // When setting the lock, set both dimensions to the value of horizontal
+                    horizontal: el.padding.horizontal,
+                    vertical:
+                      el.padding.horizontal +
+                      (el.padding.hasHiddenPadding
+                        ? HIDDEN_PADDING.vertical - HIDDEN_PADDING.horizontal
+                        : 0),
+                  },
             // Not fully sure why this flag is the way it is here, but keeps tests happy
             !lockPadding
           )
@@ -188,17 +212,13 @@ function PaddingControls({
           <Space />
           <BoxedNumeric
             suffix={_x('V', 'The Vertical padding', 'web-stories')}
-            value={
-              typeof padding.vertical === 'number'
-                ? padding.vertical -
-                  (hasHiddenPadding ? HIDDEN_PADDING.vertical : 0)
-                : padding.vertical
-            }
+            value={displayPadding.vertical}
             onChange={(value) =>
-              handleChange({
+              handleChange((el) => ({
                 vertical:
-                  value + (hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
-              })
+                  value +
+                  (el.padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+              }))
             }
             aria-label={__('Vertical padding', 'web-stories')}
           />
