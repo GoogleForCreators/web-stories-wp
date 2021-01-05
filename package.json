@@ -187,9 +187,9 @@
   "scripts": {
     "build": "npm-run-all build:*",
     "prebuild:js": "rm -rf assets/css/* assets/js/*",
-    "build:js": "NODE_ENV=production webpack --config webpack.config.cjs",
+    "build:js": "NODE_ENV=production node --no-deprecation node_modules/webpack/bin/webpack.js --config webpack.config.cjs",
     "predev": "rm -rf assets/css/* assets/js/*",
-    "dev": "webpack --config webpack.config.cjs --watch",
+    "dev": "node --no-deprecation node_modules/webpack/bin/webpack.js --config webpack.config.cjs --watch",
     "env:start": "./bin/local-env/start.sh",
     "env:stop": "./bin/local-env/stop.sh",
     "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",
