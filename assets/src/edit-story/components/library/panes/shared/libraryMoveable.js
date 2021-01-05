@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -63,7 +63,6 @@ function LibraryMoveable({
   const [didManuallyReset, setDidManuallyReset] = useState(false);
   const [hover, setHover] = useState(false);
   const cloneRef = useRef(null);
-  const editorRef = useRef(null);
   const targetBoxRef = useRef(null);
   const overlayRef = useRef(null);
 
@@ -226,19 +225,6 @@ function LibraryMoveable({
     resetMoveable();
     return undefined;
   };
-
-  useEffect(() => {
-    if (!editorRef.current) {
-      editorRef.current = cloneRef?.current?.closest('section');
-    }
-    if ((isDragging || active || hover) && cloneRef.current) {
-      // Hide overflow for dragging time since otherwise the clone/Moveable
-      // might be out of screen and cause unexpected scrollbars to appear.
-      editorRef.current.style.overflow = 'hidden';
-    } else if (editorRef.current) {
-      editorRef.current.style.overflow = null;
-    }
-  }, [isDragging, active, hover]);
 
   // @todo Add this back once all elements are using Moveable in the Library.
   /*const { offsetX: snappingOffsetX } = getTargetOffset();
