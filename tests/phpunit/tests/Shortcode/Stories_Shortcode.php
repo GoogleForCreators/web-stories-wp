@@ -97,24 +97,7 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 			]
 		);
 
-		$this->assertTrue( false !== strpos( $actual, '<div class="web-stories-list__story-wrapper has-poster">' ) );
-	}
-
-	/**
-	 * Test story player while using shortcode.
-	 *
-	 * @covers ::render_stories
-	 */
-	public function test_render_story_player_in_shortcode() {
-		$stories_shortcode = new Testee();
-		$actual            = $stories_shortcode->render_stories(
-			[
-				'story_poster' => 'false',
-				'view'         => 'grid',
-			]
-		);
-
-		$this->assertTrue( false !== strpos( $actual, '<amp-story-player' ) );
+		$this->assertTrue( false !== strpos( $actual, 'is-view-type-circles' ) );
 	}
 
 	/**
@@ -146,7 +129,6 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 			'show_title'                => true,
 			'show_author'               => true,
 			'show_date'                 => true,
-			'show_story_poster'         => true,
 			'show_story_archive_link'   => false,
 			'show_story_archive_label'  => true,
 			'list_view_image_alignment' => 'left',
@@ -160,7 +142,6 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 			'title'                     => 'true',
 			'author'                    => 'true',
 			'date'                      => 'true',
-			'story_poster'              => 'true',
 			'archive_link'              => 'randomtext',
 			'archive_label'             => 'true',
 			'list_view_image_alignment' => 'left',

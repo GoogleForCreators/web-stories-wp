@@ -81,31 +81,25 @@ class Carousel_Renderer extends Renderer {
 
 		parent::render( $args );
 		$container_classes = $this->get_container_classes();
-		$container_style   = $this->get_container_styles();
 
 		ob_start();
 		?>
-		<div>
-			<div
-				class="<?php echo esc_attr( $container_classes ); ?>"
-				style="<?php echo esc_attr( $container_style ); ?>"
+		<div class="<?php echo esc_attr( $container_classes ); ?>">
+			<amp-carousel
+				width="1"
+				height="1"
+				layout="intrinsic"
+				type="carousel"
+				role="region"
+				aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
 			>
-				<amp-carousel
-					width="1"
-					height="1"
-					layout="intrinsic"
-					type="carousel"
-					role="region"
-					aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
-				>
-					<?php
-					foreach ( $this->story_posts as $story ) {
-						$this->render_single_story_content();
-						$this->next();
-					}
-					?>
-				</amp-carousel>
-			</div>
+				<?php
+				foreach ( $this->story_posts as $story ) {
+					$this->render_single_story_content();
+					$this->next();
+				}
+				?>
+			</amp-carousel>
 			<?php $this->maybe_render_archive_link(); ?>
 		</div>
 		<?php
