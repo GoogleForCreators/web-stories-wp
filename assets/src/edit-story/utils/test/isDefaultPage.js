@@ -19,6 +19,7 @@
  */
 import { createPage } from '../../elements';
 import isDefaultPage from '../isDefaultPage';
+import createSolid from '../createSolid';
 
 describe('isDefaultPage', () => {
   it('should return true with base page', () => {
@@ -28,7 +29,7 @@ describe('isDefaultPage', () => {
 
   it('should return false with custom background color', () => {
     const page = createPage({
-      backgroundColor: { r: 0, g: 0, b: 0 },
+      backgroundColor: createSolid(0, 0, 0),
     });
     expect(isDefaultPage(page)).toBeFalse();
   });

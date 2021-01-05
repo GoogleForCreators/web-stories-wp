@@ -24,8 +24,12 @@ import { createPage } from '../elements';
  */
 
 const isShallowDifferent = (first, second) => {
+  if (!first || !second) {
+    return false;
+  }
+
   return (
-    Object.keys(first).length !== Object.keys(second).length &&
+    Object.keys(first).length !== Object.keys(second).length ||
     Object.keys(second).some((key) => first[key] !== second[key])
   );
 };
@@ -40,7 +44,12 @@ const isDefaultPage = (page) => {
   const defaultPage = createPage();
 
   // Check if background color is different
-  if (isShallowDifferent(page.backgroundColor, defaultPage.backgroundColor)) {
+  if (
+    isShallowDifferent(
+      page.backgroundColor?.color,
+      defaultPage.backgroundColor?.color
+    )
+  ) {
     return false;
   }
 
