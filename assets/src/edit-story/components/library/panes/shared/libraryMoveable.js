@@ -263,7 +263,7 @@ function LibraryMoveable({
     snappingOffsetX,
   });
 
-  const targetSize = previewSize ? previewSize : cloneProps;
+  const targetSize = previewSize ?? cloneProps;
   const { width, height } = targetSize;
   return (
     <>
