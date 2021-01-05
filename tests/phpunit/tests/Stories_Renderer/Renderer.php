@@ -91,7 +91,6 @@ class Renderer extends \WP_UnitTestCase_Base {
 				'show_title'        => false,
 				'show_author'       => false,
 				'show_date'         => false,
-				'show_story_poster' => true,
 				'number_of_columns' => 3,
 			]
 		);
@@ -144,32 +143,6 @@ class Renderer extends \WP_UnitTestCase_Base {
 	}
 
 	/**
-	 * @covers ::render_story_with_story_player
-	 */
-	public function test_render_story_with_story_player() {
-
-		$this->stories->method( 'get_story_attributes' )->willReturn(
-			[
-				'view_type'         => 'grid',
-				'class'             => '',
-				'show_story_poster' => false,
-			]
-		);
-
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ] );
-		$renderer->method( 'is_amp_request' )->willReturn( false );
-		$this->set_private_property( $renderer, 'story_posts', [ $this->stories->get_stories() ] );
-
-		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_story_player' );
-		$output = ob_get_clean();
-
-		$this->assertContains( '<amp-story-player style="width: 285px;height: 430px"', $output );
-		$this->assertContains( '--story-player-poster: url(www.example.com/image.jpg)', $output );
-		$this->assertContains( 'Story Title', $output );
-	}
-
-	/**
 	 * @covers ::render_story_with_poster
 	 */
 	public function test_render_story_with_poster() {
@@ -178,7 +151,6 @@ class Renderer extends \WP_UnitTestCase_Base {
 			[
 				'view_type'                 => 'list',
 				'class'                     => '',
-				'show_story_poster'         => true,
 				'list_view_image_alignment' => 'left',
 			]
 		);
@@ -227,39 +199,18 @@ class Renderer extends \WP_UnitTestCase_Base {
 	}
 
 	/**
-	 * @covers ::get_container_styles
-	 */
-	public function test_get_container_styles() {
-
-		$this->stories->method( 'get_story_attributes' )->willReturn(
-			[
-				'view_type'         => 'grid',
-				'number_of_columns' => '3',
-			]
-		);
-
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
-
-		$expected = 'grid-template-columns:repeat(3, 1fr);';
-		$output   = $this->call_private_method( $renderer, 'get_container_styles' );
-
-		$this->assertEquals( $expected, $output );
-	}
-
-	/**
 	 * @covers ::get_single_story_classes
 	 */
 	public function test_get_single_story_classes() {
 
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'show_story_poster' => true,
-				'view_type'         => 'circles',
+				'view_type' => 'circles',
 			]
 		);
 
 		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
-		$expected = 'web-stories-list__story-wrapper has-poster';
+		$expected = 'web-stories-list__story-wrapper';
 
 		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
 
@@ -274,16 +225,15 @@ class Renderer extends \WP_UnitTestCase_Base {
 		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 		$stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'view_type'         => 'circles',
-				'show_title'        => true,
-				'class'             => 'test',
-				'show_story_poster' => false,
+				'view_type'  => 'circles',
+				'show_title' => true,
+				'class'      => 'test',
 			]
 		);
 
 		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $stories );
 
-		$expected = 'web-stories-list is-view-type-circles alignnone test';
+		$expected = 'web-stories-list is-view-type-circles alignnone test has-title';
 
 		$output = $this->call_private_method( $renderer, 'get_container_classes' );
 
@@ -299,7 +249,6 @@ class Renderer extends \WP_UnitTestCase_Base {
 		$stories->method( 'get_story_attributes' )->willReturn(
 			[
 				'show_title'                => true,
-				'show_story_poster'         => false,
 				'show_stories_archive_link' => true,
 				'stories_archive_label'     => 'View All Stories',
 			]

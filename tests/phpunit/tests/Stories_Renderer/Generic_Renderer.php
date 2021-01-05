@@ -80,10 +80,9 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'class'             => '',
-				'view_type'         => 'grid',
-				'show_title'        => true,
-				'show_story_poster' => false,
+				'class'      => '',
+				'view_type'  => 'grid',
+				'show_title' => true,
 			]
 		);
 
@@ -105,7 +104,6 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 				'show_title'                => false,
 				'show_author'               => false,
 				'show_date'                 => false,
-				'show_story_poster'         => true,
 				'show_stories_archive_link' => false,
 				'stories_archive_label'     => 'View all stories',
 				'list_view_image_alignment' => 'left',
@@ -119,7 +117,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 		$output = $renderer->render();
 
 		$this->assertContains( 'web-stories-list is-view-type-grid alignnone', $output );
-		$this->assertContains( 'web-stories-list__story-wrapper has-poster', $output );
+		$this->assertContains( 'web-stories-list__story-wrapper', $output );
 		$this->assertContains( 'web-stories-list__story-placeholder', $output );
 
 	}
