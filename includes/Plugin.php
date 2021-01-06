@@ -378,8 +378,6 @@ class Plugin {
 	 * @return void
 	 */
 	public function register_widgets() {
-		if ( current_theme_supports( 'web-stories' ) ) {
-			register_widget( __NAMESPACE__ . '\Widgets\Stories' );
-		}
+		register_widget( __NAMESPACE__ . '\Widgets\Stories' );
 	}
 }

@@ -28,7 +28,7 @@
    * @param {Object}  target Event object.
    * @param {boolean} reset Flag to reset fields value.
    */
-  var react = function (target, reset = false) {
+  var reactiveWidget = function (target, reset = false) {
     var currentView = target.value;
     var widget = target.closest('.widget');
     var state = fieldState.fields[currentView];
@@ -70,7 +70,7 @@
     if (dropdowns.length) {
       for (var i = 0; i < dropdowns.length; i++) {
         dropdowns[i].onchange = function (event) {
-          react(event.target, false);
+          reactiveWidget(event.target, false);
         };
       }
     }
@@ -105,10 +105,14 @@
    * @param {Object} widget Widget jQuery object.
    */
   var widgetChange = function (event, widget) {
-    var target = $(widget).find('.view-type.stories-widget-field');
+    if (!widget[0]) {
+      return;
+    }
+
+    var target = widget[0].querySelectorAll('.view-type.stories-widget-field');
 
     if (target.length) {
-      react($(target).get(0), false);
+      reactiveWidget(target[0], false);
       bindEvent();
     }
   };

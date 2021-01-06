@@ -302,6 +302,19 @@ const activationNotice = {
   },
 };
 
+const widgetScript = {
+  ...sharedConfig,
+  entry: {
+    'stories-widget': './assets/src/widget/stories-widget.js',
+  },
+  plugins: [
+    new WebpackBar({
+      name: 'Stories Widget Script',
+      color: '#adf3a8',
+    }),
+  ],
+};
+
 module.exports = [
   storiesEditor,
   dashboard,
@@ -309,4 +322,5 @@ module.exports = [
   activationNotice,
   webStoriesBlock,
   webStoriesScripts,
+  widgetScript,
 ];
