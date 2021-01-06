@@ -99,19 +99,20 @@ function PaddingControls({
     (updater, submit = false) => {
       pushUpdate((el) => {
         const updates = {};
-        const newPadding = updater(el);
         const { x, y, width, height } = el;
+        const newPadding = updater(el);
 
         if ('horizontal' in newPadding) {
-          updates.x = x - (newPadding.horizontal - el.padding.horizontal || 0);
+          updates.x =
+            x - (newPadding.horizontal - (el.padding.horizontal || 0));
           updates.width =
-            width + (newPadding.horizontal - el.padding.horizontal || 0) * 2;
+            width + (newPadding.horizontal - (el.padding.horizontal || 0)) * 2;
         }
 
         if ('vertical' in newPadding) {
-          updates.y = y - (newPadding.vertical - el.padding.vertical || 0);
+          updates.y = y - (newPadding.vertical - (el.padding.vertical || 0));
           updates.height =
-            height + (newPadding.vertical - el.padding.vertical || 0) * 2;
+            height + (newPadding.vertical - (el.padding.vertical || 0)) * 2;
         }
 
         return updates;
@@ -163,13 +164,11 @@ function PaddingControls({
         suffix: _x('H', 'The Horizontal padding', 'web-stories'),
         'aria-label': __('Horizontal padding', 'web-stories'),
         onChange: (value) =>
-          handleChange((el) => {
-            return {
-              horizontal:
-                value +
-                (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
-            };
-          }),
+          handleChange((el) => ({
+            horizontal:
+              value +
+              (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+          })),
       };
 
   return (
