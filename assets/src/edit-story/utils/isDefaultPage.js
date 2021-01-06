@@ -41,6 +41,11 @@ const isShallowDifferent = (first, second) => {
  * @return {boolean} If the page is equivalent to the default page.
  */
 const isDefaultPage = (page) => {
+  // Check if page has more than just the single default background element
+  if (page.elements.length > 1) {
+    return false;
+  }
+
   const defaultPage = createPage();
 
   // Check if background color is different
@@ -56,12 +61,6 @@ const isDefaultPage = (page) => {
   // Check if background element is not default
   const backgroundElement = page.elements.find((e) => e.isBackground);
   if (backgroundElement && !backgroundElement.isDefaultBackground) {
-    return false;
-  }
-
-  // Check if page has more than just the default background element
-  const nonBackgroundElement = page.elements.find((e) => !e.isBackground);
-  if (nonBackgroundElement) {
     return false;
   }
 
