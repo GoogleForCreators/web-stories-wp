@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE, HIDDEN_PADDING } from '../../../../constants';
+import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { FillNone, FillFilled, FillHighlighted } from '../../../../icons/';
 import { Color, Label, Row, ToggleButton } from '../../../form';
 import { useKeyDownEffect } from '../../../keyboard';
@@ -39,6 +39,7 @@ import {
   getColorPickerActions,
 } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
+import { applyHiddenPadding, removeHiddenPadding } from './utils';
 
 const FillRow = styled(Row)`
   align-items: flex-start;
@@ -105,34 +106,8 @@ function ColorControls({ selectedElements, pushUpdate }) {
             BACKGROUND_TEXT_MODE.FILL,
             BACKGROUND_TEXT_MODE.HIGHLIGHT,
           ].includes(mode)
-            ? {
-                ...(element.padding ?? {}),
-                hasHiddenPadding: true,
-                horizontal:
-                  (element.padding.horizontal || 0) +
-                  (element.padding.hasHiddenPadding
-                    ? 0
-                    : HIDDEN_PADDING.horizontal),
-                vertical:
-                  (element.padding.vertical || 0) +
-                  (element.padding.hasHiddenPadding
-                    ? 0
-                    : HIDDEN_PADDING.vertical),
-              }
-            : {
-                ...(element.padding ?? {}),
-                hasHiddenPadding: false,
-                horizontal:
-                  (element.padding.horizontal || 0) -
-                  (element.padding.hasHiddenPadding
-                    ? HIDDEN_PADDING.horizontal
-                    : 0),
-                vertical:
-                  (element.padding.vertical || 0) -
-                  (element.padding.hasHiddenPadding
-                    ? HIDDEN_PADDING.vertical
-                    : 0),
-              },
+            ? applyHiddenPadding(element)
+            : removeHiddenPadding(element),
         }),
         true
       );

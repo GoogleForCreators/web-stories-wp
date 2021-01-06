@@ -29,7 +29,6 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { HIDDEN_PADDING } from '../../../../constants';
 import clamp from '../../../../utils/clamp';
 import { Lock, Unlock } from '../../../../icons';
 import {
@@ -40,6 +39,7 @@ import {
   usePresubmitHandler,
 } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
+import { getHiddenPadding, removeHiddenPadding } from './utils';
 
 const DEFAULT_PADDING = {
   horizontal: 0,
@@ -77,15 +77,7 @@ function PaddingControls({
     // if hidden padding is present
     selectedElements.map((el) => ({
       ...el,
-      padding: {
-        ...el.padding,
-        horizontal:
-          el.padding.horizontal -
-          (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
-        vertical:
-          el.padding.vertical -
-          (el.padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
-      },
+      padding: removeHiddenPadding(el),
     })),
     'padding',
     DEFAULT_PADDING
@@ -149,12 +141,8 @@ function PaddingControls({
         onChange: (value) =>
           handleChange((el) => {
             return {
-              horizontal:
-                value +
-                (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
-              vertical:
-                value +
-                (el.padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+              horizontal: value + getHiddenPadding(el, 'horizontal'),
+              vertical: value + getHiddenPadding(el, 'vertical'),
             };
           }),
 
@@ -165,9 +153,7 @@ function PaddingControls({
         'aria-label': __('Horizontal padding', 'web-stories'),
         onChange: (value) =>
           handleChange((el) => ({
-            horizontal:
-              value +
-              (el.padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+            horizontal: value + getHiddenPadding(el, 'horizontal'),
           })),
       };
 
@@ -196,9 +182,8 @@ function PaddingControls({
                     horizontal: el.padding.horizontal,
                     vertical:
                       el.padding.horizontal +
-                      (el.padding.hasHiddenPadding
-                        ? HIDDEN_PADDING.vertical - HIDDEN_PADDING.horizontal
-                        : 0),
+                      getHiddenPadding(el, 'vertical') -
+                      getHiddenPadding(el, 'horizontal'),
                   },
             // Not fully sure why this flag is the way it is here, but keeps tests happy
             !lockPadding
@@ -214,9 +199,7 @@ function PaddingControls({
             value={displayPadding.vertical}
             onChange={(value) =>
               handleChange((el) => ({
-                vertical:
-                  value +
-                  (el.padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
+                vertical: value + getHiddenPadding(el, 'vertical'),
               }))
             }
             aria-label={__('Vertical padding', 'web-stories')}
