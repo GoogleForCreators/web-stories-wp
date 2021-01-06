@@ -25,6 +25,8 @@ import { useCallback } from 'react';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../../app/story';
+import { DANGER_ZONE_HEIGHT, FULLBLEED_HEIGHT } from '../../units/dimensions';
+import { PAGE_WIDTH } from '../../constants';
 import useInsertElement from './useInsertElement';
 
 function useInsertTextSet() {
@@ -60,40 +62,32 @@ function useInsertTextSet() {
   );
 
   const insertTextSetByOffset = useCallback(
-    (elements, { offsetX, offsetY }, boundary) => {
+    (elements, { offsetX, offsetY }) => {
       if (!elements.length) {
         return;
       }
 
-      let adjustedOffsetX = offsetX;
-      let adjustedOffsetY = offsetY;
-
-      if (boundary) {
-        const { width, height } = boundary;
-        const { textSetWidth, textSetHeight } = elements[0];
-
-        if (offsetX < 0) {
-          adjustedOffsetX = 0;
-        } else if (offsetX > width) {
-          adjustedOffsetX = width - textSetWidth;
-        } else if (offsetX + textSetWidth > width) {
-          adjustedOffsetX -= offsetX + textSetWidth - width;
-        }
-
-        if (offsetY < 0) {
-          adjustedOffsetY = 0;
-        } else if (offsetY > height) {
-          adjustedOffsetY = height - textSetHeight;
-        } else if (offsetY + textSetHeight > height) {
-          adjustedOffsetY -= offsetY + textSetHeight - height;
-        }
-      }
-
-      const positionedTextSet = elements.map((element) => ({
-        ...element,
-        x: element.normalizedOffsetX + adjustedOffsetX,
-        y: element.normalizedOffsetY + adjustedOffsetY,
-      }));
+      const positionedTextSet = elements
+        .map((element) => {
+          // Skip adding any elements that are outside of page.
+          const x = element.normalizedOffsetX + offsetX;
+          const y = element.normalizedOffsetY + offsetY;
+          const { width, height } = element;
+          if (
+            x > PAGE_WIDTH ||
+            x + width < 0 ||
+            y > FULLBLEED_HEIGHT ||
+            y + height < -DANGER_ZONE_HEIGHT
+          ) {
+            return null;
+          }
+          return {
+            ...element,
+            x,
+            y,
+          };
+        })
+        .filter((el) => el);
 
       insertTextSet(positionedTextSet);
     },
