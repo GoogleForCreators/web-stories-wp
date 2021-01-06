@@ -233,7 +233,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 
 		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $stories );
 
-		$expected = 'web-stories-list is-view-type-circles alignnone test has-title';
+		$expected = 'web-stories-list alignnone test is-view-type-circles has-title';
 
 		$output = $this->call_private_method( $renderer, 'get_container_classes' );
 
