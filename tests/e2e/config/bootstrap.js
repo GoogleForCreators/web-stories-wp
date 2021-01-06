@@ -19,7 +19,6 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { setDefaultOptions } from 'expect-puppeteer';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 
 /**

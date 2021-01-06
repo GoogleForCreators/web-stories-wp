@@ -27,7 +27,6 @@ import {
   toBeValidAMP,
   toBeValidAMPStoryElement,
   toBeValidAMPStoryPage,
-  //eslint-disable-next-line import/no-extraneous-dependencies
 } from '@web-stories-wp/jest-amp';
 
 expect.extend({
