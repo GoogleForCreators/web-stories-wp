@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
-import useDeepCompareEffect from 'use-deep-compare-effect';
 
 /**
  * WordPress dependencies
@@ -36,7 +35,6 @@ import { useStory } from '../../app/story';
 
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { Error, Warning } from '../../../design-system/icons/alert';
-import usePrevious from '../../utils/usePrevious';
 import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
@@ -50,10 +48,9 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
   } = useAPI();
-  const { selectedElementIds, currentPage, story } = useStory(({ state }) => ({
+  const { selectedElementIds, currentPage } = useStory(({ state }) => ({
     selectedElementIds: state.selectedElementIds,
     currentPage: state.currentPage,
-    story: { ...state.story, pages: state.pages },
   }));
 
   const { checklist, refreshChecklist } = usePrepublishChecklist();
@@ -79,7 +76,7 @@ function InspectorProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
-  const prevTab = usePrevious(tab);
+  const tabRef = useRef(tab);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
@@ -93,23 +90,24 @@ function InspectorProvider({ children }) {
     []
   );
 
-  useDeepCompareEffect(() => {
+  useEffect(() => {
+    tabRef.current = tab;
     if (tab === PREPUBLISH) {
       refreshChecklistDebounced();
     }
-  }, [story, refreshChecklistDebounced]);
+  }, [tab, refreshChecklistDebounced, refreshChecklist]);
 
   useEffect(() => {
-    if (selectedElementIds.length > 0 && prevTab === DOCUMENT) {
+    if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
       setTab(DESIGN);
     }
-  }, [selectedElementIds, prevTab]);
+  }, [selectedElementIds]);
 
   useEffect(() => {
-    if (prevTab === DOCUMENT) {
+    if (tabRef.current === DOCUMENT) {
       setTab(DESIGN);
     }
-  }, [currentPage, prevTab]);
+  }, [currentPage]);
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {

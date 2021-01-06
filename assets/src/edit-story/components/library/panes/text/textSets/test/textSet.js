@@ -207,7 +207,7 @@ function setup(elements) {
     },
   };
 
-  const { queryAllByRole, container } = renderWithTheme(
+  const { queryAllByRole, getByRole, container } = renderWithTheme(
     <TransformContext.Provider value={transformValue}>
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
@@ -232,7 +232,7 @@ function setup(elements) {
       </ConfigContext.Provider>
     </TransformContext.Provider>
   );
-  return { queryAllByRole, container };
+  return { getByRole, queryAllByRole, container };
 }
 
 describe('TextSets', () => {
@@ -258,14 +258,12 @@ describe('TextSets', () => {
 
   it('should allow inserting a text set', () => {
     insertTextSet.mockImplementation((elements) => elements);
-    const { queryAllByRole } = setup(SET);
-    const sets = queryAllByRole('listitem');
-
-    // Disable reason: it suggests to use toBeInDocument but here we really need the length instead.
-    // eslint-disable-next-line jest-dom/prefer-in-document
-    expect(sets).toHaveLength(1);
+    const { getByRole } = setup(SET);
+    // There has to be exactly one set, thus we're using getByRole.
+    const set = getByRole('listitem');
+    expect(set).toBeInTheDocument();
     // Last child is always the moveable targetBox.
-    fireEvent.click(sets[0].lastChild);
+    fireEvent.click(set.lastChild);
 
     expect(insertTextSet).toHaveBeenCalledTimes(1);
 
