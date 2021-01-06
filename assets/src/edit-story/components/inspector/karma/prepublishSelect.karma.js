@@ -25,6 +25,8 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { MESSAGES } from '../../../app/prepublish/constants';
 import { useStory } from '../../../app';
+import { useInsertElement } from '../../../components/canvas';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Pre-publish checklist select offending elements onClick', () => {
   let fixture;
@@ -38,47 +40,79 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     fixture.restore();
   });
 
+  async function openPrepublishPanel() {
+    const { checklistTab } = fixture.editor.inspector;
+    await fixture.events.mouse.clickOn(checklistTab);
+    await waitFor(() => fixture.editor.inspector.checklistPanel);
+  }
+
   describe('Prepublish checklist tab', () => {
-    it('should select the offending elements', async () => {
-      const { checklistTab } = fixture.editor.inspector;
+    it('should select the offending image elements', async () => {
+      await fixture.events.click(fixture.editor.library.media.item(0));
 
-      await fixture.editor.library.textTab.click();
+      let storyContext = await fixture.renderHook(() => useStory());
+      const [elementId] = storyContext.state.selectedElementIds;
 
-      await waitFor(() =>
-        expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+      const canvas = fixture.querySelector('[data-testid="fullbleed"]');
+      await fixture.events.mouse.clickOn(canvas);
+      storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
+      await openPrepublishPanel();
+      await fixture.events.mouse.clickOn(
+        fixture.editor.inspector.prepublishPanel.recommended
+      );
+      await fixture.events.sleep(500);
+
+      const tooSmallOnPage = fixture.screen.getByText(
+        MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.MAIN_TEXT
       );
 
+      await openPrepublishPanel();
+      await fixture.events.mouse.clickOn(tooSmallOnPage);
+      await fixture.events.sleep(500);
+      storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds.length).toEqual(1);
+      expect(storyContext.state.selectedElementIds[0]).toEqual(elementId);
+    });
+
+    it('should select the offending text elements', async () => {
       // four paragraphs will cause the "too much text on page" error
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Paragraph')
-      );
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Paragraph')
-      );
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Paragraph')
-      );
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Paragraph')
-      );
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const doInsert = () =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          fontSize: 10,
+          content:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+          x: 40,
+          y: 40,
+          width: 250,
+        });
 
-      // Click prepublish tab
-      await fixture.events.mouse.clickOn(checklistTab);
-      await waitFor(() => fixture.editor.inspector.checklistTab);
-      expect(checklistTab).toHaveFocus();
+      const element1 = await fixture.act(doInsert);
+      const element2 = await fixture.act(doInsert);
+      const element3 = await fixture.act(doInsert);
+      const element4 = await fixture.act(doInsert);
+
+      await openPrepublishPanel();
+
       await fixture.events.mouse.clickOn(
         fixture.editor.inspector.checklistPanel.recommended
       );
       await fixture.events.sleep(500);
+
+      let storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds.length).toEqual(1);
       const tooMuchTextOnPage = fixture.screen.getByText(
         MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT
       );
-      let storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElementIds.length).toEqual(1);
       await fixture.events.mouse.clickOn(tooMuchTextOnPage);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(4);
+      expect(
+        [element1, element2, element3, element4].map(({ id }) => id)
+      ).toEqual(storyContext.state.selectedElementIds);
     });
   });
 });
