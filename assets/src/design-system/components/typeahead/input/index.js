@@ -100,11 +100,14 @@ const TypeaheadInput = (
 export default forwardRef(TypeaheadInput);
 
 TypeaheadInput.propTypes = {
-  ariaLabel: PropTypes.string.isRequired,
+  ariaInputLabel: PropTypes.string.isRequired,
+  ariaClearLabel: PropTypes.string.isRequired,
+  clearId: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   id: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
   handleClearInputValue: PropTypes.func.isRequired,
   inputValue: PropTypes.string,
+  isFlexibleValue: PropTypes.bool,
   isOpen: PropTypes.bool,
 };

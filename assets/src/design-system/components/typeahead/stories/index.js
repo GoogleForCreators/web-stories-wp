@@ -33,7 +33,7 @@ import {
   basicDropDownOptions,
   nestedDropDownOptions,
   reallyLongOptions,
-} from './sampleData';
+} from '../../../storybookUtils/sampleData';
 
 export default {
   title: 'DesignSystem/Components/Typeahead',

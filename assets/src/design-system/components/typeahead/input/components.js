@@ -90,6 +90,10 @@ export const Input = styled.input(
     }
   `
 );
+Input.propTypes = {
+  hasError: PropTypes.bool,
+  isOpen: PropTypes.bool,
+};
 
 export const IconContainer = styled.button`
   position: absolute;
@@ -119,6 +123,9 @@ export const IconContainer = styled.button`
       color: ${theme.colors.fg.disable};
     `}
 `;
+IconContainer.propTypes = {
+  disabled: PropTypes.bool,
+};
 
 export const StyledClear = styled(Clear)`
   width: 8px;
@@ -137,3 +144,6 @@ export const StyledChevron = styled(Chevron)`
       transform: rotate(180deg);
     `}
 `;
+StyledChevron.propTypes = {
+  isOpen: PropTypes.bool,
+};
