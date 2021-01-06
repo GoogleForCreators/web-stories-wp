@@ -9,6 +9,6 @@
     "@ampproject/toolbox-optimizer": "^2.6.0",
     "amphtml-validator": "^1.0.33",
     "prop-types": "^15.7.2",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.14.0"
   }
 }
