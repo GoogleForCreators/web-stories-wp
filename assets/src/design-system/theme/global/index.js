@@ -13,21 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { FOCUS_VISIBLE_SELECTOR } from '../global';
-
-export const focusableOutlineCSS = (accent) => css`
-  border: solid 2px transparent;
-
-  &.${FOCUS_VISIBLE_SELECTOR} {
-    outline: none;
-    border: solid 2px ${accent};
-  }
-`;
+export {
+  OverrideFocusOutline,
+  FOCUS_VISIBLE_SELECTOR,
+} from './overrideFocusOutline';
