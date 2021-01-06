@@ -276,7 +276,7 @@ class Stories extends WP_Widget {
 	public function stories_widget_scripts() {
 		wp_enqueue_script(
 			'web-stories-widget',
-			trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'includes/assets/stories-widget.js',
+			trailingslashit( WEBSTORIES_ASSETS_URL ) . 'js/stories-widget.js',
 			[ 'jquery' ],
 			WEBSTORIES_VERSION,
 			true
