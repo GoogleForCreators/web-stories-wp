@@ -26,8 +26,12 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { CardPreviewContainer } from '../../../../dashboard/components';
+import {
+  CardPreviewContainer,
+  CardTitle,
+} from '../../../../dashboard/components';
 import { StoryPropType, PageSizePropType } from '../../../../dashboard/types';
+import { getRelativeDisplayDate } from '../../../../date';
 
 const StoryPreviewCover = styled.div(
   ({ coverImage, pageSize, theme }) => `
@@ -44,17 +48,36 @@ const StoryPreviewCover = styled.div(
 `
 );
 
+const DetailRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 function StoryPreview({ story, pageSize }) {
   return story.originalStoryData.featured_media_url ? (
-    <StoryPreviewCover
-      ariaLabel={sprintf(
-        /* translators: %s: story title. */
-        __('preview of %s', 'web-stories'),
-        story.title
-      )}
-      coverImage={story.originalStoryData.featured_media_url}
-      pageSize={pageSize}
-    />
+    <>
+      <StoryPreviewCover
+        ariaLabel={sprintf(
+          /* translators: %s: story title. */
+          __('preview of %s', 'web-stories'),
+          story.title
+        )}
+        coverImage={story.originalStoryData.featured_media_url}
+        pageSize={pageSize}
+      />
+      <DetailRow>
+        <CardTitle
+          tabIndex={-1}
+          title={story.title}
+          titleLink={story.editStoryLink}
+          status={story?.status}
+          id={story.id}
+          secondaryTitle={story.author}
+          displayDate={getRelativeDisplayDate(story.created)}
+        />
+      </DetailRow>
+    </>
   ) : (
     <CardPreviewContainer
       ariaLabel={sprintf(
