@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -36,69 +36,61 @@ describe('Typeahead <Typeahead />', () => {
 
   jest.useFakeTimers();
 
-  it('should render a closed <Typeahead /> menu with a select button on default', () => {
+  it('should render a closed <Typeahead /> menu with an input field on default', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
       <Typeahead options={basicDropDownOptions} ariaInputLabel={'label'} />
     );
 
-    const select = getByRole('button');
-    expect(select).toBeInTheDocument();
+    const input = getByRole('combobox');
+    expect(input).toBeInTheDocument();
 
     const menu = queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
   });
 
   it('should show placeholder value when no selected value is found', () => {
-    const { getByText } = renderWithProviders(
+    const { getByPlaceholderText } = renderWithProviders(
       <Typeahead
         options={basicDropDownOptions}
         placeholder={'select a value'}
       />
     );
 
-    const placeholder = getByText('select a value');
+    const placeholder = getByPlaceholderText('select a value');
     expect(placeholder).toBeInTheDocument();
   });
 
-  it("should show selectedValue's associated label when selectedValue is present", () => {
-    const { getByText } = renderWithProviders(
+  it("should show selectedValue's associated label in input when selectedValue is present", () => {
+    const container = renderWithProviders(
       <Typeahead
         options={basicDropDownOptions}
         placeholder={'select a value'}
-        ariaInputLabel={'label'}
+        ariaInputLabel={'my aria label'}
         selectedValue={basicDropDownOptions[2].value}
       />
     );
 
-    const select = getByText(basicDropDownOptions[2].label);
-    expect(select).toBeInTheDocument();
-  });
-
-  it("should show placeholder when selectedValue's associated label cannot be found", () => {
-    const { getByText } = renderWithProviders(
-      <Typeahead
-        options={basicDropDownOptions}
-        placeholder={'select a value'}
-        ariaInputLabel={'label'}
-        selectedValue={'value that is not found in items'}
-      />
-    );
-
-    const input = getByText('select a value');
+    const input = container.getByDisplayValue(basicDropDownOptions[2].label);
     expect(input).toBeInTheDocument();
   });
 
-  it('should show inputValue as selectedValue regardless of if selectedValue is found in options', () => {
-    const { getByText } = renderWithProviders(
+  it('should show inputValue as selectedValue regardless of if selectedValue is found in options', async () => {
+    const container = renderWithProviders(
       <Typeahead
         options={basicDropDownOptions}
         placeholder={'select a value'}
         ariaInputLabel={'my label'}
-        selectedValue={'my bogus value'}
       />
     );
 
-    const input = getByText('my bogus value');
+    const input = container.getByPlaceholderText('select a value');
+
+    fireEvent.change(input, { target: { value: 'bruce wayne' } });
+
+    await waitFor(() => {
+      expect(container.getByDisplayValue('bruce wayne')).toBeInTheDocument();
+    });
+
     expect(input).toBeInTheDocument();
   });
 
@@ -111,7 +103,7 @@ describe('Typeahead <Typeahead />', () => {
       />
     );
 
-    const input = getByRole('input');
+    const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
 
     fireEvent.click(input);
@@ -137,7 +129,7 @@ describe('Typeahead <Typeahead />', () => {
       />
     );
 
-    const input = getByRole('input');
+    const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
     fireEvent.click(input);
 
@@ -161,7 +153,7 @@ describe('Typeahead <Typeahead />', () => {
       />
     );
 
-    const input = getByRole('input');
+    const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
 
     fireEvent.click(input);
@@ -183,7 +175,7 @@ describe('Typeahead <Typeahead />', () => {
     );
 
     // Fire click event
-    const input = getByRole('input');
+    const input = getByRole('combobox');
     fireEvent.click(input);
 
     const menu = getByRole('listbox');
@@ -211,7 +203,7 @@ describe('Typeahead <Typeahead />', () => {
         selectedValue={basicDropDownOptions[1].value}
       />
     );
-    const input = wrapper.getByRole('input');
+    const input = wrapper.getByRole('combobox');
     fireEvent.click(input);
 
     const menu = wrapper.getByRole('listbox');

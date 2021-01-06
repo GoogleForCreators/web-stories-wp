@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -30,13 +30,13 @@ import {
 import useTypeahead from '../useTypeahead';
 
 describe('useTypeahead()', function () {
-  it('should return falsy for activeOption when no selectedValue is present', function () {
+  it('should return falsy for activeOption when no selectedValue is present', () => {
     const { result } = renderHook(() => useTypeahead({ options: [] }));
 
     expect(result.current.activeOption).toBeFalsy();
   });
 
-  it('should return object from options containing selectedValue as active option', function () {
+  it('should return object from options containing selectedValue as active option', () => {
     const { result } = renderHook(() =>
       useTypeahead({
         selectedValue: basicDropDownOptions[2].value,
@@ -47,19 +47,23 @@ describe('useTypeahead()', function () {
     expect(result.current.activeOption).toMatchObject(basicDropDownOptions[2]);
   });
 
-  it('should return falsy for activeOption when selectedValue is not present in options', function () {
+  it('should return null for activeOption when selectedValue is empty', () => {
     const { result } = renderHook(() =>
       useTypeahead({
-        selectedValue: 'bogus value',
+        selectedValue: '',
         options: basicDropDownOptions,
       })
     );
 
-    expect(result.current.activeOption).toBeFalsy();
+    act(() => {
+      result.current.inputValue.set('bogus value');
+    });
+
+    expect(result.current.activeOption).toBeNull();
     expect(result.current.inputValue.value).toBe('bogus value');
   });
 
-  it('should return an empty array when no options are present', function () {
+  it('should return an empty array when no options are present', () => {
     const { result } = renderHook(() =>
       useTypeahead({ selectedValue: null, options: [] })
     );

@@ -87,6 +87,10 @@ export const Typeahead = ({
   selectedValue = '',
   ...rest
 }) => {
+  const listId = useMemo(() => `list-${uuidv4()}`, []);
+  const inputId = useMemo(() => `select-button-${uuidv4()}`, []);
+  const clearId = useMemo(() => `clear-button-${uuidv4()}`, []);
+
   const inputRef = useRef();
   const menuRef = useRef();
 
@@ -172,7 +176,7 @@ export const Typeahead = ({
   const handleDismissMenu = useCallback(
     (event) => {
       // don't dismiss menu if clicking on clear button while menu is open
-      if (event?.srcElement.id === clearId) {
+      if (clearId && event?.srcElement.id === clearId) {
         return;
       }
       isOpen.set(false);
@@ -195,10 +199,6 @@ export const Typeahead = ({
   const handleReturnToParent = useCallback(() => {
     inputRef?.current?.focus();
   }, []);
-
-  const listId = useMemo(() => `list-${uuidv4()}`, []);
-  const inputId = useMemo(() => `select-button-${uuidv4()}`, []);
-  const clearId = useMemo(() => `clear-button-${uuidv4()}`, []);
 
   return (
     <DropDownContainer>
