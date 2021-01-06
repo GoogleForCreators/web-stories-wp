@@ -43,7 +43,7 @@ const Input = styled.input`
   background: none !important;
   border: none !important;
   text-align: start;
-  min-width: 50%;
+  min-width: 60%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
