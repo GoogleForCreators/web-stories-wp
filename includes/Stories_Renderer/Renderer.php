@@ -342,25 +342,36 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
+	protected function get_view_classes() {
+		$view_classes   = [];
+		$view_classes[] = ( ! empty( $this->attributes['view_type'] ) ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
+
+		if ( $this->is_view_type( 'grid' ) && ! empty( $this->attributes['number_of_columns'] ) ) {
+			$view_classes[] = sprintf( 'columns-%1$d', $this->attributes['number_of_columns'] );
+		}
+
+		if ( ! $this->is_view_type( 'circles' ) && ! empty( $this->attributes['has_square_corners'] ) ) {
+			$view_classes[] = 'is-style-squared';
+		}
+
+		if ( $this->is_view_type( 'circles' ) && ! empty( $this->attributes['show_title'] ) ) {
+			$view_classes[] = 'has-title';
+		}
+
+		return implode( ' ', $view_classes );
+	}
+
+	/**
+	 * Gets the classes for renderer container.
+	 *
+	 * @return string
+	 */
 	protected function get_container_classes() {
 
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
-		$container_classes[] = ( ! empty( $this->attributes['view_type'] ) ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
 		$container_classes[] = ( ! empty( $this->attributes['align'] ) ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
 		$container_classes[] = ( ! empty( $this->attributes['class'] ) ) ? $this->attributes['class'] : '';
-
-		if ( $this->is_view_type( 'grid' ) ) {
-			$container_classes[] = ( ! empty( $this->attributes['number_of_columns'] ) ) ? sprintf( 'columns-%1$s', $this->attributes['number_of_columns'] ) : 'columns-2';
-		}
-
-		if ( ! $this->is_view_type( 'circles' ) ) {
-			$container_classes[] = ( ! empty( $this->attributes['has_square_corners'] ) ) ? 'is-style-squared' : 'is-style-default';
-		}
-
-		if ( $this->is_view_type( 'circles' ) ) {
-			$container_classes[] = ( ! empty( $this->attributes['show_title'] ) ) ? 'has-title' : '';
-		}
 
 		if ( ! empty( $this->attributes['show_stories_archive_link'] ) ) {
 			$container_classes[] = 'has-archive-link';
@@ -368,7 +379,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		$container_classes = array_filter( $container_classes );
 
-		return implode( ' ', $container_classes );
+		$view_type_classes = $this->get_view_classes();
+
+		return sprintf( '%1$s %2$s', implode( ' ', $container_classes ), $view_type_classes );
 	}
 
 	/**
