@@ -17,9 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH } from '../../../constants';
 import { getElementProperties } from '../useInsertElement';
-import { FULLBLEED_HEIGHT } from '../../../units/dimensions';
 
 const BASIC_SHAPE = {
   id: '8e06a649-ad1f-455d-a76b-ad012aff08ad',
