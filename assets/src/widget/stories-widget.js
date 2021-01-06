@@ -19,7 +19,7 @@
    *
    * @type {Object}
    */
-  var fieldState = window.webStoriesData || {};
+  const fieldState = window.webStoriesData || {};
 
   /**
    * Closure for making inputs reactive
@@ -28,7 +28,7 @@
    * @param {Object}  target Event object.
    * @param {boolean} reset Flag to reset fields value.
    */
-  var reactiveWidget = function (target, reset = false) {
+  const reactiveWidget = function (target, reset = false) {
     var currentView = target.value;
     var widget = target.closest('.widget');
     var state = fieldState.fields[currentView];
@@ -57,14 +57,14 @@
    *
    * @return {HTMLCollection} Array of elements.
    */
-  var viewSelectors = function () {
+  const viewSelectors = function () {
     return document.getElementsByClassName('view-type stories-widget-field');
   };
 
   /**
    * Bind event on view type selection change.
    */
-  var bindEvent = function () {
+  const bindEvent = function () {
     var dropdowns = viewSelectors();
 
     if (dropdowns.length) {
@@ -79,7 +79,7 @@
   /**
    * Fire event manually once.
    */
-  var fireEvent = function () {
+  const fireEvent = function () {
     var dropdowns = viewSelectors();
     var evt = document.createEvent('HTMLEvents');
     evt.initEvent('change', false, true);
@@ -104,7 +104,7 @@
    * @param {Object} event Event object.
    * @param {Object} widget Widget jQuery object.
    */
-  var widgetChange = function (event, widget) {
+  const widgetChange = function (event, widget) {
     if (!widget[0]) {
       return;
     }
