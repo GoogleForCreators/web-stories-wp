@@ -68,7 +68,7 @@ const PanelTitle = styled.span`
     error ? theme.colors.fg.negative : theme.colors.fg.warning};
 `;
 
-const Row = styled.div`
+const Row = styled.div.attrs({ role: 'listitem' })`
   &:not(:first-child) {
     padding-top: 9px;
   }

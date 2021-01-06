@@ -20,10 +20,15 @@
 import { Container } from './container';
 
 /**
- * The editor's checklist.
+ * The editor's canvas. Includes: display, frames, editor layers, carousel,
+ * navigation buttons, page menu.
  */
 export class ChecklistPanel extends Container {
   constructor(node, path) {
     super(node, path);
+  }
+
+  get recommended() {
+    return this.getByRole('button', { name: /Recommended/ });
   }
 }
