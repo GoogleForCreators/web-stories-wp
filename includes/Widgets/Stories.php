@@ -75,8 +75,9 @@ class Stories extends WP_Widget {
 	public function widget( $args, $instance ) {
 		echo $instance['before_widget'];
 
-		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+		$title = apply_filters( 'widget_title', $instance['title'] );
+		if ( ! empty( $title ) ) {
+			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
 		$story_attrs = [
