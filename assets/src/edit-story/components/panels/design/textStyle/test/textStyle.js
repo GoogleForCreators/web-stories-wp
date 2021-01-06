@@ -35,6 +35,7 @@ import createSolid from '../../../../../utils/createSolid';
 import CanvasContext from '../../../../canvas/context';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../form';
 import { renderPanel } from '../../../shared/test/_utils';
+import { HIDDEN_PADDING } from '../../../../../constants';
 
 jest.mock('../../../../../utils/textMeasurements');
 jest.mock('../../../../form/dropDown');
@@ -204,6 +205,74 @@ describe('Panels/TextStyle', () => {
       textDifferentPadding,
       unlockPaddingTextDifferentPadding;
 
+    function testUpdaterOnElementVariations({
+      pushUpdate,
+      pushUpdateForObject,
+      expectedPaddingProperties,
+    }) {
+      // Test that padding in closure of updater is expected
+      const pufoUpdateArg = pushUpdateForObject.mock.calls[0][1];
+      const padding = {};
+      const updatedProperties = pufoUpdateArg(padding);
+      expect(updatedProperties).toStrictEqual(expectedPaddingProperties);
+
+      // Test that element with hidden padding retains hidden padding
+      const withHiddenPadding = { hasHiddenPadding: true };
+      const updatedPropertiesWithHiddenPadding = pufoUpdateArg(
+        withHiddenPadding
+      );
+      const expectedPropertiesWithHiddenPadding = [
+        'horizontal',
+        'vertical',
+      ].reduce((accum, key) => {
+        if (key in expectedPaddingProperties) {
+          accum[key] = expectedPaddingProperties[key] + HIDDEN_PADDING[key];
+        }
+        return accum;
+      }, {});
+      expect(updatedPropertiesWithHiddenPadding).toStrictEqual(
+        expectedPropertiesWithHiddenPadding
+      );
+
+      // Test that element coords are updated to not move visual center
+      const puUpdateArg = pushUpdate.mock.calls[0][0];
+      [
+        {
+          x: 40,
+          y: 40,
+          width: 100,
+          height: 100,
+          padding: {},
+        },
+        // Test that element with hidden padding retains visual center
+        {
+          x: 70,
+          y: 80,
+          width: 90,
+          height: 100,
+          padding: { hasHiddenPadding: true },
+        },
+      ].forEach((el) => {
+        const updated = puUpdateArg(el);
+        const expectedPadding = el.padding.hasHiddenPadding
+          ? expectedPropertiesWithHiddenPadding
+          : expectedPaddingProperties;
+
+        const expected = {};
+        if ('horizontal' in expectedPadding) {
+          expected.x = el.x - (expectedPadding.horizontal || 0);
+          expected.width = el.width + (expectedPadding.horizontal || 0) * 2;
+        }
+
+        if ('vertical' in expectedPadding) {
+          expected.y = el.y - (expectedPadding.vertical || 0);
+          expected.height = el.height + (expectedPadding.vertical || 0) * 2;
+        }
+
+        expect(updated).toStrictEqual(expected);
+      });
+    }
+
     beforeEach(() => {
       textSamePadding = {
         ...textElement,
@@ -251,50 +320,6 @@ describe('Panels/TextStyle', () => {
       expect(horiz).toHaveValue('11');
       expect(vert).toHaveValue('12');
     });
-
-    function testUpdaterOnElementVariations({
-      pushUpdate,
-      pushUpdateForObject,
-      expectedPaddingProperties,
-    }) {
-      // Test that padding in closure of updater is expected
-      const pufoUpdateArg = pushUpdateForObject.mock.calls[0][1];
-      const padding = {};
-      const updatedProperties = pufoUpdateArg(padding);
-      expect(updatedProperties).toStrictEqual(expectedPaddingProperties);
-
-      // Test that element coords are updated to not move visual center
-      const puUpdateArg = pushUpdate.mock.calls[0][0];
-      const elWithPosition = {
-        x: 40,
-        y: 40,
-        width: 100,
-        height: 100,
-        padding: {},
-      };
-
-      const updated = puUpdateArg(elWithPosition);
-      const expected = {};
-      if ('horizontal' in expectedPaddingProperties) {
-        expected.x =
-          elWithPosition.x - (expectedPaddingProperties.horizontal || 0);
-        expected.width =
-          elWithPosition.width +
-          (expectedPaddingProperties.horizontal || 0) * 2;
-      }
-
-      if ('vertical' in expectedPaddingProperties) {
-        expected.y =
-          elWithPosition.y - (expectedPaddingProperties.vertical || 0);
-        expected.height =
-          elWithPosition.height + (expectedPaddingProperties.vertical || 0) * 2;
-      }
-
-      expect(updated).toStrictEqual(expected);
-
-      // Test that element with hidden padding retains hidden padding
-      // Test that element with hidden padding retains visual center
-    }
 
     it('should update horizontal padding with lock', () => {
       const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
