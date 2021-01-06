@@ -1,5 +1,7 @@
 {
   "name": "@web-stories-wp/jest-amp",
+  "private": true,
+  "version": "1.0.0",
   "engines": {
     "node": ">= 15",
     "npm": "~7"
