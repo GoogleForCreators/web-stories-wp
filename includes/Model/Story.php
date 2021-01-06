@@ -49,6 +49,14 @@ class Story {
 	 * @var string
 	 */
 	protected $title = '';
+
+	/**
+	 * Excerpt.
+	 *
+	 * @var string
+	 */
+	protected $excerpt = '';
+
 	/**
 	 * URL.
 	 *
@@ -125,9 +133,10 @@ class Story {
 			return false;
 		}
 
-		$this->title  = get_the_title( $post );
-		$this->markup = $post->post_content;
-		$this->url    = (string) get_permalink( $post );
+		$this->title   = get_the_title( $post );
+		$this->excerpt = get_the_excerpt( $post );
+		$this->markup  = $post->post_content;
+		$this->url     = (string) get_permalink( $post );
 
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
@@ -149,6 +158,15 @@ class Story {
 	 */
 	public function get_title() {
 		return $this->title;
+	}
+
+	/**
+	 * Getter for excerpt attribute.
+	 *
+	 * @return string
+	 */
+	public function get_excerpt() {
+		return $this->excerpt;
 	}
 
 	/**
