@@ -51,6 +51,7 @@ describe('<Menu />', () => {
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
+        ref={{ current: undefined }}
       />
     );
 
@@ -70,6 +71,7 @@ describe('<Menu />', () => {
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
+        ref={{ current: undefined }}
       />
     );
 
@@ -86,6 +88,7 @@ describe('<Menu />', () => {
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
+        ref={{ current: undefined }}
       />
     );
 
@@ -119,6 +122,7 @@ describe('<Menu />', () => {
         onDismissMenu={() => {}}
         activeValue={basicDropDownOptions[2].value}
         renderItem={OverrideRenderItem}
+        ref={{ current: undefined }}
       />
     );
 

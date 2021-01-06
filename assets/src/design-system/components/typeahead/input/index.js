@@ -49,7 +49,7 @@ const TypeaheadInput = (
 ) => {
   // show clear button when there is text present in input and the menu isn't open or isFlexibleValue is true.
   const showClearButton = useMemo(
-    () => inputValue.length > 0 && (isOpen?.value || isFlexibleValue),
+    () => inputValue.length > 0 && (isOpen || isFlexibleValue),
     [inputValue, isFlexibleValue, isOpen]
   );
 
@@ -88,9 +88,19 @@ const TypeaheadInput = (
         as={showDropDownIcon ? 'div' : 'button'}
         aria-hidden={showDropDownIcon}
       >
-        {showClearButton && <StyledClear aria-hidden={true} id={clearId} />}
+        {showClearButton && (
+          <StyledClear
+            aria-hidden={true}
+            id={clearId}
+            data-testid={'clear-typeahead-icon'}
+          />
+        )}
         {showDropDownIcon && (
-          <StyledChevron isOpen={isOpen} aria-hidden={true} />
+          <StyledChevron
+            isOpen={isOpen}
+            aria-hidden={true}
+            data-testid={'chevron-typeahead-icon'}
+          />
         )}
       </IconContainer>
     </InputContainer>

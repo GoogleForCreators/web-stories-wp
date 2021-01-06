@@ -88,7 +88,7 @@ const Menu = (
   });
 
   useEffect(() => {
-    const listEl = listRef.current;
+    const listEl = listRef?.current;
     if (!listEl || focusedIndex === null || !isMenuFocused) {
       return;
     }

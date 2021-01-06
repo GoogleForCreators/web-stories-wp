@@ -112,12 +112,6 @@ describe('Typeahead <Typeahead />', () => {
     expect(menu).toBeInTheDocument();
   });
 
-  it.todo('should show clear icon when menu is open and input contains value');
-  it.todo('should not show clear icon on input when menu is closed');
-  it.todo(
-    'should show the clear icon on input when menu is closed and isFlexibleValue is true'
-  );
-
   it('should show an active icon on list item that is active', () => {
     const { getByRole } = renderWithProviders(
       <Typeahead
@@ -195,7 +189,7 @@ describe('Typeahead <Typeahead />', () => {
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should close active menu when select is clicked', () => {
+  it('should close active menu when input is clicked', () => {
     const wrapper = renderWithProviders(
       <Typeahead
         ariaInputLabel={'label'}
