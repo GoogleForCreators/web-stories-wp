@@ -480,6 +480,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					?>
 				</div>
 			<?php } ?>
+
+			<?php if ( $this->attributes['show_excerpt'] ) { ?>
+				<div class="story-content-overlay__excerpt">
+					<?php
+					echo esc_html( $story_data->get_excerpt() );
+					?>
+				</div>
+			<?php } ?>
+
 			<?php if ( ! empty( $story_data->get_author() ) ) { ?>
 				<div class="story-content-overlay__author">
 					<?php
@@ -489,6 +498,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					?>
 				</div>
 			<?php } ?>
+
 			<?php if ( ! empty( $story_data->get_date() ) ) { ?>
 				<time class="story-content-overlay__date">
 					<?php
