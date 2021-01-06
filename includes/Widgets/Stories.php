@@ -94,7 +94,8 @@ class Stories extends WP_Widget {
 			'posts_per_page' => $instance['number'],
 		];
 
-		echo ( new Story_Query( $story_attrs, $story_args ) )->render();
+		$story_query = new Story_Query( $story_attrs, $story_args );
+		echo $story_query->render();
 
 		echo $instance['after_widget'];
 	}
