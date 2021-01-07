@@ -91,8 +91,8 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 		$renderer = new \Google\Web_Stories\Stories_Renderer\Carousel_Renderer( $this->stories );
 		$renderer->init();
 
-		$this->assertTrue( wp_script_is( 'amp-carousel-script', 'registered' ) );
-		$this->assertTrue( wp_script_is( 'amp-runtime-script', 'registered' ) );
+		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
 	}
 
 	/**
@@ -118,7 +118,6 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 
 		$output = $renderer->render();
 
-		$this->assertContains( 'amp-carousel', $output );
 		$this->assertContains( 'web-stories-list alignnone is-view-type-carousel', $output );
 		$this->assertContains( 'web-stories-list__story', $output );
 		$this->assertContains( 'web-stories-list__story-poster', $output );

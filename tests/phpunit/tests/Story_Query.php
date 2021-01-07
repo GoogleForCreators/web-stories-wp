@@ -18,8 +18,8 @@
 namespace Google\Web_Stories\Tests;
 
 use Google\Web_Stories\Story_Query as Testee;
-use Google\Web_Stories\Stories_Renderer\Generic_Renderer;
 use Google\Web_Stories\Story_Post_Type as Story_CPT;
+use Google\Web_Stories\Stories_Renderer\Carousel_Renderer;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Query
@@ -101,7 +101,7 @@ class Story_Query extends \WP_UnitTestCase {
 	 * @covers ::render
 	 */
 	public function test_render() {
-		$this->assertInstanceOf( Generic_Renderer::class, self::$testee->get_renderer() );
+		$this->assertInstanceOf( Carousel_Renderer::class, self::$testee->get_renderer() );
 	}
 
 	/**

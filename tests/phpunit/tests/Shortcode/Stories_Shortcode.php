@@ -81,7 +81,7 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 			]
 		);
 
-		$this->assertTrue( false !== strpos( $actual, '<amp-carousel' ) );
+		$this->assertTrue( false !== strpos( $actual, 'is-view-type-carousel' ) );
 	}
 
 	/**
