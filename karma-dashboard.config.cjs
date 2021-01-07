@@ -183,7 +183,7 @@ module.exports = function (config) {
     browserDisconnectTimeout: 10000,
 
     // Custom context file.
-    customClientContextFile: 'karma/fixture/client_with_context.html',
+    customClientContextFile: 'assets/src/karma-fixture/client_with_context.html',
   });
 };
 
