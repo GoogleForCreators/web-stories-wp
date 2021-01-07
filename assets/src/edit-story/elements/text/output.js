@@ -152,10 +152,16 @@ export function TextOutputWithUnits({
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     textAlign: styles.textAlign,
-    borderRadius: `${dataToEditorY(borderRadius?.topLeft || 0, PAGE_HEIGHT)}px
-      ${dataToEditorY(borderRadius?.topRight || 0, PAGE_HEIGHT)}px
-      ${dataToEditorY(borderRadius?.bottomRight || 0, PAGE_HEIGHT)}px
-      ${dataToEditorY(borderRadius?.bottomLeft || 0, PAGE_HEIGHT)}px`,
+    borderRadius: `${dataToEditorY(
+      borderRadius?.topLeft || 0,
+      PAGE_HEIGHT
+    )}px ${dataToEditorY(
+      borderRadius?.topRight || 0,
+      PAGE_HEIGHT
+    )}px ${dataToEditorY(
+      borderRadius?.bottomRight || 0,
+      PAGE_HEIGHT
+    )}px ${dataToEditorY(borderRadius?.bottomLeft || 0, PAGE_HEIGHT)}px`,
   };
 
   const backgroundTextStyle = {
