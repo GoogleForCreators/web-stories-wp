@@ -68,7 +68,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
       <BlockConfigurationPanel
         icon={icon}
         setAttributes={setAttributes}
-        instruction={__('Select an layout style', 'web-stories')}
+        instruction={__('Select a layout style', 'web-stories')}
         columnCount={4}
         selectionOptions={VIEW_TYPES}
         selectionType={'viewType'}
