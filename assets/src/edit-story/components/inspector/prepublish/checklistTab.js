@@ -77,6 +77,9 @@ const Row = styled.div.attrs({ role: 'listitem' })`
   font-size: ${({ theme }) => theme.fonts.body2.size};
   width: calc(100% - 10px);
   max-width: 210px;
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+  }
   ${({ onClick }) =>
     Boolean(onClick) &&
     `&:hover {
@@ -211,14 +214,18 @@ const ChecklistTab = (props) => {
       if (!elementId && !pageId && !elements) {
         return undefined;
       }
-      return () => {
-        if (pageId) {
-          setCurrentPage({ pageId });
-        }
-        if (Array.isArray(elements)) {
-          setSelectedElementsById({ elementIds: elements.map(({ id }) => id) });
-        } else if (elementId) {
-          setSelectedElementsById({ elementIds: [elementId] });
+      return (event) => {
+        if (event.key === undefined || event.key === 'Enter') {
+          if (pageId) {
+            setCurrentPage({ pageId });
+          }
+          if (Array.isArray(elements)) {
+            setSelectedElementsById({
+              elementIds: elements.map(({ id }) => id),
+            });
+          } else if (elementId) {
+            setSelectedElementsById({ elementIds: [elementId] });
+          }
         }
       };
     },
@@ -226,16 +233,24 @@ const ChecklistTab = (props) => {
   );
 
   const renderRow = useCallback(
-    ({ message, help, id, pageGroup, ...args }) => (
-      <Row
-        onClick={getOnClick(args)}
-        key={`guidance-${id}`}
-        pageGroup={pageGroup}
-      >
-        {message}
-        <HelperText>{help}</HelperText>
-      </Row>
-    ),
+    ({ message, help, id, pageGroup, ...args }) => {
+      const onClick = getOnClick(args);
+      return (
+        <Row
+          tabIndex={onClick ? 0 : -1}
+          onClick={onClick}
+          onKeyDown={onClick}
+          aria-label={
+            onClick ? __('Select element for error', 'web-stories') : undefined
+          }
+          key={`guidance-${id}`}
+          pageGroup={pageGroup}
+        >
+          {message}
+          <HelperText>{help}</HelperText>
+        </Row>
+      );
+    },
     [getOnClick]
   );
 
