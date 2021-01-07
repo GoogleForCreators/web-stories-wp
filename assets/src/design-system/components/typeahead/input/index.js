@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, forwardRef } from 'react';
+import { useCallback, useMemo, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -38,6 +38,7 @@ const TypeaheadInput = (
     clearId,
     disabled,
     handleClearInputValue,
+    handleTabClearButton,
     inputValue,
     isFlexibleValue,
     isOpen,
@@ -62,6 +63,15 @@ const TypeaheadInput = (
   const showDropDownIcon = useMemo(
     () => (isFlexibleValue ? inputValue.length === 0 : !showClearButton),
     [inputValue.length, isFlexibleValue, showClearButton]
+  );
+
+  const onClearButtonKeyDown = useCallback(
+    ({ key }) => {
+      if (key === 'Tab') {
+        handleTabClearButton();
+      }
+    },
+    [handleTabClearButton]
   );
 
   return (
@@ -90,6 +100,7 @@ const TypeaheadInput = (
       <IconContainer
         disabled={disabled}
         onClick={handleClearInputValue}
+        {...(showClearButton && { onKeyDown: onClearButtonKeyDown })}
         aria-label={showClearButton && ariaClearLabel}
         as={showDropDownIcon ? 'div' : 'button'}
         aria-hidden={showDropDownIcon}
@@ -121,6 +132,7 @@ TypeaheadInput.propTypes = {
   disabled: PropTypes.bool,
   listId: PropTypes.string.isRequired,
   handleClearInputValue: PropTypes.func.isRequired,
+  handleTabClearButton: PropTypes.func.isRequired,
   inputValue: PropTypes.string,
   isFlexibleValue: PropTypes.bool,
   isOpen: PropTypes.bool,

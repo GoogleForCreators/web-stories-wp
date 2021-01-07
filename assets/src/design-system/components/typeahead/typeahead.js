@@ -107,10 +107,8 @@ export const Typeahead = ({
 
   // Callbacks that begin typeahead interaction
 
-  // When input is given focus, expand menu.
-  const handleInputFocus = useCallback(() => {
-    isOpen.set(true);
-  }, [isOpen]);
+  // When input is given focus, set menu to isOpen
+  const handleInputFocus = useCallback(() => isOpen.set(true), [isOpen]);
 
   // When input is clicked, toggle menu.
   const handleInputClick = useCallback(
@@ -124,7 +122,7 @@ export const Typeahead = ({
 
   // Callbacks passed to menu
 
-  // dismissMenu as sent to menu for focusOut hook.
+  // handleDismissMenu as sent to menu for focusOut hooks.
   // if isFlexibleValue is false (default), set input back to selectedValue.
   const handleDismissMenu = useCallback(
     (event) => {
@@ -138,11 +136,13 @@ export const Typeahead = ({
       }
       isOpen.set(false);
       isMenuFocused.set(false);
-      inputRef.current.focus();
 
       if (!isFlexibleValue && activeOption?.label) {
         inputValue.set(activeOption.label);
       }
+
+      // move focus to next element if available.
+      inputRef?.current?.offsetParent.nextSibling?.focus();
     },
     [activeOption, clearId, inputValue, isFlexibleValue, isOpen, isMenuFocused]
   );
@@ -157,9 +157,7 @@ export const Typeahead = ({
     [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
   );
 
-  const handleReturnToInput = useCallback(() => {
-    inputRef?.current?.focus();
-  }, []);
+  const handleReturnToInput = useCallback(() => inputRef?.current?.focus(), []);
 
   // Callbacks passed to input
 
@@ -188,14 +186,25 @@ export const Typeahead = ({
     }
   }, [inputValue, isFlexibleValue, handleReturnToInput, onMenuItemClick]);
 
-  const focusSentToList = useCallback(() => {
-    isMenuFocused.set(true);
-  }, [isMenuFocused]);
+  // If tab is used on clear button, dismiss menu but don't focus back to input.
+  const handleTabClearButton = useCallback(() => {
+    isOpen.set(false);
+    isMenuFocused.set(false);
+
+    if (!isFlexibleValue && activeOption?.label) {
+      inputValue.set(activeOption.label);
+    }
+  }, [isOpen, isMenuFocused, inputValue, isFlexibleValue, activeOption]);
+
+  const focusSentToList = useCallback(() => isMenuFocused.set(true), [
+    isMenuFocused,
+  ]);
 
   // Used to reset the input value to an activeOption label
-  const setInputValueToActiveOption = useCallback(() => {
-    activeOption?.label && inputValue.set(activeOption.label);
-  }, [activeOption, inputValue]);
+  const setInputValueToActiveOption = useCallback(
+    () => activeOption?.label && inputValue.set(activeOption.label),
+    [activeOption, inputValue]
+  );
 
   // Watch keyDown of input for keys that change interaction (ordered)
   // Close menu on escape.
@@ -256,6 +265,7 @@ export const Typeahead = ({
         clearId={clearId}
         disabled={disabled}
         handleClearInputValue={handleClearInputValue}
+        handleTabClearButton={handleTabClearButton}
         inputValue={inputValue?.value}
         isFlexibleValue={isFlexibleValue}
         isOpen={isOpen.value}

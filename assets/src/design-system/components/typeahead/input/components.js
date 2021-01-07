@@ -107,42 +107,43 @@ Input.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const IconContainer = styled.button`
-  position: absolute;
-  ${({ alignLeft }) =>
-    alignLeft
+export const IconContainer = styled.button(
+  ({ alignLeft, disabled, theme }) => css`
+    position: absolute;
+    ${alignLeft
       ? css`
           left: 0;
         `
       : css`
           right: 0;
         `}
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 32px;
-  z-index: 15;
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 32px;
+    z-index: 15;
+    color: ${theme.colors.fg.secondary};
+    cursor: pointer;
 
-  &:not(button) {
-    pointer-events: none;
-  }
+    &:not(button) {
+      pointer-events: none;
+    }
 
-  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-  ${({ theme, disabled }) =>
-    disabled &&
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+    ${disabled &&
     css`
       pointer-events: none;
       color: ${theme.colors.fg.disable};
     `}
-`;
+  `
+);
 IconContainer.propTypes = {
+  alignLeft: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 

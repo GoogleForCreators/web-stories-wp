@@ -30,10 +30,7 @@ export default function useTypeahead({
 }) {
   // Control when associated menu of typeahead should be visible
   const [_isOpen, _setIsOpen] = useState(false);
-  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
-    leading: true,
-    trailing: false,
-  });
+  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300);
 
   const isOpen = useMemo(
     () => ({

@@ -42,7 +42,7 @@ export const _default = () => (
   <DarkThemeProvider>
     <Container>
       <TypeaheadInput
-        ariaInputLabel={text('ariaInputLabel', 'my aria label')}
+        aria-label={text('ariaInputLabel', 'my aria label')}
         ariaClearLabel={text('ariaClearLabel', 'label for clear button')}
         clearId={'my-typeahead-id'}
         disabled={boolean('disabled')}
@@ -67,7 +67,7 @@ export const _default = () => (
 export const LightTheme = () => (
   <Container>
     <TypeaheadInput
-      ariaInputLabel={text('ariaInputLabel', 'my aria label')}
+      aria-label={text('ariaInputLabel', 'my aria label')}
       ariaClearLabel={text('ariaClearLabel', 'label for clear button')}
       clearId={'my-typeahead-id'}
       disabled={boolean('disabled')}
