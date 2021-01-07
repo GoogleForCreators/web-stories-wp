@@ -41,6 +41,13 @@ const DEFAULT_PRESET = {
   font: TEXT_ELEMENT_DEFAULT_FONT,
   width: 160,
   textAlign: 'center',
+  borderRadius: {
+    locked: true,
+    topLeft: 2,
+    topRight: 2,
+    bottomRight: 2,
+    bottomLeft: 2,
+  },
 };
 
 const PRESETS = [
