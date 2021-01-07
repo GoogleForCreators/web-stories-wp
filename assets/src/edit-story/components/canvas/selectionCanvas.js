@@ -211,7 +211,8 @@ function SelectionCanvas({ children }) {
             const elementP = createPolygon(rotationAngle, elX, elY, elW, elH);
             return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;
           }
-        );
+        )
+        .filter((id) => id);
       clearSelection();
       clearEditing();
       setSelectedElementsById({ elementIds: idsToSelect });
