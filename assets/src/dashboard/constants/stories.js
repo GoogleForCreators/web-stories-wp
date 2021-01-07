@@ -111,7 +111,7 @@ export const STORY_SORT_MENU_ITEMS = [
 ];
 
 export const STORY_STATUS = {
-  ALL: 'publish,draft,future',
+  ALL: 'publish,draft,future,private',
   PUBLISHED_AND_FUTURE: 'publish,future',
   DRAFT: 'draft',
   FUTURE: 'future',
