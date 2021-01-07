@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-export const DEFAULT_POPUP_FILL_WIDTH = 240;
+export {
+  OverrideFocusOutline,
+  FOCUS_VISIBLE_SELECTOR,
+} from './overrideFocusOutline';

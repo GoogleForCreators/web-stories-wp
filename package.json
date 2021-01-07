@@ -53,6 +53,7 @@
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.5.0",
     "flagged": "^2.0.1",
+    "focus-visible": "^5.2.0",
     "history": "^5.0.0",
     "mousetrap": "^1.6.5",
     "patch-package": "^6.2.2",

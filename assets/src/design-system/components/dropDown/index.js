@@ -30,12 +30,11 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../theme';
+import { Menu, MENU_OPTIONS } from '../menu';
 import { Popup, PLACEMENT } from '../popup';
 import { DropDownContainer, Hint } from './components';
 import { DEFAULT_POPUP_FILL_WIDTH } from './constants';
-import DropDownMenu from './menu';
 import DropDownSelect from './select';
-import { MENU_OPTIONS } from './types';
 import useDropDown from './useDropDown';
 /**
  *
@@ -133,9 +132,9 @@ export const DropDown = ({
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
         >
-          <DropDownMenu
+          <Menu
             activeValue={activeOption?.value}
-            selectButtonId={selectButtonId}
+            parentId={selectButtonId}
             listId={listId}
             menuAriaLabel={sprintf(
               /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */

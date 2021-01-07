@@ -338,6 +338,41 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::print_bookend
+	 */
+	public function test_print_bookend() {
+		$source   = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-bookend layout="nodisplay"><script type="application/json">{"bookendVersion":"v1.0","shareProviders":[{"provider":"facebook"},{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-bookend></amp-story></body></html>';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
+
+		$this->assertContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::print_bookend
+	 */
+	public function test_print_bookend_filter() {
+		add_filter( 'web_stories_share_providers', '__return_empty_array' );
+
+		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
+		
+		$this->assertNotContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
+		$this->assertSame( $source, $actual );
+
+		remove_filter( 'web_stories_share_providers', '__return_empty_array' );
+	}
+
+	/**
 	 * Helper to setup renderer.
 	 *
 	 * @param WP_Post $post Post Object.

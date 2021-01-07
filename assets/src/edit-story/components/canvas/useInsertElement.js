@@ -22,7 +22,6 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useLocalMedia, useStory } from '../../app';
@@ -161,11 +160,8 @@ function getElementProperties(
     y = 0;
   }
 
-  // When dragging an element to canvas, this means that the element will always be
-  // positioned inside the design space, even if the user drags it partially outside.
-  // @todo Remove this behavior when all the elements use Moveable for dragging.
-  x = dataPixels(Math.min(x, PAGE_WIDTH - width));
-  y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
+  x = dataPixels(x);
+  y = dataPixels(y);
 
   return {
     ...attrs,

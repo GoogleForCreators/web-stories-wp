@@ -23,8 +23,8 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+import { basicDropDownOptions } from '../../../testUtils/sampleData';
 import { DropDown } from '../';
-import { basicDropDownOptions } from '../stories/sampleData';
 
 describe('DropDown <DropDown />', () => {
   // Mock scrollTo
