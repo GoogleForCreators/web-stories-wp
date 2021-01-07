@@ -39,6 +39,7 @@ import {
   usePresubmitHandler,
 } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
+import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
 import { getHiddenPadding, removeHiddenPadding } from './utils';
 
 const DEFAULT_PADDING = {
@@ -90,24 +91,16 @@ function PaddingControls({
   const handleChange = useCallback(
     (updater, submit = false) => {
       pushUpdate((el) => {
-        const updates = {};
         const { x, y, width, height } = el;
         const newPadding = updater(el);
-
-        if ('horizontal' in newPadding) {
-          updates.x =
-            x - (newPadding.horizontal - (el.padding.horizontal || 0));
-          updates.width =
-            width + (newPadding.horizontal - (el.padding.horizontal || 0)) * 2;
-        }
-
-        if ('vertical' in newPadding) {
-          updates.y = y - (newPadding.vertical - (el.padding.vertical || 0));
-          updates.height =
-            height + (newPadding.vertical - (el.padding.vertical || 0)) * 2;
-        }
-
-        return updates;
+        return metricsForTextPadding({
+          x,
+          y,
+          height,
+          width,
+          currentPadding: el.padding,
+          newPadding,
+        });
       });
       pushUpdateForObject(
         'padding',

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -131,6 +131,16 @@ function ColorControls({ selectedElements, pushUpdate }) {
     [backgroundTextMode, pushBackgroundTextMode]
   );
 
+  const handleBackgroundModeButton = useCallback(
+    (value, mode) => {
+      if (!value) {
+        return;
+      }
+      pushBackgroundTextMode(mode);
+    },
+    [pushBackgroundTextMode]
+  );
+
   return (
     <>
       <Row>
@@ -158,7 +168,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
               __('Set text background mode: %s', 'web-stories'),
               label
             )}
-            onChange={(value) => value && pushBackgroundTextMode(mode)}
+            onChange={(value) => handleBackgroundModeButton(value, mode)}
           />
         ))}
         <Space flex="2" />
