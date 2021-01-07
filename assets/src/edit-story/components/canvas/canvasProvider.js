@@ -121,21 +121,6 @@ function CanvasProvider({ children }) {
     ]
   );
 
-  const selectIntersection = useCallback(
-    ({ x: lx, y: ly, width: lw, height: lh }) => {
-      const newSelectedElementIds = currentPage.elements
-        .filter(({ isBackground }) => !isBackground)
-        .filter(({ x, y, width, height }) => {
-          return (
-            x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
-          );
-        })
-        .map(({ id }) => id);
-      setSelectedElementsById({ elementIds: newSelectedElementIds });
-    },
-    [currentPage, setSelectedElementsById]
-  );
-
   // Reset editing mode when selection changes.
   useEffect(() => {
     if (
@@ -180,7 +165,6 @@ function CanvasProvider({ children }) {
         setEditingElementWithState,
         clearEditing,
         handleSelectElement,
-        selectIntersection,
         setPageSize,
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
@@ -204,7 +188,6 @@ function CanvasProvider({ children }) {
       setEditingElementWithState,
       clearEditing,
       handleSelectElement,
-      selectIntersection,
       setPageSize,
       displayLinkGuidelines,
       setDisplayLinkGuidelines,
