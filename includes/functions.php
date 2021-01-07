@@ -118,15 +118,9 @@ function fields_states() {
 /**
  * Put some tinymce related data on the page.
  *
- * @param string $hook Hook name for current page.
- *
  * @return void
  */
-function web_stories_script_data( $hook ) {
-	if ( 'widgets.php' !== $hook ) {
-		return;
-	}
-
+function web_stories_script_data() {
 	$order      = get_orderby();
 	$views      = get_layouts();
 	$order_list = [];
@@ -160,7 +154,7 @@ function web_stories_script_data( $hook ) {
 	echo 'var webStoriesData = ' . wp_json_encode( $data ) . ';';
 	echo "\n</script>";
 }
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\web_stories_script_data' );
+add_action( 'admin_print_scripts-widgets.php', __NAMESPACE__ . '\web_stories_script_data' );
 
 /**
  * Get supported layouts for web stories.
