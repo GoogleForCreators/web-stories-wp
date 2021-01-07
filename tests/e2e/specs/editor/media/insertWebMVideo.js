@@ -22,15 +22,36 @@ import {
   previewStory,
   insertStoryTitle,
   clickButton,
+  uploadFile,
+  deleteMedia,
 } from '../../../utils';
 
 const MODAL = '.media-modal';
+
+async function uploadMedia(file) {
+  // Clicking will only act on the first element.
+  await expect(page).toClick('button', { text: 'Upload' });
+
+  await page.waitForSelector(MODAL, {
+    visible: true,
+  });
+
+  const fileName = await uploadFile(file);
+
+  await expect(page).toMatch(fileName);
+
+  await expect(page).toClick('.media-modal-close');
+
+  return fileName;
+}
 
 describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media dialog it', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    const filename = await uploadMedia('small-video.webm');
 
     // Clicking will only act on the first element.
     await expect(page).toClick('button', { text: 'Upload' });
@@ -41,7 +62,7 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).toClick('button', { text: 'Media Library' });
     await clickButton(
-      '.attachments-browser .attachments .attachment[aria-label="small-video"]'
+      `.attachments-browser .attachments .attachment[aria-label="${filename}]`
     );
     await expect(page).toClick('button', { text: 'Insert into page' });
 
@@ -50,12 +71,16 @@ describe('Inserting WebM Video', () => {
     // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
+
+    await deleteMedia(filename);
   });
 
   it('should insert an video by clicking on media library', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
@@ -67,6 +92,8 @@ describe('Inserting WebM Video', () => {
     // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
+
+    await deleteMedia(filename);
   });
 
   it('should insert an video by clicking on media library and preview on FE', async () => {
@@ -75,6 +102,8 @@ describe('Inserting WebM Video', () => {
     await insertStoryTitle('Publishing with video');
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
@@ -102,5 +131,7 @@ describe('Inserting WebM Video', () => {
 
     await editorPage.bringToFront();
     await previewPage.close();
+
+    await deleteMedia(filename);
   });
 });
