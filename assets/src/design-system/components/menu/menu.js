@@ -23,14 +23,31 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { MENU_OPTIONS, DROP_DOWN_VALUE_TYPE } from '../types';
+import { MENU_OPTIONS, DROP_DOWN_VALUE_TYPE } from './types';
 import { MenuContainer } from './components';
 import useDropDownMenu from './useDropDownMenu';
-import EmptyList from './emptyList';
-import ListGroupings from './listGroupings';
+import { EmptyList, ListGroupings } from './list';
 
-const DropDownMenu = ({
-  anchorHeight,
+/**
+ *
+ * @param {Object} props All props.
+ * @param {number} props.dropDownHeight Sets a specific height as max for the list to display in a given container. Defaults to DEFAULT_DROPDOWN_HEIGHT.
+ * @param {string} props.emptyText If the array of options is empty this text will display.
+ * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding dropdown menu styles (container div > ul > li).
+ * @param {boolean} props.hasMenuRole if true, the aria role used for the list is 'menu' instead of 'listbox'.
+ * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
+ * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list. These options need to be sanitized with utils/getOptions.
+ * @param {string} props.listId ID that comes from parent component that attaches this list to that parent. Used for a11y.
+ * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option.
+ * @param {Function} props.onDismissMenu Triggered when a user escapes a menu or clicks outside of it.
+ * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
+ * @param {string} props.activeValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
+ * @param {string} props.menuAriaLabel Specific label to use as menu's aria label for screen readers.
+ * @param {string} props.parentId if in a dropDownMenu, this is the id associated with the button that controls when the menu is visible.
+ *
+ */
+
+const Menu = ({
   dropDownHeight,
   emptyText,
   menuStylesOverride,
@@ -43,7 +60,7 @@ const DropDownMenu = ({
   renderItem,
   activeValue,
   menuAriaLabel,
-  selectButtonId,
+  parentId,
 }) => {
   const listRef = useRef();
   const optionsRef = useRef([]);
@@ -84,12 +101,11 @@ const DropDownMenu = ({
   return (
     <MenuContainer
       id={listId}
-      anchorHeight={anchorHeight}
       dropDownHeight={dropDownHeight}
       styleOverride={menuStylesOverride}
       ref={listRef}
       aria-label={menuAriaLabel}
-      aria-labelledby={selectButtonId}
+      aria-labelledby={parentId}
       aria-expanded="true"
     >
       {!options || options.length === 0 ? (
@@ -110,8 +126,7 @@ const DropDownMenu = ({
   );
 };
 
-DropDownMenu.propTypes = {
-  anchorHeight: PropTypes.number,
+Menu.propTypes = {
   dropDownHeight: PropTypes.number,
   emptyText: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -124,7 +139,7 @@ DropDownMenu.propTypes = {
   onDismissMenu: PropTypes.func.isRequired,
   renderItem: PropTypes.object,
   activeValue: DROP_DOWN_VALUE_TYPE,
-  selectButtonId: PropTypes.string.isRequired,
+  parentId: PropTypes.string.isRequired,
 };
 
-export default DropDownMenu;
+export { Menu };

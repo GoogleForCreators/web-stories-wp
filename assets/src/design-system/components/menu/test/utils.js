@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { badOptions } from '../../../testUtils/sampleData';
 import { getOptions, getInset } from '../utils';
 
 const basicDropDownOptions = [
@@ -58,7 +59,7 @@ describe('DropDown/utils getOptions', () => {
     ]);
   });
 
-  it('should shape and sanititize basic dropDown options even when some data is bad', () => {
+  it('should shape and sanitize basic dropDown options even when some shaped data is bad', () => {
     const groupedOptions = getOptions([
       ...basicDropDownOptions,
       'just a string',
@@ -85,7 +86,32 @@ describe('DropDown/utils getOptions', () => {
     ]);
   });
 
-  it('should shape and sanititize nested dropDown options', () => {
+  it('should shape and sanitize dropDown options even when some value data is bad', () => {
+    const groupedOptions = getOptions(badOptions);
+
+    expect(groupedOptions).toStrictEqual([
+      {
+        group: [
+          {
+            label: '0 as a string',
+            value: '0',
+          },
+          {
+            label: 'false as a string',
+            value: 'false',
+          },
+          {
+            label: 'true as a boolean',
+            value: true,
+          },
+        ],
+      },
+    ]);
+    expect(badOptions).toHaveLength(6);
+    expect(groupedOptions[0].group).toHaveLength(3);
+  });
+
+  it('should shape and sanitize nested dropDown options', () => {
     const nestedDropDownOptions = [
       'something terrible',
       ['lions', 'tigers', 'bears'],
