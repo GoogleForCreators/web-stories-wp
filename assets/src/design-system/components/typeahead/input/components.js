@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Chevron, Close as Clear } from '../../../icons';
+import { Chevron, Close as Clear, Search } from '../../../icons';
 import { themeHelpers } from '../../../theme';
 
 export const InputContainer = styled.div`
@@ -34,9 +34,10 @@ export const InputContainer = styled.div`
 `;
 
 export const Input = styled.input(
-  ({ theme, isOpen, hasError }) => css`
+  ({ theme, isOpen, hasError, hasSearchIcon }) => css`
     position: absolute;
     padding: 8px 20px 8px 12px;
+    padding-left: ${hasSearchIcon ? 32 : 12}px;
     height: 100%;
     width: 100%;
     background-color: transparent;
@@ -92,12 +93,20 @@ export const Input = styled.input(
 );
 Input.propTypes = {
   hasError: PropTypes.bool,
+  hasSearchIcon: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
 
 export const IconContainer = styled.button`
   position: absolute;
-  right: 0;
+  ${({ alignLeft }) =>
+    alignLeft
+      ? css`
+          left: 0;
+        `
+      : css`
+          right: 0;
+        `}
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -147,3 +156,9 @@ export const StyledChevron = styled(Chevron)`
 StyledChevron.propTypes = {
   isOpen: PropTypes.bool,
 };
+
+export const StyledSearch = styled(Search)`
+  width: 16px;
+  height: auto;
+  margin: 0 8px;
+`;

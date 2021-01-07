@@ -29,6 +29,7 @@ import {
   InputContainer,
   StyledClear,
   StyledChevron,
+  StyledSearch,
 } from './components';
 
 const TypeaheadInput = (
@@ -47,6 +48,11 @@ const TypeaheadInput = (
   },
   ref
 ) => {
+  // show the search icon ahead of the input if input is active or if isFlexibleValue is true and inputValue has a length greater than 0
+  const showSearchIcon = useMemo(
+    () => (isFlexibleValue ? inputValue.length > 0 || isOpen : isOpen),
+    [isFlexibleValue, inputValue, isOpen]
+  );
   // show clear button when there is text present in input and the menu isn't open or isFlexibleValue is true.
   const showClearButton = useMemo(
     () => inputValue.length > 0 && (isOpen || isFlexibleValue),
@@ -62,25 +68,29 @@ const TypeaheadInput = (
 
   return (
     <InputContainer disabled={disabled}>
-      <label aria-label={ariaInputLabel} htmlFor={id} />
-
       <Input
-        aria-autocomplete={'list'}
+        aria-label={ariaInputLabel}
+        aria-autocomplete="list"
         aria-controls={listId}
         aria-disabled={disabled}
         aria-expanded={isOpen}
         aria-owns={listId}
+        autocomplete="off"
         disabled={disabled}
-        id={id}
+        hasSearchIcon={showSearchIcon}
         isOpen={isOpen}
         name={id}
         ref={ref}
-        role={'combobox'}
-        type={'search'}
+        role="combobox"
+        type="search"
         value={inputValue}
         {...rest}
       />
-
+      {showSearchIcon && (
+        <IconContainer alignLeft as={'div'} aria-hidden={true}>
+          <StyledSearch id={clearId} data-testid={'search-typeahead-icon'} />
+        </IconContainer>
+      )}
       <IconContainer
         disabled={disabled}
         onClick={handleClearInputValue}

@@ -113,15 +113,14 @@ export const Typeahead = ({
     isOpen.set((prevIsOpen) => !prevIsOpen);
   }, [isOpen]);
 
-  // When input is clicked, give menu focus and expand menu.
+  // When input is clicked, toggle menu.
   const handleInputClick = useCallback(
     (event) => {
       event.preventDefault();
 
-      isMenuFocused.set((prevIsMenuFocused) => !prevIsMenuFocused);
       isOpen.set((prevIsOpen) => !prevIsOpen);
     },
-    [isOpen, isMenuFocused]
+    [isOpen]
   );
 
   // Callbacks tied to input change

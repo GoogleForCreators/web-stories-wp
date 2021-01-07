@@ -197,4 +197,67 @@ describe('Typeahead <Input />', () => {
     const chevron = getByTestId('chevron-typeahead-icon');
     expect(chevron).toBeInTheDocument();
   });
+
+  it('should not show search icon by default', () => {
+    const { queryAllByTestId } = renderWithProviders(
+      <TypeaheadInput
+        ariaInputLabel={'typeahead label'}
+        ariaClearLabel={'aria label for clearing value'}
+        onClick={onClickMock}
+        handleClearInputValue={handleClearInputMock}
+        inputValue={''}
+      />
+    );
+
+    const search = queryAllByTestId('search-typeahead-icon');
+    expect(search).toStrictEqual([]);
+  });
+
+  it('should show search icon if isOpen is true', () => {
+    const { getByTestId } = renderWithProviders(
+      <TypeaheadInput
+        ariaInputLabel={'typeahead label'}
+        ariaClearLabel={'aria label for clearing value'}
+        onClick={onClickMock}
+        handleClearInputValue={handleClearInputMock}
+        inputValue={''}
+        isOpen={true}
+      />
+    );
+
+    const search = getByTestId('search-typeahead-icon');
+    expect(search).toBeInTheDocument();
+  });
+
+  it('should show search icon if isOpen is false and isFlexibleValue is true and there is an inputValue', () => {
+    const { getByTestId } = renderWithProviders(
+      <TypeaheadInput
+        ariaInputLabel={'typeahead label'}
+        ariaClearLabel={'aria label for clearing value'}
+        onClick={onClickMock}
+        handleClearInputValue={handleClearInputMock}
+        inputValue={'existing value'}
+        isFlexibleValue={true}
+      />
+    );
+
+    const search = getByTestId('search-typeahead-icon');
+    expect(search).toBeInTheDocument();
+  });
+
+  it('should not show search icon if isOpen is false and isFlexibleValue is true and there is no inputValue', () => {
+    const { queryAllByTestId } = renderWithProviders(
+      <TypeaheadInput
+        ariaInputLabel={'typeahead label'}
+        ariaClearLabel={'aria label for clearing value'}
+        onClick={onClickMock}
+        handleClearInputValue={handleClearInputMock}
+        inputValue={''}
+        isFlexibleValue={true}
+      />
+    );
+
+    const search = queryAllByTestId('search-typeahead-icon');
+    expect(search).toStrictEqual([]);
+  });
 });

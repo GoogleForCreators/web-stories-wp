@@ -131,10 +131,6 @@ describe('Typeahead <Typeahead />', () => {
       name: `Selected ${basicDropDownOptions[2].label}`,
     });
     expect(activeMenuItem).toBeInTheDocument();
-
-    // We can't really validate this number anyway in JSDom (no actual
-    // layout is happening), so just expect it to be called
-    expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
   });
 
   // Mouse events

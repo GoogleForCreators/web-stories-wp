@@ -103,6 +103,8 @@ export default function useTypeahead({
     if (activeOption?.label) {
       setInputValue(activeOption.label);
     }
+
+    return () => {};
   }, [activeOption]);
 
   return { activeOption, normalizedOptions, inputValue, isMenuFocused, isOpen };

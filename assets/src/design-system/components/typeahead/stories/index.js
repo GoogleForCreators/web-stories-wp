@@ -20,7 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, number, select, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -28,11 +28,10 @@ import { useState } from 'react';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
 import { Text } from '../../typography';
-import { Typeahead } from '../';
+import { Typeahead } from '../typeahead';
 import {
   basicDropDownOptions,
   nestedDropDownOptions,
-  reallyLongOptions,
 } from '../../../storybookUtils/sampleData';
 
 export default {
@@ -50,6 +49,33 @@ export const _default = () => {
   const [selectedValue, setSelectedValue] = useState(
     basicDropDownOptions[2].value
   );
+
+  const [inputValue, setInputValue] = useState('');
+
+  const options = useMemo(() => {
+    const searchValue = inputValue.value || selectedValue;
+    if (!searchValue || searchValue.length === 0) {
+      return basicDropDownOptions;
+    }
+
+    return basicDropDownOptions.filter(
+      ({ label, value }) =>
+        label
+          .toString()
+          .toLowerCase()
+          .startsWith(searchValue.toLowerCase().trim()) ||
+        value
+          .toString()
+          .toLowerCase()
+          .startsWith(searchValue.toLowerCase().trim())
+    );
+  }, [selectedValue, inputValue]);
+
+  const handleTypeaheadValueChange = useCallback((value) => {
+    action('handleTypeaheadValueChange')(value);
+    setInputValue(value);
+  }, []);
+
   return (
     <DarkThemeProvider>
       <Container>
@@ -59,11 +85,9 @@ export const _default = () => {
           }
         </Text>
         <Typeahead
-          handleTypeaheadValueChange={(value) => {
-            action('handleTypeaheadValueChange')(value);
-          }}
+          handleTypeaheadValueChange={handleTypeaheadValueChange}
           emptyText={'No options available'}
-          options={basicDropDownOptions}
+          options={options}
           hasError={boolean('hasError')}
           hint={text('hint', 'default hint text')}
           isFlexibleValue={boolean('isFlexibleValue')}
@@ -89,96 +113,38 @@ export const _default = () => {
 export const LightTheme = () => {
   const [selectedValue, setSelectedValue] = useState(null);
 
-  return (
-    <Container>
-      <Typeahead
-        emptyText={'No options available'}
-        options={basicDropDownOptions}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
-        selectedValue={selectedValue}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick', event);
-          setSelectedValue(newValue);
-        }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
-      />
-    </Container>
-  );
-};
+  const [inputValue, setInputValue] = useState('');
 
-const shortenedOptions = [...basicDropDownOptions.slice(0, 3)];
-export const ShortMenu = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const options = useMemo(() => {
+    const searchValue = inputValue.value || selectedValue;
+    if (!searchValue || searchValue.length === 0) {
+      return basicDropDownOptions;
+    }
+
+    return basicDropDownOptions.filter(
+      ({ label, value }) =>
+        label
+          .toString()
+          .toLowerCase()
+          .startsWith(searchValue.toLowerCase().trim()) ||
+        value
+          .toString()
+          .toLowerCase()
+          .startsWith(searchValue.toLowerCase().trim())
+    );
+  }, [selectedValue, inputValue]);
+
+  const handleTypeaheadValueChange = useCallback((value) => {
+    action('handleTypeaheadValueChange')(value);
+    setInputValue(value);
+  }, []);
 
   return (
     <Container>
       <Typeahead
         emptyText={'No options available'}
-        options={shortenedOptions}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
-        selectedValue={selectedValue}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick', event);
-          setSelectedValue(newValue);
-        }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
-      />
-    </Container>
-  );
-};
-
-export const NoOptionsMenu = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
-
-  return (
-    <Container>
-      <Typeahead
-        emptyText={'No options available'}
-        options={[]}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
-        selectedValue={selectedValue}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick', event);
-          setSelectedValue(newValue);
-        }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
-      />
-    </Container>
-  );
-};
-
-export const ReallyLongLabelsMenu = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
-
-  return (
-    <Container narrow>
-      <Typeahead
-        emptyText={'No options available'}
-        options={reallyLongOptions}
+        options={options}
+        handleTypeaheadValueChange={handleTypeaheadValueChange}
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
@@ -202,11 +168,50 @@ export const ReallyLongLabelsMenu = () => {
 export const SubMenus = () => {
   const [selectedValue, setSelectedValue] = useState('dog-2');
 
+  const [inputValue, setInputValue] = useState(selectedValue);
+
+  const options = useMemo(() => {
+    const searchValue = inputValue.value;
+    if (!searchValue || searchValue.length === 0) {
+      return nestedDropDownOptions;
+    }
+
+    return nestedDropDownOptions
+      .map((optionSet) => {
+        const matchingOptions = optionSet.options.filter(
+          ({ label = '', value = '' }) =>
+            label
+              .toString()
+              .toLowerCase()
+              .startsWith(searchValue.toLowerCase().trim()) ||
+            value
+              .toString()
+              .toLowerCase()
+              .startsWith(searchValue.toLowerCase().trim())
+        );
+        if (matchingOptions.length > 0) {
+          return {
+            ...optionSet,
+            options: [...matchingOptions],
+          };
+        } else {
+          return null;
+        }
+      })
+      .filter(Boolean);
+  }, [inputValue]);
+
+  const handleTypeaheadValueChange = useCallback((value) => {
+    action('handleTypeaheadValueChange')(value);
+    setInputValue(value);
+  }, []);
+
   return (
     <Container>
       <Typeahead
         emptyText={'No options available'}
-        options={nestedDropDownOptions}
+        options={options}
+        handleTypeaheadValueChange={handleTypeaheadValueChange}
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
