@@ -28,7 +28,7 @@ import generatePatternStyles from '../../utils/generatePatternStyles';
 import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import { dataToEditorX, dataToEditorY } from '../../units';
-import { BACKGROUND_TEXT_MODE } from '../../constants';
+import { BACKGROUND_TEXT_MODE, PAGE_HEIGHT } from '../../constants';
 import {
   generateParagraphTextStyle,
   getHighlightLineheight,
@@ -62,6 +62,7 @@ export function TextOutputWithUnits({
     backgroundColor,
     backgroundTextMode,
     padding,
+    borderRadius,
     ...rest
   } = element;
   if (!dataToFontSizeY) {
@@ -151,6 +152,10 @@ export function TextOutputWithUnits({
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     textAlign: styles.textAlign,
+    borderRadius: `${dataToEditorY(borderRadius?.topLeft || 0, PAGE_HEIGHT)}px
+      ${dataToEditorY(borderRadius?.topRight || 0, PAGE_HEIGHT)}px
+      ${dataToEditorY(borderRadius?.bottomRight || 0, PAGE_HEIGHT)}px
+      ${dataToEditorY(borderRadius?.bottomLeft || 0, PAGE_HEIGHT)}px`,
   };
 
   const backgroundTextStyle = {
