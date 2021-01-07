@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -99,10 +100,14 @@ function PresetGroup({ presets, itemRenderer, type, handleClick, isEditMode }) {
     }
   }, [activeIndex, presets.length]);
 
+  presets = presets.map((preset) => ({
+    id: uuidv4(),
+    ...preset,
+  }));
   return (
     <Group ref={groupRef} type={type}>
       {presets.map((preset, i) => (
-        <ButtonWrapper key={i} type={type}>
+        <ButtonWrapper key={preset.id} type={type}>
           {itemRenderer(preset, i, activeIndex, handleClick, isEditMode)}
         </ButtonWrapper>
       ))}
