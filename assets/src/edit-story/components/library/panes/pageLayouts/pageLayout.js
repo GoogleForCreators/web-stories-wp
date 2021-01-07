@@ -107,6 +107,15 @@ function PageLayout(props) {
     setIsConfirming(false);
   }, [onConfirm, setIsConfirming]);
 
+  const handleKeyUp = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') {
+        handleClick();
+      }
+    },
+    [handleClick]
+  );
+
   return (
     <>
       <PageLayoutWrapper pageSize={pageSize} role="listitem">
@@ -129,6 +138,7 @@ function PageLayout(props) {
           onFocus={() => setIsActive(true)}
           onMouseEnter={() => setIsActive(true)}
           onMouseLeave={() => setIsActive(false)}
+          onKeyUp={handleKeyUp}
           onClick={handleClick}
           isActive={isActive}
           aria-label={page.title}
