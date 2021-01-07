@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -111,18 +111,29 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
 
   useEffect(() => setAdNetwork(adNetworkRaw), [adNetworkRaw]);
 
-  let message;
-  let link;
+  const message = useMemo(() => {
+    if (AD_NETWORK_TYPE.ADMANAGER === adNetwork) {
+      return TEXT.HELPER_MESSAGE_ADMANAGER;
+    }
 
-  if (AD_NETWORK_TYPE.ADMANAGER === adNetwork) {
-    message = TEXT.HELPER_MESSAGE_ADMANAGER;
-    link = TEXT.HELPER_LINK_ADMANAGER;
-  }
+    if (AD_NETWORK_TYPE.ADSENSE === adNetwork) {
+      return TEXT.HELPER_MESSAGE_ADSENSE;
+    }
 
-  if (AD_NETWORK_TYPE.ADSENSE === adNetwork) {
-    message = TEXT.HELPER_MESSAGE_ADSENSE;
-    link = TEXT.HELPER_LINK_ADSENSE;
-  }
+    return null;
+  }, [adNetwork]);
+
+  const link = useMemo(() => {
+    if (AD_NETWORK_TYPE.ADMANAGER === adNetwork) {
+      return TEXT.HELPER_LINK_ADMANAGER;
+    }
+
+    if (AD_NETWORK_TYPE.ADSENSE === adNetwork) {
+      return TEXT.HELPER_LINK_ADSENSE;
+    }
+
+    return null;
+  }, [adNetwork]);
 
   const handleMonetizationClick = useCallback(
     (evt) =>
