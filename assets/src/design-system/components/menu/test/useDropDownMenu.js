@@ -23,11 +23,11 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 
-import useDropDownMenu from '../menu/useDropDownMenu';
 import {
   basicDropDownOptions,
   nestedDropDownOptions,
-} from '../stories/sampleData';
+} from '../../../testUtils/sampleData';
+import useDropDownMenu from '../useDropDownMenu';
 import { getOptions } from '../utils';
 
 describe('useDropDownMenu()', function () {

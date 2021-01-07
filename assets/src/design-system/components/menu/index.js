@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-export const DEFAULT_POPUP_FILL_WIDTH = 240;
+export { Menu } from './menu';
+export {
+  DROP_DOWN_ITEM,
+  DROP_DOWN_ITEMS,
+  NESTED_DROP_DOWN_ITEMS,
+  MENU_OPTIONS,
+} from './types';
+export { default as useDropDownMenu } from './useDropDownMenu';

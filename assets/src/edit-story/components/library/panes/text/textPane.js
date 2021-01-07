@@ -41,6 +41,7 @@ import TextSets from './textSets';
 const Pane = styled(SharedPane)`
   overflow-y: scroll;
   max-height: 100%;
+  position: relative;
 `;
 
 function TextPane(props) {

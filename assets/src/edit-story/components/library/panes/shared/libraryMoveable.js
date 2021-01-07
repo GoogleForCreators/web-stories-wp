@@ -29,7 +29,7 @@ import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
-import { useCanvas } from '../../../canvas';
+import { useCanvas, useInsertTextSet } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
@@ -42,7 +42,7 @@ const TargetBox = styled.div`
   max-width: 100%;
   max-height: 100%;
   top: 0;
-  left: 0;
+  z-index: 1;
 `;
 
 function LibraryMoveable({
@@ -53,6 +53,8 @@ function LibraryMoveable({
   onClick,
   cloneElement,
   cloneProps,
+  previewSize,
+  elements = [],
   active = false,
 }) {
   const CloneElement = cloneElement;
@@ -69,7 +71,8 @@ function LibraryMoveable({
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer } = useCanvas((state) => ({
+  const { fullbleedContainer, pageContainer } = useCanvas((state) => ({
+    fullbleedContainer: state.state.fullbleedContainer,
     pageContainer: state.state.pageContainer,
     nodesById: state.state.nodesById,
   }));
@@ -82,6 +85,8 @@ function LibraryMoveable({
   const frame = {
     translate: [0, 0],
   };
+
+  const { insertTextSetByOffset } = useInsertTextSet();
 
   const eventTracker = useRef({});
   const startEventTracking = (evt) => {
@@ -193,7 +198,7 @@ function LibraryMoveable({
     if (activeDropTargetId && handleDragEnd) {
       handleDragEnd();
       // Only continue if the clone is at least partially on the page.
-    } else if (!isTargetOutOfContainer(cloneRef.current, pageContainer)) {
+    } else if (!isTargetOutOfContainer(cloneRef.current, fullbleedContainer)) {
       const {
         x,
         y,
@@ -202,13 +207,20 @@ function LibraryMoveable({
       } = cloneRef.current.getBoundingClientRect();
       const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
 
-      insertElement(type, {
-        ...elementProps,
-        x: editorToDataX(x - pageX, pageSize.width),
-        y: editorToDataY(y - pageY, pageSize.height),
-        width: editorToDataX(w, pageSize.width),
-        height: editorToDataY(h, pageSize.height),
-      });
+      if (type === 'textSet') {
+        insertTextSetByOffset(elements, {
+          offsetX: editorToDataX(x - pageX, pageSize.width),
+          offsetY: editorToDataY(y - pageY, pageSize.height),
+        });
+      } else {
+        insertElement(type, {
+          ...elementProps,
+          x: editorToDataX(x - pageX, pageSize.width),
+          y: editorToDataY(y - pageY, pageSize.height),
+          width: editorToDataX(w, pageSize.width),
+          height: editorToDataY(h, pageSize.height),
+        });
+      }
     }
     resetMoveable();
     return undefined;
@@ -223,7 +235,8 @@ function LibraryMoveable({
     snappingOffsetX,
   });*/
 
-  const { width, height } = cloneProps;
+  const targetSize = previewSize ?? cloneProps;
+  const { width, height } = targetSize;
   return (
     <>
       <TargetBox
@@ -270,6 +283,8 @@ LibraryMoveable.propTypes = {
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,
   active: PropTypes.bool,
+  previewSize: PropTypes.object,
+  elements: PropTypes.array,
 };
 
 export default LibraryMoveable;
