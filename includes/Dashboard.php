@@ -333,6 +333,9 @@ class Dashboard {
 			$max_upload_size = 0;
 		}
 
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		$read_private_posts = current_user_can( $post_type_object->cap->read_private_posts );
+
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
@@ -356,9 +359,9 @@ class Dashboard {
 				'maxUpload'           => $max_upload_size,
 				'maxUploadFormatted'  => size_format( $max_upload_size ),
 				'capabilities'        => [
-					'canManageSettings' => current_user_can( 'manage_options' ),
-					'canUploadFiles'    => current_user_can( 'upload_files' ),
-
+					'canManageSettings'   => current_user_can( 'manage_options' ),
+					'canUploadFiles'      => current_user_can( 'upload_files' ),
+					'canReadPrivatePosts' => $read_private_posts,
 				],
 				'siteKitCapabilities' => [
 					'siteKitInstalled'      => $this->is_site_kit_plugin_installed(),
