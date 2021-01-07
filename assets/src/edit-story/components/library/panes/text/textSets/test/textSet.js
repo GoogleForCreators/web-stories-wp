@@ -34,6 +34,7 @@ import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
 import { UnitsProvider } from '../../../../../../units';
 import StoryContext from '../../../../../../app/story/context';
 import { LayoutProvider } from '../../../../../../app/layout';
+import CanvasContext from '../../../../../canvas/context';
 
 const SET = [
   {
@@ -205,6 +206,19 @@ function setup(elements) {
     actions: {
       setSelectedElementsById: jest.fn(),
     },
+    state: {
+      currentPage: {},
+    },
+  };
+
+  const canvasValue = {
+    state: {
+      nodesById: {},
+      pageSize: {},
+      pageContainer: document.body,
+      canvasContainer: document.body,
+      designSpaceGuideline: {},
+    },
   };
 
   const { queryAllByRole, getByRole, container } = renderWithTheme(
@@ -212,21 +226,23 @@ function setup(elements) {
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
           <StoryContext.Provider value={storyValue}>
-            <FontContext.Provider value={fontsValue}>
-              <LayoutProvider>
-                <LibraryContext.Provider value={libraryValue}>
-                  <UnitsProvider
-                    pageSize={{
-                      width: TEXT_SET_SIZE,
-                      height: TEXT_SET_SIZE / PAGE_RATIO,
-                    }}
-                    getBox={getBox}
-                  >
-                    <TextSet elements={elements} index={0} />
-                  </UnitsProvider>
-                </LibraryContext.Provider>
-              </LayoutProvider>
-            </FontContext.Provider>
+            <CanvasContext.Provider value={canvasValue}>
+              <FontContext.Provider value={fontsValue}>
+                <LayoutProvider>
+                  <LibraryContext.Provider value={libraryValue}>
+                    <UnitsProvider
+                      pageSize={{
+                        width: TEXT_SET_SIZE,
+                        height: TEXT_SET_SIZE / PAGE_RATIO,
+                      }}
+                      getBox={getBox}
+                    >
+                      <TextSet elements={elements} index={0} />
+                    </UnitsProvider>
+                  </LibraryContext.Provider>
+                </LayoutProvider>
+              </FontContext.Provider>
+            </CanvasContext.Provider>
           </StoryContext.Provider>
         </APIContext.Provider>
       </ConfigContext.Provider>
