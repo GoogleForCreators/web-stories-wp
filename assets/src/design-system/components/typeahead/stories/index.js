@@ -53,8 +53,7 @@ export const _default = () => {
   const [inputValue, setInputValue] = useState('');
 
   const options = useMemo(() => {
-    const searchValue = inputValue.value || selectedValue;
-    if (!searchValue || searchValue.length === 0) {
+    if (!inputValue || inputValue.length === 0) {
       return basicDropDownOptions;
     }
 
@@ -63,13 +62,13 @@ export const _default = () => {
         label
           .toString()
           .toLowerCase()
-          .startsWith(searchValue.toLowerCase().trim()) ||
+          .startsWith(inputValue.toLowerCase().trim()) ||
         value
           .toString()
           .toLowerCase()
-          .startsWith(searchValue.toLowerCase().trim())
+          .startsWith(inputValue.toLowerCase().trim())
     );
-  }, [selectedValue, inputValue]);
+  }, [inputValue]);
 
   const handleTypeaheadValueChange = useCallback((value) => {
     action('handleTypeaheadValueChange')(value);
@@ -85,25 +84,25 @@ export const _default = () => {
           }
         </Text>
         <Typeahead
+          ariaClearLabel={text('ariaClearLabel', 'clear input')}
+          ariaInputLabel={text('ariaInputLabel')}
+          disabled={boolean('disabled')}
+          emptyText={text('emptyText', 'No options available')}
           handleTypeaheadValueChange={handleTypeaheadValueChange}
-          emptyText={'No options available'}
-          options={options}
           hasError={boolean('hasError')}
           hint={text('hint', 'default hint text')}
           isFlexibleValue={boolean('isFlexibleValue')}
-          placeholder={text('placeholder', 'select a value')}
-          ariaLabel={text('ariaLabel')}
-          dropDownLabel={text('dropDownLabel', 'label')}
           isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
           isRTL={boolean('isRTL')}
-          disabled={boolean('disabled')}
-          selectedValue={selectedValue}
           onMenuItemClick={(event, newValue) => {
             action('onMenuItemClick', event);
             setSelectedValue(newValue);
           }}
+          options={options}
+          placeholder={text('placeholder', 'select a value')}
           placement={select('placement', Object.values(PLACEMENT))}
           popupZIndex={number('popupZIndex')}
+          selectedValue={selectedValue}
         />
       </Container>
     </DarkThemeProvider>
@@ -113,11 +112,10 @@ export const _default = () => {
 export const LightTheme = () => {
   const [selectedValue, setSelectedValue] = useState(null);
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(null);
 
   const options = useMemo(() => {
-    const searchValue = inputValue.value || selectedValue;
-    if (!searchValue || searchValue.length === 0) {
+    if (!inputValue || inputValue.length === 0) {
       return basicDropDownOptions;
     }
 
@@ -126,13 +124,13 @@ export const LightTheme = () => {
         label
           .toString()
           .toLowerCase()
-          .startsWith(searchValue.toLowerCase().trim()) ||
+          .startsWith(inputValue.toLowerCase().trim()) ||
         value
           .toString()
           .toLowerCase()
-          .startsWith(searchValue.toLowerCase().trim())
+          .startsWith(inputValue.toLowerCase().trim())
     );
-  }, [selectedValue, inputValue]);
+  }, [inputValue]);
 
   const handleTypeaheadValueChange = useCallback((value) => {
     action('handleTypeaheadValueChange')(value);
@@ -142,37 +140,98 @@ export const LightTheme = () => {
   return (
     <Container>
       <Typeahead
-        emptyText={'No options available'}
-        options={options}
+        ariaClearLabel={text('ariaClearLabel', 'clear input')}
+        ariaInputLabel={text('ariaInputLabel')}
+        disabled={boolean('disabled')}
+        emptyText={text('emptyText', 'No options available')}
         handleTypeaheadValueChange={handleTypeaheadValueChange}
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
+        isFlexibleValue={boolean('isFlexibleValue')}
         isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
         isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
-        selectedValue={selectedValue}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
           setSelectedValue(newValue);
         }}
+        options={options}
+        placeholder={text('placeholder', 'select a value')}
         placement={select('placement', Object.values(PLACEMENT))}
         popupZIndex={number('popupZIndex')}
+        selectedValue={selectedValue}
       />
     </Container>
   );
 };
 
-export const SubMenus = () => {
-  const [selectedValue, setSelectedValue] = useState('dog-2');
+export const FlexibleDemo = () => {
+  // Here the selected value and inputValue are tied together.
+  // SelectedValue is updated when 'enter' on input is keyed down or new option is clicked/entered from menu.
+  // Options are updated according to inputValue, only because inputValue has chosen to update with handleTypeaheadValueChange.
 
+  const [selectedValue, setSelectedValue] = useState(null);
   const [inputValue, setInputValue] = useState(selectedValue);
 
   const options = useMemo(() => {
-    const searchValue = inputValue.value;
-    if (!searchValue || searchValue.length === 0) {
+    if (!inputValue || inputValue.length === 0) {
+      return basicDropDownOptions;
+    }
+
+    return basicDropDownOptions.filter(
+      ({ label, value }) =>
+        label
+          .toString()
+          .toLowerCase()
+          .startsWith(inputValue.toLowerCase().trim()) ||
+        value
+          .toString()
+          .toLowerCase()
+          .startsWith(inputValue.toLowerCase().trim())
+    );
+  }, [inputValue]);
+
+  const handleTypeaheadValueChange = useCallback((value) => {
+    action('handleTypeaheadValueChange')(value);
+    setInputValue(value);
+  }, []);
+
+  return (
+    <Container>
+      <Typeahead
+        ariaClearLabel={text('ariaClearLabel', 'clear search')}
+        ariaInputLabel={text('ariaInputLabel', 'search stories')}
+        disabled={boolean('disabled')}
+        emptyText={text('emptyText', 'No stories found')}
+        handleTypeaheadValueChange={handleTypeaheadValueChange}
+        hasError={boolean('hasError')}
+        hint={text('hint', 'default hint text')}
+        isFlexibleValue={true}
+        isKeepMenuOpenOnSelection={false}
+        isRTL={boolean('isRTL')}
+        onMenuItemClick={(event, newValue) => {
+          action('onMenuItemClick', event);
+          setSelectedValue(newValue);
+        }}
+        options={options}
+        placeholder={text('placeholder', 'search for stories')}
+        placement={select('placement', Object.values(PLACEMENT))}
+        popupZIndex={number('popupZIndex')}
+        selectedValue={selectedValue}
+      />
+    </Container>
+  );
+};
+
+export const StrictDemo = () => {
+  // Here we have a typeahead that will only update its selected value when a new menu option is selected.
+  // Anything typed into the input purely tells options how to filter.
+  // If the menu is closed, the input's value will return to the selectedValue.
+
+  const [selectedValue, setSelectedValue] = useState('dog-2');
+  const [inputValue, setInputValue] = useState(selectedValue);
+
+  const options = useMemo(() => {
+    if (!inputValue || inputValue.length === 0) {
       return nestedDropDownOptions;
     }
 
@@ -183,11 +242,11 @@ export const SubMenus = () => {
             label
               .toString()
               .toLowerCase()
-              .startsWith(searchValue.toLowerCase().trim()) ||
+              .startsWith(inputValue.toLowerCase().trim()) ||
             value
               .toString()
               .toLowerCase()
-              .startsWith(searchValue.toLowerCase().trim())
+              .startsWith(inputValue.toLowerCase().trim())
         );
         if (matchingOptions.length > 0) {
           return {
@@ -207,27 +266,30 @@ export const SubMenus = () => {
   }, []);
 
   return (
-    <Container>
-      <Typeahead
-        emptyText={'No options available'}
-        options={options}
-        handleTypeaheadValueChange={handleTypeaheadValueChange}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
-        selectedValue={selectedValue}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick', event);
-          setSelectedValue(newValue);
-        }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
-      />
-    </Container>
+    <DarkThemeProvider>
+      <Container>
+        <Typeahead
+          ariaClearLabel={text('ariaClearLabel', 'clear input')}
+          ariaInputLabel={text('ariaInputLabel', 'find a new font')}
+          disabled={boolean('disabled')}
+          emptyText={text('emptyText', 'No options available')}
+          handleTypeaheadValueChange={handleTypeaheadValueChange}
+          hasError={boolean('hasError')}
+          hint={text('hint', 'default hint text')}
+          isFlexibleValue={false}
+          isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+          isRTL={boolean('isRTL')}
+          onMenuItemClick={(event, newValue) => {
+            action('onMenuItemClick', event);
+            setSelectedValue(newValue);
+          }}
+          options={options}
+          placeholder={text('placeholder', 'select a value')}
+          placement={select('placement', Object.values(PLACEMENT))}
+          popupZIndex={number('popupZIndex')}
+          selectedValue={selectedValue}
+        />
+      </Container>
+    </DarkThemeProvider>
   );
 };

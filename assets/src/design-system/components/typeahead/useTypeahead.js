@@ -45,10 +45,7 @@ export default function useTypeahead({
 
   // Control whether focus is shifted to menu or input.
   const [_isMenuFocused, _setIsMenuFocused] = useState(false);
-  const [setIsMenuFocused] = useDebouncedCallback(_setIsMenuFocused, 300, {
-    leading: true,
-    trailing: false,
-  });
+  const [setIsMenuFocused] = useDebouncedCallback(_setIsMenuFocused, 300);
 
   const isMenuFocused = useMemo(
     () => ({
@@ -58,6 +55,11 @@ export default function useTypeahead({
     [_isMenuFocused, setIsMenuFocused]
   );
 
+  useEffect(() => {
+    if (!isOpen.value) {
+      setIsMenuFocused(false);
+    }
+  }, [isOpen, setIsMenuFocused]);
   // Monitor input value separate from selected value to respect user input while maintaining accurate results.
   const [_inputValue, setInputValue] = useState('');
 
@@ -95,7 +97,7 @@ export default function useTypeahead({
 
   // send the inputValue when it changes back to the parent so that any results that need to change can be changed.
   useEffect(() => {
-    handleTypeaheadValueChange && handleTypeaheadValueChange(inputValue);
+    handleTypeaheadValueChange && handleTypeaheadValueChange(inputValue.value);
   }, [handleTypeaheadValueChange, inputValue]);
 
   // When selectedValue updates we want to update input value too

@@ -34,23 +34,21 @@ import {
 
 const TypeaheadInput = (
   {
-    ariaInputLabel,
     ariaClearLabel,
     clearId,
     disabled,
-    id,
-    listId,
     handleClearInputValue,
     inputValue,
-    isOpen,
     isFlexibleValue,
+    isOpen,
+    listId,
     ...rest
   },
   ref
 ) => {
   // show the search icon ahead of the input if input is active or if isFlexibleValue is true and inputValue has a length greater than 0
   const showSearchIcon = useMemo(
-    () => (isFlexibleValue ? inputValue.length > 0 || isOpen : isOpen),
+    () => isOpen || (isFlexibleValue && inputValue.length > 0),
     [isFlexibleValue, inputValue, isOpen]
   );
   // show clear button when there is text present in input and the menu isn't open or isFlexibleValue is true.
@@ -69,7 +67,6 @@ const TypeaheadInput = (
   return (
     <InputContainer disabled={disabled}>
       <Input
-        aria-label={ariaInputLabel}
         aria-autocomplete="list"
         aria-controls={listId}
         aria-disabled={disabled}
@@ -79,7 +76,6 @@ const TypeaheadInput = (
         disabled={disabled}
         hasSearchIcon={showSearchIcon}
         isOpen={isOpen}
-        name={id}
         ref={ref}
         role="combobox"
         type="search"
@@ -94,7 +90,7 @@ const TypeaheadInput = (
       <IconContainer
         disabled={disabled}
         onClick={handleClearInputValue}
-        label={showClearButton && ariaClearLabel}
+        aria-label={showClearButton && ariaClearLabel}
         as={showDropDownIcon ? 'div' : 'button'}
         aria-hidden={showDropDownIcon}
       >
@@ -120,11 +116,9 @@ const TypeaheadInput = (
 export default forwardRef(TypeaheadInput);
 
 TypeaheadInput.propTypes = {
-  ariaInputLabel: PropTypes.string.isRequired,
   ariaClearLabel: PropTypes.string.isRequired,
   clearId: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  id: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
   handleClearInputValue: PropTypes.func.isRequired,
   inputValue: PropTypes.string,

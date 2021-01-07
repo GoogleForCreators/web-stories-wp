@@ -45,6 +45,13 @@ export const Input = styled.input(
     color: ${theme.colors.fg.primary};
     border-radius: ${theme.borders.radius.small};
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+
+    ${themeHelpers.expandPresetStyles({
+      preset: theme.typography.presets.paragraph.small,
+      theme,
+    })};
+
+    /* border color needs to be reapplied from helper for different states */
     border-color: ${theme.colors.border[
       isOpen ? 'defaultActive' : 'defaultNormal'
     ]};
@@ -64,6 +71,9 @@ export const Input = styled.input(
       border-color: ${theme.colors.border[
         isOpen ? 'defaultActive' : 'defaultHover'
       ]};
+    }
+    &:focus {
+      border-color: ${theme.colors.border.focus};
     }
 
     ${hasError &&

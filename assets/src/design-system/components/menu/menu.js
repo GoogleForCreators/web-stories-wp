@@ -89,9 +89,11 @@ const Menu = (
 
   useEffect(() => {
     const listEl = listRef?.current;
+
     if (!listEl || focusedIndex === null || !isMenuFocused) {
       return;
     }
+
     if (focusedIndex === -1) {
       listEl.scrollTo(0, 0);
       return;
