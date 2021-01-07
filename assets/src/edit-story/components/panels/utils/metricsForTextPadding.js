@@ -25,15 +25,15 @@ export function metricsForTextPadding({
   const updates = {};
 
   if ('horizontal' in newPadding) {
-    updates.x = x - (newPadding.horizontal - currentPadding.horizontal || 0);
+    updates.x = x - (newPadding.horizontal - (currentPadding.horizontal || 0));
     updates.width =
-      width + (newPadding.horizontal - currentPadding.horizontal || 0) * 2;
+      width + (newPadding.horizontal - (currentPadding.horizontal || 0)) * 2;
   }
 
   if ('vertical' in newPadding) {
-    updates.y = y - (newPadding.vertical - currentPadding.vertical || 0);
+    updates.y = y - (newPadding.vertical - (currentPadding.vertical || 0));
     updates.height =
-      height + (newPadding.vertical - currentPadding.vertical || 0) * 2;
+      height + (newPadding.vertical - (currentPadding.vertical || 0)) * 2;
   }
 
   return updates;
