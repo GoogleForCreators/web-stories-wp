@@ -70,7 +70,7 @@ const PanelTitle = styled.span`
 
 const Row = styled.div.attrs({ role: 'listitem' })`
   &:not(:first-child) {
-    padding-top: 9px;
+    margin-top: 9px;
   }
   margin-bottom: 16px;
   margin-left: ${({ pageGroup }) => (pageGroup ? '16px' : '0')};
@@ -79,6 +79,7 @@ const Row = styled.div.attrs({ role: 'listitem' })`
   max-width: 210px;
   &:focus {
     outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+    outline-offset: 5px;
   }
   ${({ onClick }) =>
     Boolean(onClick) &&
