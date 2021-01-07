@@ -208,7 +208,7 @@ class Web_Stories_Block {
 	 * @return bool Whether or not block attributes have been initialized with given value.
 	 */
 	protected function initialize_block_attributes( $block_attributes = [] ) {
-		if ( ! empty( $block_attributes ) || ! is_array( $block_attributes ) ) {
+		if ( ! empty( $block_attributes ) && is_array( $block_attributes ) ) {
 			$this->block_attributes = $block_attributes;
 			return true;
 		}
@@ -301,20 +301,11 @@ class Web_Stories_Block {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param array $attributes Current block's attributes. If not passed,
-	 *                          will use attributes stored in class variable.
-	 *
 	 * @return array Query arguments.
 	 */
-	protected function get_query_args( array $attributes = [] ) {
+	protected function get_query_args() {
 
-		if ( empty( $attributes ) ) {
-			$attributes = $this->block_attributes;
-		}
-
-		if ( empty( $attributes ) ) {
-			return [];
-		}
+		$attributes = $this->block_attributes;
 
 		$query_args = [
 			'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
@@ -326,27 +317,20 @@ class Web_Stories_Block {
 		// if block type is 'selected-webstories'.
 		if ( ! empty( $attributes['blockType'] )
 			&& 'selected-stories' === $attributes['blockType']
+			&& ! empty( $attributes['stories'] )
 		) {
-			// if no stories are selected return empty array.
-			if ( empty( $attributes['stories'] ) ) {
-				return [];
-			}
-
 			$query_args['post__in'] = $attributes['stories'];
 			$query_args['orderby']  = 'post__in';
 
 			return $query_args;
 		}
 
-		$order_by_value = ( ! empty( $attributes['orderByValue'] ) ) ? $attributes['orderByValue'] : '';
-		$num_of_stories = ( ! empty( $attributes['numOfStories'] ) ) ? absint( $attributes['numOfStories'] ) : '';
-
-		if ( ! empty( $num_of_stories ) ) {
-			$query_args['posts_per_page'] = $num_of_stories;
+		if ( ! empty( $attributes['numOfStories'] ) ) {
+			$query_args['posts_per_page'] = $attributes['numOfStories'];
 		}
 
-		if ( ! empty( $order_by_value ) ) {
-			switch ( $order_by_value ) {
+		if ( ! empty( $attributes['orderByValue'] ) ) {
+			switch ( $attributes['orderByValue'] ) {
 				case 'old-to-new':
 					$query_args['order'] = 'ASC';
 					break;
@@ -364,7 +348,7 @@ class Web_Stories_Block {
 		if ( ! empty( $attributes['authors'] ) && is_array( $attributes['authors'] ) ) {
 			$author_ids = wp_list_pluck( $attributes['authors'], 'id' );
 
-			if ( ! empty( $author_ids ) && is_array( $author_ids ) ) {
+			if ( ! empty( $author_ids ) ) {
 				$query_args['author__in'] = $author_ids;
 			}
 		}
@@ -384,10 +368,10 @@ class Web_Stories_Block {
 	 */
 	protected function fields_states() {
 		$views = [
-			'circles'  => __( 'Circles', 'web-stories' ),
-			'grid'     => __( 'Grid', 'web-stories' ),
-			'list'     => __( 'List', 'web-stories' ),
-			'carousel' => __( 'Carousel', 'web-stories' ),
+			'circles',
+			'grid',
+			'list',
+			'carousel',
 		];
 
 		$fields = [
@@ -402,7 +386,7 @@ class Web_Stories_Block {
 
 		$field_states = [];
 
-		foreach ( $views as $view_type => $view_label ) {
+		foreach ( $views as $view_type ) {
 			$field_state = ( new Story_Query( [ 'view_type' => $view_type ] ) )->get_renderer()->field();
 			foreach ( $fields as $field ) {
 				$field_states[ $view_type ][ $field ] = [
