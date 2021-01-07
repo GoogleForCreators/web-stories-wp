@@ -39,7 +39,7 @@ export default {
 };
 
 const Container = styled.div`
-  width: ${({ narrow }) => (narrow ? 150 : 400)}px;
+  width: 400px;
   height: 100vh;
   padding: 12px 24px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
