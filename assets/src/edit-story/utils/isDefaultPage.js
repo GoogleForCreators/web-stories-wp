@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { shallowEqual } from 'react-pure-render';
+
+/**
  * Internal dependencies
  */
 import { createPage } from '../elements';
@@ -22,17 +27,6 @@ import { createPage } from '../elements';
 /**
  * @typedef {import('../../../types').Page} Page
  */
-
-const isShallowDifferent = (first, second) => {
-  if (!first || !second) {
-    return false;
-  }
-
-  return (
-    Object.keys(first).length !== Object.keys(second).length ||
-    Object.keys(second).some((key) => first[key] !== second[key])
-  );
-};
 
 /**
  * Determine if a page has background or element changes different from the default page.
@@ -50,7 +44,7 @@ const isDefaultPage = (page) => {
 
   // Check if background color is different
   if (
-    isShallowDifferent(
+    !shallowEqual(
       page.backgroundColor?.color,
       defaultPage.backgroundColor?.color
     )
