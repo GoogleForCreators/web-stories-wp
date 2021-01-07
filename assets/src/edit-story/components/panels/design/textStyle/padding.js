@@ -72,7 +72,7 @@ function PaddingControls({
   pushUpdateForObject,
   pushUpdate,
 }) {
-  const displayPadding = useCommonObjectValue(
+  const displayedPadding = useCommonObjectValue(
     // Map over all elements and update display
     // values to not include hidden padding
     // if hidden padding is present
@@ -86,7 +86,7 @@ function PaddingControls({
 
   // Only if true for all selected elements, will the toggle be true
   // (Note that this behavior is different from aspect lock ratio)
-  const lockPadding = displayPadding.locked === true;
+  const lockPadding = displayedPadding.locked === true;
 
   const handleChange = useCallback(
     (updater, submit = false) => {
@@ -154,7 +154,7 @@ function PaddingControls({
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
       <BoxedNumeric
-        value={displayPadding.horizontal}
+        value={displayedPadding.horizontal}
         {...firstInputProperties}
       />
       <Space />
@@ -189,7 +189,7 @@ function PaddingControls({
           <Space />
           <BoxedNumeric
             suffix={_x('V', 'The Vertical padding', 'web-stories')}
-            value={displayPadding.vertical}
+            value={displayedPadding.vertical}
             onChange={(value) =>
               handleChange((el) => ({
                 vertical: value + getHiddenPadding(el, 'vertical'),
