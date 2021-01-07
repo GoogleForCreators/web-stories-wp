@@ -21,14 +21,14 @@ import { useCallback, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import useFocusOut from '../../../utils/useFocusOut';
-import { isNullOrUndefinedOrEmptyString } from '../../../utils/isNullOrUndefinedOrEmptyString';
-import { useKeyDownEffect } from '../../keyboard';
+import useFocusOut from '../../utils/useFocusOut';
+import { isNullOrUndefinedOrEmptyString } from '../../utils/isNullOrUndefinedOrEmptyString';
+import { useKeyDownEffect } from '../keyboard';
 import {
   KEYS_CLOSE_MENU,
   KEYS_SELECT_ITEM,
   KEYS_SHIFT_FOCUS,
-} from '../constants';
+} from './constants';
 
 export default function useDropDownMenu({
   activeValue,

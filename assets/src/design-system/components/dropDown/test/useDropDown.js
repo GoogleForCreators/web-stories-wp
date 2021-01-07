@@ -23,11 +23,11 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 
-import useDropDown from '../useDropDown';
 import {
   basicDropDownOptions,
   nestedDropDownOptions,
-} from '../stories/sampleData';
+} from '../../../testUtils/sampleData';
+import useDropDown from '../useDropDown';
 
 describe('useDropDown()', function () {
   it('should return falsy for activeOption when no selectedValue is present', function () {
@@ -117,14 +117,6 @@ describe('useDropDown()', function () {
           { label: 'Scooby', value: 'dog-2' },
         ],
         label: 'dogs',
-      },
-      {
-        group: [
-          { label: '0 as a number', value: 0 },
-          { label: 'false as a boolean', value: false },
-          { label: 'true as a boolean', value: true },
-        ],
-        label: 'tricky content',
       },
     ]);
   });
