@@ -209,37 +209,51 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
+  const selectElement = useCallback(
+    ({ elementId, elements, pageId }) => {
+      if (pageId) {
+        setCurrentPage({ pageId });
+      }
+      if (Array.isArray(elements)) {
+        setSelectedElementsById({
+          elementIds: elements.map(({ id }) => id),
+        });
+      } else if (elementId) {
+        setSelectedElementsById({ elementIds: [elementId] });
+      }
+    },
+    [setCurrentPage, setSelectedElementsById]
+  );
+
   const getOnClick = useCallback(
     ({ elementId, pageId, elements }) => {
       if (!elementId && !pageId && !elements) {
         return undefined;
       }
-      return (event) => {
-        if (event.key === undefined || event.key === 'Enter') {
-          if (pageId) {
-            setCurrentPage({ pageId });
-          }
-          if (Array.isArray(elements)) {
-            setSelectedElementsById({
-              elementIds: elements.map(({ id }) => id),
-            });
-          } else if (elementId) {
-            setSelectedElementsById({ elementIds: [elementId] });
-          }
-        }
-      };
+      return () => selectElement({ elementId, pageId, elements });
     },
-    [setCurrentPage, setSelectedElementsById]
+    [selectElement]
+  );
+
+  const getHandleKeyPress = useCallback(
+    ({ elementId, elements, pageId }) => (event) => {
+      if (event.key === 'Enter') {
+        selectElement({ elementId, elements, pageId });
+      }
+    },
+    [selectElement]
   );
 
   const renderRow = useCallback(
     ({ message, help, id, pageGroup, ...args }) => {
       const onClick = getOnClick(args);
+      const handleKeyPress = getHandleKeyPress(args);
       return (
         <Row
-          tabIndex={onClick ? 0 : -1}
+          tabIndex={0}
           onClick={onClick}
-          onKeyDown={onClick}
+          // note: onKeyDown does not work for "Enter"
+          onKeyUp={handleKeyPress}
           aria-label={
             onClick ? __('Select element for error', 'web-stories') : undefined
           }
@@ -251,7 +265,7 @@ const ChecklistTab = (props) => {
         </Row>
       );
     },
-    [getOnClick]
+    [getOnClick, getHandleKeyPress]
   );
 
   const renderPageGroupedRow = useCallback(

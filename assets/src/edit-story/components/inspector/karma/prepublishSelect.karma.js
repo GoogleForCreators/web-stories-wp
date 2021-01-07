@@ -30,10 +30,12 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Pre-publish checklist select offending elements onClick', () => {
   let fixture;
+  let insertElement;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    insertElement = await fixture.renderHook(() => useInsertElement());
   });
 
   afterEach(() => {
@@ -46,6 +48,18 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     await waitFor(() => fixture.editor.inspector.checklistPanel);
   }
 
+  async function openRecommendedPanel() {
+    await fixture.events.mouse.clickOn(
+      fixture.editor.inspector.checklistPanel.recommended
+    );
+    await fixture.events.sleep(500);
+  }
+
+  async function clickOnCanvas() {
+    const canvas = fixture.querySelector('[data-testid="fullbleed"]');
+    await fixture.events.mouse.clickOn(canvas);
+  }
+
   describe('Prepublish checklist tab', () => {
     it('should select the offending image elements', async () => {
       await fixture.events.click(fixture.editor.library.media.item(0));
@@ -53,15 +67,11 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       let storyContext = await fixture.renderHook(() => useStory());
       const [elementId] = storyContext.state.selectedElementIds;
 
-      const canvas = fixture.querySelector('[data-testid="fullbleed"]');
-      await fixture.events.mouse.clickOn(canvas);
+      await clickOnCanvas();
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
       await openPrepublishPanel();
-      await fixture.events.mouse.clickOn(
-        fixture.editor.inspector.prepublishPanel.recommended
-      );
-      await fixture.events.sleep(500);
+      await openRecommendedPanel();
 
       const tooSmallOnPage = fixture.screen.getByText(
         MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.MAIN_TEXT
@@ -77,7 +87,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
     it('should select the offending text elements', async () => {
       // four paragraphs will cause the "too much text on page" error
-      const insertElement = await fixture.renderHook(() => useInsertElement());
       const doInsert = () =>
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
@@ -96,10 +105,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
       await openPrepublishPanel();
 
-      await fixture.events.mouse.clickOn(
-        fixture.editor.inspector.checklistPanel.recommended
-      );
-      await fixture.events.sleep(500);
+      await openRecommendedPanel();
 
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
@@ -113,6 +119,126 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(
         [element1, element2, element3, element4].map(({ id }) => id)
       ).toEqual(storyContext.state.selectedElementIds);
+    });
+
+    it('should select the element when the font size is too small', async () => {
+      const insertSmallFont = () =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          fontSize: 9,
+          content: 'Lorem ipsum.',
+          x: 40,
+          y: 40,
+          width: 250,
+        });
+
+      const insertNormalFont = () =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          fontSize: 20,
+          content: 'Lorem ipsum.',
+          x: 100,
+          y: 40,
+          width: 250,
+        });
+
+      const smallFontElement = await fixture.act(insertSmallFont);
+      const normalFontElement = await fixture.act(insertNormalFont);
+
+      await openPrepublishPanel();
+      await openRecommendedPanel();
+      let storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds.length).toEqual(1);
+      expect(storyContext.state.selectedElementIds[0]).toEqual(
+        normalFontElement.id
+      );
+      const fontTooSmallRow = fixture.screen.getByText(
+        MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.MAIN_TEXT
+      );
+      await fixture.events.mouse.clickOn(fontTooSmallRow);
+      await fixture.events.sleep(500);
+      storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds[0]).toEqual(
+        smallFontElement.id
+      );
+    });
+
+    it('should select link elements when they are too small to tap', async () => {
+      const tooSmallLinkElement = await fixture.act(() =>
+        insertElement('text', {
+          id: 'elementid',
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+          content: 'G',
+          width: 40,
+          height: 40,
+        })
+      );
+      await openPrepublishPanel();
+      await openRecommendedPanel();
+      await clickOnCanvas();
+      let storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds.length).toEqual(1);
+      expect(storyContext.state.selectedElementIds[0]).not.toEqual(
+        tooSmallLinkElement.id
+      );
+      const linkTooSmallRow = fixture.screen.getByText(
+        MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
+      );
+      await fixture.events.mouse.clickOn(linkTooSmallRow);
+      await fixture.events.sleep(500);
+      storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds[0]).toEqual(
+        tooSmallLinkElement.id
+      );
+    });
+
+    it('should select the element with the keyboard', async () => {
+      const tooSmallLinkElement = await fixture.act(() =>
+        insertElement('text', {
+          id: 'elementid',
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+          content: 'S',
+          width: 40,
+          height: 40,
+        })
+      );
+
+      await clickOnCanvas();
+      await fixture.events.sleep(500);
+      await openPrepublishPanel();
+      let storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds.length).toEqual(1);
+      expect(storyContext.state.selectedElementIds[0]).not.toEqual(
+        tooSmallLinkElement.id
+      );
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('Enter');
+      await fixture.events.sleep(500);
+
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+
+      const linkTooSmallRow = fixture.screen.getByText(
+        MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
+      );
+
+      expect(document.activeElement).toEqual(linkTooSmallRow);
+      await fixture.events.keyboard.press('Enter');
+
+      storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds.length).toEqual(1);
+      expect(storyContext.state.selectedElementIds[0]).toEqual(
+        tooSmallLinkElement.id
+      );
     });
   });
 });
