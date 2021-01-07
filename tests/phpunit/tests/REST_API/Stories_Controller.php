@@ -211,7 +211,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		// Headers.
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'future', $statuses );
 		$this->assertArrayHasKey( 'draft', $statuses );
+		$this->assertArrayHasKey( 'private', $statuses );
 
 		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
 	}
