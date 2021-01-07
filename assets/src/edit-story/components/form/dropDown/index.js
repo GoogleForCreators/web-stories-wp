@@ -66,8 +66,8 @@ export const DropDownSelect = styled.button`
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
-  width: ${({ widthFitContent }) =>
-    widthFitContent ? `fit-content` : `inherit`};
+  width: ${({ fitContentWidth }) =>
+    fitContentWidth ? `fit-content` : `inherit`};
   ${({ disabled }) =>
     disabled &&
     css`

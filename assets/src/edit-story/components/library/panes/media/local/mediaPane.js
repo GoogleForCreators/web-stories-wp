@@ -94,6 +94,7 @@ function MediaPane(props) {
     setMediaType,
     setSearchTerm,
     uploadVideoPoster,
+    totalItems,
   } = useLocalMedia(
     ({
       state: {
@@ -103,6 +104,7 @@ function MediaPane(props) {
         isMediaLoaded,
         mediaType,
         searchTerm,
+        totalItems,
       },
       actions: {
         setNextPage,
@@ -119,6 +121,7 @@ function MediaPane(props) {
         isMediaLoaded,
         mediaType,
         searchTerm,
+        totalItems,
         setNextPage,
         resetWithFetch,
         setMediaType,
@@ -149,7 +152,7 @@ function MediaPane(props) {
 
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
 
-  const isSearching = Boolean(searchTerm.trim());
+  const isSearching = searchTerm.length > 0;
 
   const onClose = resetWithFetch;
 
@@ -276,19 +279,19 @@ function MediaPane(props) {
               onChange={onFilter}
               options={FILTERS}
               placement={Placement.BOTTOM_START}
-              widthFitContent
+              fitContentWidth
             />
-            {isSearching && media.length && (
+            {isSearching && media.length > 0 && (
               <SearchCount>
                 {sprintf(
                   /* translators: %d: number of results. */
                   _n(
                     '%d result found',
                     '%d results found',
-                    media.length,
+                    totalItems,
                     'web-stories'
                   ),
-                  media.length
+                  totalItems
                 )}
               </SearchCount>
             )}

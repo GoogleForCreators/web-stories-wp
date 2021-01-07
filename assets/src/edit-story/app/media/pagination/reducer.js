@@ -35,6 +35,7 @@ export const INITIAL_STATE = {
   totalPages: 1,
   isMediaLoading: false,
   isMediaLoaded: false,
+  totalItems: 0,
 };
 
 /**
@@ -61,7 +62,13 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     }
 
     case types.FETCH_MEDIA_SUCCESS: {
-      const { media, pageToken, nextPageToken, totalPages } = payload;
+      const {
+        media,
+        pageToken,
+        nextPageToken,
+        totalPages,
+        totalItems,
+      } = payload;
       return {
         ...state,
         // If a pageToken is present, append the results.
@@ -71,6 +78,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         hasMore: Boolean(nextPageToken),
         isMediaLoaded: true,
         isMediaLoading: false,
+        totalItems,
       };
     }
 

@@ -181,6 +181,7 @@ describe('useContextValueProvider', () => {
       pageToken: '',
       mediaType: '',
       searchTerm: '',
+      totalItems: 0,
     };
     reducerActions = {
       fetchMediaStart: jest.fn(),
@@ -268,6 +269,7 @@ describe('useContextValueProvider', () => {
       pageToken: 1,
       nextPageToken: undefined,
       totalPages: 1,
+      totalItems: 1,
     });
   });
 });

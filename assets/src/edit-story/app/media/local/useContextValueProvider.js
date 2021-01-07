@@ -89,6 +89,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers['X-WP-TotalPages']);
+          const totalItems = parseInt(headers['X-WP-Total']);
           const mediaArray = data.map(getResourceFromAttachment);
           const hasMore = p < totalPages;
           callback({
@@ -98,6 +99,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
             pageToken: p,
             nextPageToken: hasMore ? p + 1 : undefined,
             totalPages,
+            totalItems,
           });
         })
         .catch(fetchMediaError);
