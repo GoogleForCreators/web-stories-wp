@@ -58,6 +58,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	const STYLE_HANDLE = 'web-stories-list-styles';
 
 	/**
+	 * Web Stories stylesheet handle.
+	 *
+	 * @var string
+	 */
+	const LIGHTBOX_SCRIPT_HANDLE = 'lightbox';
+
+	/**
 	 * Stories object
 	 *
 	 * @var Stories Stories object
@@ -254,7 +261,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			$this->enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
 
 			// Web Stories Lightbox script.
-			$this->enqueue_script( 'lightbox', [ Embed_Base::STORY_PLAYER_HANDLE ] );
+			$this->enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
 
 		}
 	}
@@ -432,24 +439,32 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes = $this->get_single_story_classes();
 		$story_styles         = $this->is_view_type( 'circles' ) ? sprintf( '--size:%1$spx', $this->attributes['circle_size'] ) : '';
 		$story_styles        .= $this->is_view_type( 'carousel' ) ? sprintf( '--width:%1$spx', $this->width ) : '';
+		$lightbox_state       = 'lightbox' . $this->current()->get_id();
 
-		$lightbox_state          = "lightbox{$this->current()->get_id()}";
-		$lightbox_set_state_attr = ( $this->is_amp_request() ) ? sprintf(
-			'on="tap:AMP.setState({%1$s: ! %1$s})"',
-			$lightbox_state
-		) : '';
-
-		?>
-
-		<div
-			class="<?php echo esc_attr( $single_story_classes ); ?>"
-			<?php echo wp_kses( $lightbox_set_state_attr, 'on' ); ?>
-			style="<?php echo esc_attr( $story_styles ); ?>"
-		>
-			<?php $this->render_story_with_poster(); ?>
-		</div>
-		<?php
-
+		if ( $this->is_amp_request() ) {
+			?>
+			<div
+				class="<?php echo esc_attr( $single_story_classes ); ?>"
+				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
+				style="<?php echo esc_attr( $story_styles ); ?>"
+			>
+				<?php
+				$this->render_story_with_poster();
+				?>
+			</div>
+			<?php
+		} else {
+			?>
+			<div
+				class="<?php echo esc_attr( $single_story_classes ); ?>"
+				style="<?php echo esc_attr( $story_styles ); ?>"
+			>
+				<?php
+					$this->render_story_with_poster();
+				?>
+			</div>
+			<?php
+		}
 	}
 
 	/**
