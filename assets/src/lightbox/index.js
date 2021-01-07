@@ -15,10 +15,15 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import domReady from '@wordpress/dom-ready';
+
+/**
  * Internal dependencies
  */
 import initializeWebStoryLightbox from './web-stories-lightbox';
 
-window.addEventListener('load', () => {
+domReady(() => {
   initializeWebStoryLightbox();
 });
