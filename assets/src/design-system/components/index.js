@@ -21,6 +21,7 @@ export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
 export { Input } from './input';
 export { Modal } from './modal';
+export * from './menu';
 export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
 export * as Snackbar from './snackbar';
