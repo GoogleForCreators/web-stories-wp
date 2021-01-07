@@ -40,12 +40,7 @@ import {
   DROPDOWN_TYPES,
   STORY_SORT_MENU_ITEMS,
 } from '../../../../dashboard/constants';
-import { getRelativeDisplayDate } from '../../../../date';
-import {
-  CardTitle,
-  Dropdown,
-  InfiniteScroller,
-} from '../../../../dashboard/components';
+import { Dropdown, InfiniteScroller } from '../../../../dashboard/components';
 import TypeaheadSearch from '../../../../dashboard/app/views/shared/typeaheadSearch';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
@@ -134,12 +129,6 @@ const SearchStoryInner = styled.div`
 
 const DropdownContainer = styled.div`
   margin: auto 8px;
-`;
-
-const DetailRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `;
 
 function SelectStories({
@@ -260,17 +249,6 @@ function SelectStories({
                       data-testid={`story-grid-item-${story.id}`}
                     >
                       <StoryPreview story={story} pageSize={pageSize} />
-                      <DetailRow>
-                        <CardTitle
-                          tabIndex={-1}
-                          title={story.title}
-                          titleLink={story.editStoryLink}
-                          status={story?.status}
-                          id={story.id}
-                          secondaryTitle={story.author}
-                          displayDate={getRelativeDisplayDate(story.created)}
-                        />
-                      </DetailRow>
                       <ItemOverlay
                         isSelected={isSelected}
                         pageSize={pageSize}
