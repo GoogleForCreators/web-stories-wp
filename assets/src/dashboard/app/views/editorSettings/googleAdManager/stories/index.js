@@ -13,14 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
 
-export const PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS = {
-  REMOVE_LOGO: 'REMOVE_LOGO',
-  SET_DEFAULT: 'SET_DEFAULT',
+/**
+ * Internal dependencies
+ */
+import GoogleAdManager from '../';
+
+export default {
+  title: 'Dashboard/Views/EditorSettings/GoogleAdManager',
+  component: GoogleAdManager,
 };
 
-export const AD_NETWORK_TYPE = {
-  NONE: 'none',
-  ADSENSE: 'adsense',
-  ADMANAGER: 'admanager',
+export const _default = () => {
+  return (
+    <GoogleAdManager
+      slotId={text('slotId', '')}
+      handleUpdate={(newSlotId) =>
+        action('update google ad manager')(newSlotId)
+      }
+    />
+  );
 };
