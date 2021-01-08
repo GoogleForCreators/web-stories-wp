@@ -22,16 +22,15 @@
  * Internal dependencies
  */
 import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
-import { toUTCDate } from '../../../date';
 
 export default function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {
     const {
       id,
       title,
-      modified_gmt,
       status,
-      date_gmt,
+      date,
+      modified,
       link,
       story_data: storyData,
       _embedded: { author = [] } = {},
@@ -53,8 +52,8 @@ export default function reshapeStoryObject(editStoryURL) {
       id,
       status,
       title: title.raw,
-      modified: toUTCDate(modified_gmt),
-      created: toUTCDate(date_gmt),
+      modified: modified,
+      created: date,
       pages: updatedStoryData.pages,
       author: author[0]?.name || '',
       centerTargetAction: '',
