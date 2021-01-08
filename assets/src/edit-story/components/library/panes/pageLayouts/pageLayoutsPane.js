@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -91,7 +91,12 @@ function PageLayoutsPane(props) {
         ...pages,
         ...template.pages.map((page, index) => ({
           ...page,
-          title: `${template.title} Page ${index + 1}`,
+          title: sprintf(
+            /* translators: 1: template name. 2: page number. */
+            __(`%1$s Page %2$s`, 'web-stories'),
+            template.title,
+            index + 1
+          ),
         })),
       ],
       []
