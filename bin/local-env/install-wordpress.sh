@@ -7,6 +7,7 @@ set -e
 WP_DEBUG=${WP_DEBUG-true}
 SCRIPT_DEBUG=${SCRIPT_DEBUG-true}
 WEBSTORIES_DEV_MODE=${WEBSTORIES_DEV_MODE-true}
+MEDIA_TRASH=${MEDIA_TRASH-false}
 WP_VERSION=${WP_VERSION-"latest"}
 
 # Include useful functions
@@ -88,7 +89,6 @@ container chmod 767 \
 echo -e $(status_message "Import default set of media assets...")
 # TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
 wp media import /var/www/html/wp-content/e2e-assets/small-video.mov
-wp media import /var/www/html/wp-content/e2e-assets/small-video.webm
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png
@@ -159,6 +159,16 @@ if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
   wp config set WEBSTORIES_DEV_MODE $WEBSTORIES_DEV_MODE --raw --type=constant --quiet
   WEBSTORIES_DEV_MODE_RESULT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
   echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
+fi
+
+MEDIA_TRASH_CURRENT=!MEDIA_TRASH;
+if [ "$(wp config has --type=constant MEDIA_TRASH)" ]; then
+  $MEDIA_TRASH_CURRENT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
+fi
+if [ "$MEDIA_TRASH" != $MEDIA_TRASH_CURRENT ]; then
+  wp config set MEDIA_TRASH $MEDIA_TRASH --raw --type=constant --quiet
+  MEDIA_TRASH_RESULT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
+  echo -e $(status_message "MEDIA_TRASH: $MEDIA_TRASH_RESULT...")
 fi
 
 wp option patch insert web_stories_experiments enableSVG 1
