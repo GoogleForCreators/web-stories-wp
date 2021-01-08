@@ -21,29 +21,9 @@ import {
   createNewStory,
   previewStory,
   insertStoryTitle,
-  clickButton,
-  uploadFile,
+  uploadMedia,
   deleteMedia,
 } from '../../../utils';
-
-const MODAL = '.media-modal';
-
-async function uploadMedia(file) {
-  // Clicking will only act on the first element.
-  await expect(page).toClick('button', { text: 'Upload' });
-
-  await page.waitForSelector(MODAL, {
-    visible: true,
-  });
-
-  const fileName = await uploadFile(file);
-
-  await expect(page).toMatch(fileName);
-
-  await expect(page).toClick('.media-modal-close');
-
-  return fileName;
-}
 
 describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media dialog it', async () => {
@@ -51,19 +31,8 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    const filename = await uploadMedia('small-video.webm');
+    const filename = await uploadMedia('small-video.webm', false);
 
-    // Clicking will only act on the first element.
-    await expect(page).toClick('button', { text: 'Upload' });
-
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-
-    await expect(page).toClick('button', { text: 'Media Library' });
-    await clickButton(
-      `.attachments-browser .attachments .attachment[aria-label="${filename}]`
-    );
     await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="videoElement"]');

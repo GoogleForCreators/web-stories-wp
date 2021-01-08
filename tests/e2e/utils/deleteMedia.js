@@ -21,15 +21,18 @@ import { visitAdminPage } from '@wordpress/e2e-test-utils';
 /**
  * Creates a new story.
  *
- * @param fileName
+ * @param {string}fileName File name to delete with ext.
  */
 async function deleteMedia(fileName) {
   await visitAdminPage('upload.php', 'mode=list');
-  await expect(page).toMatch(fileName);
-  const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 
-  await expect(page).toClick('a', { text: fileNameNoExt, exact_text: true });
+  await expect(page).toMatch(fileName);
+
+  await expect(page).toClick('a', { text: fileName, exact_text: true });
+  await page.waitForNavigation();
   await expect(page).toClick('a', { text: 'Delete permanently' });
+  await page.waitForNavigation();
+  await expect(page).toMatch('Media file permanently deleted.');
 }
 
 export default deleteMedia;
