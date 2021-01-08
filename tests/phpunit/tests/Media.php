@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests;
 
+use WP_Query;
 use WP_REST_Request;
 
 /**
@@ -36,6 +37,13 @@ class Media extends \WP_UnitTestCase {
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_SQUARE_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
+
+		$this->assertSame( 10, has_action( 'rest_api_init', [ $media, 'rest_api_init' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $media, 'wp_prepare_attachment_for_js' ] ) );
+		$this->assertSame( 10, has_action( 'delete_attachment', [ $media, 'delete_video_poster' ] ) );
+		$this->assertSame( 10, has_filter( 'ajax_query_attachments_args', [ $media, 'filter_ajax_query_attachments_args' ] ) );
+		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media, 'filter_poster_attachments' ] ) );
+		$this->assertSame( 10, has_filter( 'rest_attachment_query', [ $media, 'filter_rest_poster_attachments' ] ) );
 	}
 	/**
 	 * @covers ::rest_api_init
@@ -263,5 +271,201 @@ class Media extends \WP_UnitTestCase {
 		wp_set_object_terms( $poster_attachment_id, 'poster-generation', \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
 		$result3 = $this->call_private_method( $media, 'is_poster', [ $poster_attachment_id ] );
 		$this->assertTrue( $result3 );
+	}
+
+	/**
+	 * @covers ::filter_ajax_query_attachments_args
+	 * @covers ::get_poster_tax_query
+	 */
+	public function test_filter_ajax_query_attachments_args() {
+		$expected = [
+			'tax_query' => [
+				[
+					'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation' ],
+					'operator' => 'NOT IN',
+				],
+			],
+		];
+
+		$media  = new \Google\Web_Stories\Media();
+		$actual = $media->filter_ajax_query_attachments_args( [] );
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_ajax_query_attachments_args
+	 * @covers ::get_poster_tax_query
+	 */
+	public function test_filter_ajax_query_attachments_args_existing_tax_query() {
+		$expected = [
+			'tax_query' => [
+				[
+					'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation' ],
+					'operator' => 'NOT IN',
+				],
+				[
+					[
+						'taxonomy' => 'category',
+						'field'    => 'slug',
+						'terms'    => [ 'uncategorized' ],
+						'operator' => 'NOT IN',
+					],
+				],
+			],
+		];
+
+		$media  = new \Google\Web_Stories\Media();
+		$actual = $media->filter_ajax_query_attachments_args(
+			[
+				'tax_query' => [
+					[
+						'taxonomy' => 'category',
+						'field'    => 'slug',
+						'terms'    => [ 'uncategorized' ],
+						'operator' => 'NOT IN',
+					],
+				],
+			]
+		);
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_poster_attachments
+	 */
+	public function test_filter_poster_attachments_no_screen() {
+		$query    = new WP_Query();
+		$expected = $query->get( 'tax_query' );
+
+		$media = new \Google\Web_Stories\Media();
+		$media->filter_poster_attachments( $query );
+		$actual = $query->get( 'tax_query' );
+
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_poster_attachments
+	 */
+	public function test_filter_poster_attachments_not_main_query() {
+		$GLOBALS['current_screen'] = convert_to_screen( 'upload' );
+
+		$query    = new WP_Query();
+		$expected = $query->get( 'tax_query' );
+
+		$media = new \Google\Web_Stories\Media();
+		$media->filter_poster_attachments( $query );
+		$actual = $query->get( 'tax_query' );
+
+		unset( $GLOBALS['current_screen'] );
+
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_poster_attachments
+	 */
+	public function test_filter_poster_attachments_not_upload_screen() {
+		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
+
+		$query                   = new WP_Query();
+		$GLOBALS['wp_the_query'] = $query;
+		$expected                = $query->get( 'tax_query' );
+
+		$media = new \Google\Web_Stories\Media();
+		$media->filter_poster_attachments( $query );
+		$actual = $query->get( 'tax_query' );
+
+		unset( $GLOBALS['current_screen'], $GLOBALS['wp_the_query'] );
+
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_poster_attachments
+	 */
+	public function test_filter_poster_attachments() {
+		$expected = [
+			[
+				'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+				'field'    => 'slug',
+				'terms'    => [ 'poster-generation' ],
+				'operator' => 'NOT IN',
+			],
+			[
+				[
+					'taxonomy' => 'category',
+					'field'    => 'slug',
+					'terms'    => [ 'uncategorized' ],
+					'operator' => 'NOT IN',
+				],
+			],
+		];
+
+		$GLOBALS['current_screen'] = convert_to_screen( 'upload' );
+
+		$query                   = new WP_Query();
+		$GLOBALS['wp_the_query'] = $query;
+		$query->set(
+			'tax_query',
+			[
+				[
+					'taxonomy' => 'category',
+					'field'    => 'slug',
+					'terms'    => [ 'uncategorized' ],
+					'operator' => 'NOT IN',
+				],
+			]
+		);
+
+		$media = new \Google\Web_Stories\Media();
+		$media->filter_poster_attachments( $query );
+		$actual = $query->get( 'tax_query' );
+
+		unset( $GLOBALS['current_screen'], $GLOBALS['wp_the_query'] );
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_rest_poster_attachments
+	 */
+	public function test_filter_rest_poster_attachments_wrong_route() {
+		$expected = [];
+
+		$media  = new \Google\Web_Stories\Media();
+		$actual = $media->filter_rest_poster_attachments( [], new WP_REST_Request() );
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_rest_poster_attachments
+	 */
+	public function test_filter_rest_poster_attachments() {
+		$expected = [
+			'tax_query' => [
+				[
+					'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation' ],
+					'operator' => 'NOT IN',
+				],
+			],
+		];
+
+		$media  = new \Google\Web_Stories\Media();
+		$actual = $media->filter_rest_poster_attachments(
+			[],
+			new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' )
+		);
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
 }
