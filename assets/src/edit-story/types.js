@@ -70,6 +70,12 @@ export const StylePresetPropType = PropTypes.shape({
   textStyles: PropTypes.array,
 });
 
+export const PageSizePropType = PropTypes.shape({
+  width: PropTypes.number,
+  height: PropTypes.number,
+  containerHeight: PropTypes.number,
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.story = PropTypes.shape({

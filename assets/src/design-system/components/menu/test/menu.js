@@ -26,13 +26,13 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import DropDownMenu from '../menu';
-import { basicDropDownOptions } from '../stories/sampleData';
+import { Menu } from '../';
+import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 import { getOptions } from '../utils';
 
 const groupedOptions = getOptions(basicDropDownOptions);
 
-describe('DropDown <DropDownMenu />', () => {
+describe('<Menu />', () => {
   const onClickMock = jest.fn();
 
   // Mock scrollTo
@@ -42,9 +42,9 @@ describe('DropDown <DropDownMenu />', () => {
     value: scrollTo,
   });
 
-  it('should render a <DropDownMenu /> list with 12 items', () => {
+  it('should render a <Menu /> list with 12 items', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
-      <DropDownMenu
+      <Menu
         hasMenuRole={false}
         emptyText={'No options available'}
         options={groupedOptions}
@@ -63,7 +63,7 @@ describe('DropDown <DropDownMenu />', () => {
 
   it('should return an emptyText message when there are no items to display', () => {
     const { getByText } = renderWithProviders(
-      <DropDownMenu
+      <Menu
         hasMenuRole={false}
         emptyText={'No options available'}
         options={[]}
@@ -79,7 +79,7 @@ describe('DropDown <DropDownMenu />', () => {
 
   it('should trigger onMenuItemClick when list item is clicked', () => {
     const { queryAllByRole } = renderWithProviders(
-      <DropDownMenu
+      <Menu
         hasMenuRole={false}
         emptyText={'No options available'}
         options={groupedOptions}
@@ -111,7 +111,7 @@ describe('DropDown <DropDownMenu />', () => {
     };
 
     const { queryAllByText, getByText } = renderWithProviders(
-      <DropDownMenu
+      <Menu
         hasMenuRole={false}
         emptyText={'No options available'}
         options={groupedOptions}

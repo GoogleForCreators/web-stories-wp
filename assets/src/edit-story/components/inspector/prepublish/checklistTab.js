@@ -248,6 +248,7 @@ const ChecklistTab = (props) => {
     <>
       {showHighPriorityItems && (
         <SimplePanel
+          collapsedByDefault={false}
           name="checklist"
           title={
             <TitleWrapper>
@@ -257,6 +258,7 @@ const ChecklistTab = (props) => {
               <NumberBadge error number={highPriorityLength} />
             </TitleWrapper>
           }
+          ariaLabel={__('High Priority', 'web-stories')}
         >
           {highPriority.map(renderRow)}
           {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
@@ -273,6 +275,7 @@ const ChecklistTab = (props) => {
               <NumberBadge recommended number={recommendedLength} />
             </TitleWrapper>
           }
+          ariaLabel={__('Recommended', 'web-stories')}
         >
           {recommended.map(renderRow)}
           {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}

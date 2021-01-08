@@ -95,10 +95,9 @@ describe('Inserting WebM Video', () => {
       return document.querySelector(selector).getAttribute('poster');
     }, 'amp-video');
 
-    // Check that the value of the poster is the url that is a string and not null.
     expect(poster).not.toBeNull();
     expect(poster).toStrictEqual(expect.any(String));
-    expect(poster.endsWith('.jpeg')).toBeTrue();
+    expect(poster).not.toStrictEqual('');
 
     await editorPage.bringToFront();
     await previewPage.close();

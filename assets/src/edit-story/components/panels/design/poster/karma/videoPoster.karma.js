@@ -49,6 +49,7 @@ describe('Video Poster Panel', () => {
             }),
           }),
           on: (type, callback) => callback(),
+          once: (type, callback) => callback(),
           open: () => {},
         }),
       };
