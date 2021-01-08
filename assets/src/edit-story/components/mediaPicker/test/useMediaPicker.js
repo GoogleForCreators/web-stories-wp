@@ -47,26 +47,29 @@ function setup(args) {
   );
   const onSelect = jest.fn();
   const onClose = jest.fn();
-  const { result } = renderHook(() => useMediaPicker({ onSelect, onClose }), {
-    wrapper,
-  });
+  const onPermissionError = jest.fn();
+  const { result } = renderHook(
+    () => useMediaPicker({ onSelect, onClose, onPermissionError }),
+    {
+      wrapper,
+    }
+  );
   return {
     openMediaPicker: result.current,
+    onPermissionError,
   };
 }
 
 describe('useMediaPicker', () => {
   it('user unable to upload', () => {
-    const { openMediaPicker } = setup({
+    const { openMediaPicker, onPermissionError } = setup({
       capabilities: {
         hasUploadMediaAction: false,
       },
     });
-    const evt = {
-      preventDefault: jest.fn(),
-    };
     act(() => {
-      expect(openMediaPicker(evt)).toBe(false);
+      openMediaPicker(new Event('click'));
     });
+    expect(onPermissionError).toHaveBeenCalledTimes(1);
   });
 });
