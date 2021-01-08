@@ -55,7 +55,7 @@ export const elementWithBorderRadius = css`
   ${(props) => getBorderRadius(props)}
 `;
 
-export const elementWithEditorPxBorderRadius = ({
+export const elementWithHighlightBorderRadius = ({
   borderRadius,
   dataToEditorY,
 }) =>

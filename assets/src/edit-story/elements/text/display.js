@@ -32,7 +32,7 @@ import {
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
   elementWithBorder,
-  elementWithEditorPxBorderRadius,
+  elementWithHighlightBorderRadius,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -89,7 +89,7 @@ const Span = styled.span`
 `;
 
 const BackgroundSpan = styled(Span)`
-  ${elementWithEditorPxBorderRadius}
+  ${elementWithHighlightBorderRadius}
   color: transparent;
 `;
 

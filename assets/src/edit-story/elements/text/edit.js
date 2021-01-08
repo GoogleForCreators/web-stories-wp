@@ -40,7 +40,7 @@ import {
   elementWithTextParagraphStyle,
   elementWithBackgroundColor,
   elementWithBorder,
-  elementWithEditorPxBorderRadius,
+  elementWithHighlightBorderRadius,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -104,7 +104,7 @@ const EditTextBox = styled(TextBox)(
 );
 
 const Highlight = styled.span`
-  ${elementWithEditorPxBorderRadius}
+  ${elementWithHighlightBorderRadius}
   ${({ highlightColor }) => generatePatternStyles(highlightColor)};
   color: transparent !important;
   * {
