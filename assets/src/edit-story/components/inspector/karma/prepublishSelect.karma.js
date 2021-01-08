@@ -90,7 +90,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const doInsert = () =>
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
-          fontSize: 10,
+          fontSize: 14,
           content:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           x: 40,
@@ -104,7 +104,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const element4 = await fixture.act(doInsert);
 
       await openPrepublishPanel();
-
       await openRecommendedPanel();
 
       let storyContext = await fixture.renderHook(() => useStory());
@@ -113,7 +112,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT
       );
       await fixture.events.mouse.clickOn(tooMuchTextOnPage);
-      await fixture.events.sleep(500);
+      await fixture.events.sleep(1000);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(4);
       expect(
@@ -217,6 +216,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(storyContext.state.selectedElementIds[0]).not.toEqual(
         tooSmallLinkElement.id
       );
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('Enter');
