@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackEvent } from '../../../../tracking';
-import { toDate, isAfter, getCurrentDate, subMinutes } from '../../../../date';
+import { toDate, isFuture, subMinutes } from '../../../../date';
 import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
@@ -39,8 +39,6 @@ import useHeader from '../use';
 import { usePrepublishChecklist } from '../../inspector/prepublish';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
 import { ButtonContent, WarningIcon } from './styles';
-
-export const ONE_MINUTE_IN_MS = 60 * 1000;
 
 function Publish() {
   const { isSaving, date, storyId, saveStory, title } = useStory(
@@ -69,10 +67,7 @@ function Publish() {
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
   // Offset the date by one minute to accommodate for network latency.
-  const hasFutureDate = isAfter(
-    subMinutes(getCurrentDate(), ONE_MINUTE_IN_MS),
-    toDate(date)
-  );
+  const hasFutureDate = isFuture(subMinutes(toDate(date), 1));
 
   const publish = useCallback(() => {
     trackEvent('publish_story', 'editor', '', '', {

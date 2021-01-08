@@ -19,16 +19,27 @@
  */
 import MockDate from 'mockdate';
 import { subMinutes, subHours, subDays, addHours } from 'date-fns';
+import { toDate } from 'date-fns-tz';
 
 /**
  * Internal dependencies
  */
 import getRelativeDisplayDate from '../getRelativeDisplayDate';
 import { updateSettings, resetSettings } from '../settings';
+import getOptions from '../getOptions';
+
+/**
+ * Returns the current date in the site's timezone.
+ *
+ * @return {Date} Date object.
+ */
+function getCurrentDate() {
+  return toDate(new Date(), getOptions());
+}
 
 describe('date/getRelativeDisplayDate', () => {
   beforeEach(() => {
-    MockDate.set('2020-07-15T12:00:00+00:00');
+    MockDate.set('2020-07-15T12:00:00.000');
   });
 
   afterEach(() => {
@@ -43,7 +54,7 @@ describe('date/getRelativeDisplayDate', () => {
       timeFormat: 'g:i A',
       timezone: 'America/New_York',
     });
-    const date = subMinutes(new Date(), 2);
+    const date = subMinutes(getCurrentDate(), 2);
     const formattedDate = getRelativeDisplayDate(date);
 
     expect(formattedDate).toStrictEqual('2 minutes ago');
@@ -57,7 +68,7 @@ describe('date/getRelativeDisplayDate', () => {
       timezone: 'America/Los_Angeles',
     });
 
-    const date = subMinutes(new Date(), 2);
+    const date = subMinutes(getCurrentDate(), 2);
     const formattedDate = getRelativeDisplayDate(date);
 
     expect(formattedDate).toStrictEqual('2 minutes ago');
@@ -71,7 +82,7 @@ describe('date/getRelativeDisplayDate', () => {
       timezone: 'America/Los_Angeles',
     });
 
-    const date = subHours(new Date(), 1);
+    const date = subHours(getCurrentDate(), 1);
     const formattedDate = getRelativeDisplayDate(date);
 
     expect(formattedDate).toStrictEqual('an hour ago');
@@ -84,7 +95,7 @@ describe('date/getRelativeDisplayDate', () => {
       timeFormat: 'g:i A',
       timezone: 'America/Los_Angeles',
     });
-    const date = subHours(new Date(), 2);
+    const date = subHours(getCurrentDate(), 2);
     const formattedDate = getRelativeDisplayDate(date);
 
     expect(formattedDate).toStrictEqual('2 hours ago');
@@ -97,7 +108,7 @@ describe('date/getRelativeDisplayDate', () => {
       timeFormat: 'g:i A',
       timezone: 'America/Los_Angeles',
     });
-    const date = subDays(new Date(), 1);
+    const date = subDays(getCurrentDate(), 1);
     const formattedDate = getRelativeDisplayDate(date);
 
     expect(formattedDate).toStrictEqual('yesterday');
@@ -111,10 +122,10 @@ describe('date/getRelativeDisplayDate', () => {
       timezone: 'America/Los_Angeles',
     });
 
-    const date = addHours(new Date(), 1);
-    const formattedDate = getRelativeDisplayDate(date);
+    const date = addHours(getCurrentDate(), 1);
+    const formattedDate = getRelativeDisplayDate(date.toISOString());
 
-    expect(formattedDate).toStrictEqual('3:00 PM');
+    expect(formattedDate).toStrictEqual('1:00 PM');
   });
 
   it('should return 2020-05-02 with no formatting options', () => {

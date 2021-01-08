@@ -22,7 +22,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { toUTCDate } from '../../../../date';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 import useApi from '../useApi';
@@ -44,8 +43,8 @@ jest.mock('../wpAdapter', () => ({
           title: { raw: 'Carlos', rendered: 'Carlos' },
           content: { raw: 'Content', rendered: 'Content' },
           story_data: { pages: [{ id: 1, elements: [] }] },
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000Z',
+          date: '1970-01-01T00:00:00.000Z',
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
       ],
@@ -61,8 +60,8 @@ jest.mock('../wpAdapter', () => ({
       content: { raw: content, rendered: content },
       author: 1,
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified_gmt: '1970-01-01T00:00:00.000Z',
-      date_gmt: '1970-01-01T00:00:00.000Z',
+      modified: '1970-01-01T00:00:00.000Z',
+      date: '1970-01-01T00:00:00.000Z',
       link: 'https://www.story-link.com',
       _embedded: { author: [{ id: 1, name: 'admin' }] },
     });
@@ -75,8 +74,8 @@ jest.mock('../wpAdapter', () => ({
       title: { raw: 'Carlos', rendered: 'Carlos' },
       content: { raw: 'Content', rendered: 'Content' },
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified_gmt: '1970-01-01T00:00:00.000Z',
-      date_gmt: '1970-01-01T00:00:00.000Z',
+      modified: '1970-01-01T00:00:00.000Z',
+      date: '1970-01-01T00:00:00.000Z',
       link: 'https://www.story-link.com',
     });
   },
@@ -105,14 +104,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        modified: undefined,
+        created: undefined,
         author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000Z',
+          date: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
@@ -165,7 +164,7 @@ describe('ApiProvider', () => {
     await act(async () => {
       await result.current.actions.storyApi.updateStory({
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        modified: undefined,
         pages: [
           {
             elements: [],
@@ -188,14 +187,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        modified: undefined,
+        created: undefined,
         author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000Z',
+          date: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
@@ -284,14 +283,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        modified: undefined,
+        created: undefined,
         author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000Z',
+          date: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
@@ -327,14 +326,14 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=456',
         id: 456,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        modified: undefined,
+        created: undefined,
         author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 456,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000Z',
+          date: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
