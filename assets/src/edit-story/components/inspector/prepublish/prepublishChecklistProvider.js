@@ -24,32 +24,41 @@ import PropTypes from 'prop-types';
 import { useStory } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
 import usePrevious from '../../../utils/usePrevious';
+import { useLayout } from '../../../app/layout';
 import Context from './context';
 
 function PrepublishChecklistProvider({ children }) {
+  const { pageSize } = useLayout(({ state: { canvasPageSize } }) => ({
+    pageSize: canvasPageSize,
+  }));
+
   const story = useStory(({ state: { story, pages } }) => {
     return { ...story, pages };
   });
 
-  const [currentList, setCurrentList] = useState(() =>
-    // use lazy initialization to prevent checklist from running on every update
-    getPrepublishErrors(story)
-  );
+  const [currentList, setCurrentList] = useState([]);
 
-  const handleRefreshList = useCallback(
-    () => setCurrentList(getPrepublishErrors(story)),
-    [story]
-  );
+  const handleRefreshList = useCallback(async () => {
+    const pagesWithSize = story.pages.map((page) => ({
+      ...page,
+      pageSize,
+    }));
+    setCurrentList(
+      await getPrepublishErrors({ ...story, pages: pagesWithSize })
+    );
+  }, [story, pageSize]);
 
   const prevPages = usePrevious(story.pages);
+  const prevPageSize = usePrevious(pageSize);
 
   const refreshOnInitialLoad = prevPages?.length === 0 && story.pages?.length;
+  const refreshOnPageSizeChange = prevPageSize?.width !== pageSize?.width;
 
   useEffect(() => {
-    if (refreshOnInitialLoad) {
+    if (refreshOnInitialLoad || refreshOnPageSizeChange) {
       handleRefreshList();
     }
-  }, [handleRefreshList, refreshOnInitialLoad]);
+  }, [handleRefreshList, refreshOnInitialLoad, refreshOnPageSizeChange]);
 
   return (
     <Context.Provider

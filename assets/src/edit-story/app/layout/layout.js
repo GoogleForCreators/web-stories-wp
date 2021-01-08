@@ -39,6 +39,7 @@ import {
 } from '../../constants';
 import withOverlay from '../../components/overlay/withOverlay';
 import CanvasProvider from '../../components/canvas/canvasProvider';
+import { PrepublishChecklistProvider } from '../../components/inspector/prepublish';
 import LayoutProvider from './layoutProvider';
 
 const Editor = withOverlay(styled.section.attrs({
@@ -74,17 +75,19 @@ const Area = styled.div`
 function Layout() {
   return (
     <LayoutProvider>
-      <Editor zIndex={3}>
-        <CanvasProvider>
-          <Area area="lib">
-            <Library />
+      <PrepublishChecklistProvider>
+        <Editor zIndex={3}>
+          <CanvasProvider>
+            <Area area="lib">
+              <Library />
+            </Area>
+            <Workspace />
+          </CanvasProvider>
+          <Area area="metaboxes">
+            <MetaBoxes />
           </Area>
-          <Workspace />
-        </CanvasProvider>
-        <Area area="metaboxes">
-          <MetaBoxes />
-        </Area>
-      </Editor>
+        </Editor>
+      </PrepublishChecklistProvider>
     </LayoutProvider>
   );
 }

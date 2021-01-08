@@ -31,43 +31,71 @@ const STYLES = {
 };
 
 const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
+const IMG_NODE = '__WEB_STORIES_IMG_NODE';
+
+export function getImgNodeId(elementId) {
+  if (elementId === undefined) {
+    return '__web-stories-base-color';
+  }
+  return `__web-stories-bg-${elementId}`;
+}
+
+function getImgNodeKey(elementId) {
+  if (elementId === undefined) {
+    return BASE_COLOR_NODE;
+  }
+  return `${IMG_NODE}_${elementId}`;
+}
 
 export function getMediaBaseColor(resource, onBaseColor) {
   const { type, src, poster } = resource;
-  setOrCreateImage(type === 'video' ? poster : src).then(
+  setOrCreateImage({
+    src: type === 'video' ? poster : src,
+    width: 10,
+    height: 'auto',
+  }).then(
     (color) => onBaseColor(color),
     () => onBaseColor([255, 255, 255]) // Fallback color is white.
   );
 }
 
-function setOrCreateImage(src) {
+function getDefaultOnloadCallback(nodeKey, resolve, reject) {
+  return () => {
+    try {
+      const node = document.body[nodeKey];
+      resolve(thief.getColor(node.firstElementChild));
+    } catch (error) {
+      reject(new Error(`Get color error: `, error.message));
+    }
+  };
+}
+
+export function setOrCreateImage(
+  imageData,
+  getOnloadCallback = getDefaultOnloadCallback
+) {
+  const { src, id, height, width } = imageData;
   return new Promise((resolve, reject) => {
-    let imgNode = document.body[BASE_COLOR_NODE];
+    const NODE_KEY = getImgNodeKey(id);
+    let imgNode = document.body[NODE_KEY];
     if (!imgNode) {
       imgNode = document.createElement('div');
-      imgNode.id = '__web-stories-base-color';
-      Object.assign(imgNode, STYLES);
+      imgNode.id = getImgNodeId(id);
+      Object.assign(imgNode.style, STYLES);
       document.body.appendChild(imgNode);
-      document.body[BASE_COLOR_NODE] = imgNode;
+      document.body[NODE_KEY] = imgNode;
     }
     imgNode.innerHTML = '';
 
     const img = new Image();
     // Necessary to avoid tainting canvas with CORS image data.
     img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      const node = document.body[BASE_COLOR_NODE];
-      try {
-        resolve(thief.getColor(node.firstElementChild));
-      } catch (e) {
-        reject(e);
-      }
-    };
-    img.onerror = (e) => {
-      reject(new Error('Base color image error: ' + e.message));
-    };
-    img.width = 10;
-    img.height = 'auto';
+    img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve, reject));
+    img.addEventListener('error', (e) => {
+      reject(new Error('Set image error: ' + e.message));
+    });
+    img.width = width;
+    img.height = height;
     img.src = src;
     imgNode.appendChild(img);
   });
