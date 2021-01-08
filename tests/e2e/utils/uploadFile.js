@@ -50,9 +50,6 @@ async function uploadFile(file) {
 
   // Upload successful!
   await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
-  await expect(page).toMatchElement(
-    `.media-modal li[aria-label="${newBaseName}"]`
-  );
 
   return newFileName;
 }
