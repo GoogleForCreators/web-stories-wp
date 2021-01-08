@@ -75,11 +75,10 @@ export default function useDropDownMenu({
       ) {
         handleMoveFocus(1);
       } else if (
-        handleReturnToParent &&
         ['ArrowUp', isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key) &&
         focusedIndex === 0
       ) {
-        handleReturnToParent();
+        handleReturnToParent?.();
       }
     },
     [focusedIndex, handleMoveFocus, handleReturnToParent, isRTL, listLength]

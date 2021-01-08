@@ -105,12 +105,13 @@ export const Typeahead = ({
     handleTypeaheadValueChange,
   });
 
-  // Callbacks that begin typeahead interaction
-
-  // When input is given focus, set menu to isOpen
+  /**
+   * Callbacks that begin typeahead interaction
+   * handleInputFocus: When input is given focus, set menu to isOpen.
+   * handleInputClick: When input is clicked, toggle menu.
+   * */
   const handleInputFocus = useCallback(() => isOpen.set(true), [isOpen]);
 
-  // When input is clicked, toggle menu.
   const handleInputClick = useCallback(
     (event) => {
       event.preventDefault();
@@ -120,10 +121,12 @@ export const Typeahead = ({
     [isOpen]
   );
 
-  // Callbacks passed to menu
+  /**
+   * Callbacks passed to menu
+   * handleDismissMenu: when menu is focused out (if isFlexibleValue is false (default), set input back to selectedValue.)
+   * handleMenuClick: When item menu is chosen by either cursor or keyboard.
+   */
 
-  // handleDismissMenu as sent to menu for focusOut hooks.
-  // if isFlexibleValue is false (default), set input back to selectedValue.
   const handleDismissMenu = useCallback(
     (event) => {
       // don't dismiss menu if clicking on clear button while menu is open
@@ -142,7 +145,7 @@ export const Typeahead = ({
       }
 
       // move focus to next element if available.
-      inputRef?.current?.offsetParent.nextSibling?.focus();
+      inputRef.current?.offsetParent?.nextSibling?.focus();
     },
     [activeOption, clearId, inputValue, isFlexibleValue, isOpen, isMenuFocused]
   );
@@ -159,10 +162,15 @@ export const Typeahead = ({
 
   const handleReturnToInput = useCallback(() => inputRef?.current?.focus(), []);
 
-  // Callbacks passed to input
-
-  // Control input changes by user.
-  // Ensure menu is open and focus is maintained to input.
+  /**
+   * Callbacks passed to input
+   * handleInputChange: When input changes by user.
+   * handleClearInputValue: When clear button is triggered.
+   * - Will only clear the input value by default.
+   * - If isFlexibleValue and onMenuItemClick are present will also trigger onMenuItemClick with an empty string to clear out selected value (presumably - since this is controlled by parent).
+   * handleTabClearButton: When keyboard user goes from input to clear button.
+   * - Since technically we've already focused out of the input where the menu wants to close, if tab is used on clear button, dismiss menu but don't focus back to input.
+   */
   const handleInputChange = useCallback(
     ({ target }) => {
       inputValue.set(target.value);
@@ -174,9 +182,6 @@ export const Typeahead = ({
     [inputValue, isOpen]
   );
 
-  // Triggered by clicking clear button.
-  // Will only clear the input value by default.
-  // if isFlexibleValue and onMenuItemClick are present will also trigger onMenuItemClick with an empty string to clear out selected value (presumably - since this is controlled by parent).
   const handleClearInputValue = useCallback(() => {
     inputValue.set('');
     if (isFlexibleValue) {
@@ -186,7 +191,6 @@ export const Typeahead = ({
     }
   }, [inputValue, isFlexibleValue, handleReturnToInput, onMenuItemClick]);
 
-  // If tab is used on clear button, dismiss menu but don't focus back to input.
   const handleTabClearButton = useCallback(() => {
     isOpen.set(false);
     isMenuFocused.set(false);
@@ -200,20 +204,23 @@ export const Typeahead = ({
     isMenuFocused,
   ]);
 
-  // Used to reset the input value to an activeOption label
   const setInputValueToActiveOption = useCallback(
     () => activeOption?.label && inputValue.set(activeOption.label),
     [activeOption, inputValue]
   );
 
-  // Watch keyDown of input for keys that change interaction (ordered)
-  // Close menu on escape.
-  // Also reset input value to active option if isFlexibleValue is false on escape.
-  // Close menu on tab + isFlexibleValue
-  // Reset input value to active value on tab if menu is closed
-  // Reset input value to active value and close menu if inputValue length is 0.
-  // Send focus to menu list on arrowDown
-  // Tricker menuItemClick on enter if isFlexibleValue
+  /**
+   * handleInputKeyPress
+   * Watch keyDown of input for keys that change interaction
+   * ESC: Close menu
+   * - Also reset input value to active option if isFlexibleValue is false on escape.
+   * TAB:
+   * - Close menu on tab + isFlexibleValue
+   * - Reset input value to active value on tab if menu is closed
+   * - Reset input value to active value and close menu if inputValue length is 0.
+   * ARROW DOWN: Send focus to menu list
+   * ENTER: Trigger menuItemClick if isFlexibleValue is true
+   */
   const handleInputKeyPress = useCallback(
     (event) => {
       const { key } = event;

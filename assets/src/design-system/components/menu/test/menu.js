@@ -37,9 +37,14 @@ describe('<Menu />', () => {
 
   // Mock scrollTo
   const scrollTo = jest.fn();
-  Object.defineProperty(window.Element.prototype, 'scrollTo', {
-    writable: true,
-    value: scrollTo,
+  let nativeScrollTo;
+  beforeEach(() => {
+    nativeScrollTo = window.scrollTo;
+    window.scrollTo = scrollTo;
+  });
+
+  afterEach(() => {
+    window.scrollTo = nativeScrollTo;
   });
 
   it('should render a <Menu /> list with 12 items', () => {
@@ -51,7 +56,6 @@ describe('<Menu />', () => {
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
-        ref={{ current: undefined }}
       />
     );
 
@@ -71,7 +75,6 @@ describe('<Menu />', () => {
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
-        ref={{ current: undefined }}
       />
     );
 
@@ -88,7 +91,6 @@ describe('<Menu />', () => {
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
-        ref={{ current: undefined }}
       />
     );
 
@@ -122,7 +124,6 @@ describe('<Menu />', () => {
         onDismissMenu={() => {}}
         activeValue={basicDropDownOptions[2].value}
         renderItem={OverrideRenderItem}
-        ref={{ current: undefined }}
       />
     );
 

@@ -69,7 +69,6 @@ const Menu = (
   },
   ref
 ) => {
-  const listRef = ref;
   const optionsRef = useRef([]);
 
   const handleMenuItemSelect = useCallback(
@@ -82,13 +81,13 @@ const Menu = (
     handleMenuItemSelect,
     isRTL,
     options,
-    listRef,
+    ref,
     onDismissMenu,
     handleReturnToParent,
   });
 
   useEffect(() => {
-    const listEl = listRef?.current;
+    const listEl = ref?.current;
 
     if (!listEl || focusedIndex === null || !isMenuFocused) {
       return;
@@ -106,14 +105,14 @@ const Menu = (
 
     highlighedOptionEl.focus();
     listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
-  }, [focusedIndex, isMenuFocused, listRef]);
+  }, [focusedIndex, isMenuFocused, ref]);
 
   return (
     <MenuContainer
       id={listId}
       dropDownHeight={dropDownHeight}
       styleOverride={menuStylesOverride}
-      ref={listRef}
+      ref={ref}
       aria-label={menuAriaLabel}
       aria-labelledby={parentId}
       aria-expanded="true"

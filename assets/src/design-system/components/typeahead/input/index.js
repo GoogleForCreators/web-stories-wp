@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, forwardRef } from 'react';
+import { useCallback, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -47,23 +47,27 @@ const TypeaheadInput = (
   },
   ref
 ) => {
-  // show the search icon ahead of the input if input is active or if isFlexibleValue is true and inputValue has a length greater than 0
-  const showSearchIcon = useMemo(
-    () => isOpen || (isFlexibleValue && inputValue.length > 0),
-    [isFlexibleValue, inputValue, isOpen]
-  );
-  // show clear button when there is text present in input and the menu isn't open or isFlexibleValue is true.
-  const showClearButton = useMemo(
-    () => inputValue.length > 0 && (isOpen || isFlexibleValue),
-    [inputValue, isFlexibleValue, isOpen]
-  );
+  /**
+   * show the search icon ahead of the input:
+   * 1) if input is active
+   * 2) if isFlexibleValue is true and inputValue has a length greater than 0
+   */
+  const showSearchIcon = isOpen || (isFlexibleValue && inputValue.length > 0);
 
-  // show drop down icon when clear button is not present: menu is not open and there is no input if isFlexibleValue,
-  // or if not open and showClearButton is false and isMenuFocused is true.
-  const showDropDownIcon = useMemo(
-    () => (isFlexibleValue ? inputValue.length === 0 : !showClearButton),
-    [inputValue.length, isFlexibleValue, showClearButton]
-  );
+  /**
+   * show clear button:
+   * 1) when there is text present in input and the menu isn't open or isFlexibleValue is true.
+   */
+  const showClearButton = inputValue.length > 0 && (isOpen || isFlexibleValue);
+
+  /**
+   * show drop down icon when:
+   * 1) input has no value
+   * 2) when clear button is not present
+   */
+  const showDropDownIcon = isFlexibleValue
+    ? inputValue.length === 0
+    : !showClearButton;
 
   const onClearButtonKeyDown = useCallback(
     ({ key }) => {
@@ -106,16 +110,11 @@ const TypeaheadInput = (
         aria-hidden={showDropDownIcon}
       >
         {showClearButton && (
-          <StyledClear
-            aria-hidden={true}
-            id={clearId}
-            data-testid={'clear-typeahead-icon'}
-          />
+          <StyledClear id={clearId} data-testid={'clear-typeahead-icon'} />
         )}
         {showDropDownIcon && (
           <StyledChevron
             isOpen={isOpen}
-            aria-hidden={true}
             data-testid={'chevron-typeahead-icon'}
           />
         )}

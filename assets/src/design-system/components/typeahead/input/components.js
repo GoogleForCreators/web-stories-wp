@@ -36,8 +36,7 @@ export const InputContainer = styled.div`
 export const Input = styled.input(
   ({ theme, isOpen, hasError, hasSearchIcon }) => css`
     position: absolute;
-    padding: 8px 20px 8px 12px;
-    padding-left: ${hasSearchIcon ? 32 : 12}px;
+    padding: 8px 20px 8px ${hasSearchIcon ? 32 : 12}px;
     height: 100%;
     width: 100%;
     background-color: transparent;

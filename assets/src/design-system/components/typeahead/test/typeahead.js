@@ -29,9 +29,14 @@ import { Typeahead } from '../';
 describe('Typeahead <Typeahead />', () => {
   // Mock scrollTo
   const scrollTo = jest.fn();
-  Object.defineProperty(window.Element.prototype, 'scrollTo', {
-    writable: true,
-    value: scrollTo,
+  let nativeScrollTo;
+  beforeEach(() => {
+    nativeScrollTo = window.scrollTo;
+    window.scrollTo = scrollTo;
+  });
+
+  afterEach(() => {
+    window.scrollTo = nativeScrollTo;
   });
 
   jest.useFakeTimers();
@@ -108,6 +113,9 @@ describe('Typeahead <Typeahead />', () => {
 
     fireEvent.click(input);
 
+    // wait for debounced callback to allow a select click handler to process
+    jest.runOnlyPendingTimers();
+
     const menu = getByRole('listbox');
     expect(menu).toBeInTheDocument();
   });
@@ -126,6 +134,9 @@ describe('Typeahead <Typeahead />', () => {
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
     fireEvent.click(input);
+
+    // wait for debounced callback to allow a select click handler to process
+    jest.runOnlyPendingTimers();
 
     const activeMenuItem = getByRole('option', {
       name: `Selected ${basicDropDownOptions[2].label}`,
@@ -148,6 +159,9 @@ describe('Typeahead <Typeahead />', () => {
 
     fireEvent.click(input);
 
+    // wait for debounced callback to allow a select click handler to process
+    jest.runOnlyPendingTimers();
+
     const menu = queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
   });
@@ -168,6 +182,9 @@ describe('Typeahead <Typeahead />', () => {
     const input = getByRole('combobox');
     fireEvent.click(input);
 
+    // wait for debounced callback to allow a select click handler to process
+    jest.runOnlyPendingTimers();
+
     const menu = getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
@@ -185,7 +202,7 @@ describe('Typeahead <Typeahead />', () => {
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should close active menu when input is clicked', () => {
+  it('should close active menu when input is clicked', async () => {
     const wrapper = renderWithProviders(
       <Typeahead
         ariaInputLabel={'label'}
@@ -195,16 +212,20 @@ describe('Typeahead <Typeahead />', () => {
     );
     const input = wrapper.getByRole('combobox');
     fireEvent.click(input);
+    // wait for debounced callback to allow a select click handler to process
+    jest.runOnlyPendingTimers();
 
     const menu = wrapper.getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
+    fireEvent.click(input);
+
     // wait for debounced callback to allow a select click handler to process
     jest.runOnlyPendingTimers();
 
-    fireEvent.click(input);
-
-    expect(wrapper.queryByRole('listbox')).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(wrapper.queryByRole('listbox')).not.toBeInTheDocument()
+    );
   });
 });
 
