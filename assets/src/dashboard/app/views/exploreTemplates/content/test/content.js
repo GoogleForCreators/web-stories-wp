@@ -58,7 +58,10 @@ const fakeTemplates = [
   },
 ];
 
-jest.mock('../../../../../components/previewPage.js', () => () => null);
+jest.mock(
+  '../../../../../../edit-story/components/previewPage/previewPage.js',
+  () => () => null
+);
 jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
   children
 );
