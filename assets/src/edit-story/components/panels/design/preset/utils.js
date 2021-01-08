@@ -139,23 +139,23 @@ export function getTextPresets(elements, stylePresets, type) {
     'style' === type
       ? []
       : elements
-        .map(({ content }) => getHTMLInfo(content).color)
-        .filter((color) => color !== MULTIPLE_VALUE)
-        .filter(
-          (color) => color && !findMatchingColor(color, stylePresets, true)
-        );
+          .map(({ content }) => getHTMLInfo(content).color)
+          .filter((color) => color !== MULTIPLE_VALUE)
+          .filter(
+            (color) => color && !findMatchingColor(color, stylePresets, true)
+          );
 
   const allStyles =
     'color' === type
       ? []
       : elements
-        .map((text) => {
-          return {
-            ...objectPick(text, TEXT_PRESET_STYLES),
-            ...getTextInlineStyles(text.content),
-          };
-        })
-        .filter((preset) => !findMatchingStylePreset(preset, stylePresets));
+          .map((text) => {
+            return {
+              ...objectPick(text, TEXT_PRESET_STYLES),
+              ...getTextInlineStyles(text.content),
+            };
+          })
+          .filter((preset) => !findMatchingStylePreset(preset, stylePresets));
   return {
     colors: getUniquePresets(allColors),
     textStyles: getUniquePresets(allStyles),
