@@ -17,7 +17,12 @@
 /**
  * WordPress dependencies
  */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+import {
+  activatePlugin,
+  deactivatePlugin,
+  loginUser,
+} from '@wordpress/e2e-test-utils';
+
 /**
  * Internal dependencies
  */
@@ -30,11 +35,12 @@ import {
 
 describe('Site Kit integration with editor', () => {
   beforeAll(async () => {
-    await activatePlugin('e2e-tests-site-kit-mock');
+    await loginUser('admin', 'password');
+    await activatePlugin('web-stories-test-plugin-site-kit');
   });
 
   afterAll(async () => {
-    await deactivatePlugin('e2e-tests-site-kit-mock');
+    await deactivatePlugin('web-stories-test-plugin-site-kit');
   });
 
   it('should print an analytics tag', async () => {
@@ -46,6 +52,10 @@ describe('Site Kit integration with editor', () => {
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
+    await expect(previewPage).toMatchElement('p', {
+      text: 'Fill in some text',
+    });
+
     await expect(previewPage).toMatch('XXX-YYY');
 
     await editorPage.bringToFront();

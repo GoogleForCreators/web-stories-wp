@@ -44,8 +44,13 @@ describe('Template', () => {
 
     await percySnapshot(page, 'Explore Templates');
 
-    await expect(firstTemplate).toClick('button', { text: 'Use template' });
-    await page.waitForNavigation();
+    await Promise.all([
+      page.waitForNavigation(),
+      expect(firstTemplate).toClick('button', { text: 'Use template' }),
+    ]);
+
+    // Wait for media elements to load before continuing.
+    await page.waitForSelector('[data-testid="mediaElement-image"]');
 
     // Wait for media elements to load before continuing.
     await page.waitForSelector('[data-testid="mediaElement-image"]');

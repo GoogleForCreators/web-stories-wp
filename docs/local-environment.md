@@ -7,7 +7,7 @@ Since you need a WordPress environment to run the plugin in, the quickest way to
 The following command will automatically verify whether Docker, Composer and Node.js are configured properly and start the local WordPress instance. You may need to run this script multiple times if prompted.
 
 ```bash
-npm run env:start
+npm run wp-env start
 ```
 
 The WordPress installation should be available at `http://localhost:8899` (**Username**: `admin`, **Password**: `password`).
@@ -15,19 +15,19 @@ The WordPress installation should be available at `http://localhost:8899` (**Use
 To later turn off the local environment, you can run:
 
 ```bash
-npm run env:stop
+npm run wp-env stop
 ```
 
 To bring it back later, run the previous command:
 
 ```bash
-npm run env:start
+npm run wp-env start
 ```
 
 Also, if you need to reset the local environment's database, you can run:
 
 ```bash
-npm run env:reset-site
+npm run wp-env clean
 ```
 
 ## Custom Environment

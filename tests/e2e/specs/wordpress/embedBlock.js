@@ -55,6 +55,15 @@ describe('Embed Block', () => {
         return;
       }
 
+      // story itself.
+      if (request.url().startsWith('https://amp.dev/')) {
+        request.respond({
+          status: 200,
+          body: '',
+        });
+        return;
+      }
+
       // Fetching metadata for the story.
       if (request.url().includes('web-stories/v1/embed')) {
         request.respond({

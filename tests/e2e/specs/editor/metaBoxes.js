@@ -22,7 +22,11 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * WordPress dependencies
  */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+import {
+  activatePlugin,
+  deactivatePlugin,
+  loginUser,
+} from '@wordpress/e2e-test-utils';
 
 /**
  * Internal dependencies
@@ -33,6 +37,7 @@ describe('Custom Meta Boxes', () => {
   withExperimentalFeatures(['customMetaBoxes']);
 
   beforeAll(async () => {
+    await loginUser('admin', 'password');
     await activatePlugin('web-stories-test-plugin-meta-box');
   });
 

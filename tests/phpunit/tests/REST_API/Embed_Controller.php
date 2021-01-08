@@ -311,6 +311,14 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 	 * @group ms-required
 	 */
 	public function test_local_url_pretty_permalinks_multisite() {
+		// Multisite does not support other ports by default, causing this test to fail
+		// because get_sites() doesn't return the expected results.
+		// See https://gist.github.com/bueltge/51013ab809f5f0f5e305c70c2d393fff for possible workaround.
+		$current_port = wp_parse_url( home_url(), PHP_URL_PORT );
+		if ( null !== $current_port && 80 !== $current_port ) {
+			$this->markTestSkipped( 'Avoiding false negative test results because of custom port.' );
+		}
+
 		$this->set_permalink_structure( '/%postname%/' );
 
 		// Without (re-)registering the post type here there won't be any rewrite rules for it

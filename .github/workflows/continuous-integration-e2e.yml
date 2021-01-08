@@ -18,20 +18,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # TODO: add back Firefox once support is more mature.
         include:
           - browser: 'chrome'
             wp: 'latest'
-            coverage: true
+            snapshots: true
+
           - browser: 'chrome'
             wp: '5.3.6'
-            coverage: false
+            snapshots: false
+    env:
+      WP_BASE_URL: http://localhost:8899
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # See https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#chrome-headless-doesnt-launch-on-unix
+        # See https://github.com/WordPress/gutenberg/issues/22398
+      - name: Install libkrb5-dev
+        run: sudo apt-get install libkrb5-dev
+
+        # See https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#chrome-headless-doesnt-launch-on-unix
       - name: Install libgbm1
         run: sudo apt-get install libgbm1
 
@@ -58,7 +64,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          coverage: none
+          snapshots: none
           tools: composer:v1
 
       - name: Get Composer cache directory
@@ -88,25 +94,51 @@ jobs:
           # TODO: remove eventually
           DISABLE_PREVENT: true
 
-      - name: Start Docker environment
-        run: npm run env:start
+      - name: Configure WordPress version
+        run: |
+          if [[ $WP_VERSION == 'master' ]]; then
+            echo "Using WordPress version: $WP_VERSION"
+
+            echo "{\"core\":\"WordPress/WordPress#${WP_VERSION}\"}" >> .wp-env.override.json
+            exit 0
+          fi
+
+          if [[ $WP_VERSION == 'latest' ]]; then
+            LATEST_VERSION=$(curl -s http://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[0].version')
+            if [[ -z "$LATEST_VERSION" ]]; then
+              echo "Latest WordPress version could not be found"
+              exit 1
+            fi
+
+            echo "Found latest WordPress version: $LATEST_VERSION"
+            WP_VERSION=$LATEST_VERSION
+          fi
+
+          echo "Using WordPress version: $WP_VERSION"
+
+          echo "{\"core\":\"WordPress/WordPress#tags/${WP_VERSION}\"}" >> .wp-env.override.json
         env:
-          COMPOSE_INTERACTIVE_NO_CLI: true
           WP_VERSION: ${{ matrix.wp }}
+
+      - name: Start Docker environment
+        run: |
+          chmod -R 767 ./
+          npm run wp-env start -- --update --debug
+
+      - name: Prepare E2E tests
+        run: npm run test:e2e:prepare
 
       - name: Run E2E tests with percy
         run: npm run test:e2e:percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
-        if: ( matrix.coverage ) && ( github.event.pull_request.draft == false )
+        if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
         run: npm run test:e2e
-        if: ( ! matrix.coverage ) || ( github.event.pull_request.draft == true )
+        if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
-        run: npm run env:stop
-        if: always()
-        env:
-          COMPOSE_INTERACTIVE_NO_CLI: true
+        run: npm run wp-env stop
+        if: ${{ success() || failure() }}

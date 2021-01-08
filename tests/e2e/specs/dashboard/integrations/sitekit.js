@@ -26,11 +26,11 @@ import { visitDashboard } from '../../../utils';
 
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
-    await activatePlugin('e2e-tests-site-kit-mock');
+    await activatePlugin('web-stories-test-plugin-site-kit');
   });
 
   afterAll(async () => {
-    await deactivatePlugin('e2e-tests-site-kit-mock');
+    await deactivatePlugin('web-stories-test-plugin-site-kit');
   });
 
   it('should be able see Site Kit specific message', async () => {
@@ -43,10 +43,6 @@ describe('Site Kit integration with dashboard', () => {
     await expect(dashboardNavigation).toClick('a', {
       text: 'Editor Settings',
     });
-
-    await page.waitForResponse((response) =>
-      response.url().includes('web-stories/v1/media')
-    );
 
     await expect(page).toMatch(
       'Site Kit by Google has already enabled Google Analytics for your Web Stories'

@@ -35,8 +35,9 @@ jobs:
             ${{ runner.os }}-
 
       - name: Validate composer.json
-        run: composer --no-interaction validate --no-check-all
+        run: composer --no-interaction --no-check-all validate
 
+        # TODO: Use `npm run wp-env run composer` once using Composer 2.
       - name: Install dependencies
         run: composer install --prefer-dist --no-suggest --no-progress --no-interaction
 

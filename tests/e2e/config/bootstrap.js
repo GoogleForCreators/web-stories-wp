@@ -25,6 +25,7 @@ import { setDefaultOptions } from 'expect-puppeteer';
  */
 import {
   enablePageDialogAccept,
+  loginUser,
   setBrowserViewport,
   trashAllPosts,
 } from '@wordpress/e2e-test-utils';
@@ -236,6 +237,7 @@ beforeAll(async () => {
   enablePageDialogAccept();
   observeConsoleLogging();
   await setupBrowser();
+  await loginUser('admin', 'password');
   await trashAllPosts();
   await trashAllPosts('web-story');
   await page.setDefaultNavigationTimeout(10000);

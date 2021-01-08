@@ -63,5 +63,5 @@ npm run build:js
 To run a local instance of WordPress, in a separate terminal:
 
 ```bash
-npm run env:start
+npm run wp-env start
 ```

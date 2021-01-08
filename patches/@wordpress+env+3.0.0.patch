@@ -1,0 +1,115 @@
+diff --git a/node_modules/@wordpress/env/lib/build-docker-compose-config.js b/node_modules/@wordpress/env/lib/build-docker-compose-config.js
+index 8f97225..f2be8f2 100644
+--- a/node_modules/@wordpress/env/lib/build-docker-compose-config.js
++++ b/node_modules/@wordpress/env/lib/build-docker-compose-config.js
+@@ -152,9 +152,13 @@ module.exports = function buildDockerComposeConfig( config ) {
+ 	} else if ( testsPhpVersion === '7.1' ) {
+ 		phpunitTag = '7' + phpunitPhpVersion;
+ 	} else if ( [ '7.2', '7.3', '7.4' ].indexOf( testsPhpVersion ) >= 0 ) {
+-		phpunitTag = '8' + phpunitPhpVersion;
++	  // WP doesn't support PHPUnit 8 yet.
++		//phpunitTag = '8' + phpunitPhpVersion;
++		phpunitTag = '7' + phpunitPhpVersion;
+ 	} else if ( testsPhpVersion === '8.0' ) {
+-		phpunitTag = '9' + phpunitPhpVersion;
++    // WP doesn't support PHPUnit 8 yet.
++		//phpunitTag = '9' + phpunitPhpVersion;
++		phpunitTag = '7' + phpunitPhpVersion;
+ 	}
+ 	const phpunitImage = `wordpressdevelop/phpunit:${ phpunitTag }`;
+ 
+diff --git a/node_modules/@wordpress/env/lib/init-config.js b/node_modules/@wordpress/env/lib/init-config.js
+index 68e1678..6bea1c6 100644
+--- a/node_modules/@wordpress/env/lib/init-config.js
++++ b/node_modules/@wordpress/env/lib/init-config.js
+@@ -64,6 +64,21 @@ module.exports = async function initConfig( {
+ 		spinner.start();
+ 	}
+ 
++  const devPhpVersion = config.env.development.phpVersion ? Number( config.env.development.phpVersion.slice( 0, 3 ) ) : null;
++  const testsPhpVersion = config.env.tests.phpVersion ? Number( config.env.tests.phpVersion.slice( 0, 3 ) ) : null;
++
++  if (
++    (
++      ( devPhpVersion && devPhpVersion < 7.2 ) ||
++      ( testsPhpVersion && testsPhpVersion < 7.2 )
++    ) &&
++    typeof xdebug !== 'undefined' &&
++    xdebug !== 'off'
++  ) {
++    spinner.fail( 'wp-env only supports using Xdebug on PHP 7.2+' );
++    process.exit( 1 );
++  }
++
+ 	/**
+ 	 * We avoid writing changes most of the time so that we can better pass params
+ 	 * to the start command. For example, say you start wp-env with Xdebug enabled.
+@@ -84,7 +99,7 @@ module.exports = async function initConfig( {
+ 			path.resolve( config.workDirectoryPath, 'Dockerfile' ),
+ 			dockerFileContents(
+ 				dockerComposeConfig.services.wordpress.image,
+-				xdebug
++				config
+ 			)
+ 		);
+ 	} else if ( ! existsSync( config.workDirectoryPath ) ) {
+@@ -97,16 +112,26 @@ module.exports = async function initConfig( {
+ 	return config;
+ };
+ 
+-function dockerFileContents( image, xdebugMode ) {
+-	const isLinux = os.type() === 'Linux';
+-	// Discover client host does not appear to work on macOS with Docker.
+-	const clientDetectSettings = isLinux
+-		? 'xdebug.discover_client_host=true'
+-		: 'xdebug.client_host="host.docker.internal"';
++function dockerFileContents( image, config ) {
++  const xdebugMode = config.xdebug;
++
++  const contents = [];
++
++  const isLinux = os.type() === 'Linux';
+ 
+-	return `FROM ${ image }
++  contents.push(`FROM ${ image }`);
+ 
+-RUN apt -qy install $PHPIZE_DEPS \\
++  const devPhpVersion = config.env.development.phpVersion ? Number( config.env.development.phpVersion.slice( 0, 3 ) ) : null;
++  const testsPhpVersion = config.env.tests.phpVersion ? Number( config.env.tests.phpVersion.slice( 0, 3 ) ) : null;
++
++  if ( devPhpVersion >= 7.2 && testsPhpVersion >= 7.2 ) {
++    // Discover client host does not appear to work on macOS with Docker.
++    const clientDetectSettings = isLinux
++      ? 'xdebug.discover_client_host=true'
++      : 'xdebug.client_host="host.docker.internal"';
++
++    contents.push(
++      `RUN apt -qy install $PHPIZE_DEPS \\
+ 	&& pecl install xdebug \\
+ 	&& docker-php-ext-enable xdebug
+ 
+@@ -114,5 +139,8 @@ RUN touch /usr/local/etc/php/php.ini
+ RUN echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/php.ini
+ RUN echo 'xdebug.mode=${ xdebugMode }' >> /usr/local/etc/php/php.ini
+ RUN echo '${ clientDetectSettings }' >> /usr/local/etc/php/php.ini
+-`;
++`)
++  }
++
++	return contents.join('\n');
+ }
+diff --git a/node_modules/@wordpress/env/lib/wordpress.js b/node_modules/@wordpress/env/lib/wordpress.js
+index 0770516..bb7d764 100644
+--- a/node_modules/@wordpress/env/lib/wordpress.js
++++ b/node_modules/@wordpress/env/lib/wordpress.js
+@@ -83,8 +83,8 @@ async function configureWordPress( environment, config, spinner ) {
+ 		// Add quotes around string values to work with multi-word strings better.
+ 		value = typeof value === 'string' ? `"${ value }"` : value;
+ 		setupCommands.push(
+-			`wp config set ${ key } ${ value } --anchor="define( 'WP_DEBUG',"${
+-				typeof value !== 'string' ? ' --raw' : ''
++			`wp config set ${ key } ${ value } ${
++				typeof value !== 'string' ? '--raw' : ''
+ 			}`
+ 		);
+ 	}

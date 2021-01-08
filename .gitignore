@@ -2,13 +2,13 @@
 .idea/
 .vscode/
 .DS_Store
+.wp-env.override.json
 node_modules
 /assets/css
 /assets/js
 /assets/testjs
 /build
 /bin/build
-/bin/local-env/data
 /includes/vendor
 /includes/composer.json
 /plugin-assets

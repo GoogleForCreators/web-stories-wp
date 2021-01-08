@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import { visitAdminPage, loginUser } from '@wordpress/e2e-test-utils';
 
 /**
  * Toggle experiments state.
@@ -27,6 +27,7 @@ import { visitAdminPage } from '@wordpress/e2e-test-utils';
  * @return {Promise<void>}
  */
 async function toggleExperiments(features, enable) {
+  await loginUser('admin', 'password');
   await visitAdminPage(
     'edit.php',
     'post_type=web-story&page=web-stories-experiments'

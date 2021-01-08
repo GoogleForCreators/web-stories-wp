@@ -17,9 +17,13 @@
 /**
  * WordPress dependencies
  */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import { loginUser, visitAdminPage } from '@wordpress/e2e-test-utils';
 
 describe('Admin Menu', () => {
+  beforeAll(async () => {
+    await loginUser('admin', 'password');
+  });
+
   it('should contain links to Dashboard sub-pages', async () => {
     await visitAdminPage('index.php');
 
@@ -53,10 +57,12 @@ describe('Admin Menu', () => {
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(adminMenuItem).toClick('a', {
-      text: 'My Stories',
-    });
-    await page.waitForNavigation();
+    await Promise.all([
+      page.waitForNavigation(),
+      expect(adminMenuItem).toClick('a', {
+        text: 'My Stories',
+      }),
+    ]);
 
     await expect(page).toMatch('My Stories');
   });
@@ -70,10 +76,12 @@ describe('Admin Menu', () => {
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(adminMenuItem).toClick('a', {
-      text: 'Explore Templates',
-    });
-    await page.waitForNavigation();
+    await Promise.all([
+      page.waitForNavigation(),
+      expect(adminMenuItem).toClick('a', {
+        text: 'Explore Templates',
+      }),
+    ]);
 
     await expect(page).toMatch('Viewing all templates');
   });
@@ -87,10 +95,12 @@ describe('Admin Menu', () => {
     await page.hover('#menu-posts-web-story a');
     await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await expect(adminMenuItem).toClick('a', {
-      text: 'Settings',
-    });
-    await page.waitForNavigation();
+    await Promise.all([
+      page.waitForNavigation(),
+      expect(adminMenuItem).toClick('a', {
+        text: 'Settings',
+      }),
+    ]);
 
     await expect(page).toMatch('Google Analytics Tracking ID');
   });

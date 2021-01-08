@@ -27,7 +27,7 @@ import {
 const MODAL = '.media-modal';
 
 describe('Inserting WebM Video', () => {
-  it('should insert an video by clicking on media dialog it', async () => {
+  it('should insert a video via media dialog', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
@@ -41,7 +41,7 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).toClick('button', { text: 'Media Library' });
     await clickButton(
-      '.attachments-browser .attachments .attachment[aria-label="small-video"]'
+      '.attachments-browser .attachments .attachment[aria-label="lego-webm-video"]'
     );
     await expect(page).toClick('button', { text: 'Insert into page' });
 
@@ -52,7 +52,7 @@ describe('Inserting WebM Video', () => {
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
 
-  it('should insert an video by clicking on media library', async () => {
+  it('should insert a video via media library', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
@@ -69,7 +69,7 @@ describe('Inserting WebM Video', () => {
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
 
-  it('should insert an video by clicking on media library and preview on FE', async () => {
+  it('should insert a video via media library and preview on FE', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing with video');

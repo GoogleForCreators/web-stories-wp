@@ -23,7 +23,7 @@ import { addAllowedErrorMessage } from '../../config/bootstrap';
 async function interceptStatusCheck(status, body) {
   await page.setRequestInterception(true);
   return addRequestInterception((request) => {
-    if (request.url().includes('/web-stories/v1/status-check/')) {
+    if (request.url().includes('status-check')) {
       request.respond({
         status,
         body,

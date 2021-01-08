@@ -1,0 +1,27 @@
+{
+  "config": {
+    "FS_METHOD": "direct",
+    "WEBSTORIES_DEV_MODE": true
+  },
+  "plugins": [
+    "https://downloads.wordpress.org/plugin/rtl-tester.zip",
+    "https://downloads.wordpress.org/plugin/amp.zip",
+    "https://downloads.wordpress.org/plugin/classic-editor.zip"
+  ],
+  "mappings": {
+    "wp-content/plugins/web-stories": "."
+  },
+  "env": {
+    "development": {
+      "port": 8898
+    },
+    "tests": {
+      "port": 8899,
+      "mappings": {
+        "wp-content/plugins/web-stories": ".",
+        "wp-content/plugins/web-stories-test-plugins": "./tests/e2e/plugins",
+        "wp-content/e2e-assets": "./tests/e2e/assets"
+      }
+    }
+  }
+}
