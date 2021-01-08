@@ -36,7 +36,6 @@ import {
   PageSizePropType,
 } from '../../../types';
 import {
-  PreviewPage,
   Table,
   TableAuthorHeaderCell,
   TableBody,
@@ -66,7 +65,10 @@ import {
   DASHBOARD_TOP_MARGIN,
   DEFAULT_DASHBOARD_TOP_SPACE,
 } from '../../../constants/pageStructure';
-import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+import {
+  PreviewPage,
+  PreviewErrorBoundary,
+} from '../../../../edit-story/components/previewPage';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,

@@ -113,4 +113,20 @@ describe('Inspector Tabs integration', () => {
       expect(options[0].textContent).toBe('Jane Doe');
     });
   });
+
+  describe('Checklist Panel', function () {
+    it('should show high priority items open in checklist by default', async () => {
+      const { checklistTab } = fixture.editor.inspector;
+
+      await fixture.events.mouse.clickOn(checklistTab);
+
+      await waitFor(() => {
+        expect(
+          fixture.editor.inspector.checklistPanel.node.querySelector(
+            '[class^="checklistTab__Row-"]'
+          )
+        ).not.toBeNull();
+      });
+    });
+  });
 });
