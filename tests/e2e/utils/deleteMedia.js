@@ -32,6 +32,7 @@ async function deleteMedia(fileName) {
   await page.waitForNavigation();
   await expect(page).toClick('a', { text: 'Delete permanently' });
   await page.waitForNavigation();
+  await page.waitForSelector(`#message`);
   await expect(page).toMatch('Media file permanently deleted.');
 }
 

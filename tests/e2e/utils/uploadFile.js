@@ -32,6 +32,7 @@ import { v4 as uuid } from 'uuid';
  */
 async function uploadFile(file) {
   const fileExtension = extname(file);
+  await page.setDefaultTimeout(10000);
 
   // TODO: Fix ESLint config.
   // eslint-disable-next-line no-undef
@@ -50,6 +51,7 @@ async function uploadFile(file) {
 
   // Upload successful!
   await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
+  await page.setDefaultTimeout(3000);
 
   return newFileName;
 }
