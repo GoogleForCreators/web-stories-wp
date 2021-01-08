@@ -42,6 +42,7 @@ export const Main = styled(StandardViewContentGutter)`
   flex-direction: column;
   padding-top: 36px;
   margin-top: 20px;
+  margin-bottom: 56px;
   max-width: 945px;
 `;
 

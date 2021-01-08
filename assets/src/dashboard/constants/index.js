@@ -127,12 +127,6 @@ export const TEXT_INPUT_DEBOUNCE = 300;
 export const MIN_IMG_HEIGHT = 96;
 export const MIN_IMG_WIDTH = 96;
 
-export const AD_NETWORK_TYPE = {
-  NONE: 'none',
-  ADSENSE: 'adsense',
-  ADMANAGER: 'admanager',
-};
-
 export * from './components';
 export * from './direction';
 export * from './pageStructure';

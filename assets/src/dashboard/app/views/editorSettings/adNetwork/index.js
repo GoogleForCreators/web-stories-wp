@@ -201,7 +201,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
 }
 AdNetworkSettings.propTypes = {
   handleUpdate: PropTypes.func,
-  adNetwork: PropTypes.string,
+  adNetwork: PropTypes.oneOf(Object.values(AD_NETWORK_TYPE)),
 };
 
 export default AdNetworkSettings;
