@@ -65,6 +65,16 @@ function MultiSelectionMoveable({ selectedElements }) {
     actions: { pushTransform },
   } = useTransform();
 
+  useEffect(() => {
+    const handleUpdateMoveable = () => {
+      moveable.current?.updateRect();
+    };
+    window.addEventListener('resize', handleUpdateMoveable);
+    return () => {
+      window.removeEventListener('resize', handleUpdateMoveable);
+    };
+  }, [moveable]);
+
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
   useEffect(() => {

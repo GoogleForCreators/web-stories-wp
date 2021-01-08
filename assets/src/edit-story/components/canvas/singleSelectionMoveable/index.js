@@ -66,6 +66,16 @@ function SingleSelectionMoveable({
   }));
 
   useEffect(() => {
+    const handleUpdateMoveable = () => {
+      moveable.current?.updateRect();
+    };
+    window.addEventListener('resize', handleUpdateMoveable);
+    return () => {
+      window.removeEventListener('resize', handleUpdateMoveable);
+    };
+  }, [moveable]);
+
+  useEffect(() => {
     latestEvent.current = pushEvent;
   }, [pushEvent]);
 
