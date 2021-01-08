@@ -23,7 +23,7 @@ export { Input } from './input';
 export { Modal } from './modal';
 export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
-export * as Snackbar from './snackbar';
+export { Snackbar } from './snackbar';
 export * from './tooltip';
 export * from './keyboard';
 export * from './keyboard/gridview';
