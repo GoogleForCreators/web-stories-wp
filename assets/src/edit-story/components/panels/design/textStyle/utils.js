@@ -27,16 +27,17 @@ import { HIDDEN_PADDING } from '../../../../constants';
  * @return {Object} element.padding with hidden padding properties applied
  */
 export function applyHiddenPadding(element) {
-  return {
-    ...(element.padding ?? {}),
-    hasHiddenPadding: true,
-    ...['vertical', 'horizontal'].reduce((padding, axis) => {
-      padding[axis] =
-        (element?.padding?.[axis] || 0) +
-        (element?.padding?.hasHiddenPadding ? 0 : HIDDEN_PADDING[axis]);
-      return padding;
-    }, {}),
-  };
+  return element?.padding?.hasHiddenPadding
+    ? element.padding
+    : {
+        ...(element.padding ?? {}),
+        hasHiddenPadding: true,
+        ...['vertical', 'horizontal'].reduce((padding, axis) => {
+          padding[axis] =
+            (element?.padding?.[axis] || 0) + HIDDEN_PADDING[axis];
+          return padding;
+        }, {}),
+      };
 }
 
 /**
@@ -48,16 +49,17 @@ export function applyHiddenPadding(element) {
  * @return {Object} element.padding with hidden padding properties removed
  */
 export function removeHiddenPadding(element) {
-  return {
-    ...(element.padding ?? {}),
-    hasHiddenPadding: false,
-    ...['vertical', 'horizontal'].reduce((padding, axis) => {
-      padding[axis] =
-        (element?.padding?.[axis] || 0) -
-        (element?.padding?.hasHiddenPadding ? HIDDEN_PADDING[axis] : 0);
-      return padding;
-    }, {}),
-  };
+  return element?.padding?.hasHiddenPadding
+    ? {
+        ...(element.padding ?? {}),
+        hasHiddenPadding: false,
+        ...['vertical', 'horizontal'].reduce((padding, axis) => {
+          padding[axis] =
+            (element?.padding?.[axis] || 0) - HIDDEN_PADDING[axis];
+          return padding;
+        }, {}),
+      }
+    : element.padding;
 }
 
 /**
