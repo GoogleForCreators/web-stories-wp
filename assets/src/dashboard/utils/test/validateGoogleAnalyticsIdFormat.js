@@ -25,6 +25,11 @@ const idsToValidate = [
   ['78787878', false],
   ['ua--123448-0', false],
   ['clearly wrong', false],
+  ['G-9878987', true],
+  ['g-9878987', true],
+  ['X-8888888', false],
+  ['G-123456', false],
+  ['G-12345678', false],
 ];
 
 describe('validateGoogleAnalyticsIdFormat', () => {
