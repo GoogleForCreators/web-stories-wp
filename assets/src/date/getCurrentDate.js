@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import { utcToZonedTime } from 'date-fns-tz';
+import { toDate } from 'date-fns-tz';
 
 /**
  * Internal dependencies
  */
 import getOptions from './getOptions';
-import { toUTCDate } from './';
 
 /**
  * Returns the current date in the site's timezone.
@@ -31,7 +30,7 @@ import { toUTCDate } from './';
  * @return {Date} Date object.
  */
 function getCurrentDate() {
-  return utcToZonedTime(toUTCDate(new Date()), getOptions().timeZone);
+  return toDate(new Date(), getOptions());
 }
 
 export default getCurrentDate;

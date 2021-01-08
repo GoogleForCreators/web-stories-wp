@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { formatDistanceToNow, isToday, isYesterday } from 'date-fns';
+import { formatDistanceToNow, isToday, isYesterday, isFuture } from 'date-fns';
 
 import { toDate } from 'date-fns-tz';
 
@@ -30,7 +30,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import getOptions from './getOptions';
-import { formatDate } from '.';
+import formatDate from './formatDate';
+import formatTime from './formatTime';
 
 /**
  * Formats a date to display relative to time passed since date.
@@ -49,15 +50,20 @@ function getRelativeDisplayDate(date) {
   }
 
   const displayDate = toDate(date);
-
   if (isToday(displayDate)) {
+    if (isFuture(displayDate)) {
+      return formatTime(date);
+    }
+
     const { locale } = getOptions();
     return formatDistanceToNow(displayDate, {
       includeSeconds: false,
       addSuffix: true,
       locale,
     });
-  } else if (isYesterday(displayDate)) {
+  }
+
+  if (isYesterday(displayDate)) {
     return __('yesterday', 'web-stories');
   }
 

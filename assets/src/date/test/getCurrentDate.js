@@ -44,7 +44,7 @@ describe('getCurrentDate', () => {
     });
 
     expect(getCurrentDate().toISOString()).toStrictEqual(
-      '2020-07-15T13:47:26.000Z'
+      '2020-07-15T22:47:26.000Z'
     );
   });
 });

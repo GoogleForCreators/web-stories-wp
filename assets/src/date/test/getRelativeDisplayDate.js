@@ -18,7 +18,7 @@
  * External dependencies
  */
 import MockDate from 'mockdate';
-import { subMinutes, subHours, subDays } from 'date-fns';
+import { subMinutes, subHours, subDays, addHours } from 'date-fns';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import { updateSettings, resetSettings } from '../settings';
 
 describe('date/getRelativeDisplayDate', () => {
   beforeEach(() => {
-    MockDate.set('2020-07-15T22:47:26');
+    MockDate.set('2020-07-15T12:00:00+00:00');
   });
 
   afterEach(() => {
@@ -101,6 +101,20 @@ describe('date/getRelativeDisplayDate', () => {
     const formattedDate = getRelativeDisplayDate(date);
 
     expect(formattedDate).toStrictEqual('yesterday');
+  });
+
+  it('should return time with g:i A format for future date on same day', () => {
+    updateSettings({
+      dateFormat: 'F j, Y',
+      gmtOffset: -7,
+      timeFormat: 'g:i A',
+      timezone: 'America/Los_Angeles',
+    });
+
+    const date = addHours(new Date(), 1);
+    const formattedDate = getRelativeDisplayDate(date);
+
+    expect(formattedDate).toStrictEqual('3:00 PM');
   });
 
   it('should return 2020-05-02 with no formatting options', () => {
