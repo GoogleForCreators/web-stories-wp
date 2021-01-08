@@ -28,6 +28,8 @@ describe('Inserting Media from Dialog', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
+    // TODO Use mediaUpload here.
+
     // Clicking will only act on the first element.
     await expect(page).toClick('button', { text: 'Upload' });
 

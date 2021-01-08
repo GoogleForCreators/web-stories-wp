@@ -26,6 +26,8 @@ describe('Inserting .mov from dialog', () => {
   it('should not list the .mov', async () => {
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    // TODO Use mediaUpload here.
     await expect(page).toClick('button', { text: 'Upload' });
 
     await page.waitForSelector(MODAL, {

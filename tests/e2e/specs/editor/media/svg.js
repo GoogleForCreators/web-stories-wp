@@ -56,6 +56,7 @@ describe('SVG', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
+    // TODO Use mediaUpload here.
     await expect(page).toClick('button', { text: 'Upload' });
     await expect(page).toMatch('Upload to Story');
 
