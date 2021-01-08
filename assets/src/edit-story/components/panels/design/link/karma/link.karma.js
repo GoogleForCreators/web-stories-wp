@@ -108,7 +108,9 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    it('should display the link tooltip correctly', async () => {
+    // Disable reason: flaky test, fix in https://github.com/google/web-stories-wp/issues/5851
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
