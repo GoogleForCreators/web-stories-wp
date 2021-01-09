@@ -112,7 +112,7 @@ Toggle.propTypes = {
 };
 
 function Title({
-  title,
+  ariaLabel,
   children,
   isPrimary,
   isSecondary,
@@ -178,7 +178,7 @@ function Title({
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
-      aria-label={title}
+      aria-label={ariaLabel}
       aria-expanded={!isCollapsed}
       aria-controls={panelContentId}
       onClick={onToggle}
@@ -212,7 +212,7 @@ function Title({
 }
 
 Title.propTypes = {
-  title: PropTypes.string,
+  ariaLabel: PropTypes.string,
   children: PropTypes.node,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,

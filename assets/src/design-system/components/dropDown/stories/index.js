@@ -29,14 +29,14 @@ import PropTypes from 'prop-types';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
 import { Text } from '../../typography';
-import { DROP_DOWN_ITEM } from '../types';
+import { DROP_DOWN_ITEM } from '../../menu';
 import { DropDown } from '..';
 import {
   basicDropDownOptions,
   effectChooserOptions,
   nestedDropDownOptions,
   reallyLongOptions,
-} from './sampleData';
+} from '../../../storybookUtils/sampleData';
 
 export default {
   title: 'DesignSystem/Components/DropDown',

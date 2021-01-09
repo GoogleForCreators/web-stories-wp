@@ -165,15 +165,18 @@ function MediaPane(props) {
 
         throw createError('ValidError', resource.title, message);
       }
+
       // WordPress media picker event, sizes.medium.url is the smallest image
       insertMediaElement(
         resource,
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
 
-      // Upload video poster and update media element afterwards, so that the
-      // poster will correctly show up in places like the Accessibility panel.
-      uploadVideoPoster(resource.id, mediaPickerEl.url);
+      if (!resource.posterId) {
+        // Upload video poster and update media element afterwards, so that the
+        // poster will correctly show up in places like the Accessibility panel.
+        uploadVideoPoster(resource.id, mediaPickerEl.url);
+      }
     } catch (e) {
       showSnackbar({
         message: e.message,

@@ -14,9 +14,4 @@
  * limitations under the License.
  */
 
-export const DEFAULT_DROPDOWN_HEIGHT = 208;
 export const DEFAULT_POPUP_FILL_WIDTH = 240;
-
-export const KEYS_SHIFT_FOCUS = ['up', 'down', 'left', 'right'];
-export const KEYS_CLOSE_MENU = ['esc', 'tab'];
-export const KEYS_SELECT_ITEM = ['space', 'enter'];

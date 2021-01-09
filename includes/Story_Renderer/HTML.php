@@ -78,6 +78,7 @@ class HTML {
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
 		$markup = $this->print_analytics( $markup );
+		$markup = $this->print_bookend( $markup );
 
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
@@ -223,6 +224,8 @@ class HTML {
 	/**
 	 * Force home urls to http / https based on context.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @param string $content String to replace.
 	 *
 	 * @return string
@@ -239,7 +242,7 @@ class HTML {
 	}
 
 	/**
-	 * Force home urls to http / https based on context.
+	 * Print analytics code before closing `</amp-story>`.
 	 *
 	 * @since 1.2.0
 	 *
@@ -262,6 +265,62 @@ class HTML {
 		$output = (string) ob_get_clean();
 
 		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
+	}
+
+	/**
+	 * Print amp-story-bookend before closing `</amp-story>`.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $content String to replace.
+	 *
+	 * @return string
+	 */
+	protected function print_bookend( $content ) {
+		$share_providers = [
+			[
+				'provider' => 'facebook',
+			],
+			[
+				'provider' => 'twitter',
+			],
+			[
+				'provider' => 'linkedin',
+			],
+			[
+				'provider' => 'email',
+			],
+			[
+				'provider' => 'system',
+			],
+		];
+
+		/**
+		 * Filters the list of sharing providers in the Web Stories sharing dialog.
+		 *
+		 * @since 1.3.0
+		 *
+		 * @link https://amp.dev/documentation/components/amp-story-bookend/#social-sharing
+		 * @link https://amp.dev/documentation/components/amp-social-share/?format=stories#pre-configured-providers
+		 *
+		 * @param array[] $share_providers List of sharing providers.
+		 */
+		$share_providers = (array) apply_filters( 'web_stories_share_providers', $share_providers );
+
+		if ( empty( $share_providers ) ) {
+			return $content;
+		}
+
+		$config  = [
+			'bookendVersion' => 'v1.0',
+			'shareProviders' => $share_providers,
+		];
+		$bookend = sprintf(
+			'<amp-story-bookend layout="nodisplay"><script type="application/json">%s</script></amp-story-bookend>',
+			wp_json_encode( $config )
+		);
+
+		return str_replace( '</amp-story>', $bookend . '</amp-story>', $content );
 	}
 
 	/**

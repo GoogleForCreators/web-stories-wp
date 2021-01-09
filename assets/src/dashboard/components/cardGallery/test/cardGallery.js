@@ -22,8 +22,8 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-jest.mock('../../previewPage');
-import PreviewPage from '../../previewPage';
+jest.mock('../../../../edit-story/components/previewPage/previewPage');
+import { PreviewPage } from '../../../../edit-story/components/previewPage';
 import { renderWithProviders } from '../../../testUtils/';
 import CardGallery from '../';
 

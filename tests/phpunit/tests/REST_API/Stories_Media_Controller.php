@@ -212,34 +212,4 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
 	}
-
-	/**
-	 * @covers ::filter_poster_attachments
-	 */
-	public function test_filter_poster_attachments() {
-		$controller = new \Google\Web_Stories\REST_API\Stories_Media_Controller( 'attachment' );
-		$query      = new \WP_Query();
-		$result     = $controller->filter_poster_attachments( $query );
-		$this->assertNull( $result );
-		$tax_query = $query->get( 'tax_query' );
-		$this->assertSame( '', $tax_query );
-	}
-
-	/**
-	 * @covers ::filter_poster_attachments
-	 */
-	public function test_filter_poster_attachments_with_attachments() {
-		$controller = new \Google\Web_Stories\REST_API\Stories_Media_Controller( 'attachment' );
-		$query      = new \WP_Query();
-		$query->set( 'post_type', 'attachment' );
-		$result = $controller->filter_poster_attachments( $query );
-		$this->assertNull( $result );
-		$tax_query = $query->get( 'tax_query' );
-		$this->assertTrue( is_array( $tax_query ) );
-		$data = array_shift( $tax_query );
-		$this->assertArrayHasKey( 'taxonomy', $data );
-		$this->assertArrayHasKey( 'field', $data );
-		$this->assertArrayHasKey( 'terms', $data );
-		$this->assertArrayHasKey( 'operator', $data );
-	}
 }
