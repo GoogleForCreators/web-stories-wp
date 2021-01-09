@@ -34,6 +34,7 @@ import {
   LeftArrow,
   RightArrow,
   GridView as GridViewButton,
+  MetaBoxes as MetaBoxesButton,
   Plain,
 } from '../../button';
 import {
@@ -55,7 +56,9 @@ import {
   COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
+import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
 import WithTooltip from '../../tooltip';
+import { Placement } from '../../popup';
 import KeyboardShortcutsMenu from '../../keyboardShortcutsMenu';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
@@ -119,15 +122,16 @@ const MenuIconsWrapper = styled.div`
           position: absolute;
           bottom: 44px;
         `}
-`;
 
-const OverflowButtons = styled.div`
-  position: relative;
   & > * {
-    position: absolute;
-    bottom: 10px;
+    margin-top: 10px;
   }
 `;
+
+const StyledMetaBoxesButton = styled(MetaBoxesButton).attrs({
+  height: '24',
+  width: '24',
+})``;
 
 const StyledGridViewButton = styled(GridViewButton).attrs({
   height: '24',
@@ -238,6 +242,9 @@ function Carousel() {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
   const { isRTL, version } = useConfig();
+  const { toggleMetaBoxesVisible } = useMetaBoxes(({ actions }) => ({
+    toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
+  }));
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -456,12 +463,19 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            <OverflowButtons>
-              <KeyboardShortcutsMenu />
-            </OverflowButtons>
+            <WithTooltip
+              title={__('Third-party Meta Boxes', 'web-stories')}
+              placement={isRTL ? Placement.RIGHT : Placement.LEFT}
+            >
+              <StyledMetaBoxesButton
+                onClick={toggleMetaBoxesVisible}
+                aria-label={__('Third-party Meta Boxes', 'web-stories')}
+              />
+            </WithTooltip>
+            <KeyboardShortcutsMenu />
             <WithTooltip
               title={__('Grid View', 'web-stories')}
-              placement="left"
+              placement={isRTL ? Placement.RIGHT : Placement.LEFT}
             >
               <StyledGridViewButton
                 onClick={openModal}

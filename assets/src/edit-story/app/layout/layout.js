@@ -29,7 +29,9 @@ import { __ } from '@wordpress/i18n';
  */
 import Library from '../../components/library';
 import Workspace from '../../components/workspace';
-import MetaBoxes from '../../integrations/wordpress/components/metaBoxes';
+import MetaBoxes, {
+  MetaBoxesProvider,
+} from '../../integrations/wordpress/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -83,15 +85,17 @@ function Layout() {
     <LayoutProvider>
       <PrepublishChecklistProvider>
         <Editor zIndex={3}>
-          <CanvasProvider>
-            <Area area="lib">
-              <Library />
-            </Area>
-            <Workspace />
-          </CanvasProvider>
-          <MetaBoxesArea>
-            <MetaBoxes />
-          </MetaBoxesArea>
+          <MetaBoxesProvider>
+            <CanvasProvider>
+              <Area area="lib">
+                <Library />
+              </Area>
+              <Workspace />
+            </CanvasProvider>
+            <MetaBoxesArea>
+              <MetaBoxes />
+            </MetaBoxesArea>
+          </MetaBoxesProvider>
         </Editor>
       </PrepublishChecklistProvider>
     </LayoutProvider>

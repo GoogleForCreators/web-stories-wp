@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../app';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import { useGlobalKeyDownEffect } from '../keyboard';
 import WithTooltip from '../tooltip';
@@ -38,6 +39,7 @@ import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
 function KeyboardShortcutsMenu({ onMenuToggled }) {
+  const { isRTL } = useConfig();
   const anchorRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -69,7 +71,7 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
     <>
       <WithTooltip
         title={__('Open Keyboard Shortcuts', 'web-stories')}
-        placement={Placement.LEFT}
+        placement={isRTL ? Placement.RIGHT : Placement.LEFT}
       >
         <KeyboardShortcutsButton
           ref={anchorRef}

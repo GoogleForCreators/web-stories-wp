@@ -25,8 +25,8 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import CircularProgress from '../../../../components/circularProgress';
-import { useStory } from '../../../../app/story';
+import CircularProgress from '../../../components/circularProgress';
+import { useStory } from '../../../app/story';
 
 const Wrapper = styled.div`
   position: relative;

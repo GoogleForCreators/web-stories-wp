@@ -24,13 +24,17 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../app/config';
+import { useConfig } from '../../../app/config';
 import MetaBoxesArea from './metaBoxesArea';
+import useMetaBoxes from './useMetaBoxes';
 
 const Wrapper = styled.div``;
 
 function MetaBoxes() {
   const isFeatureEnabled = useFeature('customMetaBoxes');
+  const { metaBoxesVisible } = useMetaBoxes(({ state }) => ({
+    metaBoxesVisible: state.metaBoxesVisible,
+  }));
 
   const { postType, metaBoxes = {} } = useConfig();
 
@@ -54,6 +58,10 @@ function MetaBoxes() {
     return null;
   }
 
+  if (!metaBoxesVisible) {
+    return null;
+  }
+
   const locations = Object.keys(metaBoxes);
 
   return (
@@ -66,3 +74,6 @@ function MetaBoxes() {
 }
 
 export default MetaBoxes;
+
+export { default as MetaBoxesProvider } from './metaBoxesProvider';
+export { default as useMetaBoxes } from './useMetaBoxes';
