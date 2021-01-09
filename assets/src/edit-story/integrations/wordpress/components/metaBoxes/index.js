@@ -59,10 +59,7 @@ function MetaBoxes() {
   return (
     <Wrapper>
       {locations.map((location) => {
-        const isVisible = Boolean(metaBoxes[location]?.length);
-        return (
-          isVisible && <MetaBoxesArea key={location} location={location} />
-        );
+        return <MetaBoxesArea key={location} location={location} />;
       })}
     </Wrapper>
   );
