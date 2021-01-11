@@ -23,6 +23,7 @@ import classNames from 'classnames';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../dashboard/app/config';
 import { GRID_VIEW_TYPE } from '../constants';
 import { isShowing } from '../util';
 import StoryCard from './storyCard';
@@ -34,50 +35,56 @@ function StoriesPreview(props) {
     stories,
   } = props;
 
-  const alignmentClass = classNames({ [`align${align}`]: align });
+  const { archiveURL } = useConfig();
+
+  const ArchiveLink = () => (
+    <a target="__blank" href={archiveURL}>
+      {viewAllLabel}
+    </a>
+  );
+
   const blockClasses = classNames(
     {
       'is-style-default': !isShowing('sharp_corners', fieldState[viewType]),
       'is-style-squared': isShowing('sharp_corners', fieldState[viewType]),
+      [`is-view-type-${viewType}`]: viewType,
+      [`columns-${numOfColumns}`]: GRID_VIEW_TYPE === viewType && numOfColumns,
+      [`align${align}`]: align,
     },
-    'web-stories-list',
-    { [`is-view-type-${viewType}`]: viewType },
-    { [`columns-${numOfColumns}`]: GRID_VIEW_TYPE === viewType && numOfColumns }
+    'web-stories-list'
   );
 
   return (
-    <div className={alignmentClass}>
-      <div
-        className={blockClasses}
-        style={{
-          gridTemplateColumns: `repeat(${numOfColumns}, 1fr)`,
-        }}
-      >
-        {stories.map((story) => {
-          return (
-            <StoryCard
-              key={story.id}
-              url={story.link}
-              title={story.title.rendered}
-              excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
-              date={story.date_gmt}
-              author={story._embedded.author[0].name}
-              poster={story.featured_media_url}
-              imageOnRight={isShowing('image_align', fieldState[viewType])}
-              isShowingAuthor={isShowing('author', fieldState[viewType])}
-              isShowingDate={isShowing('date', fieldState[viewType])}
-              isShowingTitle={isShowing('title', fieldState[viewType])}
-              isShowingExcerpt={isShowing('excerpt', fieldState[viewType])}
-              sizeOfCircles={sizeOfCircles}
-            />
-          );
-        })}
-      </div>
-      {isShowing('archive_link', fieldState[viewType]) &&
-        'circles' !== viewType &&
-        'carousel' !== viewType && (
-          <div className="web-stories-list__archive-link">{viewAllLabel}</div>
-        )}
+    <div
+      className={blockClasses}
+      style={{
+        '--size': sizeOfCircles ? `${sizeOfCircles}px` : undefined,
+      }}
+    >
+      {stories.map((story) => {
+        return (
+          <StoryCard
+            key={story.id}
+            url={story.link}
+            title={story.title.rendered}
+            excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
+            date={story.date_gmt}
+            author={story._embedded.author[0].name}
+            poster={story.featured_media_url}
+            imageOnRight={isShowing('image_align', fieldState[viewType])}
+            isShowingAuthor={isShowing('author', fieldState[viewType])}
+            isShowingDate={isShowing('date', fieldState[viewType])}
+            isShowingTitle={isShowing('title', fieldState[viewType])}
+            isShowingExcerpt={isShowing('excerpt', fieldState[viewType])}
+            sizeOfCircles={sizeOfCircles}
+          />
+        );
+      })}
+      {isShowing('archive_link', fieldState[viewType]) && (
+        <div className="web-stories-list__archive-link">
+          <ArchiveLink />
+        </div>
+      )}
     </div>
   );
 }

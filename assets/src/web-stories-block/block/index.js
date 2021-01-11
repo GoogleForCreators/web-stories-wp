@@ -56,7 +56,7 @@ const settings = {
     },
   },
   supports: {
-    align: ['left', 'right', 'center'],
+    align: ['wide', 'full', 'left', 'right', 'center'],
   },
   edit,
   save,

@@ -31,6 +31,7 @@ use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Assets;
+use WP_Post_Type;
 
 /**
  * Latest Stories block class.
@@ -166,7 +167,12 @@ class Web_Stories_Block {
 	 * @return array Script settings.
 	 */
 	private function get_script_settings() {
-		$rest_base = Story_Post_Type::POST_TYPE_SLUG;
+		$rest_base        = Story_Post_Type::POST_TYPE_SLUG;
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+
+		if ( $post_type_object instanceof WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+		}
 
 		$edit_story_url = admin_url(
 			add_query_arg(
@@ -182,6 +188,7 @@ class Web_Stories_Block {
 			'config'     => [
 				'maxNumOfStories' => $this->max_num_of_stories,
 				'editStoryURL'    => $edit_story_url,
+				'archiveURL'      => get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
 				'api'             => [
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'users'   => '/web-stories/v1/users/',

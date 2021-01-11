@@ -37,7 +37,6 @@ function StoryCard({
   isShowingTitle,
   isShowingExcerpt,
   imageOnRight,
-  sizeOfCircles,
 }) {
   const singleStoryClasses = classNames('web-stories-list__story-wrapper');
   const imageAlignmentClass = classNames('web-stories-list__inner-wrapper', {
@@ -48,18 +47,12 @@ function StoryCard({
   const dateFormat = __experimentalGetSettings().formats.date;
 
   return (
-    <div
-      className={singleStoryClasses}
-      style={{
-        '--size': sizeOfCircles ? `${sizeOfCircles}px` : undefined,
-      }}
-    >
+    <div className={singleStoryClasses}>
       <div className={imageAlignmentClass}>
         <div
           className="web-stories-list__story-placeholder"
           style={{
             backgroundImage: poster ? `url('${poster}')` : undefined,
-            '--size': sizeOfCircles ? `${sizeOfCircles}px` : undefined,
           }}
         />
         {hasContentOverlay && (
@@ -74,19 +67,17 @@ function StoryCard({
                 {excerpt}
               </RawHTML>
             )}
-            <div className="story-content-overlay__author-date">
-              {isShowingAuthor && (
-                <div className="story-content-overlay__author">{`By ${author}`}</div>
-              )}
-              {isShowingDate && (
-                <time
-                  dateTime={format('c', date)}
-                  className="story-content-overlay__date"
-                >
-                  {`On ${dateI18n(dateFormat, date)}`}
-                </time>
-              )}
-            </div>
+            {isShowingAuthor && (
+              <div className="story-content-overlay__author">{`By ${author}`}</div>
+            )}
+            {isShowingDate && (
+              <time
+                dateTime={format('c', date)}
+                className="story-content-overlay__date"
+              >
+                {`On ${dateI18n(dateFormat, date)}`}
+              </time>
+            )}
           </div>
         )}
       </div>
@@ -105,7 +96,6 @@ StoryCard.propTypes = {
   isShowingTitle: PropTypes.bool,
   isShowingExcerpt: PropTypes.bool,
   imageOnRight: PropTypes.bool,
-  sizeOfCircles: PropTypes.number,
 };
 
 export default StoryCard;
