@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Add, EditPencil } from '../../../../icons';
+import { Add, Edit } from '../../../../../design-system/icons';
 import { PanelTitle } from '../../panel';
 
 const buttonCSS = css`
@@ -48,8 +48,8 @@ const buttonCSS = css`
 const AddPresetButton = styled.button`
   ${buttonCSS}
   svg {
-    width: 26px;
-    height: 28px;
+    width: 15px;
+    height: 15px;
   }
 `;
 
@@ -67,8 +67,8 @@ const EditMode = styled.button`
         `
       : css`
           svg {
-            width: 16px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
           }
         `}
 `;
@@ -102,7 +102,7 @@ function PresetsHeader({
             }
             isEditMode={isEditMode}
           >
-            {isEditMode ? __('Done', 'web-stories') : <EditPencil />}
+            {isEditMode ? __('Done', 'web-stories') : <Edit />}
           </EditMode>
         )}
         {!isEditMode && !isColor && (
