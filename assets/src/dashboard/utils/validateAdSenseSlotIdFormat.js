@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-export const PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS = {
-  REMOVE_LOGO: 'REMOVE_LOGO',
-  SET_DEFAULT: 'SET_DEFAULT',
-};
+const adSenseSlotIdFormatRegex = /^\d{10}$/;
 
-export const AD_NETWORK_TYPE = {
-  NONE: 'none',
-  ADSENSE: 'adsense',
-  ADMANAGER: 'admanager',
-};
+export default function validateAdSenseSlotIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(adSenseSlotIdFormatRegex));
+}
