@@ -217,6 +217,26 @@ function rest_preload_api_request( $memo, $path ) {
 	return $memo;
 }
 
+/**
+ * Determine whether the current response being served as AMP.
+ *
+ * @since 1.3.0
+ *
+ * @return bool Whether it is singular story post (and thus an AMP endpoint).
+ */
+function is_amp() {
+	// Check for `amp_is_request()` first since `is_amp_endpoint()` is deprecated.
+	if ( function_exists( '\amp_is_request' ) ) {
+		return amp_is_request();
+	}
+
+	if ( function_exists( '\is_amp_endpoint' ) ) {
+		return is_amp_endpoint();
+	}
+
+	return is_singular( Story_Post_Type::POST_TYPE_SLUG );
+}
+
 global $web_stories;
 
 $web_stories = new Plugin();
