@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -72,9 +72,9 @@ function PageLayoutsPane(props) {
 
   const pills = useMemo(
     () =>
-      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
+      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { title }]) => ({
         id: key,
-        label: name,
+        label: title,
       })),
     []
   );
@@ -85,24 +85,19 @@ function PageLayoutsPane(props) {
         const templatePages = template.pages.reduce((acc, page) => {
           // skip unselected page layout types if not matching
           if (
-            !page.pageLayoutType ||
-            (selectedPageLayoutType &&
-              page.pageLayoutType !== selectedPageLayoutType)
+            selectedPageLayoutType &&
+            page.pageLayoutType !== selectedPageLayoutType
           ) {
             return acc;
           }
 
-          const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
+          // translation not required because page layout title is already translated
+          const pageLayoutTitle = PAGE_LAYOUT_TYPES[page.pageLayoutType]?.title;
           return [
             ...acc,
             {
               ...page,
-              title: sprintf(
-                /* translators: 1: template name. 2: page layout name. */
-                __('%1$s %2$s', 'web-stories', 'web-stories'),
-                template.title,
-                pageLayoutName
-              ),
+              title: `${template.title} ${pageLayoutTitle}`,
             },
           ];
         }, []);
