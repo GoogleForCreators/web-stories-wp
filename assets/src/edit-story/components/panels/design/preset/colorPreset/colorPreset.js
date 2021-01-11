@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -48,10 +49,10 @@ const Transparent = styled.div`
   height: 100%;
   position: absolute;
   background-image: conic-gradient(
-    #fff 0.25turn,
-    #d3d4d4 0turn 0.5turn,
-    #fff 0turn 0.75turn,
-    #d3d4d4 0turn 1turn
+    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0.25turn,
+    transparent 0turn 0.5turn,
+    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0turn 0.75turn,
+    transparent 0turn 1turn
   );
   background-size: 35% 35%;
   border-radius: 100%;
@@ -97,6 +98,10 @@ const Color = styled.button.attrs({ type: 'button' })`
   transform: rotate(-45deg);
   &:focus {
     outline: none !important;
+  }
+
+  svg {
+    color: ${({ theme }) => theme.colors.fg.primary};
   }
 `;
 
