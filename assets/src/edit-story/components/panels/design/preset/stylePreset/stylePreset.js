@@ -56,6 +56,7 @@ const PresetButton = styled.button`
     position: absolute;
     top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
     left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    color: ${({ theme }) => theme.colors.fg.primary};
   }
 `;
 
