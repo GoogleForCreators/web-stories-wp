@@ -50,6 +50,16 @@ body.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
 }
 
+@media only screen and (min-width: 960px) {
+  body.web-story_page_stories-dashboard #wpwrap #adminmenuwrap {
+    position: absolute;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 0;
+    bottom: 0;
+  }
+}
+
 body.js.web-story_page_stories-dashboard #wpcontent,
 body.js.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
