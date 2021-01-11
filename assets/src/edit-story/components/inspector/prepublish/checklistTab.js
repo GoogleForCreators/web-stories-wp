@@ -140,6 +140,15 @@ const EmptyParagraph = styled.p`
   margin: 0;
 `;
 
+const VisuallyHidden = styled.span`
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+`;
+
 function annotateNumber(number) {
   if (number <= MAX_NUMBER_FOR_BADGE) {
     return number;
@@ -264,15 +273,12 @@ const ChecklistTab = (props) => {
           pageGroup={pageGroup}
         >
           {message}
-          <HelperText
-            aria-label={
-              onClick
-                ? __('Select offending element', 'web-stories')
-                : undefined
-            }
-          >
-            {help}
-          </HelperText>
+          <HelperText>{help}</HelperText>
+          {onClick && (
+            <VisuallyHidden>
+              {__('Select offending element', 'web-stories')}
+            </VisuallyHidden>
+          )}
         </Row>
       );
     },
