@@ -75,9 +75,9 @@ function PageLayoutsPane(props) {
 
   const pills = useMemo(
     () =>
-      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
+      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { title }]) => ({
         id: key,
-        label: name,
+        label: title,
       })),
     []
   );
@@ -88,14 +88,14 @@ function PageLayoutsPane(props) {
         const templatePages = template.pages.reduce((acc, page) => {
           // skip unselected page layout types if not matching
           if (
-            !page.pageLayoutType ||
-            (selectedPageLayoutType &&
-              page.pageLayoutType !== selectedPageLayoutType)
+            selectedPageLayoutType &&
+            page.pageLayoutType !== selectedPageLayoutType
           ) {
             return acc;
           }
 
-          const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
+          // translation not required because page layout title is already translated
+          const pageLayoutTitle = PAGE_LAYOUT_TYPES[page.pageLayoutType]?.title;
           return [
             ...acc,
             {
