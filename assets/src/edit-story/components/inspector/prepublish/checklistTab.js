@@ -68,7 +68,7 @@ const PanelTitle = styled.span`
     error ? theme.colors.fg.negative : theme.colors.fg.warning};
 `;
 
-const Row = styled.div.attrs({ role: 'listitem' })`
+const Row = styled.div`
   &:not(:first-child) {
     margin-top: 9px;
   }
@@ -237,10 +237,15 @@ const ChecklistTab = (props) => {
   );
 
   const getHandleKeyPress = useCallback(
-    ({ elementId, elements, pageId }) => (event) => {
-      if (event.key === 'Enter') {
-        selectElement({ elementId, elements, pageId });
+    ({ elementId, elements, pageId }) => {
+      if (!elementId && !pageId && !elements) {
+        return undefined;
       }
+      return (event) => {
+        if (event.key === 'Enter') {
+          selectElement({ elementId, elements, pageId });
+        }
+      };
     },
     [selectElement]
   );
@@ -255,14 +260,19 @@ const ChecklistTab = (props) => {
           onClick={onClick}
           // note: onKeyDown does not work for "Enter"
           onKeyUp={handleKeyPress}
-          aria-label={
-            onClick ? __('Select element for error', 'web-stories') : undefined
-          }
-          key={`guidance-${id}`}
+          key={id}
           pageGroup={pageGroup}
         >
           {message}
-          <HelperText>{help}</HelperText>
+          <HelperText
+            aria-label={
+              onClick
+                ? __('Select offending element', 'web-stories')
+                : undefined
+            }
+          >
+            {help}
+          </HelperText>
         </Row>
       );
     },

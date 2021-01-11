@@ -20,8 +20,7 @@
 import { Container } from './container';
 
 /**
- * The editor's canvas. Includes: display, frames, editor layers, carousel,
- * navigation buttons, page menu.
+ * The prepublish checklist panel. Includes: checklist items and collapsible critical/recommended panels
  */
 export class ChecklistPanel extends Container {
   constructor(node, path) {
