@@ -37,7 +37,7 @@ import stripHTML from '../../../../../utils/stripHTML';
 import PresetPanel from '../presetPanel';
 import { generatePresetStyle } from '../utils';
 
-const REMOVE_ICON_SIZE = 18;
+const REMOVE_ICON_SIZE = 16;
 
 const PresetButton = styled.button`
   background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.16)};
