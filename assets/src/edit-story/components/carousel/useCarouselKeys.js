@@ -22,9 +22,9 @@ import { useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { useEscapeToBlurEffect, useKeyDownEffect } from '../../keyboard';
-import { useStory } from '../../../app';
-import { duplicatePage } from '../../../elements';
+import { useEscapeToBlurEffect, useKeyDownEffect } from '../keyboard';
+import { useStory } from '../../app';
+import { duplicatePage } from '../../elements';
 
 /**
  * @param {Object} ref Reference.

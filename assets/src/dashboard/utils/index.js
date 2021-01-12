@@ -40,7 +40,7 @@ export {
   getRow,
   getColumn,
   getIndex,
-} from '../../edit-story/components/canvas/gridview/useGridViewKeys';
+} from '../../edit-story/components/carousel/gridview/useGridViewKeys';
 export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';
 // TODO use these shared utils to structure image resources mirroring editor
 export { default as getTypeFromMime } from '../../edit-story/app/media/utils/getTypeFromMime';

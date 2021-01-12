@@ -28,7 +28,7 @@ import React from 'react';
 import useStory from '../../../app/story/useStory';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
-import DisplayElement from '../displayElement';
+import DisplayElement from '../../canvas/displayElement';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 
 export const THUMB_INDICATOR_HEIGHT = 6;

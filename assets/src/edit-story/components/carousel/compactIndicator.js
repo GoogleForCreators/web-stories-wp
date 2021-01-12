@@ -23,7 +23,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../layout';
+import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../canvas/layout';
 
 const CompactIndicator = styled.button`
   display: block;

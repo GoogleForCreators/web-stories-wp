@@ -29,43 +29,44 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useConfig, useStory } from '../../../app';
+import { useConfig, useStory } from '../../app';
 import {
   LeftArrow,
   RightArrow,
   GridView as GridViewButton,
   Plain,
-} from '../../button';
+} from '../button';
 import {
   Reorderable,
   ReorderableSeparator,
   ReorderableItem,
-} from '../../reorderable';
-import Modal from '../../modal';
-import GridView from '../gridview';
-import PagePreview, {
-  THUMB_FRAME_HEIGHT,
-  THUMB_FRAME_WIDTH,
-} from '../pagepreview';
-import useResizeEffect from '../../../utils/useResizeEffect';
-import {
-  CAROUSEL_VERTICAL_PADDING,
-  MIN_CAROUSEL_THUMB_HEIGHT,
-  COMPACT_THUMB_HEIGHT,
-  COMPACT_THUMB_WIDTH,
-} from '../layout';
-import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
-import WithTooltip from '../../tooltip';
-import KeyboardShortcutsMenu from '../../keyboardShortcutsMenu';
-import CompactIndicator from './compactIndicator';
+} from '../reorderable';
+import Modal from '../modal';
+import useResizeEffect from '../../utils/useResizeEffect';
+import WithTooltip from '../tooltip';
+import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
+import GridView from './gridview';
+import PagePreview, { THUMB_FRAME_HEIGHT } from './pagepreview';
 import useCarouselKeys from './useCarouselKeys';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
+const MENU_WIDTH = 167;
+const MENU_WIDTH_VERYWIDE = 175;
+const BUTTON_WIDTH = 32;
+
 const Wrapper = styled.section`
   position: relative;
   display: grid;
-  grid: 'space prev-navigation carousel next-navigation menu' auto / 53px 53px 1fr 53px 53px;
+  grid:
+    '. . prev-navigation carousel next-navigation . menu' auto /
+    ${({ menuWidth }) => menuWidth}px
+    1fr
+    ${BUTTON_WIDTH}px
+    auto
+    ${BUTTON_WIDTH}px
+    1fr
+    ${({ menuWidth }) => menuWidth}px;
   background-color: ${({ theme }) => theme.colors.bg.workspace};
   color: ${({ theme }) => theme.colors.fg.white};
   width: 100%;
@@ -82,6 +83,8 @@ const Area = styled.div`
 
 const NavArea = styled(Area)`
   margin-bottom: ${({ marginBottom }) => marginBottom}px;
+  display: flex;
+  justify-content: center;
 `;
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
@@ -135,35 +138,56 @@ const StyledGridViewButton = styled(GridViewButton).attrs({
 })``;
 
 const PageList = styled(Reorderable).attrs({
-  area: 'carousel',
   role: 'listbox',
   'aria-orientation': 'horizontal',
 })`
+  grid-area: carousel;
   flex-direction: row;
   align-items: center;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
-  overflow-x: auto;
-  overflow-x: overlay;
+  overflow-x: hidden;
   overflow-y: hidden;
+  max-width: ${({ maxWidth }) => maxWidth}px;
   margin: 0 0 ${CAROUSEL_BOTTOM_SCROLL_MARGIN}px 0;
-  padding: 0px 10px;
+  padding: 0 16px;
 
-  /*
-   * These overrides are an exception - generally scrollbars should all
-   * look the same. We do this only here because this scrollbar is always visible.
-   */
-  scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-    ${({ theme }) => theme.colors.bg.workspace} !important;
+  ${({ hasHorizontalOverflow }) =>
+    hasHorizontalOverflow &&
+    css`
+      overflow-x: auto;
+      overflow-x: overlay;
+      /*
+       * These overrides are an exception - generally scrollbars should all
+       * look the same. We do this only here because this scrollbar is always visible
+       * if scroll is possible.
+       */
+      scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+        ${({ theme }) => theme.colors.bg.workspace} !important;
 
-  &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.workspace} !important;
-  }
+      &::-webkit-scrollbar-track {
+        background: ${({ theme }) => theme.colors.bg.workspace} !important;
+      }
 
-  &::-webkit-scrollbar-thumb {
-    border: 2px solid ${({ theme }) => theme.colors.bg.workspace} !important;
-    border-top-width: 3px !important;
-  }
+      &::-webkit-scrollbar-thumb {
+        border: 2px solid ${({ theme }) => theme.colors.bg.workspace} !important;
+        border-top-width: 3px !important;
+      }
+    `};
+`;
+
+const LINE_WIDTH = 4;
+
+const Line = styled.div`
+  background: ${({ theme }) => theme.colors.accent.primary};
+  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  width: ${LINE_WIDTH}px;
+  margin: 0px;
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  position: relative;
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
@@ -175,29 +199,27 @@ const PageSeparator = styled(ReorderableSeparator)`
   display: flex;
   justify-content: center;
 
-  &:first-of-type {
-    left: -${({ width, margin }) => (width + 2 * margin) / 2}px;
+  ${ItemContainer}:first-of-type &:first-of-type,
+  ${ItemContainer}:last-of-type &:last-of-type {
+    width: ${({ width, margin }) => (width + margin + LINE_WIDTH) / 2}px;
   }
-`;
 
-const Line = styled.div`
-  background: ${({ theme }) => theme.colors.accent.primary};
-  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
-  width: 4px;
-  margin: 0px;
-`;
+  ${ItemContainer}:first-of-type &:first-of-type {
+    left: -${({ margin }) => (margin + LINE_WIDTH) / 2}px;
+    justify-content: flex-start;
+  }
 
-const ItemContainer = styled.div`
-  display: flex;
-  position: relative;
+  ${ItemContainer}:last-of-type &:last-of-type {
+    justify-content: flex-end;
+  }
 `;
 
 const ReorderablePage = styled(ReorderableItem).attrs({ role: 'option' })`
   display: flex;
   z-index: 1;
-  margin: 0 10px 0 0;
-  &:last-of-type {
-    margin: 0;
+  margin-right: ${({ margin }) => margin}px;
+  ${ItemContainer}:last-of-type & {
+    margin-right: 0;
   }
 `;
 
@@ -208,22 +230,6 @@ const GridViewContainer = styled.section.attrs({
   margin: 70px 170px 70px 170px;
   pointer-events: all;
 `;
-
-function calculateThumbnailHeight(carouselSize) {
-  return (
-    carouselSize.height -
-    CAROUSEL_VERTICAL_PADDING * 2 -
-    CAROUSEL_BOTTOM_SCROLL_MARGIN -
-    THUMB_FRAME_HEIGHT
-  );
-}
-
-function calculatePageThumbSize(carouselSize) {
-  const aspectRatio = PAGE_WIDTH / PAGE_HEIGHT;
-  const pageHeight = calculateThumbnailHeight(carouselSize);
-  const pageWidth = pageHeight * aspectRatio;
-  return [pageWidth + THUMB_FRAME_WIDTH, pageHeight + THUMB_FRAME_HEIGHT];
-}
 
 function Carousel() {
   const {
@@ -241,22 +247,47 @@ function Carousel() {
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
+  const [workspaceWidth, setWorkspaceWidth] = useState(0);
+  const [carouselSize, setCarouselSize] = useState(0);
 
   const listRef = useRef(null);
   const pageRefs = useRef([]);
   const wrapperRef = useRef(null);
 
-  const [carouselSize, setCarouselSize] = useState({
-    width: COMPACT_THUMB_WIDTH,
-    height: COMPACT_THUMB_HEIGHT,
-  });
-  const [resizedForPages, setResizedForPages] = useState(0);
+  const { isWideWorkspace, isVeryWideWorkspace } = useMemo(
+    () => ({
+      isWideWorkspace: workspaceWidth >= 700,
+      isVeryWideWorkspace: workspaceWidth >= 1000,
+    }),
+    [workspaceWidth]
+  );
+  const [pageThumbWidth, pageThumbHeight, pageThumbMargin] = useMemo(
+    () => (isWideWorkspace ? [40, 72, 16] : [36, 64, 16]),
+    [isWideWorkspace]
+  );
+  const menuWidth = useMemo(
+    () => (isVeryWideWorkspace ? MENU_WIDTH_VERYWIDE : MENU_WIDTH),
+    [isVeryWideWorkspace]
+  );
+  const carouselMaxWidth = useMemo(
+    // The carousel width has to match a whole number of page widths plus margins
+    () => {
+      const availableSpace = workspaceWidth - 2 * BUTTON_WIDTH - 2 * menuWidth;
+      const pageAndMargin = pageThumbWidth + pageThumbMargin;
+      const numPages = Math.floor(
+        (availableSpace - pageThumbMargin) / pageAndMargin
+      );
+      return pageThumbMargin + numPages * pageAndMargin;
+    },
+    [workspaceWidth, pageThumbWidth, pageThumbMargin, menuWidth]
+  );
 
-  const isCompact =
-    calculateThumbnailHeight(carouselSize) < MIN_CAROUSEL_THUMB_HEIGHT;
+  const [resizedForPages, setResizedForPages] = useState(0);
 
   const openModal = useCallback(() => setIsGridViewOpen(true), []);
   const closeModal = useCallback(() => setIsGridViewOpen(false), []);
+
+  useResizeEffect(wrapperRef, (size) => setWorkspaceWidth(size.width), []);
 
   useResizeEffect(
     listRef,
@@ -284,7 +315,7 @@ function Carousel() {
         behavior: 'smooth',
       });
     }
-  }, [currentPageId, hasHorizontalOverflow, pageRefs]);
+  }, [currentPageId, hasHorizontalOverflow, carouselMaxWidth, pageRefs]);
 
   useLayoutEffect(() => {
     const rect = listRef.current.getBoundingClientRect();
@@ -337,25 +368,13 @@ function Carousel() {
   const PrevButton = isRTL ? RightArrow : LeftArrow;
   const NextButton = isRTL ? LeftArrow : RightArrow;
 
-  const Page = isCompact ? CompactIndicator : PagePreview;
-  const [pageThumbWidth, pageThumbHeight] = useMemo(
-    () => calculatePageThumbSize(carouselSize),
-    [carouselSize]
-  );
-  const arrowsBottomMargin = isCompact
-    ? CAROUSEL_BOTTOM_SCROLL_MARGIN + SCROLLBAR_WIDTH
-    : CAROUSEL_BOTTOM_SCROLL_MARGIN;
-
   const rearrangePages = useCallback(
     (oldPos, newPos) => {
-      if (isCompact) {
-        return;
-      }
       const pageId = pages[oldPos].id;
       arrangePage({ pageId, position: newPos });
       setCurrentPage({ pageId });
     },
-    [pages, isCompact, arrangePage, setCurrentPage]
+    [pages, arrangePage, setCurrentPage]
   );
 
   useCarouselKeys(wrapperRef, pageRefs, isRTL);
@@ -363,15 +382,18 @@ function Carousel() {
   return (
     <>
       <Wrapper
+        menuWidth={menuWidth}
         ref={wrapperRef}
         data-testid="PageCarousel"
         aria-label={__('Page Carousel', 'web-stories')}
         data-ready={resizedForPages === pages.length}
       >
-        <NavArea area="space" />
-        <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
+        <NavArea
+          area="prev-navigation"
+          marginBottom={CAROUSEL_BOTTOM_SCROLL_MARGIN}
+        >
           <PrevButton
-            isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
+            disabled={!hasHorizontalOverflow || isAtBeginningOfList}
             onClick={() => scrollBy(-scrollByPx)}
             width="24"
             height="24"
@@ -379,6 +401,7 @@ function Carousel() {
           />
         </NavArea>
         <PageList
+          maxWidth={carouselMaxWidth}
           ref={listRef}
           hasHorizontalOverflow={hasHorizontalOverflow}
           aria-label={__('Pages List', 'web-stories')}
@@ -402,13 +425,13 @@ function Carousel() {
                     position={0}
                     width={pageThumbWidth}
                     height={pageThumbHeight}
-                    margin={10 /** px */}
+                    margin={pageThumbMargin}
                   >
                     <Line height={pageThumbHeight} />
                   </PageSeparator>
                 )}
-                <ReorderablePage position={index}>
-                  <Page
+                <ReorderablePage position={index} margin={pageThumbMargin}>
+                  <PagePreview
                     tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     onClick={handleClickPage(page)}
                     role="option"
@@ -437,7 +460,7 @@ function Carousel() {
                   position={index + 1}
                   width={pageThumbWidth}
                   height={pageThumbHeight}
-                  margin={10 /** px */}
+                  margin={pageThumbMargin}
                 >
                   <Line height={pageThumbHeight} />
                 </PageSeparator>
@@ -445,9 +468,12 @@ function Carousel() {
             );
           })}
         </PageList>
-        <NavArea area="next-navigation" marginBottom={arrowsBottomMargin}>
+        <NavArea
+          area="next-navigation"
+          marginBottom={CAROUSEL_BOTTOM_SCROLL_MARGIN}
+        >
           <NextButton
-            isHidden={!hasHorizontalOverflow || isAtEndOfList}
+            disabled={!hasHorizontalOverflow || isAtEndOfList}
             onClick={() => scrollBy(scrollByPx)}
             width="24"
             height="24"
@@ -455,7 +481,7 @@ function Carousel() {
           />
         </NavArea>
         <MenuArea>
-          <MenuIconsWrapper isCompact={isCompact}>
+          <MenuIconsWrapper>
             <OverflowButtons>
               <KeyboardShortcutsMenu />
             </OverflowButtons>
