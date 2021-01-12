@@ -19,8 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useRef, useCallback } from 'react';
-import SAT from 'sat';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -30,7 +29,6 @@ import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
 import { useUnits } from '../../units';
 import { PAGE_RATIO } from '../../constants';
-import { getCorners } from '../../utils/getBoundRect';
 import useCanvas from './useCanvas';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
@@ -60,32 +58,33 @@ const Lasso = styled.div`
 `;
 
 function SelectionCanvas({ children }) {
-  const {
-    selectedElements,
-    currentPage,
-    clearSelection,
-    setSelectedElementsById,
-  } = useStory(
+  const { selectedElements, currentPage, clearSelection } = useStory(
     ({
       state: { selectedElements, currentPage },
-      actions: { clearSelection, setSelectedElementsById },
+      actions: { clearSelection },
     }) => ({
       selectedElements,
       currentPage,
       clearSelection,
-      setSelectedElementsById,
     })
   );
-  const { fullbleedContainer, isEditing, nodesById, clearEditing } = useCanvas(
+  const {
+    fullbleedContainer,
+    isEditing,
+    nodesById,
+    clearEditing,
+    selectIntersection,
+  } = useCanvas(
     ({
       state: { fullbleedContainer, isEditing, nodesById },
-      actions: { clearEditing },
+      actions: { clearEditing, selectIntersection },
     }) => {
       return {
         fullbleedContainer,
         isEditing,
         nodesById,
         clearEditing,
+        selectIntersection,
       };
     }
   );
@@ -172,21 +171,6 @@ function SelectionCanvas({ children }) {
     }
   };
 
-  const createPolygon = useCallback((rotationAngle, x, y, width, height) => {
-    const {
-      topLeftPoint,
-      topRightPoint,
-      bottomRightPoint,
-      bottomLeftPoint,
-    } = getCorners(rotationAngle, x, y, width, height);
-    return new SAT.Polygon(new SAT.Vector(), [
-      new SAT.Vector(topLeftPoint.x, topLeftPoint.y),
-      new SAT.Vector(bottomLeftPoint.x, bottomLeftPoint.y),
-      new SAT.Vector(bottomRightPoint.x, bottomRightPoint.y),
-      new SAT.Vector(topRightPoint.x, topRightPoint.y),
-    ]);
-  }, []);
-
   const onMouseUp = () => {
     if (lassoModeRef.current === LassoMode.ON) {
       const [lx, ly, lwidth, lheight] = getLassoBox();
@@ -203,19 +187,9 @@ function SelectionCanvas({ children }) {
       const y = editorToDataY(ly - dy);
       const width = editorToDataX(lwidth);
       const height = editorToDataY(lheight);
-      const lassoP = createPolygon(0, x, y, width, height);
-      const idsToSelect = currentPage.elements
-        .filter(({ isBackground }) => !isBackground)
-        .map(
-          ({ id, rotationAngle, x: elX, y: elY, width: elW, height: elH }) => {
-            const elementP = createPolygon(rotationAngle, elX, elY, elW, elH);
-            return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;
-          }
-        )
-        .filter((id) => id);
       clearSelection();
       clearEditing();
-      setSelectedElementsById({ elementIds: idsToSelect });
+      selectIntersection({ x, y, width, height });
     }
     lassoModeRef.current = LassoMode.OFF;
     updateLasso();
