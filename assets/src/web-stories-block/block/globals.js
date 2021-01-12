@@ -14,21 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { registerBlockType } from '@wordpress/blocks';
-
-/**
- * Internal dependencies
- */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
-import { webStoriesBlockSettings } from './block/globals';
-import './block/storiesFilters';
-
-__webpack_public_path__ = webStoriesBlockSettings.publicPath;
-
-registerBlockType(name, settings);
-
-initializeTracking('Web Stories List Block', false);
+export const { webStoriesBlockSettings } = window;

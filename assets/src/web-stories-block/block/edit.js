@@ -37,9 +37,10 @@ import {
   BLOCK_TYPES,
   VIEW_TYPES,
 } from './constants';
+import { webStoriesBlockSettings } from './globals';
 import { icon } from './';
 
-const { config } = global.webStoriesBlockSettings;
+const { config } = webStoriesBlockSettings;
 
 function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   const { blockType, viewType } = attributes;
