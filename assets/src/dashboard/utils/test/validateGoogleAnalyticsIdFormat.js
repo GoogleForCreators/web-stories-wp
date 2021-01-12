@@ -27,9 +27,11 @@ const idsToValidate = [
   ['clearly wrong', false],
   ['G-9878987', true],
   ['g-9878987', true],
+  ['G-1A2BCD345E', true],
   ['X-8888888', false],
-  ['G-123456', false],
-  ['G-12345678', false],
+  ['G-123456', true],
+  ['G-12345678', true],
+  ['G-abcdefg8910', true],
 ];
 
 describe('validateGoogleAnalyticsIdFormat', () => {
