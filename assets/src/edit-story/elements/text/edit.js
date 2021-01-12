@@ -40,6 +40,7 @@ import {
   elementWithTextParagraphStyle,
   elementWithBackgroundColor,
   elementWithBorder,
+  elementWithHighlightBorderRadius,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -103,6 +104,7 @@ const EditTextBox = styled(TextBox)(
 );
 
 const Highlight = styled.span`
+  ${elementWithHighlightBorderRadius}
   ${({ highlightColor }) => generatePatternStyles(highlightColor)};
   color: transparent !important;
   * {
@@ -400,6 +402,8 @@ function TextEdit({
           <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
             <Highlight
               ref={highlightBgRef}
+              borderRadius={borderRadius}
+              dataToEditorY={dataToEditorY}
               dangerouslySetInnerHTML={{ __html: editorContent }}
               {...textProps}
             />
