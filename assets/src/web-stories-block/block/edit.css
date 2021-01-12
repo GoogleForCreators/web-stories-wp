@@ -1,6 +1,3 @@
-/* Embed Story block styles. */
-@import './../../story-embed-block/block/edit.css';
-
 /* Carousel view styles */
 .web-stories-list.is-view-type-carousel,
 .web-stories-list.is-view-type-circles {

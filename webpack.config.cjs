@@ -294,7 +294,11 @@ const storyEmbedBlock = {
 const webStoriesBlock = {
   ...sharedConfig,
   entry: {
-    'web-stories-block': './assets/src/web-stories-block/index.js',
+    'web-stories-block': [
+      './assets/src/web-stories-block/index.js',
+      './assets/src/web-stories-block/block/edit.css',
+    ],
+    'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -308,16 +312,6 @@ const webStoriesBlock = {
   ].filter(Boolean),
   optimization: {
     ...sharedConfig.optimization,
-    splitChunks: {
-      cacheGroups: {
-        blockStyles: {
-          name: 'web-stories-list-styles',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
   },
 };
 
@@ -352,8 +346,8 @@ const activationNotice = {
 module.exports = [
   storiesEditor,
   dashboard,
-  webStoriesScripts,
   storyEmbedBlock,
   activationNotice,
   webStoriesBlock,
+  webStoriesScripts,
 ];
