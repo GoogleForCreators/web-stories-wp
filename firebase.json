@@ -30,6 +30,23 @@
           }
         ]
       }
+    ],
+    "redirects": [
+      {
+        "source": "/static/1.0.0-beta.2/:path*",
+        "destination": "/static/1/:path*",
+        "type": 301
+      },
+      {
+        "source": "/static/1.0.0-rc.1/:path*",
+        "destination": "/static/2/:path*",
+        "type": 301
+      },
+      {
+        "source": "/static/1.:version/:path*",
+        "destination": "/static/3/:path*",
+        "type": 301
+      }
     ]
   }
 }
