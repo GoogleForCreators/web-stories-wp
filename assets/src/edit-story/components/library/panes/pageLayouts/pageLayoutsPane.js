@@ -75,9 +75,9 @@ function PageLayoutsPane(props) {
 
   const pills = useMemo(
     () =>
-      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { title }]) => ({
+      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
         id: key,
-        label: title,
+        label: name,
       })),
     []
   );
@@ -96,7 +96,7 @@ function PageLayoutsPane(props) {
           }
 
           // translation not required because page layout title is already translated
-          const pageLayoutTitle = PAGE_LAYOUT_TYPES[page.pageLayoutType].title;
+          const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
           return [
             ...acc,
             {
