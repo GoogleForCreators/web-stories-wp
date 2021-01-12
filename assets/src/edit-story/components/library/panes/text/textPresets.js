@@ -62,7 +62,7 @@ const PRESETS = [
       )}</span>`,
       fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2.667),
-      lineHeight: 1.1,
+      lineHeight: 1.17,
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(2.667)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
