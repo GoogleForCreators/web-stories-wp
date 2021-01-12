@@ -372,10 +372,16 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		if ( ! $this->is_view_type( 'circles' ) && ! empty( $this->attributes['has_square_corners'] ) ) {
 			$view_classes[] = 'is-style-squared';
+		} else {
+			$view_classes[] = 'is-style-default';
 		}
 
 		if ( $this->is_view_type( 'circles' ) && ! empty( $this->attributes['show_title'] ) ) {
 			$view_classes[] = 'has-title';
+		}
+
+		if ( $this->is_view_type( 'circles' ) || $this->is_view_type( 'carousel' ) ) {
+			$view_classes[] = 'is-carousel';
 		}
 
 		return implode( ' ', $view_classes );
@@ -412,7 +418,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function get_single_story_classes() {
 
 		$single_story_classes   = [];
-		$single_story_classes[] = 'web-stories-list__story-wrapper';
+		$single_story_classes[] = 'web-stories-list__story';
+
+		if ( ! empty( $this->attributes['list_view_image_alignment'] ) &&
+			( 'right' === $this->attributes['list_view_image_alignment'] || true === $this->attributes['list_view_image_alignment'] ) ) {
+			$single_story_classes[] = sprintf( 'image-align-right' );
+		}
 
 		$single_story_classes = array_filter( $single_story_classes );
 		$classes              = implode( ' ', $single_story_classes );
@@ -426,14 +437,29 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	}
 
 	/**
+	 * Gets the single story container styles.
+	 *
+	 * @return string Style string.
+	 */
+	protected function get_container_styles() {
+		$story_styles  = $this->is_view_type( 'circles' ) ? sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) : '';
+		$story_styles .= $this->is_view_type( 'carousel' ) ? sprintf( '--ws-story-max-width:%1$dpx', $this->width ) : '';
+
+		/**
+		 * Filters the web stories renderer single story classes.
+		 *
+		 * @param string $class Single story classes.
+		 */
+		return apply_filters( 'web_stories_renderer_container_styles', $story_styles );
+	}
+
+	/**
 	 * Render story markup.
 	 *
 	 * @return void
 	 */
 	public function render_single_story_content() {
 		$single_story_classes = $this->get_single_story_classes();
-		$story_styles         = $this->is_view_type( 'circles' ) ? sprintf( '--size:%1$spx', $this->attributes['circle_size'] ) : '';
-		$story_styles        .= $this->is_view_type( 'carousel' ) ? sprintf( '--width:%1$spx', $this->width ) : '';
 		$lightbox_state       = 'lightbox' . $this->current()->get_id();
 
 		if ( $this->is_amp_request() ) {
@@ -441,7 +467,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<div
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
 				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
-				style="<?php echo esc_attr( $story_styles ); ?>"
 			>
 				<?php
 				$this->render_story_with_poster();
@@ -450,10 +475,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<?php
 		} else {
 			?>
-			<div
-				class="<?php echo esc_attr( $single_story_classes ); ?>"
-				style="<?php echo esc_attr( $story_styles ); ?>"
-			>
+			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
 				<?php
 					$this->render_story_with_poster();
 				?>
@@ -469,28 +491,18 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function render_story_with_poster() {
 
-		$story_data            = $this->current();
-		$poster_url            = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
-		$poster_style          = sprintf( 'background-image: url(%1$s);', esc_url_raw( $poster_url ) );
-		$inner_wrapper_classes = 'web-stories-list__inner-wrapper ';
-
-		if ( true === $this->is_view_type( 'carousel' ) ) {
-			$poster_style .= sprintf( ' min-width: %1$dpx;', $this->width );
-		}
-
-		if ( ! empty( $this->attributes['list_view_image_alignment'] ) ) {
-			$inner_wrapper_classes .= sprintf( 'image-align-%1$s', $this->attributes['list_view_image_alignment'] );
-		}
+		$story_data   = $this->current();
+		$poster_url   = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
+		$poster_style = sprintf( 'background-image: url(%1$s);', esc_url_raw( $poster_url ) );
 
 		?>
-		<div class="<?php echo esc_attr( $inner_wrapper_classes ); ?>">
-			<div
-				class="web-stories-list__story-placeholder"
-				style="<?php echo esc_attr( $poster_style ); ?>"
-			></div>
-			<?php $this->get_content_overlay(); ?>
-		</div>
+
+		<div
+			class="web-stories-list__story-placeholder"
+			style="<?php echo esc_attr( $poster_style ); ?>"
+		></div>
 		<?php
+		$this->get_content_overlay();
 
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
@@ -521,7 +533,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		}
 
 		?>
-		<div class="story-content-overlay web-stories-list__story-content-overlay">
+		<div class="story-content-overlay">
 			<?php if ( $this->attributes['show_title'] ) { ?>
 				<div class="story-content-overlay__title">
 					<?php

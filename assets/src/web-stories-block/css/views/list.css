@@ -1,5 +1,5 @@
 /* Web Stories: List View */
-.is-view-type-list .web-stories-list__story-wrapper {
+.is-view-type-list .web-stories-list__story {
   margin-bottom: 12px;
 }
 
@@ -11,7 +11,7 @@
 }
 
 @media all and (min-width: 676px) {
-  .is-view-type-list .web-stories-list__inner-wrapper {
+  .is-view-type-list .web-stories-list__story {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;

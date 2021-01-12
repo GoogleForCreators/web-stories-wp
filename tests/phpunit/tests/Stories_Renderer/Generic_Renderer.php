@@ -117,7 +117,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 		$output = $renderer->render();
 
 		$this->assertContains( 'web-stories-list alignnone is-view-type-grid', $output );
-		$this->assertContains( 'web-stories-list__story-wrapper', $output );
+		$this->assertContains( 'web-stories-list__story', $output );
 		$this->assertContains( 'web-stories-list__story-placeholder', $output );
 
 	}

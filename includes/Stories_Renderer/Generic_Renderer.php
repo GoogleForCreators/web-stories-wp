@@ -70,23 +70,27 @@ class Generic_Renderer extends Renderer {
 
 		parent::render( $args );
 		$container_classes = $this->get_container_classes();
+		$container_styles  = $this->get_container_styles();
 
 		ob_start();
 		?>
 		<div class="<?php echo esc_attr( $container_classes ); ?>">
+			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
+				<?php
+				foreach ( $this->story_posts as $story ) {
+					$this->render_single_story_content();
+					$this->next();
+				}
+				?>
+			</div>
 			<?php
-			foreach ( $this->story_posts as $story ) {
-				$this->render_single_story_content();
-				$this->next();
-			}
+			$this->maybe_render_archive_link();
 
 			if ( ! $this->is_amp_request() ) {
 				$this->render_stories_with_lightbox_noamp();
 			} else {
 				$this->render_stories_with_lightbox_amp();
 			}
-
-			$this->maybe_render_archive_link();
 			?>
 		</div>
 		<?php

@@ -210,7 +210,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 		);
 
 		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
-		$expected = 'web-stories-list__story-wrapper';
+		$expected = 'web-stories-list__story';
 
 		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
 
@@ -233,7 +233,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 
 		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $stories );
 
-		$expected = 'web-stories-list alignnone test is-view-type-circles has-title';
+		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
 		$output = $this->call_private_method( $renderer, 'get_container_classes' );
 
