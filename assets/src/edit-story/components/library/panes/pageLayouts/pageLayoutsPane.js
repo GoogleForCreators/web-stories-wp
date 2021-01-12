@@ -85,14 +85,15 @@ function PageLayoutsPane(props) {
         const templatePages = template.pages.reduce((acc, page) => {
           // skip unselected page layout types if not matching
           if (
-            selectedPageLayoutType &&
-            page.pageLayoutType !== selectedPageLayoutType
+            !page.pageLayoutType ||
+            (selectedPageLayoutType &&
+              page.pageLayoutType !== selectedPageLayoutType)
           ) {
             return acc;
           }
 
           // translation not required because page layout title is already translated
-          const pageLayoutTitle = PAGE_LAYOUT_TYPES[page.pageLayoutType]?.title;
+          const pageLayoutTitle = PAGE_LAYOUT_TYPES[page.pageLayoutType].title;
           return [
             ...acc,
             {
