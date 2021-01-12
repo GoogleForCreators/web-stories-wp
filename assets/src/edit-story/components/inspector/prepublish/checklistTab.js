@@ -68,7 +68,13 @@ const PanelTitle = styled.span`
     error ? theme.colors.fg.negative : theme.colors.fg.warning};
 `;
 
-const Row = styled.div`
+const Row = styled.button`
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  color: ${({ theme }) => theme.colors.fg.white};
+  line-height: 24px;
   &:not(:first-child) {
     margin-top: 9px;
   }
@@ -325,6 +331,7 @@ const ChecklistTab = (props) => {
       </EmptyLayout>
     );
   }
+
   return (
     <>
       {showHighPriorityItems && (
