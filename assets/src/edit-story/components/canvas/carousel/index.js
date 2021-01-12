@@ -242,9 +242,12 @@ function Carousel() {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
   const { isRTL, version } = useConfig();
-  const { toggleMetaBoxesVisible } = useMetaBoxes(({ actions }) => ({
-    toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
-  }));
+  const { toggleMetaBoxesVisible, hasMetaBoxes } = useMetaBoxes(
+    ({ state, actions }) => ({
+      hasMetaBoxes: state.hasMetaBoxes,
+      toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
+    })
+  );
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -463,15 +466,17 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            <WithTooltip
-              title={__('Third-party Meta Boxes', 'web-stories')}
-              placement={isRTL ? Placement.RIGHT : Placement.LEFT}
-            >
-              <StyledMetaBoxesButton
-                onClick={toggleMetaBoxesVisible}
-                aria-label={__('Third-party Meta Boxes', 'web-stories')}
-              />
-            </WithTooltip>
+            {hasMetaBoxes && (
+              <WithTooltip
+                title={__('Third-party Meta Boxes', 'web-stories')}
+                placement={isRTL ? Placement.RIGHT : Placement.LEFT}
+              >
+                <StyledMetaBoxesButton
+                  onClick={toggleMetaBoxesVisible}
+                  aria-label={__('Third-Party Meta Boxes', 'web-stories')}
+                />
+              </WithTooltip>
+            )}
             <KeyboardShortcutsMenu />
             <WithTooltip
               title={__('Grid View', 'web-stories')}

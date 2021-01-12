@@ -19,29 +19,51 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../app';
 import Context from './context';
 
 function MetaBoxesProvider({ children }) {
+  const { metaBoxes = {} } = useConfig();
+  const { customMetaBoxes: isFeatureEnabled } = useFeatures();
+
   const [metaBoxesVisible, setMetaBoxesVisible] = useState(false);
   const toggleMetaBoxesVisible = useCallback(
     () => setMetaBoxesVisible((visible) => !visible),
     [setMetaBoxesVisible]
   );
 
+  const hasMetaBoxes =
+    isFeatureEnabled &&
+    Object.keys(metaBoxes).some((location) =>
+      Boolean(metaBoxes[location]?.length)
+    );
+
+  const locations = Object.keys(metaBoxes);
+
   const state = useMemo(
     () => ({
       state: {
         metaBoxesVisible,
+        metaBoxes,
+        locations,
+        hasMetaBoxes,
       },
       actions: {
         toggleMetaBoxesVisible,
       },
     }),
-    [metaBoxesVisible, toggleMetaBoxesVisible]
+    [
+      metaBoxesVisible,
+      toggleMetaBoxesVisible,
+      metaBoxes,
+      locations,
+      hasMetaBoxes,
+    ]
   );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
