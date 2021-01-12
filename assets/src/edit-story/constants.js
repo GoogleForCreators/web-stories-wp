@@ -78,6 +78,6 @@ export const FONT_WEIGHT = {
 };
 
 export const HIDDEN_PADDING = {
-  horizontal: 6,
-  vertical: 2,
+  horizontal: 8,
+  vertical: 4,
 };
