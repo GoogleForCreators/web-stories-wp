@@ -33,7 +33,6 @@ import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
-import { PAGE_LAYOUT_TYPES } from './constants';
 
 export const StyledPane = styled(Pane)`
   height: 100%;
@@ -61,59 +60,51 @@ function PageLayoutsPane(props) {
     actions: { getTemplates },
   } = useAPI();
   const [templates, setTemplates] = useState([]);
-  const [selectedPageLayoutType, setSelectedPageLayoutType] = useState(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
   const pageLayoutsParentRef = useRef();
 
-  // load and process templates
   useEffect(() => {
     getTemplates().then((result) => setTemplates(result));
-  }, [getTemplates, setTemplates]);
+  }, [getTemplates]);
 
   const pills = useMemo(
     () =>
-      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
-        id: key,
-        label: name,
+      templates.map((template) => ({
+        id: template.id,
+        label: template.title,
       })),
-    []
+    [templates]
   );
 
-  const filteredPages = useMemo(
-    () =>
-      templates.reduce((pages, template) => {
-        const templatePages = template.pages.reduce((acc, page) => {
-          // skip unselected page layout types if not matching
-          if (
-            !page.pageLayoutType ||
-            (selectedPageLayoutType &&
-              page.pageLayoutType !== selectedPageLayoutType)
-          ) {
-            return acc;
-          }
+  const filteredPages = useMemo(() => {
+    if (selectedTemplateId) {
+      const template = templates.find(
+        (template) => template.id === selectedTemplateId
+      );
+      if (template) {
+        return template.pages;
+      }
+    }
+    return templates.reduce(
+      (pages, template) => [
+        ...pages,
+        ...template.pages.map((page, index) => ({
+          ...page,
+          title: sprintf(
+            /* translators: 1: template name. 2: page number. */
+            __(`%1$s Page %2$s`, 'web-stories'),
+            template.title,
+            index + 1
+          ),
+        })),
+      ],
+      []
+    );
+  }, [templates, selectedTemplateId]);
 
-          const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
-          return [
-            ...acc,
-            {
-              ...page,
-              title: sprintf(
-                /* translators: 1: template name. 2: page layout name. */
-                __('%1$s %2$s', 'web-stories', 'web-stories'),
-                template.title,
-                pageLayoutName
-              ),
-            },
-          ];
-        }, []);
-
-        return [...pages, ...templatePages];
-      }, []),
-    [templates, selectedPageLayoutType]
-  );
-
-  const handleSelectPageLayoutType = useCallback((key) => {
-    setSelectedPageLayoutType(key);
+  const handleSelectTemplate = useCallback((templateId) => {
+    setSelectedTemplateId(templateId);
   }, []);
 
   return (
@@ -121,13 +112,13 @@ function PageLayoutsPane(props) {
       <PaneInner>
         <PillGroup
           items={pills}
-          selectedItemId={selectedPageLayoutType}
-          selectItem={handleSelectPageLayoutType}
-          deselectItem={() => handleSelectPageLayoutType(null)}
+          selectedItemId={selectedTemplateId}
+          selectItem={handleSelectTemplate}
+          deselectItem={() => handleSelectTemplate(null)}
         />
         <PageLayoutsParentContainer
           ref={pageLayoutsParentRef}
-          title={__('Page Layouts', 'web-stories')}
+          title={__('Page layouts', 'web-stories')}
         >
           {pageLayoutsParentRef.current && (
             <PageLayouts
