@@ -273,8 +273,7 @@ const ChecklistTab = (props) => {
         <Row
           tabIndex={0}
           onClick={onClick}
-          // note: onKeyDown does not work for "Enter"
-          onKeyUp={handleKeyPress}
+          onKeyDown={handleKeyPress}
           key={id}
           pageGroup={pageGroup}
         >
