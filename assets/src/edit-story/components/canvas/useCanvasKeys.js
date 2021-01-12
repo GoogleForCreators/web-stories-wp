@@ -114,15 +114,16 @@ function useCanvasKeys(ref) {
               ? getNodeForElement(currentSelectedIds[0])
               : null;
 
-          // Check if the selection event happends outside the canvas container,
+          // Check if the selection event happend outside the canvas container,
           // i.e Checklist panel, Document panel... etc. If there is any text
           // selection, we should not add the preventScroll setting, so that
           // user can select the text properly.
-          if (global.getSelection().anchorOffset !== 0) {
+          const sel = global.getSelection();
+          if (sel.anchorNode && sel.anchorOffset !== 0) {
             return;
           }
 
-          // If there is a multiple selection happene inside the canvas
+          // If there is a multi-selection happening inside the canvas
           // container, we should prevent the first element from scrolling.
           if (selectedFrame) {
             selectedFrame.focus({ preventScroll: true });
