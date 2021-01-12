@@ -8,12 +8,12 @@
 
 .web-stories-list.is-carousel .glider-next {
   right: 0;
-  transform: translateY(-50%);
+  background-image: url('./../../icons/carousel-arrow-next.svg');
 }
 
 .web-stories-list.is-carousel .glider-prev {
   left: 0;
-  transform: translateY(-50%) rotate(180deg);
+  background-image: url('./../../icons/carousel-arrow-prev.svg');
 }
 
 .web-stories-list.is-carousel .amp-carousel-button,
@@ -21,7 +21,6 @@
 .web-stories-list.is-carousel .glider-prev {
   border-radius: 50%;
   background-color: #eaeaea;
-  background-image: url('./../../../../images/web-stories/block/carousel-arrow.svg');
   background-size: 30%;
   background-repeat: no-repeat;
   background-position: center;
@@ -44,7 +43,8 @@
 .web-stories-list.is-carousel .glider-next:not(.disabled):hover,
 .web-stories-list.is-carousel .glider-prev:not(.disabled):hover,
 .web-stories-list.is-carousel .glider-next:not(.disabled):focus,
-.web-stories-list.is-carousel .glider-prev:not(.disabled):focus {
+.web-stories-list.is-carousel .glider-prev:not(.disabled):focus,
+.web-stories-list.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
   filter: invert(1);
 }
 
@@ -52,6 +52,9 @@
   transform: rotate(180deg);
 }
 
-.web-stories-list.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
-  filter: invert(1);
+/* Temporary till we have full support for the RTL carousel. */
+html[dir='rtl'] .glider-next.disabled,
+html[dir='rtl'] .glider-prev.disabled {
+  opacity: 1;
+  cursor: pointer;
 }
