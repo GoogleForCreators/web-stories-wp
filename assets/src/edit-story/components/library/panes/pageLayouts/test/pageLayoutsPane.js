@@ -35,8 +35,9 @@ const createTemplate = (title, id) => ({
   title,
   id,
   pages: [
-    createPage({ pageLayoutType: 'cover' }),
-    createPage({ pageLayoutType: 'section' }),
+    { id: 1, pageLayoutType: 'cover' },
+    { id: 2, pageLayoutType: 'section' },
+    { id: 3, pageLayoutType: 'quote' },
   ],
 });
 
@@ -44,11 +45,6 @@ const TEMPLATE_NAMES = ['List', 'Grid', 'Masonary'];
 
 const configValue = {
   api: {},
-};
-const transformValue = {
-  actions: {
-    registerTransformHandler: () => {},
-  },
 };
 
 function flushPromiseQueue() {
@@ -107,10 +103,5 @@ describe('PageLayoutsPane', () => {
       .forEach((name) => {
         expect(queryByText(name)).toBeInTheDocument();
       });
-
-    TEMPLATE_NAMES.forEach((name) => {
-      expect(queryByTitle(`${name} Cover`)).toBeInTheDocument();
-      expect(queryByTitle(`${name} Section`)).toBeInTheDocument();
-    });
   });
 });
