@@ -28,18 +28,23 @@ import APIContext from '../../../../../app/api/context';
 import StoryContext from '../../../../../app/story/context';
 import { createPage } from '../../../../../elements';
 import PageLayoutsPane from '../pageLayoutsPane';
+import { PAGE_LAYOUT_TYPES } from '../constants';
 
 const createTemplate = (title, id) => ({
   title,
   id,
-  pages: [{ id: 1 }, { id: 2 }, { id: 3 }],
+  pages: [
+    { id: 1, pageLayoutType: 'cover' },
+    { id: 2, pageLayoutType: 'section' },
+    { id: 3, pageLayoutType: 'quote' },
+  ],
 });
+
+const TEMPLATE_NAMES = ['List', 'Grid', 'Masonary'];
 
 const configValue = {
   api: {},
 };
-
-const TEMPLATE_NAMES = ['List', 'Grid', 'Masonary'];
 
 function flushPromiseQueue() {
   return new Promise((resolve) => resolve());
@@ -90,8 +95,10 @@ describe('PageLayoutsPane', () => {
       await flushPromiseQueue();
     });
 
-    TEMPLATE_NAMES.forEach((name) => {
-      expect(queryByText(name)).toBeInTheDocument();
-    });
+    Object.values(PAGE_LAYOUT_TYPES)
+      .map(({ name }) => name)
+      .forEach((name) => {
+        expect(queryByText(name)).toBeInTheDocument();
+      });
   });
 });
