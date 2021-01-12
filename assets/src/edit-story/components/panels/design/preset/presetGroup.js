@@ -18,9 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -100,11 +99,10 @@ function PresetGroup({ presets, itemRenderer, type, handleClick, isEditMode }) {
     }
   }, [activeIndex, presets.length]);
 
-  const keys = useMemo(() => presets.map(() => uuidv4()), [presets]);
   return (
     <Group ref={groupRef} type={type}>
       {presets.map((preset, i) => (
-        <ButtonWrapper key={keys[i]} type={type}>
+        <ButtonWrapper key={`${JSON.stringify(preset)}`} type={type}>
           {itemRenderer(preset, i, activeIndex, handleClick, isEditMode)}
         </ButtonWrapper>
       ))}
