@@ -34,8 +34,7 @@ const Autocomplete = ({
 }) => {
   // Return the block, but only if options were passed in.
   return (
-    'undefined' !== typeof options &&
-    '' !== options && (
+    Array.isArray(options) && (
       <div className="components-base-control">
         <FormTokenField
           value={value}

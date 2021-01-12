@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { addFilter } from '@wordpress/hooks';
 import { Fragment } from '@wordpress/element';
 
 /**
@@ -81,7 +82,7 @@ withBlockSwitcher.propTypes = {
   Component: PropTypes.func,
 };
 
-wp.hooks.addFilter(
+addFilter(
   'editor.BlockEdit',
   'web-stories/with-block-switcher',
   withBlockSwitcher

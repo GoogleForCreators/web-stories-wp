@@ -37,12 +37,6 @@ function StoriesPreview(props) {
 
   const { archiveURL } = useConfig();
 
-  const ArchiveLink = () => (
-    <a target="__blank" href={archiveURL}>
-      {viewAllLabel}
-    </a>
-  );
-
   const blockClasses = classNames(
     {
       'is-style-default': !isShowing('sharp_corners', fieldState[viewType]),
@@ -82,7 +76,9 @@ function StoriesPreview(props) {
       })}
       {isShowing('archive_link', fieldState[viewType]) && (
         <div className="web-stories-list__archive-link">
-          <ArchiveLink />
+          <a target="__blank" href={archiveURL}>
+            {viewAllLabel}
+          </a>
         </div>
       )}
     </div>

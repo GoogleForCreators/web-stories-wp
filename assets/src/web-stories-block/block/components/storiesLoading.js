@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 const StoriesLoading = () => {
   return (
     <Placeholder
-      className="web-stories placeholder"
+      className="web-stories-placeholder"
       instructions={__('Loading Stories…', 'web-stories')}
     >
       <Spinner />

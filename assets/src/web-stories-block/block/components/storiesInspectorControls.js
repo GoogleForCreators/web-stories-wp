@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import {
   TextControl,
   PanelBody,
@@ -32,7 +32,7 @@ import {
   Notice,
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
-import { RawHTML, useEffect } from '@wordpress/element';
+import { createInterpolateElement, useEffect } from '@wordpress/element';
 import { select } from '@wordpress/data';
 
 /**
@@ -112,13 +112,15 @@ const StoriesInspectorControls = (props) => {
   );
 
   const previewLink = select('core/editor').getEditedPostPreviewLink();
-  const carouselMessage = sprintf(
-    /* Translators: Carousel informational message. 1: Preview link. */
+  const carouselMessage = createInterpolateElement(
     __(
-      `<i><b>Note:</b> Carousel view's functionality will not work in Editor. <a target="__blank" href="%1$s">Preview</a> post to see it in action.</i>`,
+      `<b>Note:</b> Carousel view's functionality will not work in Editor. <a>Preview</a> post to see it in action.`,
       'web-stories'
     ),
-    previewLink
+    {
+      b: <b />,
+      a: <a href={previewLink} target="__blank" rel="noreferrer" />, // eslint-disable-line jsx-a11y/anchor-has-content
+    }
   );
 
   return (
@@ -133,7 +135,7 @@ const StoriesInspectorControls = (props) => {
             isDismissible={false}
             status="warning"
           >
-            <RawHTML>{carouselMessage}</RawHTML>
+            {carouselMessage}
           </Notice>
         )}
 
