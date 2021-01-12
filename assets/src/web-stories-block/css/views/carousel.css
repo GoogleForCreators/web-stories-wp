@@ -1,10 +1,7 @@
 /* Web Stories: Carousel View */
-.web-stories-list.is-view-type-carousel {
-  position: relative;
-}
 
 @media all and (min-width: 676px) {
-  .web-stories-list.is-view-type-carousel .web-stories-list__inner-wrapper {
+  .web-stories-list.is-view-type-carousel .web-stories-list__story {
     max-width: var(--ws-story-max-width);
   }
 }
@@ -19,24 +16,19 @@
   overflow: hidden;
 }
 
-.is-view-type-carousel .glider-next,
-.is-view-type-circles .glider-next {
+.is-carousel .glider-next {
   right: 0;
   transform: translateY(-50%);
 }
 
-.is-view-type-carousel .glider-prev,
-.is-view-type-circles .glider-prev {
+.is-carousel .glider-prev {
   left: 0;
   transform: translateY(-50%) rotate(180deg);
 }
 
-.is-view-type-carousel .amp-carousel-button,
-.is-view-type-carousel .glider-next,
-.is-view-type-carousel .glider-prev,
-.is-view-type-circles .amp-carousel-button,
-.is-view-type-circles .glider-next,
-.is-view-type-circles .glider-prev {
+.is-carousel .amp-carousel-button,
+.is-carousel .glider-next,
+.is-carousel .glider-prev {
   border-radius: 50%;
   background-color: #eaeaea;
   background-image: url('./../../../../images/web-stories/block/carousel-arrow.svg');
@@ -50,29 +42,26 @@
   border-style: none;
   z-index: 10;
   pointer-events: all;
+  cursor: pointer;
 }
 
-.is-view-type-carousel .glider-next,
-.is-view-type-carousel .glider-prev,
-.is-view-type-circles .glider-next,
-.is-view-type-circles .glider-prev {
+.is-carousel .glider-next,
+.is-carousel .glider-prev {
   padding: 10px;
   top: 50%;
 }
 
-.is-view-type-carousel .glider-next:not(.disabled):hover,
-.is-view-type-carousel .glider-prev:not(.disabled):hover,
-.is-view-type-circles .glider-next:not(.disabled):hover,
-.is-view-type-circles .glider-prev:not(.disabled):hover {
+.is-carousel .glider-next:not(.disabled):hover,
+.is-carousel .glider-prev:not(.disabled):hover,
+.is-carousel .glider-next:not(.disabled):focus,
+.is-carousel .glider-prev:not(.disabled):focus {
   filter: invert(1);
 }
 
-.is-view-type-carousel .amp-carousel-button-prev,
-.is-view-type-circles .amp-carousel-button-prev {
+.is-carousel .amp-carousel-button-prev {
   transform: rotate(180deg);
 }
 
-.is-view-type-carousel .amp-carousel-button:not(.amp-disabled):hover,
-.is-view-type-circles .amp-carousel-button:not(.amp-disabled):hover {
+.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
   filter: invert(1);
 }

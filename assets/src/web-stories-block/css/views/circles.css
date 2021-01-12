@@ -1,20 +1,16 @@
 /* Web Stories: Circles View */
-.is-view-type-circles {
+.is-view-type-circles .web-stories-list__inner-wrapper {
   display: flex;
   flex-wrap: nowrap;
   position: relative;
+  overflow-x: scroll;
 }
 
-.is-view-type-circles .web-stories-list__story-wrapper {
-  overflow: visible;
-  overflow: initial;
+.is-view-type-circles .web-stories-list__story {
   max-width: var(--ws-circle-size);
   min-width: initial;
   margin-right: 20px;
   text-align: center;
-}
-
-.is-view-type-circles .web-stories-list__inner-wrapper {
   display: flex;
   flex-direction: column;
 }

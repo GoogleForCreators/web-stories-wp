@@ -81,27 +81,31 @@ class Carousel_Renderer extends Renderer {
 
 		parent::render( $args );
 		$container_classes = $this->get_container_classes();
+		$container_styles  = $this->get_container_styles();
 
 		ob_start();
 		?>
 		<div class="<?php echo esc_attr( $container_classes ); ?>">
-			<amp-carousel
-				width="1"
-				height="1"
-				layout="intrinsic"
-				type="carousel"
-				role="region"
-				aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
-			>
-				<?php
-				foreach ( $this->story_posts as $story ) {
-					$this->render_single_story_content();
-					$this->next();
-				}
-				?>
-			</amp-carousel>
-			<?php $this->maybe_render_archive_link(); ?>
+			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
+				<amp-carousel
+					width="1"
+					height="1"
+					layout="intrinsic"
+					type="carousel"
+					role="region"
+					aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
+				>
+					<?php
+					foreach ( $this->story_posts as $story ) {
+						$this->render_single_story_content();
+						$this->next();
+					}
+					?>
+				</amp-carousel>
+			</div>
 			<?php
+			$this->maybe_render_archive_link();
+
 			if ( ! $this->is_amp_request() ) {
 				$this->render_stories_with_lightbox_noamp();
 			} else {

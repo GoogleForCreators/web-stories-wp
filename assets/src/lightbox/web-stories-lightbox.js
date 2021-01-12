@@ -70,9 +70,7 @@ class Lightbox {
   }
 
   bindStoryClickListeners() {
-    const cards = this.wrapperDiv.querySelectorAll(
-      '.web-stories-list__story-wrapper:not(.archive-link-card)'
-    );
+    const cards = this.wrapperDiv.querySelectorAll('.web-stories-list__story');
 
     cards.forEach((card, index) => {
       card.addEventListener('click', (event) => {
