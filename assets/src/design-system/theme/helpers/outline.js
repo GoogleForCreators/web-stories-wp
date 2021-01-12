@@ -18,10 +18,16 @@
  */
 import { css } from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { FOCUS_VISIBLE_SELECTOR } from '../global';
+
 export const focusableOutlineCSS = (accent) => css`
   border: solid 2px transparent;
-  &:focus {
-    border: solid 2px ${accent};
+
+  &.${FOCUS_VISIBLE_SELECTOR} {
     outline: none;
+    border: solid 2px ${accent};
   }
 `;

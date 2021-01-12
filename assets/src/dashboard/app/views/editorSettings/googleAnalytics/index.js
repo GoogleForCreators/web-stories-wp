@@ -33,7 +33,7 @@ import { TranslateWithMarkup } from '../../../../../i18n';
 import {
   ErrorText,
   FormContainer,
-  GoogleAnalyticsTextInput,
+  SettingsTextInput,
   InlineLink,
   InlineForm,
   SaveButton,
@@ -167,7 +167,7 @@ function GoogleAnalyticsSettings({
           <VisuallyHiddenLabel htmlFor="gaTrackingId">
             {TEXT.ARIA_LABEL}
           </VisuallyHiddenLabel>
-          <GoogleAnalyticsTextInput
+          <SettingsTextInput
             label={TEXT.ARIA_LABEL}
             id="gaTrackingId"
             value={analyticsId}

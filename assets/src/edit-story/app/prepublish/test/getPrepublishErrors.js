@@ -26,14 +26,15 @@ const DEFAULT_STORY_PROPS = {
 };
 describe('prepublish checklist', () => {
   beforeEach(jest.resetModules);
-  it('should return guidance for the story', () => {
+  it('should return guidance for the story', async () => {
     const testStory = {
       id: 120,
       pages: [{ id: 123, elements: [] }],
     };
-    expect(getPrepublishErrors(testStory)).toMatchSnapshot();
+    const result = await getPrepublishErrors(testStory);
+    expect(result).toMatchSnapshot();
   });
-  it('should return an empty array', () => {
+  it('should return an empty array', async () => {
     const testStory = {
       id: 456,
       ...DEFAULT_STORY_PROPS,
@@ -71,18 +72,20 @@ describe('prepublish checklist', () => {
         },
       ],
     };
-    expect(getPrepublishErrors(testStory) instanceof Array).toBeTrue();
-    expect(getPrepublishErrors(testStory)).toHaveLength(0);
+    expect((await getPrepublishErrors(testStory)) instanceof Array).toBeTrue();
+    expect(await getPrepublishErrors(testStory)).toHaveLength(0);
   });
 
-  it('should not throw errors if the checklist functions throw (and should not skip the others)', () => {
+  it('should not throw errors if the checklist functions throw (and should not skip the others)', async () => {
     const mockFn = jest.fn(() => {
       throw new Error('What are you doing here?');
     });
     jest.doMock('../warning', () => {
       const actual = jest.requireActual('../warning').default;
+      const async = jest.requireActual('../warning').async;
       return {
         ...actual,
+        async,
         story: [...actual.story, mockFn],
         page: [...actual.page, mockFn],
         image: [...actual.image, mockFn],
@@ -94,15 +97,18 @@ describe('prepublish checklist', () => {
       title: undefined,
       pages: [{ elements: [{ type: 'image', height: 1, width: 1 }] }],
     };
-    expect(() => getPrepublishErrorsCopy(malformedStory)).not.toThrow();
+    expect(async () => {
+      const result = await getPrepublishErrorsCopy(malformedStory);
+      return result;
+    }).not.toThrow();
     expect(mockFn).toHaveBeenCalledWith(malformedStory);
     expect(mockFn).toHaveBeenCalledTimes(3);
-    expect(getPrepublishErrorsCopy(malformedStory)).toStrictEqual(
-      getPrepublishErrors(malformedStory)
+    expect(await getPrepublishErrorsCopy(malformedStory)).toStrictEqual(
+      await getPrepublishErrors(malformedStory)
     );
   });
 
-  it('should provide the page number where the element that needs guidance is', () => {
+  it('should provide the page number where the element that needs guidance is', async () => {
     const malformedStory = {
       title: undefined,
       pages: [
@@ -120,7 +126,7 @@ describe('prepublish checklist', () => {
         },
       ],
     };
-    const test = getPrepublishErrors(malformedStory);
+    const test = await getPrepublishErrors(malformedStory);
     const elementErrors = test.filter(({ elementId }) => Boolean(elementId));
     expect(elementErrors).toHaveLength(1);
     expect(elementErrors[0].page).toStrictEqual(2);

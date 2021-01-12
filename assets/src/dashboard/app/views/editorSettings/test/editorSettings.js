@@ -29,7 +29,10 @@ import {
 import { renderWithProviders } from '../../../../testUtils';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
+import { TEXT as AD_NETWORK_TEXT } from '../adNetwork';
+
 import EditorSettings from '../';
+import { AD_NETWORK_TYPE } from '../../../../constants';
 
 const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
@@ -43,6 +46,10 @@ function createProviderValues({
   activeLogoId,
   isLoading,
   googleAnalyticsId,
+  adSensePublisherId = '',
+  adSenseSlotId = '',
+  adManagerSlotId = '',
+  adNetwork = AD_NETWORK_TYPE.NONE,
   logoIds,
   logos,
 }) {
@@ -59,6 +66,10 @@ function createProviderValues({
       state: {
         settings: {
           googleAnalyticsId,
+          adSensePublisherId,
+          adSenseSlotId,
+          adManagerSlotId,
+          adNetwork,
           activePublisherLogoId: activeLogoId,
           publisherLogoIds: logoIds,
         },
@@ -119,6 +130,8 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)).toBeInTheDocument();
     expect(getByTestId('upload-file-input')).toBeInTheDocument();
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
+
+    expect(getByText(AD_NETWORK_TEXT.SECTION_HEADING)).toBeInTheDocument();
   });
 
   it('should render settings page with publisher logos', function () {
@@ -195,5 +208,28 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
 
     expect(queryByTestId('upload-file-input')).not.toBeInTheDocument();
+  });
+
+  it('should render settings page with adsense', function () {
+    const { getByText } = renderWithProviders(
+      <EditorSettings />,
+      createProviderValues({
+        googleAnalyticsId: 'UA-098909-05',
+        canUploadFiles: true,
+        canManageSettings: true,
+        isLoading: false,
+        adSensePublisherId: '123',
+        adSenseSlotId: '456',
+        adManagerSlotId: '',
+        adNetwork: AD_NETWORK_TYPE.ADSENSE,
+        logoIds: [],
+        logos: {},
+      })
+    );
+
+    const helperLink = getByText('how to monetize your Web Stories', {
+      selector: 'a',
+    });
+    expect(helperLink).toBeInTheDocument();
   });
 });

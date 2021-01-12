@@ -25,6 +25,8 @@ import { act } from '@testing-library/react';
 import { renderWithTheme } from '../../../../../testUtils';
 import ConfigContext from '../../../../../app/config/context';
 import APIContext from '../../../../../app/api/context';
+import StoryContext from '../../../../../app/story/context';
+import { createPage } from '../../../../../elements';
 import PageLayoutsPane from '../pageLayoutsPane';
 
 const createTemplate = (title, id) => ({
@@ -53,11 +55,21 @@ describe('PageLayoutsPane', () => {
         getTemplates,
       },
     };
+    const storyContext = {
+      actions: {
+        replaceCurrentPage: jest.fn(),
+      },
+      state: {
+        currentPage: createPage(),
+      },
+    };
 
     return renderWithTheme(
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
-          <PageLayoutsPane isActive={true} />
+          <StoryContext.Provider value={storyContext}>
+            <PageLayoutsPane isActive={true} />
+          </StoryContext.Provider>
         </APIContext.Provider>
       </ConfigContext.Provider>
     );

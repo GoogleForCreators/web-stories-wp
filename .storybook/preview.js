@@ -22,7 +22,6 @@ import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
@@ -41,6 +40,7 @@ import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
 import {
   theme as designSystemTheme,
   lightMode,
+  ThemeGlobals,
 } from '../assets/src/design-system/theme';
 
 // @todo: Find better way to mock these.
@@ -112,7 +112,12 @@ addDecorator((story, { id }) => {
   if (isDesignSystemStorybook) {
     // override darkMode colors
     const dsTheme = { ...designSystemTheme, colors: lightMode };
-    return <ThemeProvider theme={dsTheme}>{story()}</ThemeProvider>;
+    return (
+      <ThemeProvider theme={dsTheme}>
+        <ThemeGlobals.OverrideFocusOutline />
+        {story()}
+      </ThemeProvider>
+    );
   }
 
   return (
