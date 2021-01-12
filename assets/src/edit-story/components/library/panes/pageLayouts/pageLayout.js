@@ -54,7 +54,7 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const HoverControls = styled.div`
+const HoverControls = styled.button`
   height: ${({ pageSize }) => pageSize.containerHeight}px;
   width: ${({ pageSize }) => pageSize.width}px;
   position: absolute;
@@ -109,7 +109,7 @@ function PageLayout(props) {
     setIsConfirming(false);
   }, [onConfirm, setIsConfirming]);
 
-  const handleKeyUp = useCallback(
+  const handleKeyDown = useCallback(
     ({ key }) => {
       if (key === 'Enter' && isActive) {
         handleClick();
@@ -140,7 +140,7 @@ function PageLayout(props) {
           onFocus={() => setIsActive(true)}
           onMouseEnter={() => setIsActive(true)}
           onMouseLeave={() => setIsActive(false)}
-          onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDown}
           onClick={handleClick}
           isActive={isActive}
           aria-label={page.title}
