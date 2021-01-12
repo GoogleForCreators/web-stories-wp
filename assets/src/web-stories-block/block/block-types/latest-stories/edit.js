@@ -82,7 +82,7 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
         path: addQueryArgs(api.stories, LATEST_STORIES_QUERY),
       });
 
-      if ('undefined' !== typeof stories && Array.isArray(stories)) {
+      if (Array.isArray(stories)) {
         setFetchedStories(stories);
       }
     } catch (err) {

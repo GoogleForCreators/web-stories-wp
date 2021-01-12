@@ -24,6 +24,7 @@ import classNames from 'classnames';
  * WordPress dependencies
  */
 import { RawHTML } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 import { dateI18n, format, __experimentalGetSettings } from '@wordpress/date';
 
 function StoryCard({
@@ -68,14 +69,24 @@ function StoryCard({
               </RawHTML>
             )}
             {isShowingAuthor && (
-              <div className="story-content-overlay__author">{`By ${author}`}</div>
+              <div className="story-content-overlay__author">
+                {sprintf(
+                  /* translators: byline. %s: current author. */
+                  __('by %s', 'web-stories'),
+                  author
+                )}
+              </div>
             )}
             {isShowingDate && (
               <time
                 dateTime={format('c', date)}
                 className="story-content-overlay__date"
               >
-                {`On ${dateI18n(dateFormat, date)}`}
+                {sprintf(
+                  /* translators: date. %s: published date. */
+                  __('On %s', 'web-stories'),
+                  dateI18n(dateFormat, date)
+                )}
               </time>
             )}
           </div>
