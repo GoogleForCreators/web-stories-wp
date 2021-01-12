@@ -7,8 +7,9 @@
   background: black;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  right: 0;
+  bottom: 0;
+  visibility: collapse;
   opacity: 0;
   transition: opacity 0.2s linear;
 }
