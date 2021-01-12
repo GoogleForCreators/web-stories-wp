@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,23 @@
  * limitations under the License.
  */
 
-export const PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS = {
-  REMOVE_LOGO: 'REMOVE_LOGO',
-  SET_DEFAULT: 'SET_DEFAULT',
-};
+/**
+ * Internal dependencies
+ */
+import { validateAdSenseSlotIdFormat } from '../';
 
-export const AD_NETWORK_TYPE = {
-  NONE: 'none',
-  ADSENSE: 'adsense',
-  ADMANAGER: 'admanager',
-};
+const idsToValidate = [
+  ['1234567890', true],
+  ['123456789', false],
+  ['12345678911', false],
+];
+
+describe('validateAdSenseSlotIdFormat', () => {
+  it.each(idsToValidate)(
+    'should take " %s " and return as %p AdSense slot id format',
+    (slotId, expected) => {
+      const bool = validateAdSenseSlotIdFormat(slotId);
+      expect(bool).toBe(expected);
+    }
+  );
+});

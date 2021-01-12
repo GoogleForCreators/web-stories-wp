@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-export const PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS = {
-  REMOVE_LOGO: 'REMOVE_LOGO',
-  SET_DEFAULT: 'SET_DEFAULT',
-};
+// /123456789/a4a/amp_story_dfp_example
+const adManagerSlotIdFormatRegex = /^\/\d+(\/[\w_-]+)*$/;
 
-export const AD_NETWORK_TYPE = {
-  NONE: 'none',
-  ADSENSE: 'adsense',
-  ADMANAGER: 'admanager',
-};
+export default function validateAdManagerSlotIdFormat(value = '') {
+  return Boolean(value.toLowerCase().match(adManagerSlotIdFormatRegex));
+}
