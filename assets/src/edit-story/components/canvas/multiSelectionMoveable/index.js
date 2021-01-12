@@ -32,6 +32,7 @@ import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
+import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
@@ -65,15 +66,7 @@ function MultiSelectionMoveable({ selectedElements }) {
     actions: { pushTransform },
   } = useTransform();
 
-  useEffect(() => {
-    const handleUpdateMoveable = () => {
-      moveable.current?.updateRect();
-    };
-    window.addEventListener('resize', handleUpdateMoveable);
-    return () => {
-      window.removeEventListener('resize', handleUpdateMoveable);
-    };
-  }, [moveable]);
+  useWindowResizeHandler(moveable);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
