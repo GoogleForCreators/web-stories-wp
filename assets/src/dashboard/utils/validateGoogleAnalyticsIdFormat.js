@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const gaTrackingFormatOrGa4MeasurementId = /^ua-\d+-\d+|g-\d{7}$/;
+const gaTrackingFormatOrGa4MeasurementId = /^ua-\d+-\d+|g-[\w]+$/;
 
 export default function validateGoogleAnalyticsIdFormat(value = '') {
   return Boolean(value.toLowerCase().match(gaTrackingFormatOrGa4MeasurementId));
