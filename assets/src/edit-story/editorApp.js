@@ -39,13 +39,13 @@ import { MediaProvider } from './app/media';
 import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
+import Layout  from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as ModalGlobalStyle } from './components/modal';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
-import Layout from './app/layout';
 
 function App({ config }) {
   const { storyId, isRTL } = config;
