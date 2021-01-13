@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _x, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -99,7 +99,7 @@ function PageLayoutsPane(props) {
               ...page,
               title: sprintf(
                 /* translators: 1: template name. 2: page layout name. */
-                __('%1$s %2$s', 'web-stories', 'web-stories'),
+                _x('%1$s %2$s', 'page layout title', 'web-stories'),
                 template.title,
                 pageLayoutName
               ),
