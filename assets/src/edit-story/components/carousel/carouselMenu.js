@@ -32,17 +32,31 @@ import { __ } from '@wordpress/i18n';
 import { GridView as GridViewButton, Plain } from '../button';
 import Modal from '../modal';
 import WithTooltip from '../tooltip';
+import { Placement } from '../popup';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import GridView from './gridview';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+`;
 
-const OverflowButtons = styled.div`
-  position: relative;
-  & > * {
-    position: absolute;
-    bottom: 10px;
-  }
+const MenuItems = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin: 0 16px 16px 0;
+`;
+
+const Box = styled.div`
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const PlainStyled = styled(Plain)`
@@ -54,8 +68,8 @@ const PlainStyled = styled(Plain)`
 `;
 
 const StyledGridViewButton = styled(GridViewButton).attrs({
-  height: '24',
-  width: '24',
+  height: '16',
+  width: '16',
 })``;
 
 const GridViewContainer = styled.section.attrs({
@@ -74,15 +88,22 @@ function CarouselMenu() {
   return (
     <>
       <Wrapper>
-        <OverflowButtons>
-          <KeyboardShortcutsMenu />
-        </OverflowButtons>
-        <WithTooltip title={__('Grid View', 'web-stories')} placement="left">
-          <StyledGridViewButton
-            onClick={openModal}
-            aria-label={__('Grid View', 'web-stories')}
-          />
-        </WithTooltip>
+        <MenuItems>
+          <Box>
+            <KeyboardShortcutsMenu />
+          </Box>
+          <Box>
+            <WithTooltip
+              title={__('Grid View', 'web-stories')}
+              placement={Placement.TOP}
+            >
+              <StyledGridViewButton
+                onClick={openModal}
+                aria-label={__('Grid View', 'web-stories')}
+              />
+            </WithTooltip>
+          </Box>
+        </MenuItems>
       </Wrapper>
       <Modal
         open={isGridViewOpen}
