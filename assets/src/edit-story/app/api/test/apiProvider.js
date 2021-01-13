@@ -82,9 +82,9 @@ describe('APIProvider', () => {
     });
   });
 
-  it('getPageLayouts gets templates w/ cdnURL', async () => {
-    const templates = [{ id: 'templateid' }];
-    getAllPageLayouts.mockResolvedValue(templates);
+  it('getPageLayouts gets pageLayouts w/ cdnURL', async () => {
+    const pageLayouts = [{ id: 'templateid' }];
+    getAllPageLayouts.mockResolvedValue(pageLayouts);
 
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
@@ -94,12 +94,12 @@ describe('APIProvider', () => {
       },
     });
 
-    let templatesResult;
+    let pageLayoutsResult;
     await act(async () => {
-      templatesResult = await result.current.actions.getPageLayouts();
+      pageLayoutsResult = await result.current.actions.getPageLayouts();
     });
 
     expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL });
-    expect(templatesResult).toStrictEqual(templates);
+    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
   });
 });
