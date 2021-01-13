@@ -89,10 +89,9 @@ const Row = styled.button`
   }
 `;
 
-const Underline = styled.u`
-  &:hover {
-    cursor: pointer;
-  }
+const Underline = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
 const HelperText = styled.span`
