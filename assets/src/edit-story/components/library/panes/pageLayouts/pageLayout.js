@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useState, useCallback } from 'react';
+import { useState, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -53,7 +53,7 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const HoverControls = styled.button`
+const HoverControls = styled.div`
   height: ${({ pageSize }) => pageSize.containerHeight}px;
   width: ${({ pageSize }) => pageSize.width}px;
   position: absolute;
@@ -81,14 +81,12 @@ const PageLayoutTitle = styled.div`
   width: 100%;
 `;
 
-function PageLayout(props) {
-  const { page, pageSize, onConfirm, requiresConfirmation } = props;
-
+function PageLayout(props, ref) {
+  const { isFocused, page, pageSize, onConfirm, requiresConfirmation } = props;
   const [isActive, setIsActive] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
-  const containElem = useRef(null);
 
-  useFocusOut(containElem, () => setIsActive(false), []);
+  useFocusOut(ref, () => setIsActive(false), []);
 
   const handleClick = useCallback(() => {
     if (requiresConfirmation) {
@@ -107,13 +105,37 @@ function PageLayout(props) {
     setIsConfirming(false);
   }, [onConfirm, setIsConfirming]);
 
-  const handleKeyDown = useCallback(
-    ({ key }) => {
+  const handleKeyUp = useCallback(
+    (event) => {
+      const { key } = event;
       if (key === 'Enter') {
+        event.stopPropagation();
         handleClick();
       }
     },
     [handleClick]
+  );
+
+  const handleFocus = useCallback(
+    (event) => {
+      // if pageLayouts are in focus we want to make sure this focus event doesn't bubble up and reset the keyboard nav.
+      if (isFocused) {
+        event.stopPropagation();
+      }
+      setIsActive(true);
+    },
+    [isFocused]
+  );
+
+  const handleBlur = useCallback(
+    (event) => {
+      // if pageLayouts are in focus we want to make sure this blur event doesn't bubble up and reset the keyboard nav.
+      if (isFocused) {
+        event.stopPropagation();
+      }
+      setIsActive(false);
+    },
+    [isFocused]
   );
 
   return (
@@ -133,16 +155,17 @@ function PageLayout(props) {
           </PreviewErrorBoundary>
         </PreviewPageWrapper>
         <HoverControls
-          ref={containElem}
+          ref={ref}
           pageSize={pageSize}
-          onFocus={() => setIsActive(true)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onMouseEnter={() => setIsActive(true)}
           onMouseLeave={() => setIsActive(false)}
-          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
           onClick={handleClick}
           isActive={isActive}
           aria-label={page.title}
-          tabIndex="0"
+          tabIndex={isActive ? 0 : -1}
         >
           <PageLayoutTitle>{page.title}</PageLayoutTitle>
         </HoverControls>
@@ -162,6 +185,7 @@ PageLayout.propTypes = {
   pageSize: PageSizePropType.isRequired,
   onConfirm: PropTypes.func.isRequired,
   requiresConfirmation: PropTypes.bool.isRequired,
+  isFocused: PropTypes.bool,
 };
 
-export default PageLayout;
+export default forwardRef(PageLayout);
