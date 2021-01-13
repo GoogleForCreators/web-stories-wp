@@ -30,9 +30,9 @@ import {
   processPastedElements,
 } from '../../utils/copyPaste';
 import usePasteTextContent from '../../components/richText/usePasteTextContent';
-import useAddPastedElements from './useAddPastedElements';
 import useUploadWithPreview from '../../components/canvas/useUploadWithPreview';
 import useInsertElement from '../../components/canvas/useInsertElement';
+import useAddPastedElements from './useAddPastedElements';
 
 function useCanvasGlobalKeys() {
   const addPastedElements = useAddPastedElements();

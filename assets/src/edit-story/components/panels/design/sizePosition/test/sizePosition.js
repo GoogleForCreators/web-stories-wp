@@ -22,7 +22,10 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '../../../../../constants';
 import { getDefinitionForType } from '../../../../../elements';
 import { dataPixels } from '../../../../../units';
 import { renderPanel } from '../../../shared/test/_utils';
