@@ -130,6 +130,7 @@ const PageAreaWithOverflow = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
 `;
 
 const PageAreaSafeZone = styled.div`

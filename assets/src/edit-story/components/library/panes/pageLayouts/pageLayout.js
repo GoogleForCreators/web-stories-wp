@@ -142,6 +142,7 @@ function PageLayout(props) {
           onClick={handleClick}
           isActive={isActive}
           aria-label={page.title}
+          title={page.title}
           tabIndex="0"
         >
           <PageLayoutTitle>{page.title}</PageLayoutTitle>

@@ -20,10 +20,14 @@
 import { Container } from './container';
 
 /**
- * The editor's checklist.
+ * The prepublish checklist panel. Includes: checklist items and collapsible critical/recommended panels
  */
 export class ChecklistPanel extends Container {
   constructor(node, path) {
     super(node, path);
+  }
+
+  get recommended() {
+    return this.getByRole('button', { name: /Recommended/ });
   }
 }

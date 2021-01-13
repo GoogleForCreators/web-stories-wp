@@ -55,6 +55,18 @@ export const elementWithBorderRadius = css`
   ${(props) => getBorderRadius(props)}
 `;
 
+export const elementWithHighlightBorderRadius = ({
+  borderRadius,
+  dataToEditorY,
+}) =>
+  dataToEditorY &&
+  css`
+    border-radius: ${dataToEditorY(borderRadius?.topLeft || 0)}px
+      ${dataToEditorY(borderRadius?.topRight || 0)}px
+      ${dataToEditorY(borderRadius?.bottomRight || 0)}px
+      ${dataToEditorY(borderRadius?.bottomLeft || 0)}px;
+  `;
+
 export const elementWithBorder = css`
   ${({ border, borderRadius, width, height }) =>
     getBorderStyle({

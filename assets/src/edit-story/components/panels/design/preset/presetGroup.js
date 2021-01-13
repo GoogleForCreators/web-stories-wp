@@ -112,7 +112,7 @@ function PresetGroup({
   return (
     <Group ref={groupRef} type={type}>
       {presets.map((preset, i) => (
-        <ButtonWrapper key={i} type={type}>
+        <ButtonWrapper key={JSON.stringify(preset)} type={type}>
           {itemRenderer(preset, i, activeIndex, handleClick, isEditMode)}
         </ButtonWrapper>
       ))}
