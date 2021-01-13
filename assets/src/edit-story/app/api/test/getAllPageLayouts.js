@@ -83,8 +83,8 @@ describe('getAllPageLayouts', () => {
                   mimeType: 'image/png',
                   src:
                     'https://plugin.url/assets/images/editor/grid-placeholder.png',
-                  width: 412,
-                  height: 732,
+                  width: 1680,
+                  height: 2938,
                   posterId: 0,
                   id: 0,
                   title: 'Placeholder',
