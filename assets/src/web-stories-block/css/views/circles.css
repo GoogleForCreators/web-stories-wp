@@ -1,12 +1,12 @@
 /* Web Stories: Circles View */
-.is-view-type-circles .web-stories-list__inner-wrapper {
+.web-stories-list.is-view-type-circles .web-stories-list__inner-wrapper {
   display: flex;
   flex-wrap: nowrap;
   position: relative;
   overflow-x: scroll;
 }
 
-.is-view-type-circles .web-stories-list__story {
+.web-stories-list.is-view-type-circles .web-stories-list__story {
   max-width: var(--ws-circle-size);
   min-width: initial;
   margin-right: 20px;
@@ -15,7 +15,7 @@
   flex-direction: column;
 }
 
-.is-view-type-circles .web-stories-list__story-placeholder {
+.web-stories-list.is-view-type-circles .web-stories-list__story-placeholder {
   height: var(--ws-circle-size);
   width: var(--ws-circle-size);
   border-radius: 50%;
@@ -24,16 +24,18 @@
   padding: 2px;
 }
 
-.is-view-type-circles .web-stories-list__story-placeholder::after,
-.is-view-type-circles .web-stories-list__story-placeholder::before {
+.web-stories-list.is-view-type-circles
+  .web-stories-list__story-placeholder::after,
+.web-stories-list.is-view-type-circles
+  .web-stories-list__story-placeholder::before {
   display: none;
 }
 
-.is-view-type-circles .story-content-overlay__title {
+.web-stories-list.is-view-type-circles .story-content-overlay__title {
   font-size: var(--ws-font-size-circle-title);
 }
 
-.is-view-type-circles.has-title .glider-next,
-.is-view-type-circles.has-title .glider-prev {
+.web-stories-list.is-view-type-circles.has-title .glider-next,
+.web-stories-list.is-view-type-circles.has-title .glider-prev {
   top: 35%;
 }

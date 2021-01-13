@@ -533,7 +533,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		}
 
 		?>
-		<div class="story-content-overlay">
+		<div class="web-stories-list__story-content-overlay">
 			<?php if ( $this->attributes['show_title'] ) { ?>
 				<div class="story-content-overlay__title">
 					<?php
