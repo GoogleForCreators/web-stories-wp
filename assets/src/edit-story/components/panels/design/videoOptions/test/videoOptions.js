@@ -37,10 +37,14 @@ describe('Panels/VideoOptions', () => {
   }
 
   beforeAll(() => {
-    localStorage.setItem(
-      'web_stories_ui_panel_settings:videoOptions',
-      JSON.stringify({ isCollapsed: false })
-    );
+    try {
+      localStorage.setItem(
+        'web_stories_ui_panel_settings:videoOptions',
+        JSON.stringify({ isCollapsed: false })
+      );
+    } catch {
+      // Do something
+    }
   });
 
   afterAll(() => {

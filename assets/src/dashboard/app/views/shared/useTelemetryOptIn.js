@@ -73,13 +73,21 @@ export default function useTelemetryOptIn() {
 
   const _toggleWebStoriesTrackingOptIn = useCallback(() => {
     toggleWebStoriesTrackingOptIn();
-    localStorage.setItem(LOCAL_STORAGE_KEY, true);
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, true);
+    } catch {
+      // Do something
+    }
     setOptInCheckboxClicked(true);
   }, [toggleWebStoriesTrackingOptIn]);
 
   const closeBanner = useCallback(() => {
     setBannerPreviouslyClosed(true);
-    localStorage.setItem(LOCAL_STORAGE_KEY, true);
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, true);
+    } catch {
+      // Do something
+    }
   }, []);
 
   let bannerVisible = true;

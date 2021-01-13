@@ -51,10 +51,14 @@ function setupPanel(configs = {}) {
 
 describe('PageAdvancementPanel', () => {
   beforeAll(() => {
-    localStorage.setItem(
-      'web_stories_ui_panel_settings:pageAdvancement',
-      JSON.stringify({ isCollapsed: false })
-    );
+    try {
+      localStorage.setItem(
+        'web_stories_ui_panel_settings:pageAdvancement',
+        JSON.stringify({ isCollapsed: false })
+      );
+    } catch {
+      // Do something
+    }
   });
 
   afterAll(() => {

@@ -69,10 +69,14 @@ describe('Panels/Link', () => {
   };
 
   beforeAll(() => {
-    localStorage.setItem(
-      'web_stories_ui_panel_settings:link',
-      JSON.stringify({ isCollapsed: false })
-    );
+    try {
+      localStorage.setItem(
+        'web_stories_ui_panel_settings:link',
+        JSON.stringify({ isCollapsed: false })
+      );
+    } catch {
+      // Do something
+    }
   });
 
   afterAll(() => {

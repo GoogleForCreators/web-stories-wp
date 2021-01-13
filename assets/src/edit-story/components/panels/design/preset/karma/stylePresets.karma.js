@@ -37,10 +37,14 @@ describe('Panel: Style Presets', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    localStorage.setItem(
-      'web_stories_ui_panel_settings:stylepreset-style',
-      JSON.stringify({ isCollapsed: false, height: 200 })
-    );
+    try {
+      localStorage.setItem(
+        'web_stories_ui_panel_settings:stylepreset-style',
+        JSON.stringify({ isCollapsed: false, height: 200 })
+      );
+    } catch {
+      // Do something
+    }
   });
 
   afterEach(() => {
