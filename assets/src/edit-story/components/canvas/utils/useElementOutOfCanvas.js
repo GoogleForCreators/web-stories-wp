@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
-import { useStory, useCanvas } from '../../../app/story';
+import { useStory, useCanvas } from '../../../app';
 
 function useElementOutOfCanvas() {
   const { deleteSelectedElements } = useStory((state) => ({

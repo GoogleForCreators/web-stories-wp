@@ -30,16 +30,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '../../../../constants';
-import {
-  Button,
-  TextInput,
-  Row,
-  usePresubmitHandler,
-} from '../../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
+import { Button, TextInput, Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';

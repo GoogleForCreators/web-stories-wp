@@ -30,7 +30,7 @@ import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import { getDefinitionForType } from '../../elements';
-import useAddPastedElements from '../../components/canvas/useAddPastedElements';
+import useAddPastedElements from './useAddPastedElements';
 
 /**
  * @param {{current: Node}} ref Reference.

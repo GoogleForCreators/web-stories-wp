@@ -32,11 +32,11 @@ import { __ } from '@wordpress/i18n';
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useDropTargets, useCanvas } from '../../app';
+import useCanvasKeys from '../../app/canvas/useCanvasKeys';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
-import useCanvasKeys from '../../app/canvas/useCanvasKeys';
 import Selection from './selection';
 import PageNav from './pagenav';
 

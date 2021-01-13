@@ -30,7 +30,7 @@ import {
 } from '../../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../../../constants';
 import { useGlobalKeyDownEffect } from '../../../../../design-system';
-import { useCanvas } from '../../../canvas';
+import { useCanvas } from '../../../../app';
 
 /**
  * Equality function for *primitives and color patterns* only.

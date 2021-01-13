@@ -30,7 +30,7 @@ import {
   processPastedElements,
 } from '../../utils/copyPaste';
 import usePasteTextContent from '../../components/richText/usePasteTextContent';
-import useAddPastedElements from '../../components/canvas/useAddPastedElements';
+import useAddPastedElements from './useAddPastedElements';
 import useUploadWithPreview from '../../components/canvas/useUploadWithPreview';
 import useInsertElement from '../../components/canvas/useInsertElement';
 

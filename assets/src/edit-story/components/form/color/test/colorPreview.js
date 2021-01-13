@@ -26,7 +26,7 @@ import createSolid from '../../../../utils/createSolid';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
-import { MULTIPLE_VALUE } from '../../../constants';
+import { MULTIPLE_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewStyle', () => jest.fn());

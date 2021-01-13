@@ -31,14 +31,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useBatchingCallback } from '../../../../../design-system';
-import { useStory } from '../../../../app/story';
-import { useAPI } from '../../../../app/api';
+import { useStory, useAPI, useCanvas } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import { Close } from '../../../../icons';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_VALUE } from '../../../../constants';
 import { Media, Row, Button, LinkInput } from '../../../form';
-import { useCanvas } from '../../../canvas';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import { ExpandedTextInput, useCommonObjectValue } from '../../shared';
