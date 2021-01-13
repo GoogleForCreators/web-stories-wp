@@ -33,7 +33,7 @@ import { TransformProvider, useTransform } from '../../transform';
 import theme from '../../../theme';
 import useEditingElement from '../../../app/canvas/useEditingElement';
 
-jest.mock('../useEditingElement');
+jest.mock('../../../app/canvas/useEditingElement');
 
 export function TestFrameElement({
   element,
