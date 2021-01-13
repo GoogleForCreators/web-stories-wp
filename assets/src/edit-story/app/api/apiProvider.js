@@ -40,6 +40,7 @@ function APIProvider({ children }) {
     api: { stories, media, link, users, statusCheck, metaBoxes },
     encodeMarkup,
     cdnURL,
+    assetsURL,
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -305,8 +306,8 @@ function APIProvider({ children }) {
   );
 
   const getPageLayouts = useCallback(() => {
-    return getAllPageLayouts({ cdnURL });
-  }, [cdnURL]);
+    return getAllPageLayouts({ cdnURL, assetsURL });
+  }, [cdnURL, assetsURL]);
 
   const state = {
     actions: {

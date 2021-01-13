@@ -87,10 +87,12 @@ describe('APIProvider', () => {
     getAllPageLayouts.mockResolvedValue(pageLayouts);
 
     const cdnURL = 'https://test.url';
+    const assetsURL = 'https://plugin.url/assets/';
     const { result } = renderApiProvider({
       configValue: {
         api: {},
         cdnURL,
+        assetsURL,
       },
     });
 
@@ -99,7 +101,7 @@ describe('APIProvider', () => {
       pageLayoutsResult = await result.current.actions.getPageLayouts();
     });
 
-    expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL });
+    expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL, assetsURL });
     expect(pageLayoutsResult).toStrictEqual(pageLayouts);
   });
 });

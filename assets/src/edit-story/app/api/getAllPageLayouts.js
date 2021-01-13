@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 import getAllTemplates from '../../../dashboard/templates';
 
-const replacePageImagesWithPlaceholders = (page) => {
+const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
   return {
     ...page,
     elements: page.elements.map((element) => {
@@ -32,7 +32,7 @@ const replacePageImagesWithPlaceholders = (page) => {
         return element;
       }
 
-      const title = __('Placeholder', 'web-stories');
+      const alt = __('Placeholder', 'web-stories');
       return {
         ...element,
         focalX: 50,
@@ -43,14 +43,13 @@ const replacePageImagesWithPlaceholders = (page) => {
         resource: {
           type: 'image',
           mimeType: 'image/png',
-          // TODO: replace this with `${cdnURL}/path/to/image.jpg`
-          src: 'http://www.squidsuds.com/i/gwsplaceholder.png',
+          src: `${assetsURL}images/editor/grid-placeholder.png`,
           width: 412,
           height: 732,
           posterId: 0,
           id: 0,
-          title,
-          alt: title,
+          title: alt,
+          alt,
           local: false,
           sizes: [],
         },
@@ -59,12 +58,12 @@ const replacePageImagesWithPlaceholders = (page) => {
   };
 };
 
-export default async function getAllPageLayouts({ cdnURL }) {
+export default async function getAllPageLayouts({ cdnURL, assetsURL }) {
   const templates = await getAllTemplates({ cdnURL });
   return templates.map((template) => ({
     ...template,
     pages: template.pages.map((page) =>
-      replacePageImagesWithPlaceholders(page, { cdnURL })
+      replacePageImagesWithPlaceholders(page, { assetsURL })
     ),
   }));
 }

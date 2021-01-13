@@ -24,6 +24,7 @@ import getAllTemplates from '../../../../dashboard/templates';
 
 describe('getAllPageLayouts', () => {
   const cdnURL = 'https://test.url';
+  const assetsURL = 'https://plugin.url/assets/';
   const templates = [
     {
       id: 'templateid',
@@ -56,7 +57,7 @@ describe('getAllPageLayouts', () => {
   });
 
   it('should get templates w/ cdnURL and images replaced with placeholders', async () => {
-    const result = await getAllPageLayouts({ cdnURL });
+    const result = await getAllPageLayouts({ cdnURL, assetsURL });
 
     expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
     expect(result).toStrictEqual([
@@ -80,7 +81,8 @@ describe('getAllPageLayouts', () => {
                 resource: {
                   type: 'image',
                   mimeType: 'image/png',
-                  src: 'http://www.squidsuds.com/i/gwsplaceholder.png',
+                  src:
+                    'https://plugin.url/assets/images/editor/grid-placeholder.png',
                   width: 412,
                   height: 732,
                   posterId: 0,
