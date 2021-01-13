@@ -31,6 +31,18 @@ import {
 import { dataFontEm } from '../../../../units';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
+// Measured in editor. As small as you can make
+// width with preset font before line wraps
+const DEFAULT_WIDTH = {
+  DEFAULT: 160,
+  HEADING_1: 181,
+  HEADING_2: 139,
+  HEADING_3: 114,
+  PARAGRAPH: 188,
+  CAPTION: 64,
+  LABEL: 52,
+};
+
 // @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
 const DEFAULT_LEFT_MARGIN = 40;
 
@@ -56,7 +68,7 @@ const DEFAULT_PRESET = {
   x: DEFAULT_LEFT_MARGIN,
   y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
   font: TEXT_ELEMENT_DEFAULT_FONT,
-  width: 160,
+  width: DEFAULT_WIDTH.DEFAULT,
   textAlign: 'center',
   borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
 };
@@ -75,8 +87,7 @@ const PRESETS = [
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(2.667)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      // Measured in editor. As small as you can make it before line wraps
-      width: 181,
+      width: DEFAULT_WIDTH.HEADING_1,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
       padding: DEFAULT_TEXT_PADDING,
@@ -95,8 +106,7 @@ const PRESETS = [
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      // Measured in editor. As small as you can make it before line wraps
-      width: 139,
+      width: DEFAULT_WIDTH.HEADING_2,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
       padding: DEFAULT_TEXT_PADDING,
@@ -115,8 +125,7 @@ const PRESETS = [
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(1.6)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      // Measured in editor. As small as you can make it before line wraps
-      width: 114,
+      width: DEFAULT_WIDTH.HEADING_3,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
       padding: DEFAULT_TEXT_PADDING,
@@ -135,8 +144,7 @@ const PRESETS = [
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(1.33)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      // Measured in editor. As small as you can make it before line wraps
-      width: 188,
+      width: DEFAULT_WIDTH.PARAGRAPH,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
       padding: DEFAULT_TEXT_PADDING,
@@ -155,8 +163,7 @@ const PRESETS = [
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      // Measured in editor. As small as you can make it before line wraps
-      width: 64,
+      width: DEFAULT_WIDTH.CAPTION,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
       padding: DEFAULT_TEXT_PADDING,
@@ -172,8 +179,7 @@ const PRESETS = [
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(0.888)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      // Measured in editor. As small as you can make it before line wraps
-      width: 52,
+      width: DEFAULT_WIDTH.LABEL,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
       padding: DEFAULT_TEXT_PADDING,
