@@ -217,4 +217,13 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'height', $result );
 		$this->assertArrayHasKey( 'width', $result );
 	}
+
+	/**
+	 * @covers ::get_poster
+	 */
+	public function test_get_poster_no() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_poster', [ -99 ] );
+		$this->assertFalse( $result );
+	}
 }
