@@ -264,7 +264,7 @@ class Discovery {
 				$metadata['og:image']        = esc_url( $poster['src'] );
 				$metadata['og:image:width']  = (int) $poster['width'];
 				$metadata['og:image:height'] = (int) $poster['height'];
-			}       
+			}
 		}
 
 		/**
@@ -400,15 +400,17 @@ class Discovery {
 	 * @return array|false
 	 */
 	protected function get_poster( $post, $size = 'full' ) {
-		if ( has_post_thumbnail( $post ) ) {
+		if ( ! has_post_thumbnail( $post ) ) {
 			return false;
 		}
 
-		$poster_id                    = (int) get_post_thumbnail_id( $post );
-		$image                        = wp_get_attachment_image_src( $poster_id, $size );
+		$poster_id = (int) get_post_thumbnail_id( $post );
+		$image     = wp_get_attachment_image_src( $poster_id, $size );
+
 		list( $src, $width, $height ) = $image;
-		$poster                       = compact( 'src', 'width', 'height' );
-		$poster                       = array_filter( $poster );
+
+		$poster = compact( 'src', 'width', 'height' );
+		$poster = array_filter( $poster );
 
 		return $poster;
 	}
