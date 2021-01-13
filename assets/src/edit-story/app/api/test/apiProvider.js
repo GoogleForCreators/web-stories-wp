@@ -30,8 +30,8 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../../../../dashboard/templates');
-import getAllTemplates from '../../../../dashboard/templates';
+jest.mock('../getAllPageLayouts');
+import getAllPageLayouts from '../getAllPageLayouts';
 
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
@@ -82,9 +82,9 @@ describe('APIProvider', () => {
     });
   });
 
-  it('getTemplates gets templates w/ cdnURL', async () => {
+  it('getPageLayouts gets templates w/ cdnURL', async () => {
     const templates = [{ id: 'templateid' }];
-    getAllTemplates.mockResolvedValue(templates);
+    getAllPageLayouts.mockResolvedValue(templates);
 
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
@@ -96,10 +96,10 @@ describe('APIProvider', () => {
 
     let templatesResult;
     await act(async () => {
-      templatesResult = await result.current.actions.getTemplates();
+      templatesResult = await result.current.actions.getPageLayouts();
     });
 
-    expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
+    expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL });
     expect(templatesResult).toStrictEqual(templates);
   });
 });
