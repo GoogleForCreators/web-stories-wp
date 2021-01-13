@@ -148,8 +148,10 @@ function ColorPresetPanel({ pushUpdate }) {
     const hasTransparency = presetHasOpacity(color);
     const hasGradient = presetHasGradient(color);
     const opaqueColor = hasTransparency ? getOpaqueColor(color) : color;
+    // In edit mode we always enable the button for being able to delete.
     const disabled =
-      (isBackground && hasTransparency) || (isText && hasGradient);
+      !isEditMode &&
+      ((isBackground && hasTransparency) || (isText && hasGradient));
     let tooltip = null;
     if (disabled) {
       tooltip = isBackground
