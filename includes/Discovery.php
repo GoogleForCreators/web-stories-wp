@@ -258,18 +258,15 @@ class Discovery {
 			$metadata['article:published_time'] = (string) get_the_date( 'c', $post );
 			$metadata['article:modified_time']  = (string) get_the_modified_date( 'c', $post );
 
-			if ( has_post_thumbnail() ) {
+			if ( has_post_thumbnail( $post ) ) {
 				$poster = wp_get_attachment_image_src( (int) get_post_thumbnail_id( $post ), 'full' );
-
 				if ( ! $poster ) {
-					return $metadata;
+					list ( $src, $width, $height ) = $poster;
+
+					$metadata['og:image']        = esc_url( $src );
+					$metadata['og:image:width']  = (int) $width;
+					$metadata['og:image:height'] = (int) $height;
 				}
-
-				list ( $src, $width, $height ) = $poster;
-
-				$metadata['og:image']        = esc_url( $src );
-				$metadata['og:image:width']  = (int) $width;
-				$metadata['og:image:height'] = (int) $height;
 			}
 		}
 
