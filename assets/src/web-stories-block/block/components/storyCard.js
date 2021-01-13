@@ -83,7 +83,7 @@ function StoryCard({
                 className="story-content-overlay__date"
               >
                 {sprintf(
-                  /* translators: date. %s: published date. */
+                  /* translators: %s: publish date. */
                   __('On %s', 'web-stories'),
                   dateI18n(dateFormat, date)
                 )}
