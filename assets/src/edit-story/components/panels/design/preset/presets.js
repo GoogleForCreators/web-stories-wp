@@ -29,6 +29,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PanelContent } from '../../panel';
+import { Add } from '../../../../../design-system/icons';
+import { TranslateWithMarkup } from '../../../../../i18n';
 import PresetGroup from './presetGroup';
 import ColorAdd from './colorAdd';
 
@@ -65,10 +67,18 @@ function Presets({
         <ButtonWrapper>
           <ColorAdd
             handleAddPreset={handleAddPreset}
-            helper={__(
-              'Click on the + icon to save a color to all stories',
-              'web-stories'
-            )}
+            helper={
+              <TranslateWithMarkup
+                mapping={{
+                  i: <Add width={18} height={13} />,
+                }}
+              >
+                {__(
+                  'Click on the <i></i> icon to save a color to all stories.',
+                  'web-stories'
+                )}
+              </TranslateWithMarkup>
+            }
           />
         </ButtonWrapper>
       )}
