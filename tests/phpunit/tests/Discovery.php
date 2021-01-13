@@ -192,6 +192,7 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'twitter:card', $output );
 		$this->assertContains( 'twitter:image', $output );
 		$this->assertContains( 'twitter:image:alt', $output );
+		$this->assertContains( 'Discovery Test Story', $output );
 	}
 
 	/**
@@ -203,6 +204,6 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'twitter:card', $result );
 		$this->assertArrayHasKey( 'twitter:image', $result );
 		$this->assertArrayHasKey( 'twitter:image:alt', $result );
-		$this->assertSame( 'Test Image', $result['twitter:image:alt'] );
+		$this->assertSame( 'Discovery Test Story', $result['twitter:image:alt'] );
 	}
 }
