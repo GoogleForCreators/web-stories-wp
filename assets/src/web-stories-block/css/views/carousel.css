@@ -16,19 +16,19 @@
   overflow: hidden;
 }
 
-.is-carousel .glider-next {
+.web-stories-list.is-carousel .glider-next {
   right: 0;
   transform: translateY(-50%);
 }
 
-.is-carousel .glider-prev {
+.web-stories-list.is-carousel .glider-prev {
   left: 0;
   transform: translateY(-50%) rotate(180deg);
 }
 
-.is-carousel .amp-carousel-button,
-.is-carousel .glider-next,
-.is-carousel .glider-prev {
+.web-stories-list.is-carousel .amp-carousel-button,
+.web-stories-list.is-carousel .glider-next,
+.web-stories-list.is-carousel .glider-prev {
   border-radius: 50%;
   background-color: #eaeaea;
   background-image: url('./../../../../images/web-stories/block/carousel-arrow.svg');
@@ -45,23 +45,23 @@
   cursor: pointer;
 }
 
-.is-carousel .glider-next,
-.is-carousel .glider-prev {
+.web-stories-list.is-carousel .glider-next,
+.web-stories-list.is-carousel .glider-prev {
   padding: 10px;
   top: 50%;
 }
 
-.is-carousel .glider-next:not(.disabled):hover,
-.is-carousel .glider-prev:not(.disabled):hover,
-.is-carousel .glider-next:not(.disabled):focus,
-.is-carousel .glider-prev:not(.disabled):focus {
+.web-stories-list.is-carousel .glider-next:not(.disabled):hover,
+.web-stories-list.is-carousel .glider-prev:not(.disabled):hover,
+.web-stories-list.is-carousel .glider-next:not(.disabled):focus,
+.web-stories-list.is-carousel .glider-prev:not(.disabled):focus {
   filter: invert(1);
 }
 
-.is-carousel .amp-carousel-button-prev {
+.web-stories-list.is-carousel .amp-carousel-button-prev {
   transform: rotate(180deg);
 }
 
-.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
+.web-stories-list.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
   filter: invert(1);
 }
