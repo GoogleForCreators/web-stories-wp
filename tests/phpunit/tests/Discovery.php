@@ -72,6 +72,7 @@ class Discovery extends \WP_UnitTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+		update_post_meta( self::$attachment_id, '_wp_attachment_image_alt', 'test alt' );
 		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
 
@@ -123,7 +124,6 @@ class Discovery extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::print_schemaorg_metadata
-	 * @covers ::get_schemaorg_metadata
 	 */
 	public function test_print_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -147,7 +147,6 @@ class Discovery extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::print_open_graph_metadata
-	 * @covers ::get_open_graph_metadata
 	 */
 	public function test_print_open_graph_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -158,6 +157,20 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'article:published_time', $output );
 		$this->assertContains( 'article:modified_time', $output );
 		$this->assertContains( 'og:image', $output );
+	}
+
+	/**
+	 * @covers ::get_open_graph_metadata
+	 */
+	public function test_get_open_graph_metadata() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_open_graph_metadata' );
+		$this->assertArrayHasKey( 'og:locale', $result );
+		$this->assertArrayHasKey( 'og:type', $result );
+		$this->assertArrayHasKey( 'og:description', $result );
+		$this->assertArrayHasKey( 'article:published_time', $result );
+		$this->assertArrayHasKey( 'article:modified_time', $result );
+		$this->assertArrayHasKey( 'og:image', $result );
 	}
 
 	/**
@@ -172,7 +185,6 @@ class Discovery extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::print_twitter_metadata
-	 * @covers ::get_twitter_metadata
 	 */
 	public function test_print_twitter_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -180,5 +192,17 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'twitter:card', $output );
 		$this->assertContains( 'twitter:image', $output );
 		$this->assertContains( 'twitter:image:alt', $output );
+	}
+
+	/**
+	 * @covers ::get_twitter_metadata
+	 */
+	public function test_get_twitter_metadata() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_twitter_metadata' );
+		$this->assertArrayHasKey( 'twitter:card', $result );
+		$this->assertArrayHasKey( 'twitter:image', $result );
+		$this->assertArrayHasKey( 'twitter:image:alt', $result );
+		$this->assertSame( 'test alt', $result['twitter:image:alt'] );
 	}
 }
