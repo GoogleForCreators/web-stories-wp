@@ -104,6 +104,7 @@ const PageIndicator = styled(Label)`
     padding-top: 9px;
   }
   margin-bottom: 8px;
+  margin-left: 16px;
   display: flex;
   align-items: center;
   svg {
