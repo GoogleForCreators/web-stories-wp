@@ -225,17 +225,13 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     );
     expect(test.storyId).toStrictEqual(testStory.id);
   });
-  it('should pass for the recommended size.', () => {
+  it('should not produce an error for a story with the correct cover image size.', () => {
     const testStory = {
       id: 456,
       featuredMedia: { height: 853, width: 640, url: 'featured-media.com/img' },
     };
 
     const test = metadataGuidelines.storyCoverAspectRatio(testStory);
-    expect(test).not.toBeUndefined();
-    expect(test.message).toMatchInlineSnapshot(
-      `"Story cover image wrong aspect ratio"`
-    );
-    expect(test.storyId).toStrictEqual(testStory.id);
+    expect(test).toBeUndefined();
   });
 });
