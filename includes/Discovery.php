@@ -161,12 +161,7 @@ class Discovery {
 				[
 					'@type'            => 'Article',
 					'mainEntityOfPage' => get_permalink( $post ),
-					'headline'         => the_title_attribute(
-						[
-							'echo' => false,
-							'post' => $post,
-						]
-					),
+					'headline'         => get_the_title( $post ),
 					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
 					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
 				]
@@ -248,12 +243,7 @@ class Discovery {
 		if ( $post instanceof WP_Post ) {
 
 			$metadata['og:type']                = 'article';
-			$metadata['og:title']               = the_title_attribute(
-				[
-					'echo' => false,
-					'post' => $post,
-				]
-			);
+			$metadata['og:title']               = get_the_title( $post );
 			$metadata['og:url']                 = get_permalink( $post );
 			$metadata['og:description']         = wp_strip_all_tags( get_the_excerpt( $post ) );
 			$metadata['article:published_time'] = (string) get_the_date( 'c', $post );
@@ -327,12 +317,7 @@ class Discovery {
 			$poster = $this->get_poster( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 			if ( $poster ) {
 				$metadata['twitter:image']     = esc_url( $poster['src'] );
-				$metadata['twitter:image:alt'] = the_title_attribute(
-					[
-						'echo' => false,
-						'post' => $post,
-					]
-				);
+				$metadata['twitter:image:alt'] = get_the_title( $post );
 
 			}
 		}
