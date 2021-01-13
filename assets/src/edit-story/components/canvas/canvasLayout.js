@@ -33,7 +33,7 @@ import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
 import NavLayer from './navLayer';
 import SelectionCanvas from './selectionCanvas';
-import useCanvas from './useCanvas';
+import { useCanvas } from '../../app';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';

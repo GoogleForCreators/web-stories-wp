@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { useGlobalKeyDownEffect } from '../../../design-system';
-import { useStory } from '../../app';
+import { useStory } from '../story';
+import { useCanvas } from '../canvas';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import { getDefinitionForType } from '../../elements';
-import useAddPastedElements from './useAddPastedElements';
-import useCanvas from './useCanvas';
+import useAddPastedElements from '../../components/canvas/useAddPastedElements';
 
 /**
  * @param {{current: Node}} ref Reference.

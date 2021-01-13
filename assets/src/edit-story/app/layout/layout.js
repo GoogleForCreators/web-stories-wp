@@ -38,7 +38,7 @@ import {
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
 import withOverlay from '../../components/overlay/withOverlay';
-import CanvasProvider from '../../components/canvas/canvasProvider';
+import { CanvasProvider } from '../canvas';
 import { PrepublishChecklistProvider } from '../../components/inspector/prepublish';
 import LayoutProvider from './layoutProvider';
 

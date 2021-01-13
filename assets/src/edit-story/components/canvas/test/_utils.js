@@ -25,13 +25,13 @@ import PropTypes from 'prop-types';
  */
 import FrameElement from '../frameElement';
 import DisplayElement from '../displayElement';
-import CanvasProvider from '../canvasProvider';
+import { CanvasProvider } from '../../../app/canvas';
 import { LayoutProvider } from '../../../app/layout';
 import ConfigProvider from '../../../app/config/configProvider';
 import StoryContext from '../../../app/story/context';
 import { TransformProvider, useTransform } from '../../transform';
 import theme from '../../../theme';
-import useEditingElement from '../useEditingElement';
+import useEditingElement from '../../../app/canvas/useEditingElement';
 
 jest.mock('../useEditingElement');
 

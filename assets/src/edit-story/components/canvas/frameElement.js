@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory, useTransform } from '../../app';
+import { useStory, useTransform, useCanvas } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -35,7 +35,6 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
-import useCanvas from './useCanvas';
 
 // @todo: should the frame borders follow clip lines?
 

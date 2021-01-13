@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-export { default } from './canvas';
-export { default as useInsertElement } from './useInsertElement';
-export { default as useInsertTextSet } from './useInsertTextSet';
+/**
+ * Internal dependencies
+ */
+import { identity, useContextSelector } from '../../../design-system';
+import Context from './context';
+
+function useCanvas(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useCanvas;

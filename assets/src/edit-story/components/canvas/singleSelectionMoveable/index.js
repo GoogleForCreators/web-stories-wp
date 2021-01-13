@@ -25,13 +25,12 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { useBatchingCallback } from '../../../../design-system';
-import { useStory } from '../../../app';
+import { useStory, useCanvas } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
-import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
 import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';

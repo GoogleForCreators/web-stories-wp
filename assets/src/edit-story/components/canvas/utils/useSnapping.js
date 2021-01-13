@@ -25,7 +25,7 @@ import { useCallback, useEffect } from 'react';
 import { FULLBLEED_RATIO } from '../../../constants';
 import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
-import useCanvas from '../useCanvas';
+import { useCanvas } from '../../../app';
 
 function useSnapping({
   isDragging,

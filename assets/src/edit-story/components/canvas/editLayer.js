@@ -31,11 +31,10 @@ import { __ } from '@wordpress/i18n';
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useKeyDownEffect } from '../../../design-system';
-import { useStory } from '../../app';
+import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
 import { Layer, PageArea, Z_INDEX } from './layout';
-import useCanvas from './useCanvas';
 import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`

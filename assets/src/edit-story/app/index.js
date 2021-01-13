@@ -26,6 +26,7 @@ import { useFont } from './font';
 import { useLocalMedia, useMedia } from './media';
 import { useStory } from './story';
 import { useSnackbar } from './snackbar';
+import { useCanvas } from './canvas';
 
 export {
   useHistory,
@@ -38,4 +39,5 @@ export {
   useLocalMedia,
   useMedia,
   useSnackbar,
+  useCanvas,
 };

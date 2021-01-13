@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,16 +23,16 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useBatchingCallback } from '../../../design-system';
-import { useStory } from '../../app';
+import { useStory } from '../story';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import {
   addElementsToClipboard,
   processPastedElements,
 } from '../../utils/copyPaste';
-import usePasteTextContent from '../richText/usePasteTextContent';
-import useAddPastedElements from './useAddPastedElements';
-import useUploadWithPreview from './useUploadWithPreview';
-import useInsertElement from './useInsertElement';
+import usePasteTextContent from '../../components/richText/usePasteTextContent';
+import useAddPastedElements from '../../components/canvas/useAddPastedElements';
+import useUploadWithPreview from '../../components/canvas/useUploadWithPreview';
+import useInsertElement from '../../components/canvas/useInsertElement';
 
 function useCanvasGlobalKeys() {
   const addPastedElements = useAddPastedElements();
