@@ -113,15 +113,11 @@ const Provider = ({ children }) => {
 
   const scrollToTop = useCallback(() => {
     const scrollFrameEl = scrollFrameRef.current;
-    if (!scrollFrameEl) {
-      return;
-    }
-    scrollFrameEl.scrollTo({
+    document.documentElement?.scrollTo?.({
       top: 0,
       behavior: 'smooth',
     });
-    // bring focus back to area getting scrolled instead of it jumping to wordpress menus
-    scrollFrameEl.children[0]?.focus();
+    scrollFrameEl?.children[0]?.focus();
   }, []);
 
   const value = useMemo(

@@ -35,7 +35,7 @@ const FixedContent = styled.div`
   overflow: hidden;
 
   /**
-   * This is an absolutley positioned full size
+   * This is an absolute positioned full size
    * overlay over the scrollable content. being
    * such, we don't want it to block pointer
    * events to the scrollable and squishable
@@ -44,8 +44,8 @@ const FixedContent = styled.div`
   pointer-events: none;
 
   /**
-   * Not sure how much I like this because 
-   * it will be a higher specifity than a 
+   * Not sure how much I like this because
+   * it will be a higher specificity than a
    * styled declaration, but I don't want
    * devs to have to declare this on every
    * component in this view.

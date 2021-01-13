@@ -25,14 +25,6 @@ import styled from 'styled-components';
 import useLayoutContext from './useLayoutContext';
 
 const ScrollContent = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
   /**
    * Adds inertial scrolling to iOS
    * devices like iPad
@@ -40,36 +32,11 @@ const ScrollContent = styled.div`
   -webkit-overflow-scrolling: touch;
 `;
 
-const Inner = styled.div`
-  position: relative;
-  padding-top: ${(props) => props.paddingTop || 0}px;
-  width: ${({ scrollbarWidth }) => `calc(100% + ${scrollbarWidth}px)`};
-`;
-
-Inner.propTypes = {
-  paddingTop: PropTypes.number,
-};
-
 const Scrollable = ({ children }) => {
   const {
-    state: { scrollFrameRef, squishContentHeight },
+    state: { scrollFrameRef },
   } = useLayoutContext();
-
-  const scrollbarWidth = scrollFrameRef?.current
-    ? scrollFrameRef.current.offsetWidth - scrollFrameRef.current.clientWidth
-    : 0;
-
-  return (
-    <ScrollContent ref={scrollFrameRef}>
-      <Inner
-        tabIndex={0}
-        scrollbarWidth={scrollbarWidth}
-        paddingTop={squishContentHeight}
-      >
-        {children}
-      </Inner>
-    </ScrollContent>
-  );
+  return <ScrollContent ref={scrollFrameRef}>{children}</ScrollContent>;
 };
 
 Scrollable.propTypes = {

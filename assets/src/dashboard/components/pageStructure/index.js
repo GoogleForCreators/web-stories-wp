@@ -48,13 +48,7 @@ import {
   NavListItem,
 } from './navigationComponents';
 
-export const AppFrame = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`;
+export const AppFrame = styled.div({});
 
 export const PageContent = styled.div`
   position: absolute;

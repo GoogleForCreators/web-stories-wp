@@ -348,12 +348,10 @@ function EditorSettings() {
   return (
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
-        <Layout.Squishable>
-          <PageHeading
-            defaultTitle={__('Settings', 'web-stories')}
-            showTypeahead={false}
-          />
-        </Layout.Squishable>
+        <PageHeading
+          defaultTitle={__('Settings', 'web-stories')}
+          showTypeahead={false}
+        />
         <Layout.Scrollable>
           <Main>
             {canManageSettings && (
