@@ -29,7 +29,7 @@ import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useUnmount from '../../../utils/useUnmount';
 import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { PatternPropType } from '../../../types';
-import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from '../multipleValue';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
 import { useKeyDownEffect } from '../../../../design-system';
 import ColorPicker from '../../colorPicker';

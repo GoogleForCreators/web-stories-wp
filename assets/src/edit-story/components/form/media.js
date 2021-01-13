@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import DropDownMenu from '../dropDownMenu';
 import { useMediaPicker } from '../mediaPicker';
-import MULTIPLE_VALUE from './multipleValue';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 const Container = styled.section`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};

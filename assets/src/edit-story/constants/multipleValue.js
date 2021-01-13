@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,10 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@wordpress/i18n';
 
-const Spacer = styled.div`
-  display: flex;
-  height: 100%;
+export const MULTIPLE_VALUE = '((MULTIPLE))';
 
-  ${({ theme, dotted = false }) =>
-    dotted && `border-left: 1px dashed ${theme.colors.bg.v2};`}
-  ${({ expand = true }) => expand && `flex: 1;`}
-`;
-
-export default Spacer;
+export const MULTIPLE_DISPLAY_VALUE = __('Mixed', 'web-stories');

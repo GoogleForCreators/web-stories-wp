@@ -22,12 +22,12 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import SizePosition from '../sizePosition';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { getDefinitionForType } from '../../../../../elements';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../form';
 import { dataPixels } from '../../../../../units';
-
 import { renderPanel } from '../../../shared/test/_utils';
+
+import SizePosition from '../sizePosition';
 
 jest.mock('../../../../../elements');
 

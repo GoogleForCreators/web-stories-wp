@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
+import { MULTIPLE_VALUE } from '../../../../constants';
 import updateProperties from '../updateProperties';
-import { MULTIPLE_VALUE } from '../../../form';
 
 describe('updateProperties', () => {
   let element;

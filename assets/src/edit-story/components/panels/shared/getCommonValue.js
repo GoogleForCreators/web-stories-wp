@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 /**
  * Get the common value `property` for all objects in `list`, if they
 in fact are all the same. If they are not all equal, return an empty string.
- 
+
 Example usage:
 ```
 getCommonValue( [ { a: 1 }, { a:  1  } ], 'a' );  // returns: 1

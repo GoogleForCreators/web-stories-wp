@@ -32,10 +32,10 @@ import objectPick from '../../../../utils/objectPick';
 import stripHTML from '../../../../utils/stripHTML';
 import { useFont } from '../../../../app/font';
 import {
-  AdvancedDropDown,
   MULTIPLE_DISPLAY_VALUE,
   MULTIPLE_VALUE,
-} from '../../../form';
+} from '../../../../constants';
+import { AdvancedDropDown } from '../../../form';
 import { Option, Selected } from '../../../form/advancedDropDown/list/styled';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';

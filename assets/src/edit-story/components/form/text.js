@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { CloseAlt as Close } from '../../icons';
 import { useKeyDownEffect } from '../../../design-system';
-import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from './multipleValue';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../constants';
 import { Input } from '.';
 
 const INPUT_PADDING = 6;

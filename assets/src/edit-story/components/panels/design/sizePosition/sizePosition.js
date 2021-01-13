@@ -29,12 +29,12 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import {  MULTIPLE_VALUE } from '../../../../constants';
 import {
   BoxedNumeric,
   Button,
   Row,
   Toggle,
-  MULTIPLE_VALUE,
 } from '../../../form';
 import { dataPixels } from '../../../../units';
 import { Lock as Locked, Unlock as Unlocked } from '../../../../icons';

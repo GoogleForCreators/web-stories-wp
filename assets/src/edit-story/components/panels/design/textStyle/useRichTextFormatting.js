@@ -28,7 +28,7 @@ import {
   getHTMLFormatters,
   getHTMLInfo,
 } from '../../../richText/htmlManipulation';
-import { MULTIPLE_VALUE } from '../../../form';
+import { MULTIPLE_VALUE } from '../../../../constants';
 import { useGlobalKeyDownEffect } from '../../../../../design-system';
 import { useCanvas } from '../../../canvas';
 
