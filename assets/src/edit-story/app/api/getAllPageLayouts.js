@@ -23,10 +23,11 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import getAllTemplates from '../../../dashboard/templates';
+import { PAGE_WIDTH } from '../../constants';
 
 const PLACEHOLDER_WIDTH = 1680;
 const PLACEHOLDER_HEIGHT = 2938;
-const PLACEHOLDER_RATIO = 4;
+const PLACEHOLDER_RATIO = PLACEHOLDER_WIDTH / PAGE_WIDTH;
 
 const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
   return {
@@ -36,6 +37,9 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
         return element;
       }
 
+      const scale = element.isBackground
+        ? 100
+        : (PLACEHOLDER_WIDTH / PLACEHOLDER_RATIO / element.width) * 100;
       const alt = __('Placeholder', 'web-stories');
       return {
         ...element,
@@ -44,9 +48,7 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
         backgroundColor: {
           color: { r: 219, g: 223, b: 226 },
         },
-        scale: element.isBackground
-          ? 100
-          : (PLACEHOLDER_WIDTH / PLACEHOLDER_RATIO / element.width) * 100,
+        scale,
         resource: {
           type: 'image',
           mimeType: 'image/png',
