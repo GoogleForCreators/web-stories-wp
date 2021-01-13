@@ -206,4 +206,15 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'twitter:image:alt', $result );
 		$this->assertSame( 'Discovery Test Story', $result['twitter:image:alt'] );
 	}
+
+	/**
+	 * @covers ::get_poster
+	 */
+	public function test_get_poster() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_poster', [ self::$story_id ] );
+		$this->assertArrayHasKey( 'src', $result );
+		$this->assertArrayHasKey( 'height', $result );
+		$this->assertArrayHasKey( 'width', $result );
+	}
 }

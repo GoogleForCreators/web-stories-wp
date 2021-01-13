@@ -181,8 +181,9 @@ class Discovery {
 				];
 			}
 
-			if ( has_post_thumbnail( $post->ID ) ) {
-				$metadata['image'] = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post->ID ), 'full' );
+			$poster = $this->get_poster( $post );
+			if ( $poster ) {
+				$metadata['image'] = $poster['src'];
 			}
 		}
 
@@ -258,16 +259,12 @@ class Discovery {
 			$metadata['article:published_time'] = (string) get_the_date( 'c', $post );
 			$metadata['article:modified_time']  = (string) get_the_modified_date( 'c', $post );
 
-			if ( has_post_thumbnail( $post ) ) {
-				$poster = wp_get_attachment_image_src( (int) get_post_thumbnail_id( $post ), 'full' );
-				if ( ! $poster ) {
-					list ( $src, $width, $height ) = $poster;
-
-					$metadata['og:image']        = esc_url( $src );
-					$metadata['og:image:width']  = (int) $width;
-					$metadata['og:image:height'] = (int) $height;
-				}
-			}
+			$poster = $this->get_poster( $post );
+			if ( $poster ) {
+				$metadata['og:image']        = esc_url( $poster['src'] );
+				$metadata['og:image:width']  = (int) $poster['width'];
+				$metadata['og:image:height'] = (int) $poster['height'];
+			}       
 		}
 
 		/**
@@ -327,19 +324,16 @@ class Discovery {
 		$post = get_queried_object();
 
 		if ( $post instanceof WP_Post ) {
-			if ( has_post_thumbnail( $post ) ) {
-				$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post ), Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster = $this->get_poster( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			if ( $poster ) {
+				$metadata['twitter:image']     = esc_url( $poster['src'] );
+				$metadata['twitter:image:alt'] = the_title_attribute(
+					[
+						'echo' => false,
+						'post' => $post,
+					]
+				);
 
-				if ( $poster ) {
-					$metadata['twitter:image']     = esc_url( $poster );
-					$metadata['twitter:image:alt'] = the_title_attribute(
-						[
-							'echo' => false,
-							'post' => $post,
-						]
-					);
-
-				}
 			}
 		}
 
@@ -395,5 +389,27 @@ class Discovery {
 			esc_attr( $title ),
 			esc_url( $feed_url )
 		);
+	}
+
+	/**
+	 * Helper to get poster image.
+	 *
+	 * @param int|WP_Post $post Post object to check for poster image attached.
+	 * @param string      $size Image size, default to full.
+	 *
+	 * @return array|false
+	 */
+	protected function get_poster( $post, $size = 'full' ) {
+		if ( has_post_thumbnail( $post ) ) {
+			return false;
+		}
+
+		$poster_id                    = (int) get_post_thumbnail_id( $post );
+		$image                        = wp_get_attachment_image_src( $poster_id, $size );
+		list( $src, $width, $height ) = $image;
+		$poster                       = compact( 'src', 'width', 'height' );
+		$poster                       = array_filter( $poster );
+
+		return $poster;
 	}
 }
