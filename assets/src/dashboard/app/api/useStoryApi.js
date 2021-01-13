@@ -231,7 +231,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         const getStoryPropsToSave = await import(
           /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
         );
-        const storyProps = await getStoryPropsToSave({
+        const storyProps = await getStoryPropsToSave.default({
           story: {
             status: status || 'auto-draft',
             title: title,
@@ -299,7 +299,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         const getStoryPropsToSave = await import(
           /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
         );
-        const storyPropsToSave = await getStoryPropsToSave({
+        const storyPropsToSave = await getStoryPropsToSave.default({
           story: {
             status: 'auto-draft',
             featuredMedia: {
