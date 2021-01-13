@@ -87,11 +87,12 @@ const Row = styled.button`
     outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
     outline-offset: 5px;
   }
-  ${({ onClick }) =>
-    Boolean(onClick) &&
-    `&:hover {
-      cursor: pointer;
-    }`}
+`;
+
+const Underline = styled.u`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const HelperText = styled.span`
@@ -269,6 +270,7 @@ const ChecklistTab = (props) => {
     ({ message, help, id, pageGroup, ...args }) => {
       const onClick = getOnClick(args);
       const handleKeyPress = getHandleKeyPress(args);
+      const accessibleText = __('Select offending element', 'web-stories');
       return (
         <Row
           tabIndex={0}
@@ -277,13 +279,13 @@ const ChecklistTab = (props) => {
           key={id}
           pageGroup={pageGroup}
         >
-          {message}
-          <HelperText>{help}</HelperText>
-          {onClick && (
-            <VisuallyHidden>
-              {__('Select offending element', 'web-stories')}
-            </VisuallyHidden>
+          {onClick ? (
+            <Underline title={accessibleText}>{message}</Underline>
+          ) : (
+            message
           )}
+          <HelperText>{help}</HelperText>
+          {onClick && <VisuallyHidden>{accessibleText}</VisuallyHidden>}
         </Row>
       );
     },
