@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -92,13 +92,17 @@ function PageLayoutsPane(props) {
             return acc;
           }
 
-          // translation not required because page layout title is already translated
           const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
           return [
             ...acc,
             {
               ...page,
-              title: `${template.title} ${pageLayoutName}`,
+              title: sprintf(
+                /* translators: 1: template name. 2: page layout name. */
+                __('%1$s %2$s', 'web-stories', 'web-stories'),
+                template.title,
+                pageLayoutName
+              ),
             },
           ];
         }, []);
