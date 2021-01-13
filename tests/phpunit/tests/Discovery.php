@@ -72,7 +72,7 @@ class Discovery extends \WP_UnitTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		update_post_meta( self::$attachment_id, '_wp_attachment_image_alt', 'test alt' );
+
 		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
 
@@ -203,6 +203,6 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'twitter:card', $result );
 		$this->assertArrayHasKey( 'twitter:image', $result );
 		$this->assertArrayHasKey( 'twitter:image:alt', $result );
-		$this->assertSame( 'test alt', $result['twitter:image:alt'] );
+		$this->assertSame( 'Test Image', $result['twitter:image:alt'] );
 	}
 }

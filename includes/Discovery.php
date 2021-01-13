@@ -161,7 +161,12 @@ class Discovery {
 				[
 					'@type'            => 'Article',
 					'mainEntityOfPage' => get_permalink( $post ),
-					'headline'         => get_the_title( $post ),
+					'headline'         => the_title_attribute(
+						[
+							'echo' => false,
+							'post' => $post,
+						]
+					),
 					'datePublished'    => mysql2date( 'c', $post->post_date_gmt, false ),
 					'dateModified'     => mysql2date( 'c', $post->post_modified_gmt, false ),
 				]
@@ -215,7 +220,7 @@ class Discovery {
 		$metadata = $this->get_open_graph_metadata();
 
 		foreach ( $metadata as $name => $value ) {
-			printf( '<meta property="%s" content="%s" />', $name, $value ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
 		}
 	}
 
@@ -228,8 +233,8 @@ class Discovery {
 	 */
 	protected function get_open_graph_metadata() {
 		$metadata = [
-			'og:locale'    => esc_attr( get_bloginfo( 'language' ) ),
-			'og:site_name' => esc_attr( get_bloginfo( 'name' ) ),
+			'og:locale'    => get_bloginfo( 'language' ),
+			'og:site_name' => get_bloginfo( 'name' ),
 		];
 
 		/**
@@ -249,9 +254,9 @@ class Discovery {
 				]
 			);
 			$metadata['og:url']                 = get_permalink( $post );
-			$metadata['og:description']         = esc_attr( wp_strip_all_tags( get_the_excerpt( $post ) ) );
-			$metadata['article:published_time'] = esc_attr( (string) get_the_date( 'c', $post ) );
-			$metadata['article:modified_time']  = esc_attr( (string) get_the_modified_date( 'c', $post ) );
+			$metadata['og:description']         = wp_strip_all_tags( get_the_excerpt( $post ) );
+			$metadata['article:published_time'] = (string) get_the_date( 'c', $post );
+			$metadata['article:modified_time']  = (string) get_the_modified_date( 'c', $post );
 
 			if ( has_post_thumbnail() ) {
 				$poster = wp_get_attachment_image_src( (int) get_post_thumbnail_id( $post ), 'full' );
@@ -263,8 +268,8 @@ class Discovery {
 				list ( $src, $width, $height ) = $poster;
 
 				$metadata['og:image']        = esc_url( $src );
-				$metadata['og:image:width']  = esc_attr( $width );
-				$metadata['og:image:height'] = esc_attr( $height );
+				$metadata['og:image:width']  = (int) $width;
+				$metadata['og:image:height'] = (int) $height;
 			}
 		}
 
@@ -301,7 +306,7 @@ class Discovery {
 		$metadata = $this->get_twitter_metadata();
 
 		foreach ( $metadata as $name => $value ) {
-			printf( '<meta name="%s" content="%s" />', $name, $value );  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( '<meta name="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
 		}
 	}
 
@@ -326,23 +331,17 @@ class Discovery {
 
 		if ( $post instanceof WP_Post ) {
 			if ( has_post_thumbnail( $post ) ) {
-				$poster_id = (int) get_post_thumbnail_id( $post );
-				if ( $poster_id ) {
-					$poster = wp_get_attachment_image_url( $poster_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+				$poster = wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post ), Media::POSTER_PORTRAIT_IMAGE_SIZE );
 
-					if ( $poster ) {
-						$metadata['twitter:image'] = esc_url( $poster );
-						$image_alt                 = get_post_meta( $poster_id, '_wp_attachment_image_alt', true );
-						if ( empty( $image_alt ) ) {
-							$image_alt = the_title_attribute(
-								[
-									'echo' => false,
-									'post' => $post,
-								]
-							);
-						}
-						$metadata['twitter:image:alt'] = esc_attr( $image_alt );
-					}
+				if ( $poster ) {
+					$metadata['twitter:image']     = esc_url( $poster );
+					$metadata['twitter:image:alt'] = the_title_attribute(
+						[
+							'echo' => false,
+							'post' => $post,
+						]
+					);
+
 				}
 			}
 		}
