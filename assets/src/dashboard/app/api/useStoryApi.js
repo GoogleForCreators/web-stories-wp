@@ -29,7 +29,6 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
 import base64Encode from '../../../edit-story/utils/base64Encode';
 import {
   STORY_STATUSES,
@@ -43,7 +42,6 @@ import storyReducer, {
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import { addQueryArgs } from '../../../design-system';
-import { getStoryPropsToSave } from '../../utils';
 import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
 import { ERRORS } from '../textContent';
 
@@ -230,6 +228,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           status,
         } = dashboardStory;
 
+        const getStoryPropsToSave = await import(
+          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
+        );
         const storyProps = await getStoryPropsToSave({
           story: {
             status: status || 'auto-draft',
@@ -254,6 +255,10 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         });
 
         const preppedStoryProps = reshapeStoryPreview(storyProps);
+
+        const getStoryMarkup = await import(
+          /* webpackChunkName: "chunk-getStoryMarkup" */ '../../../edit-story/output/utils/getStoryMarkup'
+        );
 
         const markup = await getStoryMarkup(
           preppedStoryProps.story,
@@ -291,6 +296,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
 
       try {
         const { createdBy, pages, version } = template;
+        const getStoryPropsToSave = await import(
+          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
+        );
         const storyPropsToSave = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
