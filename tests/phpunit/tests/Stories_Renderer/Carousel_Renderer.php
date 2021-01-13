@@ -121,7 +121,7 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 		$this->assertContains( 'amp-carousel', $output );
 		$this->assertContains( 'web-stories-list alignnone is-view-type-carousel', $output );
 		$this->assertContains( 'web-stories-list__story', $output );
-		$this->assertContains( 'web-stories-list__story-placeholder', $output );
+		$this->assertContains( 'web-stories-list__story-poster', $output );
 
 	}
 

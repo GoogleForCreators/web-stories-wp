@@ -15,19 +15,19 @@
   flex-direction: column;
 }
 
-.web-stories-list.is-view-type-circles .web-stories-list__story-placeholder {
+.web-stories-list.is-view-type-circles .web-stories-list__story-poster img {
+  position: relative;
   height: var(--ws-circle-size);
   width: var(--ws-circle-size);
+  max-width: initial;
   border-radius: 50%;
   background-clip: content-box;
   border: 2px solid var(--ws-circle-border-color);
   padding: 2px;
 }
 
-.web-stories-list.is-view-type-circles
-  .web-stories-list__story-placeholder::after,
-.web-stories-list.is-view-type-circles
-  .web-stories-list__story-placeholder::before {
+.web-stories-list.is-view-type-circles .web-stories-list__story-poster::after,
+.web-stories-list.is-view-type-circles .web-stories-list__story-poster::before {
   display: none;
 }
 
