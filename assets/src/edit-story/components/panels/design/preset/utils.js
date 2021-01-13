@@ -231,7 +231,8 @@ export function getPanelInitialHeight(isColor, presets) {
     const presetsPerRow = isColor
       ? COLOR_PRESETS_PER_ROW
       : STYLE_PRESETS_PER_ROW;
-    initialHeight = Math.max(1.5, presets.length / presetsPerRow) * rowHeight;
+    initialHeight =
+      Math.max(1.5, Math.ceil(presets.length / presetsPerRow)) * rowHeight;
   } else if (isColor) {
     initialHeight = emptyColorsHeight;
   }

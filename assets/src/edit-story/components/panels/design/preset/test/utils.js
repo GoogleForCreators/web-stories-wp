@@ -20,6 +20,8 @@
 import {
   findMatchingColor,
   findMatchingStylePreset,
+  getOpaqueColor,
+  getPanelInitialHeight,
   getShapePresets,
   getTextPresets,
   presetHasOpacity,
@@ -427,5 +429,65 @@ describe('Panels/StylePreset/utils', () => {
       stops: [TEST_COLOR, TEST_COLOR_2],
     };
     expect(presetHasOpacity(preset3)).toBeFalse();
+  });
+
+  describe('getOpaqueColor', () => {
+    it('should get the opaque color correctly', () => {
+      expect(getOpaqueColor({ color: { r: 1, g: 1, b: 1 } })).toMatchObject({
+        color: { r: 1, g: 1, b: 1, a: 1 },
+      });
+      expect(
+        getOpaqueColor({ color: { r: 1, g: 1, b: 1, a: 0.4 } })
+      ).toMatchObject({
+        color: { r: 1, g: 1, b: 1, a: 1 },
+      });
+      expect(
+        getOpaqueColor({ color: { r: 1, g: 1, b: 1, a: null } })
+      ).toMatchObject({
+        color: { r: 1, g: 1, b: 1, a: 1 },
+      });
+    });
+  });
+
+  describe('getPanelInitialHeight', () => {
+    it('should get the initial height correctly for color presets', () => {
+      const presets = [
+        { color: { r: 25, g: 39, b: 1 } },
+        { color: { r: 25, g: 39, b: 2 } },
+        { color: { r: 25, g: 39, b: 3 } },
+        { color: { r: 25, g: 39, b: 4 } },
+        { color: { r: 25, g: 39, b: 5 } },
+        { color: { r: 25, g: 39, b: 6 } },
+        { color: { r: 25, g: 39, b: 7 } },
+        { color: { r: 25, g: 39, b: 8 } },
+        { color: { r: 25, g: 39, b: 9 } },
+        { color: { r: 25, g: 39, b: 10 } },
+        { color: { r: 25, g: 39, b: 11 } },
+        { color: { r: 25, g: 39, b: 12 } },
+        { color: { r: 25, g: 39, b: 13 } },
+      ];
+      // Three rows.
+      expect(getPanelInitialHeight(true, presets)).toStrictEqual(90);
+      // One row.
+      expect(
+        getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
+      ).toStrictEqual(45);
+    });
+
+    it('should get the initial height correctly for style presets', () => {
+      const presets = [
+        { fontSize: 1 },
+        { fontSize: 2 },
+        { fontSize: 3 },
+        { fontSize: 4 },
+        { fontSize: 5 },
+        { fontSize: 6 },
+        { fontSize: 7 },
+      ];
+      // Three rows.
+      expect(getPanelInitialHeight(false, presets)).toStrictEqual(192);
+      // One row.
+      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toStrictEqual(72);
+    });
   });
 });
