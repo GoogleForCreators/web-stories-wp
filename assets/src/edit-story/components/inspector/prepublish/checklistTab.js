@@ -29,7 +29,6 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { SimplePanel } from '../../panels/panel';
-import { Rectangle } from '../../../icons';
 import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { Label } from '../../form';
@@ -296,7 +295,6 @@ const ChecklistTab = (props) => {
       return (
         <Fragment key={`guidance-page-group-${pageNum}`}>
           <PageIndicator>
-            <Rectangle />
             {sprintf(
               /* translators: %s: page number. */
               __('Page %s', 'web-stories'),
