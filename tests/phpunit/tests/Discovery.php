@@ -123,6 +123,7 @@ class Discovery extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::print_schemaorg_metadata
+	 * @covers ::get_schemaorg_metadata
 	 */
 	public function test_print_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -146,6 +147,7 @@ class Discovery extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::print_open_graph_metadata
+	 * @covers ::get_open_graph_metadata
 	 */
 	public function test_print_open_graph_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
@@ -170,11 +172,13 @@ class Discovery extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::print_twitter_metadata
+	 * @covers ::get_twitter_metadata
 	 */
 	public function test_print_twitter_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$output = get_echo( [ $object, 'print_twitter_metadata' ] );
 		$this->assertContains( 'twitter:card', $output );
 		$this->assertContains( 'twitter:image', $output );
+		$this->assertContains( 'twitter:image:alt', $output );
 	}
 }
