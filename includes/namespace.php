@@ -225,7 +225,7 @@ function rest_preload_api_request( $memo, $path ) {
  * @return bool Whether it is singular story post (and thus an AMP endpoint).
  */
 function is_amp() {
-	if( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ){
+	if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 		return true;
 	}
 
