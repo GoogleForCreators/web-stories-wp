@@ -95,7 +95,6 @@ function PageLayoutsPane(props) {
             return acc;
           }
 
-          // translation not required because page layout title is already translated
           const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
           return [
             ...acc,
