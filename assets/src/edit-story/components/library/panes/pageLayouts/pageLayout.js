@@ -166,6 +166,7 @@ function PageLayout(props, ref) {
           isActive={isActive}
           aria-label={page.title}
           tabIndex={isActive ? 0 : -1}
+          role="button"
         >
           <PageLayoutTitle>{page.title}</PageLayoutTitle>
         </HoverControls>
