@@ -26,6 +26,8 @@ import { generateFontFamily } from '../../../../elements/text/util';
 import {
   BACKGROUND_TEXT_MODE,
   COLOR_PRESETS_PER_ROW,
+  SAVED_COLOR_SIZE,
+  SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
 import { MULTIPLE_VALUE } from '../../../form';
@@ -220,7 +222,8 @@ export function getOpaqueColor(preset) {
 }
 
 export function getPanelInitialHeight(isColor, presets) {
-  const rowHeight = isColor ? 35 : 48;
+  const rowHeight = isColor ? SAVED_COLOR_SIZE : SAVED_STYLE_HEIGHT;
+  // Includes the helper text and button for saving a color.
   const emptyColorsHeight = 140;
   const presetsCount = presets.length;
   let initialHeight = 0;

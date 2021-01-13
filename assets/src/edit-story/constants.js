@@ -81,3 +81,6 @@ export const HIDDEN_PADDING = {
   horizontal: 8,
   vertical: 4,
 };
+
+export const SAVED_COLOR_SIZE = 30;
+export const SAVED_STYLE_HEIGHT = 48;

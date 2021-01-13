@@ -27,12 +27,12 @@ import PropTypes from 'prop-types';
 import { useKeyDownEffect } from '../../../keyboard';
 import {
   COLOR_PRESETS_PER_ROW,
+  SAVED_COLOR_SIZE,
+  SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
 import ColorAdd from './colorAdd';
 
-const COLOR_SIZE = 30;
-const STYLE_HEIGHT = 48;
 const STYLE_WIDTH = 112;
 
 const Group = styled.div`
@@ -46,8 +46,9 @@ const Group = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  height: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_HEIGHT)}px;
-  width: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_WIDTH)}px;
+  height: ${({ type }) =>
+    type === 'color' ? SAVED_COLOR_SIZE : SAVED_STYLE_HEIGHT}px;
+  width: ${({ type }) => (type === 'color' ? SAVED_COLOR_SIZE : STYLE_WIDTH)}px;
   margin: auto;
 `;
 
