@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
@@ -29,11 +29,12 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { PANE_PADDING } from '../shared';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { UnitsProvider } from '../../../../units';
-import { useStory } from '../../../../app';
+import { useConfig, useStory } from '../../../../app';
 import { duplicatePage } from '../../../../elements';
 import isDefaultPage from '../../../../utils/isDefaultPage';
+import useFocusOut from '../../../../utils/useFocusOut';
+import { useKeyDownEffect } from '../../../keyboard';
 import PageLayout from './pageLayout';
-
 const PAGE_LAYOUT_PANE_WIDTH = 158;
 const PAGE_LAYOUT_ROW_GAP = 12;
 
@@ -63,6 +64,15 @@ function PageLayouts(props) {
       currentPage,
     })
   );
+
+  const { isRTL } = useConfig();
+  const pageRefs = useRef({});
+  const containerRef = useRef();
+  const [activePageId, setActivePageId] = useState(null);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
+  const pageIdCount = pageIds.length - 1;
 
   const handleApplyPageLayout = useCallback(
     (page) => {
@@ -97,6 +107,66 @@ function PageLayouts(props) {
     [currentPage]
   );
 
+  const onKeyDown = useCallback(
+    (event) => {
+      const { key } = event;
+      if (!pageRefs.current) {
+        return;
+      }
+
+      const currentIndex = pageIds.indexOf(activePageId);
+
+      let newIndex;
+      // page layouts are in 2 columns.
+      if (key === 'ArrowUp') {
+        newIndex = currentIndex - 2;
+      } else if (key === 'ArrowDown') {
+        newIndex = currentIndex + 2;
+      } else if ([isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key)) {
+        newIndex = currentIndex - 1;
+      } else if ([isRTL ? 'ArrowLeft' : 'ArrowRight'].includes(key)) {
+        newIndex = currentIndex + 1;
+      }
+
+      if (newIndex > -1 && newIndex <= pageIdCount) {
+        setActivePageId(pageIds[newIndex]);
+      }
+    },
+    [activePageId, pageIds, isRTL, pageIdCount]
+  );
+
+  useKeyDownEffect(
+    containerRef,
+    { key: ['left', 'right', 'down', 'up'] },
+    onKeyDown,
+    [onKeyDown]
+  );
+
+  useFocusOut(
+    containerRef,
+    () => {
+      setIsFocused(false);
+      setActivePageId(null);
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (activePageId) {
+      const nextPage = pageRefs.current?.[activePageId];
+      if (nextPage) {
+        nextPage.tabIndex = 0;
+        nextPage.focus();
+      }
+    }
+  }, [activePageId]);
+
+  useEffect(() => {
+    if (isFocused && !activePageId) {
+      setActivePageId(pageIds?.[0]);
+    }
+  }, [activePageId, isFocused, pageIds]);
+
   return (
     <UnitsProvider
       pageSize={{
@@ -104,7 +174,17 @@ function PageLayouts(props) {
         height: pageSize.height,
       }}
     >
-      <PageLayoutsContainer height={rowVirtualizer.totalSize}>
+      <PageLayoutsContainer
+        height={rowVirtualizer.totalSize}
+        ref={containerRef}
+        tabIndex={0}
+        onFocus={() => {
+          setIsFocused(true);
+        }}
+        onBlur={() => {
+          setIsFocused(false);
+        }}
+      >
         {rowVirtualizer.virtualItems.map((virtualRow) => {
           const firstColumnIndex = virtualRow.index * 2;
           const indexes = [firstColumnIndex, firstColumnIndex + 1];
@@ -122,10 +202,12 @@ function PageLayouts(props) {
                 return (
                   <PageLayout
                     key={page.id}
+                    isFocused={activePageId === page.id}
                     page={page}
                     pageSize={pageSize}
                     onConfirm={() => handleApplyPageLayout(page)}
                     requiresConfirmation={requiresConfirmation}
+                    ref={(el) => (pageRefs.current[page.id] = el)}
                   />
                 );
               })}
