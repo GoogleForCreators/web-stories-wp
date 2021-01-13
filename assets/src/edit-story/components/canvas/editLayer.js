@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import { useStory } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';

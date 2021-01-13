@@ -23,7 +23,7 @@ import { useCallback, useEffect } from 'react';
  * Internal dependencies
  */
 import { FULLBLEED_RATIO } from '../../../constants';
-import { useGlobalIsKeyPressed } from '../../keyboard';
+import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
 import useCanvas from '../useCanvas';
 

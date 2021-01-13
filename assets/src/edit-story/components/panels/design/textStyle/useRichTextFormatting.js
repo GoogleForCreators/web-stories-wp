@@ -29,7 +29,7 @@ import {
   getHTMLInfo,
 } from '../../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../../form';
-import { useGlobalKeyDownEffect } from '../../../keyboard';
+import { useGlobalKeyDownEffect } from '../../../../../design-system';
 import { useCanvas } from '../../../canvas';
 
 /**

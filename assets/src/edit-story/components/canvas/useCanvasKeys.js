@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect } from '../../../design-system';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';

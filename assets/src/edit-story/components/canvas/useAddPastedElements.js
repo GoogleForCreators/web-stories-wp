@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { useStory } from '../../app';
-import useBatchingCallback from '../../utils/useBatchingCallback';
+import { useBatchingCallback } from '../../../design-system';
 
 function useAddPastedElements() {
   const {

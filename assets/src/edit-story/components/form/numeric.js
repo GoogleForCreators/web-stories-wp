@@ -28,7 +28,7 @@ import Big from 'big.js';
  */
 import { defaultUnit } from '../../../animation/utils/defaultUnit';
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import Input from './input';
 import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 

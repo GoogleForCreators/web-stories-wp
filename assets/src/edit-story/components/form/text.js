@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { CloseAlt as Close } from '../../icons';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 import { Input } from '.';
 

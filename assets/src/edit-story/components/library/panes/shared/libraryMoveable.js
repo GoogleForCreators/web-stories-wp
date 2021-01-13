@@ -33,7 +33,7 @@ import { useCanvas, useInsertTextSet } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
-import { useKeyDownEffect } from '../../../keyboard';
+import { useKeyDownEffect } from '../../../../../design-system';
 import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory } from '../../../../app/story';
 import objectWithout from '../../../../utils/objectWithout';

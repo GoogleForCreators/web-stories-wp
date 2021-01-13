@@ -30,9 +30,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useBatchingCallback } from '../../../../../design-system';
 import { useStory } from '../../../../app/story';
 import { useAPI } from '../../../../app/api';
-import useBatchingCallback from '../../../../utils/useBatchingCallback';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import { Close } from '../../../../icons';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';

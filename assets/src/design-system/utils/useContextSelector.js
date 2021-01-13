@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,6 @@ import { shallowEqual } from 'react-pure-render';
 import { useRef } from 'react';
 import { useContextSelector as useContextSelectorOrig } from 'use-context-selector';
 
-export { createContext, useContext } from 'use-context-selector';
-
 /**
  * This hook returns a part of the context value by selector.
  * It will trigger a re-render only if the selected value has changed.
@@ -38,11 +36,7 @@ export { createContext, useContext } from 'use-context-selector';
  * will not be triggered. This is {shallowEqual} by default.
  * @return {Object} The selected context value fragment.
  */
-export const useContextSelector = (
-  context,
-  selector,
-  equalityFn = shallowEqual
-) => {
+function useContextSelector(context, selector, equalityFn = shallowEqual) {
   const ref = useRef();
 
   const equalityFnCallback = (state) => {
@@ -57,6 +51,6 @@ export const useContextSelector = (
   // Update the selector fn to memoize the selected value by [equalityFn].
   const patchedSelector = equalityFn ? equalityFnCallback : selector;
   return useContextSelectorOrig(context, patchedSelector);
-};
+}
 
-export const identity = (state) => state;
+export default useContextSelector;

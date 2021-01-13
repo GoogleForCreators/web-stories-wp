@@ -22,7 +22,7 @@ import { useState, useCallback, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import useBatchingCallback from '../../utils/useBatchingCallback';
+import { useBatchingCallback } from '../../../design-system';
 
 const SCROLL_PERCENT = 0.2;
 const MAX_SCROLL_STEP = 10;

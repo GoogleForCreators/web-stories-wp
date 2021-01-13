@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,6 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useGridViewKeys } from '../../../../design-system/components/gridview';
 import { useConfig, useStory } from '../../../app';
 import RangeInput from '../../rangeInput';
 import { Rectangle as RectangleIcon } from '../../../icons';
@@ -42,7 +43,6 @@ import {
   ReorderableSeparator,
   ReorderableItem,
 } from '../../reorderable';
-import useGridViewKeys from './useGridViewKeys';
 
 const PREVIEW_WIDTH = 90;
 const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
@@ -222,14 +222,21 @@ ThumbnailSizeControl.propTypes = {
 function GridView() {
   const {
     pages,
+    currentPageId,
     currentPageIndex,
     setCurrentPage,
     arrangePage,
   } = useStory(
     ({
-      state: { pages, currentPageIndex },
+      state: { pages, currentPageIndex, currentPageId },
       actions: { setCurrentPage, arrangePage },
-    }) => ({ pages, currentPageIndex, setCurrentPage, arrangePage })
+    }) => ({
+      pages,
+      currentPageIndex,
+      currentPageId,
+      setCurrentPage,
+      arrangePage,
+    })
   );
 
   const { isRTL } = useConfig();
@@ -244,7 +251,22 @@ function GridView() {
   const gridRef = useRef();
   const pageRefs = useRef({});
 
-  useGridViewKeys(wrapperRef, gridRef, pageRefs, isRTL);
+  const arrangeItem = useCallback(
+    (focusedPageId, nextIndex) => {
+      arrangePage({ pageId: focusedPageId, position: nextIndex });
+    },
+    [arrangePage]
+  );
+
+  useGridViewKeys({
+    containerRef: wrapperRef,
+    gridRef,
+    itemRefs: pageRefs,
+    isRTL,
+    currentItemId: currentPageId,
+    items: pages,
+    arrangeItem,
+  });
 
   return (
     <Container>

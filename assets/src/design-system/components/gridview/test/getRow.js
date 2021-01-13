@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,14 @@
  */
 
 /**
- * See https://craig.is/killing/mice#keys for the supported key codes.
+ * Internal dependencies
  */
-const keys = {
-  undo: 'mod+z',
-  redo: 'shift+mod+z',
-  delete: ['del', 'backspace'],
-  clone: 'mod+d',
-};
+import { getRow } from '../utils';
 
-export default keys;
+describe('getRow', () => {
+  it('will return current row of 1 when index is 1 and numColumns is 3', () => {
+    const currentRowIndex = getRow(1, 3);
+
+    expect(currentRowIndex).toBe(1);
+  });
+});

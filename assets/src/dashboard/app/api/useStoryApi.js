@@ -42,7 +42,8 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { getStoryPropsToSave, addQueryArgs } from '../../utils';
+import { addQueryArgs } from '../../../design-system';
+import { getStoryPropsToSave } from '../../utils';
 import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
 import { ERRORS } from '../textContent';
 

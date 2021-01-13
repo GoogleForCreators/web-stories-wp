@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useResizeEffect } from '../../../design-system';
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
@@ -37,7 +38,6 @@ import {
   PAGE_NAV_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
-import useResizeEffect from '../../utils/useResizeEffect';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import useCanvas from './useCanvas';
 

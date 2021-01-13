@@ -22,13 +22,13 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
+import { useBatchingCallback } from '../../../design-system';
 import { useStory } from '../../app';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import {
   addElementsToClipboard,
   processPastedElements,
 } from '../../utils/copyPaste';
-import useBatchingCallback from '../../utils/useBatchingCallback';
 import usePasteTextContent from '../richText/usePasteTextContent';
 import useAddPastedElements from './useAddPastedElements';
 import useUploadWithPreview from './useUploadWithPreview';

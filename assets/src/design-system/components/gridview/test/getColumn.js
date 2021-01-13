@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../design-system';
+import { getColumn } from '../utils';
 
-export default createContext({ api: {} });
+describe('getColumn', () => {
+  it('will return current column of 2 when index is 1 and numColumns is 3', () => {
+    const currentColumnIndex = getColumn(1, 3);
+
+    expect(currentColumnIndex).toBe(2);
+  });
+});

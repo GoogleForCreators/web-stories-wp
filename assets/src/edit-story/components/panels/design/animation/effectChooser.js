@@ -35,6 +35,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import {
+  isNullOrUndefinedOrEmptyString,
+  useKeyDownEffect,
+  useFocusOut,
+} from '../../../../../design-system/';
 import loadStylesheet from '../../../../utils/loadStylesheet';
 import { useConfig } from '../../../../app/config';
 import { GOOGLE_MENU_FONT_URL } from '../../../../app/font';
@@ -44,8 +49,6 @@ import {
   DIRECTION,
   SCALE_DIRECTION,
 } from '../../../../../animation';
-import useFocusOut from '../../../../utils/useFocusOut';
-import { useKeyDownEffect } from '../../../keyboard';
 import WithTooltip from '../../../tooltip';
 import {
   GRID_ITEM_HEIGHT,
@@ -70,7 +73,6 @@ import {
   PanBottomAnimation,
   PanLeftAnimation,
 } from './effectChooserElements';
-import { isNullOrUndefinedOrEmptyString } from './utils/isNullOrUndefinedOrEmptyString';
 
 const Container = styled.div`
   background: black;

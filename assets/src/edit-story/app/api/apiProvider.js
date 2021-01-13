@@ -28,8 +28,8 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import { addQueryArgs } from '../../../design-system';
 import getAllTemplates from '../../../dashboard/templates';
-import addQueryArgs from '../../utils/addQueryArgs';
 import base64Encode from '../../utils/base64Encode';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';

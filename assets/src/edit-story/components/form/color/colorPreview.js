@@ -31,7 +31,7 @@ import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { PatternPropType } from '../../../types';
 import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from '../multipleValue';
 import Popup from '../../popup';
-import { useKeyDownEffect } from '../../keyboard';
+import { useKeyDownEffect } from '../../../../design-system';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
