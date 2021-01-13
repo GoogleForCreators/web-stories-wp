@@ -29,14 +29,14 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReorderableSeparator, ReorderableItem } from '../reorderable';
-import PagePreview, { THUMB_FRAME_HEIGHT } from './pagepreview';
+import CarouselPagePreview from './carouselPagePreview';
 import useCarousel from './useCarousel';
 
 const LINE_WIDTH = 4;
 
 const Line = styled.div`
   background: ${({ theme }) => theme.colors.accent.primary};
-  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  height: ${({ height }) => height}px;
   width: ${LINE_WIDTH}px;
   margin: 0px;
 `;
@@ -51,7 +51,7 @@ const PageSeparator = styled(ReorderableSeparator)`
   bottom: 0;
   left: ${({ width }) => width / 2}px;
   width: ${({ width, margin }) => width + margin}px;
-  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  height: ${({ height }) => height}px;
   display: flex;
   justify-content: center;
 
@@ -61,8 +61,12 @@ const PageSeparator = styled(ReorderableSeparator)`
   }
 
   ${ItemContainer}:first-of-type &:first-of-type {
-    left: -${({ margin }) => (margin + LINE_WIDTH) / 2}px;
+    left: ${({ margin }) => (margin - LINE_WIDTH) / 2}px;
     justify-content: flex-start;
+  }
+
+  ${ItemContainer}:first-of-type &:last-of-type {
+    left: ${({ width, margin }) => margin + width / 2}px;
   }
 
   ${ItemContainer}:last-of-type &:last-of-type {
@@ -74,6 +78,7 @@ const ReorderablePage = styled(ReorderableItem).attrs({ role: 'option' })`
   display: flex;
   z-index: 1;
   margin-right: ${({ margin }) => margin}px;
+  margin-left: ${({ margin, position }) => (position === 0 ? margin : 0)}px;
 `;
 
 function CarouselPage({ pageId, index }) {
@@ -126,7 +131,7 @@ function CarouselPage({ pageId, index }) {
         </PageSeparator>
       )}
       <ReorderablePage position={index} margin={pageThumbMargin}>
-        <PagePreview
+        <CarouselPagePreview
           tabIndex={isCurrentPage && hasMultiplePages ? 0 : -1}
           onClick={() => clickPage(page)}
           role="option"
