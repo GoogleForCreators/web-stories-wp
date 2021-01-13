@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-export { default } from './carouselContainer';
+/**
+ * Internal dependencies
+ */
+import { createContext } from '../../utils/context';
+
+const CarouselContext = createContext({ state: {}, actions: {} });
+
+export default CarouselContext;

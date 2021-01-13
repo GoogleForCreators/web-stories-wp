@@ -14,4 +14,13 @@
  * limitations under the License.
  */
 
-export { default } from './carouselContainer';
+/**
+ * Internal dependencies
+ */
+import { identity, useContextSelector } from '../../utils/context';
+import CarouselContext from './carouselContext';
+
+function useCarousel(selector) {
+  return useContextSelector(CarouselContext, selector ?? identity);
+}
+export default useCarousel;

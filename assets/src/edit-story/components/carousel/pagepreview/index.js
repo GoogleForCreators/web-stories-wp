@@ -25,7 +25,7 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import useStory from '../../../app/story/useStory';
+import StoryPropTypes from '../../../types';
 import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../../canvas/displayElement';
@@ -77,11 +77,7 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ index, gridRef, ...props }) {
-  const { pages } = useStory((state) => ({
-    pages: state.state.pages,
-  }));
-  const page = pages[index];
+function PagePreview({ page, gridRef, ...props }) {
   const { backgroundColor } = page;
   const { width: thumbWidth, height: thumbHeight } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
@@ -108,7 +104,7 @@ function PagePreview({ index, gridRef, ...props }) {
 }
 
 PagePreview.propTypes = {
-  index: PropTypes.number.isRequired,
+  page: StoryPropTypes.page.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,

@@ -52,20 +52,7 @@ export const Z_INDEX = {
 };
 
 const MENU_HEIGHT = 48;
-
-export const CAROUSEL_VERTICAL_PADDING = 24;
-export const COMPACT_CAROUSEL_VERTICAL_PADDING = 32;
-
-export const COMPACT_THUMB_WIDTH = 72;
-export const COMPACT_THUMB_HEIGHT = 8;
-
-const MAX_CAROUSEL_THUMB_HEIGHT = 128;
-export const MIN_CAROUSEL_THUMB_HEIGHT = 52;
-
-const MIN_CAROUSEL_HEIGHT =
-  COMPACT_CAROUSEL_VERTICAL_PADDING * 2 + COMPACT_THUMB_HEIGHT;
-const MAX_CAROUSEL_HEIGHT =
-  MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
+const CAROUSEL_HEIGHT = 104;
 
 // @todo: the menu height is not responsive
 const Layer = styled.section`
@@ -88,10 +75,7 @@ const Layer = styled.section`
     )
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
-    'carousel  carousel  carousel  carousel  carousel' minmax(
-      ${MIN_CAROUSEL_HEIGHT}px,
-      ${MAX_CAROUSEL_HEIGHT}px
-    )
+    'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
     / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
     ${PAGE_NAV_WIDTH}px 1fr;
   height: 100%;
@@ -171,8 +155,7 @@ function useLayoutParams(containerRef) {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
     // space for the page is:
     const maxWidth = width - PAGE_NAV_WIDTH * 2;
-    const maxHeight =
-      height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
+    const maxHeight = height - HEADER_HEIGHT - MENU_HEIGHT - CAROUSEL_HEIGHT;
 
     let bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(

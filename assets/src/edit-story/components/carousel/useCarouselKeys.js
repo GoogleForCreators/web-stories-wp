@@ -23,15 +23,11 @@ import { useMemo } from 'react';
  * Internal dependencies
  */
 import { useEscapeToBlurEffect, useKeyDownEffect } from '../keyboard';
-import { useStory } from '../../app';
+import { useStory, useConfig } from '../../app';
 import { duplicatePage } from '../../elements';
 
-/**
- * @param {Object} ref Reference.
- * @param {Object} pageRefs Page references.
- * @param {boolean} isRTL Whether we're in RTL layout or not.
- */
-function useCarouselKeys(ref, pageRefs, isRTL) {
+function useCarouselKeys({ ref, pageRefs }) {
+  const { isRTL } = useConfig();
   const {
     addPageAt,
     arrangePage,
@@ -144,7 +140,7 @@ function getArrowDir(key, pos, neg, isRTL) {
     return rtlDir;
   }
   if (key === neg) {
-    return -1 * rtlDir;
+    return -rtlDir;
   }
   return 0;
 }
