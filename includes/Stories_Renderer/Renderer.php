@@ -491,16 +491,27 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function render_story_with_poster() {
 
-		$story_data   = $this->current();
-		$poster_url   = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
-		$poster_style = sprintf( 'background-image: url(%1$s);', esc_url_raw( $poster_url ) );
+		$story_data = $this->current();
+		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
 
 		?>
-
-		<div
-			class="web-stories-list__story-placeholder"
-			style="<?php echo esc_attr( $poster_style ); ?>"
-		></div>
+		<div class="web-stories-list__story-poster">
+			<?php
+			if ( $this->is_amp_request() ) {
+				// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
+				?>
+				<amp-img
+					src="<?php echo esc_url( $poster_url ); ?>"
+					layout="responsive"
+					width="0"
+					height="0"
+					alt="<?php echo esc_attr( $story_data->get_title() ); ?>"
+				>
+				</amp-img>
+			<?php } else { ?>
+				<img src="<?php echo esc_url( $poster_url ); ?>" alt="<?php echo esc_attr( $story_data->get_title() ); ?>">
+			<?php } ?>
+		</div>
 		<?php
 		$this->get_content_overlay();
 

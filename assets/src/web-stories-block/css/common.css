@@ -14,18 +14,29 @@
 }
 
 /* Curved corners by default.*/
-.web-stories-list.is-style-default.is-view-type-grid .web-stories-list__story {
+.web-stories-list.is-style-default.is-view-type-grid .web-stories-list__story,
+.web-stories-list.is-style-default.is-view-type-carousel
+  .web-stories-list__story {
   border-radius: 8px;
   overflow: hidden;
 }
 
-.web-stories-list__story-placeholder {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+.web-stories-list__story-poster {
+  position: relative;
 }
 
-.web-stories-list__story-placeholder::before {
+.web-stories-list__story-poster img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.web-stories-list__story-poster amp-img img {
+  object-fit: cover;
+}
+
+.web-stories-list__story-poster::before {
   content: '';
   display: block;
   position: absolute;
@@ -38,9 +49,10 @@
   );
   top: 0;
   left: 0;
+  z-index: 1;
 }
 
-.web-stories-list__story-placeholder::after {
+.web-stories-list__story-poster::after {
   content: '';
   display: block;
   padding-bottom: var(--ws-aspect-ratio);

@@ -163,7 +163,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 		$this->call_private_method( $renderer, 'render_story_with_poster' );
 		$output = ob_get_clean();
 
-		$this->assertContains( 'web-stories-list__story-placeholder', $output );
+		$this->assertContains( 'web-stories-list__story-poster', $output );
 		$this->assertContains( 'style="background-image: url(http://www.example.com/image.jpg);"', $output );
 	}
 
