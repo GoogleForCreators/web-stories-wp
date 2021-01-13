@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import getAllTemplates from '../../../dashboard/templates';
@@ -27,6 +32,7 @@ const replacePageImagesWithPlaceholders = (page) => {
         return element;
       }
 
+      const title = __('Placeholder', 'web-stories');
       return {
         ...element,
         focalX: 50,
@@ -43,8 +49,8 @@ const replacePageImagesWithPlaceholders = (page) => {
           height: 732,
           posterId: 0,
           id: 0,
-          title: 'Placeholder',
-          alt: 'Placeholder',
+          title,
+          alt: title,
           local: false,
           sizes: [],
         },
