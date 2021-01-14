@@ -117,9 +117,10 @@ function useCanvasKeys(ref) {
           // Check if the selection event happend outside the canvas container,
           // i.e Checklist panel, Document panel... etc. If there is any text
           // selection, we should not add the preventScroll setting, so that
-          // user can select the text properly.
+          // user can select the text properly. Both sel.type and sel.toString()
+          // are good ways to identify the selection content.
           const sel = global.getSelection();
-          if (sel.anchorNode && sel.anchorOffset !== 0) {
+          if (sel.toString() !== '') {
             return;
           }
 
