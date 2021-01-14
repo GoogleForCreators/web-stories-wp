@@ -68,8 +68,8 @@ function Publish() {
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
   // Offset the date by one minute to accommodate for network latency.
   const hasFutureDate = isAfter(
-    subMinutes(toDate(new Date(), getOptions()), 1),
-    toDate(date)
+    toDate(date),
+    subMinutes(toDate(new Date(), getOptions()), 1)
   );
 
   const publish = useCallback(() => {
