@@ -32,6 +32,7 @@ import {
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
   elementWithBorder,
+  elementWithHighlightBorderRadius,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -88,6 +89,7 @@ const Span = styled.span`
 `;
 
 const BackgroundSpan = styled(Span)`
+  ${elementWithHighlightBorderRadius}
   color: transparent;
 `;
 
@@ -236,6 +238,8 @@ function TextDisplay({
               <BackgroundSpan
                 ref={bgRef}
                 {...props}
+                borderRadius={borderRadius}
+                dataToEditorY={dataToEditorY}
                 dangerouslySetInnerHTML={{
                   __html: contentWithoutColor,
                 }}

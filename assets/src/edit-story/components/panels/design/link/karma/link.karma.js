@@ -108,14 +108,13 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // Disable reason: flaky test, fix in https://github.com/google/web-stories-wp/issues/5851
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should display the link tooltip correctly', async () => {
+    it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
 
       // Debounce time for populating meta-data.
+      await fixture.events.keyboard.press('tab');
       await fixture.events.sleep(1200);
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);

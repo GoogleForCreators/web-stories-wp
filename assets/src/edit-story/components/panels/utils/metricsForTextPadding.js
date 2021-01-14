@@ -14,20 +14,27 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { Container } from './container';
+export function metricsForTextPadding({
+  currentPadding,
+  newPadding,
+  x,
+  y,
+  width,
+  height,
+}) {
+  const updates = {};
 
-/**
- * The prepublish checklist panel. Includes: checklist items and collapsible critical/recommended panels
- */
-export class ChecklistPanel extends Container {
-  constructor(node, path) {
-    super(node, path);
+  if ('horizontal' in newPadding) {
+    updates.x = x - (newPadding.horizontal - (currentPadding.horizontal || 0));
+    updates.width =
+      width + (newPadding.horizontal - (currentPadding.horizontal || 0)) * 2;
   }
 
-  get recommended() {
-    return this.getByRole('button', { name: /Recommended/ });
+  if ('vertical' in newPadding) {
+    updates.y = y - (newPadding.vertical - (currentPadding.vertical || 0));
+    updates.height =
+      height + (newPadding.vertical - (currentPadding.vertical || 0)) * 2;
   }
+
+  return updates;
 }

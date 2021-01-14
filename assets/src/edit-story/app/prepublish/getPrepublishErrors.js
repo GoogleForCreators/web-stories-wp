@@ -45,9 +45,7 @@ async function getPrepublishErrors(story) {
         ...elementChecklistsByType
       } = byType;
 
-      let storyGuidance = [],
-        pageGuidance = [],
-        elementGuidance = [];
+      const storyGuidance = [];
 
       // get guidance messages for the top-level story object
       storyChecklist.forEach((getStoryGuidance) => {
@@ -62,13 +60,13 @@ async function getPrepublishErrors(story) {
       });
 
       // for each page, run checklist on the page object as well as each element
-      ({ pageGuidance, elementGuidance } = story.pages.reduce(
+      const { pageGuidance, elementGuidance } = story.pages.reduce(
         (prev, currentPage, currentIndex) => {
           const pageNum = currentIndex + 1;
           const { id: pageId, elements } = currentPage;
 
           function prepareResult(result) {
-            if (result != undefined) {
+            if (typeof result !== 'undefined') {
               if (Array.isArray(result)) {
                 return result.map((message) => ({
                   ...message,
@@ -104,7 +102,7 @@ async function getPrepublishErrors(story) {
           });
 
           // get guidance for all the elements on the page
-          let currentPageElementGuidance = [];
+          const currentPageElementGuidance = [];
           elements.forEach((element) => {
             const elementsChecklist =
               elementChecklistsByType[element.type] || [];
@@ -140,7 +138,7 @@ async function getPrepublishErrors(story) {
           pageGuidance: [],
           elementGuidance: [],
         }
-      ));
+      );
 
       return [...storyGuidance, ...pageGuidance, ...elementGuidance];
     })

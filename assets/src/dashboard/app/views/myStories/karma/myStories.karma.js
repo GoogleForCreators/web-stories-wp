@@ -148,11 +148,11 @@ describe('Grid view', () => {
     let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
     const initialNumStories = stories.length;
 
-    let firstStory = stories[0];
+    const firstStory = stories[0];
 
     await fixture.events.hover(firstStory);
 
-    let utils = within(firstStory);
+    const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
       name: /^More Options/,
@@ -178,11 +178,11 @@ describe('Grid view', () => {
   it('should not Delete a story if Cancel is clicked in the confirmation modal', async () => {
     let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
     const initialNumStories = stories.length;
-    let firstStory = stories[0];
+    const firstStory = stories[0];
 
     await fixture.events.hover(firstStory);
 
-    let utils = within(firstStory);
+    const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
       name: /^More Options/,
@@ -691,7 +691,7 @@ describe('List view', () => {
       // drop the header row using slice
       let rows = fixture.screen.getAllByRole('row').slice(1);
 
-      let utils = within(rows[0]);
+      const utils = within(rows[0]);
 
       const titleCell = utils.getByRole('cell', {
         name: storiesSortedByModified[0].title,
@@ -736,7 +736,7 @@ describe('List view', () => {
       // drop the header row using slice
       let rows = fixture.screen.getAllByRole('row').slice(1);
 
-      let utils = within(rows[0]);
+      const utils = within(rows[0]);
 
       const titleCell = utils.getByRole('cell', {
         name: storiesSortedByModified[0].title,

@@ -15,19 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { Container } from './container';
+import { __ } from '@wordpress/i18n';
 
-/**
- * The prepublish checklist panel. Includes: checklist items and collapsible critical/recommended panels
- */
-export class ChecklistPanel extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get recommended() {
-    return this.getByRole('button', { name: /Recommended/ });
-  }
-}
+export const PAGE_LAYOUT_TYPES = {
+  cover: { name: __('Cover', 'web-stories') },
+  section: { name: __('Section', 'web-stories') },
+  quote: { name: __('Quote', 'web-stories') },
+  editorial: { name: __('Editorial', 'web-stories') },
+  list: { name: __('List', 'web-stories') },
+  table: { name: __('Table', 'web-stories') },
+  steps: { name: __('Steps', 'web-stories') },
+};

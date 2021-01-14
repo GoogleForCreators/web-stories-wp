@@ -15,19 +15,18 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { Container } from './container';
+import { useEffect } from 'react';
 
-/**
- * The prepublish checklist panel. Includes: checklist items and collapsible critical/recommended panels
- */
-export class ChecklistPanel extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get recommended() {
-    return this.getByRole('button', { name: /Recommended/ });
-  }
+function useWindowResizeHandler(ref) {
+  useEffect(() => {
+    const handleUpdateMoveable = () => ref.current?.updateRect();
+    window.addEventListener('resize', handleUpdateMoveable);
+    return () => {
+      window.removeEventListener('resize', handleUpdateMoveable);
+    };
+  }, [ref]);
 }
+
+export default useWindowResizeHandler;
