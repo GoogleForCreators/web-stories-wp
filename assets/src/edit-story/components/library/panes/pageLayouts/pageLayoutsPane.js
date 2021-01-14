@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, _x, sprintf } from '@wordpress/i18n';
+import { _x, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -125,10 +125,7 @@ function PageLayoutsPane(props) {
           selectItem={handleSelectPageLayoutType}
           deselectItem={() => handleSelectPageLayoutType(null)}
         />
-        <PageLayoutsParentContainer
-          ref={pageLayoutsParentRef}
-          title={__('Page Layouts', 'web-stories')}
-        >
+        <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
           {pageLayoutsParentRef.current && (
             <PageLayouts
               parentRef={pageLayoutsParentRef}
