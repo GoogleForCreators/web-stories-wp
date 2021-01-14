@@ -25,14 +25,10 @@ describe('Panel: Color Presets', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    try {
-      localStorage.setItem(
-        'web_stories_ui_panel_settings:stylepreset-color',
-        JSON.stringify({ isCollapsed: false, height: 200 })
-      );
-    } catch {
-      // Do something
-    }
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-color',
+      JSON.stringify({ isCollapsed: false, height: 200 })
+    );
   });
 
   afterEach(() => {

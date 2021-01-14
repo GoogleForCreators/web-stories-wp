@@ -79,14 +79,10 @@ describe('Panels/SizePosition', () => {
   }
 
   beforeAll(() => {
-    try {
-      localStorage.setItem(
-        'web_stories_ui_panel_settings:size',
-        JSON.stringify({ isCollapsed: false })
-      );
-    } catch {
-      // Do something
-    }
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:size',
+      JSON.stringify({ isCollapsed: false })
+    );
   });
 
   afterAll(() => {

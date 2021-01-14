@@ -122,14 +122,10 @@ describe('Panels/Preset', () => {
   });
 
   beforeAll(() => {
-    try {
-      localStorage.setItem(
-        'web_stories_ui_panel_settings:stylepreset-style',
-        JSON.stringify({ isCollapsed: false })
-      );
-    } catch {
-      // Do something
-    }
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-style',
+      JSON.stringify({ isCollapsed: false })
+    );
   });
 
   afterAll(() => {

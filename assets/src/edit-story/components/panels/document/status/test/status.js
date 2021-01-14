@@ -57,14 +57,10 @@ function setupPanel(
 
 describe('StatusPanel', () => {
   beforeAll(() => {
-    try {
-      localStorage.setItem(
-        'web_stories_ui_panel_settings:status',
-        JSON.stringify({ isCollapsed: false })
-      );
-    } catch {
-      // Do something
-    }
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:status',
+      JSON.stringify({ isCollapsed: false })
+    );
   });
 
   afterAll(() => {

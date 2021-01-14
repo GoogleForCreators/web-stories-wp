@@ -43,14 +43,10 @@ describe('Panels/VideoAccessibility', () => {
   }
 
   beforeAll(() => {
-    try {
-      localStorage.setItem(
-        'web_stories_ui_panel_settings:videoAccessibility',
-        JSON.stringify({ isCollapsed: false })
-      );
-    } catch {
-      // Do something
-    }
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:videoAccessibility',
+      JSON.stringify({ isCollapsed: false })
+    );
   });
 
   afterAll(() => {
