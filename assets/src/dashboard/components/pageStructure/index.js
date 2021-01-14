@@ -29,6 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { ADMIN_TOOLBAR_HEIGHT } from '../../../edit-story/constants';
 import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
@@ -66,11 +67,11 @@ export const PageContent = styled.div`
 export const LeftRailContainer = styled.nav.attrs({
   ['data-testid']: 'dashboard-left-rail',
 })`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  top: 0;
+  top: ${ADMIN_TOOLBAR_HEIGHT}px;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};

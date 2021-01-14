@@ -79,7 +79,7 @@ const ScrollToTop = () => {
   } = useLayoutContext();
 
   const handleScroll = useCallback(() => {
-    if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+    if (window.scrollY > 0) {
       setIsVisible(true);
       return;
     }

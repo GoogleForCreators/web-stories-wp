@@ -33,7 +33,6 @@ import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
 const Banner = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
