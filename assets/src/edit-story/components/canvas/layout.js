@@ -175,7 +175,7 @@ function useLayoutParams(containerRef) {
     const maxHeight =
       height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
 
-    let bestSize =
+    const bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
         (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
       ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];

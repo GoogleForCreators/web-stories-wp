@@ -28,7 +28,7 @@ const duplicatePage = (oldPage) => {
   const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
 
   // Ensure all existing elements get new ids
-  let elementIdTransferMap = {};
+  const elementIdTransferMap = {};
   const elements = oldElements.map(({ type, ...attrs }) => {
     const newElement = createNewElement(type, attrs);
     elementIdTransferMap[attrs.id] = newElement.id;

@@ -96,7 +96,7 @@ function SingleSelectionMoveable({
   });
 
   const box = getBox(selectedElement);
-  let frame = useMemo(
+  const frame = useMemo(
     () => ({
       translate: [0, 0],
       rotate: box.rotationAngle,

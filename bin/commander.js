@@ -34,6 +34,7 @@ import {
   getCurrentVersionNumber,
   updateVersionNumbers,
   updateTemplates,
+  updateCdnUrl,
 } from './utils/index.js';
 
 const PLUGIN_DIR = process.cwd();
@@ -51,7 +52,9 @@ program
     '--nightly',
     'Whether this is a nightly build and thus should append the current revision to the version number.'
   )
-  .description('Bump the version of the plugin')
+  .description('Bump the version of the plugin', {
+    version: 'The version number.',
+  })
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
@@ -125,6 +128,33 @@ program
     console.log(
       `Plugin successfully built! Location: ${relative(process.cwd(), build)}`
     );
+  });
+
+program
+  .command('assets-version')
+  .arguments('<version>')
+  .description('Change the CDN assets version used by the plugin', {
+    version: 'Assets version. Either `main` or an integer.',
+  })
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log(
+      '  # Change assets version to `main` (default, for development builds)'
+    );
+    console.log('  $ commander.js assets-version main');
+    console.log('');
+    console.log('  # Change assets version for stable release');
+    console.log('  $ commander.js assets-version 7');
+  })
+  .action((version) => {
+    const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
+    updateCdnUrl(
+      pluginFilePath,
+      version === 'main' ? version : parseInt(version)
+    );
+
+    console.log(`Assets CDN URL successfully updated!`);
   });
 
 program
