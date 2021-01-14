@@ -429,7 +429,7 @@ describe('Media3pPane fetching', () => {
     await fixture.events.click(coverrTab);
     await expectMediaElements(coverrSection, MEDIA_PER_PAGE);
 
-    let mediaElements = coverrSection.querySelectorAll(
+    const mediaElements = coverrSection.querySelectorAll(
       '[data-testid^=mediaElement]'
     );
 
@@ -451,7 +451,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -468,7 +468,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -492,7 +492,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -511,7 +511,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -528,7 +528,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -545,7 +545,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -562,7 +562,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -579,7 +579,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -596,7 +596,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -613,7 +613,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll(
+      const mediaElements = unsplashSection.querySelectorAll(
         '[data-testid^=mediaElement]'
       );
 
@@ -634,7 +634,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let providerTabs = media3pPane.querySelectorAll(
+      const providerTabs = media3pPane.querySelectorAll(
         '[data-testid=providerTab]'
       );
 
@@ -652,7 +652,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let providerTabs = media3pPane.querySelectorAll(
+      const providerTabs = media3pPane.querySelectorAll(
         '[data-testid=providerTab]'
       );
 
@@ -671,7 +671,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let providerTabs = media3pPane.querySelectorAll(
+      const providerTabs = media3pPane.querySelectorAll(
         '[data-testid=providerTab]'
       );
 
@@ -690,7 +690,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let providerTabs = media3pPane.querySelectorAll(
+      const providerTabs = media3pPane.querySelectorAll(
         '[data-testid=providerTab]'
       );
 
