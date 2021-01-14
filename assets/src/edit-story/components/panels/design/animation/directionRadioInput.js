@@ -73,11 +73,11 @@ const Icon = styled.div`
   border-radius: 4px;
   stroke: #e4e5e6;
   stroke-width: 1px;
-  ${({ selected, disabled }) =>
+  ${({ selected, disabled, theme }) =>
     selected &&
     !disabled &&
     css`
-      background-color: #1a73e8;
+      background-color: ${theme.colors.accent.primary};
     `}
 
   ${({ disabled }) =>
