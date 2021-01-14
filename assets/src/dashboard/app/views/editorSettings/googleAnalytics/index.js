@@ -83,8 +83,8 @@ function GoogleAnalyticsSettings({
   const disableSaveButton = !canSave;
 
   const {
+    analyticsModuleActive,
     canInstallPlugins,
-    siteKitActive,
     siteKitInstalled,
   } = siteKitCapabilities;
 
@@ -126,7 +126,7 @@ function GoogleAnalyticsSettings({
       ? TEXT.SITE_KIT_ADMIN_PLUGIN_LINK
       : TEXT.SITE_KIT_PLUGIN_LINK;
 
-    if (siteKitActive) {
+    if (analyticsModuleActive) {
       return TEXT.SITE_KIT_IN_USE;
     }
 
@@ -152,7 +152,7 @@ function GoogleAnalyticsSettings({
         {TEXT.SITE_KIT_NOT_INSTALLED}
       </TranslateWithMarkup>
     );
-  }, [canInstallPlugins, siteKitActive, siteKitInstalled]);
+  }, [canInstallPlugins, analyticsModuleActive, siteKitInstalled]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -175,7 +175,7 @@ function GoogleAnalyticsSettings({
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
-            disabled={siteKitInstalled}
+            disabled={analyticsModuleActive}
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {TEXT.SUBMIT_BUTTON}

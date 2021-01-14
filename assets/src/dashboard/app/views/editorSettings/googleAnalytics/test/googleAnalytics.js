@@ -76,15 +76,15 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(label).toBeInTheDocument();
   });
 
-  it('should not allow the input to be active when site kit is active', function () {
+  it('should not allow the input to be active when analytics module is active', function () {
     const { getByRole } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
         siteKitCapabilities={{
           ...defaultSiteKitCapabilities,
+          analyticsModuleActive: true,
           siteKitActive: true,
-          siteKitInstalled: true,
         }}
       />
     );
@@ -93,7 +93,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(input).toBeDisabled();
   });
 
-  it('should not allow the input to be active when site kit is installed', function () {
+  it('should allow the input to be active when site kit is installed but analytics module is not active', function () {
     const { getByRole } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
@@ -107,7 +107,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     );
 
     const input = getByRole('textbox');
-    expect(input).toBeDisabled();
+    expect(input).toBeEnabled();
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
