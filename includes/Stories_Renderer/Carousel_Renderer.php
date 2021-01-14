@@ -38,6 +38,8 @@ class Carousel_Renderer extends Renderer {
 	/**
 	 * Perform initial setup for object.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -49,6 +51,8 @@ class Carousel_Renderer extends Renderer {
 
 	/**
 	 * Enqueue assets.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -66,6 +70,8 @@ class Carousel_Renderer extends Renderer {
 
 	/**
 	 * Renders the stories output for given attributes.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
 	 *
@@ -118,6 +124,8 @@ class Carousel_Renderer extends Renderer {
 
 		/**
 		 * Filters the Carousel renderer stories content.
+		 *
+		 * @since 1.3.0
 		 *
 		 * @param string $content Stories content.
 		 */

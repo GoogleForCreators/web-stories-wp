@@ -123,6 +123,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Constructor
 	 *
+	 * @since 1.3.0
+	 *
 	 * @param Stories $stories Stories instance.
 	 */
 	public function __construct( Stories $stories ) {
@@ -134,6 +136,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Output markup for amp stories.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @param array $args Array of rendering arguments.
 	 *
@@ -152,6 +156,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Retrieve current story.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return mixed|void
 	 */
 	public function current() {
@@ -160,6 +166,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Retrieve next story.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @retrun void
 	 */
@@ -170,6 +178,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Retrieve the key for current node in list.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return bool|float|int|string|void|null
 	 */
 	public function key() {
@@ -178,6 +188,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Check if current position is valid.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return bool|void
 	 */
@@ -188,6 +200,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Reset pointer to start of the list.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return void
 	 */
 	public function rewind() {
@@ -197,6 +211,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Perform initial setup for object.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -205,6 +221,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Return the fields state.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return FieldState
 	 */
@@ -244,6 +262,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Initializes renderer functionality.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return void
 	 */
 	public function assets() {
@@ -264,6 +284,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Determine whether the current request is for an AMP page.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return boolean
 	 */
 	public function is_amp_request() {
@@ -273,6 +295,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Returns story item data.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
@@ -311,6 +335,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Verifies the current view type.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @param string $view_type View type to check.
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
@@ -323,6 +349,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Get view type for stories.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return string
 	 */
 	protected function get_view_type() {
@@ -332,6 +360,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Renders stories archive link if the 'show_stories_archive_link' attribute is set to true.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -359,6 +389,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Gets the classes for renderer container.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return string
 	 */
@@ -390,6 +422,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Gets the classes for renderer container.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return string
 	 */
 	protected function get_container_classes() {
@@ -413,6 +447,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Gets the single story container classes.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return string
 	 */
 	protected function get_single_story_classes() {
@@ -431,6 +467,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		/**
 		 * Filters the web stories renderer single story classes.
 		 *
+		 * @since 1.3.0
+		 *
 		 * @param string $class Single story classes.
 		 */
 		return apply_filters( 'web_stories_renderer_single_story_classes', $classes );
@@ -438,6 +476,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Gets the single story container styles.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return string Style string.
 	 */
@@ -448,6 +488,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		/**
 		 * Filters the web stories renderer single story classes.
 		 *
+		 * @since 1.3.0
+		 *
 		 * @param string $class Single story classes.
 		 */
 		return apply_filters( 'web_stories_renderer_container_styles', $story_styles );
@@ -455,6 +497,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Render story markup.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -486,6 +530,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Renders a story with story's poster image.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -533,6 +579,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Renders the content overlay markup.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -588,6 +636,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Renders the lightbox markup for non-amp pages.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @return void
 	 */
 	protected function render_stories_with_lightbox_noamp() {
@@ -618,6 +668,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Markup for the lightbox used on AMP pages.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -654,6 +706,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Renders the lightbox markup for non-amp pages.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
