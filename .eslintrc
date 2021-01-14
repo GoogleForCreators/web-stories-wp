@@ -323,7 +323,7 @@
     },
     {
       "files": [
-        "karma/**/*.js"
+        "packages/karma-puppeteer-client/**/*.js"
       ],
       "rules": {
         "no-var": "off",

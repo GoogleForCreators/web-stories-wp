@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console, node/shebang */
+/* eslint-disable no-console */
 
 /**
  * Internal dependencies
@@ -37,4 +37,4 @@ await buildFonts(file);
 
 console.log('Web fonts updated!');
 
-/* eslint-enable no-console, node/shebang */
+/* eslint-enable no-console */

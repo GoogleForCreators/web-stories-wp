@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console, node/shebang */
+/* eslint-disable no-console */
 
 /**
  * External dependencies
@@ -152,4 +152,4 @@ program
 
 program.parse(process.argv);
 
-/* eslint-enable no-console, node/shebang */
+/* eslint-enable no-console */

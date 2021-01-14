@@ -1,7 +1,6 @@
 {
   "name": "karma-failed-tests-reporter",
   "private": true,
-  "version": "1.0.0",
   "engines": {
     "node": ">= 15",
     "npm": "~7"

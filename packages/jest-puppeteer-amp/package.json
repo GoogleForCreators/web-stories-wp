@@ -1,7 +1,6 @@
 {
   "name": "@web-stories-wp/jest-puppeteer-amp",
   "private": true,
-  "version": "1.0.0",
   "engines": {
     "node": ">= 15",
     "npm": "~7"
@@ -10,6 +9,7 @@
   "exports": {
     "default": "./src/index.js"
   },
+  "main": "./src/index.js",
   "dependencies": {
     "@web-stories-wp/jest-amp": "*"
   }
