@@ -189,7 +189,7 @@ function EditorSettings() {
     async (files) => {
       let allFileSizesWithinMaxUpload = true;
       let errorProcessingImages = false;
-      let imagePromises = [];
+      const imagePromises = [];
 
       files.forEach((file) => {
         allFileSizesWithinMaxUpload =
