@@ -30,7 +30,9 @@ domReady(() => {
     '.web-stories-list__carousel'
   );
 
-  const isRTL = 'rtl' === document.documentElement.getAttribute('dir');
+  const isRTL =
+    window.webStoriesCarouselSettings.config.isRTL ||
+    'rtl' === document.documentElement.getAttribute('dir');
 
   if (!carouselWrappers.length) {
     return;
@@ -67,63 +69,61 @@ domReady(() => {
       e.preventDefault();
     }
 
-    const _ = this;
-
     let originalSlide = slide;
-    ++_.animate_id;
+    ++this.animate_id;
 
     if (dot === true) {
-      slide = slide * _.containerWidth;
-      slide = Math.round(slide / _.itemWidth) * _.itemWidth;
+      slide = slide * this.containerWidth;
+      slide = Math.round(slide / this.itemWidth) * this.itemWidth;
     } else {
       if (typeof slide === 'string') {
         let backwards = slide === 'prev';
 
         // use precise location if fractional slides are on
-        if (_.opt.slidesToScroll % 1 || _.opt.slidesToShow % 1) {
-          slide = _.getCurrentSlide();
+        if (this.opt.slidesToScroll % 1 || this.opt.slidesToShow % 1) {
+          slide = this.getCurrentSlide();
         } else {
-          slide = _.slide;
+          slide = this.slide;
         }
 
         if (isRTL) {
           if (backwards) {
-            slide += _.opt.slidesToScroll;
+            slide += this.opt.slidesToScroll;
           } else {
-            slide -= _.opt.slidesToScroll;
+            slide -= this.opt.slidesToScroll;
           }
         } else {
           if (backwards) {
-            slide -= _.opt.slidesToScroll;
+            slide -= this.opt.slidesToScroll;
           } else {
-            slide += _.opt.slidesToScroll;
+            slide += this.opt.slidesToScroll;
           }
         }
 
-        if (_.opt.rewind) {
-          let scrollLeft = _.ele.scrollLeft;
+        if (this.opt.rewind) {
+          let scrollLeft = this.ele.scrollLeft;
           slide =
             backwards && !scrollLeft
-              ? _.slides.length
+              ? this.slides.length
               : !backwards &&
-                scrollLeft + _.containerWidth >= Math.floor(_.trackWidth)
+                scrollLeft + this.containerWidth >= Math.floor(this.trackWidth)
               ? 0
               : slide;
         }
       }
 
-      slide = Math.min(slide, _.slides.length);
+      slide = Math.min(slide, this.slides.length);
 
-      _.slide = slide;
-      slide = _.itemWidth * slide;
+      this.slide = slide;
+      slide = this.itemWidth * slide;
     }
 
-    _.scrollTo(
+    this.scrollTo(
       slide,
-      _.opt.duration * Math.abs(_.ele.scrollLeft - slide),
+      this.opt.duration * Math.abs(this.ele.scrollLeft - slide),
       function () {
-        _.updateControls();
-        _.emit('animated', {
+        this.updateControls();
+        this.emit('animated', {
           value: originalSlide,
           type:
             typeof originalSlide === 'string' ? 'arrow' : dot ? 'dot' : 'slide',

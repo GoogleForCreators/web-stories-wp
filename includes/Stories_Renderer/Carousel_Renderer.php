@@ -70,7 +70,28 @@ class Carousel_Renderer extends Renderer {
 		if ( ! $this->is_amp_request() ) {
 			$this->enqueue_script( self::SCRIPT_HANDLE );
 			$this->enqueue_style( self::SCRIPT_HANDLE );
+
+			wp_localize_script(
+				self::SCRIPT_HANDLE,
+				'webStoriesCarouselSettings',
+				$this->get_carousel_settings()
+			);
 		}
+	}
+
+	/**
+	 * Get Carousel Settings.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return array
+	 */
+	protected function get_carousel_settings() {
+		return [
+			'config' => [
+				'isRTL' => is_rtl(),
+			],
+		];
 	}
 
 	/**
