@@ -144,7 +144,7 @@ function web_stories_script_data() {
 
 	$data = [
 		'orderlist' => $order_list,
-		'icon'      => trailingslashit( WEBSTORIES_ASSETS_URL ) . 'images/carousel-icon.png',
+		'icon'      => trailingslashit( WEBSTORIES_ASSETS_URL ) . 'images/widget/carousel-icon.png',
 		'tag'       => 'stories',
 		'views'     => $view_types,
 		'fields'    => $field_states,
