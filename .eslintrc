@@ -94,6 +94,9 @@
     "no-useless-call": "error",
     "no-useless-concat": "error",
     "no-console": "error",
+    "no-duplicate-imports": "error",
+    "no-var": "error",
+    "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
     "prefer-rest-params": "error",
@@ -314,6 +317,15 @@
       "globals": {
         "karmaPuppeteer": "readonly",
         "karmaSnapshot": "readonly"
+      }
+    },
+    {
+      "files": [
+        "karma/**/*.js"
+      ],
+      "rules": {
+        "no-var": "off",
+        "prefer-const": "off"
       }
     },
     {
