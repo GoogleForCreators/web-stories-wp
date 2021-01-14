@@ -56,13 +56,13 @@ function flushPromiseQueue() {
 }
 
 describe('PageLayoutsPane', () => {
-  const getTemplates = jest.fn();
+  const getPageLayouts = jest.fn();
   let templates;
 
   function renderWithTemplates() {
     const apiValue = {
       actions: {
-        getTemplates,
+        getPageLayouts,
       },
     };
     const storyContext = {
@@ -91,7 +91,7 @@ describe('PageLayoutsPane', () => {
     templates = TEMPLATE_NAMES.map((name, index) =>
       createTemplate(name, index)
     );
-    getTemplates.mockResolvedValue(templates);
+    getPageLayouts.mockResolvedValue(templates);
   });
 
   it('should render <PageLayoutsPane /> with dummy layouts', async () => {

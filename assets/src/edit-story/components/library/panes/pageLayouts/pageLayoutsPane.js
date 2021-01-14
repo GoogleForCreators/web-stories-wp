@@ -58,17 +58,17 @@ export const PageLayoutsParentContainer = styled.div`
 
 function PageLayoutsPane(props) {
   const {
-    actions: { getTemplates },
+    actions: { getPageLayouts },
   } = useAPI();
-  const [templates, setTemplates] = useState([]);
+  const [pageLayouts, setPageLayouts] = useState([]);
   const [selectedPageLayoutType, setSelectedPageLayoutType] = useState(null);
 
   const pageLayoutsParentRef = useRef();
 
-  // load and process templates
+  // load and process pageLayouts
   useEffect(() => {
-    getTemplates().then((result) => setTemplates(result));
-  }, [getTemplates, setTemplates]);
+    getPageLayouts().then((result) => setPageLayouts(result));
+  }, [getPageLayouts, setPageLayouts]);
 
   const pills = useMemo(
     () =>
@@ -81,7 +81,7 @@ function PageLayoutsPane(props) {
 
   const filteredPages = useMemo(
     () =>
-      templates.reduce((pages, template) => {
+      pageLayouts.reduce((pages, template) => {
         const templatePages = template.pages.reduce((acc, page) => {
           // skip unselected page layout types if not matching
           if (
@@ -109,7 +109,7 @@ function PageLayoutsPane(props) {
 
         return [...pages, ...templatePages];
       }, []),
-    [templates, selectedPageLayoutType]
+    [pageLayouts, selectedPageLayoutType]
   );
 
   const handleSelectPageLayoutType = useCallback((key) => {
