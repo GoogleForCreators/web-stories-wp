@@ -33,7 +33,7 @@ let mockFiles = Object.create(null);
 function __setMockFiles(newMockFiles) {
   mockFiles = Object.create(null);
 
-  for (let [file, content] of Object.entries(newMockFiles)) {
+  for (const [file, content] of Object.entries(newMockFiles)) {
     const dir = path.dirname(file);
     const basename = path.basename(file);
 

@@ -217,7 +217,7 @@ describe('Text Style Panel', () => {
           await fixture.events.keyboard.type('A');
           // Ensure the debounced callback has taken effect.
           await fixture.events.sleep(TIMEOUT);
-          let options = getOptions();
+          const options = getOptions();
           expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
         });
 
@@ -246,7 +246,7 @@ describe('Text Style Panel', () => {
 
       describe('with recent fonts', () => {
         it('should not display any recent fonts by default', () => {
-          let options = getOptions();
+          const options = getOptions();
           expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
         });
 
@@ -342,7 +342,7 @@ describe('Text Style Panel', () => {
           await fixture.events.keyboard.type('Abe');
           // Ensure the debounced callback has taken effect.
           await fixture.events.sleep(TIMEOUT);
-          let options = getOptions();
+          const options = getOptions();
 
           // Only showing up once for 'Abel'
           expect(options.length).toBe(1);

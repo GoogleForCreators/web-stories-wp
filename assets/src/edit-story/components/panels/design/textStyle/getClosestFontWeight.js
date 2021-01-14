@@ -42,8 +42,8 @@ function getClosestFontWeight(
     a = parseInt(a);
     b = parseInt(b);
 
-    let aDiff = Math.abs(a - existingWeight);
-    let bDiff = Math.abs(b - existingWeight);
+    const aDiff = Math.abs(a - existingWeight);
+    const bDiff = Math.abs(b - existingWeight);
 
     if (aDiff === bDiff) {
       return a < b ? a : b;

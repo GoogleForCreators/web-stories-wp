@@ -111,7 +111,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
-    let { getByRole, rerender } = renderWithProviders(
+    const { getByRole, rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -119,7 +119,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       />
     );
 
-    let input = getByRole('textbox');
+    const input = getByRole('textbox');
 
     fireEvent.change(input, { target: { value: 'UA-098754-33' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });

@@ -107,7 +107,10 @@ function GradientLine({
       {stops.map(({ position }, index) => (
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}
-          key={index}
+          key={
+            /* eslint-disable-next-line react/no-array-index-key */
+            index
+          }
           index={index}
           isSelected={index === currentStopIndex}
           position={position}

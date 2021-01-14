@@ -232,7 +232,7 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
   });
 }
 
-function textBgColorsLowContrast({ backgroundColor, textColors, ...ids }) {
+function textBgColorsLowContrast({ backgroundColor, textColors, ...elements }) {
   const someTextHasLowContrast = textColors.some((styleColor) => {
     const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
@@ -249,7 +249,7 @@ function textBgColorsLowContrast({ backgroundColor, textColors, ...ids }) {
       message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
       help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-      ...ids,
+      ...elements,
     };
   }
   return undefined;
@@ -293,7 +293,7 @@ export function textElementFontLowContrast(element) {
 
   // check all spans for contrast ratios that don't pass verification
   const spans = getSpansFromContent(element.content);
-  let lowContrast = spans.some((span) => {
+  const lowContrast = spans.some((span) => {
     if (!span.style?.color) {
       return false;
     }
@@ -335,11 +335,8 @@ export async function pageBackgroundTextLowContrast(page) {
   page.elements.forEach((element, index) => {
     if (element.type === 'text' && element.backgroundTextMode === 'NONE') {
       const potentialBackgroundElements = page.elements.slice(0, index);
-
       const spans = getSpansFromContent(element.content);
-      const textColors = spans.map(
-        (span) => span.style?.color || 'rgb(0, 0, 0)'
-      );
+      const textColors = spans.map((span) => span.style?.color).filter(Boolean);
 
       const textBackgrounds = getBackgroundsForElement(
         element,
@@ -371,14 +368,16 @@ export async function pageBackgroundTextLowContrast(page) {
             return {
               backgroundColor: resolvedBgColor,
               textColors,
-              ...ids,
+              pageId: page.id,
+              elements: [backgroundElement, element],
             };
           });
         } else if (backgroundColor !== undefined) {
           backgroundColorResult = {
             backgroundColor,
             textColors,
-            ...ids,
+            pageId: page.id,
+            elements: [backgroundElement, element],
           };
         }
 
@@ -496,18 +495,16 @@ export function videoElementMissingCaptions(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function pageTooManyLinks(page) {
-  let linkCount = 0;
-  page.elements.forEach((element) => {
-    if (element.link?.url?.length) {
-      linkCount += 1;
-    }
+  const elementsWithLinks = page.elements.filter((element) => {
+    return Boolean(element.link?.url?.length);
   });
 
-  if (linkCount > MAX_PAGE_LINKS) {
+  if (elementsWithLinks.length > MAX_PAGE_LINKS) {
     return {
       message: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.MAIN_TEXT,
       help: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.HELPER_TEXT,
       pageId: page.id,
+      elements: elementsWithLinks,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }

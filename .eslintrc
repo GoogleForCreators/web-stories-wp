@@ -48,7 +48,7 @@
       "",
       {
         "pattern": " \\* Copyright \\d{4} Google LLC",
-        "template": " * Copyright 2020 Google LLC"
+        "template": " * Copyright 2021 Google LLC"
       },
       " *",
       " * Licensed under the Apache License, Version 2.0 (the \"License\");",
@@ -94,6 +94,9 @@
     "no-useless-call": "error",
     "no-useless-concat": "error",
     "no-console": "error",
+    "no-duplicate-imports": "error",
+    "no-var": "error",
+    "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
     "prefer-rest-params": "error",
@@ -314,6 +317,15 @@
       "globals": {
         "karmaPuppeteer": "readonly",
         "karmaSnapshot": "readonly"
+      }
+    },
+    {
+      "files": [
+        "karma/**/*.js"
+      ],
+      "rules": {
+        "no-var": "off",
+        "prefer-const": "off"
       }
     },
     {

@@ -33,6 +33,7 @@ import useBatchingCallback from '../../../utils/useBatchingCallback';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
 import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
+import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
@@ -65,6 +66,8 @@ function SingleSelectionMoveable({
     backgroundElement: currentPage.elements[0] ?? {},
   }));
 
+  useWindowResizeHandler(moveable);
+
   useEffect(() => {
     latestEvent.current = pushEvent;
   }, [pushEvent]);
@@ -94,7 +97,7 @@ function SingleSelectionMoveable({
   });
 
   const box = getBox(selectedElement);
-  let frame = useMemo(
+  const frame = useMemo(
     () => ({
       translate: [0, 0],
       rotate: box.rotationAngle,

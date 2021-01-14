@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import SAT from 'sat';
 
 /**
  * Internal dependencies
@@ -28,6 +29,7 @@ import { useStory } from '../../app';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
 import useCanvasCopyPaste from './useCanvasCopyPaste';
+import createPolygon from './utils/createPolygon';
 
 import Context from './context';
 
@@ -123,14 +125,14 @@ function CanvasProvider({ children }) {
 
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
+      const lassoP = createPolygon(0, lx, ly, lw, lh);
       const newSelectedElementIds = currentPage.elements
         .filter(({ isBackground }) => !isBackground)
-        .filter(({ x, y, width, height }) => {
-          return (
-            x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
-          );
+        .map(({ id, rotationAngle, x, y, width, height }) => {
+          const elementP = createPolygon(rotationAngle, x, y, width, height);
+          return SAT.testPolygonPolygon(lassoP, elementP) ? id : null;
         })
-        .map(({ id }) => id);
+        .filter((id) => id);
       setSelectedElementsById({ elementIds: newSelectedElementIds });
     },
     [currentPage, setSelectedElementsById]

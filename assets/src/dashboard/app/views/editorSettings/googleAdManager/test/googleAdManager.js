@@ -52,14 +52,14 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
-    let { getByRole, rerender } = renderWithProviders(
+    const { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
 
-    let input = getByRole('textbox');
+    const input = getByRole('textbox');
 
     fireEvent.change(input, {
       target: { value: '/123456789/a4a/amp_story_dfp_example' },
