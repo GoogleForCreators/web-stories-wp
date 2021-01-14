@@ -6,7 +6,10 @@
     "node": ">= 15",
     "npm": "~7"
   },
-  "main": "src",
+  "type": "module",
+  "exports": {
+    "default": "./src/index.js"
+  },
   "dependencies": {
     "@ampproject/toolbox-optimizer": "^2.6.0",
     "amphtml-validator": "^1.0.33",

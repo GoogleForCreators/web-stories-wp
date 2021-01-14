@@ -7,7 +7,9 @@
     "npm": "~7"
   },
   "type": "module",
-  "main": "src",
+  "bin": {
+    "commander": "./src/index.js"
+  },
   "dependencies": {
     "commander": "^6.1.0"
   }

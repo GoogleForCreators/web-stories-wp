@@ -6,7 +6,10 @@
     "node": ">= 15",
     "npm": "~7"
   },
-  "main": "src",
+  "type": "module",
+  "exports": {
+    "default": "./src/index.js"
+  },
   "dependencies": {
     "@web-stories-wp/jest-amp": "*"
   }

@@ -6,7 +6,7 @@
     "node": ">= 15",
     "npm": "~7"
   },
-  "main": "src",
+  "main": "./src/index.js",
   "dependencies": {
     "karma": "^5.2.3"
   }
