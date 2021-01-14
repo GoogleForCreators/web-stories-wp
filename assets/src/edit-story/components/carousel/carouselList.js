@@ -44,6 +44,7 @@ const PageList = styled(Reorderable).attrs({
   overflow-y: hidden;
   width: ${({ width }) => width}px;
   margin: 0;
+  list-style: none;
   padding: 8px 0 16px;
 
   ${({ hasOverflow }) =>

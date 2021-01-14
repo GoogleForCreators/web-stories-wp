@@ -41,9 +41,11 @@ const Line = styled.div`
   margin: 0px;
 `;
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.li.attrs({ role: 'presentation' })`
   display: flex;
   position: relative;
+  margin: 0;
+  padding: 0;
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
