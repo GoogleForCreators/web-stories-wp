@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useMemo, forwardRef } from 'react';
 import * as React from 'react';
+const { useCallback, useState, useMemo, forwardRef } = React;
 
 import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
