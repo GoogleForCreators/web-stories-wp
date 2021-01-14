@@ -95,7 +95,7 @@ describe('PageLayoutsPane', () => {
   });
 
   it('should render <PageLayoutsPane /> with dummy layouts', async () => {
-    const { queryByText, queryByTitle } = renderWithTemplates();
+    const { queryByText, queryByLabelText } = renderWithTemplates();
 
     await act(async () => {
       // Needed to flush all promises to get templates to resolve
@@ -109,8 +109,8 @@ describe('PageLayoutsPane', () => {
       });
 
     TEMPLATE_NAMES.forEach((name) => {
-      expect(queryByTitle(`${name} Cover`)).toBeInTheDocument();
-      expect(queryByTitle(`${name} Section`)).toBeInTheDocument();
+      expect(queryByLabelText(`${name} Cover`)).toBeInTheDocument();
+      expect(queryByLabelText(`${name} Section`)).toBeInTheDocument();
     });
   });
 });
