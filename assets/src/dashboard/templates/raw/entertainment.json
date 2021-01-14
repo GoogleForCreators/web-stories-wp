@@ -69,15 +69,16 @@
           "fill": "both"
         },
         {
-          "id": "59bcc046-aef4-41ec-98cc-bc1f0a482a1a",
-          "targets": ["a4c1a093-191a-4fa6-9e73-51090739a4ef"],
           "type": "spin",
           "rotation": "-120",
+          "stopAngle": "0",
+          "id": "59bcc046-aef4-41ec-98cc-bc1f0a482a1a",
           "duration": 6000,
           "delay": 0,
           "direction": "normal",
           "easingPreset": "linear",
-          "fill": "forwards"
+          "fill": "forwards",
+          "targets": ["0d36df49-4416-4506-a017-859029fe80ca"]
         }
       ],
       "elements": [
@@ -405,34 +406,25 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 96,
+          "y": 375,
+          "width": 150,
+          "height": 150,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_wraparound.png",
-            "width": 150,
-            "height": 146,
-            "posterId": 0,
-            "id": 1192,
-            "title": "ent_icon_wraparound",
-            "alt": "ent_icon_wraparound",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 96.5,
-          "y": 375,
-          "width": 150,
-          "height": 146,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "new-music"
           },
-          "id": "a4c1a093-191a-4fa6-9e73-51090739a4ef"
+          "id": "0d36df49-4416-4506-a017-859029fe80ca"
         },
         {
           "opacity": 100,
@@ -442,39 +434,36 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 143,
+          "y": 412,
+          "width": 56,
+          "height": 74,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_musicnote.png",
-            "width": 150,
-            "height": 146,
-            "posterId": 0,
-            "id": 1191,
-            "title": "ent_icon_musicnote",
-            "alt": "ent_icon_musicnote",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 96.5,
-          "y": 375,
-          "width": 150,
-          "height": 146,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "music-note"
           },
-          "id": "36652167-a50f-48be-b85c-80b6639fd8a0"
+          "id": "748e7c7b-a7da-4ee0-bfd5-645804ac2766"
         }
       ],
       "type": "page",
       "id": "04df622c-0d7f-4760-a06c-e88d9d9ac435",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "cover"
     },
     {
@@ -865,7 +854,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "9670b092-e11b-433e-aa8a-659e4ee982c9",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "section"
     },
     {
@@ -1314,7 +1309,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "73e07f65-ae5a-4a85-8802-7ea5cfaa45b2",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "quote"
     },
     {
@@ -1769,7 +1770,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "582c5a25-6f17-4107-8e60-6ae4721c932f",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "editorial"
     },
     {
@@ -2574,7 +2581,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "7494b712-c8d0-4189-a85c-32aa52a22032",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "editorial"
     },
     {
@@ -3054,7 +3067,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "fd60f532-b619-4162-8df9-d8241cc88e45",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "editorial"
     },
     {
@@ -3346,7 +3365,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "877c2ef2-1faa-4a7b-9f5b-364dcfa3d856",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "editorial"
     },
     {
@@ -4088,7 +4113,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "3d0dbbd3-70c0-4376-b1bf-c8015def1050",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "list"
     },
     {
@@ -5322,7 +5353,13 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "f4ea7828-e328-47e6-bf9d-a786ab192ee1",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
       "pageLayoutType": "list"
     }
   ]
