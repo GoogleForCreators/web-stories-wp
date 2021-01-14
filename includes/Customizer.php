@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\ThemeSupport;
+
 /**
  * Class customizer settings.
  *
@@ -34,6 +36,8 @@ namespace Google\Web_Stories;
  * @package Google\Web_Stories
  */
 class Customizer {
+
+	use ThemeSupport;
 
 	/**
 	 * Customizer section slug.
@@ -80,7 +84,7 @@ class Customizer {
 
 		$this->wp_customize = $wp_customize;
 
-		$theme_support = get_stories_theme_support();
+		$theme_support = $this->get_stories_theme_support();
 
 		// Add Content section.
 		$wp_customize->add_section(
@@ -466,14 +470,14 @@ class Customizer {
 	 *
 	 * @return string|void
 	 */
-	public static function render_stories() {
+	public function render_stories() {
 		$options = get_option( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
 			return;
 		}
 
-		$theme_support = get_stories_theme_support();
+		$theme_support = $this->get_stories_theme_support();
 
 		$default_array = [
 			'view_type'             => $theme_support['view-type-default'],

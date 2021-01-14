@@ -73,7 +73,7 @@ class Stories extends WP_Widget {
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
-		echo $instance['before_widget'];
+		echo $args['before_widget'];
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		if ( ! empty( $title ) ) {
@@ -97,7 +97,7 @@ class Stories extends WP_Widget {
 		$story_query = new Story_Query( $story_attrs, $story_args );
 		echo $story_query->render();
 
-		echo $instance['after_widget'];
+		echo $args['after_widget'];
 	}
 
 	/**
