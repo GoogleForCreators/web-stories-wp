@@ -80,8 +80,8 @@
    * Fire event manually once.
    */
   const fireEvent = function () {
-    var dropdowns = viewSelectors();
-    var evt = document.createEvent('HTMLEvents');
+    const dropdowns = viewSelectors();
+    const evt = document.createEvent('HTMLEvents');
     evt.initEvent('change', false, true);
     for (var l = 0; l < dropdowns.length; l++) {
       dropdowns[l].dispatchEvent(evt);
