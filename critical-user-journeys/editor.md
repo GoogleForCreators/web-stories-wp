@@ -62,8 +62,8 @@
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
-| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🏆 **100.00%** *(5 / 5)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
+| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **80.00%** *(4 / 5)*     |
+|                                                                   | *[total]*                                        | 🛴 **80.00%** *(4 / 5)*     |
 | User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | enter to open                                    | 🏆 **100.00%** *(4 / 4)*    |
@@ -71,4 +71,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **77.30%** *(286 / 370)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **76.76%** *(284 / 370)* |
