@@ -130,7 +130,7 @@ function useCanvasGlobalKeys() {
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.
          */
-        let files = [];
+        const files = [];
         for (let i = 0; i < items.length; i++) {
           const file = items[i].getAsFile();
           if (file) {

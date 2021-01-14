@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
@@ -26,11 +26,15 @@ import { useVirtual } from 'react-virtual';
  * Internal dependencies
  */
 import { PANE_PADDING } from '../shared';
-import { PAGE_RATIO } from '../../../../constants';
-import PageLayout, {
-  PAGE_LAYOUT_ROW_GAP,
-  PAGE_LAYOUT_PANE_WIDTH,
-} from './pageLayout';
+import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
+import { UnitsProvider } from '../../../../units';
+import { useStory } from '../../../../app';
+import { duplicatePage } from '../../../../elements';
+import isDefaultPage from '../../../../utils/isDefaultPage';
+import PageLayout from './pageLayout';
+
+const PAGE_LAYOUT_PANE_WIDTH = 158;
+const PAGE_LAYOUT_ROW_GAP = 12;
 
 const PageLayoutsContainer = styled.div`
   height: ${({ height }) => `${height}px`};
@@ -52,35 +56,79 @@ const PageLayoutsRow = styled.div`
 function PageLayouts(props) {
   const { pages, parentRef } = props;
 
+  const { replaceCurrentPage, currentPage } = useStory(
+    ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
+      replaceCurrentPage,
+      currentPage,
+    })
+  );
+
+  const handleApplyPageLayout = useCallback(
+    (page) => {
+      const duplicatedPage = duplicatePage(page);
+      replaceCurrentPage({ page: duplicatedPage });
+    },
+    [replaceCurrentPage]
+  );
+
+  const pageSize = useMemo(() => {
+    const width = PAGE_LAYOUT_PANE_WIDTH;
+    const height = Math.round(width / PAGE_RATIO);
+    const containerHeight = Math.round(width / FULLBLEED_RATIO);
+    return { width, height, containerHeight };
+  }, []);
+
   const rowVirtualizer = useVirtual({
     size: Math.ceil(pages.length / 2),
     parentRef,
     estimateSize: useCallback(
-      () => PAGE_LAYOUT_PANE_WIDTH / PAGE_RATIO + PAGE_LAYOUT_ROW_GAP,
-      []
+      () => pageSize.containerHeight + PAGE_LAYOUT_ROW_GAP,
+      [pageSize.containerHeight]
     ),
-    overscan: 5,
+    overscan: 2,
   });
 
+  const requiresConfirmation = useMemo(() => !isDefaultPage(currentPage), [
+    currentPage,
+  ]);
+
   return (
-    <PageLayoutsContainer height={rowVirtualizer.totalSize}>
-      {rowVirtualizer.virtualItems.map((virtualRow) => {
-        const firstColumnIndex = virtualRow.index * 2;
-        const indexes = [firstColumnIndex, firstColumnIndex + 1];
-        return (
-          <PageLayoutsRow
-            key={virtualRow.index}
-            height={virtualRow.size}
-            translateY={virtualRow.start}
-          >
-            {indexes.map((index) => {
-              const page = pages[index];
-              return page ? <PageLayout key={page.id} page={page} /> : null;
-            })}
-          </PageLayoutsRow>
-        );
-      })}
-    </PageLayoutsContainer>
+    <UnitsProvider
+      pageSize={{
+        width: pageSize.width,
+        height: pageSize.height,
+      }}
+    >
+      <PageLayoutsContainer height={rowVirtualizer.totalSize}>
+        {rowVirtualizer.virtualItems.map((virtualRow) => {
+          const firstColumnIndex = virtualRow.index * 2;
+          const indexes = [firstColumnIndex, firstColumnIndex + 1];
+          return (
+            <PageLayoutsRow
+              key={virtualRow.index}
+              height={virtualRow.size}
+              translateY={virtualRow.start}
+            >
+              {indexes.map((index) => {
+                const page = pages[index];
+                if (!page) {
+                  return null;
+                }
+                return (
+                  <PageLayout
+                    key={page.id}
+                    page={page}
+                    pageSize={pageSize}
+                    onConfirm={() => handleApplyPageLayout(page)}
+                    requiresConfirmation={requiresConfirmation}
+                  />
+                );
+              })}
+            </PageLayoutsRow>
+          );
+        })}
+      </PageLayoutsContainer>
+    </UnitsProvider>
   );
 }
 

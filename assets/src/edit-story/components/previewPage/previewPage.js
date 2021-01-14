@@ -26,10 +26,9 @@ import {
   StoryAnimation,
   useStoryAnimationContext,
   STORY_ANIMATION_STATE,
-} from '../../animation';
-import StoryPropTypes from '../../edit-story/types';
-import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
-import { PageSizePropType } from '../types';
+} from '../../../animation';
+import StoryPropTypes, { PageSizePropType } from '../../types';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import PagePreviewElements from './previewPageElements';
 
 /*

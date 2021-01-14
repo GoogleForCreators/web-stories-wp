@@ -44,14 +44,7 @@ import { getResourceFromAttachment } from '../utils';
  * @return {LocalMediaContext} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
-  const {
-    processing,
-    processed,
-    media,
-    pageToken,
-    mediaType,
-    searchTerm,
-  } = reducerState;
+  const { media, pageToken, mediaType, searchTerm } = reducerState;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -89,6 +82,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers['X-WP-TotalPages']);
+          const totalItems = parseInt(headers['X-WP-Total']);
           const mediaArray = data.map(getResourceFromAttachment);
           const hasMore = p < totalPages;
           callback({
@@ -98,6 +92,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
             pageToken: p,
             nextPageToken: hasMore ? p + 1 : undefined,
             totalPages,
+            totalItems,
           });
         })
         .catch(fetchMediaError);
@@ -108,10 +103,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   const { uploadMedia, isUploading } = useUploadMedia({ media, setMedia });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
-    setProcessing,
-    removeProcessing,
-    processing,
-    processed,
   });
 
   const {
@@ -138,10 +129,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const uploadVideoPoster = useCallback(
     (id, src) => {
-      // eslint-disable-next-line no-shadow
       const { processed, processing } = stateRef.current;
 
       const process = async () => {
+        // Simple way to prevent double-uploading.
         if (processed.includes(id) || processing.includes(id)) {
           return;
         }
@@ -154,33 +145,25 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
-  const processor = useCallback(
+  const generateMissingPosters = useCallback(
     ({ mimeType, posterId, id, src, local }) => {
-      const process = async () => {
-        if (
-          allowedVideoMimeTypes.includes(mimeType) &&
-          !local &&
-          !posterId &&
-          id
-        ) {
-          await uploadVideoPoster(id, src);
-        }
-      };
-      process();
+      if (
+        allowedVideoMimeTypes.includes(mimeType) &&
+        !local &&
+        !posterId &&
+        id
+      ) {
+        uploadVideoPoster(id, src);
+      }
     },
     [allowedVideoMimeTypes, uploadVideoPoster]
   );
 
+  // Whenever media items in the library change,
+  // generate missing posters if needed.
   useEffect(() => {
-    const looper = async () => {
-      await media.reduce((accumulatorPromise, el) => {
-        return accumulatorPromise.then(() => el && processor(el));
-      }, Promise.resolve());
-    };
-    if (media) {
-      looper();
-    }
-  }, [media, mediaType, searchTerm, processor]);
+    media?.forEach((mediaElement) => generateMissingPosters(mediaElement));
+  }, [media, mediaType, searchTerm, generateMissingPosters]);
 
   return {
     state: { ...reducerState, isUploading },

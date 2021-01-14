@@ -25,41 +25,65 @@ import { act } from '@testing-library/react';
 import { renderWithTheme } from '../../../../../testUtils';
 import ConfigContext from '../../../../../app/config/context';
 import APIContext from '../../../../../app/api/context';
+import StoryContext from '../../../../../app/story/context';
+import TransformContext from '../../../../transform/context';
+import { createPage } from '../../../../../elements';
 import PageLayoutsPane from '../pageLayoutsPane';
+import { PAGE_LAYOUT_TYPES } from '../constants';
 
 const createTemplate = (title, id) => ({
   title,
   id,
-  pages: [{ id: 1 }, { id: 2 }, { id: 3 }],
+  pages: [
+    createPage({ pageLayoutType: 'cover' }),
+    createPage({ pageLayoutType: 'section' }),
+  ],
 });
+
+const TEMPLATE_NAMES = ['List', 'Grid', 'Masonary'];
 
 const configValue = {
   api: {},
 };
-
-const TEMPLATE_NAMES = ['List', 'Grid', 'Masonary'];
+const transformValue = {
+  actions: {
+    registerTransformHandler: () => {},
+  },
+};
 
 function flushPromiseQueue() {
   return new Promise((resolve) => resolve());
 }
 
 describe('PageLayoutsPane', () => {
-  let getTemplates = jest.fn();
+  const getPageLayouts = jest.fn();
   let templates;
 
   function renderWithTemplates() {
     const apiValue = {
       actions: {
-        getTemplates,
+        getPageLayouts,
+      },
+    };
+    const storyContext = {
+      actions: {
+        replaceCurrentPage: jest.fn(),
+      },
+      state: {
+        currentPage: createPage(),
       },
     };
 
     return renderWithTheme(
-      <ConfigContext.Provider value={configValue}>
-        <APIContext.Provider value={apiValue}>
-          <PageLayoutsPane isActive={true} />
-        </APIContext.Provider>
-      </ConfigContext.Provider>
+      <TransformContext.Provider value={transformValue}>
+        <ConfigContext.Provider value={configValue}>
+          <APIContext.Provider value={apiValue}>
+            <StoryContext.Provider value={storyContext}>
+              <PageLayoutsPane isActive={true} />
+            </StoryContext.Provider>
+          </APIContext.Provider>
+        </ConfigContext.Provider>
+      </TransformContext.Provider>
     );
   }
 
@@ -67,19 +91,26 @@ describe('PageLayoutsPane', () => {
     templates = TEMPLATE_NAMES.map((name, index) =>
       createTemplate(name, index)
     );
-    getTemplates.mockResolvedValue(templates);
+    getPageLayouts.mockResolvedValue(templates);
   });
 
   it('should render <PageLayoutsPane /> with dummy layouts', async () => {
-    const { queryByText } = renderWithTemplates();
+    const { queryByText, queryByLabelText } = renderWithTemplates();
 
     await act(async () => {
       // Needed to flush all promises to get templates to resolve
       await flushPromiseQueue();
     });
 
+    Object.values(PAGE_LAYOUT_TYPES)
+      .map(({ name }) => name)
+      .forEach((name) => {
+        expect(queryByText(name)).toBeInTheDocument();
+      });
+
     TEMPLATE_NAMES.forEach((name) => {
-      expect(queryByText(name)).toBeInTheDocument();
+      expect(queryByLabelText(`${name} Cover`)).toBeInTheDocument();
+      expect(queryByLabelText(`${name} Section`)).toBeInTheDocument();
     });
   });
 });

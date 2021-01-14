@@ -32,7 +32,7 @@ import guidance from './guidance';
  * @return {Guidance[]} The array of checklist items to be rectified.
  */
 
-function getPrepublishErrors(story) {
+async function getPrepublishErrors(story) {
   if (!story) {
     return [];
   }
@@ -45,9 +45,7 @@ function getPrepublishErrors(story) {
         ...elementChecklistsByType
       } = byType;
 
-      let storyGuidance = [],
-        pageGuidance = [],
-        elementGuidance = [];
+      const storyGuidance = [];
 
       // get guidance messages for the top-level story object
       storyChecklist.forEach((getStoryGuidance) => {
@@ -62,18 +60,41 @@ function getPrepublishErrors(story) {
       });
 
       // for each page, run checklist on the page object as well as each element
-      ({ pageGuidance, elementGuidance } = story.pages.reduce(
+      const { pageGuidance, elementGuidance } = story.pages.reduce(
         (prev, currentPage, currentIndex) => {
           const pageNum = currentIndex + 1;
           const { id: pageId, elements } = currentPage;
+
+          function prepareResult(result) {
+            if (typeof result !== 'undefined') {
+              if (Array.isArray(result)) {
+                return result.map((message) => ({
+                  ...message,
+                  page: pageNum,
+                  pageId,
+                }));
+              }
+              return {
+                ...result,
+                page: pageNum,
+                pageId,
+              };
+            }
+            return result;
+          }
 
           // get guidance for the page object
           const currentPageGuidance = [];
           pageChecklist.forEach((getPageGuidance) => {
             try {
               const guidanceMessage = getPageGuidance(currentPage);
-              if (guidanceMessage !== undefined) {
-                currentPageGuidance.push({ ...guidanceMessage, page: pageNum });
+              if (guidanceMessage instanceof Promise) {
+                const guidanceMessagePromise = guidanceMessage.then(
+                  prepareResult
+                );
+                currentPageGuidance.push(guidanceMessagePromise);
+              } else if (guidanceMessage !== undefined) {
+                currentPageGuidance.push(prepareResult(guidanceMessage));
               }
             } catch (e) {
               // ignore errors
@@ -81,7 +102,7 @@ function getPrepublishErrors(story) {
           });
 
           // get guidance for all the elements on the page
-          let currentPageElementGuidance = [];
+          const currentPageElementGuidance = [];
           elements.forEach((element) => {
             const elementsChecklist =
               elementChecklistsByType[element.type] || [];
@@ -89,13 +110,15 @@ function getPrepublishErrors(story) {
             elementsChecklist.forEach((getElementGuidance) => {
               try {
                 const guidanceMessage = getElementGuidance(element);
-                if (guidanceMessage !== undefined) {
-                  currentPageElementGuidance.push({
-                    ...guidanceMessage,
-                    // provide the page the element is on
-                    pageId,
-                    page: pageNum,
-                  });
+                if (guidanceMessage instanceof Promise) {
+                  const guidanceMessagePromise = guidanceMessage.then(
+                    prepareResult
+                  );
+                  currentPageGuidance.push(guidanceMessagePromise);
+                } else if (guidanceMessage !== undefined) {
+                  currentPageElementGuidance.push(
+                    prepareResult(guidanceMessage)
+                  );
                 }
               } catch (e) {
                 // ignore errors
@@ -115,12 +138,15 @@ function getPrepublishErrors(story) {
           pageGuidance: [],
           elementGuidance: [],
         }
-      ));
+      );
 
       return [...storyGuidance, ...pageGuidance, ...elementGuidance];
     })
+    // the checks may return arrays
     .flat();
-  return checklistResult;
+  const awaitedResult = await Promise.all(checklistResult);
+  // promises may return arrays
+  return [...awaitedResult.flat().filter(Boolean)];
 }
 
 export default getPrepublishErrors;
