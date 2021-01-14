@@ -56,7 +56,7 @@ function flushPromiseQueue() {
 }
 
 describe('PageLayoutsPane', () => {
-  let getPageLayouts = jest.fn();
+  const getPageLayouts = jest.fn();
   let templates;
 
   function renderWithTemplates() {
