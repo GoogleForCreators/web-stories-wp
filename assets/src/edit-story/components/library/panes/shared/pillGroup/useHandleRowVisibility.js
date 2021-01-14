@@ -56,7 +56,7 @@ function useHandleRowVisibility({
       : null;
     const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
-    for (let pill of itemRefs.current) {
+    for (const pill of itemRefs.current) {
       // Ensure the node still exists.
       if (!pill) {
         continue;

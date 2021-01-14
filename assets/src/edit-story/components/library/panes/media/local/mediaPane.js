@@ -25,7 +25,7 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -68,6 +68,13 @@ const FilterArea = styled.div`
   padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
 `;
 
+const SearchCount = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+`;
+
 const FILTERS = [
   { value: '', name: __('All Types', 'web-stories') },
   { value: 'image', name: __('Images', 'web-stories') },
@@ -87,6 +94,7 @@ function MediaPane(props) {
     setMediaType,
     setSearchTerm,
     uploadVideoPoster,
+    totalItems,
   } = useLocalMedia(
     ({
       state: {
@@ -96,6 +104,7 @@ function MediaPane(props) {
         isMediaLoaded,
         mediaType,
         searchTerm,
+        totalItems,
       },
       actions: {
         setNextPage,
@@ -112,6 +121,7 @@ function MediaPane(props) {
         isMediaLoaded,
         mediaType,
         searchTerm,
+        totalItems,
         setNextPage,
         resetWithFetch,
         setMediaType,
@@ -141,6 +151,8 @@ function MediaPane(props) {
   }));
 
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
+
+  const isSearching = searchTerm.length > 0;
 
   const onClose = resetWithFetch;
 
@@ -239,10 +251,13 @@ function MediaPane(props) {
   const resources = media.filter(filterResource);
 
   const onSearch = (value) => {
-    setSearchTerm({ searchTerm: value });
-    trackEvent('search_media', 'editor', '', '', {
-      search_term: value,
-    });
+    const trimText = value.trim();
+    if (trimText !== searchTerm) {
+      setSearchTerm({ searchTerm: trimText });
+      trackEvent('search_media', 'editor', '', '', {
+        search_term: trimText,
+      });
+    }
   };
 
   const incrementalSearchDebounceMedia = useFeature(
@@ -267,16 +282,35 @@ function MediaPane(props) {
               onChange={onFilter}
               options={FILTERS}
               placement={Placement.BOTTOM_START}
+              fitContentWidth
             />
-            <Primary onClick={openMediaPicker}>
-              {__('Upload', 'web-stories')}
-            </Primary>
+            {isSearching && media.length > 0 && (
+              <SearchCount>
+                {sprintf(
+                  /* translators: %d: number of results. */
+                  _n(
+                    '%d result found',
+                    '%d results found',
+                    totalItems,
+                    'web-stories'
+                  ),
+                  totalItems
+                )}
+              </SearchCount>
+            )}
+            {!isSearching && (
+              <Primary onClick={openMediaPicker}>
+                {__('Upload', 'web-stories')}
+              </Primary>
+            )}
           </FilterArea>
         </PaneHeader>
 
         {isMediaLoaded && !media.length ? (
           <MediaGalleryMessage>
-            {__('No media found', 'web-stories')}
+            {isSearching
+              ? __('No results found', 'web-stories')
+              : __('No media found', 'web-stories')}
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery

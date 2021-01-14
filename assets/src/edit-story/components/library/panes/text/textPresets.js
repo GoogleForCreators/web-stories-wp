@@ -31,6 +31,14 @@ const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
 // @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
 const DEFAULT_LEFT_MARGIN = 40;
 
+const DEFAULT_TEXT_BORDER_RADIUS = {
+  locked: true,
+  topLeft: 2,
+  topRight: 2,
+  bottomRight: 2,
+  bottomLeft: 2,
+};
+
 const DEFAULT_PRESET = {
   content: __('Fill in some text', 'web-stories'),
   fontWeight: FONT_WEIGHT.NORMAL,
@@ -41,6 +49,7 @@ const DEFAULT_PRESET = {
   font: TEXT_ELEMENT_DEFAULT_FONT,
   width: 160,
   textAlign: 'center',
+  borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
 };
 
 const PRESETS = [
@@ -58,6 +67,7 @@ const PRESETS = [
       y: (PAGE_HEIGHT - dataFontEm(2.667)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
     },
   },
   {
@@ -74,6 +84,7 @@ const PRESETS = [
       y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
     },
   },
   {
@@ -90,6 +101,7 @@ const PRESETS = [
       y: (PAGE_HEIGHT - dataFontEm(1.6)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
     },
   },
   {
@@ -106,6 +118,7 @@ const PRESETS = [
       y: (PAGE_HEIGHT - dataFontEm(1.33)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
     },
   },
   {
@@ -119,6 +132,7 @@ const PRESETS = [
       y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
     },
   },
   {
@@ -132,6 +146,7 @@ const PRESETS = [
       y: (PAGE_HEIGHT - dataFontEm(0.888)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
     },
   },
 ];

@@ -86,7 +86,7 @@ function getDesignPanelsForSelection(elements) {
         type: PanelTypes.VIDEO_ACCESSIBILITY,
         Panel: VideoAccessibilityPanel,
       });
-    } else if ('image' === elements[0].type) {
+    } else if (['gif', 'image'].includes(elements[0].type)) {
       panels.push({
         type: PanelTypes.IMAGE_ACCESSIBILITY,
         Panel: ImageAccessibilityPanel,

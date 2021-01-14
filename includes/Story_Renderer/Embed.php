@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Story_Renderer;
 
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
+use function Google\Web_Stories\is_amp;
 
 /**
  * Class Embed
@@ -89,10 +90,7 @@ class Embed {
 		// This CSS is used for AMP and non-AMP.
 		wp_enqueue_style( Embed_Base::SCRIPT_HANDLE );
 
-		if (
-			( function_exists( 'amp_is_request' ) && amp_is_request() ) ||
-			( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() )
-		) {
+		if ( is_amp() ) {
 			ob_start();
 			?>
 			<div class="<?php echo esc_attr( "$class web-stories-embed web-stories-embed-amp $align" ); ?>">

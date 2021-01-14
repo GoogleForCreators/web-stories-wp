@@ -61,7 +61,7 @@ function AutoSaveHandler() {
     // This is only a timeout (and not an interval), as `hasNewChanges` will come
     // back false after the save.
     // This timeout will thus be re-started when some new change occurs after an autosave.
-    let timeout = setTimeout(
+    const timeout = setTimeout(
       () => cachedSaveStory.current(),
       autoSaveInterval * 1000
     );

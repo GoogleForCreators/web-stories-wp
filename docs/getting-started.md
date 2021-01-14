@@ -26,7 +26,7 @@ Check out the [Local Environment](./local-environment.md) document.
 
 First of all, you need to make sure that all PHP and JavaScript dependencies are installed:
 
-Install Composer by following [installation instructions](https://getcomposer.org/download/), and then ensure to downgrade to version 1:
+Install Composer by following [installation instructions](https://getcomposer.org/download/). Make sure to add `composer` to your PATH if it is not already there, and then ensure to downgrade to version 1:
 
 ```bash
 composer self-update --1
@@ -37,6 +37,11 @@ Install all the required composer packages, run:
 ```bash
 composer install
 ```
+
+---
+The local environment won't run unless `composer` is in your PATH.
+
+---
 
 Install all the required npm packages, run:
 
@@ -60,8 +65,12 @@ To get a production build, run:
 npm run build:js
 ```
 
-To run a local instance of WordPress, in a separate terminal:
+### Local Development
+
+You will need a WordPress environment to run the plugin. To run a local instance of WordPress with Docker, in a separate terminal:
 
 ```bash
 npm run env:start
 ```
+
+See [local environment documentation](https://github.com/google/web-stories-wp/blob/main/docs/local-environment.md) for more information.

@@ -237,7 +237,8 @@
       ],
       "type": "page",
       "id": "1f51fc35-c1d6-46ea-9580-b38672124162",
-      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+      "pageLayoutType": "cover"
     },
     {
       "animations": [
@@ -572,7 +573,8 @@
       ],
       "type": "page",
       "id": "cda99980-6722-4141-9616-25e523a98722",
-      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+      "pageLayoutType": "quote"
     },
     {
       "animations": [
@@ -855,7 +857,8 @@
       ],
       "type": "page",
       "id": "99ae5466-855b-4d84-9379-c401969ade38",
-      "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } }
+      "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } },
+      "pageLayoutType": "section"
     },
     {
       "animations": [
@@ -1540,7 +1543,8 @@
       ],
       "type": "page",
       "id": "22e2ed54-fa70-43c5-81e8-81ad672bd6ad",
-      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+      "pageLayoutType": "list"
     },
     {
       "animations": [
@@ -2003,7 +2007,8 @@
       ],
       "type": "page",
       "id": "06f93f32-41a9-4fcd-9d03-08ea29f591e4",
-      "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } }
+      "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } },
+      "pageLayoutType": "section"
     },
     {
       "animations": [
@@ -3065,7 +3070,8 @@
       ],
       "type": "page",
       "id": "e39c480a-e017-4c6e-b48c-4dc1ef00f6ab",
-      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+      "pageLayoutType": "list"
     },
     {
       "animations": [
@@ -3599,7 +3605,8 @@
       ],
       "type": "page",
       "id": "050444c7-6097-410f-8147-0c195b051a27",
-      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+      "pageLayoutType": "editorial"
     },
     {
       "animations": [
@@ -4124,7 +4131,8 @@
         "isDefaultBackground": true,
         "id": "452a4add-0155-44fd-8521-042dcbf88594"
       },
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } },
+      "pageLayoutType": "section"
     },
     {
       "animations": [
@@ -4735,7 +4743,8 @@
       ],
       "type": "page",
       "id": "a9ed1626-720d-4b66-bfbd-40441c83390c",
-      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+      "pageLayoutType": "list"
     }
   ],
   "autoAdvance": true,

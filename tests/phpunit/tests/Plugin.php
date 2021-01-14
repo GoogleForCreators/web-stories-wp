@@ -28,6 +28,8 @@ class Plugin extends \WP_UnitTestCase {
 		$plugin = new \Google\Web_Stories\Plugin();
 		$plugin->register();
 
+		$this->assertSame( 10, has_action( 'init', [ $plugin->adsense, 'init' ] ) );
+		$this->assertSame( 10, has_action( 'init', [ $plugin->ad_manager, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->media, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->story, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->template, 'init' ] ) );
