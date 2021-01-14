@@ -87,7 +87,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
   });
 
   it('should call mockUpdatePublisherId when enter is keyed on input', function () {
-    let { getByTestId, rerender } = renderWithProviders(
+    const { getByTestId, rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -96,7 +96,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    let input = getByTestId('adSensePublisherId');
+    const input = getByTestId('adSensePublisherId');
 
     fireEvent.change(input, { target: { value: 'pub-1234567891234567' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -188,7 +188,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
   });
 
   it('should call mockUpdateSlotId when enter is keyed on input', function () {
-    let { getByTestId, rerender } = renderWithProviders(
+    const { getByTestId, rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -197,7 +197,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    let input = getByTestId('adSenseSlotId');
+    const input = getByTestId('adSenseSlotId');
 
     fireEvent.change(input, { target: { value: '0123456789' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });

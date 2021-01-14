@@ -5,6 +5,10 @@
 * [Getting Started](./getting-started.md)
 * [Glossary](./glossary.md)
 
+## Maintenance
+
+* [CDN Assets](./cdn.md)
+
 ## Development
 
 * [Architecture](./architecture.md)

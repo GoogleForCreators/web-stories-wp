@@ -83,8 +83,7 @@ export default function useFetchMediaEffect({
     async function fetch() {
       fetchMediaStart({ provider, pageToken });
       try {
-        let media, nextPageToken;
-        ({ media, nextPageToken } = await listMedia({
+        const { media, nextPageToken } = await listMedia({
           provider,
           filter: {
             contentType: PROVIDERS[provider].contentTypeFilter,
@@ -92,7 +91,7 @@ export default function useFetchMediaEffect({
             categoryId: selectedCategoryId,
           },
           pageToken,
-        }));
+        });
         fetchMediaSuccess({
           provider,
           media,

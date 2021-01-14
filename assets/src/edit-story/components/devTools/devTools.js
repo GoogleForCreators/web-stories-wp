@@ -67,13 +67,13 @@ const Button = styled.button`
 `;
 
 const replaceResourcesWithDummy = (state) => {
-  let videosToReload = [];
+  const videosToReload = [];
   const newState = {
     ...state,
     pages: state.pages.map((page) => ({
       ...page,
       elements: page.elements.map((element) => {
-        let newElement = { ...element };
+        const newElement = { ...element };
         if ('resource' in element) {
           newElement.resource = { ...element.resource };
           if (element.type === 'video') {

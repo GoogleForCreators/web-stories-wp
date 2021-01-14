@@ -293,7 +293,7 @@ export function textElementFontLowContrast(element) {
 
   // check all spans for contrast ratios that don't pass verification
   const spans = getSpansFromContent(element.content);
-  let lowContrast = spans.some((span) => {
+  const lowContrast = spans.some((span) => {
     if (!span.style?.color) {
       return false;
     }
