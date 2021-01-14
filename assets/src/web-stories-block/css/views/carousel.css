@@ -6,12 +6,14 @@
   }
 }
 
-.web-stories-list.is-carousel .glider-next {
+.web-stories-list.is-carousel .glider-next,
+.web-stories-list.is-carousel .amp-carousel-button-next {
   right: 0;
   background-image: url('./../../icons/carousel-arrow-next.svg');
 }
 
-.web-stories-list.is-carousel .glider-prev {
+.web-stories-list.is-carousel .glider-prev,
+.web-stories-list.is-carousel .amp-carousel-button-prev {
   left: 0;
   background-image: url('./../../icons/carousel-arrow-prev.svg');
 }
@@ -27,7 +29,6 @@
   box-sizing: border-box;
   height: 34px;
   width: 34px;
-  margin: 16px;
   border-style: none;
   z-index: 10;
   pointer-events: all;
@@ -38,18 +39,7 @@
 .web-stories-list.is-carousel .glider-prev {
   padding: 10px;
   top: 50%;
-}
-
-.web-stories-list.is-carousel .glider-next:not(.disabled):hover,
-.web-stories-list.is-carousel .glider-prev:not(.disabled):hover,
-.web-stories-list.is-carousel .glider-next:not(.disabled):focus,
-.web-stories-list.is-carousel .glider-prev:not(.disabled):focus,
-.web-stories-list.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
-  filter: invert(1);
-}
-
-.web-stories-list.is-carousel .amp-carousel-button-prev {
-  transform: rotate(180deg);
+  transform: translateY(-50%);
 }
 
 /* Temporary till we have full support for the RTL carousel. */
@@ -57,4 +47,14 @@ html[dir='rtl'] .glider-next.disabled,
 html[dir='rtl'] .glider-prev.disabled {
   opacity: 1;
   cursor: pointer;
+}
+
+html[dir='rtl'] .glider-next.disabled:hover,
+html[dir='rtl'] .glider-prev.disabled:hover,
+.web-stories-list.is-carousel .glider-next:not(.disabled):hover,
+.web-stories-list.is-carousel .glider-prev:not(.disabled):hover,
+.web-stories-list.is-carousel .glider-next:not(.disabled):focus,
+.web-stories-list.is-carousel .glider-prev:not(.disabled):focus,
+.web-stories-list.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
+  filter: invert(1);
 }
