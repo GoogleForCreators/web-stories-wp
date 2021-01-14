@@ -59,6 +59,7 @@
     "react-calendar": "^3.3.0",
     "react-color": "^2.19.3",
     "react-dom": "^16.13.1",
+    "react-lottie": "^1.2.3",
     "react-modal": "^3.12.1",
     "react-moveable": "^0.21.6",
     "react-photo-gallery": "^8.0.0",

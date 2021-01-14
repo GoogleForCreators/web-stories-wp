@@ -17,12 +17,14 @@
 /**
  * External dependencies
  */
+import Lottie from 'react-lottie';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import * as Icons from '..';
+import dragAnimationData from '../dragAnimation';
 
 export default {
   title: 'Stories Editor/Icons',
@@ -57,4 +59,17 @@ export const _default = () => {
       })}
     </IconsList>
   );
+};
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: dragAnimationData,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
+
+export const dragAnimation = () => {
+  return <Lottie options={defaultOptions} height={400} width={400} />;
 };
