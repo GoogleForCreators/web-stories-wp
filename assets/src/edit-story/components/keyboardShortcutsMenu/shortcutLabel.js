@@ -31,25 +31,22 @@ function ShortCutLabel({ keys, alignment = 'center', ...rest }) {
     () =>
       keys.map((key, index) =>
         key.label ? (
-          <ShortcutKeyLabel key={key.label}>{key.label}</ShortcutKeyLabel>
+          // Disable reason: some keys consist of just a word, e.g. "or" -- there is nothing else than index unique in these.
+          // eslint-disable-next-line react/no-array-index-key
+          <ShortcutKeyLabel key={`${key.label}-${index}`}>
+            {key.label}
+          </ShortcutKeyLabel>
         ) : (
-          <>
-            {/* Disable reason: some keys consist of just a word, e.g. "or" -- there is nothing else than index unique in these. */}
-            {/* eslint-disable react/no-array-index-key */}
-            <ShortcutKey
-              key={index}
-              aria-label={key.title}
-              title={key.title}
-              keySize={
-                (key.symbol || key).length > 1
-                  ? KEY_SIZE.LARGE
-                  : KEY_SIZE.NORMAL
-              }
-            >
-              {/* eslint-enable react/no-array-index-key */}
-              {key.symbol || key}
-            </ShortcutKey>
-          </>
+          <ShortcutKey
+            key={JSON.stringify(key)}
+            aria-label={key.title}
+            title={key.title}
+            keySize={
+              (key.symbol || key).length > 1 ? KEY_SIZE.LARGE : KEY_SIZE.NORMAL
+            }
+          >
+            {key.symbol || key}
+          </ShortcutKey>
         )
       ),
     [keys]
