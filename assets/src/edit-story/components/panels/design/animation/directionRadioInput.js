@@ -77,7 +77,7 @@ const Icon = styled.div`
     selected &&
     !disabled &&
     css`
-      background-color: #51389d;
+      background-color: #1a73e8;
     `}
 
   ${({ disabled }) =>
