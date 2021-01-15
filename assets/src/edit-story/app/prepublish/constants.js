@@ -53,72 +53,106 @@ export const PRE_PUBLISH_MESSAGE_TYPES = {
 export const MESSAGES = {
   CRITICAL_METADATA: {
     MISSING_TITLE: {
-      MAIN_TEXT: __('Missing story title', 'web-stories'),
-      HELPER_TEXT: sprintf(
-        /* translators: 1: minimum story title length in words. 2: maximum story title length in characters. */
-        __(
-          'Keep the title clear and clean, ideally under %1$d words in less than %2$d characters.',
-          'web-stories'
-        ),
-        MAX_STORY_TITLE_LENGTH_WORDS,
-        MAX_STORY_TITLE_LENGTH_CHARS
+      MAIN_TEXT: __('Add story title', 'web-stories'),
+      HELPER_TEXT: (
+        <TranslateWithMarkup>
+          {sprintf(
+            /* translators: 1: minimum story title length in words. 2: maximum story title length in characters. */
+            __(
+              "- Keep under %1$d words<br/>- Don't exceed %2$d characters",
+              'web-stories'
+            ),
+            MAX_STORY_TITLE_LENGTH_WORDS,
+            MAX_STORY_TITLE_LENGTH_CHARS
+          )}
+        </TranslateWithMarkup>
       ),
     },
     MISSING_COVER: {
-      MAIN_TEXT: __('Missing story cover image', 'web-stories'),
-      HELPER_TEXT: sprintf(
-        /* translators: 1: minimum cover dimension width x minimum cover dimension height. 2: cover dimensions aspect ratio.  */
-        __(
-          'Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least %1$s in size and maintain a %2$s aspect ratio.',
-          'web-stories'
-        ),
-        `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
-        `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
+      MAIN_TEXT: __('Add story cover image', 'web-stories'),
+      HELPER_TEXT: (
+        <TranslateWithMarkup>
+          {sprintf(
+            /* translators: 1: minimum cover dimension width x minimum cover dimension height. 2: cover dimensions aspect ratio.  */
+            __(
+              // 'Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least %1$s in size and maintain a %2$s aspect ratio.',
+              "- Use as a representation of the story<br/>- Avoid images with embedded text<br/>- Use an image that's at least 640x853px<br/>- Maintain a %2$s aspect ratio.",
+              'web-stories'
+            ),
+            `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
+            `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
+          )}
+        </TranslateWithMarkup>
       ),
     },
     COVER_TOO_SMALL: {
-      MAIN_TEXT: __('Story cover image too small', 'web-stories'),
-      HELPER_TEXT: sprintf(
-        /* translators: 1: minimum cover dimension width X minimum cover dimension height. 2: cover dimensions aspect ratio. */
-        __(
-          'Should be at least %1$s and maintain a %2$s aspect ratio.',
-          'web-stories'
-        ),
-        `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
-        `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
+      MAIN_TEXT: __(
+        'Choose a bigger image for your story cover',
+        'web-stories'
+      ),
+      HELPER_TEXT: (
+        <TranslateWithMarkup>
+          {sprintf(
+            /* translators: 1: minimum cover dimension width X minimum cover dimension height. 2: cover dimensions aspect ratio. */
+            __(
+              "- Use an image that's at least %1$s<br/>- Maintain a %2$s aspect ratio",
+              'web-stories'
+            ),
+            `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
+            `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
+          )}
+        </TranslateWithMarkup>
       ),
     },
     COVER_WRONG_ASPECT_RATIO: {
-      MAIN_TEXT: __('Story cover image wrong aspect ratio', 'web-stories'),
-      HELPER_TEXT: sprintf(
-        /* translators: %s: cover dimensions aspect ratio. */
-        __('Should maintain a %s aspect ratio.', 'web-stories'),
-        `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
+      MAIN_TEXT: __(
+        'Choose an image with the correct aspect ratio',
+        'web-stories'
+      ),
+      HELPER_TEXT: (
+        <TranslateWithMarkup>
+          {sprintf(
+            /* translators: %s: cover dimensions aspect ratio. */
+            __(
+              "- Use an image that's at least %1$s<br/>- Maintain a %2$s aspect ratio",
+              'web-stories'
+            ),
+            `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
+            `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
+          )}
+        </TranslateWithMarkup>
       ),
     },
     LOGO_TOO_SMALL: {
-      MAIN_TEXT: __('Publisher logo is too small', 'web-stories'),
-      HELPER_TEXT: sprintf(
-        /* translators: 1: minimum publisher logo dimensions. 2: publisher logo dimension ratio. */
-        __(
-          'Should be at least %1$s and maintain a %2$s aspect ratio.',
-          'web-stories'
-        ),
-        `${PUBLISHER_LOGO_DIMENSION}x${PUBLISHER_LOGO_DIMENSION}px`,
-        `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
+      MAIN_TEXT: __('Upload a bigger logo', 'web-stories'),
+      HELPER_TEXT: (
+        <TranslateWithMarkup>
+          {sprintf(
+            /* translators: 1: minimum publisher logo dimensions. 2: publisher logo dimension ratio. */
+            __(
+              "- Use an image that's at least %1$s<br/>- Maintain a %2$s aspect ratio",
+              'web-stories'
+            ),
+            `${PUBLISHER_LOGO_DIMENSION}x${PUBLISHER_LOGO_DIMENSION}px`,
+            `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
+          )}
+        </TranslateWithMarkup>
       ),
     },
     LINK_ATTACHMENT_CONFLICT: {
-      MAIN_TEXT: __('Link conflict with page attachment', 'web-stories'),
+      MAIN_TEXT: __(
+        'Turn off Page Attachment or remove conflicting links',
+        'web-stories'
+      ),
       HELPER_TEXT: __(
-        'Links in the bottom of a page with a Page Attachment are disabled.',
+        '- Remove the Page Attachment or any links at the bottom of the page, which conflict with the Page Attachment section',
         'web-stories'
       ),
     },
     MISSING_VIDEO_POSTER: {
-      MAIN_TEXT: __('Video missing poster image', 'web-stories'),
+      MAIN_TEXT: __('Add a poster image for every video', 'web-stories'),
       HELPER_TEXT: __(
-        'Add a poster image for every video. Posters are displayed while a video loads for a better user experience.',
+        '- Ensure a better experience by displaying a poster while users wait for the video to load',
         'web-stories'
       ),
     },
