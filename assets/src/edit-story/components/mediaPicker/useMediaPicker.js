@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
 import { trackEvent } from '../../../tracking';
+import { getTimeTracker } from '../../../tracking/trackTiming';
 
 /**
  * Custom hook to open the WordPress media modal.
@@ -73,8 +74,14 @@ export default function useMediaPicker({
       // The Uploader.success callback is invoked when a user uploads a file.
       // Race condition concern: the video content is not guaranteed to be
       // available in this callback. For the video poster insertion, please check: assets/src/edit-story/components/library/panes/media/local/mediaPane.js
+      const trackTiming = getTimeTracker(
+        'updateMedia',
+        'MediaPicker',
+        'Media Library'
+      );
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
+        trackTiming();
       };
     } catch (e) {
       // Silence.

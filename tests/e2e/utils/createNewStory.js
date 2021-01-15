@@ -18,12 +18,22 @@
  * WordPress dependencies
  */
 import { visitAdminPage } from '@wordpress/e2e-test-utils';
+/**
+ * Internal dependencies
+ */
+import { getTimeTracker } from '../../../assets/src/tracking/trackTiming';
 
 /**
  * Creates a new story.
  */
 async function createNewStory() {
+  const trackTiming = getTimeTracker(
+    'visitAdminPage',
+    'createNewStory',
+    'Publish Story'
+  );
   await visitAdminPage('post-new.php', 'post_type=web-story');
+  trackTiming();
 }
 
 export default createNewStory;
