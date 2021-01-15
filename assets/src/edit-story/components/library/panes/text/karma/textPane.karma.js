@@ -126,8 +126,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    await fixture.events.click(fixture.editor.library.text.preset('OVERLINE'));
-    await verifyStaggeredPosition('OVERLINE');
+    await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+    await verifyStaggeredPosition('LABEL');
 
     await fixture.snapshot('staggered all text presets');
   });
