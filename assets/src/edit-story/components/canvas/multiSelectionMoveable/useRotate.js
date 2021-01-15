@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { useGlobalIsKeyPressed } from '../../keyboard';
+import { useGlobalIsKeyPressed } from '../../../../design-system';
 import normalizeRotationDegrees from '../utils/normalizeRotationDegrees';
 
 function useRotate({

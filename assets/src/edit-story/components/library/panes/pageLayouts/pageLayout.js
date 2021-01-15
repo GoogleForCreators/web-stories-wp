@@ -109,11 +109,11 @@ function PageLayout(props) {
 
   const handleKeyUp = useCallback(
     ({ key }) => {
-      if (key === 'Enter') {
+      if (key === 'Enter' && isActive) {
         handleClick();
       }
     },
-    [handleClick]
+    [handleClick, isActive]
   );
 
   return (
@@ -142,8 +142,8 @@ function PageLayout(props) {
           onClick={handleClick}
           isActive={isActive}
           aria-label={page.title}
-          title={page.title}
           tabIndex="0"
+          role="button"
         >
           <PageLayoutTitle>{page.title}</PageLayoutTitle>
         </HoverControls>

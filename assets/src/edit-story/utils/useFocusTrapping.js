@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../components/keyboard';
+import { useKeyDownEffect } from '../../design-system';
 
 const getFocusableElements = (node) => {
   if (!node) {

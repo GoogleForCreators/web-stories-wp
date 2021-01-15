@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
-import ImageAccessibility from '../imageAccessibility';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
+import ImageAccessibility from '../imageAccessibility';
 
 jest.mock('../../../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {

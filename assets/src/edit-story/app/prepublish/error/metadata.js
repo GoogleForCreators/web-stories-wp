@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { greatestCommonDivisor } from '../../../utils/greatestCommonDivisor';
 import isElementBelowLimit from '../../../utils/isElementBelowLimit';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,
@@ -127,13 +126,12 @@ export function storyCoverAspectRatio(story) {
   ) {
     return undefined;
   }
-  const gcd = greatestCommonDivisor(
-    story.featuredMedia?.width,
-    story.featuredMedia?.height
-  );
-  const leftRatio = story.featuredMedia?.width / gcd;
-  const rightRatio = story.featuredMedia?.height / gcd;
-  if (leftRatio !== ASPECT_RATIO_LEFT || rightRatio !== ASPECT_RATIO_RIGHT) {
+  const hasCorrectAspectRatio =
+    Math.abs(
+      story.featuredMedia.width / story.featuredMedia.height -
+        ASPECT_RATIO_LEFT / ASPECT_RATIO_RIGHT
+    ) <= 0.001;
+  if (!hasCorrectAspectRatio) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.id,

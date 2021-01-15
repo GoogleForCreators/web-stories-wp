@@ -37,10 +37,10 @@ import {
   Icons,
   Modal,
   Text,
+  useResizeEffect,
 } from '../../../../design-system';
 import { WPBODY_ID } from '../../../constants';
 import { StoryPropType } from '../../../types';
-import { useResizeEffect } from '../../../utils';
 import useApi from '../../api/useApi';
 import { ERRORS } from '../../textContent';
 

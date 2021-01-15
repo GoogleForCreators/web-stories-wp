@@ -22,7 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect } from '../../../design-system';
 
 function useFocusCanvas() {
   /**

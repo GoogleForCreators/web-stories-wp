@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, _x, sprintf } from '@wordpress/i18n';
+import { _x, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -59,25 +59,26 @@ export const PageLayoutsParentContainer = styled.div`
 
 function PageLayoutsPane(props) {
   const {
-    actions: { getTemplates },
+    actions: { getPageLayouts },
   } = useAPI();
-  const [templates, setTemplates] = useState([]);
+  const [pageLayouts, setPageLayouts] = useState([]);
   const [selectedPageLayoutType, setSelectedPageLayoutType] = useState(null);
 
   const pageLayoutsParentRef = useRef();
 
-  // load and process templates
+  // load and process pageLayouts
   useEffect(() => {
     const trackTiming = getTimeTracker(
       'load',
       'templates',
       'Page Layouts Pane'
     );
-    getTemplates().then((result) => {
-      setTemplates(result);
+
+    getPageLayouts().then((result) => {
+      setPageLayouts(result);
       trackTiming();
     });
-  }, [getTemplates, setTemplates]);
+  }, [getPageLayouts, setPageLayouts]);
 
   const pills = useMemo(
     () =>
@@ -90,7 +91,7 @@ function PageLayoutsPane(props) {
 
   const filteredPages = useMemo(
     () =>
-      templates.reduce((pages, template) => {
+      pageLayouts.reduce((pages, template) => {
         const templatePages = template.pages.reduce((acc, page) => {
           // skip unselected page layout types if not matching
           if (
@@ -118,7 +119,7 @@ function PageLayoutsPane(props) {
 
         return [...pages, ...templatePages];
       }, []),
-    [templates, selectedPageLayoutType]
+    [pageLayouts, selectedPageLayoutType]
   );
 
   const handleSelectPageLayoutType = useCallback((key) => {
@@ -134,10 +135,7 @@ function PageLayoutsPane(props) {
           selectItem={handleSelectPageLayoutType}
           deselectItem={() => handleSelectPageLayoutType(null)}
         />
-        <PageLayoutsParentContainer
-          ref={pageLayoutsParentRef}
-          title={__('Page Layouts', 'web-stories')}
-        >
+        <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
           {pageLayoutsParentRef.current && (
             <PageLayouts
               parentRef={pageLayoutsParentRef}

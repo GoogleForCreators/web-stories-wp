@@ -30,7 +30,7 @@ async function setAnalyticsCode(code) {
   });
 
   const inputSelector =
-    'input[placeholder="Enter your Google Analytics Tracking ID"]';
+    'input[placeholder^="Enter your Google Analytics Tracking ID"]';
 
   await expect(page).toMatchElement(inputSelector);
   await page.evaluate(() => {

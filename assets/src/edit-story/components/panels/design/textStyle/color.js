@@ -32,7 +32,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { FillNone, FillFilled, FillHighlighted } from '../../../../icons/';
 import { Color, Label, Row, ToggleButton } from '../../../form';
-import { useKeyDownEffect } from '../../../keyboard';
+import { useKeyDownEffect } from '../../../../../design-system';
 import {
   useCommonColorValue,
   getCommonValue,

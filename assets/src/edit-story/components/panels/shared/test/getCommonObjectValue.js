@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
+import { MULTIPLE_VALUE } from '../../../../constants';
 import getCommonObjectValue from '../getCommonObjectValue';
-import { MULTIPLE_VALUE } from '../../../form';
 
 describe('getCommonObjectValue', () => {
   it('should return matching values for the defined properties', () => {

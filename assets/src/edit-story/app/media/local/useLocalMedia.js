@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { identity } from '../../../utils/context';
+import { identity } from '../../../../design-system';
 import useMedia from '../useMedia';
 
 /**
