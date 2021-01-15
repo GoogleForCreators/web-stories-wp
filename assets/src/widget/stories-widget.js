@@ -29,9 +29,9 @@
    * @param {boolean} reset Flag to reset fields value.
    */
   const reactiveWidget = function (target, reset = false) {
-    var currentView = target.value;
-    var widget = target.closest('.widget');
-    var state = fieldState.fields[currentView];
+    const currentView = target.value;
+    const widget = target.closest('.widget');
+    const state = fieldState.fields[currentView];
 
     for (var [key, value] of Object.entries(state)) {
       var field = widget.querySelector('.' + key + '.stories-widget-field');
