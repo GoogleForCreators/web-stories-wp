@@ -71,7 +71,8 @@ class Renderer extends \WP_UnitTestCase_Base {
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'  => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_title' => 'Story Title',
 			]
 		);
 
@@ -82,13 +83,14 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function setUp() {
 		$this->story_model = $this->createMock( Story::class );
+		$this->story_model->load_from_post( self::$story_id );
 
 		$this->stories = $this->createMock( Stories::class );
-		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'         => 'grid',
-				'show_title'        => false,
+				'show_title'        => true,
+				'show_excerpt'      => false,
 				'show_author'       => false,
 				'show_date'         => false,
 				'number_of_columns' => 3,
@@ -155,16 +157,15 @@ class Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ] );
-		$renderer->expects( $this->once() )->method( 'is_amp_request' )->willReturn( false );
-		$this->set_private_property( $renderer, 'story_posts', [ $this->stories->get_stories() ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
+		$this->set_private_property( $renderer, 'story_posts', [ $this->story_model ] );
 
 		ob_start();
 		$this->call_private_method( $renderer, 'render_story_with_poster' );
 		$output = ob_get_clean();
 
 		$this->assertContains( 'web-stories-list__story-poster', $output );
-		$this->assertContains( 'style="background-image: url(http://www.example.com/image.jpg);"', $output );
 	}
 
 	/**
@@ -172,9 +173,10 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_get_content_overlay() {
 
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->method( 'is_amp_request' )->willReturn( false );
-		$this->set_private_property( $renderer, 'story_posts', [ $this->stories->get_stories() ] );
+		$this->set_private_property( $renderer, 'story_posts', [ $this->story_model ] );
+		$this->set_private_property( $renderer, 'content_overlay', false );
 
 		ob_start();
 		$this->call_private_method( $renderer, 'get_content_overlay' );
@@ -182,20 +184,14 @@ class Renderer extends \WP_UnitTestCase_Base {
 
 		$this->assertEmpty( $output );
 
-		$story_data = [
-			'title'                => 'Story Title',
-			'date'                 => 'November 11, 2020',
-			'author'               => 'admin',
-			'show_content_overlay' => true,
-		];
+		// When content_overlay is set.
+		$this->set_private_property( $renderer, 'content_overlay', true );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'get_content_overlay', [ $story_data ] );
+		$this->call_private_method( $renderer, 'get_content_overlay' );
 		$output = ob_get_clean();
 
-		$this->assertContains( 'By admin', $output );
-		$this->assertContains( 'On November 11, 2020', $output );
-		$this->assertContains( 'Story Title', $output );
+		$this->assertContains( 'story-content-overlay__title', $output );
 	}
 
 	/**
