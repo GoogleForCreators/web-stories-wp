@@ -153,6 +153,7 @@ class Stories extends WP_Widget {
 				'classname'     => 'widefat number-stories stories-widget-field',
 				'wrapper_class' => 'number-stories_wrapper',
 				'value'         => $number,
+				'label_before'  => true,
 			]
 		);
 
@@ -304,14 +305,14 @@ class Stories extends WP_Widget {
 			]
 		);
 		?>
-	<p class="<?php printf( '%s', (string) $args['wrapper_class'] ); ?>">
+	<p class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
 
 		<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
-			<?php printf( '%s', (string) $args['label'] ); ?>
+			<?php echo esc_attr( $args['label'] ); ?>
 		</label>
 
 		<select
-			class="<?php printf( '%s', (string) $args['classname'] ); ?>"
+			class="<?php echo esc_attr( (string) $args['classname'] ); ?>"
 			id="<?php echo $this->get_field_id( $args['id'] ); ?>"
 			name="<?php echo $this->get_field_name( $args['name'] ); ?>"
 		>
@@ -319,10 +320,10 @@ class Stories extends WP_Widget {
 
 			foreach ( $args['options'] as $key => $type ) {
 				?>
-				<option value="<?php printf( '%s', $key ); ?>"
+				<option value="<?php echo esc_attr( $key ); ?>"
 					<?php selected( $key, $args['selected'], true ); ?>
 				>
-					<?php printf( '%s', $type ); ?>
+					<?php echo esc_attr( $type ); ?>
 				</option>
 				<?php
 			}
@@ -357,12 +358,12 @@ class Stories extends WP_Widget {
 		ob_start();
 		?>
 		<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
-			<?php printf( '%s', (string) $args['label'] ); ?>
+			<?php echo esc_attr( (string) $args['label'] ); ?>
 		</label>
 		<?php
 		$label = ob_get_clean();
 		?>
-		<p class="<?php printf( '%s', (string) $args['wrapper_class'] ); ?>">
+		<p class="<?php echo esc_attr( (string) $args['wrapper_class'] ); ?>">
 
 			<?php
 			if ( $args['label_before'] ) {
@@ -371,8 +372,8 @@ class Stories extends WP_Widget {
 			?>
 
 			<input
-				class="<?php printf( '%s', (string) $args['classname'] ); ?>"
-				type="<?php printf( '%s', (string) $args['type'] ); ?>"
+				class="<?php echo esc_attr( (string) $args['classname'] ); ?>"
+				type="<?php echo esc_attr( (string) $args['type'] ); ?>"
 				id="<?php echo $this->get_field_id( $args['id'] ); ?>"
 				name="<?php echo $this->get_field_name( $args['name'] ); ?>"
 				value="<?php echo $args['value']; ?>"
