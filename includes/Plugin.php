@@ -194,6 +194,8 @@ class Plugin {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @return void
 	 */
 	public function register() {
