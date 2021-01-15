@@ -228,9 +228,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
 
-      const linkTooSmallRow = fixture.screen.getByText(
-        MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
-      );
+      const linkTooSmallRow = fixture.screen
+        .getByText(MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT)
+        .closest('button');
 
       expect(document.activeElement).toEqual(linkTooSmallRow);
       await fixture.events.keyboard.press('Enter');
