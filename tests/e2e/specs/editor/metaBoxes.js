@@ -55,11 +55,18 @@ describe('Custom Meta Boxes', () => {
       await expect(page).toMatchElement('input[placeholder="Add title"]');
       await page.type('input[placeholder="Add title"]', 'Meta Box Test');
 
-      await expect(page).not.toMatchElement('#web_stories_test_meta_box_field');
+      await expect(page).not.toMatchElement(
+        '#web_stories_test_meta_box_field',
+        {
+          visible: true,
+        }
+      );
 
       await expect(page).toClick('[aria-label="Third-Party Meta Boxes"]');
 
-      await expect(page).toMatchElement('#web_stories_test_meta_box_field');
+      await expect(page).toMatchElement('#web_stories_test_meta_box_field', {
+        visible: true,
+      });
       await page.type(
         '#web_stories_test_meta_box_field',
         'Meta Box Test Value'
