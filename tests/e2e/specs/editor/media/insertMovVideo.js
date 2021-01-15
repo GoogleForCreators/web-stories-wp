@@ -46,7 +46,11 @@ describe('Inserting .mov from dialog', () => {
 
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
 
-    expect(page).toClick('.media-modal-close');
+    await page.keyboard.press('Escape');
+
+    await page.waitForSelector(MODAL, {
+      visible: false,
+    });
 
     await deleteMedia(fileName);
   });
