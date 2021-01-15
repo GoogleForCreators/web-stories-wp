@@ -33,7 +33,12 @@ import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';
+import {
+  BUTTON_TYPES,
+  PRIMARY_PATHS,
+  SECONDARY_PATHS,
+  Z_INDEX,
+} from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
@@ -79,8 +84,7 @@ export const LeftRailContainer = styled.nav.attrs({
   top: 0;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  border-right: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray50};
+  background: ${({ theme }) => theme.colors.standard.white};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
@@ -90,6 +94,11 @@ export const LeftRailContainer = styled.nav.attrs({
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
   }
+`;
+
+export const NavLinkContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 5fr;
 `;
 
 export function LeftRail() {
@@ -118,11 +127,18 @@ export function LeftRail() {
     [toggleSideBar, leftRailRef, upperContentRef]
   );
 
-  const enabledPaths = useMemo(() => {
+  const enabledPrimaryPaths = useMemo(() => {
     if (enableInProgressViews) {
       return PRIMARY_PATHS;
     }
     return PRIMARY_PATHS.filter((path) => !path.inProgress);
+  }, [enableInProgressViews]);
+
+  const enabledSecondaryPaths = useMemo(() => {
+    if (enableInProgressViews) {
+      return SECONDARY_PATHS;
+    }
+    return SECONDARY_PATHS.filter((path) => !path.inProgress);
   }, [enableInProgressViews]);
 
   const handleSideBarClose = useCallback(() => {
@@ -172,34 +188,68 @@ export function LeftRail() {
         </Content>
         <Content>
           <NavList>
-            {enabledPaths.map((path) => (
-              <NavListItem key={path.value}>
-                <NavLink
-                  active={path.value === state.currentPath}
-                  href={resolveRoute(path.value)}
-                  aria-label={
-                    path.value === state.currentPath
-                      ? sprintf(
-                          /* translators: %s: the current page, for example "My Stories". */
-                          __('%s (active view)', 'web-stories'),
-                          path.label
-                        )
-                      : path.label
-                  }
-                  {...(path.isExternal && {
-                    rel: 'noreferrer',
-                    target: '_blank',
-                    onClick: () => onExternalLinkClick(path),
-                  })}
-                >
-                  {path.label}
-                </NavLink>
-              </NavListItem>
-            ))}
+            {enabledPrimaryPaths.map((path) => {
+              const isActive = path.value === state.currentPath;
+              const Icon = isActive ? path.IconActive : path.Icon;
+
+              return (
+                <NavListItem key={path.value}>
+                  <NavLink
+                    active={path.value === state.currentPath}
+                    href={resolveRoute(path.value)}
+                    aria-label={
+                      path.value === state.currentPath
+                        ? sprintf(
+                            /* translators: %s: the current page, for example "My Stories". */
+                            __('%s (active view)', 'web-stories'),
+                            path.label
+                          )
+                        : path.label
+                    }
+                    {...(path.isExternal && {
+                      rel: 'noreferrer',
+                      target: '_blank',
+                      onClick: () => onExternalLinkClick(path),
+                    })}
+                  >
+                    <NavLinkContent active={path.value === state.currentPath}>
+                      {Icon ? <Icon width="22px" /> : <div />}
+                      {path.label}
+                    </NavLinkContent>
+                  </NavLink>
+                </NavListItem>
+              );
+            })}
           </NavList>
         </Content>
       </div>
       <Content>
+        <NavList>
+          {enabledSecondaryPaths.map(({ Icon, ...path }) => (
+            <NavListItem key={path.value}>
+              <NavLink
+                active={path.value === state.currentPath}
+                href={resolveRoute(path.value)}
+                aria-label={
+                  path.value === state.currentPath
+                    ? sprintf(
+                        /* translators: %s: the current page, for example "My Stories". */
+                        __('%s (active view)', 'web-stories'),
+                        path.label
+                      )
+                    : path.label
+                }
+                {...(path.isExternal && {
+                  rel: 'noreferrer',
+                  target: '_blank',
+                  onClick: () => onExternalLinkClick(path),
+                })}
+              >
+                {path.label}
+              </NavLink>
+            </NavListItem>
+          ))}
+        </NavList>
         <AppInfo>
           {sprintf(
             /* translators: %s: Current Year, %v: App Version */

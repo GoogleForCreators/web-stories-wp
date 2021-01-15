@@ -21,6 +21,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { ReactComponent as HomeWithHeart } from '../../../src/edit-story/icons/home_with_heart.svg';
+import { ReactComponent as HomeWithHeartActive } from '../../../src/edit-story/icons/home_with_heart_active.svg';
+import { ReactComponent as FloppyDisk } from '../../../src/edit-story/icons/floppy_disk.svg';
+import { ReactComponent as FloppyDiskActive } from '../../../src/edit-story/icons/floppy_disk_active.svg';
+import { ReactComponent as Compass } from '../../../src/edit-story/icons/compass.svg';
+import { ReactComponent as CompassActive } from '../../../src/edit-story/icons/compass_active.svg';
 import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
@@ -64,22 +70,34 @@ export const ROUTE_TITLES = {
     'Template Details',
     'web-stories'
   ),
-  [APP_ROUTES.EDITOR_SETTINGS]: __('Editor Settings', 'web-stories'),
+  [APP_ROUTES.EDITOR_SETTINGS]: __('Settings', 'web-stories'),
   [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
   DEFAULT: __('My Stories', 'web-stories'),
 };
 
 export const PRIMARY_PATHS = [
-  { value: APP_ROUTES.MY_STORIES, label: ROUTE_TITLES[APP_ROUTES.MY_STORIES] },
+  {
+    value: APP_ROUTES.MY_STORIES,
+    label: ROUTE_TITLES[APP_ROUTES.MY_STORIES],
+    Icon: HomeWithHeart,
+    IconActive: HomeWithHeartActive,
+  },
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
     inProgress: true,
+    Icon: FloppyDisk,
+    IconActive: FloppyDiskActive,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
+    Icon: Compass,
+    IconActive: CompassActive,
   },
+];
+
+export const SECONDARY_PATHS = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],

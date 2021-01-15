@@ -80,30 +80,15 @@ export const NavLink = styled.a`
     display: block;
     padding: 4px 28px;
     margin: 4px 0;
-    font-weight: ${
-      theme.DEPRECATED_THEME.typography.weight[active ? 'bold' : 'normal']
-    };
     text-decoration: none;
-    color: ${
-      active
-        ? theme.DEPRECATED_THEME.colors.gray900
-        : theme.DEPRECATED_THEME.colors.gray600
-    };
+    color: ${active ? theme.colors.gray['90'] : theme.colors.gray['70']};
 
     &:focus {
-      color: ${
-        active
-          ? theme.DEPRECATED_THEME.colors.gray900
-          : theme.DEPRECATED_THEME.colors.gray600
-      };
+      color: ${active ? theme.colors.gray['90'] : theme.colors.gray['70']};
     }
     &:hover {
-      color: ${
-        active
-          ? theme.DEPRECATED_THEME.colors.gray900
-          : theme.DEPRECATED_THEME.colors.gray600
-      };
-      background-color: ${theme.DEPRECATED_THEME.colors.gray50};
+      color: ${active ? theme.colors.gray['90'] : theme.colors.gray['70']};
+      background-color: ${theme.colors.gray['10']};
     }
   `}
 `;
