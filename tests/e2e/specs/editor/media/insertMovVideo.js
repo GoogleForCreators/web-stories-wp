@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
-import { createNewStory, clickButton, uploadFile, deleteMedia } from '../../../utils';
+import {
+  createNewStory,
+  clickButton,
+  uploadFile,
+  deleteMedia,
+} from '../../../utils';
 
 const MODAL = '.media-modal';
 
@@ -33,9 +38,8 @@ describe('Inserting .mov from dialog', () => {
       visible: true,
     });
 
-    const fileName = await uploadFile('small-video.mov');
+    const fileName = await uploadFile('small-video.mov', false);
 
-    await expect(page).toClick('button', { text: 'Media Library' });
     await clickButton(
       '.attachments-browser .attachments .attachment:first-of-type'
     );
