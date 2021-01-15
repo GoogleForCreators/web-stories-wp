@@ -52,15 +52,15 @@ import {
 export const AppFrame = styled.div({});
 
 export const PageContent = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  width: ${({ fullWidth }) =>
+    fullWidth ? '100%' : `calc(100% - ${DASHBOARD_LEFT_NAV_WIDTH}px)`};
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
   @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
     left: 0;
+    width: 100%;
   }
 `;
 
