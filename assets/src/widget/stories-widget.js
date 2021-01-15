@@ -34,8 +34,8 @@
     const state = fieldState.fields[currentView];
 
     for (var [key, value] of Object.entries(state)) {
-      var field = widget.querySelector('.' + key + '.stories-widget-field');
-      var fieldWrapper = widget.querySelector('.' + key + '_wrapper');
+      const field = widget.querySelector(`.${key}.stories-widget-field`);
+      const fieldWrapper = widget.querySelector(`.${key}_wrapper`);
       if (field && fieldWrapper && 'checkbox' === field.getAttribute('type')) {
         if (reset) {
           field.checked = false;
