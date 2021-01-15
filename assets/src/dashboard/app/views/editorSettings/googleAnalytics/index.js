@@ -68,8 +68,6 @@ export const TEXT = {
     'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
     'web-stories'
   ),
-  SITE_KIT_ADMIN_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/', // TODO get a direct link to WP admin (it's a modal)
-  SITE_KIT_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/',
 };
 
 function GoogleAnalyticsSettings({
