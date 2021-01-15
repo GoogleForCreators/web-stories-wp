@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { createContext } from '../../utils';
+import { createContext } from '../../../design-system';
 
 export const ToasterContext = createContext(null);
 

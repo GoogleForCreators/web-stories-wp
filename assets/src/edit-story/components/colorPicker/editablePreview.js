@@ -25,7 +25,7 @@ import { useCallback, useMemo, useRef, useLayoutEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 
 const Preview = styled.button`
   padding: 0;

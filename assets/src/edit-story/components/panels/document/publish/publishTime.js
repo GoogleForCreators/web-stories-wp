@@ -33,7 +33,7 @@ import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';
 import { Dropdown as ToggleIcon } from '../../../../icons';
-import { useKeyDownEffect } from '../../../keyboard';
+import { useKeyDownEffect } from '../../../../../design-system';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { format, formatTime, is12Hour } from '../../../../../date';
 

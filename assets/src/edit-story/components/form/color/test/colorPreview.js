@@ -23,11 +23,11 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import createSolid from '../../../../utils/createSolid';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
+import { renderWithTheme } from '../../../../testUtils';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
-import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from '../../multipleValue';
-import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());

@@ -29,11 +29,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
+import { useStory, useCanvas } from '../../../../app';
 import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
-import { useCanvas } from '../../../canvas';
 import { SimplePanel } from '../../panel';
 import { ExpandedTextInput } from '../../shared';
 

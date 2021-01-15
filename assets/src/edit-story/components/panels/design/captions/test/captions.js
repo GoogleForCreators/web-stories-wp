@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import Captions from '../captions';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import ConfigContext from '../../../../../app/config/context';
 import { renderPanel } from '../../../shared/test/_utils';
+import Captions from '../captions';
 
 describe('Panels/Captions', () => {
   const defaultElement = {

@@ -22,7 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import addQueryArgs from './addQueryArgs';
+import { addQueryArgs } from '../../design-system';
 
 /**
  * Update page URL in browser.

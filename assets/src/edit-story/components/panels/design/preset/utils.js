@@ -23,8 +23,7 @@ import generatePatternStyles from '../../../../utils/generatePatternStyles';
 import objectPick from '../../../../utils/objectPick';
 import createSolid from '../../../../utils/createSolid';
 import { generateFontFamily } from '../../../../elements/text/util';
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { MULTIPLE_VALUE } from '../../../form';
+import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from '../../../../constants';
 import { getHTMLInfo } from '../../../richText/htmlManipulation';
 
 const TEXT_PRESET_STYLES = [

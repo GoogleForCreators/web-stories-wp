@@ -14,5 +14,9 @@
  * limitations under the License.
  */
 
-export const isNullOrUndefinedOrEmptyString = (val) =>
-  val === null || val === undefined || val === '';
+/**
+ * Internal dependencies
+ */
+import { createContext } from '../../../design-system';
+
+export default createContext({ actions: {}, state: {} });

@@ -26,7 +26,7 @@ import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../keyboard';
+import { useKeyDownEffect } from '../../../../design-system';
 import useFocusOut from '../../../utils/useFocusOut';
 
 const ListContainer = styled.div`

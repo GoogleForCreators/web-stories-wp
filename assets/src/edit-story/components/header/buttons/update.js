@@ -28,7 +28,7 @@ import { useFeatures } from 'flagged';
  */
 import { useStory, useLocalMedia, useHistory, useConfig } from '../../../app';
 import { Outline, Primary } from '../../button';
-import { useGlobalKeyDownEffect } from '../../keyboard';
+import { useGlobalKeyDownEffect } from '../../../../design-system';
 import WithTooltip from '../../tooltip';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
 import { usePrepublishChecklist } from '../../inspector/prepublish';
