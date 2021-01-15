@@ -23,5 +23,5 @@ export { Popup, PLACEMENT } from './popup';
 export * as Snackbar from './snackbar';
 export * from './tooltip';
 export * from './keyboard';
-export * from './gridview';
+export * from './keyboard/gridview';
 export { Text, Display, Headline } from './typography';

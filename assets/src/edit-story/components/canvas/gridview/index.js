@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useGridViewKeys } from '../../../../design-system/components/gridview';
+import { useGridViewKeys } from '../../../../design-system';
 import { useConfig, useStory } from '../../../app';
 import RangeInput from '../../rangeInput';
 import { Rectangle as RectangleIcon } from '../../../icons';

@@ -39,7 +39,7 @@ import {
   isNullOrUndefinedOrEmptyString,
   useKeyDownEffect,
   useFocusOut,
-} from '../../../../../design-system/';
+} from '../../../../../design-system';
 import loadStylesheet from '../../../../utils/loadStylesheet';
 import { useConfig } from '../../../../app/config';
 import { GOOGLE_MENU_FONT_URL } from '../../../../app/font';
