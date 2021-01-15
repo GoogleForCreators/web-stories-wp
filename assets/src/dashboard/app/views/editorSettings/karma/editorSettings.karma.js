@@ -337,7 +337,7 @@ describe('Settings View', () => {
 
     await focusOnPublisherLogos();
 
-    let page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
+    const page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
     await fixture.events.keyboard.press('right');
     expect(page1).toEqual(document.activeElement);
 

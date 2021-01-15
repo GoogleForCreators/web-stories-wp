@@ -33,6 +33,7 @@ import { Rectangle } from '../../../icons';
 import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { Label } from '../../form';
+import { useStory } from '../../../app';
 
 const MAX_NUMBER_FOR_BADGE = 99;
 
@@ -67,15 +68,30 @@ const PanelTitle = styled.span`
     error ? theme.colors.fg.negative : theme.colors.fg.warning};
 `;
 
-const Row = styled.div`
+const Row = styled.button`
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  color: ${({ theme }) => theme.colors.fg.white};
+  line-height: 24px;
   &:not(:first-child) {
-    padding-top: 9px;
+    margin-top: 9px;
   }
   margin-bottom: 16px;
   margin-left: ${({ pageGroup }) => (pageGroup ? '16px' : '0')};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   width: calc(100% - 10px);
   max-width: 210px;
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+    outline-offset: 5px;
+  }
+`;
+
+const Underline = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
 const HelperText = styled.span`
@@ -130,6 +146,15 @@ const EmptyParagraph = styled.p`
   margin: 0;
 `;
 
+const VisuallyHidden = styled.span`
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+`;
+
 function annotateNumber(number) {
   if (number <= MAX_NUMBER_FOR_BADGE) {
     return number;
@@ -139,6 +164,12 @@ function annotateNumber(number) {
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
+  const { setSelectedElementsById, setCurrentPage } = useStory(
+    ({ actions }) => ({
+      setSelectedElementsById: actions.setSelectedElementsById,
+      setCurrentPage: actions.setCurrentPage,
+    })
+  );
 
   const { highPriority, recommended, pages } = useMemo(
     () =>
@@ -194,14 +225,70 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
+  const selectElement = useCallback(
+    ({ elementId, elements, pageId }) => {
+      if (pageId) {
+        setCurrentPage({ pageId });
+      }
+      if (Array.isArray(elements)) {
+        setSelectedElementsById({
+          elementIds: elements.map(({ id }) => id),
+        });
+      } else if (elementId) {
+        setSelectedElementsById({ elementIds: [elementId] });
+      }
+    },
+    [setCurrentPage, setSelectedElementsById]
+  );
+
+  const getOnClick = useCallback(
+    ({ elementId, pageId, elements }) => {
+      if (!elementId && !pageId && !elements) {
+        return undefined;
+      }
+      return () => selectElement({ elementId, pageId, elements });
+    },
+    [selectElement]
+  );
+
+  const getHandleKeyPress = useCallback(
+    ({ elementId, elements, pageId }) => {
+      if (!elementId && !pageId && !elements) {
+        return undefined;
+      }
+      return (event) => {
+        if (event.key === 'Enter') {
+          selectElement({ elementId, elements, pageId });
+        }
+      };
+    },
+    [selectElement]
+  );
+
   const renderRow = useCallback(
-    ({ message, help, id, pageGroup }) => (
-      <Row key={`guidance-${id}`} pageGroup={pageGroup}>
-        {message}
-        <HelperText>{help}</HelperText>
-      </Row>
-    ),
-    []
+    ({ message, help, id, pageGroup, ...args }) => {
+      const onClick = getOnClick(args);
+      const handleKeyPress = getHandleKeyPress(args);
+      const accessibleText = __('Select offending element', 'web-stories');
+      return (
+        <Row
+          tabIndex={0}
+          onClick={onClick}
+          onKeyDown={handleKeyPress}
+          key={id}
+          pageGroup={pageGroup}
+        >
+          {onClick ? (
+            <Underline title={accessibleText}>{message}</Underline>
+          ) : (
+            message
+          )}
+          <HelperText>{help}</HelperText>
+          {onClick && <VisuallyHidden>{accessibleText}</VisuallyHidden>}
+        </Row>
+      );
+    },
+    [getOnClick, getHandleKeyPress]
   );
 
   const renderPageGroupedRow = useCallback(
@@ -244,6 +331,7 @@ const ChecklistTab = (props) => {
       </EmptyLayout>
     );
   }
+
   return (
     <>
       {showHighPriorityItems && (

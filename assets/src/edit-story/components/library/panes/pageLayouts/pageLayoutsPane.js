@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { _x, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -33,6 +33,7 @@ import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
+import { PAGE_LAYOUT_TYPES } from './constants';
 
 export const StyledPane = styled(Pane)`
   height: 100%;
@@ -57,54 +58,62 @@ export const PageLayoutsParentContainer = styled.div`
 
 function PageLayoutsPane(props) {
   const {
-    actions: { getTemplates },
+    actions: { getPageLayouts },
   } = useAPI();
-  const [templates, setTemplates] = useState([]);
-  const [selectedTemplateId, setSelectedTemplateId] = useState(null);
+  const [pageLayouts, setPageLayouts] = useState([]);
+  const [selectedPageLayoutType, setSelectedPageLayoutType] = useState(null);
 
   const pageLayoutsParentRef = useRef();
 
+  // load and process pageLayouts
   useEffect(() => {
-    getTemplates().then((result) => setTemplates(result));
-  }, [getTemplates]);
+    getPageLayouts().then((result) => setPageLayouts(result));
+  }, [getPageLayouts, setPageLayouts]);
 
   const pills = useMemo(
     () =>
-      templates.map((template) => ({
-        id: template.id,
-        label: template.title,
+      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
+        id: key,
+        label: name,
       })),
-    [templates]
+    []
   );
 
-  const filteredPages = useMemo(() => {
-    if (selectedTemplateId) {
-      const template = templates.find(
-        (template) => template.id === selectedTemplateId
-      );
-      if (template) {
-        return template.pages;
-      }
-    }
-    return templates.reduce(
-      (pages, template) => [
-        ...pages,
-        ...template.pages.map((page, index) => ({
-          ...page,
-          title: sprintf(
-            /* translators: 1: template name. 2: page number. */
-            __(`%1$s Page %2$s`, 'web-stories'),
-            template.title,
-            index + 1
-          ),
-        })),
-      ],
-      []
-    );
-  }, [templates, selectedTemplateId]);
+  const filteredPages = useMemo(
+    () =>
+      pageLayouts.reduce((pages, template) => {
+        const templatePages = template.pages.reduce((acc, page) => {
+          // skip unselected page layout types if not matching
+          if (
+            !page.pageLayoutType ||
+            (selectedPageLayoutType &&
+              page.pageLayoutType !== selectedPageLayoutType)
+          ) {
+            return acc;
+          }
 
-  const handleSelectTemplate = useCallback((templateId) => {
-    setSelectedTemplateId(templateId);
+          const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
+          return [
+            ...acc,
+            {
+              ...page,
+              title: sprintf(
+                /* translators: 1: template name. 2: page layout name. */
+                _x('%1$s %2$s', 'page layout title', 'web-stories'),
+                template.title,
+                pageLayoutName
+              ),
+            },
+          ];
+        }, []);
+
+        return [...pages, ...templatePages];
+      }, []),
+    [pageLayouts, selectedPageLayoutType]
+  );
+
+  const handleSelectPageLayoutType = useCallback((key) => {
+    setSelectedPageLayoutType(key);
   }, []);
 
   return (
@@ -112,14 +121,11 @@ function PageLayoutsPane(props) {
       <PaneInner>
         <PillGroup
           items={pills}
-          selectedItemId={selectedTemplateId}
-          selectItem={handleSelectTemplate}
-          deselectItem={() => handleSelectTemplate(null)}
+          selectedItemId={selectedPageLayoutType}
+          selectItem={handleSelectPageLayoutType}
+          deselectItem={() => handleSelectPageLayoutType(null)}
         />
-        <PageLayoutsParentContainer
-          ref={pageLayoutsParentRef}
-          title={__('Page layouts', 'web-stories')}
-        >
+        <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
           {pageLayoutsParentRef.current && (
             <PageLayouts
               parentRef={pageLayoutsParentRef}

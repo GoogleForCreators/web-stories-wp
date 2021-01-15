@@ -232,8 +232,7 @@ describe('StoryAnimation.Provider', () => {
 
       const cancel = jest.fn();
       act(() => {
-        let unhoist;
-        unhoist = result.current.actions.hoistWAAPIAnimation({
+        const unhoist = result.current.actions.hoistWAAPIAnimation({
           animation: mockWAAPIAnimation({ cancel }),
         });
         unhoist();

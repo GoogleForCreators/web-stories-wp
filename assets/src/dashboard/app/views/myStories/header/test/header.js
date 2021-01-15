@@ -137,7 +137,7 @@ describe('My Stories <Header />', function () {
   });
 
   it('should have 3 toggle buttons, one for each status that say how many items belong to that status', function () {
-    const { getByText } = renderWithProviders(
+    const { getByText, queryByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -160,6 +160,68 @@ describe('My Stories <Header />', function () {
     expect(getByText('All Stories (19)')).toBeInTheDocument();
     expect(getByText('Drafts (9)')).toBeInTheDocument();
     expect(getByText('Published (10)')).toBeInTheDocument();
+    expect(queryByText('Private')).not.toBeInTheDocument();
+  });
+
+  it('should show the private tab only when there are private stories.', function () {
+    const { getByText } = renderWithProviders(
+      <LayoutProvider>
+        <Header
+          filter={STORY_STATUSES[0]}
+          stories={fakeStories}
+          search={{ keyword: '', setKeyword: jest.fn() }}
+          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            private: 2,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+          wpListURL="fakeurltoWordPressList.com"
+        />
+      </LayoutProvider>
+    );
+    expect(getByText('All Stories (19)')).toBeInTheDocument();
+    expect(getByText('Drafts (9)')).toBeInTheDocument();
+    expect(getByText('Published (10)')).toBeInTheDocument();
+    expect(getByText('Private (2)')).toBeInTheDocument();
+  });
+
+  it('should not show the private tab even if there are private stories when the user does not have permission.', function () {
+    const { getByText, queryByText } = renderWithProviders(
+      <LayoutProvider>
+        <Header
+          filter={STORY_STATUSES[0]}
+          stories={fakeStories}
+          search={{ keyword: '', setKeyword: jest.fn() }}
+          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            private: 2,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+          wpListURL="fakeurltoWordPressList.com"
+        />
+      </LayoutProvider>,
+      {
+        config: {
+          capabilities: { canReadPrivatePosts: false },
+        },
+      }
+    );
+    expect(getByText('All Stories (19)')).toBeInTheDocument();
+    expect(getByText('Drafts (9)')).toBeInTheDocument();
+    expect(getByText('Published (10)')).toBeInTheDocument();
+    expect(queryByText('Private')).not.toBeInTheDocument();
   });
 
   it('should call the set keyword function when new text is searched', async function () {
