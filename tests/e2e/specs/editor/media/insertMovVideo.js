@@ -39,6 +39,7 @@ describe('Inserting .mov from dialog', () => {
     });
 
     const fileName = await uploadFile('small-video.mov', false);
+    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 
     await clickButton(
       '.attachments-browser .attachments .attachment:first-of-type'
@@ -52,6 +53,6 @@ describe('Inserting .mov from dialog', () => {
       visible: false,
     });
 
-    await deleteMedia(fileName);
+    await deleteMedia(fileNameNoExt);
   });
 });
