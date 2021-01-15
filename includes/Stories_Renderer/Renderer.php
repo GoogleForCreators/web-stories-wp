@@ -38,6 +38,7 @@ use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
 use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
 use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
 use Iterator;
+use function Google\Web_Stories\is_amp;
 
 /**
  * Renderer class.
@@ -290,7 +291,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function is_amp_request() {
 
-		return ( amp_is_request() || is_amp_endpoint() );
+		return is_amp();
 	}
 
 	/**
