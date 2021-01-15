@@ -225,7 +225,7 @@ export function LeftRail() {
       </div>
       <Content>
         <NavList>
-          {enabledSecondaryPaths.map(({ Icon, ...path }) => (
+          {enabledSecondaryPaths.map((path) => (
             <NavListItem key={path.value}>
               <NavLink
                 active={path.value === state.currentPath}
