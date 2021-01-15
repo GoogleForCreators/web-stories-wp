@@ -43,34 +43,28 @@ const buttonCSS = css`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const AddPresetButton = styled.button`
-  ${buttonCSS}
   svg {
     width: 15px;
     height: 15px;
   }
 `;
 
+const AddPresetButton = styled.button`
+  ${buttonCSS}
+`;
+
 const EditMode = styled.button`
   ${buttonCSS}
 
   ${({ isEditMode }) =>
-    isEditMode
-      ? css`
-          color: ${({ theme }) => theme.colors.fg.white};
-          font-size: 12px;
-          line-height: 14px;
-          padding: 7px;
-          height: initial;
-        `
-      : css`
-          svg {
-            width: 15px;
-            height: 15px;
-          }
-        `}
+    isEditMode &&
+    css`
+      color: ${({ theme }) => theme.colors.fg.white};
+      font-size: 12px;
+      line-height: 14px;
+      padding: 7px;
+      height: initial;
+    `}
 `;
 
 function PresetsHeader({
