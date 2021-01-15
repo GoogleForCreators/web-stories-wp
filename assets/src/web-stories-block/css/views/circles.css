@@ -9,7 +9,7 @@
 .web-stories-list.is-view-type-circles .web-stories-list__story {
   max-width: var(--ws-circle-size);
   min-width: initial;
-  margin: 0 10px;
+  margin: 0 5px;
   text-align: center;
   display: flex;
   flex-direction: column;
