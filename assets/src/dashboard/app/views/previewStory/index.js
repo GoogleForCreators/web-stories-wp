@@ -37,10 +37,10 @@ import {
   Icons,
   Modal,
   Text,
+  useResizeEffect,
 } from '../../../../design-system';
 import { WPBODY_ID } from '../../../constants';
 import { StoryPropType } from '../../../types';
-import { useResizeEffect } from '../../../utils';
 import useApi from '../../api/useApi';
 import { ERRORS } from '../../textContent';
 
@@ -122,7 +122,7 @@ const PreviewStory = ({ story, handleClose }) => {
   useEffect(() => {
     const iframeContainer = document.getElementById(PREVIEW_CONTAINER_ID);
     if (previewMarkup.length > 0 && iframeContainer) {
-      let iframe = document.createElement('iframe');
+      const iframe = document.createElement('iframe');
       iframeContainer.appendChild(iframe);
       iframe.setAttribute('style', 'height:100%;width:100%;border:none;');
       iframe.setAttribute('title', __('AMP preview', 'web-stories'));

@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useResizeEffect } from '../../../design-system';
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
@@ -37,9 +38,8 @@ import {
   PAGE_NAV_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
-import useResizeEffect from '../../utils/useResizeEffect';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import useCanvas from './useCanvas';
+import { useCanvas } from '../../app';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -114,6 +114,7 @@ const PageAreaWithOverflow = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -157,7 +158,7 @@ function useLayoutParams(containerRef) {
     const maxWidth = width - PAGE_NAV_WIDTH * 2;
     const maxHeight = height - HEADER_HEIGHT - MENU_HEIGHT - CAROUSEL_HEIGHT;
 
-    let bestSize =
+    const bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
         (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
       ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];

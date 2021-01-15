@@ -168,7 +168,7 @@ function storyReducer(state, action) {
 
       const uniqueStoryIds = [...new Set(combinedStoryIds)];
 
-      let stories = {
+      const stories = {
         ...state.stories,
         ...reshapedStories,
       };

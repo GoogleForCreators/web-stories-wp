@@ -23,7 +23,7 @@ import { useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import useResizeEffect from '../../utils/useResizeEffect';
+import { useResizeEffect } from '../../../design-system';
 import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 

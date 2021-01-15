@@ -31,11 +31,8 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../../utils/objectPick';
 import stripHTML from '../../../../utils/stripHTML';
 import { useFont } from '../../../../app/font';
-import {
-  AdvancedDropDown,
-  MULTIPLE_DISPLAY_VALUE,
-  MULTIPLE_VALUE,
-} from '../../../form';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { AdvancedDropDown } from '../../../form';
 import { Option, Selected } from '../../../form/advancedDropDown/list/styled';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';

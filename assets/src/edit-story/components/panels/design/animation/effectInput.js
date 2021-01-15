@@ -61,7 +61,7 @@ function EffectInput({
     [onChange]
   );
 
-  let valueForField = effectConfig[field] || effectProps[field].defaultValue;
+  const valueForField = effectConfig[field] || effectProps[field].defaultValue;
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (

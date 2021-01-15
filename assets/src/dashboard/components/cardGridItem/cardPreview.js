@@ -35,8 +35,10 @@ import {
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
 import { useFocusOut } from '../../utils';
-import PreviewErrorBoundary from '../previewErrorBoundary';
-import PreviewPage from '../previewPage';
+import {
+  PreviewErrorBoundary,
+  PreviewPage,
+} from '../../../edit-story/components/previewPage';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`

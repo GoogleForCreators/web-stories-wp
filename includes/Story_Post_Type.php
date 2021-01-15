@@ -536,6 +536,8 @@ class Story_Post_Type {
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
+				'assetsURL'        => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'           => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'        => $max_upload_size,
 				'isDemo'           => $is_demo,
 				'capabilities'     => [

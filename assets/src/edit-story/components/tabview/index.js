@@ -25,8 +25,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import {
+  useKeyDownEffect,
+  useGlobalKeyDownEffect,
+} from '../../../design-system';
 import { useConfig } from '../../app';
-import { useKeyDownEffect, useGlobalKeyDownEffect } from '../keyboard';
 
 const ALERT_ICON_SIZE = 14;
 

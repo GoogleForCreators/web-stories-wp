@@ -79,7 +79,7 @@ function useKeyEffectInternal(
   useEffect(
     () => {
       const node =
-        typeof refOrNode.current !== 'undefined'
+        typeof refOrNode?.current !== 'undefined'
           ? refOrNode.current
           : refOrNode;
       if (!node) {

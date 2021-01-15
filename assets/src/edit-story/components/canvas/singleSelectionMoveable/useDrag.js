@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import useBatchingCallback from '../../../utils/useBatchingCallback';
+import { useBatchingCallback } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
 import { useUnits } from '../../../units';
 import { useStory } from '../../../app';

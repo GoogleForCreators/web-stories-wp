@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
-import { useGlobalKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect } from '../../../design-system';
 import WithTooltip from '../tooltip';
 import { Placement } from '../popup';
 import Modal from '../modal';

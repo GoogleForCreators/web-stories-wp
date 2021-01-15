@@ -18,8 +18,7 @@
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
-import { useStory } from '../../app';
-import useCanvas from '../canvas/useCanvas';
+import { useStory, useCanvas } from '../../app';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 

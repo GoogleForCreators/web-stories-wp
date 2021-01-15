@@ -36,7 +36,7 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import { PreviewPage } from '../../../components';
+import { PreviewPage } from '../../../../edit-story/components/previewPage';
 import { getPagePreviewHeights } from '../../../utils';
 import FontProvider from '../../font/fontProvider';
 import useApi from '../../api/useApi';

@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { More } from '../button';
 import DropDownList from '../form/dropDown/list';
 import Popup from '../popup';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 
 const MoreButton = styled(More)`
   position: absolute;

@@ -25,7 +25,7 @@ import Moveable from 'react-moveable';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import { MARK_OFFSET, MS_DIVISOR } from './ruler';
 
 const BAR_HEIGHT = 24;

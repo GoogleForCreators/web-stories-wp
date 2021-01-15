@@ -25,7 +25,7 @@ import { Fragment, useRef, forwardRef, useImperativeHandle } from 'react';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import WithTooltip from '../tooltip';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
