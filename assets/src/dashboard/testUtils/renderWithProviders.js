@@ -39,7 +39,9 @@ const defaultProviderValues = {
     ...externalDesignSystemTheme,
     colors: lightMode,
   },
-  config: {},
+  config: {
+    capabilities: { canReadPrivatePosts: true },
+  },
   api: {},
 };
 
