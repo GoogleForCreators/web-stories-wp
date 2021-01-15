@@ -29,20 +29,27 @@ import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
-import { useCanvas } from '../../../canvas';
+import { useCanvas, useInsertTextSet } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import { useKeyDownEffect } from '../../../keyboard';
+import useSnapping from '../../../canvas/utils/useSnapping';
+import { useStory } from '../../../../app/story';
+import objectWithout from '../../../../utils/objectWithout';
 
 const TargetBox = styled.div`
   position: absolute;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  max-width: 100%;
-  max-height: 100%;
+  ${({ isDragging }) =>
+    !isDragging &&
+    `
+      max-width: 100%;
+      max-height: 100%;
+    `};
   top: 0;
-  left: 0;
+  z-index: 1;
 `;
 
 function LibraryMoveable({
@@ -53,6 +60,8 @@ function LibraryMoveable({
   onClick,
   cloneElement,
   cloneProps,
+  previewSize,
+  elements = [],
   active = false,
 }) {
   const CloneElement = cloneElement;
@@ -62,17 +71,25 @@ function LibraryMoveable({
   const [hover, setHover] = useState(false);
   const cloneRef = useRef(null);
   const targetBoxRef = useRef(null);
+  const targetBoxSize = useRef(null);
   const overlayRef = useRef(null);
+  const moveable = useRef(null);
 
   const { pageSize } = useLayout(({ state }) => ({
     pageSize: state.canvasPageSize,
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer } = useCanvas((state) => ({
-    pageContainer: state.state.pageContainer,
-    nodesById: state.state.nodesById,
+  const { backgroundElement } = useStory((state) => ({
+    backgroundElement: state.state.currentPage?.elements?.[0] ?? {},
   }));
+  const { fullbleedContainer, nodesById, pageContainer } = useCanvas(
+    (state) => ({
+      fullbleedContainer: state.state.fullbleedContainer,
+      pageContainer: state.state.pageContainer,
+      nodesById: state.state.nodesById,
+    })
+  );
 
   const {
     state: { activeDropTargetId },
@@ -82,6 +99,8 @@ function LibraryMoveable({
   const frame = {
     translate: [0, 0],
   };
+
+  const { insertTextSetByOffset } = useInsertTextSet();
 
   const eventTracker = useRef({});
   const startEventTracking = (evt) => {
@@ -168,6 +187,14 @@ function LibraryMoveable({
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
     const targetBox = targetBoxRef.current.getBoundingClientRect();
+    // Let's save the original targetbox size.
+    targetBoxSize.current = {
+      width: targetBox.width,
+      height: targetBox.height,
+    };
+    // Assign new size to targetbox so that it would match the clone, for snapping.
+    targetBoxRef.current.style.width = `${cloneProps.width}px`;
+    targetBoxRef.current.style.height = `${cloneProps.height}px`;
     let x1 = targetBox.left - offsetX;
     let y1 = targetBox.top - offsetY;
     // In case of shapes, the clone is larger than the preview
@@ -178,12 +205,19 @@ function LibraryMoveable({
     }
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
+    // Update moveable to take the new size of the target for snapping.
+    if (moveable.current) {
+      moveable.current.updateRect();
+    }
   };
 
   const onDragEnd = ({ inputEvent }) => {
     if (didManuallyReset) {
       return false;
     }
+    // Restore the original size of the target.
+    targetBoxRef.current.style.width = `${targetBoxSize.current.width}px`;
+    targetBoxRef.current.style.height = `${targetBoxSize.current.height}px`;
     if (isMouseUpAClick(inputEvent, eventTracker.current)) {
       resetMoveable();
       onClick();
@@ -193,7 +227,7 @@ function LibraryMoveable({
     if (activeDropTargetId && handleDragEnd) {
       handleDragEnd();
       // Only continue if the clone is at least partially on the page.
-    } else if (!isTargetOutOfContainer(cloneRef.current, pageContainer)) {
+    } else if (!isTargetOutOfContainer(cloneRef.current, fullbleedContainer)) {
       const {
         x,
         y,
@@ -202,28 +236,35 @@ function LibraryMoveable({
       } = cloneRef.current.getBoundingClientRect();
       const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
 
-      insertElement(type, {
-        ...elementProps,
-        x: editorToDataX(x - pageX, pageSize.width),
-        y: editorToDataY(y - pageY, pageSize.height),
-        width: editorToDataX(w, pageSize.width),
-        height: editorToDataY(h, pageSize.height),
-      });
+      if (type === 'textSet') {
+        insertTextSetByOffset(elements, {
+          offsetX: editorToDataX(x - pageX, pageSize.width),
+          offsetY: editorToDataY(y - pageY, pageSize.height),
+        });
+      } else {
+        insertElement(type, {
+          ...elementProps,
+          x: editorToDataX(x - pageX, pageSize.width),
+          y: editorToDataY(y - pageY, pageSize.height),
+          width: editorToDataX(w, pageSize.width),
+          height: editorToDataY(h, pageSize.height),
+        });
+      }
     }
     resetMoveable();
     return undefined;
   };
 
-  // @todo Add this back once all elements are using Moveable in the Library.
-  /*const { offsetX: snappingOffsetX } = getTargetOffset();
+  const { offsetX: snappingOffsetX } = getTargetOffset();
   const snapProps = useSnapping({
     isDragging: true,
     canSnap: true,
     otherNodes: Object.values(objectWithout(nodesById, [backgroundElement.id])),
     snappingOffsetX,
-  });*/
+  });
 
-  const { width, height } = cloneProps;
+  const targetSize = previewSize ?? cloneProps;
+  const { width, height } = targetSize;
   return (
     <>
       <TargetBox
@@ -233,6 +274,7 @@ function LibraryMoveable({
         onClick={onClick}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
+        isDragging={isDragging || hover}
       />
       {(isDragging || active || hover) && (
         <>
@@ -245,6 +287,7 @@ function LibraryMoveable({
             }}
           />
           <Moveable
+            ref={moveable}
             className="default-moveable hide-handles"
             target={targetBoxRef.current}
             edge={true}
@@ -254,6 +297,7 @@ function LibraryMoveable({
             onDragStart={onDragStart}
             onDrag={onDrag}
             onDragEnd={onDragEnd}
+            {...snapProps}
           />
         </>
       )}
@@ -270,6 +314,8 @@ LibraryMoveable.propTypes = {
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,
   active: PropTypes.bool,
+  previewSize: PropTypes.object,
+  elements: PropTypes.array,
 };
 
 export default LibraryMoveable;

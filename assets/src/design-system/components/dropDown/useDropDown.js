@@ -22,7 +22,7 @@ import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
  */
-import { getOptions } from './utils';
+import { getOptions } from '../menu/utils';
 
 export default function useDropDown({ options = [], selectedValue }) {
   const [_isOpen, _setIsOpen] = useState(false);

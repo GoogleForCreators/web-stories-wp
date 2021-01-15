@@ -31,7 +31,7 @@ import { STORY_ANIMATION_STATE } from '../../../animation';
 import { UnitsProvider } from '../../../edit-story/units';
 import { StoryPropType } from '../../types';
 import { getPagePreviewHeights, useGridViewKeys } from '../../utils';
-import PreviewPage from '../previewPage';
+import { PreviewPage } from '../../../edit-story/components/previewPage';
 import {
   ActiveCard,
   GalleryContainer,

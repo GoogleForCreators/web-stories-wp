@@ -39,6 +39,10 @@ function reducer(state, { type, payload }) {
       return reducers.arrangePage(state, payload);
     }
 
+    case types.REPLACE_CURRENT_PAGE: {
+      return reducers.replaceCurrentPage(state, payload);
+    }
+
     case types.SET_CURRENT_PAGE: {
       return reducers.setCurrentPage(state, payload);
     }

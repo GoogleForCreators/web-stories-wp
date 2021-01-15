@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,22 @@
  */
 
 /**
- * Returns the greatest common divisor for two integers. Useful for determining
- * aspect ratios without dealing with float precision issues.
- *
- * @param {number} x The left number value
- * @param {number} y The right number value
- * @return {number|null} The largest positive number that divides both x and y.
+ * Internal dependencies
  */
-export function greatestCommonDivisor(x, y) {
-  return y ? greatestCommonDivisor(y, x % y) : x;
-}
+import { validateAdSenseSlotIdFormat } from '../';
+
+const idsToValidate = [
+  ['1234567890', true],
+  ['123456789', false],
+  ['12345678911', false],
+];
+
+describe('validateAdSenseSlotIdFormat', () => {
+  it.each(idsToValidate)(
+    'should take " %s " and return as %p AdSense slot id format',
+    (slotId, expected) => {
+      const bool = validateAdSenseSlotIdFormat(slotId);
+      expect(bool).toBe(expected);
+    }
+  );
+});

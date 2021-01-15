@@ -17,43 +17,12 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
-import { DEFAULT_DROPDOWN_HEIGHT } from '../constants';
-
-export const MenuContainer = styled.div(
-  ({
-    dropdownHeight = DEFAULT_DROPDOWN_HEIGHT,
-    styleOverride = '',
-    theme,
-  }) => css`
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: calc(100% - 2px);
-    max-height: ${dropdownHeight}px;
-    overflow-x: visible;
-    overflow-y: auto;
-    overscroll-behavior: none auto;
-    z-index: 2;
-    margin-top: 8px;
-    background-color: ${theme.colors.bg.primary};
-    border-radius: ${theme.borders.radius.small};
-    border: 2px solid ${theme.colors.divider.primary};
-    ${styleOverride}
-  `
-);
-MenuContainer.propTypes = {
-  anchorHeight: PropTypes.number,
-  dropdownHeight: PropTypes.number,
-  styleOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-};
 
 export const ListGroup = styled.ul`
   box-sizing: border-box;
@@ -89,7 +58,6 @@ export const ListItem = styled.li(
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     &:focus {
-      outline: none;
       background-color: ${isSelected
         ? theme.colors.interactiveBg.brandNormal
         : theme.colors.interactiveBg.brandHover};

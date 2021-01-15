@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
+use WP_Post_Type;
 use WP_Screen;
 
 /**
@@ -333,6 +334,16 @@ class Dashboard {
 			$max_upload_size = 0;
 		}
 
+		$can_read_private_posts = false;
+
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if (
+			$post_type_object instanceof WP_Post_Type &&
+			property_exists( $post_type_object->cap, 'read_private_posts' )
+		) {
+			$can_read_private_posts = current_user_can( $post_type_object->cap->read_private_posts );
+		}
+
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
@@ -356,9 +367,9 @@ class Dashboard {
 				'maxUpload'           => $max_upload_size,
 				'maxUploadFormatted'  => size_format( $max_upload_size ),
 				'capabilities'        => [
-					'canManageSettings' => current_user_can( 'manage_options' ),
-					'canUploadFiles'    => current_user_can( 'upload_files' ),
-
+					'canManageSettings'   => current_user_can( 'manage_options' ),
+					'canUploadFiles'      => current_user_can( 'upload_files' ),
+					'canReadPrivatePosts' => $can_read_private_posts,
 				],
 				'siteKitCapabilities' => [
 					'siteKitInstalled'      => $this->is_site_kit_plugin_installed(),

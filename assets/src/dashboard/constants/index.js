@@ -120,10 +120,7 @@ export const RESULT_LABELS = {
 };
 
 // API Query Constants
-export const ITEMS_PER_PAGE = 24;
 export const STORIES_PER_REQUEST = 24;
-
-export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
 export const TEXT_INPUT_DEBOUNCE = 300;
 

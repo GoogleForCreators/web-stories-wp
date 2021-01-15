@@ -22,8 +22,8 @@ import { memo } from 'react';
 /**
  * Internal dependencies
  */
-import DisplayElement from '../../edit-story/components/canvas/displayElement';
-import StoryPropTypes from '../../edit-story/types';
+import DisplayElement from '../canvas/displayElement';
+import StoryPropTypes from '../../types';
 
 function PreviewPageElements({ page }) {
   return page.elements.map(({ id, ...rest }) => (

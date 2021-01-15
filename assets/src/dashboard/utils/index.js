@@ -28,6 +28,9 @@ export {
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
 export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnalyticsIdFormat';
+export { default as validateAdSensePublisherIdFormat } from './validateAdSensePublisherIdFormat';
+export { default as validateAdSenseSlotIdFormat } from './validateAdSenseSlotIdFormat';
+export { default as validateAdManagerSlotIdFormat } from './validateAdManagerSlotIdFormat';
 
 export { default as addQueryArgs } from '../../edit-story/utils/addQueryArgs';
 export { default as getStoryPropsToSave } from '../../edit-story/app/story/utils/getStoryPropsToSave';

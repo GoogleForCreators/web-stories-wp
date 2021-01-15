@@ -39,7 +39,7 @@ function MetaBoxes() {
     // We need to wait for all scripts to load.
     // If the meta box loads the post script, it will already trigger this.
     // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L25-L35
-    let timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (window.postboxes?.page !== postType) {
         window.postboxes?.add_postbox_toggles(postType);
       }
