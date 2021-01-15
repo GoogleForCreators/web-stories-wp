@@ -76,7 +76,7 @@ export const MESSAGES = {
             /* translators: 1: minimum cover dimension width x minimum cover dimension height. 2: cover dimensions aspect ratio.  */
             __(
               // 'Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least %1$s in size and maintain a %2$s aspect ratio.',
-              "- Use as a representation of the story<br/>- Avoid images with embedded text<br/>- Use an image that's at least 640x853px<br/>- Maintain a %2$s aspect ratio.",
+              "- Use as a representation of the story<br/>- Avoid images with embedded text<br/>- Use an image that's at least 640x853px<br/>- Maintain a %2$s aspect ratio",
               'web-stories'
             ),
             `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
