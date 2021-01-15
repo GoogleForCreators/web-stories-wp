@@ -21,12 +21,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as HomeWithHeart } from '../../../src/edit-story/icons/home_with_heart.svg';
-import { ReactComponent as HomeWithHeartActive } from '../../../src/edit-story/icons/home_with_heart_active.svg';
-import { ReactComponent as FloppyDisk } from '../../../src/edit-story/icons/floppy_disk.svg';
-import { ReactComponent as FloppyDiskActive } from '../../../src/edit-story/icons/floppy_disk_active.svg';
-import { ReactComponent as Compass } from '../../../src/edit-story/icons/compass.svg';
-import { ReactComponent as CompassActive } from '../../../src/edit-story/icons/compass_active.svg';
+import {
+  Compass,
+  CompassActive,
+  FloppyDisk,
+  FloppyDiskActive,
+  HomeWithHeart,
+  HomeWithHeartActive,
+} from '../../design-system/icons/dashboard';
 import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
