@@ -2,6 +2,7 @@
 
 @media all and (min-width: 676px) {
   .web-stories-list.is-view-type-carousel .web-stories-list__story {
+    margin: 0 5px;
     max-width: var(--ws-story-max-width);
   }
 }

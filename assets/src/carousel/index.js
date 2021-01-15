@@ -150,9 +150,8 @@ domReady(() => {
             // Set to `auto` and provide item width to adjust to viewport
             slidesToShow: 'auto',
             slidesToScroll: 'auto',
-            itemWidth: carouselWrapper.querySelector(
-              '.web-stories-list__story-placeholder'
-            ).offsetWidth,
+            itemWidth: carouselWrapper.querySelector('.web-stories-list__story')
+              .offsetWidth,
             duration: 0.25,
           },
         },
