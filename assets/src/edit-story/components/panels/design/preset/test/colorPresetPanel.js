@@ -128,7 +128,7 @@ describe('Panels/Preset', () => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
 
-  getPanelInitialHeight.mockImplementation(() => 150);
+  getPanelInitialHeight.mockReturnValue(150);
 
   beforeAll(() => {
     localStorage.setItem(

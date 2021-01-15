@@ -501,6 +501,9 @@ describe('Panels/StylePreset/utils', () => {
       expect(
         getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
       ).toStrictEqual(45);
+
+      // No rows.
+      expect(getPanelInitialHeight(true, [])).toStrictEqual(140);
     });
 
     it('should get the initial height correctly for style presets', () => {
