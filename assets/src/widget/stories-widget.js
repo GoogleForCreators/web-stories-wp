@@ -63,7 +63,7 @@
    * Bind event on view type selection change.
    */
   const bindEvent = function () {
-    var dropdowns = viewSelectors();
+    const dropdowns = viewSelectors();
 
     if (dropdowns.length) {
       for (var i = 0; i < dropdowns.length; i++) {
