@@ -18,7 +18,7 @@
  * External dependencies
  */
 import MockDate from 'mockdate';
-import { subMinutes, subHours, subDays, addHours } from 'date-fns';
+import { subMinutes, subHours, subDays } from 'date-fns';
 import { toDate } from 'date-fns-tz';
 
 /**
