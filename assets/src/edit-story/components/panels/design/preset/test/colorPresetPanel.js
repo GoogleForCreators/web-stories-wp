@@ -30,6 +30,7 @@ import {
   getTextPresets,
   getPagePreset,
   presetHasOpacity,
+  presetHasGradient,
   areAllType,
   getPanelInitialHeight,
 } from '../utils';
@@ -118,6 +119,19 @@ describe('Panels/Preset', () => {
       g: 2,
       b: 2,
     },
+  };
+  const LINEAR_COLOR = {
+    type: 'linear',
+    stops: [
+      {
+        color: { r: 255, g: 0, b: 0 },
+        position: 0,
+      },
+      {
+        color: { r: 0, g: 0, b: 255 },
+        position: 1,
+      },
+    ],
   };
   const BACKGROUND_PROPS = {
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
@@ -412,6 +426,52 @@ describe('Panels/Preset', () => {
         content: '<span style="color: #010101">Hello World</span>',
       };
       expect(updatedContent).toStrictEqual(expectedContent);
+    });
+
+    it('should not apply colors with gradient to text', () => {
+      const extraStylePresets = {
+        colors: [LINEAR_COLOR],
+      };
+
+      presetHasGradient.mockImplementation(({ type }) => {
+        return Boolean(type) && 'solid' !== type;
+      });
+
+      const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
+      const applyPreset = getByRole('button', { name: APPLY_PRESET });
+      expect(applyPreset).toBeInTheDocument();
+
+      fireEvent.click(applyPreset);
+      expect(pushUpdate).toHaveBeenCalledTimes(0);
+    });
+
+    it('should allow removing linear color when text selected', () => {
+      const extraStylePresets = {
+        colors: [LINEAR_COLOR],
+      };
+
+      presetHasGradient.mockImplementation(({ type }) => {
+        return Boolean(type) && 'solid' !== type;
+      });
+
+      const { getByLabelText, getByRole, updateStory } = setupPanel(
+        extraStylePresets
+      );
+      const editButton = getByLabelText(EDIT_BUTTON_LABEL);
+      fireEvent.click(editButton);
+
+      const deletePreset = getByRole('button', { name: 'Delete color preset' });
+
+      fireEvent.click(deletePreset);
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          stylePresets: {
+            colors: [],
+            textStyles: [],
+          },
+        },
+      });
     });
 
     it('should not apply colors with opacity as Page background', () => {
