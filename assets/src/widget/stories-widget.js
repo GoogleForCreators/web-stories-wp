@@ -57,9 +57,7 @@
    *
    * @return {HTMLCollection} Array of elements.
    */
-  const viewSelectors = function () {
-    return document.getElementsByClassName('view-type stories-widget-field');
-  };
+  const viewSelectors = () =>  document.getElementsByClassName('view-type stories-widget-field');
 
   /**
    * Bind event on view type selection change.
