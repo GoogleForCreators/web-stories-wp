@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { createNewStory, clickButton } from '../../../utils';
+import { createNewStory, clickButton, uploadFile, deleteMedia } from '../../../utils';
 
 const MODAL = '.media-modal';
 
@@ -27,12 +27,14 @@ describe('Inserting .mov from dialog', () => {
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    // TODO Use mediaUpload here.
     await expect(page).toClick('button', { text: 'Upload' });
 
     await page.waitForSelector(MODAL, {
       visible: true,
     });
+
+    const fileName = await uploadFile('small-video.mov');
+
     await expect(page).toClick('button', { text: 'Media Library' });
     await clickButton(
       '.attachments-browser .attachments .attachment:first-of-type'
@@ -41,5 +43,7 @@ describe('Inserting .mov from dialog', () => {
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
 
     expect(page).toClick('.media-modal-close');
+
+    await deleteMedia(fileName);
   });
 });
