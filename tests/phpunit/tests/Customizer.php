@@ -19,13 +19,15 @@
 namespace Google\Web_Stories\Tests;
 
 use Google\Web_Stories\Customizer as TheCustomizer;
-use function Google\Web_Stories\get_stories_theme_support;
+use Google\Web_Stories\Traits\ThemeSupport;
 use WP_Error;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Customizer
  */
 class Customizer extends \WP_UnitTestCase {
+
+	use ThemeSupport;
 
 	/**
 	 * Instance of WP_Customize_Manager which is reset for each test.
@@ -297,7 +299,7 @@ class Customizer extends \WP_UnitTestCase {
 			'show-story-poster-default' => true,
 		];
 
-		$output = get_stories_theme_support();
+		$output = $this->get_stories_theme_support();
 
 		$this->assertEquals( $expected, $output );
 	}
