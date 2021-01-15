@@ -27,52 +27,73 @@ import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { createNewStory, withExperimentalFeatures } from '../../utils';
+import { createNewStory } from '../../utils';
 
 describe('Custom Meta Boxes', () => {
-  withExperimentalFeatures(['customMetaBoxes']);
-
-  beforeAll(async () => {
-    await activatePlugin('web-stories-test-plugin-meta-box');
+  describe('Unavailable', () => {
+    it('should not display button to toggle meta boxes', async () => {
+      await createNewStory();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).not.toMatchElement(
+        '[aria-label="Third-Party Meta Boxes"]'
+      );
+    });
   });
 
-  afterAll(async () => {
-    await deactivatePlugin('web-stories-test-plugin-meta-box');
-  });
+  describe('Available', () => {
+    beforeAll(async () => {
+      await activatePlugin('web-stories-test-plugin-meta-box');
+    });
 
-  it('should display meta boxes and save their content', async () => {
-    await createNewStory();
+    afterAll(async () => {
+      await deactivatePlugin('web-stories-test-plugin-meta-box');
+    });
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await page.type('input[placeholder="Add title"]', 'Meta Box Test');
+    it('should display meta boxes and save their content', async () => {
+      await createNewStory();
 
-    await expect(page).toMatchElement('#web_stories_test_meta_box_field');
-    await page.type('#web_stories_test_meta_box_field', 'Meta Box Test Value');
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await page.type('input[placeholder="Add title"]', 'Meta Box Test');
 
-    await percySnapshot(page, 'Custom Meta Boxes');
+      await expect(page).not.toMatchElement('#web_stories_test_meta_box_field');
 
-    // Verify that collapsing works via postbox.js from WordPress.
+      await expect(page).toClick('[aria-label="Third-Party Meta Boxes"]');
 
-    await expect(page).toClick('button.handlediv[aria-expanded="true"]');
-    await expect(page).toMatchElement(
-      'button.handlediv[aria-expanded="false"]'
-    );
+      await expect(page).toMatchElement('#web_stories_test_meta_box_field');
+      await page.type(
+        '#web_stories_test_meta_box_field',
+        'Meta Box Test Value'
+      );
 
-    await expect(page).toClick('button.handlediv[aria-expanded="false"]');
-    await expect(page).toMatchElement('button.handlediv[aria-expanded="true"]');
+      await percySnapshot(page, 'Custom Meta Boxes');
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
+      // Verify that collapsing works via postbox.js from WordPress.
 
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await expect(page).toClick('button.handlediv[aria-expanded="true"]');
+      await expect(page).toMatchElement(
+        'button.handlediv[aria-expanded="false"]'
+      );
 
-    // Refresh page to verify that the text has been persisted.
-    await page.reload();
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).toClick('button.handlediv[aria-expanded="false"]');
+      await expect(page).toMatchElement(
+        'button.handlediv[aria-expanded="true"]'
+      );
 
-    const metaBoxValue = await page.evaluate(
-      () => document.getElementById('web_stories_test_meta_box_field').value
-    );
-    await expect(metaBoxValue).toStrictEqual('Meta Box Test Value');
+      // Publish story.
+      await expect(page).toClick('button', { text: 'Publish' });
+
+      await expect(page).toMatchElement('button', { text: 'Dismiss' });
+
+      // Refresh page to verify that the text has been persisted.
+      await page.reload();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+      await expect(page).toClick('[aria-label="Third-Party Meta Boxes"]');
+
+      const metaBoxValue = await page.evaluate(
+        () => document.getElementById('web_stories_test_meta_box_field').value
+      );
+      await expect(metaBoxValue).toStrictEqual('Meta Box Test Value');
+    });
   });
 });
