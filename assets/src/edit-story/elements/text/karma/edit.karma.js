@@ -140,7 +140,7 @@ describe('TextEdit integration', () => {
   describe('add a multiline text element', () => {
     let element;
     let frame;
-    let text = '\n\nThis is some test text.\n\nThis is more test text.\n\n';
+    const text = '\n\nThis is some test text.\n\nThis is more test text.\n\n';
 
     beforeEach(async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());

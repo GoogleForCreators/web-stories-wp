@@ -20,3 +20,4 @@ export { default as createBuild } from './createBuild.js';
 export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
 export { default as updateVersionNumbers } from './updateVersionNumbers.js';
 export { default as updateTemplates } from './updateTemplates.js';
+export { default as updateCdnUrl } from './updateCdnUrl.js';

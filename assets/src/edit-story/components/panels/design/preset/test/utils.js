@@ -150,7 +150,7 @@ describe('Panels/StylePreset/utils', () => {
     ).not.toBeDefined();
   });
 
-  it('should get correct text style presets from selected elements', () => {
+  it('should get correct and unique text style presets from selected elements', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       font: {
@@ -169,6 +169,13 @@ describe('Panels/StylePreset/utils', () => {
           horizontal: 0,
         },
         content: '<span style="color: rgb(1,1,1)">Content</span>',
+      },
+      {
+        type: 'text',
+        x: 30,
+        content:
+          '<span style="font-weight: 700; font-style: italic; color: rgb(2,2,2)">Content</span>',
+        ...objectWithout(stylePreset, ['color']),
       },
       {
         type: 'text',
@@ -401,6 +408,28 @@ describe('Panels/StylePreset/utils', () => {
     };
     const expected = {
       colors: [TEST_COLOR, TEST_COLOR_2],
+    };
+    const presets = getShapePresets(elements, stylePresets);
+    expect(presets).toStrictEqual(expected);
+  });
+
+  it('should get duplicate preset only once from shape', () => {
+    const elements = [
+      {
+        type: 'shape',
+        backgroundColor: TEST_COLOR,
+      },
+      {
+        type: 'shape',
+        backgroundColor: TEST_COLOR,
+      },
+    ];
+    const stylePresets = {
+      textStyles: [],
+      colors: [],
+    };
+    const expected = {
+      colors: [TEST_COLOR],
     };
     const presets = getShapePresets(elements, stylePresets);
     expect(presets).toStrictEqual(expected);
