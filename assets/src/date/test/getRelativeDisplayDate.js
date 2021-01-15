@@ -114,20 +114,6 @@ describe('date/getRelativeDisplayDate', () => {
     expect(formattedDate).toStrictEqual('yesterday');
   });
 
-  it('should return time with g:i A format for future date on same day', () => {
-    updateSettings({
-      dateFormat: 'F j, Y',
-      gmtOffset: -7,
-      timeFormat: 'g:i A',
-      timezone: 'America/Los_Angeles',
-    });
-
-    const date = addHours(getCurrentDate(), 1);
-    const formattedDate = getRelativeDisplayDate(date.toISOString());
-
-    expect(formattedDate).toStrictEqual('1:00 PM');
-  });
-
   it('should return 2020-05-02 with no formatting options', () => {
     const date = '2020-05-02T10:47:26';
     const formattedDate = getRelativeDisplayDate(date);
