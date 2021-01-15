@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __, sprintf, _n } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
@@ -160,135 +160,149 @@ export const MESSAGES = {
   ACCESSIBILITY: {
     LOW_CONTRAST: {
       MAIN_TEXT: __(
-        'Low contrast between font and background color',
+        'Adjust contrast between font and background color',
         'web-stories'
       ),
       HELPER_TEXT: __(
-        'A high contrast makes the words easy to see.',
+        '- Ensure legibility of text and ease of reading by increasing color contrast',
         'web-stories'
       ),
     },
     FONT_TOO_SMALL: {
-      MAIN_TEXT: __('Font size too small', 'web-stories'),
+      MAIN_TEXT: __('Increase font size', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum font size. */
-        __('Text should have size %d or larger.', 'web-stories'),
+        __(
+          '- Ensure legibility by selecting text size %d or greater',
+          'web-stories'
+        ),
         MIN_FONT_SIZE
       ),
     },
     LOW_IMAGE_RESOLUTION: {
-      MAIN_TEXT: __('Low image resolution', 'web-stories'),
+      MAIN_TEXT: __('Select image with higher resolution', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum image size width x minimum image size height. */
         __(
-          'Use %s for full screen images. Use similar pixel density for cropped images.',
+          '- Use %s for a full-screen image<br/>- Consider similar pixel density for cropped images',
           'web-stories'
         ),
         `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
       ),
     },
     MISSING_CAPTIONS: {
-      MAIN_TEXT: __('Video missing captions', 'web-stories'),
+      MAIN_TEXT: __('Add captions to video', 'web-stories'),
       HELPER_TEXT: __(
-        'Add captions to your video. Captions help keep your audience engaged, even when they can’t listen to the audio.',
+        "- Keep the audience engaged even when they can't listen to the audio",
         'web-stories'
       ),
     },
     MISSING_VIDEO_DESCRIPTION: {
-      MAIN_TEXT: __('Video missing description', 'web-stories'),
-      HELPER_TEXT: __(
-        'Add a video description. Descriptions help with indexability and accessibility (for videos without captions). Include any burned-in text inside of the video.',
-        'web-stories'
+      MAIN_TEXT: __('Add video description', 'web-stories'),
+      HELPER_TEXT: (
+        <TranslateWithMarkup>
+          {__(
+            '- Improves indexability and accessibility (for videos without captions)<br/>- Include any text or captions that are already a rendered part of the video',
+            'web-stories'
+          )}
+        </TranslateWithMarkup>
       ),
     },
     TOO_MANY_LINKS: {
-      MAIN_TEXT: __('Too many links on a page', 'web-stories'),
+      MAIN_TEXT: __('Reduce number of links', 'web-stories'),
       HELPER_TEXT: __(
-        'Avoid having more than three links per page.',
+        '- Avoid having more than 3 links on one page',
         'web-stories'
       ),
     },
     LINK_REGION_TOO_SMALL: {
-      MAIN_TEXT: __('Link tappable region too small', 'web-stories'),
+      MAIN_TEXT: __('Increase tappable space for link', 'web-stories'),
       HELPER_TEXT: __(
-        "Make the linked element large enough so it's easy for a user to tap it.",
+        '- Make the linked element large enough for users to easily tap it',
         'web-stories'
       ),
     },
     MISSING_IMAGE_ALT_TEXT: {
-      MAIN_TEXT: __('Image missing description', 'web-stories'),
+      MAIN_TEXT: __('Add assistive text to image', 'web-stories'),
       HELPER_TEXT: __(
-        'Add meaningful assistive text to images to optimize accessibility and indexability.',
+        '- Optimize accessibility and indexability with meaningful text to better assist users',
         'web-stories'
       ),
     },
   },
   DISTRIBUTION: {
     MISSING_DESCRIPTION: {
-      MAIN_TEXT: __('Missing Story Description', 'web-stories'),
+      MAIN_TEXT: __('Add story description', 'web-stories'),
       HELPER_TEXT: __(
-        'Add a Story Description in the Document panel.',
+        '- Incorporate a brief description for better user experience',
         'web-stories'
       ),
     },
   },
   GENERAL_GUIDELINES: {
     STORY_TOO_SHORT: {
-      MAIN_TEXT: __('Story too short', 'web-stories'),
+      MAIN_TEXT: __('Make story longer', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum number of pages. 2: maximum number of pages. */
-        __('Use between %1$d and %2$d pages in your story.', 'web-stories'),
+        __(
+          '- It is recommended to have between %1$d and %2$d pages in your story',
+          'web-stories'
+        ),
         MIN_STORY_PAGES,
         MAX_STORY_PAGES
       ),
     },
     STORY_TOO_LONG: {
-      MAIN_TEXT: __('Story too long', 'web-stories'),
+      MAIN_TEXT: __('Make story shorter', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum number of pages. 2: maximum number of pages. */
-        __('Use between %1$d and %2$d pages in your story.', 'web-stories'),
+        __(
+          '- It is recommended to have between %1$d and %2$d pages in your story',
+          'web-stories'
+        ),
         MIN_STORY_PAGES,
         MAX_STORY_PAGES
       ),
     },
     STORY_TITLE_TOO_LONG: {
-      MAIN_TEXT: __('Story title too long', 'web-stories'),
+      MAIN_TEXT: __('Make story title shorter', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum number of story characters. */
-        __('Story title should have %d characters or fewer.', 'web-stories'),
+        __('- Limit story title to %d characters or less', 'web-stories'),
         MAX_STORY_TITLE_LENGTH_CHARS
       ),
     },
   },
   TEXT: {
     TOO_MUCH_PAGE_TEXT: {
-      MAIN_TEXT: __('Too much text on page', 'web-stories'),
+      MAIN_TEXT: __('Reduce text on page', 'web-stories'),
       // eslint-disable eslint/no-useless-escape
-      HELPER_TEXT: sprintf(
-        /* translators: 1: maximum number of story characters. 2: maximum percentage of characters, depending on number of pages. */
-        __(
-          'Keep text to max %1$d characters per page. Consider using a page attachment, breaking up the text into multiple screens, or keeping the total number of pages with a lot of text to less than %2$d%% of the pages in the story.',
-          'web-stories'
-        ),
-        MAX_STORY_CHARACTERS,
-        MAX_CHARACTER_PERCENTAGE
+      HELPER_TEXT: (
+        <TranslateWithMarkup>
+          {sprintf(
+            /* translators: 1: maximum number of story characters. 2: maximum percentage of characters, depending on number of pages. */
+            __(
+              '- Keep text to max %1$d characters per page<br/>- Use a page attachment breaking up the text into multiple screens; or<br/>- Keep the total number of text-heavy pages under %2$d%% of total number of story pages',
+              'web-stories'
+            ),
+            MAX_STORY_CHARACTERS,
+            MAX_CHARACTER_PERCENTAGE
+          )}
+        </TranslateWithMarkup>
       ),
     },
     TOO_LITTLE_TEXT: {
-      MAIN_TEXT: __('Too little text', 'web-stories'),
+      MAIN_TEXT: __('Increase amount of total text', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: %d: minimum number of story characters. */
-        __(
-          'The entire story should have a minimum of %d characters of text in total.',
-          'web-stories'
-        ),
+        __('- Make your story text %d characters or more', 'web-stories'),
         MIN_STORY_CHARACTERS
       ),
     },
   },
   MEDIA: {
     VIDEO_IMAGE_TOO_SMALL_ON_PAGE: {
-      MAIN_TEXT: __('Video or image too small on the page', 'web-stories'),
+      MAIN_TEXT: __('Increase video or image size on the page', 'web-stories'),
       HELPER_TEXT: (
         <TranslateWithMarkup
           mapping={{
@@ -303,59 +317,60 @@ export const MESSAGES = {
           }}
         >
           {__(
-            'Use full screen videos and images where possible to keep to an immersive feeling. <a>(more info)</a>',
+            '-<a> Use full screen videos and images whenever possible to create a more immersive experience. (more info)</a>',
             'web-stories'
           )}
         </TranslateWithMarkup>
       ),
     },
     LOW_IMAGE_RESOLUTION: {
-      MAIN_TEXT: __('Low image resolution', 'web-stories'),
+      MAIN_TEXT: __('Choose an image with higher resolution', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum image size width x minimum image size height. */
         __(
-          'Use %s for full screen images, keep to similar pixel density for cropped images.',
+          '- Use %s for full screen image<br/>- Consider similar pixel density for cropped images',
           'web-stories'
         ),
         `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
       ),
     },
     VIDEO_TOO_LONG: {
-      MAIN_TEXT: __('Video too long', 'web-stories'),
+      MAIN_TEXT: __('Break video into segments', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: %d: maximum video length in minutes. */
-        _n(
-          'Break longer videos into segments of %d minute or less.',
-          'Break longer videos into segments of %d minutes or less.',
-          MAX_VIDEO_LENGTH_MINUTES,
+        __(
+          '- Split longer videos into segments of %d minute or less',
           'web-stories'
         ),
         MAX_VIDEO_LENGTH_MINUTES
       ),
     },
     VIDEO_FRAME_RATE_TOO_LOW: {
-      MAIN_TEXT: __('Video frame rate low', 'web-stories'),
+      MAIN_TEXT: __('Increase video frame rate', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: %d: minimum number of frames per second for video. */
         __(
-          'Video should have a minimum of %d frames per second.',
+          '- Ensure your video has a minimum of %d frames per second',
           'web-stories'
         ),
         MIN_VIDEO_FPS
       ),
     },
     VIDEO_RESOLUTION_TOO_LOW: {
-      MAIN_TEXT: __('Video resolution low', 'web-stories'),
+      MAIN_TEXT: __('Increase video resolution', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum video resolution. */
-        __('Videos should have a minimum resolution of %s.', 'web-stories'),
+        __(
+          '- Ensure your videos has a minimum resolution of %s',
+          'web-stories'
+        ),
         `${MIN_VIDEO_RESOLUTION}p`
       ),
     },
     VIDEO_RESOLUTION_TOO_HIGH: {
-      MAIN_TEXT: __('Video resolution too high', 'web-stories'),
+      MAIN_TEXT: __('Reduce video resolution', 'web-stories'),
       HELPER_TEXT: __(
-        "Many mobile devices don't support video resolutions larger than 4K. Reduce the video resolution.",
+        "- Optimize reach and engagement by accounting for the large number of mobile devices don't support video resolutions larger than 4K",
         'web-stories'
       ),
     },
