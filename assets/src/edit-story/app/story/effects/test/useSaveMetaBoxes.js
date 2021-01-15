@@ -44,9 +44,7 @@ const render = ({ configValue, isEnabled, ...initialProps }) => {
         <FlagsProvider features={{ customMetaBoxes: isEnabled }}>
           <ConfigContext.Provider value={configValue}>
             <APIContext.Provider value={apiContextValue}>
-              <MetaBoxesProvider>
-                {children}
-              </MetaBoxesProvider>
+              <MetaBoxesProvider>{children}</MetaBoxesProvider>
             </APIContext.Provider>
           </ConfigContext.Provider>
         </FlagsProvider>
