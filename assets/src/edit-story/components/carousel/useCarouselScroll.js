@@ -24,7 +24,7 @@ import { useCallback, useState, useLayoutEffect } from 'react';
  */
 import { useConfig } from '../../app';
 
-function useCarouselScroll({ listRef, carouselWidth, hasOverflow }) {
+function useCarouselScroll({ listElement, carouselWidth, hasOverflow }) {
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const { isRTL } = useConfig();
 
@@ -34,17 +34,17 @@ function useCarouselScroll({ listRef, carouselWidth, hasOverflow }) {
         offset *= -1;
       }
 
-      if (!listRef.current.scrollBy) {
-        listRef.current.scrollLeft += offset;
+      if (!listElement.scrollBy) {
+        listElement.scrollLeft += offset;
         return;
       }
 
-      listRef.current.scrollBy({
+      listElement.scrollBy({
         left: offset,
         behavior: 'smooth',
       });
     },
-    [listRef, isRTL]
+    [listElement, isRTL]
   );
 
   const scrollByPx = carouselWidth;
@@ -64,8 +64,6 @@ function useCarouselScroll({ listRef, carouselWidth, hasOverflow }) {
   ]);
 
   useLayoutEffect(() => {
-    const listElement = listRef.current;
-
     if (!hasOverflow || !listElement) {
       return undefined;
     }
@@ -81,7 +79,7 @@ function useCarouselScroll({ listRef, carouselWidth, hasOverflow }) {
     return () => {
       listElement.removeEventListener('scroll', handleScroll);
     };
-  }, [listRef, hasOverflow]);
+  }, [listElement, hasOverflow]);
 
   return {
     canScrollBack,

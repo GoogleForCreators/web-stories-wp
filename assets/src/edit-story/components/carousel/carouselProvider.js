@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useLayoutEffect, useRef, useMemo } from 'react';
+import { useCallback, useLayoutEffect, useRef, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -42,7 +42,7 @@ function CarouselProvider({ availableSpace, children }) {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
 
-  const listRef = useRef(null);
+  const [listElement, setListElement] = useState(null);
   const pageRefs = useRef([]);
 
   const numPages = pages.length;
@@ -66,9 +66,9 @@ function CarouselProvider({ availableSpace, children }) {
     canScrollForward,
     scrollBack,
     scrollForward,
-  } = useCarouselScroll({ listRef, carouselWidth, hasOverflow });
+  } = useCarouselScroll({ listElement, carouselWidth, hasOverflow });
 
-  useCarouselKeys({ ref: listRef, pageRefs });
+  useCarouselKeys({ listElement, pageRefs });
 
   useLayoutEffect(() => {
     if (!hasOverflow) {
@@ -119,7 +119,7 @@ function CarouselProvider({ availableSpace, children }) {
       scrollForward,
       clickPage,
       rearrangePages,
-      setListRef: listRef,
+      setListRef: setListElement,
       setPageRef,
     },
   };

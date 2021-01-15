@@ -26,7 +26,7 @@ import { useEscapeToBlurEffect, useKeyDownEffect } from '../keyboard';
 import { useStory, useConfig } from '../../app';
 import { duplicatePage } from '../../elements';
 
-function useCarouselKeys({ ref, pageRefs }) {
+function useCarouselKeys({ listElement, pageRefs }) {
   const { isRTL } = useConfig();
   const {
     addPageAt,
@@ -53,11 +53,11 @@ function useCarouselKeys({ ref, pageRefs }) {
 
   const pageIds = useMemo(() => pages.map(({ id }) => id), [pages]);
 
-  useEscapeToBlurEffect(ref);
+  useEscapeToBlurEffect({ current: listElement });
 
   // Navigate left and right.
   useKeyDownEffect(
-    ref,
+    listElement,
     { key: ['up', 'down', 'left', 'right'] },
     ({ key }) => {
       // Intercept all keys, but only handle left and right.
@@ -84,7 +84,7 @@ function useCarouselKeys({ ref, pageRefs }) {
 
   // Rearrange pages.
   useKeyDownEffect(
-    ref,
+    listElement,
     { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
     (evt) => {
       const { key, shiftKey } = evt;
@@ -114,7 +114,7 @@ function useCarouselKeys({ ref, pageRefs }) {
 
   // Delete the current page.
   useKeyDownEffect(
-    ref,
+    listElement,
     'delete',
     () => {
       deletePage({ pageId: currentPageId });
@@ -124,7 +124,7 @@ function useCarouselKeys({ ref, pageRefs }) {
 
   // Clone the current page.
   useKeyDownEffect(
-    ref,
+    listElement,
     'clone',
     () => {
       const index = pageIds.indexOf(currentPage.id);
