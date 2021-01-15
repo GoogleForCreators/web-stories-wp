@@ -44,7 +44,7 @@ const defaultConfig = {
     installed: false,
     active: false,
     analyticActive: false,
-    link: 'https://example.com/wp-admin/plugins.php'
+    link: 'https://example.com/wp-admin/plugins.php',
   },
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',
