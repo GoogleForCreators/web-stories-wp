@@ -38,13 +38,24 @@ async function trackClick(event, eventName, eventCategory, url) {
     return Promise.resolve();
   }
 
-  event.preventDefault();
-
   const eventData = {
     send_to: config.trackingId,
     event_category: eventCategory,
     event_label: url,
   };
+
+  const openLinkInNewTab =
+    event.target === '_blank' ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.metaKey ||
+    event.which === 2;
+
+  if (openLinkInNewTab) {
+    return track(eventName, eventData);
+  }
+
+  event.preventDefault();
 
   return track(eventName, eventData).finally(() => {
     document.location = url;
