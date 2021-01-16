@@ -90,22 +90,20 @@ const StyledCheckmark = styled(Checkmark)`
   width: 16px;
 `;
 
-export default function Checkbox({ checked, disabled, ...props }) {
-  return (
-    <FlexContainer>
-      <Border disabled={disabled}>
-        <CheckboxContainer disabled={disabled}>
-          {checked && <StyledCheckmark />}
-          <input type="checkbox" disabled={disabled} {...props} />
-        </CheckboxContainer>
-      </Border>
-    </FlexContainer>
-  );
-}
+const Checkbox = ({ checked, disabled, ...props }) => (
+  <FlexContainer>
+    <Border disabled={disabled}>
+      <CheckboxContainer disabled={disabled}>
+        {checked && <StyledCheckmark />}
+        <input type="checkbox" disabled={disabled} {...props} />
+      </CheckboxContainer>
+    </Border>
+  </FlexContainer>
+);
 
 Checkbox.propTypes = {
   checked: propTypes.bool,
   disabled: propTypes.bool,
 };
 
-Checkbox.defaultProps = {};
+export { Checkbox };

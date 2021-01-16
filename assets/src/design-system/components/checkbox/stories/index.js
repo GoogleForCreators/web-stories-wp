@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Checkbox from '../index';
+import { Checkbox } from '../index';
 
 export default {
   title: 'DesignSystem/Components/Checkbox',
