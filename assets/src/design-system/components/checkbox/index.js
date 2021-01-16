@@ -94,7 +94,7 @@ const Checkbox = ({ checked, disabled, ...props }) => (
   <FlexContainer>
     <Border disabled={disabled}>
       <CheckboxContainer disabled={disabled}>
-        {checked && <StyledCheckmark />}
+        {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
         <input type="checkbox" disabled={disabled} {...props} />
       </CheckboxContainer>
     </Border>

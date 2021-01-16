@@ -32,4 +32,20 @@ describe('Checkbox', () => {
 
     expect(getByTestId('checkbox')).toBeInTheDocument();
   });
+
+  it('should render the checkmark if the checkbox is checked', () => {
+    const { getByTestId } = renderWithProviders(
+      <Checkbox data-testid="checkbox" checked />
+    );
+
+    expect(getByTestId('checkbox-checkmark')).toBeInTheDocument();
+  });
+
+  it('should not render the checkmark if the checkbox is not checked', () => {
+    const { queryByTestId } = renderWithProviders(
+      <Checkbox data-testid="checkbox" />
+    );
+
+    expect(queryByTestId('checkbox-checkmark')).not.toBeInTheDocument();
+  });
 });
