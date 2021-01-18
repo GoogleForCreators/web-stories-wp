@@ -23,7 +23,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../components/canvas';
+import { useCanvas } from '../../app';
 import useDoubleClick from '../../utils/useDoubleClick';
 import { elementFillContent } from '../shared';
 import StoryPropTypes from '../../types';

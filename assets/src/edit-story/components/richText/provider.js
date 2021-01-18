@@ -24,7 +24,7 @@ import { EditorState } from 'draft-js';
 /**
  * Internal dependencies
  */
-import useCanvas from '../canvas/useCanvas';
+import { useCanvas } from '../../app';
 import RichTextContext from './context';
 import {
   getSelectionForAll,

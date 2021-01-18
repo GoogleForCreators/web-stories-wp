@@ -23,8 +23,8 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { identity, useContextSelector } from '../design-system';
 import { SCROLLBAR_WIDTH } from './constants';
-import { identity, useContextSelector } from './utils/context';
 
 export const GlobalStyle = createGlobalStyle`
 	*,

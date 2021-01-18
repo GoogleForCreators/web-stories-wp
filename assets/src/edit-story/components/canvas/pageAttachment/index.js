@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useCanvas from '../useCanvas';
+import { useCanvas } from '../../../app';
 import Popup from '../../popup';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 

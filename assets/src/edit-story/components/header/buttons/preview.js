@@ -27,8 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { addQueryArgs } from '../../../../design-system';
 import { trackEvent } from '../../../../tracking';
-import addQueryArgs from '../../../utils/addQueryArgs';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import { Outline } from '../../button';
 import escapeHTML from '../../../utils/escapeHTML';

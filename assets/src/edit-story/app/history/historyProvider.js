@@ -23,7 +23,7 @@ import { useCallback, useEffect, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '../../components/keyboard';
+import { useGlobalKeyDownEffect } from '../../../design-system';
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';

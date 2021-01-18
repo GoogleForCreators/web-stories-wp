@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../types';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import useFocusTrapping from '../../utils/useFocusTrapping';

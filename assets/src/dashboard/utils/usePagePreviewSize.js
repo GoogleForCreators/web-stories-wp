@@ -22,6 +22,7 @@ import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
  */
+import { useResizeEffect } from '../../design-system';
 import theme from '../theme';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
@@ -29,7 +30,6 @@ import {
   PAGE_RATIO,
   WPBODY_ID,
 } from '../constants';
-import { useResizeEffect } from './';
 
 /**
  * Here we need to calculate two heights for every pagePreview in use.

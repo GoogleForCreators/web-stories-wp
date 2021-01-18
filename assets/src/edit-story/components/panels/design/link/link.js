@@ -30,14 +30,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
-import { useAPI } from '../../../../app/api';
-import useBatchingCallback from '../../../../utils/useBatchingCallback';
+import { useBatchingCallback } from '../../../../../design-system';
+import { useStory, useAPI, useCanvas } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import { Close } from '../../../../icons';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { Media, Row, Button, LinkInput, MULTIPLE_VALUE } from '../../../form';
-import { useCanvas } from '../../../canvas';
+import { MULTIPLE_VALUE } from '../../../../constants';
+import { Media, Row, Button, LinkInput } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import { ExpandedTextInput, useCommonObjectValue } from '../../shared';

@@ -29,7 +29,7 @@ jest.mock('../../useLibrary');
 import useLibrary from '../../useLibrary';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../constants';
 import { UnitsProvider } from '../../../../units';
-import CanvasContext from '../../../canvas/context';
+import CanvasContext from '../../../../app/canvas/context';
 
 describe('ShapePreview', () => {
   const insertElement = jest.fn();

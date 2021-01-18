@@ -25,7 +25,7 @@ import { screen } from '@testing-library/react';
 import ConfigContext from '../../../../../app/config/context';
 import LinkPanel from '../link';
 import StoryContext from '../../../../../app/story/context';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
 jest.mock('../../../../../elements');

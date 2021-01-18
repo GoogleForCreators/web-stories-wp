@@ -132,7 +132,7 @@ function TextSets({ paneRef }) {
   );
 
   const rowVirtualizer = useVirtual({
-    size: Math.ceil(filteredTextSets.length / 2),
+    size: Math.ceil((filteredTextSets || []).length / 2),
     parentRef: paneRef,
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
@@ -185,14 +185,14 @@ function TextSets({ paneRef }) {
                 height={virtualRow.size}
                 translateY={virtualRow.start}
               >
-                {filteredTextSets[firstColumnIndex].length > 0 && (
+                {(filteredTextSets[firstColumnIndex] || []).length > 0 && (
                   <TextSet
                     key={firstColumnIndex}
                     elements={filteredTextSets[firstColumnIndex]}
                   />
                 )}
                 {filteredTextSets[secondColumnIndex] &&
-                  filteredTextSets[secondColumnIndex].length > 0 && (
+                  (filteredTextSets[secondColumnIndex] || []).length > 0 && (
                     <TextSet
                       key={secondColumnIndex}
                       elements={filteredTextSets[secondColumnIndex]}
