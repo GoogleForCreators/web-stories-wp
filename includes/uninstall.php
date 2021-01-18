@@ -118,6 +118,17 @@ function delete_stories_post_meta() {
 }
 
 /**
+ * Deletes all associated user meta data.
+ *
+ * @since 1.3.0
+ *
+ * @return void
+ */
+function delete_stories_user_meta() {
+	delete_metadata( 'user', 0, Tracking::OPTIN_META_KEY, '', true );
+}
+
+/**
  * Deletes all stories & templates.
  *
  * @since 1.0.0
