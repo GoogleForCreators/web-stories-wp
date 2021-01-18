@@ -39,59 +39,50 @@ function StoryCard({
   isShowingExcerpt,
   imageOnRight,
 }) {
-  const singleStoryClasses = classNames('web-stories-list__story-wrapper');
-  const imageAlignmentClass = classNames('web-stories-list__inner-wrapper', {
+  const singleStoryClasses = classNames('web-stories-list__story', {
     [`image-align-right`]: imageOnRight,
-    [`image-align-left`]: !imageOnRight,
   });
   const hasContentOverlay = isShowingTitle || isShowingAuthor || isShowingDate;
   const dateFormat = __experimentalGetSettings().formats.date;
 
   return (
     <div className={singleStoryClasses}>
-      <div className={imageAlignmentClass}>
-        <div
-          className="web-stories-list__story-placeholder"
-          style={{
-            backgroundImage: poster ? `url('${poster}')` : undefined,
-          }}
-        />
-        {hasContentOverlay && (
-          <div className="story-content-overlay web-stories-list__story-content-overlay">
-            {isShowingTitle && title && (
-              <RawHTML className="story-content-overlay__title">
-                {title}
-              </RawHTML>
-            )}
-            {isShowingExcerpt && excerpt && (
-              <RawHTML className="story-content-overlay__excerpt">
-                {excerpt}
-              </RawHTML>
-            )}
-            {isShowingAuthor && (
-              <div className="story-content-overlay__author">
-                {sprintf(
-                  /* translators: byline. %s: current author. */
-                  __('by %s', 'web-stories'),
-                  author
-                )}
-              </div>
-            )}
-            {isShowingDate && (
-              <time
-                dateTime={format('c', date)}
-                className="story-content-overlay__date"
-              >
-                {sprintf(
-                  /* translators: %s: publish date. */
-                  __('On %s', 'web-stories'),
-                  dateI18n(dateFormat, date)
-                )}
-              </time>
-            )}
-          </div>
-        )}
+      <div className="web-stories-list__story-poster">
+        <img src={poster} alt={title} />
       </div>
+      {hasContentOverlay && (
+        <div className="story-content-overlay web-stories-list__story-content-overlay">
+          {isShowingTitle && title && (
+            <RawHTML className="story-content-overlay__title">{title}</RawHTML>
+          )}
+          {isShowingExcerpt && excerpt && (
+            <RawHTML className="story-content-overlay__excerpt">
+              {excerpt}
+            </RawHTML>
+          )}
+          {isShowingAuthor && (
+            <div className="story-content-overlay__author">
+              {sprintf(
+                /* translators: byline. %s: current author. */
+                __('by %s', 'web-stories'),
+                author
+              )}
+            </div>
+          )}
+          {isShowingDate && (
+            <time
+              dateTime={format('c', date)}
+              className="story-content-overlay__date"
+            >
+              {sprintf(
+                /* translators: %s: publish date. */
+                __('On %s', 'web-stories'),
+                dateI18n(dateFormat, date)
+              )}
+            </time>
+          )}
+        </div>
+      )}
     </div>
   );
 }
