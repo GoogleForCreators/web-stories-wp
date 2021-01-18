@@ -52,28 +52,33 @@ function StoriesPreview(props) {
     <div
       className={blockClasses}
       style={{
-        '--size': sizeOfCircles ? `${sizeOfCircles}px` : undefined,
+        '--ws-circle-size':
+          'circles' === viewType && sizeOfCircles
+            ? `${sizeOfCircles}px`
+            : undefined,
       }}
     >
-      {stories.map((story) => {
-        return (
-          <StoryCard
-            key={story.id}
-            url={story.link}
-            title={story.title.rendered}
-            excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
-            date={story.date_gmt}
-            author={story._embedded.author[0].name}
-            poster={story.featured_media_url}
-            imageOnRight={isShowing('image_align', fieldState[viewType])}
-            isShowingAuthor={isShowing('author', fieldState[viewType])}
-            isShowingDate={isShowing('date', fieldState[viewType])}
-            isShowingTitle={isShowing('title', fieldState[viewType])}
-            isShowingExcerpt={isShowing('excerpt', fieldState[viewType])}
-            sizeOfCircles={sizeOfCircles}
-          />
-        );
-      })}
+      <div className="web-stories-list__inner-wrapper">
+        {stories.map((story) => {
+          return (
+            <StoryCard
+              key={story.id}
+              url={story.link}
+              title={story.title.rendered}
+              excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
+              date={story.date_gmt}
+              author={story._embedded.author[0].name}
+              poster={story.featured_media_url}
+              imageOnRight={isShowing('image_align', fieldState[viewType])}
+              isShowingAuthor={isShowing('author', fieldState[viewType])}
+              isShowingDate={isShowing('date', fieldState[viewType])}
+              isShowingTitle={isShowing('title', fieldState[viewType])}
+              isShowingExcerpt={isShowing('excerpt', fieldState[viewType])}
+              sizeOfCircles={sizeOfCircles}
+            />
+          );
+        })}
+      </div>
       {isShowing('archive_link', fieldState[viewType]) && (
         <div className="web-stories-list__archive-link">
           <a target="__blank" href={archiveURL}>
