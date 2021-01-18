@@ -27,13 +27,17 @@ async function deleteMedia(fileName) {
   await visitAdminPage('upload.php', 'mode=list');
 
   await expect(page).toMatch(fileName);
+
+  // Make row actions appear.
+  const elm = await page.evaluate(() =>
+    document.querySelector(`a[aria-label="“${fileName}” (Edit)"]`).closest('tr')
+  );
+  await page.hover(`#${elm.id}`);
+
   await Promise.all([
-    expect(page).toClick('a', { text: fileName, exact_text: true }),
-    page.waitForNavigation(),
-  ]);
-  await Promise.all([
-    page.waitForSelector(`#delete-action a`),
-    expect(page).toClick(`#delete-action a`),
+    await expect(page).toClick(
+      `a[aria-label="Delete “${fileName}” permanently"]`
+    ),
     page.waitForNavigation(),
   ]);
   await page.waitForSelector(`#message`);
