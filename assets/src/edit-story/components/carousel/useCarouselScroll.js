@@ -25,7 +25,7 @@ import { useCallback, useState, useLayoutEffect } from 'react';
 import { useConfig } from '../../app';
 
 function useCarouselScroll({ listElement, carouselWidth, hasOverflow }) {
-  const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [ratio, setRatio] = useState(0);
   const { isRTL } = useConfig();
 
   const scroll = useCallback(
@@ -48,8 +48,8 @@ function useCarouselScroll({ listElement, carouselWidth, hasOverflow }) {
   );
 
   const scrollByPx = carouselWidth;
-  const isAtStart = isRTL ? 1 === scrollPercentage : 0 === scrollPercentage;
-  const isAtEnd = isRTL ? 0 === scrollPercentage : 1 === scrollPercentage;
+  const isAtStart = isRTL ? 1 === ratio : 0 === ratio;
+  const isAtEnd = isRTL ? 0 === ratio : 1 === ratio;
 
   const canScrollBack = hasOverflow && !isAtStart;
   const canScrollForward = hasOverflow && !isAtEnd;
@@ -71,7 +71,7 @@ function useCarouselScroll({ listElement, carouselWidth, hasOverflow }) {
     const handleScroll = () => {
       const { offsetWidth, scrollLeft, scrollWidth } = listElement;
       const max = scrollWidth - offsetWidth;
-      setScrollPercentage(scrollLeft / max);
+      setRatio(scrollLeft / max);
     };
 
     listElement.addEventListener('scroll', handleScroll, { passive: true });
