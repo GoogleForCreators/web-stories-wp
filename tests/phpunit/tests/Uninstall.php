@@ -23,7 +23,7 @@ require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 class Uninstall extends \WP_UnitTestCase {
 	protected static $attachment_ids;
 
-	protected static $author_id;
+	protected static $user_id;
 
 	public function setUp() {
 		parent::setUp();
@@ -91,4 +91,3 @@ class Uninstall extends \WP_UnitTestCase {
 		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
 	}
 }
-
