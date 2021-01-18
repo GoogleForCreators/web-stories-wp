@@ -31,13 +31,12 @@ import { __, sprintf } from '@wordpress/i18n';
 import { ReorderableSeparator, ReorderableItem } from '../reorderable';
 import CarouselPagePreview from './carouselPagePreview';
 import useCarousel from './useCarousel';
-
-const LINE_WIDTH = 4;
+import { THUMBNAIL_LINE_WIDTH } from './constants';
 
 const Line = styled.div`
   background: ${({ theme }) => theme.colors.accent.primary};
   height: ${({ height }) => height}px;
-  width: ${LINE_WIDTH}px;
+  width: ${THUMBNAIL_LINE_WIDTH}px;
   margin: 0px;
 `;
 
@@ -59,11 +58,12 @@ const PageSeparator = styled(ReorderableSeparator)`
 
   ${ItemContainer}:first-of-type &:first-of-type,
   ${ItemContainer}:last-of-type &:last-of-type {
-    width: ${({ width, margin }) => (width + margin + LINE_WIDTH) / 2}px;
+    width: ${({ width, margin }) =>
+      (width + margin + THUMBNAIL_LINE_WIDTH) / 2}px;
   }
 
   ${ItemContainer}:first-of-type &:first-of-type {
-    left: ${({ margin }) => (margin - LINE_WIDTH) / 2}px;
+    left: ${({ margin }) => (margin - THUMBNAIL_LINE_WIDTH) / 2}px;
     justify-content: flex-start;
   }
 

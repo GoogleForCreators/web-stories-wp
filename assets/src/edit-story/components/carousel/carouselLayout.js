@@ -33,9 +33,7 @@ import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselMenu from './carouselMenu';
 import CarouselList from './carouselList';
 import useCarousel from './useCarousel';
-
-const MENU_WIDTH = 167;
-const BUTTON_WIDTH = 32;
+import { MENU_GUTTER, BUTTON_GUTTER } from './constants';
 
 const Wrapper = styled.section`
   position: relative;
@@ -43,13 +41,13 @@ const Wrapper = styled.section`
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
     '. . prev-navigation carousel next-navigation . menu' auto /
-    ${MENU_WIDTH}px
+    ${MENU_GUTTER}px
     1fr
-    ${BUTTON_WIDTH}px
+    ${BUTTON_GUTTER}px
     auto
-    ${BUTTON_WIDTH}px
+    ${BUTTON_GUTTER}px
     1fr
-    ${MENU_WIDTH}px;
+    ${MENU_GUTTER}px;
   width: 100%;
   height: 100%;
 `;

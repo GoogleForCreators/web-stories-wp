@@ -19,13 +19,32 @@
  */
 import { useMemo } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import {
+  BUTTON_GUTTER,
+  MENU_GUTTER,
+  WIDE_WORKSPACE_LIMIT,
+  WIDE_THUMBNAIL_WIDTH,
+  WIDE_THUMBNAIL_HEIGHT,
+  NARROW_THUMBNAIL_WIDTH,
+  NARROW_THUMBNAIL_HEIGHT,
+  THUMBNAIL_MARGIN,
+} from './constants';
+
 function useCarouselSizing({ availableSpace, numPages }) {
   return useMemo(() => {
-    const isWideWorkspace = availableSpace >= 700;
-    const spaceForCarousel = availableSpace - 2 * 167 - 2 * 32;
-    const pageThumbWidth = isWideWorkspace ? 40 : 36;
-    const pageThumbHeight = isWideWorkspace ? 72 : 64;
-    const pageThumbMargin = 16;
+    const isWideWorkspace = availableSpace >= WIDE_WORKSPACE_LIMIT;
+    const spaceForCarousel =
+      availableSpace - 2 * MENU_GUTTER - 2 * BUTTON_GUTTER;
+    const pageThumbWidth = isWideWorkspace
+      ? WIDE_THUMBNAIL_WIDTH
+      : NARROW_THUMBNAIL_WIDTH;
+    const pageThumbHeight = isWideWorkspace
+      ? WIDE_THUMBNAIL_HEIGHT
+      : NARROW_THUMBNAIL_HEIGHT;
+    const pageThumbMargin = THUMBNAIL_MARGIN;
     const pageAndMargin = pageThumbWidth + pageThumbMargin;
     const showablePages = Math.floor(
       (spaceForCarousel - pageThumbMargin) / pageAndMargin

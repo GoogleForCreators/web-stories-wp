@@ -26,6 +26,7 @@ import { useMemo, useRef, useState } from 'react';
 import { useResizeEffect } from '../../../design-system';
 import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
+import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';
 
 const Wrapper = styled.section`
   margin-right: ${({ marginRight }) => marginRight}px;
@@ -38,7 +39,8 @@ function CarouselContainer() {
 
   useResizeEffect(ref, ({ width }) => setWorkspaceWidth(width), []);
   const [margin, width] = useMemo(() => {
-    const rightMargin = workspaceWidth >= 1000 ? 8 : 0;
+    const rightMargin =
+      workspaceWidth >= VERY_WIDE_WORKSPACE_LIMIT ? VERY_WIDE_MARGIN : 0;
     return [rightMargin, workspaceWidth - rightMargin];
   }, [workspaceWidth]);
 
