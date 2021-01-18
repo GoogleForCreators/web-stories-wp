@@ -168,14 +168,6 @@ fi
 echo -e $(status_message "Import default set of media assets...")
 # TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
 
-# Since MOV files are not allowed in the editor, only the WEBM one needs a poster.
-wp media import /var/www/html/wp-content/e2e-assets/small-video.mov --quiet
-
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png --quiet
-
-
-wp option patch insert web_stories_experiments enableSVG 1
-wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
-wp option patch insert web_stories_experiments enableSVG 0
