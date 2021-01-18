@@ -35,7 +35,7 @@ async function deleteMedia(fileName) {
       .closest('tr')
       .id;
   }, fileName);
-  console.log(elmId);
+
   await page.hover(`#${elmId}`);
 
   await Promise.all([
