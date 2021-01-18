@@ -30,7 +30,7 @@ async function deleteMedia(fileName) {
 
   // Make row actions appear.
   const elm = await page.evaluate((filename) => {
-    document
+    return document
       .querySelector(`a[aria-label="“${filename}” (Edit)"]`)
       .closest('tr');
   }, fileName);
