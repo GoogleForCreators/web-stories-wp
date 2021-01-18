@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
 jest.mock('../../../../mediaPicker', () => ({

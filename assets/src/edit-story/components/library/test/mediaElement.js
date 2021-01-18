@@ -23,7 +23,7 @@
 import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
 import { renderWithTheme } from '../../../testUtils';
-import CanvasContext from '../../canvas/context';
+import CanvasContext from '../../../app/canvas/context';
 import StoryContext from '../../../app/story/context';
 
 const renderMediaElement = (resource, providerType) => {

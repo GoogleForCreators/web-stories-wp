@@ -29,7 +29,7 @@ import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
-import { useContext } from '../../../../utils/context';
+import { useContext } from '../../../../../design-system';
 import { trackEvent } from '../../../../../tracking';
 import DragHandle from './handle';
 

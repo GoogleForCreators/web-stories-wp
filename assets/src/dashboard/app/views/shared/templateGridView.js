@@ -41,7 +41,7 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { useGridViewKeys, useFocusOut } from '../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 
 const GridContainer = styled(CardGrid)`

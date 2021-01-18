@@ -22,7 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { createContext, useContext } from './context';
+import { createContext, useContext } from '../../design-system';
 
 const PreventUnloadContext = createContext({ listeners: new Map() });
 

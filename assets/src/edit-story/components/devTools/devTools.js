@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DATA_VERSION } from '../../../migration/migrate';
-import { useGlobalKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect } from '../../../design-system';
 import { useStory } from '../../app/story';
 import { useSnackbar } from '../../app/snackbar';
 import { dummyImage, dummyVideo } from './dummyData';

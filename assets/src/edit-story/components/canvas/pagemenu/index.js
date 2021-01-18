@@ -30,7 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../../animation';
-import { useStory, useHistory, useConfig } from '../../../app';
+import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import {
   Delete,
@@ -44,7 +44,6 @@ import {
   Text,
 } from '../../../icons';
 import WithTooltip from '../../tooltip';
-import useCanvas from '../useCanvas';
 
 const HEIGHT = 28;
 

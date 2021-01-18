@@ -29,7 +29,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { DATA_VERSION } from '../../../migration';
-import addQueryArgs from '../../utils/addQueryArgs';
+import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';

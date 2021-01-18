@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../../utils/context';
+import { createContext } from '../../../../../design-system';
 
 /**
  * @typedef {import('./typedefs').Media3pApiContext} Media3pApiContext

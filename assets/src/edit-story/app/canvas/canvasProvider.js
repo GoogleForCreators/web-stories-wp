@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import SAT from 'sat';
 /**
  * Internal dependencies
  */
-import { useLayout } from '../../app/layout';
-import { useStory } from '../../app';
+import { useLayout } from '../layout';
+import { useStory } from '../story';
 import { UnitsProvider } from '../../units';
-import useEditingElement from './useEditingElement';
 import useCanvasCopyPaste from './useCanvasCopyPaste';
+import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';
 
 import Context from './context';

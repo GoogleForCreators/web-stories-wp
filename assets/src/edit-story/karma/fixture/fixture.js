@@ -27,12 +27,12 @@ import Modal from 'react-modal';
  */
 import { DATA_VERSION } from '../../../migration';
 import FixtureEvents from '../../../karma-fixture/events';
-import App from '../../app/index';
+import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
 import FileContext from '../../app/file/context';
-import Layout from '../../app/layout';
+import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import getMediaResponse from './db/getMediaResponse';

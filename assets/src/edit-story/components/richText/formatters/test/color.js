@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import createSolid from '../../../../utils/createSolid';
-import { MULTIPLE_VALUE } from '../../../form';
+import { MULTIPLE_VALUE } from '../../../../constants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,

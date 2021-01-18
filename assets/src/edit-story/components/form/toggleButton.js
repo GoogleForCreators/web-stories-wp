@@ -26,8 +26,8 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../keyboard';
-import MULTIPLE_VALUE from './multipleValue';
+import { useKeyDownEffect } from '../../../design-system';
+import { MULTIPLE_VALUE } from '../../constants';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
 const CheckBoxInput = styled.input.attrs({
