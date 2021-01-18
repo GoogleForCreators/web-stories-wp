@@ -28,9 +28,10 @@ import { v4 as uuid } from 'uuid';
  * The file should reside in tests/e2e/assets/.
  *
  * @param {string|null} file The file name to upload, for example 'foo.mp4'.
+ * @param {boolean} checkUpload Check upload was successfully.
  * @return {string|null} The name of the file as it was uploaded.
  */
-async function uploadFile(file) {
+async function uploadFile(file, checkUpload = true) {
   const fileExtension = extname(file);
   await page.setDefaultTimeout(10000);
 
@@ -50,7 +51,9 @@ async function uploadFile(file) {
   await expect(page).not.toMatchElement('.media-modal .upload-error');
 
   // Upload successful!
-  await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
+  if (checkUpload) {
+    await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
+  }
   await page.setDefaultTimeout(3000);
 
   return newFileName;

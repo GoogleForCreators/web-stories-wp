@@ -24,8 +24,9 @@ import { percySnapshot } from '@percy/puppeteer';
  */
 import {
   withExperimentalFeatures,
-  uploadFile,
   createNewStory,
+  uploadMedia,
+  deleteMedia,
 } from '../../../utils';
 
 describe('SVG', () => {
@@ -56,16 +57,14 @@ describe('SVG', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    // TODO Use mediaUpload here.
-    await expect(page).toClick('button', { text: 'Upload' });
-    await expect(page).toMatch('Upload to Story');
-
-    await uploadFile('close.svg');
+    const filename = await uploadMedia('close.svg', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
     await percySnapshot(page, 'Uploading SVG to editor');
+
+    await deleteMedia(filename);
   });
 });
