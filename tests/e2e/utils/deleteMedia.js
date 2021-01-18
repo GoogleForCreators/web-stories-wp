@@ -29,9 +29,11 @@ async function deleteMedia(fileName) {
   await expect(page).toMatch(fileName);
 
   // Make row actions appear.
-  const elm = await page.evaluate(() =>
-    document.querySelector(`a[aria-label="“${fileName}” (Edit)"]`).closest('tr')
-  );
+  const elm = await page.evaluate((filename) => {
+    document
+      .querySelector(`a[aria-label="“${filename}” (Edit)"]`)
+      .closest('tr');
+  }, fileName);
   await page.hover(`#${elm.id}`);
 
   await Promise.all([
