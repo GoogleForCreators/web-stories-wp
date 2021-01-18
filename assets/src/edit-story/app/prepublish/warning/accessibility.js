@@ -31,6 +31,7 @@ import {
   setOrCreateImage,
   getImgNodeId,
 } from '../../../utils/getMediaBaseColor';
+import { inputs } from '../../highlights';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -482,6 +483,11 @@ export function videoElementMissingCaptions(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      highlight: {
+        design: {
+          captions: inputs.design.captions,
+        },
+      },
     };
   }
 
@@ -551,6 +557,11 @@ export function imageElementMissingAlt(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      highlight: {
+        design: {
+          assistiveText: inputs.design.assistiveText,
+        },
+      },
     };
   }
 

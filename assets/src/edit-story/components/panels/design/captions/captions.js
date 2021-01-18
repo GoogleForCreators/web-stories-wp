@@ -35,6 +35,7 @@ import { Button, TextInput, Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
+import { useHighlights } from '../../../../app/highlights';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -103,8 +104,16 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
+  const { captions: highlighted } = useHighlights(({ design }) => ({
+    captions: design?.captions,
+  }));
+
   return (
-    <SimplePanel name="caption" title={__('Captions', 'web-stories')}>
+    <SimplePanel
+      name="caption"
+      title={__('Captions', 'web-stories')}
+      isPersistable={!highlighted}
+    >
       {isMixedValue && (
         <Row>
           <BoxedTextInput
@@ -131,7 +140,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
           </Row>
         ))}
       {!tracks.length && (
-        <Row expand>
+        <Row expand css={highlighted?.css}>
           <Button onClick={UploadCaption} fullWidth>
             {captionText}
           </Button>

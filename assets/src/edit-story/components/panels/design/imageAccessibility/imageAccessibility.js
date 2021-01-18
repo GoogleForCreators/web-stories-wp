@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useEffect, useRef } from 'react';
 import { Row } from '../../../form';
 import {
   Note,
@@ -35,6 +36,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { SimplePanel } from '../../panel';
+import { useHighlights } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
@@ -50,14 +52,24 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
+  const { design } = useHighlights(({ design }) => ({ design }));
+
+  const ref = useRef(null);
+  const assistiveTextFocused = design?.assistiveText?.focus;
+
+  useEffect(() => {
+    assistiveTextFocused && ref.current?.focus();
+  });
 
   return (
     <SimplePanel
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
+      isPersistable={!assistiveTextFocused}
     >
-      <Row>
+      <Row css={design?.assistiveText?.css}>
         <ExpandedTextInput
+          ref={ref}
           placeholder={__('Assistive text', 'web-stories')}
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}

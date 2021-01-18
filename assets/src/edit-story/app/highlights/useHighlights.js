@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 16px;
-  ${({ spaceBetween = true }) =>
-    spaceBetween && `justify-content: space-between;`}
-  ${({ expand = true }) => expand && `flex: 1;`}
-`;
+/**
+ * Internal dependencies
+ */
+import { useContextSelector, identity } from '../../../design-system';
+import Context from './context';
 
-export default Row;
+function useHighlights(selector) {
+  const context = useContextSelector(Context, selector ?? identity);
+  if (!context) {
+    throw new Error(
+      'Must use `useHighlights()` within <highlights.Provider />'
+    );
+  }
+  return context;
+}
+export default useHighlights;

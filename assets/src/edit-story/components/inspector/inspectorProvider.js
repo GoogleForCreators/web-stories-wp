@@ -35,6 +35,7 @@ import { useStory } from '../../app/story';
 
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { Error, Warning } from '../../../design-system/icons/alert';
+import { useHighlights } from '../../app/highlights';
 import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
@@ -43,7 +44,6 @@ import DocumentInspector from './document';
 const DESIGN = 'design';
 const DOCUMENT = 'document';
 const PREPUBLISH = 'prepublish';
-
 function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
@@ -58,6 +58,20 @@ function InspectorProvider({ children }) {
     refreshChecklist,
     500
   );
+
+  const { document, design } = useHighlights(({ document, design }) => ({
+    document,
+    design,
+  }));
+
+  useEffect(() => {
+    if (document) {
+      setTab(DOCUMENT);
+    }
+    if (design) {
+      setTab(DESIGN);
+    }
+  }, [document, design]);
 
   const prepublishAlert = useCallback(
     () =>

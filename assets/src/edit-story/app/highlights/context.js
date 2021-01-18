@@ -15,19 +15,10 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
+import { createContext } from '../../../design-system';
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 16px;
-  ${({ spaceBetween = true }) =>
-    spaceBetween && `justify-content: space-between;`}
-  ${({ expand = true }) => expand && `flex: 1;`}
-`;
-
-export default Row;
+export default createContext({
+  onPrepublishSelect: {},
+});

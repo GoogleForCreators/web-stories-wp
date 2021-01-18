@@ -13,21 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 16px;
-  ${({ spaceBetween = true }) =>
-    spaceBetween && `justify-content: space-between;`}
-  ${({ expand = true }) => expand && `flex: 1;`}
-`;
-
-export default Row;
+export { default as useHighlights } from './useHighlights';
+export { default as HighlightsProvider } from './provider';
+export { INPUTS as inputs } from './constants';

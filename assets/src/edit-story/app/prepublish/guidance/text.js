@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import stripHTML from '../../../utils/stripHTML';
+import { inputs } from '../../highlights';
 import { PRE_PUBLISH_MESSAGE_TYPES, MESSAGES } from '../constants';
 
 const MAX_PAGE_CHARACTER_COUNT = 200;
@@ -79,6 +80,11 @@ export function storyTooLittleText(story) {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       message: MESSAGES.TEXT.TOO_LITTLE_TEXT.MAIN_TEXT,
       help: MESSAGES.TEXT.TOO_LITTLE_TEXT.HELPER_TEXT,
+      highlight: {
+        tab: {
+          text: inputs.tab.text,
+        },
+      },
     };
   }
 

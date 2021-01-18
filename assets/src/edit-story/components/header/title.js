@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
+import { useHighlights } from '../../app/highlights';
 import useHeader from './use';
 
 const Input = styled.input`
@@ -58,7 +59,14 @@ function Title() {
       actions: { updateStory },
     }) => ({ title, slug, updateStory })
   );
-  const { setTitleInput } = useHeader();
+  const { setTitleInput, titleInput } = useHeader();
+  const { storyTitle } = useHighlights(({ storyTitle }) => ({ storyTitle }));
+
+  useEffect(() => {
+    if (storyTitle) {
+      titleInput?.focus();
+    }
+  });
 
   const { storyId } = useConfig();
 

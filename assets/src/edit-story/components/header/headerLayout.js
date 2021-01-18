@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useHighlights } from '../../app/highlights';
 import Buttons from './buttons';
 import Title from './title';
 import HeaderProvider from './provider';
@@ -51,10 +52,11 @@ const ButtonCell = styled.div`
 `;
 
 function HeaderLayout() {
+  const { storyTitle } = useHighlights(({ storyTitle }) => ({ storyTitle }));
   return (
     <HeaderProvider>
       <Background>
-        <Head>
+        <Head css={storyTitle?.css}>
           <Title />
         </Head>
         <ButtonCell>

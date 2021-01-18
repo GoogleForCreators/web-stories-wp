@@ -32,6 +32,7 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { useAPI } from '../../../../app/api';
+import { useHighlights } from '../../../../app/highlights';
 import { Row, AdvancedDropDown, Label, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
@@ -57,6 +58,10 @@ function PublishPanel() {
     state: { tab, users, isUsersLoading },
     actions: { loadUsers },
   } = useInspector();
+
+  const { document } = useHighlights(({ document }) => ({
+    document,
+  }));
 
   const {
     isSaving,
@@ -168,7 +173,11 @@ function PublishPanel() {
     selectedId: author.id,
   };
   return (
-    <Panel name="publishing" collapsedByDefault={false}>
+    <Panel
+      name="publishing"
+      collapsedByDefault={false}
+      isPersistable={!(document?.publisherLogo || document?.cover)}
+    >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent padding={'10px 10px 10px 20px'}>
         <PublishTime />
@@ -201,7 +210,7 @@ function PublishPanel() {
             <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper>
+          <MediaWrapper css={document?.publisherLogo?.css}>
             <Media
               value={publisherLogoUrl}
               onChange={handleChangePublisherLogo}
@@ -218,7 +227,7 @@ function PublishPanel() {
             <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper>
+          <MediaWrapper css={document?.cover?.css}>
             <Media
               value={featuredMedia?.url}
               onChange={handleChangeCover}

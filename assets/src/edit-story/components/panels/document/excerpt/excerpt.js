@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,6 +31,7 @@ import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import Note from '../../shared/note';
+import { useHighlights } from '../../../../app/highlights';
 
 export const EXCERPT_MAX_LENGTH = 200;
 
@@ -53,14 +54,27 @@ function ExcerptPanel() {
     [updateStory]
   );
 
+  const { document } = useHighlights(({ document }) => ({
+    document,
+  }));
+
+  const ref = useRef();
+  useEffect(() => {
+    if (document?.excerpt?.focus) {
+      ref.current?.focus();
+    }
+  });
+
   return (
     <SimplePanel
       name="excerpt"
       title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
+      isPersistable={!document?.excerpt?.focus}
     >
-      <Row>
+      <Row css={document?.excerpt?.css}>
         <TextArea
+          ref={ref}
           value={excerpt}
           onTextChange={handleTextChange}
           placeholder={__('Write a description of the story', 'web-stories')}

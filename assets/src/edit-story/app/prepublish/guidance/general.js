@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { inputs } from '../../highlights';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,
   MESSAGES,
@@ -54,6 +55,9 @@ export function storyPagesCount(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       storyId: story.id,
+      highlight: {
+        pageMenu: inputs.pageMenu,
+      },
       ...message,
     };
   }
@@ -75,6 +79,9 @@ export function storyTitleLength(story) {
       storyId: story.id,
       message: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.MAIN_TEXT,
       help: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.HELPER_TEXT,
+      highlight: {
+        storyTitle: inputs.storyTitle,
+      },
     };
   }
   return undefined;

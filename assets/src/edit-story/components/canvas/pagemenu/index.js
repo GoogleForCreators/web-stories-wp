@@ -44,6 +44,7 @@ import {
   Text,
 } from '../../../icons';
 import WithTooltip from '../../tooltip';
+import { useHighlights } from '../../../app/highlights';
 
 const HEIGHT = 28;
 
@@ -140,6 +141,9 @@ function PageMenu() {
       };
     }
   );
+
+  const { pageMenu } = useHighlights(({ pageMenu }) => ({ pageMenu }));
+
   const { pageSize } = useCanvas((state) => ({
     pageSize: state.state.pageSize,
   }));
@@ -182,7 +186,7 @@ function PageMenu() {
 
   return (
     <Wrapper>
-      <Box>
+      <Box css={pageMenu?.css}>
         <Options>
           {pageSize.width > 280 && (
             <>
