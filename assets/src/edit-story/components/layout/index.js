@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import Library from '../../components/library';
-import Workspace from '../../components/workspace';
+import Library from '../library';
+import Workspace from '../workspace';
 import MetaBoxes, {
   MetaBoxesProvider,
 } from '../../integrations/wordpress/metaBoxes';
@@ -39,10 +39,10 @@ import {
   INSPECTOR_MIN_WIDTH,
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
-import withOverlay from '../../components/overlay/withOverlay';
-import CanvasProvider from '../../components/canvas/canvasProvider';
-import { PrepublishChecklistProvider } from '../../components/inspector/prepublish';
-import LayoutProvider from './layoutProvider';
+import withOverlay from '../overlay/withOverlay';
+import { CanvasProvider } from '../../app/canvas';
+import { PrepublishChecklistProvider } from '../inspector/prepublish';
+import LayoutProvider from '../../app/layout/layoutProvider';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),

@@ -25,7 +25,7 @@ import { useState, useRef, useMemo, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { prettifyShortcut } from '../keyboard';
+import { prettifyShortcut } from '../../../design-system';
 import Popup, { Placement } from '../popup';
 
 const SPACING = 12;

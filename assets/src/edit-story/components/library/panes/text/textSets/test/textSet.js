@@ -34,7 +34,7 @@ import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
 import { UnitsProvider } from '../../../../../../units';
 import StoryContext from '../../../../../../app/story/context';
 import { LayoutProvider } from '../../../../../../app/layout';
-import CanvasContext from '../../../../../canvas/context';
+import CanvasContext from '../../../../../../app/canvas/context';
 
 const SET = [
   {

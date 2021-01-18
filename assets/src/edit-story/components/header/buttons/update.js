@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { useStory, useLocalMedia, useHistory } from '../../../app';
 import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
 import { Outline, Primary } from '../../button';
-import { useGlobalKeyDownEffect } from '../../keyboard';
+import { useGlobalKeyDownEffect } from '../../../../design-system';
 import WithTooltip from '../../tooltip';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
 import { usePrepublishChecklist } from '../../inspector/prepublish';

@@ -19,7 +19,7 @@
  */
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import createSolid from '../../../utils/createSolid';
-import MULTIPLE_VALUE from '../multipleValue';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 function getPreviewStyle(pattern) {
   if (!pattern || pattern === MULTIPLE_VALUE) {

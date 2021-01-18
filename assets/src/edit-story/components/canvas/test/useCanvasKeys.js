@@ -23,9 +23,9 @@ import { render, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { useRef } from 'react';
-import useCanvasKeys from '../useCanvasKeys';
+import useCanvasKeys from '../../../app/canvas/useCanvasKeys';
 import StoryContext from '../../../app/story/context.js';
-import CanvasContext from '../../../components/canvas/context.js';
+import CanvasContext from '../../../app/canvas/context.js';
 
 const Canvas = () => {
   const ref = useRef(null);

@@ -22,7 +22,10 @@ import { useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { useEscapeToBlurEffect, useKeyDownEffect } from '../../keyboard';
+import {
+  useEscapeToBlurEffect,
+  useKeyDownEffect,
+} from '../../../../design-system';
 import { useStory } from '../../../app';
 import { duplicatePage } from '../../../elements';
 

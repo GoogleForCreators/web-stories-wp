@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
+import { identity, useContextSelector } from '../../../design-system';
+import Context from './context';
 
-const Spacer = styled.div`
-  display: flex;
-  height: 100%;
+function useCanvas(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
 
-  ${({ theme, dotted = false }) =>
-    dotted && `border-left: 1px dashed ${theme.colors.bg.v2};`}
-  ${({ expand = true }) => expand && `flex: 1;`}
-`;
-
-export default Spacer;
+export default useCanvas;

@@ -48,7 +48,7 @@ import PagePreview, {
   THUMB_FRAME_HEIGHT,
   THUMB_FRAME_WIDTH,
 } from '../pagepreview';
-import useResizeEffect from '../../../utils/useResizeEffect';
+import { useResizeEffect } from '../../../../design-system';
 import {
   CAROUSEL_VERTICAL_PADDING,
   MIN_CAROUSEL_THUMB_HEIGHT,

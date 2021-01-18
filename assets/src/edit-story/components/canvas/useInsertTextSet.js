@@ -22,7 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import useBatchingCallback from '../../utils/useBatchingCallback';
+import { useBatchingCallback } from '../../../design-system';
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../../app/story';
 import { DANGER_ZONE_HEIGHT, FULLBLEED_HEIGHT } from '../../units/dimensions';

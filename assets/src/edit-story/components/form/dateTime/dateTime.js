@@ -25,7 +25,7 @@ import { useCallback, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../keyboard';
+import { useKeyDownEffect } from '../../../../design-system';
 import useFocusTrapping from '../../../utils/useFocusTrapping';
 import useRovingTabIndex from '../../../utils/useRovingTabIndex';
 import TimePicker from './timePicker';
