@@ -22,7 +22,7 @@ import { useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import convertToCSS from '../../../utils/convertToCSS';
 

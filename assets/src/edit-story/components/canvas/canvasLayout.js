@@ -28,12 +28,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useCanvas } from '../../app';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
 import NavLayer from './navLayer';
 import SelectionCanvas from './selectionCanvas';
-import useCanvas from './useCanvas';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';

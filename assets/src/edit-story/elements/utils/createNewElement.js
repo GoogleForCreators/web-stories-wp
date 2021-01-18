@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,27 @@
  */
 
 /**
+ * External dependencies
+ */
+import { v4 as uuidv4 } from 'uuid';
+
+/**
  * Internal dependencies
  */
-import { createContext } from '../../utils/context';
+import getDefinitionForType from './getDefinitionForType';
 
-export default createContext({ actions: {}, state: {} });
+const createNewElement = (type, attributes = {}) => {
+  const element = getDefinitionForType(type);
+  if (!element) {
+    throw new Error(`Unknown element type: ${type}`);
+  }
+  const { defaultAttributes } = element;
+  return {
+    ...defaultAttributes,
+    ...attributes,
+    type,
+    id: uuidv4(),
+  };
+};
+
+export default createNewElement;

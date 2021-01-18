@@ -24,12 +24,11 @@ import { useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
 import { useUnits } from '../../units';
 import { PAGE_RATIO } from '../../constants';
-import useCanvas from './useCanvas';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
 

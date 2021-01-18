@@ -24,7 +24,7 @@ import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useContext } from '../../utils/context';
+import { useContext } from '../../../design-system';
 
 /**
  * Internal dependencies

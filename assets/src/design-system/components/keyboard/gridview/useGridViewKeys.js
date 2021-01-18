@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,19 +22,15 @@ import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '../';
 import {
-  useKeyDownEffect,
   focusOnPage,
   getArrowDir,
   getGridColumnAndRowCount,
   getRow,
   getColumn,
   getIndex,
-} from './';
-
-// This functionality is taken from edit-story/components/canvas/gridview/useGridViewKeys
-// and updated to separate it from story context
-// so that it can be reused in the dashboard's different grids
+} from './utils';
 
 /**
  * @typedef {Object} UseGridViewKeysProps
@@ -60,6 +56,7 @@ function useGridViewKeys(props) {
     gridRef,
     itemRefs,
     isRTL,
+    arrangeItem,
   } = props;
   const [focusedItemId, setFocusedItemId] = useState();
   const itemIds = useMemo(() => items.map(({ id }) => id), [items]);
@@ -172,9 +169,12 @@ function useGridViewKeys(props) {
             nextIndex <= itemIds.length - 1;
 
           if (canArrange) {
+            if (arrangeItem) {
+              arrangeItem(focusedItemId, nextIndex);
+            }
+
             // Focus on DOM element where this page is moving to
             const item = itemRefs?.current?.[itemIds[nextIndex]];
-
             focusOnPage(item);
           }
 
@@ -209,6 +209,10 @@ function useGridViewKeys(props) {
             nextIndex >= 0 &&
             nextIndex <= itemIds.length - 1;
           if (canArrange) {
+            if (arrangeItem) {
+              arrangeItem(focusedItemId, nextIndex);
+            }
+
             // Focus on DOM element where this page is moving to
             const page = itemRefs?.current?.[itemIds[nextIndex]];
             focusOnPage(page);
@@ -221,7 +225,15 @@ function useGridViewKeys(props) {
           break;
       }
     },
-    [currentItemId, itemIds, isRTL, gridRef, itemRefs, focusedItemId]
+    [
+      currentItemId,
+      itemIds,
+      isRTL,
+      gridRef,
+      itemRefs,
+      focusedItemId,
+      arrangeItem,
+    ]
   );
 }
 
