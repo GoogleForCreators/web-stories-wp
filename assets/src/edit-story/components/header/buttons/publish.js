@@ -28,7 +28,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackEvent } from '../../../../tracking';
-import { toDate, isAfter, subMinutes, getOptions } from '../../../../date';
+import {
+  toDate,
+  isAfter,
+  subMinutes,
+  getOptions,
+} from '../../../../date';
 import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
@@ -68,8 +73,8 @@ function Publish() {
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
   // Offset the date by one minute to accommodate for network latency.
   const hasFutureDate = isAfter(
-    toDate(date, getOptions()),
-    subMinutes(toDate(new Date(), getOptions()), 1)
+    subMinutes(toDate(date, getOptions()), 1),
+    toDate(new Date(), getOptions())
   );
 
   const publish = useCallback(() => {

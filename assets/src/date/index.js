@@ -28,7 +28,6 @@ export {
   isValid,
   differenceInSeconds,
   isAfter,
-  isFuture,
 } from 'date-fns';
 export { toDate } from 'date-fns-tz';
 
