@@ -32,8 +32,7 @@ async function deleteMedia(fileName) {
   const elmId = await page.evaluate((filename) => {
     return document
       .querySelector(`a[aria-label="“${filename}” (Edit)"]`)
-      .closest('tr')
-      .id;
+      .closest('tr').id;
   }, fileName);
 
   await page.hover(`#${elmId}`);
