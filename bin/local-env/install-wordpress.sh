@@ -165,7 +165,7 @@ if [ "$MEDIA_TRASH" != $MEDIA_TRASH_CURRENT ]; then
 fi
 
 # Let's make sure we have some media in the media library to work with.
-echo -e $(status_message "Import default set of media assets...")
+echo -e $(status_message "Import default set of media assets....")
 # TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
 
 WEBM_VIDEO_ID=$(wp media import /var/www/html/wp-content/e2e-assets/small-video.webm --porcelain)
