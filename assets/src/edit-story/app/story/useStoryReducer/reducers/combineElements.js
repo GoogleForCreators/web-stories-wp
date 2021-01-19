@@ -99,6 +99,10 @@ function combineElements(state, { firstElement, secondId }) {
       propsFromFirst.push('border');
       propsFromFirst.push('borderRadius');
     }
+  } else {
+    // If we're dropping into background, maintain the flip, too.
+    // @todo This behavior has been since the beginning, however, it's not consistent with how other elements behave -- needs confirmation.
+    propsFromFirst.push('flip');
   }
   const mediaProps = objectPick(element, propsFromFirst);
 
