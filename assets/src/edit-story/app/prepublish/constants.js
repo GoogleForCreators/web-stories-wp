@@ -393,7 +393,12 @@ export const MESSAGES = {
           <li>
             {sprintf(
               /* translators: %d: minimum number of story characters. */
-              __('Limit story title to %d characters or less', 'web-stories'),
+              _n(
+                'Limit story title to %d character or less',
+                'Limit story title to %d characters or less',
+                MAX_STORY_TITLE_LENGTH_CHARS,
+                'web-stories'
+              ),
               MAX_STORY_TITLE_LENGTH_CHARS
             )}
           </li>
@@ -410,15 +415,26 @@ export const MESSAGES = {
           <li>
             {sprintf(
               /* translators: %d: maximum number of story characters. */
-              __('Keep text to max %d characters per page', 'web-stories'),
+              _n(
+                'Keep text to max %d character per page',
+                'Keep text to max %d characters per page',
+                MAX_STORY_CHARACTERS,
+                'web-stories'
+              ),
               MAX_STORY_CHARACTERS
+            )}
+          </li>
+          <li>
+            {__(
+              'Use a page attachment breaking up the text into multiple screens; or',
+              'web-stories'
             )}
           </li>
           <li>
             {sprintf(
               /* translators: %d: maximum percentage of characters, depending on number of pages. */
               __(
-                'Use a page attachment breaking up the text into multiple screens; or<br/>- Keep the total number of text-heavy pages under %d% of total number of story pages',
+                'Keep the total number of text-heavy pages under %d% of total number of story pages',
                 'web-stories'
               ),
               MAX_CHARACTER_PERCENTAGE
@@ -434,7 +450,12 @@ export const MESSAGES = {
           <li>
             {sprintf(
               /* translators: %d: minimum number of story characters. */
-              __('Make your story text %d characters or more', 'web-stories'),
+              _n(
+                'Make your story text %d character or more',
+                'Make your story text %d characters or more',
+                MIN_STORY_CHARACTERS,
+                'web-stories'
+              ),
               MIN_STORY_CHARACTERS
             )}
           </li>
