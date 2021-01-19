@@ -36,5 +36,5 @@ export {
   trackClick,
   trackScreenView,
   trackTimingComplete,
-  getTimeTracker
+  getTimeTracker,
 };
