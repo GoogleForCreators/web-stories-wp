@@ -40,6 +40,13 @@ class User_Preferences {
 	const OPTIN_META_KEY = 'web_stories_tracking_optin';
 
 	/**
+	 * Name of the user meta key used for onboarding.
+	 *
+	 * @var string
+	 */
+	const ONBOARDING_META_KEY = 'web_stories_onboarding';
+
+	/**
 	 * Initializes User_Preferences.
 	 *
 	 * Registers the setting in WordPress.
@@ -57,11 +64,34 @@ class User_Preferences {
 				'sanitize_callback' => 'rest_sanitize_boolean',
 				'default'           => false,
 				'show_in_rest'      => true,
-				'auth_callback'     => static function() {
-					return current_user_can( 'edit_user', get_current_user_id() );
-				},
+				'auth_callback'     => [ $this, 'can_edit_current_user' ],
 				'single'            => true,
 			]
 		);
+
+		register_meta(
+			'user',
+			static::ONBOARDING_META_KEY,
+			[
+				'type'          => 'object',
+				'default'       => [],
+				'show_in_rest'  => [
+					'schema' => [
+						'additionalProperties' => true,
+					],
+				],
+				'auth_callback' => [ $this, 'can_edit_current_user' ],
+				'single'        => true,
+			]
+		);
+	}
+
+	/**
+	 * Auth callback.
+	 *
+	 * @return bool
+	 */
+	public function can_edit_current_user() {
+		return current_user_can( 'edit_user', get_current_user_id() );
 	}
 }
