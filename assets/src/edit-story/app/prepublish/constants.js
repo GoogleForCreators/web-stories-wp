@@ -50,9 +50,10 @@ const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 
 const DashedList = styled.ul`
   list-style-type: '-';
+  margin-left: 4px;
 
   li {
-    padding-left: 5px;
+    padding-left: 4px;
   }
 `;
 
@@ -290,7 +291,13 @@ export const MESSAGES = {
         <DashedList>
           <li>
             {__(
-              'Improves indexability and accessibility (for videos without captions)<br/>- Include any text or captions that are already a rendered part of the video',
+              'Improves indexability and accessibility (for videos without captions)',
+              'web-stories'
+            )}
+          </li>
+          <li>
+            {__(
+              'Include any text or captions that are already a rendered part of the video',
               'web-stories'
             )}
           </li>
@@ -482,7 +489,7 @@ export const MESSAGES = {
               }}
             >
               {__(
-                '<a>Use full screen videos and images whenever possible to create a more immersive experience. (more info)</a>',
+                '<a>Use full screen videos and images whenever possible to create a more immersive experience (more info)</a>',
                 'web-stories'
               )}
             </TranslateWithMarkup>
