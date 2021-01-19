@@ -31,7 +31,6 @@ import {
   SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
-import { MULTIPLE_VALUE } from '../../../form';
 import { getHTMLInfo } from '../../../richText/htmlManipulation';
 
 const TEXT_PRESET_STYLES = [
