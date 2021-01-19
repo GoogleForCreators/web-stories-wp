@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import { Checkbox } from '..';
 import { Text } from '../..';
+import { DarkThemeProvider } from '../../../storybookUtils';
 
 export default {
   title: 'DesignSystem/Components/Checkbox',
@@ -35,6 +36,7 @@ const Container = styled.div`
   row-gap: 20px;
   max-width: 500px;
   padding: 20px 50px;
+  background-color: ${({ darkMode }) => (darkMode ? '#000' : '#FFF')};
 `;
 
 const Row = styled.div`
@@ -50,31 +52,61 @@ const Row = styled.div`
 
 export const _default = () => {
   return (
-    <Container>
-      <Row>
-        <Text>
-          <p>{'Normal'}</p>
-        </Text>
-        <Text>
-          <p>{'Disable'}</p>
-        </Text>
-      </Row>
-      <Row>
-        <div>
-          <Checkbox />
-        </div>
-        <div>
-          <Checkbox disabled />
-        </div>
-      </Row>
-      <Row>
-        <div>
-          <Checkbox checked />
-        </div>
-        <div>
-          <Checkbox checked disabled />
-        </div>
-      </Row>
-    </Container>
+    <>
+      <Container>
+        <Row>
+          <Text>
+            <p>{'Normal'}</p>
+          </Text>
+          <Text>
+            <p>{'Disable'}</p>
+          </Text>
+        </Row>
+        <Row>
+          <div>
+            <Checkbox />
+          </div>
+          <div>
+            <Checkbox disabled />
+          </div>
+        </Row>
+        <Row>
+          <div>
+            <Checkbox checked />
+          </div>
+          <div>
+            <Checkbox checked disabled />
+          </div>
+        </Row>
+      </Container>
+      <DarkThemeProvider>
+        <Container darkMode>
+          <Row>
+            <Text>
+              <p>{'Normal'}</p>
+            </Text>
+            <Text>
+              <p>{'Disable'}</p>
+            </Text>
+          </Row>
+          <Row>
+            <div>
+              <Checkbox />
+            </div>
+            <div>
+              <Checkbox disabled />
+            </div>
+          </Row>
+          <Row>
+            <div>
+              <Checkbox checked />
+            </div>
+            <div>
+              <Checkbox checked disabled />
+            </div>
+          </Row>
+        </Container>
+      </DarkThemeProvider>
+    </>
   );
 };
