@@ -72,5 +72,4 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
       },
     });
   });
-  // @todo More tests to be added once the feature gets completed.
 });

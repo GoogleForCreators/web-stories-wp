@@ -177,8 +177,8 @@ const StoryGridView = ({
                   }
                   displayDate={
                     story?.status === STORY_STATUS.DRAFT
-                      ? getRelativeDisplayDate(story?.modified)
-                      : getRelativeDisplayDate(story?.created)
+                      ? getRelativeDisplayDate(story?.modified_gmt)
+                      : getRelativeDisplayDate(story?.created_gmt)
                   }
                   {...titleRenameProps}
                 />
