@@ -398,7 +398,7 @@ class Story_Post_Type {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
 			// custom editor after the 'current_screen' action and when we can be certain the
-			// $post global is available.
+			// $post_type, $post_type_object, $post globals are all set by WordPress.
 			if ( null !== $GLOBALS['post'] && did_action( 'current_screen' ) ) {
 				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			}
