@@ -75,10 +75,7 @@ function useCarouselScroll({ listElement, carouselWidth, hasOverflow }) {
     };
 
     listElement.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      listElement.removeEventListener('scroll', handleScroll);
-    };
+    return () => listElement.removeEventListener('scroll', handleScroll);
   }, [listElement, hasOverflow]);
 
   return {
