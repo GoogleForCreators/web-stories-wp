@@ -65,7 +65,7 @@ class Web_Stories_Block {
 	 *
 	 * @var int
 	 */
-	protected $max_num_of_stories = 20;
+	const MAX_NUM_OF_STORIES = 20;
 
 	/**
 	 * Initializes the Web Stories embed block.
@@ -186,7 +186,7 @@ class Web_Stories_Block {
 		$settings = [
 			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
 			'config'     => [
-				'maxNumOfStories' => $this->max_num_of_stories,
+				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
 				'editStoryURL'    => $edit_story_url,
 				'archiveURL'      => get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
 				'api'             => [
