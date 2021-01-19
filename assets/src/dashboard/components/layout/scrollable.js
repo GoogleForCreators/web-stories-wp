@@ -24,13 +24,7 @@ import styled from 'styled-components';
  */
 import useLayoutContext from './useLayoutContext';
 
-const ScrollContent = styled.div`
-  /**
-   * Adds inertial scrolling to iOS
-   * devices like iPad
-   */
-  -webkit-overflow-scrolling: touch;
-`;
+const ScrollContent = styled.div``;
 
 const Scrollable = ({ children }) => {
   const {

@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ADMIN_TOOLBAR_HEIGHT } from '../../../edit-story/constants';
+import { THEME_CONSTANTS } from '../../../design-system';
 import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
@@ -53,6 +53,7 @@ export const AppFrame = styled.div({});
 
 export const PageContent = styled.div`
   position: relative;
+  padding-top: 10px;
   width: ${({ fullWidth }) =>
     fullWidth ? '100%' : `calc(100% - ${DASHBOARD_LEFT_NAV_WIDTH}px)`};
   left: ${({ fullWidth }) =>
@@ -71,7 +72,7 @@ export const LeftRailContainer = styled.nav.attrs({
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  top: ${ADMIN_TOOLBAR_HEIGHT}px;
+  top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
