@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -33,29 +34,34 @@ import { Remove } from '../../../../../icons';
 import { useStory } from '../../../../../app/story';
 import generatePatternStyles from '../../../../../utils/generatePatternStyles';
 import PresetPanel from '../presetPanel';
-import { areAllType, presetHasGradient, presetHasOpacity } from '../utils';
+import {
+  areAllType,
+  getOpaqueColor,
+  presetHasGradient,
+  presetHasOpacity,
+} from '../utils';
 
 const PRESET_SIZE = 30;
-const REMOVE_ICON_SIZE = 18;
+const REMOVE_ICON_SIZE = 16;
 
 const Transparent = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   background-image: conic-gradient(
-    #fff 0.25turn,
-    #d3d4d4 0turn 0.5turn,
-    #fff 0turn 0.75turn,
-    #d3d4d4 0turn 1turn
+    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0.25turn,
+    transparent 0turn 0.5turn,
+    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0turn 0.75turn,
+    transparent 0turn 1turn
   );
-  background-size: 50% 50%;
+  background-size: 35% 35%;
+  border-radius: 100%;
 `;
 
 const ColorWrapper = styled.div`
   display: block;
   width: ${PRESET_SIZE}px;
   height: ${PRESET_SIZE}px;
-  border: 1px solid ${({ theme }) => theme.colors.whiteout};
   border-radius: 100%;
   overflow: hidden;
   position: relative;
@@ -83,15 +89,38 @@ const presetCSS = css`
     position: absolute;
     top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
     left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    transform: rotate(45deg);
   }
 `;
 const Color = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
-
+  transform: rotate(-45deg);
   &:focus {
     outline: none !important;
   }
+
+  svg {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
+`;
+
+const OpaqueColorWrapper = styled.div`
+  height: ${PRESET_SIZE}px;
+  width: 50%;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
+const OpaqueColor = styled.div`
+  height: ${PRESET_SIZE}px;
+  width: ${PRESET_SIZE}px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  ${({ color }) => generatePatternStyles(color)}
 `;
 
 function ColorPresetPanel({ pushUpdate }) {
@@ -116,10 +145,13 @@ function ColorPresetPanel({ pushUpdate }) {
     if (!color) {
       return null;
     }
+    const hasTransparency = presetHasOpacity(color);
+    const hasGradient = presetHasGradient(color);
+    const opaqueColor = hasTransparency ? getOpaqueColor(color) : color;
+    // In edit mode we always enable the button for being able to delete.
     const disabled =
       !isEditMode &&
-      ((isBackground && presetHasOpacity(color)) ||
-        (isText && presetHasGradient(color)));
+      ((isBackground && hasTransparency) || (isText && hasGradient));
     let tooltip = null;
     if (disabled) {
       tooltip = isBackground
@@ -129,7 +161,7 @@ function ColorPresetPanel({ pushUpdate }) {
     return (
       <WithTooltip title={tooltip}>
         <ColorWrapper disabled={disabled}>
-          <Transparent />
+          {hasTransparency && <Transparent />}
           <Color
             tabIndex={activeIndex === i ? 0 : -1}
             color={color}
@@ -141,6 +173,11 @@ function ColorPresetPanel({ pushUpdate }) {
                 : __('Apply color preset', 'web-stories')
             }
           >
+            {hasTransparency && !hasGradient && (
+              <OpaqueColorWrapper>
+                <OpaqueColor color={opaqueColor} />
+              </OpaqueColorWrapper>
+            )}
             {isEditMode && <Remove />}
           </Color>
         </ColorWrapper>

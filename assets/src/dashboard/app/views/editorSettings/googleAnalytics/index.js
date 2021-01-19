@@ -74,25 +74,19 @@ export const TEXT = {
     'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
     'web-stories'
   ),
-  SITE_KIT_ADMIN_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/', // TODO get a direct link to WP admin (it's a modal)
-  SITE_KIT_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/',
 };
 
 function GoogleAnalyticsSettings({
   googleAnalyticsId,
   handleUpdate,
-  siteKitCapabilities = {},
+  siteKitStatus = {},
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
 
-  const {
-    canInstallPlugins,
-    siteKitActive,
-    siteKitInstalled,
-  } = siteKitCapabilities;
+  const { analyticsActive, installed, link } = siteKitStatus;
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -128,37 +122,20 @@ function GoogleAnalyticsSettings({
   );
 
   const siteKitDisplayText = useMemo(() => {
-    const siteKitLink = canInstallPlugins
-      ? TEXT.SITE_KIT_ADMIN_PLUGIN_LINK
-      : TEXT.SITE_KIT_PLUGIN_LINK;
-
-    if (siteKitActive) {
+    if (analyticsActive) {
       return TEXT.SITE_KIT_IN_USE;
     }
 
-    if (siteKitInstalled) {
-      return (
-        <TranslateWithMarkup
-          mapping={{
-            a: (
-              <InlineLink href={siteKitLink} rel="noreferrer" target="_blank" />
-            ),
-          }}
-        >
-          {TEXT.SITE_KIT_INSTALLED}
-        </TranslateWithMarkup>
-      );
-    }
     return (
       <TranslateWithMarkup
         mapping={{
-          a: <InlineLink href={siteKitLink} rel="noreferrer" target="_blank" />,
+          a: <InlineLink href={link} rel="noreferrer" target="_blank" />,
         }}
       >
-        {TEXT.SITE_KIT_NOT_INSTALLED}
+        {installed ? TEXT.SITE_KIT_INSTALLED : TEXT.SITE_KIT_NOT_INSTALLED}
       </TranslateWithMarkup>
     );
-  }, [canInstallPlugins, siteKitActive, siteKitInstalled]);
+  }, [analyticsActive, installed, link]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -181,7 +158,7 @@ function GoogleAnalyticsSettings({
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
-            disabled={siteKitInstalled}
+            disabled={analyticsActive}
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {TEXT.SUBMIT_BUTTON}
@@ -210,12 +187,11 @@ function GoogleAnalyticsSettings({
 GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
-  siteKitCapabilities: PropTypes.shape({
-    analyticsModuleActive: PropTypes.bool,
-    canActivatePlugins: PropTypes.bool,
-    canInstallPlugins: PropTypes.bool,
-    siteKitActive: PropTypes.bool,
-    siteKitInstalled: PropTypes.bool,
+  siteKitStatus: PropTypes.shape({
+    installed: PropTypes.bool,
+    active: PropTypes.bool,
+    analyticsActive: PropTypes.bool,
+    link: PropTypes.string,
   }),
 };
 

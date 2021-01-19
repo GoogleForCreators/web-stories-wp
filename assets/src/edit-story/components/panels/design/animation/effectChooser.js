@@ -85,7 +85,8 @@ const ContentWrapper = styled.div`
 
 const GridItem = styled.button.attrs({ role: 'listitem' })`
   border: none;
-  background: ${({ active }) => (active ? '#5732A3' : '#333')};
+  background: ${({ active, theme }) =>
+    active ? theme.colors.accent.primary : '#333'};
   border-radius: 4px;
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
@@ -107,7 +108,8 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
 
   &:hover:not([aria-disabled='true']),
   &:focus:not([aria-disabled='true']) {
-    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
+    background: ${({ active, theme }) =>
+      active ? theme.colors.accent.primary : '#1C73E8'};
 
     ${BaseAnimationCell} {
       display: inline-block;
