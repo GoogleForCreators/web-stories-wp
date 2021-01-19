@@ -67,16 +67,15 @@ class Carousel_Renderer extends Renderer {
 
 		parent::assets();
 
-		if ( ! $this->is_amp_request() ) {
-			$this->enqueue_script( self::SCRIPT_HANDLE );
-			$this->enqueue_style( self::SCRIPT_HANDLE );
+		$this->register_script( self::SCRIPT_HANDLE );
+		$this->register_style( self::SCRIPT_HANDLE );
 
-			wp_localize_script(
-				self::SCRIPT_HANDLE,
-				'webStoriesCarouselSettings',
-				$this->get_carousel_settings()
-			);
-		}
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesCarouselSettings',
+			$this->get_carousel_settings()
+		);
+
 	}
 
 	/**
@@ -121,6 +120,8 @@ class Carousel_Renderer extends Renderer {
 			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
 				if ( ! $this->is_amp_request() ) {
+					wp_enqueue_script( self::SCRIPT_HANDLE );
+					wp_enqueue_style( self::SCRIPT_HANDLE );
 					?>
 					<div class="web-stories-list__carousel">
 						<?php

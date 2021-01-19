@@ -269,17 +269,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function assets() {
 
-		$this->enqueue_style( self::STYLE_HANDLE );
+		// Web Stories Styles for AMP and non-AMP pages.
+		$this->register_style( self::STYLE_HANDLE );
 
-		if ( ! $this->is_amp_request() ) {
+		// Web Stories Lightbox script.
+		$this->register_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
 
-			$this->enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
-			$this->enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
-
-			// Web Stories Lightbox script.
-			$this->enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
-
-		}
 	}
 
 	/**
@@ -507,6 +502,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $this->current()->get_id();
 
+		// Web Stories Styles for AMP and non-AMP pages.
+		wp_enqueue_style( self::STYLE_HANDLE );
+
 		if ( $this->is_amp_request() ) {
 			?>
 			<div
@@ -519,6 +517,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 			<?php
 		} else {
+			wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
+			wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
+			wp_enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
 			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
 				<?php
