@@ -68,16 +68,13 @@ function PageLayoutsPane(props) {
 
   // load and process pageLayouts
   useEffect(() => {
-    const trackTiming = getTimeTracker(
-      'load',
-      'templates',
-      'Page Layouts Pane'
-    );
+    async function loadPageLayouts() {
+      const trackTiming = getTimeTracker('load', 'editor', 'Page Layouts');
+      setPageLayouts(await getPageLayouts());
+      await trackTiming();
+    }
 
-    getPageLayouts().then((result) => {
-      setPageLayouts(result);
-      trackTiming();
-    });
+    loadPageLayouts();
   }, [getPageLayouts, setPageLayouts]);
 
   const pills = useMemo(
