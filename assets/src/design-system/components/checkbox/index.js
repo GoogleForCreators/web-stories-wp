@@ -38,12 +38,12 @@ const CheckboxContainer = styled.div(
     align-items: center;
     height: 24px;
     width: 24px;
-    margin: 1px;
+    margin: 12px;
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.defaultNormal};
 
     :focus-within {
-      margin: 0;
+      margin: 11px;
       border: 2px solid ${theme.colors.border.focus};
     }
 

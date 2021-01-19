@@ -18,6 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { action } from '@storybook/addon-actions';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -46,67 +48,106 @@ const Row = styled.div`
 
   > * {
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 `;
 
-export const _default = () => {
-  return (
-    <>
-      <Container>
+export const _default = () => (
+  <>
+    <Container>
+      <Row>
+        <div>
+          <label htmlFor="unchecked-1">
+            <Text>{text('Checkbox Label 1', 'Normal')}</Text>
+          </label>
+          <Checkbox
+            id="unchecked-1"
+            onChange={action('Checkbox 1: onChange')}
+          />
+        </div>
+        <div>
+          <label htmlFor="unchecked-disabled-1">
+            <Text>{text('Checkbox Label 2', 'Disabled')}</Text>
+          </label>
+          <Checkbox
+            id="unchecked-disabled-1"
+            onChange={action('Checkbox 2: onChange')}
+            disabled
+          />
+        </div>
+      </Row>
+      <Row>
+        <div>
+          <label htmlFor="unchecked-2">
+            <Text>{text('Checkbox Label 3', 'Checked')}</Text>
+          </label>
+          <Checkbox
+            id="unchecked-2"
+            onChange={action('Checkbox 3: onChange')}
+            checked
+          />
+        </div>
+        <div>
+          <label htmlFor="unchecked-disabled-2">
+            <Text>{text('Checkbox Label 4', 'Checked and Disabled')}</Text>
+          </label>
+          <Checkbox
+            id="unchecked-disabled-2"
+            onChange={action('Checkbox 4: onChange')}
+            checked
+            disabled
+          />
+        </div>
+      </Row>
+    </Container>
+    <DarkThemeProvider>
+      <Container darkMode>
         <Row>
-          <Text>
-            <p>{'Normal'}</p>
-          </Text>
-          <Text>
-            <p>{'Disable'}</p>
-          </Text>
+          <div>
+            <label htmlFor="unchecked-3">
+              <Text>{text('Checkbox Label 1', 'Normal')}</Text>
+            </label>
+            <Checkbox
+              id="unchecked-3"
+              onChange={action('Checkbox 5: onChange')}
+            />
+          </div>
+          <div>
+            <label htmlFor="unchecked-disabled-3">
+              <Text>{text('Checkbox Label 2', 'Disabled')}</Text>
+            </label>
+            <Checkbox
+              id="unchecked-disabled-3"
+              onChange={action('Checkbox 6: onChange')}
+              disabled
+            />
+          </div>
         </Row>
         <Row>
           <div>
-            <Checkbox />
+            <label htmlFor="unchecked-4">
+              <Text>{text('Checkbox Label 3', 'Checked')}</Text>
+            </label>
+            <Checkbox
+              id="unchecked-4"
+              onChange={action('Checkbox 7: onChange')}
+              checked
+            />
           </div>
           <div>
-            <Checkbox disabled />
-          </div>
-        </Row>
-        <Row>
-          <div>
-            <Checkbox checked />
-          </div>
-          <div>
-            <Checkbox checked disabled />
+            <label htmlFor="unchecked-disabled-4">
+              <Text>{text('Checkbox Label 4', 'Checked and Disabled')}</Text>
+            </label>
+            <Checkbox
+              id="unchecked-disabled-4"
+              onChange={action('Checkbox 8: onChange')}
+              checked
+              disabled
+            />
           </div>
         </Row>
       </Container>
-      <DarkThemeProvider>
-        <Container darkMode>
-          <Row>
-            <Text>
-              <p>{'Normal'}</p>
-            </Text>
-            <Text>
-              <p>{'Disable'}</p>
-            </Text>
-          </Row>
-          <Row>
-            <div>
-              <Checkbox />
-            </div>
-            <div>
-              <Checkbox disabled />
-            </div>
-          </Row>
-          <Row>
-            <div>
-              <Checkbox checked />
-            </div>
-            <div>
-              <Checkbox checked disabled />
-            </div>
-          </Row>
-        </Container>
-      </DarkThemeProvider>
-    </>
-  );
-};
+    </DarkThemeProvider>
+  </>
+);
