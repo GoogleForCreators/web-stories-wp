@@ -29,7 +29,7 @@ import {
 import { useStory, useConfig } from '../../app';
 import { duplicatePage } from '../../elements';
 
-function useCarouselKeys({ listElement }) {
+function useCarouselKeys({ listElement, pageRefs }) {
   const { isRTL } = useConfig();
   const {
     addPageAt,
@@ -73,9 +73,17 @@ function useCarouselKeys({ listElement }) {
       if (nextIndex >= 0 && nextIndex < pageIds.length) {
         const pageId = pageIds[nextIndex];
         setCurrentPage({ pageId });
+
+        const thumbnail = pageRefs.current && pageRefs.current[pageId];
+        // @todo: provide a cleaner `focusFirst()` API and takes into account
+        // `tabIndex`, `disabled`, links, buttons, inputs, etc.
+        const button = thumbnail?.querySelector('button');
+        if (button) {
+          button.focus();
+        }
       }
     },
-    [currentPageId, isRTL, pageIds, setCurrentPage]
+    [currentPageId, isRTL, pageIds, setCurrentPage, pageRefs]
   );
 
   // Rearrange pages.
@@ -114,6 +122,7 @@ function useCarouselKeys({ listElement }) {
     'delete',
     () => {
       deletePage({ pageId: currentPageId });
+
       // Wait for active page to change, then set new active page as focus
       const currentElement = document.activeElement;
       const setFocusWhenActiveElementChanges = () => {

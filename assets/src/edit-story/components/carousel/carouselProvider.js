@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useRef, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -43,6 +43,7 @@ function CarouselProvider({ availableSpace, children }) {
   );
 
   const [listElement, setListElement] = useState(null);
+  const pageRefs = useRef([]);
 
   const numPages = pages.length;
 
@@ -71,7 +72,11 @@ function CarouselProvider({ availableSpace, children }) {
     pageThumbMargin,
   });
 
-  useCarouselKeys({ listElement });
+  useCarouselKeys({ listElement, pageRefs });
+
+  const setPageRef = useCallback((page, el) => {
+    pageRefs.current[page.id] = el;
+  }, []);
 
   const clickPage = useCallback((page) => setCurrentPage({ pageId: page.id }), [
     setCurrentPage,
@@ -107,6 +112,7 @@ function CarouselProvider({ availableSpace, children }) {
       clickPage,
       rearrangePages,
       setListRef: setListElement,
+      setPageRef,
     },
   };
 
