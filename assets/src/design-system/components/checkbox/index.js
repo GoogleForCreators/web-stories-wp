@@ -80,7 +80,7 @@ const CheckboxContainer = styled.div(
       height: 24px;
       margin: 0;
       padding: 0;
-      visibility: hidden;
+      opacity: 0;
     }
   `
 );
