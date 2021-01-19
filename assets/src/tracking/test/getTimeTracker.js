@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
-
 /**
  * Internal dependencies
  */
-import trackTiming from '../trackTiming';
+import getTimeTracker from '../getTimeTracker';
 import { config, gtag } from '../shared';
 
-describe('trackTiming', () => {
+jest.mock('../shared');
+
+jest
+  .spyOn(performance, 'now')
+  .mockImplementationOnce(() => 150)
+  .mockImplementationOnce(() => 200);
+
+describe('getTimeTracker', () => {
   afterEach(() => {
     config.trackingAllowed = false;
     config.trackingEnabled = false;
@@ -41,20 +46,23 @@ describe('trackTiming', () => {
       eventData.event_callback();
     });
 
-    await trackTiming(20, 'load', 'Dependencies', 'CDN');
+    const trackTime = getTimeTracker('load', 'Dependencies', 'CDN');
+    await trackTime();
+
     expect(gtag).toHaveBeenCalledWith('event', 'timing_complete', {
       event_callback: expect.any(Function),
       event_category: 'Dependencies',
       event_label: 'CDN',
       name: 'load',
-      value: 20,
+      value: 50,
     });
   });
 
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
 
-    await trackTiming('load', 20, 'Dependencies', 'CDN');
+    const trackTime = getTimeTracker('load', 'Dependencies', 'CDN');
+    await trackTime();
     expect(gtag).not.toHaveBeenCalled();
   });
 });
