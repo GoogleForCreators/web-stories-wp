@@ -49,14 +49,12 @@ describe('StoryCard', () => {
 
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="web-stories-list__story-wrapper"
+        class="web-stories-list__story"
       >
         <div
-          class="web-stories-list__inner-wrapper image-align-left"
+          class="web-stories-list__story-poster"
         >
-          <div
-            class="web-stories-list__story-placeholder"
-          />
+          <img />
         </div>
       </div>
     `);
@@ -67,14 +65,13 @@ describe('StoryCard', () => {
 
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="web-stories-list__story-wrapper"
+        class="web-stories-list__story"
       >
         <div
-          class="web-stories-list__inner-wrapper image-align-left"
+          class="web-stories-list__story-poster"
         >
-          <div
-            class="web-stories-list__story-placeholder"
-            style="background-image: url(https://amp.dev/static/samples/img/story_dog2_portrait.jpg);"
+          <img
+            src="https://amp.dev/static/samples/img/story_dog2_portrait.jpg"
           />
         </div>
       </div>
@@ -98,40 +95,40 @@ describe('StoryCard', () => {
 
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="web-stories-list__story-wrapper"
+        class="web-stories-list__story"
       >
         <div
-          class="web-stories-list__inner-wrapper image-align-left"
+          class="web-stories-list__story-poster"
+        >
+          <img
+            alt="Stories in AMP"
+            src="https://amp.dev/static/samples/img/story_dog2_portrait.jpg"
+          />
+        </div>
+        <div
+          class="story-content-overlay web-stories-list__story-content-overlay"
         >
           <div
-            class="web-stories-list__story-placeholder"
-            style="background-image: url(https://amp.dev/static/samples/img/story_dog2_portrait.jpg);"
-          />
-          <div
-            class="story-content-overlay web-stories-list__story-content-overlay"
+            class="story-content-overlay__title"
           >
-            <div
-              class="story-content-overlay__title"
-            >
-              Stories in AMP
-            </div>
-            <div
-              class="story-content-overlay__excerpt"
-            >
-              Ullamcorper integer senectus netus dapibus consectetur orci imperdiet gravida volutpat nulla, aliquet penatibus elit sollicitudin turpis aenean suscipit vel a, at et congue nullam tincidunt semper eget auctor vehicula. Netus commodo mauris pharetra non diam fusce convallis nibh tempor nisi fringilla, lorem bibendum aenean nostra dis congue mus primis sapien vivamus tortor proin, metus leo quam arcu et augue lacinia integer suscipit ridiculus. Nulla diam viverra fringilla nostra, neque augue cubilia blandit felis, habitant leo aliquam. Fusce dictumst cursus nibh penatibus interdum duis natoque sed, lacinia ut convallis nam scelerisque lorem cubilia curabitur vel, mollis aliquam mattis commodo litora pretium suscipit.
-            </div>
-            <div
-              class="story-content-overlay__author"
-            >
-              by Admin
-            </div>
-            <time
-              class="story-content-overlay__date"
-              datetime="2020-11-18T13:36:35"
-            >
-              On November 18, 2020
-            </time>
+            Stories in AMP
           </div>
+          <div
+            class="story-content-overlay__excerpt"
+          >
+            Ullamcorper integer senectus netus dapibus consectetur orci imperdiet gravida volutpat nulla, aliquet penatibus elit sollicitudin turpis aenean suscipit vel a, at et congue nullam tincidunt semper eget auctor vehicula. Netus commodo mauris pharetra non diam fusce convallis nibh tempor nisi fringilla, lorem bibendum aenean nostra dis congue mus primis sapien vivamus tortor proin, metus leo quam arcu et augue lacinia integer suscipit ridiculus. Nulla diam viverra fringilla nostra, neque augue cubilia blandit felis, habitant leo aliquam. Fusce dictumst cursus nibh penatibus interdum duis natoque sed, lacinia ut convallis nam scelerisque lorem cubilia curabitur vel, mollis aliquam mattis commodo litora pretium suscipit.
+          </div>
+          <div
+            class="story-content-overlay__author"
+          >
+            by Admin
+          </div>
+          <time
+            class="story-content-overlay__date"
+            datetime="2020-11-18T13:36:35"
+          >
+            On November 18, 2020
+          </time>
         </div>
       </div>
     `);
@@ -154,14 +151,14 @@ describe('StoryCard', () => {
 
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
-        class="web-stories-list__story-wrapper"
+        class="web-stories-list__story"
       >
         <div
-          class="web-stories-list__inner-wrapper image-align-left"
+          class="web-stories-list__story-poster"
         >
-          <div
-            class="web-stories-list__story-placeholder"
-            style="background-image: url(https://amp.dev/static/samples/img/story_dog2_portrait.jpg);"
+          <img
+            alt="Stories in AMP"
+            src="https://amp.dev/static/samples/img/story_dog2_portrait.jpg"
           />
         </div>
       </div>
