@@ -35,6 +35,7 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
+import {MaskTypes} from "../../masks";
 
 // @todo: should the frame borders follow clip lines?
 
@@ -44,7 +45,7 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
 	${elementWithRotation}
-  pointer-events: initial;
+  pointer-events: none;
 
   &:focus,
   &:active,
@@ -61,9 +62,10 @@ const EmptyFrame = styled.div`
 `;
 
 function FrameElement({ element }) {
-  const { id, type } = element;
+  const { id, type, mask } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
+  const maskRef = useRef();
   const [hovering, setHovering] = useState(false);
   const {
     state: { isAnythingTransforming },
@@ -128,30 +130,33 @@ function FrameElement({ element }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
-        onMouseDown={(evt) => {
-          if (isSelected) {
-            elementRef.current.focus({ preventScroll: true });
-          } else {
-            handleSelectElement(id, evt);
-          }
-          if (!isBackground) {
-            evt.stopPropagation();
-          }
-        }}
-        onFocus={(evt) => {
-          if (!isSelected) {
-            handleSelectElement(id, evt);
-          }
-        }}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
         isAnimating={isAnimating}
         data-testid="frameElement"
       >
-        <WithMask element={element} fill={true}>
+        <WithMask
+          element={element}
+          fill={true}
+          maskRef={maskRef}
+          onMouseDown={(evt) => {
+            console.log(evt.target);
+            if (isSelected) {
+              elementRef.current.focus({ preventScroll: true });
+            } else {
+              handleSelectElement(id, evt);
+            }
+            if (!isBackground) {
+              evt.stopPropagation();
+            }
+          }}
+          onFocus={(evt) => {
+            if (!isSelected) {
+              handleSelectElement(id, evt);
+            }
+          }}
+        >
           {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
           ) : (

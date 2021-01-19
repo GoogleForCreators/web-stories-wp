@@ -49,7 +49,7 @@ const DropTargetSVG = styled.svg`
 const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
-  opacity: ${({ active }) => (active ? 0.3 : 0)};
+  opacity: ${({ active }) => (active ? 0.3 : 0.3)};
 `;
 
 function WithDropTarget({ element, children, hover }) {
@@ -109,7 +109,7 @@ function WithDropTarget({ element, children, hover }) {
           ref={pathRef}
           vectorEffect="non-scaling-stroke"
           strokeWidth="48"
-          fill="none"
+          fill="red"
           stroke="#0063F9"
           strokeLinecap="round"
           strokeLinejoin="round"
