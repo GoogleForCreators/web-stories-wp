@@ -77,6 +77,7 @@ class User_Preferences {
 				'default'       => [],
 				'show_in_rest'  => [
 					'schema' => [
+						'properties'           => [],
 						'additionalProperties' => true,
 					],
 				],
