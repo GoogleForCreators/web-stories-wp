@@ -39,7 +39,7 @@ class Uninstall extends \WP_UnitTestCase {
 		set_transient( 'web_stories_link_data_fdsf', 'hello' );
 		set_site_transient( 'web_stories_updater', 'hello' );
 		self::$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
-		add_user_meta( self::$user_id, \Google\Web_Stories\Tracking::OPTIN_META_KEY, true );
+		add_user_meta( self::$user_id, \Google\Web_Stories\User_Preferences::OPTIN_META_KEY, true );
 	}
 
 	public function test_delete_options() {
@@ -78,7 +78,7 @@ class Uninstall extends \WP_UnitTestCase {
 
 	public function test_delete_stories_user_meta() {
 		\Google\Web_Stories\delete_stories_user_meta();
-		$user_meta = (bool) get_user_meta( self::$user_id, \Google\Web_Stories\Tracking::OPTIN_META_KEY, true );
+		$user_meta = (bool) get_user_meta( self::$user_id, \Google\Web_Stories\User_Preferences::OPTIN_META_KEY, true );
 		$this->assertFalse( $user_meta );
 	}
 

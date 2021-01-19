@@ -47,13 +47,6 @@ class Tracking {
 	const TRACKING_ID = 'UA-168571240-1';
 
 	/**
-	 * Name of the user meta key used for opt-in.
-	 *
-	 * @var string
-	 */
-	const OPTIN_META_KEY = 'web_stories_tracking_optin';
-
-	/**
 	 * Initializes tracking.
 	 *
 	 * Registers the setting in WordPress.
@@ -63,21 +56,6 @@ class Tracking {
 	 * @return void
 	 */
 	public function init() {
-		register_meta(
-			'user',
-			static::OPTIN_META_KEY,
-			[
-				'type'              => 'boolean',
-				'sanitize_callback' => 'rest_sanitize_boolean',
-				'default'           => false,
-				'show_in_rest'      => true,
-				'auth_callback'     => static function() {
-					return current_user_can( 'edit_user', get_current_user_id() );
-				},
-				'single'            => true,
-			]
-		);
-
 		// By not passing an actual script src we can print only the inline script.
 		wp_register_script(
 			self::SCRIPT_HANDLE,
@@ -113,6 +91,6 @@ class Tracking {
 	 * @return bool True if tracking enabled, and False if not.
 	 */
 	public function is_active() {
-		return (bool) get_user_meta( get_current_user_id(), static::OPTIN_META_KEY, true );
+		return (bool) get_user_meta( get_current_user_id(), User_Preferences::OPTIN_META_KEY, true );
 	}
 }
