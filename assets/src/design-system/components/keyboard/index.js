@@ -219,17 +219,20 @@ export function useGlobalIsKeyPressed(keyNameOrSpec, deps = undefined) {
 }
 
 /**
- * @param {{current: Node}} ref Node reference.
+ * @param {Node|{current: Node}} refOrNode Node or reference to one
  * @param {Array} [deps] The effect's dependencies.
  */
-export function useEscapeToBlurEffect(ref, deps = undefined) {
+export function useEscapeToBlurEffect(refOrNode, deps = undefined) {
   useKeyDownEffect(
-    ref,
+    refOrNode,
     { key: 'esc', editable: true },
     () => {
-      const { current } = ref;
+      const node =
+        typeof refOrNode?.current !== 'undefined'
+          ? refOrNode.current
+          : refOrNode;
       const { activeElement } = document;
-      if (current.contains(activeElement)) {
+      if (node.contains(activeElement)) {
         activeElement.blur();
       }
     },

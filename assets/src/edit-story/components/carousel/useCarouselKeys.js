@@ -56,7 +56,7 @@ function useCarouselKeys({ listElement, pageRefs }) {
 
   const pageIds = useMemo(() => pages.map(({ id }) => id), [pages]);
 
-  useEscapeToBlurEffect({ current: listElement });
+  useEscapeToBlurEffect(listElement, [listElement]);
 
   // Navigate left and right.
   useKeyDownEffect(
