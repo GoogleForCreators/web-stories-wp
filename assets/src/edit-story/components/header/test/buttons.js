@@ -23,6 +23,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import Modal from 'react-modal';
+import MockDate from 'mockdate';
 
 /**
  * Internal dependencies
@@ -87,7 +88,7 @@ function setupButtons({
 }
 
 describe('buttons', () => {
-  const FUTURE_DATE = '9999-01-01T20:20:20';
+  const FUTURE_DATE = '2022-01-01T20:20:20Z';
   const PREVIEW_POPUP = {
     document: {
       write: jest.fn(),
@@ -103,10 +104,12 @@ describe('buttons', () => {
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
     Modal.setAppElement(modalWrapper);
+    MockDate.set('2020-07-15T12:00:00+00:00');
   });
 
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
+    MockDate.reset();
   });
 
   it('should display Publish button when in draft mode', () => {

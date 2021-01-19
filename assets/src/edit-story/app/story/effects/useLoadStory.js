@@ -43,7 +43,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           title: { raw: title },
           status,
           slug,
-          date_gmt,
+          date,
           modified,
           excerpt: { raw: excerpt },
           link,
@@ -55,7 +55,6 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           password,
           _embedded: embedded = {},
         } = post;
-        const date = `${date_gmt}Z`;
 
         let author = {
           id: 0,
