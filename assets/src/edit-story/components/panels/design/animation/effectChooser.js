@@ -35,6 +35,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import {
+  isNullOrUndefinedOrEmptyString,
+  useKeyDownEffect,
+  useFocusOut,
+} from '../../../../../design-system';
 import loadStylesheet from '../../../../utils/loadStylesheet';
 import { useConfig } from '../../../../app/config';
 import { GOOGLE_MENU_FONT_URL } from '../../../../app/font';
@@ -44,8 +49,6 @@ import {
   DIRECTION,
   SCALE_DIRECTION,
 } from '../../../../../animation';
-import useFocusOut from '../../../../utils/useFocusOut';
-import { useKeyDownEffect } from '../../../keyboard';
 import WithTooltip from '../../../tooltip';
 import {
   GRID_ITEM_HEIGHT,
@@ -70,7 +73,6 @@ import {
   PanBottomAnimation,
   PanLeftAnimation,
 } from './effectChooserElements';
-import { isNullOrUndefinedOrEmptyString } from './utils/isNullOrUndefinedOrEmptyString';
 
 const Container = styled.div`
   background: black;
@@ -83,7 +85,8 @@ const ContentWrapper = styled.div`
 
 const GridItem = styled.button.attrs({ role: 'listitem' })`
   border: none;
-  background: ${({ active }) => (active ? '#5732A3' : '#333')};
+  background: ${({ active, theme }) =>
+    active ? theme.colors.accent.primary : '#333'};
   border-radius: 4px;
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
@@ -105,7 +108,8 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
 
   &:hover:not([aria-disabled='true']),
   &:focus:not([aria-disabled='true']) {
-    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
+    background: ${({ active, theme }) =>
+      active ? theme.colors.accent.primary : '#1C73E8'};
 
     ${BaseAnimationCell} {
       display: inline-block;

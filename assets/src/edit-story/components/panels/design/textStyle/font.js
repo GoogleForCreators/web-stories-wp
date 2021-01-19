@@ -32,14 +32,8 @@ import { __ } from '@wordpress/i18n';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
-import {
-  Numeric,
-  Row,
-  DropDown,
-  usePresubmitHandler,
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '../../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
+import { Numeric, Row, DropDown, usePresubmitHandler } from '../../../form';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';

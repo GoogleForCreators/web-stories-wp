@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils/context';
+import { identity, useContextSelector } from '../../../design-system';
 import Context from './context';
 
 function useLayout(selector) {

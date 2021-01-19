@@ -22,7 +22,7 @@ import isPatternEqual from '../../../utils/isPatternEqual';
 import createSolidFromString from '../../../utils/createSolidFromString';
 import createSolid from '../../../utils/createSolid';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE } from '../../../constants';
 import { NONE, COLOR } from '../customConstants';
 import {
   togglePrefixStyle,

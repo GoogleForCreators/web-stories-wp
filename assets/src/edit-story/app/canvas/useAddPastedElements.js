@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
-import useBatchingCallback from '../../utils/useBatchingCallback';
+import { useStory } from '../story';
+import { useBatchingCallback } from '../../../design-system';
 
 function useAddPastedElements() {
   const {

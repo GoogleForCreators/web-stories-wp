@@ -41,7 +41,7 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { useGridViewKeys, useFocusOut } from '../../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../../design-system';
 import { useConfig } from '../../../config';
 import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
 import PopoverLogoContextMenu from './popoverLogoContextMenu';

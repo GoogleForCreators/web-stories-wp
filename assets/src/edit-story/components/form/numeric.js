@@ -28,9 +28,9 @@ import Big from 'big.js';
  */
 import { defaultUnit } from '../../../animation/utils/defaultUnit';
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../constants';
 import Input from './input';
-import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 
 const ONCHANGE_DEBOUNCE_DELAY = 500;
 const SELECT_CONTENTS_DELAY = 10;

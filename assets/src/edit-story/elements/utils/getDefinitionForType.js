@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,9 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../utils/context';
+import elementTypes from '../elementTypes';
 
-/**
- * Internal dependencies
- */
-import keys from './keys';
+const getDefinitionForType = (type) =>
+  elementTypes.find((el) => el.type === type);
 
-export default createContext({ keys });
+export default getDefinitionForType;

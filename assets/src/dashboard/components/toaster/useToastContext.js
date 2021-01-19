@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { useContextSelector, identity } from '../../utils';
+import { useContextSelector, identity } from '../../../design-system';
 import { ToasterContext } from './provider';
 
 const useToasterContext = (selector = identity) => {

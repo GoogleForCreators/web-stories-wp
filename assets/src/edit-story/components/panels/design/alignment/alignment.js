@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  */
 import WithTooltip from '../../../tooltip';
 import { useConfig } from '../../../../app';
-import { useKeyDownEffect } from '../../../keyboard';
+import { useKeyDownEffect } from '../../../../../design-system';
 import {
   AlignBottom,
   AlignTop,

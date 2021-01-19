@@ -26,6 +26,7 @@ import { generateFontFamily } from '../../../../elements/text/util';
 import {
   BACKGROUND_TEXT_MODE,
   COLOR_PRESETS_PER_ROW,
+  MULTIPLE_VALUE,
   SAVED_COLOR_SIZE,
   SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,

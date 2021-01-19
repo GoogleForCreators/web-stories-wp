@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * See https://craig.is/killing/mice#keys for the supported key codes.
- */
-const keys = {
-  undo: 'mod+z',
-  redo: 'shift+mod+z',
-  delete: ['del', 'backspace'],
-  clone: 'mod+d',
-};
-
-export default keys;
+export { default as CanvasProvider } from './canvasProvider';
+export { default as useCanvas } from './useCanvas';

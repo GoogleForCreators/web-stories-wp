@@ -19,6 +19,7 @@
  */
 import * as Icons from './icons';
 
+export { Icons };
 export * from './components';
 export * from './theme';
-export { Icons };
+export * from './utils';
