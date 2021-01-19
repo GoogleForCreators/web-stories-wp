@@ -126,6 +126,7 @@ function delete_stories_post_meta() {
  */
 function delete_stories_user_meta() {
 	delete_metadata( 'user', 0, User_Preferences::OPTIN_META_KEY, '', true );
+	delete_metadata( 'user', 0, User_Preferences::ONBOARDING_META_KEY, '', true );
 }
 
 /**
