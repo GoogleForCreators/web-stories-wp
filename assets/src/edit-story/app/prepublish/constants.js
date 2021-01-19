@@ -22,10 +22,6 @@ import { __, sprintf, _n } from '@wordpress/i18n';
  * External dependencies
  */
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { TranslateWithMarkup } from '../../../i18n';
 
 export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;
@@ -476,23 +472,16 @@ export const MESSAGES = {
       HELPER_TEXT: (
         <DashedList>
           <li>
-            <TranslateWithMarkup
-              mapping={{
-                a: (
-                  //eslint-disable-next-line jsx-a11y/anchor-has-content
-                  <a
-                    href="https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#visual-treat"
-                    rel="noreferrer"
-                    target="_blank"
-                  />
-                ),
-              }}
+            <a
+              href="https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#visual-treat"
+              rel="noreferrer"
+              target="_blank"
             >
               {__(
-                '<a>Use full screen videos and images whenever possible to create a more immersive experience (more info)</a>',
+                'Use full screen videos and images whenever possible to create a more immersive experience (more info)',
                 'web-stories'
               )}
-            </TranslateWithMarkup>
+            </a>
           </li>
         </DashedList>
       ),
