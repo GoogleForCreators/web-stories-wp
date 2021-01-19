@@ -58,6 +58,7 @@ function useCarouselSizing({ availableSpace, numPages }) {
       pageThumbHeight,
       pageThumbMargin,
       carouselWidth,
+      showablePages,
       hasOverflow,
     };
   }, [availableSpace, numPages]);

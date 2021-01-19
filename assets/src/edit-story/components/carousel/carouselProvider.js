@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useLayoutEffect, useRef, useMemo, useState } from 'react';
+import { useCallback, useRef, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -55,6 +55,7 @@ function CarouselProvider({ availableSpace, children }) {
     pageThumbMargin,
     carouselWidth,
     hasOverflow,
+    showablePages,
   } = useCarouselSizing({ availableSpace, numPages });
 
   const setPageRef = useCallback((page, el) => {
@@ -66,25 +67,16 @@ function CarouselProvider({ availableSpace, children }) {
     canScrollForward,
     scrollBack,
     scrollForward,
-  } = useCarouselScroll({ listElement, carouselWidth, hasOverflow });
+  } = useCarouselScroll({
+    listElement,
+    carouselWidth,
+    hasOverflow,
+    showablePages,
+    pageThumbWidth,
+    pageThumbMargin,
+  });
 
   useCarouselKeys({ listElement, pageRefs });
-
-  useLayoutEffect(() => {
-    if (!hasOverflow) {
-      return;
-    }
-    const currentPageRef = pageRefs.current[currentPageId];
-
-    if (!currentPageRef || !currentPageRef.scrollIntoView) {
-      return;
-    }
-
-    currentPageRef.scrollIntoView({
-      inline: 'center',
-      behavior: 'smooth',
-    });
-  }, [currentPageId, hasOverflow, carouselWidth, pageRefs]);
 
   const clickPage = useCallback((page) => setCurrentPage({ pageId: page.id }), [
     setCurrentPage,
