@@ -25,7 +25,7 @@ import { fireEvent } from '@testing-library/react';
 import StylePresetPanel from '../stylePreset';
 import StoryContext from '../../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
-import { getTextPresets, areAllType } from '../utils';
+import { getTextPresets, areAllType, getPanelInitialHeight } from '../utils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
@@ -120,6 +120,8 @@ describe('Panels/Preset', () => {
   areAllType.mockImplementation((elType, els) => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
+
+  getPanelInitialHeight.mockReturnValue(150);
 
   beforeAll(() => {
     localStorage.setItem(
