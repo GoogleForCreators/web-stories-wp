@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
 
 /**
@@ -36,20 +36,32 @@ const FILL_STYLE = {
   bottom: 0,
 };
 
-const DropTargetSVG = styled.svg`
+const svgCss = css`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+`;
+
+const DropTargetSVG = styled.svg`
+  ${svgCss}
   z-index: ${({ active }) => (active ? 1 : -1)};
+`;
+
+const Filler = styled.svg`
+  ${svgCss}
+`;
+
+const FillerPath = styled.path`
+  pointer-events: all;
 `;
 
 const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
-  opacity: ${({ active }) => (active ? 0.3 : 0.3)};
+  opacity: ${({ active }) => (active ? 0.3 : 0)};
 `;
 
 function WithDropTarget({ element, children, hover }) {
@@ -109,7 +121,7 @@ function WithDropTarget({ element, children, hover }) {
           ref={pathRef}
           vectorEffect="non-scaling-stroke"
           strokeWidth="48"
-          fill="red"
+          fill="none"
           stroke="#0063F9"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -173,6 +185,18 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
           </clipPath>
         </defs>
       </svg>
+      <Filler
+        viewBox={`0 0 1 ${1 / mask.ratio}`}
+        width="100%"
+        height="100%"
+        preserveAspectRatio="none"
+      >
+        <FillerPath
+          vectorEffect="non-scaling-stroke"
+          fill="none"
+          d={mask?.path}
+        />
+      </Filler>
       <WithDropTarget element={element} hover={hover}>
         {children}
       </WithDropTarget>
