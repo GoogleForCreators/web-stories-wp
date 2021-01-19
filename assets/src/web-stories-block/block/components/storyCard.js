@@ -43,6 +43,8 @@ function StoryCard({
     [`image-align-right`]: imageOnRight,
   });
   const hasContentOverlay = isShowingTitle || isShowingAuthor || isShowingDate;
+
+  // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
   const dateFormat = __experimentalGetSettings().formats.date;
 
   return (
