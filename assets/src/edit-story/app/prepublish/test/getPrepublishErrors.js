@@ -103,9 +103,9 @@ describe('prepublish checklist', () => {
     }).not.toThrow();
     expect(mockFn).toHaveBeenCalledWith(malformedStory);
     expect(mockFn).toHaveBeenCalledTimes(3);
-    expect(await getPrepublishErrorsCopy(malformedStory)).toStrictEqual(
-      await getPrepublishErrors(malformedStory)
-    );
+    expect(
+      JSON.stringify(await getPrepublishErrorsCopy(malformedStory))
+    ).toStrictEqual(JSON.stringify(await getPrepublishErrors(malformedStory)));
   });
 
   it('should provide the page number where the element that needs guidance is', async () => {
