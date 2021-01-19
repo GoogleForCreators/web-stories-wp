@@ -18,14 +18,16 @@
  * Internal dependencies
  */
 
+export {
+  CompassActive,
+  FloppyDiskActive,
+  HomeWithHeartActive,
+} from './activeIcons';
 export { ReactComponent as ExploreTemplatesActive } from './exploreTemplatesActive.svg';
 export { ReactComponent as ExploreTemplatesNormal } from './exploreTemplatesNormal.svg';
 export { ReactComponent as Compass } from './compass.svg';
-export { ReactComponent as CompassActive } from './compass_active.svg';
 export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
-export { ReactComponent as FloppyDiskActive } from './floppy_disk_active.svg';
 export { ReactComponent as HomeWithHeart } from './home_with_heart.svg';
-export { ReactComponent as HomeWithHeartActive } from './home_with_heart_active.svg';
 export { ReactComponent as SavedTemplatesActive } from './savedTemplatesActive.svg';
 export { ReactComponent as SavedTemplatesNormal } from './savedTemplatesNormal.svg';
 export { ReactComponent as StoriesActive } from './storiesActive.svg';
