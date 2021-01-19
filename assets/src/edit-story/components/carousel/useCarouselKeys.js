@@ -29,7 +29,7 @@ import {
 import { useStory, useConfig } from '../../app';
 import { duplicatePage } from '../../elements';
 
-function useCarouselKeys({ listElement, pageRefs }) {
+function useCarouselKeys({ listElement }) {
   const { isRTL } = useConfig();
   const {
     addPageAt,
@@ -73,16 +73,9 @@ function useCarouselKeys({ listElement, pageRefs }) {
       if (nextIndex >= 0 && nextIndex < pageIds.length) {
         const pageId = pageIds[nextIndex];
         setCurrentPage({ pageId });
-        const thumbnail = pageRefs.current && pageRefs.current[pageId];
-        // @todo: provide a cleaner `focusFirst()` API and takes into account
-        // `tabIndex`, `disabled`, links, buttons, inputs, etc.
-        const button = thumbnail?.querySelector('button');
-        if (button) {
-          button.focus();
-        }
       }
     },
-    [currentPageId, isRTL, pageIds, pageRefs, setCurrentPage]
+    [currentPageId, isRTL, pageIds, setCurrentPage]
   );
 
   // Rearrange pages.
@@ -121,8 +114,26 @@ function useCarouselKeys({ listElement, pageRefs }) {
     'delete',
     () => {
       deletePage({ pageId: currentPageId });
+      // Wait for active page to change, then set new active page as focus
+      const currentElement = document.activeElement;
+      const setFocusWhenActiveElementChanges = () => {
+        if (document.activeElement !== currentElement) {
+          // Find the new active element (an option with tabindex=0)
+          const focusableOption = listElement.querySelector(
+            '[role="option"][tabindex="0"]'
+          );
+          // If exists, set focus
+          if (focusableOption) {
+            focusableOption.focus();
+            return;
+          }
+        }
+        // Otherwise, try again in 100ms
+        setTimeout(setFocusWhenActiveElementChanges, 100);
+      };
+      setFocusWhenActiveElementChanges();
     },
-    [currentPageId, deletePage]
+    [currentPageId, deletePage, listElement]
   );
 
   // Clone the current page.

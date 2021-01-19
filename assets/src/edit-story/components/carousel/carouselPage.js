@@ -89,7 +89,6 @@ function CarouselPage({ pageId, index }) {
     pageThumbHeight,
     pageThumbMargin,
     clickPage,
-    setPageRef,
     page,
     isCurrentPage,
     hasMultiplePages,
@@ -103,13 +102,12 @@ function CarouselPage({ pageId, index }) {
         pages,
         currentPageId,
       },
-      actions: { clickPage, setPageRef },
+      actions: { clickPage },
     }) => ({
       pageThumbWidth,
       pageThumbHeight,
       pageThumbMargin,
       clickPage,
-      setPageRef,
       page: pages.find(({ id }) => id === pageId),
       isCurrentPage: pageId === currentPageId,
       hasMultiplePages: numPages > 1,
@@ -121,7 +119,7 @@ function CarouselPage({ pageId, index }) {
   }
 
   return (
-    <ItemContainer key={page.id} ref={(el) => setPageRef(page, el)}>
+    <ItemContainer key={page.id}>
       {index === 0 && (
         <PageSeparator
           position={0}
