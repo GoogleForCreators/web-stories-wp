@@ -23,7 +23,7 @@ use WP_REST_Request;
 /**
  * @coversDefaultClass \Google\Web_Stories\User_Preferences
  */
-class User_Preferences extends \WP_Test_REST_TestCase {
+class User_Preferences extends \WP_UnitTestCase {
 	protected static $user_id;
 
 	protected static $author_id;
@@ -142,7 +142,13 @@ class User_Preferences extends \WP_Test_REST_TestCase {
 			]
 		);
 		$response = rest_get_server()->dispatch( $request );
+		if ( is_a( $response, 'WP_REST_Response' ) ) {
+			$response = $response->as_error();
+		}
 
-		$this->assertErrorResponse( 'rest_invalid_type', $response, 400 );
+		$this->assertWPError( $response );
+		$data = $response->get_error_data();
+		$this->assertArrayHasKey( 'status', $data );
+		$this->assertEquals( 400, $data['status'] );
 	}
 }
