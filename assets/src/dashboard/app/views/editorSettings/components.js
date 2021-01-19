@@ -33,9 +33,7 @@ import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import { Link } from '../../../components/link';
 import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../../constants';
 
-export const Wrapper = styled.div`
-  margin: 0;
-`;
+export const Wrapper = styled.div``;
 
 export const Main = styled(StandardViewContentGutter)`
   display: flex;

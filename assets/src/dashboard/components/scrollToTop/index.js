@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -78,18 +79,15 @@ const ScrollToTop = () => {
     actions: { scrollToTop },
   } = useLayoutContext();
 
-  const handleScroll = useCallback(() => {
-    if (window.scrollY > 0) {
-      setIsVisible(true);
-      return;
-    }
-    setIsVisible(false);
-  }, []);
+  const [handleScroll] = useDebouncedCallback(
+    () => setIsVisible(window.scrollY > 0),
+    100
+  );
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return function () {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll, { passive: true });
     };
   }, [handleScroll]);
 
