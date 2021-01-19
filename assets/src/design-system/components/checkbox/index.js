@@ -24,54 +24,32 @@ import styled, { css } from 'styled-components';
  */
 import { Checkmark } from '../../icons';
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Border = styled.div(
-  ({ disabled }) => css`
-    ${!disabled &&
-    css`
-      margin: 2px;
-
-      :focus-within {
-        border: 2px solid #5d96eb;
-        border-radius: 6px;
-        margin: 0;
-      }
-
-      :active {
-        border: 2px solid rgb(0 0 0 / 0.1);
-        box-shadow: 0 0 0 8px rgb(0 0 0 / 0.1);
-        border-radius: 6px;
-        margin: 2px;
-
-        ${CheckboxContainer} {
-          margin: 0;
-        }
-      }
-    `}
-  `
-);
-
 const CheckboxContainer = styled.div(
   ({ disabled, theme }) => css`
+    ${disabled &&
+    css`
+      opacity: 0.5;
+    `}
+
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 24px;
     width: 24px;
-    margin: 2px;
+    margin: 3px;
+    border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.gray['20']};
-    border-radius: 4px;
 
-    ${disabled &&
-    css`
-      opacity: 0.5;
-    `}
+    :focus-within {
+      margin: 2px;
+      border: 2px solid ${theme.colors.border.focus};
+    }
+
+    :active {
+      border: 1px solid ${theme.colors.gray['20']};
+      box-shadow: 0 0 0 8px rgb(0 0 0 / 0.1);
+    }
 
     /* Hide Checkbox */
     input[type='checkbox'] {
@@ -91,14 +69,10 @@ const StyledCheckmark = styled(Checkmark)`
 `;
 
 const Checkbox = ({ checked, disabled, ...props }) => (
-  <FlexContainer>
-    <Border disabled={disabled}>
-      <CheckboxContainer disabled={disabled}>
-        {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
-        <input type="checkbox" disabled={disabled} {...props} />
-      </CheckboxContainer>
-    </Border>
-  </FlexContainer>
+  <CheckboxContainer disabled={disabled}>
+    {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
+    <input type="checkbox" disabled={disabled} {...props} />
+  </CheckboxContainer>
 );
 
 Checkbox.propTypes = {

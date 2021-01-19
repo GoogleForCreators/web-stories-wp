@@ -22,26 +22,18 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Checkbox } from '../index';
+import { Checkbox } from '..';
+import { Text } from '../..';
 
 export default {
   title: 'DesignSystem/Components/Checkbox',
   component: Checkbox,
 };
 
-const Header = styled.div`
-  p {
-    font-family: Google Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
-  }
-`;
-
 const Container = styled.div`
   display: grid;
   row-gap: 20px;
+  max-width: 500px;
   padding: 20px 50px;
 `;
 
@@ -50,7 +42,7 @@ const Row = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-column: 1 / -1;
 
-  > div {
+  > * {
     display: flex;
     justify-content: center;
   }
@@ -60,12 +52,12 @@ export const _default = () => {
   return (
     <Container>
       <Row>
-        <Header>
+        <Text>
           <p>{'Normal'}</p>
-        </Header>
-        <Header>
+        </Text>
+        <Text>
           <p>{'Disable'}</p>
-        </Header>
+        </Text>
       </Row>
       <Row>
         <div>
