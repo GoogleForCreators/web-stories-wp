@@ -400,6 +400,14 @@ class Story_Post_Type {
 			// custom editor after the 'current_screen' action when we can be certain the
 			// $post_type, $post_type_object, $post globals are all set by WordPress.
 			if ( did_action( 'current_screen' ) ) {
+
+				// Some plugins cause the following globals to be absent at this point,
+				// so edit-story.php and get_editor_settings() won't be able to access them.
+				// Explicitly set the globals to prevent issues when loading the editor.
+
+				$GLOBALS['post']             = $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				$GLOBALS['post_type']        = $post->post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				$GLOBALS['post_type_object'] = get_post_type_object( $post->post_type ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			}
 

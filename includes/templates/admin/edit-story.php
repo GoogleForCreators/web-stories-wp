@@ -29,6 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+// These globals are guaranteed to exist at this point, due to
+// Story_Post_Type::replace_editor() explicitly defining them.
 global $post_type, $post_type_object, $post;
 
 $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
