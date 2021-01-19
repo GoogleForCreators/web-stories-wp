@@ -17,42 +17,27 @@
 /**
  * Internal dependencies
  */
-import track from './track';
-import isTrackingEnabled from './isTrackingEnabled';
+import trackTimingComplete from './trackTimingComplete';
 
 /**
- * Send an Analytics timing_complete event.
+ * Starts a timer and returns a callback to stop it and
+ * send an Analytics timing_complete event.
  *
+ * @see trackTimingComplete
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings
  *
- * @param {number} time The number of milliseconds in elapsed time to report to Google Analytics (e.g. 20).
  * @param {string} name The variable being recorded (e.g. 'load').
  * @param {string} eventCategory A string for categorizing all user timing variables into logical groups (e.g. 'JS Dependencies').
- * @param {string} label A string that can be used to add flexibility in visualizing user timings in the reports (e.g. 'Google CDN').
- * @return {Promise<void>} Promise that always resolves.
+ * @param {string} eventLabel A string that can be used to add flexibility in visualizing user timings in the reports (e.g. 'Google CDN').
+ * @return {Function} Callback to stop timer and send tracking event.
  */
-//eslint-disable-next-line require-await
-async function trackTiming(time, name, eventCategory, label) {
-  if (!isTrackingEnabled()) {
-    return Promise.resolve();
-  }
-
-  const eventData = {
-    name,
-    value: time,
-    event_category: eventCategory,
-    event_label: label,
-  };
-
-  return track('timing_complete', eventData);
-}
-
-export function getTimeTracker(name, category, label) {
+function getTimeTracker(name, eventCategory, eventLabel) {
   const before = window.performance.now();
   return () => {
     const after = window.performance.now();
-    trackTiming(after - before, name, category, label);
+    const value = after - before;
+    return trackTimingComplete(name, value, eventCategory, eventLabel);
   };
 }
 
-export default trackTiming;
+export default getTimeTracker;

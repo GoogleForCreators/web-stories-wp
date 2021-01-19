@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
 import { trackEvent } from '../../../tracking';
-import { getTimeTracker } from '../../../tracking/trackTiming';
+import { getTimeTracker } from '../../../tracking';
 
 /**
  * Custom hook to open the WordPress media modal.
