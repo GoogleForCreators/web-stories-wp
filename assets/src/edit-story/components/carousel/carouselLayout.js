@@ -85,7 +85,7 @@ function CarouselLayout() {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper aria-label={__('Page Carousel', 'web-stories')}>
         <Area area="prev-navigation">
           <CarouselScrollBack />
         </Area>
