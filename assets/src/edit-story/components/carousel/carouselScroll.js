@@ -33,15 +33,17 @@ import useCarousel from './useCarousel';
 
 function CarouselScrollButton({ isForward = false }) {
   const {
+    hasOverflow,
     canScrollBack,
     canScrollForward,
     scrollBack,
     scrollForward,
   } = useCarousel(
     ({
-      state: { canScrollBack, canScrollForward },
+      state: { hasOverflow, canScrollBack, canScrollForward },
       actions: { scrollBack, scrollForward },
     }) => ({
+      hasOverflow,
       canScrollBack,
       canScrollForward,
       scrollBack,
@@ -49,6 +51,11 @@ function CarouselScrollButton({ isForward = false }) {
     })
   );
   const { isRTL } = useConfig();
+
+  if (!hasOverflow) {
+    // If no overflow, just abort quickly
+    return null;
+  }
 
   const canScroll = isForward ? canScrollForward : canScrollBack;
   const onClick = isForward ? scrollForward : scrollBack;
