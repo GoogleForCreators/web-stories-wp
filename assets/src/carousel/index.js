@@ -69,7 +69,7 @@ domReady(() => {
       e.preventDefault();
     }
 
-    let originalSlide = slide;
+    const originalSlide = slide;
     ++this.animate_id;
 
     if (dot === true) {
@@ -77,7 +77,7 @@ domReady(() => {
       slide = Math.round(slide / this.itemWidth) * this.itemWidth;
     } else {
       if (typeof slide === 'string') {
-        let backwards = slide === 'prev';
+        const backwards = slide === 'prev';
 
         // use precise location if fractional slides are on
         if (this.opt.slidesToScroll % 1 || this.opt.slidesToShow % 1) {
@@ -101,7 +101,7 @@ domReady(() => {
         }
 
         if (this.opt.rewind) {
-          let scrollLeft = this.ele.scrollLeft;
+          const scrollLeft = this.ele.scrollLeft;
           slide =
             backwards && !scrollLeft
               ? this.slides.length
