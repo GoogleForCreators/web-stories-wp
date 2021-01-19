@@ -87,7 +87,7 @@ export const PRIMARY_PATHS = [
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
-    // inProgress: true,
+    inProgress: true,
     Icon: FloppyDisk,
     IconActive: FloppyDiskActive,
   },
