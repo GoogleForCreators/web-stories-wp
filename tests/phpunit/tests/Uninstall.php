@@ -23,6 +23,8 @@ require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 class Uninstall extends \WP_UnitTestCase {
 	protected static $attachment_ids;
 
+	protected static $user_id;
+
 	public function setUp() {
 		parent::setUp();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
@@ -36,6 +38,8 @@ class Uninstall extends \WP_UnitTestCase {
 		update_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.0.0' );
 		set_transient( 'web_stories_link_data_fdsf', 'hello' );
 		set_site_transient( 'web_stories_updater', 'hello' );
+		self::$user_id = self::factory()->user->create( [ 'role' => 'administrator' ] );
+		add_user_meta( self::$user_id, \Google\Web_Stories\Tracking::OPTIN_META_KEY, true );
 	}
 
 	public function test_delete_options() {
@@ -72,6 +76,13 @@ class Uninstall extends \WP_UnitTestCase {
 		}
 	}
 
+	public function test_delete_stories_user_meta() {
+		\Google\Web_Stories\delete_stories_user_meta();
+		$user_meta = (bool) get_user_meta( self::$user_id, \Google\Web_Stories\Tracking::OPTIN_META_KEY, true );
+		$this->assertFalse( $user_meta );
+	}
+
+
 	/**
 	 * @group ms-required
 	 */
@@ -79,6 +90,4 @@ class Uninstall extends \WP_UnitTestCase {
 		\Google\Web_Stories\delete_site_options();
 		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
 	}
-
 }
-
