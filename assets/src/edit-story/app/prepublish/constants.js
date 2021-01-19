@@ -432,12 +432,12 @@ export const MESSAGES = {
           </li>
           <li>
             {sprintf(
-              /* translators: 1: maximum percentage of characters, depending on number of pages. */
+              /* translators: %d: maximum percentage of characters, depending on number of pages. */
               __(
-                'Keep the total number of text-heavy pages under %1$d%% of total number of story pages',
+                'Keep the total number of text-heavy pages under %d of total number of story pages',
                 'web-stories'
               ),
-              MAX_CHARACTER_PERCENTAGE
+              MAX_CHARACTER_PERCENTAGE + '%'
             )}
           </li>
         </DashedList>
