@@ -41,7 +41,7 @@ describe('Site Kit integration with dashboard', () => {
     );
 
     await expect(dashboardNavigation).toClick('a', {
-      text: 'Editor Settings',
+      text: 'Settings',
     });
 
     await page.waitForResponse((response) =>
