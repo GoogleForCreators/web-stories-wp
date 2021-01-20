@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 import { useEffect } from 'react';
 
 /**
@@ -31,8 +30,8 @@ import useMetaBoxes from './useMetaBoxes';
 const Wrapper = styled.div``;
 
 function MetaBoxes() {
-  const isFeatureEnabled = useFeature('customMetaBoxes');
-  const { metaBoxesVisible } = useMetaBoxes(({ state }) => ({
+  const { metaBoxesVisible, hasMetaBoxes } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
     metaBoxesVisible: state.metaBoxesVisible,
   }));
 
@@ -54,7 +53,7 @@ function MetaBoxes() {
     };
   }, [postType]);
 
-  if (!isFeatureEnabled) {
+  if (!hasMetaBoxes) {
     return null;
   }
 
