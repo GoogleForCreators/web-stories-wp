@@ -35,6 +35,7 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
+import { getElementMask, MaskTypes } from '../../masks';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -44,7 +45,7 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
 	${elementWithRotation}
-  pointer-events: ${({ isText }) => (isText ? 'initial' : 'none')};
+  pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
 
   &:focus,
   &:active,
@@ -64,7 +65,6 @@ function FrameElement({ element }) {
   const { id, type } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
-  const maskRef = useRef();
   const [hovering, setHovering] = useState(false);
   const {
     state: { isAnythingTransforming },
@@ -108,8 +108,10 @@ function FrameElement({ element }) {
     setIsTransforming(transform !== null);
   });
 
-  // Text doesn't have masking and will handle pointer events directly on the wrapper.
-  const isText = type === 'text';
+  // For elements with no mask, handle events by the wrapper.
+  const mask = getElementMask(element);
+  const maskDisabled =
+    !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
   const eventHandlers = {
     onMouseDown: (evt) => {
       if (isSelected) {
@@ -156,14 +158,13 @@ function FrameElement({ element }) {
         hasMask={isMaskable}
         isAnimating={isAnimating}
         data-testid="frameElement"
-        isText={isText}
-        {...(isText ? eventHandlers : null)}
+        maskDisabled={maskDisabled}
+        {...(maskDisabled ? eventHandlers : null)}
       >
         <WithMask
           element={element}
           fill={true}
-          maskRef={maskRef}
-          eventHandlers={!isText ? eventHandlers : null}
+          eventHandlers={!maskDisabled ? eventHandlers : null}
         >
           {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
