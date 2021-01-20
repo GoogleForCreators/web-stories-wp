@@ -35,7 +35,6 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
-import {MaskTypes} from "../../masks";
 
 // @todo: should the frame borders follow clip lines?
 
@@ -45,7 +44,7 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
 	${elementWithRotation}
-  pointer-events: none;
+  pointer-events: ${({ isText }) => (isText ? 'initial' : 'none')};
 
   &:focus,
   &:active,
@@ -62,7 +61,7 @@ const EmptyFrame = styled.div`
 `;
 
 function FrameElement({ element }) {
-  const { id, type, mask } = element;
+  const { id, type } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const maskRef = useRef();
@@ -109,6 +108,28 @@ function FrameElement({ element }) {
     setIsTransforming(transform !== null);
   });
 
+  // Text doesn't have masking and will handle pointer events directly on the wrapper.
+  const isText = type === 'text';
+  const eventHandlers = {
+    onMouseDown: (evt) => {
+      if (isSelected) {
+        elementRef.current.focus({ preventScroll: true });
+      } else {
+        handleSelectElement(id, evt);
+      }
+      if (!isBackground) {
+        evt.stopPropagation();
+      }
+    },
+    onFocus: (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+    },
+    onPointerEnter,
+    onPointerLeave,
+  };
+
   return (
     <WithLink
       element={element}
@@ -135,27 +156,14 @@ function FrameElement({ element }) {
         hasMask={isMaskable}
         isAnimating={isAnimating}
         data-testid="frameElement"
+        isText={isText}
+        {...(isText ? eventHandlers : null)}
       >
         <WithMask
           element={element}
           fill={true}
           maskRef={maskRef}
-          onMouseDown={(evt) => {
-            console.log(evt.target);
-            if (isSelected) {
-              elementRef.current.focus({ preventScroll: true });
-            } else {
-              handleSelectElement(id, evt);
-            }
-            if (!isBackground) {
-              evt.stopPropagation();
-            }
-          }}
-          onFocus={(evt) => {
-            if (!isSelected) {
-              handleSelectElement(id, evt);
-            }
-          }}
+          eventHandlers={!isText ? eventHandlers : null}
         >
           {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />

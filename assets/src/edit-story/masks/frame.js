@@ -142,6 +142,7 @@ WithDropTarget.propTypes = {
 export default function WithMask({ element, fill, style, children, ...rest }) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
+  const { eventHandlers } = rest;
 
   const mask = getElementMask(element);
   if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
@@ -171,6 +172,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
         ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
+      {...eventHandlers}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
     >
