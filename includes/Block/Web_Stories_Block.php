@@ -152,7 +152,7 @@ class Web_Stories_Block {
 						'default' => $this->fields_states(),
 					],
 				],
-				'render_callback' => [ $this, 'render_block' ],
+				'render_callback' => [ $this, 'render' ],
 				'editor_script'   => self::SCRIPT_HANDLE,
 				'editor_style'    => self::SCRIPT_HANDLE,
 			]
@@ -231,7 +231,7 @@ class Web_Stories_Block {
 	 *
 	 * @return string Rendered block type output.*
 	 */
-	public function render_block( array $attributes ) {
+	public function render( array $attributes ) {
 
 		if ( false === $this->initialize_block_attributes( $attributes ) ) {
 			return '';
@@ -368,6 +368,9 @@ class Web_Stories_Block {
 	 * based on the view types.
 	 *
 	 * Mainly uses FieldState and Fields classes.
+	 *
+	 * @todo Remove this and use common function introduced in following PR after it gets merged.
+	 *       https://github.com/rtCamp/web-stories-wp/pull/189
 	 *
 	 * @since 1.3.0
 	 *
