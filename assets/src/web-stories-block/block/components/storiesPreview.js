@@ -25,7 +25,6 @@ import classNames from 'classnames';
  */
 import { useConfig } from '../../../dashboard/app/config';
 import { GRID_VIEW_TYPE } from '../constants';
-import { isShowing } from '../util';
 import StoryCard from './storyCard';
 
 function StoriesPreview(props) {
@@ -39,8 +38,8 @@ function StoriesPreview(props) {
 
   const blockClasses = classNames(
     {
-      'is-style-default': !isShowing('sharp_corners', fieldState[viewType]),
-      'is-style-squared': isShowing('sharp_corners', fieldState[viewType]),
+      'is-style-default': !fieldState['show_sharp_corners'],
+      'is-style-squared': fieldState['show_sharp_corners'],
       [`is-view-type-${viewType}`]: viewType,
       [`columns-${numOfColumns}`]: GRID_VIEW_TYPE === viewType && numOfColumns,
       [`align${align}`]: align,
@@ -69,17 +68,17 @@ function StoriesPreview(props) {
               date={story.date_gmt}
               author={story._embedded.author[0].name}
               poster={story.featured_media_url}
-              imageOnRight={isShowing('image_align', fieldState[viewType])}
-              isShowingAuthor={isShowing('author', fieldState[viewType])}
-              isShowingDate={isShowing('date', fieldState[viewType])}
-              isShowingTitle={isShowing('title', fieldState[viewType])}
-              isShowingExcerpt={isShowing('excerpt', fieldState[viewType])}
+              imageOnRight={fieldState['show_image_align']}
+              isShowingAuthor={fieldState['show_author']}
+              isShowingDate={fieldState['show_date']}
+              isShowingTitle={fieldState['show_title']}
+              isShowingExcerpt={fieldState['show_excerpt']}
               sizeOfCircles={sizeOfCircles}
             />
           );
         })}
       </div>
-      {isShowing('archive_link', fieldState[viewType]) && (
+      {fieldState['show_archive_link'] && (
         <div className="web-stories-list__archive-link">
           <a target="__blank" href={archiveURL}>
             {viewAllLabel}

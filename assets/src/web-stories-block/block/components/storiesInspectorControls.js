@@ -32,7 +32,11 @@ import {
   Notice,
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
-import { createInterpolateElement, useEffect } from '@wordpress/element';
+import {
+  createInterpolateElement,
+  useEffect,
+  useRef,
+} from '@wordpress/element';
 import { select } from '@wordpress/data';
 
 /**
@@ -45,7 +49,6 @@ import {
   GRID_VIEW_TYPE,
   ORDER_BY_OPTIONS,
 } from '../constants';
-import { isShowing } from '../util';
 import AuthorSelection from './authorSelection';
 
 /**
@@ -91,15 +94,45 @@ const StoriesInspectorControls = (props) => {
   } = props;
 
   const { fieldStates } = useConfig();
+  const firstUpdate = useRef(true);
 
   useEffect(() => {
     // Set default field state on load.
-    if (!Object.entries(fieldState).length) {
-      setAttributes({
-        fieldState: fieldStates,
-      });
+    const defaultState = {};
+    Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
+      const { show } = fieldObj;
+      // Initially the fieldState will be an empty object. Set the defaults based on current viewType.
+      if (undefined === fieldState[`show_${field}`]) {
+        defaultState[`show_${field}`] = show;
+      }
+    });
+
+    setAttributes({
+      fieldState: {
+        ...fieldState,
+        ...defaultState,
+      },
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps -- We only want to set the values once.
+
+  useEffect(() => {
+    // We want to update the fieldState for any viewType change post first render.
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
     }
-  }, [fieldState, fieldStates, setAttributes]);
+
+    // Set default field state on load.
+    const defaultViewState = {};
+    Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
+      const { show } = fieldObj;
+      defaultViewState[`show_${field}`] = show;
+    });
+
+    setAttributes({
+      fieldState: defaultViewState,
+    });
+  }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps -- We only want to set the values on viewType change.
 
   // Set up sort options.
   const orderByOptions = Object.entries(ORDER_BY_OPTIONS).map(
@@ -123,6 +156,15 @@ const StoriesInspectorControls = (props) => {
     }
   );
 
+  const handleToggleControl = (field) => {
+    setAttributes({
+      fieldState: {
+        ...fieldState,
+        [`show_${field}`]: !fieldState[`show_${field}`],
+      },
+    });
+  };
+
   return (
     <InspectorControls>
       <PanelBody
@@ -139,48 +181,33 @@ const StoriesInspectorControls = (props) => {
           </Notice>
         )}
 
-        {fieldState[viewType] &&
-          Object.entries(fieldState[viewType]).map(([field, fieldObj]) => {
-            const { label, show, readonly } = fieldObj;
+        {fieldStates[viewType] &&
+          Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
+            const { label, readonly } = fieldObj;
 
             if (!readonly) {
               return (
                 <ToggleControl
                   key={`${field}__control`}
                   label={label}
-                  checked={show}
-                  onChange={() => {
-                    if (!readonly) {
-                      const updatedSettings = {
-                        ...fieldState[viewType],
-                        [field]: { ...fieldObj, show: !show },
-                      };
-
-                      setAttributes({
-                        fieldState: {
-                          ...fieldState,
-                          [viewType]: updatedSettings,
-                        },
-                      });
-                    }
-                  }}
+                  checked={fieldState[`show_${field}`]}
+                  onChange={() => handleToggleControl(field)}
                 />
               );
             }
 
             return false;
           })}
-        {fieldState[viewType] &&
-          isShowing('archive_link', fieldState[viewType]) && (
-            <TextControl
-              label={__("'View All Stories' Link label", 'web-stories')}
-              value={viewAllLinkLabel}
-              placeholder={__('View All Stories', 'web-stories')}
-              onChange={(newLabel) =>
-                setAttributes({ viewAllLinkLabel: newLabel })
-              }
-            />
-          )}
+        {fieldState['show_archive_link'] && (
+          <TextControl
+            label={__("'View All Stories' Link label", 'web-stories')}
+            value={viewAllLinkLabel}
+            placeholder={__('View All Stories', 'web-stories')}
+            onChange={(newLabel) =>
+              setAttributes({ viewAllLinkLabel: newLabel })
+            }
+          />
+        )}
       </PanelBody>
       {(CIRCLES_VIEW_TYPE === viewType || GRID_VIEW_TYPE === viewType) && (
         <PanelBody
