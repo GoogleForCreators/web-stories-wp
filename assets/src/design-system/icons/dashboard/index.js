@@ -23,12 +23,6 @@ export {
   FloppyDiskActive,
   HomeWithHeartActive,
 } from './activeIcons';
-export { ReactComponent as ExploreTemplatesActive } from './exploreTemplatesActive.svg';
-export { ReactComponent as ExploreTemplatesNormal } from './exploreTemplatesNormal.svg';
 export { ReactComponent as Compass } from './compass.svg';
 export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
 export { ReactComponent as HomeWithHeart } from './home_with_heart.svg';
-export { ReactComponent as SavedTemplatesActive } from './savedTemplatesActive.svg';
-export { ReactComponent as SavedTemplatesNormal } from './savedTemplatesNormal.svg';
-export { ReactComponent as StoriesActive } from './storiesActive.svg';
-export { ReactComponent as StoriesNormal } from './storiesNormal.svg';
