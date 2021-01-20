@@ -38,18 +38,19 @@ const CheckboxContainer = styled.div(
     align-items: center;
     height: 24px;
     width: 24px;
-    margin: 12px;
+    margin: 8px;
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.defaultNormal};
 
     :focus-within {
-      margin: 11px;
+      margin: 7px;
       border: 2px solid ${theme.colors.border.focus};
     }
 
     :active {
+      margin: 8px;
       border: 1px solid ${theme.colors.border.defaultNormal};
-      box-shadow: 0 0 0 8px ${theme.colors.interactiveBg.tertiaryPress};
+      box-shadow: 0 0 0 8px ${theme.colors.interactiveBg.activeShadow};
     }
 
     /* Hide Checkbox */
@@ -70,17 +71,16 @@ const StyledCheckmark = styled(Checkmark)`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-// eslint-disable-next-line react/display-name
-const Checkbox = forwardRef(({ checked, disabled, ...props }, ref) => (
+const BaseCheckbox = ({ checked, disabled, ...props }, ref) => (
   <CheckboxContainer disabled={disabled}>
     {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
     <input type="checkbox" ref={ref} disabled={disabled} {...props} />
   </CheckboxContainer>
-));
+);
 
-Checkbox.propTypes = {
+BaseCheckbox.propTypes = {
   checked: propTypes.bool,
   disabled: propTypes.bool,
 };
 
-export { Checkbox };
+export const Checkbox = forwardRef(BaseCheckbox);
