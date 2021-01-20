@@ -37,6 +37,8 @@ const TypeGrid = styled.div`
   display: grid;
   gap: 10px;
   grid-auto-rows: minmax(100px, auto);
+  grid-template-columns: ${({ $columnCount }) =>
+    `repeat(${$columnCount}, 1fr)`};
 
   & * {
     cursor: pointer;
@@ -81,7 +83,7 @@ function BlockConfigurationPanel({
       label={label}
       instructions={instruction}
     >
-      <TypeGrid style={{ gridTemplateColumns: `repeat(${columnCount}, 1fr)` }}>
+      <TypeGrid $columnCount={columnCount}>
         {selectionOptions.map((option) => (
           <TypeCard
             key={option.id}
