@@ -29,9 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Library from '../library';
 import Workspace from '../workspace';
-import MetaBoxes, {
-  MetaBoxesProvider,
-} from '../../integrations/wordpress/metaBoxes';
+import MetaBoxes from '../../integrations/wordpress/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -79,23 +77,20 @@ const MetaBoxesArea = styled(Area).attrs({
   overflow-y: auto;
 `;
 
-// TODO: Fix meta boxes layout.
 function Layout() {
   return (
     <LayoutProvider>
       <PrepublishChecklistProvider>
         <Editor zIndex={3}>
-          <MetaBoxesProvider>
-            <CanvasProvider>
-              <Area area="lib">
-                <Library />
-              </Area>
-              <Workspace />
-            </CanvasProvider>
-            <MetaBoxesArea>
-              <MetaBoxes />
-            </MetaBoxesArea>
-          </MetaBoxesProvider>
+          <CanvasProvider>
+            <Area area="lib">
+              <Library />
+            </Area>
+            <Workspace />
+          </CanvasProvider>
+          <MetaBoxesArea>
+            <MetaBoxes />
+          </MetaBoxesArea>
         </Editor>
       </PrepublishChecklistProvider>
     </LayoutProvider>

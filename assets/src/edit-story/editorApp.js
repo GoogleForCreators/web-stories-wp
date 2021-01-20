@@ -46,6 +46,7 @@ import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cr
 import { GlobalStyle as ModalGlobalStyle } from './components/modal';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
+import { MetaBoxesProvider } from './integrations/wordpress/metaBoxes';
 
 function App({ config }) {
   const { storyId, isRTL } = config;
@@ -60,25 +61,27 @@ function App({ config }) {
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
-                      <StoryProvider storyId={storyId}>
-                        <FontProvider>
-                          <MediaProvider>
-                            <AutoSaveHandler />
-                            <TransformProvider>
-                              <DropTargetsProvider>
-                                <GlobalStyle />
-                                <DevTools />
-                                <DefaultMoveableGlobalStyle />
-                                <CropMoveableGlobalStyle />
-                                <ModalGlobalStyle />
-                                <CalendarStyle />
-                                <KeyboardOnlyOutlines />
-                                <Layout />
-                              </DropTargetsProvider>
-                            </TransformProvider>
-                          </MediaProvider>
-                        </FontProvider>
-                      </StoryProvider>
+                      <MetaBoxesProvider>
+                        <StoryProvider storyId={storyId}>
+                          <FontProvider>
+                            <MediaProvider>
+                              <AutoSaveHandler />
+                              <TransformProvider>
+                                <DropTargetsProvider>
+                                  <GlobalStyle />
+                                  <DevTools />
+                                  <DefaultMoveableGlobalStyle />
+                                  <CropMoveableGlobalStyle />
+                                  <ModalGlobalStyle />
+                                  <CalendarStyle />
+                                  <KeyboardOnlyOutlines />
+                                  <Layout />
+                                </DropTargetsProvider>
+                              </TransformProvider>
+                            </MediaProvider>
+                          </FontProvider>
+                        </StoryProvider>
+                      </MetaBoxesProvider>
                     </SnackbarProvider>
                   </HistoryProvider>
                 </Media3pApiProvider>
