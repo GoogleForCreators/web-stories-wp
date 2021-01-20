@@ -60,7 +60,7 @@ const Wrapper = styled.div`
   #poststuff .stuffbox > h3,
   #poststuff h2.hndle {
     box-sizing: border-box;
-    color: inherit;
+    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
     font-size: 14px;
     font-weight: 500;
     outline: none;
@@ -75,6 +75,7 @@ const Wrapper = styled.div`
     margin-bottom: 0;
   }
 
+  .postbox > .hndle,
   .postbox .postbox-header {
     background: ${({ theme }) => theme.colors.bg.panel};
     color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
