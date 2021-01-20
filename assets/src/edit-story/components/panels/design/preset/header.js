@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Add, EditPencil } from '../../../../icons';
+import { Add, Edit } from '../../../../../design-system/icons';
 import { PanelTitle } from '../../panel';
 
 const buttonCSS = css`
@@ -43,34 +43,28 @@ const buttonCSS = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  svg {
+    width: 15px;
+    height: 15px;
+  }
 `;
 
 const AddPresetButton = styled.button`
   ${buttonCSS}
-  svg {
-    width: 26px;
-    height: 28px;
-  }
 `;
 
 const EditMode = styled.button`
   ${buttonCSS}
 
   ${({ isEditMode }) =>
-    isEditMode
-      ? css`
-          color: ${({ theme }) => theme.colors.fg.white};
-          font-size: 12px;
-          line-height: 14px;
-          padding: 7px;
-          height: initial;
-        `
-      : css`
-          svg {
-            width: 16px;
-            height: 20px;
-          }
-        `}
+    isEditMode &&
+    css`
+      color: ${({ theme }) => theme.colors.fg.white};
+      font-size: 12px;
+      line-height: 14px;
+      padding: 7px;
+      height: initial;
+    `}
 `;
 
 function PresetsHeader({
@@ -84,14 +78,10 @@ function PresetsHeader({
 }) {
   const hasPresets = presets.length > 0;
 
-  const addLabel =
-    'style' === presetType
-      ? __('Add style preset', 'web-stories')
-      : __('Add color preset', 'web-stories');
-  const editLabel =
-    'style' === presetType
-      ? __('Edit style presets', 'web-stories')
-      : __('Edit color presets', 'web-stories');
+  const isColor = 'color' === presetType;
+  const editLabel = isColor
+    ? __('Edit color presets', 'web-stories')
+    : __('Edit style presets', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -106,11 +96,14 @@ function PresetsHeader({
             }
             isEditMode={isEditMode}
           >
-            {isEditMode ? __('Exit', 'web-stories') : <EditPencil />}
+            {isEditMode ? __('Done', 'web-stories') : <Edit />}
           </EditMode>
         )}
-        {!isEditMode && (
-          <AddPresetButton onClick={handleAddPreset} aria-label={addLabel}>
+        {!isEditMode && !isColor && (
+          <AddPresetButton
+            onClick={handleAddPreset}
+            aria-label={__('Add style preset', 'web-stories')}
+          >
             <Add />
           </AddPresetButton>
         )}
