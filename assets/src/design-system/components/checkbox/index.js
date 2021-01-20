@@ -71,16 +71,16 @@ const StyledCheckmark = styled(Checkmark)`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-export const Checkbox = forwardRef(({ checked, disabled, ...props }, ref) => (
+const BaseCheckbox = ({ checked, disabled, ...props }, ref) => (
   <CheckboxContainer disabled={disabled}>
     {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
     <input type="checkbox" ref={ref} disabled={disabled} {...props} />
   </CheckboxContainer>
-));
+);
 
-Checkbox.displayName = 'Checkbox';
-
-Checkbox.propTypes = {
+BaseCheckbox.propTypes = {
   checked: propTypes.bool,
   disabled: propTypes.bool,
 };
+
+export const Checkbox = forwardRef(BaseCheckbox);
