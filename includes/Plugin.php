@@ -182,6 +182,13 @@ class Plugin {
 	public $svg;
 
 	/**
+	 * User_Preferences.
+	 *
+	 * @var User_Preferences
+	 */
+	public $user_preferences;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
@@ -251,6 +258,9 @@ class Plugin {
 
 		$this->ad_manager = new Ad_Manager();
 		add_action( 'init', [ $this->ad_manager, 'init' ] );
+
+		$this->user_preferences = new User_Preferences();
+		add_action( 'init', [ $this->user_preferences, 'init' ] );
 
 		$this->svg = new SVG( $this->experiments );
 		add_action( 'init', [ $this->svg, 'init' ] );
