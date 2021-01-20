@@ -7,6 +7,7 @@ set -e
 WP_DEBUG=${WP_DEBUG-true}
 SCRIPT_DEBUG=${SCRIPT_DEBUG-true}
 WEBSTORIES_DEV_MODE=${WEBSTORIES_DEV_MODE-true}
+MEDIA_TRASH=${MEDIA_TRASH-false}
 WP_VERSION=${WP_VERSION-"latest"}
 
 # Include useful functions
@@ -84,6 +85,7 @@ container chmod 767 \
 	/var/www/html/wp-content/uploads \
 	/var/www/html/wp-content/upgrade
 
+
 CURRENT_WP_VERSION=$(wp core version | tr -d '\r')
 echo -e $(status_message "Current WordPress version: $CURRENT_WP_VERSION...")
 
@@ -152,12 +154,19 @@ if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
   echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi
 
+MEDIA_TRASH_CURRENT=!MEDIA_TRASH;
+if [ "$(wp config has --type=constant MEDIA_TRASH)" ]; then
+  $MEDIA_TRASH_CURRENT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
+fi
+if [ "$MEDIA_TRASH" != $MEDIA_TRASH_CURRENT ]; then
+  wp config set MEDIA_TRASH $MEDIA_TRASH --raw --type=constant --quiet
+  MEDIA_TRASH_RESULT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
+  echo -e $(status_message "MEDIA_TRASH: $MEDIA_TRASH_RESULT...")
+fi
+
 # Let's make sure we have some media in the media library to work with.
 echo -e $(status_message "Import default set of media assets...")
 # TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
-
-# Since MOV files are not allowed in the editor, only the WEBM one needs a poster.
-wp media import /var/www/html/wp-content/e2e-assets/small-video.mov --quiet
 
 WEBM_VIDEO_ID=$(wp media import /var/www/html/wp-content/e2e-assets/small-video.webm --porcelain)
 WEBM_VIDEO_POSTER_ID=$(wp media import /var/www/html/wp-content/e2e-assets/small-video-poster.jpg --post_id=$WEBM_VIDEO_ID --featured_image --porcelain)

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../../utils';
+import { createNewStory, deleteMedia, uploadMedia } from '../../../utils';
 
 describe('Inserting Media from Media Library', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -25,6 +25,8 @@ describe('Inserting Media from Media Library', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    const filename = await uploadMedia('example-1.jpg', true);
 
     await page.waitForSelector('[data-testid="mediaElement-image"]');
     // Clicking will only act on the first element.
@@ -38,5 +40,7 @@ describe('Inserting Media from Media Library', () => {
     );
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
+
+    await deleteMedia(filename);
   });
 });
