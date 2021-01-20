@@ -27,31 +27,31 @@ import { ReactComponent as HomeWithHeart } from './home_with_heart.svg';
 
 export const CompassActive = styled(Compass)`
   path {
-    stroke: ${({ theme }) => theme.colors.interactiveBg.brandHover};
+    stroke: ${({ theme }) => theme.colors.accent.primary};
   }
 
   :nth-child(6) {
-    fill: ${({ theme }) => theme.colors.interactiveBg.brandHover};
+    fill: ${({ theme }) => theme.colors.accent.primary};
   }
 `;
 
 export const FloppyDiskActive = styled(FloppyDisk)`
   rect {
-    fill: ${({ theme }) => theme.colors.interactiveBg.brandHover};
+    fill: ${({ theme }) => theme.colors.accent.primary};
     opacity: 0.3;
   }
 
   path {
-    stroke: ${({ theme }) => theme.colors.interactiveBg.brandHover};
+    stroke: ${({ theme }) => theme.colors.accent.primary};
   }
 `;
 
 export const HomeWithHeartActive = styled(HomeWithHeart)`
   path {
-    stroke: ${({ theme }) => theme.colors.interactiveBg.brandHover};
+    stroke: ${({ theme }) => theme.colors.accent.primary};
   }
 
   path:first-child {
-    fill: ${({ theme }) => theme.colors.interactiveBg.brandHover};
+    fill: ${({ theme }) => theme.colors.accent.primary};
   }
 `;
