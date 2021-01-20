@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
@@ -26,15 +26,15 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { PANE_PADDING } from '../shared';
+import { useKeyDownEffect } from '../../../../../design-system';
+import { useStory } from '../../../../app';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
-import { UnitsProvider } from '../../../../units';
-import { useConfig, useStory } from '../../../../app';
 import { duplicatePage } from '../../../../elements';
+import { UnitsProvider } from '../../../../units';
 import isDefaultPage from '../../../../utils/isDefaultPage';
-import useFocusOut from '../../../../utils/useFocusOut';
-import { useKeyDownEffect } from '../../../keyboard';
+import { PANE_PADDING } from '../shared';
 import PageLayout from './pageLayout';
+
 const PAGE_LAYOUT_PANE_WIDTH = 158;
 const PAGE_LAYOUT_ROW_GAP = 12;
 
@@ -44,15 +44,19 @@ const PageLayoutsContainer = styled.div`
   position: relative;
 `;
 
-const PageLayoutsRow = styled.div`
+const PageLayoutsVirtualizedContainer = styled.div`
   position: absolute;
   top: 0;
   left: ${PANE_PADDING};
-  height: ${({ height }) => `${height}px`};
-  transform: ${({ translateY }) => `translateY(${translateY}px)`};
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 12px;
+  grid-template-columns: ${({ pageSize }) => `
+    repeat(auto-fill, ${pageSize.width}px)`};
+  grid-template-rows: ${({ pageSize }) =>
+    `minmax(${pageSize.containerHeight}px, auto)`};
+  gap: ${PAGE_LAYOUT_ROW_GAP}px;
+  width: 100%;
+  height: 100%;
 `;
 
 function PageLayouts(props) {
@@ -65,14 +69,7 @@ function PageLayouts(props) {
     })
   );
 
-  const { isRTL } = useConfig();
-  const pageRefs = useRef({});
   const containerRef = useRef();
-  const [activePageId, setActivePageId] = useState(null);
-  const [isFocused, setIsFocused] = useState(false);
-
-  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
-  const pageIdCount = pageIds.length - 1;
 
   const handleApplyPageLayout = useCallback(
     (page) => {
@@ -93,7 +90,7 @@ function PageLayouts(props) {
   }, []);
 
   const rowVirtualizer = useVirtual({
-    size: Math.ceil(pages.length / 2),
+    size: Math.ceil((pages || []).length / 2),
     parentRef,
     estimateSize: useCallback(
       () => pageSize.containerHeight + PAGE_LAYOUT_ROW_GAP,
@@ -102,70 +99,37 @@ function PageLayouts(props) {
     overscan: 2,
   });
 
+  const columnVirtualizer = useVirtual({
+    horizontal: true,
+    size: 2,
+    parentRef,
+    estimateSize: useCallback(() => pageSize.width + PAGE_LAYOUT_ROW_GAP, [
+      pageSize.width,
+    ]),
+    overscan: 0,
+  });
+
   const requiresConfirmation = useMemo(
     () => currentPage && !isDefaultPage(currentPage),
     [currentPage]
   );
 
-  const onKeyDown = useCallback(
-    (event) => {
-      const { key } = event;
-      if (!pageRefs.current) {
-        return;
-      }
-
-      const currentIndex = pageIds.indexOf(activePageId);
-
-      let newIndex;
-      // page layouts are in 2 columns.
-      if (key === 'ArrowUp') {
-        newIndex = currentIndex - 2;
-      } else if (key === 'ArrowDown') {
-        newIndex = currentIndex + 2;
-      } else if ([isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key)) {
-        newIndex = currentIndex - 1;
-      } else if ([isRTL ? 'ArrowLeft' : 'ArrowRight'].includes(key)) {
-        newIndex = currentIndex + 1;
-      }
-
-      if (newIndex > -1 && newIndex <= pageIdCount) {
-        setActivePageId(pageIds[newIndex]);
-      }
-    },
-    [activePageId, pageIds, isRTL, pageIdCount]
-  );
-
-  useKeyDownEffect(
-    containerRef,
-    { key: ['left', 'right', 'down', 'up'] },
-    onKeyDown,
-    [onKeyDown]
-  );
-
-  useFocusOut(
-    containerRef,
-    () => {
-      setIsFocused(false);
-      setActivePageId(null);
-    },
-    []
-  );
-
-  useEffect(() => {
-    if (activePageId) {
-      const nextPage = pageRefs.current?.[activePageId];
-      if (nextPage) {
-        nextPage.tabIndex = 0;
-        nextPage.focus();
+  const onTabKeyDown = useCallback(() => {
+    // When page layouts is already in focus and tab is hit again we want to move focus out of the panel
+    // This gets a little goofy because there's nothing else focusable left to go to in the page layouts tab
+    // and if we back up without moving to the next sibling we'll never let the keyboard user continue through the page.
+    if (parentRef.current) {
+      const canvas =
+        parentRef.current?.offsetParent?.offsetParent?.offsetParent?.nextSibling
+          ?.firstChild;
+      if (canvas) {
+        canvas.tabIndex = 0;
+        canvas.focus();
       }
     }
-  }, [activePageId]);
+  }, [parentRef]);
 
-  useEffect(() => {
-    if (isFocused && !activePageId) {
-      setActivePageId(pageIds?.[0]);
-    }
-  }, [activePageId, isFocused, pageIds]);
+  useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
 
   return (
     <UnitsProvider
@@ -174,46 +138,39 @@ function PageLayouts(props) {
         height: pageSize.height,
       }}
     >
-      <PageLayoutsContainer
-        height={rowVirtualizer.totalSize}
-        ref={containerRef}
-        tabIndex={0}
-        onFocus={() => {
-          setIsFocused(true);
-        }}
-        onBlur={() => {
-          setIsFocused(false);
-        }}
-      >
-        {rowVirtualizer.virtualItems.map((virtualRow) => {
-          const firstColumnIndex = virtualRow.index * 2;
-          const indexes = [firstColumnIndex, firstColumnIndex + 1];
-          return (
-            <PageLayoutsRow
-              key={virtualRow.index}
-              height={virtualRow.size}
-              translateY={virtualRow.start}
-            >
-              {indexes.map((index) => {
-                const page = pages[index];
+      <PageLayoutsContainer height={rowVirtualizer.totalSize}>
+        <PageLayoutsVirtualizedContainer
+          height={rowVirtualizer.totalSize}
+          ref={containerRef}
+          pageSize={pageSize}
+        >
+          {rowVirtualizer.virtualItems.map((virtualRow) => (
+            <Fragment key={virtualRow.index}>
+              {columnVirtualizer.virtualItems.map((virtualColumn) => {
+                const pageIndex =
+                  virtualColumn.index === 0
+                    ? virtualRow.index * 2
+                    : virtualRow.index * 2 + 1;
+                const page = pages[pageIndex];
+
                 if (!page) {
                   return null;
                 }
                 return (
                   <PageLayout
+                    translateY={virtualRow.start}
+                    translateX={virtualColumn.start}
                     key={page.id}
-                    isFocused={activePageId === page.id}
                     page={page}
                     pageSize={pageSize}
                     onConfirm={() => handleApplyPageLayout(page)}
                     requiresConfirmation={requiresConfirmation}
-                    ref={(el) => (pageRefs.current[page.id] = el)}
                   />
                 );
               })}
-            </PageLayoutsRow>
-          );
-        })}
+            </Fragment>
+          ))}
+        </PageLayoutsVirtualizedContainer>
       </PageLayoutsContainer>
     </UnitsProvider>
   );

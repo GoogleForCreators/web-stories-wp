@@ -18,32 +18,44 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, forwardRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { useFocusOut, useKeyDownEffect } from '../../../../../design-system';
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
-import useFocusOut from '../../../../utils/useFocusOut';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
+import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 
 const PageLayoutWrapper = styled.div`
-  position: relative;
+  position: absolute;
+  top: 0;
   height: ${({ pageSize }) => pageSize.containerHeight}px;
   width: ${({ pageSize }) => pageSize.width}px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transform: ${({ translateX, translateY }) =>
+    `translateX(${translateX}px) translateY(${translateY}px)`};
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) => `2px solid ${theme.colors.selection} !important`};
+  }
 `;
 PageLayoutWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
+  translateY: PropTypes.number.isRequired,
+  translateX: PropTypes.number.isRequired,
 };
 
 const PreviewPageWrapper = styled.div`
   height: ${({ pageSize }) => pageSize.containerHeight}px;
   width: ${({ pageSize }) => pageSize.width}px;
-  position: absolute;
   z-index: -1;
   background-color: ${({ theme }) =>
     theme.DEPRECATED_THEME.colors.loading.primary};
@@ -54,41 +66,42 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const HoverControls = styled.div`
-  height: ${({ pageSize }) => pageSize.containerHeight}px;
-  width: ${({ pageSize }) => pageSize.width}px;
-  position: absolute;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
-  cursor: pointer;
-  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
-  overflow: hidden;
-
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) =>
-      `2px solid ${theme.DEPRECATED_THEME.colors.selection} !important`};
-  }
-`;
-HoverControls.propTypes = {
-  pageSize: PageSizePropType.isRequired,
-  isActive: PropTypes.bool.isRequired,
-};
-
 const PageLayoutTitle = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.grayout};
+  background-color: ${({ theme }) => theme.colors.grayout};
+  border-radius: ${({ theme }) => theme.border.radius.default};
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+
   padding: 8px;
   font-size: 12px;
   line-height: 22px;
   width: 100%;
+  align-self: flex-end;
 `;
 
-function PageLayout(props, ref) {
-  const { isFocused, page, pageSize, onConfirm, requiresConfirmation } = props;
+PageLayoutTitle.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+};
+
+function PageLayout(props) {
+  const {
+    page,
+    pageSize,
+    onConfirm,
+    requiresConfirmation,
+    translateY,
+    translateX,
+  } = props;
+
+  const ref = useRef();
   const [isActive, setIsActive] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
 
   useFocusOut(ref, () => setIsActive(false), []);
+  useRovingTabIndex({ ref });
 
   const handleClick = useCallback(() => {
     if (requiresConfirmation) {
@@ -107,40 +120,24 @@ function PageLayout(props, ref) {
     setIsConfirming(false);
   }, [onConfirm, setIsConfirming]);
 
-  const handleKeyUp = useCallback(
-    ({ key }) => {
-      if (key === 'Enter' && isActive) {
-        handleClick();
-      }
-    },
-    [handleClick, isActive]
-  );
-
-  const handleFocus = useCallback(
-    (event) => {
-      // if pageLayouts are in focus we want to make sure this focus event doesn't bubble up and reset the keyboard nav.
-      if (isFocused) {
-        event.stopPropagation();
-      }
-      setIsActive(true);
-    },
-    [isFocused]
-  );
-
-  const handleBlur = useCallback(
-    (event) => {
-      // if pageLayouts are in focus we want to make sure this blur event doesn't bubble up and reset the keyboard nav.
-      if (isFocused) {
-        event.stopPropagation();
-      }
-      setIsActive(false);
-    },
-    [isFocused]
-  );
+  useKeyDownEffect(ref, ['enter', 'space'], handleClick, [handleClick]);
 
   return (
     <>
-      <PageLayoutWrapper pageSize={pageSize} role="listitem">
+      <PageLayoutWrapper
+        pageSize={pageSize}
+        role="button"
+        ref={ref}
+        tabIndex={0}
+        onFocus={() => setIsActive(true)}
+        onBlur={() => setIsActive(false)}
+        onMouseEnter={() => setIsActive(true)}
+        onMouseLeave={() => setIsActive(false)}
+        onClick={handleClick}
+        aria-label={page.title}
+        translateY={translateY}
+        translateX={translateX}
+      >
         <PreviewPageWrapper pageSize={pageSize}>
           <PreviewErrorBoundary>
             <PreviewPage
@@ -154,22 +151,8 @@ function PageLayout(props, ref) {
             />
           </PreviewErrorBoundary>
         </PreviewPageWrapper>
-        <HoverControls
-          ref={ref}
-          pageSize={pageSize}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onMouseEnter={() => setIsActive(true)}
-          onMouseLeave={() => setIsActive(false)}
-          onKeyUp={handleKeyUp}
-          onClick={handleClick}
-          isActive={isActive}
-          aria-label={page.title}
-          tabIndex="0"
-          role="button"
-        >
-          <PageLayoutTitle>{page.title}</PageLayoutTitle>
-        </HoverControls>
+
+        <PageLayoutTitle isActive={isActive}>{page.title}</PageLayoutTitle>
       </PageLayoutWrapper>
       {isConfirming && (
         <ConfirmPageLayoutDialog
@@ -186,7 +169,8 @@ PageLayout.propTypes = {
   pageSize: PageSizePropType.isRequired,
   onConfirm: PropTypes.func.isRequired,
   requiresConfirmation: PropTypes.bool.isRequired,
-  isFocused: PropTypes.bool,
+  translateY: PropTypes.number.isRequired,
+  translateX: PropTypes.number.isRequired,
 };
 
-export default forwardRef(PageLayout);
+export default PageLayout;
