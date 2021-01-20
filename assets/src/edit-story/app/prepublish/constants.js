@@ -435,9 +435,9 @@ export const MESSAGES = {
           </li>
           <li>
             {sprintf(
-              /* translators: %d: maximum percentage of characters, depending on number of pages. */
+              /* translators: %s: maximum percentage of characters, depending on number of pages. */
               __(
-                'Keep the total number of text-heavy pages under %d of total number of story pages',
+                'Keep the total number of text-heavy pages under %s of total number of story pages',
                 'web-stories'
               ),
               MAX_CHARACTER_PERCENTAGE + '%'
