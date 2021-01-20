@@ -149,7 +149,7 @@ class Web_Stories_Block {
 					],
 					'fieldState'       => [
 						'type'    => 'object',
-						'default' => $this->fields_states(),
+						'default' => [],
 					],
 				],
 				'render_callback' => [ $this, 'render' ],
@@ -248,7 +248,7 @@ class Web_Stories_Block {
 				'circle_size'           => $attributes['sizeOfCircles'],
 			];
 
-			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states( $attributes ) );
+			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states() );
 
 			$stories = new Story_Query( $story_attributes, $this->get_query_args() );
 
@@ -261,29 +261,13 @@ class Web_Stories_Block {
 	}
 
 	/**
-	 * Get the field value.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param string $field     Field name to get the value of.
-	 * @param string $view_type View type to get the field from.
-	 *
-	 * @return boolean
-	 */
-	public function get_field_state( $field, $view_type ) {
-		return $this->block_attributes['fieldState'][ $view_type ][ $field ]['show'];
-	}
-
-	/**
 	 * Maps fields to the story params.
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param array $attributes Block Attributes.
-	 *
 	 * @return array
 	 */
-	public function get_mapped_field_states( $attributes ) {
+	public function get_mapped_field_states() {
 		$controls = [
 			'show_title'                => 'title',
 			'show_excerpt'              => 'excerpt',
@@ -297,7 +281,7 @@ class Web_Stories_Block {
 		$controls_state = [];
 
 		foreach ( $controls as $control => $field ) {
-			$controls_state[ $control ] = $this->get_field_state( $field, $attributes['viewType'] );
+			$controls_state[ $control ] = $this->block_attributes['fieldState'][ 'show_' . $field ];
 		}
 
 		return $controls_state;
