@@ -122,10 +122,15 @@ const MenuIconsWrapper = styled.div`
           position: absolute;
           bottom: 44px;
         `}
+`;
 
-  & > * {
-    margin-top: 10px;
-  }
+const OverflowButtons = styled.div`
+  position: relative;
+`;
+
+const OverflowButton = styled.div`
+  position: absolute;
+  bottom: ${({ $offset }) => $offset}px;
 `;
 
 const StyledMetaBoxesButton = styled(MetaBoxesButton).attrs({
@@ -466,18 +471,24 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            {hasMetaBoxes && (
-              <WithTooltip
-                title={__('Third-party Meta Boxes', 'web-stories')}
-                placement={isRTL ? Placement.RIGHT : Placement.LEFT}
-              >
-                <StyledMetaBoxesButton
-                  onClick={toggleMetaBoxesVisible}
-                  aria-label={__('Third-Party Meta Boxes', 'web-stories')}
-                />
-              </WithTooltip>
-            )}
-            <KeyboardShortcutsMenu />
+            <OverflowButtons>
+              {hasMetaBoxes && (
+                <OverflowButton $offset={44}>
+                  <WithTooltip
+                    title={__('Third-party Meta Boxes', 'web-stories')}
+                    placement={isRTL ? Placement.RIGHT : Placement.LEFT}
+                  >
+                    <StyledMetaBoxesButton
+                      onClick={toggleMetaBoxesVisible}
+                      aria-label={__('Third-Party Meta Boxes', 'web-stories')}
+                    />
+                  </WithTooltip>
+                </OverflowButton>
+              )}
+              <OverflowButton $offset={10}>
+                <KeyboardShortcutsMenu />
+              </OverflowButton>
+            </OverflowButtons>
             <WithTooltip
               title={__('Grid View', 'web-stories')}
               placement={isRTL ? Placement.RIGHT : Placement.LEFT}
