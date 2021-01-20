@@ -139,10 +139,16 @@ WithDropTarget.propTypes = {
   hover: PropTypes.bool,
 };
 
-export default function WithMask({ element, fill, style, children, ...rest }) {
+export default function WithMask({
+  element,
+  fill,
+  style,
+  children,
+  eventHandlers = null,
+  ...rest
+}) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
-  const { eventHandlers } = rest;
 
   const mask = getElementMask(element);
   if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
@@ -210,5 +216,6 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
+  eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
 };
