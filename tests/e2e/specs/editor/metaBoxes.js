@@ -58,7 +58,7 @@ describe('Custom Meta Boxes', () => {
       await expect(page).not.toMatchElement(
         '#web-stories-editor #web_stories_test_meta_box_field',
         {
-          visible: true,
+          visible: false,
         }
       );
 
@@ -67,7 +67,7 @@ describe('Custom Meta Boxes', () => {
       await expect(page).toMatchElement(
         '#web-stories-editor #web_stories_test_meta_box_field',
         {
-          visible: true,
+          visible: false,
         }
       );
       await page.type(
@@ -98,7 +98,21 @@ describe('Custom Meta Boxes', () => {
       await page.reload();
       await expect(page).toMatchElement('input[placeholder="Add title"]');
 
+      await expect(page).not.toMatchElement(
+        '#web-stories-editor #web_stories_test_meta_box_field',
+        {
+          visible: false,
+        }
+      );
+
       await expect(page).toClick('[aria-label="Third-Party Meta Boxes"]');
+
+      await expect(page).toMatchElement(
+        '#web-stories-editor #web_stories_test_meta_box_field',
+        {
+          visible: false,
+        }
+      );
 
       const metaBoxValue = await page.evaluate(
         () => document.getElementById('web_stories_test_meta_box_field').value
