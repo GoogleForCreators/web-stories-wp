@@ -65,7 +65,6 @@ const Wrapper = styled.div`
     font-weight: 500;
     outline: none;
     padding: 15px;
-    position: relative;
     width: 100%;
   }
 
