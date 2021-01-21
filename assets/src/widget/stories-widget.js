@@ -69,9 +69,9 @@ const bindEvent = function () {
 
   if (dropdowns.length) {
     for (let i = 0; i < dropdowns.length; i++) {
-      dropdowns[i].onchange = function (event) {
+      dropdowns[i].addEventListener('change', (event) => {
         reactiveWidget(event.target, false);
-      };
+      });
     }
   }
 };
