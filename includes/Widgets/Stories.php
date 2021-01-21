@@ -283,7 +283,7 @@ class Stories extends WP_Widget {
 		wp_enqueue_script(
 			$this->script_handle,
 			trailingslashit( WEBSTORIES_ASSETS_URL ) . 'js/stories-widget.js',
-			[ 'jquery', 'wp-dom-ready' ],
+			[ 'jquery' ],
 			WEBSTORIES_VERSION,
 			true
 		);
