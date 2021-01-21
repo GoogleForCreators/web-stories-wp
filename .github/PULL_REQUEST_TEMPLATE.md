@@ -31,8 +31,12 @@ Write step-by-step test instructions aimed at non-tech-savvy users, even if the 
 
 ### QA
 
+<!--
+Not all changes require manual QA.
+-->
+
 <!-- ignore-task-list-start -->
-* [ ] This is a non-user-facing change and 
+* [ ] This is a non-user-facing change and requires no QA
 <!-- ignore-task-list-end -->
 
 This PR can be tested by following these steps:
@@ -72,11 +76,15 @@ This PR can be tested by following these steps:
 
 ## Checklist
 
+<!-- Check these after PR creation -->
+
 * [ ] This PR addresses an existing issue and I have linked this PR to it in ZenHub
 * [ ] I have tested this code to the best of my abilities
-* [ ] I have verified accessibility to the best of my abilities
-* [ ] I have added automated tests (unit, integration, and/or e2e) to verify the code works as intended
+* [ ] I have verified accessibility to the best of my abilities ([docs](https://github.com/google/web-stories-wp/blob/main/docs/accessibility-testiing.md))
+* [ ] I have verified i18n and l10n (translation, right-to-left layout) to the best of my abilities
+* [ ] This PR contains automated tests (unit, integration, and/or e2e) to verify the code works as intended ([docs](https://github.com/google/web-stories-wp/tree/main/docs#testing))
 * [ ] I have added documentation where necessary
+* [ ] I have added a matching `Type: XYZ` label to the PR
 
 ---
 
