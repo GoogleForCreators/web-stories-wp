@@ -169,7 +169,7 @@ export const MESSAGES = {
         <DashedList>
           <li>
             {sprintf(
-              /* translators: %s: minimum publisher logo dimensions. */
+              /* translators: %s: image dimensions. */
               __("Use an image that's at least %s", 'web-stories'),
               `${PUBLISHER_LOGO_DIMENSION}x${PUBLISHER_LOGO_DIMENSION}px`
             )}
