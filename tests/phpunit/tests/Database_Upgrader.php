@@ -332,6 +332,42 @@ class Database_Upgrader extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::v_2_add_term
+	 */
+	public function test_v_2_add_term() {
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$this->call_private_method( $object, 'v_2_add_term' );
+
+		$terms = get_terms(
+			[
+				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+				'hide_empty' => false,
+			] 
+		);
+
+		$slugs = wp_list_pluck( $terms, 'slug' );
+		$this->assertContains( 'editor', $slugs );
+	}
+
+	/**
+	 * @covers ::v_3_add_term
+	 */
+	public function test_v_3_add_term() {
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$this->call_private_method( $object, 'v_3_add_term' );
+
+		$terms = get_terms(
+			[
+				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+				'hide_empty' => false,
+			] 
+		);
+
+		$slugs = wp_list_pluck( $terms, 'slug' );
+		$this->assertContains( 'video-optimization', $slugs );
+	}
+
+	/**
 	 * @group ms-required
 	 */
 	public function test_init_sets_missing_options_multisite() {
