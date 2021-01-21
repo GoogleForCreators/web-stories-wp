@@ -33,14 +33,16 @@ import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
+import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
+  BUTTON_SIZES,
   BUTTON_TYPES,
-  PRIMARY_PATHS,
-  SECONDARY_PATHS,
-  Z_INDEX,
-} from '../../constants';
+  Button,
+  Text,
+  THEME_CONSTANTS,
+  WebStoriesLogo,
+} from '../../../design-system';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
-import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -48,9 +50,10 @@ import {
   Content,
   Header,
   NavButton,
-  NavLink,
+  NavLinkContent,
   NavList,
   NavListItem,
+  PathName,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -84,7 +87,7 @@ export const LeftRailContainer = styled.nav.attrs({
   top: 0;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
-  background: ${({ theme }) => theme.colors.standard.white};
+  background: ${({ theme }) => theme.colors.bg.primary};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
@@ -94,11 +97,6 @@ export const LeftRailContainer = styled.nav.attrs({
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
   }
-`;
-
-export const NavLinkContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 5fr;
 `;
 
 export function LeftRail() {
@@ -134,13 +132,6 @@ export function LeftRail() {
     return PRIMARY_PATHS.filter((path) => !path.inProgress);
   }, [enableInProgressViews]);
 
-  const enabledSecondaryPaths = useMemo(() => {
-    if (enableInProgressViews) {
-      return SECONDARY_PATHS;
-    }
-    return SECONDARY_PATHS.filter((path) => !path.inProgress);
-  }, [enableInProgressViews]);
-
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
       toggleSideBar();
@@ -173,18 +164,18 @@ export function LeftRail() {
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <Header>
+        <Header as="h1">
           <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
         </Header>
         <Content>
-          <NavButton
-            type={BUTTON_TYPES.CTA}
+          <Button
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
             href={newStoryURL}
-            isLink
             onClick={onCreateNewStoryClick}
           >
             {__('Create New Story', 'web-stories')}
-          </NavButton>
+          </Button>
         </Content>
         <Content>
           <NavList>
@@ -194,7 +185,9 @@ export function LeftRail() {
 
               return (
                 <NavListItem key={path.value}>
-                  <NavLink
+                  <NavButton
+                    type={BUTTON_TYPES.TERTIARY}
+                    size={BUTTON_SIZES.SMALL}
                     active={path.value === state.currentPath}
                     href={resolveRoute(path.value)}
                     aria-label={
@@ -212,11 +205,11 @@ export function LeftRail() {
                       onClick: () => onExternalLinkClick(path),
                     })}
                   >
-                    <NavLinkContent active={path.value === state.currentPath}>
+                    <NavLinkContent>
                       {Icon ? <Icon width="22px" /> : <div />}
-                      {path.label}
+                      <PathName as="span">{path.label}</PathName>
                     </NavLinkContent>
-                  </NavLink>
+                  </NavButton>
                 </NavListItem>
               );
             })}
@@ -225,9 +218,11 @@ export function LeftRail() {
       </div>
       <Content>
         <NavList>
-          {enabledSecondaryPaths.map((path) => (
+          {SECONDARY_PATHS.map((path) => (
             <NavListItem key={path.value}>
-              <NavLink
+              <NavButton
+                type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
                 active={path.value === state.currentPath}
                 href={resolveRoute(path.value)}
                 aria-label={
@@ -245,12 +240,14 @@ export function LeftRail() {
                   onClick: () => onExternalLinkClick(path),
                 })}
               >
-                {path.label}
-              </NavLink>
+                <NavLinkContent>
+                  <Text as="span">{path.label}</Text>
+                </NavLinkContent>
+              </NavButton>
             </NavListItem>
           ))}
         </NavList>
-        <AppInfo>
+        <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {sprintf(
             /* translators: %s: Current Year, %v: App Version */
             __('\u00A9 %s Google Version %v', 'web-stories'),

@@ -17,10 +17,4 @@
 /**
  * Internal dependencies
  */
-import * as Icons from './icons';
-
-export { Icons };
-export * from './components';
-export * from './images';
-export * from './theme';
-export * from './utils';
+export { ReactComponent as WebStoriesLogo } from './webStoriesFullLogo.svg';

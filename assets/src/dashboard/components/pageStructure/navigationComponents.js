@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import Button from '../button';
-import { TypographyPresets } from '../typography';
+import { Button, Headline, Text } from '../../../design-system';
 
 export const Content = styled.div`
   display: flex;
@@ -34,32 +33,12 @@ export const Content = styled.div`
   }
 `;
 
-export const Header = styled.h1`
+export const Header = styled(Headline)`
   margin: 42px 0px 72px;
 
   & > svg {
     margin: 0 28px;
     height: 64px;
-  }
-`;
-
-export const NavButton = styled(Button)`
-  margin-bottom: 0;
-  margin-top: 0;
-  background-color: ${({ theme }) =>
-    theme.DEPRECATED_THEME.colors.foreground.gray12};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.black};
-  border-radius: 4px;
-  border-color: ${({ theme }) =>
-    theme.DEPRECATED_THEME.colors.foreground.gray12};
-  height: 36px;
-
-  &:hover,
-  &:focus,
-  &:focus-within {
-    background-color: ${({ theme }) =>
-      theme.DEPRECATED_THEME.colors.foreground.gray16};
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.black};
   }
 `;
 
@@ -74,26 +53,28 @@ export const NavListItem = styled.li`
   list-style-type: none;
 `;
 
-export const NavLink = styled.a`
-  ${TypographyPresets.Medium};
-  ${({ theme, active }) => `
-    display: block;
-    padding: 4px 28px;
-    margin: 4px 0;
-    text-decoration: none;
-    color: ${active ? theme.colors.gray[90] : theme.colors.gray[70]};
-
-    &:focus {
-      color: ${active ? theme.colors.gray['90'] : theme.colors.gray['70']};
-    }
-    &:hover {
-      color: ${active ? theme.colors.gray['90'] : theme.colors.gray['70']};
-      background-color: ${theme.colors.gray['10']};
-    }
-  `}
+export const NavButton = styled(Button)`
+  border-radius: 0;
 `;
 
-export const AppInfo = styled.div`
-  ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+export const NavLinkContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-areas: 'icon link link link link';
+  width: 100%;
+  margin-left: 12px;
+
+  svg {
+    grid-area: icon;
+  }
 `;
+
+export const PathName = styled(Text)`
+  grid-area: link;
+`;
+
+export const AppInfo = styled(Text)(
+  ({ theme }) => css`
+    color: ${theme.colors.fg.secondary};
+  `
+);
