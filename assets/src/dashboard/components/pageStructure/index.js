@@ -206,7 +206,7 @@ export function LeftRail() {
                     })}
                   >
                     <NavLinkContent>
-                      {Icon ? <Icon width="22px" /> : <div />}
+                      {Icon && <Icon width="22px" />}
                       <PathName as="span">{path.label}</PathName>
                     </NavLinkContent>
                   </NavButton>
