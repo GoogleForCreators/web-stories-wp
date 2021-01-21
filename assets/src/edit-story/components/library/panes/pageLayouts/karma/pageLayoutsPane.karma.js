@@ -23,6 +23,9 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
+import { useStory } from '../../../../../app/story';
+import { formattedTemplatesArray } from '../../../../../../dashboard/storybookUtils';
+import objectWithout from '../../../../../utils/objectWithout';
 
 describe('CUJ: Creator can Apply a Page Layout', () => {
   let fixture;
@@ -44,20 +47,38 @@ describe('CUJ: Creator can Apply a Page Layout', () => {
   it('should apply page layout to an empty page', async () => {
     await fixture.editor.library.pageLayoutsTab.click();
 
-    //console.log('about to click');
     await waitFor(() =>
       expect(
         fixture.editor.library.pageLayoutsPane.pageLayouts.length
       ).toBeTruthy()
     );
-    //console.log(fixture.editor.library.pageLayoutsPane);
-    //console.log('about to click');
     await fixture.events.click(
-      fixture.editor.library.pageLayoutsPane.pageLayout('Beauty Cover')
+      fixture.editor.library.pageLayoutsPane.pageLayout('Cooking Cover')
     );
-    // await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
-    // await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
 
-    // await fixture.snapshot('applied page layout');
+    // check that all elements have been applied
+    const currentPage = await fixture.renderHook(() =>
+      useStory(({ state }) => state.currentPage)
+    );
+    const cookingTemplate = formattedTemplatesArray.find(
+      (t) => t.title === 'Cooking'
+    );
+    const coverPage = cookingTemplate.pages.find(
+      (p) => p.pageLayoutType === 'cover'
+    );
+    expect(currentPage.id).not.toEqual(coverPage.id);
+    expect(currentPage.elements.length).toEqual(coverPage.elements.length);
+    coverPage.elements.forEach((element, index) => {
+      expect(objectWithout(currentPage.elements[index], ['id'])).toEqual(
+        objectWithout(element, ['id'])
+      );
+    });
+    expect(currentPage.animations.length).toEqual(0);
+
+    await fixture.snapshot('applied page layout');
   });
+
+  it('should confirm and apply layout to a page with changes');
+
+  it('should confirm and cancel applying to a page with changes');
 });
