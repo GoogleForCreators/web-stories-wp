@@ -255,6 +255,8 @@
     "workflow:fonts": "update-fonts packages/fonts/src/fonts.json",
     "preworkflow:migrate": "[ -f assets/src/migration/module.js ] || npx rollup --config assets/src/migration/rollup.config.migrate.js",
     "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
+    "workflow:migrate:text-sets": "./assets/src/migration/cli.js assets/src/edit-story/components/library/panes/text/textSets/raw",
+    "postworkflow:migrate:text-sets": "npx prettier --write assets/src/edit-story/components/library/panes/text/textSets/raw",
     "workflow:migrate:templates": "./assets/src/migration/cli.js assets/src/dashboard/templates/raw",
     "postworkflow:migrate:templates": "npx prettier --write assets/src/dashboard/templates/raw",
     "workflow:migrate:ftue-story": "./assets/src/migration/cli.js includes/data/stories",
