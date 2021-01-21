@@ -70,6 +70,7 @@ class Database_Upgrader {
 			'3.0.3' => 'yoast_reindex_stories',
 			'3.0.4' => 'add_poster_generation_media_source',
 			'3.0.5' => 'remove_unneeded_attachment_meta',
+			'3.0.6' => 'v_3_add_term',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -375,6 +376,17 @@ class Database_Upgrader {
 	 */
 	protected function remove_unneeded_attachment_meta() {
 		delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
+	}
+
+	/**
+	 * Add the video optimization term, to make sure it exists.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return void
+	 */
+	protected function v_3_add_term() {
+		wp_insert_term( 'video-optimization', Media::STORY_MEDIA_TAXONOMY );
 	}
 
 	/**
