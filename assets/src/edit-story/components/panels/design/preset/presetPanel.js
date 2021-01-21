@@ -19,18 +19,34 @@
  */
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { Panel } from '../../panel';
+import { TranslateWithMarkup } from '../../../../../i18n';
+import { Add } from '../../../../../design-system/icons';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
 import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
+import ColorAdd from './colorAdd';
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  padding: 0px 30px 10px;
+  text-align: center;
+  line-height: 20px;
+`;
 
 function PresetPanel({
   presetType = 'color',
@@ -108,6 +124,7 @@ function PresetPanel({
     return null;
   }
 
+  // @todo adjust for the local color!
   const handlePresetClick = (preset) => {
     if (isEditMode) {
       handleDeletePreset(preset);
@@ -148,14 +165,35 @@ function PresetPanel({
         type={presetType}
       />
       {isColor && (
-        <Presets
-          isEditMode={isEditMode}
-          presets={localColorPresets?.colors || []}
-          handleOnClick={handlePresetClick}
-          handleAddPreset={handleAddLocalPreset}
-          itemRenderer={itemRenderer}
-          type={presetType}
-        />
+        <>
+          <Presets
+            isEditMode={isEditMode}
+            presets={localColorPresets?.colors || []}
+            handleOnClick={handlePresetClick}
+            handleAddPreset={handleAddLocalPreset}
+            itemRenderer={itemRenderer}
+            type={presetType}
+          />
+          {!hasPresets && !localColorPresets.length && (
+            <ButtonWrapper>
+              <ColorAdd
+                handleAddPreset={handleAddPreset}
+                helper={
+                  <TranslateWithMarkup
+                    mapping={{
+                      i: <Add width={18} height={13} />,
+                    }}
+                  >
+                    {__(
+                      'Click on the <i></i> icon to save a color to all stories.',
+                      'web-stories'
+                    )}
+                  </TranslateWithMarkup>
+                }
+              />
+            </ButtonWrapper>
+          )}
+        </>
       )}
       {resizeable && <Resize position="bottom" />}
     </Panel>
