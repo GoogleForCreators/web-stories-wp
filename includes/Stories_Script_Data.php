@@ -53,6 +53,8 @@ class Stories_Script_Data {
 
 	/**
 	 * Add the data via wp_localize_script.
+	 *
+	 * @return void
 	 */
 	public function enqueue() {
 		wp_localize_script(
