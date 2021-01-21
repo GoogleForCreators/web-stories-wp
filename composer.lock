@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc7d1814bce9ded215cfeccc62a9a4ad",
+    "content-hash": "4b025629a547b8397bb96159fc0f275b",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -204,16 +204,16 @@
         },
         {
             "name": "enshrined/svg-sanitize",
-            "version": "0.13.3",
+            "version": "0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/darylldoyle/svg-sanitizer.git",
-                "reference": "bc66593f255b7d2613d8f22041180036979b6403"
+                "reference": "beff89576a72540ee99476aeb9cfe98222e76fb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/bc66593f255b7d2613d8f22041180036979b6403",
-                "reference": "bc66593f255b7d2613d8f22041180036979b6403",
+                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/beff89576a72540ee99476aeb9cfe98222e76fb8",
+                "reference": "beff89576a72540ee99476aeb9cfe98222e76fb8",
                 "shasum": ""
             },
             "require": {
@@ -226,10 +226,7 @@
             },
             "type": "library",
             "extra": {
-                "patches_applied": {
-                    "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch",
-                    "Fix a PHP 8 deprecation warning <https://github.com/darylldoyle/svg-sanitizer/pull/45>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...c23734ebfa35aa40e975e76415da3698329ae7b2.patch"
-                }
+                "patches_applied": []
             },
             "autoload": {
                 "psr-4": {
@@ -247,7 +244,7 @@
                 }
             ],
             "description": "An SVG sanitizer for PHP",
-            "time": "2020-01-20T01:34:17+00:00"
+            "time": "2021-01-21T10:13:20+00:00"
         },
         {
             "name": "fasterimage/fasterimage",
@@ -373,6 +370,12 @@
                 "phpunit/phpunit": "^4.8.36"
             },
             "type": "library",
+            "extra": {
+                "patches_applied": {
+                    "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
+                    "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
@@ -393,13 +396,7 @@
                 "parser",
                 "stylesheet"
             ],
-            "time": "2020-11-18T12:10:42+00:00",
-            "extra": {
-                "patches_applied": {
-                    "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
-                    "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
-                }
-            }
+            "time": "2020-11-18T12:10:42+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
