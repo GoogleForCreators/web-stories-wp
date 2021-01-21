@@ -75,13 +75,15 @@ function useSnapping({
     ({ elements }) =>
       // Show design space if we're snapping to any of its edges
       toggleDesignSpace(
-        elements
-          .flat()
-          .some(
-            ({ center, element }) => element === designSpaceGuideline && !center
-          )
+        isDragging &&
+          elements
+            .flat()
+            .some(
+              ({ center, element }) =>
+                element === designSpaceGuideline && !center
+            )
       ),
-    [toggleDesignSpace, designSpaceGuideline]
+    [toggleDesignSpace, isDragging, designSpaceGuideline]
   );
 
   // Always hide design space guideline when dragging stops
