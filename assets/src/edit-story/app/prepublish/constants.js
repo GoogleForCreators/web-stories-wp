@@ -124,7 +124,7 @@ export const MESSAGES = {
         <DashedList>
           <li>
             {sprintf(
-              /* translators: %s: minimum cover dimension width X minimum cover dimension height.  */
+              /* translators: %s: image dimensions. */
               __("Use an image that's at least %s", 'web-stories'),
               `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`
             )}
