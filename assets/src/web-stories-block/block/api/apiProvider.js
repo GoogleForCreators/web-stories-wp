@@ -24,7 +24,7 @@ import { useMemo } from 'react';
  * Internal dependencies
  */
 import { useConfig } from '../../../dashboard/app/config';
-import { createContext } from '../../../dashboard/utils';
+import { createContext } from '../../../design-system';
 import dataAdapter from '../../../dashboard/app/api/wpAdapter';
 import useStoryApi from './useStoryApi';
 import useUsersApi from './useUserApi';
