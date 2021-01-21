@@ -76,9 +76,9 @@ describe('useUploader', () => {
   it('user uploads an invalid file', async () => {
     const { uploadFile } = setup({});
 
-    await expect(uploadFile({ size: 20000, type: 'application/pdf' })).rejects.toThrow(
-      'Please choose only png, jpeg, jpg, gif, mp4 to upload.'
-    );
+    await expect(
+      uploadFile({ size: 20000, type: 'application/pdf' })
+    ).rejects.toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
   });
 
   it('isValidType is given an invalid file', () => {
