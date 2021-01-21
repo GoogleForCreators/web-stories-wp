@@ -70,7 +70,7 @@ class Stories_Script_Data {
 	 * @return array
 	 */
 	private function data() {
-		$order      = get_orderby();
+		$order      = get_stories_order();
 		$views      = get_layouts();
 		$order_list = [];
 		$view_types = [];
