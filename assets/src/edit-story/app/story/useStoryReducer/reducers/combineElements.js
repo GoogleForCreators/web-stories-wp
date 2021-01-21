@@ -50,9 +50,13 @@ import { removeAnimationsWithElementIds } from './utils';
  * @param {Object} payload Action payload
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
+ * @param {boolean} payload.isCopyAndPasteAction Is called from copy and paste
  * @return {Object} New state
  */
-function combineElements(state, { firstElement, secondId }) {
+function combineElements(
+  state,
+  { firstElement, secondId, isCopyAndPasteAction = false }
+) {
   if (!firstElement || !secondId) {
     return state;
   }
@@ -134,9 +138,14 @@ function combineElements(state, { firstElement, secondId }) {
   // new element. We want to remove any animations it has. Second
   // element should be an element with or without animations that
   // we want to retain.
-  const newAnimations = removeAnimationsWithElementIds(page.animations, [
-    firstId,
-  ]);
+  //
+  // We want different behavior for copy and paste where we
+  // replace the element's animation with any coming from the
+  // newly pasted element.
+  const newAnimations = removeAnimationsWithElementIds(
+    page.animations,
+    isCopyAndPasteAction ? [firstId, secondId] : [firstId]
+  );
 
   const newPage = {
     ...page,
