@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useCanvas } from '../../app';
+import { HelpCenter } from '../../components/helpCenter';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -83,6 +84,7 @@ function CanvasLayout() {
             <EditLayer />
           </CanvasElementDropzone>
         </CanvasUploadDropTarget>
+        <HelpCenter />
       </Background>
     </StyleSheetManager>
   );
