@@ -50,7 +50,7 @@ function Presets({
   handleAddPreset,
 }) {
   const hasPresets = presets.length > 0;
-
+  console.log('here');
   return (
     <PanelContent isPrimary padding={hasPresets ? null : '0'}>
       {hasPresets && (

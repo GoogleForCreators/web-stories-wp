@@ -28,7 +28,7 @@ import {
   getTextPresets,
 } from './utils';
 
-function useAddPreset(presetType) {
+function useAddPreset(presetType, isLocal = false) {
   const { currentPage, selectedElements, stylePresets, updateStory } = useStory(
     ({
       state: {
@@ -53,10 +53,14 @@ function useAddPreset(presetType) {
   const handleAddPreset = useCallback(
     (evt) => {
       evt.stopPropagation();
-      let addedPresets = {
-        textStyles: [],
-        colors: [],
-      };
+      let addedPresets = isLocal
+        ? {
+            colors: [],
+          }
+        : {
+            textStyles: [],
+            colors: [],
+          };
       if (isText) {
         addedPresets = {
           ...addedPresets,
@@ -77,19 +81,30 @@ function useAddPreset(presetType) {
         addedPresets.colors?.length > 0 ||
         addedPresets.textStyles?.length > 0
       ) {
-        updateStory({
-          properties: {
-            stylePresets: {
-              textStyles: [...textStyles, ...addedPresets.textStyles],
-              colors: [...colors, ...addedPresets.colors],
+        if (isLocal) {
+          updateStory({
+            properties: {
+              localColorPresets: {
+                colors: [...colors, ...addedPresets.colors],
+              },
             },
-          },
-        });
+          });
+        } else {
+          updateStory({
+            properties: {
+              stylePresets: {
+                textStyles: [...textStyles, ...addedPresets.textStyles],
+                colors: [...colors, ...addedPresets.colors],
+              },
+            },
+          });
+        }
       }
     },
     [
       currentPage,
       isBackground,
+      isLocal,
       colors,
       isText,
       presetType,
