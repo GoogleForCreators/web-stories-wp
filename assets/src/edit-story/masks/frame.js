@@ -199,11 +199,7 @@ export default function WithMask({
         height="100%"
         preserveAspectRatio="none"
       >
-        <FillerPath
-          vectorEffect="non-scaling-stroke"
-          fill="none"
-          d={mask?.path}
-        />
+        <FillerPath fill="none" d={mask?.path} />
       </Filler>
       <WithDropTarget element={element} hover={hover}>
         {children}
