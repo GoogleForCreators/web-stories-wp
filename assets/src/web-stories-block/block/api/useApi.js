@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../../dashboard/utils';
+import { identity, useContextSelector } from '../../../design-system';
 import { StoriesBlockApiContext } from './apiProvider';
 
 export default function useApi(selector = identity) {

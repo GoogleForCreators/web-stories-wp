@@ -210,7 +210,6 @@ class Plugin {
 		// Plugin compatibility / polyfills.
 		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
 		add_action( 'init', [ $this, 'includes' ] );
-		add_action( 'rest_dispatch_request', [ $this, 'load_amp_plugin_compat' ] );
 
 		// Settings.
 		$this->settings = new Settings();
@@ -322,8 +321,7 @@ class Plugin {
 	 *
 	 * Loads a separate PHP file that allows defining functions in the global namespace.
 	 *
-	 * Runs on the 'wp' and 'rest_dispatch_request' hook to ensure the WP environment has
-	 * been fully set up,
+	 * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
 	 *
 	 * @return void
 	 */
