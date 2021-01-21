@@ -30,6 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
+import useTranscodeVideo from '../media/utils/useTranscodeVideo';
 
 function useUploader() {
   const {
@@ -49,6 +50,7 @@ function useUploader() {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
+  const transcodeVideo = useTranscodeVideo();
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -73,19 +75,13 @@ function useUploader() {
    * @param {Object} _additionalData Additional Data object.
    */
   const uploadFile = useCallback(
-    (file, _additionalData = {}) => {
+    async (file, _additionalData = {}) => {
       if (!hasUploadMediaAction) {
         const message = __(
           'Sorry, you are unable to upload files.',
           'web-stories'
         );
-        const permissionError = createError(
-          'PermissionError',
-          file.name,
-          message
-        );
-
-        throw permissionError;
+        throw createError('PermissionError', file.name, message);
       }
       if (!fileSizeCheck(file)) {
         const message = sprintf(
@@ -97,12 +93,12 @@ function useUploader() {
           bytesToMB(file.size),
           bytesToMB(maxUpload)
         );
-        const sizeError = createError('SizeError', file.name, message);
-
-        throw sizeError;
+        throw createError('SizeError', file.name, message);
       }
 
-      if (!isValidType(file)) {
+      const isVideo = file.type.startsWith('video/');
+
+      if (!isValidType(file) && !isVideo) {
         /* translators: %s is a list of allowed file extensions. */
         const message = sprintf(
           /* translators: %s: list of allowed file types. */
@@ -113,9 +109,7 @@ function useUploader() {
           )
         );
 
-        const validError = createError('ValidError', file.name, message);
-
-        throw validError;
+        throw createError('ValidError', file.name, message);
       }
 
       const additionalData = {
@@ -123,6 +117,32 @@ function useUploader() {
         media_source: 'editor',
         ..._additionalData,
       };
+
+      // TODO: Add max size check.
+      // See https://github.com/ffmpegwasm/ffmpeg.wasm#what-is-the-maximum-size-of-input-file
+      if (isVideo) {
+        try {
+          const newFile = await transcodeVideo(file);
+          return uploadMedia(newFile, additionalData);
+        } catch (err) {
+          if (!isValidType(file)) {
+            /* translators: %s is a list of allowed file extensions. */
+            const message = sprintf(
+              /* translators: %s: list of allowed file types. */
+              __('Please choose only %s to upload.', 'web-stories'),
+              allowedFileTypes.join(
+                /* translators: delimiter used in a list */
+                __(', ', 'web-stories')
+              )
+            );
+
+            throw createError('ValidError', file.name, message);
+          }
+
+          const message = __('Video optimization failed', 'web-stories');
+          throw createError('TranscodingError', file.name, message);
+        }
+      }
 
       return uploadMedia(file, additionalData);
     },
@@ -134,6 +154,7 @@ function useUploader() {
       maxUpload,
       uploadMedia,
       storyId,
+      transcodeVideo,
     ]
   );
 
