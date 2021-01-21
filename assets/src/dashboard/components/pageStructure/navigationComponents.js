@@ -81,7 +81,7 @@ export const NavLink = styled.a`
     padding: 4px 28px;
     margin: 4px 0;
     text-decoration: none;
-    color: ${active ? theme.colors.gray['90'] : theme.colors.gray['70']};
+    color: ${active ? theme.colors.gray[90] : theme.colors.gray[70]};
 
     &:focus {
       color: ${active ? theme.colors.gray['90'] : theme.colors.gray['70']};
