@@ -21,11 +21,7 @@ import styled, { css } from 'styled-components';
 /**
  * WordPress dependencies
  */
-<<<<<<< HEAD
 import { __, _n, sprintf } from '@wordpress/i18n';
-=======
-import { __ } from '@wordpress/i18n';
->>>>>>> 07ddfec5a (wip)
 
 /**
  * Internal dependencies
