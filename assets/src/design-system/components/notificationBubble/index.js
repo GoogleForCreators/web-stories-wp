@@ -17,12 +17,38 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
-export const Notification = styled.div`
+/**
+ * Internal dependencies
+ */
+import { themeHelpers } from '../../theme';
+
+const Bubble = styled.div`
   ${({ theme }) => css`
+    color: ${theme.colors.fg.primary};
     background-color: ${theme.colors.accent.primary};
     border-radius: ${theme.borders.radius.round};
   `}
+  position: relative;
   height: 24px;
   width: 24px;
 `;
+
+const Inner = styled.div`
+  ${themeHelpers.fullSizeAbsolute}
+  ${themeHelpers.centerContent}
+  ${themeHelpers.expandTextPreset(
+    ({ paragraph }, sizes) => paragraph[sizes.SMALL]
+  )};
+  color: ${({ theme }) => theme.colors.bg.primary};
+`;
+
+export const NotificationBubble = ({ notificationCount }) => (
+  <Bubble>
+    <Inner>{notificationCount}</Inner>
+  </Bubble>
+);
+NotificationBubble.propTypes = {
+  notificationCount: PropTypes.number,
+};

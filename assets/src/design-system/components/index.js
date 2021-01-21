@@ -25,4 +25,5 @@ export * as Snackbar from './snackbar';
 export * from './tooltip';
 export * from './keyboard';
 export * from './keyboard/gridview';
+export * from './notificationBubble';
 export { Text, Display, Headline } from './typography';

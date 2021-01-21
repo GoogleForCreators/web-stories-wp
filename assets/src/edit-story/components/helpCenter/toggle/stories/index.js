@@ -16,7 +16,8 @@
 /**
  * External dependencies
  */
-import { boolean, number } from '@storybook/addon-knobs';
+import { useState } from 'react';
+import { number } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
@@ -38,12 +39,14 @@ const Bg = styled.div`
 `;
 
 export const Toggle = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <ThemeProvider theme={dsTheme}>
       <Bg>
         <HelpCenterToggle
-          isOpen={boolean('isOpen')}
-          numNotifications={number('numNotifications')}
+          isOpen={isOpen}
+          onClick={() => setIsOpen((v) => !v)}
+          notificationCount={number('notificationCount')}
         />
       </Bg>
     </ThemeProvider>
