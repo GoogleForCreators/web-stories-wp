@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { css } from 'styled-components';
 
-export const expandPresetStyles = ({ preset, theme }) => css`
-  font-family: ${theme.typography.family.primary};
-  font-size: ${preset.size}px;
-  font-weight: ${preset.weight};
-  letter-spacing: ${preset.letterSpacing}px;
-  line-height: ${preset.lineHeight}px;
-  text-decoration: ${preset.textDecoration || 'none'};
-`;
-
-export const expandPresetStylesCurried = (presetSelector) => ({ theme }) =>
-  expandPresetStyles({
-    preset: presetSelector(theme.typography.presets),
-    theme,
-  });
+export const mq = {
+  desktop: (styles) => css`
+    @media screen and (min-width: 1121px) {
+      ${styles}
+    }
+  `,
+  tablet: (styles) => css`
+    @media screen and (min-width: 801px) {
+      ${styles}
+    }
+  `,
+  mobile: (styles) => css`
+    @media screen and (max-width: 800px) {
+      ${styles}
+    }
+  `,
+  mobileSmall: (styles) => css`
+    @media screen and (max-width: 684px) {
+      ${styles}
+    }
+  `,
+  min: (styles) => css`
+    @media screen and (max-width: 440px) {
+      ${styles}
+    }
+  `,
+};

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { css } from 'styled-components';
 
-export const expandPresetStyles = ({ preset, theme }) => css`
-  font-family: ${theme.typography.family.primary};
-  font-size: ${preset.size}px;
-  font-weight: ${preset.weight};
-  letter-spacing: ${preset.letterSpacing}px;
-  line-height: ${preset.lineHeight}px;
-  text-decoration: ${preset.textDecoration || 'none'};
-`;
-
-export const expandPresetStylesCurried = (presetSelector) => ({ theme }) =>
-  expandPresetStyles({
-    preset: presetSelector(theme.typography.presets),
-    theme,
-  });
+/**
+ * This is an object containing styles to reset
+ * native html styles.
+ *
+ * **structure:**
+ * ```
+ * const reset = {
+ *   [element]: css`
+ *      // ...styles
+ *   ` || (styledProps) => css`
+ *      // ...styles
+ *    `,
+ * }
+ * ```
+ *
+ * **example:**
+ * ```
+ * const Button = styled.button`
+ *   ${themeHelpers.reset.button}
+ * `;
+ * ```
+ */
+export const reset = {
+  button: css`
+    background-color: inherit;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  `,
+};

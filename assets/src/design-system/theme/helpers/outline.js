@@ -23,11 +23,14 @@ import { css } from 'styled-components';
  */
 import { FOCUS_VISIBLE_SELECTOR } from '../global';
 
-export const focusableOutlineCSS = (accent) => css`
-  border: solid 2px transparent;
+export const focusableOutlineCSS = (v) => {
+  const accent = typeof v === 'string' ? v : v?.theme?.colors?.border?.focus;
+  return css`
+    border: solid 2px transparent;
 
-  &.${FOCUS_VISIBLE_SELECTOR} {
-    outline: none;
-    border: solid 2px ${accent};
-  }
-`;
+    &.${FOCUS_VISIBLE_SELECTOR} {
+      outline: none;
+      border: solid 2px ${accent};
+    }
+  `;
+};
