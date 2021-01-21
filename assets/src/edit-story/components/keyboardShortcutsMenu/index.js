@@ -69,7 +69,7 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
     <>
       <WithTooltip
         title={__('Open Keyboard Shortcuts', 'web-stories')}
-        placement={Placement.LEFT}
+        placement={Placement.TOP}
       >
         <KeyboardShortcutsButton
           ref={anchorRef}

@@ -84,6 +84,7 @@ const StyledButton = styled(Base)`
   svg {
     width: ${({ width }) => width}px;
     height: ${({ height }) => height}px;
+    display: block;
   }
 `;
 

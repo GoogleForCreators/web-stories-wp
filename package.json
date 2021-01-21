@@ -248,6 +248,7 @@
     "workflow:version": "./bin/commander.js version",
     "workflow:build-plugin": "./bin/commander.js build-plugin",
     "workflow:fonts": "./bin/commander.js build-fonts",
+    "workflow:text-sets": "./bin/commander.js update-text-sets",
     "workflow:templates": "./bin/commander.js update-templates"
   },
   "husky": {

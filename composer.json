@@ -14,7 +14,7 @@
     "ampproject/amp-wp": "^2.0.8",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
-    "enshrined/svg-sanitize": "^0.13.3",
+    "enshrined/svg-sanitize": "^0.14.0",
     "mcaskill/composer-exclude-files": "^2.0",
     "symfony/polyfill-mbstring": "^1.18"
   },
@@ -69,10 +69,6 @@
       "sabberworm/php-css-parser": {
         "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
         "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
-      },
-      "enshrined/svg-sanitize": {
-        "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch",
-        "Fix a PHP 8 deprecation warning <https://github.com/darylldoyle/svg-sanitizer/pull/45>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...c23734ebfa35aa40e975e76415da3698329ae7b2.patch"
       }
     },
     "patches-ignore": {
