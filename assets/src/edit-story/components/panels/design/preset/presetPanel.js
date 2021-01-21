@@ -37,18 +37,25 @@ function PresetPanel({
   title,
   itemRenderer,
   pushUpdate,
+  isLocal = false,
 }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
-  const { selectedElements, stylePresets, updateStory } = useStory(
+  const {
+    localColorPresets,
+    selectedElements,
+    stylePresets,
+    updateStory,
+  } = useStory(
     ({
       state: {
         selectedElements,
-        story: { stylePresets },
+        story: { stylePresets, localColorPresets },
       },
       actions: { updateStory },
     }) => {
       return {
+        localColorPresets,
         selectedElements,
         stylePresets,
         updateStory,
@@ -66,6 +73,7 @@ function PresetPanel({
   const isShape = areAllType('shape', selectedElements);
 
   const handleApplyPreset = useApplyPreset(isColor, pushUpdate);
+  // @todo Adjust this for local colors.
   const handleAddPreset = useAddPreset(presetType);
 
   const handleDeletePreset = useCallback(
@@ -135,6 +143,14 @@ function PresetPanel({
       <Presets
         isEditMode={isEditMode}
         presets={presets}
+        handleOnClick={handlePresetClick}
+        handleAddPreset={handleAddPreset}
+        itemRenderer={itemRenderer}
+        type={presetType}
+      />
+      <Presets
+        isEditMode={isEditMode}
+        presets={localColorPresets}
         handleOnClick={handlePresetClick}
         handleAddPreset={handleAddPreset}
         itemRenderer={itemRenderer}

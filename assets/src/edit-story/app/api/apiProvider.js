@@ -77,6 +77,7 @@ function APIProvider({ children }) {
       publisherLogo,
       autoAdvance,
       defaultPageDuration,
+      localColorPresets,
       content,
       author,
       ...rest
@@ -87,6 +88,7 @@ function APIProvider({ children }) {
           pages,
           autoAdvance,
           defaultPageDuration,
+          localColorPresets,
         },
         featured_media: featuredMedia.id,
         style_presets: stylePresets,
