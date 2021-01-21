@@ -130,9 +130,12 @@ function combineElements(state, { firstElement, secondId }) {
     // Update reference to second element
     .map((el) => (el.id === secondId ? newElement : el));
 
+  // First element should always be the image getting applied to
+  // new element. We want to remove any animations it has. Second
+  // element should be an element with or without animations that
+  // we want to retain.
   const newAnimations = removeAnimationsWithElementIds(page.animations, [
     firstId,
-    secondId,
   ]);
 
   const newPage = {
