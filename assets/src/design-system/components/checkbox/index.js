@@ -25,37 +25,40 @@ import styled, { css } from 'styled-components';
  */
 import { Checkmark } from '../../icons';
 
+const CONTAINER_WIDTH = 24;
+const BORDER_WIDTH = 2;
+
 const CheckboxContainer = styled.div(
   ({ disabled, theme }) => css`
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 24px;
-    width: 24px;
+    height: ${CONTAINER_WIDTH}px;
+    width: ${CONTAINER_WIDTH}px;
     margin: 8px;
     border-radius: ${theme.borders.radius.small};
-    border: 2px solid ${theme.colors.border.defaultNormal};
+    border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
 
     :focus-within {
-      border: 2px solid ${theme.colors.border.focus};
+      border: ${BORDER_WIDTH}px solid ${theme.colors.border.focus};
     }
 
     :active {
-      border: 2px solid ${theme.colors.border.defaultNormal};
+      border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
       box-shadow: 0 0 0 8px ${theme.colors.shadows.active};
     }
 
     ${disabled &&
     css`
-      border: 2px solid ${theme.colors.border.disable};
+      border: ${BORDER_WIDTH}px solid ${theme.colors.border.disable};
     `}
 
     /* Hide Checkbox */
     input[type='checkbox'] {
       position: absolute;
-      width: 26px;
-      height: 26px;
+      width: ${CONTAINER_WIDTH + BORDER_WIDTH}px;
+      height: ${CONTAINER_WIDTH + BORDER_WIDTH}px;
       margin: 0;
       padding: 0;
       opacity: 0;
