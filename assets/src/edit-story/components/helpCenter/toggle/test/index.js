@@ -35,7 +35,11 @@ describe('help center toggle <Toggle />', () => {
     const { getByRole } = renderWithProviders(<Toggle />);
 
     const toggle = getByRole('button');
+<<<<<<< HEAD
     expect(toggle).toHaveAttribute('aria-haspopup');
+=======
+    expect(toggle.attr('aria-haspopup')).toBeTruthy();
+>>>>>>> bf308b20b (add unit tests)
   });
 
   it('should have propper aria attributes when open', () => {
