@@ -181,7 +181,7 @@ const darkTheme = {
   form: {
     dropDownSubtitle: brand.gray[20], // equivalent to fg.secondary
   },
-  shadows: {
+  shadow: {
     active: opacity.white16,
   },
 };
@@ -256,7 +256,7 @@ const lightTheme = {
   form: {
     dropDownSubtitle: brand.gray[50], // equivalent to fg.tertiary
   },
-  shadows: {
+  shadow: {
     active: opacity.black10,
   },
 };

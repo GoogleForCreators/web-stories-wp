@@ -41,17 +41,17 @@ const CheckboxContainer = styled.div(
     border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
 
     :focus-within {
-      border: ${BORDER_WIDTH}px solid ${theme.colors.border.focus};
+      border-color: ${theme.colors.border.focus};
     }
 
     :active {
-      border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
-      box-shadow: 0 0 0 8px ${theme.colors.shadows.active};
+      border-color: ${theme.colors.border.defaultNormal};
+      box-shadow: 0 0 0 8px ${theme.colors.shadow.active};
     }
 
     ${disabled &&
     css`
-      border: ${BORDER_WIDTH}px solid ${theme.colors.border.disable};
+      border-color: ${theme.colors.border.disable};
     `}
 
     /* Hide Checkbox */
