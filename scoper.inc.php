@@ -96,23 +96,18 @@ return [
 			)
 			->append( [ 'vendor/ampproject/amp-wp/composer.json' ] ),
 
-		// AMP Common + Optimizer.
+		// AMP PHP Toolbox (Common + Optimizer).
 		Finder::create()
 			->files()
 			->ignoreVCS( true )
 			->ignoreDotFiles( true )
 			->notName( '/LICENSE|.*\\.md|.*\\.svg|.*\\.xml|.*\\.dist|composer\\.json|composer\\.lock/' )
-			->exclude(
-				[
-					'bin',
-					'tests',
-				]
-			)
 			->in(
 				[
-					'vendor/ampproject/amp-wp/lib',
+					'vendor/ampproject/amp-toolbox/src',
 				]
-			),
+			)
+			->append( [ 'vendor/ampproject/amp-toolbox/composer.json' ] ),
 
 		// FasterImage (used by AMP_Img_Sanitizer).
 		Finder::create()
