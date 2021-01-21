@@ -176,7 +176,7 @@ export const MESSAGES = {
           </li>
           <li>
             {sprintf(
-              /* translators: %s: publisher logo dimension ratio. */
+              /* translators: %s: image dimensions. */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
             )}
