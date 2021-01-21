@@ -20,4 +20,4 @@ npm run test:karma --headless --slowMo=100
 ## Exposed functions
 
 The karma-puppeteer-launcher exposes a few Puppeteer APIs. They are documented
-in the [karma-puppeteer-client](packages/karma-puppeteer-clientclient/README.md) docs.
+in the [karma-puppeteer-client](packages/karma-puppeteer-client/README.md) docs.
