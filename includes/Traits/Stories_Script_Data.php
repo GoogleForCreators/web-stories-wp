@@ -26,14 +26,18 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Traits;
+
+use function Google\Web_Stories\fields_states;
+use function Google\Web_Stories\get_layouts;
+use function Google\Web_Stories\get_stories_order;
 
 /**
- * Class Stories_Script_Data.
+ * Trait Stories_Script_Data.
  *
  * @package Google\Web_Stories
  */
-class Stories_Script_Data {
+trait Stories_Script_Data {
 
 	/**
 	 * Script handle.
@@ -43,25 +47,18 @@ class Stories_Script_Data {
 	private $script_handle;
 
 	/**
-	 * Stories_Script_Data constructor.
-	 *
-	 * @param string $script_handle Script handle.
-	 */
-	public function __construct( $script_handle ) {
-		$this->script_handle = $script_handle;
-	}
-
-	/**
 	 * Add the data via wp_localize_script.
 	 *
 	 * @return void
 	 */
 	public function enqueue() {
-		wp_localize_script(
-			$this->script_handle,
-			'webStoriesData',
-			$this->data()
-		);
+		if ( $this->script_handle && wp_script_is( $this->script_handle ) ) {
+			wp_localize_script(
+				$this->script_handle,
+				'webStoriesData',
+				$this->data()
+			);
+		}
 	}
 
 	/**
