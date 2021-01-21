@@ -75,47 +75,6 @@ function fields_states() {
 }
 
 /**
- * Put some tinymce related data on the page.
- *
- * @return void
- */
-function web_stories_script_data() {
-	$order      = get_orderby();
-	$views      = get_layouts();
-	$order_list = [];
-	$view_types = [];
-
-	foreach ( $order as $order_key => $an_order ) {
-		$order_list[] = [
-			'label' => $an_order,
-			'value' => $order_key,
-		];
-	}
-
-	foreach ( $views as $view_key => $view_label ) {
-		$view_types[] = [
-			'label' => $view_label,
-			'value' => $view_key,
-		];
-	}
-
-	$field_states = fields_states();
-
-	$data = [
-		'orderlist' => $order_list,
-		'icon'      => trailingslashit( WEBSTORIES_ASSETS_URL ) . 'images/widget/carousel-icon.png',
-		'tag'       => 'stories',
-		'views'     => $view_types,
-		'fields'    => $field_states,
-	];
-
-	echo "<script type='text/javascript'>\n";
-	echo 'var webStoriesData = ' . wp_json_encode( $data ) . ';';
-	echo "\n</script>";
-}
-add_action( 'admin_print_scripts-widgets.php', __NAMESPACE__ . '\web_stories_script_data' );
-
-/**
  * Get supported layouts for web stories.
  *
  * @return mixed|void
