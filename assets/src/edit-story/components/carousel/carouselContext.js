@@ -15,32 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { memo } from 'react';
-
-/**
  * Internal dependencies
  */
-import Header from '../header';
-import Carousel from '../carousel';
-import { Layer, HeadArea, CarouselArea, Z_INDEX } from './layout';
+import { createContext } from '../../../design-system';
 
-function NavLayer() {
-  return (
-    <Layer
-      pointerEvents="none"
-      zIndex={Z_INDEX.NAV}
-      onMouseDown={(evt) => evt.stopPropagation()}
-    >
-      <HeadArea pointerEvents="initial">
-        <Header />
-      </HeadArea>
-      <CarouselArea pointerEvents="initial">
-        <Carousel />
-      </CarouselArea>
-    </Layer>
-  );
-}
+const CarouselContext = createContext({ state: {}, actions: {} });
 
-export default memo(NavLayer);
+export default CarouselContext;

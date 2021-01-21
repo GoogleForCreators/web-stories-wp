@@ -25,45 +25,45 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import useStory from '../../../app/story/useStory';
-import { TransformProvider } from '../../transform';
-import { UnitsProvider } from '../../../units';
-import DisplayElement from '../displayElement';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-
-export const THUMB_INDICATOR_HEIGHT = 6;
-export const THUMB_INDICATOR_GAP = 4;
-
-export const THUMB_FRAME_HEIGHT = THUMB_INDICATOR_HEIGHT + THUMB_INDICATOR_GAP;
-export const THUMB_FRAME_WIDTH = 0;
+import StoryPropTypes from '../../types';
+import { TransformProvider } from '../transform';
+import { UnitsProvider } from '../../units';
+import DisplayElement from '../canvas/displayElement';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 
 const Page = styled.button`
   display: block;
+  position: relative;
   cursor: ${({ isInteractive }) => (isInteractive ? 'pointer' : 'default')};
-  padding: ${THUMB_INDICATOR_GAP}px 0 0 0;
+  padding: 0;
   border: 0;
-  border-top: ${THUMB_INDICATOR_HEIGHT}px solid
-    ${({ isActive, theme }) =>
-      isActive ? theme.colors.selection : theme.colors.bg.workspace};
-  height: ${({ height }) => height}px;
   background-color: transparent;
+  height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
   flex: none;
-  transition: width 0.2s ease, height 0.2s ease;
   outline: 0;
 
-  &:focus {
-    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -4px;
+    right: -4px;
+    top: -4px;
+    bottom: -4px;
+    pointer-events: none;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: ${({ isActive, theme }) =>
+      isActive ? theme.colors.fg.primary : 'transparent'};
   }
 
-  ${({ isActive, isInteractive, theme }) =>
-    !isActive &&
+  ${({ isInteractive, isActive, theme }) =>
     isInteractive &&
     css`
-      &:hover,
-      &:focus {
-        border-top: ${THUMB_INDICATOR_HEIGHT}px solid
-          ${rgba(theme.colors.selection, 0.3)};
+      &:focus::after {
+        border-color: ${rgba(theme.colors.selection, isActive ? 1 : 0.7)};
       }
     `}
 `;
@@ -73,19 +73,13 @@ const PreviewWrapper = styled.div`
   position: relative;
   overflow: hidden;
   background-color: white;
-  border-radius: 4.5px;
+  border-radius: 4px;
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ index, gridRef, ...props }) {
-  const { pages } = useStory((state) => ({
-    pages: state.state.pages,
-  }));
-  const page = pages[index];
+function CarouselPagePreview({ page, ...props }) {
   const { backgroundColor } = page;
-  const { width: thumbWidth, height: thumbHeight } = props;
-  const width = thumbWidth - THUMB_FRAME_WIDTH;
-  const height = thumbHeight - THUMB_FRAME_HEIGHT;
+  const { width, height } = props;
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
@@ -107,18 +101,13 @@ function PagePreview({ index, gridRef, ...props }) {
   );
 }
 
-PagePreview.propTypes = {
-  index: PropTypes.number.isRequired,
+CarouselPagePreview.propTypes = {
+  page: StoryPropTypes.page.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,
   isActive: PropTypes.bool,
-  gridRef: PropTypes.any,
   tabIndex: PropTypes.number,
 };
 
-PagePreview.defaultProps = {
-  isInteractive: true,
-};
-
-export default PagePreview;
+export default CarouselPagePreview;
