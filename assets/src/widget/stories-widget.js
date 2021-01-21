@@ -105,7 +105,7 @@ domReady(() => {
  * @param {Object} event Event object.
  * @param {Object} widget Widget jQuery object.
  */
-const widgetChange = function (event, widget) {
+const widgetChange = (event, widget) => {
   if (!widget[0]) {
     return;
   }
