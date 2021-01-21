@@ -103,7 +103,7 @@ function get_layouts() {
  *
  * @return array
  */
-function get_orderby() {
+function get_stories_order() {
 	/**
 	 * Filter supported order by options.
 	 *
