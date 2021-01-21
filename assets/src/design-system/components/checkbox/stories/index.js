@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
 import styled from 'styled-components';
 import { action } from '@storybook/addon-actions';
 import { text } from '@storybook/addon-knobs';
@@ -38,7 +39,8 @@ const Container = styled.div`
   row-gap: 20px;
   max-width: 500px;
   padding: 20px 50px;
-  background-color: ${({ darkMode }) => (darkMode ? '#000' : '#FFF')};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  border: 1px solid ${({ theme }) => theme.colors.standard.black};
 `;
 
 const Row = styled.div`
@@ -46,108 +48,154 @@ const Row = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-column: 1 / -1;
 
-  > * {
+  > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column: 1 / -1;
+    vertical-align: middle;
+  }
+
+  label {
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 `;
 
-export const _default = () => (
-  <>
-    <Container>
-      <Row>
-        <div>
-          <label htmlFor="unchecked-1">
-            <Text>{text('Checkbox Label 1', 'Normal')}</Text>
-          </label>
-          <Checkbox
-            id="unchecked-1"
-            onChange={action('Checkbox 1: onChange')}
-          />
-        </div>
-        <div>
-          <label htmlFor="unchecked-disabled-1">
-            <Text>{text('Checkbox Label 2', 'Disabled')}</Text>
-          </label>
-          <Checkbox
-            id="unchecked-disabled-1"
-            onChange={action('Checkbox 2: onChange')}
-            disabled
-          />
-        </div>
-      </Row>
-      <Row>
-        <div>
-          <label htmlFor="unchecked-2">
-            <Text>{text('Checkbox Label 3', 'Checked')}</Text>
-          </label>
-          <Checkbox
-            id="unchecked-2"
-            onChange={action('Checkbox 3: onChange')}
-            checked
-          />
-        </div>
-        <div>
-          <label htmlFor="unchecked-disabled-2">
-            <Text>{text('Checkbox Label 4', 'Checked and Disabled')}</Text>
-          </label>
-          <Checkbox
-            id="unchecked-disabled-2"
-            onChange={action('Checkbox 4: onChange')}
-            checked
-            disabled
-          />
-        </div>
-      </Row>
-    </Container>
-    <DarkThemeProvider>
-      <Container darkMode>
+export const _default = () => {
+  const [formState, setFormState] = useState({
+    one: false,
+    two: true,
+    three: false,
+    four: true,
+    disabledOne: false,
+    disabledTwo: true,
+    disabledThree: false,
+    disabledFour: true,
+  });
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.checked;
+
+    action(event.target.name)(event);
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <>
+      <Container>
         <Row>
           <div>
-            <label htmlFor="unchecked-3">
-              <Text>{text('Checkbox Label 1', 'Normal')}</Text>
+            <label htmlFor="one">
+              <Text as="span">{text('Checkbox Label 1', 'Normal')}</Text>
             </label>
             <Checkbox
-              id="unchecked-3"
-              onChange={action('Checkbox 5: onChange')}
+              id="one"
+              name="one"
+              checked={formState.one}
+              onChange={handleChange}
             />
           </div>
           <div>
-            <label htmlFor="unchecked-disabled-3">
-              <Text>{text('Checkbox Label 2', 'Disabled')}</Text>
+            <label htmlFor="disabledOne">
+              <Text as="span">{text('Checkbox Label 2', 'Disabled')}</Text>
             </label>
             <Checkbox
-              id="unchecked-disabled-3"
-              onChange={action('Checkbox 6: onChange')}
+              id="disabledOne"
+              name="disabledOne"
+              checked={formState.disabledOne}
+              onChange={handleChange}
               disabled
             />
           </div>
         </Row>
         <Row>
           <div>
-            <label htmlFor="unchecked-4">
-              <Text>{text('Checkbox Label 3', 'Checked')}</Text>
+            <label htmlFor="two">
+              <Text as="span">{text('Checkbox Label 3', 'Checked')}</Text>
             </label>
             <Checkbox
-              id="unchecked-4"
-              onChange={action('Checkbox 7: onChange')}
-              checked
+              id="two"
+              name="two"
+              checked={formState.two}
+              onChange={handleChange}
             />
           </div>
           <div>
-            <label htmlFor="unchecked-disabled-4">
-              <Text>{text('Checkbox Label 4', 'Checked and Disabled')}</Text>
+            <label htmlFor="disabledTwo">
+              <Text as="span">
+                {text('Checkbox Label 4', 'Checked and Disabled')}
+              </Text>
             </label>
             <Checkbox
-              id="unchecked-disabled-4"
-              onChange={action('Checkbox 8: onChange')}
-              checked
+              id="disabledTwo"
+              name="disabledTwo"
+              checked={formState.disabledTwo}
+              onChange={handleChange}
               disabled
             />
           </div>
         </Row>
       </Container>
-    </DarkThemeProvider>
-  </>
-);
+      <DarkThemeProvider>
+        <Container darkMode>
+          <Row>
+            <div>
+              <label htmlFor="three">
+                <Text as="span">{text('Checkbox Label 1', 'Normal')}</Text>
+              </label>
+              <Checkbox
+                id="three"
+                name="three"
+                checked={formState.three}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="disabledThree">
+                <Text as="span">{text('Checkbox Label 2', 'Disabled')}</Text>
+              </label>
+              <Checkbox
+                id="disabledThree"
+                name="disabledThree"
+                checked={formState.disabledThree}
+                onChange={handleChange}
+                disabled
+              />
+            </div>
+          </Row>
+          <Row>
+            <div>
+              <label htmlFor="four">
+                <Text as="span">{text('Checkbox Label 3', 'Checked')}</Text>
+              </label>
+              <Checkbox
+                id="four"
+                name="four"
+                checked={formState.four}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="disabledFour">
+                <Text as="span">
+                  {text('Checkbox Label 4', 'Checked and Disabled')}
+                </Text>
+              </label>
+              <Checkbox
+                id="disabledFour"
+                name="disabledFour"
+                checked={formState.disabledFour}
+                onChange={handleChange}
+                disabled
+              />
+            </div>
+          </Row>
+        </Container>
+      </DarkThemeProvider>
+    </>
+  );
+};

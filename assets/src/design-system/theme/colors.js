@@ -157,7 +157,6 @@ const darkTheme = {
     positiveNormal: brand.green[40],
     positiveHover: brand.green[30],
     positivePress: brand.green[20],
-    activeShadow: opacity.white16,
   },
   border: {
     focus: brand.blue[30],
@@ -181,6 +180,9 @@ const darkTheme = {
   },
   form: {
     dropDownSubtitle: brand.gray[20], // equivalent to fg.secondary
+  },
+  shadows: {
+    active: opacity.white16,
   },
 };
 
@@ -230,7 +232,6 @@ const lightTheme = {
     positiveNormal: brand.green[20],
     positiveHover: brand.green[30],
     positivePress: brand.green[40],
-    activeShadow: opacity.black10,
   },
   border: {
     focus: brand.blue[40],
@@ -254,6 +255,9 @@ const lightTheme = {
   },
   form: {
     dropDownSubtitle: brand.gray[50], // equivalent to fg.tertiary
+  },
+  shadows: {
+    active: opacity.black10,
   },
 };
 

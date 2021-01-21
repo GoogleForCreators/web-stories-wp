@@ -27,11 +27,6 @@ import { Checkmark } from '../../icons';
 
 const CheckboxContainer = styled.div(
   ({ disabled, theme }) => css`
-    ${disabled &&
-    css`
-      opacity: 0.5;
-    `}
-
     position: relative;
     display: flex;
     justify-content: center;
@@ -40,18 +35,21 @@ const CheckboxContainer = styled.div(
     width: 24px;
     margin: 8px;
     border-radius: ${theme.borders.radius.small};
-    border: 1px solid ${theme.colors.border.defaultNormal};
+    border: 2px solid ${theme.colors.border.defaultNormal};
 
     :focus-within {
-      margin: 7px;
       border: 2px solid ${theme.colors.border.focus};
     }
 
     :active {
-      margin: 8px;
-      border: 1px solid ${theme.colors.border.defaultNormal};
-      box-shadow: 0 0 0 8px ${theme.colors.interactiveBg.activeShadow};
+      border: 2px solid ${theme.colors.border.defaultNormal};
+      box-shadow: 0 0 0 8px ${theme.colors.shadows.active};
     }
+
+    ${disabled &&
+    css`
+      border: 2px solid ${theme.colors.border.disable};
+    `}
 
     /* Hide Checkbox */
     input[type='checkbox'] {
@@ -66,21 +64,24 @@ const CheckboxContainer = styled.div(
 );
 
 const StyledCheckmark = styled(Checkmark)`
-  height: 12px;
+  height: auto;
   width: 16px;
-  color: ${({ theme }) => theme.colors.fg.primary};
+  color: ${({ disabled, theme }) =>
+    disabled ? theme.colors.fg.disable : theme.colors.fg.primary};
 `;
 
 const BaseCheckbox = ({ checked, disabled, ...props }, ref) => (
   <CheckboxContainer disabled={disabled}>
-    {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
+    {checked && (
+      <StyledCheckmark data-testid="checkbox-checkmark" disabled={disabled} />
+    )}
     <input type="checkbox" ref={ref} disabled={disabled} {...props} />
   </CheckboxContainer>
 );
+
+export const Checkbox = forwardRef(BaseCheckbox);
 
 BaseCheckbox.propTypes = {
   checked: propTypes.bool,
   disabled: propTypes.bool,
 };
-
-export const Checkbox = forwardRef(BaseCheckbox);
