@@ -16,14 +16,22 @@
 /**
  * External dependencies
  */
+<<<<<<< HEAD
 import { useState } from 'react';
 import { number } from '@storybook/addon-knobs';
+=======
+import { boolean, number } from '@storybook/addon-knobs';
+>>>>>>> 07ddfec5a (wip)
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
 import { Toggle as HelpCenterToggle } from '..';
+<<<<<<< HEAD
 import { theme as dsTheme, ThemeGlobals } from '../../../../../design-system';
+=======
+import { theme as dsTheme } from '../../../../../design-system';
+>>>>>>> 07ddfec5a (wip)
 
 export default {
   title: 'Stories Editor/Components/Help Center',
