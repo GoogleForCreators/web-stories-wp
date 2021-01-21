@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const { domReady } = wp;
+/**
+ * WordPress dependencies
+ */
+import domReady from '@wordpress/dom-ready';
 
 /**
  * Store field states in local variable.
