@@ -54,8 +54,8 @@ const CheckboxContainer = styled.div(
     /* Hide Checkbox */
     input[type='checkbox'] {
       position: absolute;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       margin: 0;
       padding: 0;
       opacity: 0;
