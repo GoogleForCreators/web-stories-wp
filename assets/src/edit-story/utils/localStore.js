@@ -32,7 +32,11 @@ function getItemByKey(key) {
 }
 
 function setItemByKey(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch {
+    // Do something
+  }
 }
 
 export default {
