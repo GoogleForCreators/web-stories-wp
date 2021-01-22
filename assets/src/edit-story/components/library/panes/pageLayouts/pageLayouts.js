@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Fragment, useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
@@ -32,6 +32,7 @@ import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { duplicatePage } from '../../../../elements';
 import { UnitsProvider } from '../../../../units';
 import isDefaultPage from '../../../../utils/isDefaultPage';
+import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { PANE_PADDING } from '../shared';
 import PageLayout from './pageLayout';
 
@@ -114,20 +115,9 @@ function PageLayouts(props) {
     [currentPage]
   );
 
-  const onTabKeyDown = useCallback(() => {
-    // When page layouts is already in focus and tab is hit again we want to move focus out of the panel
-    // This gets a little goofy because there's nothing else focusable left to go to in the page layouts tab
-    // and if we back up without moving to the next sibling we'll never let the keyboard user continue through the page.
-    if (parentRef.current) {
-      const canvas =
-        parentRef.current?.offsetParent?.offsetParent?.offsetParent?.nextSibling
-          ?.firstChild;
-      if (canvas) {
-        canvas.tabIndex = 0;
-        canvas.focus();
-      }
-    }
-  }, [parentRef]);
+  const focusCanvas = useFocusCanvas();
+
+  const onTabKeyDown = useCallback(() => focusCanvas(), [focusCanvas]);
 
   useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
 
@@ -144,32 +134,30 @@ function PageLayouts(props) {
           ref={containerRef}
           pageSize={pageSize}
         >
-          {rowVirtualizer.virtualItems.map((virtualRow) => (
-            <Fragment key={virtualRow.index}>
-              {columnVirtualizer.virtualItems.map((virtualColumn) => {
-                const pageIndex =
-                  virtualColumn.index === 0
-                    ? virtualRow.index * 2
-                    : virtualRow.index * 2 + 1;
-                const page = pages[pageIndex];
+          {rowVirtualizer.virtualItems.map((virtualRow) =>
+            columnVirtualizer.virtualItems.map((virtualColumn) => {
+              const pageIndex =
+                virtualColumn.index === 0
+                  ? virtualRow.index * 2
+                  : virtualRow.index * 2 + 1;
+              const page = pages[pageIndex];
 
-                if (!page) {
-                  return null;
-                }
-                return (
-                  <PageLayout
-                    translateY={virtualRow.start}
-                    translateX={virtualColumn.start}
-                    key={page.id}
-                    page={page}
-                    pageSize={pageSize}
-                    onConfirm={() => handleApplyPageLayout(page)}
-                    requiresConfirmation={requiresConfirmation}
-                  />
-                );
-              })}
-            </Fragment>
-          ))}
+              if (!page) {
+                return null;
+              }
+              return (
+                <PageLayout
+                  key={pageIndex}
+                  translateY={virtualRow.start}
+                  translateX={virtualColumn.start}
+                  page={page}
+                  pageSize={pageSize}
+                  onConfirm={() => handleApplyPageLayout(page)}
+                  requiresConfirmation={requiresConfirmation}
+                />
+              );
+            })
+          )}
         </PageLayoutsVirtualizedContainer>
       </PageLayoutsContainer>
     </UnitsProvider>
