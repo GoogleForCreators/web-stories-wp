@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "356cdf7709a3cd054f738da9b218d8f9",
+    "content-hash": "e9d21a99268b62a8f97dcbd43249b293",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -379,6 +379,7 @@
                     "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
