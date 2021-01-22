@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
@@ -28,6 +28,7 @@ export default function useTypeahead({
   selectedValue,
   options,
 }) {
+  const activeOptionRef = useRef();
   /**
    *Control when associated menu of typeahead should be visible.
    */
@@ -113,12 +114,19 @@ export default function useTypeahead({
   ]);
 
   /**
-   * When selectedValue updates we want to update input value too.
+   * When selectedValue updates we want to update input value too but only if it's different from the previously set inputValue.
+   * This prevents reseting the input preemptively on clearing the input
    */
   useEffect(() => {
-    if (activeOption?.label) {
+    if (
+      activeOption?.label &&
+      activeOption.label !== activeOptionRef?.current
+    ) {
+      activeOptionRef.current = activeOption.label;
       setInputValue(activeOption.label);
     }
+
+    return () => (activeOptionRef.current = undefined);
   }, [activeOption]);
 
   return { activeOption, normalizedOptions, inputValue, isMenuFocused, isOpen };
