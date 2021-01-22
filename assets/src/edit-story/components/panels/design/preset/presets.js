@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { PanelContent } from '../../panel';
 import PresetGroup from './presetGroup';
 
 function Presets({
@@ -34,20 +33,16 @@ function Presets({
   handleAddPreset,
 }) {
   const hasPresets = presets.length > 0;
-  return (
-    <PanelContent isPrimary padding={hasPresets ? null : '0'}>
-      {hasPresets && (
-        <PresetGroup
-          itemRenderer={itemRenderer}
-          presets={presets}
-          type={type}
-          isEditMode={isEditMode}
-          handleClick={handleOnClick}
-          handleAddPreset={handleAddPreset}
-        />
-      )}
-    </PanelContent>
-  );
+  return hasPresets ? (
+    <PresetGroup
+      itemRenderer={itemRenderer}
+      presets={presets}
+      type={type}
+      isEditMode={isEditMode}
+      handleClick={handleOnClick}
+      handleAddPreset={handleAddPreset}
+    />
+  ) : null;
 }
 
 Presets.propTypes = {

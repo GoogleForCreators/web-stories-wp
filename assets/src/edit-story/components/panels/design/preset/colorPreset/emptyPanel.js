@@ -68,12 +68,14 @@ function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
       </Note>
       <ActionWrapper>
         <ColorAdd
+          aria-label={__('Add local color', 'web-stories')}
           handleAddPreset={handleAddLocalPreset}
           helper={__('Current story', 'web-stories')}
         />
       </ActionWrapper>
       <ActionWrapper>
         <ColorAdd
+          aria-label={__('Add global color', 'web-stories')}
           handleAddPreset={handleAddPreset}
           helper={__('Global story', 'web-stories')}
         />

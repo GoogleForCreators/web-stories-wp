@@ -24,14 +24,14 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
-import { Panel } from '../../panel';
+import {Panel, PanelContent} from '../../panel';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
 import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
-import EmptyPanel from './colorPreset/emptyPanel';
+import ColorPresetPanel from './colorPreset/colorPresetPanel';
 
 function PresetPanel({
   presetType = 'color',
@@ -78,7 +78,6 @@ function PresetPanel({
 
   const handleApplyPreset = useApplyPreset(isColor, pushUpdate);
   const handleAddPreset = useAddPreset(presetType);
-  const handleAddLocalPreset = useAddPreset(presetType, true);
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
@@ -164,32 +163,25 @@ function PresetPanel({
         title={title}
         presetType={presetType}
       />
-      <Presets
-        isEditMode={isEditMode}
-        presets={globalPresets}
-        handleOnClick={handlePresetClick}
-        handleAddPreset={handleAddPreset}
-        itemRenderer={itemRenderer}
-        type={presetType}
-      />
-      {isColor && (
-        <>
+      <PanelContent isPrimary padding={hasPresets ? null : '0'}>
+        {isColor && (
+          <ColorPresetPanel
+            itemRenderer={itemRenderer}
+            isEditMode={isEditMode}
+            handlePresetClick={handlePresetClick}
+          />
+        )}
+        {isStyle && (
           <Presets
             isEditMode={isEditMode}
-            presets={localColorPresets?.colors || []}
-            handleOnClick={(preset) => handlePresetClick(preset, true)}
-            handleAddPreset={handleAddLocalPreset}
+            presets={globalPresets}
+            handleOnClick={handlePresetClick}
+            handleAddPreset={handleAddPreset}
             itemRenderer={itemRenderer}
             type={presetType}
           />
-          {!hasPresets && (
-            <EmptyPanel
-              handleAddPreset={handleAddPreset}
-              handleAddLocalPreset={handleAddLocalPreset}
-            />
-          )}
-        </>
-      )}
+        )}
+      </PanelContent>
       {resizeable && <Resize position="bottom" />}
     </Panel>
   );

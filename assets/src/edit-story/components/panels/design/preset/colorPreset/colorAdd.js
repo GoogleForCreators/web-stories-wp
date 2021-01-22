@@ -52,12 +52,13 @@ const Note = styled.div`
   margin-bottom: 10px;
 `;
 
-function ColorAdd({ handleAddPreset, helper }) {
+function ColorAdd({ handleAddPreset, helper, ...rest }) {
   return (
     <>
       <AddColorAction
         onClick={handleAddPreset}
         aria-label={__('Add color preset', 'web-stories')}
+        {...rest}
       >
         <AddColor />
       </AddColorAction>
