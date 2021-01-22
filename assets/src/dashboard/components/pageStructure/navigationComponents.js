@@ -46,8 +46,12 @@ export const NewStoryButton = styled(Button)(
   ({ theme }) => css`
     margin-bottom: 0;
     margin-top: 0;
-    border: 1px solid ${theme.colors.border.defaultActive};
+    border: 2px solid ${theme.colors.border.defaultActive};
     border-radius: ${theme.borders.radius.medium};
+
+    :focus {
+      box-shadow: none;
+    }
 
     :hover {
       color: ${theme.colors.bg.primary};
@@ -70,12 +74,8 @@ export const NavListItem = styled.li`
   list-style-type: none;
 `;
 
-export const NavButton = styled(Button)`
-  border-radius: 0;
-`;
-
 const activeLinkCss = css`
-  * {
+  span {
     color: ${({ theme }) => theme.colors.interactiveFg.brandPress};
   }
 
@@ -85,17 +85,20 @@ const activeLinkCss = css`
 `;
 
 export const NavLink = styled(Text)(
-  ({ active, theme }) => css`
+  ({ active }) => css`
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-areas: 'icon link link link link';
 
     * {
-      font-weight: ${theme.typography.weight.bold};
       transition: color 0.25s linear, stroke 0.25s linear;
     }
 
     ${active && activeLinkCss};
+
+    :focus {
+      box-shadow: none;
+    }
 
     :hover {
       ${activeLinkCss};

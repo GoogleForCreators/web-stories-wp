@@ -39,9 +39,9 @@ import {
   BUTTON_TYPES,
   Text,
   THEME_CONSTANTS,
-  WebStoriesLogo,
 } from '../../../design-system';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import { WebStoriesLogo } from '../../images';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -203,6 +203,7 @@ export function LeftRail() {
                   <PathName
                     as="span"
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    isBold
                   >
                     {path.label}
                   </PathName>
@@ -238,6 +239,7 @@ export function LeftRail() {
                 <Text
                   as="span"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  isBold
                 >
                   {path.label}
                 </Text>
