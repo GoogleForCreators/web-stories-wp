@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6203aad77eedfa6ff8303e4e6d33d8cf",
+    "content-hash": "356cdf7709a3cd054f738da9b218d8f9",
     "packages": [
         {
             "name": "ampproject/amp-wp",

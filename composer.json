@@ -16,8 +16,8 @@
     "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.14.0",
     "mcaskill/composer-exclude-files": "^2.0",
-    "symfony/polyfill-mbstring": "^1.18",
-    "sabberworm/php-css-parser": "dev-master#bfdd976"
+    "sabberworm/php-css-parser": "dev-master#bfdd976",
+    "symfony/polyfill-mbstring": "^1.18"
   },
   "provide": {
     "ampproject/common": "dev-develop",
