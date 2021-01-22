@@ -26,8 +26,10 @@ export {
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
 export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnalyticsIdFormat';
+
 export { default as validateAdSensePublisherIdFormat } from './validateAdSensePublisherIdFormat';
 export { default as validateAdSenseSlotIdFormat } from './validateAdSenseSlotIdFormat';
 export { default as validateAdManagerSlotIdFormat } from './validateAdManagerSlotIdFormat';
+
 // TODO use these shared utils to structure image resources mirroring editor
 export { default as getResourceFromLocalFile } from '../../edit-story/app/media/utils/getResourceFromLocalFile';
