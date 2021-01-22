@@ -135,6 +135,7 @@ const darkTheme = {
     active: brand.gray[5],
     brandNormal: brand.gray[90],
     brandHover: brand.gray[90],
+    brandPress: brand.violet[40],
   },
   interactiveBg: {
     active: brand.violet[70],
@@ -207,6 +208,7 @@ const lightTheme = {
     active: brand.gray[90],
     brandNormal: brand.gray[90],
     brandHover: brand.gray[90],
+    brandPress: brand.violet[40],
   },
   interactiveBg: {
     active: brand.violet[10],

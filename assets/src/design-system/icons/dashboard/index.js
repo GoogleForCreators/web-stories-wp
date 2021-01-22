@@ -18,11 +18,6 @@
  * Internal dependencies
  */
 
-export {
-  CompassActive,
-  FloppyDiskActive,
-  HomeWithHeartActive,
-} from './activeIcons';
 export { ReactComponent as Compass } from './compass.svg';
 export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
 export { ReactComponent as HomeWithHeart } from './home_with_heart.svg';
