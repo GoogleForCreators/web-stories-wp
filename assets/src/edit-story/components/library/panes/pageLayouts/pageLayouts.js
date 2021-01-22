@@ -60,9 +60,7 @@ const PageLayoutsVirtualizedContainer = styled.div`
   height: 100%;
 `;
 
-function PageLayouts(props) {
-  const { pages, parentRef } = props;
-
+function PageLayouts({ pages, parentRef }) {
   const { replaceCurrentPage, currentPage } = useStory(
     ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
       replaceCurrentPage,

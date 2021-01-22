@@ -86,16 +86,14 @@ PageLayoutTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-function PageLayout(props) {
-  const {
-    page,
-    pageSize,
-    onConfirm,
-    requiresConfirmation,
-    translateY,
-    translateX,
-  } = props;
-
+function PageLayout({
+  page,
+  pageSize,
+  onConfirm,
+  requiresConfirmation,
+  translateY,
+  translateX,
+}) {
   const ref = useRef();
   const [isActive, setIsActive] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
