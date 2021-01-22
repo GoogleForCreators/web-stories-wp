@@ -35,7 +35,7 @@ describe('help center toggle <Toggle />', () => {
     const { getByRole } = renderWithProviders(<Toggle />);
 
     const toggle = getByRole('button');
-    expect(toggle.attr('aria-haspopup')).toBeTruthy();
+    expect(toggle).toHaveAttribute('aria-haspopup');
   });
 
   it('should have propper aria attributes when open', () => {
@@ -45,9 +45,9 @@ describe('help center toggle <Toggle />', () => {
     );
 
     const toggle = getByRole('button');
-    expect(toggle.attr('aria-expanded')).toBeTruthy();
-    expect(toggle.attr('aria-pressed')).toBeTruthy();
-    expect(toggle.attr('aria-owns')).toBe(popupId);
+    expect(toggle).toHaveAttribute('aria-expanded');
+    expect(toggle).toHaveAttribute('aria-pressed');
+    expect(toggle).toHaveAttribute('aria-owns', popupId);
   });
 
   it('should fire onClick event when clicked', () => {
