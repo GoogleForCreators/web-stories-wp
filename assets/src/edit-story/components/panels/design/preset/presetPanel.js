@@ -79,10 +79,12 @@ function PresetPanel({
   );
 
   const { colors, textStyles } = stylePresets;
-  const presets = isColor ? colors : textStyles;
+  const globalPresets = isColor ? colors : textStyles;
   const { colors: localColors } = localColorPresets;
-  const hasPresets = presets.length > 0;
   const hasLocalPresets = localColors.length > 0;
+  const hasPresets = isColor
+    ? globalPresets.length > 0 || hasLocalPresets
+    : globalPresets.length > 0;
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -123,11 +125,11 @@ function PresetPanel({
         },
       });
       // If no colors are left, exit edit mode.
-      if (updatedColors.length === 0 && !hasPresets) {
+      if (updatedColors.length === 0 && !globalPresets.length > 0) {
         setIsEditMode(false);
       }
     },
-    [hasPresets, localColors, updateStory]
+    [globalPresets.length, localColors, updateStory]
   );
 
   useEffect(() => {
@@ -164,13 +166,13 @@ function PresetPanel({
   return (
     <Panel
       name={`stylepreset-${presetType}`}
-      initialHeight={getPanelInitialHeight(isColor, presets)}
+      initialHeight={getPanelInitialHeight(isColor, globalPresets)}
       resizeable={resizeable}
       canCollapse={canCollapse}
     >
       <PresetsHeader
         handleAddPreset={handleAddPreset}
-        presets={presets}
+        hasPresets={hasPresets}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
         canCollapse={canCollapse}
@@ -179,7 +181,7 @@ function PresetPanel({
       />
       <Presets
         isEditMode={isEditMode}
-        presets={presets}
+        presets={globalPresets}
         handleOnClick={handlePresetClick}
         handleAddPreset={handleAddPreset}
         itemRenderer={itemRenderer}
@@ -195,7 +197,7 @@ function PresetPanel({
             itemRenderer={itemRenderer}
             type={presetType}
           />
-          {!hasPresets && !hasLocalPresets && (
+          {!hasPresets && (
             <ButtonWrapper>
               <ColorAdd
                 handleAddPreset={handleAddPreset}

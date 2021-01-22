@@ -29,17 +29,24 @@ import {
 } from './utils';
 
 function useAddPreset(presetType, isLocal = false) {
-  const { currentPage, selectedElements, stylePresets, updateStory } = useStory(
+  const {
+    currentPage,
+    localColorPresets,
+    selectedElements,
+    stylePresets,
+    updateStory,
+  } = useStory(
     ({
       state: {
         currentPage,
         selectedElements,
-        story: { stylePresets },
+        story: { stylePresets, localColorPresets },
       },
       actions: { updateStory },
     }) => {
       return {
         currentPage,
+        localColorPresets,
         selectedElements,
         stylePresets,
         updateStory,
@@ -47,6 +54,7 @@ function useAddPreset(presetType, isLocal = false) {
     }
   );
   const { colors, textStyles } = stylePresets;
+  const { colors: localColors } = localColorPresets;
 
   const isText = areAllType('text', selectedElements);
   const isBackground = selectedElements[0].id === currentPage.elements[0].id;
@@ -61,20 +69,21 @@ function useAddPreset(presetType, isLocal = false) {
             textStyles: [],
             colors: [],
           };
+      const currentPresets = isLocal ? localColorPresets : stylePresets;
       if (isText) {
         addedPresets = {
           ...addedPresets,
-          ...getTextPresets(selectedElements, stylePresets, presetType),
+          ...getTextPresets(selectedElements, currentPresets, presetType),
         };
       } else if (isBackground) {
         addedPresets = {
           ...addedPresets,
-          ...getPagePreset(currentPage, stylePresets),
+          ...getPagePreset(currentPage, currentPresets),
         };
       } else {
         addedPresets = {
           ...addedPresets,
-          ...getShapePresets(selectedElements, stylePresets),
+          ...getShapePresets(selectedElements, currentPresets),
         };
       }
       if (
@@ -85,7 +94,7 @@ function useAddPreset(presetType, isLocal = false) {
           updateStory({
             properties: {
               localColorPresets: {
-                colors: [...colors, ...addedPresets.colors],
+                colors: [...localColors, ...addedPresets.colors],
               },
             },
           });
@@ -102,16 +111,18 @@ function useAddPreset(presetType, isLocal = false) {
       }
     },
     [
+      colors,
       currentPage,
       isBackground,
       isLocal,
-      colors,
       isText,
+      localColors,
+      localColorPresets,
       presetType,
-      textStyles,
       selectedElements,
-      updateStory,
       stylePresets,
+      textStyles,
+      updateStory,
     ]
   );
   return handleAddPreset;
