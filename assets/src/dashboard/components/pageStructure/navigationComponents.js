@@ -48,6 +48,8 @@ export const NewStoryButton = styled(Button)(
     margin-top: 0;
     border: 2px solid ${theme.colors.border.defaultActive};
     border-radius: ${theme.borders.radius.medium};
+    transition: border-color 0.25s linear, background-color 0.25s linear,
+      color 0.25s linear;
 
     :focus {
       box-shadow: none;
@@ -57,8 +59,6 @@ export const NewStoryButton = styled(Button)(
       color: ${theme.colors.bg.primary};
       background-color: ${theme.colors.interactiveBg.brandPress};
       border-color: ${theme.colors.interactiveFg.brandPress};
-      transition: border-color 0.25s linear, background-color 0.25s linear,
-        color 0.25s linear;
     }
   `
 );
