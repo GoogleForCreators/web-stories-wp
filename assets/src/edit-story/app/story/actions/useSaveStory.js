@@ -70,7 +70,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         story.status
       );
 
-
       const trackTiming = getTimeTracker('save story', 'editor', 'Publish');
 
       return saveStoryById({

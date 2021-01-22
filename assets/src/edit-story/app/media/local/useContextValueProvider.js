@@ -98,9 +98,9 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           });
         })
         .catch(fetchMediaError)
-        .finally( () => {
+        .finally(() => {
           trackTiming();
-        })
+        });
     },
     [fetchMediaError, fetchMediaStart, getMedia]
   );
