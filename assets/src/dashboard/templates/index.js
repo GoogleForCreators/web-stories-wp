@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -38,15 +38,19 @@ export default async function ({ cdnURL }) {
   return [
     {
       id: 1,
-      title: 'Beauty',
+      title: _x('Beauty', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Health', 'Bold', 'Joy'],
+      tags: [
+        _x('Health', 'template keyword', 'web-stories'),
+        _x('Bold', 'template keyword', 'web-stories'),
+        _x('Joy', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Pink', color: '#f3d9e1' },
-        { label: 'Green', color: '#d8ddcc' },
-        { label: 'Black', color: '#28292b' },
-        { label: 'White', color: '#fff' },
-        { label: 'Brown', color: '#eadfd6' },
+        { label: _x('Pink', 'color', 'web-stories'), color: '#f3d9e1' },
+        { label: _x('Green', 'color', 'web-stories'), color: '#d8ddcc' },
+        { label: _x('Black', 'color', 'web-stories'), color: '#28292b' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+        { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
       ],
       description: __(
         'The modern and bright Beauty template lends itself well as a foundation for stories covering make up, beauty products, shopping guides, instructions & tutorials and more.',
@@ -57,15 +61,19 @@ export default async function ({ cdnURL }) {
     },
     {
       id: 2,
-      title: 'Cooking',
+      title: _x('Cooking', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Delicious', 'Baker', 'Cook'],
+      tags: [
+        _x('Delicious', 'template keyword', 'web-stories'),
+        _x('Baker', 'template keyword', 'web-stories'),
+        _x('Cook', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Cream', color: '#fff933' },
-        { label: 'Orange', color: '#ff922e' },
-        { label: 'Grey', color: '#676461' },
-        { label: 'Black', color: '#2a2928' },
-        { label: 'White', color: '#fff' },
+        { label: _x('Cream', 'color', 'web-stories'), color: '#fff933' },
+        { label: _x('Orange', 'color', 'web-stories'), color: '#ff922e' },
+        { label: _x('Grey', 'color', 'web-stories'), color: '#676461' },
+        { label: _x('Black', 'color', 'web-stories'), color: '#2a2928' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
       ],
       description: __(
         'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',
@@ -76,16 +84,20 @@ export default async function ({ cdnURL }) {
     },
     {
       id: 3,
-      title: 'DIY',
+      title: _x('DIY', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Doers', 'Expand', 'Start'],
+      tags: [
+        _x('Doers', 'template keyword', 'web-stories'),
+        _x('Expand', 'template keyword', 'web-stories'),
+        _x('Start', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Black', color: '#211f1e' },
-        { label: 'Grey', color: '#353332' },
-        { label: 'Orange', color: '#ff7324' },
-        { label: 'Cream', color: '#faf4ea' },
-        { label: 'Light Grey', color: '#858280' },
-        { label: 'White', color: '#fff' },
+        { label: _x('Black', 'color', 'web-stories'), color: '#211f1e' },
+        { label: _x('Grey', 'color', 'web-stories'), color: '#353332' },
+        { label: _x('Orange', 'color', 'web-stories'), color: '#ff7324' },
+        { label: _x('Cream', 'color', 'web-stories'), color: '#faf4ea' },
+        { label: _x('Light Grey', 'color', 'web-stories'), color: '#858280' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
       ],
       description: __(
         'Motivate your audience to get out there and make something with the bold DIY template. Use it for DIY, crafting, 3D printing, woodworking or any other content targeting makers.',
@@ -96,14 +108,18 @@ export default async function ({ cdnURL }) {
     },
     {
       id: 4,
-      title: 'Entertainment',
+      title: _x('Entertainment', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Funny', 'Action', 'Hip'],
+      tags: [
+        _x('Funny', 'template keyword', 'web-stories'),
+        _x('Action', 'template keyword', 'web-stories'),
+        _x('Hip', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Black', color: '#000' },
-        { label: 'White', color: '#fff' },
-        { label: 'Pink', color: '#ff00d6' },
-        { label: 'Grey', color: '#525252' },
+        { label: _x('Black', 'color', 'web-stories'), color: '#000' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+        { label: _x('Pink', 'color', 'web-stories'), color: '#ff00d6' },
+        { label: _x('Grey', 'color', 'web-stories'), color: '#525252' },
       ],
       description: __(
         'Cover the world of entertainment with this template that comes with an edgy, interesting look. Works well as foundation for celebrity, movie, TV and music coverage, insights and inspiration.',
@@ -114,15 +130,18 @@ export default async function ({ cdnURL }) {
     },
     {
       id: 5,
-      title: 'Fashion',
+      title: _x('Fashion', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Clothing', 'Sparkle'],
+      tags: [
+        _x('Clothing', 'template keyword', 'web-stories'),
+        _x('Sparkle', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Cream', color: '#ffece3' },
-        { label: 'Orange', color: '#ff6c4a' },
-        { label: 'Black', color: '#212121' },
-        { label: 'Grey', color: '#858280' },
-        { label: 'White', color: '#fff' },
+        { label: _x('Cream', 'color', 'web-stories'), color: '#ffece3' },
+        { label: _x('Orange', 'color', 'web-stories'), color: '#ff6c4a' },
+        { label: _x('Black', 'color', 'web-stories'), color: '#212121' },
+        { label: _x('Grey', 'color', 'web-stories'), color: '#858280' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
       ],
       description: __(
         'The elegant serif Fashion template works well for New York Fashion Week highlights, high fashion shopping guides and accessory trends.',
@@ -133,13 +152,19 @@ export default async function ({ cdnURL }) {
     },
     {
       id: 6,
-      title: 'Fitness',
+      title: _x('Fitness', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Exercise', 'Fitness', 'Health', 'Workout', 'Bold'],
+      tags: [
+        _x('Exercise', 'template keyword', 'web-stories'),
+        _x('Fitness', 'template keyword', 'web-stories'),
+        _x('Health', 'template keyword', 'web-stories'),
+        _x('Workout', 'template keyword', 'web-stories'),
+        _x('Bold', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Black', color: '#1a1a1a' },
-        { label: 'Red', color: '#cf1323' },
-        { label: 'White', color: '#fff' },
+        { label: _x('Black', 'color', 'web-stories'), color: '#1a1a1a' },
+        { label: _x('Red', 'color', 'web-stories'), color: '#cf1323' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
       ],
       description: __(
         'This modern, bold theme lends itself well for workout routines, fitness gear shopping lists, but also tech, internet and gadget news, reviews, recommendations and coverage, due to its timeless, simple look.',
@@ -150,14 +175,18 @@ export default async function ({ cdnURL }) {
     },
     {
       id: 7,
-      title: 'Travel',
+      title: _x('Travel', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Explore', 'Adventure', 'Taste'],
+      tags: [
+        _x('Explore', 'template keyword', 'web-stories'),
+        _x('Adventure', 'template keyword', 'web-stories'),
+        _x('Taste', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Green', color: '#094228' },
-        { label: 'White', color: '#fff' },
-        { label: 'Yellow', color: '#fec85a' },
-        { label: 'Blue', color: '#0648ad' },
+        { label: _x('Green', 'color', 'web-stories'), color: '#094228' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+        { label: _x('Yellow', 'color', 'web-stories'), color: '#fec85a' },
+        { label: _x('Blue', 'color', 'web-stories'), color: '#0648ad' },
       ],
       description: __(
         'Designed to instil a sense of wanderlust & wonder, the Travel template can be a great foundation for travel inspiration, travel itineraries, restaurant hopping guides, Best-of attraction listicles and other types of travel content.',
@@ -168,16 +197,21 @@ export default async function ({ cdnURL }) {
     },
     {
       id: 8,
-      title: 'Wellbeing',
+      title: _x('Wellbeing', 'template name', 'web-stories'),
       ...globalConfig,
-      tags: ['Health', 'Happiness', 'Joy', 'Mindfulness'],
+      tags: [
+        _x('Health', 'template keyword', 'web-stories'),
+        _x('Happiness', 'template keyword', 'web-stories'),
+        _x('Joy', 'template keyword', 'web-stories'),
+        _x('Mindfulness', 'template keyword', 'web-stories'),
+      ],
       colors: [
-        { label: 'Blue', color: '#1f2a2e' },
-        { label: 'Green', color: '#4b5c54' },
-        { label: 'Yellow', color: '#fbebba' },
-        { label: 'Grey', color: '#858280' },
-        { label: 'Light Grey', color: '#d8d8d8' },
-        { label: 'White', color: '#fff' },
+        { label: _x('Blue', 'color', 'web-stories'), color: '#1f2a2e' },
+        { label: _x('Green', 'color', 'web-stories'), color: '#4b5c54' },
+        { label: _x('Yellow', 'color', 'web-stories'), color: '#fbebba' },
+        { label: _x('Grey', 'color', 'web-stories'), color: '#858280' },
+        { label: _x('Light Grey', 'color', 'web-stories'), color: '#d8d8d8' },
+        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
       ],
       description: __(
         'With a warm color palette and soothing shapes, the Wellbeing template works best for web stories covering mindfulness, lifestyle health and related exercise and activities like Yoga, Spa treatments and the like.',

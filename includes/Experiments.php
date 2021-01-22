@@ -372,6 +372,7 @@ class Experiments {
 				'label'       => __( 'Page layouts tab', 'web-stories' ),
 				'description' => __( 'Enable page layouts tab', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}

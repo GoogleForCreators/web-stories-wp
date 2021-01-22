@@ -321,10 +321,9 @@ function GridView() {
                     }
                     tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     isActive={isCurrentPage && isInteractive}
-                    index={index}
+                    page={page}
                     width={width}
                     height={height}
-                    dragIndicatorOffset={GRID_GAP / 2}
                     onClick={handleClickPage(page)}
                     isInteractive={isInteractive}
                     gridRef={gridRef}
