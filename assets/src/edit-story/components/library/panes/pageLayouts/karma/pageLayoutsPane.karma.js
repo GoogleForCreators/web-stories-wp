@@ -26,6 +26,20 @@ import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
 import { formattedTemplatesArray } from '../../../../../../dashboard/storybookUtils';
 import objectWithout from '../../../../../utils/objectWithout';
+import useInsertElement from '../../../../../components/canvas/useInsertElement';
+
+const expectPageLayoutEqual = (currentPage, template) => {
+  expect(currentPage.id).not.toEqual(template.id);
+  expect(currentPage.elements.length).toEqual(template.elements.length);
+  template.elements.forEach((element, index) => {
+    expect(objectWithout(currentPage.elements[index], ['id'])).toEqual(
+      objectWithout(element, ['id'])
+    );
+  });
+  expect(currentPage.animations.length).toEqual(
+    (template.animations || []).length
+  );
+};
 
 describe('CUJ: Creator can Apply a Page Layout', () => {
   let fixture;
@@ -66,19 +80,95 @@ describe('CUJ: Creator can Apply a Page Layout', () => {
     const coverPage = cookingTemplate.pages.find(
       (p) => p.pageLayoutType === 'cover'
     );
-    expect(currentPage.id).not.toEqual(coverPage.id);
-    expect(currentPage.elements.length).toEqual(coverPage.elements.length);
-    coverPage.elements.forEach((element, index) => {
-      expect(objectWithout(currentPage.elements[index], ['id'])).toEqual(
-        objectWithout(element, ['id'])
-      );
-    });
-    expect(currentPage.animations.length).toEqual(0);
+    expectPageLayoutEqual(currentPage, coverPage);
 
     await fixture.snapshot('applied page layout');
   });
 
-  it('should confirm and apply layout to a page with changes');
+  it('should confirm and apply layout to a page with changes', async () => {
+    // Insert element to make the page have changes
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    await fixture.act(() =>
+      insertElement('text', {
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 50,
+        content: 'Hello, Stories!',
+      })
+    );
 
-  it('should confirm and cancel applying to a page with changes');
+    await fixture.editor.library.pageLayoutsTab.click();
+
+    await waitFor(() =>
+      expect(
+        fixture.editor.library.pageLayoutsPane.pageLayouts.length
+      ).toBeTruthy()
+    );
+    await fixture.events.click(
+      fixture.editor.library.pageLayoutsPane.pageLayout('Cooking Cover')
+    );
+
+    // confirm changes
+    await waitFor(() => {
+      expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+    });
+    await fixture.events.click(
+      fixture.screen.getByRole('button', { name: 'Apply Page Layout' })
+    );
+
+    // check that all elements have been applied
+    const currentPage = await fixture.renderHook(() =>
+      useStory(({ state }) => state.currentPage)
+    );
+    const cookingTemplate = formattedTemplatesArray.find(
+      (t) => t.title === 'Cooking'
+    );
+    const coverPage = cookingTemplate.pages.find(
+      (p) => p.pageLayoutType === 'cover'
+    );
+    expectPageLayoutEqual(currentPage, coverPage);
+
+    await fixture.snapshot('applied page layout');
+  });
+
+  it('should confirm and cancel applying to a page with changes', async () => {
+    // Insert element to make the page have changes
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    const element = await fixture.act(() =>
+      insertElement('text', {
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 50,
+        content: 'Hello, Stories!',
+      })
+    );
+
+    await fixture.editor.library.pageLayoutsTab.click();
+
+    await waitFor(() =>
+      expect(
+        fixture.editor.library.pageLayoutsPane.pageLayouts.length
+      ).toBeTruthy()
+    );
+    await fixture.events.click(
+      fixture.editor.library.pageLayoutsPane.pageLayout('Cooking Cover')
+    );
+
+    // confirm changes
+    await waitFor(() => {
+      expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+    });
+    await fixture.events.click(
+      fixture.screen.getByRole('button', { name: 'Cancel' })
+    );
+
+    // check that all elements have been applied
+    const currentPage = await fixture.renderHook(() =>
+      useStory(({ state }) => state.currentPage)
+    );
+    expect(currentPage.elements.length).toEqual(2);
+    expect(currentPage.elements[1]).toEqual(element);
+  });
 });
