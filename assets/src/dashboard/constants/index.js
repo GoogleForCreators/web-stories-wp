@@ -23,11 +23,8 @@ import { __ } from '@wordpress/i18n';
  */
 import {
   Compass,
-  CompassActive,
   FloppyDisk,
-  FloppyDiskActive,
   HomeWithHeart,
-  HomeWithHeartActive,
 } from '../../design-system/icons/dashboard';
 import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
@@ -82,20 +79,17 @@ export const PRIMARY_PATHS = [
     value: APP_ROUTES.MY_STORIES,
     label: ROUTE_TITLES[APP_ROUTES.MY_STORIES],
     Icon: HomeWithHeart,
-    IconActive: HomeWithHeartActive,
   },
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
     inProgress: true,
     Icon: FloppyDisk,
-    IconActive: FloppyDiskActive,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
     Icon: Compass,
-    IconActive: CompassActive,
   },
 ];
 

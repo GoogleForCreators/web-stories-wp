@@ -37,7 +37,6 @@ import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Button,
   Text,
   THEME_CONSTANTS,
   WebStoriesLogo,
@@ -49,10 +48,10 @@ import {
   AppInfo,
   Content,
   Header,
-  NavButton,
-  NavLinkContent,
+  NavLink,
   NavList,
   NavListItem,
+  NewStoryButton,
   PathName,
 } from './navigationComponents';
 
@@ -168,51 +167,48 @@ export function LeftRail() {
           <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
         </Header>
         <Content>
-          <Button
-            type={BUTTON_TYPES.SECONDARY}
+          <NewStoryButton
+            type={BUTTON_TYPES.PLAIN}
             size={BUTTON_SIZES.SMALL}
             href={newStoryURL}
             onClick={onCreateNewStoryClick}
           >
             {__('Create New Story', 'web-stories')}
-          </Button>
+          </NewStoryButton>
         </Content>
         <Content>
           <NavList>
-            {enabledPrimaryPaths.map((path) => {
-              const isActive = path.value === state.currentPath;
-              const Icon = isActive ? path.IconActive : path.Icon;
-
-              return (
-                <NavListItem key={path.value}>
-                  <NavButton
-                    type={BUTTON_TYPES.TERTIARY}
-                    size={BUTTON_SIZES.SMALL}
-                    active={path.value === state.currentPath}
-                    href={resolveRoute(path.value)}
-                    aria-label={
-                      path.value === state.currentPath
-                        ? sprintf(
-                            /* translators: %s: the current page, for example "My Stories". */
-                            __('%s (active view)', 'web-stories'),
-                            path.label
-                          )
-                        : path.label
-                    }
-                    {...(path.isExternal && {
-                      rel: 'noreferrer',
-                      target: '_blank',
-                      onClick: () => onExternalLinkClick(path),
-                    })}
+            {enabledPrimaryPaths.map(({ Icon, ...path }) => (
+              <NavListItem key={path.value}>
+                <NavLink
+                  as="a"
+                  active={path.value === state.currentPath}
+                  href={resolveRoute(path.value)}
+                  aria-label={
+                    path.value === state.currentPath
+                      ? sprintf(
+                          /* translators: %s: the current page, for example "My Stories". */
+                          __('%s (active view)', 'web-stories'),
+                          path.label
+                        )
+                      : path.label
+                  }
+                  {...(path.isExternal && {
+                    rel: 'noreferrer',
+                    target: '_blank',
+                    onClick: () => onExternalLinkClick(path),
+                  })}
+                >
+                  {Icon && <Icon width="22px" />}
+                  <PathName
+                    as="span"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                   >
-                    <NavLinkContent>
-                      {Icon && <Icon width="22px" />}
-                      <PathName as="span">{path.label}</PathName>
-                    </NavLinkContent>
-                  </NavButton>
-                </NavListItem>
-              );
-            })}
+                    {path.label}
+                  </PathName>
+                </NavLink>
+              </NavListItem>
+            ))}
           </NavList>
         </Content>
       </div>
@@ -220,9 +216,8 @@ export function LeftRail() {
         <NavList>
           {SECONDARY_PATHS.map((path) => (
             <NavListItem key={path.value}>
-              <NavButton
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
+              <NavLink
+                as="a"
                 active={path.value === state.currentPath}
                 href={resolveRoute(path.value)}
                 aria-label={
@@ -240,10 +235,13 @@ export function LeftRail() {
                   onClick: () => onExternalLinkClick(path),
                 })}
               >
-                <NavLinkContent>
-                  <Text as="span">{path.label}</Text>
-                </NavLinkContent>
-              </NavButton>
+                <Text
+                  as="span"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                >
+                  {path.label}
+                </Text>
+              </NavLink>
             </NavListItem>
           ))}
         </NavList>

@@ -42,13 +42,30 @@ export const Header = styled(Headline)`
   }
 `;
 
+export const NewStoryButton = styled(Button)(
+  ({ theme }) => css`
+    margin-bottom: 0;
+    margin-top: 0;
+    border: 1px solid ${theme.colors.border.defaultActive};
+    border-radius: ${theme.borders.radius.medium};
+
+    :hover {
+      color: ${theme.colors.bg.primary};
+      background-color: ${theme.colors.interactiveBg.brandPress};
+      border-color: ${theme.colors.interactiveFg.brandPress};
+      transition: border-color 0.25s linear, background-color 0.25s linear,
+        color 0.25s linear;
+    }
+  `
+);
+
 export const NavList = styled.ul`
   margin: 0;
   padding: 0;
 `;
 
 export const NavListItem = styled.li`
-  margin: 8px 0;
+  margin: 8px 28px;
   padding: 0;
   list-style-type: none;
 `;
@@ -57,17 +74,34 @@ export const NavButton = styled(Button)`
   border-radius: 0;
 `;
 
-export const NavLinkContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-areas: 'icon link link link link';
-  width: 100%;
-  margin-left: 12px;
+const activeLinkCss = css`
+  * {
+    color: ${({ theme }) => theme.colors.interactiveFg.brandPress};
+  }
 
-  svg {
-    grid-area: icon;
+  svg path {
+    stroke: ${({ theme }) => theme.colors.interactiveFg.brandPress};
   }
 `;
+
+export const NavLink = styled(Text)(
+  ({ active, theme }) => css`
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: 'icon link link link link';
+
+    * {
+      font-weight: ${theme.typography.weight.bold};
+      transition: color 0.25s linear, stroke 0.25s linear;
+    }
+
+    ${active && activeLinkCss};
+
+    :hover {
+      ${activeLinkCss};
+    }
+  `
+);
 
 export const PathName = styled(Text)`
   grid-area: link;
