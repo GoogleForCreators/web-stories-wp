@@ -32,8 +32,7 @@ function Presets({
   type,
   handleAddPreset,
 }) {
-  const hasPresets = presets.length > 0;
-  return hasPresets ? (
+  return (
     <PresetGroup
       itemRenderer={itemRenderer}
       presets={presets}
@@ -42,7 +41,7 @@ function Presets({
       handleClick={handleOnClick}
       handleAddPreset={handleAddPreset}
     />
-  ) : null;
+  );
 }
 
 Presets.propTypes = {

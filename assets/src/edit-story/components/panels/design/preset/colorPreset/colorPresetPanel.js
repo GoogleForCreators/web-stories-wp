@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import Presets from '../presets';
@@ -28,7 +33,15 @@ import { useStory } from '../../../../../app/story';
 import useAddPreset from '../useAddPreset';
 import EmptyPanel from './emptyPanel';
 
-const Wrapper = styled.div``;
+const Title = styled.div`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+  margin-bottom: 10px;
+`;
+
+const GroupWrapper = styled.div`
+  margin-bottom: 10px;
+`;
 
 function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
   const presetType = 'color';
@@ -50,31 +63,42 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
   const { colors: globalPresets } = stylePresets;
   const { colors: localPresets } = localColorPresets;
   const hasPresets = globalPresets.length > 0 || localPresets.length > 0;
+  const groupProps = {
+    isEditMode,
+    itemRenderer,
+    type: presetType,
+  };
   return (
-    <Wrapper>
-      <Presets
-        isEditMode={isEditMode}
-        presets={globalPresets}
-        handleOnClick={handlePresetClick}
-        handleAddPreset={handleAddPreset}
-        itemRenderer={itemRenderer}
-        type={presetType}
-      />
-      <Presets
-        isEditMode={isEditMode}
-        presets={localColorPresets?.colors || []}
-        handleOnClick={(preset) => handlePresetClick(preset, true)}
-        handleAddPreset={handleAddLocalPreset}
-        itemRenderer={itemRenderer}
-        type={presetType}
-      />
+    <>
+      {hasPresets && (
+        <>
+          <GroupWrapper>
+            <Title>{__('Current story', 'web-stories')}</Title>
+            <Presets
+              presets={localColorPresets?.colors || []}
+              handleOnClick={(preset) => handlePresetClick(preset, true)}
+              handleAddPreset={handleAddLocalPreset}
+              {...groupProps}
+            />
+          </GroupWrapper>
+          <GroupWrapper>
+            <Title>{__('All stories', 'web-stories')}</Title>
+            <Presets
+              presets={globalPresets}
+              handleOnClick={handlePresetClick}
+              handleAddPreset={handleAddPreset}
+              {...groupProps}
+            />
+          </GroupWrapper>
+        </>
+      )}
       {!hasPresets && (
         <EmptyPanel
           handleAddPreset={handleAddPreset}
           handleAddLocalPreset={handleAddLocalPreset}
         />
       )}
-    </Wrapper>
+    </>
   );
 }
 
