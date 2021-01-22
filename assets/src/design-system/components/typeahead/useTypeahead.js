@@ -25,10 +25,13 @@ import { getOptions } from '../menu/utils';
 
 export default function useTypeahead({
   handleTypeaheadValueChange,
+  isFlexibleValue,
   selectedValue,
   options,
 }) {
+  // Refs here act as a control for when to force an update to the visible input value
   const activeOptionRef = useRef();
+  const inputValueRef = useRef();
   /**
    *Control when associated menu of typeahead should be visible.
    */
@@ -76,6 +79,12 @@ export default function useTypeahead({
     [_inputValue]
   );
 
+  useEffect(() => {
+    if (!isFlexibleValue && isOpen?.value) {
+      setInputValue('');
+    }
+  }, [isFlexibleValue, isOpen]);
+
   /**
    * list of options to display in menu.
    */
@@ -113,6 +122,8 @@ export default function useTypeahead({
     inputValue,
   ]);
 
+  useEffect(() => (inputValueRef.current = inputValue.value), [inputValue]);
+
   /**
    * When selectedValue updates we want to update input value too but only if it's different from the previously set inputValue.
    * This prevents reseting the input preemptively on clearing the input
@@ -123,11 +134,16 @@ export default function useTypeahead({
       activeOption.label !== activeOptionRef?.current
     ) {
       activeOptionRef.current = activeOption.label;
-      setInputValue(activeOption.label);
+      if (isFlexibleValue || inputValueRef?.current.length > 0) {
+        setInputValue(activeOption.label);
+      }
     }
 
-    return () => (activeOptionRef.current = undefined);
-  }, [activeOption]);
+    return () => {
+      activeOptionRef.current = undefined;
+      inputValueRef.current = undefined;
+    };
+  }, [activeOption, isFlexibleValue]);
 
   return { activeOption, normalizedOptions, inputValue, isMenuFocused, isOpen };
 }

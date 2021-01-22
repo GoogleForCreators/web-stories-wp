@@ -228,7 +228,7 @@ export const StrictDemo = () => {
   // If the menu is closed, the input's value will return to the selectedValue.
 
   const [selectedValue, setSelectedValue] = useState('dog-2');
-  const [inputValue, setInputValue] = useState(selectedValue);
+  const [inputValue, setInputValue] = useState('');
 
   const options = useMemo(() => {
     if (!inputValue || inputValue.length === 0) {

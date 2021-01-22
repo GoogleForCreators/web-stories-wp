@@ -101,6 +101,7 @@ export const Typeahead = ({
     isOpen,
     normalizedOptions,
   } = useTypeahead({
+    isFlexibleValue,
     options,
     selectedValue,
     handleTypeaheadValueChange,
