@@ -44,10 +44,7 @@ function useTranscodeVideo() {
       /* webpackChunkName: "ffmpeg" */ '@ffmpeg/ffmpeg'
     );
     const ffmpeg = createFFmpeg({
-      // Useful for testing, where corePath will be automatically defined.
-      // See https://github.com/ffmpegwasm/ffmpeg.wasm/blob/bc8db3a1a5dca5c98026bdd1f8842e9a3c0cab1d/docs/api.md#createffmpegoptions-ffmpeg
-      // TODO: Don't do this. Load from CDN instead. The files are way too big.
-      corePath: isDevelopment ? ffmpegCoreUrl : undefined,
+      corePath: ffmpegCoreUrl,
       log: isDevelopment,
     });
     await ffmpeg.load();
@@ -85,10 +82,17 @@ function useTranscodeVideo() {
     );
   }
 
-  //eslint-disable-next-line require-await -- So the caller will always get an async function.
-  const transcodeVideoNoop = async (file) => file;
+  // TODO: Check for ffmpeg's list of supported file types instead.
+  // See `ffmpeg -demuxers`
+  // TODO: Add max size check.
+  // See https://github.com/ffmpegwasm/ffmpeg.wasm#what-is-the-maximum-size-of-input-file
+  const canTranscodeFile = (file) =>
+    isFeatureEnabled && file.type.startsWith('video/');
 
-  return isFeatureEnabled ? transcodeVideo : transcodeVideoNoop;
+  return {
+    canTranscodeFile,
+    transcodeVideo,
+  };
 }
 
 export default useTranscodeVideo;

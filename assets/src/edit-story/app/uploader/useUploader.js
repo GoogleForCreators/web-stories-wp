@@ -50,7 +50,7 @@ function useUploader() {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
-  const transcodeVideo = useTranscodeVideo();
+  const { transcodeVideo, canTranscodeFile } = useTranscodeVideo();
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -96,9 +96,7 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      const isVideo = file.type.startsWith('video/');
-
-      if (!isValidType(file) && !isVideo) {
+      if (!isValidType(file) && !canTranscodeFile) {
         /* translators: %s is a list of allowed file extensions. */
         const message = sprintf(
           /* translators: %s: list of allowed file types. */
@@ -118,10 +116,9 @@ function useUploader() {
         ..._additionalData,
       };
 
-      // TODO: Add max size check.
-      // See https://github.com/ffmpegwasm/ffmpeg.wasm#what-is-the-maximum-size-of-input-file
-      if (isVideo) {
+      if (canTranscodeFile) {
         try {
+          // TODO: Only transcode & optimize video if needed (criteria TBD).
           const newFile = await transcodeVideo(file);
           return uploadMedia(newFile, additionalData);
         } catch (err) {
@@ -154,6 +151,7 @@ function useUploader() {
       maxUpload,
       uploadMedia,
       storyId,
+      canTranscodeFile,
       transcodeVideo,
     ]
   );
