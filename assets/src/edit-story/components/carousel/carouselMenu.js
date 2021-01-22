@@ -35,6 +35,7 @@ import WithTooltip from '../tooltip';
 import { Placement } from '../popup';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import GridView from './gridview';
+import ZoomSelector from './zoomSelector';
 
 const Wrapper = styled.div`
   display: flex;
@@ -103,6 +104,7 @@ function CarouselMenu() {
               />
             </WithTooltip>
           </Box>
+          <ZoomSelector />
         </MenuItems>
       </Wrapper>
       <Modal
