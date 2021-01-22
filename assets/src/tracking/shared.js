@@ -37,10 +37,12 @@ const DEFAULT_CONFIG = {
   trackingId: '',
 };
 
-const { trackingAllowed, trackingId } = global.webStoriesTrackingSettings || {};
+const { trackingAllowed, trackingId, appVersion } =
+  global.webStoriesTrackingSettings || {};
 
 export const config = {
   ...DEFAULT_CONFIG,
   trackingAllowed,
   trackingId,
+  appVersion,
 };

@@ -82,6 +82,7 @@ class Tracking {
 		return [
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
+			'appVersion'      => WEBSTORIES_VERSION,
 		];
 	}
 

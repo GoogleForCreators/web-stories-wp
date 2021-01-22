@@ -25,6 +25,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
+import { trackError } from '../../../../tracking';
 import { preloadImage, getFirstFrameOfVideo } from './';
 
 function useUploadVideoFrame({ updateMediaElement }) {
@@ -91,7 +92,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         ...newSize,
       });
     } catch (err) {
-      // TODO Display error message to user as video poster upload has as failed.
+      trackError('video poster generation', err.message);
     }
   };
 
