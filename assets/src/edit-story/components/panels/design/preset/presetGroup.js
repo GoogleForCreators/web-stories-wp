@@ -31,7 +31,7 @@ import {
   SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
-import ColorAdd from './colorAdd';
+import ColorAdd from './colorPreset/colorAdd';
 
 const STYLE_WIDTH = 112;
 

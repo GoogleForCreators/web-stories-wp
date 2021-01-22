@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { AddColor } from '../../../../icons';
+import { AddColor } from '../../../../../icons';
 
 const COLOR_SIZE = 30;
 const AddColorAction = styled.button`
@@ -55,13 +55,13 @@ const Note = styled.div`
 function ColorAdd({ handleAddPreset, helper }) {
   return (
     <>
-      {helper && <Note>{helper}</Note>}
       <AddColorAction
         onClick={handleAddPreset}
         aria-label={__('Add color preset', 'web-stories')}
       >
         <AddColor />
       </AddColorAction>
+      {helper && <Note>{helper}</Note>}
     </>
   );
 }

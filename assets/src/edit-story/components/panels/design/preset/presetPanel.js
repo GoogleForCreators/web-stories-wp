@@ -19,34 +19,19 @@
  */
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { Panel } from '../../panel';
-import { TranslateWithMarkup } from '../../../../../i18n';
-import { Add } from '../../../../../design-system/icons';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
 import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
-import ColorAdd from './colorAdd';
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  padding: 0px 30px 10px;
-  text-align: center;
-  line-height: 20px;
-`;
+import EmptyPanel from './colorPreset/emptyPanel';
 
 function PresetPanel({
   presetType = 'color',
@@ -198,23 +183,10 @@ function PresetPanel({
             type={presetType}
           />
           {!hasPresets && (
-            <ButtonWrapper>
-              <ColorAdd
-                handleAddPreset={handleAddPreset}
-                helper={
-                  <TranslateWithMarkup
-                    mapping={{
-                      i: <Add width={18} height={13} />,
-                    }}
-                  >
-                    {__(
-                      'Click on the <i></i> icon to save a color to all stories.',
-                      'web-stories'
-                    )}
-                  </TranslateWithMarkup>
-                }
-              />
-            </ButtonWrapper>
+            <EmptyPanel
+              handleAddPreset={handleAddPreset}
+              handleAddLocalPreset={handleAddLocalPreset}
+            />
           )}
         </>
       )}

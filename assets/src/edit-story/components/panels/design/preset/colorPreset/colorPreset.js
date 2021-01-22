@@ -142,7 +142,6 @@ function ColorPresetPanel({ pushUpdate }) {
     handleOnClick,
     isEditMode
   ) => {
-    console.log('in renderer');
     if (!color) {
       return null;
     }
