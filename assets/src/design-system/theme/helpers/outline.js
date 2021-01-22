@@ -26,9 +26,11 @@ import { FOCUS_VISIBLE_SELECTOR } from '../global';
 export const focusableOutlineCSS = (v) => {
   const accent = typeof v === 'string' ? v : v?.theme?.colors?.border?.focus;
   return css`
+    border: 2px solid transparent;
+
     &.${FOCUS_VISIBLE_SELECTOR} {
       outline: none;
-      box-shadow: 0px 0px 0px 2px ${accent};
+      border: 2px solid ${accent};
     }
   `;
 };

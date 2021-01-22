@@ -13,35 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
+export const raw = {
+  desktop: 1121,
+  tablet: 801,
+  mobile: 800,
+  mobileSmall: 684,
+  min: 684,
+};
 
-export const mq = {
-  desktop: (styles) => css`
-    @media screen and (min-width: 1121px) {
-      ${styles}
-    }
-  `,
-  tablet: (styles) => css`
-    @media screen and (min-width: 801px) {
-      ${styles}
-    }
-  `,
-  mobile: (styles) => css`
-    @media screen and (max-width: 800px) {
-      ${styles}
-    }
-  `,
-  mobileSmall: (styles) => css`
-    @media screen and (max-width: 684px) {
-      ${styles}
-    }
-  `,
-  min: (styles) => css`
-    @media screen and (max-width: 440px) {
-      ${styles}
-    }
-  `,
+export const breakpoint = {
+  desktop: `screen and (min-width: ${raw.desktop}px)`,
+  tablet: `screen and (min-width: ${raw.tablet}px)`,
+  mobile: `screen and (max-width: ${raw.mobile}px)`,
+  mobileSmall: `screen and (max-width: ${raw.mobileSmall}px)`,
+  min: `screen and (max-width: ${raw.min}px)`,
 };

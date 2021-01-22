@@ -21,40 +21,28 @@ import styled, { css } from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../../animation';
 import {
-  themeHelpers,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  BUTTON_SIZES,
   Icons,
   NotificationBubble,
+  Button as dsButton,
 } from '../../../../design-system';
 
-const Button = styled.button`
-  ${themeHelpers.reset.button}
-  ${themeHelpers.centerContent}
-  ${themeHelpers.focusableOutlineCSS}
-  ${themeHelpers.expandTextPreset(({ label }, sizes) => label[sizes.MEDIUM])}
-  ${({ theme }) => css`
-    color: ${theme.colors.fg.primary};
-    border-radius: ${theme.borders.radius.small};
-    border: 1px solid ${theme.colors.bg.tertiary};
-  `}
+const Button = styled(dsButton)`
+  border: ${({ theme }) => `1px solid ${theme.colors.bg.tertiary}`};
   padding: 1px 14px 1px 4.5px;
-  transform-origin: 50% 50%;
 
-  &:active {
-    transform: scale(0.99);
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    padding: 1px 16px 1px 14.5;
   }
-
-  ${themeHelpers.mq.desktop(
-    css`
-      padding: 1px 16px 1px 14.5;
-    `
-  )}
 
   ${({ hasNotifications, theme }) =>
     hasNotifications &&
@@ -66,19 +54,17 @@ const Button = styled.button`
 
 const Label = styled.span`
   display: none;
-  ${themeHelpers.mq.desktop(
-    css`
-      display: block;
-      min-width: 115px;
-      text-align: left;
-    `
-  )}
+
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    display: block;
+    min-width: 115px;
+    text-align: left;
+  }
 `;
 
 const HelpIcon = styled(Icons.Help)`
   height: 32px;
   width: auto;
-
   margin-right: 4.5px;
 `;
 
@@ -90,21 +76,19 @@ const ChevronIcon = styled(Icons.Chevron)`
   transform: rotate(${({ isOpen }) => (isOpen ? 360 : 180)}deg);
   transition: 0.2s transform ${BEZIER.outSine};
 
-  ${({ hasNotifications }) =>
-    hasNotifications &&
-    themeHelpers.mq.mobile(
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    ${({ hasNotifications }) =>
+      hasNotifications &&
       css`
         display: none;
-      `
-    )}
+      `}
+  }
 `;
 
 const NotificationWrapper = styled.div`
-  ${themeHelpers.mq.tablet(
-    css`
-      margin-right: 14.5px;
-    `
-  )}
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    margin-right: 14.5px;
+  }
 `;
 
 function Toggle({
@@ -120,8 +104,25 @@ function Toggle({
       aria-pressed={isOpen}
       aria-expanded={isOpen}
       aria-owns={popupId}
+      aria-label={
+        hasNotifications
+          ? sprintf(
+              /* translators: %s:  number of unread notifications. */
+              _n(
+                'Help Center: %s unread notification',
+                'Help Center: %s unread notifications',
+                notificationCount,
+                'web-stories'
+              ),
+              notificationCount
+            )
+          : __('Help Center', 'web-stories')
+      }
       onClick={onClick}
       hasNotifications={hasNotifications}
+      type={hasNotifications ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.PLAIN}
+      variant={BUTTON_VARIANTS.RECTANGLE}
+      size={BUTTON_SIZES.MEDIUM}
     >
       <HelpIcon />
       <Label>{__('Help Center', 'web-stories')}</Label>

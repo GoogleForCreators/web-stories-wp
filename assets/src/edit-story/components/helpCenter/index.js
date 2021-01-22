@@ -18,11 +18,11 @@
  */
 import { useState } from 'react';
 import { useFeatures } from 'flagged';
-import styled, { ThemeProvider, css } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme, themeHelpers } from '../../../design-system';
+import { theme as dsTheme, ThemeGlobals } from '../../../design-system';
 import { Toggle } from './toggle';
 
 const Wrapper = styled.div`
@@ -31,19 +31,15 @@ const Wrapper = styled.div`
   left: 11px;
   z-index: 10;
 
-  ${themeHelpers.mq.tablet(
-    css`
-      bottom: 24px;
-      left: 23px;
-    `
-  )}
+  @media ${({ theme }) => theme.breakpoint.tablet} {
+    bottom: 24px;
+    left: 23px;
+  }
 
-  ${themeHelpers.mq.desktop(
-    css`
-      bottom: 16px;
-      left: 31px;
-    `
-  )}
+  @media ${({ theme }) => theme.breakpoint.destop} {
+    bottom: 16px;
+    left: 31px;
+  }
 `;
 
 export const HelpCenter = () => {
@@ -52,7 +48,8 @@ export const HelpCenter = () => {
 
   return (
     enableQuickTips && (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={dsTheme}>
+        <ThemeGlobals.OverrideFocusOutline />
         <Wrapper>
           <Toggle
             isOpen={isOpen}

@@ -23,7 +23,7 @@ import styled, { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import { Toggle as HelpCenterToggle } from '..';
-import { theme as dsTheme } from '../../../../../design-system';
+import { theme as dsTheme, ThemeGlobals } from '../../../../../design-system';
 
 export default {
   title: 'Stories Editor/Components/Help Center',
@@ -42,6 +42,7 @@ export const Toggle = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <ThemeProvider theme={dsTheme}>
+      <ThemeGlobals.OverrideFocusOutline />
       <Bg>
         <HelpCenterToggle
           isOpen={isOpen}
