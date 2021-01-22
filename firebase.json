@@ -29,6 +29,19 @@
             "value": "*"
           }
         ]
+      },
+      {
+        "source": "static/**/*.@(js|wasm)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=604800"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
       }
     ],
     "redirects": [
