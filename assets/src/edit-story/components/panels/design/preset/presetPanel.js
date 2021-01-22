@@ -190,7 +190,7 @@ function PresetPanel({
           <Presets
             isEditMode={isEditMode}
             presets={localColorPresets?.colors || []}
-            handleOnClick={handlePresetClick}
+            handleOnClick={(preset) => handlePresetClick(preset, true)}
             handleAddPreset={handleAddLocalPreset}
             itemRenderer={itemRenderer}
             type={presetType}
