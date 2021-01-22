@@ -48,6 +48,10 @@ const DropDownContainer = styled.div`
   margin-top: 10px;
 `;
 
+const MenuContainer = styled.div`
+  z-index: 1;
+`;
+
 /**
  * Get a More icon that displays a dropdown menu on click.
  *
@@ -104,7 +108,7 @@ function DropDownMenu({
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     !resource.local && ( // Don't show menu if resource not uploaded to server yet.
-      <div>
+      <MenuContainer>
         {(display || isMenuOpen) && (
           <>
             <MoreButton
@@ -140,7 +144,7 @@ function DropDownMenu({
         {showEditDialog && (
           <MediaEditDialog resource={resource} onClose={onEditDialogClose} />
         )}
-      </div>
+      </MenuContainer>
     )
   );
 }

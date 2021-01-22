@@ -28,13 +28,6 @@ describe('getPreviewText', () => {
     expect(result).toBe(expected);
   });
 
-  it('should return null for transparent solid', () => {
-    const input = createSolid(255, 0, 0, 0);
-    const result = getPreviewText(input);
-    const expected = null;
-    expect(result).toBe(expected);
-  });
-
   it('should return hex ignoring alpha for non-transparent solid', () => {
     const input = createSolid(255, 0, 0, 0.1);
     const result = getPreviewText(input);

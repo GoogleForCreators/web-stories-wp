@@ -140,6 +140,20 @@ class Plugin {
 	public $analytics;
 
 	/**
+	 * AdSense.
+	 *
+	 * @var AdSense
+	 */
+	public $adsense;
+
+	/**
+	 * Ad Manager.
+	 *
+	 * @var Ad_Manager
+	 */
+	public $ad_manager;
+
+	/**
 	 * Experiments.
 	 *
 	 * @var Experiments
@@ -159,6 +173,20 @@ class Plugin {
 	 * @var Meta_Boxes
 	 */
 	public $meta_boxes;
+
+	/**
+	 * SVG.
+	 *
+	 * @var SVG
+	 */
+	public $svg;
+
+	/**
+	 * User_Preferences.
+	 *
+	 * @var User_Preferences
+	 */
+	public $user_preferences;
 
 	/**
 	 * Initialize plugin functionality.
@@ -224,6 +252,18 @@ class Plugin {
 
 		$this->analytics = new Analytics();
 		add_action( 'init', [ $this->analytics, 'init' ] );
+
+		$this->adsense = new AdSense();
+		add_action( 'init', [ $this->adsense, 'init' ] );
+
+		$this->ad_manager = new Ad_Manager();
+		add_action( 'init', [ $this->ad_manager, 'init' ] );
+
+		$this->user_preferences = new User_Preferences();
+		add_action( 'init', [ $this->user_preferences, 'init' ] );
+
+		$this->svg = new SVG( $this->experiments );
+		add_action( 'init', [ $this->svg, 'init' ] );
 
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.

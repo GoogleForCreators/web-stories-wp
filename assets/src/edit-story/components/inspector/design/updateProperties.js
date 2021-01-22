@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 /**
  * @param {Object} currentProperties The existing element properties.

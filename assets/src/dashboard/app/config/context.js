@@ -16,6 +16,6 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../utils';
+import { createContext } from '../../../design-system';
 
 export default createContext({ api: {} });

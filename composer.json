@@ -14,6 +14,7 @@
     "ampproject/amp-wp": "^2.0.8",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
+    "enshrined/svg-sanitize": "^0.14.0",
     "mcaskill/composer-exclude-files": "^2.0",
     "symfony/polyfill-mbstring": "^1.18"
   },

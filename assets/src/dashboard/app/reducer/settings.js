@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { AD_NETWORK_TYPE } from '../../constants';
+
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
   UPDATE_SETTINGS_FAILURE: 'update_settings_failure',
@@ -25,6 +30,10 @@ export const defaultSettingsState = {
   activePublisherLogoId: null,
   error: {},
   googleAnalyticsId: '',
+  adSensePublisherId: '',
+  adSenseSlotId: '',
+  adManagerSlotId: '',
+  adNetwork: AD_NETWORK_TYPE.NONE,
   publisherLogoIds: [],
 };
 
@@ -45,6 +54,10 @@ function settingsReducer(state, action) {
         activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
         googleAnalyticsId: action.payload.googleAnalyticsId,
+        adSensePublisherId: action.payload.adSensePublisherId,
+        adSenseSlotId: action.payload.adSenseSlotId,
+        adManagerSlotId: action.payload.adManagerSlotId,
+        adNetwork: action.payload.adNetwork,
         publisherLogoIds: [
           ...new Set([
             action.payload.activePublisherLogoId,

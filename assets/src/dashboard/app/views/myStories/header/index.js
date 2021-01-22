@@ -40,6 +40,7 @@ import {
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
+  STORY_STATUS,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -57,6 +58,7 @@ import {
   HeaderToggleButtonContainer,
   PageHeading,
 } from '../../shared';
+import { useConfig } from '../../../config';
 
 function Header({
   filter,
@@ -70,6 +72,8 @@ function Header({
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
+
+  const { capabilities: { canReadPrivatePosts } = {} } = useConfig();
 
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
@@ -101,6 +105,14 @@ function Header({
       <HeaderToggleButtonContainer>
         <ToggleButtonGroup
           buttons={STORY_STATUSES.map((storyStatus) => {
+            if (
+              storyStatus.status === STORY_STATUS.PRIVATE &&
+              (!totalStoriesByStatus.private ||
+                totalStoriesByStatus.private < 1 ||
+                !canReadPrivatePosts)
+            ) {
+              return null;
+            }
             return {
               handleClick: () => {
                 handleClick(storyStatus.value);
@@ -119,11 +131,11 @@ function Header({
                   : ''
               }`,
             };
-          })}
+          }).filter(Boolean)}
         />
       </HeaderToggleButtonContainer>
     );
-  }, [filter, totalStoriesByStatus, handleClick]);
+  }, [totalStoriesByStatus, canReadPrivatePosts, filter.value, handleClick]);
 
   const onSortChange = useCallback(
     (newSort) => {

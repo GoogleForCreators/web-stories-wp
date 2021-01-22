@@ -15,16 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
-import { createNewStory, clickButton } from '../../../utils';
-
-const MODAL = '.media-modal';
+import { createNewStory, uploadMedia, deleteMedia } from '../../../utils';
 
 describe('Inserting Media from Dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -33,21 +26,12 @@ describe('Inserting Media from Dialog', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    // Clicking will only act on the first element.
-    await expect(page).toClick('button', { text: 'Upload' });
+    const filename = await uploadMedia('example-1.jpg', false);
 
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-    await expect(page).toClick('button', { text: 'Media Library' });
-
-    await clickButton(
-      '.attachments-browser .attachments .attachment:first-of-type'
-    );
     await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await percySnapshot(page, 'Inserting Image from Dialog');
+    await deleteMedia(filename);
   });
 });

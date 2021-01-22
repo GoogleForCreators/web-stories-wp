@@ -27,6 +27,9 @@
 namespace Google\Web_Stories;
 
 use WP_Post;
+use WP_Query;
+use WP_REST_Request;
+use WP_Screen;
 
 /**
  * Class Media
@@ -204,6 +207,112 @@ class Media {
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
 		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
+
+		// Hide video posters from Media grid view.
+		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
+		// Hide video posters from Media list view.
+		add_filter( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
+		// Hide video posters from web-stories/v1/media REST API requests.
+		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_poster_attachments' ], 10, 2 );
+	}
+
+	/**
+	 * Returns the tax query needed to exclude generated video poster images.
+	 *
+	 * @param array $args Existing WP_Query args.
+	 *
+	 * @return array  Tax query arg.
+	 */
+	private function get_poster_tax_query( array $args ) {
+		$tax_query = [
+			[
+				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
+				'field'    => 'slug',
+				'terms'    => [ 'poster-generation' ],
+				'operator' => 'NOT IN',
+			],
+		];
+
+		/**
+		 *  Merge with existing tax query if needed,
+		 * in a nested way so WordPress will run them
+		 * with an 'AND' relation. Example:
+		 *
+		 * [
+		 *   'relation' => 'AND', // implicit.
+		 *   [ this query ],
+		 *   [ [ any ], [ existing ], [ tax queries] ]
+		 * ]
+		 */
+		if ( ! empty( $args['tax_query'] ) ) {
+			$tax_query[] = $args['tax_query'];
+		}
+
+		return $tax_query;
+	}
+
+	/**
+	 * Filters the attachment query args to hide generated video poster images.
+	 *
+	 * Reduces unnecessary noise in the Media grid view.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array $args Query args.
+	 *
+	 * @return array Filtered query args.
+	 */
+	public function filter_ajax_query_attachments_args( array $args ) {
+		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+
+		return $args;
+	}
+
+	/**
+	 * Filters the current query to hide generated video poster images.
+	 *
+	 * Reduces unnecessary noise in the Media list view.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param WP_Query $query WP_Query instance, passed by reference.
+	 *
+	 * @return void
+	 */
+	public function filter_poster_attachments( &$query ) {
+		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+		if ( ! $current_screen instanceof WP_Screen ) {
+			return;
+		}
+
+		if ( is_admin() && $query->is_main_query() && 'upload' === $current_screen->id ) {
+			$tax_query = $query->get( 'tax_query' );
+
+			$query->set( 'tax_query', $this->get_poster_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		}
+	}
+
+	/**
+	 * Filters the current query to hide generated video poster images.
+	 *
+	 * Reduces unnecessary noise in media REST API requests.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array           $args Query args.
+	 * @param WP_REST_Request $request The current REST request.
+	 *
+	 * @return array Filtered query args.
+	 */
+	public function filter_rest_poster_attachments( array $args, WP_REST_Request $request ) {
+		if ( '/web-stories/v1/media' !== $request->get_route() ) {
+			return $args;
+		}
+
+		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+
+		return $args;
 	}
 
 	/**
@@ -236,7 +345,7 @@ class Media {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [ 'editor', 'poster-generation' ],
+					'enum'        => [ 'editor', 'poster-generation', 'video-optimization' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],

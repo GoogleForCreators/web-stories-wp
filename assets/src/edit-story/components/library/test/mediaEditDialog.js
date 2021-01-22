@@ -134,7 +134,7 @@ describe('MediaEditDialog', () => {
     const { getByLabelText, getByRole } = setup();
 
     // Mock out `updateMedia`.
-    let serverAltText = resource.alt;
+    const serverAltText = resource.alt;
     updateMedia.mockImplementation(() => {
       throw Error;
     });

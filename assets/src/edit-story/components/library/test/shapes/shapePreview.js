@@ -29,6 +29,7 @@ jest.mock('../../useLibrary');
 import useLibrary from '../../useLibrary';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../constants';
 import { UnitsProvider } from '../../../../units';
+import CanvasContext from '../../../../app/canvas/context';
 
 describe('ShapePreview', () => {
   const insertElement = jest.fn();
@@ -51,17 +52,28 @@ describe('ShapePreview', () => {
   it('should render', () => {
     let shapePreviewElement;
     act(() => {
+      const canvasValue = {
+        state: {
+          nodesById: {},
+          pageSize: {},
+          pageContainer: document.body,
+          canvasContainer: document.body,
+          designSpaceGuideline: {},
+        },
+      };
       const { getByLabelText } = renderWithTheme(
-        <UnitsProvider
-          pageSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE / PAGE_RATIO,
-          }}
-          dataToEditorX={jest.fn()}
-          dataToEditorY={jest.fn()}
-        >
-          <ShapePreview mask={rectangleMask} />
-        </UnitsProvider>
+        <CanvasContext.Provider value={canvasValue}>
+          <UnitsProvider
+            pageSize={{
+              width: TEXT_SET_SIZE,
+              height: TEXT_SET_SIZE / PAGE_RATIO,
+            }}
+            dataToEditorX={jest.fn()}
+            dataToEditorY={jest.fn()}
+          >
+            <ShapePreview mask={rectangleMask} />
+          </UnitsProvider>
+        </CanvasContext.Provider>
       );
       shapePreviewElement = getByLabelText(rectangleMask.name);
     });

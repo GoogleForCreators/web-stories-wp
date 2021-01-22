@@ -30,8 +30,8 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../../../../dashboard/templates');
-import getAllTemplates from '../../../../dashboard/templates';
+jest.mock('../getAllPageLayouts');
+import getAllPageLayouts from '../getAllPageLayouts';
 
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
@@ -82,24 +82,26 @@ describe('APIProvider', () => {
     });
   });
 
-  it('getTemplates gets templates w/ cdnURL', async () => {
-    const templates = [{ id: 'templateid' }];
-    getAllTemplates.mockResolvedValue(templates);
+  it('getPageLayouts gets pageLayouts w/ cdnURL', async () => {
+    const pageLayouts = [{ id: 'templateid' }];
+    getAllPageLayouts.mockResolvedValue(pageLayouts);
 
     const cdnURL = 'https://test.url';
+    const assetsURL = 'https://plugin.url/assets/';
     const { result } = renderApiProvider({
       configValue: {
         api: {},
         cdnURL,
+        assetsURL,
       },
     });
 
-    let templatesResult;
+    let pageLayoutsResult;
     await act(async () => {
-      templatesResult = await result.current.actions.getTemplates();
+      pageLayoutsResult = await result.current.actions.getPageLayouts();
     });
 
-    expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
-    expect(templatesResult).toStrictEqual(templates);
+    expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL, assetsURL });
+    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
   });
 });

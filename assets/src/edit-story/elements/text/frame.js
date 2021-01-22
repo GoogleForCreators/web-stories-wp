@@ -25,8 +25,7 @@ import { useRef, useEffect } from 'react';
  * Internal dependencies
  */
 import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
-import { useStory } from '../../app';
-import { useCanvas } from '../../components/canvas';
+import { useStory, useCanvas } from '../../app';
 import { useUnits } from '../../units';
 import {
   elementFillContent,

@@ -24,7 +24,10 @@ import LayoutProvider from '../../../../../components/layout/provider';
 import { ToastProvider } from '../../../../../components';
 import Content from '../';
 
-jest.mock('../../../../../components/previewPage.js', () => () => null);
+jest.mock(
+  '../../../../../../edit-story/components/previewPage/previewPage.js',
+  () => () => null
+);
 jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
   children
 );

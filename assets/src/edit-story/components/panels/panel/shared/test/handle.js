@@ -29,7 +29,7 @@ import { renderWithTheme } from '../../../../../testUtils';
 describe('DragHandle', () => {
   describe('should raise handleHeightChange when up or down key is pressed', () => {
     const handleHeightChange = jest.fn();
-    var slider;
+    let slider;
 
     beforeEach(() => {
       handleHeightChange.mockReset();

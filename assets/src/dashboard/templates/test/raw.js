@@ -20,6 +20,11 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 
+/**
+ * Internal dependencies
+ */
+import { PAGE_LAYOUT_TYPES } from '../../../edit-story/components/library/panes/pageLayouts/constants';
+
 describe('Raw template files', () => {
   const templates = readdirSync(
     resolve(process.cwd(), 'assets/src/dashboard/templates/raw')
@@ -63,6 +68,32 @@ describe('Raw template files', () => {
             );
           }
         }
+      }
+    }
+  );
+
+  // @see https://github.com/google/web-stories-wp/pull/5889
+  it.each(templates)(
+    '%s template should contain pageLayoutType',
+    (template) => {
+      const templateContent = readFileSync(
+        resolve(
+          process.cwd(),
+          `assets/src/dashboard/templates/raw/${template}`
+        ),
+        'utf8'
+      );
+      const templateData = JSON.parse(templateContent);
+
+      for (const page of templateData.pages) {
+        expect(page).toStrictEqual(
+          expect.objectContaining({
+            pageLayoutType: expect.any(String),
+          })
+        );
+        expect(Object.keys(PAGE_LAYOUT_TYPES)).toStrictEqual(
+          expect.arrayContaining([page.pageLayoutType])
+        );
       }
     }
   );

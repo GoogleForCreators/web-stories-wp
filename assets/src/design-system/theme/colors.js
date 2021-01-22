@@ -178,6 +178,9 @@ const darkTheme = {
     primary: opacity.white24,
     secondary: opacity.white16,
   },
+  form: {
+    dropDownSubtitle: brand.gray[20], // equivalent to fg.secondary
+  },
 };
 
 const lightTheme = {
@@ -246,6 +249,9 @@ const lightTheme = {
   divider: {
     primary: opacity.black24,
     secondary: opacity.black10,
+  },
+  form: {
+    dropDownSubtitle: brand.gray[50], // equivalent to fg.tertiary
   },
 };
 

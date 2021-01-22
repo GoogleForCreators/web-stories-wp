@@ -316,6 +316,33 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
 
   describe('pageTooManyLinks', () => {
     it('should return a warning if page has too many links', () => {
+      const linkElements = [
+        {
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+        {
+          type: 'image',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+        {
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+        {
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+      ];
+
       const page = {
         id: 'pageid',
         elements: [
@@ -324,39 +351,17 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
           {
             type: 'text',
             link: {
-              url: 'https://google.com',
-            },
-          },
-          {
-            type: 'image',
-            link: {
-              url: 'https://google.com',
-            },
-          },
-          {
-            type: 'text',
-            link: {
               url: '',
             },
           },
-          {
-            type: 'text',
-            link: {
-              url: 'https://google.com',
-            },
-          },
-          {
-            type: 'text',
-            link: {
-              url: 'https://google.com',
-            },
-          },
+          ...linkElements,
         ],
       };
       expect(accessibilityChecks.pageTooManyLinks(page)).toStrictEqual({
         message: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.MAIN_TEXT,
         help: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.HELPER_TEXT,
         pageId: page.id,
+        elements: linkElements,
         type: 'warning',
       });
     });
@@ -490,6 +495,17 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         type: 'image',
         alt: 'Image is about things',
         resource: {},
+      };
+      expect(
+        accessibilityChecks.imageElementMissingAlt(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if image element has a resource alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+        resource: { alt: 'Image is about things' },
       };
       expect(
         accessibilityChecks.imageElementMissingAlt(element)

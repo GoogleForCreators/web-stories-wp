@@ -24,12 +24,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
-import {
-  COLOR_PRESETS_PER_ROW,
-  STYLE_PRESETS_PER_ROW,
-} from '../../../../constants';
 import { Panel } from '../../panel';
-import { areAllType } from './utils';
+import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
@@ -113,18 +109,8 @@ function PresetPanel({
     }
   };
 
-  const rowHeight = isColor ? 35 : 48;
-  const presetsCount = isColor ? colors.length : textStyles.length;
-  let initialHeight = 0;
-  if (presetsCount > 0) {
-    const presetsPerRow = isColor
-      ? COLOR_PRESETS_PER_ROW
-      : STYLE_PRESETS_PER_ROW;
-    initialHeight = Math.max(1.5, colors.length / presetsPerRow) * rowHeight;
-  }
-
   const resizeable = hasPresets;
-  const canCollapse = !isEditMode && hasPresets;
+  const canCollapse = !isEditMode && (hasPresets || isColor);
 
   if (!isStyle && !isColor) {
     return null;
@@ -133,7 +119,7 @@ function PresetPanel({
   return (
     <Panel
       name={`stylepreset-${presetType}`}
-      initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
+      initialHeight={getPanelInitialHeight(isColor, presets)}
       resizeable={resizeable}
       canCollapse={canCollapse}
     >
@@ -150,6 +136,7 @@ function PresetPanel({
         isEditMode={isEditMode}
         presets={presets}
         handleOnClick={handlePresetClick}
+        handleAddPreset={handleAddPreset}
         itemRenderer={itemRenderer}
         type={presetType}
       />

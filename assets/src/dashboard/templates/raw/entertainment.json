@@ -69,15 +69,16 @@
           "fill": "both"
         },
         {
-          "id": "59bcc046-aef4-41ec-98cc-bc1f0a482a1a",
-          "targets": ["a4c1a093-191a-4fa6-9e73-51090739a4ef"],
           "type": "spin",
           "rotation": "-120",
+          "stopAngle": "0",
+          "id": "59bcc046-aef4-41ec-98cc-bc1f0a482a1a",
           "duration": 6000,
           "delay": 0,
           "direction": "normal",
           "easingPreset": "linear",
-          "fill": "forwards"
+          "fill": "forwards",
+          "targets": ["0d36df49-4416-4506-a017-859029fe80ca"]
         }
       ],
       "elements": [
@@ -87,11 +88,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "17bad711-de31-4f09-8d30-f83ade1d6f2a",
@@ -103,14 +115,25 @@
           "width": 360,
           "height": 648,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 270,
           "focalX": 41.91473010440877,
           "focalY": 20.55378631524039,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "basedOn": "ccb83cf6-b35b-41b1-bc5f-7f7383decc8a",
           "id": "ce3de6dc-492d-47ab-aa0b-aa86cf1363cd",
@@ -134,7 +157,10 @@
           "width": 273,
           "height": 47,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -165,7 +191,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "initial",
           "scale": 100,
@@ -175,7 +207,10 @@
           "id": "c7a5dbe5-43f8-4510-8741-7e3900e3d487",
           "content": "<span style=\"font-weight: 700; color: #fff\">WEEKLY</span>",
           "fontSize": 68,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": -269,
@@ -183,7 +218,10 @@
           "width": 586,
           "height": 54,
           "opacity": 10,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -214,7 +252,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "initial",
           "scale": 100,
@@ -225,7 +269,10 @@
           "id": "3970117d-3e7f-4eb0-94c6-a90873ba11c5",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">ENTERTAINMENT</span></span>",
           "fontSize": 68,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 94,
@@ -233,7 +280,10 @@
           "width": 586,
           "height": 54,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -264,7 +314,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "initial",
           "scale": 100,
@@ -275,7 +331,10 @@
           "id": "d3c1350e-1e2f-4f43-ae55-7fac7fd59932",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">ENTERTAINMENT</span></span>",
           "fontSize": 68,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 51,
@@ -283,7 +342,10 @@
           "width": 273,
           "height": 47,
           "opacity": 10,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 180,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -314,7 +376,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "initial",
           "scale": 100,
@@ -325,124 +393,78 @@
           "id": "0b0ba715-00b7-4b12-8c51-2fa4035bca6b",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">WEEKLY</span></span>",
           "fontSize": 68,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 96,
+          "y": 375,
+          "width": 150,
+          "height": 150,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_wraparound.png",
-            "width": 150,
-            "height": 146,
-            "posterId": 0,
-            "id": 1192,
-            "title": "ent_icon_wraparound",
-            "alt": "ent_icon_wraparound",
-            "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "ent_icon_wraparound-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_icon_wraparound-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "ent_icon_wraparound-150x146.png",
-                "width": 150,
-                "height": 146,
-                "mime_type": "image/png",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_icon_wraparound-150x146.png"
-              },
-              "full": {
-                "file": "ent_icon_wraparound.png",
-                "width": 300,
-                "height": 292,
-                "mime_type": "image/png",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_icon_wraparound.png"
-              }
-            }
-          },
-          "type": "image",
-          "x": 96.5,
-          "y": 375,
-          "width": 150,
-          "height": 146,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "new-music"
           },
-          "id": "a4c1a093-191a-4fa6-9e73-51090739a4ef"
+          "id": "0d36df49-4416-4506-a017-859029fe80ca"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 143,
+          "y": 412,
+          "width": 56,
+          "height": 74,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_musicnote.png",
-            "width": 150,
-            "height": 146,
-            "posterId": 0,
-            "id": 1191,
-            "title": "ent_icon_musicnote",
-            "alt": "ent_icon_musicnote",
-            "local": false,
-            "sizes": {
-              "thumbnail": {
-                "file": "ent_icon_musicnote-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_icon_musicnote-150x150.png"
-              },
-              "web_stories_thumbnail": {
-                "file": "ent_icon_musicnote-150x146.png",
-                "width": 150,
-                "height": 146,
-                "mime_type": "image/png",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_icon_musicnote-150x146.png"
-              },
-              "full": {
-                "file": "ent_icon_musicnote.png",
-                "width": 300,
-                "height": 292,
-                "mime_type": "image/png",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_icon_musicnote.png"
-              }
-            }
-          },
-          "type": "image",
-          "x": 96.5,
-          "y": 375,
-          "width": 150,
-          "height": 146,
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "music-note"
           },
-          "id": "36652167-a50f-48be-b85c-80b6639fd8a0"
+          "id": "748e7c7b-a7da-4ee0-bfd5-645804ac2766"
         }
       ],
       "type": "page",
       "id": "04df622c-0d7f-4760-a06c-e88d9d9ac435",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "cover"
     },
     {
       "animations": [
@@ -519,11 +541,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "7a27a752-537d-4dcd-9677-5926437c0e19",
@@ -535,14 +568,25 @@
           "width": 357,
           "height": 606,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 110,
           "focalX": 41.49743929933975,
           "focalY": 54.586814873401416,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "816de043-a84a-43af-af61-9a4d00a04e9b",
           "resource": {
@@ -565,7 +609,10 @@
           "width": 452,
           "height": 64,
           "opacity": 10,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -596,7 +643,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "center",
           "scale": 100,
@@ -607,7 +660,10 @@
           "id": "26df8c19-b913-441a-bff1-bf1b677cb159",
           "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
           "fontSize": 81,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": -20,
@@ -615,7 +671,10 @@
           "width": 452,
           "height": 64,
           "opacity": 30,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -646,7 +705,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "center",
           "scale": 100,
@@ -657,7 +722,10 @@
           "id": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
           "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
           "fontSize": 81,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": -20,
@@ -665,7 +733,10 @@
           "width": 452,
           "height": 65,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -696,7 +767,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "center",
           "scale": 100,
@@ -707,7 +784,10 @@
           "id": "5efefa69-c1d0-4331-905b-3936d866f0eb",
           "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
           "fontSize": 81,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 55,
@@ -715,7 +795,10 @@
           "width": 209,
           "height": 35,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -746,7 +829,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -756,13 +845,23 @@
           "id": "74ea4aa6-1165-42cf-9849-90ab25e6b76e",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\">New Artists</span>",
           "fontSize": 35,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "backgroundOverlay": "none",
       "type": "page",
       "id": "9670b092-e11b-433e-aa8a-659e4ee982c9",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "section"
     },
     {
       "animations": [
@@ -875,11 +974,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "03d49bf5-7b5e-4d7c-b09e-7c3ebde20c94",
@@ -891,7 +1001,10 @@
           "width": 829,
           "height": 256,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -922,7 +1035,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "initial",
           "scale": 100,
@@ -933,7 +1052,10 @@
           "id": "741cf9c1-5c4e-400a-88d1-f8d85988d103",
           "content": "<span style=\"color: rgba(78, 20, 80, 0.5)\"><span style=\"font-weight: 700\">PINK</span></span>",
           "fontSize": 367,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": -286,
@@ -941,7 +1063,10 @@
           "width": 829,
           "height": 256,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -972,7 +1097,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.7,
           "textAlign": "initial",
           "scale": 100,
@@ -983,7 +1114,10 @@
           "id": "942add2b-e206-4802-bf78-64bd514ab574",
           "content": "<span style=\"color: rgba(78, 20, 80, 1)\"><span style=\"font-weight: 700\">PINK</span></span>",
           "fontSize": 367,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 1,
@@ -991,7 +1125,10 @@
           "width": 81,
           "height": 202,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1022,7 +1159,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -1033,7 +1176,10 @@
           "id": "a8a8df4d-5750-4508-9698-69226f88a94f",
           "content": "<span style=\"font-weight: 700; color: #fff\">“</span>",
           "fontSize": 202,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 45,
@@ -1041,7 +1187,10 @@
           "width": 324,
           "height": 366,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1072,7 +1221,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.83,
           "textAlign": "initial",
           "scale": 100,
@@ -1083,7 +1238,10 @@
           "id": "37fa4bdd-2898-4b95-bf2a-ae0d4e474f47",
           "content": "<span style=\"font-weight: 700; color: #ff00d6\">PINK</span>\n<span style=\"font-weight: 700; color: #fff\">IS NOT</span>\n<span style=\"font-weight: 700; color: #fff\">JUST A</span>\n<span style=\"font-weight: 700; color: #fff\">COLOR,</span>\n<span style=\"font-weight: 700; color: #fff\">IT'S AN</span>\n<span style=\"font-weight: 700; color: #fff\">ATTITUDE!</span>",
           "fontSize": 64,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 251,
@@ -1091,7 +1249,10 @@
           "width": 100,
           "height": 26,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -1122,7 +1283,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "right",
           "scale": 100,
@@ -1133,13 +1300,23 @@
           "id": "8bef4ffe-0a36-4444-ac4c-48b548217cb9",
           "content": "<span style=\"color: #fff\">– Artist</span>",
           "fontSize": 26,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "backgroundOverlay": "none",
       "type": "page",
       "id": "73e07f65-ae5a-4a85-8802-7ea5cfaa45b2",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "quote"
     },
     {
       "animations": [
@@ -1279,11 +1456,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "87fe44ec-dfa5-450c-8250-1859f8e4fe07",
@@ -1295,14 +1483,25 @@
           "width": 364,
           "height": 425,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 100,
           "focalX": 50.193135557679454,
           "focalY": 58.677063671635366,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
           "resource": {
@@ -1325,7 +1524,10 @@
           "width": 595,
           "height": 81,
           "opacity": 10,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1356,7 +1558,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.75,
           "textAlign": "left",
           "scale": 100,
@@ -1367,7 +1575,10 @@
           "id": "2ed3fa60-d97a-4641-b858-a024163090aa",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">SPOTLIGHT</span></span>",
           "fontSize": 108,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 49,
@@ -1375,7 +1586,10 @@
           "width": 272,
           "height": 70,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1406,7 +1620,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -1417,7 +1637,10 @@
           "id": "e23cd5e4-d0c9-436d-a1b1-b91dcf909373",
           "content": "<span style=\"color: #fff\">Toronto-based singer D7</span>",
           "fontSize": 35,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 50,
@@ -1425,7 +1648,10 @@
           "width": 343,
           "height": 84,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1456,7 +1682,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.43,
           "textAlign": "left",
           "scale": 100,
@@ -1467,7 +1699,10 @@
           "id": "fc016a73-3d6f-43a3-8542-6de6651a2829",
           "content": "<span style=\"color: #fff\">D7 first gained media attention in 2020 when a video of her singing \"Nowhere to Go\" was shared over a million times. Her deput album was well received.</span>",
           "fontSize": 15,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": -149,
@@ -1475,7 +1710,10 @@
           "width": 352,
           "height": 53,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1506,7 +1744,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.83,
           "textAlign": "center",
           "scale": 100,
@@ -1517,13 +1761,23 @@
           "id": "17fff8ec-3742-4837-bbcb-6f547744c46a",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">SPOTLIGHT</span></span>",
           "fontSize": 64,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "backgroundOverlay": "none",
       "type": "page",
       "id": "582c5a25-6f17-4107-8e60-6ae4721c932f",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
     },
     {
       "animations": [
@@ -1614,131 +1868,6 @@
           "delay": 550,
           "direction": "normal",
           "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "298efc68-f3cd-4a80-885b-84ce236db591",
-          "targets": ["94012718-482e-48fd-87ad-9c7656a2699e"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 600,
-          "delay": 650,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "8d55c846-2ed8-4a78-ba8c-ba6c0374dccd",
-          "targets": ["636dafd1-3a4f-4959-ba81-b3ebf414d144"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 600,
-          "delay": 650,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "11fa4e7b-59a8-4568-9f06-932415424b25",
-          "targets": ["2dec6f59-b7fc-4418-a28f-c2eaaf43aade"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 600,
-          "delay": 650,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "66317a29-8a26-42ec-933f-5fd10c112e66",
-          "targets": ["cef84787-c3a8-466a-8367-44f344b57af5"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 600,
-          "delay": 650,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "a7ba664f-4410-41c3-bdb9-f0d1628c2979",
-          "targets": ["82024650-41c0-49fc-bc90-68a41dcd9eaf"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 600,
-          "delay": 650,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "57f12eaf-1548-4e62-a91c-828124c5cd63",
-          "targets": ["94012718-482e-48fd-87ad-9c7656a2699e"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-5",
-          "offsetY": 0,
-          "duration": 600,
-          "delay": 850,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "99f3e8cd-2d17-4498-bcb5-538221318ade",
-          "targets": ["636dafd1-3a4f-4959-ba81-b3ebf414d144"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-5",
-          "offsetY": 0,
-          "duration": 600,
-          "delay": 800,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "132dd34c-2f39-4e9c-b91c-90e331697374",
-          "targets": ["2dec6f59-b7fc-4418-a28f-c2eaaf43aade"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-5",
-          "offsetY": 0,
-          "duration": 600,
-          "delay": 750,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "868c7fcb-ec09-4ef5-bbcc-93508da276c3",
-          "targets": ["cef84787-c3a8-466a-8367-44f344b57af5"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-5",
-          "offsetY": 0,
-          "duration": 600,
-          "delay": 700,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
-          "fill": "both"
-        },
-        {
-          "id": "b3931a0d-5ec5-41bd-b54f-85e3d2521f96",
-          "targets": ["82024650-41c0-49fc-bc90-68a41dcd9eaf"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-5",
-          "offsetY": 0,
-          "duration": 600,
-          "delay": 650,
-          "direction": "normal",
-          "easingPreset": "inOutSine",
           "fill": "both"
         },
         {
@@ -1852,6 +1981,46 @@
           "direction": "normal",
           "easingPreset": "linear",
           "fill": "both"
+        },
+        {
+          "id": "aded41e8-0139-49d2-a33e-4240c5cc4cc9",
+          "type": "effect-whoosh-in",
+          "targets": ["030a889c-6cce-4745-b0b9-1c38a93c932a"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "771fa48c-a791-4e71-b053-91ef23276501",
+          "type": "effect-whoosh-in",
+          "targets": ["c13a96c1-7696-4343-b045-889178ee4445"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "45183f3d-f03b-48d1-8f2e-7061cf5befc4",
+          "type": "effect-whoosh-in",
+          "targets": ["0e9586ab-0e6a-4e72-89f5-dbbd420ba25e"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "1b7d46c9-b000-470d-be5a-0f718f2957df",
+          "type": "effect-whoosh-in",
+          "targets": ["b769af25-9dc3-4f19-bd34-b94c1e9812a8"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "731fe13f-75b9-4072-b6a2-a3b5f0715b62",
+          "type": "effect-whoosh-in",
+          "targets": ["1c599d8f-79fb-42ce-bf26-7cec1e79cdeb"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
         }
       ],
       "elements": [
@@ -1861,11 +2030,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "923c69d0-84f6-4223-8f7e-8fd7f0d0363f",
@@ -1877,14 +2057,25 @@
           "width": 30,
           "height": 286,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 0, "b": 214 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "id": "07ca71a9-b60e-4373-8ee1-65be94c152f0"
         },
@@ -1894,14 +2085,25 @@
           "width": 392,
           "height": 372,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -1915,85 +2117,7 @@
             "title": "ent_page5_image1",
             "alt": "ent_page5_image1",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "ent_page5_image1-300x181.jpg",
-                "width": 300,
-                "height": 181,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-300x181.jpg"
-              },
-              "large": {
-                "file": "ent_page5_image1-1024x618.jpg",
-                "width": 1024,
-                "height": 618,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-1024x618.jpg"
-              },
-              "thumbnail": {
-                "file": "ent_page5_image1-150x150.jpg",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-150x150.jpg"
-              },
-              "medium_large": {
-                "file": "ent_page5_image1-768x464.jpg",
-                "width": 768,
-                "height": 464,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-768x464.jpg"
-              },
-              "1536x1536": {
-                "file": "ent_page5_image1-1536x927.jpg",
-                "width": 1536,
-                "height": 927,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-1536x927.jpg"
-              },
-              "post-thumbnail": {
-                "file": "ent_page5_image1-1200x724.jpg",
-                "width": 1200,
-                "height": 724,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-1200x724.jpg"
-              },
-              "web-stories-poster-portrait": {
-                "file": "ent_page5_image1-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "ent_page5_image1-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-928x928.jpg"
-              },
-              "web-stories-poster-landscape": {
-                "file": "ent_page5_image1-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-928x696.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "ent_page5_image1-150x91.jpg",
-                "width": 150,
-                "height": 91,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1-150x91.jpg"
-              },
-              "full": {
-                "file": "ent_page5_image1.jpg",
-                "width": 1920,
-                "height": 1159,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page5_image1.jpg"
-              }
-            }
+            "sizes": []
           },
           "basedOn": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
           "id": "46058255-8bf6-4302-88eb-f9bd71304225"
@@ -2004,7 +2128,10 @@
           "width": 272,
           "height": 70,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2035,7 +2162,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -2046,7 +2179,10 @@
           "id": "fd434caf-7752-47d3-b41b-0a1048f116a8",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\">New Album Review</span>",
           "fontSize": 35,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 37,
@@ -2054,7 +2190,10 @@
           "width": 332,
           "height": 42,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2085,7 +2224,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.43,
           "textAlign": "left",
           "scale": 100,
@@ -2096,7 +2241,10 @@
           "id": "ff9a77cf-c942-4a04-84ea-d7134d97f360",
           "content": "<span style=\"color: #fff\">Trevor and Inband explores electronic sounds with haunting vocals.</span>",
           "fontSize": 15,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 264,
@@ -2104,14 +2252,25 @@
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 82, "g": 82, "b": 82 } },
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "b6325820-9ffe-41d3-97e9-eb969ff9ef22",
           "id": "76c34633-deca-4d3b-ad89-9f8f787aabf3"
@@ -2122,14 +2281,25 @@
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "3f8f943f-ca2c-4604-b9e7-d300c4b2b9d6",
           "id": "837db927-1ee6-4419-ace6-c59f83f0ca49"
@@ -2140,7 +2310,10 @@
           "width": 101,
           "height": 28,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -2171,7 +2344,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2182,181 +2361,10 @@
           "id": "d61d1f44-9af9-4cdc-8912-caf2aa0c4993",
           "content": "<span style=\"color: #fff\">See More</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 11, "vertical": 6 }
-        },
-        {
-          "x": 37,
-          "y": 561,
-          "width": 15,
-          "height": 14,
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_white_star.png",
-            "width": 50,
-            "height": 47,
-            "posterId": 0,
-            "id": 545,
-            "title": "ent_icon_white_star",
-            "alt": "ent_icon_white_star",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "94012718-482e-48fd-87ad-9c7656a2699e"
-        },
-        {
-          "x": 52,
-          "y": 561,
-          "width": 15,
-          "height": 14,
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_white_star.png",
-            "width": 50,
-            "height": 47,
-            "posterId": 0,
-            "id": 545,
-            "title": "ent_icon_white_star",
-            "alt": "ent_icon_white_star",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "basedOn": "94012718-482e-48fd-87ad-9c7656a2699e",
-          "id": "636dafd1-3a4f-4959-ba81-b3ebf414d144"
-        },
-        {
-          "x": 67,
-          "y": 561,
-          "width": 15,
-          "height": 14,
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_white_star.png",
-            "width": 50,
-            "height": 47,
-            "posterId": 0,
-            "id": 545,
-            "title": "ent_icon_white_star",
-            "alt": "ent_icon_white_star",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "basedOn": "636dafd1-3a4f-4959-ba81-b3ebf414d144",
-          "id": "2dec6f59-b7fc-4418-a28f-c2eaaf43aade"
-        },
-        {
-          "width": 15,
-          "height": 14,
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_white_star.png",
-            "width": 50,
-            "height": 47,
-            "posterId": 0,
-            "id": 545,
-            "title": "ent_icon_white_star",
-            "alt": "ent_icon_white_star",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "basedOn": "2dec6f59-b7fc-4418-a28f-c2eaaf43aade",
-          "id": "cef84787-c3a8-466a-8367-44f344b57af5",
-          "x": 82,
-          "y": 561
-        },
-        {
-          "width": 15,
-          "height": 14,
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_icon_white_star.png",
-            "width": 50,
-            "height": 47,
-            "posterId": 0,
-            "id": 545,
-            "title": "ent_icon_white_star",
-            "alt": "ent_icon_white_star",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "basedOn": "2dec6f59-b7fc-4418-a28f-c2eaaf43aade",
-          "id": "82024650-41c0-49fc-bc90-68a41dcd9eaf",
-          "x": 98,
-          "y": 561
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          }
         },
         {
           "x": 136,
@@ -2364,7 +2372,10 @@
           "width": 75,
           "height": 11,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2395,7 +2406,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -2406,13 +2423,172 @@
           "id": "ed850d1c-3f8f-4154-ad72-a90d30dc836d",
           "content": "<span style=\"font-style: italic; color: #fff\">5 out of 5</span>",
           "fontSize": 12,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "x": 98,
+          "y": 561,
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "id": "1c599d8f-79fb-42ce-bf26-7cec1e79cdeb"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "1c599d8f-79fb-42ce-bf26-7cec1e79cdeb",
+          "id": "b769af25-9dc3-4f19-bd34-b94c1e9812a8",
+          "x": 82,
+          "y": 561
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "1c599d8f-79fb-42ce-bf26-7cec1e79cdeb",
+          "id": "0e9586ab-0e6a-4e72-89f5-dbbd420ba25e",
+          "x": 67,
+          "y": 561
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "0e9586ab-0e6a-4e72-89f5-dbbd420ba25e",
+          "id": "c13a96c1-7696-4343-b045-889178ee4445",
+          "x": 52,
+          "y": 561
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "c13a96c1-7696-4343-b045-889178ee4445",
+          "id": "030a889c-6cce-4745-b0b9-1c38a93c932a",
+          "x": 37,
+          "y": 561
         }
       ],
       "backgroundOverlay": "none",
       "type": "page",
       "id": "7494b712-c8d0-4189-a85c-32aa52a22032",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
     },
     {
       "animations": [
@@ -2514,11 +2690,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "3fb75a52-ac04-4979-9a26-c28e725c3ed3",
@@ -2530,14 +2717,25 @@
           "width": 375,
           "height": 305,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 200,
           "focalX": 50.079165168465856,
           "focalY": 43.117469706013374,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2561,7 +2759,10 @@
           "width": 272,
           "height": 35,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2592,7 +2793,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -2603,7 +2810,10 @@
           "id": "883294a7-1863-4ef1-b3b3-05f4e99f027c",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Summer Hits</span>",
           "fontSize": 35,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 41,
@@ -2611,7 +2821,10 @@
           "width": 349,
           "height": 42,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2642,7 +2855,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.43,
           "textAlign": "left",
           "scale": 100,
@@ -2653,7 +2872,10 @@
           "id": "7807179c-ca03-44f5-b164-de59858ed73b",
           "content": "<span style=\"color: #fff\">Summer’s here and so are the great hits! Let’s check out the scenes with Trevor and Inband.</span>",
           "fontSize": 15,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 39,
@@ -2661,7 +2883,10 @@
           "width": 386,
           "height": 63,
           "opacity": 10,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2692,7 +2917,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "center",
           "scale": 100,
@@ -2703,7 +2934,10 @@
           "id": "99964f56-048a-4e9c-bc0c-79ff8f9e32d5",
           "content": "<span style=\"font-weight: 700; color: #fff\">OUT NOW</span>",
           "fontSize": 79,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 39,
@@ -2711,7 +2945,10 @@
           "width": 386,
           "height": 63,
           "opacity": 30,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2742,7 +2979,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "left",
           "scale": 100,
@@ -2753,7 +2996,10 @@
           "id": "7134bc0d-5c49-40fb-ac4a-dac7dc45dccf",
           "content": "<span style=\"font-weight: 700; color: #fff\">OUT NOW</span>",
           "fontSize": 79,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 39,
@@ -2761,7 +3007,10 @@
           "width": 386,
           "height": 63,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2792,7 +3041,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.8,
           "textAlign": "center",
           "scale": 100,
@@ -2803,13 +3058,23 @@
           "id": "842c2576-5887-4eb2-a9ba-93a6eea67b7d",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">OUT NOW</span></span>",
           "fontSize": 79,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "backgroundOverlay": "none",
       "type": "page",
       "id": "fd60f532-b619-4162-8df9-d8241cc88e45",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
     },
     {
       "animations": [
@@ -2909,11 +3174,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "f1d3853d-aa0a-4bfc-8b40-d09c94153814",
@@ -2925,14 +3201,25 @@
           "width": 376,
           "height": 392,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 110,
           "focalX": 49.89204749754657,
           "focalY": 62.22262102275575,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2956,7 +3243,10 @@
           "width": 272,
           "height": 70,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2987,7 +3277,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -2998,7 +3294,10 @@
           "id": "0fdf2c26-3138-41cf-ae7c-e508635ae6fe",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Behind the Scenes</span>",
           "fontSize": 35,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 36,
@@ -3006,7 +3305,10 @@
           "width": 340,
           "height": 92,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3037,7 +3339,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "left",
           "scale": 100,
@@ -3048,13 +3356,23 @@
           "id": "b0d4ee54-76eb-4050-821d-5d11181b6a2c",
           "content": "<span style=\"color: #fff\">It’s one thing to listen to music; it’s another to learn how it’s made! We’ll take you through the production process of one of our favorite songs.</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "backgroundOverlay": "none",
       "type": "page",
       "id": "877c2ef2-1faa-4a7b-9f5b-364dcfa3d856",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
     },
     {
       "animations": [
@@ -3310,11 +3628,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "777737d1-e79e-4f4e-9708-cf5a41962d77",
@@ -3326,14 +3655,25 @@
           "width": 309,
           "height": 16,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 0, "b": 214 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "4e907f06-b5e0-4254-b469-8f0a505cd915",
           "id": "6403aa20-a02a-499d-832a-0982518395f5"
@@ -3344,14 +3684,25 @@
           "width": 309,
           "height": 16,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 0, "b": 214 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "4e907f06-b5e0-4254-b469-8f0a505cd915",
           "id": "016efcac-89dc-4123-bec4-f7422f8babd6"
@@ -3362,14 +3713,25 @@
           "width": 309,
           "height": 16,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 0, "b": 214 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "id": "4e907f06-b5e0-4254-b469-8f0a505cd915"
         },
@@ -3379,14 +3741,25 @@
           "width": 352,
           "height": 110,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 130,
           "focalX": 55.59746548940643,
           "focalY": 37.583736990182935,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "24deb6f3-2a32-4638-8702-7fc1157b9956",
           "resource": {
@@ -3409,14 +3782,25 @@
           "width": 352,
           "height": 110,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 110,
           "focalX": 50,
           "focalY": 35.61736883198913,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "basedOn": "24deb6f3-2a32-4638-8702-7fc1157b9956",
           "id": "84d3c738-e445-460d-96cc-e04f1184a554",
@@ -3432,36 +3816,7 @@
             "title": "ent_page8_image3",
             "alt": "ent_page8_image3",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "ent_page8_image3-300x119.jpg",
-                "width": 300,
-                "height": 119,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page8_image3-300x119.jpg"
-              },
-              "thumbnail": {
-                "file": "ent_page8_image3-150x140.jpg",
-                "width": 150,
-                "height": 140,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page8_image3-150x140.jpg"
-              },
-              "web_stories_thumbnail": {
-                "file": "ent_page8_image3-150x60.jpg",
-                "width": 150,
-                "height": 60,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page8_image3-150x60.jpg"
-              },
-              "full": {
-                "file": "ent_page8_image3.jpg",
-                "width": 352,
-                "height": 140,
-                "mime_type": "image/jpeg",
-                "source_url": "https://replaceme.com/images/templates/entertainment/ent_page8_image3.jpg"
-              }
-            }
+            "sizes": []
           }
         },
         {
@@ -3470,14 +3825,25 @@
           "width": 352,
           "height": 110,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 160,
           "focalX": 31.375571576243427,
           "focalY": 57.36004155908421,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "basedOn": "84d3c738-e445-460d-96cc-e04f1184a554",
           "id": "e53c70ed-d9e7-442b-ab62-0c236111e1db",
@@ -3501,7 +3867,10 @@
           "width": 268,
           "height": 46,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "FILL",
@@ -3532,7 +3901,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -3543,7 +3918,10 @@
           "id": "2942198b-fcac-4d56-bc37-b5a16de50651",
           "content": "<span style=\"font-weight: 700; color: #fff\">MURDER MYSTERY</span>",
           "fontSize": 26,
-          "padding": { "horizontal": 10, "vertical": 10 }
+          "padding": {
+            "horizontal": 10,
+            "vertical": 10
+          }
         },
         {
           "x": 0,
@@ -3551,7 +3929,10 @@
           "width": 268,
           "height": 46,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "FILL",
@@ -3582,7 +3963,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -3593,7 +3980,10 @@
           "id": "787be6c3-3d2d-4d08-9db1-801e2f1bf7f1",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">DOCUMENTARY</span></span>",
           "fontSize": 26,
-          "padding": { "horizontal": 10, "vertical": 10 }
+          "padding": {
+            "horizontal": 10,
+            "vertical": 10
+          }
         },
         {
           "x": 40,
@@ -3601,7 +3991,10 @@
           "width": 251,
           "height": 105,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3632,7 +4025,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -3643,7 +4042,10 @@
           "id": "97bead85-66e2-4ea0-af98-8b1305d41884",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\">This summer’s must-see blockbusters</span>",
           "fontSize": 35,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 0,
@@ -3651,7 +4053,10 @@
           "width": 268,
           "height": 48,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "FILL",
@@ -3682,7 +4087,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -3693,13 +4104,23 @@
           "id": "b2b65d7c-5689-4c40-a40e-5a9a628bc04e",
           "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">POLITICAL BIOPIC</span></span>",
           "fontSize": 26,
-          "padding": { "horizontal": 10, "vertical": 11 }
+          "padding": {
+            "horizontal": 10,
+            "vertical": 11
+          }
         }
       ],
       "backgroundOverlay": "none",
       "type": "page",
       "id": "3d0dbbd3-70c0-4376-b1bf-c8015def1050",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "list"
     },
     {
       "animations": [
@@ -4112,11 +4533,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "ffce028c-042d-4b3c-a489-3cc31162ed10",
@@ -4128,14 +4560,25 @@
           "width": 160,
           "height": 124,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "77770ec0-6e97-40bc-813b-1e0500033fc3",
           "resource": {
@@ -4158,14 +4601,25 @@
           "width": 160,
           "height": 124,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 100,
           "focalX": 49.851188990309694,
           "focalY": 34.28571451955782,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "basedOn": "77770ec0-6e97-40bc-813b-1e0500033fc3",
           "id": "e279e4c7-f45a-4642-86ce-8c86644f7198",
@@ -4189,14 +4643,25 @@
           "width": 160,
           "height": 124,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "basedOn": "e279e4c7-f45a-4642-86ce-8c86644f7198",
           "id": "78953cce-d23a-4bef-97e5-dec04f6a45a9",
@@ -4218,7 +4683,10 @@
           "width": 338,
           "height": 66,
           "opacity": 30,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4249,7 +4717,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.83,
           "textAlign": "left",
           "scale": 100,
@@ -4258,7 +4732,10 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff\">STORIES</span>",
           "fontSize": 80,
-          "padding": { "horizontal": 0, "vertical": 0 },
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
           "basedOn": "4f12d40d-d1c9-488f-a4f8-48e81f141c27",
           "id": "f449ade2-50c9-4495-9887-2e906e1e925f",
           "x": -1,
@@ -4270,7 +4747,10 @@
           "width": 234,
           "height": 66,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4301,7 +4781,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.83,
           "textAlign": "left",
           "scale": 100,
@@ -4312,7 +4798,10 @@
           "id": "4f12d40d-d1c9-488f-a4f8-48e81f141c27",
           "content": "<span style=\"font-weight: 700; color: #fff\">MORE</span>",
           "fontSize": 80,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 210,
@@ -4320,7 +4809,10 @@
           "width": 162,
           "height": 31,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4351,7 +4843,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -4362,7 +4860,10 @@
           "id": "c6c185a6-32d1-42ed-b376-5733abe06f55",
           "content": "<span style=\"font-weight: 700; color: #fff\">OUR TOP PICKS&nbsp;FOR THE GRAMMYS</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 210,
@@ -4370,7 +4871,10 @@
           "width": 113,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4401,7 +4905,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -4412,7 +4922,10 @@
           "id": "9379053f-520a-4138-9720-dd14e3115431",
           "content": "<span style=\"font-weight: 700; color: #fff\">TRENDING SUPERHERO</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 210,
@@ -4420,7 +4933,10 @@
           "width": 145,
           "height": 31,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4451,7 +4967,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -4462,20 +4984,34 @@
           "id": "9300db37-ac48-4bfc-b91b-0ffb4da5f8d0",
           "content": "<span style=\"font-weight: 700; color: #fff\">NEW SUMMER MOVIES</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 82, "g": 82, "b": 82 } },
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "76c34633-deca-4d3b-ad89-9f8f787aabf3",
           "id": "4dbd5cae-d36c-468e-9914-13c82c0897fe",
@@ -4486,14 +5022,25 @@
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "837db927-1ee6-4419-ace6-c59f83f0ca49",
           "id": "88568499-f049-4a3d-88f1-ed6c0793c3a6",
@@ -4504,7 +5051,10 @@
           "width": 101,
           "height": 28,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -4535,7 +5085,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -4544,7 +5100,10 @@
           "type": "text",
           "content": "<span style=\"color: #fff\">See More</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 11, "vertical": 6 },
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          },
           "basedOn": "d61d1f44-9af9-4cdc-8912-caf2aa0c4993",
           "id": "786b9306-0b57-4a0a-9843-2e38304be5ce",
           "x": 212.5,
@@ -4554,14 +5113,25 @@
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 82, "g": 82, "b": 82 } },
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "4dbd5cae-d36c-468e-9914-13c82c0897fe",
           "id": "507dba78-9d97-4f60-9075-43472c6b91cc",
@@ -4572,14 +5142,25 @@
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "88568499-f049-4a3d-88f1-ed6c0793c3a6",
           "id": "f2e11fcc-6f0f-4de1-afa3-a072bd52685c",
@@ -4590,7 +5171,10 @@
           "width": 101,
           "height": 28,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -4621,7 +5205,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -4630,7 +5220,10 @@
           "type": "text",
           "content": "<span style=\"color: #fff\">See More</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 11, "vertical": 6 },
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          },
           "basedOn": "786b9306-0b57-4a0a-9843-2e38304be5ce",
           "id": "33c99ae6-6566-4fcd-8fd7-a6c6ed162374",
           "x": 212.5,
@@ -4640,14 +5233,25 @@
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 82, "g": 82, "b": 82 } },
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "507dba78-9d97-4f60-9075-43472c6b91cc",
           "id": "857f8f9d-55e7-45c6-8ffd-d69d3ca60c12",
@@ -4658,14 +5262,25 @@
           "width": 108,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "f2e11fcc-6f0f-4de1-afa3-a072bd52685c",
           "id": "ea388d41-74f1-422c-b8bd-648ed640b2d3",
@@ -4676,7 +5291,10 @@
           "width": 101,
           "height": 28,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -4707,7 +5325,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -4716,7 +5340,10 @@
           "type": "text",
           "content": "<span style=\"color: #fff\">See More</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 11, "vertical": 6 },
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          },
           "basedOn": "33c99ae6-6566-4fcd-8fd7-a6c6ed162374",
           "id": "01c957dd-499c-4e32-8917-5293bd52cbee",
           "x": 211.5,
@@ -4726,9 +5353,14 @@
       "backgroundOverlay": "none",
       "type": "page",
       "id": "f4ea7828-e328-47e6-bf9d-a786ab192ee1",
-      "backgroundColor": { "color": { "r": 0, "g": 0, "b": 0 } }
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "list"
     }
-  ],
-  "autoAdvance": true,
-  "defaultPageDuration": 7
+  ]
 }

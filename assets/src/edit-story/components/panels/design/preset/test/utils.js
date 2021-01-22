@@ -20,6 +20,8 @@
 import {
   findMatchingColor,
   findMatchingStylePreset,
+  getOpaqueColor,
+  getPanelInitialHeight,
   getShapePresets,
   getTextPresets,
   presetHasOpacity,
@@ -148,7 +150,7 @@ describe('Panels/StylePreset/utils', () => {
     ).not.toBeDefined();
   });
 
-  it('should get correct text style presets from selected elements', () => {
+  it('should get correct and unique text style presets from selected elements', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       font: {
@@ -167,6 +169,13 @@ describe('Panels/StylePreset/utils', () => {
           horizontal: 0,
         },
         content: '<span style="color: rgb(1,1,1)">Content</span>',
+      },
+      {
+        type: 'text',
+        x: 30,
+        content:
+          '<span style="font-weight: 700; font-style: italic; color: rgb(2,2,2)">Content</span>',
+        ...objectWithout(stylePreset, ['color']),
       },
       {
         type: 'text',
@@ -404,6 +413,28 @@ describe('Panels/StylePreset/utils', () => {
     expect(presets).toStrictEqual(expected);
   });
 
+  it('should get duplicate preset only once from shape', () => {
+    const elements = [
+      {
+        type: 'shape',
+        backgroundColor: TEST_COLOR,
+      },
+      {
+        type: 'shape',
+        backgroundColor: TEST_COLOR,
+      },
+    ];
+    const stylePresets = {
+      textStyles: [],
+      colors: [],
+    };
+    const expected = {
+      colors: [TEST_COLOR],
+    };
+    const presets = getShapePresets(elements, stylePresets);
+    expect(presets).toStrictEqual(expected);
+  });
+
   it('should detect opacity in preset correctly', () => {
     expect(presetHasOpacity(TEST_COLOR)).toBeFalse();
     const preset1 = {
@@ -427,5 +458,68 @@ describe('Panels/StylePreset/utils', () => {
       stops: [TEST_COLOR, TEST_COLOR_2],
     };
     expect(presetHasOpacity(preset3)).toBeFalse();
+  });
+
+  describe('getOpaqueColor', () => {
+    it('should get the opaque color correctly', () => {
+      expect(getOpaqueColor({ color: { r: 1, g: 1, b: 1 } })).toMatchObject({
+        color: { r: 1, g: 1, b: 1, a: 1 },
+      });
+      expect(
+        getOpaqueColor({ color: { r: 1, g: 1, b: 1, a: 0.4 } })
+      ).toMatchObject({
+        color: { r: 1, g: 1, b: 1, a: 1 },
+      });
+      expect(
+        getOpaqueColor({ color: { r: 1, g: 1, b: 1, a: null } })
+      ).toMatchObject({
+        color: { r: 1, g: 1, b: 1, a: 1 },
+      });
+    });
+  });
+
+  describe('getPanelInitialHeight', () => {
+    it('should get the initial height correctly for color presets', () => {
+      const presets = [
+        { color: { r: 25, g: 39, b: 1 } },
+        { color: { r: 25, g: 39, b: 2 } },
+        { color: { r: 25, g: 39, b: 3 } },
+        { color: { r: 25, g: 39, b: 4 } },
+        { color: { r: 25, g: 39, b: 5 } },
+        { color: { r: 25, g: 39, b: 6 } },
+        { color: { r: 25, g: 39, b: 7 } },
+        { color: { r: 25, g: 39, b: 8 } },
+        { color: { r: 25, g: 39, b: 9 } },
+        { color: { r: 25, g: 39, b: 10 } },
+        { color: { r: 25, g: 39, b: 11 } },
+        { color: { r: 25, g: 39, b: 12 } },
+        { color: { r: 25, g: 39, b: 13 } },
+      ];
+      // Three rows.
+      expect(getPanelInitialHeight(true, presets)).toStrictEqual(90);
+      // One row.
+      expect(
+        getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
+      ).toStrictEqual(45);
+
+      // No rows.
+      expect(getPanelInitialHeight(true, [])).toStrictEqual(140);
+    });
+
+    it('should get the initial height correctly for style presets', () => {
+      const presets = [
+        { fontSize: 1 },
+        { fontSize: 2 },
+        { fontSize: 3 },
+        { fontSize: 4 },
+        { fontSize: 5 },
+        { fontSize: 6 },
+        { fontSize: 7 },
+      ];
+      // Three rows.
+      expect(getPanelInitialHeight(false, presets)).toStrictEqual(192);
+      // One row.
+      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toStrictEqual(72);
+    });
   });
 });

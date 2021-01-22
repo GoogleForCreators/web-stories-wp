@@ -54,10 +54,6 @@ const StyledPill = styled.button(
       pointer-events: none;
     }
 
-    &:focus {
-      outline: none;
-    }
-
     transition: color 0.6s ease 0s;
     transition: background-color 0.6s ease 0s;
   `

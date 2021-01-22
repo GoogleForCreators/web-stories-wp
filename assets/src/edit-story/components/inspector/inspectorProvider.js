@@ -29,8 +29,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
-import useResizeEffect from '../../utils/useResizeEffect';
 import { useStory } from '../../app/story';
 
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';

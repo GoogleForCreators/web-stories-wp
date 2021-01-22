@@ -15,21 +15,15 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
 import {
   createNewStory,
   previewStory,
   insertStoryTitle,
-  clickButton,
+  uploadMedia,
+  deleteMedia,
 } from '../../../utils';
-
-const MODAL = '.media-modal';
 
 describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media dialog it', async () => {
@@ -37,32 +31,25 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    // Clicking will only act on the first element.
-    await expect(page).toClick('button', { text: 'Upload' });
+    const filename = await uploadMedia('small-video.webm', false);
 
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-
-    await expect(page).toClick('button', { text: 'Media Library' });
-    await clickButton(
-      '.attachments-browser .attachments .attachment[aria-label="small-video"]'
-    );
     await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
+    // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 
-    await percySnapshot(page, 'Inserting Video from Dialog');
+    await deleteMedia(filename);
   });
 
   it('should insert an video by clicking on media library', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
@@ -71,11 +58,11 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
+    // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 
-    await percySnapshot(page, 'Inserting Video from Media Library');
+    await deleteMedia(filename);
   });
 
   it('should insert an video by clicking on media library and preview on FE', async () => {
@@ -84,6 +71,8 @@ describe('Inserting WebM Video', () => {
     await insertStoryTitle('Publishing with video');
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
@@ -104,12 +93,13 @@ describe('Inserting WebM Video', () => {
       return document.querySelector(selector).getAttribute('poster');
     }, 'amp-video');
 
-    // Check that the value of the poster is the url that is a string and not null.
     expect(poster).not.toBeNull();
     expect(poster).toStrictEqual(expect.any(String));
-    expect(poster.endsWith('.jpeg')).toBeTrue();
+    expect(poster).not.toStrictEqual('');
 
     await editorPage.bringToFront();
     await previewPage.close();
+
+    await deleteMedia(filename);
   });
 });

@@ -23,7 +23,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { createContext, useContextSelector, identity } from '../utils';
+import {
+  createContext,
+  useContextSelector,
+  identity,
+} from '../../design-system';
 
 export const NavContext = createContext({ actions: {}, state: {} });
 

@@ -397,9 +397,9 @@ class Story_Post_Type {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
-			// custom editor after the 'current_screen' action when we can be certain the
+			// custom editor after the 'current_screen' action and when we can be certain the
 			// $post_type, $post_type_object, $post globals are all set by WordPress.
-			if ( did_action( 'current_screen' ) ) {
+			if ( isset( $GLOBALS['post'] ) && $post === $GLOBALS['post'] && did_action( 'current_screen' ) ) {
 				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			}
 
@@ -536,6 +536,8 @@ class Story_Post_Type {
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
+				'assetsURL'        => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'           => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'        => $max_upload_size,
 				'isDemo'           => $is_demo,
 				'capabilities'     => [

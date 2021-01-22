@@ -26,7 +26,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
-import { useKeyDownEffect } from '../../components/keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import getFocalFromOffset from './getFocalFromOffset';
 
