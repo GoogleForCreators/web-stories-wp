@@ -80,7 +80,9 @@ function PresetPanel({
 
   const { colors, textStyles } = stylePresets;
   const presets = isColor ? colors : textStyles;
+  const { colors: localColors } = localColorPresets;
   const hasPresets = presets.length > 0;
+  const hasLocalPresets = localColors.length > 0;
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -112,6 +114,22 @@ function PresetPanel({
     [colors, isColor, textStyles, updateStory]
   );
 
+  const handleDeleteLocalPreset = useCallback(
+    (toDelete) => {
+      const updatedColors = localColors.filter((color) => color !== toDelete);
+      updateStory({
+        properties: {
+          localColorPresets: { colors: updatedColors },
+        },
+      });
+      // If no colors are left, exit edit mode.
+      if (updatedColors.length === 0 && !hasPresets) {
+        setIsEditMode(false);
+      }
+    },
+    [hasPresets, localColors, updateStory]
+  );
+
   useEffect(() => {
     // If there are no colors left, exit edit mode.
     if (isEditMode && !hasPresets) {
@@ -124,10 +142,13 @@ function PresetPanel({
     return null;
   }
 
-  // @todo adjust for the local color!
-  const handlePresetClick = (preset) => {
+  const handlePresetClick = (preset, isLocal = false) => {
     if (isEditMode) {
-      handleDeletePreset(preset);
+      if (isLocal) {
+        handleDeleteLocalPreset(preset);
+      } else {
+        handleDeletePreset(preset);
+      }
     } else {
       handleApplyPreset(preset);
     }
@@ -174,7 +195,7 @@ function PresetPanel({
             itemRenderer={itemRenderer}
             type={presetType}
           />
-          {!hasPresets && !localColorPresets.length && (
+          {!hasPresets && !hasLocalPresets && (
             <ButtonWrapper>
               <ColorAdd
                 handleAddPreset={handleAddPreset}
