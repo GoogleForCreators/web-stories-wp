@@ -37,7 +37,7 @@ import {
 } from '../../../../dashboard/constants';
 import { useStoryView } from '../../../../dashboard/utils';
 import { ScrollToTop, Layout } from '../../../../dashboard/components';
-import { useConfig } from '../../../../dashboard/app/config';
+import { useConfig } from '../../config';
 import SelectStories from './selectStories';
 import SortStories from './sortStories';
 import LoaderContainer from './components/loaderContainer';

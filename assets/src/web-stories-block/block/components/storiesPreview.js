@@ -23,7 +23,7 @@ import classNames from 'classnames';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../dashboard/app/config';
+import { useConfig } from '../config';
 import { GRID_VIEW_TYPE } from '../constants';
 import StoryCard from './storyCard';
 

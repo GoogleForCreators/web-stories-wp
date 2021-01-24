@@ -42,7 +42,7 @@ import { select } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../dashboard/app/config';
+import { useConfig } from '../config';
 import {
   CAROUSEL_VIEW_TYPE,
   CIRCLES_VIEW_TYPE,
