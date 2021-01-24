@@ -36,7 +36,7 @@ import StoriesBlockControls from '../../components/storiesBlockControls';
 import StoriesLoading from '../../components/storiesLoading';
 import { FETCH_STORIES_DEBOUNCE, ORDER_BY_OPTIONS } from '../../constants';
 import StoriesPreview from '../../components/storiesPreview';
-import { useConfig } from '../../../../dashboard/app/config';
+import { useConfig } from '../../config';
 
 /**
  * Module constants
