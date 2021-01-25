@@ -34,7 +34,7 @@ import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import TitleMissingDialog from '../titleMissingDialog';
 import useHeader from '../use';
-import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
+import ButtonWithPrepublishChecklistWarning from './buttonWithPrepublishChecklistWarning';
 
 function Publish() {
   const { isSaving, date, storyId, saveStory, title } = useStory(
@@ -95,7 +95,7 @@ function Publish() {
 
   return (
     <>
-      <ButtonWithChecklistWarning
+      <ButtonWithPrepublishChecklistWarning
         onClick={handlePublish}
         isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
         text={text}
