@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68536bd6181613999ab990d35d70f7c0",
+    "content-hash": "e9d21a99268b62a8f97dcbd43249b293",
     "packages": [
         {
             "name": "ampproject/amp-wp",
-            "version": "2.0.8",
+            "version": "2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "09af21aeb5f2309071be58b89edc02bbdb09f72c"
+                "reference": "501d13f3f63915b51f106ea0fb7ea60d67b0f557"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/09af21aeb5f2309071be58b89edc02bbdb09f72c",
-                "reference": "09af21aeb5f2309071be58b89edc02bbdb09f72c",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/501d13f3f63915b51f106ea0fb7ea60d67b0f557",
+                "reference": "501d13f3f63915b51f106ea0fb7ea60d67b0f557",
                 "shasum": ""
             },
             "require": {
@@ -56,16 +56,16 @@
             "extra": {
                 "downloads": {
                     "phpstan": {
-                        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
                         "path": "vendor/bin/phpstan",
-                        "type": "phar"
+                        "type": "phar",
+                        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar"
                     }
                 },
                 "patches": {
                     "sabberworm/php-css-parser": {
-                        "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
-                        "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/d42b64793f2edaffeb663c63e9de79069cdc0831%5E...113df5d55e94e21c6402021dfa959924941d4c29.patch",
-                        "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
+                        "1. Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
+                        "2. Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/d42b64793f2edaffeb663c63e9de79069cdc0831%5E...113df5d55e94e21c6402021dfa959924941d4c29.patch",
+                        "3. Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
                     }
                 }
             },
@@ -105,7 +105,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2020-12-09T21:56:42+00:00"
+            "time": "2021-01-13T21:47:32+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -241,10 +241,7 @@
                 }
             ],
             "description": "An SVG sanitizer for PHP",
-            "time": "2021-01-21T10:13:20+00:00",
-            "extra": {
-                "patches_applied": []
-            }
+            "time": "2021-01-21T10:13:20+00:00"
         },
         {
             "name": "fasterimage/fasterimage",
@@ -354,12 +351,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
-                "reference": "cd1ff1118394e25e3f43885fa6d5b23cf05ef48a"
+                "reference": "bfdd976"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/cd1ff1118394e25e3f43885fa6d5b23cf05ef48a",
-                "reference": "cd1ff1118394e25e3f43885fa6d5b23cf05ef48a",
+                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/bfdd976",
+                "reference": "bfdd976",
                 "shasum": ""
             },
             "require": {
@@ -370,6 +367,13 @@
                 "phpunit/phpunit": "^4.8.36"
             },
             "type": "library",
+            "extra": {
+                "patches_applied": {
+                    "1. Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
+                    "2. Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/d42b64793f2edaffeb663c63e9de79069cdc0831%5E...113df5d55e94e21c6402021dfa959924941d4c29.patch",
+                    "3. Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
@@ -390,13 +394,7 @@
                 "parser",
                 "stylesheet"
             ],
-            "time": "2020-11-18T12:10:42+00:00",
-            "extra": {
-                "patches_applied": {
-                    "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
-                    "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
-                }
-            }
+            "time": "2020-07-21T18:39:46+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -3246,6 +3244,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "sabberworm/php-css-parser": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
