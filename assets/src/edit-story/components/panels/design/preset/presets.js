@@ -31,6 +31,7 @@ function Presets({
   isEditMode,
   type,
   handleAddPreset,
+  isLocal = false,
 }) {
   return (
     <PresetGroup
@@ -40,6 +41,7 @@ function Presets({
       isEditMode={isEditMode}
       handleClick={handleOnClick}
       handleAddPreset={handleAddPreset}
+      isLocal={isLocal}
     />
   );
 }
@@ -51,6 +53,7 @@ Presets.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddPreset: PropTypes.func.isRequired,
+  isLocal: PropTypes.bool,
 };
 
 export default Presets;

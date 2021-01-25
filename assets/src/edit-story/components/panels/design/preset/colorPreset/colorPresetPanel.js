@@ -78,6 +78,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
               presets={storyPresets?.colors || []}
               handleOnClick={(preset) => handlePresetClick(preset, true)}
               handleAddPreset={addLocalPreset}
+              isLocal={true}
               {...groupProps}
             />
           </GroupWrapper>
