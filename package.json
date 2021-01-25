@@ -37,7 +37,7 @@
     "@wordpress/data": "^4.26.0",
     "@wordpress/element": "^2.19.0",
     "@wordpress/i18n": "^3.17.0",
-    "@wordpress/viewport": "^2.25.0",
+    "@wordpress/viewport": "^2.25.2",
     "big.js": "^6.0.3",
     "classnames": "^2.2.6",
     "colorthief": "^2.3.2",
