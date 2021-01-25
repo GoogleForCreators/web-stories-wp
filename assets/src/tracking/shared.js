@@ -38,7 +38,8 @@ const DEFAULT_CONFIG = {
   trackingIdGA4: '',
 };
 
-const { trackingAllowed, trackingId, trackingIdGA4 } = global.webStoriesTrackingSettings || {};
+const { trackingAllowed, trackingId, trackingIdGA4 } =
+  global.webStoriesTrackingSettings || {};
 
 export const config = {
   ...DEFAULT_CONFIG,
