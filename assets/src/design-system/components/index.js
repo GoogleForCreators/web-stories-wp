@@ -18,6 +18,7 @@ export * from './button';
 export * from './checkbox';
 export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
+export { Input } from './input';
 export { Modal } from './modal';
 export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
