@@ -227,7 +227,6 @@ class HTML extends WP_UnitTestCase {
 
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 * @covers ::remove_amp_attr
 	 */
 	public function test_add_poster_images_no_poster_no_amp() {
 		$post = self::factory()->post->create_and_get(
@@ -365,7 +364,7 @@ class HTML extends WP_UnitTestCase {
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
 		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
-		
+
 		$this->assertNotContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $source, $actual );
 

@@ -23,7 +23,7 @@ import { memo } from 'react';
  * Internal dependencies
  */
 import Header from '../header';
-import Carousel from './carousel';
+import Carousel from '../carousel';
 import { Layer, HeadArea, CarouselArea, Z_INDEX } from './layout';
 
 function NavLayer() {

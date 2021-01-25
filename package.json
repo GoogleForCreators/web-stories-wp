@@ -42,7 +42,7 @@
     "@wordpress/data": "^4.26.0",
     "@wordpress/element": "^2.19.0",
     "@wordpress/i18n": "^3.17.0",
-    "@wordpress/viewport": "^2.25.1",
+    "@wordpress/viewport": "^2.25.2",
     "big.js": "^6.0.3",
     "classnames": "^2.2.6",
     "colorthief": "^2.3.2",
@@ -81,7 +81,7 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.7.4",
+    "@ampproject/toolbox-optimizer": "^2.7.5",
     "@babel/core": "^7.12.10",
     "@babel/eslint-parser": "^7.12.1",
     "@babel/eslint-plugin": "^7.12.1",
@@ -105,7 +105,7 @@
     "@storybook/client-logger": "^6.1.14",
     "@storybook/react": "^6.1.14",
     "@svgr/webpack": "^5.5.0",
-    "@testing-library/dom": "^7.29.2",
+    "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/react-hooks": "^3.7.0",
