@@ -102,14 +102,15 @@ class SVG {
 		}
 
 		add_filter( 'web_stories_allowed_mime_types', [ $this, 'web_stories_allowed_mime_types' ] );
-		add_filter( 'mime_types', [ $this, 'mime_types_add_svg' ] );
 
 		// Check if svg uploads, already enabled.
 		if ( $this->svg_already_enabled() ) {
+			add_filter( 'mime_types', [ $this, 'mime_types_add_svg' ] );
 			return;
 		}
 
 		add_filter( 'upload_mimes', [ $this, 'upload_mimes_add_svg' ] ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
+		add_filter( 'mime_types', [ $this, 'mime_types_add_svg' ] );
 		add_filter( 'wp_handle_upload_prefilter', [ $this, 'wp_handle_upload' ] );
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'wp_generate_attachment_metadata' ], 10, 3 );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'wp_check_filetype_and_ext' ], 10, 5 );
@@ -125,7 +126,6 @@ class SVG {
 	 */
 	private function svg_already_enabled() {
 		$allowed_mime_types = get_allowed_mime_types();
-
 		$mime_types         = array_values( $allowed_mime_types );
 
 		return in_array( self::MIME_TYPE, $mime_types, true );
@@ -162,7 +162,7 @@ class SVG {
 		// allow SVG files.
 		$mime_types['svg'] = self::MIME_TYPE;
 
-		return $mime_types;
+		return array_unique( $mime_types );
 	}
 
 	/**
