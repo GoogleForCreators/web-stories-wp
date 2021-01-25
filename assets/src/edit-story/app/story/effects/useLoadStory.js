@@ -53,6 +53,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           permalink_template: permalinkTemplate,
           style_presets: stylePresets,
           password,
+          preview_link: previewLink,
           _embedded: embedded = {},
         } = post;
 
@@ -129,6 +130,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           permalinkConfig,
           publisherLogoUrl,
           password,
+          previewLink,
           stylePresets,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
