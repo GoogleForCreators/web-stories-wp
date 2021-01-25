@@ -32,6 +32,7 @@ import { addQueryArgs } from '@wordpress/url';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../config';
 import LoaderContainer from './components/loaderContainer';
 
 const LoadingPlaceholder = styled(Placeholder)`
@@ -52,13 +53,15 @@ function FetchSelectedStories({
   setSelectedStoriesObject,
   setIsFetchingSelectedStories,
 }) {
+  const { api } = useConfig();
+
   const [errorMsg, setErrorMsg] = useState('');
-  let placeholderIcon = <BlockIcon icon={icon} showColors />;
+  const placeholderIcon = <BlockIcon icon={icon} showColors />;
 
   const fetchStories = async () => {
     try {
       const response = await apiFetch({
-        path: addQueryArgs('/web-stories/v1/web-story', {
+        path: addQueryArgs(api.stories, {
           _embed: 'author',
           _web_stories_envelope: true,
           context: 'edit',
