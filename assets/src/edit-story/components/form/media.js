@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -34,6 +34,7 @@ import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import DropDownMenu from '../dropDownMenu';
 import { useMediaPicker } from '../mediaPicker';
 import { MULTIPLE_VALUE } from '../../constants';
+import { useFocusOut } from '../../../design-system';
 
 const Container = styled.section`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
@@ -182,7 +183,7 @@ function MediaInput({
 
   const ref = useRef();
   const [isHovering, setIsHovering] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState();
   const resettableProps = {
     tabIndex: 0,
     'aria-label': ariaLabel,
@@ -193,6 +194,15 @@ function MediaInput({
   };
 
   const isMenuVisible = isHovering || isFocused;
+
+  const buttonRef = useRef();
+
+  useEffect(() => {
+    rest.isFocused && buttonRef.current?.focus();
+  });
+
+  useFocusOut(buttonRef, onBlur);
+
   return (
     <Container
       ref={ref}
@@ -214,6 +224,7 @@ function MediaInput({
       )}
       {!canReset && (
         <EditBtn
+          ref={buttonRef}
           onClick={openMediaPicker}
           circle={circle}
           aria-label={ariaLabel}

@@ -59,9 +59,15 @@ function PublishPanel() {
     actions: { loadUsers },
   } = useInspector();
 
-  const { document } = useHighlights(({ document }) => ({
-    document,
-  }));
+  const { highlight, onFocusOut } = useHighlights(
+    ({ onFocusOut, cover, publisherLogo }) => ({
+      highlight: {
+        cover,
+        publisherLogo,
+      },
+      onFocusOut,
+    })
+  );
 
   const {
     isSaving,
@@ -176,7 +182,7 @@ function PublishPanel() {
     <Panel
       name="publishing"
       collapsedByDefault={false}
-      isPersistable={!(document?.publisherLogo || document?.cover)}
+      isPersistable={!(highlight?.publisherLogo || highlight?.cover)}
     >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent padding={'10px 10px 10px 20px'}>
@@ -210,8 +216,10 @@ function PublishPanel() {
             <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper css={document?.publisherLogo?.css}>
+          <MediaWrapper css={highlight?.publisherLogo?.focusContainerCss}>
             <Media
+              isFocused={Boolean(highlight?.publisherLogo)}
+              onBlur={onFocusOut}
               value={publisherLogoUrl}
               onChange={handleChangePublisherLogo}
               title={__('Select as publisher logo', 'web-stories')}
@@ -227,8 +235,10 @@ function PublishPanel() {
             <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper css={document?.cover?.css}>
+          <MediaWrapper css={highlight?.cover?.focusContainerCss}>
             <Media
+              isFocused={Boolean(highlight?.cover)}
+              onBlur={onFocusOut}
               value={featuredMedia?.url}
               onChange={handleChangeCover}
               title={__('Select as cover image', 'web-stories')}

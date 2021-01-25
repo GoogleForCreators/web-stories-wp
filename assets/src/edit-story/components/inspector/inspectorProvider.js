@@ -59,19 +59,16 @@ function InspectorProvider({ children }) {
     500
   );
 
-  const { document, design } = useHighlights(({ document, design }) => ({
-    document,
-    design,
-  }));
+  const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
   useEffect(() => {
-    if (document) {
+    if (highlightedTab === 'document') {
       setTab(DOCUMENT);
     }
-    if (design) {
+    if (highlightedTab === 'design') {
       setTab(DESIGN);
     }
-  }, [document, design]);
+  }, [highlightedTab]);
 
   const prepublishAlert = useCallback(
     () =>

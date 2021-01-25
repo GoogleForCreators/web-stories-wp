@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { inputs } from '../../highlights';
+import { states } from '../../highlights';
 import { PRE_PUBLISH_MESSAGE_TYPES, MESSAGES } from '../constants';
 
 /**
@@ -38,11 +38,7 @@ export function storyMissingExcerpt(story) {
       help: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT,
       storyId: story.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-      highlight: {
-        document: {
-          excerpt: inputs.document.excerpt,
-        },
-      },
+      highlight: states.EXCERPT,
     };
   }
 

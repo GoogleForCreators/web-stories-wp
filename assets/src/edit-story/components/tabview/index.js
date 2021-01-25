@@ -30,7 +30,6 @@ import {
   useGlobalKeyDownEffect,
 } from '../../../design-system';
 import { useConfig } from '../../app';
-import { useHighlights } from '../../app/highlights';
 
 const ALERT_ICON_SIZE = 14;
 
@@ -184,18 +183,6 @@ function TabView({
   useKeyDownEffect(ref, 'home', () => selectTabByIndex(0), [selectTabByIndex]);
   useKeyDownEffect(ref, 'end', () => selectTabByIndex(-1), [selectTabByIndex]);
 
-  const { highlighted } = useHighlights(({ tab: highlighted }) => ({
-    highlighted,
-  }));
-
-  const [highlightedTab] = Object.keys(highlighted ?? {});
-
-  useEffect(() => {
-    if (highlightedTab && tabs.map(({ id }) => id).includes(highlightedTab)) {
-      tabChanged(highlightedTab);
-    }
-  }, [highlightedTab, tabChanged, tabs]);
-
   return (
     <Tabs aria-label={label} ref={ref}>
       {tabs.map(({ id, title, icon: Icon }) => (
@@ -209,7 +196,6 @@ function TabView({
           }
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
-          css={highlightedTab === id && highlighted?.[id]?.css}
         >
           {Boolean(title) && <span>{title}</span>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}

@@ -32,6 +32,7 @@ import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
 import { useHighlights } from '../../app/highlights';
+import { useFocusOut } from '../../../design-system';
 import useHeader from './use';
 
 const Input = styled.input`
@@ -50,6 +51,14 @@ const Input = styled.input`
   text-overflow: ellipsis;
 `;
 
+const HighlightContainer = styled.div`
+  display: inline-block;
+  ${({ focusContainerCss }) => focusContainerCss}
+  ${({ focusContainerSelector }) => focusContainerSelector} {
+    border-radius: 4px;
+  }
+`;
+
 function Title() {
   const { title, slug, updateStory } = useStory(
     ({
@@ -60,13 +69,20 @@ function Title() {
     }) => ({ title, slug, updateStory })
   );
   const { setTitleInput, titleInput } = useHeader();
-  const { storyTitle } = useHighlights(({ storyTitle }) => ({ storyTitle }));
+  const { highlight, onFocusOut } = useHighlights(
+    ({ storyTitle, onFocusOut }) => ({
+      highlight: storyTitle,
+      onFocusOut,
+    })
+  );
 
   useEffect(() => {
-    if (storyTitle) {
+    if (highlight) {
       titleInput?.focus();
     }
   });
+
+  useFocusOut({ current: titleInput }, onFocusOut);
 
   const { storyId } = useConfig();
 
@@ -87,15 +103,17 @@ function Title() {
   }
 
   return (
-    <Input
-      ref={setTitleInput}
-      value={title}
-      type={'text'}
-      onBlur={handleBlur}
-      onChange={handleChange}
-      placeholder={__('Add title', 'web-stories')}
-      aria-label={__('Story title', 'web-stories')}
-    />
+    <HighlightContainer {...highlight}>
+      <Input
+        ref={setTitleInput}
+        value={title}
+        type={'text'}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        placeholder={__('Add title', 'web-stories')}
+        aria-label={__('Story title', 'web-stories')}
+      />
+    </HighlightContainer>
   );
 }
 

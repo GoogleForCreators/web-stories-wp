@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import { Row } from '../../../form';
 import {
   Note,
@@ -45,6 +46,13 @@ const MIN_MAX = {
   },
 };
 
+const HighlightRow = styled(Row)`
+  ${({ focusContainerSelector }) => focusContainerSelector} {
+    border-radius: 4px;
+  }
+  ${({ focusContainerCss }) => focusContainerCss}
+`;
+
 function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
     selectedElements,
@@ -52,22 +60,23 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
-  const { design } = useHighlights(({ design }) => ({ design }));
+  const { highlight } = useHighlights(({ assistiveText }) => ({
+    highlight: assistiveText,
+  }));
 
   const ref = useRef(null);
-  const assistiveTextFocused = design?.assistiveText?.focus;
 
   useEffect(() => {
-    assistiveTextFocused && ref.current?.focus();
+    highlight && ref.current?.focus();
   });
 
   return (
     <SimplePanel
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
-      isPersistable={!assistiveTextFocused}
+      isPersistable={!highlight}
     >
-      <Row css={design?.assistiveText?.css}>
+      <HighlightRow {...highlight}>
         <ExpandedTextInput
           ref={ref}
           placeholder={__('Assistive text', 'web-stories')}
@@ -77,7 +86,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
           aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
-      </Row>
+      </HighlightRow>
       <Row>
         <Note>{__('Text for visually impaired users.', 'web-stories')}</Note>
       </Row>

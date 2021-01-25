@@ -31,7 +31,7 @@ import {
   setOrCreateImage,
   getImgNodeId,
 } from '../../../utils/getMediaBaseColor';
-import { inputs } from '../../highlights';
+import { states } from '../../highlights';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -338,6 +338,10 @@ export async function pageBackgroundTextLowContrast(page) {
       const potentialBackgroundElements = page.elements.slice(0, index);
       const spans = getSpansFromContent(element.content);
       const textColors = spans.map((span) => span.style?.color).filter(Boolean);
+      // if no colors were retrieved but there are spans, there is a black default color
+      if (textColors.length === 0 && spans.length !== textColors.length) {
+        textColors.push('rgb(0, 0, 0)');
+      }
 
       const textBackgrounds = getBackgroundsForElement(
         element,
@@ -464,6 +468,7 @@ export function videoElementMissingDescription(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      highlight: states.ASSISTIVE_TEXT,
     };
   }
 
@@ -483,11 +488,7 @@ export function videoElementMissingCaptions(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-      highlight: {
-        design: {
-          captions: inputs.design.captions,
-        },
-      },
+      highlight: states.CAPTIONS,
     };
   }
 
@@ -557,11 +558,7 @@ export function imageElementMissingAlt(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-      highlight: {
-        design: {
-          assistiveText: inputs.design.assistiveText,
-        },
-      },
+      highlight: states.ASSISTIVE_TEXT,
     };
   }
 

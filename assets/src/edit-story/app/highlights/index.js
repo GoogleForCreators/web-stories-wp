@@ -19,4 +19,4 @@
 
 export { default as useHighlights } from './useHighlights';
 export { default as HighlightsProvider } from './provider';
-export { INPUTS as inputs } from './constants';
+export { STATES as states } from './constants';

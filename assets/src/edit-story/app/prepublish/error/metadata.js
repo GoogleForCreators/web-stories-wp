@@ -24,7 +24,7 @@ import {
   ASPECT_RATIO_LEFT,
   ASPECT_RATIO_RIGHT,
 } from '../constants';
-import { inputs } from '../../highlights';
+import { states } from '../../highlights';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
@@ -60,11 +60,7 @@ export function storyCoverAttached(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.MISSING_COVER.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.MISSING_COVER.HELPER_TEXT,
-      highlight: {
-        document: {
-          cover: inputs.document.cover,
-        },
-      },
+      highlight: states.COVER,
     };
   }
   return undefined;
@@ -85,9 +81,7 @@ export function storyTitle(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.HELPER_TEXT,
-      highlight: {
-        storyTitle: inputs.storyTitle,
-      },
+      highlight: states.STORY_TITLE,
     };
   }
   return undefined;
@@ -114,11 +108,7 @@ export function storyCoverPortraitSize(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.HELPER_TEXT,
-      highlight: {
-        document: {
-          cover: inputs.document.cover,
-        },
-      },
+      highlight: states.COVER,
     };
   }
   return undefined;
@@ -151,11 +141,7 @@ export function storyCoverAspectRatio(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.COVER_WRONG_ASPECT_RATIO.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.COVER_WRONG_ASPECT_RATIO.HELPER_TEXT,
-      highlight: {
-        document: {
-          cover: inputs.document.cover,
-        },
-      },
+      highlight: states.COVER,
     };
   }
   return undefined;
@@ -179,11 +165,7 @@ export function publisherLogoSize(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.HELPER_TEXT,
-      highlight: {
-        document: {
-          publisherLogo: inputs.document.publisherLogo,
-        },
-      },
+      highlight: states.PUBLISHER_LOGO,
     };
   }
   return undefined;

@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -36,12 +36,20 @@ import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { useHighlights } from '../../../../app/highlights';
+import { useFocusOut } from '../../../../../design-system';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
   border-radius: 4px;
   flex-grow: 1;
   opacity: 1;
+`;
+
+const HighlightRow = styled(Row)`
+  ${({ focusContainerCss }) => focusContainerCss}
+  ${({ focusContainerSelector }) => focusContainerSelector} {
+    border-radius: 4px;
+  }
 `;
 
 export const MIN_MAX = {
@@ -104,15 +112,28 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
-  const { captions: highlighted } = useHighlights(({ design }) => ({
-    captions: design?.captions,
-  }));
+  const { highlight, onFocusOut } = useHighlights(
+    ({ captions, onFocusOut }) => ({
+      highlight: captions,
+      onFocusOut,
+    })
+  );
+
+  const buttonRef = useRef();
+
+  useEffect(() => {
+    if (highlight) {
+      buttonRef.current?.focus();
+    }
+  });
+
+  useFocusOut(buttonRef, onFocusOut);
 
   return (
     <SimplePanel
       name="caption"
       title={__('Captions', 'web-stories')}
-      isPersistable={!highlighted}
+      isPersistable={!highlight}
     >
       {isMixedValue && (
         <Row>
@@ -140,11 +161,11 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
           </Row>
         ))}
       {!tracks.length && (
-        <Row expand css={highlighted?.css}>
-          <Button onClick={UploadCaption} fullWidth>
+        <HighlightRow expand {...highlight}>
+          <Button ref={buttonRef} onClick={UploadCaption} fullWidth>
             {captionText}
           </Button>
-        </Row>
+        </HighlightRow>
       )}
     </SimplePanel>
   );

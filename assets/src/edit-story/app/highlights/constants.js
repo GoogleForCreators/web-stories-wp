@@ -18,54 +18,80 @@
  */
 import { css } from 'styled-components';
 
-const FLASH_KEYFRAMES = `
-@keyframes flash {
-  50% {
-    opacity: 50%;
+const ANIMATION = `
+  opacity: 1;
+  animation: flash 1s ease-in-out 4;
+`;
+const KEYFRAMES = `
+  @keyframes flash {
+    50% {
+      opacity: 0;
+    }
   }
-}
 `;
 
-const FLASH_ANIMATION = `
-  animation: flash 0.25s ease-out 3;
+const OUTLINE = css`
+  box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.accent.primary};
 `;
 
-export const panelRowStyles = css`
+const HIGHLIGHT_ELEMENT = `&:focus-within::after`;
+
+const container = css`
   position: relative;
-  &:after {
+  ${HIGHLIGHT_ELEMENT} {
     display: block;
     position: absolute;
-    top: -10px;
-    right: -10px;
-    bottom: -10px;
-    left: -10px;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     content: '';
-    background-color: ${({ theme }) => theme.colors.callout};
-    opacity: 0;
     pointer-events: none;
-    ${FLASH_ANIMATION}
+    ${OUTLINE}
+    ${ANIMATION}
   }
-  ${FLASH_KEYFRAMES}
+  ${KEYFRAMES}
 `;
 
-const defaultBehavior = { css: panelRowStyles };
+const defaultBehavior = {
+  focusContainerCss: container,
+  focusContainerSelector: HIGHLIGHT_ELEMENT,
+  animation: css`
+    ${OUTLINE}
+    ${ANIMATION}
+  `,
+  keyframes: KEYFRAMES,
+};
 
-export const INPUTS = {
-  storyTitle: { ...defaultBehavior, focus: true },
-  pageMenu: defaultBehavior,
-  document: {
-    publisherLogo: defaultBehavior,
+const STORY_TITLE = 'STORY_TITLE';
+const COVER = 'COVER';
+const PUBLISHER_LOGO = 'PUBLISHER_LOGO';
+const EXCERPT = 'EXCERPT';
+const CAPTIONS = 'CAPTIONS';
+const ASSISTIVE_TEXT = 'ASSISTIVE_TEXT';
+
+export const STATES = {
+  [STORY_TITLE]: {
+    storyTitle: defaultBehavior,
+  },
+  [COVER]: {
     cover: defaultBehavior,
-    excerpt: { ...defaultBehavior, focus: true },
+    tab: 'document',
   },
-  design: {
+  [PUBLISHER_LOGO]: {
+    publisherLogo: defaultBehavior,
+    tab: 'document',
+  },
+  [EXCERPT]: {
+    excerpt: defaultBehavior,
+    tab: 'document',
+  },
+  [CAPTIONS]: {
     captions: defaultBehavior,
-    assistiveText: {
-      ...defaultBehavior,
-      focus: true,
-    },
+    tab: 'design',
   },
-  tab: {
-    text: defaultBehavior,
+  [ASSISTIVE_TEXT]: {
+    assistiveText: defaultBehavior,
+    tab: 'design',
   },
 };

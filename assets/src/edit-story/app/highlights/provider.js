@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -50,7 +50,7 @@ function HighlightsProvider({ children }) {
     [setCurrentPage, setSelectedElementsById]
   );
 
-  const triggerHighlight = useCallback(
+  const setHighlights = useCallback(
     ({ elements, elementId, pageId, highlight }) => {
       if (elements || elementId || pageId) {
         selectElement({ elements, elementId, pageId });
@@ -61,29 +61,19 @@ function HighlightsProvider({ children }) {
     },
     [selectElement]
   );
-  const onPrepublishSelect = useCallback(
-    (errorDetails) => {
-      const { elements, elementId, pageId, highlight } = errorDetails;
-      if (!elements && !elementId && !pageId && !highlight) {
-        return {};
-      }
 
-      return {
-        onClick: () => triggerHighlight(errorDetails),
-        onKeyDown: (event) =>
-          event.key === 'Enter' && triggerHighlight(errorDetails),
-      };
-    },
-    [triggerHighlight]
-  );
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setHighlighted({}), 800);
-    return () => clearTimeout(timeout);
-  });
+  const onFocusOut = useCallback(() => {
+    setHighlighted({});
+  }, [setHighlighted]);
 
   return (
-    <Context.Provider value={{ onPrepublishSelect, ...highlighted }}>
+    <Context.Provider
+      value={{
+        setHighlights,
+        ...highlighted,
+        onFocusOut,
+      }}
+    >
       {children}
     </Context.Provider>
   );

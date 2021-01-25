@@ -27,6 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import { Row, usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import {
@@ -35,6 +37,8 @@ import {
   ExpandedTextInput,
   Note,
 } from '../../shared';
+import { useFocusOut } from '../../../../../design-system';
+import { useHighlights } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {
   alt: null,
@@ -45,6 +49,13 @@ export const MIN_MAX = {
     MAX: 1000,
   },
 };
+
+const HighlightRow = styled(Row)`
+  ${({ focusContainerSelector }) => focusContainerSelector} {
+    border-radius: 4px;
+  }
+  ${({ focusContainerCss }) => focusContainerCss}
+`;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
@@ -64,13 +75,28 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     []
   );
 
+  const ref = useRef();
+  const { highlight, onFocusOut } = useHighlights(
+    ({ assistiveText, onFocusOut }) => ({
+      highlight: assistiveText,
+      onFocusOut,
+    })
+  );
+
+  useEffect(() => {
+    highlight && ref.current?.focus();
+  });
+
+  useFocusOut(ref, onFocusOut);
+
   return (
     <SimplePanel
       name="videoAccessibility"
       title={__('Description', 'web-stories')}
     >
-      <Row>
+      <HighlightRow {...highlight}>
         <ExpandedTextInput
+          ref={ref}
           placeholder={__('Video description', 'web-stories')}
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
@@ -78,7 +104,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           aria-label={__('Video description', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
-      </Row>
+      </HighlightRow>
       <Row>
         <Note>
           {__(
