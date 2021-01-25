@@ -29,7 +29,7 @@ import { useFeatures } from 'flagged';
 import { useStory, useLocalMedia, useHistory, useConfig } from '../../../app';
 import { Outline } from '../../button';
 import { useGlobalKeyDownEffect } from '../../../../design-system';
-import ButtonWithPrepublishChecklistWarning from './buttonWithPrepublishChecklistWarning';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -93,7 +93,7 @@ function Update() {
   }
 
   return (
-    <ButtonWithPrepublishChecklistWarning
+    <ButtonWithChecklistWarning
       onClick={() => saveStory()}
       isDisabled={isSaving || isUploading}
       text={text}
