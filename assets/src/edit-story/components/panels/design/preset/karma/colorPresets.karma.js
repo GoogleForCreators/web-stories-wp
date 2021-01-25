@@ -111,6 +111,7 @@ describe('Panel: Color Presets', () => {
       const [shape] = await getSelection();
       expect(shape.backgroundColor).toBe({ color: { r: 0, g: 0, b: 0 } });
     });
+  });
 
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
     it('should allow deleting local and global color presets', async () => {
