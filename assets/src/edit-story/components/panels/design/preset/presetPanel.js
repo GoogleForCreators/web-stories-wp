@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
-import {Panel, PanelContent} from '../../panel';
+import { Panel, PanelContent } from '../../panel';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
@@ -77,7 +77,7 @@ function PresetPanel({
   const isShape = areAllType('shape', selectedElements);
 
   const handleApplyPreset = useApplyPreset(isColor, pushUpdate);
-  const handleAddPreset = useAddPreset(presetType);
+  const { addGlobalPreset } = useAddPreset(presetType);
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
@@ -155,7 +155,7 @@ function PresetPanel({
       canCollapse={canCollapse}
     >
       <PresetsHeader
-        handleAddPreset={handleAddPreset}
+        handleAddPreset={addGlobalPreset}
         hasPresets={hasPresets}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
@@ -176,7 +176,7 @@ function PresetPanel({
             isEditMode={isEditMode}
             presets={globalPresets}
             handleOnClick={handlePresetClick}
-            handleAddPreset={handleAddPreset}
+            handleAddPreset={addGlobalPreset}
             itemRenderer={itemRenderer}
             type={presetType}
           />

@@ -57,8 +57,8 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
       };
     }
   );
-  const handleAddPreset = useAddPreset(presetType);
-  const handleAddLocalPreset = useAddPreset(presetType, true);
+
+  const { addGlobalPreset, addLocalPreset } = useAddPreset(presetType);
 
   const { colors: globalPresets } = stylePresets;
   const { colors: localPresets } = localColorPresets;
@@ -77,7 +77,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
             <Presets
               presets={localColorPresets?.colors || []}
               handleOnClick={(preset) => handlePresetClick(preset, true)}
-              handleAddPreset={handleAddLocalPreset}
+              handleAddPreset={addLocalPreset}
               {...groupProps}
             />
           </GroupWrapper>
@@ -86,7 +86,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
             <Presets
               presets={globalPresets}
               handleOnClick={handlePresetClick}
-              handleAddPreset={handleAddPreset}
+              handleAddPreset={addGlobalPreset}
               {...groupProps}
             />
           </GroupWrapper>
@@ -94,8 +94,8 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
       )}
       {!hasPresets && (
         <EmptyPanel
-          handleAddPreset={handleAddPreset}
-          handleAddLocalPreset={handleAddLocalPreset}
+          handleAddPreset={addGlobalPreset}
+          handleAddLocalPreset={addLocalPreset}
         />
       )}
     </>

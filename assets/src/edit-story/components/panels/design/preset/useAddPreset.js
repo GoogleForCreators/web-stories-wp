@@ -28,7 +28,7 @@ import {
   getTextPresets,
 } from './utils';
 
-function useAddPreset(presetType, isLocal = false) {
+function useAddPreset(presetType) {
   const {
     currentPage,
     localColorPresets,
@@ -58,74 +58,101 @@ function useAddPreset(presetType, isLocal = false) {
 
   const isText = areAllType('text', selectedElements);
   const isBackground = selectedElements[0].id === currentPage.elements[0].id;
-  const handleAddPreset = useCallback(
-    (evt) => {
-      evt.stopPropagation();
-      let addedPresets = isLocal
-        ? {
-            colors: [],
-          }
-        : {
-            textStyles: [],
-            colors: [],
-          };
-      const currentPresets = isLocal ? localColorPresets : stylePresets;
+
+  const getPresets = useCallback(
+    (addedPresets, currentPresets) => {
       if (isText) {
-        addedPresets = {
+        return {
           ...addedPresets,
           ...getTextPresets(selectedElements, currentPresets, presetType),
         };
       } else if (isBackground) {
-        addedPresets = {
+        return {
           ...addedPresets,
           ...getPagePreset(currentPage, currentPresets),
         };
       } else {
-        addedPresets = {
+        return {
           ...addedPresets,
           ...getShapePresets(selectedElements, currentPresets),
         };
       }
+    },
+    [currentPage, isBackground, isText, presetType, selectedElements]
+  );
+
+  const updateLocalPresets = useCallback(
+    (addedPresets) => {
+      updateStory({
+        properties: {
+          localColorPresets: {
+            colors: [...localColors, ...addedPresets.colors],
+          },
+        },
+      });
+    },
+    [localColors, updateStory]
+  );
+
+  const updateGlobalPresets = useCallback(
+    (addedPresets) => {
+      updateStory({
+        properties: {
+          stylePresets: {
+            textStyles: [...textStyles, ...addedPresets.textStyles],
+            colors: [...colors, ...addedPresets.colors],
+          },
+        },
+      });
+    },
+    [colors, textStyles, updateStory]
+  );
+
+  const handleAddPreset = useCallback(
+    (addedPresets, isLocal = false) => {
+      addedPresets = getPresets(addedPresets);
+      const currentPresets = isLocal ? localColorPresets : stylePresets;
       if (
         addedPresets.colors?.length > 0 ||
         addedPresets.textStyles?.length > 0
       ) {
         if (isLocal) {
-          updateStory({
-            properties: {
-              localColorPresets: {
-                colors: [...localColors, ...addedPresets.colors],
-              },
-            },
-          });
+          updateLocalPresets(addedPresets, currentPresets);
         } else {
-          updateStory({
-            properties: {
-              stylePresets: {
-                textStyles: [...textStyles, ...addedPresets.textStyles],
-                colors: [...colors, ...addedPresets.colors],
-              },
-            },
-          });
+          updateGlobalPresets(addedPresets, currentPresets);
         }
       }
     },
     [
-      colors,
-      currentPage,
-      isBackground,
-      isLocal,
-      isText,
-      localColors,
+      getPresets,
       localColorPresets,
-      presetType,
-      selectedElements,
       stylePresets,
-      textStyles,
-      updateStory,
+      updateGlobalPresets,
+      updateLocalPresets,
     ]
   );
-  return handleAddPreset;
+  const addGlobalPreset = (evt) => {
+    evt.stopPropagation();
+    handleAddPreset({
+      textStyles: [],
+      colors: [],
+    });
+  };
+
+  const addLocalPreset = (evt) => {
+    evt.stopPropagation();
+    handleAddPreset(
+      {
+        colors: [],
+      },
+      true /* isLocal */
+    );
+  };
+
+  return {
+    addGlobalPreset,
+    addLocalPreset,
+  };
 }
 
 export default useAddPreset;
