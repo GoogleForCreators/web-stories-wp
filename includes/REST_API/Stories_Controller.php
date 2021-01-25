@@ -87,7 +87,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		if ( in_array( 'preview_link', $fields, true ) ) {
-			// Based on https://github.com/WordPress/wordpress-develop/blob/8153c8ba020c4aec0b9d94243cd39c689a0730f7/src/wp-admin/includes/post.php#L1445-L1457
+			// Based on https://github.com/WordPress/wordpress-develop/blob/8153c8ba020c4aec0b9d94243cd39c689a0730f7/src/wp-admin/includes/post.php#L1445-L1457.
 			if ( 'draft' === $post->post_status || empty( $post->post_name ) ) {
 				$view_link = get_preview_post_link( $post );
 			} else {
