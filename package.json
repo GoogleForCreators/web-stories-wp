@@ -93,7 +93,7 @@
     "@storybook/addon-backgrounds": "^6.1.11",
     "@storybook/addon-docs": "^6.1.11",
     "@storybook/addon-knobs": "^6.1.11",
-    "@storybook/addon-storysource": "^6.1.11",
+    "@storybook/addon-storysource": "^6.1.15",
     "@storybook/addon-viewport": "^6.1.11",
     "@storybook/client-api": "^6.1.11",
     "@storybook/client-logger": "^6.1.11",
