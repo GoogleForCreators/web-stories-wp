@@ -42,7 +42,7 @@ function PresetPanel({
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
   const {
-    localColorPresets,
+    storyPresets,
     selectedElements,
     stylePresets,
     updateStory,
@@ -50,12 +50,12 @@ function PresetPanel({
     ({
       state: {
         selectedElements,
-        story: { stylePresets, localColorPresets },
+        story: { stylePresets, storyPresets },
       },
       actions: { updateStory },
     }) => {
       return {
-        localColorPresets,
+        storyPresets,
         selectedElements,
         stylePresets,
         updateStory,
@@ -65,7 +65,7 @@ function PresetPanel({
 
   const { colors, textStyles } = stylePresets;
   const globalPresets = isColor ? colors : textStyles;
-  const { colors: localColors } = localColorPresets;
+  const { colors: localColors } = storyPresets;
   const hasLocalPresets = localColors.length > 0;
   const hasPresets = isColor
     ? globalPresets.length > 0 || hasLocalPresets
@@ -105,7 +105,7 @@ function PresetPanel({
       const updatedColors = localColors.filter((color) => color !== toDelete);
       updateStory({
         properties: {
-          localColorPresets: { colors: updatedColors },
+          storyPresets: { colors: updatedColors },
         },
       });
       // If no colors are left, exit edit mode.

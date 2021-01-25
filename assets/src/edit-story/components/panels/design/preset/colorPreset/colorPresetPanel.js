@@ -45,14 +45,14 @@ const GroupWrapper = styled.div`
 
 function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
   const presetType = 'color';
-  const { localColorPresets, stylePresets } = useStory(
+  const { storyPresets, stylePresets } = useStory(
     ({
       state: {
-        story: { stylePresets, localColorPresets },
+        story: { stylePresets, storyPresets },
       },
     }) => {
       return {
-        localColorPresets,
+        storyPresets,
         stylePresets,
       };
     }
@@ -61,7 +61,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
   const { addGlobalPreset, addLocalPreset } = useAddPreset(presetType);
 
   const { colors: globalPresets } = stylePresets;
-  const { colors: localPresets } = localColorPresets;
+  const { colors: localPresets } = storyPresets;
   const hasPresets = globalPresets.length > 0 || localPresets.length > 0;
   const groupProps = {
     isEditMode,
@@ -75,7 +75,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
           <GroupWrapper>
             <Title>{__('Current story', 'web-stories')}</Title>
             <Presets
-              presets={localColorPresets?.colors || []}
+              presets={storyPresets?.colors || []}
               handleOnClick={(preset) => handlePresetClick(preset, true)}
               handleAddPreset={addLocalPreset}
               {...groupProps}

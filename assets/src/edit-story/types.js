@@ -96,7 +96,7 @@ StoryPropTypes.story = PropTypes.shape({
     height: PropTypes.number.isRequired,
   }),
   password: PropTypes.string.isRequired,
-  localColorPresets: PropTypes.array,
+  storyPresets: PropTypes.array,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 });
