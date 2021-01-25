@@ -44,7 +44,6 @@ export const focusableOutlineCSS = (colorOrProps, background) => {
     typeof colorOrProps === 'string'
       ? colorOrProps
       : colorOrProps?.theme?.colors?.border?.focus;
-
   return css`
     border: 2px solid transparent;
 
