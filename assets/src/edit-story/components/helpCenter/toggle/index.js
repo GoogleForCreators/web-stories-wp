@@ -38,11 +38,22 @@ import {
 
 const Button = styled(dsButton)`
   border-color: ${({ theme }) => theme.colors.bg.tertiary};
-  padding: 1px 14px 1px 4.5px;
+  ${({ theme, isRTL }) =>
+    isRTL
+      ? css`
+          padding: 1px 4.5px 1px 14px;
 
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    padding: 1px 16px 1px 14.5;
-  }
+          @media ${theme.breakpoint.desktop} {
+            padding: 1px 14.5 1px 16px;
+          }
+        `
+      : css`
+          padding: 1px 14px 1px 4.5px;
+
+          @media ${theme.breakpoint.desktop} {
+            padding: 1px 16px 1px 14.5;
+          }
+        `}
 
   ${({ hasNotifications, theme }) =>
     hasNotifications &&
@@ -58,14 +69,21 @@ const Label = styled.span`
   @media ${({ theme }) => theme.breakpoint.desktop} {
     display: block;
     min-width: 115px;
-    text-align: left;
+    text-align: ${({ isRTL }) => (isRTL ? 'right' : 'left')};
   }
 `;
 
 const HelpIcon = styled(Icons.Help)`
   height: 32px;
   width: auto;
-  margin-right: 4.5px;
+  ${({ isRTL }) =>
+    isRTL
+      ? css`
+          margin-left: 4.5px;
+        `
+      : css`
+          margin-right: 4.5px;
+        `};
 `;
 
 const ChevronIcon = styled(Icons.Chevron)`
@@ -87,7 +105,14 @@ const ChevronIcon = styled(Icons.Chevron)`
 
 const NotificationWrapper = styled.div`
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    margin-right: 14.5px;
+    ${({ isRTL }) =>
+      isRTL
+        ? css`
+            margin-left: 14.5px;
+          `
+        : css`
+            margin-right: 14.5px;
+          `}
   }
 `;
 
@@ -96,6 +121,7 @@ function Toggle({
   popupId = '',
   onClick = () => {},
   notificationCount = 0,
+  isRTL = false,
 }) {
   const hasNotifications = notificationCount > 0;
   return (
@@ -123,11 +149,12 @@ function Toggle({
       type={hasNotifications ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.PLAIN}
       variant={BUTTON_VARIANTS.RECTANGLE}
       size={BUTTON_SIZES.MEDIUM}
+      isRTL={isRTL}
     >
-      <HelpIcon />
-      <Label>{__('Help Center', 'web-stories')}</Label>
+      <HelpIcon isRTL={isRTL} />
+      <Label isRTL={isRTL}>{__('Help Center', 'web-stories')}</Label>
       {hasNotifications && (
-        <NotificationWrapper>
+        <NotificationWrapper isRTL={isRTL}>
           <NotificationBubble notificationCount={notificationCount} />
         </NotificationWrapper>
       )}
@@ -141,6 +168,7 @@ Toggle.propTypes = {
   popupId: PropTypes.string,
   onClick: PropTypes.func,
   notificationCount: PropTypes.number,
+  isRTL: PropTypes.boolean,
 };
 
 export { Toggle };
