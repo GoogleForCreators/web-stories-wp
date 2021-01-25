@@ -219,7 +219,7 @@ function PublishPanel() {
           <MediaWrapper css={highlight?.publisherLogo?.focusContainerCss}>
             <Media
               isFocused={Boolean(highlight?.publisherLogo)}
-              onBlur={onFocusOut}
+              onFocusOut={onFocusOut}
               value={publisherLogoUrl}
               onChange={handleChangePublisherLogo}
               title={__('Select as publisher logo', 'web-stories')}
@@ -238,7 +238,7 @@ function PublishPanel() {
           <MediaWrapper css={highlight?.cover?.focusContainerCss}>
             <Media
               isFocused={Boolean(highlight?.cover)}
-              onBlur={onFocusOut}
+              onFocusOut={onFocusOut}
               value={featuredMedia?.url}
               onChange={handleChangeCover}
               title={__('Select as cover image', 'web-stories')}
