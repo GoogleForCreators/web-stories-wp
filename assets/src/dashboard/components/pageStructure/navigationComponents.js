@@ -48,8 +48,7 @@ export const NewStoryButton = styled(Button)(
     margin-top: 0;
     border: 2px solid ${theme.colors.border.defaultActive};
     border-radius: ${theme.borders.radius.medium};
-    transition: border-color 0.25s linear, background-color 0.25s linear,
-      color 0.25s linear;
+    transition: background-color 0.25s linear, color 0.25s linear;
 
     :focus {
       box-shadow: none;
@@ -69,7 +68,7 @@ export const NavList = styled.ul`
 `;
 
 export const NavListItem = styled.li`
-  margin: 8px 28px;
+  margin: 10px 28px;
   padding: 0;
   list-style-type: none;
 `;
