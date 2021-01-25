@@ -112,28 +112,6 @@ describe('Panel: Color Presets', () => {
       expect(shape.backgroundColor).toBe({ color: { r: 0, g: 0, b: 0 } });
     });
 
-    xit('should display only global presets for a new story', async () => {
-      await fixture.events.click(fixture.editor.library.shapesTab);
-      await fixture.events.click(
-        fixture.editor.library.shapes.shape('Triangle')
-      );
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addGlobal
-      );
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addLocal
-      );
-
-      // Save changes.
-      const saveDraftButton = fixture.screen.getByRole('button', {
-        name: 'Save draft',
-      });
-      await fixture.events.click(saveDraftButton);
-      await window.location.reload();
-      await waitFor(() => expect(fixture.editor.library.textAdd).toBeTruthy());
-    });
-  });
-
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
     it('should allow deleting local and global color presets', async () => {
       // @todo Add local part here.
