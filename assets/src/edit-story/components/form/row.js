@@ -25,6 +25,7 @@ const Row = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 16px;
+
   ${({ spaceBetween = true }) =>
     spaceBetween && `justify-content: space-between;`}
   ${({ expand = true }) => expand && `flex: 1;`}

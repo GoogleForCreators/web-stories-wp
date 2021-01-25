@@ -44,10 +44,6 @@ export class Editor extends Container {
     return null;
   }
 
-  get titleInput() {
-    return this._get(this.getByLabelText('Story title'), 'titleInput');
-  }
-
   get library() {
     return this._get(
       this.getByRole('region', { name: 'Library' }),

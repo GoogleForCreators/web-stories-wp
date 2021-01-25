@@ -90,9 +90,7 @@ async function getPrepublishErrors(story) {
               const guidanceMessage = getPageGuidance(currentPage);
               if (guidanceMessage instanceof Promise) {
                 const guidanceMessagePromise = guidanceMessage.then(
-                  (result) => {
-                    return prepareResult(result);
-                  }
+                  prepareResult
                 );
                 currentPageGuidance.push(guidanceMessagePromise);
               } else if (guidanceMessage !== undefined) {

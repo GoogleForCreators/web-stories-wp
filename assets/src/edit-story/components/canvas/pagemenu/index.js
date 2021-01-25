@@ -140,7 +140,6 @@ function PageMenu() {
       };
     }
   );
-
   const { pageSize } = useCanvas((state) => ({
     pageSize: state.state.pageSize,
   }));
