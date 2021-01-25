@@ -36,16 +36,27 @@ describe('Panel: Color Presets', () => {
     localStorage.clear();
   });
 
-  describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Display Panel', () => {
+  describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Add Colors', () => {
     it('should display color presets panel for a text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       const addButton = fixture.editor.inspector.designPanel.colorPreset.add;
       expect(addButton).toBeTruthy();
     });
+
+    // @todo
+    xit('should allow adding both local and global colors');
+
+    // @todo
+    xit('should allow applying both local and global colors');
+
+    // @todo
+    xit('should display only global presets for a new story');
   });
 
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
-    it('should allow deleting a color preset', async () => {
+    it('should allow deleting local and global color presets', async () => {
+      // @todo Add local part here.
+
       // Add text element and a color preset.
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
