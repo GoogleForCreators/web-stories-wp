@@ -177,6 +177,7 @@ class Story_Post_Type {
 				],
 				'public'                => true,
 				'has_archive'           => true,
+				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
