@@ -522,13 +522,18 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         colors: [LINEAR_COLOR],
       };
+      const extraStoryPresets = {
+        colors: [LINEAR_COLOR],
+      };
 
       presetHasGradient.mockImplementation(({ type }) => {
         return Boolean(type) && 'solid' !== type;
       });
 
       const { getByLabelText, getByRole, updateStory } = setupPanel(
-        extraStylePresets
+        extraStylePresets,
+        null,
+        extraStoryPresets
       );
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
       fireEvent.click(editButton);
@@ -542,6 +547,20 @@ describe('Panels/Preset', () => {
           stylePresets: {
             colors: [],
             textStyles: [],
+          },
+        },
+      });
+
+      updateStory.mockReset();
+      const deleteStoryPreset = getByRole('button', {
+        name: 'Delete local color',
+      });
+      fireEvent.click(deleteStoryPreset);
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          storyPresets: {
+            colors: [],
           },
         },
       });
@@ -586,6 +605,9 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR],
       };
+      const extraStoryPresets = {
+        colors: [LINEAR_COLOR],
+      };
       const extraStateProps = {
         selectedElements: [
           {
@@ -595,9 +617,11 @@ describe('Panels/Preset', () => {
       };
       const { getByRole, updateCurrentPageProperties } = setupPanel(
         extraStylePresets,
-        extraStateProps
+        extraStateProps,
+        extraStoryPresets
       );
 
+      // Global color.
       const applyPreset = getByRole('button', { name: APPLY_GLOBAL_PRESET });
       expect(applyPreset).toBeInTheDocument();
 
@@ -606,6 +630,19 @@ describe('Panels/Preset', () => {
       expect(updateCurrentPageProperties).toHaveBeenCalledWith({
         properties: {
           backgroundColor: TEST_COLOR,
+        },
+      });
+
+      // Local color.
+      updateCurrentPageProperties.mockReset();
+      const applyStoryPreset = getByRole('button', {
+        name: 'Apply local color',
+      });
+      fireEvent.click(applyStoryPreset);
+      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(1);
+      expect(updateCurrentPageProperties).toHaveBeenCalledWith({
+        properties: {
+          backgroundColor: LINEAR_COLOR,
         },
       });
     });

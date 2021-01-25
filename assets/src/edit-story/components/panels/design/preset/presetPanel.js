@@ -93,11 +93,14 @@ function PresetPanel({
         },
       });
       // If no styles left, exit edit mode.
-      if (updatedStyles.length === 0) {
+      if (
+        updatedStyles.length === 0 &&
+        ((isColor && !hasLocalPresets) || isStyle)
+      ) {
         setIsEditMode(false);
       }
     },
-    [colors, isColor, textStyles, updateStory]
+    [colors, isColor, textStyles, updateStory, hasLocalPresets, isStyle]
   );
 
   const handleDeleteLocalPreset = useCallback(
