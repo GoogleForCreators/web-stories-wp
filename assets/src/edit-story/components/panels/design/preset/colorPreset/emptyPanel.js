@@ -77,7 +77,7 @@ function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
         <ColorAdd
           aria-label={__('Add global color', 'web-stories')}
           handleAddPreset={handleAddPreset}
-          helper={__('Global story', 'web-stories')}
+          helper={__('All stories', 'web-stories')}
         />
       </ActionWrapper>
     </Wrapper>

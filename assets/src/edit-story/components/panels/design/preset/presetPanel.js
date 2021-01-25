@@ -109,7 +109,7 @@ function PresetPanel({
         },
       });
       // If no colors are left, exit edit mode.
-      if (updatedColors.length === 0 && !globalPresets.length > 0) {
+      if (updatedColors.length === 0 && globalPresets.length === 0) {
         setIsEditMode(false);
       }
     },
