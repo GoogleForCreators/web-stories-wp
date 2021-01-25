@@ -91,7 +91,7 @@ function combineElements(
     'scale',
     'focalX',
     'focalY',
-    'backgroundOverlay',
+    'flip',
     'tracks',
   ];
 
@@ -114,10 +114,7 @@ function combineElements(
 
   const newElement = {
     // First copy everything from existing element except if it was default background and any overlay
-    ...objectWithout(secondElement, [
-      'isDefaultBackground',
-      'backgroundOverlay',
-    ]),
+    ...objectWithout(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
     // Then copy all media-related attributes from new element
