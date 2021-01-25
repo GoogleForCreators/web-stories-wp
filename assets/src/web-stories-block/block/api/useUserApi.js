@@ -23,7 +23,7 @@ import queryString from 'query-string';
 /**
  * Internal dependencies
  */
-import { STORIES_PER_REQUEST } from '../../../dashboard/constants';
+import { STORIES_PER_REQUEST } from '../constants';
 
 export default function useUserApi(dataAdapter, { usersApi }) {
   const [authorSuggestions, setAuthorSuggestions] = useState([]);

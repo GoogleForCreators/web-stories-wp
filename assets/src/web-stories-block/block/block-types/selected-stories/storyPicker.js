@@ -30,11 +30,7 @@ import { useState, useEffect, useMemo, useCallback } from '@wordpress/element';
  * Internal dependencies
  */
 import useApi from '../../api/useApi';
-import {
-  VIEW_STYLE,
-  STORY_STATUSES,
-  STORY_STATUS,
-} from '../../../../dashboard/constants';
+import { VIEW_STYLE, STORY_STATUSES } from '../../constants';
 import { useStoryView } from '../../../../dashboard/utils';
 import { ScrollToTop, Layout } from '../../../../dashboard/components';
 import { useConfig } from '../../config';
@@ -153,7 +149,6 @@ function StoryPicker({
       searchTerm: search.keyword,
       sortDirection: view.style === VIEW_STYLE.LIST && sort.direction,
       sortOption: sort.value,
-      status: STORY_STATUS.PUBLISH,
     };
 
     if (currentAuthor.length) {
@@ -204,7 +199,6 @@ function StoryPicker({
     currentAuthor,
     sort.direction,
     sort.value,
-    view.style,
   ]);
 
   useEffect(() => {
