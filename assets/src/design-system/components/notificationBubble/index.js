@@ -35,7 +35,7 @@ const Bubble = styled.div`
   width: 24px;
 `;
 
-const Inner = styled.div`
+const Inner = styled.span`
   ${themeHelpers.fullSizeAbsolute}
   ${themeHelpers.centerContent}
   ${themeHelpers.expandTextPreset(
@@ -44,8 +44,8 @@ const Inner = styled.div`
   color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-export const NotificationBubble = ({ notificationCount }) => (
-  <Bubble>
+export const NotificationBubble = ({ notificationCount, ...props }) => (
+  <Bubble {...props}>
     <Inner>{notificationCount}</Inner>
   </Bubble>
 );

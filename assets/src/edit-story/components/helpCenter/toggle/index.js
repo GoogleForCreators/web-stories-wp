@@ -37,7 +37,7 @@ import {
 } from '../../../../design-system';
 
 const Button = styled(dsButton)`
-  border: ${({ theme }) => `1px solid ${theme.colors.bg.tertiary}`};
+  border-color: ${({ theme }) => theme.colors.bg.tertiary};
   padding: 1px 14px 1px 4.5px;
 
   @media ${({ theme }) => theme.breakpoint.desktop} {
@@ -48,7 +48,7 @@ const Button = styled(dsButton)`
     hasNotifications &&
     css`
       background-color: ${theme.colors.bg.secondary};
-      border: 1px solid ${theme.colors.bg.secondary};
+      border-color: ${theme.colors.bg.secondary};
     `}
 `;
 

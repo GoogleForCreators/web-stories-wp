@@ -28,17 +28,17 @@ import { Toggle } from './toggle';
 const Wrapper = styled.div`
   position: absolute;
   bottom: 16px;
-  left: 11px;
+  left: 12px;
   z-index: 10;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
     bottom: 24px;
-    left: 23px;
+    left: 24px;
   }
 
   @media ${({ theme }) => theme.breakpoint.destop} {
-    bottom: 16px;
-    left: 31px;
+    bottom: 28px;
+    left: 34px;
   }
 `;
 
