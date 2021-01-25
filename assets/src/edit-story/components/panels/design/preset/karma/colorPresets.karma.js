@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import {fireEvent, waitFor} from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
