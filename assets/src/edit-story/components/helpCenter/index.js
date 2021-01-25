@@ -46,18 +46,16 @@ export const HelpCenter = () => {
   const { enableQuickTips } = useFeatures();
   const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    enableQuickTips && (
-      <ThemeProvider theme={dsTheme}>
-        <ThemeGlobals.OverrideFocusOutline />
-        <Wrapper>
-          <Toggle
-            isOpen={isOpen}
-            onClick={() => setIsOpen((v) => !v)}
-            notificationCount={1}
-          />
-        </Wrapper>
-      </ThemeProvider>
-    )
-  );
+  return enableQuickTips ? (
+    <ThemeProvider theme={dsTheme}>
+      <ThemeGlobals.OverrideFocusOutline />
+      <Wrapper>
+        <Toggle
+          isOpen={isOpen}
+          onClick={() => setIsOpen((v) => !v)}
+          notificationCount={1}
+        />
+      </Wrapper>
+    </ThemeProvider>
+  ) : null;
 };
