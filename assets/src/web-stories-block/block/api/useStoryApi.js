@@ -24,12 +24,11 @@ import queryString from 'query-string';
  * Internal dependencies
  */
 import {
-  STORY_STATUSES,
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
   STORY_STATUS,
-} from '../../../dashboard/constants';
+} from '../constants';
 import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
@@ -41,7 +40,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
   const fetchStories = useCallback(
     async ({
-      status = STORY_STATUSES[0].value,
+      status = 'publish',
       sortOption = STORY_SORT_OPTIONS.LAST_MODIFIED,
       sortDirection,
       searchTerm,

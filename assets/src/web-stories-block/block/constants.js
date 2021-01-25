@@ -121,3 +121,64 @@ export const ORDER_BY_OPTIONS = {
  */
 export const FETCH_AUTHORS_DEBOUNCE = 500;
 export const FETCH_STORIES_DEBOUNCE = 1000;
+
+/**
+ * Story picker.
+ */
+export const VIEW_STYLE = {
+  GRID: 'grid',
+  LIST: 'list',
+};
+
+export const STORIES_PER_REQUEST = 24;
+
+export const SORT_DIRECTION = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
+export const STORY_SORT_OPTIONS = {
+  NAME: 'title',
+  DATE_CREATED: 'date',
+  LAST_MODIFIED: 'modified',
+  CREATED_BY: 'story_author',
+};
+
+export const ORDER_BY_SORT = {
+  [STORY_SORT_OPTIONS.NAME]: SORT_DIRECTION.ASC,
+  [STORY_SORT_OPTIONS.DATE_CREATED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.LAST_MODIFIED]: SORT_DIRECTION.DESC,
+  [STORY_SORT_OPTIONS.CREATED_BY]: SORT_DIRECTION.ASC,
+};
+
+export const STORY_STATUS = {
+  ALL: 'publish,draft,future,private',
+  PUBLISHED_AND_FUTURE: 'publish,future',
+  DRAFT: 'draft',
+  FUTURE: 'future',
+  PUBLISH: 'publish',
+  PRIVATE: 'private',
+};
+
+export const STORY_STATUSES = [
+  {
+    label: __('All Stories', 'web-stories'),
+    value: STORY_STATUS.ALL,
+    status: 'all',
+  },
+  {
+    label: __('Drafts', 'web-stories'),
+    value: STORY_STATUS.DRAFT,
+    status: STORY_STATUS.DRAFT,
+  },
+  {
+    label: __('Published', 'web-stories'),
+    value: STORY_STATUS.PUBLISHED_AND_FUTURE,
+    status: STORY_STATUS.PUBLISHED_AND_FUTURE,
+  },
+  {
+    label: __('Private', 'web-stories'),
+    value: STORY_STATUS.PRIVATE,
+    status: STORY_STATUS.PRIVATE,
+  },
+];
