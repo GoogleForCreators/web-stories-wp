@@ -215,17 +215,18 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         type: 'video',
         resource: {},
       };
-      expect(
-        accessibilityChecks.videoElementMissingDescription(element)
-      ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
-        elementId: element.id,
-        type: 'warning',
-      });
+      const test = accessibilityChecks.videoElementMissingDescription(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
-    it('should return a warning if video element has empty descriiption', () => {
+    it('should return a warning if video element has empty description', () => {
       const element = {
         id: 'elementid',
         type: 'video',
@@ -234,14 +235,15 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
           alt: '',
         },
       };
-      expect(
-        accessibilityChecks.videoElementMissingDescription(element)
-      ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
-        elementId: element.id,
-        type: 'warning',
-      });
+      const test = accessibilityChecks.videoElementMissingDescription(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return undefined if video element has title', () => {
