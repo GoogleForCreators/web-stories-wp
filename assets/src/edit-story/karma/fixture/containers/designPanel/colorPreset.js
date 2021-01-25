@@ -28,16 +28,28 @@ export class ColorPreset extends AbstractPanel {
     super(node, path);
   }
 
-  get add() {
-    return this.getByRole('button', { name: /Add color preset/ });
+  get addGlobal() {
+    return this.getByRole('button', { name: /Add global color/ });
   }
 
-  get apply() {
-    return this.getByRole('button', { name: /Apply color preset/ });
+  get addLocal() {
+    return this.getByRole('button', { name: /Add local color/ });
   }
 
-  get delete() {
-    return this.getByRole('button', { name: /Delete color preset/ });
+  get applyGlobal() {
+    return this.getByRole('button', { name: /Apply global color/ });
+  }
+
+  get applyLocal() {
+    return this.getByRole('button', { name: /Apply local color/ });
+  }
+
+  get deleteLocal() {
+    return this.getByRole('button', { name: /Delete local color/ });
+  }
+
+  get deleteGlobal() {
+    return this.getByRole('button', { name: /Delete global color/ });
   }
 
   get edit() {
