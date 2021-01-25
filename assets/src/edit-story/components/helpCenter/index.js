@@ -23,7 +23,6 @@ import styled, { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import { theme as dsTheme, ThemeGlobals } from '../../../design-system';
-import { useConfig } from '../../app/config';
 import { Toggle } from './toggle';
 
 const Wrapper = styled.div`
@@ -46,7 +45,6 @@ const Wrapper = styled.div`
 export const HelpCenter = () => {
   const { enableQuickTips } = useFeatures();
   const [isOpen, setIsOpen] = useState(false);
-  const { isRTL } = useConfig();
 
   return (
     enableQuickTips && (
@@ -57,7 +55,6 @@ export const HelpCenter = () => {
             isOpen={isOpen}
             onClick={() => setIsOpen((v) => !v)}
             notificationCount={1}
-            isRTL={isRTL}
           />
         </Wrapper>
       </ThemeProvider>
