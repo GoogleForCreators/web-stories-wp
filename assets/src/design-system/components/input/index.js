@@ -65,6 +65,7 @@ const StyledInput = styled.input(
     }
 
     :disabled {
+      color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
     }
 
