@@ -81,7 +81,7 @@ describe('Embed Block', () => {
     await insertBlock('Web Stories');
 
     await page.type(
-      'input[aria-label="Web Story URL"]',
+      'input[aria-label="Story URL"]',
       'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'
     );
     await expect(page).toClick('button', { text: 'Embed' });
