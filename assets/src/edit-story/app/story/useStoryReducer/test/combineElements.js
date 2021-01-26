@@ -127,11 +127,14 @@ describe('combineElements', () => {
         focalX: 20,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 20,
         y: 20,
         width: 20,
         height: 20,
+        flip: {
+          vertical: false,
+          horizontal: true,
+        },
       },
     ]);
   });
@@ -167,12 +170,15 @@ describe('combineElements', () => {
         focalX: 20,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 20,
         y: 20,
         width: 20,
         height: 20,
         tracks: ['track-1'],
+        flip: {
+          vertical: false,
+          horizontal: true,
+        },
       },
     ]);
   });
@@ -197,7 +203,6 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 10,
         y: 10,
         width: 10,
@@ -227,7 +232,6 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 10,
         y: 10,
         width: 10,
@@ -263,7 +267,6 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 30,
         y: 30,
         width: 30,
@@ -324,7 +327,6 @@ describe('combineElements', () => {
       expect(result.pages[0].elements[0]).toStrictEqual({
         id: '123',
         isBackground: true,
-        flip: {},
         focalX: 50,
         focalY: 50,
         height: 10,
@@ -353,7 +355,6 @@ describe('combineElements', () => {
       });
 
       expect(result.pages[0].elements[1]).toStrictEqual({
-        flip: {},
         focalX: 50,
         focalY: 50,
         height: 10,
@@ -404,7 +405,6 @@ describe('combineElements', () => {
         width: 10,
         x: 10,
         y: 10,
-        flip: {},
         focalX: 50,
         focalY: 50,
       });
@@ -427,7 +427,6 @@ describe('combineElements', () => {
       expect(result.pages[0].elements[0]).toStrictEqual({
         id: '123',
         isBackground: true,
-        flip: {},
         focalX: 50,
         focalY: 50,
         height: 10,
@@ -456,7 +455,6 @@ describe('combineElements', () => {
       });
 
       expect(result.pages[0].elements[2]).toStrictEqual({
-        flip: {},
         focalX: 50,
         focalY: 50,
         height: 10,
@@ -509,7 +507,6 @@ describe('combineElements', () => {
         width: 10,
         x: 10,
         y: 10,
-        flip: {},
         focalX: 50,
         focalY: 50,
       });
@@ -532,7 +529,6 @@ describe('combineElements', () => {
       expect(result.pages[0].elements[0]).toStrictEqual({
         id: '123',
         isBackground: true,
-        flip: {},
         focalX: 50,
         focalY: 50,
         height: 10,
@@ -561,7 +557,6 @@ describe('combineElements', () => {
       });
 
       expect(result.pages[0].elements[2]).toStrictEqual({
-        flip: {},
         focalX: 50,
         focalY: 50,
         height: 10,
@@ -614,7 +609,6 @@ describe('combineElements', () => {
         width: 10,
         x: 10,
         y: 10,
-        flip: {},
         focalX: 50,
         focalY: 50,
       });
@@ -658,6 +652,10 @@ function getDefaultState1() {
             y: 20,
             width: 20,
             height: 20,
+            flip: {
+              vertical: false,
+              horizontal: true,
+            },
           },
         ],
       },

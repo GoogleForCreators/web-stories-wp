@@ -105,6 +105,7 @@ class SVG {
 
 		// Check if svg uploads, already enabled.
 		if ( $this->svg_already_enabled() ) {
+			add_filter( 'mime_types', [ $this, 'mime_types_add_svg' ] );
 			return;
 		}
 
@@ -161,7 +162,7 @@ class SVG {
 		// allow SVG files.
 		$mime_types['svg'] = self::MIME_TYPE;
 
-		return $mime_types;
+		return array_unique( $mime_types );
 	}
 
 	/**
