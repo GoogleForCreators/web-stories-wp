@@ -24,6 +24,7 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
+import { getTimeTracker } from '../../../tracking';
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
 import { MediaPane, MediaIcon } from './panes/media/local';
@@ -32,7 +33,7 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageLayoutsPane, PageLayoutsIcon } from './panes/pageLayouts';
-import { getTextSets } from './panes/text/textSets/utils';
+import loadTextSets from './panes/text/textSets/loadTextSets';
 
 const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
 const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
@@ -96,7 +97,13 @@ function LibraryProvider({ children }) {
   );
 
   useEffect(() => {
-    getTextSets().then(setTextSets);
+    async function getTextSets() {
+      const trackTiming = getTimeTracker('load', 'editor', 'Text Sets');
+      setTextSets(await loadTextSets());
+      await trackTiming();
+    }
+
+    getTextSets();
   }, []);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
