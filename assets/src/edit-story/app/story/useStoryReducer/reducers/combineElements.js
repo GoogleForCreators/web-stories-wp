@@ -91,7 +91,6 @@ function combineElements(
     'scale',
     'focalX',
     'focalY',
-    'flip',
     'tracks',
   ];
 
