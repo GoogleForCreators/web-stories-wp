@@ -52,7 +52,7 @@ function LibraryProvider({ children }) {
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
-  const { showElementsTab, showPageLayoutsTab } = useFeatures();
+  const { showElementsTab } = useFeatures();
 
   // Order here is important, as it denotes the actual visual order of elements.
   const tabs = useMemo(
@@ -62,9 +62,9 @@ function LibraryProvider({ children }) {
       ...(tab === TEXT.id ? [TEXT] : [{ icon: TextIcon, id: 'text' }]),
       SHAPES,
       ...(showElementsTab ? [ELEMS] : []),
-      ...(showPageLayoutsTab ? [PAGE_LAYOUTS] : []),
+      PAGE_LAYOUTS,
     ],
-    [showElementsTab, showPageLayoutsTab, tab]
+    [showElementsTab, tab]
   );
 
   const state = useMemo(
