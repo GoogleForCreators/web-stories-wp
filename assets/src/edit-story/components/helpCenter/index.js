@@ -36,9 +36,9 @@ const Wrapper = styled.div`
     left: 24px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.destop} {
-    bottom: 28px;
-    left: 34px;
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    bottom: 36px;
+    left: 8px;
   }
 `;
 
