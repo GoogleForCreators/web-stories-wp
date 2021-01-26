@@ -84,6 +84,19 @@ function mock_enable_active_modules( $current ) {
 }
 add_filter( 'pre_option_googlesitekit_active_modules', __NAMESPACE__ . '\mock_enable_active_modules' );
 
+
+/**
+ * Force analytics snippet to be enabled.
+ *
+ * @param $current
+ *
+ * @return string[]
+ */
+function mock_enable_analytics_settings( $current ) {
+	return [ 'useSnippet' => true ];
+}
+add_filter( 'pre_option_googlesitekit_analytics_settings', __NAMESPACE__ . '\mock_enable_analytics_settings' );
+
 /**
  * Gets the HTML attributes for an AMP tag that may potentially require user consent before loading.
  *
