@@ -79,7 +79,7 @@ const EmbedPlaceholder = ({
     if (!selectedStories.length && !isStoryPickerOpen) {
       openStoryPicker();
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedStories, isStoryPickerOpen]);
 
   if (selectedStoriesObject.length) {
     placeholderIcon = false;
