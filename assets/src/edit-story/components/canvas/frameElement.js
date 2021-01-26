@@ -61,7 +61,7 @@ const EmptyFrame = styled.div`
 `;
 
 function FrameElement({ element }) {
-  const { id, type } = element;
+  const { id, type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
@@ -151,7 +151,7 @@ function FrameElement({ element }) {
         isAnimating={isAnimating}
         data-testid="frameElement"
       >
-        <WithMask element={element} fill={true}>
+        <WithMask element={element} fill={true} flip={flip}>
           {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
           ) : (

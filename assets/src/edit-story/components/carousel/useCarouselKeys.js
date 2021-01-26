@@ -25,16 +25,12 @@ import { useMemo } from 'react';
 import {
   useEscapeToBlurEffect,
   useKeyDownEffect,
-} from '../../../../design-system';
-import { useStory } from '../../../app';
-import { duplicatePage } from '../../../elements';
+} from '../../../design-system';
+import { useStory, useConfig } from '../../app';
+import { duplicatePage } from '../../elements';
 
-/**
- * @param {Object} ref Reference.
- * @param {Object} pageRefs Page references.
- * @param {boolean} isRTL Whether we're in RTL layout or not.
- */
-function useCarouselKeys(ref, pageRefs, isRTL) {
+function useCarouselKeys({ listElement, pageRefs }) {
+  const { isRTL } = useConfig();
   const {
     addPageAt,
     arrangePage,
@@ -60,11 +56,11 @@ function useCarouselKeys(ref, pageRefs, isRTL) {
 
   const pageIds = useMemo(() => pages.map(({ id }) => id), [pages]);
 
-  useEscapeToBlurEffect(ref);
+  useEscapeToBlurEffect(listElement, [listElement]);
 
   // Navigate left and right.
   useKeyDownEffect(
-    ref,
+    listElement,
     { key: ['up', 'down', 'left', 'right'] },
     ({ key }) => {
       // Intercept all keys, but only handle left and right.
@@ -77,6 +73,7 @@ function useCarouselKeys(ref, pageRefs, isRTL) {
       if (nextIndex >= 0 && nextIndex < pageIds.length) {
         const pageId = pageIds[nextIndex];
         setCurrentPage({ pageId });
+
         const thumbnail = pageRefs.current && pageRefs.current[pageId];
         // @todo: provide a cleaner `focusFirst()` API and takes into account
         // `tabIndex`, `disabled`, links, buttons, inputs, etc.
@@ -86,12 +83,12 @@ function useCarouselKeys(ref, pageRefs, isRTL) {
         }
       }
     },
-    [currentPageId, isRTL, pageIds, pageRefs, setCurrentPage]
+    [currentPageId, isRTL, pageIds, setCurrentPage, pageRefs]
   );
 
   // Rearrange pages.
   useKeyDownEffect(
-    ref,
+    listElement,
     { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
     (evt) => {
       const { key, shiftKey } = evt;
@@ -121,17 +118,36 @@ function useCarouselKeys(ref, pageRefs, isRTL) {
 
   // Delete the current page.
   useKeyDownEffect(
-    ref,
+    listElement,
     'delete',
     () => {
       deletePage({ pageId: currentPageId });
+
+      // Wait for active page to change, then set new active page as focus
+      const currentElement = document.activeElement;
+      const setFocusWhenActiveElementChanges = () => {
+        if (document.activeElement !== currentElement) {
+          // Find the new active element (an option with tabindex=0)
+          const focusableOption = listElement.querySelector(
+            '[role="option"][tabindex="0"]'
+          );
+          // If exists, set focus
+          if (focusableOption) {
+            focusableOption.focus();
+            return;
+          }
+        }
+        // Otherwise, try again in 100ms
+        setTimeout(setFocusWhenActiveElementChanges, 100);
+      };
+      setFocusWhenActiveElementChanges();
     },
-    [currentPageId, deletePage]
+    [currentPageId, deletePage, listElement]
   );
 
   // Clone the current page.
   useKeyDownEffect(
-    ref,
+    listElement,
     'clone',
     () => {
       const index = pageIds.indexOf(currentPage.id);
@@ -147,7 +163,7 @@ function getArrowDir(key, pos, neg, isRTL) {
     return rtlDir;
   }
   if (key === neg) {
-    return -1 * rtlDir;
+    return -rtlDir;
   }
   return 0;
 }
