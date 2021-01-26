@@ -91,7 +91,7 @@ function useAddPastedElements() {
           combineElements({
             firstElement: newBackgroundElement,
             secondId: existingBgElement.id,
-            isCopyAndPasteAction: true,
+            shouldRetainAnimations: false,
           });
         }
       }

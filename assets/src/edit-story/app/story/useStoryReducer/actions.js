@@ -92,11 +92,11 @@ const updateSelectedElements = (dispatch) => ({ properties }) =>
 const combineElements = (dispatch) => ({
   firstElement,
   secondId,
-  isCopyAndPasteAction,
+  shouldRetainAnimations,
 }) =>
   dispatch({
     type: types.COMBINE_ELEMENTS,
-    payload: { firstElement, secondId, isCopyAndPasteAction },
+    payload: { firstElement, secondId, shouldRetainAnimations },
   });
 
 const setBackgroundElement = (dispatch) => ({ elementId }) =>

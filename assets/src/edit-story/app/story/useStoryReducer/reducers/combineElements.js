@@ -50,12 +50,12 @@ import { removeAnimationsWithElementIds } from './utils';
  * @param {Object} payload Action payload
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
- * @param {boolean} payload.isCopyAndPasteAction Is called from copy and paste
+ * @param {boolean} payload.shouldRetainAnimations Is called from copy and paste
  * @return {Object} New state
  */
 function combineElements(
   state,
-  { firstElement, secondId, isCopyAndPasteAction = false }
+  { firstElement, secondId, shouldRetainAnimations = true }
 ) {
   if (!firstElement || !secondId) {
     return state;
@@ -112,7 +112,7 @@ function combineElements(
   const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
   const newElement = {
-    // First copy everything from existing element except if it was default background and any overlay
+    // First copy everything from existing element except if it was default background
     ...objectWithout(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
@@ -140,7 +140,7 @@ function combineElements(
   // newly pasted element.
   const newAnimations = removeAnimationsWithElementIds(
     page.animations,
-    isCopyAndPasteAction ? [firstId, secondId] : [firstId]
+    shouldRetainAnimations ? [firstId] : [firstId, secondId]
   );
 
   const newPage = {
