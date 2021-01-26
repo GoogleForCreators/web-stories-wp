@@ -58,7 +58,7 @@ const Label = styled.span`
   @media ${({ theme }) => theme.breakpoint.desktop} {
     display: block;
     min-width: 115px;
-    text-align: ${({ isRTL }) => (isRTL ? 'right' : 'left')};
+    text-align: left;
   }
 `;
 
