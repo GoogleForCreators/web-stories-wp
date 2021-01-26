@@ -203,7 +203,6 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        flip: {},
         backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
         x: 10,
         y: 10,
