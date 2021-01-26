@@ -69,7 +69,7 @@ function setupPanel(extraStylePresets, extraStateProps, extraStoryPresets) {
           ...{ colors: [], textStyles: [] },
           ...extraStylePresets,
         },
-        storyPresets: {
+        currentStoryStyles: {
           colors: [],
           ...extraStoryPresets,
         },
@@ -267,7 +267,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          storyPresets: {
+          currentStoryStyles: {
             colors: [TEST_COLOR_2],
           },
         },
@@ -317,7 +317,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          storyPresets: {
+          currentStoryStyles: {
             colors: [TEST_COLOR_2],
           },
         },
@@ -365,7 +365,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          storyPresets: {
+          currentStoryStyles: {
             colors: [TEST_COLOR_2],
           },
         },
@@ -411,7 +411,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          storyPresets: {
+          currentStoryStyles: {
             colors: [TEST_COLOR_2],
           },
         },
@@ -559,7 +559,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          storyPresets: {
+          currentStoryStyles: {
             colors: [],
           },
         },

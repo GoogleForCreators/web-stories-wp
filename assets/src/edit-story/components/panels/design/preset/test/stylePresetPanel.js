@@ -60,7 +60,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
           ...{ colors: [], textStyles: [] },
           ...extraStylePresets,
         },
-        storyPresets: {
+        currentStoryStyles: {
           colors: [],
         },
       },

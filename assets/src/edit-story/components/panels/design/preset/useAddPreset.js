@@ -31,7 +31,7 @@ import {
 function useAddPreset({ presetType }) {
   const {
     currentPage,
-    storyPresets,
+    currentStoryStyles,
     selectedElements,
     stylePresets,
     updateStory,
@@ -40,13 +40,13 @@ function useAddPreset({ presetType }) {
       state: {
         currentPage,
         selectedElements,
-        story: { stylePresets, storyPresets },
+        story: { stylePresets, currentStoryStyles },
       },
       actions: { updateStory },
     }) => {
       return {
         currentPage,
-        storyPresets,
+        currentStoryStyles,
         selectedElements,
         stylePresets,
         updateStory,
@@ -54,7 +54,7 @@ function useAddPreset({ presetType }) {
     }
   );
   const { colors, textStyles } = stylePresets;
-  const { colors: localColors } = storyPresets;
+  const { colors: localColors } = currentStoryStyles;
 
   const isText = areAllType('text', selectedElements);
   const isBackground = selectedElements[0].id === currentPage.elements[0].id;
@@ -85,7 +85,7 @@ function useAddPreset({ presetType }) {
     (addedPresets) => {
       updateStory({
         properties: {
-          storyPresets: {
+          currentStoryStyles: {
             colors: [...localColors, ...addedPresets.colors],
           },
         },
@@ -110,7 +110,7 @@ function useAddPreset({ presetType }) {
 
   const handleAddPreset = useCallback(
     (addedPresets, isLocal = false) => {
-      const currentPresets = isLocal ? storyPresets : stylePresets;
+      const currentPresets = isLocal ? currentStoryStyles : stylePresets;
       addedPresets = getPresets(addedPresets, currentPresets);
       if (
         addedPresets.colors?.length > 0 ||
@@ -125,7 +125,7 @@ function useAddPreset({ presetType }) {
     },
     [
       getPresets,
-      storyPresets,
+      currentStoryStyles,
       stylePresets,
       updateGlobalPresets,
       updateLocalPresets,

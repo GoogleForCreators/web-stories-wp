@@ -42,15 +42,15 @@ function PresetPanel({
 }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
-  const { storyPresets, selectedElements, stylePresets } = useStory(
+  const { currentStoryStyles, selectedElements, stylePresets } = useStory(
     ({
       state: {
         selectedElements,
-        story: { stylePresets, storyPresets },
+        story: { stylePresets, currentStoryStyles },
       },
     }) => {
       return {
-        storyPresets,
+        currentStoryStyles,
         selectedElements,
         stylePresets,
       };
@@ -59,7 +59,7 @@ function PresetPanel({
 
   const { colors, textStyles } = stylePresets;
   const globalPresets = isColor ? colors : textStyles;
-  const { colors: localColors } = storyPresets;
+  const { colors: localColors } = currentStoryStyles;
   const hasLocalPresets = localColors.length > 0;
   // If there are any global presets or local colors in case of color.
   const hasPresets = globalPresets.length > 0 || (isColor && hasLocalPresets);

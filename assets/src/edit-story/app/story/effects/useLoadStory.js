@@ -129,7 +129,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           permalinkConfig,
           publisherLogoUrl,
           password,
-          storyPresets: storyData?.storyPresets || { colors: [] },
+          currentStoryStyles: storyData?.currentStoryStyles || { colors: [] },
           stylePresets,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,

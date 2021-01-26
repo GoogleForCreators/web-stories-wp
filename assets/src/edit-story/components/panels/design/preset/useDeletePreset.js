@@ -24,15 +24,15 @@ import { useCallback } from 'react';
 import { useStory } from '../../../../app/story';
 
 function useDeletePreset({ presetType, setIsEditMode }) {
-  const { storyPresets, stylePresets, updateStory } = useStory(
+  const { currentStoryStyles, stylePresets, updateStory } = useStory(
     ({
       state: {
-        story: { stylePresets, storyPresets },
+        story: { stylePresets, currentStoryStyles },
       },
       actions: { updateStory },
     }) => {
       return {
-        storyPresets,
+        currentStoryStyles,
         stylePresets,
         updateStory,
       };
@@ -44,7 +44,7 @@ function useDeletePreset({ presetType, setIsEditMode }) {
 
   const { colors, textStyles } = stylePresets;
   const globalPresets = isColor ? colors : textStyles;
-  const { colors: localColors } = storyPresets;
+  const { colors: localColors } = currentStoryStyles;
   const hasLocalPresets = localColors.length > 0;
 
   const deleteGlobalPreset = useCallback(
@@ -84,7 +84,7 @@ function useDeletePreset({ presetType, setIsEditMode }) {
       const updatedColors = localColors.filter((color) => color !== toDelete);
       updateStory({
         properties: {
-          storyPresets: { colors: updatedColors },
+          currentStoryStyles: { colors: updatedColors },
         },
       });
       // If no colors are left, exit edit mode.
