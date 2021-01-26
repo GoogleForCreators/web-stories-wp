@@ -43,6 +43,7 @@ use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
 use Google\Web_Stories\Shortcode\Stories_Shortcode;
 use Google\Web_Stories\Block\Web_Stories_Block;
+use Google\Web_Stories\TinyMCE;
 
 /**
  * Plugin class.
@@ -326,6 +327,9 @@ class Plugin {
 		add_action( 'admin_init', [ $this->tracking, 'init' ] );
 
 		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
+
+		$tinymce = new TinyMCE();
+		$tinymce->init();
 	}
 
 	/**
@@ -347,7 +351,6 @@ class Plugin {
 	 * @return void
 	 */
 	public function includes() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/tinymce.php';
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 	}
 
