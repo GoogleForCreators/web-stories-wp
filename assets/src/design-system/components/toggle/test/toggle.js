@@ -14,10 +14,22 @@
  * limitations under the License.
  */
 
-export const Z_INDEX = {
-  BOTTOM: 0,
-  DEFAULT: 1,
-  MIDDLE: 2,
-  TOP: 3,
-  SNACKBAR: 15,
-};
+/**
+ * External dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+import { Toggle } from '..';
+import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+
+describe('Toggle', () => {
+  it('should render the toggle', () => {
+    const { getByTestId } = renderWithProviders(
+      <Toggle data-testid="toggle" />
+    );
+
+    expect(getByTestId('toggle')).toBeInTheDocument();
+  });
+});
