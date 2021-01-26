@@ -95,7 +95,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
     } catch (err) {
       // TODO Display error message to user as video poster upload has as failed.
     } finally {
-      await trackTiming();
+      trackTiming();
     }
   };
 

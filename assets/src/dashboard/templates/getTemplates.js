@@ -72,7 +72,7 @@ async function getTemplates(imageBaseUrl) {
 
   const result = Object.fromEntries(templates);
 
-  await trackTiming();
+  trackTiming();
 
   return result;
 }

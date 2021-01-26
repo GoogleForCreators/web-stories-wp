@@ -100,7 +100,7 @@ function LibraryProvider({ children }) {
     async function getTextSets() {
       const trackTiming = getTimeTracker('load', 'editor', 'Text Sets');
       setTextSets(await loadTextSets());
-      await trackTiming();
+      trackTiming();
     }
 
     getTextSets();

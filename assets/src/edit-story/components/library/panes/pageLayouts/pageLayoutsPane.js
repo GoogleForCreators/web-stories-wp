@@ -71,7 +71,7 @@ function PageLayoutsPane(props) {
     async function loadPageLayouts() {
       const trackTiming = getTimeTracker('load', 'editor', 'Page Layouts');
       setPageLayouts(await getPageLayouts());
-      await trackTiming();
+      trackTiming();
     }
 
     loadPageLayouts();
