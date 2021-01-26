@@ -39,13 +39,13 @@ function useDeletePreset({ presetType, setIsEditMode }) {
     }
   );
 
+  const isColor = 'color' === presetType;
+  const isStyle = 'style' === presetType;
+
   const { colors, textStyles } = stylePresets;
   const globalPresets = isColor ? colors : textStyles;
   const { colors: localColors } = storyPresets;
   const hasLocalPresets = localColors.length > 0;
-
-  const isColor = 'color' === presetType;
-  const isStyle = 'style' === presetType;
 
   const handleDeleteGlobalPreset = useCallback(
     (toDelete) => {
