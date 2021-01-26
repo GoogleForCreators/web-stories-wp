@@ -363,16 +363,15 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @zachhale
-			 * Issue: #5079
-			 * Creation date: 2020-11-04
+			 * Author: @swissspidy
+			 * Issue: #5669
+			 * Creation date: 2021-01-21
 			 */
 			[
-				'name'        => 'showPageLayoutsTab',
-				'label'       => __( 'Page layouts tab', 'web-stories' ),
-				'description' => __( 'Enable page layouts tab', 'web-stories' ),
+				'name'        => 'videoOptimization',
+				'label'       => __( 'Video optimization', 'web-stories' ),
+				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}
