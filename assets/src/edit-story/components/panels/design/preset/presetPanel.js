@@ -123,7 +123,7 @@ function PresetPanel({
         title={title}
         presetType={presetType}
       />
-      <PanelContent isPrimary padding={hasPresets && '0'}>
+      <PanelContent isPrimary padding={hasPresets ? null : '0'}>
         {isColor && (
           <ColorPresetPanel
             itemRenderer={itemRenderer}

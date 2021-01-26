@@ -47,7 +47,7 @@ function useDeletePreset({ presetType, setIsEditMode }) {
   const { colors: localColors } = storyPresets;
   const hasLocalPresets = localColors.length > 0;
 
-  const handleDeleteGlobalPreset = useCallback(
+  const deleteGlobalPreset = useCallback(
     (toDelete) => {
       const updatedStyles = isColor
         ? colors.filter((color) => color !== toDelete)
@@ -79,7 +79,7 @@ function useDeletePreset({ presetType, setIsEditMode }) {
     ]
   );
 
-  const handleDeleteLocalPreset = useCallback(
+  const deleteLocalPreset = useCallback(
     (toDelete) => {
       const updatedColors = localColors.filter((color) => color !== toDelete);
       updateStory({
@@ -96,8 +96,8 @@ function useDeletePreset({ presetType, setIsEditMode }) {
   );
 
   return {
-    handleDeleteLocalPreset,
-    handleDeleteGlobalPreset,
+    deleteLocalPreset,
+    deleteGlobalPreset,
   };
 }
 
