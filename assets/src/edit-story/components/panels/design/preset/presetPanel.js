@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -32,6 +32,7 @@ import Resize from './resize';
 import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
 import ColorPresetPanel from './colorPreset/colorPresetPanel';
+import useDeletePreset from './useDeletePreset';
 
 function PresetPanel({
   presetType = 'color',
@@ -41,24 +42,17 @@ function PresetPanel({
 }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
-  const {
-    storyPresets,
-    selectedElements,
-    stylePresets,
-    updateStory,
-  } = useStory(
+  const { storyPresets, selectedElements, stylePresets } = useStory(
     ({
       state: {
         selectedElements,
         story: { stylePresets, storyPresets },
       },
-      actions: { updateStory },
     }) => {
       return {
         storyPresets,
         selectedElements,
         stylePresets,
-        updateStory,
       };
     }
   );
@@ -67,57 +61,20 @@ function PresetPanel({
   const globalPresets = isColor ? colors : textStyles;
   const { colors: localColors } = storyPresets;
   const hasLocalPresets = localColors.length > 0;
-  const hasPresets = isColor
-    ? globalPresets.length > 0 || hasLocalPresets
-    : globalPresets.length > 0;
+  // If there are any global presets or local colors in case of color.
+  const hasPresets = globalPresets.length > 0 || (isColor && hasLocalPresets);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
   const isText = areAllType('text', selectedElements);
   const isShape = areAllType('shape', selectedElements);
 
-  const handleApplyPreset = useApplyPreset(isColor, pushUpdate);
-  const { addGlobalPreset } = useAddPreset(presetType);
-
-  const handleDeletePreset = useCallback(
-    (toDelete) => {
-      const updatedStyles = isColor
-        ? colors.filter((color) => color !== toDelete)
-        : textStyles.filter((style) => style !== toDelete);
-      updateStory({
-        properties: {
-          stylePresets: {
-            textStyles: isColor ? textStyles : updatedStyles,
-            colors: isColor ? updatedStyles : colors,
-          },
-        },
-      });
-      // If no styles left, exit edit mode.
-      if (
-        updatedStyles.length === 0 &&
-        ((isColor && !hasLocalPresets) || isStyle)
-      ) {
-        setIsEditMode(false);
-      }
-    },
-    [colors, isColor, textStyles, updateStory, hasLocalPresets, isStyle]
-  );
-
-  const handleDeleteLocalPreset = useCallback(
-    (toDelete) => {
-      const updatedColors = localColors.filter((color) => color !== toDelete);
-      updateStory({
-        properties: {
-          storyPresets: { colors: updatedColors },
-        },
-      });
-      // If no colors are left, exit edit mode.
-      if (updatedColors.length === 0 && globalPresets.length === 0) {
-        setIsEditMode(false);
-      }
-    },
-    [globalPresets.length, localColors, updateStory]
-  );
+  const handleApplyPreset = useApplyPreset({ isColor, pushUpdate });
+  const { addGlobalPreset } = useAddPreset({ presetType });
+  const { deleteLocalPreset, deleteGlobalPreset } = useDeletePreset({
+    presetType,
+    setIsEditMode,
+  });
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
@@ -134,9 +91,9 @@ function PresetPanel({
   const handlePresetClick = (preset, isLocal = false) => {
     if (isEditMode) {
       if (isLocal) {
-        handleDeleteLocalPreset(preset);
+        deleteLocalPreset(preset);
       } else {
-        handleDeletePreset(preset);
+        deleteGlobalPreset(preset);
       }
     } else {
       handleApplyPreset(preset);
@@ -166,7 +123,7 @@ function PresetPanel({
         title={title}
         presetType={presetType}
       />
-      <PanelContent isPrimary padding={hasPresets ? null : '0'}>
+      <PanelContent isPrimary padding={hasPresets && '0'}>
         {isColor && (
           <ColorPresetPanel
             itemRenderer={itemRenderer}

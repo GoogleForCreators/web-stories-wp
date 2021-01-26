@@ -28,7 +28,7 @@ import {
   getTextPresets,
 } from './utils';
 
-function useAddPreset(presetType) {
+function useAddPreset({ presetType }) {
   const {
     currentPage,
     storyPresets,

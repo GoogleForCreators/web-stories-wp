@@ -88,7 +88,7 @@ describe('Panel: Color Presets', () => {
         fixture.editor.inspector.designPanel.colorPreset.applyGlobal
       );
       const [shape] = await getSelection();
-      expect(shape.backgroundColor).toBe({ color: { r: 0, g: 0, b: 0 } });
+      expect(shape.backgroundColor).toEqual({ color: { r: 0, g: 0, b: 0 } });
     });
 
     it('should allow applying local colors', async () => {
@@ -104,7 +104,7 @@ describe('Panel: Color Presets', () => {
         fixture.editor.inspector.designPanel.colorPreset.applyLocal
       );
       const [shape] = await getSelection();
-      expect(shape.backgroundColor).toBe({ color: { r: 0, g: 0, b: 0 } });
+      expect(shape.backgroundColor).toEqual({ color: { r: 0, g: 0, b: 0 } });
     });
   });
 
