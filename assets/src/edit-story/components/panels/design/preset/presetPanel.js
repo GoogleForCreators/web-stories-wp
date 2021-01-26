@@ -42,22 +42,22 @@ function PresetPanel({
 }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
-  const { currentStoryStyles, selectedElements, stylePresets } = useStory(
+  const { currentStoryStyles, selectedElements, globalStoryStyles } = useStory(
     ({
       state: {
         selectedElements,
-        story: { stylePresets, currentStoryStyles },
+        story: { globalStoryStyles, currentStoryStyles },
       },
     }) => {
       return {
         currentStoryStyles,
         selectedElements,
-        stylePresets,
+        globalStoryStyles,
       };
     }
   );
 
-  const { colors, textStyles } = stylePresets;
+  const { colors, textStyles } = globalStoryStyles;
   const globalPresets = isColor ? colors : textStyles;
   const { colors: localColors } = currentStoryStyles;
   const hasLocalPresets = localColors.length > 0;

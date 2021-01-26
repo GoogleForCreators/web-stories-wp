@@ -73,7 +73,7 @@ function APIProvider({ children }) {
     ({
       pages,
       featuredMedia,
-      stylePresets,
+      globalStoryStyles,
       publisherLogo,
       autoAdvance,
       defaultPageDuration,
@@ -91,7 +91,7 @@ function APIProvider({ children }) {
           currentStoryStyles,
         },
         featured_media: featuredMedia.id,
-        style_presets: stylePresets,
+        style_presets: globalStoryStyles,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
         author: author.id,

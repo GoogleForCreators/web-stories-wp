@@ -24,16 +24,16 @@ import { useCallback } from 'react';
 import { useStory } from '../../../../app/story';
 
 function useDeletePreset({ presetType, setIsEditMode }) {
-  const { currentStoryStyles, stylePresets, updateStory } = useStory(
+  const { currentStoryStyles, globalStoryStyles, updateStory } = useStory(
     ({
       state: {
-        story: { stylePresets, currentStoryStyles },
+        story: { globalStoryStyles, currentStoryStyles },
       },
       actions: { updateStory },
     }) => {
       return {
         currentStoryStyles,
-        stylePresets,
+        globalStoryStyles,
         updateStory,
       };
     }
@@ -42,8 +42,8 @@ function useDeletePreset({ presetType, setIsEditMode }) {
   const isColor = 'color' === presetType;
   const isStyle = 'style' === presetType;
 
-  const { colors, textStyles } = stylePresets;
-  const globalPresets = isColor ? colors : textStyles;
+  const { colors, textStyles } = globalStoryStyles;
+  const globalStyles = isColor ? colors : textStyles;
   const { colors: localColors } = currentStoryStyles;
   const hasLocalPresets = localColors.length > 0;
 
@@ -54,7 +54,7 @@ function useDeletePreset({ presetType, setIsEditMode }) {
         : textStyles.filter((style) => style !== toDelete);
       updateStory({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             textStyles: isColor ? textStyles : updatedStyles,
             colors: isColor ? updatedStyles : colors,
           },
@@ -88,11 +88,11 @@ function useDeletePreset({ presetType, setIsEditMode }) {
         },
       });
       // If no colors are left, exit edit mode.
-      if (updatedColors.length === 0 && globalPresets.length === 0) {
+      if (updatedColors.length === 0 && globalStyles.length === 0) {
         setIsEditMode(false);
       }
     },
-    [globalPresets.length, localColors, updateStory, setIsEditMode]
+    [globalStyles.length, localColors, updateStory, setIsEditMode]
   );
 
   return {

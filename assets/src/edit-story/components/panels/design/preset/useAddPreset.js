@@ -33,14 +33,14 @@ function useAddPreset({ presetType }) {
     currentPage,
     currentStoryStyles,
     selectedElements,
-    stylePresets,
+    globalStoryStyles,
     updateStory,
   } = useStory(
     ({
       state: {
         currentPage,
         selectedElements,
-        story: { stylePresets, currentStoryStyles },
+        story: { globalStoryStyles, currentStoryStyles },
       },
       actions: { updateStory },
     }) => {
@@ -48,12 +48,12 @@ function useAddPreset({ presetType }) {
         currentPage,
         currentStoryStyles,
         selectedElements,
-        stylePresets,
+        globalStoryStyles,
         updateStory,
       };
     }
   );
-  const { colors, textStyles } = stylePresets;
+  const { colors, textStyles } = globalStoryStyles;
   const { colors: localColors } = currentStoryStyles;
 
   const isText = areAllType('text', selectedElements);
@@ -98,7 +98,7 @@ function useAddPreset({ presetType }) {
     (addedPresets) => {
       updateStory({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             textStyles: [...textStyles, ...addedPresets.textStyles],
             colors: [...colors, ...addedPresets.colors],
           },
@@ -110,7 +110,7 @@ function useAddPreset({ presetType }) {
 
   const handleAddPreset = useCallback(
     (addedPresets, isLocal = false) => {
-      const currentPresets = isLocal ? currentStoryStyles : stylePresets;
+      const currentPresets = isLocal ? currentStoryStyles : globalStoryStyles;
       addedPresets = getPresets(addedPresets, currentPresets);
       if (
         addedPresets.colors?.length > 0 ||
@@ -126,7 +126,7 @@ function useAddPreset({ presetType }) {
     [
       getPresets,
       currentStoryStyles,
-      stylePresets,
+      globalStoryStyles,
       updateGlobalPresets,
       updateLocalPresets,
     ]

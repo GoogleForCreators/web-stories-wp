@@ -10018,7 +10018,7 @@
   "current": "e21ff914-108e-4f32-9dbd-b3c8a276aa13",
   "selection": ["48b4df6b-1a5a-44d4-a10f-0e5dc8dc1e8d"],
   "story": {
-    "stylePresets": {
+    "globalStoryStyles": {
       "textStyles": [
         {
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },

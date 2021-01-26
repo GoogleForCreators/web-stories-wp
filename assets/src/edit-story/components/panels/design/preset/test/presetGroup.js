@@ -57,7 +57,7 @@ const getThirdArguments = (calls) => {
   return [...calls.map((args) => args[2])];
 };
 
-describe('stylePresets/PresetGroup', () => {
+describe('globalStoryStyles/PresetGroup', () => {
   it('should modify active index correctly with arrow keys', () => {
     const { itemRenderer, getAllByRole } = setupPresetGroup();
     expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([0, 0, 0]);

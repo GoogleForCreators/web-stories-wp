@@ -133,7 +133,7 @@ export class Fixture {
       'borderRadius',
       'borderStyle',
       'captions',
-      'stylePresets',
+      'globalStoryStyles',
       'colorPresets',
       'imageAccessibility',
       'layerStyle',

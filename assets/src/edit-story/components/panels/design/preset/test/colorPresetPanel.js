@@ -65,7 +65,7 @@ function setupPanel(extraStylePresets, extraStateProps, extraStoryPresets) {
       selectedElements: [textElement],
       ...extraStateProps,
       story: {
-        stylePresets: {
+        globalStoryStyles: {
           ...{ colors: [], textStyles: [] },
           ...extraStylePresets,
         },
@@ -252,7 +252,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
           },
@@ -303,7 +303,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
           },
@@ -351,7 +351,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
           },
@@ -397,7 +397,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
           },
@@ -442,7 +442,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
           },
@@ -544,7 +544,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [],
             textStyles: [],
           },

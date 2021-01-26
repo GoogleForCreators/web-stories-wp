@@ -32,7 +32,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'password',
     'publisherLogo',
     'currentStoryStyles',
-    'stylePresets',
+    'globalStoryStyles',
     'autoAdvance',
     'defaultPageDuration',
   ]);
