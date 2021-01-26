@@ -28,45 +28,42 @@ import name from './store/name';
 import WebStoryMCEStore from './store';
 import WebStoriesModal from './containers/Modal';
 import { webStoriesData } from './utils/globals';
-import { setFields } from './utils/';
 
 const { _ } = window;
 
 /**
  * Add button to tinyMCE editor.
  */
-(function () {
-  // eslint-disable-next-line no-prototype-builtins
-  if (!_.hasOwnProperty('pluck')) {
-    _.pluck = _.map;
+// eslint-disable-next-line no-prototype-builtins
+if (!_.hasOwnProperty('pluck')) {
+  _.pluck = _.map;
+}
+
+/**
+ * Render tinyMCE settings modal.
+ *
+ * @class
+ */
+const RenderModal = () => {
+  const target = document.getElementById('web-stories-tinymce');
+
+  if (target) {
+    render(<WebStoriesModal />, target);
   }
+};
 
-  /**
-   * Render tinyMCE settings modal.
-   *
-   * @class
-   */
-  const RenderModal = () => {
-    const target = document.getElementById('web-stories-tinymce');
+/**
+ * Subscribe to state change in store.
+ */
+WebStoryMCEStore.subscribe(() => RenderModal());
 
-    if (target) {
-      render(<WebStoriesModal />, target);
-    }
-  };
-
-  /**
-   * Subscribe to state change in store.
-   */
-  WebStoryMCEStore.subscribe(() => RenderModal());
-  //eslint-disable-next-line no-undef
-  tinymce.PluginManager.add('web_stories', function (editor) {
-    editor.addButton('web_stories', {
-      text: __('Web Stories', 'web-stories'),
-      image: webStoriesData.icon,
-      onclick: function () {
-        dispatch(name).setEditor(editor);
-        dispatch(name).toggleModal(true);
-      },
-    });
+tinymce.PluginManager.add('web_stories', function (editor) {
+  editor.addButton('web_stories', {
+    text: __('Web Stories', 'web-stories'),
+    image: webStoriesData.icon,
+    onclick: function () {
+      dispatch(name).setEditor(editor);
+      dispatch(name).toggleModal(true);
+    },
   });
-})();
+});
