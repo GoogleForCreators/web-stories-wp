@@ -36,7 +36,7 @@ import { usePrepublishChecklist } from '../../inspector/prepublish';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
 import { ButtonContent, WarningIcon } from './styles';
 
-function ButtonWithPrepublishChecklistWarning({ text, ...buttonProps }) {
+function ButtonWithChecklistWarning({ text, ...buttonProps }) {
   const { checklist, refreshChecklist } = usePrepublishChecklist();
 
   const tooltip = checklist.some(
@@ -57,8 +57,8 @@ function ButtonWithPrepublishChecklistWarning({ text, ...buttonProps }) {
   return tooltip ? <WithTooltip title={tooltip}>{button}</WithTooltip> : button;
 }
 
-ButtonWithPrepublishChecklistWarning.propTypes = {
+ButtonWithChecklistWarning.propTypes = {
   text: PropTypes.node.isRequired,
 };
 
-export default ButtonWithPrepublishChecklistWarning;
+export default ButtonWithChecklistWarning;
