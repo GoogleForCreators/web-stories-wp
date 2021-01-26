@@ -46,10 +46,10 @@ describe('Panel: Color Presets', () => {
     it('should display color presets panel for a text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       const addButton =
-        fixture.editor.inspector.designPanel.colorPreset.addGlobal;
+        fixture.editor.inspector.designPanel.colorPreset.global.add;
       expect(addButton).toBeTruthy();
       expect(
-        fixture.editor.inspector.designPanel.colorPreset.addLocal
+        fixture.editor.inspector.designPanel.colorPreset.local.add
       ).toBeTruthy();
     });
 
@@ -61,31 +61,31 @@ describe('Panel: Color Presets', () => {
       );
 
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addGlobal
+        fixture.editor.inspector.designPanel.colorPreset.global.add
       );
       expect(
-        fixture.editor.inspector.designPanel.colorPreset.applyGlobal
+        fixture.editor.inspector.designPanel.colorPreset.global.apply
       ).toBeTruthy();
 
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addLocal
+        fixture.editor.inspector.designPanel.colorPreset.local.add
       );
       expect(
-        fixture.editor.inspector.designPanel.colorPreset.applyLocal
+        fixture.editor.inspector.designPanel.colorPreset.local.apply
       ).toBeTruthy();
     });
 
     it('should allow applying global colors', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addGlobal
+        fixture.editor.inspector.designPanel.colorPreset.global.add
       );
       await fixture.events.click(fixture.editor.library.shapesTab);
       await fixture.events.click(
         fixture.editor.library.shapes.shape('Triangle')
       );
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.applyGlobal
+        fixture.editor.inspector.designPanel.colorPreset.global.apply
       );
       const [shape] = await getSelection();
       expect(shape.backgroundColor).toEqual({ color: { r: 0, g: 0, b: 0 } });
@@ -94,14 +94,14 @@ describe('Panel: Color Presets', () => {
     it('should allow applying local colors', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addLocal
+        fixture.editor.inspector.designPanel.colorPreset.local.add
       );
       await fixture.events.click(fixture.editor.library.shapesTab);
       await fixture.events.click(
         fixture.editor.library.shapes.shape('Triangle')
       );
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.applyLocal
+        fixture.editor.inspector.designPanel.colorPreset.local.apply
       );
       const [shape] = await getSelection();
       expect(shape.backgroundColor).toEqual({ color: { r: 0, g: 0, b: 0 } });
@@ -110,15 +110,13 @@ describe('Panel: Color Presets', () => {
 
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
     it('should allow deleting local and global color presets', async () => {
-      // @todo Add local part here.
-
       // Add text element and a color preset.
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addGlobal
+        fixture.editor.inspector.designPanel.colorPreset.global.add
       );
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.addLocal
+        fixture.editor.inspector.designPanel.colorPreset.local.add
       );
 
       await fixture.events.click(
@@ -132,14 +130,14 @@ describe('Panel: Color Presets', () => {
         fixture.editor.inspector.designPanel.colorPreset.exit;
       expect(exitEditButton).toBeTruthy();
       const deleteGlobalButton =
-        fixture.editor.inspector.designPanel.colorPreset.deleteGlobal;
+        fixture.editor.inspector.designPanel.colorPreset.global.delete;
 
       expect(deleteGlobalButton).toBeTruthy();
 
       // Delete both local and global presets.
       await fixture.events.click(deleteGlobalButton);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.colorPreset.deleteLocal
+        fixture.editor.inspector.designPanel.colorPreset.local.delete
       );
 
       // Verify the edit mode was exited (due to removing all elements).

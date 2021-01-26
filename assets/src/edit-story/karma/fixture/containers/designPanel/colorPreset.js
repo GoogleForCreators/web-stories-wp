@@ -17,7 +17,25 @@
 /**
  * Internal dependencies
  */
+import { Container } from '../container';
 import { AbstractPanel } from './abstractPanel';
+
+class ColorPresetType extends Container {
+  constructor(node, path) {
+    super(node, path);
+    // Name is added as the last part of path after dot.
+    this._type = /[^.]*$/.exec(path)[0];
+  }
+  get add() {
+    return this.getByRole('button', { name: `Add ${this._type} color` });
+  }
+  get apply() {
+    return this.getByRole('button', { name: `Apply ${this._type} color` });
+  }
+  get delete() {
+    return this.getByRole('button', { name: `Delete ${this._type} color` });
+  }
+}
 
 /**
  * The text style panel containing inputs, toggles, dropdowns and other form elements
@@ -28,28 +46,11 @@ export class ColorPreset extends AbstractPanel {
     super(node, path);
   }
 
-  get addGlobal() {
-    return this.getByRole('button', { name: /Add global color/ });
+  get local() {
+    return this._get(this.node, 'local', ColorPresetType);
   }
-
-  get addLocal() {
-    return this.getByRole('button', { name: /Add local color/ });
-  }
-
-  get applyGlobal() {
-    return this.getByRole('button', { name: /Apply global color/ });
-  }
-
-  get applyLocal() {
-    return this.getByRole('button', { name: /Apply local color/ });
-  }
-
-  get deleteLocal() {
-    return this.getByRole('button', { name: /Delete local color/ });
-  }
-
-  get deleteGlobal() {
-    return this.getByRole('button', { name: /Delete global color/ });
+  get global() {
+    return this._get(this.node, 'global', ColorPresetType);
   }
 
   get edit() {

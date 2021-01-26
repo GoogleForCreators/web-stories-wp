@@ -58,7 +58,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
     }
   );
 
-  const { addGlobalPreset, addLocalPreset } = useAddPreset(presetType);
+  const { addGlobalPreset, addLocalPreset } = useAddPreset({ presetType });
 
   const { colors: globalPresets } = stylePresets;
   const { colors: localPresets } = storyPresets;
@@ -76,7 +76,9 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
             <Title>{__('Current story', 'web-stories')}</Title>
             <Presets
               presets={storyPresets?.colors || []}
-              handleOnClick={(preset) => handlePresetClick(preset, true)}
+              handleOnClick={(preset) =>
+                handlePresetClick(preset, true /* isLocal */)
+              }
               handleAddPreset={addLocalPreset}
               isLocal={true}
               {...groupProps}
