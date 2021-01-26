@@ -362,6 +362,17 @@ class Experiments {
 				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #5669
+			 * Creation date: 2021-01-21
+			 */
+			[
+				'name'        => 'videoOptimization',
+				'label'       => __( 'Video optimization', 'web-stories' ),
+				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

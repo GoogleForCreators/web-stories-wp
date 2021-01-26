@@ -51,35 +51,39 @@ function setup(args) {
 }
 
 describe('useUploader', () => {
-  it('throws an error when user does not have upload permissions', () => {
+  it('throws an error when user does not have upload permissions', async () => {
     const { uploadFile } = setup({
       capabilities: {
         hasUploadMediaAction: false,
       },
     });
 
-    expect(() => {
-      uploadFile({});
-    }).toThrow('Sorry, you are unable to upload files.');
+    await expect(uploadFile({})).rejects.toThrow(
+      'Sorry, you are unable to upload files.'
+    );
   });
-  it('user uploads a to large file', () => {
+
+  it('user uploads a to large file', async () => {
     const { uploadFile } = setup({
       maxUpload: 2000000,
     });
-    expect(() => {
-      uploadFile({ size: 3000000 });
-    }).toThrow(
+
+    await expect(uploadFile({ size: 3000000 })).rejects.toThrow(
       'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
     );
   });
-  it('user uploads an invalid file', () => {
+
+  it('user uploads an invalid file', async () => {
     const { uploadFile } = setup({});
-    expect(() => {
-      uploadFile({ size: 20000, type: 'application/pdf' });
-    }).toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
+
+    await expect(
+      uploadFile({ size: 20000, type: 'application/pdf' })
+    ).rejects.toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
   });
-  it('isValidType is given an inavlid file', () => {
+
+  it('isValidType is given an invalid file', () => {
     const { isValidType } = setup({});
+
     expect(isValidType({ type: 'application/pdf' })).toBe(false);
   });
 });
