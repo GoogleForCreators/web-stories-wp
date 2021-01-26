@@ -47,6 +47,13 @@ class Tracking {
 	const TRACKING_ID = 'UA-168571240-1';
 
 	/**
+	 * Google Analytics 4 measurement ID.
+	 *
+	 * @var string
+	 */
+	const TRACKING_ID_GA4 = 'G-T88C9951CM';
+
+	/**
 	 * Initializes tracking.
 	 *
 	 * Registers the setting in WordPress.
@@ -82,6 +89,7 @@ class Tracking {
 		return [
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
+			'trackingIdGA4'   => self::TRACKING_ID_GA4,
 			'appVersion'      => WEBSTORIES_VERSION,
 		];
 	}

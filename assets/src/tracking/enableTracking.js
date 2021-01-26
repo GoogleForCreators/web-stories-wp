@@ -55,6 +55,16 @@ function loadTrackingScript(sendPageView = true) {
       transport_type: 'beacon',
     });
 
+    // Support GA4 in parallel.
+    // At some point, only this will remain.
+    gtag('config', config.trackingIdGA4, {
+      app_name: config.appName,
+      send_page_view: sendPageView,
+      // Setting the transport method to 'beacon' lets the hit be sent
+      // using 'navigator.sendBeacon' in browsers that support it.
+      transport_type: 'beacon',
+    });
+
     // Clean up location param.
     const url = new URL(window.location.href);
     url.searchParams.delete('paged');

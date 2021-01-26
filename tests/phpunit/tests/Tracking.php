@@ -59,6 +59,7 @@ class Tracking extends \WP_UnitTestCase {
 		$expected = [
 			'trackingAllowed' => false,
 			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
+			'trackingIdGA4'   => \Google\Web_Stories\Tracking::TRACKING_ID_GA4,
 			'appVersion'      => WEBSTORIES_VERSION,
 		];
 
@@ -77,6 +78,7 @@ class Tracking extends \WP_UnitTestCase {
 		$expected = [
 			'trackingAllowed' => true,
 			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
+			'trackingIdGA4'   => \Google\Web_Stories\Tracking::TRACKING_ID_GA4,
 			'appVersion'      => WEBSTORIES_VERSION,
 		];
 

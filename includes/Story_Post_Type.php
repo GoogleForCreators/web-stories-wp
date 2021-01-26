@@ -177,6 +177,7 @@ class Story_Post_Type {
 				],
 				'public'                => true,
 				'has_archive'           => true,
+				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
@@ -559,6 +560,7 @@ class Story_Post_Type {
 				'version'          => WEBSTORIES_VERSION,
 				'encodeMarkup'     => $this->decoder->supports_decoding(),
 				'metaBoxes'        => $this->meta_boxes->get_meta_boxes_per_location(),
+				'ffmpegCoreUrl'    => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

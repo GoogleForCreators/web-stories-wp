@@ -30,6 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
+import useTranscodeVideo from '../media/utils/useTranscodeVideo';
 
 function useUploader() {
   const {
@@ -49,6 +50,7 @@ function useUploader() {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
+  const { transcodeVideo, canTranscodeFile } = useTranscodeVideo();
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -73,19 +75,13 @@ function useUploader() {
    * @param {Object} _additionalData Additional Data object.
    */
   const uploadFile = useCallback(
-    (file, _additionalData = {}) => {
+    async (file, _additionalData = {}) => {
       if (!hasUploadMediaAction) {
         const message = __(
           'Sorry, you are unable to upload files.',
           'web-stories'
         );
-        const permissionError = createError(
-          'PermissionError',
-          file.name,
-          message
-        );
-
-        throw permissionError;
+        throw createError('PermissionError', file.name, message);
       }
       if (!fileSizeCheck(file)) {
         const message = sprintf(
@@ -97,12 +93,10 @@ function useUploader() {
           bytesToMB(file.size),
           bytesToMB(maxUpload)
         );
-        const sizeError = createError('SizeError', file.name, message);
-
-        throw sizeError;
+        throw createError('SizeError', file.name, message);
       }
 
-      if (!isValidType(file)) {
+      if (!isValidType(file) && !canTranscodeFile(file)) {
         /* translators: %s is a list of allowed file extensions. */
         const message = sprintf(
           /* translators: %s: list of allowed file types. */
@@ -113,9 +107,7 @@ function useUploader() {
           )
         );
 
-        const validError = createError('ValidError', file.name, message);
-
-        throw validError;
+        throw createError('ValidError', file.name, message);
       }
 
       const additionalData = {
@@ -123,6 +115,32 @@ function useUploader() {
         media_source: 'editor',
         ..._additionalData,
       };
+
+      if (canTranscodeFile(file)) {
+        try {
+          // TODO: Only transcode & optimize video if needed (criteria TBD).
+          const newFile = await transcodeVideo(file);
+          additionalData.media_source = 'video-optimization';
+          return uploadMedia(newFile, additionalData);
+        } catch (err) {
+          if (!isValidType(file)) {
+            /* translators: %s is a list of allowed file extensions. */
+            const message = sprintf(
+              /* translators: %s: list of allowed file types. */
+              __('Please choose only %s to upload.', 'web-stories'),
+              allowedFileTypes.join(
+                /* translators: delimiter used in a list */
+                __(', ', 'web-stories')
+              )
+            );
+
+            throw createError('ValidError', file.name, message);
+          }
+
+          const message = __('Video optimization failed', 'web-stories');
+          throw createError('TranscodingError', file.name, message);
+        }
+      }
 
       return uploadMedia(file, additionalData);
     },
@@ -134,6 +152,8 @@ function useUploader() {
       maxUpload,
       uploadMedia,
       storyId,
+      canTranscodeFile,
+      transcodeVideo,
     ]
   );
 
