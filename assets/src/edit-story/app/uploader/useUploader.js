@@ -120,6 +120,7 @@ function useUploader() {
         try {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           const newFile = await transcodeVideo(file);
+          additionalData.media_source = 'video-optimization';
           return uploadMedia(newFile, additionalData);
         } catch (err) {
           if (!isValidType(file)) {
