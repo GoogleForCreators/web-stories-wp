@@ -53,9 +53,7 @@ function SortStories({
 
   useEffect(() => {
     setSelectedStoryList(
-      selectedStoriesObject.map((story) => {
-        return reshapeStoryObject()(story);
-      })
+      selectedStoriesObject.map((story) => reshapeStoryObject()(story))
     );
   }, [selectedStoriesObject]);
 
