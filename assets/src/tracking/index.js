@@ -25,6 +25,7 @@ import trackEvent from './trackEvent';
 import trackClick from './trackClick';
 import trackScreenView from './trackScreenView';
 import trackTimingComplete from './trackTimingComplete';
+import getTimeTracker from './getTimeTracker';
 
 export {
   initializeTracking,
@@ -35,4 +36,5 @@ export {
   trackClick,
   trackScreenView,
   trackTimingComplete,
+  getTimeTracker,
 };
