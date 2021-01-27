@@ -75,9 +75,7 @@ describe('SVG', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    const filename = await uploadMedia('close.svg');
-
-    await expect(page).toClick('li', { text: 'Document' });
+    await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toClick('[aria-label="Publisher logo"]');
 
     await page.waitForSelector(MODAL, {
@@ -88,15 +86,7 @@ describe('SVG', () => {
     await expect(page).toClick('button', { text: 'Media Library' });
 
     await expect(page).not.toMatchElement(
-      `.attachments-browser .attachments .attachment[aria-label="${filename}"]`
+      '.attachments-browser .attachments .attachment[aria-label="video-play"]'
     );
-    
-    await page.keyboard.press('Escape');
-
-    await page.waitForSelector(MODAL, {
-      visible: false,
-    });
-
-    await deleteMedia(filename);
   });
 });
