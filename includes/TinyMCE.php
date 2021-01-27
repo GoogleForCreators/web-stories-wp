@@ -37,6 +37,8 @@ class TinyMCE {
 
 	/**
 	 * Initialization actions.
+	 *
+	 * @return void
 	 */
 	public function init() {
 		add_filter( 'mce_buttons', [ $this, 'tinymce_web_stories_button' ] );
