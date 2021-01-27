@@ -82,7 +82,7 @@ export const updateViewSettings = ({ fieldObj, field, isReadonly = false }) => {
  *
  * @return {Object} Settings.
  */
-export const SetDefaultStateSetting = () => {
+export const setDefaultStateSetting = () => {
   const State = [];
   const { orderlist, views, fields } = webStoriesData;
 

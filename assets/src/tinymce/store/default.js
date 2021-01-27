@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { SetDefaultStateSetting } from '../utils';
+import { setDefaultStateSetting } from '../utils';
 
 const DEFAULT_STATE = {
   settings: {},
@@ -26,6 +26,6 @@ const DEFAULT_STATE = {
   currentView: 'circles',
 };
 
-DEFAULT_STATE['settings'] = SetDefaultStateSetting();
+DEFAULT_STATE['settings'] = setDefaultStateSetting();
 
 export default DEFAULT_STATE;
