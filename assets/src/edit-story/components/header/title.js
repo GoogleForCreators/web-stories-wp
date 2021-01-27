@@ -31,8 +31,8 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
-import { useHighlights } from '../../app/highlights';
-import { useFocusOut } from '../../../design-system';
+import { HIGHLIGHT_STYLES, states, useHighlights } from '../../app/highlights';
+import { useFocusOut, theme as dsTheme } from '../../../design-system';
 import useHeader from './use';
 
 const Input = styled.input`
@@ -51,12 +51,8 @@ const Input = styled.input`
   text-overflow: ellipsis;
 `;
 
-const HighlightContainer = styled.div`
-  display: inline-block;
-  ${({ focusContainerCss }) => focusContainerCss}
-  ${({ focusContainerSelector }) => focusContainerSelector} {
-    border-radius: 4px;
-  }
+const HighlightEffect = styled.div`
+  ${({ isHighlighted }) => isHighlighted && HIGHLIGHT_STYLES}
 `;
 
 function Title() {
@@ -69,18 +65,16 @@ function Title() {
     }) => ({ title, slug, updateStory })
   );
   const { setTitleInput, titleInput } = useHeader();
-  const { highlight, onFocusOut } = useHighlights(
-    ({ storyTitle, onFocusOut }) => ({
-      highlight: storyTitle,
-      onFocusOut,
-    })
-  );
+  const { onFocusOut, highlight } = useHighlights((state) => ({
+    highlight: state[states.STORY_TITLE],
+    onFocusOut: state.onFocusOut,
+  }));
 
   useEffect(() => {
-    if (highlight) {
+    if (highlight?.focus) {
       titleInput?.focus();
     }
-  });
+  }, [highlight, titleInput]);
 
   useFocusOut({ current: titleInput }, onFocusOut);
 
@@ -103,7 +97,10 @@ function Title() {
   }
 
   return (
-    <HighlightContainer {...highlight}>
+    <HighlightEffect
+      isHighlighted={highlight?.focus}
+      borderRadius={dsTheme.borders.radius.small}
+    >
       <Input
         ref={setTitleInput}
         value={title}
@@ -113,7 +110,7 @@ function Title() {
         placeholder={__('Add title', 'web-stories')}
         aria-label={__('Story title', 'web-stories')}
       />
-    </HighlightContainer>
+    </HighlightEffect>
   );
 }
 

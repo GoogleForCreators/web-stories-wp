@@ -27,22 +27,18 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import styled from 'styled-components';
 import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import Note from '../../shared/note';
-import { useHighlights } from '../../../../app/highlights';
-import { useFocusOut } from '../../../../../design-system';
+import {
+  useHighlights,
+  states,
+  HIGHLIGHT_STYLES,
+} from '../../../../app/highlights';
+import { useFocusOut, theme as dsTheme } from '../../../../../design-system';
 
 export const EXCERPT_MAX_LENGTH = 200;
-
-const HighlightRow = styled(Row)`
-  ${({ focusContainerCss }) => focusContainerCss}
-  ${({ focusContainerSelector }) => focusContainerSelector} {
-    border-radius: 4px;
-  }
-`;
 
 function ExcerptPanel() {
   const { excerpt, updateStory } = useStory(
@@ -63,17 +59,17 @@ function ExcerptPanel() {
     [updateStory]
   );
 
-  const { highlight, onFocusOut } = useHighlights((state) => ({
-    highlight: state?.excerpt,
-    onFocusOut: state?.onFocusOut,
-  }));
-
   const ref = useRef();
 
+  const { highlight, onFocusOut } = useHighlights(
+    ({ onFocusOut, ...state }) => ({
+      highlight: state[states.EXCERPT],
+      onFocusOut,
+    })
+  );
+
   useEffect(() => {
-    if (highlight) {
-      ref.current?.focus();
-    }
+    highlight?.focus && ref.current?.focus();
   });
 
   useFocusOut(ref, onFocusOut);
@@ -85,7 +81,10 @@ function ExcerptPanel() {
       collapsedByDefault={false}
       isPersistable={!highlight}
     >
-      <HighlightRow {...highlight}>
+      <Row
+        css={highlight?.focus && HIGHLIGHT_STYLES}
+        borderRadius={dsTheme.borders.radius.small}
+      >
         <TextArea
           ref={ref}
           value={excerpt}
@@ -95,7 +94,7 @@ function ExcerptPanel() {
           maxLength={EXCERPT_MAX_LENGTH}
           rows={4}
         />
-      </HighlightRow>
+      </Row>
       <Row>
         <Note>
           {__(

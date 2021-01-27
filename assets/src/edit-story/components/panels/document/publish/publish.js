@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -32,10 +32,15 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { useAPI } from '../../../../app/api';
-import { useHighlights } from '../../../../app/highlights';
+import {
+  useHighlights,
+  states,
+  HIGHLIGHT_STYLES,
+} from '../../../../app/highlights';
 import { Row, AdvancedDropDown, Label, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
+import { useFocusOut } from '../../../../../design-system';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
@@ -59,15 +64,21 @@ function PublishPanel() {
     actions: { loadUsers },
   } = useInspector();
 
-  const { highlight, onFocusOut } = useHighlights(
-    ({ onFocusOut, cover, publisherLogo }) => ({
-      highlight: {
-        cover,
-        publisherLogo,
-      },
-      onFocusOut,
-    })
-  );
+  const { onFocusOut, ...highlight } = useHighlights((state) => ({
+    onFocusOut: state.onFocusOut,
+    cover: state[states.COVER],
+    publisherLogo: state[states.PUBLISHER_LOGO],
+  }));
+
+  const coverButtonRef = useRef();
+  const publisherLogoRef = useRef();
+  useEffect(() => {
+    highlight.cover?.focus && coverButtonRef.current?.focus();
+    highlight.publisherLogo?.focus && publisherLogoRef.current?.focus();
+  });
+
+  useFocusOut(coverButtonRef, onFocusOut);
+  useFocusOut(publisherLogoRef, onFocusOut);
 
   const {
     isSaving,
@@ -216,10 +227,11 @@ function PublishPanel() {
             <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper css={highlight?.publisherLogo?.focusContainerCss}>
+          <MediaWrapper
+            css={highlight.publisherLogo?.focus && HIGHLIGHT_STYLES}
+          >
             <Media
-              isFocused={Boolean(highlight?.publisherLogo)}
-              onFocusOut={onFocusOut}
+              ref={publisherLogoRef}
               value={publisherLogoUrl}
               onChange={handleChangePublisherLogo}
               title={__('Select as publisher logo', 'web-stories')}
@@ -235,10 +247,9 @@ function PublishPanel() {
             <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper css={highlight?.cover?.focusContainerCss}>
+          <MediaWrapper css={highlight.cover?.focus && HIGHLIGHT_STYLES}>
             <Media
-              isFocused={Boolean(highlight?.cover)}
-              onFocusOut={onFocusOut}
+              ref={coverButtonRef}
               value={featuredMedia?.url}
               onChange={handleChangeCover}
               title={__('Select as cover image', 'web-stories')}

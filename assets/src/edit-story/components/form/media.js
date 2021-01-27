@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useRef, forwardRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -34,7 +34,6 @@ import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import DropDownMenu from '../dropDownMenu';
 import { useMediaPicker } from '../mediaPicker';
 import { MULTIPLE_VALUE } from '../../constants';
-import { useFocusOut } from '../../../design-system';
 
 const Container = styled.section`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
@@ -133,108 +132,104 @@ const LoadingDots = styled.div`
   }
 `;
 
-function MediaInput({
-  className,
-  onBlur,
-  onChange,
-  label,
-  title,
-  buttonInsertText,
-  type,
-  alt,
-  value,
-  ariaLabel,
-  disabled,
-  circle,
-  size,
-  loading,
-  canReset,
-  imgProps,
-  ...rest
-}) {
-  const isMultiple = value === MULTIPLE_VALUE;
-  const openMediaPicker = useMediaPicker({
-    title,
-    buttonInsertText,
-    onSelect: onChange,
-    type,
-  });
-
-  const dropdownOptions = [
-    { name: __('Edit', 'web-stories'), value: 'edit' },
-    { name: __('Reset', 'web-stories'), value: 'reset' },
-  ];
-
-  const onOption = useCallback(
-    (opt, evt) => {
-      switch (opt) {
-        case 'edit':
-          openMediaPicker(evt);
-          break;
-        case 'reset':
-          onChange(null);
-          break;
-        default:
-          break;
-      }
+const MediaInput = forwardRef(
+  (
+    {
+      className,
+      onBlur,
+      onChange,
+      label,
+      title,
+      buttonInsertText,
+      type,
+      alt,
+      value,
+      ariaLabel,
+      disabled,
+      circle,
+      size,
+      loading,
+      canReset,
+      ...rest
     },
-    [onChange, openMediaPicker]
-  );
+    forwardedRef
+  ) => {
+    const isMultiple = value === MULTIPLE_VALUE;
+    const openMediaPicker = useMediaPicker({
+      title,
+      buttonInsertText,
+      onSelect: onChange,
+      type,
+    });
 
-  const ref = useRef();
-  const [isHovering, setIsHovering] = useState(false);
-  const [isFocused, setIsFocused] = useState();
-  const resettableProps = {
-    tabIndex: 0,
-    'aria-label': ariaLabel,
-    onFocus: () => setIsFocused(true),
-    onBlur: (evt) => setIsFocused(ref.current.contains(evt.relatedTarget)),
-    onPointerEnter: () => setIsHovering(true),
-    onPointerLeave: () => setIsHovering(false),
-  };
+    const dropdownOptions = [
+      { name: __('Edit', 'web-stories'), value: 'edit' },
+      { name: __('Reset', 'web-stories'), value: 'reset' },
+    ];
 
-  const isMenuVisible = isHovering || isFocused;
+    const onOption = useCallback(
+      (opt, evt) => {
+        switch (opt) {
+          case 'edit':
+            openMediaPicker(evt);
+            break;
+          case 'reset':
+            onChange(null);
+            break;
+          default:
+            break;
+        }
+      },
+      [onChange, openMediaPicker]
+    );
 
-  const buttonRef = useRef();
+    const ref = useRef();
+    const [isHovering, setIsHovering] = useState(false);
+    const [isFocused, setIsFocused] = useState(rest.isFocused);
+    const resettableProps = {
+      tabIndex: 0,
+      'aria-label': ariaLabel,
+      onFocus: () => setIsFocused(true),
+      onBlur: (evt) => setIsFocused(ref.current.contains(evt.relatedTarget)),
+      onPointerEnter: () => setIsHovering(true),
+      onPointerLeave: () => setIsHovering(false),
+    };
 
-  useEffect(() => {
-    rest.isFocused && buttonRef.current?.focus();
-  });
+    const isMenuVisible = isHovering || isFocused;
 
-  useFocusOut(buttonRef, rest.onFocusOut);
-
-  return (
-    <Container
-      ref={ref}
-      className={`${className}`}
-      disabled={disabled}
-      circle={circle}
-      size={size}
-      {...rest}
-      {...(canReset && resettableProps)}
-    >
-      {value && !isMultiple ? (
-        <Img src={value} circle={circle} alt={alt} {...imgProps} />
-      ) : (
-        <DefaultImage size={size} />
-      )}
-      {loading && <LoadingDots />}
-      {canReset && isMenuVisible && (
-        <DropDownMenu options={dropdownOptions} onOption={onOption} />
-      )}
-      {!canReset && (
-        <EditBtn
-          ref={buttonRef}
-          onClick={openMediaPicker}
-          circle={circle}
-          aria-label={ariaLabel}
-        >
-          <EditIcon />
-        </EditBtn>
-      )}
-    </Container>
-  );
-}
+    return (
+      <Container
+        ref={ref}
+        className={`${className}`}
+        disabled={disabled}
+        circle={circle}
+        size={size}
+        {...rest}
+        {...(canReset && resettableProps)}
+      >
+        {value && !isMultiple ? (
+          <Img src={value} circle={circle} alt={alt} />
+        ) : (
+          <DefaultImage size={size} />
+        )}
+        {loading && <LoadingDots />}
+        {canReset && isMenuVisible && (
+          <DropDownMenu options={dropdownOptions} onOption={onOption} />
+        )}
+        {!canReset && (
+          <EditBtn
+            ref={forwardedRef}
+            onClick={openMediaPicker}
+            circle={circle}
+            aria-label={ariaLabel}
+          >
+            <EditIcon />
+          </EditBtn>
+        )}
+      </Container>
+    );
+  }
+);
 
 MediaInput.propTypes = {
   className: PropTypes.string,

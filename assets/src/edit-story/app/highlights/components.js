@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,28 @@
 /**
  * External dependencies
  */
+import { css, keyframes } from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { useContextSelector, identity } from '../../../design-system';
-import Context from './context';
-
-function useHighlights(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
-
-  if (!context) {
-    throw new Error(
-      'Must use `useHighlights()` within <highlights.Provider />'
-    );
+const flash = keyframes`
+  50% {
+    opacity: 0;
   }
+`;
 
-  return context;
-}
-export default useHighlights;
+export const HIGHLIGHT_STYLES = css`
+  position: relative;
+  :focus-within::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    content: '';
+    pointer-events: none;
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.accent.primary};
+    opacity: 1;
+    animation: ${flash} 1s ease-in-out 4;
+    border-radius: ${({ borderRadius }) => borderRadius};
+  }
+`;

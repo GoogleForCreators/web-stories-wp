@@ -21,7 +21,7 @@ import { useLayoutEffect } from 'react';
 
 function useFocusOut(ref, callback, deps) {
   useLayoutEffect(() => {
-    const node = ref.current;
+    const node = ref?.current;
     if (!node) {
       return undefined;
     }

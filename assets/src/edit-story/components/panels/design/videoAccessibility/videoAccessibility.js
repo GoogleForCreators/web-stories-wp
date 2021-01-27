@@ -28,7 +28,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import { Row, usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import {
@@ -37,8 +36,12 @@ import {
   ExpandedTextInput,
   Note,
 } from '../../shared';
-import { useFocusOut } from '../../../../../design-system';
-import { useHighlights } from '../../../../app/highlights';
+import { useFocusOut, theme as dsTheme } from '../../../../../design-system';
+import {
+  useHighlights,
+  HIGHLIGHT_STYLES,
+  states,
+} from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {
   alt: null,
@@ -49,13 +52,6 @@ export const MIN_MAX = {
     MAX: 1000,
   },
 };
-
-const HighlightRow = styled(Row)`
-  ${({ focusContainerSelector }) => focusContainerSelector} {
-    border-radius: 4px;
-  }
-  ${({ focusContainerCss }) => focusContainerCss}
-`;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
@@ -76,12 +72,10 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
 
   const ref = useRef();
-  const { highlight, onFocusOut } = useHighlights(
-    ({ assistiveText, onFocusOut }) => ({
-      highlight: assistiveText,
-      onFocusOut,
-    })
-  );
+  const { highlight, onFocusOut } = useHighlights((state) => ({
+    highlight: state[states.ASSISTIVE_TEXT],
+    onFocusOut: state.onFocusOut,
+  }));
 
   useEffect(() => {
     highlight && ref.current?.focus();
@@ -94,7 +88,10 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
       name="videoAccessibility"
       title={__('Description', 'web-stories')}
     >
-      <HighlightRow {...highlight}>
+      <Row
+        css={highlight?.focus && HIGHLIGHT_STYLES}
+        borderRadius={dsTheme.borders.radius.small}
+      >
         <ExpandedTextInput
           ref={ref}
           placeholder={__('Video description', 'web-stories')}
@@ -104,7 +101,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           aria-label={__('Video description', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
-      </HighlightRow>
+      </Row>
       <Row>
         <Note>
           {__(

@@ -35,21 +35,18 @@ import { Button, TextInput, Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import { useHighlights } from '../../../../app/highlights';
-import { useFocusOut } from '../../../../../design-system';
+import {
+  useHighlights,
+  states,
+  HIGHLIGHT_STYLES,
+} from '../../../../app/highlights';
+import { useFocusOut, theme as dsTheme } from '../../../../../design-system';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
   border-radius: 4px;
   flex-grow: 1;
   opacity: 1;
-`;
-
-const HighlightRow = styled(Row)`
-  ${({ focusContainerCss }) => focusContainerCss}
-  ${({ focusContainerSelector }) => focusContainerSelector} {
-    border-radius: 4px;
-  }
 `;
 
 export const MIN_MAX = {
@@ -112,14 +109,11 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
-  const { highlight, onFocusOut } = useHighlights(
-    ({ captions, onFocusOut }) => ({
-      highlight: captions,
-      onFocusOut,
-    })
-  );
-
   const buttonRef = useRef();
+  const { highlight, onFocusOut } = useHighlights((state) => ({
+    highlight: state[states.CAPTIONS],
+    onFocusOut: state.onFocusOut,
+  }));
 
   useEffect(() => {
     if (highlight) {
@@ -161,11 +155,15 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
           </Row>
         ))}
       {!tracks.length && (
-        <HighlightRow expand {...highlight}>
+        <Row
+          expand
+          css={highlight?.focus && HIGHLIGHT_STYLES}
+          borderRadius={dsTheme.borders.radius.small}
+        >
           <Button ref={buttonRef} onClick={UploadCaption} fullWidth>
             {captionText}
           </Button>
-        </HighlightRow>
+        </Row>
       )}
     </SimplePanel>
   );

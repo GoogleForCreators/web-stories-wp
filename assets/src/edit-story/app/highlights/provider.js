@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { useStory } from '../story';
 import Context from './context';
+import { STATES } from './states';
 
 function HighlightsProvider({ children }) {
   const [highlighted, setHighlighted] = useState({});
@@ -55,8 +56,15 @@ function HighlightsProvider({ children }) {
       if (elements || elementId || pageId) {
         selectElement({ elements, elementId, pageId });
       }
+
       if (highlight) {
-        setHighlighted(highlight);
+        if (highlight !== undefined) {
+          const { tab, ...highlightState } = STATES[highlight];
+          setHighlighted({
+            [highlight]: highlightState,
+            tab,
+          });
+        }
       }
     },
     [selectElement]
@@ -70,8 +78,8 @@ function HighlightsProvider({ children }) {
     <Context.Provider
       value={{
         setHighlights,
-        ...highlighted,
         onFocusOut,
+        ...highlighted,
       }}
     >
       {children}

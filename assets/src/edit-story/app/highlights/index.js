@@ -19,4 +19,5 @@
 
 export { default as useHighlights } from './useHighlights';
 export { default as HighlightsProvider } from './provider';
-export { STATES as states } from './constants';
+export { default as states } from './states';
+export { HIGHLIGHT_STYLES } from './components';

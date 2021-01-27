@@ -36,14 +36,12 @@ import { useStory } from '../../app/story';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { Error, Warning } from '../../../design-system/icons/alert';
 import { useHighlights } from '../../app/highlights';
+import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
 import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
 
-const DESIGN = 'design';
-const DOCUMENT = 'document';
-const PREPUBLISH = 'prepublish';
 function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
@@ -62,11 +60,8 @@ function InspectorProvider({ children }) {
   const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
   useEffect(() => {
-    if (highlightedTab === 'document') {
-      setTab(DOCUMENT);
-    }
-    if (highlightedTab === 'design') {
-      setTab(DESIGN);
+    if (highlightedTab) {
+      setTab(highlightedTab);
     }
   }, [highlightedTab]);
 
