@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from 'react';
-import queryString from 'query-string';
 
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -43,14 +43,9 @@ export default function useUserApi({ usersApi }) {
       };
 
       try {
-        const path = queryString.stringifyUrl({
-          url: usersApi,
-          query,
-        });
-
         setAuthorSuggestions(
           await apiFetch({
-            path,
+            path: addQueryArgs(usersApi, query),
           })
         );
       } catch (e) {
