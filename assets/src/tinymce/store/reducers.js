@@ -22,9 +22,9 @@ import DEFAULT_STATE from './default';
 /**
  * Store reducer.
  *
- * @param state
- * @param action
- * @return {{image_options: boolean, number: number, modalOpen: boolean, show_date: boolean, columns: number, show_author: boolean}|{image_options: boolean, number: number, settings: *, modalOpen: boolean, show_date: boolean, columns: number, show_author: boolean}}
+ * @param {Object} state Current state for the data store.
+ * @param {Object} action Action object for manipulating state.
+ * @return {Object} New Manipulated state for the store.
  */
 function reducer(state = DEFAULT_STATE, action) {
   switch (action.type) {
