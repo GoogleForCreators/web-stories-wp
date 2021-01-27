@@ -55,6 +55,7 @@ function createProviderValues({
 }) {
   return {
     config: {
+      allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
       capabilities: {
         canUploadFiles: canUploadFiles,
         canManageSettings: canManageSettings,

@@ -95,7 +95,7 @@ function PublishPanel() {
     }
   }, [tab, loadUsers]);
 
-  const { capabilities } = useConfig();
+  const { capabilities, allowedImageMimeTypes } = useConfig();
 
   const handleChangeCover = useCallback(
     (image) =>
@@ -207,7 +207,7 @@ function PublishPanel() {
               onChange={handleChangePublisherLogo}
               title={__('Select as publisher logo', 'web-stories')}
               buttonInsertText={__('Select as publisher logo', 'web-stories')}
-              type={'image'}
+              type={allowedImageMimeTypes}
               size={80}
               ariaLabel={__('Publisher logo', 'web-stories')}
             />
@@ -224,7 +224,7 @@ function PublishPanel() {
               onChange={handleChangeCover}
               title={__('Select as cover image', 'web-stories')}
               buttonInsertText={__('Select as cover image', 'web-stories')}
-              type={'image'}
+              type={allowedImageMimeTypes}
               ariaLabel={__('Cover image', 'web-stories')}
             />
           </MediaWrapper>

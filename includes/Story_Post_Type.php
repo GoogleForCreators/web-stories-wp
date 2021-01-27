@@ -529,24 +529,25 @@ class Story_Post_Type {
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
-				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
-				'isRTL'            => is_rtl(),
-				'locale'           => ( new Locale() )->get_locale_settings(),
-				'allowedMimeTypes' => $this->get_allowed_mime_types(),
-				'allowedFileTypes' => $this->get_allowed_file_types(),
-				'postType'         => self::POST_TYPE_SLUG,
-				'storyId'          => $story_id,
-				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
-				'assetsURL'        => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'cdnURL'           => trailingslashit( WEBSTORIES_CDN_URL ),
-				'maxUpload'        => $max_upload_size,
-				'isDemo'           => $is_demo,
-				'capabilities'     => [
+				'autoSaveInterval'      => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+				'isRTL'                 => is_rtl(),
+				'locale'                => ( new Locale() )->get_locale_settings(),
+				'allowedMimeTypes'      => $this->get_allowed_mime_types(),
+				'allowedFileTypes'      => $this->get_allowed_file_types(),
+				'allowedImageMimeTypes' => $this->get_allowed_poster_image_mime_types(),
+				'postType'              => self::POST_TYPE_SLUG,
+				'storyId'               => $story_id,
+				'previewLink'           => get_preview_post_link( $story_id, $preview_query_args ),
+				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
+				'maxUpload'             => $max_upload_size,
+				'isDemo'                => $is_demo,
+				'capabilities'          => [
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
-				'api'              => [
+				'api'                   => [
 					'users'       => '/web-stories/v1/users/',
 					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
 					'media'       => '/web-stories/v1/media/',
@@ -554,13 +555,13 @@ class Story_Post_Type {
 					'statusCheck' => '/web-stories/v1/status-check/',
 					'metaBoxes'   => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 				],
-				'metadata'         => [
+				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
 				],
-				'version'          => WEBSTORIES_VERSION,
-				'encodeMarkup'     => $this->decoder->supports_decoding(),
-				'metaBoxes'        => $this->meta_boxes->get_meta_boxes_per_location(),
-				'ffmpegCoreUrl'    => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
+				'version'               => WEBSTORIES_VERSION,
+				'encodeMarkup'          => $this->decoder->supports_decoding(),
+				'metaBoxes'             => $this->meta_boxes->get_meta_boxes_per_location(),
+				'ffmpegCoreUrl'         => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
