@@ -34,6 +34,15 @@ const { _ } = window;
 /**
  * Add button to tinyMCE editor.
  */
+
+/**
+ * This is a patch for TinyMCE editor to insert content
+ * using `insertContent` method.
+ *
+ * WP still uses `_.pluck` method
+ * https://github.com/WordPress/WordPress/blob/master/wp-includes/js/mce-view.js#L145
+ * lodash (which WP uses now) does not have this method, so there will be JS error in console.
+ */
 // eslint-disable-next-line no-prototype-builtins
 if (!_.hasOwnProperty('pluck')) {
   _.pluck = _.map;
