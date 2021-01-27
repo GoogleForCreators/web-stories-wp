@@ -108,3 +108,29 @@ export const setDefaultStateSetting = () => {
 
   return State;
 };
+
+/**
+ * Build the shortcode tag based on the selected attributes.
+ *
+ * @return {string}
+ */
+export const prepareShortCode = () => {
+  let shortCode = `[${webStoriesData.tag}`;
+  const editorInstance = select(name).getEditor();
+  const settings = select(name).getCurrentViewSettings();
+
+  if (editorInstance) {
+    Object.keys(settings).forEach((value) => {
+      const ValueObject = settings[value];
+      const Value =
+        'object' === typeof ValueObject
+          ? ValueObject.show.toString()
+          : ValueObject.toString();
+      shortCode += ` ${value.toString()}=${Value}`;
+    });
+  }
+
+  shortCode += ' /]';
+
+  return shortCode;
+};
