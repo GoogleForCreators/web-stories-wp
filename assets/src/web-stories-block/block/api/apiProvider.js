@@ -25,7 +25,6 @@ import { useMemo } from 'react';
  */
 import { useConfig } from '../config';
 import { createContext } from '../../../design-system';
-import dataAdapter from './wpAdapter';
 import useStoryApi from './useStoryApi';
 import useUsersApi from './useUserApi';
 
@@ -34,11 +33,11 @@ export const StoriesBlockApiContext = createContext({ state: {}, actions: {} });
 export default function StoriesBlockApiProvider({ children }) {
   const { api, editStoryURL } = useConfig();
 
-  const { api: usersApi, authorSuggestions } = useUsersApi(dataAdapter, {
+  const { api: usersApi, authorSuggestions } = useUsersApi({
     usersApi: api.users,
   });
 
-  const { stories, api: storyApi } = useStoryApi(dataAdapter, {
+  const { stories, api: storyApi } = useStoryApi({
     editStoryURL,
     storyApi: api.stories,
   });

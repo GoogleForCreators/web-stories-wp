@@ -21,11 +21,16 @@ import { useCallback, useMemo, useState } from 'react';
 import queryString from 'query-string';
 
 /**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+/**
  * Internal dependencies
  */
 import { STORIES_PER_REQUEST } from '../constants';
 
-export default function useUserApi(dataAdapter, { usersApi }) {
+export default function useUserApi({ usersApi }) {
   const [authorSuggestions, setAuthorSuggestions] = useState([]);
 
   const fetchAuthors = useCallback(
@@ -43,12 +48,16 @@ export default function useUserApi(dataAdapter, { usersApi }) {
           query,
         });
 
-        setAuthorSuggestions(await dataAdapter.get(path));
+        setAuthorSuggestions(
+          await apiFetch({
+            path,
+          })
+        );
       } catch (e) {
         setAuthorSuggestions([]);
       }
     },
-    [dataAdapter, usersApi]
+    [usersApi]
   );
 
   return useMemo(
