@@ -49,17 +49,28 @@ const AddColorPreset = styled.button`
 `;
 
 function ColorPresetActions({ color }) {
-  const { selectedElements, globalStoryStyles, updateStory } = useStory(
+  const {
+    selectedElements,
+    currentStoryStyles,
+    globalStoryStyles,
+    updateStory,
+  } = useStory(
     ({
       state: {
         selectedElements,
-        story: { globalStoryStyles },
+        story: { globalStoryStyles, currentStoryStyles },
       },
       actions: { updateStory },
-    }) => ({ selectedElements, globalStoryStyles, updateStory })
+    }) => ({
+      selectedElements,
+      globalStoryStyles,
+      currentStoryStyles,
+      updateStory,
+    })
   );
 
-  const { colors } = globalStoryStyles;
+  const { colors: globalColors } = globalStoryStyles;
+  const { colors: localColors } = currentStoryStyles;
 
   // @todo This will change with the missing multi-selection handling.
   const isText =
@@ -79,13 +90,13 @@ function ColorPresetActions({ color }) {
           properties: {
             globalStoryStyles: {
               ...globalStoryStyles,
-              colors: [...colors, toAdd],
+              colors: [...globalColors, toAdd],
             },
           },
         });
       }
     },
-    [globalStoryStyles, isText, colors, updateStory]
+    [globalStoryStyles, isText, globalColors, updateStory]
   );
 
   return (

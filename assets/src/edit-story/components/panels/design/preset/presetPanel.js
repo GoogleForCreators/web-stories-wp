@@ -126,7 +126,6 @@ function PresetPanel({
       <PanelContent isPrimary padding={!hasPresets && '0'}>
         {isColor && (
           <ColorPresetPanel
-            itemRenderer={itemRenderer}
             isEditMode={isEditMode}
             handlePresetClick={handlePresetClick}
           />
@@ -149,7 +148,7 @@ function PresetPanel({
 
 PresetPanel.propTypes = {
   presetType: PropTypes.string,
-  itemRenderer: PropTypes.func.isRequired,
+  itemRenderer: PropTypes.func,
   title: PropTypes.string.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };

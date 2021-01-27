@@ -28,10 +28,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import Presets from '../presets';
 import { useStory } from '../../../../../app/story';
 import useAddPreset from '../useAddPreset';
 import EmptyPanel from './emptyPanel';
+import ColorGroup from './colorGroup';
 
 const Title = styled.div`
   font-size: 14px;
@@ -43,7 +43,7 @@ const GroupWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
+function ColorPresetPanel({ isEditMode, handlePresetClick }) {
   const presetType = 'color';
   const { currentStoryStyles, globalStoryStyles } = useStory(
     ({
@@ -63,34 +63,30 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
   const { colors: globalStyles } = globalStoryStyles;
   const { colors: localStyles } = currentStoryStyles;
   const hasPresets = globalStyles.length > 0 || localStyles.length > 0;
-  const groupProps = {
-    isEditMode,
-    itemRenderer,
-    type: presetType,
-  };
   return (
     <>
       {hasPresets && (
         <>
           <GroupWrapper>
             <Title>{__('Current story', 'web-stories')}</Title>
-            <Presets
-              presets={currentStoryStyles?.colors || []}
-              handleOnClick={(preset) =>
+            <ColorGroup
+              colors={localStyles}
+              type={presetType}
+              handleAddPreset={addLocalPreset}
+              handleClick={(preset) =>
                 handlePresetClick(preset, true /* isLocal */)
               }
-              handleAddPreset={addLocalPreset}
-              isLocal={true}
-              {...groupProps}
+              isEditMode={isEditMode}
             />
           </GroupWrapper>
           <GroupWrapper>
             <Title>{__('All stories', 'web-stories')}</Title>
-            <Presets
-              presets={globalStyles}
-              handleOnClick={handlePresetClick}
+            <ColorGroup
+              colors={globalStyles}
+              type={presetType}
+              isEditMode={isEditMode}
+              handleClick={handlePresetClick}
               handleAddPreset={addGlobalPreset}
-              {...groupProps}
             />
           </GroupWrapper>
         </>
@@ -108,7 +104,6 @@ function ColorPresetPanel({ isEditMode, handlePresetClick, itemRenderer }) {
 ColorPresetPanel.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   handlePresetClick: PropTypes.func.isRequired,
-  itemRenderer: PropTypes.func.isRequired,
 };
 
 export default ColorPresetPanel;
