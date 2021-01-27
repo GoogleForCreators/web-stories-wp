@@ -29,6 +29,8 @@ import {
   deleteMedia,
 } from '../../../utils';
 
+const MODAL = '.media-modal';
+
 describe('SVG', () => {
   withExperimentalFeatures(['enableSVG']);
 
@@ -64,6 +66,36 @@ describe('SVG', () => {
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
     await percySnapshot(page, 'Uploading SVG to editor');
+
+    await deleteMedia(filename);
+  });
+
+  it('not should be to select SVG as publisher logo', async () => {
+    await createNewStory();
+
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    const filename = await uploadMedia('close.svg');
+
+    await expect(page).toClick('li', { text: 'Document' });
+    await expect(page).toClick('[aria-label="Publisher logo"]');
+
+    await page.waitForSelector(MODAL, {
+      visible: true,
+    });
+
+    await expect(page).toMatch('Select as publisher logo');
+    await expect(page).toClick('button', { text: 'Media Library' });
+
+    await expect(page).not.toMatchElement(
+      `.attachments-browser .attachments .attachment[aria-label="${filename}"]`
+    );
+    
+    await page.keyboard.press('Escape');
+
+    await page.waitForSelector(MODAL, {
+      visible: false,
+    });
 
     await deleteMedia(filename);
   });
