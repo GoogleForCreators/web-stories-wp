@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import queryString from 'query-string';
 
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -85,13 +85,8 @@ const useStoryApi = ({ editStoryURL, storyApi }) => {
       };
 
       try {
-        const path = queryString.stringifyUrl({
-          url: storyApi,
-          query,
-        });
-
         const response = await apiFetch({
-          path,
+          path: addQueryArgs(storyApi, query),
         });
 
         const totalPages =
