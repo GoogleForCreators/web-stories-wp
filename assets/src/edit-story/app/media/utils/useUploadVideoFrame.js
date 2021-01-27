@@ -21,12 +21,11 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { getTimeTracker } from '../../../../tracking';
+import { getTimeTracker, trackError } from '../../../../tracking';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
-import { trackError } from '../../../../tracking';
 import { preloadImage, getFirstFrameOfVideo } from './';
 
 function useUploadVideoFrame({ updateMediaElement }) {
