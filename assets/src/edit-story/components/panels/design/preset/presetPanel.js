@@ -27,19 +27,14 @@ import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
-import Presets from './presets';
 import Resize from './resize';
 import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
 import ColorPresetPanel from './colorPreset/colorPresetPanel';
 import useDeletePreset from './useDeletePreset';
+import StyleGroup from './stylePreset/styleGroup';
 
-function PresetPanel({
-  presetType = 'color',
-  title,
-  itemRenderer,
-  pushUpdate,
-}) {
+function PresetPanel({ presetType = 'color', title, pushUpdate }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
   const { currentStoryStyles, selectedElements, globalStoryStyles } = useStory(
@@ -131,13 +126,10 @@ function PresetPanel({
           />
         )}
         {isStyle && (
-          <Presets
+          <StyleGroup
+            styles={globalPresets}
             isEditMode={isEditMode}
-            presets={globalPresets}
-            handleOnClick={handlePresetClick}
-            handleAddPreset={addGlobalPreset}
-            itemRenderer={itemRenderer}
-            type={presetType}
+            handleClick={handlePresetClick}
           />
         )}
       </PanelContent>
@@ -148,7 +140,6 @@ function PresetPanel({
 
 PresetPanel.propTypes = {
   presetType: PropTypes.string,
-  itemRenderer: PropTypes.func,
   title: PropTypes.string.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };

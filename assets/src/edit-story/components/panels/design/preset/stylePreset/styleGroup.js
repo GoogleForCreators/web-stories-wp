@@ -22,38 +22,27 @@ import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SAVED_COLOR_SIZE } from '../../../../../constants';
 import useKeyboardNavigation from '../useKeyboardNavigation';
-import ColorAdd from './colorAdd';
-import Color from './color';
+import { SAVED_STYLE_HEIGHT } from '../../../../../constants';
+import StyleItem from './styleItem';
 
 const Group = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 `;
 
+const STYLE_WIDTH = 112;
 const ButtonWrapper = styled.div`
-  height: ${SAVED_COLOR_SIZE}px;
-  width: ${SAVED_COLOR_SIZE}px;
+  height: ${SAVED_STYLE_HEIGHT}px;
+  width: ${STYLE_WIDTH}px;
   margin: auto;
 `;
 
-function ColorGroup({
-  colors,
-  isEditMode,
-  handleAddPreset,
-  isLocal,
-  handleClick,
-}) {
+function StyleGroup({ styles, isEditMode, handleClick }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
 
@@ -61,47 +50,30 @@ function ColorGroup({
     activeIndex,
     setActiveIndex,
     groupRef,
-    styles: colors,
+    styles,
   });
-
-  const displayAddIcon = !isEditMode;
 
   return (
     <Group ref={groupRef}>
-      {colors.map((color, i) => (
-        <ButtonWrapper key={JSON.stringify(color)}>
-          <Color
-            color={color}
+      {styles.map((style, i) => (
+        <ButtonWrapper key={JSON.stringify(style)}>
+          <StyleItem
+            style={style}
             i={i}
             activeIndex={activeIndex}
             handleOnClick={handleClick}
             isEditMode={isEditMode}
-            isLocal={true}
           />
         </ButtonWrapper>
       ))}
-      {displayAddIcon && (
-        <ButtonWrapper>
-          <ColorAdd
-            handleAddPreset={handleAddPreset}
-            aria-label={
-              isLocal
-                ? __('Add local color', 'web-stories')
-                : __('Add global color', 'web-stories')
-            }
-          />
-        </ButtonWrapper>
-      )}
     </Group>
   );
 }
 
-ColorGroup.propTypes = {
-  colors: PropTypes.array.isRequired,
+StyleGroup.propTypes = {
+  styles: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  handleAddPreset: PropTypes.func.isRequired,
-  isLocal: PropTypes.bool,
 };
 
-export default ColorGroup;
+export default StyleGroup;
