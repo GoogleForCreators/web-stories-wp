@@ -88,5 +88,13 @@ describe('SVG', () => {
     await expect(page).not.toMatchElement(
       '.attachments-browser .attachments .attachment[aria-label="video-play"]'
     );
+
+    const btnSelector =
+      '.attachments-browser .attachments .attachment:first-of-type';
+    await page.waitForSelector(btnSelector);
+
+    await expect(page).toClick(btnSelector);
+
+    await expect(page).toClick('button', { text: 'Select as publisher logo' });
   });
 });
