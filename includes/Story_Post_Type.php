@@ -534,7 +534,7 @@ class Story_Post_Type {
 				'locale'                => ( new Locale() )->get_locale_settings(),
 				'allowedMimeTypes'      => $this->get_allowed_mime_types(),
 				'allowedFileTypes'      => $this->get_allowed_file_types(),
-				'allowedImageMimeTypes' => $this->get_allowed_poster_image_mime_types(),
+				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'postType'              => self::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
 				'previewLink'           => get_preview_post_link( $story_id, $preview_query_args ),

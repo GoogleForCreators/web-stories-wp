@@ -356,7 +356,7 @@ class Dashboard {
 				'wpListURL'             => $classic_wp_list_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
-				'allowedImageMimeTypes' => $this->get_allowed_poster_image_mime_types(),
+				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'api'                   => [
