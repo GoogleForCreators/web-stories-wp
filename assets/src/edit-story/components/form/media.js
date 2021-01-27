@@ -185,7 +185,7 @@ const MediaInput = forwardRef(
 
     const ref = useRef();
     const [isHovering, setIsHovering] = useState(false);
-    const [isFocused, setIsFocused] = useState(rest.isFocused);
+    const [isFocused, setIsFocused] = useState(false);
     const resettableProps = {
       tabIndex: 0,
       'aria-label': ariaLabel,
