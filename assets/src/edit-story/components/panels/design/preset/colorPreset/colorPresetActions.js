@@ -33,14 +33,17 @@ import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
 import useApplyPreset from '../useApplyPreset';
+import { AdvancedDropDown } from '../../../../form';
 import ColorGroup from './colorGroup';
 
 const ActionsWrapper = styled.div`
   text-align: center;
   border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
+  padding: 4px 8px;
 `;
 
 const AddColorPreset = styled.button`
+  padding: 4px;
   background: transparent;
   border: none;
   color: ${({ theme }) => rgba(theme.colors.accent.primary, 0.84)};
@@ -48,6 +51,19 @@ const AddColorPreset = styled.button`
   padding: 12px 0px;
   line-height: 18px;
   font-size: 13px;
+`;
+
+const DropDownWrapper = styled.div`
+  width: 135px;
+`;
+
+const HeaderRow = styled.div`
+  display: flex;
+`;
+
+const ButtonWrapper = styled.div`
+  text-align: end;
+  flex-grow: 1;
 `;
 
 function ColorPresetActions({ color, pushUpdate }) {
@@ -104,14 +120,35 @@ function ColorPresetActions({ color, pushUpdate }) {
     [globalStoryStyles, isText, globalColors, updateStory]
   );
 
+  const options = [
+    {
+      id: 'local',
+      name: 'Current colors',
+    },
+    {
+      id: 'global',
+      name: 'Global colors',
+    },
+  ];
+
   return (
     <ActionsWrapper>
-      <div>
-        <div>{'Dropdown'}</div>
-        <div>
-          <AddColorPreset onClick={() => handleAddColorPreset(color)} />
-        </div>
-      </div>
+      <HeaderRow>
+        <DropDownWrapper>
+          <AdvancedDropDown
+            options={options}
+            displayInContent={true}
+            hasSearch={false}
+            onChange={({ id }) => setShowLocalColors(id === 'local')}
+            selectedId={showLocalColors ? 'local' : 'global'}
+          />
+        </DropDownWrapper>
+        <ButtonWrapper>
+          <AddColorPreset onClick={() => handleAddColorPreset(color)}>
+            {'+'}
+          </AddColorPreset>
+        </ButtonWrapper>
+      </HeaderRow>
       <div>
         <ColorGroup
           isEditMode={false}

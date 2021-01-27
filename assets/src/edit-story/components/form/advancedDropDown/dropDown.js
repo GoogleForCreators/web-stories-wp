@@ -103,6 +103,7 @@ const DropDownTitle = styled.span`
  * @param {string} props.priorityLabel Label to display in front of the priority options.
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
+ * @param props.displayInContent
  * @return {*} Render.
  */
 function DropDown({
@@ -121,6 +122,7 @@ function DropDown({
   priorityLabel,
   searchResultsLabel,
   renderer,
+  displayInContent = false,
   ...rest
 }) {
   if (!options && !getOptionsByQuery) {
@@ -170,6 +172,41 @@ function DropDown({
     [isOpen]
   );
 
+  const list = (
+    <OptionsContainer
+      isOpen={isOpen}
+      onClose={debouncedCloseDropDown}
+      getOptionsByQuery={getOptionsByQuery}
+      hasSearch={hasSearch}
+      displayInContent={displayInContent}
+      renderContents={({
+        searchKeyword,
+        setIsExpanded,
+        trigger,
+        queriedOptions,
+        listId,
+      }) => (
+        <List
+          listId={listId}
+          value={selectedId}
+          keyword={searchKeyword}
+          onSelect={handleSelect}
+          onClose={debouncedCloseDropDown}
+          onExpandedChange={setIsExpanded}
+          focusTrigger={trigger}
+          onObserve={onObserve}
+          options={options || queriedOptions}
+          primaryOptions={primaryOptions}
+          primaryLabel={primaryLabel}
+          priorityOptions={priorityOptions}
+          priorityLabel={priorityLabel}
+          searchResultsLabel={searchResultsLabel}
+          renderer={renderer}
+        />
+      )}
+    />
+  );
+
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
   return (
     <Container onKeyDown={handleKeyPress}>
@@ -185,40 +222,9 @@ function DropDown({
         <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
-      {!disabled && (
-        <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
-          <OptionsContainer
-            isOpen={isOpen}
-            onClose={debouncedCloseDropDown}
-            getOptionsByQuery={getOptionsByQuery}
-            hasSearch={hasSearch}
-            renderContents={({
-              searchKeyword,
-              setIsExpanded,
-              trigger,
-              queriedOptions,
-              listId,
-            }) => (
-              <List
-                listId={listId}
-                value={selectedId}
-                keyword={searchKeyword}
-                onSelect={handleSelect}
-                onClose={debouncedCloseDropDown}
-                onExpandedChange={setIsExpanded}
-                focusTrigger={trigger}
-                onObserve={onObserve}
-                options={options || queriedOptions}
-                primaryOptions={primaryOptions}
-                primaryLabel={primaryLabel}
-                priorityOptions={priorityOptions}
-                priorityLabel={priorityLabel}
-                searchResultsLabel={searchResultsLabel}
-                renderer={renderer}
-              />
-            )}
-          />
-        </Popup>
+      {isOpen && !disabled && displayInContent && list}
+      {!disabled && !displayInContent && (
+        <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>{list}</Popup>
       )}
     </Container>
   );
@@ -240,6 +246,7 @@ DropDown.propTypes = {
   priorityLabel: PropTypes.string,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  displayInContent: PropTypes.bool,
 };
 
 export default DropDown;
