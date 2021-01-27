@@ -24,7 +24,24 @@ import { select } from '@wordpress/data';
 jest.mock('@wordpress/data', () => ({
   select: jest.fn(() => ({
     getCurrentView: () => 'grid',
+    getCurrentViewSettings: () => ({
+      order: 'latest',
+      dummy: {
+        show: true,
+        label: 'Dummy Text',
+        readonly: true,
+      },
+    }),
+    getEditor: () => 'testEditor',
   })),
+}));
+
+jest.mock('../../utils/globals', () => ({
+  webStoriesData: {
+    tag: 'testStories',
+    views: [],
+    orderlist: [],
+  },
 }));
 
 import * as Utils from '../../utils';
@@ -59,5 +76,25 @@ describe('Test view is circle', () => {
     }));
     const circleView = Utils.isCircleView();
     expect(circleView).toBeTruthy();
+  });
+});
+
+/**
+ * Test shortcode build function.
+ */
+describe('Test shortcode is prepared', () => {
+  it('test without editor instance', () => {
+    select.mockImplementationOnce(() => ({
+      getEditor: () => null,
+      getCurrentViewSettings: () => null,
+    }));
+
+    const shortCode = Utils.prepareShortCode();
+    expect(shortCode).toBe('[testStories /]');
+  });
+
+  it('test with editor instance set', () => {
+    const shortCode = Utils.prepareShortCode();
+    expect(shortCode).toBe('[testStories order=latest dummy=true /]');
   });
 });
