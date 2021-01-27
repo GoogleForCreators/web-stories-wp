@@ -21,6 +21,11 @@ import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 
 /**
+ * WordPress dependencies
+ */
+import apiFetch from '@wordpress/api-fetch';
+
+/**
  * Internal dependencies
  */
 import {
@@ -35,7 +40,7 @@ import storyReducer, {
 } from '../../../dashboard/app/reducer/stories';
 import { ERRORS } from '../../../dashboard/app/textContent';
 
-const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
+const useStoryApi = ({ editStoryURL, storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
 
   const fetchStories = useCallback(
@@ -85,7 +90,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           query,
         });
 
-        const response = await dataAdapter.get(path);
+        const response = await apiFetch({
+          path,
+        });
 
         const totalPages =
           response.headers && parseInt(response.headers['X-WP-TotalPages']);
@@ -126,7 +133,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         });
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, editStoryURL]
   );
 
   const api = useMemo(

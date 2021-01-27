@@ -63,16 +63,21 @@ function FetchSelectedStories({
       const response = await apiFetch({
         path: addQueryArgs(api.stories, {
           _embed: 'author',
-          _web_stories_envelope: true,
           context: 'edit',
           include: selectedStories,
         }),
       });
-      setSelectedStoriesObject(
-        response.body.sort((a, b) => {
-          return selectedStories.indexOf(a.id) - selectedStories.indexOf(b.id);
-        })
-      );
+
+      if (response.length) {
+        setSelectedStoriesObject(
+          response.sort((a, b) => {
+            return (
+              selectedStories.indexOf(a.id) - selectedStories.indexOf(b.id)
+            );
+          })
+        );
+      }
+
       setIsFetchingSelectedStories(false);
     } catch (error) {
       error?.message && setErrorMsg(error.message);
