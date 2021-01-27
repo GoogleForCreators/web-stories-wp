@@ -21,7 +21,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { getTimeTracker } from '../../../../tracking';
+import { getTimeTracker, trackError } from '../../../../tracking';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
@@ -93,7 +93,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
         ...newSize,
       });
     } catch (err) {
-      // TODO Display error message to user as video poster upload has as failed.
+      // TODO: Potentially display error message to user.
+      trackError('video poster generation', err.message);
     } finally {
       trackTiming();
     }
