@@ -45,10 +45,10 @@ export const isCircleView = () => {
 /**
  * Update the view wide settings.
  *
- * @param root0
- * @param root0.fieldObj
- * @param root0.field
- * @param root0.isReadonly
+ * @param {Object} args Arguments.
+ * @param {Object} args.fieldObj Field object.
+ * @param {Object} args.field Field.
+ * @param {boolean} [args.isReadonly=false] Whether the field is readonly.
  * @return {void}
  */
 export const updateViewSettings = ({ fieldObj, field, isReadonly = false }) => {
