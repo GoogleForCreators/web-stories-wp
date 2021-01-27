@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 /**
  * Class TinyMCE
+ *
  * @package Google\Web_Stories
  */
 class TinyMCE {
