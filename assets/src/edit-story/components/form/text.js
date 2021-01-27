@@ -127,6 +127,9 @@ const TextInput = forwardRef(
   ) => {
     const { suffix } = rest;
     const inputRef = useRef();
+    if (ref) {
+      ref.current = inputRef.current;
+    }
     const isMultiple = value === MULTIPLE_VALUE;
     value = isMultiple ? '' : value;
     placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : placeholder;
@@ -142,7 +145,7 @@ const TextInput = forwardRef(
 
     return (
       <Container
-        className={`${className}`}
+        className={className}
         flexBasis={flexBasis}
         disabled={disabled}
         suffix={suffix}
@@ -150,12 +153,7 @@ const TextInput = forwardRef(
         {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
         <StyledInput
           type="text"
-          ref={(node) => {
-            if (ref !== null) {
-              ref.current = node;
-            }
-            inputRef.current = node;
-          }}
+          ref={inputRef}
           placeholder={placeholder}
           label={label}
           value={value}

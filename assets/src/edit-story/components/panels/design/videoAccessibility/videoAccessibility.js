@@ -87,6 +87,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     <SimplePanel
       name="videoAccessibility"
       title={__('Description', 'web-stories')}
+      isPersistable={!highlight}
     >
       <Row
         css={highlight?.focus && HIGHLIGHT_STYLES}

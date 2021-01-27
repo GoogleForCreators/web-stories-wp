@@ -104,7 +104,7 @@ function Title() {
       <Input
         ref={setTitleInput}
         value={title}
-        type={'text'}
+        type="text"
         onBlur={handleBlur}
         onChange={handleChange}
         placeholder={__('Add title', 'web-stories')}
