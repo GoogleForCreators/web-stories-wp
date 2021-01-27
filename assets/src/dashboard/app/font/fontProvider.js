@@ -50,7 +50,7 @@ function FontProvider({ children }) {
   const getFonts = useCallback(
     () =>
       import(
-        /* webpackChunkName: "chunk-fonts" */ '../../../../../packages/fonts/src/fonts.json'
+        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/src/fonts.json'
       ).then((res) => res.default),
     []
   );
