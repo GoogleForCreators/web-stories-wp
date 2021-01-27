@@ -13,13 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { SetDefaultStateSetting } from '../../utils';
 
 jest.mock('../../utils', () => ({
-  SetDefaultStateSetting: jest.fn(() => ({
+  setDefaultStateSetting: jest.fn(() => ({
     grid: {
       title: true,
       author: true,
@@ -52,6 +48,9 @@ jest.mock('../../utils/globals', () => ({
   },
 }));
 
+/**
+ * Internal dependencies
+ */
 import DEFAULT_STATE from '../../store/default';
 
 describe('Test default state for store', () => {
