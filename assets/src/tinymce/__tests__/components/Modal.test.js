@@ -21,7 +21,7 @@ import renderer from 'react-test-renderer';
 /**
  * Internal dependencies
  */
-import { isCircleView, updateViewSettings } from '../../utils';
+import { isCircleView } from '../../utils';
 import WebStoriesModal from '../../components/Modal';
 
 jest.mock('@wordpress/data', () => ({
@@ -43,8 +43,6 @@ jest.mock('@wordpress/components', () => ({
 }));
 
 jest.mock('../../utils/globals', () => ({
-  forEach: () => {},
-  isEmpty: () => {},
   webStoriesData: {
     views: [],
     orderlist: [],
