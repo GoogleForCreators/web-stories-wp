@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { isCircleView, updateViewSettings } from '../utils';
-import { isEmpty, webStoriesData } from '../utils/globals';
+import { webStoriesData } from '../utils/globals';
 import name from '../store/name';
 
 import TinyMCEToggle from './controls/Toggle';
@@ -66,16 +66,14 @@ const WebStoriesModal = (props) => {
           className={'component_web_stories_mce_model'}
           shouldCloseOnClickOutside={false}
         >
-          {!isEmpty(view) && (
-            <SelectControl
-              label={__('Select View Type', 'web-stories')}
-              value={view}
-              options={views}
-              onChange={(view_type) => {
-                dispatch(name).setCurrentView(view_type);
-              }}
-            />
-          )}
+          <SelectControl
+            label={__('Select View Type', 'web-stories')}
+            value={view}
+            options={views}
+            onChange={(view_type) => {
+              dispatch(name).setCurrentView(view_type);
+            }}
+          />
 
           <TinyMCEToggle field={'title'} fieldObj={title} />
 
@@ -115,16 +113,14 @@ const WebStoriesModal = (props) => {
             />
           )}
 
-          {!isEmpty(order) && (
-            <SelectControl
-              label={__('Select Order', 'web-stories')}
-              value={order}
-              options={orderlist}
-              onChange={(o) => {
-                updateViewSettings({ fieldObj: o, field: 'order' });
-              }}
-            />
-          )}
+          <SelectControl
+            label={__('Select Order', 'web-stories')}
+            value={order}
+            options={orderlist}
+            onChange={(o) => {
+              updateViewSettings({ fieldObj: o, field: 'order' });
+            }}
+          />
 
           <div style={{ padding: '20px 0' }} className={'alignright'}>
             <Button

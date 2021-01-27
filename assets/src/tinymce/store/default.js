@@ -19,7 +19,7 @@
  */
 import { SetDefaultStateSetting } from '../utils';
 
-let DEFAULT_STATE = {
+const DEFAULT_STATE = {
   settings: {},
   modalOpen: false,
   editor: false,

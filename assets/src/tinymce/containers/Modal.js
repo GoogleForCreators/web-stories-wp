@@ -23,7 +23,6 @@ import { compose } from '@wordpress/compose';
 /**
  * Internal dependencies
  */
-import { forEach } from '../utils/globals';
 import name from '../store/name';
 import WebStoriesModal from '../components/Modal';
 
@@ -34,10 +33,13 @@ const prepareShortCode = () => {
   const settings = select(name).getCurrentViewSettings();
 
   if (editorInstance) {
-    forEach(settings, (value, index) => {
+    Object.keys(settings).forEach((value) => {
+      const ValueObject = settings[value];
       const Value =
-        'object' === typeof value ? value.show.toString() : value.toString();
-      shortCode = shortCode + ' ' + index.toString() + '=' + Value;
+        'object' === typeof ValueObject
+          ? ValueObject.show.toString()
+          : ValueObject.toString();
+      shortCode = shortCode + ' ' + value.toString() + '=' + Value;
     });
   }
 

@@ -22,7 +22,7 @@ import { dispatch, select } from '@wordpress/data';
  * Internal dependencies
  */
 import name from '../store/name';
-import { forEach, isEmpty, webStoriesData } from './globals';
+import { webStoriesData } from './globals';
 
 /**
  * Get current view.
@@ -52,7 +52,7 @@ export const isCircleView = () => {
  * @return {void}
  */
 export const updateViewSettings = ({ fieldObj, field, isReadonly = false }) => {
-  let currentViewSettings = select(name).getCurrentViewSettings();
+  const currentViewSettings = select(name).getCurrentViewSettings();
   let updatedSettings = currentViewSettings;
 
   switch (typeof fieldObj) {
@@ -86,7 +86,7 @@ export const SetDefaultStateSetting = () => {
   const State = [];
   const { orderlist, views, fields } = webStoriesData;
 
-  forEach(views, (value) => {
+  views.forEach((value) => {
     const { value: viewValue } = value;
     const { title, author, date, excerpt, image_align, archive_link } = fields[
       viewValue
@@ -102,7 +102,7 @@ export const SetDefaultStateSetting = () => {
       number: 5,
       columns: 1,
       view: viewValue,
-      order: isEmpty(orderlist) ? 'latest' : orderlist[0].value,
+      order: orderlist ? 'latest' : orderlist[0].value,
     };
   });
 

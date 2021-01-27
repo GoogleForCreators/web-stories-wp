@@ -34,8 +34,6 @@ jest.mock('../../utils', () => ({
 }));
 
 jest.mock('../../utils/globals', () => ({
-  forEach: jest.fn(),
-  isEmpty: jest.fn(),
   webStoriesData: {
     orderlist: [],
     views: {
