@@ -43,8 +43,11 @@ jobs:
           path: .jest-cache
           key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
 
+      # Rollup is needed for tests in `assets/src/migration` expecting `module.js`
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npx rollup --config assets/src/migration/rollup.config.migrate.js
         env:
           CI: true
 
