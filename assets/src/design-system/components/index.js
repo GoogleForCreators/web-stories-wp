@@ -15,6 +15,7 @@
  */
 
 export * from './button';
+export * from './checkbox';
 export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
 export { Modal } from './modal';

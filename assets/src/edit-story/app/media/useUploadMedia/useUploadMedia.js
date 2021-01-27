@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useRef, useState } from 'react';
@@ -29,18 +24,16 @@ import { useCallback, useRef, useState } from 'react';
  */
 import { useUploader } from '../../uploader';
 import { useSnackbar } from '../../snackbar';
-import { useConfig } from '../../config';
 import {
   getResourceFromLocalFile,
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
-import createError from '../../../utils/createError';
+import { trackError } from '../../../../tracking';
 
 function useUploadMedia({ media, setMedia }) {
-  const { uploadFile, isValidType } = useUploader();
+  const { uploadFile } = useUploader();
   const { showSnackbar } = useSnackbar();
-  const { allowedFileTypes } = useConfig();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
 
@@ -56,27 +49,12 @@ function useUploadMedia({ media, setMedia }) {
       if (!files || files.length === 0) {
         return;
       }
+
       let localFiles;
       let updatedMedia;
       try {
         setIsUploading(true);
         setPreventUnload('upload', true);
-
-        files.reverse().map((file) => {
-          if (!isValidType(file)) {
-            /* translators: %s is a list of allowed file extensions. */
-            const message = sprintf(
-              /* translators: %s: list of allowed file types. */
-              __('Please choose only %s to upload.', 'web-stories'),
-              allowedFileTypes.join(
-                /* translators: delimiter used in a list */
-                __(', ', 'web-stories')
-              )
-            );
-
-            throw createError('ValidError', file.name, message);
-          }
-        });
 
         localFiles = await Promise.all(
           files.reverse().map(async (file) => ({
@@ -100,8 +78,8 @@ function useUploadMedia({ media, setMedia }) {
         ];
         setMedia({ media: updatedMedia });
       } catch (e) {
+        trackError('upload media', e.message);
         setMedia({ media });
-
         setIsUploading(false);
         showSnackbar({
           message: e.message,
@@ -142,6 +120,7 @@ function useUploadMedia({ media, setMedia }) {
           }),
         });
       } catch (e) {
+        trackError('upload media', e.message);
         showSnackbar({
           message: e.message,
         });
@@ -159,14 +138,7 @@ function useUploadMedia({ media, setMedia }) {
         setPreventUnload('upload', false);
       }
     },
-    [
-      setMedia,
-      showSnackbar,
-      allowedFileTypes,
-      uploadFile,
-      isValidType,
-      setPreventUnload,
-    ]
+    [setMedia, showSnackbar, uploadFile, setPreventUnload]
   );
 
   return {

@@ -87,7 +87,6 @@ function combineElements(state, { firstElement, secondId }) {
     'scale',
     'focalX',
     'focalY',
-    'flip',
     'backgroundOverlay',
     'tracks',
   ];
@@ -100,6 +99,10 @@ function combineElements(state, { firstElement, secondId }) {
       propsFromFirst.push('border');
       propsFromFirst.push('borderRadius');
     }
+  } else {
+    // If we're dropping into background, maintain the flip, too.
+    // @todo This behavior has been since the beginning, however, it's not consistent with how other elements behave -- needs confirmation.
+    propsFromFirst.push('flip');
   }
   const mediaProps = objectPick(element, propsFromFirst);
 
@@ -113,7 +116,6 @@ function combineElements(state, { firstElement, secondId }) {
     ]),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
-    flip: {},
     // Then copy all media-related attributes from new element
     ...mediaProps,
     // Only copy position properties for backgrounds, as they're ignored while being background

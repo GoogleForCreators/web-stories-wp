@@ -35,6 +35,7 @@ import Layout from '../../components/layout';
 import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
@@ -750,6 +751,11 @@ class APIProviderFixture {
         []
       );
 
+      const getPageLayouts = useCallback(
+        () => asyncResponse(formattedTemplatesArray),
+        []
+      );
+
       const state = {
         actions: {
           autoSaveById,
@@ -763,6 +769,7 @@ class APIProviderFixture {
           uploadMedia,
           updateMedia,
           getStatusCheck,
+          getPageLayouts,
         },
       };
       return (
