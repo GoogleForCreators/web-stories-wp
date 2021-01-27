@@ -43,7 +43,7 @@ const prepareShortCode = () => {
     });
   }
 
-  shortCode = shortCode + ' /]';
+  shortCode += ' /]';
 
   return shortCode;
 };
