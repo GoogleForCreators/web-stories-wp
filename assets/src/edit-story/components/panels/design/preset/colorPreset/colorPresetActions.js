@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -32,6 +32,8 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
+import useApplyPreset from '../useApplyPreset';
+import ColorGroup from './colorGroup';
 
 const ActionsWrapper = styled.div`
   text-align: center;
@@ -48,7 +50,8 @@ const AddColorPreset = styled.button`
   font-size: 13px;
 `;
 
-function ColorPresetActions({ color }) {
+function ColorPresetActions({ color, pushUpdate }) {
+  const [showLocalColors, setShowLocalColors] = useState(true);
   const {
     selectedElements,
     currentStoryStyles,
@@ -71,6 +74,8 @@ function ColorPresetActions({ color }) {
 
   const { colors: globalColors } = globalStoryStyles;
   const { colors: localColors } = currentStoryStyles;
+
+  const applyStyle = useApplyPreset({ isColor: true, pushUpdate });
 
   // @todo This will change with the missing multi-selection handling.
   const isText =
@@ -101,9 +106,21 @@ function ColorPresetActions({ color }) {
 
   return (
     <ActionsWrapper>
-      <AddColorPreset onClick={() => handleAddColorPreset(color)}>
-        {__('+ Add to Color Preset', 'web-stories')}
-      </AddColorPreset>
+      <div>
+        <div>{'Dropdown'}</div>
+        <div>
+          <AddColorPreset onClick={() => handleAddColorPreset(color)} />
+        </div>
+      </div>
+      <div>
+        <ColorGroup
+          isEditMode={false}
+          isLocal={showLocalColors}
+          colors={showLocalColors ? localColors : globalColors}
+          handleClick={applyStyle}
+          displayAdd={false}
+        />
+      </div>
     </ActionsWrapper>
   );
 }

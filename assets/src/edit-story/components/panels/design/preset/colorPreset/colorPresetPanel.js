@@ -63,6 +63,11 @@ function ColorPresetPanel({ isEditMode, handlePresetClick }) {
   const { colors: globalStyles } = globalStoryStyles;
   const { colors: localStyles } = currentStoryStyles;
   const hasPresets = globalStyles.length > 0 || localStyles.length > 0;
+  const groupProps = {
+    type: presetType,
+    isEditMode,
+    displayAdd: !isEditMode,
+  };
   return (
     <>
       {hasPresets && (
@@ -71,22 +76,20 @@ function ColorPresetPanel({ isEditMode, handlePresetClick }) {
             <Title>{__('Current story', 'web-stories')}</Title>
             <ColorGroup
               colors={localStyles}
-              type={presetType}
               handleAddPreset={addLocalPreset}
               handleClick={(preset) =>
                 handlePresetClick(preset, true /* isLocal */)
               }
-              isEditMode={isEditMode}
+              {...groupProps}
             />
           </GroupWrapper>
           <GroupWrapper>
             <Title>{__('All stories', 'web-stories')}</Title>
             <ColorGroup
               colors={globalStyles}
-              type={presetType}
-              isEditMode={isEditMode}
               handleClick={handlePresetClick}
               handleAddPreset={addGlobalPreset}
+              {...groupProps}
             />
           </GroupWrapper>
         </>

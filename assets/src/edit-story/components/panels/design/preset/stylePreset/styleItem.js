@@ -131,6 +131,10 @@ function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
 
 StyleItem.propTypes = {
   style: PropTypes.object.isRequired,
+  i: PropTypes.number.isRequired,
+  activeIndex: PropTypes.object,
+  handleOnClick: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
 };
 
 export default StyleItem;

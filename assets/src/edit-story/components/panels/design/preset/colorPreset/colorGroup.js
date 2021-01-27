@@ -53,6 +53,7 @@ function ColorGroup({
   handleAddPreset,
   isLocal,
   handleClick,
+  displayAdd,
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
@@ -63,8 +64,6 @@ function ColorGroup({
     groupRef,
     styles: colors,
   });
-
-  const displayAddIcon = !isEditMode;
 
   return (
     <Group ref={groupRef}>
@@ -80,7 +79,7 @@ function ColorGroup({
           />
         </ButtonWrapper>
       ))}
-      {displayAddIcon && (
+      {displayAdd && (
         <ButtonWrapper>
           <ColorAdd
             handleAddPreset={handleAddPreset}
@@ -100,8 +99,9 @@ ColorGroup.propTypes = {
   colors: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  handleAddPreset: PropTypes.func.isRequired,
+  handleAddPreset: PropTypes.func,
   isLocal: PropTypes.bool,
+  displayAdd: PropTypes.bool.isRequired,
 };
 
 export default ColorGroup;
