@@ -39,7 +39,6 @@ import {
 } from '../utils';
 import { useStory } from '../../../../../app/story';
 import generatePatternStyles from '../../../../../utils/generatePatternStyles';
-import {SAVED_COLOR_SIZE, SAVED_STYLE_HEIGHT} from "../../../../../constants";
 
 const PRESET_SIZE = 30;
 const REMOVE_ICON_SIZE = 16;
@@ -180,7 +179,12 @@ function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
 }
 
 Color.propTypes = {
-
+  color: PropTypes.object,
+  i: PropTypes.number.isRequired,
+  activeIndex: PropTypes.number.isRequired,
+  handleOnClick: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
+  isLocal: PropTypes.bool,
 };
 
 export default Color;

@@ -103,7 +103,7 @@ const DropDownTitle = styled.span`
  * @param {string} props.priorityLabel Label to display in front of the priority options.
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
- * @param props.displayInContent
+ * @param {boolean} props.displayInContent If to display the selection list inline instead of as a modal.
  * @return {*} Render.
  */
 function DropDown({
@@ -224,7 +224,9 @@ function DropDown({
       </DropDownSelect>
       {isOpen && !disabled && displayInContent && list}
       {!disabled && !displayInContent && (
-        <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>{list}</Popup>
+        <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+          {list}
+        </Popup>
       )}
     </Container>
   );
