@@ -62,7 +62,7 @@ const EmptyFrame = styled.div`
 `;
 
 function FrameElement({ element }) {
-  const { id, type } = element;
+  const { id, type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
@@ -164,6 +164,7 @@ function FrameElement({ element }) {
         <WithMask
           element={element}
           fill={true}
+          flip={flip}
           eventHandlers={!maskDisabled ? eventHandlers : null}
         >
           {Frame ? (

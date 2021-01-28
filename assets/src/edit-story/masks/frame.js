@@ -26,6 +26,7 @@ import { useRef, useEffect, useState } from 'react';
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
+import getTransformFlip from '../elements/shared/getTransformFlip';
 import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
@@ -86,6 +87,14 @@ function WithDropTarget({ element, children, hover }) {
     return children;
   }
 
+  const pathProps = {
+    vectorEffect: 'non-scaling-stroke',
+    fill: 'none',
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    d: mask?.path,
+    stroke: '#0063F9',
+  };
   return (
     <>
       {children}
@@ -100,13 +109,8 @@ function WithDropTarget({ element, children, hover }) {
       >
         {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
-          vectorEffect="non-scaling-stroke"
+          {...pathProps}
           strokeWidth="4"
-          fill="none"
-          stroke="#0063F9"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d={mask?.path}
           style={
             (hover && !draggingResource) ||
             (Boolean(draggingResource) &&
@@ -119,13 +123,8 @@ function WithDropTarget({ element, children, hover }) {
         {/** Drop target shown when an element is in the drop target area  */}
         <DropTargetPath
           ref={pathRef}
-          vectorEffect="non-scaling-stroke"
+          {...pathProps}
           strokeWidth="48"
-          fill="none"
-          stroke="#0063F9"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d={mask?.path}
           active={activeDropTargetId === element.id}
         />
       </DropTargetSVG>
@@ -149,14 +148,17 @@ export default function WithMask({
 }) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
+  const { flip } = rest;
 
   const mask = getElementMask(element);
+  const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
   if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
     return (
       <div
         style={{
           ...(fill ? FILL_STYLE : {}),
           ...style,
+          ...flipStyle,
         }}
         {...rest}
       >
@@ -175,6 +177,7 @@ export default function WithMask({
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
+        ...flipStyle,
         ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}

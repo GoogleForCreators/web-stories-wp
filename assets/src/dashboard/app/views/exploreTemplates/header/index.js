@@ -29,7 +29,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Dropdown, Layout } from '../../../../components';
+import { Dropdown } from '../../../../components';
 import { DropdownContainer } from '../../../../components/dropdown';
 import {
   DASHBOARD_VIEWS,
@@ -104,7 +104,7 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
   ) : null;
 
   return (
-    <Layout.Squishable>
+    <>
       <PageHeading
         centerContent
         defaultTitle={__('Templates', 'web-stories')}
@@ -131,7 +131,7 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
           'web-stories'
         )}
       />
-    </Layout.Squishable>
+    </>
   );
 }
 

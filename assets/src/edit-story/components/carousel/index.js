@@ -14,21 +14,4 @@
  * limitations under the License.
  */
 
-/**
- *
- * @param {string} start CSS value with unit.
- * @param {string} end CSS value with unit.
- * @param {string} progress CSS variable to represent progress in range [0, 1]
- * @return {string} Resulting `calc()` CSS value.
- */
-const cssLerp = (start, end, progress) => {
-  const currentProgress = `var(${progress}, 0)`;
-  const remainingProgress = `calc(1 - ${currentProgress})`;
-  return `
-    calc(
-      calc(${remainingProgress} * ${start}) +
-      calc(${currentProgress} * ${end})
-  )`;
-};
-
-export default cssLerp;
+export { default } from './carouselContainer';

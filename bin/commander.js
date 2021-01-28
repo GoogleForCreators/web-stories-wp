@@ -42,6 +42,7 @@ const PLUGIN_FILE = 'web-stories.php';
 const README_FILE = 'readme.txt';
 const FONTS_FILE = 'assets/src/fonts/fonts.json';
 const BUILD_DIR = 'build/web-stories';
+const TEXT_SET_DIR = `${PLUGIN_DIR}/assets/src/edit-story/components/library/panes/text/textSets/raw`;
 const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
 const STORIES_DIR = `${PLUGIN_DIR}/includes/data/stories`;
 
@@ -198,6 +199,21 @@ program
     updateTemplates(STORIES_DIR);
 
     console.log("Templates updated! Don't forget to run prettier!");
+  });
+
+program
+  .command('update-text-sets')
+  .description('Update text sets by running them through migration')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  # Migrate text sets to newest version');
+    console.log('  $ commander.js update-text-sets');
+  })
+  .action(() => {
+    updateTemplates(TEXT_SET_DIR);
+
+    console.log("Text sets updated! Don't forget to run prettier!");
   });
 
 program.parse(process.argv);

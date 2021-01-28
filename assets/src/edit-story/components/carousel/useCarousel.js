@@ -17,9 +17,10 @@
 /**
  * Internal dependencies
  */
-import loadTextSets from './loadTextSets';
+import { identity, useContextSelector } from '../../../design-system';
+import CarouselContext from './carouselContext';
 
-export async function getTextSets() {
-  const textSetLibrary = await loadTextSets();
-  return textSetLibrary;
+function useCarousel(selector) {
+  return useContextSelector(CarouselContext, selector ?? identity);
 }
+export default useCarousel;

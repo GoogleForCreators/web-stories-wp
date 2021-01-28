@@ -37,6 +37,7 @@ import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import { formatDate, toDate, isValid } from '../../../../../../date';
+import { trackError } from '../../../../../../tracking';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -167,6 +168,7 @@ function MediaEditDialog({ resource, onClose }) {
       updateMediaElement({ id, alt: altText });
       onClose();
     } catch (err) {
+      trackError('local media edit', err.message);
       showSnackbar({
         message: __('Failed to update, please try again.', 'web-stories'),
       });
