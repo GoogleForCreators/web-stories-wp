@@ -27,9 +27,9 @@ import styled, { css } from 'styled-components';
 import { Close } from '../../icons';
 import { THEME_CONSTANTS } from '../../theme';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
-import { Text } from '../typography';
+import { Headline } from '../typography';
 
-const Title = styled(Text)`
+const Title = styled(Headline)`
   grid-area: title;
   font-weight: 700;
   padding-left: 8px;
@@ -65,7 +65,6 @@ const Container = styled.div`
   ${({ isDashboard }) =>
     isDashboard &&
     css`
-      max-height: 164px;
       grid-template-columns: 1fr 32px;
       grid-template-rows: 3;
       grid-column-gap: 0;
@@ -105,9 +104,10 @@ export const Banner = forwardRef(
         {...rest}
       >
         <Title
+          as="h1"
           size={
             THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES[
-              isDashboard ? 'LARGE' : 'MEDIUM'
+              isDashboard ? 'X_SMALL' : 'XX_SMALL'
             ]
           }
         >
