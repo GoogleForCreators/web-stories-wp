@@ -37,8 +37,8 @@ import Color from './color';
 const Group = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  grid-column-gap: ${({ colorGap }) => colorGap}px;
+  grid-row-gap: ${({ colorGap }) => colorGap}px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -54,6 +54,7 @@ function ColorGroup({
   isLocal,
   handleClick,
   displayAdd,
+  colorGap = 10,
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
@@ -66,7 +67,7 @@ function ColorGroup({
   });
 
   return (
-    <Group ref={groupRef}>
+    <Group ref={groupRef} colorGap={colorGap}>
       {colors.map((color, i) => (
         <ButtonWrapper key={JSON.stringify(color)}>
           <Color
@@ -102,6 +103,7 @@ ColorGroup.propTypes = {
   handleAddPreset: PropTypes.func,
   isLocal: PropTypes.bool,
   displayAdd: PropTypes.bool.isRequired,
+  colorGap: PropTypes.number,
 };
 
 export default ColorGroup;

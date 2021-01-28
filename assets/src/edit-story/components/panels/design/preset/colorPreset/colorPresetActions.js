@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
 import { Add } from '../../../../../../design-system/icons';
 import { Curve } from '../../../../../icons';
 import { useStory } from '../../../../../app/story';
@@ -39,6 +40,10 @@ import { SAVED_COLOR_SIZE } from '../../../../../constants';
 import { TranslateWithMarkup } from '../../../../../../i18n';
 import ColorGroup from './colorGroup';
 import useApplyColor from './useApplyColor';
+
+const LOCAL = 'local';
+const GLOBAL = 'global';
+const COLOR_GAP = 6;
 
 const ActionsWrapper = styled.div`
   text-align: center;
@@ -52,7 +57,7 @@ const AddColorPreset = styled.button`
   color: ${({ theme }) => theme.colors.fg.secondary};
   cursor: pointer;
   padding: 8px 0px;
-  line-height: 18px;
+  line-height: 20px;
   svg {
     width: 16px;
     height: 16px;
@@ -67,10 +72,12 @@ const CtaWrapper = styled.div`
 `;
 
 const ColorsWrapper = styled.div`
-  margin-top: ${({ hasColors }) => (hasColors ? '16px' : 0)};
-  max-height: ${SAVED_COLOR_SIZE * 3}px;
+  margin-top: ${({ hasColors }) => (hasColors ? '14px' : 0)};
+  max-height: ${SAVED_COLOR_SIZE * 3 + 2 * COLOR_GAP}px;
   overflow-x: hidden;
   overflow-y: auto;
+
+  ${ScrollBarStyles}
 `;
 
 const DropDownWrapper = styled.div`
@@ -85,9 +92,6 @@ const ButtonWrapper = styled.div`
   text-align: end;
   flex-grow: 1;
 `;
-
-const LOCAL = 'local';
-const GLOBAL = 'global';
 
 function ColorPresetActions({ color, pushUpdate }) {
   const [showLocalColors, setShowLocalColors] = useState(true);
@@ -198,6 +202,7 @@ function ColorPresetActions({ color, pushUpdate }) {
             colors={savedColors}
             handleClick={applyStyle}
             displayAdd={false}
+            colorGap={COLOR_GAP}
           />
         )}
         {!savedColors.length && (
