@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
 import * as metadataErrors from './metadata';
+import * as validationErrors from './validation';
 
 export default {
   story: [
@@ -26,5 +28,6 @@ export default {
     metadataErrors.storyCoverAspectRatio,
     metadataErrors.publisherLogoSize,
     metadataErrors.linkInPageAttachmentRegion,
+    validationErrors.ampValidation,
   ],
 };

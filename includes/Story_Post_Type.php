@@ -67,6 +67,13 @@ class Story_Post_Type {
 	const WEB_STORIES_SCRIPT_HANDLE = 'edit-story';
 
 	/**
+	 * AMP validator script handle.
+	 *
+	 * @var string
+	 */
+	const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
+
+	/**
 	 * The rewrite slug for this post type.
 	 *
 	 * @var string
@@ -467,7 +474,14 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
+		wp_enqueue_script(
+			self::AMP_VALIDATOR_SCRIPT_HANDLE,
+			'https://cdn.ampproject.org/v0/validator.js',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		$script_dependencies = [ Tracking::SCRIPT_HANDLE, self::AMP_VALIDATOR_SCRIPT_HANDLE ];
 
 		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
 			$script_dependencies[] = 'postbox';

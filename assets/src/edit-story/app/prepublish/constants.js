@@ -60,6 +60,15 @@ export const PRE_PUBLISH_MESSAGE_TYPES = {
 };
 
 export const MESSAGES = {
+  VALIDATION: {
+    AMP_VALIDATION: {
+      MAIN_TEXT: __('Web Story validation', 'web-stories'),
+      HELPER_TEXT: __(
+        'Your story contains errors that make it ineligable to appear in dedicated places on Google Search and Discover',
+        'web-stories'
+      ),
+    },
+  },
   CRITICAL_METADATA: {
     MISSING_TITLE: {
       MAIN_TEXT: __('Add story title', 'web-stories'),
