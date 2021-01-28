@@ -58,13 +58,12 @@ const StyledInput = styled.input(
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
     }
+
+    & + p {
+      color: ${theme.colors.fg[hasError ? 'negative' : 'tertiary']};
+    }
   `
 );
-
-const Hint = styled(Text)`
-  color: ${({ hasError, theme }) =>
-    theme.colors.fg[hasError ? 'negative' : 'tertiary']};
-`;
 
 export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
@@ -82,7 +81,7 @@ export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
         hasError={hasError}
         {...props}
       />
-      {hint && <Hint hasError={hasError}>{hint}</Hint>}
+      {hint && <Text hasError={hasError}>{hint}</Text>}
     </Container>
   );
 };
