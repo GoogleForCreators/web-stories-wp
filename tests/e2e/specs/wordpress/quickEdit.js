@@ -35,7 +35,7 @@ describe('Quick Edit', () => {
     await switchUserToAdmin();
   });
 
-  it('save quick edit', async () => {
+  it('save quick edit and KSES', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
@@ -54,9 +54,9 @@ describe('Quick Edit', () => {
     await expect(page).toMatch(storyTitle);
 
     // Make row actions appear.
-    const elmId = await page.evaluate((filename) => {
+    const elmId = await page.evaluate((storytitle) => {
       return document
-        .querySelector(`a[aria-label="“${filename}” (Edit)"]`)
+        .querySelector(`a[aria-label="“${storytitle}” (Edit)"]`)
         .closest('tr').id;
     }, storyTitle);
 
