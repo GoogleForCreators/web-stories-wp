@@ -28,12 +28,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Assets;
+
 /**
  * Class TinyMCE
  *
  * @package Google\Web_Stories
  */
 class TinyMCE {
+
+	use Assets;
 
 	/**
 	 * Initialization actions.
@@ -80,7 +84,7 @@ class TinyMCE {
 	 */
 	public function web_stories_tinymce_scripts() {
 		if ( ! $this->is_block_editor() ) {
-			wp_enqueue_style( 'wp-components' );
+			$this->enqueue_style( 'wp-components' );
 		}
 	}
 
