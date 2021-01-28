@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -29,8 +29,6 @@ import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
-import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
-import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 
 const PageLayoutWrapper = styled.div`
   position: absolute;
@@ -86,89 +84,76 @@ PageLayoutTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-function PageLayout({
-  page,
-  pageSize,
-  onConfirm,
-  requiresConfirmation,
-  translateY,
-  translateX,
-}) {
-  const ref = useRef();
-  const [isActive, setIsActive] = useState(false);
-  const [isConfirming, setIsConfirming] = useState(false);
+function PageLayout(
+  {
+    page,
+    pageSize,
+    translateY,
+    translateX,
+    handleFocus,
+    handleFocusOut,
+    isActive,
+    handleClick,
+    ...rest
+  },
+  ref
+) {
+  const [isHover, setIsHover] = useState(false);
 
-  useFocusOut(ref, () => setIsActive(false), []);
-  useRovingTabIndex({ ref });
+  // todo this will work with Em's PR
+  // useFocusOut(
+  //   ref,
+  //   () => {
+  //     setIsHover(false);
+  //   },
+  //   []
+  // );
 
-  const handleClick = useCallback(() => {
-    if (requiresConfirmation) {
-      setIsConfirming(true);
-    } else {
-      onConfirm();
-    }
-  }, [setIsConfirming, onConfirm, requiresConfirmation]);
+  const handleSetHoverActive = useCallback(() => setIsHover(true), []);
 
-  const handleCloseDialog = useCallback(() => {
-    setIsConfirming(false);
-  }, [setIsConfirming]);
-
-  const handleConfirmDialog = useCallback(() => {
-    onConfirm();
-    setIsConfirming(false);
-  }, [onConfirm, setIsConfirming]);
-
-  useKeyDownEffect(ref, ['enter', 'space'], handleClick, [handleClick]);
+  const handleSetHoverFalse = useCallback(() => {
+    setIsHover(false);
+  }, []);
 
   return (
-    <>
-      <PageLayoutWrapper
-        pageSize={pageSize}
-        role="button"
-        ref={ref}
-        tabIndex={0}
-        onFocus={() => setIsActive(true)}
-        onBlur={() => setIsActive(false)}
-        onMouseEnter={() => setIsActive(true)}
-        onMouseLeave={() => setIsActive(false)}
-        onClick={handleClick}
-        aria-label={page.title}
-        translateY={translateY}
-        translateX={translateX}
-      >
-        <PreviewPageWrapper pageSize={pageSize}>
-          <PreviewErrorBoundary>
-            <PreviewPage
-              pageSize={pageSize}
-              page={page}
-              animationState={
-                isActive
-                  ? STORY_ANIMATION_STATE.PLAYING
-                  : STORY_ANIMATION_STATE.RESET
-              }
-            />
-          </PreviewErrorBoundary>
-        </PreviewPageWrapper>
+    <PageLayoutWrapper
+      pageSize={pageSize}
+      role="button"
+      ref={ref}
+      tabIndex={0}
+      onMouseEnter={handleSetHoverActive}
+      onMouseLeave={handleSetHoverFalse}
+      aria-label={page.title}
+      translateY={translateY}
+      translateX={translateX}
+      {...rest}
+    >
+      <PreviewPageWrapper pageSize={pageSize}>
+        <PreviewErrorBoundary>
+          <PreviewPage
+            pageSize={pageSize}
+            page={page}
+            animationState={
+              isActive || isHover
+                ? STORY_ANIMATION_STATE.PLAYING
+                : STORY_ANIMATION_STATE.RESET
+            }
+          />
+        </PreviewErrorBoundary>
+      </PreviewPageWrapper>
 
-        <PageLayoutTitle isActive={isActive}>{page.title}</PageLayoutTitle>
-      </PageLayoutWrapper>
-      {isConfirming && (
-        <ConfirmPageLayoutDialog
-          onConfirm={handleConfirmDialog}
-          onClose={handleCloseDialog}
-        />
-      )}
-    </>
+      <PageLayoutTitle isActive={isActive || isHover}>
+        {page.title}
+      </PageLayoutTitle>
+    </PageLayoutWrapper>
   );
 }
 
 PageLayout.propTypes = {
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
-  onConfirm: PropTypes.func.isRequired,
-  requiresConfirmation: PropTypes.bool.isRequired,
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
 };
 
-export default PageLayout;
+export default forwardRef(PageLayout);
