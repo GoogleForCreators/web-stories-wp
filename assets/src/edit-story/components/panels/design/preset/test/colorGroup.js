@@ -21,11 +21,11 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import PresetGroup from '../presetGroup';
+import ColorGroup from '../colorPreset/colorGroup';
 import createSolid from '../../../../../utils/createSolid';
 import { renderWithTheme } from '../../../../../testUtils';
 
-function setupPresetGroup() {
+function setupColorGroup() {
   const itemRenderer = jest.fn();
   const handleClick = jest.fn();
   const presets = [
@@ -39,12 +39,12 @@ function setupPresetGroup() {
   });
 
   const { container, getAllByRole } = renderWithTheme(
-    <PresetGroup
-      presets={presets}
-      itemRenderer={itemRenderer}
-      type={'color'}
+    <ColorGroup
+      colors={presets}
+      displayAdd={true}
       handleClick={handleClick}
       isEditMode={false}
+      isLocal={true}
     />
   );
   return {
@@ -57,9 +57,9 @@ const getThirdArguments = (calls) => {
   return [...calls.map((args) => args[2])];
 };
 
-describe('stylePresets/PresetGroup', () => {
+describe('savedStyles/ColorGroup', () => {
   it('should modify active index correctly with arrow keys', () => {
-    const { itemRenderer, getAllByRole } = setupPresetGroup();
+    const { itemRenderer, getAllByRole } = setupColorGroup();
     expect(getThirdArguments(itemRenderer.mock.calls)).toStrictEqual([0, 0, 0]);
 
     const firstButton = getAllByRole('button')[0];
