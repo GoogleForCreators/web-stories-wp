@@ -20,6 +20,7 @@
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -29,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { Add } from '../../../../../../design-system/icons';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
@@ -43,14 +45,16 @@ const ActionsWrapper = styled.div`
 `;
 
 const AddColorPreset = styled.button`
-  padding: 4px;
   background: transparent;
   border: none;
-  color: ${({ theme }) => rgba(theme.colors.accent.primary, 0.84)};
+  color: ${({ theme }) => theme.colors.fg.secondary};
   cursor: pointer;
-  padding: 12px 0px;
+  padding: 8px 0px;
   line-height: 18px;
-  font-size: 13px;
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const DropDownWrapper = styled.div`
@@ -65,6 +69,9 @@ const ButtonWrapper = styled.div`
   text-align: end;
   flex-grow: 1;
 `;
+
+const LOCAL = 'local';
+const GLOBAL = 'global';
 
 function ColorPresetActions({ color, pushUpdate }) {
   const [showLocalColors, setShowLocalColors] = useState(true);
@@ -122,12 +129,12 @@ function ColorPresetActions({ color, pushUpdate }) {
 
   const options = [
     {
-      id: 'local',
-      name: 'Current colors',
+      id: LOCAL,
+      name: __('Current colors', 'web-stories'),
     },
     {
-      id: 'global',
-      name: 'Global colors',
+      id: GLOBAL,
+      name: __('Global colors', 'web-stories'),
     },
   ];
 
@@ -139,13 +146,13 @@ function ColorPresetActions({ color, pushUpdate }) {
             options={options}
             displayInContent={true}
             hasSearch={false}
-            onChange={({ id }) => setShowLocalColors(id === 'local')}
-            selectedId={showLocalColors ? 'local' : 'global'}
+            onChange={({ id }) => setShowLocalColors(id === LOCAL)}
+            selectedId={showLocalColors ? LOCAL : GLOBAL}
           />
         </DropDownWrapper>
         <ButtonWrapper>
           <AddColorPreset onClick={() => handleAddColorPreset(color)}>
-            {'+'}
+            <Add />
           </AddColorPreset>
         </ButtonWrapper>
       </HeaderRow>
@@ -164,6 +171,7 @@ function ColorPresetActions({ color, pushUpdate }) {
 
 ColorPresetActions.propTypes = {
   color: PatternPropType,
+  pushUpdate: PropTypes.func,
 };
 
 export default ColorPresetActions;
