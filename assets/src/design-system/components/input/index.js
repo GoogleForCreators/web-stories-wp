@@ -27,12 +27,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text } from '..';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 
-const Container = styled.div`
-  margin: 0 12px;
-`;
-
 const StyledInput = styled.input(
   ({ hasError, theme }) => css`
+    box-sizing: border-box;
+    width: 100%;
     margin: 12px 0;
     padding: 8px 12px;
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
@@ -69,7 +67,7 @@ export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
 
   return (
-    <Container>
+    <div>
       {label && (
         <Text htmlFor={inputId} as="label" disabled={disabled}>
           {label}
@@ -82,11 +80,12 @@ export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
         {...props}
       />
       {hint && <Text hasError={hasError}>{hint}</Text>}
-    </Container>
+    </div>
   );
 };
 
 Input.propTypes = {
+  'aria-label': PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   hint: PropTypes.string,

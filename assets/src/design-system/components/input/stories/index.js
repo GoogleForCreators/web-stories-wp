@@ -46,6 +46,7 @@ const Row = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column: 1 / -1;
+  grid-column-gap: 60px;
 
   label {
     display: flex;
@@ -81,6 +82,7 @@ export const _default = () => {
       <Container>
         <Row>
           <Input
+            aria-label="input-one"
             id="one-light"
             name="oneLight"
             value={inputState.oneLight}
@@ -90,6 +92,7 @@ export const _default = () => {
             placeholder="placeholder"
           />
           <Input
+            aria-label="input-two"
             id="two-light"
             name="twoLight"
             value={inputState.twoLight}
@@ -100,6 +103,7 @@ export const _default = () => {
             hasError
           />
           <Input
+            aria-label="disabled-input-one"
             id="three-light"
             name="threeLight"
             value={inputState.threeLight}
@@ -115,6 +119,7 @@ export const _default = () => {
         <Container darkMode>
           <Row>
             <Input
+              aria-label="input-three"
               id="one-dark"
               name="oneDark"
               value={inputState.oneDark}
@@ -124,6 +129,7 @@ export const _default = () => {
               placeholder="placeholder"
             />
             <Input
+              aria-label="input-four"
               id="two-dark"
               name="twoDark"
               value={inputState.twoDark}
@@ -134,6 +140,7 @@ export const _default = () => {
               hasError
             />
             <Input
+              aria-label="disabled-input-two"
               id="three-dark"
               name="threeDark"
               value={inputState.threeDark}
