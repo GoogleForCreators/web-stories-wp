@@ -108,7 +108,7 @@ class TinyMCE {
 	 * @return bool
 	 */
 	private function is_block_editor() {
-		$screen = get_current_screen();
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		if ( ( $screen instanceof \WP_Screen ) ) {
 			return $screen->is_block_editor();
