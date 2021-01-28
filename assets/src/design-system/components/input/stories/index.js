@@ -85,7 +85,7 @@ export const _default = () => {
             name="oneLight"
             value={inputState.oneLight}
             onChange={handleChange}
-            label={text('Input 1 Label')}
+            label={text('Input 1 Label', 'Normal')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
           />
@@ -119,7 +119,7 @@ export const _default = () => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={text('Input 1 Label')}
+              label={text('Input 1 Label', 'Normal')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
             />

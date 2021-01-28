@@ -24,6 +24,7 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 import { Text } from '../';
+import { Headline } from '../..';
 import { THEME_CONSTANTS } from '../../../../';
 
 export default {
@@ -31,6 +32,7 @@ export default {
   component: Text,
 };
 
+const booleanOptions = [true, false];
 const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 const textRenderAsOptions = ['p', 'a', 'span'];
 
@@ -78,6 +80,37 @@ export const Link = () => (
         onClick={action('anchor clicked! Do something.')}
       >
         {`${presetSize} - Click here for more information`}
+        <br />
+      </Text>
+    ))}
+  </>
+);
+
+export const Label = () => (
+  <>
+    <Headline as="h1">{'Label'}</Headline>
+    {textPresetSizes.map((presetSize) => (
+      <Text
+        key={`${presetSize}_text_link`}
+        size={presetSize}
+        as={select('label', textRenderAsOptions, 'label')}
+        isBold={select('isBold', booleanOptions, false)}
+      >
+        {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+        <br />
+      </Text>
+    ))}
+    <br />
+    <Headline as="h1">{'Label - Disabled'}</Headline>
+    {textPresetSizes.map((presetSize) => (
+      <Text
+        key={`${presetSize}_text_link_disabled`}
+        size={presetSize}
+        as={select('label', textRenderAsOptions, 'label')}
+        isBold={select('isBold', booleanOptions, false)}
+        disabled
+      >
+        {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
         <br />
       </Text>
     ))}

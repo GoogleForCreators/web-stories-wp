@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -30,16 +30,6 @@ import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 const Container = styled.div`
   margin: 0 12px;
 `;
-
-const Label = styled.label(
-  ({ disabled, theme }) =>
-    disabled &&
-    css`
-      ${Text} {
-        color: ${theme.colors.fg.disable};
-      }
-    `
-);
 
 const StyledInput = styled.input(
   ({ hasError, theme }) => css`
@@ -68,33 +58,39 @@ const StyledInput = styled.input(
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
     }
-
-    & + ${Text} {
-      color: ${theme.colors.fg[hasError ? 'negative' : 'tertiary']};
-    }
   `
 );
 
-export const Input = ({ disabled, hint, id, label, ...props }) => {
+const Hint = styled(Text)`
+  color: ${({ hasError, theme }) =>
+    theme.colors.fg[hasError ? 'negative' : 'tertiary']};
+`;
+
+export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
 
   return (
     <Container>
       {label && (
-        <Label htmlFor={inputId} disabled={disabled}>
-          <Text as="span">{label}</Text>
-        </Label>
+        <Text htmlFor={inputId} as="label" disabled={disabled}>
+          {label}
+        </Text>
       )}
-      <StyledInput id={inputId} disabled={disabled} {...props} />
-      {hint && <Text>{hint}</Text>}
+      <StyledInput
+        id={inputId}
+        disabled={disabled}
+        hasError={hasError}
+        {...props}
+      />
+      {hint && <Hint hasError={hasError}>{hint}</Hint>}
     </Container>
   );
 };
 
 Input.propTypes = {
-  disabled: propTypes.bool,
-  hasError: propTypes.bool,
-  hint: propTypes.string,
-  id: propTypes.string,
-  label: propTypes.string,
+  disabled: PropTypes.bool,
+  hasError: PropTypes.bool,
+  hint: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.string,
 };
