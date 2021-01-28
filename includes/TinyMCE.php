@@ -92,7 +92,9 @@ class TinyMCE {
 	 */
 	public function web_stories_tinymce_root_element() {
 		if ( ! $this->is_block_editor() ) {
-			echo '<div id="web-stories-tinymce"></div>';
+			?>
+			<div id="web-stories-tinymce"></div>
+			<?php
 		}
 	}
 
