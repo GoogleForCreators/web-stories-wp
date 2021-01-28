@@ -297,19 +297,5 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       });
       await fixture.snapshot('document tab opened by checklist panel');
     });
-
-    it('should open the text library panel', async () => {
-      await openPrepublishPanel();
-      await openRecommendedPanel();
-      const storyTooLittleTextRow = fixture.screen.getByText(
-        MESSAGES.TEXT.TOO_LITTLE_TEXT.MAIN_TEXT
-      );
-      await fixture.events.mouse.clickOn(storyTooLittleTextRow);
-
-      await waitFor(() =>
-        expect(fixture.editor.library.text.textSets.length).toBeTruthy()
-      );
-      await fixture.snapshot('text tab opened by checklist panel');
-    });
   });
 });
