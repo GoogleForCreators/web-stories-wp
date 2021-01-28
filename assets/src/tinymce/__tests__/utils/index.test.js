@@ -82,8 +82,8 @@ describe('Test view is circle', () => {
 /**
  * Test shortcode build function.
  */
-describe('Test shortcode is prepared', () => {
-  it('test without editor instance', () => {
+describe('Test shortcode is preparation', () => {
+  it('editor instance not set', () => {
     select.mockImplementationOnce(() => ({
       getEditor: () => null,
       getCurrentViewSettings: () => null,
@@ -93,8 +93,8 @@ describe('Test shortcode is prepared', () => {
     expect(shortCode).toBe('[testStories /]');
   });
 
-  it('test with editor instance set', () => {
+  it('editor instance set', () => {
     const shortCode = Utils.prepareShortCode();
-    expect(shortCode).toBe('[testStories order=latest dummy=true /]');
+    expect(shortCode).toBe('[testStories order="latest" dummy="true" /]');
   });
 });

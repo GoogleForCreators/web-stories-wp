@@ -126,7 +126,7 @@ export const prepareShortCode = () => {
         'object' === typeof ValueObject
           ? ValueObject.show.toString()
           : ValueObject.toString();
-      shortCode += ` ${value.toString()}=${Value}`;
+      shortCode += ` ${value.toString()}="${Value}"`;
     });
   }
 
