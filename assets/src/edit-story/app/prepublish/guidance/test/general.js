@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+/**
  * Internal dependencies
  */
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../constants';
@@ -38,11 +42,11 @@ describe('Pre-publish checklist - general guidelines (guidance)', () => {
     });
 
     expect(storyTooShort).not.toBeUndefined();
-    expect(storyTooShort.message).toMatchInlineSnapshot(`"Story too short"`);
+    expect(storyTooShort.message).toMatchInlineSnapshot(`"Make story longer"`);
     expect(storyTooShort.storyId).toStrictEqual(123);
 
     expect(storyTooLong).not.toBeUndefined();
-    expect(storyTooLong.message).toMatchInlineSnapshot(`"Story too long"`);
+    expect(storyTooLong.message).toMatchInlineSnapshot(`"Make story shorter"`);
     expect(storyTooLong.storyId).toStrictEqual(456);
 
     expect(testUndefined).toBeUndefined();
@@ -60,9 +64,11 @@ describe('Pre-publish checklist - general guidelines (guidance)', () => {
     });
     const test = generalGuidelines.storyTitleLength(testStory);
     expect(test).not.toBeUndefined();
+
+    const { getByText } = render(test.help);
+    getByText(/40 characters/);
     expect(test.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE);
-    expect(test.message).toMatchInlineSnapshot(`"Story title too long"`);
-    expect(test.help).toMatch(/40 characters/);
+    expect(test.message).toMatchInlineSnapshot(`"Make story title shorter"`);
     expect(test.storyId).toStrictEqual(testStory.id);
     expect(testUndefined).toBeUndefined();
   });
