@@ -29,6 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../../design-system';
 import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
@@ -48,35 +49,30 @@ import {
   NavListItem,
 } from './navigationComponents';
 
-export const AppFrame = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`;
+export const AppFrame = styled.div({});
 
 export const PageContent = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  padding-top: 10px;
+  width: ${({ fullWidth }) =>
+    fullWidth ? '100%' : `calc(100% - ${DASHBOARD_LEFT_NAV_WIDTH}px)`};
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
   @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
     left: 0;
+    width: 100%;
   }
 `;
 
 export const LeftRailContainer = styled.nav.attrs({
   ['data-testid']: 'dashboard-left-rail',
 })`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  top: 0;
+  top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
