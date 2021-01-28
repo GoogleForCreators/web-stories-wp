@@ -19,7 +19,6 @@
  */
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
@@ -34,14 +33,15 @@ import { Add } from '../../../../../../design-system/icons';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
-import useApplyPreset from '../useApplyPreset';
 import { AdvancedDropDown } from '../../../../form';
+import { SAVED_COLOR_SIZE } from '../../../../../constants';
 import ColorGroup from './colorGroup';
+import useApplyColor from './useApplyColor';
 
 const ActionsWrapper = styled.div`
   text-align: center;
   border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
-  padding: 4px 8px;
+  padding: 12px;
 `;
 
 const AddColorPreset = styled.button`
@@ -55,6 +55,13 @@ const AddColorPreset = styled.button`
     width: 16px;
     height: 16px;
   }
+`;
+
+const ColorsWrapper = styled.div`
+  margin-top: 16px;
+  max-height: ${SAVED_COLOR_SIZE * 3}px;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const DropDownWrapper = styled.div`
@@ -98,7 +105,7 @@ function ColorPresetActions({ color, pushUpdate }) {
   const { colors: globalColors } = globalStoryStyles;
   const { colors: localColors } = currentStoryStyles;
 
-  const applyStyle = useApplyPreset({ isColor: true, pushUpdate });
+  const applyStyle = useApplyColor({ pushUpdate });
 
   // @todo This will change with the missing multi-selection handling.
   const isText =
@@ -109,22 +116,39 @@ function ColorPresetActions({ color, pushUpdate }) {
     (toAdd) => {
       if (toAdd) {
         // If match found, don't add.
-        // @todo UX improvement: notify the user/mark the existing color?
-        if (findMatchingColor(toAdd, globalStoryStyles, isText)) {
+        const currentStyles = showLocalColors
+          ? currentStoryStyles
+          : globalStoryStyles;
+        if (findMatchingColor(toAdd, currentStyles, isText)) {
           return;
         }
-
+        const newProps = showLocalColors
+          ? {
+              currentStoryStyles: {
+                ...currentStoryStyles,
+                colors: [...localColors, toAdd],
+              },
+            }
+          : {
+              globalStoryStyles: {
+                ...globalStoryStyles,
+                colors: [...globalColors, toAdd],
+              },
+            };
         updateStory({
-          properties: {
-            globalStoryStyles: {
-              ...globalStoryStyles,
-              colors: [...globalColors, toAdd],
-            },
-          },
+          properties: newProps,
         });
       }
     },
-    [globalStoryStyles, isText, globalColors, updateStory]
+    [
+      currentStoryStyles,
+      globalStoryStyles,
+      localColors,
+      showLocalColors,
+      isText,
+      globalColors,
+      updateStory,
+    ]
   );
 
   const options = [
@@ -156,7 +180,7 @@ function ColorPresetActions({ color, pushUpdate }) {
           </AddColorPreset>
         </ButtonWrapper>
       </HeaderRow>
-      <div>
+      <ColorsWrapper>
         <ColorGroup
           isEditMode={false}
           isLocal={showLocalColors}
@@ -164,7 +188,7 @@ function ColorPresetActions({ color, pushUpdate }) {
           handleClick={applyStyle}
           displayAdd={false}
         />
-      </div>
+      </ColorsWrapper>
     </ActionsWrapper>
   );
 }

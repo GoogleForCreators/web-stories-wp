@@ -28,11 +28,12 @@ import { Panel, PanelContent } from '../../panel';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Resize from './resize';
-import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
 import ColorPresetPanel from './colorPreset/colorPresetPanel';
 import useDeletePreset from './useDeletePreset';
 import StyleGroup from './stylePreset/styleGroup';
+import useApplyColor from './colorPreset/useApplyColor';
+import useApplyStyle from './stylePreset/useApplyStyle';
 
 function PresetPanel({ presetType = 'color', title, pushUpdate }) {
   const isStyle = 'style' === presetType;
@@ -64,7 +65,9 @@ function PresetPanel({ presetType = 'color', title, pushUpdate }) {
   const isText = areAllType('text', selectedElements);
   const isShape = areAllType('shape', selectedElements);
 
-  const handleApplyPreset = useApplyPreset({ isColor, pushUpdate });
+  const handleApplyColor = useApplyColor({ pushUpdate });
+  const handleApplyStyle = useApplyStyle({ pushUpdate });
+  const handleApplyPreset = isColor ? handleApplyColor : handleApplyStyle;
   const { addGlobalPreset } = useAddPreset({ presetType });
   const { deleteLocalPreset, deleteGlobalPreset } = useDeletePreset({
     presetType,
