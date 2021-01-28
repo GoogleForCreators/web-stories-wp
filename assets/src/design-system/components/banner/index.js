@@ -65,6 +65,8 @@ const Container = styled.div`
   ${({ isDashboard }) =>
     isDashboard &&
     css`
+      max-height: 164px;
+      border-radius: 0;
       grid-template-columns: 1fr 32px;
       grid-template-rows: 3;
       grid-column-gap: 0;
@@ -74,7 +76,7 @@ const Container = styled.div`
       ${Title} {
         padding-left: 0;
         margin-top: -10px;
-        font-weight: normal;
+        font-weight: ${({ theme }) => theme.typography.weight.bold};
       }
       ${Content} {
         margin: 8px auto 18px;
