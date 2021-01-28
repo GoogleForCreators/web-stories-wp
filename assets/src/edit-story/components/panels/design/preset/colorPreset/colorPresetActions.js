@@ -30,11 +30,13 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Add } from '../../../../../../design-system/icons';
+import { Curve } from '../../../../../icons';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
 import { AdvancedDropDown } from '../../../../form';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
+import { TranslateWithMarkup } from '../../../../../../i18n';
 import ColorGroup from './colorGroup';
 import useApplyColor from './useApplyColor';
 
@@ -57,8 +59,15 @@ const AddColorPreset = styled.button`
   }
 `;
 
+const CtaWrapper = styled.div`
+  text-align: right;
+  font-size: 14px;
+  margin: 5px;
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
+
 const ColorsWrapper = styled.div`
-  margin-top: 16px;
+  margin-top: ${({ hasColors }) => (hasColors ? '16px' : 0)};
   max-height: ${SAVED_COLOR_SIZE * 3}px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -162,6 +171,7 @@ function ColorPresetActions({ color, pushUpdate }) {
     },
   ];
 
+  const savedColors = showLocalColors ? localColors : globalColors;
   return (
     <ActionsWrapper>
       <HeaderRow>
@@ -180,14 +190,31 @@ function ColorPresetActions({ color, pushUpdate }) {
           </AddColorPreset>
         </ButtonWrapper>
       </HeaderRow>
-      <ColorsWrapper>
-        <ColorGroup
-          isEditMode={false}
-          isLocal={showLocalColors}
-          colors={showLocalColors ? localColors : globalColors}
-          handleClick={applyStyle}
-          displayAdd={false}
-        />
+      <ColorsWrapper hasColors={savedColors.length > 0}>
+        {savedColors.length > 0 && (
+          <ColorGroup
+            isEditMode={false}
+            isLocal={showLocalColors}
+            colors={savedColors}
+            handleClick={applyStyle}
+            displayAdd={false}
+          />
+        )}
+        {!savedColors.length && (
+          <CtaWrapper>
+            <TranslateWithMarkup
+              mapping={{
+                i: <Add width={12} height={12} />,
+                arrow: <Curve width={32} />,
+              }}
+            >
+              {__(
+                'Click <i></i> to save a color. <arrow></arrow>',
+                'web-stories'
+              )}
+            </TranslateWithMarkup>
+          </CtaWrapper>
+        )}
       </ColorsWrapper>
     </ActionsWrapper>
   );
