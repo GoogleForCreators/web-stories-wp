@@ -36,7 +36,8 @@ const CheckboxContainer = styled.div(
     align-items: center;
     height: ${CONTAINER_WIDTH}px;
     width: ${CONTAINER_WIDTH}px;
-    margin: 8px;
+    min-height: ${CONTAINER_WIDTH}px;
+    min-width: ${CONTAINER_WIDTH}px;
     border-radius: ${theme.borders.radius.small};
     border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
 
