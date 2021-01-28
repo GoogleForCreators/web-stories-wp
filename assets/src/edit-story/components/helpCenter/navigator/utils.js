@@ -23,23 +23,36 @@ import ResizeObserver from 'resize-observer-polyfill';
  */
 import { BEZIER } from '../../../../animation';
 
+/**
+ * Removes inner Element from the layout flow without disrupting
+ * visual layout. Adds transition for height of outer Element
+ * So it animates if it changes.
+ *
+ * @param {HTMLElement} innerEl - element we're removing from layout flow
+ * @param {HTMLElement} outerEl - element we're applying height to
+ * @return {Function} cleanup method
+ */
 export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   if (!innerEl || !outerEl) {
     return () => {};
   }
 
-  // Explicitly set height of container, and disconnect
-  // inner content from layout flow.
+  // Explicitly set height of outer container to not
+  // disrupt current visual layout.
   const { height } = innerEl.getBoundingClientRect();
   outerEl.style.height = `${height}px`;
+
+  // Remove inner element from layout flow
   innerEl.style.position = 'absolute';
   innerEl.style.bottom = 0;
   innerEl.style.content = 'contain';
 
   // Applying transition on separate frame as a
-  // change to an animated property prevents any
-  // content flash. Only way to guarentee the frame
-  // after styles get applied is to do 2 frames from now.
+  // change to the animated property. This prevents any
+  // content flash.
+  //
+  // Only way to guarentee the frame after styles
+  // get applied is to do 2 frames from now.
   let id = requestAnimationFrame(() => {
     id = requestAnimationFrame(() => {
       outerEl.style.transition = `0.3s height ${BEZIER.default}`;
@@ -48,6 +61,14 @@ export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   return () => cancelAnimationFrame(id);
 }
 
+/**
+ * Adds a resize observer and observes the inner element. Applies all
+ * changes of height from the inner element to the outer element.
+ *
+ * @param {HTMLElement} innerEl - element we're reading changes of height from
+ * @param {HTMLElement} outerEl - element we're applying height to
+ * @return {Function} cleanup method
+ */
 export function syncOuterHeightWithInner(innerEl, outerEl) {
   if (!innerEl) {
     return () => {};
