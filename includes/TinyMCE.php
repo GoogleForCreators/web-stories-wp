@@ -80,13 +80,7 @@ class TinyMCE {
 	 */
 	public function web_stories_tinymce_scripts() {
 		if ( ! $this->is_block_editor() ) {
-
-			wp_enqueue_style(
-				'web-stories-mce-components',
-				trailingslashit( WEBSTORIES_ASSETS_URL ) . 'css/web-stories-button.css',
-				[],
-				WEBSTORIES_VERSION
-			);
+			wp_enqueue_style( 'wp-components' );
 		}
 	}
 

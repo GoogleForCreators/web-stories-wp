@@ -23,7 +23,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import '../../../node_modules/@wordpress/components/build-style/style.css';
 import name from './store/name';
 import WebStoryMCEStore from './store';
 import WebStoriesModal from './containers/Modal';
