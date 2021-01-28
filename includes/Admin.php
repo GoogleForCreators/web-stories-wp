@@ -49,6 +49,7 @@ class Admin {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
+		add_action( 'wp_ajax_inline-save', [ $this, 'load_kses_before_inline_save' ], 0 );
 	}
 
 	/**
@@ -190,5 +191,20 @@ class Admin {
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
 		return isset( $post->post_title ) ? $post->post_title : '';
+	}
+
+	/**
+	 * Hook in before wp_ajax_inline-save and add KSES.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return void
+	 */
+	public function load_kses_before_inline_save() {
+		if ( ! isset( $_POST['post_type'] ) || Story_Post_Type::POST_TYPE_SLUG !== $_POST['post_type'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			return;
+		}
+		$kses = new KSES();
+		$kses->init();
 	}
 }
