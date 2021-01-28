@@ -49,7 +49,6 @@ describe('CUJ: Creator can Apply a Page Layout', () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
-    fixture.setFlags({ showPageLayoutsTab: true });
     await fixture.render();
   });
 
