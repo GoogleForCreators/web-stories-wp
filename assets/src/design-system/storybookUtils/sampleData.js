@@ -135,35 +135,22 @@ export const effectChooserOptions = [
 ];
 
 export const nestedDropDownOptions = [
-  {
-    label: 'aliens',
-    options: [
-      { value: 'alien-1', label: 'ET' },
-      { value: 'alien-2', label: 'Stitch' },
-      { value: 'alien-3', label: 'Groot' },
-      { value: 'alien-4', label: 'The Worm Guys' },
-      { value: 'alien-5', label: "Na'vi" },
-      { value: 'alien-6', label: 'Arachnids' },
-      { value: 'alien-7', label: 'The Predator' },
-      { value: 'alien-8', label: 'Xenomorph' },
-    ],
-  },
-  {
-    label: 'dragons',
-    options: [
-      { value: 'dragon-1', label: 'Smaug' },
-      { value: 'dragon-2', label: 'Mushu' },
-      { value: 'dragon-3', label: 'Toothless' },
-      { value: 'dragon-4', label: 'Falkor' },
-      { value: 'dragon-5', label: 'Drogon' },
-      { value: 'dragon-6', label: 'Kalessin' },
-    ],
-  },
-  {
-    label: 'dogs',
-    options: [
-      { value: 'dog-1', label: 'Snoopy' },
-      { value: 'dog-2', label: 'Scooby' },
-    ],
-  },
+  { value: 'alien-1', label: 'ET', group: 'aliens' },
+  { value: 'alien-2', label: 'Stitch', group: 'aliens' },
+  { value: 'alien-3', label: 'Groot', group: 'aliens' },
+  { value: 'alien-4', label: 'The Worm Guys', group: 'aliens' },
+  { value: 'alien-5', label: "Na'vi", group: 'aliens' },
+  { value: 'alien-6', label: 'Arachnids', group: 'aliens' },
+  { value: 'alien-7', label: 'The Predator', group: 'aliens' },
+  { value: 'alien-8', label: 'Xenomorph', group: 'aliens' },
+
+  { value: 'dragon-1', label: 'Smaug', group: 'dragons' },
+  { value: 'dragon-2', label: 'Mushu', group: 'dragons' },
+  { value: 'dragon-3', label: 'Toothless', group: 'dragons' },
+  { value: 'dragon-4', label: 'Falkor', group: 'dragons' },
+  { value: 'dragon-5', label: 'Drogon', group: 'dragons' },
+  { value: 'dragon-6', label: 'Kalessin', group: 'dragons' },
+
+  { value: 'dog-1', label: 'Snoopy', group: 'dogs' },
+  { value: 'dog-2', label: 'Scooby', group: 'dogs' },
 ];

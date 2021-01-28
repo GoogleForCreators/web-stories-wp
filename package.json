@@ -30,6 +30,8 @@
   "dependencies": {
     "@ap.cx/hues": "^2.4.0",
     "@ffmpeg/ffmpeg": "^0.9.6",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@wordpress/api-fetch": "^3.21.1",
     "@wordpress/block-editor": "^5.2.1",
     "@wordpress/blocks": "^6.25.0",
