@@ -35,12 +35,11 @@ export const _default = () => {
     <GoogleAnalyticsSettings
       onUpdateGoogleAnalyticsId={action('update google analytics id submitted')}
       googleAnalyticsId={text('googleAnalyticsId', 'UA-000000-98')}
-      siteKitCapabilities={{
-        analyticsModuleActive: boolean('analyticsModuleActive', false),
-        canActivatePlugins: boolean('canActivatePlugins', true),
-        canInstallPlugins: boolean('canInstallPlugins', true),
-        siteKitActive: boolean('siteKitActive', false),
-        siteKitInstalled: boolean('siteKitInstalled', false),
+      siteKitStatus={{
+        installed: boolean('installed', false),
+        active: boolean('siteKitActive', false),
+        analyticsActive: boolean('analyticsActive', false),
+        link: text('link', ''),
       }}
     />
   );

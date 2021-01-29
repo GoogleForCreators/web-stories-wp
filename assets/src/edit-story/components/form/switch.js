@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 
 const SwitchContainer = styled.div`
   appearance: none;

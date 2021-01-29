@@ -28,7 +28,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import addQueryArgs from '../../utils/addQueryArgs';
+import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
@@ -272,8 +272,7 @@ function APIProvider({ children }) {
         story.comment_status ? ['comment_status', story.comment_status] : false,
         story.ping_status ? ['ping_status', story.ping_status] : false,
         story.sticky ? ['sticky', story.sticky] : false,
-        // TODO: Adapt once https://github.com/google/web-stories-wp/pull/5039 is merged.
-        story.author ? ['post_author', story.author] : false,
+        story.author ? ['post_author', story.author.id] : false,
       ].filter(Boolean);
 
       additionalData.forEach(([key, value]) => formData.append(key, value));

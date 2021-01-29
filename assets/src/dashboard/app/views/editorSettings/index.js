@@ -107,7 +107,7 @@ function EditorSettings() {
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
-    siteKitCapabilities = {},
+    siteKitStatus = {},
     maxUpload,
     maxUploadFormatted,
   } = useConfig();
@@ -348,19 +348,17 @@ function EditorSettings() {
   return (
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
-        <Layout.Squishable>
-          <PageHeading
-            defaultTitle={__('Settings', 'web-stories')}
-            showTypeahead={false}
-          />
-        </Layout.Squishable>
+        <PageHeading
+          defaultTitle={__('Settings', 'web-stories')}
+          showTypeahead={false}
+        />
         <Layout.Scrollable>
           <Main>
             {canManageSettings && (
               <GoogleAnalyticsSettings
                 handleUpdate={handleUpdateGoogleAnalyticsId}
                 googleAnalyticsId={googleAnalyticsId}
-                siteKitCapabilities={siteKitCapabilities}
+                siteKitStatus={siteKitStatus}
               />
             )}
             {canManageSettings && (

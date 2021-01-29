@@ -24,7 +24,7 @@ import { useRef } from 'react';
  */
 import isMouseUpAClick from '../../../utils/isMouseUpAClick';
 import { useDropTargets } from '../../dropTargets';
-import useCanvas from '../useCanvas';
+import { useCanvas } from '../../../app';
 
 function useMultiSelectionDrag({
   targetList,

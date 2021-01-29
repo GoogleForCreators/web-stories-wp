@@ -22,7 +22,7 @@ import { defaultUnit, getGlobalSpace } from '../../utils';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
-  fill: 'forwards',
+  fill: 'both',
   duration: 1000,
 };
 

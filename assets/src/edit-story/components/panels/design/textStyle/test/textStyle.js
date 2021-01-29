@@ -32,10 +32,13 @@ import DropDown from '../../../../form/dropDown';
 import AdvancedDropDown from '../../../../form/advancedDropDown';
 import ColorInput from '../../../../form/color/color';
 import createSolid from '../../../../../utils/createSolid';
-import CanvasContext from '../../../../canvas/context';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../form';
+import CanvasContext from '../../../../../app/canvas/context';
+import {
+  HIDDEN_PADDING,
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
-import { HIDDEN_PADDING } from '../../../../../constants';
 
 jest.mock('../../../../../utils/textMeasurements');
 jest.mock('../../../../form/dropDown');

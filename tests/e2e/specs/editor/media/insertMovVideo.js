@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
-import { createNewStory, clickButton } from '../../../utils';
+import {
+  createNewStory,
+  clickButton,
+  uploadFile,
+  deleteMedia,
+} from '../../../utils';
 
 const MODAL = '.media-modal';
 
@@ -26,18 +31,28 @@ describe('Inserting .mov from dialog', () => {
   it('should not list the .mov', async () => {
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
     await expect(page).toClick('button', { text: 'Upload' });
 
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    await expect(page).toClick('button', { text: 'Media Library' });
+
+    const fileName = await uploadFile('small-video.mov', false);
+    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
+
     await clickButton(
       '.attachments-browser .attachments .attachment:first-of-type'
     );
 
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
 
-    expect(page).toClick('.media-modal-close');
+    await page.keyboard.press('Escape');
+
+    await page.waitForSelector(MODAL, {
+      visible: false,
+    });
+
+    await deleteMedia(fileNameNoExt);
   });
 });

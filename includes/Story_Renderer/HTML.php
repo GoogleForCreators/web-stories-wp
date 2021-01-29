@@ -279,9 +279,6 @@ class HTML {
 	protected function print_bookend( $content ) {
 		$share_providers = [
 			[
-				'provider' => 'facebook',
-			],
-			[
 				'provider' => 'twitter',
 			],
 			[

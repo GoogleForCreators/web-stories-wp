@@ -20,7 +20,7 @@
 /**
  * Internal dependencies
  */
-import { useKeyEffect } from '../../keyboard';
+import { useKeyEffect } from '../../../../design-system';
 
 const DELTA_CHANGE = 20; // change in pixels when pressing arrow keys
 

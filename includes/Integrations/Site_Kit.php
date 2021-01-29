@@ -83,7 +83,11 @@ class Site_Kit {
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
 	protected function is_analytics_module_active() {
-		return in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
+		$analytics_module_active = in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
+		$analytics_options       = get_option( 'googlesitekit_analytics_settings' );
+		$analytics_use_snippet   = ! empty( $analytics_options['useSnippet'] );
+
+		return $analytics_module_active && $analytics_use_snippet;
 	}
 
 	/**

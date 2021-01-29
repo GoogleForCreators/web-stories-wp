@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { isPlatformMacOS } from '../keyboard';
+import { isPlatformMacOS } from '../../../design-system';
 import { SPECIAL_KEYS } from './constants';
 
 function getKeyboardShortcuts() {

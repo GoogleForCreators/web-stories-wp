@@ -27,7 +27,7 @@ import { FlagsProvider } from 'flagged';
  */
 import { initializeTracking } from '../tracking';
 import { updateSettings } from '../date';
-import App from './app';
+import App from './editorApp';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 __webpack_public_path__ = window.webStoriesEditorSettings.publicPath;

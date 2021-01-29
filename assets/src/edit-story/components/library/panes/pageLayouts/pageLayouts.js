@@ -88,9 +88,10 @@ function PageLayouts(props) {
     overscan: 2,
   });
 
-  const requiresConfirmation = useMemo(() => !isDefaultPage(currentPage), [
-    currentPage,
-  ]);
+  const requiresConfirmation = useMemo(
+    () => currentPage && !isDefaultPage(currentPage),
+    [currentPage]
+  );
 
   return (
     <UnitsProvider

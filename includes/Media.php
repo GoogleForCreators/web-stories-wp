@@ -345,7 +345,7 @@ class Media {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [ 'editor', 'poster-generation' ],
+					'enum'        => [ 'editor', 'poster-generation', 'video-optimization' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],

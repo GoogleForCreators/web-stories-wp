@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE } from '../../../constants';
 import { NONE, LETTERSPACING } from '../customConstants';
 import {
   togglePrefixStyle,

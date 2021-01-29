@@ -41,6 +41,7 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
+import getTransformFlip from '../../elements/shared/getTransformFlip';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -62,6 +63,8 @@ const ReplacementContainer = styled.div`
   transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
   pointer-events: none;
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
+  transform: ${({ flip }) => (flip ? getTransformFlip(flip) : null)};
+  height: 100%;
 `;
 
 function AnimationWrapper({ children, id, isAnimatable }) {
@@ -108,6 +111,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     isBackground,
     backgroundOverlay,
     border = {},
+    flip,
   } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
@@ -164,7 +168,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           <Display element={element} previewMode={previewMode} box={box} />
         </WithMask>
         {!previewMode && (
-          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+          <ReplacementContainer
+            flip={flip}
+            hasReplacement={Boolean(replacementElement)}
+          >
             {replacementElement && (
               <WithMask
                 element={replacementElement}

@@ -24,14 +24,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../keyboard';
+import { useKeyDownEffect } from '../../../../../design-system';
 import {
   COLOR_PRESETS_PER_ROW,
+  SAVED_COLOR_SIZE,
+  SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
+import ColorAdd from './colorAdd';
 
-const COLOR_SIZE = 30;
-const STYLE_HEIGHT = 48;
 const STYLE_WIDTH = 112;
 
 const Group = styled.div`
@@ -45,12 +46,20 @@ const Group = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  height: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_HEIGHT)}px;
-  width: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_WIDTH)}px;
+  height: ${({ type }) =>
+    type === 'color' ? SAVED_COLOR_SIZE : SAVED_STYLE_HEIGHT}px;
+  width: ${({ type }) => (type === 'color' ? SAVED_COLOR_SIZE : STYLE_WIDTH)}px;
   margin: auto;
 `;
 
-function PresetGroup({ presets, itemRenderer, type, handleClick, isEditMode }) {
+function PresetGroup({
+  presets,
+  itemRenderer,
+  type,
+  handleClick,
+  isEditMode,
+  handleAddPreset,
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
 
@@ -99,6 +108,8 @@ function PresetGroup({ presets, itemRenderer, type, handleClick, isEditMode }) {
     }
   }, [activeIndex, presets.length]);
 
+  const displayAddIcon = 'color' === type && !isEditMode;
+
   return (
     <Group ref={groupRef} type={type}>
       {presets.map((preset, i) => (
@@ -106,6 +117,11 @@ function PresetGroup({ presets, itemRenderer, type, handleClick, isEditMode }) {
           {itemRenderer(preset, i, activeIndex, handleClick, isEditMode)}
         </ButtonWrapper>
       ))}
+      {displayAddIcon && (
+        <ButtonWrapper type={type}>
+          <ColorAdd handleAddPreset={handleAddPreset} />
+        </ButtonWrapper>
+      )}
     </Group>
   );
 }
@@ -116,6 +132,7 @@ PresetGroup.propTypes = {
   type: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
+  handleAddPreset: PropTypes.func.isRequired,
 };
 
 export default PresetGroup;

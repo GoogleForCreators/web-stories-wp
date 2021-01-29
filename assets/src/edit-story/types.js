@@ -24,8 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/backgroundOverlay';
-import { BACKGROUND_TEXT_MODE } from './constants';
-import MULTIPLE_VALUE from './components/form/multipleValue';
+import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,

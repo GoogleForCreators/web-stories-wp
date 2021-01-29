@@ -209,6 +209,17 @@ class Experiments {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 5880
+			 * Creation date: 2021-01-19
+			 */
+			[
+				'name'        => 'enableQuickTips',
+				'label'       => __( 'Quick Tips', 'web-stories' ),
+				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28
@@ -339,6 +350,7 @@ class Experiments {
 				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
 				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
@@ -352,14 +364,14 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @zachhale
-			 * Issue: #5079
-			 * Creation date: 2020-11-04
+			 * Author: @swissspidy
+			 * Issue: #5669
+			 * Creation date: 2021-01-21
 			 */
 			[
-				'name'        => 'showPageLayoutsTab',
-				'label'       => __( 'Page layouts tab', 'web-stories' ),
-				'description' => __( 'Enable page layouts tab', 'web-stories' ),
+				'name'        => 'videoOptimization',
+				'label'       => __( 'Video optimization', 'web-stories' ),
+				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

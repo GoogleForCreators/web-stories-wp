@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 
 function useKeyMoveStop(ref, onMove) {
   useKeyDownEffect(ref, 'left', () => onMove(-0.01), [onMove]);

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils';
+import { identity, useContextSelector } from '../../../design-system';
 import { ApiContext } from './apiProvider';
 
 export default function useApi(selector = identity) {

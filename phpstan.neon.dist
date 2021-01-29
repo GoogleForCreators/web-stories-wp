@@ -61,3 +61,7 @@ parameters:
     # wp_die() is called with [ 'exit' => false ]
     - message: '#^Unreachable statement - code above always terminates.$#'
       path: includes/Story_Renderer/HTML.php
+
+    # wp_robots() is called.
+    - message: '/^Parameter #2 \$function_to_add of function add_action expects callable\(\): mixed, \S+ given\.$/'
+      path: includes/Discovery.php

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../utils';
+import { identity, useContextSelector } from '../../../design-system';
 import { RouterContext } from './routerProvider';
 
 function useRouteHistory(selector = identity) {
