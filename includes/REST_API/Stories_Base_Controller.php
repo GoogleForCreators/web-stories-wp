@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\KSES;
 use Google\Web_Stories\Media;
 use stdClass;
@@ -155,7 +154,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function create_item( $request ) {
 		$kses = new KSES();
-		$kses->init();
+		$kses->add_filters();
 		$response = parent::create_item( $request );
 		$kses->remove_filters();
 		return $response;
@@ -172,7 +171,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function update_item( $request ) {
 		$kses = new KSES();
-		$kses->init();
+		$kses->add_filters();
 		$response = parent::update_item( $request );
 		$kses->remove_filters();
 		return $response;

@@ -85,7 +85,7 @@ class Demo_Content {
 	 */
 	private function localize_texts( $content ) {
 		$kses = new KSES();
-		$kses->init();
+		$kses->add_filters();
 
 		$replacements = [
 			// Page 1.

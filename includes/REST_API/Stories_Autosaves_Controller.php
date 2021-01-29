@@ -142,7 +142,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	 */
 	public function create_item( $request ) {
 		$kses = new KSES();
-		$kses->init();
+		$kses->add_filters();
 		$response = parent::create_item( $request );
 		$kses->remove_filters();
 		return $response;

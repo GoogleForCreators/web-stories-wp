@@ -39,12 +39,6 @@ use WP_Screen;
  */
 class Admin {
 	/**
-	 * KSES instance.
-	 *
-	 * @var KSES KSES instance.
-	 */
-	protected $kses;
-	/**
 	 * Initialize admin-related functionality.
 	 *
 	 * @since 1.0.0
@@ -55,9 +49,6 @@ class Admin {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
-		add_action( 'wp_ajax_inline-save', [ $this, 'load_kses_before_inline_save' ], 0 );
-		add_action( 'load-edit.php', [ $this, 'admin_header' ], 10 );
-		add_action( 'admin_footer-edit.php', [ $this, 'admin_footer' ], 10 );
 	}
 
 	/**
@@ -199,73 +190,5 @@ class Admin {
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
 		return isset( $post->post_title ) ? $post->post_title : '';
-	}
-
-	/**
-	 * Hook in before wp_ajax_inline-save and add KSES.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @return void
-	 */
-	public function load_kses_before_inline_save() {
-		if ( ! isset( $_POST['post_type'] ) || Story_Post_Type::POST_TYPE_SLUG !== $_POST['post_type'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			return;
-		}
-		$this->kses = new KSES();
-		$this->kses->init();
-	}
-
-	/**
-	 * Hook admin header for the all stories screen.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @return void
-	 */
-	public function admin_header() {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		if ( 'edit' !== $screen->base ) {
-			return;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
-			return;
-		}
-
-		$this->kses = new KSES();
-		$this->kses->init();
-	}
-
-	/**
-	 * Hook admin footer for the all stories screen.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @return void
-	 */
-	public function admin_footer() {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		if ( 'edit' !== $screen->base ) {
-			return;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
-			return;
-		}
-
-		if ( $this->kses instanceof KSES ) {
-			$this->kses->remove_filters();
-		}
 	}
 }

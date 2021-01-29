@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use WP_Post_Type;
+
 /**
  * KSES class.
  *
@@ -33,13 +35,37 @@ namespace Google\Web_Stories;
  */
 class KSES {
 	/**
-	 * Initializes KSES filters for stories.
+	 * Initializes KSES filters for stories only if capability check are met.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
 	public function init() {
+
+		$create_posts     = false;
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if (
+			$post_type_object instanceof WP_Post_Type &&
+			property_exists( $post_type_object->cap, 'create_posts' )
+		) {
+
+			$create_posts = current_user_can( $post_type_object->cap->create_posts );
+		}
+
+		if ( $create_posts ) {
+			$this->add_filters();
+		}
+	}
+
+	/**
+	 * Initializes KSES filters for stories.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return void
+	 */
+	public function add_filters() {
 		if ( ! current_user_can( 'unfiltered_html' ) ) {
 			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
 			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
