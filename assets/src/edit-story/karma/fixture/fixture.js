@@ -293,7 +293,7 @@ export class Fixture {
           );
         }
       },
-      { timeout: 1000 }
+      { timeout: 5000 }
     );
 
     // Check to see if Roboto font is loaded.
