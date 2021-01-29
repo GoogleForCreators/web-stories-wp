@@ -84,6 +84,17 @@ export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
   );
 };
 
+/**
+ * Custom propTypes validator used to check if either `label`
+ * or `aria-label` have been passed to the component.
+ * This also checks that they are of the correct type.
+ *
+ * @param {Object} props the props supplied to the component.
+ * @param {string} _ the name of the prop.
+ * @param {string} componentName the name of the component.
+ * @return {Error|null} Returns an error if the conditions have not been met.
+ * Otherwise, returns null.
+ */
 export const labelAccessibilityValidator = function (props, _, componentName) {
   if (!props.label && !props['aria-label']) {
     return new Error(
