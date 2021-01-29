@@ -22,12 +22,14 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { themeHelpers, Text, THEME_CONSTANTS } from '../../../../design-system';
+import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { GUTTER_WIDTH } from '../constants';
 import { Transitioner } from './transitioner';
 
 const Panel = styled.div`
   width: 100%;
-  padding: ${GUTTER_WIDTH}px;
+  padding: ${GUTTER_WIDTH}px ${GUTTER_WIDTH}px
+    ${NAVIGATION_HEIGHT + GUTTER_WIDTH}px ${GUTTER_WIDTH}px;
 `;
 
 // @TODO update with actual figure.

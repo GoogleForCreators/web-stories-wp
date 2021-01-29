@@ -24,7 +24,7 @@ import styled from 'styled-components';
  */
 import { themeHelpers } from '../../../../design-system';
 import { BottomNavigation } from './bottomNavigation';
-import { NAVIGATION_HEIGHT, NAVIGATION_WIDTH } from './constants';
+import { NAVIGATION_WIDTH } from './constants';
 import { TopNavigation } from './topNavigation';
 import {
   removeInnerElementFromLayoutFlow,
@@ -50,8 +50,7 @@ const Layout = styled.div`
 
 const Content = styled.div``;
 const ContentInner = styled.div`
-  padding-bottom: ${({ hasBottomPadding }) =>
-    hasBottomPadding ? NAVIGATION_HEIGHT : 0}px;
+  position: relative;
 `;
 
 export function Navigator({
@@ -84,9 +83,7 @@ export function Navigator({
       <TopNavigation onClose={onClose} />
       <Layout ref={layoutRef}>
         <Content ref={innerRef}>
-          <ContentInner hasBottomPadding={hasBottomNavigation}>
-            {children}
-          </ContentInner>
+          <ContentInner>{children}</ContentInner>
         </Content>
       </Layout>
       <BottomNavigation
