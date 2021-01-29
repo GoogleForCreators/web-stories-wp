@@ -40,6 +40,7 @@ function hasNoFeaturedMedia(story) {
  *
  * @typedef {import('../types').Guidance} Guidance
  * @typedef {import('../../../types').Story} Story
+ * @typedef {import('../../../types').Page} Page
  */
 
 /**
@@ -176,33 +177,23 @@ export function publisherLogoSize(story) {
  * If there is an element with a link in the page attachment region, return an error message.
  * Otherwise, return undefined.
  *
- * @param {Story} story The story being checked for critical metadata
+ * @param {Page} page The story being checked for critical metadata
  * @return {Guidance|undefined} Guidance object for consumption
  */
-export function linkInPageAttachmentRegion(story) {
-  const { pages } = story;
-  const pagesWithLinksInAttachmentArea = pages
-    .filter((page) => {
-      const { elements } = page;
-      const hasPageAttachment = Boolean(page.pageAttachment?.url?.length);
-      return (
-        hasPageAttachment &&
-        elements
-          .filter(({ link }) => Boolean(link?.url?.length))
-          .some(isElementBelowLimit)
-      );
-    })
-    .map((page) => page.id);
+export function linkInPageAttachmentRegion(page) {
+  const { elements } = page;
+  const hasPageAttachment = Boolean(page.pageAttachment?.url?.length);
+  const linksInPageAttachmentArea =
+    hasPageAttachment &&
+    elements
+      .filter(({ link }) => Boolean(link?.url?.length))
+      .filter(isElementBelowLimit);
 
-  const isLinkInPageAttachmentArea = Boolean(
-    pagesWithLinksInAttachmentArea.length
-  );
-
-  if (isLinkInPageAttachmentArea) {
+  if (linksInPageAttachmentArea && linksInPageAttachmentArea.length) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      storyId: story.id,
-      pages: pagesWithLinksInAttachmentArea,
+      pageId: page.id,
+      elements: linksInPageAttachmentArea,
       message: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.HELPER_TEXT,
     };
