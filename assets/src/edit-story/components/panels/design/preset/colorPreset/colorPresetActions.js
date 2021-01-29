@@ -187,7 +187,6 @@ function ColorPresetActions({ color, pushUpdate }) {
             onChange={({ id }) => setShowLocalColors(id === LOCAL)}
             selectedId={showLocalColors ? LOCAL : GLOBAL}
             aria-label={__('Select color type', 'web-stories')}
-            style={{ backgroundColor: 'transparent' }}
           />
         </DropDownWrapper>
         <ButtonWrapper>
