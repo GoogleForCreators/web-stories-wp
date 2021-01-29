@@ -17,20 +17,28 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { GUTTER_WIDTH } from '../constants';
 import { Footer } from './footer';
 import { Header } from './header';
 import { Tips } from './tips';
 import { Transitioner } from './transitioner';
 
+const Containter = styled.div`
+  padding: 0 ${GUTTER_WIDTH};
+`;
+
 export function Menu({ onTipSelect = () => {}, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
-      <Header />
-      <Tips onTipSelect={onTipSelect} />
-      <Footer />
+      <Containter>
+        <Header />
+        <Tips onTipSelect={onTipSelect} />
+        <Footer />
+      </Containter>
     </Transitioner>
   );
 }
