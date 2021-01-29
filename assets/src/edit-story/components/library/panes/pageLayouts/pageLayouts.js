@@ -27,7 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { useFocusOut, useKeyDownEffect } from '../../../../../design-system';
-import { useConfig, useStory } from '../../../../app';
+import { useStory } from '../../../../app';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { duplicatePage } from '../../../../elements';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
@@ -73,14 +73,13 @@ function PageLayouts({ pages, parentRef }) {
 
   const containerRef = useRef();
   const pageRefs = useRef({});
-  // Used to indicate focus is new to page layouts
-  const isNewFocusRef = useRef(false);
 
-  const [activePageId, setActivePageId] = useState();
   const [activePage, setActivePage] = useState();
-  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
-
+  const [activePageId, setActivePageId] = useState();
   const [isConfirming, setIsConfirming] = useState();
+  const [isPageLayoutsFocused, setIsPageLayoutsFocused] = useState(false);
+
+  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
 
   const requiresConfirmation = useMemo(
     () => currentPage && !isDefaultPage(currentPage),
@@ -110,7 +109,6 @@ function PageLayouts({ pages, parentRef }) {
   const handlePageClick = useCallback(
     (page) => {
       if (requiresConfirmation) {
-        console.log('requires confirm');
         setIsConfirming(true);
         setActivePage(page);
       } else {
@@ -121,25 +119,34 @@ function PageLayouts({ pages, parentRef }) {
     [requiresConfirmation, handleApplyPageLayout]
   );
 
-  const handleCloseDialog = useCallback(
-    (event) => {
-      console.log('close event?', event);
-      event.stopPropagation();
-      setIsConfirming(false);
-      setActivePage(null);
+  const handleKeyboardPageClick = useCallback(
+    ({ key }, page) => {
+      if (key === 'Enter') {
+        if (isPageLayoutsFocused) {
+          handlePageClick(page);
+        }
+      }
     },
-    [setIsConfirming]
+    [isPageLayoutsFocused, handlePageClick]
   );
 
-  const handleConfirmDialog = useCallback(
-    (event) => {
-      console.log('confirm event ', event);
-      event.preventDefault();
-      event.stopPropagation();
-      handleApplyPageLayout(activePage);
-      setIsConfirming(false);
+  const handleCloseDialog = useCallback(() => {
+    setActivePage(null);
+    setIsConfirming(false);
+  }, [setIsConfirming]);
+
+  const handleConfirmDialog = useCallback(() => {
+    handleApplyPageLayout(activePage);
+    setIsConfirming(false);
+  }, [activePage, handleApplyPageLayout]);
+
+  const handlePageFocus = useCallback(
+    (pageId) => {
+      if (activePageId !== pageId) {
+        setActivePageId(pageId);
+      }
     },
-    [activePage, handleApplyPageLayout]
+    [activePageId]
   );
 
   const rowVirtualizer = useVirtual({
@@ -149,7 +156,7 @@ function PageLayouts({ pages, parentRef }) {
       () => pageSize.containerHeight + PAGE_LAYOUT_ROW_GAP,
       [pageSize.containerHeight]
     ),
-    overscan: 2,
+    overscan: 4,
   });
 
   const columnVirtualizer = useVirtual({
@@ -177,32 +184,31 @@ function PageLayouts({ pages, parentRef }) {
       currentAvailableRowsRef.current = currentAvailableRows;
     }
 
-    activePageId && pageRefs.current?.[activePageId]?.focus();
-  }, [activePageId, currentAvailableRows]);
+    if (activePageId && isPageLayoutsFocused) {
+      pageRefs.current?.[activePageId]?.focus();
+    }
+  }, [activePageId, currentAvailableRows, isPageLayoutsFocused]);
 
   const handlePageLayoutFocus = useCallback(() => {
-    if (!isNewFocusRef?.current) {
-      console.log('initial set ', activePageId);
+    if (!isPageLayoutsFocused) {
       const newPageId = pageRefs.current?.[activePageId]
         ? activePageId
         : pageIds[0];
-      setActivePageId(newPageId);
-      // TODO is this necessary?
-      pageRefs.current?.[newPageId]?.focus();
 
-      isNewFocusRef.current = true;
+      setActivePageId(newPageId);
+      setIsPageLayoutsFocused(true);
+      pageRefs.current?.[newPageId]?.focus();
     }
-  }, [activePageId, pageIds]);
+  }, [activePageId, isPageLayoutsFocused, pageIds]);
 
   useRovingTabIndex({ ref: containerRef });
 
-  // Exit page layouts, resets
+  // Exit page layouts
   const focusCanvas = useFocusCanvas();
 
   const onTabKeyDown = useCallback(() => {
-    console.log('tab');
     focusCanvas();
-    isNewFocusRef.current = false;
+    setIsPageLayoutsFocused(false);
   }, [focusCanvas]);
 
   useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
@@ -210,10 +216,9 @@ function PageLayouts({ pages, parentRef }) {
   useFocusOut(
     containerRef,
     () => {
-      console.log('FOCUS OUT');
-      isNewFocusRef.current = false;
+      setIsPageLayoutsFocused(false);
     },
-    []
+    [isConfirming]
   );
 
   return (
@@ -228,7 +233,7 @@ function PageLayouts({ pages, parentRef }) {
           height={rowVirtualizer.totalSize}
           ref={containerRef}
           pageSize={pageSize}
-          // tabIndex={0}
+          tab={0}
           onFocus={handlePageLayoutFocus}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>
@@ -242,6 +247,7 @@ function PageLayouts({ pages, parentRef }) {
               if (!page) {
                 return null;
               }
+              const isActive = activePageId === page.id && isPageLayoutsFocused;
 
               return (
                 <PageLayout
@@ -251,24 +257,10 @@ function PageLayouts({ pages, parentRef }) {
                   translateX={virtualColumn.start}
                   page={page}
                   pageSize={pageSize}
-                  isActive={activePageId === page.id && isNewFocusRef?.current}
-                  onBlur={() => {}}
-                  onFocus={() => {
-                    if (activePageId !== page.id) {
-                      setActivePageId(page.id);
-                    }
-                  }}
+                  isActive={isActive}
+                  onFocus={() => handlePageFocus(page.id)}
                   onClick={() => handlePageClick(page)}
-                  onKeyUp={(event) => {
-                    if (event.key === 'Enter') {
-                      // todo double check these are needed
-                      event.preventDefault();
-                      event.stopPropagation();
-                      if (isNewFocusRef?.current) {
-                        handlePageClick(page);
-                      }
-                    }
-                  }}
+                  onKeyUp={(event) => handleKeyboardPageClick(event, page)}
                 />
               );
             })

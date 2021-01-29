@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useFocusOut, useKeyDownEffect } from '../../../../../design-system';
+import { useFocusOut } from '../../../../../design-system';
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
@@ -85,29 +85,13 @@ PageLayoutTitle.propTypes = {
 };
 
 function PageLayout(
-  {
-    page,
-    pageSize,
-    translateY,
-    translateX,
-    handleFocus,
-    handleFocusOut,
-    isActive,
-    handleClick,
-    ...rest
-  },
+  { page, pageSize, translateY, translateX, isActive, ...rest },
   ref
 ) {
   const [isHover, setIsHover] = useState(false);
+  const isActivePage = isHover || isActive;
 
-  // todo this will work with Em's PR
-  // useFocusOut(
-  //   ref,
-  //   () => {
-  //     setIsHover(false);
-  //   },
-  //   []
-  // );
+  useFocusOut(ref, () => setIsHover(false), []);
 
   const handleSetHoverActive = useCallback(() => setIsHover(true), []);
 
@@ -134,7 +118,7 @@ function PageLayout(
             pageSize={pageSize}
             page={page}
             animationState={
-              isActive || isHover
+              isActivePage
                 ? STORY_ANIMATION_STATE.PLAYING
                 : STORY_ANIMATION_STATE.RESET
             }
@@ -142,14 +126,13 @@ function PageLayout(
         </PreviewErrorBoundary>
       </PreviewPageWrapper>
 
-      <PageLayoutTitle isActive={isActive || isHover}>
-        {page.title}
-      </PageLayoutTitle>
+      <PageLayoutTitle isActive={isActivePage}>{page.title}</PageLayoutTitle>
     </PageLayoutWrapper>
   );
 }
 
 PageLayout.propTypes = {
+  isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
   translateY: PropTypes.number.isRequired,
