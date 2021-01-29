@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { focusableOutlineCSS } from './outline';
+export * from './outline';
 export { expandPresetStyles, expandTextPreset } from './expandPresetStyles';
 export { fullSizeAbsolute, fullSizeRelative } from './fullSize';
 export { centerContent } from './centerContent';
