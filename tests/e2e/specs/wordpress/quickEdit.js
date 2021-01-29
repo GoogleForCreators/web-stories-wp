@@ -35,7 +35,7 @@ describe('Quick Edit', () => {
     await switchUserToAdmin();
   });
 
-  it('save quick edit and KSES', async () => {
+  it('should save story without breaking markup', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
@@ -77,6 +77,6 @@ describe('Quick Edit', () => {
       await expect(page).toClick(`a[aria-label="View “${storyTitleNew}”"]`),
     ]);
 
-    await expect(page).not.toMatch('amp=""');
+    await expect(page).toMatchElement('amp-story');
   });
 });
