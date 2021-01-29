@@ -74,7 +74,7 @@ function PageLayouts({ pages, parentRef }) {
   const containerRef = useRef();
   const pageRefs = useRef({});
 
-  const [activePage, setActivePage] = useState();
+  const [selectedPage, setSelectedPage] = useState();
   const [activePageId, setActivePageId] = useState();
   const [isConfirming, setIsConfirming] = useState();
   const [isPageLayoutsFocused, setIsPageLayoutsFocused] = useState(false);
@@ -101,7 +101,7 @@ function PageLayouts({ pages, parentRef }) {
         name: page.title,
       });
 
-      setActivePage(null);
+      setSelectedPage(null);
     },
     [replaceCurrentPage]
   );
@@ -110,10 +110,10 @@ function PageLayouts({ pages, parentRef }) {
     (page) => {
       if (requiresConfirmation) {
         setIsConfirming(true);
-        setActivePage(page);
+        setSelectedPage(page);
       } else {
         handleApplyPageLayout(page);
-        setActivePage(null);
+        setSelectedPage(null);
       }
     },
     [requiresConfirmation, handleApplyPageLayout]
@@ -131,14 +131,14 @@ function PageLayouts({ pages, parentRef }) {
   );
 
   const handleCloseDialog = useCallback(() => {
-    setActivePage(null);
+    setSelectedPage(null);
     setIsConfirming(false);
   }, [setIsConfirming]);
 
   const handleConfirmDialog = useCallback(() => {
-    handleApplyPageLayout(activePage);
+    handleApplyPageLayout(selectedPage);
     setIsConfirming(false);
-  }, [activePage, handleApplyPageLayout]);
+  }, [selectedPage, handleApplyPageLayout]);
 
   const handlePageFocus = useCallback(
     (pageId) => {
@@ -169,11 +169,17 @@ function PageLayouts({ pages, parentRef }) {
     overscan: 0,
   });
 
-  // this is how we make sure the proper ref is focused when more rows are loaded
-  // otherwise focus gets thrown off
-  // checking for a difference in currentAvailableRows and assigning the matching ref to any change
-  // is just so that the effect hook will run when the virtualized list updates and reattach focus to the new instance
-  // of an already selected layout.
+  /**
+   * useVirtual and useRovingTabIndex do not play well together but we need both!
+   * The Below useEffect is key to maintaining the proper focus for keyboard users.
+   * What happens is on "scroll" of the virtualized container useVirtual is grabbing more rows
+   * and these rows are fed through the rendered map to create page layouts that are visible to users.
+   * While it doesn't look like the DOM is updating, it is in fact updating.
+   * So the old refs get lost and the list gets new ones! By manually forcing focus and maintaining an object
+   * of pageRefs that are organized by page id (those don't update) we can make sure the focus stays where it's supposed to be.
+   * Checking for a difference in currentAvailableRows and assigning the matching ref to any change is just so that the effect hook will run when the virtualized list
+   * updates and reattach focus to the new instance of an already selected layout.
+   */
   const currentAvailableRows = useMemo(() => rowVirtualizer.virtualItems, [
     rowVirtualizer,
   ]);
