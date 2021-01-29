@@ -41,7 +41,7 @@ const expectPageLayoutEqual = (currentPage, template) => {
   );
 };
 
-describe('CUJ: Creator can Apply a Page Layout', () => {
+describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
   let fixture;
   let originalTimeout;
 
