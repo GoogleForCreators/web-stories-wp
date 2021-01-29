@@ -88,7 +88,7 @@ export const TelemetryOptInBanner = forwardRef(
     return visible ? (
       <Banner
         backgroundUrl={`${assetsURL}images/dashboard/analytics-banner-bg.png`}
-        closeButtonLabel={__('Dismiss Telemetry Opt In Banner', 'web-stories')}
+        closeButtonLabel={__('Dismiss telemetry', 'web-stories')}
         onClose={onClose}
         title={title}
         ref={ref}
@@ -111,13 +111,13 @@ export const TelemetryOptInBanner = forwardRef(
           <LabelText
             as="span"
             aria-checked={checked}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           >
             <TranslateWithMarkup
               mapping={{
                 a: (
                   <NavLink
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
                     as="a"
                     href={__(
                       'https://policies.google.com/privacy',

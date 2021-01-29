@@ -106,7 +106,7 @@ export const Banner = forwardRef(
         {...rest}
       >
         <Title
-          as="h1"
+          as="h2"
           size={
             THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES[
               isDashboard ? 'X_SMALL' : 'XX_SMALL'
