@@ -23,6 +23,12 @@
  */
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Interfaces\FieldState;
+use Google\Web_Stories\Stories_Renderer\FieldState\BaseFieldState as GridView;
+use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
+use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
+use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
+
 /**
  * Fetch stories based on customizer settings.
  *
@@ -34,6 +40,45 @@ function stories( $args = [] ) {
 	$story_query = new Story_Query( $args );
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $story_query->render();
+}
+
+/**
+ * Returns field state for the provided view type.
+ *
+ * @param string $view View Type.
+ *
+ * @return GridView|ListView|CircleView|CarouselView
+ */
+function get_field( $view = 'grid' ) {
+
+	switch ( $view ) {
+		case 'grid':
+			$field_state = new GridView();
+			break;
+		case 'list':
+			$field_state = new ListView();
+			break;
+		case 'circles':
+			$field_state = new CircleView();
+			break;
+		case 'carousel':
+			$field_state = new CarouselView();
+			break;
+		default:
+			$default_field_state = new CircleView();
+			/**
+			 * Filters the fieldstate object.
+			 *
+			 * This depicts
+			 *
+			 * @since 1.3.0
+			 *
+			 * @param FieldState $default_field_state Field states for circle view.
+			 */
+			$field_state = apply_filters( 'web_stories_default_fieldstate', $default_field_state );
+	}
+
+	return $field_state;
 }
 
 /**
@@ -55,13 +100,14 @@ function fields_states() {
 		'date',
 		'image_align',
 		'excerpt',
+		'sharp_corners',
 		'archive_link',
 	];
 
 	$field_states = [];
 
 	foreach ( $views as $view_type => $view_label ) {
-		$field_state = ( new Story_Query( [ 'view_type' => $view_type ] ) )->get_renderer()->field();
+		$field_state = get_field( $view_type );
 		foreach ( $fields as $field ) {
 			$field_states[ $view_type ][ $field ] = [
 				'show'     => $field_state->$field()->show(),

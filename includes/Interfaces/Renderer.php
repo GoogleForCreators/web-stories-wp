@@ -61,11 +61,4 @@ interface Renderer {
 	 */
 	public function render_single_story_content();
 
-	/**
-	 * This should return the fields state
-	 * for the current view type.
-	 *
-	 * @return FieldState
-	 */
-	public function field();
 }

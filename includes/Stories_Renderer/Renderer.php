@@ -221,46 +221,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	}
 
 	/**
-	 * Return the fields state.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return FieldState
-	 */
-	public function field() {
-		$view = isset( $this->attributes['view_type'] ) ? $this->attributes['view_type'] : 'grid';
-
-		switch ( $view ) {
-			case 'grid':
-				$field_state = new GridView();
-				break;
-			case 'list':
-				$field_state = new ListView();
-				break;
-			case 'circles':
-				$field_state = new CircleView();
-				break;
-			case 'carousel':
-				$field_state = new CarouselView();
-				break;
-			default:
-				$default_field_state = new CircleView();
-				/**
-				 * Filters the fieldstate object.
-				 *
-				 * This depicts
-				 *
-				 * @since 1.3.0
-				 *
-				 * @param FieldState $default_field_state Field states for circle view.
-				 */
-				$field_state = apply_filters( 'web_stories_default_fieldstate', $default_field_state );
-		}
-
-		return $field_state;
-	}
-
-	/**
 	 * Initializes renderer functionality.
 	 *
 	 * @since 1.3.0
