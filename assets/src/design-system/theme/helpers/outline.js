@@ -28,15 +28,15 @@ import { FOCUS_VISIBLE_SELECTOR } from '../global';
  *
  * @param {string} accent the color of the focused border
  * @param {string} background the background color used in between
- * the edge of the element and the focus border.
+ * the edge of the element and the focused border.
  * @return css snippet
  */
 export const focusCSS = (accent, background) => css`
   outline: none;
   box-shadow: ${({ theme }) =>
-    `0px 0px 0 2px ${
-      background || theme.colors.bg.primary
-    }, 0px 0px 0 4px ${accent}`};
+    `0px 0px 0 2px ${background || theme.colors.bg.primary}, 0px 0px 0 4px ${
+      accent || theme.colors.border.focus
+    }`};
 `;
 
 export const focusableOutlineCSS = (colorOrProps) => {

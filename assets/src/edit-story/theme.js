@@ -24,6 +24,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { identity, useContextSelector } from '../design-system';
+import { focusableOutlineCSS } from '../design-system/theme/helpers';
 import { SCROLLBAR_WIDTH } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
@@ -73,6 +74,13 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 6px;
     border: 2px solid transparent;
     background-clip: content-box;
+  }
+
+  ${({ theme }) =>
+    focusableOutlineCSS(theme.colors.accent.primary, theme.colors.bg.panel)};
+
+  :focus {
+    outline: none;
   }
 `;
 

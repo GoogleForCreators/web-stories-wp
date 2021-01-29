@@ -82,10 +82,6 @@ const Row = styled.button`
   font-size: ${({ theme }) => theme.fonts.body2.size};
   width: calc(100% - 10px);
   max-width: 210px;
-  &:focus {
-    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
-    outline-offset: 5px;
-  }
 `;
 
 const Underline = styled.span`
