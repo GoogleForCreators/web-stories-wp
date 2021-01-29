@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   wordpress:
-    image: wordpress
+    image: wordpress:php${PHP_VERSION}
     ports:
       - '127.0.0.1:8899:80'
     environment:
@@ -24,7 +24,7 @@ services:
       - mysql
 
   cli:
-    image: wordpress:cli
+    image: wordpress:cli-php${PHP_VERSION}
     user: xfs
     volumes:
       - wordpress_data:/var/www/html
