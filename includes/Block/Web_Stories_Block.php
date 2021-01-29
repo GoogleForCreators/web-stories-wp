@@ -32,6 +32,7 @@ use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Assets;
 use WP_Post_Type;
+use function Google\Web_Stories\fields_states;
 
 /**
  * Latest Stories block class.
@@ -193,7 +194,7 @@ class Web_Stories_Block {
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'users'   => '/web-stories/v1/users/',
 				],
-				'fieldStates'     => $this->fields_states(),
+				'fieldStates'     => fields_states(),
 			],
 		];
 
@@ -347,50 +348,4 @@ class Web_Stories_Block {
 		return $query_args;
 	}
 
-	/**
-	 * Wrapper function for fetching field states
-	 * based on the view types.
-	 *
-	 * Mainly uses FieldState and Fields classes.
-	 *
-	 * @todo Remove this and use common function introduced in following PR after it gets merged.
-	 *       https://github.com/rtCamp/web-stories-wp/pull/189
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return array
-	 */
-	protected function fields_states() {
-		$views = [
-			'circles',
-			'grid',
-			'list',
-			'carousel',
-		];
-
-		$fields = [
-			'title',
-			'excerpt',
-			'author',
-			'date',
-			'image_align',
-			'sharp_corners',
-			'archive_link',
-		];
-
-		$field_states = [];
-
-		foreach ( $views as $view_type ) {
-			$field_state = ( new Story_Query( [ 'view_type' => $view_type ] ) )->get_renderer()->field();
-			foreach ( $fields as $field ) {
-				$field_states[ $view_type ][ $field ] = [
-					'show'     => $field_state->$field()->show(),
-					'label'    => $field_state->$field()->label(),
-					'readonly' => $field_state->$field()->readonly(),
-				];
-			}
-		}
-
-		return $field_states;
-	}
 }
