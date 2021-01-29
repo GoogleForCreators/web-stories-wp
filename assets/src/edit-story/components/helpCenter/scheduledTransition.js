@@ -49,8 +49,12 @@ export function Interpreter({ state, children }) {
     dispatch(nextRender);
   }, [nextRender]);
 
-  const shouldUseBaseState =
+  const isPrematureExit =
     ['entering', 'entered'].includes(scheduledState) && state === 'exiting';
+  const isPrematureEntrance =
+    ['exiting'].includes(scheduledState) &&
+    ['entering', 'entered'].includes(state);
+  const shouldUseBaseState = isPrematureEntrance || isPrematureExit;
   return children(shouldUseBaseState ? state : scheduledState);
 }
 
