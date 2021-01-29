@@ -21,13 +21,13 @@
 /**
  * Internal dependencies
  */
-import { Input } from '../';
+import { Input, labelAccessibilityValidator } from '../';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Input', () => {
   it('should render the input', () => {
     const { getByPlaceholderText } = renderWithProviders(
-      <Input placeholder="my placeholder" />
+      <Input aria-label="test" placeholder="my placeholder" />
     );
 
     expect(getByPlaceholderText('my placeholder')).toBeInTheDocument();
@@ -43,9 +43,37 @@ describe('Input', () => {
 
   it('should render a hint', () => {
     const { getByText } = renderWithProviders(
-      <Input hint="This is my input hint" />
+      <Input aria-label="test" hint="This is my input hint" />
     );
 
     expect(getByText('This is my input hint')).toBeInTheDocument();
+  });
+});
+
+describe('labelAccessibilityValidator', () => {
+  it('should return null if `label` or `aria-label` are passed in as a prop', () => {
+    expect(
+      labelAccessibilityValidator({ label: 'test' }, '', 'Test')
+    ).toBeNull();
+    expect(
+      labelAccessibilityValidator({ 'aria-label': 'test' }, '', 'Test')
+    ).toBeNull();
+    expect(
+      labelAccessibilityValidator(
+        { label: 'test', 'aria-label': 'test' },
+        '',
+        'Test'
+      )
+    ).toBeNull();
+  });
+
+  it.each`
+    propName
+    ${'label'}
+    ${'aria-label'}
+  `('should throw an error if `label` is not a string type', ({ propName }) => {
+    expect(
+      labelAccessibilityValidator({ [propName]: 2 }, '', 'Test')
+    ).toStrictEqual(expect.any(Error));
   });
 });

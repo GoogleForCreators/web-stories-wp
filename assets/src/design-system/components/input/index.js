@@ -84,11 +84,35 @@ export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
   );
 };
 
+export const labelAccessibilityValidator = function (props, _, componentName) {
+  if (!props.label && !props['aria-label']) {
+    return new Error(
+      `\`label\` or \`aria-label\` must be supplied to \`${componentName}\`. Validation failed.`
+    );
+  }
+
+  if (props.label && typeof props.label !== 'string') {
+    return new Error(
+      `Invalid prop \`label\` of type \`${typeof props.label}\` supplied to \`${componentName}\`, expected \`string\`.`
+    );
+  }
+
+  if (props['aria-label'] && typeof props['aria-label'] !== 'string') {
+    return new Error(
+      `Invalid prop \`aria-label\` of type \`${typeof props[
+        'aria-label'
+      ]}\` supplied to \`${componentName}\`, expected \`string\`.`
+    );
+  }
+
+  return null;
+};
+
 Input.propTypes = {
-  'aria-label': PropTypes.string.isRequired,
+  'aria-label': labelAccessibilityValidator,
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
   id: PropTypes.string,
-  label: PropTypes.string,
+  label: labelAccessibilityValidator,
 };
