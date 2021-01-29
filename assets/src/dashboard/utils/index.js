@@ -16,7 +16,7 @@
 export { default as titleFormatted } from './titleFormatted';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as memoize } from './memoize';
-export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
+export { default as groupBy } from './groupBy';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
 export { default as useFocusOut } from './useFocusOut';
 export {
