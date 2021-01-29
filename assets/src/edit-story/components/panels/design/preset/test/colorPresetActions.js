@@ -37,7 +37,19 @@ function setupActions() {
   const storyContextValue = {
     state: {
       selectedElements: [textElement],
-      story: { globalStoryStyles: { colors: [] } },
+      story: {
+        globalStoryStyles: { colors: [] },
+        currentStoryStyles: { colors: [] },
+      },
+      currentPage: {
+        elements: [
+          {
+            id: 'bg',
+            type: 'shape',
+          },
+          textElement,
+        ],
+      },
     },
     actions: { updateStory },
   };
@@ -56,7 +68,7 @@ function setupActions() {
 }
 
 describe('Panels/StylePreset/ColorPresetActions', () => {
-  const ADD_PRESET = '+ Add to Color Preset';
+  const ADD_PRESET = 'Add color';
 
   it('should render color preset actions', () => {
     const { getByRole } = setupActions();
@@ -70,7 +82,7 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
     fireEvent.click(element);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
-        globalStoryStyles: {
+        currentStoryStyles: {
           colors: [{ color: { b: 1, g: 1, r: 1 } }],
         },
       },
