@@ -17,14 +17,30 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../../animation';
+import { ScheduledTransition } from '../scheduledTransition';
 
-const DURATION = 500;
+const DURATION = 800;
+
+const enterSyles = css`
+  opacity: 1;
+  transform: none;
+`;
+const exitSyles = css`
+  position: absolute;
+  bottom: 0;
+`;
+
+const transitionStyles = {
+  entering: enterSyles,
+  entered: enterSyles,
+  exiting: exitSyles,
+  exited: exitSyles,
+};
 
 const Manager = styled.div`
   position: relative;
@@ -35,34 +51,19 @@ const Manager = styled.div`
   transform: scale(0.96);
   z-index: 1;
 
-  ${({ state }) =>
-    ['entered'].includes(state) &&
-    css`
-      opacity: 1;
-      transform: none;
-    `};
-
-  ${({ state }) =>
-    ['exiting', 'exited'].includes(state) &&
-    css`
-      position: absolute;
-      bottom: 0;
-    `};
+  ${({ state }) => transitionStyles[state]};
 `;
 
 export function Transitioner({ children, ...props }) {
   return (
-    <Transition
+    <ScheduledTransition
       {...props}
-      timeout={{
-        enter: 0,
-        exit: DURATION,
-      }}
+      timeout={DURATION}
       mountOnEnter
       unmountOnExit
     >
       {(state) => <Manager state={state}>{children}</Manager>}
-    </Transition>
+    </ScheduledTransition>
   );
 }
 

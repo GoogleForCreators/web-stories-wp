@@ -55,7 +55,7 @@ export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   // get applied is to do 2 frames from now.
   let id = requestAnimationFrame(() => {
     id = requestAnimationFrame(() => {
-      outerEl.style.transition = `0.3s height ${BEZIER.default}`;
+      outerEl.style.transition = `0.65s height ${BEZIER.default}`;
     });
   });
   return () => cancelAnimationFrame(id);
