@@ -286,12 +286,12 @@ export class Fixture {
     let mediaElements;
     await waitFor(() => {
       mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
-      if (!mediaElements?.length) {
-        throw new Error(
-          `Not ready: only found ${mediaElements?.length} media elements`
-        );
-      }
     });
+    if (!mediaElements?.length) {
+      throw new Error(
+        `Not ready: only found ${mediaElements?.length} media elements`
+      );
+    }
 
     // Check to see if Roboto font is loaded.
     await waitFor(async () => {
