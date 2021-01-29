@@ -28,6 +28,7 @@ import { renderWithTheme } from '../../../../../testUtils';
 
 function setupActions() {
   const updateStory = jest.fn();
+  const pushUpdate = jest.fn();
 
   const textElement = {
     id: '1',
@@ -42,7 +43,10 @@ function setupActions() {
   };
   const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
-      <ColorPresetActions color={{ color: { r: 1, g: 1, b: 1 } }} />
+      <ColorPresetActions
+        color={{ color: { r: 1, g: 1, b: 1 } }}
+        pushUpdate={pushUpdate}
+      />
     </StoryContext.Provider>
   );
   return {
