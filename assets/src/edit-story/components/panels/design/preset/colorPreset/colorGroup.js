@@ -76,7 +76,7 @@ function ColorGroup({
             activeIndex={activeIndex}
             handleOnClick={handleClick}
             isEditMode={isEditMode}
-            isLocal={true}
+            isLocal={isLocal}
           />
         </ButtonWrapper>
       ))}
