@@ -27,18 +27,20 @@ import { Header } from './header';
 import { Tips } from './tips';
 import { Transitioner } from './transitioner';
 
-const Containter = styled.div`
-  padding: 0 ${GUTTER_WIDTH};
+const Container = styled.div`
+  padding: 0 ${GUTTER_WIDTH}px;
+  max-height: 60vh;
+  overflow-y: scroll;
 `;
 
 export function Menu({ onTipSelect = () => {}, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
-      <Containter>
+      <Container>
         <Header />
         <Tips onTipSelect={onTipSelect} />
         <Footer />
-      </Containter>
+      </Container>
     </Transitioner>
   );
 }

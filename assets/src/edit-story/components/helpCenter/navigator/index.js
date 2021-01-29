@@ -43,11 +43,6 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
 const Layout = styled.div`
   ${themeHelpers.fullSizeRelative}
   contain: content;
@@ -90,7 +85,7 @@ export function Navigator({
       <Layout ref={layoutRef}>
         <Content ref={innerRef}>
           <ContentInner hasBottomPadding={hasBottomNavigation}>
-            <Container>{children}</Container>
+            {children}
           </ContentInner>
         </Content>
       </Layout>

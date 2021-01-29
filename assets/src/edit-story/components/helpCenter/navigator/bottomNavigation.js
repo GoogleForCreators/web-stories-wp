@@ -68,26 +68,22 @@ export function BottomNavigation({
         </NavButton>
       </BottomNavButtons>
       <BottomNavButtons>
-        {Boolean(onPrev) && (
-          <NavButton
-            onClick={onPrev}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            disabled={!hasBottomNavigation}
-          >
-            {__('Previous', 'web-stories')}
-          </NavButton>
-        )}
-        {Boolean(onNext) && (
-          <NavButton
-            onClick={onNext}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            disabled={!hasBottomNavigation}
-          >
-            {__('Next', 'web-stories')}
-          </NavButton>
-        )}
+        <NavButton
+          onClick={onPrev}
+          type={BUTTON_TYPES.PLAIN}
+          size={BUTTON_SIZES.SMALL}
+          disabled={!hasBottomNavigation || !onPrev}
+        >
+          {__('Previous', 'web-stories')}
+        </NavButton>
+        <NavButton
+          onClick={onNext}
+          type={BUTTON_TYPES.PLAIN}
+          size={BUTTON_SIZES.SMALL}
+          disabled={!hasBottomNavigation || !onNext}
+        >
+          {__('Next', 'web-stories')}
+        </NavButton>
       </BottomNavButtons>
     </BottomNavBar>
   );

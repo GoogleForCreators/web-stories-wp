@@ -34,14 +34,15 @@ const Manager = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   transition: ${DURATION / 1000}s transform ${BEZIER.default};
   transform-origin: 50% 50%;
+  z-index: 2;
 
   ${({ isLeftToRightTransition }) =>
     isLeftToRightTransition
       ? css`
-          transform: translateX(-100%);
+          transform: translateX(100%);
         `
       : css`
-          transform: translateX(100%);
+          transform: translateX(-100%);
         `}
 
   ${Opacity} {
@@ -67,34 +68,40 @@ const Manager = styled.div`
       ${({ isLeftToRightTransition }) =>
         isLeftToRightTransition
           ? css`
-              transform: translateX(100%);
+              transform: translateX(-100%);
             `
           : css`
-              transform: translateX(-100%);
+              transform: translateX(100%);
             `}
     `};
 `;
 
+const HoldPlace = styled.div`
+  position: relative;
+`;
+
 export function Transitioner({ children, isLeftToRightTransition, ...props }) {
   return (
-    <Transition
-      {...props}
-      timeout={{
-        enter: 0,
-        exit: DURATION,
-      }}
-      mountOnEnter
-      unmountOnExit
-    >
-      {(state) => (
-        <Manager
-          state={state}
-          isLeftToRightTransition={isLeftToRightTransition}
-        >
-          <Opacity>{children}</Opacity>
-        </Manager>
-      )}
-    </Transition>
+    <HoldPlace>
+      <Transition
+        {...props}
+        timeout={{
+          enter: 0,
+          exit: DURATION,
+        }}
+        mountOnEnter
+        unmountOnExit
+      >
+        {(state) => (
+          <Manager
+            state={state}
+            isLeftToRightTransition={isLeftToRightTransition}
+          >
+            <Opacity>{children}</Opacity>
+          </Manager>
+        )}
+      </Transition>
+    </HoldPlace>
   );
 }
 

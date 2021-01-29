@@ -31,8 +31,9 @@ const Manager = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
   transition: ${DURATION / 1000}s transform ${BEZIER.default},
     ${DURATION / 1000}s opacity ${BEZIER.default};
-  opacity: 0.8;
-  transform: translateX(-40px) scale(0.99);
+  opacity: 0.6;
+  transform: scale(0.96);
+  z-index: 1;
 
   ${({ state }) =>
     ['entered'].includes(state) &&
@@ -51,7 +52,15 @@ const Manager = styled.div`
 
 export function Transitioner({ children, ...props }) {
   return (
-    <Transition {...props} timeout={DURATION} mountOnEnter unmountOnExit>
+    <Transition
+      {...props}
+      timeout={{
+        enter: 0,
+        exit: DURATION,
+      }}
+      mountOnEnter
+      unmountOnExit
+    >
       {(state) => <Manager state={state}>{children}</Manager>}
     </Transition>
   );
