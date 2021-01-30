@@ -28,6 +28,8 @@ import { useMemo, useRef } from 'react';
  */
 import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
 import useRadioNavigation from '../shared/useRadioNavigation';
+import { FOCUS_VISIBLE_SELECTOR } from '../../../../design-system/theme/global';
+import { focusCSS } from '../../../../design-system/theme/helpers';
 
 const RadioButton = styled.label`
   display: block;
@@ -58,6 +60,10 @@ const Name = styled.span`
 const Radio = styled.input.attrs({ className: 'mousetrap' })`
   opacity: 0;
   position: absolute;
+  &.${FOCUS_VISIBLE_SELECTOR} + ${Label} {
+    ${({ theme }) =>
+      focusCSS(theme.colors.accent.primary, theme.colors.bg.panel)}
+  }
 `;
 
 const Helper = styled.div`
