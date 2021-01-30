@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { createContext } from '../../utils';
+import { createContext } from '../../../design-system';
 import { useRouteHistory } from '../router';
 
 export const SnackbarContext = createContext(null);
