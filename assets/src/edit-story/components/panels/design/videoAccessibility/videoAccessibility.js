@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Row, usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import {
@@ -36,12 +36,7 @@ import {
   ExpandedTextInput,
   Note,
 } from '../../shared';
-import { useFocusOut, theme as dsTheme } from '../../../../../design-system';
-import {
-  useHighlights,
-  HIGHLIGHT_STYLES,
-  states,
-} from '../../../../app/highlights';
+import { styles, states, useFocusHighlight } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {
   alt: null,
@@ -72,27 +67,16 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
 
   const ref = useRef();
-  const { highlight, onFocusOut } = useHighlights((state) => ({
-    highlight: state[states.ASSISTIVE_TEXT],
-    onFocusOut: state.onFocusOut,
-  }));
-
-  useEffect(() => {
-    highlight && ref.current?.focus();
-  });
-
-  useFocusOut(ref, onFocusOut);
+  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
 
   return (
     <SimplePanel
+      css={highlight && styles.FLASH}
       name="videoAccessibility"
       title={__('Description', 'web-stories')}
       isPersistable={!highlight}
     >
-      <Row
-        css={highlight?.focus && HIGHLIGHT_STYLES}
-        borderRadius={dsTheme.borders.radius.small}
-      >
+      <Row>
         <ExpandedTextInput
           ref={ref}
           placeholder={__('Video description', 'web-stories')}
@@ -101,6 +85,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           clear
           aria-label={__('Video description', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
+          css={highlight?.showEffect && styles.OUTLINE}
         />
       </Row>
       <Row>

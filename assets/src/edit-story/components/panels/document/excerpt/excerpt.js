@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,12 +31,7 @@ import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import Note from '../../shared/note';
-import {
-  useHighlights,
-  states,
-  HIGHLIGHT_STYLES,
-} from '../../../../app/highlights';
-import { useFocusOut, theme as dsTheme } from '../../../../../design-system';
+import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 
 export const EXCERPT_MAX_LENGTH = 200;
 
@@ -60,31 +55,17 @@ function ExcerptPanel() {
   );
 
   const ref = useRef();
-
-  const { highlight, onFocusOut } = useHighlights(
-    ({ onFocusOut, ...state }) => ({
-      highlight: state[states.EXCERPT],
-      onFocusOut,
-    })
-  );
-
-  useEffect(() => {
-    highlight?.focus && ref.current?.focus();
-  });
-
-  useFocusOut(ref, onFocusOut);
+  const highlight = useFocusHighlight(states.EXCERPT, ref);
 
   return (
     <SimplePanel
+      css={highlight?.showEffect && styles.FLASH}
       name="excerpt"
       title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
       isPersistable={!highlight}
     >
-      <Row
-        css={highlight?.focus && HIGHLIGHT_STYLES}
-        borderRadius={dsTheme.borders.radius.small}
-      >
+      <Row>
         <TextArea
           ref={ref}
           value={excerpt}
@@ -93,6 +74,7 @@ function ExcerptPanel() {
           aria-label={__('Story Description', 'web-stories')}
           maxLength={EXCERPT_MAX_LENGTH}
           rows={4}
+          css={highlight?.showEffect && styles.OUTLINE}
         />
       </Row>
       <Row>

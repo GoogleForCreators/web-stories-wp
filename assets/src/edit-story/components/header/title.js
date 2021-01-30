@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { useCallback, useEffect } from 'react';
+import styled, { css } from 'styled-components';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,8 +31,7 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
-import { HIGHLIGHT_STYLES, states, useHighlights } from '../../app/highlights';
-import { useFocusOut, theme as dsTheme } from '../../../design-system';
+import { styles, states, useFocusHighlight } from '../../app/highlights';
 import useHeader from './use';
 
 const Input = styled.input`
@@ -42,17 +41,19 @@ const Input = styled.input`
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  background: none !important;
+  background: ${({ isHighlighted }) => !isHighlighted && 'none !important'};
   border: none !important;
   text-align: start;
   min-width: 60%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
-
-const HighlightEffect = styled.div`
-  ${({ isHighlighted }) => isHighlighted && HIGHLIGHT_STYLES}
+  ${({ isHighlighted }) =>
+    isHighlighted &&
+    css`
+      ${styles.OUTLINE}
+      ${styles.FLASH}
+    `}
 `;
 
 function Title() {
@@ -65,18 +66,9 @@ function Title() {
     }) => ({ title, slug, updateStory })
   );
   const { setTitleInput, titleInput } = useHeader();
-  const { onFocusOut, highlight } = useHighlights((state) => ({
-    highlight: state[states.STORY_TITLE],
-    onFocusOut: state.onFocusOut,
-  }));
-
-  useEffect(() => {
-    if (highlight?.focus) {
-      titleInput?.focus();
-    }
-  }, [highlight, titleInput]);
-
-  useFocusOut({ current: titleInput }, onFocusOut);
+  const highlight = useFocusHighlight(states.STORY_TITLE, {
+    current: titleInput,
+  });
 
   const { storyId } = useConfig();
 
@@ -97,20 +89,16 @@ function Title() {
   }
 
   return (
-    <HighlightEffect
-      isHighlighted={highlight?.focus}
-      borderRadius={dsTheme.borders.radius.small}
-    >
-      <Input
-        ref={setTitleInput}
-        value={title}
-        type="text"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        placeholder={__('Add title', 'web-stories')}
-        aria-label={__('Story title', 'web-stories')}
-      />
-    </HighlightEffect>
+    <Input
+      ref={setTitleInput}
+      value={title}
+      type="text"
+      onBlur={handleBlur}
+      onChange={handleChange}
+      placeholder={__('Add title', 'web-stories')}
+      aria-label={__('Story title', 'web-stories')}
+      isHighlighted={highlight?.showEffect}
+    />
   );
 }
 

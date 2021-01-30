@@ -127,9 +127,16 @@ const TextInput = forwardRef(
   ) => {
     const { suffix } = rest;
     const inputRef = useRef();
-    if (ref) {
-      ref.current = inputRef.current;
-    }
+    const shareRef = useCallback(
+      (node) => {
+        if (ref) {
+          ref.current = node;
+        }
+        inputRef.current = node;
+      },
+      [inputRef, ref]
+    );
+
     const isMultiple = value === MULTIPLE_VALUE;
     value = isMultiple ? '' : value;
     placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : placeholder;
@@ -153,7 +160,7 @@ const TextInput = forwardRef(
         {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
         <StyledInput
           type="text"
-          ref={inputRef}
+          ref={shareRef}
           placeholder={placeholder}
           label={label}
           value={value}

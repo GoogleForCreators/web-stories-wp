@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Row } from '../../../form';
 import {
   Note,
@@ -36,12 +36,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { SimplePanel } from '../../panel';
-import {
-  useHighlights,
-  states,
-  HIGHLIGHT_STYLES,
-} from '../../../../app/highlights';
-import { useFocusOut, theme as dsTheme } from '../../../../../design-system';
+import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
@@ -58,27 +53,16 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
   const ref = useRef(null);
-  const { highlight, onFocusOut } = useHighlights((state) => ({
-    highlight: state[states.ASSISTIVE_TEXT],
-    onFocusOut: state.onFocusOut,
-  }));
-
-  useEffect(() => {
-    highlight && ref.current?.focus();
-  });
-
-  useFocusOut(ref, onFocusOut);
+  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
 
   return (
     <SimplePanel
+      css={highlight && styles.FLASH}
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
       isPersistable={!highlight}
     >
-      <Row
-        css={highlight?.focus && HIGHLIGHT_STYLES}
-        borderRadius={dsTheme.borders.radius.small}
-      >
+      <Row>
         <ExpandedTextInput
           ref={ref}
           placeholder={__('Assistive text', 'web-stories')}
@@ -87,6 +71,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
           clear
           aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
+          css={highlight?.showEffect && styles.OUTLINE}
         />
       </Row>
       <Row>

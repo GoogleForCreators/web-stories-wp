@@ -17,27 +17,23 @@
  * External dependencies
  */
 import { css, keyframes } from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { theme as dsTheme } from '../../../design-system';
 
 const flash = keyframes`
   50% {
-    opacity: 0;
+    background-color: rgba(255, 255, 255, 0.3);
   }
 `;
 
-export const HIGHLIGHT_STYLES = css`
-  position: relative;
-  :focus-within::after {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    content: '';
-    pointer-events: none;
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.accent.primary};
-    opacity: 1;
-    animation: ${flash} 1s ease-in-out 4;
-    border-radius: ${({ borderRadius }) => borderRadius};
-  }
+export const FLASH = css`
+  background-color: rgba(255, 255, 255, 0);
+  animation: ${flash} 0.3s ease-in-out 2;
+`;
+
+export const OUTLINE = css`
+  box-shadow: 0 0 0 2px ${dsTheme.colors.border.focus};
+  border-radius: ${dsTheme.borders.radius.small};
 `;

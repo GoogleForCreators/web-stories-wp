@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -35,12 +35,7 @@ import { Button, TextInput, Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import {
-  useHighlights,
-  states,
-  HIGHLIGHT_STYLES,
-} from '../../../../app/highlights';
-import { useFocusOut, theme as dsTheme } from '../../../../../design-system';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -110,21 +105,11 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   });
 
   const buttonRef = useRef();
-  const { highlight, onFocusOut } = useHighlights((state) => ({
-    highlight: state[states.CAPTIONS],
-    onFocusOut: state.onFocusOut,
-  }));
-
-  useEffect(() => {
-    if (highlight) {
-      buttonRef.current?.focus();
-    }
-  });
-
-  useFocusOut(buttonRef, onFocusOut);
+  const highlight = useFocusHighlight(states.CAPTIONS, buttonRef);
 
   return (
     <SimplePanel
+      css={highlight?.showEffect && styles.FLASH}
       name="caption"
       title={__('Captions', 'web-stories')}
       isPersistable={!highlight}
@@ -155,12 +140,13 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
           </Row>
         ))}
       {!tracks.length && (
-        <Row
-          expand
-          css={highlight?.focus && HIGHLIGHT_STYLES}
-          borderRadius={dsTheme.borders.radius.small}
-        >
-          <Button ref={buttonRef} onClick={UploadCaption} fullWidth>
+        <Row expand>
+          <Button
+            css={highlight?.showEffect && styles.OUTLINE}
+            ref={buttonRef}
+            onClick={UploadCaption}
+            fullWidth
+          >
             {captionText}
           </Button>
         </Row>

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -32,15 +32,10 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { useAPI } from '../../../../app/api';
-import {
-  useHighlights,
-  states,
-  HIGHLIGHT_STYLES,
-} from '../../../../app/highlights';
+import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 import { Row, AdvancedDropDown, Label, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { useFocusOut } from '../../../../../design-system';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
@@ -52,7 +47,26 @@ const FieldLabel = styled(Label)`
 `;
 
 const MediaWrapper = styled.div`
+  ${({ isHighlighted }) =>
+    isHighlighted &&
+    css`
+      ${styles.OUTLINE}
+      border-radius: 0;
+    `}
   flex-basis: 134px;
+`;
+
+const HighlightRow = styled(Row)`
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -20px;
+    right: -10px;
+    ${({ isHighlighted }) => isHighlighted && styles.FLASH}
+  }
 `;
 
 function PublishPanel() {
@@ -64,21 +78,14 @@ function PublishPanel() {
     actions: { loadUsers },
   } = useInspector();
 
-  const { onFocusOut, ...highlight } = useHighlights((state) => ({
-    onFocusOut: state.onFocusOut,
-    cover: state[states.COVER],
-    publisherLogo: state[states.PUBLISHER_LOGO],
-  }));
-
   const coverButtonRef = useRef();
   const publisherLogoRef = useRef();
-  useEffect(() => {
-    highlight.cover?.focus && coverButtonRef.current?.focus();
-    highlight.publisherLogo?.focus && publisherLogoRef.current?.focus();
-  });
 
-  useFocusOut(coverButtonRef, onFocusOut);
-  useFocusOut(publisherLogoRef, onFocusOut);
+  const highlightCover = useFocusHighlight(states.COVER, coverButtonRef);
+  const highlightLogo = useFocusHighlight(
+    states.PUBLISHER_LOGO,
+    publisherLogoRef
+  );
 
   const {
     isSaving,
@@ -193,7 +200,7 @@ function PublishPanel() {
     <Panel
       name="publishing"
       collapsedByDefault={false}
-      isPersistable={!(highlight?.publisherLogo || highlight?.cover)}
+      isPersistable={!(highlightLogo || highlightCover)}
     >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent padding={'10px 10px 10px 20px'}>
@@ -227,9 +234,7 @@ function PublishPanel() {
             <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper
-            css={highlight.publisherLogo?.focus && HIGHLIGHT_STYLES}
-          >
+          <MediaWrapper isHighlighted={highlightLogo?.showEffect}>
             <Media
               ref={publisherLogoRef}
               value={publisherLogoUrl}
@@ -242,12 +247,12 @@ function PublishPanel() {
             />
           </MediaWrapper>
         </Row>
-        <Row>
+        <HighlightRow isHighlighted={highlightCover?.showEffect}>
           <LabelWrapper>
             <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper css={highlight.cover?.focus && HIGHLIGHT_STYLES}>
+          <MediaWrapper isHighlighted={highlightCover?.showEffect}>
             <Media
               ref={coverButtonRef}
               value={featuredMedia?.url}
@@ -258,7 +263,7 @@ function PublishPanel() {
               ariaLabel={__('Cover image', 'web-stories')}
             />
           </MediaWrapper>
-        </Row>
+        </HighlightRow>
       </PanelContent>
     </Panel>
   );

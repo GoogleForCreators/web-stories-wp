@@ -200,7 +200,7 @@ const MediaInput = forwardRef(
     return (
       <Container
         ref={ref}
-        className={`${className}`}
+        className={className}
         disabled={disabled}
         circle={circle}
         size={size}

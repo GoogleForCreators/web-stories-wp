@@ -60,7 +60,7 @@ function HighlightsProvider({ children }) {
       if (highlight) {
         const { tab, ...highlightState } = STATES[highlight];
         setHighlighted({
-          [highlight]: highlightState,
+          [highlight]: { ...highlightState, showEffect: true },
           tab,
         });
       }
@@ -72,11 +72,18 @@ function HighlightsProvider({ children }) {
     setHighlighted({});
   }, [setHighlighted]);
 
+  const cancelEffect = useCallback((stateKey) => {
+    setHighlighted((state) => ({
+      [stateKey]: { ...state[stateKey], showEffect: false },
+    }));
+  }, []);
+
   return (
     <Context.Provider
       value={{
         setHighlights,
         onFocusOut,
+        cancelEffect,
         ...highlighted,
       }}
     >
