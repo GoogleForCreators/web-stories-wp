@@ -49,6 +49,7 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
+const HEADER_SPACE = 16;
 const MENU_HEIGHT = 48;
 const CAROUSEL_HEIGHT = 104;
 
@@ -67,7 +68,10 @@ const Layer = styled.section`
   display: grid;
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
-    '.         .         .         .         .       ' minmax(16px, 1fr)
+    '.         .         .         .         .       ' minmax(
+      ${HEADER_SPACE}px,
+      1fr
+    )
     '.         prev      page      next      .       ' var(--viewport-height-px)
     'menu      menu      menu      menu      menu    ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
@@ -161,7 +165,8 @@ function useLayoutParams(containerRef) {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
     // space for the page is:
     const maxWidth = width;
-    const maxHeight = height - HEADER_HEIGHT - MENU_HEIGHT - CAROUSEL_HEIGHT;
+    const maxHeight =
+      height - HEADER_HEIGHT - HEADER_SPACE - MENU_HEIGHT - CAROUSEL_HEIGHT;
 
     setWorkspaceSize({ width: maxWidth, height: maxHeight });
   });
