@@ -62,12 +62,14 @@ function TextSet({ elements }) {
     insertTextSet: state.actions.insertTextSet,
   }));
 
-  const { canvasPageSize } = useLayout(({ state }) => ({
-    canvasPageSize: state.canvasPageSize,
-  }));
+  const { pageWidth, pageHeight } = useLayout(
+    ({ state: { pageWidth, pageHeight } }) => ({
+      pageWidth,
+      pageHeight,
+    })
+  );
 
   const { textSetHeight, textSetWidth } = elements[0];
-  const { width: pageWidth, height: pageHeight } = canvasPageSize;
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
