@@ -69,7 +69,7 @@ const Layer = styled.section`
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(16px, 1fr)
     '.         prev      page      next      .       ' var(--viewport-height-px)
-    '.         .         menu      .         .       ' ${MENU_HEIGHT}px
+    'menu      menu      menu      menu      menu    ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
     'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
     /
@@ -110,9 +110,6 @@ const PageAreaWithOverflow = styled.div`
   position: relative;
   width: var(--page-width-px);
   height: var(--fullbleed-height-px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: 4px;
   ${({ isControlled }) =>
     isControlled &&
@@ -125,9 +122,10 @@ const PageAreaWithOverflow = styled.div`
 const PageAreaSafeZone = styled.div`
   width: var(--page-width-px);
   height: var(--page-height-px);
-  overflow: visible;
+  overflow: hidden;
   position: relative;
   margin: auto 0;
+  top: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
 `;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
