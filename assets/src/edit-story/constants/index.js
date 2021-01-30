@@ -28,6 +28,14 @@ export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
 
+export const ZOOM_SETTING = {
+  SINGLE: 'SINGLE',
+  DOUBLE: 'DOUBLE',
+  TRIPLE: 'TRIPLE',
+  FILL: 'FILL',
+  FIT: 'FIT',
+};
+
 export const PAGE_RATIO = 2 / 3;
 export const PAGE_WIDTH = 412;
 export const PAGE_HEIGHT = 618;

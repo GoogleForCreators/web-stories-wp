@@ -27,40 +27,35 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_RATIO } from '../../../constants';
+import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
 import { DropDown } from '../../form';
 import { Placement } from '../../popup';
 
 const ZOOM_OPTIONS = [
-  { name: '100%', value: ALLOWED_EDITOR_PAGE_WIDTHS[0] },
-  { name: '66%', value: ALLOWED_EDITOR_PAGE_WIDTHS[1] },
-  { name: '33%', value: ALLOWED_EDITOR_PAGE_WIDTHS[2] },
+  { name: '100%', value: ZOOM_SETTING.SINGLE },
+  { name: '200%', value: ZOOM_SETTING.DOUBLE },
+  { name: '300%', value: ZOOM_SETTING.TRIPLE },
+  { name: 'Fill', value: ZOOM_SETTING.FILL },
+  { name: 'Fit', value: ZOOM_SETTING.FIT },
 ];
 
 function ZoomSelector() {
-  const { canvasPageSize, setCanvasPageSize } = useLayout(
-    ({ state: { canvasPageSize }, actions: { setCanvasPageSize } }) => ({
-      canvasPageSize,
-      setCanvasPageSize,
+  const { zoomSetting, setZoomSetting } = useLayout(
+    ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
+      zoomSetting,
+      setZoomSetting,
     })
   );
 
   const placeholder = useMemo(
-    () =>
-      ZOOM_OPTIONS.find(({ value }) => value === canvasPageSize.width)?.name ||
-      'Fit',
-    [canvasPageSize]
+    () => ZOOM_OPTIONS.find(({ value }) => value === zoomSetting).name,
+    [zoomSetting]
   );
 
   const handleSetZoom = useCallback(
-    (pageWidth) => {
-      setCanvasPageSize({
-        width: pageWidth,
-        height: pageWidth / PAGE_RATIO,
-      });
-    },
-    [setCanvasPageSize]
+    (newSetting) => setZoomSetting(newSetting),
+    [setZoomSetting]
   );
 
   return (
@@ -69,7 +64,7 @@ function ZoomSelector() {
       placeholder={placeholder}
       options={ZOOM_OPTIONS}
       placement={Placement.TOP}
-      value={canvasPageSize}
+      value={zoomSetting}
       onChange={handleSetZoom}
     />
   );

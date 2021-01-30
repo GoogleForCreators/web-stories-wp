@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useRef } from 'react';
+import { memo, useRef, useCallback } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -32,6 +32,7 @@ import { __ } from '@wordpress/i18n';
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useDropTargets, useCanvas } from '../../app';
+import useLayout from '../../app/layout/useLayout';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
@@ -43,7 +44,9 @@ import PageNav from './pagenav';
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
     showOverflow: true,
-  })``
+  })`
+    pointer-events: initial;
+  `
 );
 
 const FrameSidebar = styled.div`
@@ -98,15 +101,28 @@ function FramesLayer() {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
   } = useDropTargets();
+  const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
+    setScrollOffset,
+  }));
 
   const ref = useRef(null);
   useCanvasKeys(ref);
+
+  const onScroll = useCallback(
+    (evt) =>
+      setScrollOffset({
+        left: `-${evt.target.scrollLeft}px`,
+        top: `-${evt.target.scrollTop}px`,
+      }),
+    [setScrollOffset]
+  );
 
   return (
     <Layer
       ref={ref}
       data-testid="FramesLayer"
-      pointerEvents="none"
+      pointerEvents="initial"
+      onScroll={onScroll}
       // Use `-1` to ensure that there's a default target to focus if
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.

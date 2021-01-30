@@ -58,7 +58,7 @@ const Box = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   height: ${HEIGHT}px;
   width: 100%;
 `;
@@ -74,7 +74,6 @@ const PageCount = styled.div`
 const Options = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
   color: ${({ theme }) => theme.colors.fg.v2};
 `;
 
@@ -245,14 +244,13 @@ function PageMenu() {
             </Icon>
           </WithTooltip>
           <Space />
+          <Divider />
+          <Space />
           {[
             STORY_ANIMATION_STATE.PLAYING,
             STORY_ANIMATION_STATE.PLAYING_SELECTED,
           ].includes(animationState) ? (
-            <WithTooltip
-              style={{ marginLeft: 'auto' }}
-              title={__('Stop', 'web-stories')}
-            >
+            <WithTooltip title={__('Stop', 'web-stories')}>
               <Icon
                 onClick={toggleAnimationState}
                 disabled={!hasAnimations}
@@ -262,10 +260,7 @@ function PageMenu() {
               </Icon>
             </WithTooltip>
           ) : (
-            <WithTooltip
-              style={{ marginLeft: 'auto' }}
-              title={__('Play', 'web-stories')}
-            >
+            <WithTooltip title={__('Play', 'web-stories')}>
               <Icon
                 onClick={toggleAnimationState}
                 disabled={!hasAnimations}

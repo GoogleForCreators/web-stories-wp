@@ -43,9 +43,9 @@ function CanvasProvider({ children }) {
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
   const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
 
-  const { pageSize, setPageSize } = useLayout(({ state, actions }) => ({
-    pageSize: state.canvasPageSize,
-    setPageSize: actions.setCanvasPageSize,
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
   }));
 
   const {
@@ -183,7 +183,6 @@ function CanvasProvider({ children }) {
         clearEditing,
         handleSelectElement,
         selectIntersection,
-        setPageSize,
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
         setCanvasContainer,
@@ -207,7 +206,6 @@ function CanvasProvider({ children }) {
       clearEditing,
       handleSelectElement,
       selectIntersection,
-      setPageSize,
       displayLinkGuidelines,
       setDisplayLinkGuidelines,
       pageAttachmentContainer,

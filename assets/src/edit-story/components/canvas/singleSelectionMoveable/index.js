@@ -26,6 +26,7 @@ import classnames from 'classnames';
  */
 import { useBatchingCallback } from '../../../../design-system';
 import { useStory, useCanvas } from '../../../app';
+import useLayout from '../../../app/layout/useLayout';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
@@ -56,6 +57,12 @@ function SingleSelectionMoveable({
   const {
     actions: { pushTransform },
   } = useTransform();
+  const { scrollLeft, scrollTop } = useLayout(
+    ({ state: { scrollLeft, scrollTop } }) => ({
+      scrollLeft,
+      scrollTop,
+    })
+  );
 
   const actionsEnabled = !selectedElement.isBackground;
 
@@ -70,6 +77,14 @@ function SingleSelectionMoveable({
   useEffect(() => {
     latestEvent.current = pushEvent;
   }, [pushEvent]);
+
+  // If scroll ever updates, update rect
+  useEffect(() => {
+    if (!moveable.current) {
+      return;
+    }
+    moveable.current.updateRect();
+  }, [scrollLeft, scrollTop]);
 
   useEffect(() => {
     if (!moveable.current) {

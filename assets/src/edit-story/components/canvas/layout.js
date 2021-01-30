@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
 
@@ -32,14 +32,12 @@ import { __ } from '@wordpress/i18n';
 import { useResizeEffect } from '../../../design-system';
 import {
   FULLBLEED_RATIO,
-  PAGE_RATIO,
-  ALLOWED_EDITOR_PAGE_WIDTHS,
   HEADER_HEIGHT,
   PAGE_NAV_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import { useCanvas } from '../../app';
+import useLayout from '../../app/layout/useLayout';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -70,14 +68,16 @@ const Layer = styled.section`
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(16px, 1fr)
-    '.         prev      page      next      .       ' var(
-      --fullbleed-height-px
-    )
+    '.         prev      page      next      .       ' var(--viewport-height-px)
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
     'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
-    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
-    ${PAGE_NAV_WIDTH}px 1fr;
+    /
+    1fr
+    var(--page-nav-width)
+    var(--viewport-width-px)
+    var(--page-nav-width)
+    1fr;
   height: 100%;
 `;
 
@@ -99,9 +99,8 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   area: 'page',
   overflowAllowed: true,
 })`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow-x: var(--overflow-x);
+  overflow-y: var(--overflow-y);
 `;
 
 // Overflow is not hidden for media edit layer.
@@ -109,16 +108,22 @@ const PageAreaWithOverflow = styled.div`
   ${({ background }) => generatePatternStyles(background)}
   overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: var(--page-width-px);
+  height: var(--fullbleed-height-px);
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
+  ${({ isControlled }) =>
+    isControlled &&
+    css`
+      left: var(--scroll-left-px);
+      top: var(--scroll-top-px);
+    `};
 `;
 
 const PageAreaSafeZone = styled.div`
-  width: 100%;
+  width: var(--page-width-px);
   height: var(--page-height-px);
   overflow: visible;
   position: relative;
@@ -148,33 +153,72 @@ const CarouselArea = styled(Area).attrs({
  * @param {!{current: ?Element}} containerRef Container reference.
  */
 function useLayoutParams(containerRef) {
-  const { setPageSize } = useCanvas((state) => ({
-    setPageSize: state.actions.setPageSize,
-  }));
+  const { setWorkspaceSize } = useLayout(
+    ({ actions: { setWorkspaceSize } }) => ({
+      setWorkspaceSize,
+    })
+  );
 
   useResizeEffect(containerRef, ({ width, height }) => {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
     // space for the page is:
-    const maxWidth = width - PAGE_NAV_WIDTH * 2;
+    const maxWidth = width;
     const maxHeight = height - HEADER_HEIGHT - MENU_HEIGHT - CAROUSEL_HEIGHT;
 
-    const bestSize =
-      ALLOWED_EDITOR_PAGE_WIDTHS.find(
-        (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
-      ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
-    setPageSize({ width: bestSize, height: bestSize / PAGE_RATIO });
+    setWorkspaceSize({ width: maxWidth, height: maxHeight });
   });
 }
 
 function useLayoutParamsCssVars() {
-  const { pageSize } = useCanvas((state) => ({
-    pageSize: state.state.pageSize,
-  }));
+  const {
+    pageWidth,
+    pageHeight,
+    workspaceWidth,
+    workspaceHeight,
+    hasPageNavigation,
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    scrollLeft,
+    scrollTop,
+  } = useLayout(
+    ({
+      state: {
+        pageWidth,
+        pageHeight,
+        workspaceWidth,
+        workspaceHeight,
+        hasPageNavigation,
+        hasVerticalOverflow,
+        hasHorizontalOverflow,
+        scrollLeft,
+        scrollTop,
+      },
+    }) => ({
+      pageWidth,
+      pageHeight,
+      workspaceWidth,
+      workspaceHeight,
+      hasPageNavigation,
+      hasVerticalOverflow,
+      hasHorizontalOverflow,
+      scrollLeft,
+      scrollTop,
+    })
+  );
+  const fullHeight = pageWidth / FULLBLEED_RATIO;
+  const viewportWidth = hasHorizontalOverflow ? workspaceWidth : pageWidth;
+  const viewportHeight = hasVerticalOverflow ? workspaceHeight : fullHeight;
   return {
-    '--page-width-px': `${pageSize.width}px`,
-    '--page-height-px': `${pageSize.height}px`,
-    '--fullbleed-width-px': `${pageSize.width}px`,
-    '--fullbleed-height-px': `${pageSize.width / FULLBLEED_RATIO}px`,
+    '--page-nav-width': `${hasPageNavigation ? PAGE_NAV_WIDTH : 0}px`,
+    '--page-width-px': `${pageWidth}px`,
+    '--page-height-px': `${pageHeight}px`,
+    '--fullbleed-height-px': `${fullHeight}px`,
+    '--viewport-width-px': `${viewportWidth}px`,
+    '--viewport-height-px': `${viewportHeight}px`,
+    '--overflow-x': hasHorizontalOverflow ? 'scroll' : 'hidden',
+    '--overflow-y': hasVerticalOverflow ? 'scroll' : 'hidden',
+    '--scroll-left-px': scrollLeft,
+    '--scroll-top-px': scrollTop,
   };
 }
 
@@ -185,6 +229,7 @@ const PageArea = forwardRef(function PageArea(
     fullbleedRef = createRef(),
     overlay = [],
     background,
+    isControlled = false,
   },
   ref
 ) {
@@ -195,7 +240,11 @@ const PageArea = forwardRef(function PageArea(
       aria-label={__('Fullbleed area', 'web-stories')}
       role="region"
     >
-      <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
+      <PageAreaWithOverflow
+        showOverflow={showOverflow}
+        background={background}
+        isControlled={isControlled}
+      >
         <PageAreaSafeZone ref={ref} data-testid="safezone">
           {children}
         </PageAreaSafeZone>
@@ -211,6 +260,7 @@ PageArea.propTypes = {
   fullbleedRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   overlay: PropTypes.node,
   background: PropTypes.object,
+  isControlled: PropTypes.bool,
 };
 
 export {

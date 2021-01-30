@@ -25,6 +25,7 @@ import { useRef, useEffect, useState } from 'react';
  */
 import Moveable from '../../moveable';
 import { useStory, useCanvas } from '../../../app';
+import useLayout from '../../../app/layout/useLayout';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
@@ -60,6 +61,12 @@ function MultiSelectionMoveable({ selectedElements }) {
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
   }));
+  const { scrollLeft, scrollTop } = useLayout(
+    ({ state: { scrollLeft, scrollTop } }) => ({
+      scrollLeft,
+      scrollTop,
+    })
+  );
 
   const {
     actions: { pushTransform },
@@ -73,7 +80,7 @@ function MultiSelectionMoveable({ selectedElements }) {
     if (moveable.current) {
       moveable.current.updateRect();
     }
-  }, [selectedElements, moveable, nodesById]);
+  }, [selectedElements, moveable, nodesById, scrollLeft, scrollTop]);
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
