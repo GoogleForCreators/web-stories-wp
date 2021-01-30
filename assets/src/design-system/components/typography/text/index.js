@@ -57,7 +57,8 @@ const Anchor = styled.a`
     color: ${theme.colors.fg.linkNormal};
     text-decoration: none;
     cursor: pointer;
-    &:hover {
+
+    :hover {
       color: ${theme.colors.fg.linkHover};
     }
 
