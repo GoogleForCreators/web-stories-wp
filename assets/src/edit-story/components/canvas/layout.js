@@ -122,7 +122,7 @@ const PageAreaWithOverflow = styled.div`
 const PageAreaSafeZone = styled.div`
   width: var(--page-width-px);
   height: var(--page-height-px);
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   margin: auto 0;
   top: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
