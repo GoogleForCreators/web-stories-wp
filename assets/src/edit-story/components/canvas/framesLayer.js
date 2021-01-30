@@ -111,8 +111,8 @@ function FramesLayer() {
   const onScroll = useCallback(
     (evt) =>
       setScrollOffset({
-        left: `-${evt.target.scrollLeft}px`,
-        top: `-${evt.target.scrollTop}px`,
+        left: evt.target.scrollLeft,
+        top: evt.target.scrollTop,
       }),
     [setScrollOffset]
   );

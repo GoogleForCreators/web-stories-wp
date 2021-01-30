@@ -19,7 +19,7 @@
  */
 import { useState } from 'react';
 
-function useScroll() {
+function useOffset() {
   const [scrollOffset, setScrollOffset] = useState({ left: 0, top: 0 });
   return {
     state: {
@@ -30,4 +30,4 @@ function useScroll() {
   };
 }
 
-export default useScroll;
+export default useOffset;

@@ -215,8 +215,8 @@ function useLayoutParamsCssVars() {
     '--viewport-height-px': `${viewportHeight}px`,
     '--overflow-x': hasHorizontalOverflow ? 'scroll' : 'hidden',
     '--overflow-y': hasVerticalOverflow ? 'scroll' : 'hidden',
-    '--scroll-left-px': scrollLeft,
-    '--scroll-top-px': scrollTop,
+    '--scroll-left-px': `-${scrollLeft}px`,
+    '--scroll-top-px': `-${scrollTop}px`,
   };
 }
 
