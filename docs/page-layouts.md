@@ -4,7 +4,7 @@ Page layouts allow people to apply individual pages defined in templates to thei
 
 ## How Page Layouts differ from Template Pages
 
-Since page layouts are based on the same source files as page layouts, some customization of raw templates is required for them to work correctly with Page Layouts.
+Since page layouts are based on the same source files as templates, some customization of raw templates is required for them to work correctly with Page Layouts.
 
 ### Page Layout Types and Naming
 
