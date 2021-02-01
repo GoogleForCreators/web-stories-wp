@@ -29,7 +29,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { KEYBOARD_USER_SELECTOR } from '../../../../../../dashboard/constants';
 import { Remove } from '../../../../../icons';
 import WithTooltip from '../../../../tooltip';
 import {
@@ -40,7 +39,6 @@ import {
 } from '../utils';
 import { useStory } from '../../../../../app/story';
 import generatePatternStyles from '../../../../../utils/generatePatternStyles';
-import useRovingTabIndex from "../../../../../utils/useRovingTabIndex";
 
 const PRESET_SIZE = 30;
 const REMOVE_ICON_SIZE = 16;
