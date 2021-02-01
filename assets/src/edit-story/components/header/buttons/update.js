@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { useFeatures } from 'flagged';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
