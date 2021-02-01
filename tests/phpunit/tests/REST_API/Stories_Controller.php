@@ -20,6 +20,7 @@ namespace Google\Web_Stories\Tests\REST_API;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\KSES;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -28,6 +29,7 @@ use WP_REST_Request;
  */
 class Stories_Controller extends \WP_Test_REST_TestCase {
 	protected $server;
+	protected $kses;
 
 	protected static $user_id;
 	protected static $user2_id;
@@ -307,11 +309,13 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	}
 
 	/**
-	 * @covers ::create_item
-	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::create_item
+	 *
 	 */
 	public function test_create_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
+
+		$kses = new KSES();
+		$kses->init();
 
 		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
 		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
@@ -328,6 +332,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$new_data = $response->get_data();
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+
+		$kses->remove_filters();
 	}
 
 	/**
@@ -336,6 +342,9 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_update_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
+
+		$kses = new KSES();
+		$kses->init();
 
 		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
 		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
@@ -358,6 +367,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$new_data = $response->get_data();
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+		$kses->remove_filters();
 	}
 
 	/**
