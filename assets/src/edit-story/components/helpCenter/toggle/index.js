@@ -74,7 +74,7 @@ const ChevronIcon = styled(Icons.Chevron)`
   width: 11px;
   transform-origin: 50% 50%;
   transform: rotate(${({ isOpen }) => (isOpen ? 360 : 180)}deg);
-  transition: 0.2s transform ${BEZIER.outSine};
+  transition: transform 300ms ${BEZIER.default};
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
     ${({ hasNotifications }) =>

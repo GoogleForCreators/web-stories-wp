@@ -16,16 +16,22 @@
 /**
  * External dependencies
  */
+import { useRef } from 'react';
 import { useFeatures } from 'flagged';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme as dsTheme, ThemeGlobals } from '../../../design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+  useFocusOut,
+} from '../../../design-system';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
 import { Toggle } from './toggle';
 import { useHelpCenter } from './useHelpCenter';
+import { Popup } from './popup';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -44,22 +50,20 @@ const Wrapper = styled.div`
   }
 `;
 
-const Popup = styled.div`
-  position: absolute;
-  top: -12px;
-`;
-
 const POPUP_ID = 'help_center_companion';
 
 export const HelpCenter = () => {
+  const ref = useRef(null);
   const { enableQuickTips } = useFeatures();
   const { state, actions } = useHelpCenter();
+
+  useFocusOut(ref, actions.close, []);
 
   return enableQuickTips ? (
     <ThemeProvider theme={dsTheme}>
       <ThemeGlobals.OverrideFocusOutline />
-      <Wrapper>
-        <Popup id={POPUP_ID} isOpen={state.isOpen}>
+      <Wrapper ref={ref}>
+        <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
           <Navigator
             onNext={actions.goToNext}
             onPrev={actions.goToPrev}
