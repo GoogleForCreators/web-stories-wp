@@ -35,7 +35,7 @@ use WP_Post_Type;
  */
 class KSES {
 	/**
-	 * Initializes KSES filters for stories only if capability check are met.
+	 * Initializes KSES filters for all post types if user can edit stories.
 	 *
 	 * @since 1.0.0
 	 *
