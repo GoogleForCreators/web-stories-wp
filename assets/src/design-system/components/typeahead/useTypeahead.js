@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
@@ -25,13 +25,9 @@ import { getOptions } from '../menu/utils';
 
 export default function useTypeahead({
   handleTypeaheadValueChange,
-  isFlexibleValue,
   selectedValue,
   options,
 }) {
-  // Refs here act as a control for when to force an update to the visible input value
-  const activeOptionRef = useRef();
-  const inputValueRef = useRef();
   /**
    *Control when associated menu of typeahead should be visible.
    */
@@ -67,25 +63,6 @@ export default function useTypeahead({
   }, [isOpen, setIsMenuFocused]);
 
   /**
-   * Monitor input value separate from selected value to respect user input while maintaining accurate results.
-   */
-  const [_inputValue, setInputValue] = useState('');
-
-  const inputValue = useMemo(
-    () => ({
-      value: _inputValue,
-      set: setInputValue,
-    }),
-    [_inputValue]
-  );
-
-  useEffect(() => {
-    if (!isFlexibleValue && isOpen?.value) {
-      setInputValue('');
-    }
-  }, [isFlexibleValue, isOpen]);
-
-  /**
    * list of options to display in menu.
    */
 
@@ -99,20 +76,48 @@ export default function useTypeahead({
   /**
    * the active option, if there is a selectedValue present that matches an option.
    */
+
+  const getActiveOption = useCallback(
+    (selectedVal) =>
+      normalizedOptions
+        .flatMap((optionSet) => optionSet.group)
+        .find((option) => {
+          return (
+            option?.value?.toString().toLowerCase() ===
+            selectedVal.toString().toLowerCase()
+          );
+        }),
+    [normalizedOptions]
+  );
+
+  /**
+   * Monitor input value separate from selected value to respect user input while maintaining accurate results.
+   */
+  const [_inputValue, setInputValue] = useState('');
+
+  const handleOptionSetAsInputValue = useCallback(
+    (newValue = '') => {
+      const newInputVal = getActiveOption(newValue)?.label;
+      setInputValue(newInputVal);
+    },
+    [getActiveOption]
+  );
+
+  const inputValue = useMemo(
+    () => ({
+      value: _inputValue,
+      set: setInputValue,
+      updateToOption: handleOptionSetAsInputValue,
+    }),
+    [_inputValue, handleOptionSetAsInputValue]
+  );
+
   const activeOption = useMemo(() => {
     if (!selectedValue || normalizedOptions.length === 0) {
       return null;
     }
-
-    return normalizedOptions
-      .flatMap((optionSet) => optionSet.group)
-      .find((option) => {
-        return (
-          option?.value?.toString().toLowerCase() ===
-          selectedValue.toString().toLowerCase()
-        );
-      });
-  }, [selectedValue, normalizedOptions]);
+    return getActiveOption(selectedValue);
+  }, [selectedValue, normalizedOptions, getActiveOption]);
 
   /**
    * send the inputValue when it changes back to the parent so that any results that need to change can be changed.
@@ -121,29 +126,6 @@ export default function useTypeahead({
     handleTypeaheadValueChange,
     inputValue,
   ]);
-
-  useEffect(() => (inputValueRef.current = inputValue.value), [inputValue]);
-
-  /**
-   * When selectedValue updates we want to update input value too but only if it's different from the previously set inputValue.
-   * This prevents reseting the input preemptively on clearing the input
-   */
-  useEffect(() => {
-    if (
-      activeOption?.label &&
-      activeOption.label !== activeOptionRef?.current
-    ) {
-      activeOptionRef.current = activeOption.label;
-      if (isFlexibleValue || inputValueRef?.current.length > 0) {
-        setInputValue(activeOption.label);
-      }
-    }
-
-    return () => {
-      activeOptionRef.current = undefined;
-      inputValueRef.current = undefined;
-    };
-  }, [activeOption, isFlexibleValue]);
 
   return { activeOption, normalizedOptions, inputValue, isMenuFocused, isOpen };
 }

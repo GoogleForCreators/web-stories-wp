@@ -39,6 +39,7 @@ export const Input = styled.input(
     padding: 8px 20px 8px ${hasSearchIcon ? 32 : 12}px;
     height: 100%;
     width: 100%;
+    max-width: 276px;
     background-color: transparent;
     outline: none;
     color: ${theme.colors.fg.primary};

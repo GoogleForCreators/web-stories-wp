@@ -53,12 +53,9 @@ import useTypeahead from './useTypeahead';
  * This is to separate the inputValue from the selectedValue should the typeahead demand selection from a list as opposed to be freeform.
  * @param {boolean} props.hasError If true, input and hint (if present) will show error styles.
  * @param {string} props.hint Hint text to display below input (optional). If not present, no hint text will display.
- * @param {boolean} props.isFlexibleValue If true, input values will be treated the same as options in the menu are when selected. Essentially, letting the input value be a valid value not just a guide to narrow down menu options.
- * If isFlexibleValue is true, clearing the input will also clear the selectedValue.
- * @param {boolean} props.isKeepMenuOpenOnSelection If true, when a new selection is made the internal functionality to close the menu will not fire, by default is false.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding menu styles (container div > ul > li).
- * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option, or isFlexibleValue and 'Enter' is pressed on input.
+ * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option, or 'Enter' is pressed on input.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
  * @param {string} props.placeholder Placeholder text to display in input if no value is present.
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
@@ -76,8 +73,6 @@ export const Typeahead = ({
   handleTypeaheadValueChange,
   hasError,
   hint,
-  isFlexibleValue,
-  isKeepMenuOpenOnSelection,
   onMenuItemClick,
   options = [],
   placeholder = DEFAULT_PLACEHOLDER,
@@ -101,11 +96,15 @@ export const Typeahead = ({
     isOpen,
     normalizedOptions,
   } = useTypeahead({
-    isFlexibleValue,
     options,
     selectedValue,
     handleTypeaheadValueChange,
   });
+
+  const isMenuHidden = useMemo(() => disabled || !inputValue?.value, [
+    disabled,
+    inputValue,
+  ]);
 
   /**
    * Callbacks that begin typeahead interaction
@@ -127,7 +126,7 @@ export const Typeahead = ({
 
   /**
    * Callbacks passed to menu
-   * handleDismissMenu: when menu is focused out (if isFlexibleValue is false (default), set input back to selectedValue.)
+   * handleDismissMenu: Focus out menu, set isOpen to false.
    * handleMenuClick: When item menu is chosen by either cursor or keyboard.
    */
 
@@ -142,27 +141,22 @@ export const Typeahead = ({
         return;
       }
 
-      if (!isFlexibleValue && activeOption?.label) {
-        inputValue.set(activeOption.label);
-      }
-
       isOpen.set(false);
       isMenuFocused.set(false);
 
       // move focus to next element if available.
       inputRef.current?.offsetParent?.nextSibling?.focus();
     },
-    [activeOption, clearId, inputValue, isFlexibleValue, isOpen, isMenuFocused]
+    [clearId, isOpen, isMenuFocused]
   );
 
   const handleMenuItemClick = useCallback(
     (event, menuItem) => {
+      inputValue.updateToOption(menuItem);
       onMenuItemClick?.(event, menuItem);
-      if (!isKeepMenuOpenOnSelection) {
-        handleDismissMenu();
-      }
+      handleDismissMenu();
     },
-    [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
+    [handleDismissMenu, inputValue, onMenuItemClick]
   );
 
   const handleReturnToInput = useCallback(() => inputRef?.current?.focus(), []);
@@ -172,7 +166,7 @@ export const Typeahead = ({
    * handleInputChange: When input changes by user.
    * handleClearInputValue: When clear button is triggered.
    * - Will only clear the input value by default.
-   * - If isFlexibleValue and onMenuItemClick are present will also trigger onMenuItemClick with an empty string to clear out selected value (presumably - since this is controlled by parent).
+   * - If onMenuItemClick is present will also trigger onMenuItemClick with an empty string to clear out selected value (presumably - since this is controlled by parent).
    * handleTabClearButton: When keyboard user goes from input to clear button.
    * - Since technically we've already focused out of the input where the menu wants to close, if tab is used on clear button, dismiss menu but don't focus back to input.
    */
@@ -189,73 +183,46 @@ export const Typeahead = ({
 
   const handleClearInputValue = useCallback(() => {
     inputValue.set('');
-    if (isFlexibleValue) {
-      onMenuItemClick?.(null, '');
-    }
+    onMenuItemClick?.(null, '');
     handleReturnToInput();
-  }, [handleReturnToInput, inputValue, isFlexibleValue, onMenuItemClick]);
+  }, [handleReturnToInput, inputValue, onMenuItemClick]);
 
   const handleTabClearButton = useCallback(() => {
     isOpen.set(false);
     isMenuFocused.set(false);
-
-    if (!isFlexibleValue && activeOption?.label) {
-      inputValue.set(activeOption.label);
-    }
-  }, [isOpen, isMenuFocused, inputValue, isFlexibleValue, activeOption]);
+  }, [isOpen, isMenuFocused]);
 
   const focusSentToList = useCallback(() => isMenuFocused.set(true), [
     isMenuFocused,
   ]);
 
-  const setInputValueToActiveOption = useCallback(
-    () => activeOption?.label && inputValue.set(activeOption.label),
-    [activeOption, inputValue]
-  );
-
   /**
    * handleInputKeyPress
    * Watch keyDown of input for keys that change interaction
    * ESC: Close menu
-   * - Also reset input value to active option if isFlexibleValue is false on escape.
    * TAB:
    * - Close menu on tab if inputValue length is 0
-   * - And reset input value to active option if not isFlexibleValue
    * ARROW DOWN: Send focus to menu list
-   * ENTER: Trigger menuItemClick if isFlexibleValue is true
+   * ENTER: Trigger menuItemClick
    */
   const handleInputKeyPress = useCallback(
     (event) => {
       const { key } = event;
       if (key === 'Escape') {
         isOpen.set(false);
-        if (!isFlexibleValue) {
-          setInputValueToActiveOption();
-        }
       } else if (key === 'Tab') {
         // if inputValue exists then there is a clear button
         if (inputValue.value.length === 0) {
-          isOpen.set(false);
           isMenuFocused.set(false);
-          if (!isFlexibleValue) {
-            setInputValueToActiveOption();
-          }
+          isOpen.set(false);
         }
       } else if (key === 'ArrowDown') {
         focusSentToList();
-      } else if (key === 'Enter' && isFlexibleValue) {
+      } else if (key === 'Enter') {
         handleMenuItemClick(event, inputValue.value);
       }
     },
-    [
-      isFlexibleValue,
-      isOpen,
-      setInputValueToActiveOption,
-      inputValue.value,
-      isMenuFocused,
-      focusSentToList,
-      handleMenuItemClick,
-    ]
+    [isOpen, inputValue, isMenuFocused, focusSentToList, handleMenuItemClick]
   );
 
   return (
@@ -277,17 +244,17 @@ export const Typeahead = ({
         handleClearInputValue={handleClearInputValue}
         handleTabClearButton={handleTabClearButton}
         inputValue={inputValue?.value}
-        isFlexibleValue={isFlexibleValue}
-        isOpen={isOpen.value}
+        isFlexibleValue={true}
+        isOpen={isOpen?.value}
         listId={listId}
         ref={inputRef}
         {...rest}
       />
 
-      {!disabled && (
+      {!isMenuHidden && (
         <Popup
           anchor={inputRef}
-          isOpen={isOpen.value}
+          isOpen={isOpen?.value}
           placement={placement}
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
@@ -331,8 +298,6 @@ Typeahead.propTypes = {
   handleTypeaheadValueChange: PropTypes.func,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
-  isFlexibleValue: PropTypes.bool,
-  isKeepMenuOpenOnSelection: PropTypes.bool,
   isRTL: PropTypes.bool,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,

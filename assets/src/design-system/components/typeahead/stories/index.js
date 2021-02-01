@@ -29,10 +29,7 @@ import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
 import { Text } from '../../typography';
 import { Typeahead } from '../typeahead';
-import {
-  basicDropDownOptions,
-  nestedDropDownOptions,
-} from '../../../storybookUtils/sampleData';
+import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 
 export default {
   title: 'DesignSystem/Components/Typeahead',
@@ -54,7 +51,7 @@ export const _default = () => {
 
   const options = useMemo(() => {
     if (!inputValue || inputValue.length === 0) {
-      return basicDropDownOptions;
+      return [];
     }
 
     return basicDropDownOptions.filter(
@@ -91,7 +88,6 @@ export const _default = () => {
           handleTypeaheadValueChange={handleTypeaheadValueChange}
           hasError={boolean('hasError')}
           hint={text('hint', 'default hint text')}
-          isFlexibleValue={boolean('isFlexibleValue')}
           isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
           isRTL={boolean('isRTL')}
           onMenuItemClick={(event, newValue) => {
@@ -116,7 +112,7 @@ export const LightTheme = () => {
 
   const options = useMemo(() => {
     if (!inputValue || inputValue.length === 0) {
-      return basicDropDownOptions;
+      return [];
     }
 
     return basicDropDownOptions.filter(
@@ -147,8 +143,6 @@ export const LightTheme = () => {
         handleTypeaheadValueChange={handleTypeaheadValueChange}
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
-        isFlexibleValue={boolean('isFlexibleValue')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
         isRTL={boolean('isRTL')}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
@@ -161,135 +155,5 @@ export const LightTheme = () => {
         selectedValue={selectedValue}
       />
     </Container>
-  );
-};
-
-export const FlexibleDemo = () => {
-  // Here the selected value and inputValue are tied together.
-  // SelectedValue is updated when 'enter' on input is keyed down or new option is clicked/entered from menu.
-  // Options are updated according to inputValue, only because inputValue has chosen to update with handleTypeaheadValueChange.
-
-  const [selectedValue, setSelectedValue] = useState(null);
-  const [inputValue, setInputValue] = useState(selectedValue);
-
-  const options = useMemo(() => {
-    if (!inputValue || inputValue.length === 0) {
-      return basicDropDownOptions;
-    }
-
-    return basicDropDownOptions.filter(
-      ({ label, value }) =>
-        label
-          .toString()
-          .toLowerCase()
-          .startsWith(inputValue.toLowerCase().trim()) ||
-        value
-          .toString()
-          .toLowerCase()
-          .startsWith(inputValue.toLowerCase().trim())
-    );
-  }, [inputValue]);
-
-  const handleTypeaheadValueChange = useCallback((value) => {
-    action('handleTypeaheadValueChange')(value);
-    setInputValue(value);
-  }, []);
-
-  return (
-    <Container>
-      <Typeahead
-        ariaClearLabel={text('ariaClearLabel', 'clear search')}
-        ariaInputLabel={text('ariaInputLabel', 'search stories')}
-        disabled={boolean('disabled')}
-        emptyText={text('emptyText', 'No stories found')}
-        handleTypeaheadValueChange={handleTypeaheadValueChange}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        isFlexibleValue={true}
-        isKeepMenuOpenOnSelection={false}
-        isRTL={boolean('isRTL')}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick', event);
-          setSelectedValue(newValue);
-        }}
-        options={options}
-        placeholder={text('placeholder', 'search for stories')}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
-        selectedValue={selectedValue}
-      />
-    </Container>
-  );
-};
-
-export const StrictDemo = () => {
-  // Here we have a typeahead that will only update its selected value when a new menu option is selected.
-  // Anything typed into the input purely tells options how to filter.
-  // If the menu is closed, the input's value will return to the selectedValue.
-
-  const [selectedValue, setSelectedValue] = useState('dog-2');
-  const [inputValue, setInputValue] = useState('');
-
-  const options = useMemo(() => {
-    if (!inputValue || inputValue.length === 0) {
-      return nestedDropDownOptions;
-    }
-
-    return nestedDropDownOptions
-      .map((optionSet) => {
-        const matchingOptions = optionSet.options.filter(
-          ({ label = '', value = '' }) =>
-            label
-              .toString()
-              .toLowerCase()
-              .startsWith(inputValue.toLowerCase().trim()) ||
-            value
-              .toString()
-              .toLowerCase()
-              .startsWith(inputValue.toLowerCase().trim())
-        );
-        if (matchingOptions.length > 0) {
-          return {
-            ...optionSet,
-            options: [...matchingOptions],
-          };
-        } else {
-          return null;
-        }
-      })
-      .filter(Boolean);
-  }, [inputValue]);
-
-  const handleTypeaheadValueChange = useCallback((value) => {
-    action('handleTypeaheadValueChange')(value);
-    setInputValue(value);
-  }, []);
-
-  return (
-    <DarkThemeProvider>
-      <Container>
-        <Typeahead
-          ariaClearLabel={text('ariaClearLabel', 'clear input')}
-          ariaInputLabel={text('ariaInputLabel', 'find a new font')}
-          disabled={boolean('disabled')}
-          emptyText={text('emptyText', 'No options available')}
-          handleTypeaheadValueChange={handleTypeaheadValueChange}
-          hasError={boolean('hasError')}
-          hint={text('hint', 'default hint text')}
-          isFlexibleValue={false}
-          isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-          isRTL={boolean('isRTL')}
-          onMenuItemClick={(event, newValue) => {
-            action('onMenuItemClick', event);
-            setSelectedValue(newValue);
-          }}
-          options={options}
-          placeholder={text('placeholder', 'select a value')}
-          placement={select('placement', Object.values(PLACEMENT))}
-          popupZIndex={number('popupZIndex')}
-          selectedValue={selectedValue}
-        />
-      </Container>
-    </DarkThemeProvider>
   );
 };
