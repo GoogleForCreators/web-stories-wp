@@ -43,17 +43,17 @@ class KSES {
 	 */
 	public function init() {
 
-		$create_posts     = false;
+		$edit_posts       = false;
 		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
 		if (
 			$post_type_object instanceof WP_Post_Type &&
-			property_exists( $post_type_object->cap, 'create_posts' )
+			property_exists( $post_type_object->cap, 'edit_posts' )
 		) {
 
-			$create_posts = current_user_can( $post_type_object->cap->create_posts );
+			$edit_posts = current_user_can( $post_type_object->cap->edit_posts );
 		}
 
-		if ( $create_posts ) {
+		if ( $edit_posts ) {
 			$this->add_filters();
 		}
 	}
