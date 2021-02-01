@@ -24,6 +24,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useConfig } from '../../config';
+import { useUser } from '../../user';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -31,6 +32,9 @@ const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
 
 function useTranscodeVideo() {
   const { ffmpegCoreUrl } = useConfig();
+  const {
+    actions: { getCurrentUser },
+  } = useUser();
   const isFeatureEnabled = useFeature('videoOptimization');
 
   /**
@@ -86,8 +90,18 @@ function useTranscodeVideo() {
   // See `ffmpeg -demuxers`
   // TODO: Add max size check.
   // See https://github.com/ffmpegwasm/ffmpeg.wasm#what-is-the-maximum-size-of-input-file
-  const canTranscodeFile = (file) =>
-    isFeatureEnabled && file.type.startsWith('video/');
+  const canTranscodeFile = async (file) => {
+    if (!isFeatureEnabled) {
+      return false;
+    }
+    if (!file.type.startsWith('video/')) {
+      return false;
+    }
+
+    const currentUser = await getCurrentUser();
+
+    return currentUser.meta?.web_stories_media_optimization;
+  };
 
   return {
     canTranscodeFile,
