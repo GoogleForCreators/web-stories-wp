@@ -25,30 +25,27 @@ import { Menu } from '../menu';
 import { QuickTip } from '../quickTip';
 import { TIPS, DONE_TIP_ENTRY } from '../constants';
 
-const TIP_REFERENCE = { ...TIPS, [DONE_TIP_ENTRY[0]]: DONE_TIP_ENTRY[1] };
+const TIP_MAP = { ...TIPS, [DONE_TIP_ENTRY[0]]: DONE_TIP_ENTRY[1] };
 
-export function Companion({
-  displayKey,
-  onTipSelect,
-  isLeftToRightTransition,
-}) {
-  const tip = TIP_REFERENCE[displayKey];
+export function Companion({ tipKey, onTipSelect, isLeftToRightTransition }) {
+  const tip = tipKey && TIP_MAP[tipKey];
   return (
     <TransitionGroup>
       {tip ? (
         <QuickTip
-          key={displayKey}
-          {...tip}
+          key={tipKey}
+          transitionKey={tipKey}
           isLeftToRightTransition={isLeftToRightTransition}
+          {...tip}
         />
       ) : (
-        <Menu key={displayKey} onTipSelect={onTipSelect} />
+        <Menu key={'menu'} transitionKey={'menu'} onTipSelect={onTipSelect} />
       )}
     </TransitionGroup>
   );
 }
 Companion.propTypes = {
-  displayKey: PropTypes.oneOf(...Object.keys(TIP_REFERENCE), 'menu').isRequired,
+  tipKey: PropTypes.oneOf(Object.keys(TIP_MAP)),
   onTipSelect: PropTypes.func.isRequired,
-  isLeftToRightTransition: PropTypes.bool,
+  isLeftToRightTransition: PropTypes.bool.isRequired,
 };

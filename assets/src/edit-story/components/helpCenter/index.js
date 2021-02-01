@@ -16,18 +16,16 @@
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState } from 'react';
 import { useFeatures } from 'flagged';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../animation';
 import { theme as dsTheme, ThemeGlobals } from '../../../design-system';
-import { TIPS, DONE_TIP_ENTRY } from './constants';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
 import { Toggle } from './toggle';
+import { useHelpCenter } from './useHelpCenter';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -48,83 +46,39 @@ const Wrapper = styled.div`
 
 const Popup = styled.div`
   position: absolute;
-  top: -8px;
+  top: -12px;
 `;
-
-// @TODO make this dynamic based off of unread tips.
-const NAVIGATION_FLOW = [...Object.keys(TIPS), DONE_TIP_ENTRY[0]];
 
 const POPUP_ID = 'help_center_companion';
 
-const reducer = (state, operation) => {
-  const newState = { ...state, ...operation(state) };
-  const isMenuIndex = newState.navigationIndex < 0;
-  const isLTRTransition = newState.navigationIndex - state.navigationIndex > 0;
-  return {
-    ...newState,
-    hasBottomNavigation: !isMenuIndex,
-    isLeftToRightTransition: !isMenuIndex && isLTRTransition,
-  };
-};
-
 export const HelpCenter = () => {
   const { enableQuickTips } = useFeatures();
-
-  // @TODO move this into a provider so story
-  // actions can trigger it as a side effect
-  const [store, dispatch] = useReducer(reducer, {
-    isOpen: false,
-    navigationIndex: -1,
-    isLeftToRightTransition: true,
-    hasBottomNavigation: false,
-    next: ({ navigationIndex, navigationFlow }) => ({
-      navigationIndex: clamp(navigationIndex + 1, [
-        0,
-        navigationFlow.length - 1,
-      ]),
-    }),
-    prev: ({ navigationIndex, navigationFlow }) => ({
-      navigationIndex: clamp(navigationIndex - 1, [
-        0,
-        navigationFlow.length - 1,
-      ]),
-    }),
-    menu: () => ({ navigationIndex: -1 }),
-    goToTip: (key) => () => ({
-      navigationIndex: NAVIGATION_FLOW.findIndex((v) => v === key),
-    }),
-    toggle: ({ isOpen }) => ({ isOpen: !isOpen }),
-    close: () => ({ isOpen: false }),
-    navigationFlow: NAVIGATION_FLOW,
-  });
-
-  const [nextRenderStore, setNextRenderStore] = useState(store);
-  useEffect(() => setNextRenderStore(store), [store]);
-
-  const { navigationIndex } = nextRenderStore;
+  const { state, actions } = useHelpCenter();
 
   return enableQuickTips ? (
     <ThemeProvider theme={dsTheme}>
       <ThemeGlobals.OverrideFocusOutline />
       <Wrapper>
-        <Popup id={POPUP_ID} isOpen={store.isOpen}>
+        <Popup id={POPUP_ID} isOpen={state.isOpen}>
           <Navigator
-            onNext={() => dispatch(store.next)}
-            onPrev={() => dispatch(store.prev)}
-            onAllTips={() => dispatch(store.menu)}
-            onClose={() => dispatch(store.close)}
-            hasBottomNavigation={store.hasBottomNavigation}
+            onNext={actions.goToNext}
+            onPrev={actions.goToPrev}
+            onAllTips={actions.goToMenu}
+            onClose={actions.close}
+            hasBottomNavigation={state.hasBottomNavigation}
+            isNextDisabled={state.isNextDisabled}
+            isPrevDisabled={state.isPrevDisabled}
           >
             <Companion
-              displayKey={NAVIGATION_FLOW[navigationIndex]}
-              onTipSelect={(key) => dispatch(store.goToTip(key))}
-              isLeftToRightTransition={store.isLeftToRightTransition}
+              tipKey={state.navigationFlow[state.navigationIndex]}
+              onTipSelect={actions.goToTip}
+              isLeftToRightTransition={state.isLeftToRightTransition}
             />
           </Navigator>
         </Popup>
         <Toggle
-          isOpen={store.isOpen}
-          onClick={() => dispatch(store.toggle)}
+          isOpen={state.isOpen}
+          onClick={actions.toggle}
           notificationCount={1}
           popupId={POPUP_ID}
         />

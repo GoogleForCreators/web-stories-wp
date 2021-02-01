@@ -68,6 +68,5 @@ export function Transitioner({ children, ...props }) {
 }
 
 Transitioner.propTypes = {
-  key: PropTypes.string.required,
   children: PropTypes.node,
 };

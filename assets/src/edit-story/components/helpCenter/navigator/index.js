@@ -60,6 +60,8 @@ export function Navigator({
   onPrev,
   onAllTips,
   hasBottomNavigation,
+  isNextDisabled,
+  isPrevDisabled,
 }) {
   const innerRef = useRef(null);
   const layoutRef = useRef(null);
@@ -91,6 +93,8 @@ export function Navigator({
         onPrev={onPrev}
         onAllTips={onAllTips}
         hasBottomNavigation={hasBottomNavigation}
+        isNextDisabled={isNextDisabled}
+        isPrevDisabled={isPrevDisabled}
       />
     </Wrapper>
   );
@@ -102,5 +106,7 @@ Navigator.propTypes = {
   onNext: PropTypes.func,
   onPrev: PropTypes.func,
   onAllTips: PropTypes.func,
-  hasBottomNavigation: PropTypes.func,
+  hasBottomNavigation: PropTypes.bool,
+  isNextDisabled: PropTypes.bool,
+  isPrevDisabled: PropTypes.bool,
 };

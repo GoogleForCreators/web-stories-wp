@@ -45,5 +45,5 @@ export function Menu({ onTipSelect = () => {}, ...transitionProps }) {
   );
 }
 Menu.propTypes = {
-  onTipSelect: PropTypes.func,
+  onTipSelect: PropTypes.func.isRequired,
 };

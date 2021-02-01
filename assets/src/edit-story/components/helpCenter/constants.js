@@ -117,3 +117,6 @@ export const DONE_TIP_ENTRY = [
 ];
 
 export const GUTTER_WIDTH = 24;
+
+// @TODO make this dynamic based off of unread tips.
+export const NAVIGATION_FLOW = [...Object.keys(TIPS), DONE_TIP_ENTRY[0]];

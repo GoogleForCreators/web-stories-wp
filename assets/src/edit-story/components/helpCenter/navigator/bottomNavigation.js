@@ -50,6 +50,8 @@ export function BottomNavigation({
   onPrev,
   onNext,
   hasBottomNavigation,
+  isNextDisabled,
+  isPrevDisabled,
 }) {
   return (
     <BottomNavBar
@@ -72,7 +74,7 @@ export function BottomNavigation({
           onClick={onPrev}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
-          disabled={!hasBottomNavigation || !onPrev}
+          disabled={!hasBottomNavigation || isPrevDisabled}
         >
           {__('Previous', 'web-stories')}
         </NavButton>
@@ -80,7 +82,7 @@ export function BottomNavigation({
           onClick={onNext}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
-          disabled={!hasBottomNavigation || !onNext}
+          disabled={!hasBottomNavigation || isNextDisabled}
         >
           {__('Next', 'web-stories')}
         </NavButton>
@@ -93,5 +95,7 @@ BottomNavigation.propTypes = {
   onNext: PropTypes.func,
   onPrev: PropTypes.func,
   onAllTips: PropTypes.func,
-  hasBottomNavigation: PropTypes.func,
+  hasBottomNavigation: PropTypes.bool,
+  isNextDisabled: PropTypes.bool,
+  isPrevDisabled: PropTypes.bool,
 };

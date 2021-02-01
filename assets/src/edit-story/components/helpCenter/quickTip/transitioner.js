@@ -109,7 +109,6 @@ export function Transitioner({ children, isLeftToRightTransition, ...props }) {
 }
 
 Transitioner.propTypes = {
-  key: PropTypes.string.required,
   children: PropTypes.node,
   isLeftToRightTransition: PropTypes.bool,
 };

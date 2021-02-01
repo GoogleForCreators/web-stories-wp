@@ -76,8 +76,8 @@ export function QuickTip({
 }
 
 QuickTip.propTypes = {
-  figureSrc: PropTypes.string,
-  title: PropTypes.string,
-  description: PropTypes.string,
+  figureSrc: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.arrayOf(PropTypes.string).isRequired,
   isLeftToRightTransition: PropTypes.bool,
 };
