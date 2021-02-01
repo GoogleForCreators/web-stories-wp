@@ -43,7 +43,7 @@ import PageNav from './pagenav';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
-    showOverflow: true,
+    showOverflow: false,
   })`
     pointer-events: initial;
   `
