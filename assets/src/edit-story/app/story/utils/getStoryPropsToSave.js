@@ -31,7 +31,8 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'featuredMedia',
     'password',
     'publisherLogo',
-    'stylePresets',
+    'currentStoryStyles',
+    'globalStoryStyles',
     'autoAdvance',
     'defaultPageDuration',
   ]);

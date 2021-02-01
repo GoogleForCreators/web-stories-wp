@@ -34,7 +34,7 @@ describe('getStoryPropsToSave', () => {
       excerpt: '',
       featuredMedia: { id: 0 },
       password: '',
-      stylePresets: '',
+      globalStoryStyles: '',
       autoAdvance: 'manual',
       defaultPageDuration: 7,
     };

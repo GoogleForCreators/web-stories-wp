@@ -1938,7 +1938,7 @@
   "current": "f3ff9526-189a-4eb5-8e5b-1b38228a562b",
   "selection": [],
   "story": {
-    "stylePresets": {
+    "globalStoryStyles": {
       "textStyles": [
         {
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
