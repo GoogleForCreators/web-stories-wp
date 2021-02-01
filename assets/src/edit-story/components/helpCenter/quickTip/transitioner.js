@@ -24,7 +24,7 @@ import styled, { css } from 'styled-components';
 import { BEZIER } from '../../../../animation';
 import { ScheduledTransition } from '../scheduledTransition';
 
-const DURATION = 550;
+const DURATION = 520;
 const DELAY = 80;
 
 const Opacity = styled.div``;

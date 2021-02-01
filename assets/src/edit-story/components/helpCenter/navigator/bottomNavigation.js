@@ -32,7 +32,7 @@ import { NavBar, NavButton } from './components';
 const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
-  transition: 0.3s transform ${BEZIER.default};
+  transition: transform 600ms ${BEZIER.default};
   ${({ isHidden }) =>
     isHidden &&
     css`

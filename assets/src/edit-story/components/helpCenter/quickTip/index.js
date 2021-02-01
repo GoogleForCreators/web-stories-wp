@@ -28,8 +28,19 @@ import { Transitioner } from './transitioner';
 
 const Panel = styled.div`
   width: 100%;
-  padding: ${GUTTER_WIDTH}px ${GUTTER_WIDTH}px
-    ${NAVIGATION_HEIGHT + GUTTER_WIDTH}px ${GUTTER_WIDTH}px;
+  padding-bottom: ${NAVIGATION_HEIGHT}px;
+
+  ${Text} + ${Text} {
+    margin-top: 8px;
+  }
+`;
+
+const Overflow = styled.div`
+  position: relative;
+  width: 100%;
+  max-height: 70vh;
+  overflow-y: scroll;
+  padding: ${GUTTER_WIDTH}px;
 `;
 
 // @TODO update with actual figure.
@@ -59,17 +70,19 @@ export function QuickTip({
       isLeftToRightTransition={isLeftToRightTransition}
     >
       <Panel>
-        <Figure />
-        <Title>{title}</Title>
-        {description.map((paragraph, i) => (
-          <Text
-            // eslint-disable-next-line react/no-array-index-key
-            key={`${title}-${i}`}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
-            {paragraph}
-          </Text>
-        ))}
+        <Overflow>
+          <Figure />
+          <Title>{title}</Title>
+          {description.map((paragraph, i) => (
+            <Text
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${title}-${i}`}
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {paragraph}
+            </Text>
+          ))}
+        </Overflow>
       </Panel>
     </Transitioner>
   );
