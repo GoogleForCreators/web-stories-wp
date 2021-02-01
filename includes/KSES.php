@@ -53,19 +53,10 @@ class KSES {
 			$edit_posts = current_user_can( $post_type_object->cap->edit_posts );
 		}
 
-		if ( $edit_posts ) {
-			$this->add_filters();
+		if ( ! $edit_posts ) {
+			return;
 		}
-	}
 
-	/**
-	 * Initializes KSES filters for stories.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @return void
-	 */
-	public function add_filters() {
 		if ( ! current_user_can( 'unfiltered_html' ) ) {
 			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
 			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );

@@ -84,9 +84,6 @@ class Demo_Content {
 	 * @return string Localized text.
 	 */
 	private function localize_texts( $content ) {
-		$kses = new KSES();
-		$kses->add_filters();
-
 		$replacements = [
 			// Page 1.
 			'L10N_PLACEHOLDER_1_1' => /* translators: demo content used in the "Get Started" story */
@@ -163,8 +160,6 @@ class Demo_Content {
 		foreach ( $replacements as $search => $replacement ) {
 			$content = str_replace( $search, $replacement, $content );
 		}
-
-		$kses->remove_filters();
 
 		return $content;
 	}
