@@ -45,6 +45,10 @@ const Container = styled.section`
   position: relative;
 
   ${({ circle }) => circle && 'border-radius: 50%;'}
+
+  :focus {
+    outline: -webkit-focus-ring-color auto 1px;
+  }
 `;
 
 const DefaultImage = styled(DefaultImageIcon)`

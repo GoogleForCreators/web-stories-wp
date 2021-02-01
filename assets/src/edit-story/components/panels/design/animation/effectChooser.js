@@ -128,6 +128,10 @@ const Grid = styled.div.attrs({ role: 'list' })`
   grid-template-columns: repeat(4, 58px);
   padding: 15px;
   position: relative;
+  /* Specify outline override here so we can give priority with extra selectors */
+  & > button[role='listitem']:focus {
+    outline: -webkit-focus-ring-color auto 1px !important;
+  }
 `;
 
 const GridItemFullRow = styled(GridItem)`

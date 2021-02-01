@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
+import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useLibrary from '../../../useLibrary';
 import { dataToEditorX, dataToEditorY } from '../../../../../units';
 import LibraryMoveable from '../../shared/libraryMoveable';
@@ -43,6 +44,9 @@ const TextSetItem = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
   border-radius: 4px;
   cursor: pointer;
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: -webkit-focus-ring-color auto 2px;
+  }
 `;
 
 const DragContainer = styled.div`

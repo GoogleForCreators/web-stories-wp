@@ -27,6 +27,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
+import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import Attribution from './attribution';
@@ -51,6 +52,9 @@ const InnerContainer = styled.div`
   display: flex;
   margin-bottom: 10px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
+    outline: solid 2px #fff;
+  }
 `;
 
 const gradientAnimation = keyframes`

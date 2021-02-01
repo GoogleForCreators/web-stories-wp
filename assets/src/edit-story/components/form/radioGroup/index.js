@@ -27,9 +27,8 @@ import { useMemo, useRef } from 'react';
  * Internal dependencies
  */
 import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
+import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useRadioNavigation from '../shared/useRadioNavigation';
-import { FOCUS_VISIBLE_SELECTOR } from '../../../../design-system/theme/global';
-import { focusCSS } from '../../../../design-system/theme/helpers';
 
 const RadioButton = styled.label`
   display: block;
@@ -60,9 +59,8 @@ const Name = styled.span`
 const Radio = styled.input.attrs({ className: 'mousetrap' })`
   opacity: 0;
   position: absolute;
-  &.${FOCUS_VISIBLE_SELECTOR} + ${Label} {
-    ${({ theme }) =>
-      focusCSS(theme.colors.accent.primary, theme.colors.bg.panel)}
+  ${KEYBOARD_USER_SELECTOR} &:focus + ${Label} {
+    outline: -webkit-focus-ring-color auto 5px;
   }
 `;
 
