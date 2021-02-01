@@ -52,7 +52,7 @@ const Label = styled.label`
     disabled ? theme.colors.fg.disable : 'auto'};
 `;
 
-const Anchor = styled.a`
+const Link = styled.a`
   ${({ theme }) => css`
     color: ${theme.colors.fg.linkNormal};
     text-decoration: none;
@@ -69,7 +69,7 @@ const Anchor = styled.a`
 export const Text = ({ as, disabled, ...props }) => {
   switch (as) {
     case 'a':
-      return <Anchor {...props} />;
+      return <Link {...props} />;
     case 'label':
       return <Label disabled={disabled} {...props} />;
     case 'span':
