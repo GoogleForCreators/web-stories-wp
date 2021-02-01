@@ -24,14 +24,14 @@ import { clamp } from '../../../animation';
 import { NAVIGATION_FLOW } from './constants';
 
 /**
- * Perform any state updates that result from
+ * Performs any state updates that result from
  * inspection of previous or next state
  *
  * @param {*} previous - previous state
  * @param {*} next - next state
  * @return {*} partial of state
  */
-const deriveState = (previous, next) => {
+export const deriveState = (previous, next) => {
   const isMenuIndex = next.navigationIndex < 0;
   const isLTRTransition = next.navigationIndex - previous.navigationIndex > 0;
 
@@ -39,7 +39,7 @@ const deriveState = (previous, next) => {
     hasBottomNavigation: !isMenuIndex,
     isLeftToRightTransition: !isMenuIndex && isLTRTransition,
     isPrevDisabled: next.navigationIndex <= 0,
-    isNextDisabled: next.navigationIndex >= next.navigationFlow.length - 1,
+    isNextDisabled: next.navigationIndex >= next.navigationFlow?.length - 1,
   };
 };
 

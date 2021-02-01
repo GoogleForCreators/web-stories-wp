@@ -19,6 +19,10 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
  * Internal dependencies
  */
 import { GUTTER_WIDTH } from '../constants';
@@ -36,7 +40,7 @@ const Container = styled.div`
 export function Menu({ onTipSelect = () => {}, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
-      <Container>
+      <Container aria-label={__('Help Center Main Menu', 'web-stories')}>
         <Header />
         <Tips onTipSelect={onTipSelect} />
         <Footer />
