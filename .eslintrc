@@ -403,6 +403,14 @@
         "header/header": "off",
         "prettier/prettier": "off"
       }
+    },
+    {
+      "files": [
+        "assets/src/tinymce/**/*.js"
+      ],
+      "globals": {
+        "tinymce": "readonly"
+      }
     }
   ]
 }
