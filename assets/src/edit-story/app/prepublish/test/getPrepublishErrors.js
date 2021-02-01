@@ -106,7 +106,6 @@ describe('prepublish checklist', () => {
     expect(test).toHaveLength(copyTest.length);
     test.forEach((obj, index) => {
       expect(obj.message).toStrictEqual(copyTest[index].message);
-      expect(obj.help).toStrictEqual(copyTest[index].help);
       expect(obj.type).toStrictEqual(copyTest[index].type);
     });
   });
