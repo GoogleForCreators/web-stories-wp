@@ -30,11 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackEvent } from '../../../../../tracking';
-import {
-  Layout,
-  ToggleButtonGroup,
-  useLayoutContext,
-} from '../../../../components';
+import { ToggleButtonGroup, useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
@@ -153,7 +149,7 @@ function Header({
   }, TEXT_INPUT_DEBOUNCE);
 
   return (
-    <Layout.Squishable>
+    <>
       <PageHeading
         defaultTitle={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
@@ -178,7 +174,7 @@ function Header({
           'web-stories'
         )}
       />
-    </Layout.Squishable>
+    </>
   );
 }
 

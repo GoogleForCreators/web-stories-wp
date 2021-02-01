@@ -72,12 +72,10 @@ function PresetsHeader({
   handleAddPreset,
   isEditMode,
   setIsEditMode,
-  presets,
+  hasPresets,
   canCollapse,
   presetType,
 }) {
-  const hasPresets = presets.length > 0;
-
   const isColor = 'color' === presetType;
   const editLabel = isColor
     ? __('Edit color presets', 'web-stories')
@@ -119,7 +117,7 @@ function PresetsHeader({
 }
 
 PresetsHeader.propTypes = {
-  presets: PropTypes.array.isRequired,
+  hasPresets: PropTypes.bool.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,

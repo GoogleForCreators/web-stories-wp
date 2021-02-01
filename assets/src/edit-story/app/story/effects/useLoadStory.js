@@ -51,7 +51,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           // todo: get publisher_logo_url image dimensions for prepublish checklist
           publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
-          style_presets: stylePresets,
+          style_presets: globalStoryStyles,
           password,
           preview_link: previewLink,
           _embedded: embedded = {},
@@ -108,11 +108,11 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
 
         // Initialize color/style presets, if missing.
-        if (!stylePresets.colors) {
-          stylePresets.colors = [];
+        if (!globalStoryStyles.colors) {
+          globalStoryStyles.colors = [];
         }
-        if (!stylePresets.textStyles) {
-          stylePresets.textStyles = [];
+        if (!globalStoryStyles.textStyles) {
+          globalStoryStyles.textStyles = [];
         }
 
         // Set story-global variables.
@@ -131,7 +131,8 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           publisherLogoUrl,
           password,
           previewLink,
-          stylePresets,
+          currentStoryStyles: storyData?.currentStoryStyles || { colors: [] },
+          globalStoryStyles,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
         };
