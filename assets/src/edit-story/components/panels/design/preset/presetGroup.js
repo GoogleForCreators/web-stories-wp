@@ -22,6 +22,11 @@ import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../../../../design-system';
@@ -31,7 +36,7 @@ import {
   SAVED_STYLE_HEIGHT,
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
-import ColorAdd from './colorAdd';
+import ColorAdd from './colorPreset/colorAdd';
 
 const STYLE_WIDTH = 112;
 
@@ -59,6 +64,7 @@ function PresetGroup({
   handleClick,
   isEditMode,
   handleAddPreset,
+  isLocal,
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
@@ -114,12 +120,26 @@ function PresetGroup({
     <Group ref={groupRef} type={type}>
       {presets.map((preset, i) => (
         <ButtonWrapper key={JSON.stringify(preset)} type={type}>
-          {itemRenderer(preset, i, activeIndex, handleClick, isEditMode)}
+          {itemRenderer(
+            preset,
+            i,
+            activeIndex,
+            handleClick,
+            isEditMode,
+            isLocal
+          )}
         </ButtonWrapper>
       ))}
       {displayAddIcon && (
         <ButtonWrapper type={type}>
-          <ColorAdd handleAddPreset={handleAddPreset} />
+          <ColorAdd
+            handleAddPreset={handleAddPreset}
+            aria-label={
+              isLocal
+                ? __('Add local color', 'web-stories')
+                : __('Add global color', 'web-stories')
+            }
+          />
         </ButtonWrapper>
       )}
     </Group>
@@ -133,6 +153,7 @@ PresetGroup.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddPreset: PropTypes.func.isRequired,
+  isLocal: PropTypes.bool,
 };
 
 export default PresetGroup;

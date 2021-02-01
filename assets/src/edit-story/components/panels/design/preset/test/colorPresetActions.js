@@ -36,7 +36,7 @@ function setupActions() {
   const storyContextValue = {
     state: {
       selectedElements: [textElement],
-      story: { stylePresets: { colors: [] } },
+      story: { globalStoryStyles: { colors: [] } },
     },
     actions: { updateStory },
   };
@@ -66,7 +66,7 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
     fireEvent.click(element);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
-        stylePresets: {
+        globalStoryStyles: {
           colors: [{ color: { b: 1, g: 1, r: 1 } }],
         },
       },
