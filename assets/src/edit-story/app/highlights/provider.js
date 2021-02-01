@@ -68,15 +68,15 @@ function HighlightsProvider({ children }) {
     [selectElement]
   );
 
-  const onFocusOut = useCallback(() => {
-    setHighlighted({});
-  }, [setHighlighted]);
+  const onFocusOut = useCallback(() => setHighlighted({}), [setHighlighted]);
 
-  const cancelEffect = useCallback((stateKey) => {
-    setHighlighted((state) => ({
-      [stateKey]: { ...state[stateKey], showEffect: false },
-    }));
-  }, []);
+  const cancelEffect = useCallback(
+    (stateKey) =>
+      setHighlighted((state) => ({
+        [stateKey]: { ...state[stateKey], showEffect: false },
+      })),
+    []
+  );
 
   return (
     <Context.Provider
@@ -93,7 +93,7 @@ function HighlightsProvider({ children }) {
 }
 
 HighlightsProvider.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 };
 
 export default HighlightsProvider;

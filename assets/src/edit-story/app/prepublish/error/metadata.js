@@ -189,7 +189,7 @@ export function linkInPageAttachmentRegion(page) {
       .filter(({ link }) => Boolean(link?.url?.length))
       .filter(isElementBelowLimit);
 
-  if (linksInPageAttachmentArea && linksInPageAttachmentArea.length) {
+  if (linksInPageAttachmentArea?.length) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       pageId: page.id,

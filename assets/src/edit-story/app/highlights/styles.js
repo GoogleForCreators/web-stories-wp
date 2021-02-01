@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { rgba } from 'polished';
 import { css, keyframes } from 'styled-components';
 /**
  * Internal dependencies
@@ -24,12 +25,12 @@ import { theme as dsTheme } from '../../../design-system';
 
 const flash = keyframes`
   50% {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: ${rgba(dsTheme.colors.standard.white, 0.3)};
   }
 `;
 
 export const FLASH = css`
-  background-color: rgba(255, 255, 255, 0);
+  background-color: ${rgba(dsTheme.colors.standard.white, 0)};
   animation: ${flash} 0.3s ease-in-out 2;
 `;
 
