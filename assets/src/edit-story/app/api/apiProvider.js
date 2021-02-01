@@ -73,10 +73,11 @@ function APIProvider({ children }) {
     ({
       pages,
       featuredMedia,
-      stylePresets,
+      globalStoryStyles,
       publisherLogo,
       autoAdvance,
       defaultPageDuration,
+      currentStoryStyles,
       content,
       author,
       ...rest
@@ -87,9 +88,10 @@ function APIProvider({ children }) {
           pages,
           autoAdvance,
           defaultPageDuration,
+          currentStoryStyles,
         },
         featured_media: featuredMedia.id,
-        style_presets: stylePresets,
+        style_presets: globalStoryStyles,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
         author: author.id,
@@ -272,8 +274,7 @@ function APIProvider({ children }) {
         story.comment_status ? ['comment_status', story.comment_status] : false,
         story.ping_status ? ['ping_status', story.ping_status] : false,
         story.sticky ? ['sticky', story.sticky] : false,
-        // TODO: Adapt once https://github.com/google/web-stories-wp/pull/5039 is merged.
-        story.author ? ['post_author', story.author] : false,
+        story.author ? ['post_author', story.author.id] : false,
       ].filter(Boolean);
 
       additionalData.forEach(([key, value]) => formData.append(key, value));

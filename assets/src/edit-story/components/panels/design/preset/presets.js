@@ -18,28 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { PanelContent } from '../../panel';
-import { Add } from '../../../../../design-system/icons';
-import { TranslateWithMarkup } from '../../../../../i18n';
 import PresetGroup from './presetGroup';
-import ColorAdd from './colorAdd';
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  padding: 0px 30px 10px;
-  text-align: center;
-  line-height: 20px;
-`;
 
 function Presets({
   presets,
@@ -48,41 +31,18 @@ function Presets({
   isEditMode,
   type,
   handleAddPreset,
+  isLocal = false,
 }) {
-  const hasPresets = presets.length > 0;
-
   return (
-    <PanelContent isPrimary padding={hasPresets ? null : '0'}>
-      {hasPresets && (
-        <PresetGroup
-          itemRenderer={itemRenderer}
-          presets={presets}
-          type={type}
-          isEditMode={isEditMode}
-          handleClick={handleOnClick}
-          handleAddPreset={handleAddPreset}
-        />
-      )}
-      {!hasPresets && 'color' === type && (
-        <ButtonWrapper>
-          <ColorAdd
-            handleAddPreset={handleAddPreset}
-            helper={
-              <TranslateWithMarkup
-                mapping={{
-                  i: <Add width={18} height={13} />,
-                }}
-              >
-                {__(
-                  'Click on the <i></i> icon to save a color to all stories.',
-                  'web-stories'
-                )}
-              </TranslateWithMarkup>
-            }
-          />
-        </ButtonWrapper>
-      )}
-    </PanelContent>
+    <PresetGroup
+      itemRenderer={itemRenderer}
+      presets={presets}
+      type={type}
+      isEditMode={isEditMode}
+      handleClick={handleOnClick}
+      handleAddPreset={handleAddPreset}
+      isLocal={isLocal}
+    />
   );
 }
 
@@ -93,6 +53,7 @@ Presets.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddPreset: PropTypes.func.isRequired,
+  isLocal: PropTypes.bool,
 };
 
 export default Presets;

@@ -140,11 +140,18 @@ function ColorPresetPanel({ pushUpdate }) {
     i,
     activeIndex,
     handleOnClick,
-    isEditMode
+    isEditMode,
+    isLocal
   ) => {
     if (!color) {
       return null;
     }
+    const deleteLabel = isLocal
+      ? __('Delete local color', 'web-stories')
+      : __('Delete global color', 'web-stories');
+    const applyLabel = isLocal
+      ? __('Apply local color', 'web-stories')
+      : __('Apply global color', 'web-stories');
     const hasTransparency = presetHasOpacity(color);
     const hasGradient = presetHasGradient(color);
     const opaqueColor = hasTransparency ? getOpaqueColor(color) : color;
@@ -167,11 +174,7 @@ function ColorPresetPanel({ pushUpdate }) {
             color={color}
             onClick={() => handleOnClick(color)}
             disabled={disabled}
-            aria-label={
-              isEditMode
-                ? __('Delete color preset', 'web-stories')
-                : __('Apply color preset', 'web-stories')
-            }
+            aria-label={isEditMode ? deleteLabel : applyLabel}
           >
             {hasTransparency && !hasGradient && (
               <OpaqueColorWrapper>

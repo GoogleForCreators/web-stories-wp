@@ -15,18 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useFeatures } from 'flagged';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import { useFeatures } from 'flagged';
-/**
  * Internal dependencies
  */
-import { useStory, useLocalMedia, useHistory, useConfig } from '../../../app';
+import { useStory, useLocalMedia, useHistory } from '../../../app';
+import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
 import { Outline } from '../../button';
 import { useGlobalKeyDownEffect } from '../../../../design-system';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
@@ -47,15 +49,9 @@ function Update() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-
-  const { customMetaBoxes: isMetaBoxesFeatureEnabled } = useFeatures();
-  const { metaBoxes = {} } = useConfig();
-
-  const hasMetaBoxes =
-    isMetaBoxesFeatureEnabled &&
-    Object.keys(metaBoxes).some((location) =>
-      Boolean(metaBoxes[location]?.length)
-    );
+  const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+  }));
 
   useGlobalKeyDownEffect(
     { key: ['mod+s'] },

@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import {
@@ -40,11 +39,11 @@ const StyledHeader = styled.h2`
   justify-content: flex-start;
   align-items: center;
   line-height: 1;
-  font-size: ${cssLerp('36px', '30px', '--squish-progress')};
+  font-size: 30px;
   white-space: nowrap;
 
   @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
-    font-size: ${cssLerp('30px', '24px', '--squish-progress')};
+    font-size: 24px;
   }
 `;
 

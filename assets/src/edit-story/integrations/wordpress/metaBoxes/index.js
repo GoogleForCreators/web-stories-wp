@@ -18,19 +18,22 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useFeature } from 'flagged';
 import { useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../app/config';
+import { useConfig } from '../../../app/config';
 import MetaBoxesArea from './metaBoxesArea';
+import useMetaBoxes from './useMetaBoxes';
 
 const Wrapper = styled.div``;
 
 function MetaBoxes() {
-  const isFeatureEnabled = useFeature('customMetaBoxes');
+  const { metaBoxesVisible, hasMetaBoxes } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+    metaBoxesVisible: state.metaBoxesVisible,
+  }));
 
   const { postType, metaBoxes = {} } = useConfig();
 
@@ -50,7 +53,11 @@ function MetaBoxes() {
     };
   }, [postType]);
 
-  if (!isFeatureEnabled) {
+  if (!hasMetaBoxes) {
+    return null;
+  }
+
+  if (!metaBoxesVisible) {
     return null;
   }
 
@@ -59,13 +66,13 @@ function MetaBoxes() {
   return (
     <Wrapper>
       {locations.map((location) => {
-        const isVisible = Boolean(metaBoxes[location]?.length);
-        return (
-          isVisible && <MetaBoxesArea key={location} location={location} />
-        );
+        return <MetaBoxesArea key={location} location={location} />;
       })}
     </Wrapper>
   );
 }
 
 export default MetaBoxes;
+
+export { default as MetaBoxesProvider } from './metaBoxesProvider';
+export { default as useMetaBoxes } from './useMetaBoxes';

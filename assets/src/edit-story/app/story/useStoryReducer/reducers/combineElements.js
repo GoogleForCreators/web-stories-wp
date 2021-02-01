@@ -50,9 +50,13 @@ import { removeAnimationsWithElementIds } from './utils';
  * @param {Object} payload Action payload
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
+ * @param {boolean} payload.shouldRetainAnimations Is called from copy and paste
  * @return {Object} New state
  */
-function combineElements(state, { firstElement, secondId }) {
+function combineElements(
+  state,
+  { firstElement, secondId, shouldRetainAnimations = true }
+) {
   if (!firstElement || !secondId) {
     return state;
   }
@@ -87,7 +91,6 @@ function combineElements(state, { firstElement, secondId }) {
     'scale',
     'focalX',
     'focalY',
-    'backgroundOverlay',
     'tracks',
   ];
 
@@ -109,11 +112,8 @@ function combineElements(state, { firstElement, secondId }) {
   const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
   const newElement = {
-    // First copy everything from existing element except if it was default background and any overlay
-    ...objectWithout(secondElement, [
-      'isDefaultBackground',
-      'backgroundOverlay',
-    ]),
+    // First copy everything from existing element except if it was default background
+    ...objectWithout(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
     // Then copy all media-related attributes from new element
@@ -130,10 +130,18 @@ function combineElements(state, { firstElement, secondId }) {
     // Update reference to second element
     .map((el) => (el.id === secondId ? newElement : el));
 
-  const newAnimations = removeAnimationsWithElementIds(page.animations, [
-    firstId,
-    secondId,
-  ]);
+  // First element should always be the image getting applied to
+  // new element. We want to remove any animations it has. Second
+  // element should be an element with or without animations that
+  // we want to retain.
+  //
+  // We want different behavior for copy and paste where we
+  // replace the element's animation with any coming from the
+  // newly pasted element.
+  const newAnimations = removeAnimationsWithElementIds(
+    page.animations,
+    shouldRetainAnimations ? [firstId] : [firstId, secondId]
+  );
 
   const newPage = {
     ...page,
