@@ -541,6 +541,7 @@ class Story_Post_Type {
 				],
 				'api'              => [
 					'users'       => '/web-stories/v1/users/',
+					'currentUser' => '/web-stories/v1/users/me/',
 					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
 					'media'       => '/web-stories/v1/media/',
 					'link'        => '/web-stories/v1/link/',
