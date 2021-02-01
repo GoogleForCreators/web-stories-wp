@@ -47,6 +47,13 @@ class User_Preferences {
 	const ONBOARDING_META_KEY = 'web_stories_onboarding';
 
 	/**
+	 * Name of the user meta key used for media optimization.
+	 *
+	 * @var string
+	 */
+	const MEDIA_OPTIMIZATION_META_KEY = 'web_stories_media_optimization';
+
+	/**
 	 * Initializes User_Preferences.
 	 *
 	 * Registers the setting in WordPress.
@@ -63,6 +70,19 @@ class User_Preferences {
 				'type'              => 'boolean',
 				'sanitize_callback' => 'rest_sanitize_boolean',
 				'default'           => false,
+				'show_in_rest'      => true,
+				'auth_callback'     => [ $this, 'can_edit_current_user' ],
+				'single'            => true,
+			]
+		);
+
+		register_meta(
+			'user',
+			static::MEDIA_OPTIMIZATION_META_KEY,
+			[
+				'type'              => 'boolean',
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'default'           => true,
 				'show_in_rest'      => true,
 				'auth_callback'     => [ $this, 'can_edit_current_user' ],
 				'single'            => true,
