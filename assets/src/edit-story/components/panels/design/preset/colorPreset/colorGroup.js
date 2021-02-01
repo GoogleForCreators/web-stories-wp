@@ -63,7 +63,6 @@ function ColorGroup({
     activeIndex,
     setActiveIndex,
     groupRef,
-    styles: colors,
   });
 
   return (
@@ -83,6 +82,7 @@ function ColorGroup({
       {displayAdd && (
         <ButtonWrapper>
           <ColorAdd
+            tabIndex={0}
             handleAddPreset={handleAddPreset}
             aria-label={
               isLocal

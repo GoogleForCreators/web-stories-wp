@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { KEYBOARD_USER_SELECTOR } from '../../../../../../dashboard/constants';
 import { Remove } from '../../../../../icons';
 import WithTooltip from '../../../../tooltip';
 import {
@@ -39,6 +40,7 @@ import {
 } from '../utils';
 import { useStory } from '../../../../../app/story';
 import generatePatternStyles from '../../../../../utils/generatePatternStyles';
+import useRovingTabIndex from "../../../../../utils/useRovingTabIndex";
 
 const PRESET_SIZE = 30;
 const REMOVE_ICON_SIZE = 16;
@@ -57,7 +59,12 @@ const Transparent = styled.div`
   border-radius: 100%;
 `;
 
-const ColorWrapper = styled.div`
+const ColorButton = styled.button.attrs({ type: 'button' })`
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+  border-width: 0;
   display: block;
   width: ${PRESET_SIZE}px;
   height: ${PRESET_SIZE}px;
@@ -65,11 +72,6 @@ const ColorWrapper = styled.div`
   overflow: hidden;
   position: relative;
   ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
-
-  &:focus-within {
-    border-color: ${({ theme }) => theme.colors.fg.white};
-    border-width: 3px;
-  }
 `;
 
 const presetCSS = css`
@@ -78,10 +80,6 @@ const presetCSS = css`
   height: 100%;
   font-size: 13px;
   position: relative;
-  cursor: pointer;
-  background-color: transparent;
-  border-color: transparent;
-  border-width: 0;
   svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
@@ -91,13 +89,10 @@ const presetCSS = css`
     transform: rotate(45deg);
   }
 `;
-const ColorButton = styled.button.attrs({ type: 'button' })`
+const ColorItem = styled.div`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
   transform: rotate(-45deg);
-  &:focus {
-    outline: none !important;
-  }
 
   svg {
     color: ${({ theme }) => theme.colors.fg.primary};
@@ -157,23 +152,22 @@ function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
   }
   return (
     <WithTooltip title={tooltip}>
-      <ColorWrapper disabled={disabled}>
+      <ColorButton
+        aria-label={isEditMode ? deleteLabel : applyLabel}
+        disabled={disabled}
+        tabIndex={activeIndex === i ? 0 : -1}
+        onClick={() => handleOnClick(color)}
+      >
         {hasTransparency && <Transparent />}
-        <ColorButton
-          tabIndex={activeIndex === i ? 0 : -1}
-          color={color}
-          onClick={() => handleOnClick(color)}
-          disabled={disabled}
-          aria-label={isEditMode ? deleteLabel : applyLabel}
-        >
+        <ColorItem color={color} disabled={disabled}>
           {hasTransparency && !hasGradient && (
             <OpaqueColorWrapper>
               <OpaqueColor color={opaqueColor} />
             </OpaqueColorWrapper>
           )}
           {isEditMode && <Remove />}
-        </ColorButton>
-      </ColorWrapper>
+        </ColorItem>
+      </ColorButton>
     </WithTooltip>
   );
 }

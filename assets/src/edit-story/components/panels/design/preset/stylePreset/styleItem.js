@@ -132,7 +132,7 @@ function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
 StyleItem.propTypes = {
   style: PropTypes.object.isRequired,
   i: PropTypes.number.isRequired,
-  activeIndex: PropTypes.object,
+  activeIndex: PropTypes.number,
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
 };

@@ -15,22 +15,22 @@
  */
 
 /**
- * External dependencies
- */
-import { useEffect } from 'react';
-
-/**
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../../../../design-system/components/keyboard';
-import { COLOR_PRESETS_PER_ROW } from '../../../../constants';
+import {
+  COLOR_PRESETS_PER_ROW,
+  STYLE_PRESETS_PER_ROW,
+} from '../../../../constants';
 
 function useKeyboardNavigation({
   activeIndex,
   setActiveIndex,
   groupRef,
-  styles,
+  type = 'color',
 }) {
+  const presetsPerRow =
+    'color' === type ? COLOR_PRESETS_PER_ROW : STYLE_PRESETS_PER_ROW;
   const getIndexDiff = (key, rowLength) => {
     switch (key) {
       case 'ArrowUp':
@@ -53,26 +53,21 @@ function useKeyboardNavigation({
       // When the user navigates in the colors using the arrow keys,
       // Let's change the active index accordingly, to indicate which preset should be focused
       if (groupRef.current) {
-        const diff = getIndexDiff(key, COLOR_PRESETS_PER_ROW);
-        const maxIndex = styles.length - 1;
+        const diff = getIndexDiff(key, presetsPerRow);
+        const buttons = groupRef.current.querySelectorAll(
+          'button:not([disabled])'
+        );
+        const maxIndex = buttons.length - 1;
         const val = (activeIndex ?? 0) + diff;
         const newIndex = Math.max(0, Math.min(maxIndex, val));
         setActiveIndex(newIndex);
-        const buttons = groupRef.current.querySelectorAll('button');
         if (buttons[newIndex]) {
           buttons[newIndex].focus();
         }
       }
     },
-    [activeIndex, styles.length, setActiveIndex, groupRef]
+    [activeIndex, setActiveIndex, groupRef, presetsPerRow]
   );
-
-  // Make sure index stays within the length (user can delete last element)
-  useEffect(() => {
-    if (activeIndex >= styles.length) {
-      setActiveIndex(styles.length - 1);
-    }
-  }, [activeIndex, styles.length, setActiveIndex]);
 }
 
 export default useKeyboardNavigation;

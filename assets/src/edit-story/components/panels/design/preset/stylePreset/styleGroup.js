@@ -50,7 +50,7 @@ function StyleGroup({ styles, isEditMode, handleClick }) {
     activeIndex,
     setActiveIndex,
     groupRef,
-    styles,
+    type: 'style',
   });
 
   return (
