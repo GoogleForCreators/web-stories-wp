@@ -26,11 +26,11 @@ import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
 function setupPresets(props = {}) {
-  const { isEditMode = false, stylePresets } = props;
+  const { isEditMode = false, globalStoryStyles } = props;
   const presets = {
     colors: [],
     textStyles: [],
-    ...stylePresets,
+    ...globalStoryStyles,
   };
   const handleOnClick = jest.fn();
   return renderWithTheme(
@@ -44,7 +44,7 @@ function setupPresets(props = {}) {
   );
 }
 
-describe('stylePresets/Presets', () => {
+describe('globalStoryStyles/Presets', () => {
   const TEST_COLOR = {
     color: {
       r: 1,
@@ -72,7 +72,7 @@ describe('stylePresets/Presets', () => {
     const textContent = 'Hello, Preset';
     const { getByText } = setupPresets({
       textContent,
-      stylePresets: {
+      globalStoryStyles: {
         textStyles: [STYLE_PRESET],
         fillColors: [],
       },
@@ -86,7 +86,7 @@ describe('stylePresets/Presets', () => {
     const textContent = 'Hello, Preset';
     const { getByText } = setupPresets({
       textContent,
-      stylePresets: {
+      globalStoryStyles: {
         textStyles: [
           {
             ...STYLE_PRESET,

@@ -69,7 +69,7 @@ describe('useAutoSave', () => {
       excerpt: '',
       featuredMedia: { id: 0 },
       password: '',
-      stylePresets: '',
+      globalStoryStyles: '',
     };
     const pages = [
       {
