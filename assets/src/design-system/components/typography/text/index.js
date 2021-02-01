@@ -52,24 +52,8 @@ const Label = styled.label`
     disabled ? theme.colors.fg.disable : 'auto'};
 `;
 
-const Link = styled.a`
-  ${({ theme }) => css`
-    color: ${theme.colors.fg.linkNormal};
-    text-decoration: none;
-    cursor: pointer;
-
-    :hover {
-      color: ${theme.colors.fg.linkHover};
-    }
-
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
-  `};
-`;
-
 export const Text = ({ as, disabled, ...props }) => {
   switch (as) {
-    case 'a':
-      return <Link {...props} />;
     case 'label':
       return <Label disabled={disabled} {...props} />;
     case 'span':
@@ -80,7 +64,7 @@ export const Text = ({ as, disabled, ...props }) => {
 };
 
 Text.propTypes = {
-  as: PropTypes.oneOf(['p', 'a', 'span', 'label']),
+  as: PropTypes.oneOf(['p', 'span', 'label']),
   /** only applies to label styling */
   disabled: PropTypes.bool,
   isBold: PropTypes.bool,

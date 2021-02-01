@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,28 @@
  * limitations under the License.
  */
 
-export * from './button';
-export * from './checkbox';
-export { Dialog } from './dialog';
-export { DropDown } from './dropDown';
-export { Input } from './input';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export { Popup, PLACEMENT } from './popup';
-export * as Snackbar from './snackbar';
-export * from './tooltip';
-export * from './keyboard';
-export * from './keyboard/gridview';
-export * from './notificationBubble';
-export { Display, Headline, Link, Text } from './typography';
+/**
+ * External dependencies
+ */
+import styled, { css } from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { themeHelpers } from '../../../theme';
+import { defaultTypographyStyle } from '../styles';
+
+export const Link = styled.a`
+  ${defaultTypographyStyle};
+  ${({ theme }) => css`
+    color: ${theme.colors.fg.linkNormal};
+    text-decoration: none;
+    cursor: pointer;
+
+    :hover {
+      color: ${theme.colors.fg.linkHover};
+    }
+
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
+  `};
+`;

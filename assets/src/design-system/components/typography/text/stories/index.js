@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -64,23 +63,6 @@ export const Bold = () => (
       >
         {presetSize} <br />
         {'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'}
-      </Text>
-    ))}
-  </>
-);
-
-export const Link = () => (
-  <>
-    {textPresetSizes.map((presetSize) => (
-      <Text
-        key={`${presetSize}_text_link`}
-        size={presetSize}
-        as={select('as', textRenderAsOptions, 'a')}
-        href="#"
-        onClick={action('anchor clicked! Do something.')}
-      >
-        {`${presetSize} - Click here for more information`}
-        <br />
       </Text>
     ))}
   </>
