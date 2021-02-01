@@ -67,23 +67,6 @@ class KSES {
 	}
 
 	/**
-	 * Restores original KSES behavior.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function remove_filters() {
-		if ( ! current_user_can( 'unfiltered_html' ) ) {
-			remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10 );
-			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
-		}
-		kses_init();
-	}
-
-	/**
 	 * Filters list of allowed CSS attributes.
 	 *
 	 * @since 1.0.0
