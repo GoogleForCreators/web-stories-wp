@@ -33,6 +33,7 @@ import { Plain } from '../../../../button';
 import Dialog from '../../../../dialog';
 import { useSnackbar } from '../../../../../app/snackbar';
 import { useLocalMedia } from '../../../../../app/media';
+import { trackError } from '../../../../../../tracking';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
@@ -58,6 +59,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
       await deleteMedia(mediaId);
       deleteMediaElement({ id: mediaId });
     } catch (err) {
+      trackError('local media deletion', err.message);
       showSnackbar({
         message: __('Failed to delete media item.', 'web-stories'),
       });

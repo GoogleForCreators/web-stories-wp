@@ -17,9 +17,6 @@
 /**
  * Internal dependencies
  */
-import loadTextSets from './loadTextSets';
+import { createContext } from '../../../../design-system';
 
-export async function getTextSets() {
-  const textSetLibrary = await loadTextSets();
-  return textSetLibrary;
-}
+export default createContext({ state: {}, actions: {} });
