@@ -30,7 +30,7 @@ const DELAY = 80;
 const Opacity = styled.div``;
 
 const enterStyles = () => css`
-  transition-delay: ${DELAY / 1000}s;
+  transition-delay: ${DELAY}ms;
   transform: none;
   ${Opacity} {
     opacity: 1;
@@ -65,7 +65,7 @@ const Manager = styled.div`
   position: relative;
   color: ${({ theme }) => theme.colors.fg.primary};
   background-color: ${({ theme }) => theme.colors.bg.primary};
-  transition: ${DURATION / 1000}s transform ${BEZIER.default};
+  transition: transform ${DURATION}ms ${BEZIER.default};
   transform-origin: 50% 50%;
   z-index: 2;
   ${({ isLeftToRightTransition }) =>
@@ -79,7 +79,7 @@ const Manager = styled.div`
 
   ${Opacity} {
     opacity: 0.6;
-    transition: ${DURATION / 1000}s opacity ${BEZIER.default};
+    transition: opacity ${DURATION}ms ${BEZIER.default};
   }
 
   ${({ state, ...props }) => transitionStyles[state]?.(props)};

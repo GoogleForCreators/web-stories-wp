@@ -24,7 +24,7 @@ import { clamp } from '../../../animation';
 import { NAVIGATION_FLOW } from './constants';
 
 /**
- * Perform any state updates that result off of
+ * Perform any state updates that result from
  * inspection of previous or next state
  *
  * @param {*} previous - previous state

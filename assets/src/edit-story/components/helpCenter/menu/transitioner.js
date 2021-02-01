@@ -36,6 +36,10 @@ const exitSyles = css`
 `;
 
 const transitionStyles = {
+  enter: css`
+    opacity: 0.6;
+    transform: scale(0.96);
+  `,
   entering: enterSyles,
   entered: enterSyles,
   exiting: exitSyles,
@@ -45,10 +49,8 @@ const transitionStyles = {
 const Manager = styled.div`
   position: relative;
   color: ${({ theme }) => theme.colors.fg.primary};
-  transition: ${DURATION / 1000}s transform ${BEZIER.default},
-    ${DURATION / 1000}s opacity ${BEZIER.default};
-  opacity: 0.6;
-  transform: scale(0.96);
+  transition: transform ${DURATION}ms ${BEZIER.default},
+    opacity ${DURATION}ms ${BEZIER.default};
   z-index: 1;
 
   ${({ state }) => transitionStyles[state]};
