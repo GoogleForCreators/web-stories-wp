@@ -17,17 +17,26 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../theme';
+import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
 export const Link = styled.a`
-  ${defaultTypographyStyle};
-  ${({ theme }) => css`
+  ${({ isBold, size, theme }) => css`
+    ${defaultTypographyStyle};
+    ${themeHelpers.expandPresetStyles({
+      preset: theme.typography.presets.paragraph[size],
+      theme,
+    })};
+    font-weight: ${isBold
+      ? theme.typography.weight.bold
+      : theme.typography.presets.paragraph[size].weight};
+
     color: ${theme.colors.fg.linkNormal};
     text-decoration: none;
     cursor: pointer;
@@ -39,3 +48,13 @@ export const Link = styled.a`
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
   `};
 `;
+
+Link.propTypes = {
+  isBold: PropTypes.bool,
+  size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
+};
+Link.defaultProps = {
+  as: 'p',
+  isBold: false,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+};
