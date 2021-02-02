@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -78,18 +78,17 @@ function HighlightsProvider({ children }) {
     []
   );
 
-  return (
-    <Context.Provider
-      value={{
-        setHighlights,
-        onFocusOut,
-        cancelEffect,
-        ...highlighted,
-      }}
-    >
-      {children}
-    </Context.Provider>
+  const contextValue = useMemo(
+    () => ({
+      setHighlights,
+      onFocusOut,
+      cancelEffect,
+      ...highlighted,
+    }),
+    [cancelEffect, onFocusOut, setHighlights, highlighted]
   );
+
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
 
 HighlightsProvider.propTypes = {

@@ -14,15 +14,30 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
+/**
+ * Internal dependencies
+ */
 import { useContextSelector, useFocusOut } from '../../../design-system';
 import Context from './context';
 
+/**
+ *
+ * @typedef {import('./states').Highlight} Highlight
+ */
+
+/**
+ * Given a state key and a focusable ref, return the highlight context state
+ * and have the following effects on the element which owns the ref:
+ * - on focus out, clear the highlight state
+ * - on keydown, click, cancel any visual effects
+ *
+ * @param {string} stateKey the key of the highlight state to select from the context
+ * @param {{ current: { focus: Function }}} ref reference to a focusable input or button
+ * @return {Highlight} current highlight state
+ */
 function useFocusHighlight(stateKey, ref) {
   const context = useContextSelector(Context, (state) => ({
     [stateKey]: state[stateKey],
@@ -41,13 +56,13 @@ function useFocusHighlight(stateKey, ref) {
     };
     if (highlight?.focus && highlight?.showEffect) {
       events.forEach((eventName) => {
-        ref.current?.addEventListener(eventName, listener);
+        ref?.current?.addEventListener(eventName, listener);
       });
     }
 
     return () => {
       events.forEach((eventName) => {
-        ref.current?.removeEventListener(eventName, listener);
+        ref?.current?.removeEventListener(eventName, listener);
       });
     };
   }, [stateKey, ref, highlight, cancelEffect]);
@@ -59,6 +74,7 @@ function useFocusHighlight(stateKey, ref) {
     // timeout allows a state update tick
     // needed for when components are being rendered by switching tabs and selecting elements
     setTimeout(() => {
+      // if the effect has been canceled, do not re-focus
       highlight?.focus && highlight?.showEffect && current?.focus();
     });
   }, [highlight, current]);

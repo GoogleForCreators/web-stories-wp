@@ -19,6 +19,4 @@
  */
 import { createContext } from '../../../design-system';
 
-export default createContext({
-  onPrepublishSelect: {},
-});
+export default createContext({});

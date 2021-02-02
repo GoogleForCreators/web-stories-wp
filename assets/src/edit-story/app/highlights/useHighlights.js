@@ -25,7 +25,6 @@ import Context from './context';
 
 function useHighlights(selector) {
   const context = useContextSelector(Context, selector ?? identity);
-
   if (!context) {
     throw new Error(
       'Must use `useHighlights()` within <highlights.Provider />'
