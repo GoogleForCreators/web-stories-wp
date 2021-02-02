@@ -252,16 +252,19 @@ describe('Media3pPane fetching', () => {
 
   async function expectMediaElements(section, expectedCount) {
     let mediaElements;
-    await waitFor(() => {
-      mediaElements = section.querySelectorAll('[data-testid^=mediaElement]');
-      if (!mediaElements || mediaElements.length !== expectedCount) {
-        throw new Error(
-          `Not ready: ${mediaElements?.length} != ${expectedCount}`
-        );
-      }
-      jasmine.clock().tick(10);
-    });
-    expect(mediaElements.length).toBe(expectedCount);
+    await waitFor(
+      () => {
+        mediaElements = section.querySelectorAll('[data-testid^=mediaElement]');
+        if (!mediaElements || mediaElements.length !== expectedCount) {
+          throw new Error(
+            `Not ready: ${mediaElements?.length} != ${expectedCount}`
+          );
+        }
+        jasmine.clock().tick(10);
+      },
+      { timeout: 5000 }
+    );
+    expect(mediaElements?.length).toBe(expectedCount);
   }
 
   it('should render initial page with media3p tab button at top', async () => {
