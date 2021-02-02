@@ -35,7 +35,7 @@ async function loadTemplate(title, imageBaseUrl) {
         }
         if (elem?.resource?.src) {
           elem.resource.src = elem.resource.src.replace(
-            'https://replaceme.com/',
+            '__WEB_STORIES_TEMPLATE_BASE_URL__',
             imageBaseUrl
           );
         }

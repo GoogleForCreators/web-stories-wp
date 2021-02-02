@@ -61,7 +61,7 @@ const defaultConfig = {
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
   wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories/assets',
-  cdnURL: 'https://replaceme.com',
+  cdnURL: '__WEB_STORIES_TEMPLATE_BASE_URL__',
   version: '1.0.0-alpha.9',
   api: {
     stories: '/web-stories/v1/web-story',
