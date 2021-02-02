@@ -41,6 +41,12 @@ const Image = styled.img`
   max-width: initial;
   max-height: initial;
   ${videoWithScale}
+  ${({ previewMode }) =>
+    previewMode &&
+    `
+    height: inherit;
+    object-fit: contain;
+  `}
 `;
 
 function VideoDisplay({ previewMode, box: { width, height }, element }) {
@@ -88,6 +94,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           style={style}
           {...videoProps}
           ref={ref}
+          previewMode={previewMode}
         />
       ) : (
         <Video
