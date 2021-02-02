@@ -41,7 +41,7 @@ export function getContent() {
       height: 456,
     },
     password: '',
-    stylePresets: '',
+    globalStoryStyles: '',
   };
   const pages = [
     {

@@ -134,6 +134,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->add_caps_to_roles();
+
+		$this->set_permalink_structure( '/%postname%/' );
 	}
 
 	public function tearDown() {
@@ -146,6 +148,8 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->remove_caps_from_roles();
+
+		$this->set_permalink_structure( '' );
 
 		parent::tearDown();
 	}
@@ -188,6 +192,53 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertEquals( 3, $headers['X-WP-Total'] );
 	}
 
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 */
+	public function test_get_item() {
+		wp_set_current_user( self::$user_id );
+		$story   = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'draft',
+				'post_author' => self::$user_id,
+			]
+		);
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$this->assertArrayHasKey( 'preview_link', $data );
+		$view_link = get_preview_post_link( $story );
+		$this->assertSame( $view_link, $data['preview_link'] );
+	}
+
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 */
+	public function test_get_item_future() {
+		wp_set_current_user( self::$user_id );
+		$future_date = strtotime( '+1 day' );
+		$story       = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_author' => self::$user_id,
+			]
+		);
+		$request     = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$this->assertArrayHasKey( 'preview_link', $data );
+		$story_object = get_post( $story );
+		$slug         = $story_object->post_name;
+		$this->assertContains( $slug, $data['preview_link'] );
+	}
 	/**
 	 * @covers ::get_items
 	 */

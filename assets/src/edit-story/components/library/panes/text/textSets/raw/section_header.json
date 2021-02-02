@@ -1879,7 +1879,7 @@
   "current": "9c5a3d04-66eb-4ff3-a5fa-440b1ca4c9cf",
   "selection": [],
   "story": {
-    "stylePresets": {
+    "globalStoryStyles": {
       "textStyles": [
         {
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
