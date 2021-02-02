@@ -41,6 +41,7 @@ export class Layers extends AbstractPanel {
   }
 
   get resizeHandle() {
-    return getByLabelText(this.node.ownerDocument, /Set panel height/i);
+    console.log('HEY', this.node);
+    return getByLabelText(this.node, /Set panel height/i);
   }
 }
