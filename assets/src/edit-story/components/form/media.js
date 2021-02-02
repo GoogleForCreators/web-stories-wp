@@ -192,7 +192,7 @@ function MediaInput({
   };
 
   const isMenuVisible = isHovering || isFocused;
-
+  const { imgProps } = rest;
   return (
     <Container
       ref={ref}
@@ -204,7 +204,7 @@ function MediaInput({
       {...(canReset && resettableProps)}
     >
       {value && !isMultiple ? (
-        <Img src={value} circle={circle} alt={alt} />
+        <Img src={value} circle={circle} alt={alt} {...imgProps} />
       ) : (
         <DefaultImage size={size} />
       )}
