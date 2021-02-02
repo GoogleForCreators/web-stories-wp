@@ -39,3 +39,9 @@ export const Hint = styled(Text)`
 Hint.propTypes = {
   hasError: PropTypes.bool,
 };
+
+export const Label = styled(Text)`
+  margin-bottom: 8px;
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.fg.disable : theme.colors.fg.primary};
+`;

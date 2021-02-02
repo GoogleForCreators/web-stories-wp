@@ -24,12 +24,14 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import {
-  IconContainer,
   Input,
   InputContainer,
-  StyledClear,
-  StyledChevron,
-  StyledSearch,
+  ClearIcon,
+  ChevronIcon,
+  ChevronDecoration,
+  SearchDecoration,
+  SearchIcon,
+  ClearButton,
 } from './components';
 
 const TypeaheadInput = (
@@ -40,39 +42,19 @@ const TypeaheadInput = (
     handleClearInputValue,
     handleTabClearButton,
     inputValue,
-    isFlexibleValue,
     isOpen,
     listId,
     ...rest
   },
   ref
 ) => {
-  /**
-   * show the search icon ahead of the input:
-   * 1) if input is active
-   * 2) if isFlexibleValue is true and inputValue has a length greater than 0
-   */
-  const showSearchIcon = isOpen || (isFlexibleValue && inputValue.length > 0);
-
-  /**
-   * show clear button:
-   * 1) when there is text present in input and the menu isn't open or isFlexibleValue is true.
-   */
-  const showClearButton = inputValue.length > 0 && (isOpen || isFlexibleValue);
-
-  /**
-   * show drop down icon when:
-   * 1) input has no value
-   * 2) when clear button is not present
-   */
-  const showDropDownIcon = isFlexibleValue
-    ? inputValue.length === 0
-    : !showClearButton;
+  const activeInput = inputValue.length > 0 && isOpen;
+  const alignInputCenter = inputValue.length === 0 && !isOpen;
 
   const onClearButtonKeyDown = useCallback(
     ({ key }) => {
       if (key === 'Tab') {
-        handleTabClearButton();
+        handleTabClearButton?.();
       }
     },
     [handleTabClearButton]
@@ -88,37 +70,36 @@ const TypeaheadInput = (
         aria-owns={listId}
         autocomplete="off"
         disabled={disabled}
-        hasSearchIcon={showSearchIcon}
         isOpen={isOpen}
         ref={ref}
         role="combobox"
         type="search"
         value={inputValue}
+        alignCenter={alignInputCenter}
         {...rest}
       />
-      {showSearchIcon && (
-        <IconContainer alignLeft as={'div'} aria-hidden={true}>
-          <StyledSearch id={clearId} data-testid={'search-typeahead-icon'} />
-        </IconContainer>
-      )}
-      <IconContainer
+      <SearchDecoration
+        alignCenter={alignInputCenter}
+        aria-hidden={true}
         disabled={disabled}
-        onClick={handleClearInputValue}
-        {...(showClearButton && { onKeyDown: onClearButtonKeyDown })}
-        aria-label={showClearButton && ariaClearLabel}
-        as={showDropDownIcon ? 'div' : 'button'}
-        aria-hidden={showDropDownIcon}
       >
-        {showClearButton && (
-          <StyledClear id={clearId} data-testid={'clear-typeahead-icon'} />
-        )}
-        {showDropDownIcon && (
-          <StyledChevron
-            isOpen={isOpen}
-            data-testid={'chevron-typeahead-icon'}
-          />
-        )}
-      </IconContainer>
+        <SearchIcon id={clearId} data-testid={'search-typeahead-icon'} />
+      </SearchDecoration>
+      {activeInput && (
+        <ClearButton
+          tabIndex={0}
+          aria-label={activeInput && ariaClearLabel}
+          onClick={handleClearInputValue}
+          onKeyDown={onClearButtonKeyDown}
+        >
+          <ClearIcon id={clearId} data-testid={'clear-typeahead-icon'} />
+        </ClearButton>
+      )}
+      {!activeInput && inputValue.length > 0 && (
+        <ChevronDecoration disabled={disabled} aria-hidden={!activeInput}>
+          <ChevronIcon isOpen={isOpen} data-testid={'chevron-typeahead-icon'} />
+        </ChevronDecoration>
+      )}
     </InputContainer>
   );
 };
@@ -133,6 +114,5 @@ TypeaheadInput.propTypes = {
   handleClearInputValue: PropTypes.func.isRequired,
   handleTabClearButton: PropTypes.func.isRequired,
   inputValue: PropTypes.string,
-  isFlexibleValue: PropTypes.bool,
   isOpen: PropTypes.bool,
 };

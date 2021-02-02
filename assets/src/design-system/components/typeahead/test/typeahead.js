@@ -99,12 +99,13 @@ describe('Typeahead <Typeahead />', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('should show <Typeahead /> menu when input is clicked', () => {
+  it('should show <Typeahead /> menu when input has more than 1 character', () => {
     const { getByRole } = renderWithProviders(
       <Typeahead
         emptyText={'No options available'}
         options={basicDropDownOptions}
         ariaInputLabel={'label'}
+        selectedValue={'a'}
       />
     );
 
@@ -200,32 +201,6 @@ describe('Typeahead <Typeahead />', () => {
     );
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should close active menu when input is clicked', async () => {
-    const wrapper = renderWithProviders(
-      <Typeahead
-        ariaInputLabel={'label'}
-        options={basicDropDownOptions}
-        selectedValue={basicDropDownOptions[1].value}
-      />
-    );
-    const input = wrapper.getByRole('combobox');
-    fireEvent.click(input);
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
-
-    const menu = wrapper.getByRole('listbox');
-    expect(menu).toBeInTheDocument();
-
-    fireEvent.click(input);
-
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
-
-    await waitFor(() =>
-      expect(wrapper.queryByRole('listbox')).not.toBeInTheDocument()
-    );
   });
 });
 

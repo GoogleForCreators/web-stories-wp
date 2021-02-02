@@ -25,36 +25,40 @@ import PropTypes from 'prop-types';
 import { Chevron, Close as Clear, Search } from '../../../icons';
 import { themeHelpers } from '../../../theme';
 
-export const InputContainer = styled.div`
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  height: 36px;
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-`;
-
-export const Input = styled.input(
-  ({ theme, isOpen, hasError, hasSearchIcon }) => css`
-    position: absolute;
-    padding: 8px 20px 8px ${hasSearchIcon ? 32 : 12}px;
-    height: 100%;
+export const InputContainer = styled.div(
+  ({ theme }) => css`
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    height: 36px;
     width: 100%;
     max-width: 276px;
+    background-color: ${theme.colors.bg.primary};
+    color: ${theme.colors.fg.primary};
+  `
+);
+InputContainer.propTypes = {
+  disabled: PropTypes.bool,
+};
+
+export const Input = styled.input(
+  ({ theme, alignCenter, isOpen, hasError }) => css`
+    position: absolute;
+    padding: 8px 20px 8px ${alignCenter ? 'calc(50% - 8px)' : '32px'};
+    height: 100%;
+    width: 100%;
     background-color: transparent;
     outline: none;
-    color: ${theme.colors.fg.primary};
-    border-radius: ${theme.borders.radius.small};
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-
+    cursor: pointer;
     ${themeHelpers.expandPresetStyles({
       preset: theme.typography.presets.paragraph.small,
       theme,
     })};
 
-    /* border color needs to be reapplied from helper for different states */
-    border-color: ${theme.colors.border[
-      isOpen ? 'defaultActive' : 'defaultNormal'
-    ]};
+    border-radius: ${theme.borders.radius.small};
+    border: 1px solid
+      ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
+    color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
 
     &::-ms-clear {
       display: none;
@@ -73,7 +77,7 @@ export const Input = styled.input(
       ]};
     }
     &:focus {
-      border-color: ${theme.colors.border.focus};
+      border-color: ${theme.colors.fg.secondary};
     }
 
     ${hasError &&
@@ -102,39 +106,62 @@ export const Input = styled.input(
   `
 );
 Input.propTypes = {
+  alignCenter: PropTypes.bool,
   hasError: PropTypes.bool,
-  hasSearchIcon: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
 
-export const IconContainer = styled.button(
-  ({ alignLeft, disabled, theme }) => css`
-    position: absolute;
-    ${alignLeft
-      ? css`
-          left: 0;
-        `
-      : css`
-          right: 0;
-        `}
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 32px;
-    z-index: 15;
-    color: ${theme.colors.fg.secondary};
-    cursor: pointer;
+const BaseDecorationContainer = css`
+  display: flex;
+  align-items: center;
+  width: 16px;
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  border: 0;
+  margin: auto 12px auto auto;
+  padding: 0;
+  align-self: flex-end;
+  cursor: pointer;
+`;
 
-    &:not(button) {
+export const ClearButton = styled.button`
+  ${BaseDecorationContainer}
+  height: 16px;
+  z-index: 5;
+`;
+
+export const ClearIcon = styled(Clear)`
+  width: 8px;
+  height: auto;
+  margin: auto;
+`;
+
+export const ChevronDecoration = styled.div`
+  ${BaseDecorationContainer};
+  height: 100%;
+
+  ${({ disabled, theme }) =>
+    disabled &&
+    css`
       pointer-events: none;
-    }
+      color: ${theme.colors.fg.disable};
+    `}
+`;
+export const ChevronIcon = styled(Chevron)`
+  width: 8px;
+  height: auto;
+  margin: auto;
+`;
 
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+export const SearchDecoration = styled.div(
+  ({ theme, alignCenter, disabled }) => css`
+    ${BaseDecorationContainer};
+    position: absolute;
+    height: 100%;
+    margin: 0;
+    left: ${alignCenter ? 'calc(50% - 32px)' : '8px'};
+    color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
+
     ${disabled &&
     css`
       pointer-events: none;
@@ -142,34 +169,14 @@ export const IconContainer = styled.button(
     `}
   `
 );
-IconContainer.propTypes = {
-  alignLeft: PropTypes.bool,
-  disabled: PropTypes.bool,
+
+SearchDecoration.propTypes = {
+  alignCenter: PropTypes.bool,
 };
 
-export const StyledClear = styled(Clear)`
-  width: 8px;
-  height: auto;
-  margin: 0 auto 0 12px;
-`;
-
-export const StyledChevron = styled(Chevron)`
-  width: 8px;
-  height: auto;
-  margin: 0 auto 0 12px;
-
-  ${({ isOpen }) =>
-    isOpen &&
-    css`
-      transform: rotate(180deg);
-    `}
-`;
-StyledChevron.propTypes = {
-  isOpen: PropTypes.bool,
-};
-
-export const StyledSearch = styled(Search)`
+export const SearchIcon = styled(Search)`
+  position: relative;
   width: 16px;
   height: auto;
-  margin: 0 8px;
+  margin: auto;
 `;

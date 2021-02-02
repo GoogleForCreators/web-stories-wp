@@ -30,9 +30,10 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../theme';
+import useFocusOut from '../../utils/useFocusOut';
 import { Menu, MENU_OPTIONS } from '../menu';
 import { Popup, PLACEMENT } from '../popup';
-import { DropDownContainer, Hint } from './components';
+import { DropDownContainer, Hint, Label } from './components';
 import {
   DEFAULT_POPUP_FILL_WIDTH,
   DEFAULT_PLACEHOLDER,
@@ -54,6 +55,7 @@ import useTypeahead from './useTypeahead';
  * @param {boolean} props.hasError If true, input and hint (if present) will show error styles.
  * @param {string} props.hint Hint text to display below input (optional). If not present, no hint text will display.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
+ * @param {string} props.label If present, will display a text label above input. ariaLabel controls accessibility label of input since there are times search components are present without label text visible.
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding menu styles (container div > ul > li).
  * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option, or 'Enter' is pressed on input.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
@@ -73,6 +75,7 @@ export const Typeahead = ({
   handleTypeaheadValueChange,
   hasError,
   hint,
+  label,
   onMenuItemClick,
   options = [],
   placeholder = DEFAULT_PLACEHOLDER,
@@ -99,6 +102,7 @@ export const Typeahead = ({
     options,
     selectedValue,
     handleTypeaheadValueChange,
+    inputRef,
   });
 
   const isMenuHidden = useMemo(() => disabled || !inputValue?.value, [
@@ -108,8 +112,6 @@ export const Typeahead = ({
 
   /**
    * Callbacks that begin typeahead interaction
-   * handleInputFocus: When input is given focus, set menu to isOpen and reset isMenuFocused to false.
-   * handleInputClick: When input is clicked, toggle menu.
    * */
   const handleInputFocus = useCallback(() => {
     isOpen.set(true);
@@ -119,15 +121,13 @@ export const Typeahead = ({
   const handleInputClick = useCallback(
     (event) => {
       event.preventDefault();
-      isOpen.set((prevIsOpen) => !prevIsOpen);
+      isOpen.set(true);
     },
     [isOpen]
   );
 
   /**
    * Callbacks passed to menu
-   * handleDismissMenu: Focus out menu, set isOpen to false.
-   * handleMenuClick: When item menu is chosen by either cursor or keyboard.
    */
 
   const handleDismissMenu = useCallback(
@@ -147,7 +147,7 @@ export const Typeahead = ({
       // move focus to next element if available.
       inputRef.current?.offsetParent?.nextSibling?.focus();
     },
-    [clearId, isOpen, isMenuFocused]
+    [clearId, isMenuFocused, isOpen]
   );
 
   const handleMenuItemClick = useCallback(
@@ -163,12 +163,6 @@ export const Typeahead = ({
 
   /**
    * Callbacks passed to input
-   * handleInputChange: When input changes by user.
-   * handleClearInputValue: When clear button is triggered.
-   * - Will only clear the input value by default.
-   * - If onMenuItemClick is present will also trigger onMenuItemClick with an empty string to clear out selected value (presumably - since this is controlled by parent).
-   * handleTabClearButton: When keyboard user goes from input to clear button.
-   * - Since technically we've already focused out of the input where the menu wants to close, if tab is used on clear button, dismiss menu but don't focus back to input.
    */
   const handleInputChange = useCallback(
     ({ target }) => {
@@ -196,23 +190,15 @@ export const Typeahead = ({
     isMenuFocused,
   ]);
 
-  /**
-   * handleInputKeyPress
-   * Watch keyDown of input for keys that change interaction
-   * ESC: Close menu
-   * TAB:
-   * - Close menu on tab if inputValue length is 0
-   * ARROW DOWN: Send focus to menu list
-   * ENTER: Trigger menuItemClick
-   */
   const handleInputKeyPress = useCallback(
     (event) => {
       const { key } = event;
       if (key === 'Escape') {
-        isOpen.set(false);
+        if (!isMenuHidden) {
+          isMenuFocused.set(false);
+        }
       } else if (key === 'Tab') {
-        // if inputValue exists then there is a clear button
-        if (inputValue.value.length === 0) {
+        if (isMenuHidden) {
           isMenuFocused.set(false);
           isOpen.set(false);
         }
@@ -222,11 +208,38 @@ export const Typeahead = ({
         handleMenuItemClick(event, inputValue.value);
       }
     },
-    [isOpen, inputValue, isMenuFocused, focusSentToList, handleMenuItemClick]
+    [
+      isMenuHidden,
+      isMenuFocused,
+      isOpen,
+      focusSentToList,
+      handleMenuItemClick,
+      inputValue.value,
+    ]
+  );
+
+  useFocusOut(
+    inputRef,
+    () => {
+      if (isMenuHidden) {
+        isOpen.set(false);
+        isMenuFocused.set(false);
+      }
+    },
+    [isMenuFocused, isMenuHidden, isOpen]
   );
 
   return (
     <DropDownContainer>
+      {label && (
+        <Label
+          size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+          disabled={disabled}
+          as="span"
+        >
+          {label}
+        </Label>
+      )}
       <TypeaheadInput
         // Passed through to input
         aria-label={ariaInputLabel}
@@ -243,9 +256,8 @@ export const Typeahead = ({
         disabled={disabled}
         handleClearInputValue={handleClearInputValue}
         handleTabClearButton={handleTabClearButton}
-        inputValue={inputValue?.value}
-        isFlexibleValue={true}
-        isOpen={isOpen?.value}
+        inputValue={inputValue?.value || ''}
+        isOpen={isOpen.value}
         listId={listId}
         ref={inputRef}
         {...rest}
@@ -299,6 +311,7 @@ Typeahead.propTypes = {
   hasError: PropTypes.bool,
   hint: PropTypes.string,
   isRTL: PropTypes.bool,
+  label: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,
   options: MENU_OPTIONS,

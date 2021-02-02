@@ -27,7 +27,6 @@ import { useCallback, useMemo, useState } from 'react';
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
-import { Text } from '../../typography';
 import { Typeahead } from '../typeahead';
 import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 
@@ -43,9 +42,7 @@ const Container = styled.div`
 `;
 
 export const _default = () => {
-  const [selectedValue, setSelectedValue] = useState(
-    basicDropDownOptions[2].value
-  );
+  const [selectedValue, setSelectedValue] = useState();
 
   const [inputValue, setInputValue] = useState('');
 
@@ -75,11 +72,6 @@ export const _default = () => {
   return (
     <DarkThemeProvider>
       <Container>
-        <Text>
-          {
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus luctus ex eu maximus. Nam cursus nulla massa, vel porta nisi mattis et. Vivamus vitae massa nulla. Sed enim velit, iaculis ut pharetra vitae, sagittis et dui. In sollicitudin lectus vel rhoncus auctor. Morbi pulvinar nisl sed mi fringilla, vitae bibendum felis egestas.'
-          }
-        </Text>
         <Typeahead
           ariaClearLabel={text('ariaClearLabel', 'clear input')}
           ariaInputLabel={text('ariaInputLabel')}
@@ -88,14 +80,14 @@ export const _default = () => {
           handleTypeaheadValueChange={handleTypeaheadValueChange}
           hasError={boolean('hasError')}
           hint={text('hint', 'default hint text')}
-          isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+          label={text('label', 'Find an image')}
           isRTL={boolean('isRTL')}
           onMenuItemClick={(event, newValue) => {
             action('onMenuItemClick', event);
             setSelectedValue(newValue);
           }}
           options={options}
-          placeholder={text('placeholder', 'select a value')}
+          placeholder={text('placeholder', 'search')}
           placement={select('placement', Object.values(PLACEMENT))}
           popupZIndex={number('popupZIndex')}
           selectedValue={selectedValue}
@@ -106,9 +98,9 @@ export const _default = () => {
 };
 
 export const LightTheme = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState();
 
-  const [inputValue, setInputValue] = useState(null);
+  const [inputValue, setInputValue] = useState('');
 
   const options = useMemo(() => {
     if (!inputValue || inputValue.length === 0) {
@@ -143,13 +135,14 @@ export const LightTheme = () => {
         handleTypeaheadValueChange={handleTypeaheadValueChange}
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
+        label={text('label', 'Search For Stories')}
         isRTL={boolean('isRTL')}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
           setSelectedValue(newValue);
         }}
         options={options}
-        placeholder={text('placeholder', 'select a value')}
+        placeholder={text('placeholder', 'search')}
         placement={select('placement', Object.values(PLACEMENT))}
         popupZIndex={number('popupZIndex')}
         selectedValue={selectedValue}
