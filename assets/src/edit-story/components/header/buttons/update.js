@@ -20,19 +20,13 @@
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import { useFeatures } from 'flagged';
-/**
  * Internal dependencies
  */
-import { useStory, useLocalMedia, useHistory, useConfig } from '../../../app';
-import { Outline, Primary } from '../../button';
+import { useStory, useLocalMedia, useHistory } from '../../../app';
+import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
+import { Outline } from '../../button';
 import { useGlobalKeyDownEffect } from '../../../../design-system';
-import WithTooltip from '../../tooltip';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
-import { usePrepublishChecklist } from '../../inspector/prepublish';
-import { ButtonContent, WarningIcon } from './styles';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -50,19 +44,9 @@ function Update() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-
-  const { checklist, refreshChecklist } = usePrepublishChecklist();
-  const {
-    showPrePublishTab,
-    customMetaBoxes: isMetaBoxesFeatureEnabled,
-  } = useFeatures();
-  const { metaBoxes = {} } = useConfig();
-
-  const hasMetaBoxes =
-    isMetaBoxesFeatureEnabled &&
-    Object.keys(metaBoxes).some((location) =>
-      Boolean(metaBoxes[location]?.length)
-    );
+  const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+  }));
 
   useGlobalKeyDownEffect(
     { key: ['mod+s'] },
@@ -99,28 +83,13 @@ function Update() {
       );
   }
 
-  const tooltip = showPrePublishTab
-    ? checklist.some(({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type) &&
-      __('There are items in the checklist to resolve', 'web-stories')
-    : null;
-
-  const button = (
-    <Primary
-      onPointerEnter={refreshChecklist}
+  return (
+    <ButtonWithChecklistWarning
       onClick={() => saveStory()}
       isDisabled={isSaving || isUploading}
-    >
-      <ButtonContent>
-        {text}
-        {tooltip && <WarningIcon />}
-      </ButtonContent>
-    </Primary>
+      text={text}
+    />
   );
-
-  const wrappedWithTooltip = (
-    <WithTooltip title={tooltip}>{button}</WithTooltip>
-  );
-  return tooltip ? wrappedWithTooltip : button;
 }
 
 export default Update;

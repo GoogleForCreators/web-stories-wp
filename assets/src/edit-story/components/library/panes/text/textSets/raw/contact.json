@@ -2240,7 +2240,7 @@
   "current": "098967a3-f72e-4236-92e9-ec239467696f",
   "selection": [],
   "story": {
-    "stylePresets": {
+    "globalStoryStyles": {
       "textStyles": [
         {
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },

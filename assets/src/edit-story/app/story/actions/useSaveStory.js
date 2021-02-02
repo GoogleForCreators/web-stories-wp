@@ -35,6 +35,7 @@ import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
+import { getTimeTracker } from '../../../../tracking';
 
 /**
  * Custom hook to save story.
@@ -69,6 +70,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         story.status
       );
 
+      const trackTiming = getTimeTracker('save story', 'editor', 'Publish');
+
       return saveStoryById({
         storyId,
         ...getStoryPropsToSave({ story, pages, metadata, flags }),
@@ -78,6 +81,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           const properties = {
             ...objectPick(post, ['status', 'slug', 'link']),
             featuredMediaUrl: post.featured_media_url,
+            previewLink: post.preview_link,
           };
           updateStory({ properties });
 
@@ -94,6 +98,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         .finally(() => {
           setIsSaving(false);
           resetNewChanges();
+          trackTiming();
         });
     },
     [

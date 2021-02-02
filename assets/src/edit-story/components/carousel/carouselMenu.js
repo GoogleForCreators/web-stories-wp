@@ -29,7 +29,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { GridView as GridViewButton, Plain } from '../button';
+import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
+import {
+  GridView as GridViewButton,
+  MetaBoxes as MetaBoxesButton,
+  Plain,
+} from '../button';
 import Modal from '../modal';
 import WithTooltip from '../tooltip';
 import { Placement } from '../popup';
@@ -81,15 +86,40 @@ const GridViewContainer = styled.section.attrs({
   pointer-events: all;
 `;
 
+const StyledMetaBoxesButton = styled(MetaBoxesButton).attrs({
+  height: '24',
+  width: '24',
+})``;
+
 function CarouselMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const openModal = useCallback(() => setIsGridViewOpen(true), []);
   const closeModal = useCallback(() => setIsGridViewOpen(false), []);
 
+  const { toggleMetaBoxesVisible, hasMetaBoxes } = useMetaBoxes(
+    ({ state, actions }) => ({
+      hasMetaBoxes: state.hasMetaBoxes,
+      toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
+    })
+  );
+
   return (
     <>
       <Wrapper>
         <MenuItems>
+          {hasMetaBoxes && (
+            <Box>
+              <WithTooltip
+                title={__('Third-Party Meta Boxes', 'web-stories')}
+                placement={Placement.TOP}
+              >
+                <StyledMetaBoxesButton
+                  onClick={toggleMetaBoxesVisible}
+                  aria-label={__('Third-Party Meta Boxes', 'web-stories')}
+                />
+              </WithTooltip>
+            </Box>
+          )}
           <Box>
             <KeyboardShortcutsMenu />
           </Box>

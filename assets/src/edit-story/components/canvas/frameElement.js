@@ -35,6 +35,7 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
+import { getElementMask, MaskTypes } from '../../masks';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -44,7 +45,7 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
 	${elementWithRotation}
-  pointer-events: initial;
+  pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
 
   &:focus,
   &:active,
@@ -110,6 +111,30 @@ function FrameElement({ element }) {
     setIsTransforming(transform !== null);
   });
 
+  // For elements with no mask, handle events by the wrapper.
+  const mask = getElementMask(element);
+  const maskDisabled =
+    !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
+  const eventHandlers = {
+    onMouseDown: (evt) => {
+      if (isSelected) {
+        elementRef.current.focus({ preventScroll: true });
+      } else {
+        handleSelectElement(id, evt);
+      }
+      if (!isBackground) {
+        evt.stopPropagation();
+      }
+    },
+    onFocus: (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+    },
+    onPointerEnter,
+    onPointerLeave,
+  };
+
   return (
     <WithLink
       element={element}
@@ -131,30 +156,20 @@ function FrameElement({ element }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
-        onMouseDown={(evt) => {
-          if (isSelected) {
-            elementRef.current.focus({ preventScroll: true });
-          } else {
-            handleSelectElement(id, evt);
-          }
-          if (!isBackground) {
-            evt.stopPropagation();
-          }
-        }}
-        onFocus={(evt) => {
-          if (!isSelected) {
-            handleSelectElement(id, evt);
-          }
-        }}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
         isAnimating={isAnimating}
         data-testid="frameElement"
+        maskDisabled={maskDisabled}
+        {...(maskDisabled ? eventHandlers : null)}
       >
-        <WithMask element={element} fill={true} flip={flip}>
+        <WithMask
+          element={element}
+          fill={true}
+          flip={flip}
+          eventHandlers={!maskDisabled ? eventHandlers : null}
+        >
           {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
           ) : (

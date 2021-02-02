@@ -69,6 +69,9 @@ describe('Publishing Flow', () => {
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
 
+    // See https://github.com/WordPress/gutenberg/blob/c31555d4cec541db929ee5f63b900c6577513272/packages/e2e-test-utils/src/create-new-post.js#L37-L63.
+    await page.waitForSelector('.edit-post-layout');
+
     // Disable Gutenberg's Welcome Guide if existing.
     const isWelcomeGuideActive = await page.evaluate(() =>
       wp.data.select('core/edit-post').isFeatureActive('welcomeGuide')
@@ -78,6 +81,22 @@ describe('Publishing Flow', () => {
       await page.evaluate(() =>
         wp.data.dispatch('core/edit-post').toggleFeature('welcomeGuide')
       );
+
+      await page.reload();
+      await page.waitForSelector('.edit-post-layout');
+    }
+
+    // Disable Gutenberg's full screen mode.
+    const isFullscreenMode = await page.evaluate(() =>
+      wp.data.select('core/edit-post').isFeatureActive('fullscreenMode')
+    );
+
+    if (isFullscreenMode) {
+      await page.evaluate(() =>
+        wp.data.dispatch('core/edit-post').toggleFeature('fullscreenMode')
+      );
+
+      await page.waitForSelector('body:not(.is-fullscreen-mode)');
     }
 
     await expect(page).toMatch('Publishing Flow Test');

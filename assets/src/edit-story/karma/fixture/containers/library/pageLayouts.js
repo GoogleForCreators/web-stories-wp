@@ -15,20 +15,20 @@
  */
 
 /**
- *
- * @param {string} start CSS value with unit.
- * @param {string} end CSS value with unit.
- * @param {string} progress CSS variable to represent progress in range [0, 1]
- * @return {string} Resulting `calc()` CSS value.
+ * Internal dependencies
  */
-const cssLerp = (start, end, progress) => {
-  const currentProgress = `var(${progress}, 0)`;
-  const remainingProgress = `calc(1 - ${currentProgress})`;
-  return `
-    calc(
-      calc(${remainingProgress} * ${start}) +
-      calc(${currentProgress} * ${end})
-  )`;
-};
+import { Container } from '../container';
 
-export default cssLerp;
+export default class PageLayouts extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get pageLayouts() {
+    return this.getAllByRole('listitem');
+  }
+
+  pageLayout(name) {
+    return this.getByRole('button', { name });
+  }
+}

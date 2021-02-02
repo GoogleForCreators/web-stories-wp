@@ -133,7 +133,7 @@ export class Fixture {
       'borderRadius',
       'borderStyle',
       'captions',
-      'stylePresets',
+      'globalStoryStyles',
       'colorPresets',
       'imageAccessibility',
       'layerStyle',
@@ -284,14 +284,17 @@ export class Fixture {
     // wait for the media gallery items to load, as many tests assume they're
     // there
     let mediaElements;
-    await waitFor(() => {
-      mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
-      if (!mediaElements?.length) {
-        throw new Error(
-          `Not ready: only found ${mediaElements?.length} media elements`
-        );
-      }
-    });
+    await waitFor(
+      () => {
+        mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
+        if (!mediaElements?.length) {
+          throw new Error(
+            `Not ready: only found ${mediaElements?.length} media elements`
+          );
+        }
+      },
+      { timeout: 5000 }
+    );
 
     // Check to see if Roboto font is loaded.
     await waitFor(async () => {

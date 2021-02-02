@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../tracking';
+import { trackError } from '../../../tracking';
 import ErrorActions from './errorActions';
 
 class ErrorBoundary extends Component {
@@ -38,10 +38,10 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     this.setState({ error, errorInfo });
-    trackEvent('error', 'editor', '', '', {
-      error,
-      error_info: errorInfo,
-    });
+    const msg = errorInfo
+      ? `${error.message}\n\n${errorInfo.componentName}\n${errorInfo.componentStack}`
+      : error.message;
+    trackError('editor error boundary', msg, true);
   }
 
   render() {

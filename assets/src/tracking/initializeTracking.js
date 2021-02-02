@@ -19,6 +19,7 @@
  */
 import { config } from './shared';
 import enableTracking from './enableTracking';
+import initializeErrorReporting from './initializeErrorReporting';
 
 /**
  * Initializes tracking.
@@ -30,6 +31,7 @@ import enableTracking from './enableTracking';
 async function initializeTracking(appName, sendPageView = true) {
   config.appName = appName;
   await enableTracking(sendPageView);
+  initializeErrorReporting();
 }
 
 export default initializeTracking;
