@@ -96,9 +96,8 @@ function useUploader() {
         );
         throw createError('SizeError', file.name, message);
       }
-      const isFileTranscodable = await canTranscodeFile(file);
 
-      if (!isValidType(file) && !isFileTranscodable) {
+      if (!isValidType(file) && !canTranscodeFile(file)) {
         /* translators: %s is a list of allowed file extensions. */
         const message = sprintf(
           /* translators: %s: list of allowed file types. */
@@ -118,7 +117,7 @@ function useUploader() {
         ..._additionalData,
       };
 
-      if (isFileTranscodable) {
+      if (canTranscodeFile(file)) {
         try {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           const newFile = await transcodeVideo(file);
