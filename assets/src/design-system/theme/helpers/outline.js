@@ -29,7 +29,7 @@ import { FOCUS_VISIBLE_SELECTOR } from '../global';
  * @param {string} accent the color of the focused border
  * @param {string} background the background color used in between
  * the edge of the element and the focused border.
- * @return css snippet
+ * @return {*} css snippet
  */
 export const focusCSS = (accent, background) => css`
   outline: none;
