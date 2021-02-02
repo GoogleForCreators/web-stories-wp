@@ -60,7 +60,7 @@ describe('Image Editor', () => {
     });
 
     // Disable reason: flakey tests.
-    // See https://github.com/google/web-stories-wp/issues/6085
+    // See https://github.com/google/web-stories-wp/pull/6162
     // eslint-disable-next-line jasmine/no-disabled-tests
     xdescribe('edit mode', () => {
       beforeEach(async () => {
