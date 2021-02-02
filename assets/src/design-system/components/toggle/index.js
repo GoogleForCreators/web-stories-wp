@@ -24,7 +24,6 @@ import styled, { css } from 'styled-components';
  */
 import { Checkmark } from '../../icons';
 import { THEME_CONSTANTS } from '../../theme';
-import { focusCSS } from '../../theme/helpers/outline';
 
 const BORDER_WIDTH = 1;
 const TOGGLE_HEIGHT = 20;
@@ -132,7 +131,9 @@ const ToggleContainer = styled.div(
 
       :focus {
         ~ ${Background} {
-          ${focusCSS()}
+          outline: none;
+          box-shadow: 0 0 0 5px ${theme.colors.bg.primary},
+            0 0 0 7px ${theme.colors.border.focus};
         }
       }
 
