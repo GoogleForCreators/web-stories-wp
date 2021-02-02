@@ -26,6 +26,7 @@ export { ReactComponent as Edit } from './edit.svg';
 export { ReactComponent as Grid } from './grid.svg';
 export { ReactComponent as GridMany } from './gridMany.svg';
 export { ReactComponent as GridSingle } from './gridSingle.svg';
+export { ReactComponent as Help } from './help.svg';
 export { ReactComponent as Info } from './info.svg';
 export { ReactComponent as KeyboardShortcut } from './keyboardShortcut.svg';
 export { ReactComponent as List } from './list.svg';
