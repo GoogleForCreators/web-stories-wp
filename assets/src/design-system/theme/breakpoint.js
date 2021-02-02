@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export const raw = {
+  desktop: 1121,
+  tablet: 801,
+  mobile: 800,
+  mobileSmall: 684,
+  min: 684,
+};
 
-export const borders = {
-  radius: {
-    small: '4px',
-    medium: '8px',
-    x_large: '50px',
-    round: '9999px',
-  },
+export const breakpoint = {
+  desktop: `screen and (min-width: ${raw.desktop}px)`,
+  tablet: `screen and (min-width: ${raw.tablet}px)`,
+  mobile: `screen and (max-width: ${raw.mobile}px)`,
+  mobileSmall: `screen and (max-width: ${raw.mobileSmall}px)`,
+  min: `screen and (max-width: ${raw.min}px)`,
 };
