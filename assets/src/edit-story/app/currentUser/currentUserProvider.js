@@ -26,7 +26,7 @@ import { useCallback, useState } from 'react';
 import { useAPI } from '../api';
 import Context from './context';
 
-function UserProvider({ children }) {
+function CurrentUserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({});
   const {
     actions: { getCurrentUser: _getCurrentUser },
@@ -51,8 +51,8 @@ function UserProvider({ children }) {
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-UserProvider.propTypes = {
+CurrentUserProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export default UserProvider;
+export default CurrentUserProvider;

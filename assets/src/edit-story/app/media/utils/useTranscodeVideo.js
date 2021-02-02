@@ -24,7 +24,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useConfig } from '../../config';
-import { useUser } from '../../user';
+import { useCurrentUser } from '../../currentUser';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -34,7 +34,7 @@ function useTranscodeVideo() {
   const { ffmpegCoreUrl } = useConfig();
   const {
     actions: { getCurrentUser },
-  } = useUser();
+  } = useCurrentUser();
   const isFeatureEnabled = useFeature('videoOptimization');
 
   /**

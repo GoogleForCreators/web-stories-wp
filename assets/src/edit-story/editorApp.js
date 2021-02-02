@@ -35,7 +35,7 @@ import { SnackbarProvider } from './app/snackbar';
 import { StoryProvider } from './app/story';
 import { FontProvider } from './app/font';
 import { MediaProvider } from './app/media';
-import { UserProvider } from './app/user';
+import { CurrentUserProvider } from './app/currentUser';
 import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
@@ -65,7 +65,7 @@ function App({ config }) {
                       <MetaBoxesProvider>
                         <StoryProvider storyId={storyId}>
                           <FontProvider>
-                            <UserProvider>
+                            <CurrentUserProvider>
                               <MediaProvider>
                                 <AutoSaveHandler />
                                 <TransformProvider>
@@ -81,7 +81,7 @@ function App({ config }) {
                                   </DropTargetsProvider>
                                 </TransformProvider>
                               </MediaProvider>
-                            </UserProvider>
+                            </CurrentUserProvider>
                           </FontProvider>
                         </StoryProvider>
                       </MetaBoxesProvider>
