@@ -25,7 +25,7 @@ import { Fixture } from './fixture';
 /**
  * Takes an HTMLCollection and sequentially performs an
  * async action on each element in the collection.
-
+ *
  * Call order of operations is based on the order of
  * the elements in the collection
  *
