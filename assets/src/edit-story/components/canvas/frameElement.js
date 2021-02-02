@@ -62,6 +62,8 @@ const EmptyFrame = styled.div`
   pointer-events: none;
 `;
 
+const NOOP = () => {};
+
 function FrameElement({ element }) {
   const { setEditingElement } = useCanvas((state) => ({
     setEditingElement: state.actions.setEditingElement,
@@ -114,7 +116,6 @@ function FrameElement({ element }) {
 
   // Media needs separate handler for double click.
   const { isMedia } = getDefinitionForType(type);
-  const handleSingleClick = useCallback(() => {}, []);
   const handleMediaDoubleClick = useCallback(
     (evt) => {
       if (!isSelected) {
@@ -124,10 +125,7 @@ function FrameElement({ element }) {
     },
     [id, setEditingElement, handleSelectElement, isSelected]
   );
-  const handleMediaClick = useDoubleClick(
-    handleSingleClick,
-    handleMediaDoubleClick
-  );
+  const handleMediaClick = useDoubleClick(NOOP, handleMediaDoubleClick);
 
   // For elements with no mask, handle events by the wrapper.
   const mask = getElementMask(element);
