@@ -31,8 +31,6 @@ import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
 import FileContext from '../../app/file/context';
-import CurrentUserProvider from '../../app/currentUser/currentUserProvider';
-import CurrentUserContext from '../../app/currentUser/context';
 import Layout from '../../components/layout';
 import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
@@ -118,11 +116,6 @@ export class Fixture {
     this.fileProviderFixture_ = new FileProviderFixture();
     this.stubComponent(FileProvider).callFake(
       this.fileProviderFixture_.Component
-    );
-
-    this.currentUserProviderFixture_ = new CurrentUserProviderFixture();
-    this.stubComponent(CurrentUserProvider).callFake(
-      this.currentUserProviderFixture_.Component
     );
 
     this._layoutStub = this.stubComponent(Layout);
@@ -753,6 +746,19 @@ class APIProviderFixture {
 
       const getAuthors = useCallback(() => asyncResponse(users), [users]);
 
+      const getCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
@@ -780,6 +786,7 @@ class APIProviderFixture {
           updateMedia,
           getStatusCheck,
           getPageLayouts,
+          getCurrentUser,
         },
       };
       return (
@@ -809,40 +816,6 @@ class APIProviderFixture {
   }
 }
 /* eslint-enable jasmine/no-unsafe-spy */
-
-class CurrentUserProviderFixture {
-  constructor() {
-    // eslint-disable-next-line react/prop-types
-    const Comp = ({ children }) => {
-      const currentUser = {
-        id: 1,
-        meta: {
-          web_stories_tracking_optin: false,
-          web_stories_onboarding: {},
-          web_stories_media_optimization: true,
-        },
-      };
-
-      const state = {
-        state: {
-          currentUser,
-        },
-      };
-
-      return (
-        <CurrentUserContext.Provider value={state}>
-          {children}
-        </CurrentUserContext.Provider>
-      );
-    };
-    Comp.displayName = 'Fixture(CurrentUserProvider)';
-    this._comp = Comp;
-  }
-
-  get Component() {
-    return this._comp;
-  }
-}
 
 /**
  * Wraps a fixture response in a promise. May additionally add `act()` calls as
