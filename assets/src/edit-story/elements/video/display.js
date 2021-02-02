@@ -40,13 +40,11 @@ const Image = styled.img`
   position: absolute;
   max-width: initial;
   max-height: initial;
-  ${videoWithScale}
-  ${({ previewMode }) =>
-    previewMode &&
-    `
-    height: inherit;
-    object-fit: contain;
-  `}
+  object-fit: contain;
+  width: ${({ width }) => `${width}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
+  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 
 function VideoDisplay({ previewMode, box: { width, height }, element }) {
@@ -94,7 +92,6 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           style={style}
           {...videoProps}
           ref={ref}
-          previewMode={previewMode}
         />
       ) : (
         <Video

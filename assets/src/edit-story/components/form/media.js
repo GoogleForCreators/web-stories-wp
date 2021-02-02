@@ -148,6 +148,7 @@ function MediaInput({
   size,
   loading,
   canReset,
+  imgProps,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -192,7 +193,6 @@ function MediaInput({
   };
 
   const isMenuVisible = isHovering || isFocused;
-  const { imgProps } = rest;
   return (
     <Container
       ref={ref}
@@ -239,6 +239,7 @@ MediaInput.propTypes = {
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
   alt: PropTypes.string,
+  imgProps: PropTypes.object,
   loading: PropTypes.bool,
   canReset: PropTypes.bool,
 };
