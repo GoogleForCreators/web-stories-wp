@@ -36,6 +36,7 @@ import { TranslateWithMarkup } from '../../../../i18n';
 import { useLayoutContext } from '../../../components';
 import { useConfig } from '../../config';
 import { APP_ROUTES } from '../../../constants';
+import { resolveRoute } from '../../router';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
 const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
@@ -150,7 +151,7 @@ export const TelemetryOptInBanner = forwardRef(
                 <NavLink
                   as="a"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                  href={APP_ROUTES.EDITOR_SETTINGS}
+                  href={resolveRoute(APP_ROUTES.EDITOR_SETTINGS)}
                   aria-label={__('Settings', 'web-stories')}
                 />
               ),
