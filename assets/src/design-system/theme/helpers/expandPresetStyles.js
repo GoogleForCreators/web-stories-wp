@@ -18,6 +18,10 @@
  * External dependencies
  */
 import { css } from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { THEME_CONSTANTS } from '../constants';
 
 export const expandPresetStyles = ({ preset, theme }) => css`
   font-family: ${theme.typography.family.primary};
@@ -27,3 +31,12 @@ export const expandPresetStyles = ({ preset, theme }) => css`
   line-height: ${preset.lineHeight}px;
   text-decoration: ${preset.textDecoration || 'none'};
 `;
+
+export const expandTextPreset = (presetSelector) => ({ theme }) =>
+  expandPresetStyles({
+    preset: presetSelector(
+      theme.typography.presets,
+      THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES
+    ),
+    theme,
+  });

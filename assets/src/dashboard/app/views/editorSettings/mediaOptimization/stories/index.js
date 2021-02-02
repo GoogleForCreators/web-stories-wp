@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,25 @@
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
+import { action } from '@storybook/addon-actions';
+import { boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { FOCUS_VISIBLE_SELECTOR } from '../global';
+import MediaOptimizationSettings from '../';
 
-export const focusableOutlineCSS = (colorOrProps) => {
-  const accent =
-    typeof colorOrProps === 'string'
-      ? colorOrProps
-      : colorOrProps?.theme?.colors?.border?.focus;
-  return css`
-    border: 2px solid transparent;
+export default {
+  title: 'Dashboard/Views/EditorSettings/MediaOptimization',
+  component: MediaOptimizationSettings,
+};
 
-    &.${FOCUS_VISIBLE_SELECTOR} {
-      outline: none;
-      border: 2px solid ${accent};
-    }
-  `;
+export const _default = () => {
+  return (
+    <MediaOptimizationSettings
+      disabled={boolean('disabled', true)}
+      selected={boolean('userMediaOptimization', true)}
+      onCheckboxSelected={action('onCheckboxSelected fired')}
+    />
+  );
 };

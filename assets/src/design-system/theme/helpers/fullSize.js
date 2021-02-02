@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { css } from 'styled-components';
 
-export const borders = {
-  radius: {
-    small: '4px',
-    medium: '8px',
-    x_large: '50px',
-    round: '9999px',
-  },
-};
+export const fullSizeAbsolute = css`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
+
+export const fullSizeRelative = css`
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+`;
