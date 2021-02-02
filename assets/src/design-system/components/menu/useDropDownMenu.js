@@ -91,7 +91,8 @@ export default function useDropDownMenu({
         return () => {};
       }
 
-      return handleMenuItemSelect(event, { value: focusedValue });
+      const selectedValue = focusedValue || allOptions[focusedIndex].value;
+      return handleMenuItemSelect(event, { value: selectedValue });
     },
     [allOptions, focusedIndex, focusedValue, handleMenuItemSelect]
   );
