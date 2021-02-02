@@ -104,8 +104,8 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
 
         // Hardening in case data returned by the server is malformed.
         // For example, story_data could be missing/empty.
-        const cleanStories = response.body.filter(
-          (story) =>  Array.isArray(story?.story_data?.pages)
+        const cleanStories = response.body.filter((story) =>
+          Array.isArray(story?.story_data?.pages)
         );
 
         if (
