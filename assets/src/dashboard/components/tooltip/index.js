@@ -94,6 +94,7 @@ export default function Tooltip({ children, content, position }) {
         top: containerRect.height + 1,
       };
     }
+
     return metrics;
   }, [position, showTooltip]);
 
