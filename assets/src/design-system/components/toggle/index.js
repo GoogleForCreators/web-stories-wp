@@ -24,18 +24,19 @@ import styled, { css } from 'styled-components';
  */
 import { Checkmark } from '../../icons';
 import { THEME_CONSTANTS } from '../../theme';
+import { focusCSS } from '../../theme/helpers/outline';
 
-const BORDER_WIDTH = 2;
-const TOGGLE_HEIGHT = 28;
+const BORDER_WIDTH = 1;
+const TOGGLE_HEIGHT = 20;
 const TOGGLE_WIDTH = 44;
-const CIRCLE_DIAMETER = 20;
+const CIRCLE_DIAMETER = 28;
 const CIRCLE_INITIAL_POSITION = (TOGGLE_HEIGHT - CIRCLE_DIAMETER) / 2;
 const CIRCLE_FINAL_POSITION =
   TOGGLE_WIDTH - CIRCLE_DIAMETER - CIRCLE_INITIAL_POSITION;
 
-const ICON_HEIGHT = 8;
-const ICON_TOP_POSITION = 10;
-const ICON_LEFT_POSITION = 25;
+const ICON_WIDTH = 7;
+const ICON_TOP_POSITION = 8;
+const ICON_LEFT_POSITION = 30.5;
 
 const Background = styled.div(
   ({ theme }) => css`
@@ -48,7 +49,7 @@ const Background = styled.div(
     border-radius: ${theme.borders.radius.x_large};
     border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
     pointer-events: none;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
   `
 );
 
@@ -63,7 +64,7 @@ const Circle = styled.span(
       left: ${CIRCLE_INITIAL_POSITION}px;
       height: ${CIRCLE_DIAMETER}px;
       width: ${CIRCLE_DIAMETER}px;
-      background-color: ${theme.colors.interactiveBg.secondaryNormal};
+      background-color: ${theme.colors.fg.secondary};
       border-radius: ${theme.borders.radius.round};
       cursor: pointer;
       transition: all 0.3s;
@@ -74,7 +75,7 @@ const Circle = styled.span(
 const StyledCheckmark = styled(Checkmark)(
   ({ theme }) => css`
     position: absolute;
-    height: ${ICON_HEIGHT}px;
+    width: ${ICON_WIDTH}px;
     top: ${ICON_TOP_POSITION}px;
     left: ${ICON_LEFT_POSITION}px;
     z-index: ${THEME_CONSTANTS.Z_INDEX.DEFAULT};
@@ -108,11 +109,20 @@ const ToggleContainer = styled.div(
 
       :disabled {
         ~ ${Background} {
-          border-color: ${theme.colors.border.disable};
+          border-color: ${theme.colors.fg.disable};
+        }
+
+        :checked ~ ${Background} {
+          background-color: ${theme.colors.fg.disable};
+          border-color: ${theme.colors.fg.disable};
         }
 
         ~ ${Circle}:after {
-          background-color: ${theme.colors.interactiveBg.disable};
+          background-color: ${theme.colors.fg.disable};
+        }
+
+        :checked ~ ${Circle}:after {
+          background-color: ${theme.colors.bg.secondary};
         }
 
         ~ ${StyledCheckmark} path {
@@ -120,22 +130,21 @@ const ToggleContainer = styled.div(
         }
       }
 
-      :disabled:checked ~ ${Background} {
-        background-color: ${theme.colors.bg.quaternary};
-        border-color: ${theme.colors.border.disable};
-      }
-
-      :focus ~ ${Background} {
-        border-color: ${theme.colors.border.focus};
+      :focus {
+        ~ ${Background} {
+          ${focusCSS()}
+        }
       }
 
       :checked {
         ~ ${Background} {
-          background-color: ${theme.colors.interactiveBg.positiveNormal};
+          background-color: ${theme.colors.interactiveBg.positivePress};
+          border-color: ${theme.colors.interactiveBg.positivePress};
         }
 
         ~ ${Circle}:after {
           left: ${CIRCLE_FINAL_POSITION}px;
+          background-color: ${theme.colors.interactiveBg.positiveNormal};
         }
 
         ~ ${StyledCheckmark} {
@@ -143,21 +152,19 @@ const ToggleContainer = styled.div(
         }
       }
 
-      :hover:not(:disabled) ~ ${Circle}:after {
-        background-color: ${theme.colors.interactiveBg.secondaryHover};
-      }
+      :hover {
+        :not(:disabled) ~ ${Background} {
+          border-color: ${theme.colors.fg.secondary};
+        }
 
-      :hover:checked:not(:disabled) ~ ${Background} {
-        background-color: ${theme.colors.interactiveBg.positiveHover};
+        :checked:not(:disabled) ~ ${Background} {
+          background-color: ${theme.colors.interactiveBg.positiveHover};
+          border-color: ${theme.colors.interactiveBg.positiveHover};
+        }
       }
 
       :active {
         ~ ${Background} {
-          border-color: ${theme.colors.interactiveBg.primaryPress};
-        }
-
-        ~ ${Circle}:after {
-          background-color: ${theme.colors.interactiveBg.secondaryPress};
           box-shadow: 0 0 0 8px ${theme.colors.shadow.active};
         }
       }
