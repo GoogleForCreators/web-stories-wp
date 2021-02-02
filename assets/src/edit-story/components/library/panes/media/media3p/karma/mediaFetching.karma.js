@@ -192,7 +192,10 @@ const categories = [
   },
 ];
 
-describe('Media3pPane fetching', () => {
+// Disable reason: flakey tests.
+// See https://github.com/google/web-stories-wp/pull/6162
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('Media3pPane fetching', () => {
   let fixture;
   let unsplashSection;
   let coverrSection;
