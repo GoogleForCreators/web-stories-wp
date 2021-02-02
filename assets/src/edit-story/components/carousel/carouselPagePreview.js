@@ -95,8 +95,8 @@ function CarouselPagePreview({ page, isCurrentPage, ...props }) {
                 page={page}
               />
             ))}
-            {isCurrentPage && <ZoomPreview />}
           </PreviewWrapper>
+          {isCurrentPage && <ZoomPreview />}
         </Page>
       </TransformProvider>
     </UnitsProvider>
