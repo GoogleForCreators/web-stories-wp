@@ -39,7 +39,7 @@ export const focusCSS = (accent, background) => css`
     }`};
 `;
 
-export const focusableOutlineCSS = (colorOrProps) => {
+export const focusableOutlineCSS = (colorOrProps, background) => {
   const accent =
     typeof colorOrProps === 'string'
       ? colorOrProps
@@ -47,7 +47,7 @@ export const focusableOutlineCSS = (colorOrProps) => {
 
   return css`
     &.${FOCUS_VISIBLE_SELECTOR} {
-      ${focusCSS(accent)};
+      ${focusCSS(accent, background)};
     }
   `;
 };
