@@ -13,28 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
-import { noop } from '../../../utils/noop';
-import { Footer } from './footer';
-import { Header } from './header';
-import { Tips } from './tips';
-import { Transitioner } from './transitioner';
-
-export function Menu({ onTipSelect = noop, ...transitionProps }) {
-  return (
-    <Transitioner {...transitionProps}>
-      <Header />
-      <Tips onTipSelect={onTipSelect} />
-      <Footer />
-    </Transitioner>
-  );
-}
-Menu.propTypes = {
-  onTipSelect: PropTypes.func,
-};
+export function noop() {}

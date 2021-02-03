@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../design-system';
+import { themeHelpers, Text, THEME_CONSTANTS } from '../../../../design-system';
 
 const Panel = styled.div`
   padding: 24px 0 16px 0;
@@ -37,23 +37,16 @@ const Heading = styled.h4`
   margin: 0 0 8px 0;
 `;
 
-const Caption = styled.p`
-  ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { X_SMALL }) => paragraph[X_SMALL]
-  )}
-  margin: 0;
-`;
-
 export function Header() {
   return (
     <Panel>
       <Heading>{__('Web Stories Help Center', 'web-stories')}</Heading>
-      <Caption>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {__(
           'Discover tips & resources to help you get the most out of your Web Stories.',
           'web-stories'
         )}
-      </Caption>
+      </Text>
     </Panel>
   );
 }
