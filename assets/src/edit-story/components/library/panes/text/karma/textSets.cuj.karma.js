@@ -76,12 +76,11 @@ fdescribe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () =>
     await fixture.events.mouse.moveRel(textSet, 25, 25);
     await fixture.events.mouse.down();
 
-    // @todo The following two lines of code are for giving the text set more time to start dragging.
-    // These can be removed once https://github.com/google/web-stories-wp/issues/6027 is fixed.
-    await fixture.events.mouse.move(5, 5);
-    await fixture.events.sleep(2000);
-
     await fixture.events.mouse.moveRel(page, 50, 100, { steps: 20 });
+    // Verify the clone exists.
+    await waitFor(() =>
+      expect(fixture.querySelector('[data-testid="libraryClone"]')).toBeTruthy()
+    );
     await fixture.snapshot('Text set dragged');
     await fixture.events.mouse.up();
 

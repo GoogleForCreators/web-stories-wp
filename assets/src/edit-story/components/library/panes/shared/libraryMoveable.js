@@ -283,7 +283,13 @@ function LibraryMoveable({
             zIndex={1}
             pointerEvents="initial"
             render={() => {
-              return <CloneElement ref={cloneRef} {...cloneProps} />;
+              return (
+                <CloneElement
+                  ref={cloneRef}
+                  data-testid="libraryClone"
+                  {...cloneProps}
+                />
+              );
             }}
           />
           <Moveable
