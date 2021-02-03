@@ -91,6 +91,7 @@ export const _default = () => {
         <Row>
           <Toggle
             id="one-light"
+            aria-label="toggle-one-light"
             name="oneLight"
             checked={inputState.oneLight}
             onChange={handleChange}
@@ -98,6 +99,7 @@ export const _default = () => {
           />
           <Toggle
             id="two-light"
+            aria-label="toggle-two-light"
             name="twoLight"
             checked={inputState.twoLight}
             onChange={handleChange}
@@ -105,6 +107,7 @@ export const _default = () => {
           />
           <Toggle
             id="three-light"
+            aria-label="toggle-three-light"
             name="threeLight"
             checked={inputState.threeLight}
             onChange={handleChange}
@@ -113,6 +116,7 @@ export const _default = () => {
           />
           <Toggle
             id="four-light"
+            aria-label="toggle-four-light"
             name="fourLight"
             checked={inputState.fourLight}
             onChange={handleChange}
@@ -132,6 +136,7 @@ export const _default = () => {
           <Row>
             <Toggle
               id="one-dark"
+              aria-label="toggle-one-dark"
               name="oneDark"
               checked={inputState.oneDark}
               onChange={handleChange}
@@ -139,6 +144,7 @@ export const _default = () => {
             />
             <Toggle
               id="two-dark"
+              aria-label="toggle-two-dark"
               name="twoDark"
               checked={inputState.twoDark}
               onChange={handleChange}
@@ -146,6 +152,7 @@ export const _default = () => {
             />
             <Toggle
               id="three-dark"
+              aria-label="toggle-three-dark"
               name="threeDark"
               checked={inputState.threeDark}
               onChange={handleChange}
@@ -154,6 +161,7 @@ export const _default = () => {
             />
             <Toggle
               id="four-dark"
+              aria-label="toggle-four-dark"
               name="fourDark"
               checked={inputState.fourDark}
               onChange={handleChange}

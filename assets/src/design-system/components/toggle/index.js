@@ -23,7 +23,6 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { Checkmark } from '../../icons';
-import { THEME_CONSTANTS } from '../../theme';
 import { FOCUS_VISIBLE_SELECTOR } from '../../theme/global';
 
 const BORDER_WIDTH = 1;
@@ -78,7 +77,7 @@ const StyledCheckmark = styled(Checkmark)(
     width: ${ICON_WIDTH}px;
     top: ${ICON_TOP_POSITION}px;
     left: ${ICON_LEFT_POSITION}px;
-    z-index: ${THEME_CONSTANTS.Z_INDEX.DEFAULT};
+    z-index: 1;
     opacity: 0;
     transition: opacity 0.15s;
     pointer-events: none;
