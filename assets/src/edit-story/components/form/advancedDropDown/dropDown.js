@@ -103,7 +103,7 @@ const DropDownTitle = styled.span`
  * @param {string} props.priorityLabel Label to display in front of the priority options.
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
- * @param {boolean} props.displayInContent If to display the selection list inline instead of as a modal.
+ * @param {boolean} props.isInline If to display the selection list inline instead of as a separate popup modal.
  * @return {*} Render.
  */
 function DropDown({
@@ -122,7 +122,7 @@ function DropDown({
   priorityLabel,
   searchResultsLabel,
   renderer,
-  displayInContent = false,
+  isInline = false,
   ...rest
 }) {
   if (!options && !getOptionsByQuery) {
@@ -178,7 +178,7 @@ function DropDown({
       onClose={debouncedCloseDropDown}
       getOptionsByQuery={getOptionsByQuery}
       hasSearch={hasSearch}
-      displayInContent={displayInContent}
+      isInline={isInline}
       renderContents={({
         searchKeyword,
         setIsExpanded,
@@ -208,6 +208,7 @@ function DropDown({
   );
 
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
+  // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
     <Container onKeyDown={handleKeyPress}>
       <DropDownSelect
@@ -222,8 +223,8 @@ function DropDown({
         <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
-      {isOpen && !disabled && displayInContent && list}
-      {!disabled && !displayInContent && (
+      {isOpen && !disabled && isInline && list}
+      {!disabled && !isInline && (
         <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
           {list}
         </Popup>
@@ -248,7 +249,7 @@ DropDown.propTypes = {
   priorityLabel: PropTypes.string,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  displayInContent: PropTypes.bool,
+  isInline: PropTypes.bool,
 };
 
 export default DropDown;

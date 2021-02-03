@@ -35,7 +35,7 @@ import StyleGroup from './stylePreset/styleGroup';
 import useApplyColor from './colorPreset/useApplyColor';
 import useApplyStyle from './stylePreset/useApplyStyle';
 
-function PresetPanel({ presetType = 'color', title, pushUpdate }) {
+function PresetPanel({ presetType, title, pushUpdate }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
   const { currentStoryStyles, selectedElements, globalStoryStyles } = useStory(
@@ -62,9 +62,6 @@ function PresetPanel({ presetType = 'color', title, pushUpdate }) {
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const isText = areAllType('text', selectedElements);
-  const isShape = areAllType('shape', selectedElements);
-
   const handleApplyColor = useApplyColor({ pushUpdate });
   const handleApplyStyle = useApplyStyle({ pushUpdate });
   const handleApplyPreset = isColor ? handleApplyColor : handleApplyStyle;
@@ -81,6 +78,12 @@ function PresetPanel({ presetType = 'color', title, pushUpdate }) {
     }
   }, [hasPresets, isEditMode]);
 
+  if (!isStyle && !isColor) {
+    return null;
+  }
+
+  const isText = areAllType('text', selectedElements);
+  const isShape = areAllType('shape', selectedElements);
   // Text and shape presets are not compatible.
   if (!isText && !isShape && selectedElements.length > 1) {
     return null;
@@ -100,11 +103,6 @@ function PresetPanel({ presetType = 'color', title, pushUpdate }) {
 
   const resizeable = hasPresets;
   const canCollapse = !isEditMode && (hasPresets || isColor);
-
-  if (!isStyle && !isColor) {
-    return null;
-  }
-
   return (
     <Panel
       name={`stylepreset-${presetType}`}
@@ -142,7 +140,7 @@ function PresetPanel({ presetType = 'color', title, pushUpdate }) {
 }
 
 PresetPanel.propTypes = {
-  presetType: PropTypes.string,
+  presetType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };

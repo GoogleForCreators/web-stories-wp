@@ -41,8 +41,8 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.border.radius.default};
   padding: 5px;
   margin-top: 16px;
-  ${({ displayInContent }) =>
-    displayInContent &&
+  ${({ isInline }) =>
+    isInline &&
     `
       position: absolute;
       margin-top: 0;
@@ -58,7 +58,7 @@ function OptionsContainer({
   getOptionsByQuery,
   hasSearch,
   renderContents,
-  displayInContent,
+  isInline,
 }) {
   const ref = useRef();
   const inputRef = useRef();
@@ -94,7 +94,7 @@ function OptionsContainer({
 
   const listId = `list-${uuidv4()}`;
   return (
-    <Container role="dialog" ref={ref} displayInContent={displayInContent}>
+    <Container role="dialog" ref={ref} isInline={isInline}>
       {hasSearch && (
         <SearchInput
           ref={inputRef}
@@ -123,7 +123,7 @@ OptionsContainer.propTypes = {
   getOptionsByQuery: PropTypes.func,
   hasSearch: PropTypes.bool,
   renderContents: PropTypes.func.isRequired,
-  displayInContent: PropTypes.bool,
+  isInline: PropTypes.bool,
 };
 
 export default OptionsContainer;

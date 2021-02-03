@@ -182,7 +182,7 @@ function ColorPresetActions({ color, pushUpdate }) {
         <DropDownWrapper>
           <AdvancedDropDown
             options={options}
-            displayInContent={true}
+            isInline={true}
             hasSearch={false}
             onChange={({ id }) => setShowLocalColors(id === LOCAL)}
             selectedId={showLocalColors ? LOCAL : GLOBAL}
