@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { elementFillContent } from '../shared';
+import { noop } from '../../../utils/noop';
+import { Footer } from './footer';
+import { Header } from './header';
+import { Tips } from './tips';
+import { Transitioner } from './transitioner';
 
-const Element = styled.div`
-  ${elementFillContent}
-`;
-
-function MediaFrame() {
-  return <Element />;
+export function Menu({ onTipSelect = noop, ...transitionProps }) {
+  return (
+    <Transitioner {...transitionProps}>
+      <Header />
+      <Tips onTipSelect={onTipSelect} />
+      <Footer />
+    </Transitioner>
+  );
 }
-
-export default MediaFrame;
+Menu.propTypes = {
+  onTipSelect: PropTypes.func,
+};
