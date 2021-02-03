@@ -72,7 +72,7 @@ export const TIPS = {
     title: __('Add links to design elements', 'web-stories'),
     description: [
       __(
-        'Go to the Design tab. Scroll down to Links and enter a URL. To remove a link, select the “X” to the right of URL box.',
+        'Go to the Links section under the Design tab and enter a URL. To remove a link, select the "X" (Clear) button.',
         'web-stories'
       ),
     ],
@@ -81,7 +81,7 @@ export const TIPS = {
     title: __('Enable swipe-up option', 'web-stories'),
     description: [
       __(
-        'You’re caught up with quick tips. We’ll notify you when we add new tips, but feel free to come back whenever you need help.',
+        'Go to the Design tab. Scroll down to Swipe-up Link and enter a web address and a call to action to describe the link.',
         'web-stories'
       ),
     ],
