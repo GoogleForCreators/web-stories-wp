@@ -54,7 +54,7 @@ Link.propTypes = {
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
 };
 Link.defaultProps = {
-  as: 'p',
+  as: 'a',
   isBold: false,
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };
