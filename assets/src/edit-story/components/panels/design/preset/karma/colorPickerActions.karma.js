@@ -25,6 +25,8 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
 
+const ALL_STORIES = 'All stories';
+
 describe('Saved Styles: Color Picker', () => {
   let fixture;
 
@@ -58,7 +60,7 @@ describe('Saved Styles: Color Picker', () => {
       // Switch to global.
       await fixture.events.click(fontColor.picker.colorTypeSelect);
       await fixture.events.click(
-        fixture.screen.getByRole('option', { name: 'Global colors' })
+        fixture.screen.getByRole('option', { name: ALL_STORIES })
       );
       await fixture.events.click(fontColor.picker.saveColor);
       expect(fontColor.picker.applySavedColor('global')).toBeTruthy();
@@ -104,7 +106,7 @@ describe('Saved Styles: Color Picker', () => {
       await waitFor(() => fontColor.picker);
       await fixture.events.click(fontColor.picker.colorTypeSelect);
       await fixture.events.click(
-        fixture.screen.getByRole('option', { name: 'Global colors' })
+        fixture.screen.getByRole('option', { name: ALL_STORIES })
       );
       await fixture.events.click(fontColor.picker.saveColor);
 
@@ -114,7 +116,7 @@ describe('Saved Styles: Color Picker', () => {
       await waitFor(() => fontColor.picker);
       await fixture.events.click(fontColor.picker.colorTypeSelect);
       await fixture.events.click(
-        fixture.screen.getByRole('option', { name: 'Global colors' })
+        fixture.screen.getByRole('option', { name: ALL_STORIES })
       );
       await fixture.events.click(fontColor.picker.applySavedColor('global'));
 

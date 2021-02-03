@@ -31,7 +31,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
 import { Add } from '../../../../../../design-system/icons';
-import { Curve } from '../../../../../icons';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
@@ -65,7 +64,6 @@ const AddColorPreset = styled.button`
 `;
 
 const CtaWrapper = styled.div`
-  text-align: right;
   font-size: 14px;
   line-height: 26px;
   margin-right: 5px;
@@ -215,13 +213,9 @@ function ColorPresetActions({ color, pushUpdate }) {
             <TranslateWithMarkup
               mapping={{
                 i: <Add width={12} height={12} />,
-                arrow: <Curve width={32} />,
               }}
             >
-              {__(
-                'Click <i></i> to save a color <arrow></arrow>',
-                'web-stories'
-              )}
+              {__('Click <i></i> to save a color', 'web-stories')}
             </TranslateWithMarkup>
           </CtaWrapper>
         )}
