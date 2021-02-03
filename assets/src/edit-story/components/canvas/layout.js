@@ -34,6 +34,7 @@ import {
   FULLBLEED_RATIO,
   HEADER_HEIGHT,
   PAGE_NAV_WIDTH,
+  SCROLLBAR_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
@@ -102,8 +103,13 @@ const Area = styled.div`
 const PageAreaFullbleedContainer = styled(Area).attrs({
   area: 'page',
 })`
-  overflow: ${({ canScroll }) =>
-    canScroll ? 'var(--overflow-x) var(--overflow-y)' : 'hidden'};
+  overflow: ${({ hideScrollbars }) =>
+    hideScrollbars ? 'hidden' : 'var(--overflow-x) var(--overflow-y)'};
+
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-corner {
+    background-color: ${({ theme }) => theme.colors.bg.workspace};
+  }
 `;
 
 // Overflow is not hidden for media edit layer.
@@ -208,8 +214,13 @@ function useLayoutParamsCssVars() {
     })
   );
   const fullHeight = pageWidth / FULLBLEED_RATIO;
-  const viewportWidth = hasHorizontalOverflow ? workspaceWidth : pageWidth;
+  const widthPadding = hasVerticalOverflow ? SCROLLBAR_WIDTH : 0;
+  const viewportWidth = hasHorizontalOverflow
+    ? workspaceWidth
+    : pageWidth + widthPadding;
   const viewportHeight = hasVerticalOverflow ? workspaceHeight : fullHeight;
+  // We need to make sure the element is correctly placed when there's no horizontal
+  // scroll. By not setting an explicit width, we can ensure that.
   return {
     '--page-nav-width': `${hasPageNavigation ? PAGE_NAV_WIDTH : 0}px`,
     '--page-width-px': `${pageWidth}px`,
@@ -232,6 +243,7 @@ const PageArea = forwardRef(function PageArea(
     overlay = [],
     background,
     isControlled = false,
+    hideScrollbars = false,
   },
   ref
 ) {
@@ -241,7 +253,7 @@ const PageArea = forwardRef(function PageArea(
       data-testid="fullbleed"
       aria-label={__('Fullbleed area', 'web-stories')}
       role="region"
-      canScroll={!isControlled}
+      hideScrollbars={hideScrollbars}
     >
       <PageAreaWithOverflow
         showOverflow={showOverflow}
@@ -264,6 +276,7 @@ PageArea.propTypes = {
   overlay: PropTypes.node,
   background: PropTypes.object,
   isControlled: PropTypes.bool,
+  hideScrollbars: PropTypes.bool,
 };
 
 export {

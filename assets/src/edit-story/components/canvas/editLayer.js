@@ -98,7 +98,7 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef} isControlled>
+      <EditPageArea ref={pageAreaRef} isControlled hideScrollbars>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

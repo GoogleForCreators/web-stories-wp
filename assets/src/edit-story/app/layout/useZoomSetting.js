@@ -28,6 +28,7 @@ import {
   FULLBLEED_RATIO,
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,
+  SCROLLBAR_WIDTH,
 } from '../../constants';
 
 function useZoomSetting() {
@@ -46,11 +47,12 @@ function useZoomSetting() {
       case ZOOM_SETTING.FILL: {
         // See how much we can fit inside so all space is used
         if (workspaceRatio > FULLBLEED_RATIO) {
-          // workspace is limited in the height, so use the full width
-          maxPageWidth = workspaceSize.width;
+          // workspace is limited in the height, so use the width minus room for scrollbar
+          maxPageWidth = workspaceSize.width - SCROLLBAR_WIDTH;
         } else {
-          // workspace is limited in the width, so use the full height converted
-          maxPageWidth = workspaceSize.height * FULLBLEED_RATIO;
+          // workspace is limited in the width, so use the height minus room for scrollbar converted
+          maxPageWidth =
+            (workspaceSize.height - SCROLLBAR_WIDTH) * FULLBLEED_RATIO;
         }
         break;
       }

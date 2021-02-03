@@ -62,12 +62,8 @@ export const GlobalStyle = createGlobalStyle`
     position:fixed;
   }
 
-  *::-webkit-scrollbar-track,
-  *::-webkit-scrollbar-corner {
-    background: ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
-  }
-
   *::-webkit-scrollbar-track {
+    background: ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
     border-radius: 6px;
   }
 
@@ -77,6 +73,10 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 6px;
     border: 2px solid transparent;
     background-clip: content-box;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background-color: transparent;
   }
 `;
 
