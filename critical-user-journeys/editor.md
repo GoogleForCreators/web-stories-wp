@@ -13,10 +13,10 @@
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
 |                                                                   | *[total]*                                        | 🚨 **20.00%** *(1 / 5)*     |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(6 / 6)*    |
-|                                                                   | Enter edit mode                                  | 🚨 **20.00%** *(1 / 5)*     |
+|                                                                   | Enter edit mode                                  | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                                   | *[total]*                                        | 🛴 **52.94%** *(9 / 17)*    |
+|                                                                   | *[total]*                                        | 🛴 **76.47%** *(13 / 17)*   |
 | Creator Can Style Text                                            | Apply B                                          | 🏔️ **94.74%** *(18 / 19)*  |
 |                                                                   | Apply I                                          | 🛴 **80.00%** *(8 / 10)*    |
 |                                                                   | Apply U                                          | 🛴 **77.78%** *(7 / 9)*     |
@@ -41,9 +41,10 @@
 |                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
-| Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
+| Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors from Color Picker                     | 🏆 **100.00%** *(3 / 3)*    |
+|                                                                   | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
@@ -73,4 +74,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **75.52%** *(290 / 384)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **77.95%** *(304 / 390)* |
