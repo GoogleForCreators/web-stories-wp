@@ -67,6 +67,10 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 6px;
   }
 
+  *::-webkit-scrollbar-corner {
+    background: ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
+  }
+
   *::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => rgba(theme.colors.bg.divider, 0.04)};
     width: 3px;
