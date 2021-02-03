@@ -81,6 +81,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           const properties = {
             ...objectPick(post, ['status', 'slug', 'link']),
             featuredMediaUrl: post.featured_media_url,
+            previewLink: post.preview_link,
           };
           updateStory({ properties });
 

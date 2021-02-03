@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { useFeatures } from 'flagged';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -29,12 +24,9 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory, useLocalMedia, useHistory } from '../../../app';
 import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
-import { Outline, Primary } from '../../button';
+import { Outline } from '../../button';
 import { useGlobalKeyDownEffect } from '../../../../design-system';
-import WithTooltip from '../../tooltip';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
-import { usePrepublishChecklist } from '../../inspector/prepublish';
-import { ButtonContent, WarningIcon } from './styles';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -52,9 +44,6 @@ function Update() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-
-  const { checklist, refreshChecklist } = usePrepublishChecklist();
-  const { showPrePublishTab } = useFeatures();
   const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
     hasMetaBoxes: state.hasMetaBoxes,
   }));
@@ -94,28 +83,13 @@ function Update() {
       );
   }
 
-  const tooltip = showPrePublishTab
-    ? checklist.some(({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type) &&
-      __('There are items in the checklist to resolve', 'web-stories')
-    : null;
-
-  const button = (
-    <Primary
-      onPointerEnter={refreshChecklist}
+  return (
+    <ButtonWithChecklistWarning
       onClick={() => saveStory()}
       isDisabled={isSaving || isUploading}
-    >
-      <ButtonContent>
-        {text}
-        {tooltip && <WarningIcon />}
-      </ButtonContent>
-    </Primary>
+      text={text}
+    />
   );
-
-  const wrappedWithTooltip = (
-    <WithTooltip title={tooltip}>{button}</WithTooltip>
-  );
-  return tooltip ? wrappedWithTooltip : button;
 }
 
 export default Update;

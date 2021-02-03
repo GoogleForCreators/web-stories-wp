@@ -27,7 +27,7 @@ import { usePresubmitHandler } from '../../../form';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { areAllType } from './utils';
 
-function useApplyPreset(isColor, pushUpdate) {
+function useApplyPreset({ isColor, pushUpdate }) {
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 

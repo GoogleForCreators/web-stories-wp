@@ -177,6 +177,9 @@ module.exports = function (config) {
       terminal: false,
     },
 
+    // When a browser crashes,try to relaunch more than just 2 times (which is the default)
+    retryLimit: 5,
+
     // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
     browserNoActivityTimeout: 100000,
 

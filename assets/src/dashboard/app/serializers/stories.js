@@ -34,6 +34,7 @@ export default function reshapeStoryObject(editStoryURL) {
       modified,
       modified_gmt,
       link,
+      preview_link: previewLink,
       story_data: storyData,
       _embedded: { author = [] } = {},
     } = originalStoryData;
@@ -63,6 +64,7 @@ export default function reshapeStoryObject(editStoryURL) {
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
       editStoryLink: `${editStoryURL}&post=${id}`,
+      previewLink,
       link,
       originalStoryData,
     };
