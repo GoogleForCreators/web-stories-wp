@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
 
-describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {
+fdescribe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {
   let fixture;
   let originalTimeout;
 
@@ -79,7 +79,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     // @todo The following two lines of code are for giving the text set more time to start dragging.
     // These can be removed once https://github.com/google/web-stories-wp/issues/6027 is fixed.
     await fixture.events.mouse.move(5, 5);
-    await fixture.events.sleep(500);
+    await fixture.events.sleep(5000);
 
     await fixture.events.mouse.moveRel(page, 50, 100, { steps: 20 });
     await fixture.snapshot('Text set dragged');
