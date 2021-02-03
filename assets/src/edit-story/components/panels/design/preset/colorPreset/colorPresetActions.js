@@ -65,9 +65,15 @@ const AddColorPreset = styled.button`
 
 const CtaWrapper = styled.div`
   font-size: 14px;
-  line-height: 26px;
+  line-height: 30px;
   margin-right: 5px;
   color: ${({ theme }) => theme.colors.fg.tertiary};
+
+  svg {
+    color: ${({ theme }) => theme.colors.fg.white};
+    width: 20px;
+    height: 14px;
+  }
 `;
 
 const ColorsWrapper = styled.div`
@@ -212,7 +218,7 @@ function ColorPresetActions({ color, pushUpdate }) {
           <CtaWrapper>
             <TranslateWithMarkup
               mapping={{
-                i: <Add width={12} height={12} />,
+                i: <Add />,
               }}
             >
               {__('Click <i></i> to save a color', 'web-stories')}
