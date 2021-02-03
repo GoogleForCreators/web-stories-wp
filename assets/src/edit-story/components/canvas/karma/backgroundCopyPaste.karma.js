@@ -201,8 +201,9 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%)'
+      'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
     );
+    await fixture.events.sleep(10000);
     expect(await getNumElements()).toBe(1);
 
     // Now delete background image and verify that underlying color is still correct

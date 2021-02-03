@@ -48,11 +48,39 @@ export default function useUserApi(dataAdapter, { currentUserApi }) {
     }
   }, [dataAdapter, currentUser, currentUserApi]);
 
+  const toggleWebStoriesMediaOptimization = useCallback(async () => {
+    setIsUpdating(true);
+    try {
+      setCurrentUser(
+        await dataAdapter.post(currentUserApi, {
+          data: {
+            meta: {
+              web_stories_media_optimization: !currentUser.meta
+                .web_stories_media_optimization,
+            },
+          },
+        })
+      );
+    } finally {
+      setIsUpdating(false);
+    }
+  }, [dataAdapter, currentUser, currentUserApi]);
+
   return useMemo(
     () => ({
-      api: { fetchCurrentUser, toggleWebStoriesTrackingOptIn },
+      api: {
+        fetchCurrentUser,
+        toggleWebStoriesTrackingOptIn,
+        toggleWebStoriesMediaOptimization,
+      },
       currentUser: { data: currentUser, isUpdating },
     }),
-    [fetchCurrentUser, toggleWebStoriesTrackingOptIn, currentUser, isUpdating]
+    [
+      fetchCurrentUser,
+      toggleWebStoriesTrackingOptIn,
+      toggleWebStoriesMediaOptimization,
+      currentUser,
+      isUpdating,
+    ]
   );
 }

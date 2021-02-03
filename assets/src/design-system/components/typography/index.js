@@ -16,4 +16,5 @@
 
 export { Display } from './display';
 export { Headline } from './headline';
+export { Link } from './link';
 export { Text } from './text';

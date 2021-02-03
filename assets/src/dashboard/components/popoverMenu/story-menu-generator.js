@@ -24,7 +24,7 @@ export const generateStoryMenu = ({ menuItems, story }) =>
     if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR) {
       return { ...menuItem, url: story.bottomTargetAction, newTab: false };
     } else if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
-      return { ...menuItem, url: story.link, newTab: true };
+      return { ...menuItem, url: story.previewLink, newTab: true };
     }
     return menuItem;
   });

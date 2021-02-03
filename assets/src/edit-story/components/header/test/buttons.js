@@ -48,13 +48,18 @@ function setupButtons({
   const storyContextValue = {
     state: {
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
-      story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
+      story: {
+        status: 'draft',
+        storyId: 123,
+        date: null,
+        previewLink:
+          'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+        ...extraStoryProps,
+      },
     },
     actions: { saveStory, autoSave },
   };
   const configValue = {
-    previewLink:
-      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
     capabilities: {
       hasPublishAction: true,
     },
@@ -314,7 +319,7 @@ describe('buttons', () => {
   it('should open draft preview when clicking on Preview via about:blank', () => {
     const { getByRole, saveStory } = setupButtons({
       story: {
-        link: 'https://example.com',
+        previewLink: 'https://example.com/?preview=true',
       },
     });
     const previewButton = getByRole('button', { name: 'Preview' });
