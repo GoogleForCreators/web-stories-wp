@@ -62,13 +62,13 @@ export const GlobalStyle = createGlobalStyle`
     position:fixed;
   }
 
-  *::-webkit-scrollbar-track {
-    background: ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
-    border-radius: 6px;
-  }
-
+  *::-webkit-scrollbar-track,
   *::-webkit-scrollbar-corner {
     background: ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
+  }
+
+  *::-webkit-scrollbar-track {
+    border-radius: 6px;
   }
 
   *::-webkit-scrollbar-thumb {
