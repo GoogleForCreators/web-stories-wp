@@ -24,9 +24,9 @@ import { fireEvent, waitFor } from '@testing-library/react';
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { basicDropDownOptions } from '../../../testUtils/sampleData';
-import { Typeahead } from '../';
+import { Search } from '..';
 
-describe('Typeahead <Typeahead />', () => {
+describe('Search <Search />', () => {
   // Mock scrollTo
   const scrollTo = jest.fn();
   let nativeScrollTo;
@@ -41,9 +41,9 @@ describe('Typeahead <Typeahead />', () => {
 
   jest.useFakeTimers();
 
-  it('should render a closed <Typeahead /> menu with an input field on default', () => {
+  it('should render a closed <Search /> menu with an input field on default', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
-      <Typeahead options={basicDropDownOptions} ariaInputLabel={'label'} />
+      <Search options={basicDropDownOptions} ariaInputLabel={'label'} />
     );
 
     const input = getByRole('combobox');
@@ -55,10 +55,7 @@ describe('Typeahead <Typeahead />', () => {
 
   it('should show placeholder value when no selected value is found', () => {
     const { getByPlaceholderText } = renderWithProviders(
-      <Typeahead
-        options={basicDropDownOptions}
-        placeholder={'select a value'}
-      />
+      <Search options={basicDropDownOptions} placeholder={'select a value'} />
     );
 
     const placeholder = getByPlaceholderText('select a value');
@@ -67,7 +64,7 @@ describe('Typeahead <Typeahead />', () => {
 
   it("should show selectedValue's associated label in input when selectedValue is present", () => {
     const container = renderWithProviders(
-      <Typeahead
+      <Search
         options={basicDropDownOptions}
         placeholder={'select a value'}
         ariaInputLabel={'my aria label'}
@@ -81,7 +78,7 @@ describe('Typeahead <Typeahead />', () => {
 
   it('should show inputValue as selectedValue regardless of if selectedValue is found in options', async () => {
     const container = renderWithProviders(
-      <Typeahead
+      <Search
         options={basicDropDownOptions}
         placeholder={'select a value'}
         ariaInputLabel={'my label'}
@@ -99,9 +96,9 @@ describe('Typeahead <Typeahead />', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('should show <Typeahead /> menu when input has more than 1 character', () => {
+  it('should show <Search /> menu when input has more than 1 character', () => {
     const { getByRole } = renderWithProviders(
-      <Typeahead
+      <Search
         emptyText={'No options available'}
         options={basicDropDownOptions}
         ariaInputLabel={'label'}
@@ -123,7 +120,7 @@ describe('Typeahead <Typeahead />', () => {
 
   it('should show an active icon on list item that is active', () => {
     const { getByRole } = renderWithProviders(
-      <Typeahead
+      <Search
         emptyText={'No options available'}
         ariaInputLabel={'label'}
         isKeepMenuOpenOnSelection={false}
@@ -148,7 +145,7 @@ describe('Typeahead <Typeahead />', () => {
   // Mouse events
   it('should not expand menu when disabled is true', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
-      <Typeahead
+      <Search
         options={basicDropDownOptions}
         ariaInputLabel={'my label'}
         disabled={true}
@@ -171,7 +168,7 @@ describe('Typeahead <Typeahead />', () => {
     const onClickMock = jest.fn();
 
     const { getByRole, getAllByRole } = renderWithProviders(
-      <Typeahead
+      <Search
         options={basicDropDownOptions}
         selectedValue={null}
         ariaInputLabel={'my dropDown label'}

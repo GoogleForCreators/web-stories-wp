@@ -27,18 +27,18 @@ import {
   basicDropDownOptions,
   nestedDropDownOptions,
 } from '../../../testUtils/sampleData';
-import useTypeahead from '../useTypeahead';
+import useSearch from '../useSearch';
 
-describe('useTypeahead()', function () {
+describe('useSearch()', function () {
   it('should return falsy for activeOption when no selectedValue is present', () => {
-    const { result } = renderHook(() => useTypeahead({ options: [] }));
+    const { result } = renderHook(() => useSearch({ options: [] }));
 
     expect(result.current.activeOption).toBeFalsy();
   });
 
   it('should return object from options containing selectedValue as active option', () => {
     const { result } = renderHook(() =>
-      useTypeahead({
+      useSearch({
         selectedValue: basicDropDownOptions[2].value,
         options: basicDropDownOptions,
       })
@@ -49,7 +49,7 @@ describe('useTypeahead()', function () {
 
   it('should return null for activeOption when selectedValue is empty', () => {
     const { result } = renderHook(() =>
-      useTypeahead({
+      useSearch({
         selectedValue: '',
         options: basicDropDownOptions,
       })
@@ -65,7 +65,7 @@ describe('useTypeahead()', function () {
 
   it('should return an empty array when no options are present', () => {
     const { result } = renderHook(() =>
-      useTypeahead({ selectedValue: null, options: [] })
+      useSearch({ selectedValue: null, options: [] })
     );
 
     expect(result.current.normalizedOptions).toStrictEqual([]);
@@ -73,7 +73,7 @@ describe('useTypeahead()', function () {
 
   it('should return an empty array when only bad options are present', function () {
     const { result } = renderHook(() =>
-      useTypeahead({
+      useSearch({
         selectedValue: null,
         options: [
           'things that are not good for a dropDown',
@@ -88,7 +88,7 @@ describe('useTypeahead()', function () {
 
   it('should return only sanitized options that meet requirements', function () {
     const { result } = renderHook(() =>
-      useTypeahead({ selectedValue: null, options: nestedDropDownOptions })
+      useSearch({ selectedValue: null, options: nestedDropDownOptions })
     );
 
     expect(result.current.normalizedOptions).toStrictEqual([

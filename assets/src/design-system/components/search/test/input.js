@@ -24,16 +24,16 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import TypeaheadInput from '../input';
+import SearchInput from '../input';
 
-describe('Typeahead <Input />', () => {
+describe('Search <Input />', () => {
   const onClickMock = jest.fn();
   const handleClearInputMock = jest.fn();
 
-  it('should render a <TypeaheadInput /> combobox by default', () => {
+  it('should render a <SearchInput /> combobox by default', () => {
     const { getByRole } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -47,18 +47,18 @@ describe('Typeahead <Input />', () => {
 
   it('should not trigger onClickMock on click if input is disabled', () => {
     const { getByPlaceholderText } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
-        placeholder={'typeahead placeholder'}
+        placeholder={'search placeholder'}
         inputValue={''}
         disabled={true}
       />
     );
 
-    const input = getByPlaceholderText('typeahead placeholder');
+    const input = getByPlaceholderText('search placeholder');
     fireEvent.click(input);
 
     expect(onClickMock).toHaveBeenCalledTimes(0);
@@ -66,17 +66,17 @@ describe('Typeahead <Input />', () => {
 
   it('should trigger onClickMock on click if input is not disabled', () => {
     const { getByPlaceholderText } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
         inputValue={''}
-        placeholder={'typeahead placeholder'}
+        placeholder={'search placeholder'}
       />
     );
 
-    const input = getByPlaceholderText('typeahead placeholder');
+    const input = getByPlaceholderText('search placeholder');
     fireEvent.click(input);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
@@ -84,18 +84,18 @@ describe('Typeahead <Input />', () => {
 
   it('should trigger handleClearInputMock on click of clear button if input has content', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
         inputValue={'my input value'}
-        placeholder={'typeahead placeholder'}
+        placeholder={'search placeholder'}
         isFlexibleValue={true}
       />
     );
 
-    const clearButton = getByTestId('clear-typeahead-icon');
+    const clearButton = getByTestId('clear-search-icon');
     expect(clearButton).toBeInTheDocument();
 
     fireEvent.click(clearButton);
@@ -105,8 +105,8 @@ describe('Typeahead <Input />', () => {
 
   it('should show chevron icon by default while input is not open', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -114,14 +114,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const chevron = getByTestId('chevron-typeahead-icon');
+    const chevron = getByTestId('chevron-search-icon');
     expect(chevron).toBeInTheDocument();
   });
 
   it('should still show chevron icon by default while input is not open and input has value', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -129,14 +129,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const chevron = getByTestId('chevron-typeahead-icon');
+    const chevron = getByTestId('chevron-search-icon');
     expect(chevron).toBeInTheDocument();
   });
 
   it('should show clear icon by while input is not open and input has value if isFlexibleValue true', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -145,14 +145,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const clear = getByTestId('clear-typeahead-icon');
+    const clear = getByTestId('clear-search-icon');
     expect(clear).toBeInTheDocument();
   });
 
   it('should show clear icon by while input is open and input has value if isFlexibleValue true', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -162,14 +162,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const clear = getByTestId('clear-typeahead-icon');
+    const clear = getByTestId('clear-search-icon');
     expect(clear).toBeInTheDocument();
   });
 
   it('should show clear icon by while input is open and input has value', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -178,14 +178,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const clear = getByTestId('clear-typeahead-icon');
+    const clear = getByTestId('clear-search-icon');
     expect(clear).toBeInTheDocument();
   });
 
   it('should show chevron icon by while input is open and input has no value', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -194,14 +194,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const chevron = getByTestId('chevron-typeahead-icon');
+    const chevron = getByTestId('chevron-search-icon');
     expect(chevron).toBeInTheDocument();
   });
 
   it('should not show search icon by default', () => {
     const { queryAllByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -209,14 +209,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const search = queryAllByTestId('search-typeahead-icon');
+    const search = queryAllByTestId('search-search-icon');
     expect(search).toStrictEqual([]);
   });
 
   it('should show search icon if isOpen is true', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -225,14 +225,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const search = getByTestId('search-typeahead-icon');
+    const search = getByTestId('search-search-icon');
     expect(search).toBeInTheDocument();
   });
 
   it('should show search icon if isOpen is false and isFlexibleValue is true and there is an inputValue', () => {
     const { getByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -241,14 +241,14 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const search = getByTestId('search-typeahead-icon');
+    const search = getByTestId('search-search-icon');
     expect(search).toBeInTheDocument();
   });
 
   it('should not show search icon if isOpen is false and isFlexibleValue is true and there is no inputValue', () => {
     const { queryAllByTestId } = renderWithProviders(
-      <TypeaheadInput
-        ariaInputLabel={'typeahead label'}
+      <SearchInput
+        ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
@@ -257,7 +257,7 @@ describe('Typeahead <Input />', () => {
       />
     );
 
-    const search = queryAllByTestId('search-typeahead-icon');
+    const search = queryAllByTestId('search-search-icon');
     expect(search).toStrictEqual([]);
   });
 });

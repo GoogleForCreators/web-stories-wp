@@ -25,10 +25,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import TypeaheadInput from '../input';
+import SearchInput from '../input';
 
 export default {
-  title: 'DesignSystem/Components/Typeahead/Input',
+  title: 'DesignSystem/Components/Search/Input',
 };
 
 const Container = styled.div`
@@ -41,10 +41,10 @@ const Container = styled.div`
 export const _default = () => (
   <DarkThemeProvider>
     <Container>
-      <TypeaheadInput
+      <SearchInput
         aria-label={text('ariaInputLabel', 'my aria label')}
         ariaClearLabel={text('ariaClearLabel', 'label for clear button')}
-        clearId={'my-typeahead-id'}
+        clearId={'my-search-id'}
         disabled={boolean('disabled')}
         hasError={boolean('hasError')}
         id={'my-input-id'}
@@ -58,7 +58,7 @@ export const _default = () => (
         onFocus={action('on focus event triggered')}
         onKeyDown={action('on keyDown event triggered')}
         handleClearInputValue={action('handle clear input value triggered')}
-        placeholder={text('placeholder')}
+        placeholder={text('placeholder', 'search')}
       />
     </Container>
   </DarkThemeProvider>
@@ -66,10 +66,10 @@ export const _default = () => (
 
 export const LightTheme = () => (
   <Container>
-    <TypeaheadInput
+    <SearchInput
       aria-label={text('ariaInputLabel', 'my aria label')}
       ariaClearLabel={text('ariaClearLabel', 'label for clear button')}
-      clearId={'my-typeahead-id'}
+      clearId={'my-search-id'}
       disabled={boolean('disabled')}
       hasError={boolean('hasError')}
       id={'my-input-id'}
@@ -83,7 +83,7 @@ export const LightTheme = () => (
       onFocus={action('on focus event triggered')}
       onKeyDown={action('on keyDown event triggered')}
       handleClearInputValue={action('handle clear input value triggered')}
-      placeholder={text('placeholder')}
+      placeholder={text('placeholder', 'search')}
     />
   </Container>
 );

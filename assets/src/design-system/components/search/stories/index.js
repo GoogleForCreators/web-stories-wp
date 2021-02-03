@@ -27,11 +27,11 @@ import { useCallback, useMemo, useState } from 'react';
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
-import { Typeahead } from '../typeahead';
+import { Search } from '../search';
 import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 
 export default {
-  title: 'DesignSystem/Components/Typeahead',
+  title: 'DesignSystem/Components/Search',
 };
 
 const Container = styled.div`
@@ -64,20 +64,20 @@ export const _default = () => {
     );
   }, [inputValue]);
 
-  const handleTypeaheadValueChange = useCallback((value) => {
-    action('handleTypeaheadValueChange')(value);
+  const handleSearchValueChange = useCallback((value) => {
+    action('handleSearchValueChange')(value);
     setInputValue(value);
   }, []);
 
   return (
     <DarkThemeProvider>
       <Container>
-        <Typeahead
+        <Search
           ariaClearLabel={text('ariaClearLabel', 'clear input')}
           ariaInputLabel={text('ariaInputLabel')}
           disabled={boolean('disabled')}
           emptyText={text('emptyText', 'No options available')}
-          handleTypeaheadValueChange={handleTypeaheadValueChange}
+          handleSearchValueChange={handleSearchValueChange}
           hasError={boolean('hasError')}
           hint={text('hint', 'default hint text')}
           label={text('label', 'Find an image')}
@@ -120,19 +120,19 @@ export const LightTheme = () => {
     );
   }, [inputValue]);
 
-  const handleTypeaheadValueChange = useCallback((value) => {
-    action('handleTypeaheadValueChange')(value);
+  const handleSearchValueChange = useCallback((value) => {
+    action('handleSearchValueChange')(value);
     setInputValue(value);
   }, []);
 
   return (
     <Container>
-      <Typeahead
+      <Search
         ariaClearLabel={text('ariaClearLabel', 'clear input')}
         ariaInputLabel={text('ariaInputLabel')}
         disabled={boolean('disabled')}
         emptyText={text('emptyText', 'No options available')}
-        handleTypeaheadValueChange={handleTypeaheadValueChange}
+        handleSearchValueChange={handleSearchValueChange}
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         label={text('label', 'Search For Stories')}

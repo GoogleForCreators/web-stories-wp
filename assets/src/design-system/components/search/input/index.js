@@ -34,7 +34,7 @@ import {
   ClearButton,
 } from './components';
 
-const TypeaheadInput = (
+const SearchInput = (
   {
     ariaClearLabel,
     clearId,
@@ -83,7 +83,7 @@ const TypeaheadInput = (
         aria-hidden={true}
         disabled={disabled}
       >
-        <SearchIcon id={clearId} data-testid={'search-typeahead-icon'} />
+        <SearchIcon id={clearId} data-testid={'search-search-icon'} />
       </SearchDecoration>
       {activeInput && (
         <ClearButton
@@ -92,21 +92,21 @@ const TypeaheadInput = (
           onClick={handleClearInputValue}
           onKeyDown={onClearButtonKeyDown}
         >
-          <ClearIcon id={clearId} data-testid={'clear-typeahead-icon'} />
+          <ClearIcon id={clearId} data-testid={'clear-search-icon'} />
         </ClearButton>
       )}
       {!activeInput && inputValue.length > 0 && (
         <ChevronDecoration disabled={disabled} aria-hidden={!activeInput}>
-          <ChevronIcon isOpen={isOpen} data-testid={'chevron-typeahead-icon'} />
+          <ChevronIcon isOpen={isOpen} data-testid={'chevron-search-icon'} />
         </ChevronDecoration>
       )}
     </InputContainer>
   );
 };
 
-export default forwardRef(TypeaheadInput);
+export default forwardRef(SearchInput);
 
-TypeaheadInput.propTypes = {
+SearchInput.propTypes = {
   ariaClearLabel: PropTypes.string.isRequired,
   clearId: PropTypes.string.isRequired,
   disabled: PropTypes.bool,

@@ -23,13 +23,13 @@ import { useDebouncedCallback } from 'use-debounce';
  */
 import { getOptions } from '../menu/utils';
 
-export default function useTypeahead({
-  handleTypeaheadValueChange,
+export default function useSearch({
+  handleSearchValueChange,
   selectedValue,
   options,
 }) {
   /**
-   *Control when associated menu of typeahead should be visible.
+   *Control when associated menu of search should be visible.
    */
   const [_isOpen, _setIsOpen] = useState(false);
   const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300);
@@ -122,8 +122,8 @@ export default function useTypeahead({
   /**
    * send the inputValue when it changes back to the parent so that any results that need to change can be changed.
    */
-  useEffect(() => handleTypeaheadValueChange?.(inputValue.value), [
-    handleTypeaheadValueChange,
+  useEffect(() => handleSearchValueChange?.(inputValue.value), [
+    handleSearchValueChange,
     inputValue,
   ]);
 

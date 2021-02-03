@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { Typeahead } from './typeahead';
+export { Search } from './search';

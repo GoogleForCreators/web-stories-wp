@@ -40,8 +40,8 @@ import {
   DEFAULT_ARIA_CLEAR_LABEL,
   DEFAULT_ARIA_INPUT_LABEL,
 } from './constants';
-import TypeaheadInput from './input';
-import useTypeahead from './useTypeahead';
+import SearchInput from './input';
+import useSearch from './useSearch';
 
 /**
  *
@@ -50,8 +50,8 @@ import useTypeahead from './useTypeahead';
  * @param {string} props.ariaClearLabel Aria label passed to clear button for SR users.
  * @param {boolean} props.disabled If true, menu will not be openable
  * @param {string} props.emptyText If the array of options is empty this text will display when menu is expanded.
- * @param {Function} props.handleTypeaheadValueChange specific callback to monitor changes in input value separate from onMenuItemClick.
- * This is to separate the inputValue from the selectedValue should the typeahead demand selection from a list as opposed to be freeform.
+ * @param {Function} props.handleSearchValueChange specific callback to monitor changes in input value separate from onMenuItemClick.
+ * This is to separate the inputValue from the selectedValue should the search demand selection from a list as opposed to be freeform.
  * @param {boolean} props.hasError If true, input and hint (if present) will show error styles.
  * @param {string} props.hint Hint text to display below input (optional). If not present, no hint text will display.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
@@ -68,11 +68,11 @@ import useTypeahead from './useTypeahead';
  *
  */
 
-export const Typeahead = ({
+export const Search = ({
   ariaInputLabel = DEFAULT_ARIA_INPUT_LABEL,
   ariaClearLabel = DEFAULT_ARIA_CLEAR_LABEL,
   disabled,
-  handleTypeaheadValueChange,
+  handleSearchValueChange,
   hasError,
   hint,
   label,
@@ -98,10 +98,10 @@ export const Typeahead = ({
     isMenuFocused,
     isOpen,
     normalizedOptions,
-  } = useTypeahead({
+  } = useSearch({
     options,
     selectedValue,
-    handleTypeaheadValueChange,
+    handleSearchValueChange,
     inputRef,
   });
 
@@ -111,7 +111,7 @@ export const Typeahead = ({
   ]);
 
   /**
-   * Callbacks that begin typeahead interaction
+   * Callbacks that begin search interaction
    * */
   const handleInputFocus = useCallback(() => {
     isOpen.set(true);
@@ -240,7 +240,7 @@ export const Typeahead = ({
           {label}
         </Label>
       )}
-      <TypeaheadInput
+      <SearchInput
         // Passed through to input
         aria-label={ariaInputLabel}
         hasError={hasError}
@@ -250,7 +250,7 @@ export const Typeahead = ({
         onFocus={handleInputFocus}
         onKeyDown={handleInputKeyPress}
         placeholder={placeholder}
-        // Used within TypeaheadInput
+        // Used within SearchInput
         ariaClearLabel={ariaClearLabel}
         clearId={clearId}
         disabled={disabled}
@@ -302,12 +302,12 @@ export const Typeahead = ({
   );
 };
 
-Typeahead.propTypes = {
+Search.propTypes = {
   ariaInputLabel: PropTypes.string,
   ariaClearLabel: PropTypes.string,
   disabled: PropTypes.bool,
   emptyText: PropTypes.string,
-  handleTypeaheadValueChange: PropTypes.func,
+  handleSearchValueChange: PropTypes.func,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
   isRTL: PropTypes.bool,
