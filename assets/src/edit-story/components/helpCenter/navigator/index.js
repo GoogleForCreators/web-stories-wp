@@ -24,11 +24,7 @@ import styled from 'styled-components';
  */
 import { themeHelpers } from '../../../../design-system';
 import { BottomNavigation } from './bottomNavigation';
-import {
-  NAVIGATION_GUTTER,
-  NAVIGATION_HEIGHT,
-  NAVIGATION_WIDTH,
-} from './constants';
+import { NAVIGATION_HEIGHT, NAVIGATION_WIDTH } from './constants';
 import { TopNavigation } from './topNavigation';
 import {
   removeInnerElementFromLayoutFlow,
@@ -50,7 +46,6 @@ const Wrapper = styled.div`
 const Container = styled.div`
   position: relative;
   width: 100%;
-  padding: 0px ${NAVIGATION_GUTTER}px;
 `;
 
 const Layout = styled.div`

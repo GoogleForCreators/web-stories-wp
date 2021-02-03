@@ -16,39 +16,55 @@
 /**
  * External dependencies
  */
+import { boolean } from '@storybook/addon-knobs';
 import { useState } from 'react';
-import { number } from '@storybook/addon-knobs';
+import { TransitionGroup } from 'react-transition-group';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Toggle as HelpCenterToggle } from '..';
 import { theme as dsTheme, ThemeGlobals } from '../../../../../design-system';
+import { TIPS } from '../../constants';
+import { QuickTip as HelpCenterQuickTip } from '..';
 
 export default {
-  title: 'Stories Editor/Components/Help Center',
+  title: 'Stories Editor/Components/Help Center/Quick Tip',
 };
 
 const Bg = styled.div`
   position: relative;
   top: 0;
   left: 0;
-  height: 100vh;
   background-color: ${({ theme }) => theme.colors.bg.primary};
-  padding: 50px;
+  padding: 0 50px;
 `;
 
-export const Toggle = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const Container = styled.div`
+  position: relative;
+  width: 340px;
+  height: 100%;
+  height: 352px;
+  overflow: hidden;
+`;
+
+const [tip] = Object.values(TIPS);
+export const QuickTip = () => {
+  const [toggled, setToggled] = useState(true);
   return (
     <ThemeProvider theme={dsTheme}>
       <ThemeGlobals.OverrideFocusOutline />
+      <button onClick={() => setToggled((v) => !v)}>{'toggleTips'}</button>
       <Bg>
-        <HelpCenterToggle
-          isOpen={isOpen}
-          onClick={() => setIsOpen((v) => !v)}
-          notificationCount={number('notificationCount')}
-        />
+        <Container>
+          <TransitionGroup component={null}>
+            <HelpCenterQuickTip
+              key={toggled ? 'key1' : 'key2'}
+              title={tip.title}
+              description={tip.description}
+              isLeftToRightTransition={boolean('isLeftToRightTransition')}
+            />
+          </TransitionGroup>
+        </Container>
       </Bg>
     </ThemeProvider>
   );

@@ -17,21 +17,29 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
 import { noop } from '../../../utils/noop';
+import { GUTTER_WIDTH } from '../constants';
 import { Footer } from './footer';
 import { Header } from './header';
 import { Tips } from './tips';
 import { Transitioner } from './transitioner';
 
+const Container = styled.div`
+  padding: 0 ${GUTTER_WIDTH};
+`;
+
 export function Menu({ onTipSelect = noop, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
-      <Header />
-      <Tips onTipSelect={onTipSelect} />
-      <Footer />
+      <Container>
+        <Header />
+        <Tips onTipSelect={onTipSelect} />
+        <Footer />
+      </Container>
     </Transitioner>
   );
 }
