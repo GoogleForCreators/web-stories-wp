@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import { BREAKPOINTS } from './breakpoints';
-import * as TYPOGRAPHY from './typography';
-import * as WP_ADMIN from './wpAdmin';
-import { Z_INDEX } from './zIndex';
-
-export const THEME_CONSTANTS = {
-  BREAKPOINTS,
-  TYPOGRAPHY,
-  Z_INDEX,
-  WP_ADMIN,
+export const BREAKPOINTS = {
+  TABLET: {
+    maxWidth: 1120,
+    minWidth: 768,
+  },
 };
