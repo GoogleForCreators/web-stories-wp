@@ -75,5 +75,17 @@ class ColorPicker extends Container {
     return this.getByRole('textbox', { name: /Edit opacity value/i });
   }
 
+  get saveColor() {
+    return this.getByRole('button', { name: /Add color/i });
+  }
+
+  applySavedColor(type) {
+    return this.getByRole('button', { name: `Apply ${type} color` });
+  }
+
+  get colorTypeSelect() {
+    return this.getByRole('button', { name: 'Select color type' });
+  }
+
   // @todo: add accessors for remaining options
 }

@@ -33,6 +33,7 @@ export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as Bold } from './bold_icon.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './close_icon.svg';
+export { ReactComponent as Curve } from './curve.svg';
 export { ReactComponent as DefaultImage } from './default_image.svg';
 export { ReactComponent as Delete } from './delete_icon.svg';
 export { ReactComponent as DistributeHorizontal } from './horizontal_distribute.svg';
