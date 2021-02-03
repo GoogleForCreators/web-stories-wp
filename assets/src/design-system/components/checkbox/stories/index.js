@@ -47,6 +47,7 @@ const Row = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column: 1 / -1;
+  grid-row-gap: 16px;
 
   > div {
     display: grid;

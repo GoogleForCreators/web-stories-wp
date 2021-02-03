@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
 
 /**
@@ -37,14 +37,26 @@ const FILL_STYLE = {
   bottom: 0,
 };
 
-const DropTargetSVG = styled.svg`
+const svgCss = css`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+`;
+
+const DropTargetSVG = styled.svg`
+  ${svgCss}
   z-index: ${({ active }) => (active ? 1 : -1)};
+`;
+
+const Filler = styled.svg`
+  ${svgCss}
+`;
+
+const FillerPath = styled.path`
+  pointer-events: all;
 `;
 
 const DropTargetPath = styled.path`
@@ -126,7 +138,14 @@ WithDropTarget.propTypes = {
   hover: PropTypes.bool,
 };
 
-export default function WithMask({ element, fill, style, children, ...rest }) {
+export default function WithMask({
+  element,
+  fill,
+  style,
+  children,
+  eventHandlers = null,
+  ...rest
+}) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
   const { flip } = rest;
@@ -162,6 +181,7 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
         ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
+      {...eventHandlers}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
     >
@@ -176,6 +196,14 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
           </clipPath>
         </defs>
       </svg>
+      <Filler
+        viewBox={`0 0 1 ${1 / mask.ratio}`}
+        width="100%"
+        height="100%"
+        preserveAspectRatio="none"
+      >
+        <FillerPath fill="none" d={mask?.path} />
+      </Filler>
       <WithDropTarget element={element} hover={hover}>
         {children}
       </WithDropTarget>
@@ -187,5 +215,6 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
+  eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
 };

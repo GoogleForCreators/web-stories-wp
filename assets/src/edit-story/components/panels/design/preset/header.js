@@ -72,16 +72,14 @@ function PresetsHeader({
   handleAddPreset,
   isEditMode,
   setIsEditMode,
-  presets,
+  hasPresets,
   canCollapse,
   presetType,
 }) {
-  const hasPresets = presets.length > 0;
-
   const isColor = 'color' === presetType;
   const editLabel = isColor
-    ? __('Edit color presets', 'web-stories')
-    : __('Edit style presets', 'web-stories');
+    ? __('Edit colors', 'web-stories')
+    : __('Edit styles', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -102,7 +100,7 @@ function PresetsHeader({
         {!isEditMode && !isColor && (
           <AddPresetButton
             onClick={handleAddPreset}
-            aria-label={__('Add style preset', 'web-stories')}
+            aria-label={__('Add style', 'web-stories')}
           >
             <Add />
           </AddPresetButton>
@@ -119,7 +117,7 @@ function PresetsHeader({
 }
 
 PresetsHeader.propTypes = {
-  presets: PropTypes.array.isRequired,
+  hasPresets: PropTypes.bool.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,

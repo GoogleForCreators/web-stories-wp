@@ -32,7 +32,7 @@ const Bg = styled.div`
   position: relative;
   top: 0;
   left: 0;
-  height: 80vh;
+  height: 100vh;
   background-color: ${({ theme }) => theme.colors.bg.primary};
   padding: 50px;
 `;
@@ -44,7 +44,7 @@ const Wrapper = styled.div`
 `;
 
 export const Navigator = () => {
-  const [v, s] = useState(false);
+  const [visible, setVisible] = useState(false);
   return (
     <ThemeProvider theme={dsTheme}>
       <ThemeGlobals.OverrideFocusOutline />
@@ -53,9 +53,9 @@ export const Navigator = () => {
           <HelpCenterNavigator
             onNext={() => {}}
             onPrev={() => {}}
-            hasBottomNavigation={v}
+            hasBottomNavigation={visible}
           >
-            {v ? (
+            {visible ? (
               <div>
                 <div>
                   <h1>{'Hello'}</h1>
@@ -79,7 +79,9 @@ export const Navigator = () => {
             )}
           </HelpCenterNavigator>
         </Wrapper>
-        <button onClick={() => s((b) => !b)}>{'Toggle Children'}</button>
+        <button onClick={() => setVisible((b) => !b)}>
+          {'Toggle Children'}
+        </button>
       </Bg>
     </ThemeProvider>
   );

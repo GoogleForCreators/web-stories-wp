@@ -33,7 +33,6 @@ import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
 const Banner = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -226,7 +225,7 @@ export default function TelemetryBannerContainer(props) {
   const ref = useRef();
 
   const {
-    actions: { setTelemetryBannerOpen, setTelemetryBannerHeight },
+    actions: { setTelemetryBannerOpen },
   } = useLayoutContext();
 
   const previousBannerVisible = useRef(bannerVisible);
@@ -238,13 +237,12 @@ export default function TelemetryBannerContainer(props) {
       ref.current
     ) {
       setTelemetryBannerOpen(true);
-      setTelemetryBannerHeight(ref.current.offsetHeight);
       previousBannerVisible.current = true;
     } else if (!bannerVisible && previousBannerVisible.current) {
       setTelemetryBannerOpen(false);
       previousBannerVisible.current = false;
     }
-  }, [bannerVisible, setTelemetryBannerOpen, setTelemetryBannerHeight]);
+  }, [bannerVisible, setTelemetryBannerOpen]);
 
   return (
     <TelemetryOptInBanner

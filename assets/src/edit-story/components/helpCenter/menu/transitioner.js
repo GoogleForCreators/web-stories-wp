@@ -62,8 +62,8 @@ export function Transitioner({ children, ...props }) {
     <ScheduledTransition
       {...props}
       timeout={DURATION}
-      mountOnEnter={true}
-      unmountOnExit={true}
+      mountOnEnter
+      unmountOnExit
     >
       {(state) => <Manager state={state}>{children}</Manager>}
     </ScheduledTransition>

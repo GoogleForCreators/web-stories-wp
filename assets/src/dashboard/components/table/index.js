@@ -18,11 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../../design-system';
 import { TypographyPresets } from '../typography';
 import { Z_INDEX } from '../../constants';
 
@@ -51,12 +51,9 @@ export const StickyTableHeader = styled(TableHeader)`
     border-bottom: ${({ theme }) => theme.DEPRECATED_THEME.table.border};
     position: sticky;
     z-index: ${Z_INDEX.STICKY_TABLE};
-    top: ${({ top }) => `${top}px` || 0};
+    top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
   }
 `;
-StickyTableHeader.propTypes = {
-  top: PropTypes.number,
-};
 
 export const TableHeaderCell = styled.th`
   padding: ${({ theme }) => theme.DEPRECATED_THEME.table.headerCellPadding}px;

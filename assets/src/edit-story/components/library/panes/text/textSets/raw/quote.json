@@ -1587,7 +1587,7 @@
   "current": "7da9face-3152-4482-aba2-82fce4114901",
   "selection": [],
   "story": {
-    "stylePresets": {
+    "globalStoryStyles": {
       "textStyles": [
         {
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },

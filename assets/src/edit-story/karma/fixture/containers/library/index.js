@@ -19,6 +19,7 @@
  */
 import { Container } from '../container';
 import Text from './text';
+import PageLayouts from './pageLayouts';
 
 /**
  * The library wrapper - containing tabs and panes for media, text and shapes.
@@ -69,6 +70,18 @@ export class Library extends Container {
       this.getByRole('tabpanel', { name: /Shapes library/ }),
       'shapes',
       Shapes
+    );
+  }
+
+  get pageLayoutsTab() {
+    return this.getByRole('tab', { name: /Page layouts library/ });
+  }
+
+  get pageLayoutsPane() {
+    return this._get(
+      this.getByRole('tabpanel', { name: /Page layouts library/ }),
+      'pageLayouts',
+      PageLayouts
     );
   }
 }

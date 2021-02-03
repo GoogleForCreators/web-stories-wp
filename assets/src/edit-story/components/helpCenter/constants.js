@@ -13,21 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
- * Copyright 2021 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 /**
  * WordPress dependencies
  */
@@ -87,7 +72,7 @@ export const TIPS = {
     title: __('Add links to design elements', 'web-stories'),
     description: [
       __(
-        'Go to the Design tab. Scroll down to Links and enter a URL. To remove a link, select the “X” to the right of URL box.',
+        'Go to the <strong>Links</strong> section under the Design tab and enter a URL. To remove a link, select the "X"<screenreader> (Clear)</screenreader> button.',
         'web-stories'
       ),
     ],
@@ -96,7 +81,7 @@ export const TIPS = {
     title: __('Enable swipe-up option', 'web-stories'),
     description: [
       __(
-        'You’re caught up with quick tips. We’ll notify you when we add new tips, but feel free to come back whenever you need help.',
+        'Go to the Design tab. Scroll down to <strong>Swipe-up Link</strong> and enter a web address and a call to action to describe the link.',
         'web-stories'
       ),
     ],

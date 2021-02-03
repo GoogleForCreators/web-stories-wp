@@ -92,9 +92,9 @@ export function BottomNavigation({
 }
 
 BottomNavigation.propTypes = {
-  onNext: PropTypes.func,
-  onPrev: PropTypes.func,
-  onAllTips: PropTypes.func,
+  onNext: PropTypes.func.required,
+  onPrev: PropTypes.func.required,
+  onAllTips: PropTypes.func.required,
   hasBottomNavigation: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
   isPrevDisabled: PropTypes.bool,

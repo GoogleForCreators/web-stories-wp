@@ -25,22 +25,20 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../design-system';
+import {
+  themeHelpers,
+  Link as DsLink,
+  THEME_CONSTANTS,
+  Text,
+} from '../../../../design-system';
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;
   border-top: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
 `;
 
-const Caption = styled.p`
-  ${themeHelpers.expandTextPreset(
-    ({ paragraph }, { X_SMALL }) => paragraph[X_SMALL]
-  )}
-  margin-bottom: 8px;
-`;
-
 const Links = styled.ul`
-  margin: 0;
+  margin: 8px 0 0 0;
   padding: 0;
   list-style-position: inside;
   list-style-type: none;
@@ -53,19 +51,18 @@ const ListItem = styled.li`
   &::before {
     content: '- ';
   }
-`;
-
-const Anchor = styled.a`
-  ${themeHelpers.focusableOutlineCSS}
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.accent.secondary};
-  text-decoration: none;
+  &,
+  & > * {
+    font-weight: 700;
+  }
 `;
 
 function Link({ children, ...props }) {
   return (
     <ListItem>
-      <Anchor {...props}>{children}</Anchor>
+      <DsLink {...props} size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        {children}
+      </DsLink>
     </ListItem>
   );
 }
@@ -77,16 +74,34 @@ Link.propTypes = {
 export function Footer() {
   return (
     <Panel>
-      <Caption>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {__(
           'Discover more resources to get the most out of Web Stories. Read our start guide or visit our support forum to get answers to your questions.',
           'web-stories'
         )}
-      </Caption>
+      </Text>
       <Links>
-        <Link href="#">{__('Read start guide', 'web-stories')}</Link>
-        <Link href="#">{__('Visit support forum', 'web-stories')}</Link>
-        <Link href="#">{__('Stories Youtube Channel', 'web-stories')}</Link>
+        <Link
+          href="https://wp.stories.google/docs/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Read start guide', 'web-stories')}
+        </Link>
+        <Link
+          href="https://wordpress.org/support/plugin/web-stories/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Visit support forum', 'web-stories')}
+        </Link>
+        <Link
+          href="https://www.youtube.com/watch?v=MCcHkmzrIVY&list=PLfVPq9A6B0RNoQ3HTE9LQzgAdVzcb7tmt"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Storytime YouTube series', 'web-stories')}
+        </Link>
       </Links>
     </Panel>
   );

@@ -60,6 +60,7 @@ class Tracking extends \WP_UnitTestCase {
 			'trackingAllowed' => false,
 			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
 			'trackingIdGA4'   => \Google\Web_Stories\Tracking::TRACKING_ID_GA4,
+			'appVersion'      => WEBSTORIES_VERSION,
 		];
 
 		$this->assertEqualSetsWithIndex( $expected, $settings );
@@ -78,6 +79,7 @@ class Tracking extends \WP_UnitTestCase {
 			'trackingAllowed' => true,
 			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
 			'trackingIdGA4'   => \Google\Web_Stories\Tracking::TRACKING_ID_GA4,
+			'appVersion'      => WEBSTORIES_VERSION,
 		];
 
 		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY );

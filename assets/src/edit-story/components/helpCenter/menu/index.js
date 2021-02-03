@@ -25,6 +25,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { noop } from '../../../utils/noop';
 import { GUTTER_WIDTH } from '../constants';
 import { Footer } from './footer';
 import { Header } from './header';
@@ -37,7 +38,7 @@ const Container = styled.div`
   overflow-y: scroll;
 `;
 
-export function Menu({ onTipSelect = () => {}, ...transitionProps }) {
+export function Menu({ onTipSelect = noop, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
       <Container aria-label={__('Help Center Main Menu', 'web-stories')}>

@@ -15,20 +15,13 @@
  */
 
 /**
- *
- * @param {string} start CSS value with unit.
- * @param {string} end CSS value with unit.
- * @param {string} progress CSS variable to represent progress in range [0, 1]
- * @return {string} Resulting `calc()` CSS value.
+ * Internal dependencies
  */
-const cssLerp = (start, end, progress) => {
-  const currentProgress = `var(${progress}, 0)`;
-  const remainingProgress = `calc(1 - ${currentProgress})`;
-  return `
-    calc(
-      calc(${remainingProgress} * ${start}) +
-      calc(${currentProgress} * ${end})
-  )`;
-};
+import { identity, useContextSelector } from '../../../design-system';
+import Context from './context';
 
-export default cssLerp;
+function useCurrentUser(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useCurrentUser;

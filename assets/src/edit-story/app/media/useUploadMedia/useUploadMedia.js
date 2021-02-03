@@ -29,6 +29,7 @@ import {
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
+import { trackError } from '../../../../tracking';
 
 function useUploadMedia({ media, setMedia }) {
   const { uploadFile } = useUploader();
@@ -77,8 +78,8 @@ function useUploadMedia({ media, setMedia }) {
         ];
         setMedia({ media: updatedMedia });
       } catch (e) {
+        trackError('upload media', e.message);
         setMedia({ media });
-
         setIsUploading(false);
         showSnackbar({
           message: e.message,
@@ -119,6 +120,7 @@ function useUploadMedia({ media, setMedia }) {
           }),
         });
       } catch (e) {
+        trackError('upload media', e.message);
         showSnackbar({
           message: e.message,
         });

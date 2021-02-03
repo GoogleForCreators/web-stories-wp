@@ -93,8 +93,8 @@ export function Transitioner({ children, isLeftToRightTransition, ...props }) {
         enter: DURATION + DELAY,
         exit: DURATION,
       }}
-      mountOnEnter={true}
-      unmountOnExit={true}
+      mountOnEnter
+      unmountOnExit
     >
       {(state) => (
         <Manager

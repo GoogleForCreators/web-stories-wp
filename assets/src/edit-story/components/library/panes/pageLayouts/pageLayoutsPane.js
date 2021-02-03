@@ -31,6 +31,7 @@ import { _x, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../../../app/api';
 import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
+import { getTimeTracker } from '../../../../../tracking';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
 import { PAGE_LAYOUT_TYPES } from './constants';
@@ -67,7 +68,13 @@ function PageLayoutsPane(props) {
 
   // load and process pageLayouts
   useEffect(() => {
-    getPageLayouts().then((result) => setPageLayouts(result));
+    async function loadPageLayouts() {
+      const trackTiming = getTimeTracker('load', 'editor', 'Page Layouts');
+      setPageLayouts(await getPageLayouts());
+      trackTiming();
+    }
+
+    loadPageLayouts();
   }, [getPageLayouts, setPageLayouts]);
 
   const pills = useMemo(

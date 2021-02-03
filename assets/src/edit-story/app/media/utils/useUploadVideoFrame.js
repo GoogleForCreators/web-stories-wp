@@ -21,6 +21,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
+import { getTimeTracker, trackError } from '../../../../tracking';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
@@ -44,6 +45,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
   );
 
   const processData = async (id, src) => {
+    const trackTiming = getTimeTracker('poster generation', 'editor', 'Media');
     try {
       const obj = await getFirstFrameOfVideo(src);
       obj.name = getFileName(src) + '-poster.jpeg';
@@ -91,7 +93,10 @@ function useUploadVideoFrame({ updateMediaElement }) {
         ...newSize,
       });
     } catch (err) {
-      // TODO Display error message to user as video poster upload has as failed.
+      // TODO: Potentially display error message to user.
+      trackError('video poster generation', err.message);
+    } finally {
+      trackTiming();
     }
   };
 

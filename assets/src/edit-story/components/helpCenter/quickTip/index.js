@@ -23,24 +23,32 @@ import styled from 'styled-components';
  */
 import { themeHelpers, Text, THEME_CONSTANTS } from '../../../../design-system';
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
+import { TranslateWithMarkup } from '../../../../i18n';
 import { GUTTER_WIDTH } from '../constants';
 import { Transitioner } from './transitioner';
 
 const Panel = styled.div`
   width: 100%;
   padding-bottom: ${NAVIGATION_HEIGHT}px;
-
-  ${Text} + ${Text} {
-    margin-top: 8px;
-  }
 `;
 
 const Overflow = styled.div`
   position: relative;
   width: 100%;
   max-height: 70vh;
-  overflow-y: scroll;
   padding: ${GUTTER_WIDTH}px;
+
+  strong {
+    font-weight: 700;
+  }
+
+  .screenreader {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+  }
 `;
 
 // @TODO update with actual figure.
@@ -55,6 +63,12 @@ const Title = styled.h1`
   color: ${({ theme }) => theme.colors.fg.primary};
   line-height: 32px;
   margin: 0 0 8px 0;
+`;
+
+const Paragraph = styled(Text)`
+  & + & {
+    margin-top: 8px;
+  }
 `;
 
 export function QuickTip({
@@ -74,13 +88,19 @@ export function QuickTip({
           <Figure />
           <Title>{title}</Title>
           {description.map((paragraph, i) => (
-            <Text
+            <Paragraph
               // eslint-disable-next-line react/no-array-index-key
               key={`${title}-${i}`}
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
             >
-              {paragraph}
-            </Text>
+              <TranslateWithMarkup
+                mapping={{
+                  screenreader: <span className="screenreader" />,
+                }}
+              >
+                {paragraph}
+              </TranslateWithMarkup>
+            </Paragraph>
           ))}
         </Overflow>
       </Panel>

@@ -31,6 +31,7 @@ import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
+import { trackError } from '../../../tracking';
 
 function useUploader() {
   const {
@@ -123,6 +124,8 @@ function useUploader() {
           additionalData.media_source = 'video-optimization';
           return uploadMedia(newFile, additionalData);
         } catch (err) {
+          trackError('video transcoding', err.message);
+
           if (!isValidType(file)) {
             /* translators: %s is a list of allowed file extensions. */
             const message = sprintf(

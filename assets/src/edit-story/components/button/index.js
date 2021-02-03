@@ -37,6 +37,7 @@ import {
   Eyedropper as EyedropperIcon,
   More as MoreIcon,
   SafeZone as SafeZoneIcon,
+  Widgets as WidgetsIcon,
 } from '../../icons';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
@@ -175,6 +176,12 @@ export const Redo = (props) => (
 export const GridView = (props) => (
   <StyledButton {...props}>
     <GridViewIcon />
+  </StyledButton>
+);
+
+export const MetaBoxes = (props) => (
+  <StyledButton {...props}>
+    <WidgetsIcon />
   </StyledButton>
 );
 

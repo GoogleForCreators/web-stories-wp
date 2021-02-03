@@ -101,11 +101,11 @@ export function Navigator({
 }
 
 Navigator.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func,
-  onNext: PropTypes.func,
-  onPrev: PropTypes.func,
-  onAllTips: PropTypes.func,
+  children: PropTypes.node.required,
+  onClose: PropTypes.func.required,
+  onNext: PropTypes.func.required,
+  onPrev: PropTypes.func.required,
+  onAllTips: PropTypes.func.required,
   hasBottomNavigation: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
   isPrevDisabled: PropTypes.bool,

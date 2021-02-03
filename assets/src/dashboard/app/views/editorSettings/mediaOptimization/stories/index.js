@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import { boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import loadTextSets from './loadTextSets';
+import MediaOptimizationSettings from '../';
 
-export async function getTextSets() {
-  const textSetLibrary = await loadTextSets();
-  return textSetLibrary;
-}
+export default {
+  title: 'Dashboard/Views/EditorSettings/MediaOptimization',
+  component: MediaOptimizationSettings,
+};
+
+export const _default = () => {
+  return (
+    <MediaOptimizationSettings
+      disabled={boolean('disabled', true)}
+      selected={boolean('userMediaOptimization', true)}
+      onCheckboxSelected={action('onCheckboxSelected fired')}
+    />
+  );
+};

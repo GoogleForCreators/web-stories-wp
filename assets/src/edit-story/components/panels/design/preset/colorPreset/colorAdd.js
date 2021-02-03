@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { AddColor } from '../../../../icons';
+import { AddColor } from '../../../../../icons';
 
 const COLOR_SIZE = 30;
 const AddColorAction = styled.button`
@@ -52,16 +52,17 @@ const Note = styled.div`
   margin-bottom: 10px;
 `;
 
-function ColorAdd({ handleAddPreset, helper }) {
+function ColorAdd({ handleAddPreset, helper, ...rest }) {
   return (
     <>
-      {helper && <Note>{helper}</Note>}
       <AddColorAction
         onClick={handleAddPreset}
-        aria-label={__('Add color preset', 'web-stories')}
+        aria-label={__('Add color', 'web-stories')}
+        {...rest}
       >
         <AddColor />
       </AddColorAction>
+      {helper && <Note>{helper}</Note>}
     </>
   );
 }
