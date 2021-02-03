@@ -35,6 +35,7 @@ import { SnackbarProvider } from './app/snackbar';
 import { StoryProvider } from './app/story';
 import { FontProvider } from './app/font';
 import { MediaProvider } from './app/media';
+import { CurrentUserProvider } from './app/currentUser';
 import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
@@ -64,21 +65,23 @@ function App({ config }) {
                       <MetaBoxesProvider>
                         <StoryProvider storyId={storyId}>
                           <FontProvider>
-                            <MediaProvider>
-                              <AutoSaveHandler />
-                              <TransformProvider>
-                                <DropTargetsProvider>
-                                  <GlobalStyle />
-                                  <DevTools />
-                                  <DefaultMoveableGlobalStyle />
-                                  <CropMoveableGlobalStyle />
-                                  <ModalGlobalStyle />
-                                  <CalendarStyle />
-                                  <KeyboardOnlyOutlines />
-                                  <Layout />
-                                </DropTargetsProvider>
-                              </TransformProvider>
-                            </MediaProvider>
+                            <CurrentUserProvider>
+                              <MediaProvider>
+                                <AutoSaveHandler />
+                                <TransformProvider>
+                                  <DropTargetsProvider>
+                                    <GlobalStyle />
+                                    <DevTools />
+                                    <DefaultMoveableGlobalStyle />
+                                    <CropMoveableGlobalStyle />
+                                    <ModalGlobalStyle />
+                                    <CalendarStyle />
+                                    <KeyboardOnlyOutlines />
+                                    <Layout />
+                                  </DropTargetsProvider>
+                                </TransformProvider>
+                              </MediaProvider>
+                            </CurrentUserProvider>
                           </FontProvider>
                         </StoryProvider>
                       </MetaBoxesProvider>

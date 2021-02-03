@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 
-export * from './outline';
-export { expandPresetStyles, expandTextPreset } from './expandPresetStyles';
-export { fullSizeAbsolute, fullSizeRelative } from './fullSize';
-export { centerContent } from './centerContent';
+/**
+ * Internal dependencies
+ */
+import { identity, useContextSelector } from '../../../design-system';
+import Context from './context';
+
+function useCurrentUser(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useCurrentUser;
