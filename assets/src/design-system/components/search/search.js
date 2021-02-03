@@ -105,10 +105,10 @@ export const Search = ({
     inputRef,
   });
 
-  const isMenuHidden = useMemo(() => disabled || !inputValue?.value, [
-    disabled,
-    inputValue,
-  ]);
+  const isMenuHidden = useMemo(
+    () => disabled || inputValue?.value.length === 0,
+    [disabled, inputValue]
+  );
 
   /**
    * Callbacks that begin search interaction
@@ -140,23 +140,18 @@ export const Search = ({
       ) {
         return;
       }
-
       isOpen.set(false);
-      isMenuFocused.set(false);
-
-      // move focus to next element if available.
-      inputRef.current?.offsetParent?.nextSibling?.focus();
     },
-    [clearId, isMenuFocused, isOpen]
+    [clearId, isOpen]
   );
 
   const handleMenuItemClick = useCallback(
     (event, menuItem) => {
+      isOpen.set(false);
       inputValue.updateToOption(menuItem);
       onMenuItemClick?.(event, menuItem);
-      handleDismissMenu();
     },
-    [handleDismissMenu, inputValue, onMenuItemClick]
+    [inputValue, isOpen, onMenuItemClick]
   );
 
   const handleReturnToInput = useCallback(() => inputRef?.current?.focus(), []);
@@ -233,7 +228,7 @@ export const Search = ({
     <DropDownContainer>
       {label && (
         <Label
-          size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           disabled={disabled}
           as="span"
         >
@@ -290,10 +285,11 @@ export const Search = ({
           />
         </Popup>
       )}
+
       {hint && (
         <Hint
           hasError={hasError}
-          size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         >
           {hint}
         </Hint>

@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Chevron, Close as Clear, Search } from '../../../icons';
-import { themeHelpers } from '../../../theme';
+import { themeHelpers, THEME_CONSTANTS } from '../../../theme';
 
 export const InputContainer = styled.div(
   ({ theme }) => css`
@@ -51,14 +51,17 @@ export const Input = styled.input(
     outline: none;
     cursor: pointer;
     ${themeHelpers.expandPresetStyles({
-      preset: theme.typography.presets.paragraph.small,
+      preset:
+        theme.typography.presets.paragraph[
+          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+        ],
       theme,
     })};
-
-    border-radius: ${theme.borders.radius.small};
+    color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
     border: 1px solid
       ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
-    color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
+    border-radius: ${theme.borders.radius.small};
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     &::-ms-clear {
       display: none;
@@ -76,20 +79,15 @@ export const Input = styled.input(
         isOpen ? 'defaultActive' : 'defaultHover'
       ]};
     }
-    &:focus {
-      border-color: ${theme.colors.fg.secondary};
-    }
 
     ${hasError &&
     css`
       ${themeHelpers.focusableOutlineCSS(
         theme.colors.interactiveBg.negativeNormal
       )};
-      border-color: ${theme.colors.interactiveBg.negativeNormal};
 
       &:active,
-      &:hover,
-      &:focus {
+      &:hover {
         border-color: ${theme.colors.interactiveBg.negativeHover};
       }
     `}
@@ -126,6 +124,7 @@ const BaseDecorationContainer = css`
 
 export const ClearButton = styled.button`
   ${BaseDecorationContainer}
+  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
   height: 16px;
   z-index: 5;
 `;

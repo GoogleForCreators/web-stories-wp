@@ -32,7 +32,7 @@ export default function useSearch({
    *Control when associated menu of search should be visible.
    */
   const [_isOpen, _setIsOpen] = useState(false);
-  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300);
+  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 100);
 
   const isOpen = useMemo(
     () => ({
@@ -67,11 +67,11 @@ export default function useSearch({
    */
 
   const normalizedOptions = useMemo(() => {
-    if (!options || options.length == 0) {
+    if (!options || options.length == 0 || !isOpen.value) {
       return [];
     }
     return getOptions(options);
-  }, [options]);
+  }, [isOpen.value, options]);
 
   /**
    * the active option, if there is a selectedValue present that matches an option.
