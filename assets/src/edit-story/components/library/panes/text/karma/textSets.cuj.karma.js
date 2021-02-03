@@ -63,10 +63,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     expect(selection.length).toBeGreaterThan(1);
   });
 
-  // Disable reason: flakey tests.
-  // See https://github.com/google/web-stories-wp/pull/6162
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should allow user to drag and drop text set onto page', async () => {
+  it('should allow user to drag and drop text set onto page', async () => {
     await waitFor(
       () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
       { timeout: 2000 }
@@ -78,6 +75,12 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     textSet.scrollIntoView();
     await fixture.events.mouse.moveRel(textSet, 25, 25);
     await fixture.events.mouse.down();
+
+    // @todo The following two lines of code are for giving the text set more time to start dragging.
+    // These can be removed once https://github.com/google/web-stories-wp/issues/6027 is fixed.
+    await fixture.events.mouse.move(5, 5);
+    await fixture.events.sleep(500);
+
     await fixture.events.mouse.moveRel(page, 50, 100, { steps: 20 });
     await fixture.snapshot('Text set dragged');
     await fixture.events.mouse.up();
