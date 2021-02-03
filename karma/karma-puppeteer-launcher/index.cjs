@@ -40,6 +40,17 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       devtools: false,
       defaultViewport: null,
       snapshots: false,
+      // See https://peter.sh/experiments/chromium-command-line-switches/
+      args: [
+        // Disables GPU hardware acceleration.
+        '--disable-gpu',
+        // Disables the sandbox for all process types that are normally sandboxed.
+        '--no-sandbox',
+        // The /dev/shm partition is too small in certain VM environments, causing Chrome to fail or crash.
+        // See http://crbug.com/715363
+        // We use this flag to work-around this issue.
+        '--disable-dev-shm-usage',
+      ],
     };
     const puppeteerOptions = {
       ...defaultPuppeteerOptions,
