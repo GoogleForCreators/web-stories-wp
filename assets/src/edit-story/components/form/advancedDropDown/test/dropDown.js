@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { act, fireEvent, waitFor } from '@testing-library/react';
+import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '../../../../../../../packages/fonts/src';
 import FontContext from '../../../../app/font/context';
 import { renderWithTheme } from '../../../../testUtils';
 import DropDown from '../';

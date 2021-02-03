@@ -19,11 +19,11 @@
  */
 import { act, fireEvent } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
+import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '../../../../../../../packages/fonts/src';
 import { renderWithTheme } from '../../../../testUtils/index';
 import FontContext from '../../../../app/font/context';
 import useFont from '../../../../app/font/useFont';

@@ -15,20 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import { useCallback, useState, useRef, useMemo } from 'react';
+import { curatedFontNames } from '@web-stories-wp/fonts';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useMemo } from 'react';
-
-/**
  * Internal dependencies
  */
-import { curatedFontNames } from '../../../../../packages/fonts/src';
 import loadStylesheet from '../../utils/loadStylesheet';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';

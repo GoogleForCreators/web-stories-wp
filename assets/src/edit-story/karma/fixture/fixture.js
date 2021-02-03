@@ -746,6 +746,19 @@ class APIProviderFixture {
 
       const getAuthors = useCallback(() => asyncResponse(users), [users]);
 
+      const getCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
@@ -773,6 +786,7 @@ class APIProviderFixture {
           updateMedia,
           getStatusCheck,
           getPageLayouts,
+          getCurrentUser,
         },
       };
       return (
