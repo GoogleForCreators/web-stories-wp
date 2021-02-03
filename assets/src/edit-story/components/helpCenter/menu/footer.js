@@ -81,9 +81,27 @@ export function Footer() {
         )}
       </Text>
       <Links>
-        <Link href="#">{__('Read start guide', 'web-stories')}</Link>
-        <Link href="#">{__('Visit support forum', 'web-stories')}</Link>
-        <Link href="#">{__('Stories Youtube Channel', 'web-stories')}</Link>
+        <Link
+          href="https://wp.stories.google/docs/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Read start guide', 'web-stories')}
+        </Link>
+        <Link
+          href="https://wordpress.org/support/plugin/web-stories/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Visit support forum', 'web-stories')}
+        </Link>
+        <Link
+          href="https://www.youtube.com/watch?v=MCcHkmzrIVY&list=PLfVPq9A6B0RNoQ3HTE9LQzgAdVzcb7tmt"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {__('Storytime YouTube series', 'web-stories')}
+        </Link>
       </Links>
     </Panel>
   );
