@@ -42,6 +42,7 @@ export const BEZIER = {
   inCirc: 'cubic-bezier(0.6, 0.04, 0.98, 0.335)',
   outCirc: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
   inOutCirc: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
+  default: 'cubic-bezier(0.4, 0.4, 0.0, 1)',
 };
 
 export const ANIMATION_TYPES = {
