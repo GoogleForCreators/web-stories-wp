@@ -48,7 +48,7 @@ const COLOR_GAP = 6;
 const ActionsWrapper = styled.div`
   text-align: center;
   border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
-  padding: 12px;
+  padding: 12px 12px 20px 12px;
 `;
 
 const AddColorPreset = styled.button`
@@ -67,12 +67,13 @@ const AddColorPreset = styled.button`
 const CtaWrapper = styled.div`
   text-align: right;
   font-size: 14px;
-  margin: 5px;
+  line-height: 26px;
+  margin-right: 5px;
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
 const ColorsWrapper = styled.div`
-  margin-top: ${({ hasColors }) => (hasColors ? '14px' : 0)};
+  margin-top: 10px;
   max-height: ${SAVED_COLOR_SIZE * 3 + 2 * COLOR_GAP}px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -167,11 +168,11 @@ function ColorPresetActions({ color, pushUpdate }) {
   const options = [
     {
       id: LOCAL,
-      name: __('Current colors', 'web-stories'),
+      name: __('Current story', 'web-stories'),
     },
     {
       id: GLOBAL,
-      name: __('Global colors', 'web-stories'),
+      name: __('All stories', 'web-stories'),
     },
   ];
 
@@ -218,7 +219,7 @@ function ColorPresetActions({ color, pushUpdate }) {
               }}
             >
               {__(
-                'Click <i></i> to save a color. <arrow></arrow>',
+                'Click <i></i> to save a color <arrow></arrow>',
                 'web-stories'
               )}
             </TranslateWithMarkup>
