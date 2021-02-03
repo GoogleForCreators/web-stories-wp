@@ -48,7 +48,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     const result = mediaGuidance.mediaElementSizeOnPage(tooSmallVideoElement);
     expect(result).not.toBeUndefined();
     expect(result.message).toMatchInlineSnapshot(
-      `"Video or image too small on the page"`
+      `"Increase video or image size on the page"`
     );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooSmallVideoElement.id);
@@ -86,7 +86,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       tooLowResolutionVideoElement
     );
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Video resolution low"`);
+    expect(result.message).toMatchInlineSnapshot(`"Increase video resolution"`);
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLowResolutionVideoElement.id);
   });
@@ -111,7 +111,9 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       tooLowResolutionImageElement
     );
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Low image resolution"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Choose an image with higher resolution"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
   });
@@ -140,7 +142,9 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       tooLowResolutionImageElement
     );
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Low image resolution"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Choose an image with higher resolution"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
   });
@@ -161,7 +165,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
 
     const result = mediaGuidance.mediaElementResolution(tooHighVideoResolution);
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Video resolution too high"`);
+    expect(result.message).toMatchInlineSnapshot(`"Reduce video resolution"`);
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooHighVideoResolution.id);
   });
@@ -183,7 +187,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
 
     const result = mediaGuidance.videoElementLength(tooLongVideo);
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Video too long"`);
+    expect(result.message).toMatchInlineSnapshot(`"Break video into segments"`);
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLongVideo.id);
   });

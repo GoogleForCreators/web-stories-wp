@@ -56,9 +56,12 @@ function setupPanel(extraStylePresets, extraStateProps) {
       selectedElements: [textElement],
       ...extraStateProps,
       story: {
-        stylePresets: {
+        globalStoryStyles: {
           ...{ colors: [], textStyles: [] },
           ...extraStylePresets,
+        },
+        currentStoryStyles: {
+          colors: [],
         },
       },
     },
@@ -199,7 +202,7 @@ describe('Panels/Preset', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [],
             textStyles: [TEST_STYLE],
           },

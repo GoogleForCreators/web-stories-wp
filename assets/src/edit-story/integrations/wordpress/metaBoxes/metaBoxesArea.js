@@ -20,12 +20,13 @@
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import CircularProgress from '../../../../components/circularProgress';
-import { useStory } from '../../../../app/story';
+import CircularProgress from '../../../components/circularProgress';
+import { useStory } from '../../../app/story';
 
 const Wrapper = styled.div`
   position: relative;
@@ -54,16 +55,16 @@ const Wrapper = styled.div`
     min-width: auto;
   }
 
-  /* Override Default meta box stylings */
+  /* Override Default meta box styling */
   #poststuff h3.hndle,
   #poststuff .stuffbox > h3,
   #poststuff h2.hndle {
     box-sizing: border-box;
-    color: inherit;
-    font-weight: 600;
+    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+    font-size: 14px;
+    font-weight: 500;
     outline: none;
     padding: 15px;
-    position: relative;
     width: 100%;
   }
 
@@ -73,9 +74,29 @@ const Wrapper = styled.div`
     margin-bottom: 0;
   }
 
+  .postbox > .hndle,
+  .postbox .postbox-header {
+    background: ${({ theme }) => theme.colors.bg.panel};
+    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+    border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.04)};
+  }
+
   .postbox .handlediv {
     height: 44px;
     width: 44px;
+  }
+
+  .postbox .handlediv .toggle-indicator {
+    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+  }
+
+  .postbox .handle-order-higher,
+  .postbox .handle-order-lower {
+    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+
+    &[aria-disabled='true'] {
+      color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+    }
   }
 
   /**

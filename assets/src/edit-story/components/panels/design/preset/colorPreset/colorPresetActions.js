@@ -49,17 +49,17 @@ const AddColorPreset = styled.button`
 `;
 
 function ColorPresetActions({ color }) {
-  const { selectedElements, stylePresets, updateStory } = useStory(
+  const { selectedElements, globalStoryStyles, updateStory } = useStory(
     ({
       state: {
         selectedElements,
-        story: { stylePresets },
+        story: { globalStoryStyles },
       },
       actions: { updateStory },
-    }) => ({ selectedElements, stylePresets, updateStory })
+    }) => ({ selectedElements, globalStoryStyles, updateStory })
   );
 
-  const { colors } = stylePresets;
+  const { colors } = globalStoryStyles;
 
   // @todo This will change with the missing multi-selection handling.
   const isText =
@@ -71,21 +71,21 @@ function ColorPresetActions({ color }) {
       if (toAdd) {
         // If match found, don't add.
         // @todo UX improvement: notify the user/mark the existing color?
-        if (findMatchingColor(toAdd, stylePresets, isText)) {
+        if (findMatchingColor(toAdd, globalStoryStyles, isText)) {
           return;
         }
 
         updateStory({
           properties: {
-            stylePresets: {
-              ...stylePresets,
+            globalStoryStyles: {
+              ...globalStoryStyles,
               colors: [...colors, toAdd],
             },
           },
         });
       }
     },
-    [stylePresets, isText, colors, updateStory]
+    [globalStoryStyles, isText, colors, updateStory]
   );
 
   return (

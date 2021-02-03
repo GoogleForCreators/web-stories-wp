@@ -28,78 +28,131 @@ import {
   getTextPresets,
 } from './utils';
 
-function useAddPreset(presetType) {
-  const { currentPage, selectedElements, stylePresets, updateStory } = useStory(
+function useAddPreset({ presetType }) {
+  const {
+    currentPage,
+    currentStoryStyles,
+    selectedElements,
+    globalStoryStyles,
+    updateStory,
+  } = useStory(
     ({
       state: {
         currentPage,
         selectedElements,
-        story: { stylePresets },
+        story: { globalStoryStyles, currentStoryStyles },
       },
       actions: { updateStory },
     }) => {
       return {
         currentPage,
+        currentStoryStyles,
         selectedElements,
-        stylePresets,
+        globalStoryStyles,
         updateStory,
       };
     }
   );
-  const { colors, textStyles } = stylePresets;
+  const { colors, textStyles } = globalStoryStyles;
+  const { colors: localColors } = currentStoryStyles;
 
   const isText = areAllType('text', selectedElements);
   const isBackground = selectedElements[0].id === currentPage.elements[0].id;
-  const handleAddPreset = useCallback(
-    (evt) => {
-      evt.stopPropagation();
-      let addedPresets = {
-        textStyles: [],
-        colors: [],
-      };
+
+  const getPresets = useCallback(
+    (addedPresets, currentPresets) => {
       if (isText) {
-        addedPresets = {
+        return {
           ...addedPresets,
-          ...getTextPresets(selectedElements, stylePresets, presetType),
+          ...getTextPresets(selectedElements, currentPresets, presetType),
         };
       } else if (isBackground) {
-        addedPresets = {
+        return {
           ...addedPresets,
-          ...getPagePreset(currentPage, stylePresets),
+          ...getPagePreset(currentPage, currentPresets),
         };
       } else {
-        addedPresets = {
+        return {
           ...addedPresets,
-          ...getShapePresets(selectedElements, stylePresets),
+          ...getShapePresets(selectedElements, currentPresets),
         };
       }
+    },
+    [currentPage, isBackground, isText, presetType, selectedElements]
+  );
+
+  const updateLocalPresets = useCallback(
+    (addedPresets) => {
+      updateStory({
+        properties: {
+          currentStoryStyles: {
+            colors: [...localColors, ...addedPresets.colors],
+          },
+        },
+      });
+    },
+    [localColors, updateStory]
+  );
+
+  const updateGlobalPresets = useCallback(
+    (addedPresets) => {
+      updateStory({
+        properties: {
+          globalStoryStyles: {
+            textStyles: [...textStyles, ...addedPresets.textStyles],
+            colors: [...colors, ...addedPresets.colors],
+          },
+        },
+      });
+    },
+    [colors, textStyles, updateStory]
+  );
+
+  const handleAddPreset = useCallback(
+    (addedPresets, isLocal = false) => {
+      const currentPresets = isLocal ? currentStoryStyles : globalStoryStyles;
+      addedPresets = getPresets(addedPresets, currentPresets);
       if (
         addedPresets.colors?.length > 0 ||
         addedPresets.textStyles?.length > 0
       ) {
-        updateStory({
-          properties: {
-            stylePresets: {
-              textStyles: [...textStyles, ...addedPresets.textStyles],
-              colors: [...colors, ...addedPresets.colors],
-            },
-          },
-        });
+        if (isLocal) {
+          updateLocalPresets(addedPresets, currentPresets);
+        } else {
+          updateGlobalPresets(addedPresets, currentPresets);
+        }
       }
     },
     [
-      currentPage,
-      isBackground,
-      colors,
-      isText,
-      presetType,
-      textStyles,
-      selectedElements,
-      updateStory,
-      stylePresets,
+      getPresets,
+      currentStoryStyles,
+      globalStoryStyles,
+      updateGlobalPresets,
+      updateLocalPresets,
     ]
   );
-  return handleAddPreset;
+  const addGlobalPreset = (evt) => {
+    evt.stopPropagation();
+    handleAddPreset({
+      textStyles: [],
+      colors: [],
+    });
+  };
+
+  const addLocalPreset = (evt) => {
+    evt.stopPropagation();
+    handleAddPreset(
+      {
+        colors: [],
+      },
+      true /* isLocal */
+    );
+  };
+
+  return {
+    addGlobalPreset,
+    addLocalPreset,
+  };
 }
 
 export default useAddPreset;
