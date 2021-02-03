@@ -62,9 +62,7 @@ describe('Quick Edit', () => {
 
     await page.hover(`#${elmId}`);
 
-    await expect(page).toClick(
-      `button[aria-label="Quick edit “${storyTitle}” inline"]`
-    );
+    await expect(page).toClick('button', { text: 'Quick Edit' });
 
     await page.type('input[name="post_title"]', ' - updated.');
     await expect(page).toClick('button', { text: 'Update' });
@@ -72,8 +70,11 @@ describe('Quick Edit', () => {
     const storyTitleNew = 'Test quick edit – updated.';
 
     await expect(page).toMatch(storyTitleNew);
+
+    await page.hover(`#${elmId}`);
+
     await Promise.all([
-      expect(page).toClick(`a[aria-label="View “${storyTitleNew}”"]`),
+      expect(page).toClick(`#${elmId} a`, { text: 'View' }),
       page.waitForNavigation(),
     ]);
 
