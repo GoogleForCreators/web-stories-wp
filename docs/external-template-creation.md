@@ -1,6 +1,6 @@
 # Creating an External Template
 
-`src/dashbpard/templates/raw` is a dumping ground for raw story json output from the editor, which is then interpreted as a template.
+`src/dashboard/templates/raw` is a dumping ground for raw story json output from the editor, which is then interpreted as a template.
 
 ## Getting The Raw Story JSON
 

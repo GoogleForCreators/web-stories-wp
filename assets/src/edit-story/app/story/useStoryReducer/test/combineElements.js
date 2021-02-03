@@ -183,7 +183,7 @@ describe('combineElements', () => {
     ]);
   });
 
-  it('should remove background overlay if present on second element', () => {
+  it('should not remove background overlay if present on second element', () => {
     const { restore, combineElements } = setupReducer();
 
     const state = getDefaultState3();
@@ -203,6 +203,7 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
         x: 10,
         y: 10,
         width: 10,
@@ -334,6 +335,7 @@ describe('combineElements', () => {
           src: '1',
           type: 'image',
         },
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
         type: 'image',
         width: 10,
@@ -434,6 +436,7 @@ describe('combineElements', () => {
           src: '1',
           type: 'image',
         },
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
         type: 'image',
         width: 10,
@@ -536,6 +539,7 @@ describe('combineElements', () => {
           src: '1',
           type: 'image',
         },
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
         type: 'image',
         width: 10,
