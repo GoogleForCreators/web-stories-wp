@@ -74,7 +74,7 @@ describe('Quick Edit', () => {
     await expect(page).toMatch(storyTitleNew);
     await Promise.all([
       page.waitForNavigation(),
-      await expect(page).toClick(`a[aria-label="View “${storyTitleNew}”"]`),
+      expect(page).toClick(`a[aria-label="View “${storyTitleNew}”"]`),
     ]);
 
     await expect(page).toMatchElement('amp-story');

@@ -425,6 +425,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_update_item_publisher_id() {
 		wp_set_current_user( self::$user_id );
+		$this->kses_int();
 
 		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
 		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
@@ -460,5 +461,6 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 		$this->assertEquals( $attachment_id, $active_publisher_logo );
 		$this->assertContains( $attachment_id, $all_publisher_logos );
+		$this->kses_remove_filters();
 	}
 }
