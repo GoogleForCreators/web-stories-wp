@@ -15,4 +15,6 @@
  */
 
 export { focusableOutlineCSS } from './outline';
-export { expandPresetStyles } from './expandPresetStyles';
+export { expandPresetStyles, expandTextPreset } from './expandPresetStyles';
+export { fullSizeAbsolute, fullSizeRelative } from './fullSize';
+export { centerContent } from './centerContent';
