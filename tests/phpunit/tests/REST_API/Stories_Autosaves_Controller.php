@@ -18,14 +18,13 @@
 namespace Google\Web_Stories\Tests\REST_API;
 
 use Google\Web_Stories\Experiments;
-use Google\Web_Stories\KSES;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\KsesSetup;
+use Google\Web_Stories\Tests\Kses_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
 
 class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
-	use KsesSetup;
+	use Kses_Setup;
 
 	protected $server;
 
