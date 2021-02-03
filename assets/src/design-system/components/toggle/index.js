@@ -67,7 +67,7 @@ const Circle = styled.span(
       background-color: ${theme.colors.fg.secondary};
       border-radius: ${theme.borders.radius.round};
       cursor: pointer;
-      transition: all 0.3s;
+      transition: background-color 0.3s, border-color 0.3s, left 0.15s;
     }
   `
 );
@@ -80,7 +80,7 @@ const StyledCheckmark = styled(Checkmark)(
     left: ${ICON_LEFT_POSITION}px;
     z-index: ${THEME_CONSTANTS.Z_INDEX.DEFAULT};
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.15s;
     pointer-events: none;
 
     path {
