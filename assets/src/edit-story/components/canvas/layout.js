@@ -101,10 +101,9 @@ const Area = styled.div`
 // mechanisms.
 const PageAreaFullbleedContainer = styled(Area).attrs({
   area: 'page',
-  overflowAllowed: true,
 })`
-  overflow-x: var(--overflow-x);
-  overflow-y: var(--overflow-y);
+  overflow: ${({ canScroll }) =>
+    canScroll ? 'var(--overflow-x) var(--overflow-y)' : 'hidden'};
 `;
 
 // Overflow is not hidden for media edit layer.
@@ -242,6 +241,7 @@ const PageArea = forwardRef(function PageArea(
       data-testid="fullbleed"
       aria-label={__('Fullbleed area', 'web-stories')}
       role="region"
+      canScroll={!isControlled}
     >
       <PageAreaWithOverflow
         showOverflow={showOverflow}
