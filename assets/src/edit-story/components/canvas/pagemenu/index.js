@@ -30,7 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../../animation';
-import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
+import { useStory, useHistory, useConfig, useLayout } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import {
   Delete,
@@ -139,8 +139,8 @@ function PageMenu() {
       };
     }
   );
-  const { pageSize } = useCanvas((state) => ({
-    pageSize: state.state.pageSize,
+  const { pageWidth } = useLayout(({ state: { pageWidth } }) => ({
+    pageWidth,
   }));
   const { isRTL } = useConfig();
   const { showTextMagicAndHelperMode } = useFeatures();
@@ -183,7 +183,7 @@ function PageMenu() {
     <Wrapper>
       <Box>
         <Options>
-          {pageSize.width > 280 && (
+          {pageWidth > 280 && (
             <>
               <PageCount>
                 {sprintf(
