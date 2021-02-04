@@ -185,6 +185,20 @@ export const Search = ({
     isMenuFocused,
   ]);
 
+  const trimInputValue = useCallback(() => {
+    if (inputValue.value.length !== inputValue.value.trim().length) {
+      inputValue.set((prevInputVal) => prevInputVal.trim());
+    }
+  }, [inputValue]);
+
+  const handleEndSearch = useCallback(() => {
+    trimInputValue();
+    if (isMenuHidden || inputValue.value.trim().length === 0) {
+      isMenuFocused.set(false);
+      isOpen.set(false);
+    }
+  }, [inputValue, isMenuFocused, isMenuHidden, isOpen, trimInputValue]);
+
   const handleInputKeyPress = useCallback(
     (event) => {
       const { key } = event;
@@ -193,10 +207,7 @@ export const Search = ({
           isMenuFocused.set(false);
         }
       } else if (key === 'Tab') {
-        if (isMenuHidden) {
-          isMenuFocused.set(false);
-          isOpen.set(false);
-        }
+        handleEndSearch();
       } else if (key === 'ArrowDown') {
         focusSentToList();
       } else if (key === 'Enter') {
@@ -206,23 +217,14 @@ export const Search = ({
     [
       isMenuHidden,
       isMenuFocused,
-      isOpen,
+      handleEndSearch,
       focusSentToList,
       handleMenuItemClick,
       inputValue.value,
     ]
   );
 
-  useFocusOut(
-    inputRef,
-    () => {
-      if (isMenuHidden) {
-        isOpen.set(false);
-        isMenuFocused.set(false);
-      }
-    },
-    [isMenuFocused, isMenuHidden, isOpen]
-  );
+  useFocusOut(inputRef, handleEndSearch, [handleEndSearch]);
 
   return (
     <DropDownContainer>
@@ -230,7 +232,7 @@ export const Search = ({
         <Label
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           disabled={disabled}
-          as="span"
+          forwardedAs="span"
         >
           {label}
         </Label>
@@ -252,7 +254,7 @@ export const Search = ({
         handleClearInputValue={handleClearInputValue}
         handleTabClearButton={handleTabClearButton}
         inputValue={inputValue?.value || ''}
-        isOpen={isOpen.value}
+        isOpen={isOpen?.value}
         listId={listId}
         ref={inputRef}
         {...rest}

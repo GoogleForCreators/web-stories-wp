@@ -23,3 +23,7 @@ export const DEFAULT_POPUP_FILL_WIDTH = 240;
 export const DEFAULT_PLACEHOLDER = __('Search', 'web-stories');
 export const DEFAULT_ARIA_CLEAR_LABEL = __('Clear Search', 'web-stories');
 export const DEFAULT_ARIA_INPUT_LABEL = __('Search', 'web-stories');
+
+export const Z_INDEX = {
+  CLEAR_BUTTON: 5,
+};

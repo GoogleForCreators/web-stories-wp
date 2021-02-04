@@ -22,13 +22,22 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Text } from '../typography';
+import { Text } from '../typography/text';
 
 export const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
+
+export const Label = styled(Text)`
+  margin-bottom: 8px;
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.fg.disable : theme.colors.fg.primary};
+`;
+Label.propTypes = {
+  disabled: PropTypes.bool,
+};
 
 export const Hint = styled(Text)`
   margin-top: 12px;
@@ -39,9 +48,3 @@ export const Hint = styled(Text)`
 Hint.propTypes = {
   hasError: PropTypes.bool,
 };
-
-export const Label = styled(Text)`
-  margin-bottom: 8px;
-  color: ${({ theme, disabled }) =>
-    disabled ? theme.colors.fg.disable : theme.colors.fg.primary};
-`;

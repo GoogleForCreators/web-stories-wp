@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, forwardRef } from 'react';
+import { useCallback, useMemo, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -48,8 +48,16 @@ const SearchInput = (
   },
   ref
 ) => {
-  const activeInput = inputValue.length > 0 && isOpen;
-  const alignInputCenter = inputValue.length === 0 && !isOpen;
+  // Avoid conditional rendering in this input because it causes rerendering which if the keyboard is getting used to focus the input will remove the visible focus style.
+
+  const activeInput = useMemo(() => inputValue.length > 0 && isOpen, [
+    isOpen,
+    inputValue,
+  ]);
+  const alignInputCenter = useMemo(() => inputValue.length === 0 && !isOpen, [
+    isOpen,
+    inputValue,
+  ]);
 
   const onClearButtonKeyDown = useCallback(
     ({ key }) => {
@@ -61,7 +69,7 @@ const SearchInput = (
   );
 
   return (
-    <InputContainer disabled={disabled}>
+    <InputContainer alignCenter={alignInputCenter}>
       <Input
         aria-autocomplete="list"
         aria-controls={listId}
@@ -70,12 +78,10 @@ const SearchInput = (
         aria-owns={listId}
         autocomplete="off"
         disabled={disabled}
-        isOpen={isOpen}
         ref={ref}
         role="combobox"
         type="search"
         value={inputValue}
-        alignCenter={alignInputCenter}
         {...rest}
       />
       <SearchDecoration
@@ -85,21 +91,24 @@ const SearchInput = (
       >
         <SearchIcon id={clearId} data-testid={'search-search-icon'} />
       </SearchDecoration>
-      {activeInput && (
-        <ClearButton
-          tabIndex={0}
-          aria-label={activeInput && ariaClearLabel}
-          onClick={handleClearInputValue}
-          onKeyDown={onClearButtonKeyDown}
-        >
-          <ClearIcon id={clearId} data-testid={'clear-search-icon'} />
-        </ClearButton>
-      )}
-      {!activeInput && inputValue.length > 0 && (
-        <ChevronDecoration disabled={disabled} aria-hidden={!activeInput}>
-          <ChevronIcon isOpen={isOpen} data-testid={'chevron-search-icon'} />
-        </ChevronDecoration>
-      )}
+
+      <ClearButton
+        isVisible={activeInput}
+        tabIndex={0}
+        aria-label={activeInput && ariaClearLabel}
+        onClick={handleClearInputValue}
+        onKeyDown={onClearButtonKeyDown}
+      >
+        <ClearIcon id={clearId} data-testid={'clear-search-icon'} />
+      </ClearButton>
+
+      <ChevronDecoration
+        disabled={disabled}
+        aria-hidden={activeInput}
+        isVisible={!activeInput && inputValue.length > 0}
+      >
+        <ChevronIcon isOpen={isOpen} data-testid={'chevron-search-icon'} />
+      </ChevronDecoration>
     </InputContainer>
   );
 };

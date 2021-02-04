@@ -24,9 +24,10 @@ import PropTypes from 'prop-types';
  */
 import { Chevron, Close as Clear, Search } from '../../../icons';
 import { themeHelpers, THEME_CONSTANTS } from '../../../theme';
+import { Z_INDEX } from '../constants';
 
 export const InputContainer = styled.div(
-  ({ theme }) => css`
+  ({ theme, alignCenter }) => css`
     display: flex;
     position: relative;
     box-sizing: border-box;
@@ -35,16 +36,20 @@ export const InputContainer = styled.div(
     max-width: 276px;
     background-color: ${theme.colors.bg.primary};
     color: ${theme.colors.fg.primary};
+
+    input {
+      padding: 8px 20px 8px ${alignCenter ? 'calc(50% - 8px)' : '32px'};
+    }
   `
 );
 InputContainer.propTypes = {
+  alignCenter: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
 export const Input = styled.input(
-  ({ theme, alignCenter, hasError }) => css`
+  ({ theme, hasError }) => css`
     position: absolute;
-    padding: 8px 20px 8px ${alignCenter ? 'calc(50% - 8px)' : '32px'};
     height: 100%;
     width: 100%;
     background-color: transparent;
@@ -57,9 +62,11 @@ export const Input = styled.input(
         ],
       theme,
     })};
-    color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
+    color: ${theme.colors.fg.primary};
     border: 1px solid ${theme.colors.border.defaultNormal};
-
+    &::placeholder {
+      color: ${theme.colors.fg.tertiary};
+    }
     &[aria-expanded='true'] {
       border-color: ${theme.colors.border.defaultActive};
     }
@@ -105,7 +112,6 @@ export const Input = styled.input(
   `
 );
 Input.propTypes = {
-  alignCenter: PropTypes.bool,
   hasError: PropTypes.bool,
 };
 
@@ -123,11 +129,16 @@ const BaseDecorationContainer = css`
 `;
 
 export const ClearButton = styled.button`
-  ${BaseDecorationContainer}
+  ${BaseDecorationContainer};
+  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+
   ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
   height: 16px;
-  z-index: 5;
+  z-index: ${Z_INDEX.CLEAR_BUTTON};
 `;
+ClearButton.propTypes = {
+  isVisible: PropTypes.bool,
+};
 
 export const ClearIcon = styled(Clear)`
   width: 8px;
@@ -137,8 +148,8 @@ export const ClearIcon = styled(Clear)`
 
 export const ChevronDecoration = styled.div`
   ${BaseDecorationContainer};
+  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   height: 100%;
-
   ${({ disabled, theme }) =>
     disabled &&
     css`
@@ -146,6 +157,11 @@ export const ChevronDecoration = styled.div`
       color: ${theme.colors.fg.disable};
     `}
 `;
+ChevronDecoration.propTypes = {
+  disabled: PropTypes.bool,
+  isVisible: PropTypes.bool,
+};
+
 export const ChevronIcon = styled(Chevron)`
   width: 8px;
   height: auto;
@@ -168,7 +184,6 @@ export const SearchDecoration = styled.div(
     `}
   `
 );
-
 SearchDecoration.propTypes = {
   alignCenter: PropTypes.bool,
 };
