@@ -31,8 +31,6 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
-import WithBorder from '../elementBorder';
-import { shouldDisplayBorder } from '../elementBorder/utils';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
 const Wrapper = styled.div`
@@ -70,7 +68,6 @@ function EditElement({ element }) {
         onMouseDown={(evt) => evt.stopPropagation()}
         ref={setEditWrapper}
       >
-        {shouldDisplayBorder(element) && <WithBorder element={element} />}
         <Edit
           element={element}
           box={box}

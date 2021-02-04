@@ -32,10 +32,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../types';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import useFocusTrapping from '../../utils/useFocusTrapping';
+import { useTransform } from '../transform';
+import useStory from '../../app/story/useStory';
 import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
@@ -45,7 +47,7 @@ const Container = styled.div`
   border-radius: 6px;
   background: ${({ theme }) => theme.colors.bg.v8};
   color: ${({ theme }) => theme.colors.fg.white};
-  width: 240px;
+  width: 256px;
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-style: normal;
   font-weight: normal;
@@ -79,6 +81,7 @@ function ColorPicker({
   onChange,
   onClose,
   renderFooter,
+  changedStyle = 'background',
 }) {
   const {
     state: { type, stops, currentStopIndex, currentColor, generatedColor },
@@ -95,6 +98,18 @@ function ColorPicker({
       setToGradient,
     },
   } = useColor();
+
+  const {
+    actions: { pushTransform },
+  } = useTransform();
+
+  const { selectedElementIds = [] } = useStory(
+    ({ state: { selectedElementIds } }) => {
+      return {
+        selectedElementIds,
+      };
+    }
+  );
 
   const [onDebouncedChange] = useDebouncedCallback(onChange, 100, {
     leading: true,
@@ -137,6 +152,18 @@ function ColorPicker({
 
   useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
   useFocusTrapping({ ref: containerRef });
+
+  useEffect(() => {
+    if (generatedColor) {
+      selectedElementIds.forEach((id) => {
+        pushTransform(id, {
+          color: generatedColor,
+          style: changedStyle,
+          staticTransformation: true,
+        });
+      });
+    }
+  }, [selectedElementIds, generatedColor, pushTransform, changedStyle]);
 
   return (
     <CSSTransition in appear={true} classNames="picker" timeout={300}>
@@ -186,6 +213,7 @@ ColorPicker.propTypes = {
   hasOpacity: PropTypes.bool,
   color: PatternPropType,
   renderFooter: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorPicker.defaultProps = {

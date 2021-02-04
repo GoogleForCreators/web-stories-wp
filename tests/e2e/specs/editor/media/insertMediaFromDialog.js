@@ -15,16 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
-import { createNewStory } from '../../../utils';
-
-const MODAL = '.media-modal';
+import { createNewStory, uploadMedia, deleteMedia } from '../../../utils';
 
 describe('Inserting Media from Dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -33,30 +26,12 @@ describe('Inserting Media from Dialog', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    // Clicking will only act on the first element.
-    await expect(page).toClick('button', { text: 'Upload' });
+    const filename = await uploadMedia('example-1.jpg', false);
 
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-    const btnTab = '#menu-item-browse';
-    await page.waitForSelector(btnTab);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnTab);
-    const btnSelector =
-      '.attachments-browser .attachments .attachment:first-of-type';
-    await page.waitForSelector(btnSelector);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnSelector);
-    const btnSelect = '.media-button-select';
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnSelect);
+    await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await percySnapshot(page, 'Inserting Image from Dialog');
+    await deleteMedia(filename);
   });
 });

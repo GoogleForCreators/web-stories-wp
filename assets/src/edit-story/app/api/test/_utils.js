@@ -24,6 +24,7 @@ export function createStory(properties = {}) {
     excerpt: { raw: 'excerpt' },
     permalink_template: 'http://localhost:8899/web-stories/%pagename%',
     style_presets: { colors: [TEST_COLOR] },
+    _embedded: { author: [{ id: 1, name: 'John Doe' }] },
     ...properties,
   };
 }
@@ -51,7 +52,7 @@ export const GET_MEDIA_RESPONSE_BODY = [
       raw: 'IMAGE',
       rendered: 'IMAGE',
     },
-    author: 1,
+    author: { id: 1, name: 'John Doe' },
     featured_media: 0,
     comment_status: 'open',
     ping_status: 'closed',

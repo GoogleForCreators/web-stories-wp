@@ -210,14 +210,14 @@ class Experiments {
 		return [
 			/**
 			 * Author: @littlemilkstudio
-			 * Issue: 1897
-			 * Creation date: 2020-05-21
+			 * Issue: 5880
+			 * Creation date: 2021-01-19
 			 */
 			[
-				'name'        => 'enableAnimation',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable user facing animations', 'web-stories' ),
-				'group'       => 'general',
+				'name'        => 'enableQuickTips',
+				'label'       => __( 'Quick Tips', 'web-stories' ),
+				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
+				'group'       => 'editor',
 			],
 			/**
 			 * Author: @carlos-kelly
@@ -287,28 +287,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2092
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showAnimationTab',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable animations tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
-			 * Issue: #2095
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showPrePublishTab',
-				'label'       => __( 'Pre-Publish', 'web-stories' ),
-				'description' => __( 'Enable pre-publish tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */
@@ -353,26 +331,26 @@ class Experiments {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #4918
-			 * Creation date: 2020-10-27
+			 * Issue: #798
+			 * Creation date: 2020-11-02
 			 */
 			[
-				'name'        => 'statusCheck',
-				'label'       => __( 'Status Check', 'web-stories' ),
-				'description' => __( 'Enable status check in editor.', 'web-stories' ),
-				'group'       => 'editor',
+				'name'        => 'enableSVG',
+				'label'       => __( 'SVG upload', 'web-stories' ),
+				'description' => __( 'Enable SVG upload', 'web-stories' ),
+				'group'       => 'general',
 			],
 			/**
 			 * Author: @swissspidy
-			 * Issue: #4805
+			 * Issue: #3134
 			 * Creation date: 2020-10-28
 			 */
 			[
-				'name'        => 'encodeStoryMarkup',
-				/* translators: %s: WAF stands for Web Application Firewall */
-				'label'       => __( 'WAF Compatibility', 'web-stories' ),
-				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
-				'group'       => 'general',
+				'name'        => 'customMetaBoxes',
+				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
+				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
@@ -382,8 +360,19 @@ class Experiments {
 			[
 				'name'        => 'eyeDropper',
 				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
 				'group'       => 'editor',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #5669
+			 * Creation date: 2021-01-21
+			 */
+			[
+				'name'        => 'videoOptimization',
+				'label'       => __( 'Video optimization', 'web-stories' ),
+				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
+				'group'       => 'general',
 			],
 		];
 	}
@@ -420,6 +409,19 @@ class Experiments {
 	}
 
 	/**
+	 * Returns an experiment by name.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $name Experiment name.
+	 * @return array|null Experiment if found, null otherwise.
+	 */
+	protected function get_experiment( $name ) {
+		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
+		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
+	}
+
+	/**
 	 * Checks whether an experiment is enabled.
 	 *
 	 * @since 1.0.0
@@ -429,6 +431,16 @@ class Experiments {
 	 * @return bool Whether the experiment is enabled.
 	 */
 	public function is_experiment_enabled( $name ) {
+		$experiment = $this->get_experiment( $name );
+
+		if ( ! $experiment ) {
+			return false;
+		}
+
+		if ( array_key_exists( 'default', $experiment ) ) {
+			return (bool) $experiment['default'];
+		}
+
 		$experiments = get_option( Settings::SETTING_NAME_EXPERIMENTS );
 		return ! empty( $experiments[ $name ] );
 	}

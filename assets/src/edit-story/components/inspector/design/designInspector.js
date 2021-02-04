@@ -25,7 +25,7 @@ import styled from 'styled-components';
  */
 import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory } from '../../../app';
-import { LayerPanel } from '../../panels';
+import { LayerPanel } from '../../panels/design';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`

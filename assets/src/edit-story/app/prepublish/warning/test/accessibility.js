@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { MESSAGES } from '../../constants';
 import * as accessibilityChecks from '../accessibility';
 
 describe('Pre-publish checklist - accessibility issues (warnings)', () => {
@@ -39,7 +40,8 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       expect(
         accessibilityChecks.textElementFontLowContrast(element)
       ).toStrictEqual({
-        message: 'Low contrast between font and background color',
+        message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -109,7 +111,8 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       expect(
         accessibilityChecks.textElementFontSizeTooSmall(element)
       ).toStrictEqual({
-        message: 'Font size too small',
+        message: MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -137,14 +140,19 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         scale: 100,
         resource: {
           type: 'image',
-          width: 99,
-          height: 99,
+          sizes: {
+            full: {
+              width: 99,
+              height: 99,
+            },
+          },
         },
       };
       expect(
         accessibilityChecks.imageElementLowResolution(element)
       ).toStrictEqual({
-        message: 'Very low image resolution',
+        message: MESSAGES.ACCESSIBILITY.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -159,14 +167,19 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         scale: 130,
         resource: {
           type: 'image',
-          width: 100,
-          height: 100,
+          sizes: {
+            full: {
+              width: 100,
+              height: 100,
+            },
+          },
         },
       };
       expect(
         accessibilityChecks.imageElementLowResolution(element)
       ).toStrictEqual({
-        message: 'Very low image resolution',
+        message: MESSAGES.ACCESSIBILITY.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -181,8 +194,12 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         scale: 100,
         resource: {
           type: 'image',
-          width: 100,
-          height: 100,
+          sizes: {
+            full: {
+              width: 100,
+              height: 100,
+            },
+          },
         },
       };
       expect(
@@ -191,7 +208,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
     });
   });
 
-  describe('videoElementMissingTitle', () => {
+  describe('videoElementMissingDescription', () => {
     it('should return a warning if video element missing title', () => {
       const element = {
         id: 'elementid',
@@ -199,27 +216,29 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         resource: {},
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toStrictEqual({
-        message: 'Video is missing title',
+        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
     });
 
-    it('should return a warning if video element has empty title', () => {
+    it('should return a warning if video element has empty descriiption', () => {
       const element = {
         id: 'elementid',
         type: 'video',
-        title: '',
+        alt: '',
         resource: {
-          title: '',
+          alt: '',
         },
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toStrictEqual({
-        message: 'Video is missing title',
+        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -229,11 +248,11 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'video',
-        title: 'Video title',
+        alt: 'Video description',
         resource: {},
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toBeUndefined();
     });
 
@@ -242,71 +261,11 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'video',
         resource: {
-          title: 'Video title',
+          alt: 'Video description',
         },
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
-      ).toBeUndefined();
-    });
-  });
-
-  describe('videoElementMissingAlt', () => {
-    it('should return a warning if video element missing alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'video',
-        resource: {},
-      };
-      expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
-        {
-          message: 'Video is missing assistive text',
-          elementId: element.id,
-          type: 'warning',
-        }
-      );
-    });
-
-    it('should return a warning if video element has empty alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'video',
-        alt: '',
-        resource: {
-          alt: '',
-        },
-      };
-      expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
-        {
-          message: 'Video is missing assistive text',
-          elementId: element.id,
-          type: 'warning',
-        }
-      );
-    });
-
-    it('should return undefined if video element has alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'video',
-        alt: 'Video is about things',
-        resource: {},
-      };
-      expect(
-        accessibilityChecks.videoElementMissingAlt(element)
-      ).toBeUndefined();
-    });
-
-    it('should return undefined if video resource has alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'image',
-        resource: {
-          alt: 'Image is about things',
-        },
-      };
-      expect(
-        accessibilityChecks.videoElementMissingAlt(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toBeUndefined();
     });
   });
@@ -320,7 +279,8 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       expect(
         accessibilityChecks.videoElementMissingCaptions(element)
       ).toStrictEqual({
-        message: 'Video is missing captions',
+        message: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -335,7 +295,8 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       expect(
         accessibilityChecks.videoElementMissingCaptions(element)
       ).toStrictEqual({
-        message: 'Video is missing captions',
+        message: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -355,6 +316,33 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
 
   describe('pageTooManyLinks', () => {
     it('should return a warning if page has too many links', () => {
+      const linkElements = [
+        {
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+        {
+          type: 'image',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+        {
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+        {
+          type: 'text',
+          link: {
+            url: 'https://google.com',
+          },
+        },
+      ];
+
       const page = {
         id: 'pageid',
         elements: [
@@ -363,38 +351,17 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
           {
             type: 'text',
             link: {
-              url: 'https://google.com',
-            },
-          },
-          {
-            type: 'image',
-            link: {
-              url: 'https://google.com',
-            },
-          },
-          {
-            type: 'text',
-            link: {
               url: '',
             },
           },
-          {
-            type: 'text',
-            link: {
-              url: 'https://google.com',
-            },
-          },
-          {
-            type: 'text',
-            link: {
-              url: 'https://google.com',
-            },
-          },
+          ...linkElements,
         ],
       };
       expect(accessibilityChecks.pageTooManyLinks(page)).toStrictEqual({
-        message: 'Too many links on page',
+        message: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.HELPER_TEXT,
         pageId: page.id,
+        elements: linkElements,
         type: 'warning',
       });
     });
@@ -449,7 +416,8 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       expect(
         accessibilityChecks.elementLinkTappableRegionTooSmall(element)
       ).toStrictEqual({
-        message: 'Link tappable region is too small',
+        message: MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -494,7 +462,8 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       };
       expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
         {
-          message: 'Image is missing alt text',
+          message: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT,
+          help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
           elementId: element.id,
           type: 'warning',
         }
@@ -512,7 +481,8 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       };
       expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
         {
-          message: 'Image is missing alt text',
+          message: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT,
+          help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
           elementId: element.id,
           type: 'warning',
         }
@@ -531,13 +501,11 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       ).toBeUndefined();
     });
 
-    it('should return undefined if image resource has alt', () => {
+    it('should return undefined if image element has a resource alt', () => {
       const element = {
         id: 'elementid',
         type: 'image',
-        resource: {
-          alt: 'Image is about things',
-        },
+        resource: { alt: 'Image is about things' },
       };
       expect(
         accessibilityChecks.imageElementMissingAlt(element)

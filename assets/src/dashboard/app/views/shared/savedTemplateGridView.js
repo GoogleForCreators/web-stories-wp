@@ -44,7 +44,7 @@ import {
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
 import { getRelativeDisplayDate } from '../../../../date';
-import { useGridViewKeys, useFocusOut } from '../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 import { trackEvent } from '../../../../tracking';

@@ -41,6 +41,9 @@ const updateCurrentPageProperties = (dispatch) => ({ properties }) =>
 const arrangePage = (dispatch) => ({ pageId, position }) =>
   dispatch({ type: types.ARRANGE_PAGE, payload: { pageId, position } });
 
+const replaceCurrentPage = (dispatch) => ({ page }) =>
+  dispatch({ type: types.REPLACE_CURRENT_PAGE, payload: { page } });
+
 const setCurrentPage = (dispatch) => ({ pageId }) =>
   dispatch({ type: types.SET_CURRENT_PAGE, payload: { pageId } });
 
@@ -86,10 +89,14 @@ const updateSelectedElements = (dispatch) => ({ properties }) =>
     payload: { elementIds: null, properties },
   });
 
-const combineElements = (dispatch) => ({ firstElement, secondId }) =>
+const combineElements = (dispatch) => ({
+  firstElement,
+  secondId,
+  shouldRetainAnimations,
+}) =>
   dispatch({
     type: types.COMBINE_ELEMENTS,
-    payload: { firstElement, secondId },
+    payload: { firstElement, secondId, shouldRetainAnimations },
   });
 
 const setBackgroundElement = (dispatch) => ({ elementId }) =>
@@ -131,6 +138,9 @@ const updateStory = (dispatch) => ({ properties }) =>
 const updateAnimationState = (dispatch) => ({ animationState }) =>
   dispatch({ type: types.UPDATE_ANIMATION_STATE, payload: { animationState } });
 
+const addAnimations = (dispatch) => ({ animations }) =>
+  dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -139,6 +149,7 @@ export const exposedActions = {
   updatePageProperties,
   updateCurrentPageProperties,
   arrangePage,
+  replaceCurrentPage,
   setCurrentPage,
   addElements,
   addElement,
@@ -160,6 +171,7 @@ export const exposedActions = {
   removeElementFromSelection,
   toggleElementInSelection,
   updateAnimationState,
+  addAnimations,
   updateStory,
 };
 

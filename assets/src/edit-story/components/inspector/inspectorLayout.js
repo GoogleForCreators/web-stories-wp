@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useEscapeToBlurEffect } from '../keyboard';
+import { useEscapeToBlurEffect } from '../../../design-system';
 import TabView from '../tabview';
 import useInspector from './useInspector';
 import InspectorContent from './inspectorContent';

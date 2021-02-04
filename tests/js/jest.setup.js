@@ -23,13 +23,11 @@
 import 'jest-extended';
 import '@testing-library/jest-dom';
 import 'jest-axe/extend-expect';
-
-/**
- * Internal dependencies
- */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
+import {
+  toBeValidAMP,
+  toBeValidAMPStoryElement,
+  toBeValidAMPStoryPage,
+} from '@web-stories-wp/jest-amp';
 
 expect.extend({
   toBeValidAMP,

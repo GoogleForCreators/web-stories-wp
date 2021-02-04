@@ -96,14 +96,61 @@ class Experiments extends \WP_UnitTestCase {
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field() {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'fooExperiment' => true ], false );
-		$experiments = new \Google\Web_Stories\Experiments();
-		$output      = get_echo(
+		$experiments = $this->createPartialMock(
+			\Google\Web_Stories\Experiments::class,
+			[ 'get_experiments' ]
+		);
+		$experiments->method( 'get_experiments' )
+					->willReturn(
+						[
+							[
+								'name'        => 'foo',
+								'label'       => 'Foo Label',
+								'description' => 'Foo Desc',
+							],
+						]
+					);
+
+		$output = get_echo(
 			[ $experiments, 'display_experiment_field' ],
 			[
 				[
-					'label' => 'Experiment',
-					'id'    => 'fooExperiment',
+					'label' => 'Foo Label',
+					'id'    => 'foo',
+				],
+			]
+		);
+
+		$this->assertNotContains( "checked='checked'", $output );
+	}
+
+	/**
+	 * @covers ::display_experiment_field
+	 */
+	public function test_display_experiment_field_enabled() {
+		$experiments = $this->createPartialMock(
+			\Google\Web_Stories\Experiments::class,
+			[ 'get_experiments' ]
+		);
+		$experiments->method( 'get_experiments' )
+					->willReturn(
+						[
+							[
+								'name'        => 'foo',
+								'label'       => 'Foo Label',
+								'description' => 'Foo Desc',
+							],
+						]
+					);
+
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'foo' => true ], false );
+
+		$output = get_echo(
+			[ $experiments, 'display_experiment_field' ],
+			[
+				[
+					'label' => 'Foo Label',
+					'id'    => 'foo',
 				],
 			]
 		);
@@ -114,18 +161,33 @@ class Experiments extends \WP_UnitTestCase {
 	 * @covers ::display_experiment_field
 	 */
 	public function test_display_experiment_field_enabled_by_default() {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'fooExperiment' => true ], false );
-		$experiments = new \Google\Web_Stories\Experiments();
-		$output      = get_echo(
+		$experiments = $this->createPartialMock(
+			\Google\Web_Stories\Experiments::class,
+			[ 'get_experiments' ]
+		);
+		$experiments->method( 'get_experiments' )
+					->willReturn(
+						[
+							[
+								'name'        => 'foo',
+								'label'       => 'Foo Label',
+								'description' => 'Foo Desc',
+							],
+						]
+					);
+
+		$output = get_echo(
 			[ $experiments, 'display_experiment_field' ],
 			[
 				[
-					'label'   => 'Experiment',
-					'id'      => 'fooExperiment',
+					'label'   => 'Foo Label',
+					'id'      => 'foo',
 					'default' => true,
 				],
 			]
 		);
+
+		$this->assertContains( "checked='checked'", $output );
 		$this->assertContains( 'disabled', $output );
 	}
 
@@ -177,8 +239,39 @@ class Experiments extends \WP_UnitTestCase {
 	 * @covers ::is_experiment_enabled
 	 */
 	public function test_is_experiment_enabled() {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableAnimation' => true ], false );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableBookmarkActions' => true ], false );
 		$experiments = new \Google\Web_Stories\Experiments();
-		$this->assertTrue( $experiments->is_experiment_enabled( 'enableAnimation' ) );
+		$this->assertTrue( $experiments->is_experiment_enabled( 'enableBookmarkActions' ) );
+	}
+
+	/**
+	 * @covers ::is_experiment_enabled
+	 * @covers ::get_experiment
+	 */
+	public function test_is_experiment_enabled_default_experiment() {
+		$experiments = $this->createPartialMock(
+			\Google\Web_Stories\Experiments::class,
+			[ 'get_experiments' ]
+		);
+		$experiments->method( 'get_experiments' )
+					->willReturn(
+						[
+							[
+								'name'        => 'foo',
+								'label'       => 'Foo Label',
+								'description' => 'Foo Desc',
+							],
+							[
+								'name'        => 'bar',
+								'label'       => 'Bar Label',
+								'description' => 'Bar Desc',
+								'default'     => true,
+							],
+						]
+					);
+
+		$this->assertFalse( $experiments->is_experiment_enabled( 'foo' ) );
+		$this->assertTrue( $experiments->is_experiment_enabled( 'bar' ) );
+		$this->assertFalse( $experiments->is_experiment_enabled( 'baz' ) );
 	}
 }

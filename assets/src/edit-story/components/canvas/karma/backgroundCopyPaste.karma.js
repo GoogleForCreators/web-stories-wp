@@ -201,8 +201,9 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%)'
+      'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
     );
+    await fixture.events.sleep(10000);
     expect(await getNumElements()).toBe(1);
 
     // Now delete background image and verify that underlying color is still correct
@@ -232,13 +233,14 @@ describe('Background Copy Paste integration', () => {
   }
   async function setBackgroundColor(hex) {
     await clickBackgroundElement();
-    const hexInput = getInputByAriaLabel(/Enter: Background color/i);
+    const hexInput = getInputByAriaLabel('Background color');
     // First click the input field to focus it
     await fixture.events.click(hexInput);
     // Select all the text
     hexInput.select();
     // Then type hex combo
     await fixture.events.keyboard.type(hex);
+    await fixture.events.keyboard.press('tab');
   }
   function setOverlay(overlayName) {
     const overlayCheckbox = getInputByAriaLabel(
@@ -325,7 +327,7 @@ describe('Background Copy Paste integration', () => {
 
   function getMediaElement(imageAlt) {
     return getElementByQueryAndMatcher(
-      '[data-testid="mediaElement"] img',
+      '[data-testid^="mediaElement"] img',
       getByAttribute('alt', imageAlt)
     );
   }

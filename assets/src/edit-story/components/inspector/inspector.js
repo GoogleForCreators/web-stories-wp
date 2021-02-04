@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { UploadDropTarget } from '../uploadDropTarget';
+
 import InspectorProvider from './inspectorProvider';
 import InspectorLayout from './inspectorLayout';
 

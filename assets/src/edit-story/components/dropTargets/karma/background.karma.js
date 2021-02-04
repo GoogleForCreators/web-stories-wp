@@ -455,14 +455,14 @@ describe('Background Drop-Target integration', () => {
 });
 
 function getMediaLibraryElementByIndex(fixture, index) {
-  return fixture.querySelectorAll('[data-testid=mediaElement]')[index];
+  return fixture.querySelectorAll('[data-testid^=mediaElement]')[index];
 }
 
-async function addDummyImage(fixture, index) {
+export async function addDummyImage(fixture, index) {
   await fixture.events.click(getMediaLibraryElementByIndex(fixture, index));
 }
 
-async function dragCanvasElementToDropTarget(
+export async function dragCanvasElementToDropTarget(
   fixture,
   canvasElementId,
   targetId
@@ -544,4 +544,23 @@ function getAllTransformsBetween(startElement, endElement) {
 
 function getComputedStyle(element) {
   return window.getComputedStyle(element);
+}
+
+export async function addBackgroundImage(fixture, options) {
+  await addDummyImage(fixture, 1);
+  const {
+    actions: { updateElementById },
+    state: {
+      currentPage: { elements },
+    },
+  } = await fixture.renderHook(() => useStory());
+  if (options?.properties) {
+    updateElementById({
+      elementId: elements[1].id,
+      properties: options?.properties,
+    });
+  }
+  const backgroundId = await getBackgroundElementId(fixture);
+  await dragCanvasElementToDropTarget(fixture, elements[1].id, backgroundId);
+  await fixture.events.mouse.up();
 }

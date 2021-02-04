@@ -26,6 +26,7 @@ import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
 import { canMaskHaveBorder } from '../../../../masks';
+import { removeAnimationsWithElementIds } from './utils';
 
 /**
  * Combine elements by taking properties from a first item and
@@ -49,9 +50,13 @@ import { canMaskHaveBorder } from '../../../../masks';
  * @param {Object} payload Action payload
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
+ * @param {boolean} payload.shouldRetainAnimations Is called from copy and paste
  * @return {Object} New state
  */
-function combineElements(state, { firstElement, secondId }) {
+function combineElements(
+  state,
+  { firstElement, secondId, shouldRetainAnimations = true }
+) {
   if (!firstElement || !secondId) {
     return state;
   }
@@ -86,8 +91,6 @@ function combineElements(state, { firstElement, secondId }) {
     'scale',
     'focalX',
     'focalY',
-    'flip',
-    'backgroundOverlay',
     'tracks',
   ];
 
@@ -97,21 +100,22 @@ function combineElements(state, { firstElement, secondId }) {
     // If relevant, maintain border, too.
     if (canMaskHaveBorder(secondElement)) {
       propsFromFirst.push('border');
+      propsFromFirst.push('borderRadius');
     }
+  } else {
+    // If we're dropping into background, maintain the flip, too.
+    // @todo This behavior has been since the beginning, however, it's not consistent with how other elements behave -- needs confirmation.
+    propsFromFirst.push('flip');
   }
   const mediaProps = objectPick(element, propsFromFirst);
 
   const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
   const newElement = {
-    // First copy everything from existing element except if it was default background and any overlay
-    ...objectWithout(secondElement, [
-      'isDefaultBackground',
-      'backgroundOverlay',
-    ]),
+    // First copy everything from existing element except if it was default background
+    ...objectWithout(secondElement, ['isDefaultBackground']),
     // Then set sensible default attributes
     ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
-    flip: {},
     // Then copy all media-related attributes from new element
     ...mediaProps,
     // Only copy position properties for backgrounds, as they're ignored while being background
@@ -126,10 +130,24 @@ function combineElements(state, { firstElement, secondId }) {
     // Update reference to second element
     .map((el) => (el.id === secondId ? newElement : el));
 
+  // First element should always be the image getting applied to
+  // new element. We want to remove any animations it has. Second
+  // element should be an element with or without animations that
+  // we want to retain.
+  //
+  // We want different behavior for copy and paste where we
+  // replace the element's animation with any coming from the
+  // newly pasted element.
+  const newAnimations = removeAnimationsWithElementIds(
+    page.animations,
+    shouldRetainAnimations ? [firstId] : [firstId, secondId]
+  );
+
   const newPage = {
     ...page,
     elements,
     ...newPageProps,
+    animations: newAnimations,
   };
 
   const newPages = [

@@ -44,7 +44,7 @@ describe('Dropdown', () => {
     const DropdownButton = wrapper.getByRole('button');
     const PopoverMenu = wrapper.getByTestId('popover-menu');
     const DropdownMenu = window.getComputedStyle(PopoverMenu).display;
-    expect(DropdownButton).toBeDefined();
+    expect(DropdownButton).toBeInTheDocument();
     expect(DropdownMenu).toBe('none');
   });
 });

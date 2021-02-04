@@ -15,14 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
-import { createNewStory } from '../../../utils';
+import {
+  createNewStory,
+  clickButton,
+  uploadFile,
+  deleteMedia,
+} from '../../../utils';
 
 const MODAL = '.media-modal';
 
@@ -31,23 +31,28 @@ describe('Inserting .mov from dialog', () => {
   it('should not list the .mov', async () => {
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
     await expect(page).toClick('button', { text: 'Upload' });
 
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    const btnTab = '#menu-item-browse';
-    await page.waitForSelector(btnTab);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnTab);
-    const btnSelector =
-      '.attachments-browser .attachments .attachment:first-of-type';
-    await page.waitForSelector(btnSelector);
-    await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
-    await percySnapshot(page, 'Avoid inserting .mov files');
 
-    const closeBtnSelector = '.media-modal-close';
-    await page.click(closeBtnSelector);
+    const fileName = await uploadFile('small-video.mov', false);
+    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
+
+    await clickButton(
+      '.attachments-browser .attachments .attachment:first-of-type'
+    );
+
+    await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
+
+    await page.keyboard.press('Escape');
+
+    await page.waitForSelector(MODAL, {
+      visible: false,
+    });
+
+    await deleteMedia(fileNameNoExt);
   });
 });

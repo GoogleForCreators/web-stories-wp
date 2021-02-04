@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { ERRORS } from '../../textContent';
 import settingsReducer, { ACTION_TYPES } from '../settings';
 
 describe('settingsReducer', () => {
@@ -56,7 +57,7 @@ describe('settingsReducer', () => {
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to find settings data',
+          title: ERRORS.LOAD_SETTINGS.TITLE,
         },
         code: 'my_error_code',
       },
@@ -66,7 +67,7 @@ describe('settingsReducer', () => {
       error: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to find settings data',
+          title: ERRORS.LOAD_SETTINGS.TITLE,
         },
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
@@ -80,7 +81,7 @@ describe('settingsReducer', () => {
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to update settings data',
+          title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
         },
         code: 'my_error_code',
       },
@@ -90,7 +91,7 @@ describe('settingsReducer', () => {
       error: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to update settings data',
+          title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
         },
         id: MOCK_ERROR_ID,
         code: 'my_error_code',

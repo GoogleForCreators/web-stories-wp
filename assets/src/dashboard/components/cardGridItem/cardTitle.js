@@ -30,6 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../constants';
+import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
@@ -109,10 +110,6 @@ const CardTitle = ({
         );
     }
   }, [status, displayDate]);
-
-  const titleFormatted = (rawTitle) => {
-    return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
-  };
 
   return (
     <StyledCardTitle>

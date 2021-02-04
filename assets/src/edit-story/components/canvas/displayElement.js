@@ -35,7 +35,13 @@ import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
-import WithBorder from '../elementBorder';
+import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
+import {
+  getBorderPositionCSS,
+  getResponsiveBorder,
+  shouldDisplayBorder,
+} from '../../utils/elementBorder';
+import getTransformFlip from '../../elements/shared/getTransformFlip';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -57,6 +63,8 @@ const ReplacementContainer = styled.div`
   transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
   pointer-events: none;
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
+  transform: ${({ flip }) => (flip ? getTransformFlip(flip) : null)};
+  height: 100%;
 `;
 
 function AnimationWrapper({ children, id, isAnimatable }) {
@@ -75,8 +83,9 @@ AnimationWrapper.propTypes = {
 };
 
 function DisplayElement({ element, previewMode, isAnimatable = false }) {
-  const { getBox } = useUnits((state) => ({
+  const { getBox, dataToEditorX } = useUnits((state) => ({
     getBox: state.actions.getBox,
+    dataToEditorX: state.actions.dataToEditorX,
   }));
 
   const [replacement, setReplacement] = useState(null);
@@ -95,7 +104,15 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       }
     : null;
 
-  const { id, opacity, type, isBackground, backgroundOverlay } = element;
+  const {
+    id,
+    opacity,
+    type,
+    isBackground,
+    backgroundOverlay,
+    border = {},
+    flip,
+  } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.resource.type) || {};
@@ -126,24 +143,39 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     }
   });
 
+  const bgOverlayRef = useRef(null);
+  useColorTransformHandler({
+    id,
+    targetRef: bgOverlayRef,
+    resetOnNullTransform: false,
+  });
+
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
-        <WithBorder element={element} previewMode={previewMode}>
-          <WithMask
-            element={element}
-            fill={true}
-            box={box}
-            style={{
-              opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-            }}
-            previewMode={previewMode}
-          >
-            <Display element={element} previewMode={previewMode} box={box} />
-          </WithMask>
-        </WithBorder>
+        <WithMask
+          element={element}
+          fill={true}
+          box={box}
+          style={{
+            opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
+            ...(shouldDisplayBorder(element)
+              ? getBorderPositionCSS({
+                  ...getResponsiveBorder(border, previewMode, dataToEditorX),
+                  width: `${box.width}px`,
+                  height: `${box.height}px`,
+                })
+              : null),
+          }}
+          previewMode={previewMode}
+        >
+          <Display element={element} previewMode={previewMode} box={box} />
+        </WithMask>
         {!previewMode && (
-          <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
+          <ReplacementContainer
+            flip={flip}
+            hasReplacement={Boolean(replacementElement)}
+          >
             {replacementElement && (
               <WithMask
                 element={replacementElement}
@@ -160,7 +192,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           </ReplacementContainer>
         )}
         {isBackground && backgroundOverlay && !hasReplacement && (
-          <BackgroundOverlay style={generatePatternStyles(backgroundOverlay)} />
+          <BackgroundOverlay
+            ref={bgOverlayRef}
+            style={generatePatternStyles(backgroundOverlay)}
+          />
         )}
       </AnimationWrapper>
     </Wrapper>

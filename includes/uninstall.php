@@ -118,6 +118,18 @@ function delete_stories_post_meta() {
 }
 
 /**
+ * Deletes all associated user meta data.
+ *
+ * @since 1.3.0
+ *
+ * @return void
+ */
+function delete_stories_user_meta() {
+	delete_metadata( 'user', 0, User_Preferences::OPTIN_META_KEY, '', true );
+	delete_metadata( 'user', 0, User_Preferences::ONBOARDING_META_KEY, '', true );
+}
+
+/**
  * Deletes all stories & templates.
  *
  * @since 1.0.0
@@ -146,7 +158,7 @@ function delete_posts() {
  * @return void
  */
 function remove_caps() {
-	$story_post_type = new Story_Post_Type( new Experiments() );
+	$story_post_type = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
 	$story_post_type->remove_caps_from_roles();
 }
 

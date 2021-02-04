@@ -31,7 +31,7 @@ import { _x, __ } from '@wordpress/i18n';
  */
 import { PatternPropType } from '../../../types';
 import useFocusAndSelect from '../../../utils/useFocusAndSelect';
-import { MULTIPLE_VALUE } from '../';
+import { MULTIPLE_VALUE } from '../../../constants';
 import getPreviewText from './getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
 import { ColorInput } from './colorBox';

@@ -50,13 +50,11 @@ class Status_Check_Controller extends WP_REST_Controller {
 
 	/**
 	 * Constructor.
-	 *
-	 * @param Experiments $experiments Experiments instance.
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct() {
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'status-check';
-		$this->decoder   = new Decoder( $experiments );
+		$this->decoder   = new Decoder();
 	}
 
 	/**

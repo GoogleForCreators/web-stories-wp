@@ -32,11 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $post_type, $post_type_object, $post;
 
 $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+$demo      = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 // Preload common data.
 $preload_paths = [
-	sprintf( '/web-stories/v1/%s/%s?context=edit&_embed=%s', $rest_base, $post->ID, 'wp%3Afeaturedmedia' ),
-	'/web-stories/v1/media?context=edit&per_page=100&page=1&_web_stories_envelope=true',
+	sprintf( '/web-stories/v1/%s/%s/?context=edit&_embed=%s&web_stories_demo=%s', $rest_base, $post->ID, urlencode( 'wp:featuredmedia,author' ), $demo ),
+	'/web-stories/v1/media/?context=edit&per_page=100&page=1&_web_stories_envelope=true',
+	'/web-stories/v1/users/?per_page=100&who=authors',
+	'/web-stories/v1/users/me/',
 ];
 
 /**
@@ -71,10 +74,30 @@ wp_add_inline_script(
 	'after'
 );
 
+// In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
+require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
+register_and_do_post_meta_boxes( $post );
+
 require_once ABSPATH . 'wp-admin/admin-header.php';
-require_once __DIR__ . '/error-no-js.php';
+
+// TODO: Use custom version of the_block_editor_meta_boxes() without the block editor specifics?
 ?>
 
-<div id="edit-story" class="hide-if-no-js">
-	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
+<div class="web-stories-wp">
+	<h1 class="screen-reader-text hide-if-no-js"><?php esc_html_e( 'Web Stories', 'web-stories' ); ?></h1>
+	<div id="web-stories-editor" class="web-stories-editor-app-container hide-if-no-js">
+		<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
+	</div>
+
+	<div id="metaboxes" class="hidden">
+		<?php the_block_editor_meta_boxes(); ?>
+	</div>
+
+	<?php // JavaScript is disabled. ?>
+	<div class="wrap hide-if-js web-stories-wp-no-js">
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Web Stories', 'web-stories' ); ?></h1>
+		<div class="notice notice-error notice-alt">
+			<p><?php esc_html_e( 'Web Stories for WordPress requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
+		</div>
+	</div>
 </div>

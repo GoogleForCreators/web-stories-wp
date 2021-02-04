@@ -21,6 +21,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
+import { ERRORS } from '../../textContent';
 import useSettingsApi from '../useSettingsApi';
 import wpAdapter from '../wpAdapter';
 
@@ -36,7 +37,7 @@ describe('useSettingsApi', () => {
 
     expect(result.current.settings.error.message).toStrictEqual({
       body: 'The response is not a valid JSON response.',
-      title: 'Unable to find settings data',
+      title: ERRORS.LOAD_SETTINGS.TITLE,
     });
   });
 
@@ -51,7 +52,7 @@ describe('useSettingsApi', () => {
 
     expect(result.current.settings.error.message).toStrictEqual({
       body: 'The response is not a valid JSON response.',
-      title: 'Unable to update settings data',
+      title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
     });
   });
 });

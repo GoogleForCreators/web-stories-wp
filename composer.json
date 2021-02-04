@@ -5,16 +5,19 @@
   "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
   "require": {
-    "php": "^5.6 || ^7.0",
+    "php": "^5.6 || ^7.0 || ^8.0",
     "ext-dom": "*",
     "ext-iconv": "*",
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "^2.0.6",
+    "ampproject/amp-toolbox": "^0.1",
+    "ampproject/amp-wp": "dev-develop",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
+    "enshrined/svg-sanitize": "^0.14.0",
     "mcaskill/composer-exclude-files": "^2.0",
+    "sabberworm/php-css-parser": "dev-master#bfdd976",
     "symfony/polyfill-mbstring": "^1.18"
   },
   "provide": {
@@ -57,6 +60,7 @@
         "type": "phar"
       }
     },
+    "enable-patching": true,
     "exclude-from-files": [
       "ampproject/amp-wp/back-compat/back-compat.php",
       "ampproject/amp-wp/includes/amp-helper-functions.php",
@@ -85,11 +89,6 @@
     {
       "type": "vcs",
       "url": "https://github.com/ampproject/amp-wp",
-      "no-api": true
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
       "no-api": true
     }
   ],

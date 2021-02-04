@@ -27,7 +27,7 @@ function customInlineDisplay(styles) {
   ];
 
   return stylesToCSSConverters.reduce(
-    (css, stylesToCSS) => ({ ...css, ...stylesToCSS(styles) }),
+    (css, stylesToCSS) => ({ ...css, ...stylesToCSS(styles, css) }),
     {}
   );
 }

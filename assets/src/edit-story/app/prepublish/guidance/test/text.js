@@ -17,32 +17,36 @@
 /**
  * Internal dependencies
  */
+import { MESSAGES } from '../../constants';
 import { pageTooMuchText, storyTooLittleText } from '../text';
 
 describe('Pre-publish checklist - text guidelines (guidance)', () => {
   describe('pageTooMuchText', () => {
     it('should return a guidance if too much text', () => {
+      const testElements = [
+        {
+          id: '25b6f99b-3f69-4351-9e18-31b8ef1d1a61',
+          type: 'text',
+          content:
+            '<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">FRESH</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">&amp;&nbsp;</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">BRIGHT</span>',
+        },
+        {
+          id: 'd886c844-5b5c-4b27-a9c3-332df2aed3f3',
+          type: 'text',
+          content:
+            "<span style=\"color: #28292b\">this is a lot of text that should</span>&nbsp;not pass the test because it's too much text. not pass the test because it's too much text. not pass the test because it's too much text. a little more.",
+        },
+      ];
       const page = {
         id: 'd886c844-5b5c-4b27-a9c3-332df2aeaaaa',
-        elements: [
-          {
-            id: '25b6f99b-3f69-4351-9e18-31b8ef1d1a61',
-            type: 'text',
-            content:
-              '<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">FRESH</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">&amp;&nbsp;</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">BRIGHT</span>',
-          },
-          {
-            id: 'd886c844-5b5c-4b27-a9c3-332df2aed3f3',
-            type: 'text',
-            content:
-              "<span style=\"color: #28292b\">this is a lot of text that should</span>&nbsp;not pass the test because it's too much text. not pass the test because it's too much text. not pass the test because it's too much text. a little more.",
-          },
-        ],
+        elements: testElements,
       };
       expect(pageTooMuchText(page)).toStrictEqual({
-        message: 'Too much text on page',
         pageId: page.id,
+        elements: testElements,
         type: 'guidance',
+        message: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT,
+        help: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.HELPER_TEXT,
       });
     });
 
@@ -98,9 +102,10 @@ describe('Pre-publish checklist - text guidelines (guidance)', () => {
         ],
       };
       expect(storyTooLittleText(story)).toStrictEqual({
-        message: 'Too little text in story',
         storyId: story.id,
         type: 'guidance',
+        message: MESSAGES.TEXT.TOO_LITTLE_TEXT.MAIN_TEXT,
+        help: MESSAGES.TEXT.TOO_LITTLE_TEXT.HELPER_TEXT,
       });
     });
 

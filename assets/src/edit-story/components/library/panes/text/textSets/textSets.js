@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useState, useMemo, useCallback } from 'react';
@@ -24,16 +29,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Section } from '../../../common';
+import { FullWidthWrapper } from '../../common/styles';
 import PillGroup from '../../shared/pillGroup';
-import { PANE_PADDING } from '../../shared';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
@@ -45,6 +44,11 @@ import {
   getInUseFontsForPages,
   getTextSetsForFonts,
 } from '../../../../../utils/getInUseFonts';
+import Switch from '../../../../switch';
+import {
+  Container as SectionContainer,
+  Title as SectionTitle,
+} from '../../../common/section';
 import TextSet from './textSet';
 
 const TEXT_SET_ROW_GAP = 12;
@@ -69,10 +73,13 @@ const TextSetRow = styled.div`
   column-gap: 12px;
 `;
 
-/* Undo the -1.5em set by the Pane */
-const CategoryWrapper = styled.div`
-  margin-left: -${PANE_PADDING};
-  margin-right: -${PANE_PADDING};
+const TitleBar = styled.div`
+  display: flex;
+
+  label {
+    margin-top: 14px;
+    margin-bottom: 28px;
+  }
 `;
 
 const CATEGORIES = {
@@ -84,11 +91,11 @@ const CATEGORIES = {
   step: __('Steps', 'web-stories'),
   table: __('Table', 'web-stories'),
   quote: __('Quote', 'web-stories'),
-  inUse: __('Fonts In Use', 'web-stories'),
 };
 
 function TextSets({ paneRef }) {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+  const [showInUse, setShowInUse] = useState(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const storyPages = useStory(({ state: { pages } }) => pages);
@@ -102,17 +109,17 @@ function TextSets({ paneRef }) {
     () =>
       getTextSetsForFonts({
         fonts: getInUseFontsForPages(storyPages),
-        textSets: allTextSets,
+        textSets: selectedCat ? textSets[selectedCat] : allTextSets,
       }),
-    [allTextSets, storyPages]
+    [allTextSets, storyPages, selectedCat, textSets]
   );
 
   const filteredTextSets = useMemo(() => {
-    if (selectedCat === 'inUse') {
+    if (showInUse) {
       return getTextSetsForInUseFonts();
     }
     return selectedCat ? textSets[selectedCat] : allTextSets;
-  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts]);
+  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts, showInUse]);
 
   const categories = useMemo(
     () => [
@@ -120,13 +127,12 @@ function TextSets({ paneRef }) {
         id: cat,
         label: CATEGORIES[cat] ?? cat,
       })),
-      { id: 'inUse', label: CATEGORIES.inUse },
     ],
     [textSets]
   );
 
   const rowVirtualizer = useVirtual({
-    size: Math.ceil(filteredTextSets.length / 2),
+    size: Math.ceil((filteredTextSets || []).length / 2),
     parentRef: paneRef,
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
@@ -143,15 +149,25 @@ function TextSets({ paneRef }) {
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
   return (
-    <Section id={sectionId} title={title}>
-      <CategoryWrapper>
+    <SectionContainer id={sectionId}>
+      <TitleBar>
+        <SectionTitle>{title}</SectionTitle>
+        <Switch
+          onChange={(value) => {
+            requestAnimationFrame(() => setShowInUse(value));
+          }}
+          value={showInUse}
+          label={__('Match fonts from story', 'web-stories')}
+        />
+      </TitleBar>
+      <FullWidthWrapper>
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}
           deselectItem={() => handleSelectedCategory(null)}
         />
-      </CategoryWrapper>
+      </FullWidthWrapper>
       <UnitsProvider
         pageSize={{
           width: TEXT_SET_SIZE,
@@ -169,14 +185,14 @@ function TextSets({ paneRef }) {
                 height={virtualRow.size}
                 translateY={virtualRow.start}
               >
-                {filteredTextSets[firstColumnIndex].length > 0 && (
+                {(filteredTextSets[firstColumnIndex] || []).length > 0 && (
                   <TextSet
                     key={firstColumnIndex}
                     elements={filteredTextSets[firstColumnIndex]}
                   />
                 )}
                 {filteredTextSets[secondColumnIndex] &&
-                  filteredTextSets[secondColumnIndex].length > 0 && (
+                  (filteredTextSets[secondColumnIndex] || []).length > 0 && (
                     <TextSet
                       key={secondColumnIndex}
                       elements={filteredTextSets[secondColumnIndex]}
@@ -187,7 +203,7 @@ function TextSets({ paneRef }) {
           })}
         </TextSetContainer>
       </UnitsProvider>
-    </Section>
+    </SectionContainer>
   );
 }
 

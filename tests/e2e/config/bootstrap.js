@@ -19,6 +19,7 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { setDefaultOptions } from 'expect-puppeteer';
+import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 
 /**
  * WordPress dependencies
@@ -26,15 +27,11 @@ import { setDefaultOptions } from 'expect-puppeteer';
 import {
   enablePageDialogAccept,
   setBrowserViewport,
+  trashAllPosts,
 } from '@wordpress/e2e-test-utils';
 
 // Extend Jest matchers.
 import 'jest-extended';
-
-/**
- * Internal dependencies
- */
-import toBeValidAMP from '../matchers/toBeValidAMP';
 
 expect.extend({
   toBeValidAMP,
@@ -57,6 +54,57 @@ const OBSERVED_CONSOLE_MESSAGE_TYPES = {
   warning: 'warn',
   error: 'error',
 };
+
+/**
+ * A list of "allowed" error message - or actually error message substrings.
+ *
+ * The list comes prepopulated with known messages,
+ * but can be appended to by tests where relevant.
+ *
+ * @type {Array<string>}
+ */
+const ALLOWED_ERROR_MESSAGES = [
+  // As of WordPress 5.3.2 in Chrome 79, navigating to the block editor
+  // (Posts > Add New) will display a console warning about
+  // non - unique IDs.
+  // See: https://core.trac.wordpress.org/ticket/23165
+  'elements with non-unique id #_wpnonce',
+
+  // Ignore warning about isSecondary prop on button component as used by AMP plugin.
+  // The prop is only supported in newer versions of Gutenberg, and as such will trigger
+  // warnings on older WordPress versions (but not on newer ones).
+  'isSecondary',
+
+  // styled-components warns about dynamically created components.
+  // @todo Fix issues.
+  ' has been created dynamically.',
+
+  // WordPress still bundles jQuery Migrate, which logs to the console.
+  'JQMIGRATE',
+
+  // Firefox warns about this issue in WordPress admin.
+  'This page uses the non standard property “zoom”',
+
+  // Firefox warns about this issue when there's no proper favicon.
+  'Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIContentSniffer.getMIMETypeFromContent]',
+
+  // Firefox warns about this issue on the login screen.
+  'wp-includes/js/zxcvbn.min.js',
+
+  // Another Firefox warning.
+  'Layout was forced before the page was fully loaded',
+
+  // Known AMP Story bookend issue.
+  'Error fetching bookend configuration',
+];
+
+export function addAllowedErrorMessage(message) {
+  ALLOWED_ERROR_MESSAGES.push(message);
+  return () => {
+    const index = ALLOWED_ERROR_MESSAGES.findIndex((msg) => msg === message);
+    ALLOWED_ERROR_MESSAGES.splice(index, 1);
+  };
+}
 
 /**
  * Array of page event tuples of [ eventName, handler ].
@@ -114,46 +162,8 @@ function observeConsoleLogging() {
 
     let text = message.text();
 
-    // As of WordPress 5.3.2 in Chrome 79, navigating to the block editor
-    // (Posts > Add New) will display a console warning about
-    // non - unique IDs.
-    // See: https://core.trac.wordpress.org/ticket/23165
-    if (text.includes('elements with non-unique id #_wpnonce')) {
-      return;
-    }
-
-    // styled-components warns about dynamically created components.
-    // @todo Fix issues.
-    if (text.includes(' has been created dynamically.')) {
-      return;
-    }
-
-    // WordPress still bundles jQuery Migrate, which logs to the console.
-    if (text.includes('JQMIGRATE')) {
-      return;
-    }
-
-    // Firefox warns about this issue in WordPress admin.
-    if (text.includes('This page uses the non standard property “zoom”')) {
-      return;
-    }
-
-    // Firefox warns about this issue when there's no proper favicon.
-    if (
-      text.includes(
-        'Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIContentSniffer.getMIMETypeFromContent]'
-      )
-    ) {
-      return;
-    }
-
-    // Firefox warns about this issue on the login screen.
-    if (text.includes('wp-includes/js/zxcvbn.min.js')) {
-      return;
-    }
-
-    // Another Firefox warning.
-    if (text.includes('Layout was forced before the page was fully loaded')) {
+    // Short-circuit abort if any known "allowed" message fails
+    if (ALLOWED_ERROR_MESSAGES.some((msg) => text.includes(msg))) {
       return;
     }
 
@@ -201,6 +211,8 @@ async function runAxeTestsForStoriesEditor() {
       'aria-required-parent',
       'button-name',
       'color-contrast',
+      // Because of multiple #_wpnonce elements.
+      'duplicate-id',
       'label',
       'landmark-banner-is-top-level',
       'landmark-no-duplicate-banner',
@@ -223,6 +235,8 @@ beforeAll(async () => {
   enablePageDialogAccept();
   observeConsoleLogging();
   await setupBrowser();
+  await trashAllPosts();
+  await trashAllPosts('web-story');
   await page.setDefaultNavigationTimeout(10000);
   await page.setDefaultTimeout(3000);
 });

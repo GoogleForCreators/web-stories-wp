@@ -26,6 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   clamp,
   getAnimationProps,
+  getTotalDuration,
   ANIMATION_TYPES,
   FIELD_TYPES,
 } from '../../../../../animation';
@@ -158,14 +159,9 @@ function Timeline({
     [story, activePageIndex]
   );
 
-  const totalDuration = useMemo(
-    () =>
-      animations.reduce(
-        (total, { duration, delay }) => Math.max(total, duration + delay),
-        0
-      ),
-    [animations]
-  );
+  const totalDuration = useMemo(() => getTotalDuration({ animations }), [
+    animations,
+  ]);
 
   useEffect(() => {
     if (!(canScrub && isDragging && scrubContainerRef.current)) {

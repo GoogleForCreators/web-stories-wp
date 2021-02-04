@@ -24,6 +24,7 @@ import { css } from 'styled-components';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { calcFontMetrics, generateFontFamily } from '../text/util';
+import { getBorderStyle, getBorderRadius } from '../../utils/elementBorder';
 
 export const elementFillContent = css`
   position: absolute;
@@ -48,6 +49,33 @@ export const elementWithSize = css`
 
 export const elementWithRotation = css`
   transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
+`;
+
+export const elementWithBorderRadius = css`
+  ${(props) => getBorderRadius(props)}
+`;
+
+export const elementWithHighlightBorderRadius = ({
+  borderRadius,
+  dataToEditorY,
+}) =>
+  dataToEditorY &&
+  css`
+    border-radius: ${dataToEditorY(borderRadius?.topLeft || 0)}px
+      ${dataToEditorY(borderRadius?.topRight || 0)}px
+      ${dataToEditorY(borderRadius?.bottomRight || 0)}px
+      ${dataToEditorY(borderRadius?.bottomLeft || 0)}px;
+  `;
+
+export const elementWithBorder = css`
+  ${({ border, borderRadius, width, height }) =>
+    getBorderStyle({
+      border,
+      borderRadius,
+      width,
+      height,
+    })}
+  background-clip: padding-box;
 `;
 
 export const elementWithBackgroundColor = css`

@@ -22,7 +22,7 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import { activateRTL, createNewStory, deactivateRTL } from '../../utils';
+import { createNewStory } from '../../utils';
 
 describe('Story Editor with disabled JavaScript', () => {
   it('should display error message', async () => {
@@ -31,27 +31,11 @@ describe('Story Editor with disabled JavaScript', () => {
 
     await createNewStory();
 
-    await expect(page).toMatchElement('#web-stories-no-js');
+    await expect(page).toMatchElement('.web-stories-wp-no-js');
 
-    // Re-enable javascript for snapsnots.
+    // Re-enable javascript for snapshots.
     await page.setJavaScriptEnabled(true);
 
     await percySnapshot(page, 'Editor no js');
-  });
-
-  it('should display error message on RTL', async () => {
-    await activateRTL();
-    // Disable javascript for test.
-    await page.setJavaScriptEnabled(false);
-
-    await createNewStory();
-
-    await expect(page).toMatchElement('#web-stories-no-js');
-
-    // Re-enable javascript for snapsnots.
-    await page.setJavaScriptEnabled(true);
-
-    await percySnapshot(page, 'Editor no js on RTL');
-    await deactivateRTL();
   });
 });

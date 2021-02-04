@@ -49,7 +49,7 @@ describe('Typeahead', () => {
 
     const Input = getByRole('textbox');
 
-    expect(Input).toBeDefined();
+    expect(Input).toBeInTheDocument();
   });
 
   it('should clear input value when button is clicked', () => {

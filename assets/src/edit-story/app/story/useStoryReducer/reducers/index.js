@@ -19,6 +19,7 @@ export { default as addPage } from './addPage';
 export { default as deletePage } from './deletePage';
 export { default as updatePage } from './updatePage';
 export { default as arrangePage } from './arrangePage';
+export { default as replaceCurrentPage } from './replaceCurrentPage';
 
 // Manipulate elements on a page.
 export { default as addElements } from './addElements';
@@ -40,6 +41,7 @@ export { default as toggleElement } from './toggleElement';
 
 // Manipulate animation state
 export { default as updateAnimationState } from './updateAnimationState';
+export { default as addAnimations } from './addAnimations';
 
 // Manipulate entire internal state.
 export { default as restore } from './restore';

@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
+.web-stories-embed.alignnone,
 .web-stories-embed.alignleft,
 .web-stories-embed.alignright {
+  display: block;
   width: 100%;
 }
 
@@ -25,6 +27,14 @@
 
 .web-stories-embed .wp-block-embed__wrapper {
   position: relative;
+}
+
+.web-stories-embed.alignleft .wp-block-embed__wrapper {
+  margin-right: auto;
+}
+
+.web-stories-embed.alignright .wp-block-embed__wrapper {
+  margin-left: auto;
 }
 
 .web-stories-embed.aligncenter .wp-block-embed__wrapper {

@@ -33,15 +33,14 @@ import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import { Link } from '../../../components/link';
 import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../../constants';
 
-export const Wrapper = styled.div`
-  margin: 0 107px;
-`;
+export const Wrapper = styled.div``;
 
 export const Main = styled(StandardViewContentGutter)`
   display: flex;
   flex-direction: column;
   padding-top: 36px;
   margin-top: 20px;
+  margin-bottom: 56px;
   max-width: 945px;
 `;
 
@@ -217,7 +216,7 @@ export const InlineForm = styled.div`
   display: flex;
 `;
 export const VisuallyHiddenLabel = styled.label(visuallyHiddenStyles);
-export const GoogleAnalyticsTextInput = styled(TextInput)`
+export const SettingsTextInput = styled(TextInput)`
   flex: 3;
   width: auto;
   display: inline-block;

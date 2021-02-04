@@ -31,7 +31,7 @@ export default {
   component: Headline,
 };
 
-const headlinePresetSizes = THEME_CONSTANTS.HEADLINE_SIZES;
+const headlinePresetSizes = THEME_CONSTANTS.TYPOGRAPHY.HEADLINE_SIZES;
 const headlineRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export const _default = () => (

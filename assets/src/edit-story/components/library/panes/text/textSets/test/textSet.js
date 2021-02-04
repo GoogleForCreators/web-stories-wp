@@ -34,8 +34,9 @@ import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
 import { UnitsProvider } from '../../../../../../units';
 import StoryContext from '../../../../../../app/story/context';
 import { LayoutProvider } from '../../../../../../app/layout';
+import CanvasContext from '../../../../../../app/canvas/context';
 
-const SETS = [
+const SET = [
   {
     opacity: 100,
     flip: {
@@ -205,34 +206,49 @@ function setup(elements) {
     actions: {
       setSelectedElementsById: jest.fn(),
     },
+    state: {
+      currentPage: {},
+    },
   };
 
-  const { queryAllByRole, container } = renderWithTheme(
+  const canvasValue = {
+    state: {
+      nodesById: {},
+      pageSize: {},
+      pageContainer: document.body,
+      canvasContainer: document.body,
+      designSpaceGuideline: {},
+    },
+  };
+
+  const { queryAllByRole, getByRole, container } = renderWithTheme(
     <TransformContext.Provider value={transformValue}>
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
           <StoryContext.Provider value={storyValue}>
-            <FontContext.Provider value={fontsValue}>
-              <LayoutProvider>
-                <LibraryContext.Provider value={libraryValue}>
-                  <UnitsProvider
-                    pageSize={{
-                      width: TEXT_SET_SIZE,
-                      height: TEXT_SET_SIZE / PAGE_RATIO,
-                    }}
-                    getBox={getBox}
-                  >
-                    <TextSet elements={elements} index={0} />
-                  </UnitsProvider>
-                </LibraryContext.Provider>
-              </LayoutProvider>
-            </FontContext.Provider>
+            <CanvasContext.Provider value={canvasValue}>
+              <FontContext.Provider value={fontsValue}>
+                <LayoutProvider>
+                  <LibraryContext.Provider value={libraryValue}>
+                    <UnitsProvider
+                      pageSize={{
+                        width: TEXT_SET_SIZE,
+                        height: TEXT_SET_SIZE / PAGE_RATIO,
+                      }}
+                      getBox={getBox}
+                    >
+                      <TextSet elements={elements} index={0} />
+                    </UnitsProvider>
+                  </LibraryContext.Provider>
+                </LayoutProvider>
+              </FontContext.Provider>
+            </CanvasContext.Provider>
           </StoryContext.Provider>
         </APIContext.Provider>
       </ConfigContext.Provider>
     </TransformContext.Provider>
   );
-  return { queryAllByRole, container };
+  return { getByRole, queryAllByRole, container };
 }
 
 describe('TextSets', () => {
@@ -241,13 +257,13 @@ describe('TextSets', () => {
   });
 
   it('should render', () => {
-    const { container } = setup(SETS);
+    const { container } = setup(SET);
     const el1 = container.querySelector('[data-element-id="1"]');
     expect(el1).not.toBeNull();
   });
 
   it('should render the correct elements from the text sets', () => {
-    const { container } = setup(SETS);
+    const { container } = setup(SET);
     const el1 = container.querySelector('[data-element-id="1"]');
     expect(el1).toHaveTextContent('Good design is aesthetic');
     const el2 = container.querySelector('[data-element-id="2"]');
@@ -258,10 +274,12 @@ describe('TextSets', () => {
 
   it('should allow inserting a text set', () => {
     insertTextSet.mockImplementation((elements) => elements);
-    const { queryAllByRole } = setup(SETS);
-    const sets = queryAllByRole('listitem');
-    expect(sets).toHaveLength(2);
-    fireEvent.click(sets[1]);
+    const { getByRole } = setup(SET);
+    // There has to be exactly one set, thus we're using getByRole.
+    const set = getByRole('listitem');
+    expect(set).toBeInTheDocument();
+    // Last child is always the moveable targetBox.
+    fireEvent.click(set.lastChild);
 
     expect(insertTextSet).toHaveBeenCalledTimes(1);
 

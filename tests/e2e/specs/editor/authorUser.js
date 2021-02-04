@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * WordPress dependencies
  */
 import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
@@ -27,12 +22,12 @@ import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { createNewStory, previewStory, addTextElement } from '../../utils';
-
-async function insertStoryTitle(title) {
-  await expect(page).toMatchElement('input[placeholder="Add title"]');
-  await page.type('input[placeholder="Add title"]', title);
-}
+import {
+  createNewStory,
+  previewStory,
+  addTextElement,
+  insertStoryTitle,
+} from '../../utils';
 
 async function publishStory() {
   await expect(page).toClick('button', { text: 'Publish' });
@@ -60,8 +55,6 @@ describe('Author User', () => {
 
     await addTextElement();
 
-    await percySnapshot(page, 'Author previewing without publishing');
-
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
@@ -83,8 +76,6 @@ describe('Author User', () => {
 
     await publishStory();
 
-    await percySnapshot(page, 'Author previewing after publishing');
-
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
@@ -105,8 +96,6 @@ describe('Author User', () => {
 
     // Make some changes _after_ publishing so previewing will cause an autosave.
     await addTextElement();
-
-    await percySnapshot(page, 'Autosaving and previewing');
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);

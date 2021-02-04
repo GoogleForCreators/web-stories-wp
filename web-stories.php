@@ -12,7 +12,7 @@
  * Plugin URI: https://wp.stories.google/
  * Author: Google
  * Author URI: https://opensource.google.com/
- * Version: 1.1.1
+ * Version: 1.3.0
  * Requires at least: 5.3
  * Requires PHP: 5.6
  * Text Domain: web-stories
@@ -40,26 +40,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBSTORIES_VERSION', '1.1.1' );
-define( 'WEBSTORIES_DB_VERSION', '3.0.2' );
-define( 'WEBSTORIES_AMP_VERSION', '2.0.6' ); // Version of the AMP library included in the plugin.
+define( 'WEBSTORIES_VERSION', '1.3.0' );
+define( 'WEBSTORIES_DB_VERSION', '3.0.6' );
+define( 'WEBSTORIES_AMP_VERSION', '2.1.0-alpha' ); // Version of the AMP library included in the plugin.
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_ASSETS_URL', WEBSTORIES_PLUGIN_DIR_URL . 'assets' );
 define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.3' );
-
-$cdn_version = 'main';
-
-if ( false !== strpos( WEBSTORIES_VERSION, '+' ) ) {
-	$pieces      = explode( '+', WEBSTORIES_VERSION );
-	$cdn_version = array_shift( $pieces );
-}
-
-define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/' . $cdn_version );
-
-unset( $cdn_version );
+define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/main' );
 
 if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
@@ -103,6 +93,7 @@ function web_stories_get_compat_instance() {
 		'libxml' => array(
 			'functions' => array(
 				'libxml_use_internal_errors',
+				'libxml_clear_errors',
 			),
 		),
 		'spl'    => array(

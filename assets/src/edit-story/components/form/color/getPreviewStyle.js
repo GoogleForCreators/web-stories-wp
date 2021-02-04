@@ -19,7 +19,7 @@
  */
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import createSolid from '../../../utils/createSolid';
-import MULTIPLE_VALUE from '../multipleValue';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 function getPreviewStyle(pattern) {
   if (!pattern || pattern === MULTIPLE_VALUE) {
@@ -32,14 +32,8 @@ function getPreviewStyle(pattern) {
     return generatePatternStyles(opaquePattern);
   }
   const {
-    color: { r, g, b, a },
+    color: { r, g, b },
   } = pattern;
-  // If opacity is 0, no extra styling needed:
-  if (a === 0) {
-    return {};
-  }
-
-  // Otherwise create color, but with full opacity
   return generatePatternStyles(createSolid(r, g, b));
 }
 

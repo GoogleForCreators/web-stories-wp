@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { useFeatures } from 'flagged';
+import { useDebouncedCallback } from 'use-debounce/lib';
 
 /**
  * WordPress dependencies
@@ -29,13 +29,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
-import useResizeEffect from '../../utils/useResizeEffect';
 import { useStory } from '../../app/story';
+
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
+import { Error, Warning } from '../../../design-system/icons/alert';
+import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
-import PrepublishInspector from './prepublish';
 
 const DESIGN = 'design';
 const DOCUMENT = 'document';
@@ -43,13 +46,29 @@ const PREPUBLISH = 'prepublish';
 
 function InspectorProvider({ children }) {
   const {
-    actions: { getAllUsers },
+    actions: { getAuthors },
   } = useAPI();
-  const { selectedElementIds, currentPage } = useStory((state) => ({
-    selectedElementIds: state.state.selectedElementIds,
-    currentPage: state.state.currentPage,
+  const { selectedElementIds, currentPage } = useStory(({ state }) => ({
+    selectedElementIds: state.selectedElementIds,
+    currentPage: state.currentPage,
   }));
-  const { showPrePublishTab } = useFeatures();
+
+  const { checklist, refreshChecklist } = usePrepublishChecklist();
+  const [refreshChecklistDebounced] = useDebouncedCallback(
+    refreshChecklist,
+    500
+  );
+
+  const prepublishAlert = useCallback(
+    () =>
+      checklist.some(({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR) ? (
+        <Error className="alert error" />
+      ) : (
+        <Warning className="alert warning" />
+      ),
+    [checklist]
+  );
+
   const inspectorRef = useRef(null);
 
   const initialTab = DESIGN;
@@ -73,7 +92,10 @@ function InspectorProvider({ children }) {
 
   useEffect(() => {
     tabRef.current = tab;
-  }, [tab]);
+    if (tab === PREPUBLISH) {
+      refreshChecklistDebounced();
+    }
+  }, [tab, refreshChecklistDebounced, refreshChecklist]);
 
   useEffect(() => {
     if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
@@ -90,20 +112,19 @@ function InspectorProvider({ children }) {
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
       setIsUsersLoading(true);
-      getAllUsers()
+      getAuthors()
         .then((data) => {
           const saveData = data.map(({ id, name }) => ({
-            value: id,
+            id,
             name,
           }));
-
           setUsers(saveData);
         })
         .finally(() => {
           setIsUsersLoading(false);
         });
     }
-  }, [isUsersLoading, users.length, getAllUsers]);
+  }, [isUsersLoading, users.length, getAuthors]);
 
   const state = {
     state: {
@@ -133,15 +154,13 @@ function InspectorProvider({ children }) {
           title: __('Document', 'web-stories'),
           Pane: DocumentInspector,
         },
-        ...(showPrePublishTab
-          ? [
-              {
-                id: PREPUBLISH,
-                title: __('Prepublish', 'web-stories'),
-                Pane: PrepublishInspector,
-              },
-            ]
-          : []),
+
+        {
+          icon: checklist.length > 0 ? prepublishAlert : undefined,
+          id: PREPUBLISH,
+          title: __('Checklist', 'web-stories'),
+          Pane: PrepublishInspector,
+        },
       ],
     },
   };

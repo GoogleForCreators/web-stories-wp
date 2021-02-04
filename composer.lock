@@ -4,25 +4,85 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "758cbdd648e661d6246158848c0237d0",
+    "content-hash": "34eafda33b6b1c1a6d2774fdd90c0be1",
     "packages": [
         {
-            "name": "ampproject/amp-wp",
-            "version": "2.0.6",
+            "name": "ampproject/amp-toolbox",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ampproject/amp-wp",
-                "reference": "2acc034f6591038b6ebdc5a7d45f89ebd814d1b8"
+                "url": "https://github.com/ampproject/amp-toolbox-php.git",
+                "reference": "c14b5b9f9c9c2af3d78d791750d35dc83667b65b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/2acc034f6591038b6ebdc5a7d45f89ebd814d1b8",
-                "reference": "2acc034f6591038b6ebdc5a7d45f89ebd814d1b8",
+                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/c14b5b9f9c9c2af3d78d791750d35dc83667b65b",
+                "reference": "c14b5b9f9c9c2af3d78d791750d35dc83667b65b",
                 "shasum": ""
             },
             "require": {
-                "ampproject/common": "*",
-                "ampproject/optimizer": "*",
+                "ext-dom": "*",
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "civicrm/composer-downloads-plugin": "^2.1",
+                "dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
+                "ext-zip": "*",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpcompatibility/phpcompatibility-wp": "2.1.0",
+                "roave/security-advisories": "dev-master",
+                "sirbrillig/phpcs-variable-analysis": "2.9.0",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "suggest": {
+                "ext-json": "Provides native implementation of json_encode()/json_decode().",
+                "ext-mbstring": "Used by Dom\\Document to convert encoding to UTF-8 if needed."
+            },
+            "type": "library",
+            "extra": {
+                "downloads": {
+                    "phpstan": {
+                        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
+                        "path": "vendor/bin/phpstan",
+                        "type": "phar"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AmpProject\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A collection of AMP tools making it easier to publish and host AMP pages with PHP.",
+            "support": {
+                "issues": "https://github.com/ampproject/amp-toolbox-php/issues",
+                "source": "https://github.com/ampproject/amp-toolbox-php/tree/0.1.1"
+            },
+            "time": "2020-12-11T18:20:11+00:00"
+        },
+        {
+            "name": "ampproject/amp-wp",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ampproject/amp-wp",
+                "reference": "1e21242a41e7370f9f1b98f41f587da5c0007a2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/1e21242a41e7370f9f1b98f41f587da5c0007a2d",
+                "reference": "1e21242a41e7370f9f1b98f41f587da5c0007a2d",
+                "shasum": ""
+            },
+            "require": {
+                "ampproject/amp-toolbox": "^0.1",
                 "cweagans/composer-patches": "1.7.0",
                 "ext-curl": "*",
                 "ext-date": "*",
@@ -32,40 +92,46 @@
                 "ext-libxml": "*",
                 "ext-spl": "*",
                 "fasterimage/fasterimage": "1.5.0",
-                "php": "^5.6 || ^7.0",
+                "php": "^5.6 || ^7.0 || ^8.0",
                 "sabberworm/php-css-parser": "dev-master#bfdd976"
             },
             "require-dev": {
+                "automattic/vipwpcs": "^2.2",
                 "civicrm/composer-downloads-plugin": "^3.0",
-                "dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
+                "dealerdirect/phpcodesniffer-composer-installer": "0.7.1",
+                "google/cloud-storage": "^1.22",
                 "mikey179/vfsstream": "1.6.8",
                 "mustache/mustache": "^2",
                 "php-stubs/wordpress-stubs": "^5.3.2",
                 "phpcompatibility/phpcompatibility-wp": "2.1.0",
                 "phpdocumentor/reflection": "~3.0",
+                "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
                 "roave/security-advisories": "dev-master",
-                "sirbrillig/phpcs-variable-analysis": "2.8.3",
-                "wp-coding-standards/wpcs": "2.3.0",
-                "xwp/wp-dev-lib": "1.6.4"
+                "sirbrillig/phpcs-variable-analysis": "2.10.2",
+                "wp-cli/export-command": "^2.0",
+                "wp-cli/extension-command": "^2.0",
+                "wp-cli/wp-cli": "^2.4",
+                "wp-coding-standards/wpcs": "2.3.0"
             },
             "suggest": {
                 "ext-intl": "Enables use of idn_to_utf8() to convert punycode domains to UTF-8 for use with an AMP Cache.",
                 "ext-mbstring": "Used by PHP-CSS-Parser when working with stylesheets."
             },
+            "default-branch": true,
             "type": "wordpress-plugin",
             "extra": {
                 "downloads": {
                     "phpstan": {
-                        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
                         "path": "vendor/bin/phpstan",
-                        "type": "phar"
+                        "type": "phar",
+                        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar"
                     }
                 },
                 "patches": {
                     "sabberworm/php-css-parser": {
-                        "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
-                        "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/d42b64793f2edaffeb663c63e9de79069cdc0831%5E...113df5d55e94e21c6402021dfa959924941d4c29.patch",
-                        "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
+                        "1. Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
+                        "2. Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/d42b64793f2edaffeb663c63e9de79069cdc0831%5E...113df5d55e94e21c6402021dfa959924941d4c29.patch",
+                        "3. Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
                     }
                 }
             },
@@ -92,12 +158,16 @@
                     "tests/php/validation/"
                 ],
                 "files": [
+                    "tests/php/register-wp-cli-commands.php",
                     "docs/includes/register-wp-cli-commands.php"
                 ]
             },
             "scripts": {
                 "analyze": [
                     "if [ -z $TEST_SKIP_PHPSTAN ]; then phpstan --version; phpstan analyze --ansi; fi"
+                ],
+                "pre-commit": [
+                    "npm run lint:staged"
                 ]
             },
             "license": [
@@ -105,7 +175,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2020-11-17T21:48:14+00:00"
+            "time": "2021-02-04T02:46:04+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -208,6 +278,51 @@
                 "source": "https://github.com/cweagans/composer-patches/tree/1.7.0"
             },
             "time": "2020-09-30T17:56:20+00:00"
+        },
+        {
+            "name": "enshrined/svg-sanitize",
+            "version": "0.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/darylldoyle/svg-sanitizer.git",
+                "reference": "beff89576a72540ee99476aeb9cfe98222e76fb8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/beff89576a72540ee99476aeb9cfe98222e76fb8",
+                "reference": "beff89576a72540ee99476aeb9cfe98222e76fb8",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0.1.2",
+                "phpunit/phpunit": "^6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "enshrined\\svgSanitize\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Daryll Doyle",
+                    "email": "daryll@enshrined.co.uk"
+                }
+            ],
+            "description": "An SVG sanitizer for PHP",
+            "support": {
+                "issues": "https://github.com/darylldoyle/svg-sanitizer/issues",
+                "source": "https://github.com/darylldoyle/svg-sanitizer/tree/0.14.0"
+            },
+            "time": "2021-01-21T10:13:20+00:00"
         },
         {
             "name": "fasterimage/fasterimage",
@@ -325,12 +440,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
-                "reference": "cd1ff1118394e25e3f43885fa6d5b23cf05ef48a"
+                "reference": "bfdd976"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/cd1ff1118394e25e3f43885fa6d5b23cf05ef48a",
-                "reference": "cd1ff1118394e25e3f43885fa6d5b23cf05ef48a",
+                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/bfdd976",
+                "reference": "bfdd976",
                 "shasum": ""
             },
             "require": {
@@ -347,6 +462,7 @@
                     "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -362,6 +478,10 @@
                 "parser",
                 "stylesheet"
             ],
+            "support": {
+                "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
+                "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/master"
+            },
             "time": "2020-11-18T12:10:42+00:00"
         },
         {
@@ -651,22 +771,22 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.7.0",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7"
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/e8d808670b8f882188368faaf1144448c169c0b7",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/fe390591e0241955f22eb9ba327d137e501c771c",
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
                 "php": ">=5.3",
-                "squizlabs/php_codesniffer": "^2 || ^3 || 4.0.x-dev"
+                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
@@ -717,7 +837,7 @@
                 "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
                 "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
             },
-            "time": "2020-06-25T14:57:39+00:00"
+            "time": "2020-12-07T18:04:37+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -885,16 +1005,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v5.5.3",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "7a8d0009b38c5fdec777a0a5333552ff6e445065"
+                "reference": "ed446cce304cd49f13900274b3ed60d1b526297e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/7a8d0009b38c5fdec777a0a5333552ff6e445065",
-                "reference": "7a8d0009b38c5fdec777a0a5333552ff6e445065",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/ed446cce304cd49f13900274b3ed60d1b526297e",
+                "reference": "ed446cce304cd49f13900274b3ed60d1b526297e",
                 "shasum": ""
             },
             "replace": {
@@ -923,9 +1043,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v5.5.3"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v5.6.0"
             },
-            "time": "2020-10-31T01:42:05+00:00"
+            "time": "2020-12-09T00:38:16+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -1939,12 +2059,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4100ec7deab9f78b3b7685fedc6c9b82c15b5c76"
+                "reference": "f7d723a10c7cb36e11430182f5813ecb1b887da0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4100ec7deab9f78b3b7685fedc6c9b82c15b5c76",
-                "reference": "4100ec7deab9f78b3b7685fedc6c9b82c15b5c76",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/f7d723a10c7cb36e11430182f5813ecb1b887da0",
+                "reference": "f7d723a10c7cb36e11430182f5813ecb1b887da0",
                 "shasum": ""
             },
             "conflict": {
@@ -1974,7 +2094,7 @@
                 "composer/composer": "<=1-alpha.11",
                 "contao-components/mediaelement": ">=2.14.2,<2.21.1",
                 "contao/core": ">=2,<3.5.39",
-                "contao/core-bundle": "= 4.10.0|>=4,<4.4.52|>=4.5,<4.9.6",
+                "contao/core-bundle": ">=4,<4.4.52|>=4.5,<4.9.6|= 4.10.0",
                 "contao/listing-bundle": ">=4,<4.4.8",
                 "datadog/dd-trace": ">=0.30,<0.30.2",
                 "david-garcia/phpwhois": "<=4.3.1",
@@ -1990,12 +2110,13 @@
                 "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1",
                 "dolibarr/dolibarr": "<11.0.4",
                 "dompdf/dompdf": ">=0.6,<0.6.2",
-                "drupal/core": ">=7,<7.73|>=8,<8.8.10|>=8.9,<8.9.6|>=9,<9.0.6",
-                "drupal/drupal": ">=7,<7.73|>=8,<8.8.10|>=8.9,<8.9.6|>=9,<9.0.6",
+                "drupal/core": ">=7,<7.74|>=8,<8.8.11|>=8.9,<8.9.9|>=9,<9.0.8",
+                "drupal/drupal": ">=7,<7.74|>=8,<8.8.11|>=8.9,<8.9.9|>=9,<9.0.8",
                 "endroid/qr-code-bundle": "<3.4.2",
                 "enshrined/svg-sanitize": "<0.13.1",
                 "erusev/parsedown": "<1.7.2",
                 "ezsystems/demobundle": ">=5.4,<5.4.6.1",
+                "ezsystems/ez-support-tools": ">=2.2,<2.2.3",
                 "ezsystems/ezdemo-ls-extension": ">=5.4,<5.4.2.1",
                 "ezsystems/ezfind-ls": ">=5.3,<5.3.6.1|>=5.4,<5.4.11.1|>=2017.12,<2017.12.0.1",
                 "ezsystems/ezplatform": ">=1.7,<1.7.9.1|>=1.13,<1.13.5.1|>=2.5,<2.5.4",
@@ -2009,6 +2130,8 @@
                 "ezsystems/repository-forms": ">=2.3,<2.3.2.1",
                 "ezyang/htmlpurifier": "<4.1.1",
                 "firebase/php-jwt": "<2",
+                "flarum/sticky": ">=0.1-beta.14,<=0.1-beta.15",
+                "flarum/tags": "<=0.1-beta.13",
                 "fooman/tcpdf": "<6.2.22",
                 "fossar/tcpdf-parser": "<6.2.22",
                 "friendsofsymfony/oauth2-php": "<1.3",
@@ -2017,13 +2140,15 @@
                 "friendsoftypo3/mediace": ">=7.6.2,<7.6.5",
                 "fuel/core": "<1.8.1",
                 "getgrav/grav": "<1.7-beta.8",
+                "getkirby/cms": ">=3,<3.4.5",
+                "getkirby/panel": "<2.5.14",
                 "gos/web-socket-bundle": "<1.10.4|>=2,<2.6.1|>=3,<3.3",
                 "gree/jose": "<=2.2",
                 "gregwar/rst": "<1.0.3",
                 "guzzlehttp/guzzle": ">=4-rc.2,<4.2.4|>=5,<5.3.1|>=6,<6.2.1",
                 "illuminate/auth": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.10",
                 "illuminate/cookie": ">=4,<=4.0.11|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.31|>=7,<7.22.4",
-                "illuminate/database": ">=4,<4.0.99|>=4.1,<4.1.29|>=5.5,<=5.5.44|>=6,<6.18.34|>=7,<7.23.2",
+                "illuminate/database": "<6.20.14|>=7,<7.30.4|>=8,<8.24",
                 "illuminate/encryption": ">=4,<=4.0.11|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.40|>=5.6,<5.6.15",
                 "illuminate/view": ">=7,<7.1.2",
                 "ivankristianto/phpwhois": "<=4.3",
@@ -2034,7 +2159,7 @@
                 "kitodo/presentation": "<3.1.2",
                 "kreait/firebase-php": ">=3.2,<3.8.1",
                 "la-haute-societe/tcpdf": "<6.2.22",
-                "laravel/framework": ">=4,<4.0.99|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.34|>=7,<7.23.2",
+                "laravel/framework": "<6.20.14|>=7,<7.30.4|>=8,<8.24",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
                 "league/commonmark": "<0.18.3",
                 "librenms/librenms": "<1.53",
@@ -2044,7 +2169,8 @@
                 "magento/magento1ee": ">=1,<1.14.4.3",
                 "magento/product-community-edition": ">=2,<2.2.10|>=2.3,<2.3.2-p.2",
                 "marcwillmann/turn": "<0.3.3",
-                "mediawiki/core": ">=1.31,<1.31.9|>=1.32,<1.32.4|>=1.33,<1.33.3|>=1.34,<1.34.3|>=1.34.99,<1.35",
+                "mautic/core": "<2.16.5|>=3,<3.2.4|= 2.13.1",
+                "mediawiki/core": ">=1.27,<1.27.6|>=1.29,<1.29.3|>=1.30,<1.30.2|>=1.31,<1.31.9|>=1.32,<1.32.6|>=1.32.99,<1.33.3|>=1.33.99,<1.34.3|>=1.34.99,<1.35",
                 "mittwald/typo3_forum": "<1.2.1",
                 "monolog/monolog": ">=1.8,<1.12",
                 "namshi/jose": "<2.2",
@@ -2052,8 +2178,8 @@
                 "nette/nette": ">=2,<2.0.19|>=2.1,<2.1.13",
                 "nystudio107/craft-seomatic": "<3.3",
                 "nzo/url-encryptor-bundle": ">=4,<4.3.2|>=5,<5.0.1",
-                "october/backend": ">=1.0.319,<1.0.467",
-                "october/cms": ">=1.0.319,<1.0.466",
+                "october/backend": ">=1.0.319,<1.0.470",
+                "october/cms": "= 1.0.469|>=1.0.319,<1.0.469",
                 "october/october": ">=1.0.319,<1.0.466",
                 "october/rain": ">=1.0.319,<1.0.468",
                 "onelogin/php-saml": "<2.10.4",
@@ -2066,15 +2192,16 @@
                 "padraic/humbug_get_contents": "<1.1.2",
                 "pagarme/pagarme-php": ">=0,<3",
                 "paragonie/random_compat": "<2",
+                "passbolt/passbolt_api": "<2.11",
                 "paypal/merchant-sdk-php": "<3.12",
-                "pear/archive_tar": "<1.4.4",
+                "pear/archive_tar": "<1.4.12",
                 "personnummer/personnummer": "<3.0.2",
                 "phpfastcache/phpfastcache": ">=5,<5.0.13",
                 "phpmailer/phpmailer": "<6.1.6",
                 "phpmussel/phpmussel": ">=1,<1.6",
-                "phpmyadmin/phpmyadmin": "<4.9.2",
+                "phpmyadmin/phpmyadmin": "<4.9.6|>=5,<5.0.3",
                 "phpoffice/phpexcel": "<1.8.2",
-                "phpoffice/phpspreadsheet": "<1.8",
+                "phpoffice/phpspreadsheet": "<1.16",
                 "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5.0.10,<5.6.3",
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
@@ -2083,7 +2210,7 @@
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/contactform": ">1.0.1,<4.3",
                 "prestashop/gamification": "<2.3.2",
-                "prestashop/productcomments": ">=4,<4.2",
+                "prestashop/productcomments": ">=4,<4.2.1",
                 "prestashop/ps_facetedsearch": "<3.4.1",
                 "privatebin/privatebin": "<1.2.2|>=1.3,<1.3.2",
                 "propel/propel": ">=2-alpha.1,<=2-alpha.7",
@@ -2097,8 +2224,8 @@
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
-                "shopware/core": "<=6.3.2",
-                "shopware/platform": "<=6.3.2",
+                "shopware/core": "<=6.3.4",
+                "shopware/platform": "<=6.3.4",
                 "shopware/shopware": "<5.6.9",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
@@ -2120,6 +2247,7 @@
                 "slim/slim": "<2.6",
                 "smarty/smarty": "<3.1.33",
                 "socalnick/scn-social-auth": "<1.15.2",
+                "socialiteproviders/steam": "<1.1",
                 "spoonity/tcpdf": "<6.2.22",
                 "squizlabs/php_codesniffer": ">=1,<2.8.1|>=3,<3.0.1",
                 "ssddanbrown/bookstack": "<0.29.2",
@@ -2169,12 +2297,12 @@
                 "titon/framework": ">=0,<9.9.99",
                 "truckersmp/phpwhois": "<=4.3.1",
                 "twig/twig": "<1.38|>=2,<2.7",
-                "typo3/cms": ">=6.2,<6.2.30|>=7,<7.6.32|>=8,<8.7.30|>=9,<9.5.20|>=10,<10.4.6",
-                "typo3/cms-core": ">=8,<8.7.30|>=9,<9.5.20|>=10,<10.4.6",
+                "typo3/cms": ">=6.2,<6.2.30|>=7,<7.6.32|>=8,<8.7.38|>=9,<9.5.23|>=10,<10.4.10",
+                "typo3/cms-core": ">=8,<8.7.38|>=9,<9.5.23|>=10,<10.4.10",
                 "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.10|>=3.1,<3.1.7|>=3.2,<3.2.7|>=3.3,<3.3.5",
                 "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4",
                 "typo3/phar-stream-wrapper": ">=1,<2.1.1|>=3,<3.1.1",
-                "typo3fluid/fluid": ">=2,<2.0.5|>=2.1,<2.1.4|>=2.2,<2.2.1|>=2.3,<2.3.5|>=2.4,<2.4.1|>=2.5,<2.5.5|>=2.6,<2.6.1",
+                "typo3fluid/fluid": ">=2,<2.0.8|>=2.1,<2.1.7|>=2.2,<2.2.4|>=2.3,<2.3.7|>=2.4,<2.4.4|>=2.5,<2.5.11|>=2.6,<2.6.10",
                 "ua-parser/uap-php": "<3.8",
                 "usmanhalalit/pixie": "<1.0.3|>=2,<2.0.2",
                 "verot/class.upload.php": "<=1.0.3|>=2,<=2.0.4",
@@ -2248,27 +2376,27 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-18T07:02:14+00:00"
+            "time": "2021-02-02T10:05:32+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/code-unit-reverse-lookup.git",
-                "reference": "4419fcdb5eabb9caa61a27c7a1db532a6b55dd18"
+                "reference": "1de8cd5c010cb153fcd68b8d0f64606f523f7619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/4419fcdb5eabb9caa61a27c7a1db532a6b55dd18",
-                "reference": "4419fcdb5eabb9caa61a27c7a1db532a6b55dd18",
+                "url": "https://api.github.com/repos/sebastianbergmann/code-unit-reverse-lookup/zipball/1de8cd5c010cb153fcd68b8d0f64606f523f7619",
+                "reference": "1de8cd5c010cb153fcd68b8d0f64606f523f7619",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0"
+                "php": ">=5.6"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7 || ^6.0"
+                "phpunit/phpunit": "^8.5"
             },
             "type": "library",
             "extra": {
@@ -2295,9 +2423,15 @@
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
             "support": {
                 "issues": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/issues",
-                "source": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/tree/master"
+                "source": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/tree/1.0.2"
             },
-            "time": "2017-03-04T06:30:41+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sebastianbergmann",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-11-30T08:15:22+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -2805,24 +2939,24 @@
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
-            "version": "v2.9.0",
+            "version": "v2.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "ff54d4ec7f2bd152d526fdabfeff639aa9b8be01"
+                "reference": "0775e0c683badad52c03b11c2cd86a9fdecb937a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/ff54d4ec7f2bd152d526fdabfeff639aa9b8be01",
-                "reference": "ff54d4ec7f2bd152d526fdabfeff639aa9b8be01",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/0775e0c683badad52c03b11c2cd86a9fdecb937a",
+                "reference": "0775e0c683badad52c03b11c2cd86a9fdecb937a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4.0",
-                "squizlabs/php_codesniffer": "^3.1"
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4 || ^0.5 || ^0.6",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
                 "limedeck/phpunit-detailed-printer": "^3.1 || ^4.0 || ^5.0",
                 "phpstan/phpstan": "^0.11.8",
                 "phpunit/phpunit": "^5.0 || ^6.5 || ^7.0 || ^8.0",
@@ -2854,7 +2988,7 @@
                 "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
                 "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
             },
-            "time": "2020-10-07T23:32:29+00:00"
+            "time": "2021-01-08T16:31:05+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -2914,7 +3048,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.4.46",
+            "version": "v3.4.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -2970,7 +3104,7 @@
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v3.4.46"
+                "source": "https://github.com/symfony/config/tree/v3.4.47"
             },
             "funding": [
                 {
@@ -2990,7 +3124,7 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v3.4.46",
+            "version": "v3.4.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
@@ -3053,7 +3187,7 @@
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dependency-injection/tree/v3.4.46"
+                "source": "https://github.com/symfony/dependency-injection/tree/v3.4.47"
             },
             "funding": [
                 {
@@ -3073,7 +3207,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.4.46",
+            "version": "v3.4.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -3115,7 +3249,7 @@
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v3.4.46"
+                "source": "https://github.com/symfony/filesystem/tree/v3.4.47"
             },
             "funding": [
                 {
@@ -3214,7 +3348,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.46",
+            "version": "v3.4.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -3265,7 +3399,7 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v3.4.46"
+                "source": "https://github.com/symfony/yaml/tree/v3.4.47"
             },
             "funding": [
                 {
@@ -3288,12 +3422,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
@@ -3331,8 +3465,8 @@
                 "validate"
             ],
             "support": {
-                "issues": "https://github.com/webmozart/assert/issues",
-                "source": "https://github.com/webmozart/assert/tree/master"
+                "issues": "https://github.com/webmozarts/assert/issues",
+                "source": "https://github.com/webmozarts/assert/tree/1.9.1"
             },
             "time": "2020-07-08T17:02:28+00:00"
         },
@@ -3391,12 +3525,14 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "ampproject/amp-wp": 20,
+        "sabberworm/php-css-parser": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.6 || ^7.0",
+        "php": "^5.6 || ^7.0 || ^8.0",
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-json": "*",

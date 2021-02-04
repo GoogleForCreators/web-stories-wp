@@ -25,16 +25,17 @@ import Modal from 'react-modal';
 /**
  * Internal dependencies
  */
-import FixtureEvents from '../../../../../karma/fixture/events';
-import App from '../../app/index';
+import { DATA_VERSION } from '../../../migration';
+import FixtureEvents from '../../../karma-fixture/events';
+import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
 import FileContext from '../../app/file/context';
-import Layout from '../../app/layout';
-import { DATA_VERSION } from '../../migration';
+import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
@@ -50,6 +51,7 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
     hasPublishAction: true,
+    hasAssignAuthorAction: true,
   },
   version: '1.0.0-alpha.9',
   isRTL: false,
@@ -123,6 +125,42 @@ export class Fixture {
     this._container = null;
 
     this._editor = null;
+
+    const panels = [
+      'animation',
+      'backgroundSizePosition',
+      'backgroundOverlay',
+      'borderRadius',
+      'borderStyle',
+      'captions',
+      'globalStoryStyles',
+      'colorPresets',
+      'imageAccessibility',
+      'layerStyle',
+      'link',
+      'pageAttachment',
+      'pageStyle',
+      'videoPoster',
+      'size',
+      'shapeStyle',
+      'text',
+      'textStyle',
+      'videoOptions',
+      'videoAccessibility',
+      'elementAlignment',
+      'noselection',
+      'publishing',
+      'status',
+      'stylepreset-style',
+      'stylepreset-color',
+    ];
+    // Open all panels by default.
+    panels.forEach((panel) => {
+      localStorage.setItem(
+        `web_stories_ui_panel_settings:${panel}`,
+        JSON.stringify({ isCollapsed: false })
+      );
+    });
   }
 
   restore() {
@@ -246,12 +284,24 @@ export class Fixture {
     // wait for the media gallery items to load, as many tests assume they're
     // there
     let mediaElements;
-    await waitFor(() => {
-      mediaElements = this.querySelectorAll('[data-testid=mediaElement]');
-      if (!mediaElements?.length) {
-        throw new Error(
-          `Not ready: only found ${mediaElements?.length} media elements`
-        );
+    await waitFor(
+      () => {
+        mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
+        if (!mediaElements?.length) {
+          throw new Error(
+            `Not ready: only found ${mediaElements?.length} media elements`
+          );
+        }
+      },
+      { timeout: 5000 }
+    );
+
+    // Check to see if Roboto font is loaded.
+    await waitFor(async () => {
+      const font = '12px Roboto';
+      await document.fonts.load(font, '');
+      if (!document.fonts.check(font, '')) {
+        throw new Error('Not ready: Roboto font could not be loaded');
       }
     });
 
@@ -600,6 +650,35 @@ class APIProviderFixture {
             permalink_template: 'http://stories3.local/stories/%pagename%/',
             style_presets: { textStyles: [], colors: [] },
             password: '',
+            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+          }),
+        []
+      );
+
+      const getDemoStoryById = useCallback(
+        // @todo: put this to __db__/
+        () =>
+          asyncResponse({
+            title: { raw: '' },
+            status: 'draft',
+            author: 1,
+            slug: '',
+            date_gmt: '2020-05-06T22:32:37',
+            modified: '2020-05-06T22:32:37',
+            excerpt: { raw: '' },
+            link: 'http://stories.local/?post_type=web-story&p=1',
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
+            featured_media: 0,
+            featured_media_url: '',
+            publisher_logo_url:
+              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
+            permalink_template: 'http://stories3.local/stories/%pagename%/',
+            style_presets: { textStyles: [], colors: [] },
+            password: '',
+            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
           }),
         []
       );
@@ -657,8 +736,26 @@ class APIProviderFixture {
         []
       );
 
-      const getAllUsers = useCallback(
-        () => asyncResponse([{ id: 1, name: 'John Doe' }]),
+      const users = useMemo(
+        () => [
+          { id: 1, name: 'John Doe' },
+          { id: 2, name: 'Jane Doe' },
+        ],
+        []
+      );
+
+      const getAuthors = useCallback(() => asyncResponse(users), [users]);
+
+      const getCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
         []
       );
 
@@ -670,18 +767,26 @@ class APIProviderFixture {
         []
       );
 
+      const getPageLayouts = useCallback(
+        () => asyncResponse(formattedTemplatesArray),
+        []
+      );
+
       const state = {
         actions: {
           autoSaveById,
           getStoryById,
+          getDemoStoryById,
           getMedia,
           getLinkMetadata,
           saveStoryById,
           getAllStatuses,
-          getAllUsers,
+          getAuthors,
           uploadMedia,
           updateMedia,
           getStatusCheck,
+          getPageLayouts,
+          getCurrentUser,
         },
       };
       return (

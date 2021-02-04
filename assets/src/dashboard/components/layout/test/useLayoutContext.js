@@ -44,7 +44,4 @@ describe('useLayoutContext()', () => {
     });
     expect(result.current.error).toBeUndefined();
   });
-
-  it.todo('has a setable squish height');
-  it.todo('has a data.progress property on squish events');
 });

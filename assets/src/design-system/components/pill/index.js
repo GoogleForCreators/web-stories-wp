@@ -26,13 +26,18 @@ import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 
 const StyledPill = styled.button(
   ({ isActive, theme }) => css`
-    min-height: 32px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 6px 16px;
+    height: 32px;
 
     background-color: ${isActive
       ? theme.colors.interactiveBg.primaryNormal
       : theme.colors.opacity.footprint};
     border: none;
-    border-radius: 50px;
+    border-radius: ${theme.borders.radius.x_large};
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.secondary};
@@ -40,24 +45,13 @@ const StyledPill = styled.button(
     ${themeHelpers.expandPresetStyles({
       preset:
         theme.typography.presets.label[
-          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
         ],
       theme,
     })};
 
     &:disabled {
       pointer-events: none;
-    }
-
-    &:focus {
-      outline: none;
-    }
-    div {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 6px 16px;
-      height: 100%;
     }
 
     transition: color 0.6s ease 0s;
@@ -68,7 +62,7 @@ const StyledPill = styled.button(
 export const Pill = ({ children, isActive, onClick, ...rest }) => {
   return (
     <StyledPill isActive={isActive} onClick={onClick} {...rest}>
-      <div>{children}</div>
+      {children}
     </StyledPill>
   );
 };

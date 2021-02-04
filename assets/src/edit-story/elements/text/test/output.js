@@ -89,11 +89,10 @@ describe('TextOutput', () => {
     );
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('Content');
-    expect(output.className).toBe('fill');
+    expect(output).toHaveClass('fill', { exact: true });
     expect(output.style).toMatchObject({
       whiteSpace: 'pre-wrap',
       padding: '0% 0%',
-      backgroundColor: 'rgba(255, 0, 0, 0.3)',
       fontSize: '0.258900em',
       textAlign: 'left',
     });
@@ -128,7 +127,7 @@ describe('TextOutput', () => {
     );
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('Content');
-    expect(output.className).toBe('fill');
+    expect(output).toHaveClass('fill', { exact: true });
     expect(output.style).toMatchObject({
       padding: '20% 20%',
     });

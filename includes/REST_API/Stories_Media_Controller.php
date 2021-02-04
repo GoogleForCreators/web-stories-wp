@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Media;
 use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_REST_Request;
@@ -66,6 +67,53 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
 			$response = rest_get_server()->envelope_response( $response, false );
 		}
+		return $response;
+	}
+
+	/**
+	 * Creates a single attachment.
+	 *
+	 * Override the existing method so we can set parent id.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
+	 */
+	public function create_item( $request ) {
+		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
+		// Hence we are working around this here.
+		$parent_post = ! empty( $request['post'] ) ? (int) $request['post'] : null;
+		unset( $request['post'] );
+
+		if ( ! $parent_post ) {
+			return parent::create_item( $request );
+		}
+
+		$response = parent::create_item( $request );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$data              = $response->get_data();
+		$post_id           = $data['id'];
+		$attachment_before = $this->get_post( $post_id );
+		if ( is_wp_error( $attachment_before ) ) {
+			return $attachment_before;
+		}
+
+		$args   = [
+			'ID'          => $post_id,
+			'post_parent' => $parent_post,
+		];
+		$result = wp_update_post( $args, true );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		$data['post'] = $parent_post;
+		$response->set_data( $data );
+
 		return $response;
 	}
 

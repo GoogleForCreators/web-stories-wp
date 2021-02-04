@@ -24,8 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/backgroundOverlay';
-import { BACKGROUND_TEXT_MODE } from './constants';
-import MULTIPLE_VALUE from './components/form/multipleValue';
+import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -70,13 +69,22 @@ export const StylePresetPropType = PropTypes.shape({
   textStyles: PropTypes.array,
 });
 
+export const PageSizePropType = PropTypes.shape({
+  width: PropTypes.number,
+  height: PropTypes.number,
+  containerHeight: PropTypes.number,
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.story = PropTypes.shape({
   storyId: PropTypes.number,
   title: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  author: PropTypes.number.isRequired,
+  author: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    name: PropTypes.string.isRequired,
+  }),
   slug: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   modified: PropTypes.string.isRequired,
@@ -88,6 +96,7 @@ StoryPropTypes.story = PropTypes.shape({
     height: PropTypes.number.isRequired,
   }),
   password: PropTypes.string.isRequired,
+  currentStoryStyles: PropTypes.array,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 });
@@ -136,10 +145,13 @@ StoryPropTypes.imageResourceSizes = PropTypes.shape({
   web_stories_thumbnail: StoryPropTypes.resourceSize,
 });
 
-StoryPropTypes.videoResourceSizes = PropTypes.shape({
-  full: StoryPropTypes.resourceSize,
-  preview: StoryPropTypes.resourceSize,
-});
+StoryPropTypes.videoResourceSizes = PropTypes.oneOfType([
+  PropTypes.array,
+  PropTypes.shape({
+    full: StoryPropTypes.resourceSize,
+    preview: StoryPropTypes.resourceSize,
+  }),
+]);
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
@@ -373,7 +385,7 @@ export default StoryPropTypes;
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
  * @property {Array<Page>} pages Array of all pages.
- * @property {number} author User ID of story author.
+ * @property {Object} author Story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.
  * @property {string} modified The modified date of the story.

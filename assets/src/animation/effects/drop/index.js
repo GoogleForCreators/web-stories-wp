@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import SimpleAnimation from '../../parts/simpleAnimation';
-import getOffPageOffset from '../../utils/getOffPageOffset';
+import { getGlobalSpace, getOffPageOffset } from '../../utils';
 
 const getMinTopOffset = (element) =>
   getOffPageOffset({
@@ -31,6 +31,7 @@ export function EffectDrop({
   duration = 1600,
   delay = 0,
 }) {
+  const global = getGlobalSpace(element);
   const minTopOffset = getMinTopOffset(element);
   const { offsetTop } = getOffPageOffset(element);
   const maxBounceHeight =
@@ -40,33 +41,53 @@ export function EffectDrop({
   const keyframes = [
     {
       offset: 0,
-      transform: `translateY(${maxBounceHeight}%)`,
-      easing: 'cubic-bezier(.75,.05,.86,.08)',
+      transform: global`translate3d(0, ${maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
     },
     {
-      offset: 0.3,
-      transform: 'translateY(0)',
-      easing: 'cubic-bezier(.22,.61,.35,1)',
+      offset: 0.29,
+      transform: global`translate3d(0, 0%, 0)`,
+      easing: 'cubic-bezier(0, 0, .5, 1)',
     },
     {
-      offset: 0.52,
-      transform: `translateY(${0.6 * maxBounceHeight}%)`,
-      easing: 'cubic-bezier(.75,.05,.86,.08)',
+      offset: 0.45,
+      transform: global`translate3d(0, ${0.2812 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
     },
     {
-      offset: 0.74,
-      transform: 'translateY(0)',
-      easing: 'cubic-bezier(.22,.61,.35,1)',
+      offset: 0.61,
+      transform: global`translate3d(0, 0%, 0)`,
+      easing: 'cubic-bezier(0, 0, .5, 1)',
     },
     {
-      offset: 0.83,
-      transform: `translateY(${0.3 * maxBounceHeight}%)`,
-      easing: 'cubic-bezier(.75,.05,.86,.08)',
+      offset: 0.71,
+      transform: global`translate3d(0, ${0.0956 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
+    },
+    {
+      offset: 0.8,
+      transform: global`translate3d(0, 0%, 0)`,
+      easing: 'cubic-bezier(0, 0, .5, 1)',
+    },
+    {
+      offset: 0.85,
+      transform: global`translate3d(0, ${0.0359 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
+    },
+    {
+      offset: 0.92,
+      transform: global`translate3d(0, 0%, 0)`,
+      easing: 'cubic-bezier(0, 0, .5, 1)',
+    },
+    {
+      offset: 0.96,
+      transform: global`translate3d(0, ${0.0156 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
     },
     {
       offset: 1,
-      transform: 'translateY(0)',
-      easing: 'cubic-bezier(.22,.61,.35,1)',
+      transform: global`translate3d(0, 0%, 0)`,
+      easing: 'cubic-bezier(0, 0, .5, 1)',
     },
   ];
 

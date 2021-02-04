@@ -53,7 +53,7 @@ describe('PillGroup', () => {
       />
     );
     const itemContainer = queryByRole('listbox');
-    expect(itemContainer).toBeNull();
+    expect(itemContainer).not.toBeInTheDocument();
   });
 
   it('should render <PillGroup /> with items', () => {
@@ -71,7 +71,7 @@ describe('PillGroup', () => {
     const categoryPill2 = queryByRole('option', { name: 'Category 2' });
     const categoryPill3 = queryByRole('option', { name: 'Category 3' });
 
-    expect(itemContainer).toBeDefined();
+    expect(itemContainer).toBeInTheDocument();
     expect(categoryPill1).toHaveAttribute('aria-selected', 'false');
     expect(categoryPill2).toHaveAttribute('aria-selected', 'false');
     expect(categoryPill3).toHaveAttribute('aria-selected', 'false');

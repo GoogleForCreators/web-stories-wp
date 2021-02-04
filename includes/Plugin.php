@@ -44,6 +44,8 @@ use Google\Web_Stories\Shortcode\Embed_Shortcode;
 
 /**
  * Plugin class.
+ *
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class Plugin {
 	/**
@@ -138,6 +140,20 @@ class Plugin {
 	public $analytics;
 
 	/**
+	 * AdSense.
+	 *
+	 * @var AdSense
+	 */
+	public $adsense;
+
+	/**
+	 * Ad Manager.
+	 *
+	 * @var Ad_Manager
+	 */
+	public $ad_manager;
+
+	/**
 	 * Experiments.
 	 *
 	 * @var Experiments
@@ -152,9 +168,39 @@ class Plugin {
 	public $integrations = [];
 
 	/**
+	 * Meta boxes.
+	 *
+	 * @var Meta_Boxes
+	 */
+	public $meta_boxes;
+
+	/**
+	 * SVG.
+	 *
+	 * @var SVG
+	 */
+	public $svg;
+
+	/**
+	 * User_Preferences.
+	 *
+	 * @var User_Preferences
+	 */
+	public $user_preferences;
+
+	/**
+	 * KSES.
+	 *
+	 * @var KSES
+	 */
+	public $kses;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @return void
 	 */
@@ -181,13 +227,21 @@ class Plugin {
 		$this->media = new Media();
 		add_action( 'init', [ $this->media, 'init' ] );
 
+		// KSES
+		// High priority to load after Story_Post_Type.
+		$this->kses = new KSES();
+		add_action( 'init', [ $this->kses, 'init' ], 11 );
+
 		$this->tracking = new Tracking();
 		add_action( 'init', [ $this->tracking, 'init' ] );
 
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
 
-		$this->story = new Story_Post_Type( $this->experiments );
+		$this->meta_boxes = new Meta_Boxes();
+		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
+
+		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
 		add_action( 'init', [ $this->story, 'init' ] );
 
 		// REST API endpoints.
@@ -212,6 +266,18 @@ class Plugin {
 
 		$this->analytics = new Analytics();
 		add_action( 'init', [ $this->analytics, 'init' ] );
+
+		$this->adsense = new AdSense();
+		add_action( 'init', [ $this->adsense, 'init' ] );
+
+		$this->ad_manager = new Ad_Manager();
+		add_action( 'init', [ $this->ad_manager, 'init' ] );
+
+		$this->user_preferences = new User_Preferences();
+		add_action( 'init', [ $this->user_preferences, 'init' ] );
+
+		$this->svg = new SVG( $this->experiments );
+		add_action( 'init', [ $this->svg, 'init' ] );
 
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.
@@ -267,7 +333,7 @@ class Plugin {
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();
 
-		$status_check = new Status_Check_Controller( $this->experiments );
+		$status_check = new Status_Check_Controller();
 		$status_check->register_routes();
 
 		$embed_controller = new Embed_Controller();

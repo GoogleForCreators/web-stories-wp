@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import objectWithout from '../../../../utils/objectWithout';
-import { moveArrayElement } from './utils';
+import { moveArrayElement, removeAnimationsWithElementIds } from './utils';
 
 /**
  * Set background element on the current page to element matching the given id.
@@ -124,9 +124,19 @@ function setBackgroundElement(state, { elementId }) {
     };
   }
 
+  // Remove any applied background animations
+  // or exising element animations.
+  const backgroundElementId = page.elements.find(
+    (element) => element.isBackground
+  );
+  const newAnimations = removeAnimationsWithElementIds(page.animations, [
+    elementId,
+    backgroundElementId.id,
+  ]);
+
   const newPages = [
     ...state.pages.slice(0, pageIndex),
-    newPage,
+    { ...newPage, animations: newAnimations || [] },
     ...state.pages.slice(pageIndex + 1),
   ];
 

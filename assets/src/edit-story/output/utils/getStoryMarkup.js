@@ -35,6 +35,10 @@ import OutputStory from '../story';
  * @return {string} Story markup.
  */
 export default function getStoryMarkup(story, pages, metadata, featureFlags) {
+  // Note that react-dom/server will warn about useLayoutEffect usage here.
+  // Not because of any wrongdoing in our code, but mostly because
+  // of its own profiler.
+  // See https://github.com/facebook/react/issues/14927
   return renderToStaticMarkup(
     <FlagsProvider features={featureFlags}>
       <OutputStory story={story} pages={pages} metadata={metadata} />

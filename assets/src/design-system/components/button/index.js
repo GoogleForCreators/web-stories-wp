@@ -22,13 +22,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../';
+import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
   ({ size, theme }) => css`
-    position: relative;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
     background: transparent;
@@ -38,21 +40,18 @@ const Base = styled.button(
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
       preset: {
-        ...theme.typography.presets.button[
+        ...theme.typography.presets.label[
           size === BUTTON_SIZES.SMALL
-            ? THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-            : THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM
+            ? THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+            : THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM
         ],
       },
       theme,
     })};
 
-    &:focus,
-    &:active {
-      outline: none;
-    }
     &:active {
       background-color: ${theme.colors.interactiveBg.active};
+      color: ${theme.colors.interactiveFg.active};
     }
 
     &:disabled {
@@ -61,19 +60,21 @@ const Base = styled.button(
       color: ${theme.colors.fg.disable};
     }
 
-    transition: background-color 0.6s ease 0s;
+    transition: background-color 0.6s ease 0s, color 0.6s ease 0s;
   `
 );
 
 const primaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.brandNormal};
-
+  color: ${theme.colors.interactiveFg.brandNormal};
   &:hover,
   &:focus {
     background-color: ${theme.colors.interactiveBg.brandHover};
+    color: ${theme.colors.interactiveFg.brandHover};
   }
   &:active {
     background-color: ${theme.colors.interactiveBg.active};
+    color: ${theme.colors.interactiveFg.active};
   }
 `;
 
@@ -109,59 +110,35 @@ const ButtonRectangle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
   min-width: 1px;
   min-height: 1em;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 
-  & > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: ${({ size }) =>
-      size === BUTTON_SIZES.SMALL ? '8px 16px' : '16px 32px'};
-    height: 100%;
-  }
+  padding: ${({ size }) =>
+    size === BUTTON_SIZES.SMALL ? '8px 16px' : '18px 32px'};
 `;
 
 const ButtonSquare = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-  border-radius: 4px;
-  ${({ size }) => css`
-    width: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
-    height: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 
-    & > div {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 10px 10px;
-      height: 100%;
-      width: 100%;
-    }
+  ${({ size }) => css`
+    width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
+    height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
 
     svg {
-      width: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
-      height: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
-      margin: 0 auto;
+      width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+      height: auto;
     }
   `}
 `;
 
 const ButtonCircle = styled(ButtonSquare)`
-  border-radius: 50%;
+  border-radius: ${({ theme }) => theme.borders.radius.round};
 `;
 
 const ButtonIcon = styled(Base)`
   ${({ size }) => css`
-    width: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
-    height: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
-
-    & > div {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      height: 100%;
-      width: 100%;
-    }
-
+    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
     svg {
       width: 100%;
       height: auto;
@@ -170,7 +147,6 @@ const ButtonIcon = styled(Base)`
   `}
 `;
 
-// TODO incorporate tooltip as a label on hover per figma
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
@@ -178,7 +154,7 @@ const ButtonOptions = {
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
-export const Button = ({
+const Button = ({
   size = BUTTON_SIZES.MEDIUM,
   type = BUTTON_TYPES.PLAIN,
   variant = BUTTON_VARIANTS.RECTANGLE,
@@ -195,7 +171,7 @@ export const Button = ({
       type={type}
       {...rest}
     >
-      <div>{children}</div>
+      {children}
     </StyledButton>
   );
 };
@@ -208,4 +184,4 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-export { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
+export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };

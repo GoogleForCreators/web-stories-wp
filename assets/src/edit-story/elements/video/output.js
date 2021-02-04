@@ -32,20 +32,19 @@ function VideoOutput({ element, box }) {
     src: resource.src,
   };
 
-  const props = {
+  const videoProps = {
     autoPlay: 'autoplay',
     poster: defaultForUndefined(element.poster, resource.poster),
     artwork: defaultForUndefined(element.poster, resource.poster),
-    title: defaultForUndefined(element.title, resource.title),
+    title: defaultForUndefined(element.alt, resource.alt),
     alt: defaultForUndefined(element.alt, resource.alt),
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
   };
 
-  // crossorigin='anonymous' is required to play videos from other domains.
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">
-      <amp-video {...props} id={`el-${element.id}-media`}>
+      <amp-video {...videoProps} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
         {tracks &&
           tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
@@ -55,7 +54,7 @@ function VideoOutput({ element, box }) {
               kind={kind}
               src={src}
               key={key}
-              default={i == 0}
+              default={i === 0}
             />
           ))}
       </amp-video>

@@ -1,7 +1,8 @@
 {
-  "version": 24,
+  "version": 25,
   "pages": [
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -162,6 +163,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -323,6 +325,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -483,6 +486,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -644,6 +648,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -804,6 +809,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -964,6 +970,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -1124,6 +1131,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {
@@ -1285,6 +1293,7 @@
       }
     },
     {
+      "animations": [],
       "backgroundOverlay": "none",
       "elements": [
         {

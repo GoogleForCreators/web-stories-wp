@@ -16,7 +16,9 @@
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 	</rule>
 
-	<rule ref="WordPress-VIP-Go" />
+	<rule ref="WordPress-VIP-Go">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
@@ -45,6 +47,7 @@
 				<element value="removeChild" />
 				<element value="ownerDocument" />
 				<element value="strictErrorChecking" />
+				<element value="preserveWhiteSpace" />
 			</property>
 		</properties>
 	</rule>
@@ -77,6 +80,7 @@
 	<!-- Third-party or auto-generated code -->
 	<exclude-pattern>*/build/*</exclude-pattern>
 	<exclude-pattern>*/data/*</exclude-pattern>
+	<exclude-pattern>tests/e2e/plugins/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/third-party/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
@@ -84,4 +88,5 @@
 	<exclude-pattern>includes/polyfills/mbstring.php</exclude-pattern>
 	<exclude-pattern>tests/phpstan/*</exclude-pattern>
 	<exclude-pattern>tests/phpunit/includes/MarkupComparison.php</exclude-pattern>
+	<exclude-pattern>tests/e2e/plugins/*</exclude-pattern>
 </ruleset>

@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
+import PanelTypes from '../../components/panels/design/types';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import createSolid from '../../utils/createSolid';
 export { default as Display } from './display';
@@ -71,6 +71,7 @@ export const panels = [
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.TEXT_STYLE,
+  PanelTypes.BORDER_RADIUS,
   PanelTypes.BORDER,
   PanelTypes.LINK,
   PanelTypes.ANIMATION,

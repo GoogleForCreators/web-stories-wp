@@ -94,25 +94,20 @@ return [
 					'vendor/ampproject/amp-wp/includes/templates/class-amp-content-sanitizer.php',
 				]
 			)
-			->append( [ 'vendor/ampproject/amp-wp/composer.json' ] ),
+				->append( [ 'vendor/ampproject/amp-wp/composer.json' ] ),
 
-		// AMP Common + Optimizer.
+		// AMP PHP Toolbox (Common + Optimizer).
 		Finder::create()
 			->files()
 			->ignoreVCS( true )
 			->ignoreDotFiles( true )
-			->name( '*.php' )
-			->exclude(
-				[
-					'bin',
-					'tests',
-				]
-			)
+			->notName( '/LICENSE|.*\\.md|.*\\.svg|.*\\.xml|.*\\.dist|composer\\.json|composer\\.lock/' )
 			->in(
 				[
-					'vendor/ampproject/amp-wp/lib',
+					'vendor/ampproject/amp-toolbox/src',
 				]
-			),
+			)
+			->append( [ 'vendor/ampproject/amp-toolbox/composer.json' ] ),
 
 		// FasterImage (used by AMP_Img_Sanitizer).
 		Finder::create()
@@ -141,6 +136,19 @@ return [
 			)
 			->in( 'vendor/sabberworm/php-css-parser' )
 			->append( [ 'vendor/sabberworm/php-css-parser/composer.json' ] ),
+
+		Finder::create()
+			->files()
+			->ignoreVCS( true )
+			->ignoreDotFiles( true )
+			->name( '*.php' )
+			->exclude(
+				[
+					'tests',
+				]
+			)
+			->in( 'vendor/enshrined/svg-sanitize/src' )
+			->append( [ 'vendor/enshrined/svg-sanitize/composer.json' ] ),
 
 		// Symfony mbstring polyfill.
 		Finder::create()

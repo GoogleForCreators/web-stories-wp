@@ -31,7 +31,37 @@ describe('Panels/Panel/SimplePanel', () => {
     const titleElement = getByText('Simple Panel');
     const contentElement = getByText('Simple Panel Content');
 
-    expect(titleElement).toBeDefined();
-    expect(contentElement).toBeDefined();
+    expect(titleElement).toBeInTheDocument();
+    expect(contentElement).toBeInTheDocument();
+  });
+
+  describe('should render <PanelTitle>', () => {
+    const titleName = 'Size & position';
+    const contentText = 'Panel Content';
+    let panelElement;
+    let titleElement;
+    beforeEach(() => {
+      panelElement = renderWithTheme(
+        <SimplePanel name="simple-panel" title={titleName}>
+          <div>{contentText}</div>
+        </SimplePanel>
+      );
+      titleElement = panelElement.getByRole('button', { name: titleName });
+    });
+
+    it('should have a button role', () => {
+      expect(titleElement).toBeDefined();
+      expect(titleElement).toHaveAttribute('role', 'button');
+    });
+
+    it('should have a label that matches the title name', () => {
+      const label = titleElement.getAttribute('aria-label');
+      expect(label).toStrictEqual(titleName);
+    });
+
+    it('should have an expand status by default', () => {
+      const isExpanded = titleElement.getAttribute('aria-expanded');
+      expect(isExpanded).toBeTruthy();
+    });
   });
 });

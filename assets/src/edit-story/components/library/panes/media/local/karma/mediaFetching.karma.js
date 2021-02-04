@@ -49,7 +49,7 @@ describe('MediaPane fetching', () => {
   async function expectMediaElements(expectedCount) {
     let mediaElements;
     await waitFor(() => {
-      mediaElements = localPane.querySelectorAll('[data-testid=mediaElement]');
+      mediaElements = localPane.querySelectorAll('[data-testid^=mediaElement]');
       if (!mediaElements || mediaElements.length !== expectedCount) {
         throw new Error(
           `Not ready: ${mediaElements?.length} != ${expectedCount}`

@@ -15,14 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { PRE_PUBLISH_MESSAGE_TYPES, MESSAGES } from '../constants';
 
 /**
  * @typedef {import('../../../types').Story} Story
@@ -38,7 +33,8 @@ import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 export function storyMissingExcerpt(story) {
   if (!story.excerpt?.length) {
     return {
-      message: __('Missing story excerpt', 'web-stories'),
+      message: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT,
+      help: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT,
       storyId: story.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };

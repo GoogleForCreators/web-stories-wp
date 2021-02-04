@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -33,7 +33,7 @@ import { TranslateWithMarkup } from '../../../../../i18n';
 import {
   ErrorText,
   FormContainer,
-  GoogleAnalyticsTextInput,
+  SettingsTextInput,
   InlineLink,
   InlineForm,
   SaveButton,
@@ -41,27 +41,52 @@ import {
   SettingHeading,
   TextInputHelperText,
   VisuallyHiddenLabel,
+  HelperText,
 } from '../components';
 
 export const TEXT = {
   CONTEXT: __(
-    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on <a>analytics for your Web Stories</a>.",
+    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on<a>analytics for your Web Stories</a>.",
     'web-stories'
   ),
   CONTEXT_LINK:
     'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
-  SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
-  PLACEHOLDER: __('Enter your Google Analytics Tracking ID', 'web-stories'),
-  ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
+  SECTION_HEADING: __('Google Analytics', 'web-stories'),
+  PLACEHOLDER: __(
+    'Enter your Google Analytics Tracking ID or Measurement ID',
+    'web-stories'
+  ),
+  ARIA_LABEL: __(
+    'Enter your Google Analytics Tracking ID or Measurement ID',
+    'web-stories'
+  ),
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
+  SITE_KIT_NOT_INSTALLED: __(
+    'Install<a>Site Kit by Google</a> to easily enable Google Analytics for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_INSTALLED: __(
+    'Use Site Kit by Google to easily<a>activate Google Analytics</a> for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_IN_USE: __(
+    'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
+    'web-stories'
+  ),
 };
 
-function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
+function GoogleAnalyticsSettings({
+  googleAnalyticsId,
+  handleUpdate,
+  siteKitStatus = {},
+}) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
+
+  const { analyticsActive, installed, link } = siteKitStatus;
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -96,17 +121,36 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
     [handleOnSave]
   );
 
+  const siteKitDisplayText = useMemo(() => {
+    if (analyticsActive) {
+      return TEXT.SITE_KIT_IN_USE;
+    }
+
+    return (
+      <TranslateWithMarkup
+        mapping={{
+          a: <InlineLink href={link} rel="noreferrer" target="_blank" />,
+        }}
+      >
+        {installed ? TEXT.SITE_KIT_INSTALLED : TEXT.SITE_KIT_NOT_INSTALLED}
+      </TranslateWithMarkup>
+    );
+  }, [analyticsActive, installed, link]);
+
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
-      <SettingHeading htmlFor="gaTrackingID">
-        {TEXT.SECTION_HEADING}
-      </SettingHeading>
+      <div>
+        <SettingHeading htmlFor="gaTrackingID">
+          {TEXT.SECTION_HEADING}
+        </SettingHeading>
+        <HelperText>{siteKitDisplayText}</HelperText>
+      </div>
       <FormContainer>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="gaTrackingId">
             {TEXT.ARIA_LABEL}
           </VisuallyHiddenLabel>
-          <GoogleAnalyticsTextInput
+          <SettingsTextInput
             label={TEXT.ARIA_LABEL}
             id="gaTrackingId"
             value={analyticsId}
@@ -114,6 +158,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
+            disabled={analyticsActive}
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {TEXT.SUBMIT_BUTTON}
@@ -123,7 +168,13 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
         <TextInputHelperText>
           <TranslateWithMarkup
             mapping={{
-              a: <InlineLink href={TEXT.CONTEXT_LINK} />,
+              a: (
+                <InlineLink
+                  href={TEXT.CONTEXT_LINK}
+                  rel="noreferrer"
+                  target="_blank"
+                />
+              ),
             }}
           >
             {TEXT.CONTEXT}
@@ -136,6 +187,12 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
 GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
+  siteKitStatus: PropTypes.shape({
+    installed: PropTypes.bool,
+    active: PropTypes.bool,
+    analyticsActive: PropTypes.bool,
+    link: PropTypes.string,
+  }),
 };
 
 export default GoogleAnalyticsSettings;

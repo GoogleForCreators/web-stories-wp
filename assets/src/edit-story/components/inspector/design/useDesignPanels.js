@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo } from 'react';
-import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { getPanels } from '../../panels';
 import useHandlers from '../../../utils/useHandlers';
 import updateProperties from './updateProperties';
+import getDesignPanelsForSelection from './getDesignPanelsForSelection';
 
 function useDesignPanels() {
   const {
@@ -35,6 +34,7 @@ function useDesignPanels() {
     selectedElementAnimations,
     deleteSelectedElements,
     updateElementsById,
+    updateAnimationState,
   } = useStory(
     ({
       state: {
@@ -42,7 +42,11 @@ function useDesignPanels() {
         selectedElements,
         selectedElementAnimations,
       },
-      actions: { deleteSelectedElements, updateElementsById },
+      actions: {
+        deleteSelectedElements,
+        updateElementsById,
+        updateAnimationState,
+      },
     }) => {
       return {
         selectedElementIds,
@@ -50,14 +54,13 @@ function useDesignPanels() {
         selectedElementAnimations,
         deleteSelectedElements,
         updateElementsById,
+        updateAnimationState,
       };
     }
   );
 
-  const flags = useFeatures();
-  const panels = useMemo(() => getPanels(selectedElements, flags), [
+  const panels = useMemo(() => getDesignPanelsForSelection(selectedElements), [
     selectedElements,
-    flags,
   ]);
   const [submitHandlers, registerSubmitHandler] = useHandlers();
   const onSetProperties = useCallback(
@@ -109,6 +112,7 @@ function useDesignPanels() {
       deleteSelectedElements,
       selectedElements,
       selectedElementAnimations,
+      updateAnimationState,
     },
   };
 }

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -32,10 +32,9 @@ import {
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '../../../animation';
-import { useStory } from '../../app';
+import { useStory, useCanvas } from '../../app';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
-import useCanvas from './useCanvas';
 import PageAttachment from './pageAttachment';
 
 function DisplayPage({
@@ -50,6 +49,7 @@ function DisplayPage({
 
   useEffect(() => {
     switch (animationState) {
+      case STORY_ANIMATION_STATE.PLAYING_SELECTED:
       case STORY_ANIMATION_STATE.PLAYING:
         WAAPIAnimationMethods.play();
         return;
@@ -100,15 +100,19 @@ function DisplayPage({
 }
 
 function DisplayLayer() {
-  const { currentPage, animationState, updateAnimationState } = useStory(
-    ({ state, actions }) => {
-      return {
-        currentPage: state.currentPage,
-        animationState: state.animationState,
-        updateAnimationState: actions.updateAnimationState,
-      };
-    }
-  );
+  const {
+    currentPage,
+    animationState,
+    updateAnimationState,
+    selectedElements,
+  } = useStory(({ state, actions }) => {
+    return {
+      currentPage: state.currentPage,
+      animationState: state.animationState,
+      selectedElements: state.selectedElements,
+      updateAnimationState: actions.updateAnimationState,
+    };
+  });
   const {
     editingElement,
     setPageContainer,
@@ -120,16 +124,24 @@ function DisplayLayer() {
     }) => ({ editingElement, setPageContainer, setFullbleedContainer })
   );
 
-  const resetAnimationState = useCallback(
-    () => updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET }),
-    [updateAnimationState]
-  );
+  const resetAnimationState = useCallback(() => {
+    updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
+  }, [updateAnimationState]);
+
+  const animatedElements = useMemo(() => selectedElements.map((el) => el.id), [
+    selectedElements,
+  ]);
 
   return (
     <StoryAnimation.Provider
       animations={currentPage?.animations}
       elements={currentPage?.elements}
       onWAAPIFinish={resetAnimationState}
+      selectedElementIds={
+        animationState === STORY_ANIMATION_STATE.PLAYING_SELECTED
+          ? animatedElements
+          : []
+      }
     >
       <Layer
         data-testid="DisplayLayer"

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { waitFor, fireEvent } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -78,13 +79,27 @@ function setup() {
 }
 
 describe('MediaEditDialog', () => {
+  let modalWrapper;
+
+  beforeAll(() => {
+    modalWrapper = document.createElement('aside');
+    document.documentElement.appendChild(modalWrapper);
+    Modal.setAppElement(modalWrapper);
+  });
+
+  afterAll(() => {
+    document.documentElement.removeChild(modalWrapper);
+  });
+
   it('should render', () => {
     const { getByLabelText, getByRole, queryByText } = setup();
 
     expect(queryByText('Edit Image')).toBeInTheDocument();
     expect(queryByText('My Image :)')).toBeInTheDocument();
     expect(queryByText('910 x 675 pixels')).toBeInTheDocument();
-    expect(getByLabelText('Alt text').value).toContain('my image alt text');
+    expect(getByLabelText('Assistive text').value).toContain(
+      'my image alt text'
+    );
     expect(getByRole('button', { name: /save/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /cancel/i })).toBeInTheDocument();
   });
@@ -104,7 +119,7 @@ describe('MediaEditDialog', () => {
       stateAltText = update.alt;
     });
 
-    const input = getByLabelText('Alt text');
+    const input = getByLabelText('Assistive text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(getByRole('button', { name: /save/i }));
 
@@ -119,12 +134,12 @@ describe('MediaEditDialog', () => {
     const { getByLabelText, getByRole } = setup();
 
     // Mock out `updateMedia`.
-    let serverAltText = resource.alt;
+    const serverAltText = resource.alt;
     updateMedia.mockImplementation(() => {
       throw Error;
     });
 
-    const input = getByLabelText('Alt text');
+    const input = getByLabelText('Assistive text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(getByRole('button', { name: /save/i }));
 
@@ -142,7 +157,7 @@ describe('MediaEditDialog', () => {
       throw Error;
     });
 
-    const input = getByLabelText('Alt text');
+    const input = getByLabelText('Assistive text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
     fireEvent.click(getByRole('button', { name: /save/i }));
 

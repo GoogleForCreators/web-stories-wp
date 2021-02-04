@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -40,11 +40,17 @@ export default {
     label: __('Scale', 'web-stories'),
     tooltip: 'Valid values are greater than or equal to 0',
     type: FIELD_TYPES.FLOAT,
-    defaultValue: 0.5,
+    defaultValue: 0.05,
   },
   iterations: {
-    label: __('# of Pulses', 'web-stories'),
+    label: __('Pulses', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     defaultValue: 1,
+  },
+  duration: {
+    label: __('Duration', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    defaultValue: 600,
   },
 };

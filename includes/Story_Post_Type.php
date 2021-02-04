@@ -43,6 +43,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
@@ -94,21 +95,32 @@ class Story_Post_Type {
 	private $decoder;
 
 	/**
+	 * Meta boxes instance.
+	 *
+	 * @var Meta_Boxes
+	 */
+	private $meta_boxes;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
+	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder( $this->experiments );
+		$this->meta_boxes  = $meta_boxes;
+		$this->decoder     = new Decoder();
 	}
 
 	/**
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
 	 *
@@ -165,6 +177,7 @@ class Story_Post_Type {
 				],
 				'public'                => true,
 				'has_archive'           => true,
+				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
@@ -177,6 +190,10 @@ class Story_Post_Type {
 		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
+
+		// Custom Meta Boxes Support.
+		$metabox = new Meta_Boxes();
+		$metabox->init();
 
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
@@ -381,9 +398,9 @@ class Story_Post_Type {
 		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
-			// custom editor after the 'current_screen' action when we can be certain the
+			// custom editor after the 'current_screen' action and when we can be certain the
 			// $post_type, $post_type_object, $post globals are all set by WordPress.
-			if ( did_action( 'current_screen' ) ) {
+			if ( isset( $GLOBALS['post'] ) && $post === $GLOBALS['post'] && did_action( 'current_screen' ) ) {
 				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
 			}
 
@@ -450,7 +467,13 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
+
+		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
+			$script_dependencies[] = 'postbox';
+		}
+
+		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
 		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
 
 		wp_localize_script(
@@ -495,14 +518,10 @@ class Story_Post_Type {
 			$max_upload_size = 0;
 		}
 
-		$preview_query_args = [
-			'preview_id'    => $story_id,
-			// Leveraging the default WP post preview logic.
-			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
-		];
+		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$settings = [
-			'id'         => 'edit-story',
+			'id'         => 'web-stories-editor',
 			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
@@ -511,25 +530,31 @@ class Story_Post_Type {
 				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
-				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
+				'assetsURL'        => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'           => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'        => $max_upload_size,
+				'isDemo'           => $is_demo,
 				'capabilities'     => [
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'users'       => '/web-stories/v1/users',
-					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'       => '/web-stories/v1/media',
-					'link'        => '/web-stories/v1/link',
-					'statusCheck' => '/web-stories/v1/status-check',
+					'users'       => '/web-stories/v1/users/',
+					'currentUser' => '/web-stories/v1/users/me/',
+					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'       => '/web-stories/v1/media/',
+					'link'        => '/web-stories/v1/link/',
+					'statusCheck' => '/web-stories/v1/status-check/',
+					'metaBoxes'   => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 				],
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
 				'encodeMarkup'     => $this->decoder->supports_decoding(),
+				'metaBoxes'        => $this->meta_boxes->get_meta_boxes_per_location(),
+				'ffmpegCoreUrl'    => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

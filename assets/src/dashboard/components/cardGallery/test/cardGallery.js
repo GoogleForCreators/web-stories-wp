@@ -22,8 +22,8 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-jest.mock('../../previewPage');
-import PreviewPage from '../../previewPage';
+jest.mock('../../../../edit-story/components/previewPage/previewPage');
+import { PreviewPage } from '../../../../edit-story/components/previewPage';
 import { renderWithProviders } from '../../../testUtils/';
 import CardGallery from '../';
 
@@ -45,7 +45,7 @@ describe('CardGallery', () => {
     ]);
 
     const { getAllByTestId } = renderWithProviders(
-      <CardGallery story={template} />
+      <CardGallery story={template} galleryLabel="Test Gallery" />
     );
 
     // totalCards = childrenCount + activeCardCount (there is only 1 active card at a time)
@@ -62,7 +62,7 @@ describe('CardGallery', () => {
     ]);
 
     const { getAllByTestId } = renderWithProviders(
-      <CardGallery story={template} />
+      <CardGallery story={template} galleryLabel="Test Gallery" />
     );
 
     // The active child should always appear twice
@@ -77,16 +77,15 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'other-child' },
     ]);
 
-    const { getAllByTestId } = renderWithProviders(
-      <CardGallery story={template} />
+    const { getAllByTestId, getByTestId } = renderWithProviders(
+      <CardGallery story={template} galleryLabel="Test Gallery" />
     );
 
     // When the child is not active, it should only appear once
-    const testIds = getAllByTestId('test-child');
-    expect(testIds).toHaveLength(1);
+    const firstItem = getByTestId('test-child');
 
     // Simulate clicking on Item 3
-    fireEvent.click(testIds[0]);
+    fireEvent.click(firstItem);
 
     // When active, it should appear twice
     expect(getAllByTestId('test-child')).toHaveLength(2);

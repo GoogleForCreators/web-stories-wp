@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -98,10 +99,12 @@ const DEFAULT_PROVIDER_STATE = (index) => ({
         {
           id: `provider${index}/1`,
           displayName: `Tiny dogs for provider ${index}`,
+          label: `${index} Dogs`,
         },
         {
           id: `provider${index}/2`,
           displayName: `Tiny cats for provider ${index}`,
+          label: `${index} Cats`,
         },
       ],
     },
@@ -146,10 +149,35 @@ describe('Media3pPane', () => {
     useMediaResult = DEFAULT_USE_MEDIA_RESULT;
   });
 
+  it('should display terms dialog', () => {
+    const { queryByText, getByRole } = renderWithTheme(
+      <Media3pPane isActive={true} />
+    );
+
+    expect(
+      queryByText(/Your use of stock content is subject to third party terms/)
+    ).toBeInTheDocument();
+
+    fireEvent.click(getByRole('button', { name: 'Dismiss' }));
+
+    expect(
+      queryByText('Your use of stock content is subject to third party terms.')
+    ).not.toBeInTheDocument();
+  });
+
   it('should render <Media3pPane /> with no media', () => {
     const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
 
-    expect(queryByText('No media found')).toBeDefined();
+    expect(queryByText('No media found')).not.toBeInTheDocument();
+    expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
+  });
+
+  it('should render "No media found" text once loading is completed', () => {
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = false;
+    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+
+    expect(queryByText('No media found')).toBeInTheDocument();
     expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
   });
 
@@ -201,14 +229,11 @@ describe('Media3pPane', () => {
   it('should render <Media3pPane /> with the category display name when selected', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { queryByTestId } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { getByTestId } = renderWithTheme(<Media3pPane isActive={true} />);
 
-    expect(queryByTestId('media-subheading')).toBeDefined();
-    expect(
-      getComputedStyle(queryByTestId('media-subheading')).display
-    ).not.toBe('none');
-    expect(queryByTestId('media-subheading')).toHaveTextContent(
-      'Tiny dogs for provider 1'
-    );
+    const subHeading = getByTestId('media-subheading');
+
+    expect(getComputedStyle(subHeading).display).not.toBe('none');
+    expect(subHeading).toHaveTextContent('Tiny dogs for provider 1');
   });
 });

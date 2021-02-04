@@ -37,7 +37,7 @@ describe('StoryMenu', () => {
     );
 
     const menuButton = getByRole('button');
-    expect(menuButton).toBeDefined();
+    expect(menuButton).toBeInTheDocument();
   });
 
   it('should get access to menu on button click', () => {

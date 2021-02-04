@@ -65,7 +65,7 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 	/**
 	 * @dataProvider get_publisher_logo_data
 	 * @covers ::sanitize
-	 * @covers Sanitization_Utils::add_publisher_logo
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 *
 	 * @param string   $source   Source.
 	 * @param string   $expected Expected.

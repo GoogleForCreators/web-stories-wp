@@ -17,51 +17,34 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
-import { useFeature } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useEffect, useCallback, useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import { useAPI } from '../../app';
 import { getContent } from './utils';
+import StatusCheckFailed from './statusCheckFailed';
 
 function StatusCheck() {
   const {
     actions: { getStatusCheck },
   } = useAPI();
-  const statusCheckEnabled = useFeature('statusCheck');
+  const [showDialog, setShowDialog] = useState(false);
+  const closeDialog = useCallback(() => setShowDialog(false), []);
 
-  const doStatusCheck = useCallback(() => {
-    if (!statusCheckEnabled) {
-      return;
-    }
+  useEffect(() => {
+    // If it succeeds, do nothing.
+    // Only in case of failure do we want to alert the user and track the error.
+    getStatusCheck(getContent()).catch((error) => {
+      setShowDialog(true);
+      trackEvent('error', 'editor', '', '', {
+        error,
+      });
+    });
+  }, [getStatusCheck]);
 
-    async function performRequests() {
-      const content = getContent();
-
-      try {
-        await getStatusCheck(content);
-        // eslint-disable-next-line no-console
-        console.log(__('Status Check successful.', 'web-stories'));
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log(__('Status Check failure.', 'web-stories'));
-      }
-      // eslint-disable-next-line no-console
-      console.log(__('Status Check finished.', 'web-stories'));
-    }
-
-    performRequests();
-  }, [getStatusCheck, statusCheckEnabled]);
-
-  useEffect(doStatusCheck);
-
-  return null;
+  return <StatusCheckFailed open={showDialog} onClose={closeDialog} />;
 }
 export default StatusCheck;

@@ -33,7 +33,7 @@ describe('getStoryMarkup', () => {
     const story = {
       storyId: 1,
       title: 'Story!',
-      author: 1,
+      author: { id: 1, name: 'John Doe' },
       slug: 'story',
       link: 'https://example.com',
       publisherLogoUrl: 'https://example.com',

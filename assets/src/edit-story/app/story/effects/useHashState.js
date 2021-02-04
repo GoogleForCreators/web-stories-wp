@@ -70,7 +70,7 @@ function useHashState(key, fallback) {
   useEffect(() => {
     const params = hashToParams(window.location.hash);
     params.set(key, encodeURI(JSON.stringify(value)));
-    window.location.hash = params.toString();
+    history.replaceState(history.state, '', `#${params.toString()}`);
   }, [key, value]);
 
   return [value, setValue];

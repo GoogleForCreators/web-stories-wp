@@ -34,7 +34,7 @@ export const TextInput = styled.input`
     error
       ? theme.DEPRECATED_THEME.borders.danger
       : theme.DEPRECATED_THEME.borders.gray100};
-  &:active {
+  &:active:enabled {
     border: ${({ theme, error }) =>
       error
         ? theme.DEPRECATED_THEME.borders.danger

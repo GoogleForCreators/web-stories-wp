@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../constants';
+import { FIELD_TYPES, SCALE_DIRECTION } from '../../constants';
 import { AnimationInputPropTypes } from '../types';
 
 export const ZoomEffectInputPropTypes = {
@@ -35,10 +35,16 @@ export const ZoomEffectInputPropTypes = {
 };
 
 export default {
-  normalizedScaleFrom: {
-    label: __('Scale From', 'web-stories'),
-    tooltip: __('Slide between min and max zoom amounts', 'web-stories'),
-    type: FIELD_TYPES.RANGE,
-    defaultValue: 0,
+  zoomDirection: {
+    label: __('Direction', 'web-stories'),
+    tooltip: sprintf(
+      /* translators: 1: scaleIn. 2: scaleOut */
+      __('Valid values are %1$s or %2$s', 'web-stories'),
+      'zoomIn',
+      'zoomOut'
+    ),
+    type: FIELD_TYPES.DIRECTION_PICKER,
+    values: [SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT],
+    defaultValue: SCALE_DIRECTION.SCALE_OUT,
   },
 };

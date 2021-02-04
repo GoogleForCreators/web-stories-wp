@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import DropDownMenu from '../dropDownMenu';
 import { useMediaPicker } from '../mediaPicker';
-import MULTIPLE_VALUE from './multipleValue';
+import { MULTIPLE_VALUE } from '../../constants';
 
 const Container = styled.section`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
@@ -140,6 +140,7 @@ function MediaInput({
   title,
   buttonInsertText,
   type,
+  alt,
   value,
   ariaLabel,
   disabled,
@@ -147,6 +148,7 @@ function MediaInput({
   size,
   loading,
   canReset,
+  imgProps,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -191,7 +193,6 @@ function MediaInput({
   };
 
   const isMenuVisible = isHovering || isFocused;
-
   return (
     <Container
       ref={ref}
@@ -203,7 +204,7 @@ function MediaInput({
       {...(canReset && resettableProps)}
     >
       {value && !isMultiple ? (
-        <Img src={value} circle={circle} />
+        <Img src={value} circle={circle} alt={alt} {...imgProps} />
       ) : (
         <DefaultImage size={size} />
       )}
@@ -237,6 +238,8 @@ MediaInput.propTypes = {
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
+  alt: PropTypes.string,
+  imgProps: PropTypes.object,
   loading: PropTypes.bool,
   canReset: PropTypes.bool,
 };
@@ -253,6 +256,7 @@ MediaInput.defaultProps = {
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
   ariaLabel: __('Choose an image', 'web-stories'),
+  alt: __('Preview image', 'web-stories'),
   canReset: false,
 };
 

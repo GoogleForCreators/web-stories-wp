@@ -48,7 +48,7 @@
       "",
       {
         "pattern": " \\* Copyright \\d{4} Google LLC",
-        "template": " * Copyright 2020 Google LLC"
+        "template": " * Copyright 2021 Google LLC"
       },
       " *",
       " * Licensed under the Apache License, Version 2.0 (the \"License\");",
@@ -66,7 +66,7 @@
     ] ],
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
-        "target": "./assets/src/edit-story/migration/migrations",
+        "target": "./assets/src/migration/migrations",
         "from": "./assets/src/edit-story",
         "except": [ "./migration/migrations" ]
       }, {
@@ -94,6 +94,9 @@
     "no-useless-call": "error",
     "no-useless-concat": "error",
     "no-console": "error",
+    "no-duplicate-imports": "error",
+    "no-var": "error",
+    "prefer-const": "error",
     "prefer-object-spread": "error",
     "prefer-promise-reject-errors": "error",
     "prefer-rest-params": "error",
@@ -277,7 +280,9 @@
     },
     {
       "files": [
-        "**/karma/**/*.js"
+        "**/karma/**/*.js",
+        "assets/src/karma-*/**/*.js",
+        "packages/karma-*/**/*.js"
       ],
       "extends": [
         "plugin:jasmine/recommended"
@@ -317,6 +322,15 @@
       }
     },
     {
+      "files": [
+        "packages/karma-puppeteer-client/**/*.js"
+      ],
+      "rules": {
+        "no-var": "off",
+        "prefer-const": "off"
+      }
+    },
+    {
       "files": ["tests/e2e/**/*.js"],
       "extends": [
         "plugin:jest/all"
@@ -349,6 +363,7 @@
         "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.cjs",
+        "rollup.config.migrate.cjs",
         "jest-puppeteer.config.cjs",
         "karma-*.config.cjs",
         "webpack.*.cjs",
@@ -358,7 +373,10 @@
         "tests/e2e/*.js",
         "tests/e2e/config/*.js",
         "assets/src/dashboard/karma-tests.cjs",
-        "assets/src/edit-story/karma-tests.cjs"
+        "assets/src/edit-story/karma-tests.cjs",
+        "assets/src/migration/**/*.js",
+        "packages/fonts/**/*.js",
+        "packages/commander/**/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
@@ -372,8 +390,17 @@
       },
       "rules": {
         "node/no-extraneous-import": "off",
+        "node/no-missing-import": "off",
         "node/no-unpublished-import": "off",
         "node/no-unpublished-require": "off"
+      }
+    },
+    {
+      "files": [
+        "assets/src/migration/utils/updateTemplates.js"
+      ],
+      "rules": {
+        "eslint-comments/no-unused-disable": "off"
       }
     },
     {

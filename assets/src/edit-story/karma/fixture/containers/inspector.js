@@ -19,6 +19,8 @@
  */
 import { Container } from './container';
 import { DesignPanel } from './designPanel';
+import { DocumentPanel } from './documentPanel';
+import { ChecklistPanel } from './checklistPanel';
 
 /**
  * The right-hand side inspector containing tabs and panes for design panel
@@ -46,7 +48,22 @@ export class Inspector extends Container {
   }
 
   get documentPanel() {
-    // TODO: Wrap in proper container
-    return this.getByRole('tabpanel', { name: /Document/ });
+    return this._get(
+      this.getByRole('tabpanel', { name: /Document/ }),
+      'documentPanel',
+      DocumentPanel
+    );
+  }
+
+  get checklistTab() {
+    return this.getByRole('tab', { name: /Checklist/ });
+  }
+
+  get checklistPanel() {
+    return this._get(
+      this.getByRole('tabpanel', { name: /Checklist/ }),
+      'prepublishPanel',
+      ChecklistPanel
+    );
   }
 }

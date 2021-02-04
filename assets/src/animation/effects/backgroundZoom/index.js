@@ -17,13 +17,13 @@
 /**
  * Internal dependencies
  */
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../constants';
+import { BG_MIN_SCALE, BG_MAX_SCALE, SCALE_DIRECTION } from '../../constants';
 import { AnimationZoom } from '../../parts/zoom';
 import { lerp } from '../../utils';
 
 export function EffectBackgroundZoom({
   element,
-  normalizedScaleFrom = 0.75,
+  zoomDirection = SCALE_DIRECTION.SCALE_OUT,
   duration = 1000,
   delay,
   easing,
@@ -32,8 +32,9 @@ export function EffectBackgroundZoom({
   // at element scale 400, the range should be [1/4, 1]
   // at element scale 100, the range should be [1, 4]
   const range = [BG_MIN_SCALE / element.scale, BG_MAX_SCALE / element.scale];
+
   return AnimationZoom({
-    zoomFrom: lerp(normalizedScaleFrom, range),
+    zoomFrom: lerp(zoomDirection === SCALE_DIRECTION.SCALE_OUT ? 1 : 0, range),
     zoomTo: 1,
     duration,
     delay,

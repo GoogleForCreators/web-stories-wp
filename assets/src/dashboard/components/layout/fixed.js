@@ -16,14 +16,12 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
 import { Z_INDEX } from '../../constants';
-import useAddSquishVar from './useAddSquishVar';
 
 const FixedContent = styled.div`
   position: absolute;
@@ -35,7 +33,7 @@ const FixedContent = styled.div`
   overflow: hidden;
 
   /**
-   * This is an absolutley positioned full size
+   * This is an absolute positioned full size
    * overlay over the scrollable content. being
    * such, we don't want it to block pointer
    * events to the scrollable and squishable
@@ -44,8 +42,8 @@ const FixedContent = styled.div`
   pointer-events: none;
 
   /**
-   * Not sure how much I like this because 
-   * it will be a higher specifity than a 
+   * Not sure how much I like this because
+   * it will be a higher specificity than a
    * styled declaration, but I don't want
    * devs to have to declare this on every
    * component in this view.
@@ -55,12 +53,7 @@ const FixedContent = styled.div`
   }
 `;
 
-const Fixed = ({ children }) => {
-  const rootRef = useRef(null);
-  useAddSquishVar(rootRef);
-
-  return <FixedContent ref={rootRef}>{children}</FixedContent>;
-};
+const Fixed = ({ children }) => <FixedContent>{children}</FixedContent>;
 
 Fixed.propTypes = {
   children: PropTypes.node,

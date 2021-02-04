@@ -18,20 +18,19 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
 /**
  * Internal dependencies
  */
-import { AnimationMove } from '../../parts/move';
+import { DIRECTION } from '../../constants';
 import { AnimationFade } from '../../parts/fade';
+import { AnimationMove } from '../../parts/move';
 import { AnimationZoom } from '../../parts/zoom';
 import getOffPageOffset from '../../utils/getOffPageOffset';
-import { DIRECTION } from '../../constants';
 
 export function EffectWhooshIn({
-  duration = 400,
+  duration = 600,
   whooshInDir = DIRECTION.LEFT_TO_RIGHT,
-  easing = 'cubic-bezier(0.0, 0.0, 0.2, 1)',
+  easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
   delay,
   element,
 }) {
@@ -54,6 +53,7 @@ export function EffectWhooshIn({
     duration,
     delay,
     easing,
+    element,
   });
 
   const {

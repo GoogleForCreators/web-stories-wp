@@ -23,21 +23,19 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import createSolid from '../../../../utils/createSolid';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
+import { renderWithTheme } from '../../../../testUtils';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
-import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from '../../multipleValue';
-import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
 
 function arrange(children = null) {
-  const { getByRole, getByLabelText, queryByLabelText } = renderWithTheme(
-    children
-  );
-  const button = getByLabelText(/edit/i);
-  const input = queryByLabelText(/enter/i);
+  const { getByRole, queryByLabelText } = renderWithTheme(children);
+  const button = getByRole('button', { name: 'Color' });
+  const input = queryByLabelText('Color', { selector: 'input' });
   const swatch = getByRole('status');
   return {
     button,
@@ -70,7 +68,7 @@ describe('<ColorPreview />', () => {
     );
 
     expect(button).toBeDefined();
-    expect(button).toHaveAttribute('aria-label', 'Edit: Color');
+    expect(button).toHaveAttribute('aria-label', 'Color');
 
     expect(input).toHaveValue('FF0000');
 
@@ -92,7 +90,7 @@ describe('<ColorPreview />', () => {
     );
 
     expect(button).toBeDefined();
-    expect(button).toHaveAttribute('aria-label', 'Edit: Color');
+    expect(button).toHaveAttribute('aria-label', 'Color');
     expect(button).toHaveTextContent('Radial');
 
     expect(input).toBeNull();
@@ -131,7 +129,7 @@ describe('<ColorPreview />', () => {
     fireEvent.click(button);
 
     const previewButton = queryByLabelText(/solid pattern/i);
-    expect(previewButton).toBeDefined();
+    expect(previewButton).toBeInTheDocument();
   });
 
   it('should open the color picker when clicked if multiple', () => {
@@ -150,7 +148,7 @@ describe('<ColorPreview />', () => {
     fireEvent.click(button);
 
     const previewButton = queryByLabelText(/solid pattern/i);
-    expect(previewButton).toBeDefined();
+    expect(previewButton).toBeInTheDocument();
   });
 
   it('should invoke onChange when inputting valid hex', () => {

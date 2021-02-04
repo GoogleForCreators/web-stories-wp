@@ -34,18 +34,19 @@ const Overlay = styled.div`
   left: 0;
   width: 0;
   height: 0;
-  z-index: 1;
+  z-index: ${({ zIndex }) => zIndex};
 `;
 
 function withOverlay(Comp) {
   function WithOverlay({ children, ...rest }, ref) {
     const [overlay, setOverlay] = useState(null);
     const [container, setContainer] = useState(null);
+    const { zIndex = 1 } = rest;
     return (
       <Context.Provider value={{ container, overlay }}>
         <Comp ref={useCombinedRefs(ref, setContainer)} {...rest}>
           {children}
-          <Overlay ref={setOverlay} />
+          <Overlay ref={setOverlay} zIndex={zIndex} />
         </Comp>
       </Context.Provider>
     );

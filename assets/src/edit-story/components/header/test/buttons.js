@@ -23,6 +23,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import Modal from 'react-modal';
+import MockDate from 'mockdate';
 
 /**
  * Internal dependencies
@@ -47,13 +48,18 @@ function setupButtons({
   const storyContextValue = {
     state: {
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
-      story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
+      story: {
+        status: 'draft',
+        storyId: 123,
+        date: null,
+        previewLink:
+          'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+        ...extraStoryProps,
+      },
     },
     actions: { saveStory, autoSave },
   };
   const configValue = {
-    previewLink:
-      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
     capabilities: {
       hasPublishAction: true,
     },
@@ -87,7 +93,7 @@ function setupButtons({
 }
 
 describe('buttons', () => {
-  const FUTURE_DATE = '9999-01-01T20:20:20';
+  const FUTURE_DATE = '2022-01-01T20:20:20Z';
   const PREVIEW_POPUP = {
     document: {
       write: jest.fn(),
@@ -103,16 +109,18 @@ describe('buttons', () => {
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
     Modal.setAppElement(modalWrapper);
+    MockDate.set('2020-07-15T12:00:00+00:00');
   });
 
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
+    MockDate.reset();
   });
 
   it('should display Publish button when in draft mode', () => {
     const { getByRole } = setupButtons();
     const publishButton = getByRole('button', { name: 'Publish' });
-    expect(publishButton).toBeDefined();
+    expect(publishButton).toBeInTheDocument();
   });
 
   it('should not be able to save draft if no changes', () => {
@@ -194,7 +202,7 @@ describe('buttons', () => {
     setupButtons({ meta: { isFreshlyPublished: true } });
 
     const dismissButton = screen.getByRole('button', { name: 'Dismiss' });
-    expect(dismissButton).toBeDefined();
+    expect(dismissButton).toBeInTheDocument();
     fireEvent.click(dismissButton);
 
     await waitForElementToBeRemoved(() =>
@@ -208,7 +216,7 @@ describe('buttons', () => {
     });
     const draftButton = getByRole('button', { name: 'Switch to Draft' });
 
-    expect(draftButton).toBeDefined();
+    expect(draftButton).toBeInTheDocument();
     fireEvent.click(draftButton);
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
@@ -223,7 +231,7 @@ describe('buttons', () => {
     });
     const scheduleButton = getByRole('button', { name: 'Schedule' });
 
-    expect(scheduleButton).toBeDefined();
+    expect(scheduleButton).toBeInTheDocument();
     fireEvent.click(scheduleButton);
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
@@ -236,13 +244,13 @@ describe('buttons', () => {
       },
     });
     const publishButton = getByRole('button', { name: 'Publish' });
-    expect(publishButton).toBeDefined();
+    expect(publishButton).toBeInTheDocument();
     fireEvent.click(publishButton);
 
     const publishAnywayButton = screen.getByRole('button', {
       name: 'Publish without title',
     });
-    expect(publishAnywayButton).toBeDefined();
+    expect(publishAnywayButton).toBeInTheDocument();
     fireEvent.click(publishAnywayButton);
 
     expect(saveStory).toHaveBeenCalledTimes(1);
@@ -260,11 +268,11 @@ describe('buttons', () => {
       },
     });
     const publishButton = getByRole('button', { name: 'Publish' });
-    expect(publishButton).toBeDefined();
+    expect(publishButton).toBeInTheDocument();
     fireEvent.click(publishButton);
 
     const addTitleButton = screen.getByRole('button', { name: 'Add a title' });
-    expect(addTitleButton).toBeDefined();
+    expect(addTitleButton).toBeInTheDocument();
     fireEvent.click(addTitleButton);
 
     expect(saveStory).not.toHaveBeenCalled();
@@ -283,7 +291,7 @@ describe('buttons', () => {
     });
     const scheduleButton = getByRole('button', { name: 'Schedule' });
 
-    expect(scheduleButton).toBeDefined();
+    expect(scheduleButton).toBeInTheDocument();
   });
 
   it('should display loading indicator while the story is updating', () => {
@@ -311,12 +319,12 @@ describe('buttons', () => {
   it('should open draft preview when clicking on Preview via about:blank', () => {
     const { getByRole, saveStory } = setupButtons({
       story: {
-        link: 'https://example.com',
+        previewLink: 'https://example.com/?preview=true',
       },
     });
     const previewButton = getByRole('button', { name: 'Preview' });
 
-    expect(previewButton).toBeDefined();
+    expect(previewButton).toBeInTheDocument();
 
     saveStory.mockImplementation(() => ({
       then(callback) {

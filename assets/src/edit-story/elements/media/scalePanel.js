@@ -19,12 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -32,7 +26,6 @@ import { __ } from '@wordpress/i18n';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import InOverlay from '../../components/overlay';
 import RangeInput from '../../components/rangeInput';
-import { useKeyDownEffect } from '../../components/keyboard';
 import { Z_INDEX_CANVAS } from '../../constants';
 
 const MIN_WIDTH = 165;
@@ -57,39 +50,6 @@ const Container = styled.div`
   padding: 0 4px;
 `;
 
-const Reset = styled.button`
-  flex: 0 0;
-  margin-left: 4px;
-  height: 20px;
-  text-transform: uppercase;
-  font-size: 9px;
-  color: ${({ theme }) => theme.colors.fg.white};
-  background: ${({ theme }) => theme.colors.accent.primary};
-  border-radius: 100px;
-  border: none;
-  padding: 1px 8px 0 8px;
-`;
-
-function ResetButton({ onClick, children }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text and media elements. For shape element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
-
-  return (
-    <Reset ref={ref} onClick={onClick}>
-      {children}
-    </Reset>
-  );
-}
-
-ResetButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
 function ScalePanel({ setProperties, width, height, x, y, scale }) {
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
@@ -107,9 +67,6 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
           value={scale}
           handleChange={(value) => setProperties({ scale: value })}
         />
-        <ResetButton onClick={() => setProperties({ scale: 100 })}>
-          {__('Reset', 'web-stories')}
-        </ResetButton>
       </Container>
     </InOverlay>
   );

@@ -21,17 +21,13 @@ import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import settingsReducer, {
   defaultSettingsState,
   ACTION_TYPES as SETTINGS_ACTION_TYPES,
 } from '../reducer/settings';
+import { ERRORS } from '../textContent';
 
 export default function useSettingsApi(
   dataAdapter,
@@ -45,8 +41,8 @@ export default function useSettingsApi(
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
           message: {
-            body: __('Cannot connect to data source', 'web-stories'),
-            title: __('Unable to find settings data', 'web-stories'),
+            body: ERRORS.LOAD_SETTINGS.DEFAULT_MESSAGE,
+            title: ERRORS.LOAD_SETTINGS.TITLE,
           },
         },
       });
@@ -62,6 +58,10 @@ export default function useSettingsApi(
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
         payload: {
           googleAnalyticsId: response.web_stories_ga_tracking_id,
+          adSensePublisherId: response.web_stories_adsense_publisher_id,
+          adSenseSlotId: response.web_stories_adsense_slot_id,
+          adManagerSlotId: response.web_stories_ad_manager_slot_id,
+          adNetwork: response.web_stories_ad_network,
           activePublisherLogoId: response.web_stories_active_publisher_logo,
           publisherLogoIds: response.web_stories_publisher_logos,
         },
@@ -72,7 +72,7 @@ export default function useSettingsApi(
         payload: {
           message: {
             body: err.message,
-            title: __('Unable to find settings data', 'web-stories'),
+            title: ERRORS.LOAD_SETTINGS.TITLE,
           },
         },
       });
@@ -82,6 +82,10 @@ export default function useSettingsApi(
   const updateSettings = useCallback(
     async ({
       googleAnalyticsId,
+      adSensePublisherId,
+      adSenseSlotId,
+      adManagerSlotId,
+      adNetwork,
       publisherLogoIds,
       publisherLogoIdToRemove,
       publisherLogoToMakeDefault,
@@ -90,6 +94,22 @@ export default function useSettingsApi(
         const query = {};
         if (googleAnalyticsId !== undefined) {
           query.web_stories_ga_tracking_id = googleAnalyticsId;
+        }
+
+        if (adSensePublisherId !== undefined) {
+          query.web_stories_adsense_publisher_id = adSensePublisherId;
+        }
+
+        if (adSenseSlotId !== undefined) {
+          query.web_stories_adsense_slot_id = adSenseSlotId;
+        }
+
+        if (adManagerSlotId !== undefined) {
+          query.web_stories_ad_manager_slot_id = adManagerSlotId;
+        }
+
+        if (adNetwork !== undefined) {
+          query.web_stories_ad_network = adNetwork;
         }
 
         if (publisherLogoIds) {
@@ -119,6 +139,10 @@ export default function useSettingsApi(
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
           payload: {
             googleAnalyticsId: response.web_stories_ga_tracking_id,
+            adSensePublisherId: response.web_stories_adsense_publisher_id,
+            adSenseSlotId: response.web_stories_adsense_slot_id,
+            adManagerSlotId: response.web_stories_ad_manager_slot_id,
+            adNetwork: response.web_stories_ad_network,
             activePublisherLogoId: response.web_stories_active_publisher_logo,
             publisherLogoIds: response.web_stories_publisher_logos,
           },
@@ -129,7 +153,7 @@ export default function useSettingsApi(
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to update settings data', 'web-stories'),
+              title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
             },
           },
         });

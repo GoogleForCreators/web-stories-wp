@@ -23,7 +23,10 @@ export function getContent() {
   const story = {
     storyId: 1,
     title: 'Story!',
-    author: 1,
+    author: {
+      id: 1,
+      name: 'John Doe',
+    },
     slug: 'story',
     publisherLogo: 1,
     defaultPageDuration: 7,
@@ -31,9 +34,14 @@ export function getContent() {
     date: '2020-04-10T07:06:26',
     modified: '',
     excerpt: '',
-    featuredMedia: 0,
+    featuredMedia: {
+      id: 123,
+      url: 'https://example.com/image.png',
+      width: 123,
+      height: 456,
+    },
     password: '',
-    stylePresets: '',
+    globalStoryStyles: '',
   };
   const pages = [
     {

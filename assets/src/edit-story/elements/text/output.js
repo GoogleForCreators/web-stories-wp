@@ -62,6 +62,7 @@ export function TextOutputWithUnits({
     backgroundColor,
     backgroundTextMode,
     padding,
+    borderRadius,
     ...rest
   } = element;
   if (!dataToFontSizeY) {
@@ -97,7 +98,6 @@ export function TextOutputWithUnits({
   );
   const fillStyle = {
     ...styles,
-    ...bgColor,
     color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     overflowWrap: 'break-word',
@@ -114,6 +114,7 @@ export function TextOutputWithUnits({
 
   const highlightStyle = {
     ...fillStyle,
+    ...bgColor,
     margin: 0,
     padding: 0,
     background: 'none',
@@ -151,6 +152,9 @@ export function TextOutputWithUnits({
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     textAlign: styles.textAlign,
+    borderRadius: `${borderRadius?.topLeft || 0}px ${
+      borderRadius?.topRight || 0
+    }px ${borderRadius?.bottomRight || 0}px ${borderRadius?.bottomLeft || 0}px`,
   };
 
   const backgroundTextStyle = {

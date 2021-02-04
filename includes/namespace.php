@@ -27,7 +27,6 @@
 namespace Google\Web_Stories;
 
 use WP_REST_Request;
-use WP_REST_Server;
 use WP_Error;
 use WP_Site;
 
@@ -39,7 +38,7 @@ use WP_Site;
  * @return void
  */
 function setup_new_site() {
-	$story = new Story_Post_Type( new Experiments() );
+	$story = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
 	$story->init();
 	$story->add_caps_to_roles();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
@@ -113,7 +112,7 @@ function remove_site( $error, $site ) {
 		return;
 	}
 	$site_id = (int) $site->blog_id;
-	$story   = new Story_Post_Type( new Experiments() );
+	$story   = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
 	switch_to_blog( $site_id );
 	$story->remove_caps_from_roles();
 	restore_current_blog();
@@ -146,7 +145,7 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
  * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
  * Expected to be called in the context of `array_reduce`.
  *
- * Like rest_preload_api_request() in core, but embeds links.
+ * Like rest_preload_api_request() in core, but embeds links and removes trailing slashes.
  *
  * @link  https://core.trac.wordpress.org/ticket/51722
  *
@@ -186,7 +185,7 @@ function rest_preload_api_request( $memo, $path ) {
 		return $memo;
 	}
 
-	$request = new WP_REST_Request( $method, $path_parts['path'] );
+	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
 	$embed   = false;
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
@@ -216,6 +215,30 @@ function rest_preload_api_request( $memo, $path ) {
 	}
 
 	return $memo;
+}
+
+/**
+ * Determine whether the current response being served as AMP.
+ *
+ * @since 1.3.0
+ *
+ * @return bool Whether it is singular story post (and thus an AMP endpoint).
+ */
+function is_amp() {
+	if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+		return true;
+	}
+
+	// Check for `amp_is_request()` first since `is_amp_endpoint()` is deprecated.
+	if ( function_exists( '\amp_is_request' ) ) {
+		return amp_is_request();
+	}
+
+	if ( function_exists( '\is_amp_endpoint' ) ) {
+		return is_amp_endpoint();
+	}
+
+	return false;
 }
 
 global $web_stories;

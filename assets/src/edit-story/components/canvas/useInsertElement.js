@@ -22,7 +22,6 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useLocalMedia, useStory } from '../../app';
@@ -160,8 +159,9 @@ function getElementProperties(
   if (!isNum(y)) {
     y = 0;
   }
-  x = dataPixels(Math.min(x, PAGE_WIDTH - width));
-  y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
+
+  x = dataPixels(x);
+  y = dataPixels(y);
 
   return {
     ...attrs,
