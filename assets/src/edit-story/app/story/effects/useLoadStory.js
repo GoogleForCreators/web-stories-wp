@@ -22,9 +22,9 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { migrate } from '../../../../migration';
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
-import { migrate } from '../../../migration';
 
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {

@@ -28,6 +28,7 @@ import { renderWithTheme } from '../../../../../testUtils';
 
 function setupActions() {
   const updateStory = jest.fn();
+  const pushUpdate = jest.fn();
 
   const textElement = {
     id: '1',
@@ -36,13 +37,28 @@ function setupActions() {
   const storyContextValue = {
     state: {
       selectedElements: [textElement],
-      story: { globalStoryStyles: { colors: [] } },
+      story: {
+        globalStoryStyles: { colors: [] },
+        currentStoryStyles: { colors: [] },
+      },
+      currentPage: {
+        elements: [
+          {
+            id: 'bg',
+            type: 'shape',
+          },
+          textElement,
+        ],
+      },
     },
     actions: { updateStory },
   };
   const { getByRole } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
-      <ColorPresetActions color={{ color: { r: 1, g: 1, b: 1 } }} />
+      <ColorPresetActions
+        color={{ color: { r: 1, g: 1, b: 1 } }}
+        pushUpdate={pushUpdate}
+      />
     </StoryContext.Provider>
   );
   return {
@@ -52,7 +68,7 @@ function setupActions() {
 }
 
 describe('Panels/StylePreset/ColorPresetActions', () => {
-  const ADD_PRESET = '+ Add to Color Preset';
+  const ADD_PRESET = 'Add color';
 
   it('should render color preset actions', () => {
     const { getByRole } = setupActions();
@@ -66,7 +82,7 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
     fireEvent.click(element);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
-        globalStoryStyles: {
+        currentStoryStyles: {
           colors: [{ color: { b: 1, g: 1, r: 1 } }],
         },
       },

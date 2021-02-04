@@ -57,7 +57,7 @@ function ColorAdd({ handleAddPreset, helper, ...rest }) {
     <>
       <AddColorAction
         onClick={handleAddPreset}
-        aria-label={__('Add color preset', 'web-stories')}
+        aria-label={__('Add color', 'web-stories')}
         {...rest}
       >
         <AddColor />

@@ -28,9 +28,9 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import { DATA_VERSION } from '../../../migration';
 import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
-import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
 import getAllPageLayouts from './getAllPageLayouts';

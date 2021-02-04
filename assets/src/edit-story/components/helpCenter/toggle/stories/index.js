@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-
 import { useState } from 'react';
 import { number } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';

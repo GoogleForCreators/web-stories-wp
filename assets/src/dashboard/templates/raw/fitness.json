@@ -74,7 +74,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page1_bg-red.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page1_bg-red.png",
             "width": 330,
             "height": 586,
             "id": 1297,
@@ -131,7 +131,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page1_logo-generic.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page1_logo-generic.png",
             "width": 79,
             "height": 22,
             "id": 1241,
@@ -272,7 +272,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page2_figure-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page2_figure-formatted.png",
             "width": 220,
             "height": 350,
             "posterId": 0,
@@ -477,7 +477,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page3_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page3_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -730,7 +730,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page4_bg-red.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page4_bg-red.png",
             "width": 330,
             "height": 308,
             "id": 1299,
@@ -757,7 +757,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page4_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page4_bg.jpg",
             "width": 220,
             "height": 288,
             "posterId": 0,
@@ -1033,7 +1033,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page5_bg-no-logo.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page5_bg-no-logo.png",
             "width": 330,
             "height": 295,
             "id": 1256,
@@ -1353,7 +1353,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page6_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page6_bg.jpg",
             "width": 220,
             "height": 165,
             "posterId": 0,
@@ -1379,7 +1379,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-30T20:40:21",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page6_watch.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page6_watch.png",
             "width": 330,
             "height": 330,
             "posterId": 0,
@@ -1715,7 +1715,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page7_bg-red.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page7_bg-red.png",
             "width": 330,
             "height": 239,
             "id": 1301,
@@ -2006,7 +2006,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story3-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page8_story3-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -2040,7 +2040,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story1-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page8_story1-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
@@ -2074,7 +2074,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story2-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page8_story2-formatted.png",
             "width": 188,
             "height": 97,
             "posterId": 0,
