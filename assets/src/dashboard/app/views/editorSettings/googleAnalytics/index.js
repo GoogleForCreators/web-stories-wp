@@ -181,7 +181,7 @@ function GoogleAnalyticsSettings({
             onClick={handleOnSave}
           >
             {TEXT.SUBMIT_BUTTON}
-          </Button>
+          </SaveButton>
         </InlineForm>
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

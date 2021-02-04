@@ -32,6 +32,7 @@ import {
 import {
   InlineForm,
   InlineLink,
+  SaveButton,
   SettingForm,
   SettingHeading,
   SettingsTextInput,
@@ -188,7 +189,7 @@ function GoogleAdSenseSettings({
               data-testid="adSensePublisherIdButton"
             >
               {TEXT.SUBMIT_BUTTON}
-            </Button>
+            </SaveButton>
           </InlineForm>
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -239,7 +240,7 @@ function GoogleAdSenseSettings({
               data-testid="adSenseSlotIdButton"
             >
               {TEXT.SUBMIT_BUTTON}
-            </Button>
+            </SaveButton>
           </InlineForm>
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
