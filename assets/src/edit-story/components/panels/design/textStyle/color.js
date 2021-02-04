@@ -149,7 +149,9 @@ function ColorControls({ selectedElements, pushUpdate }) {
           data-testid="text.color"
           value={color}
           onChange={handleSetColor}
-          colorPickerActions={getColorPickerActions}
+          colorPickerActions={(selColor) =>
+            getColorPickerActions(selColor, pushUpdate)
+          }
           label={__('Text color', 'web-stories')}
           labelId="text-color-label"
           changedStyle="color"

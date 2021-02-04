@@ -78,8 +78,8 @@ function PresetsHeader({
 }) {
   const isColor = 'color' === presetType;
   const editLabel = isColor
-    ? __('Edit color presets', 'web-stories')
-    : __('Edit style presets', 'web-stories');
+    ? __('Edit colors', 'web-stories')
+    : __('Edit styles', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -100,7 +100,7 @@ function PresetsHeader({
         {!isEditMode && !isColor && (
           <AddPresetButton
             onClick={handleAddPreset}
-            aria-label={__('Add style preset', 'web-stories')}
+            aria-label={__('Add style', 'web-stories')}
           >
             <Add />
           </AddPresetButton>

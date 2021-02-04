@@ -93,6 +93,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
+
+  // Known AMP Story bookend issue.
+  'Error fetching bookend configuration',
 ];
 
 export function addAllowedErrorMessage(message) {

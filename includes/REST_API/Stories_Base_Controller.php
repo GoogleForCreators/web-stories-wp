@@ -27,8 +27,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\KSES;
 use Google\Web_Stories\Media;
 use stdClass;
 use WP_Error;
@@ -144,39 +142,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
 
-	/**
-	 * Creates a single post.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function create_item( $request ) {
-		$kses = new KSES();
-		$kses->init();
-		$response = parent::create_item( $request );
-		$kses->remove_filters();
-		return $response;
-	}
-
-	/**
-	 * Updates a single post.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function update_item( $request ) {
-		$kses = new KSES();
-		$kses->init();
-		$response = parent::update_item( $request );
-		$kses->remove_filters();
-		return $response;
-	}
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
