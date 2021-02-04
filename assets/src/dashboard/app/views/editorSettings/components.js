@@ -119,7 +119,7 @@ export const UploadedContainer = styled.div`
   border: 1px solid transparent;
   border-width: 2px;
 
-  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 export const GridItemContainer = styled.div`
@@ -149,7 +149,7 @@ export const GridItemButton = styled.button`
   border-width: 2px;
   padding: 0;
 
-  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 export const Logo = styled.img`
@@ -192,7 +192,7 @@ export const LogoMenuButton = styled.button`
     display: block;
   }
 
-  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 export const SaveButton = styled(Button)`

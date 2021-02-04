@@ -26,10 +26,6 @@ export const StandardViewContentGutter = styled.div(
     @media ${theme.breakpoint.mobile} {
       margin: 0 10px;
     }
-
-    @media ${theme.breakpoint.min} {
-      margin: 0 10px;
-    }
   `
 );
 
