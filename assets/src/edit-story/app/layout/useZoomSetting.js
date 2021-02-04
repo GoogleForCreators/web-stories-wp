@@ -29,6 +29,7 @@ import {
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,
   SCROLLBAR_WIDTH,
+  PAGE_WIDTH_FACTOR,
 } from '../../constants';
 
 function useZoomSetting() {
@@ -83,8 +84,9 @@ function useZoomSetting() {
         // do nothing for any of the fixed settings
         break;
     }
-    // Floor page width to nearest multiple of 12
-    const pageWidth = 12 * Math.floor(maxPageWidth / 12);
+    // Floor page width to nearest multiple of PAGE_WIDTH_FACTOR
+    const pageWidth =
+      PAGE_WIDTH_FACTOR * Math.floor(maxPageWidth / PAGE_WIDTH_FACTOR);
     // Update whether there's overflow and if we have room for page navigation
     const pageHeight = pageWidth / PAGE_RATIO;
     const fullbleedHeight = pageWidth / FULLBLEED_RATIO;

@@ -38,9 +38,8 @@ export const ZOOM_SETTING = {
 
 export const PAGE_RATIO = 2 / 3;
 export const PAGE_WIDTH = 412;
-export const PAGE_HEIGHT = 618;
-
-export const ALLOWED_EDITOR_PAGE_WIDTHS = [412, 268, 223];
+export const PAGE_HEIGHT = PAGE_WIDTH / PAGE_RATIO;
+export const PAGE_WIDTH_FACTOR = 12;
 
 export const FULLBLEED_RATIO = 9 / 16;
 
