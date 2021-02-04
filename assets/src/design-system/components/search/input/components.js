@@ -64,6 +64,7 @@ export const Input = styled.input(
     })};
     color: ${theme.colors.fg.primary};
     border: 1px solid ${theme.colors.border.defaultNormal};
+
     &::placeholder {
       color: ${theme.colors.fg.tertiary};
     }
@@ -166,7 +167,16 @@ export const ChevronIcon = styled(Chevron)`
   width: 8px;
   height: auto;
   margin: auto;
+
+  ${({ isMenuOpen }) =>
+    isMenuOpen &&
+    css`
+      transform: rotate(180deg);
+    `}
 `;
+ChevronIcon.propTypes = {
+  isMenuOpen: PropTypes.bool,
+};
 
 export const SearchDecoration = styled.div(
   ({ theme, alignCenter, disabled }) => css`
