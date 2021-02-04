@@ -65,7 +65,7 @@ const Container = styled.div`
   ${({ isDashboard }) =>
     isDashboard &&
     css`
-      max-height: 164px;
+      max-height: 184px;
       border-radius: 0;
       grid-template-columns: 1fr 32px;
       grid-template-rows: 3;

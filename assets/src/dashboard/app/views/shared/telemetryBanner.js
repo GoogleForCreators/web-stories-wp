@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 import {
   Banner,
   Checkbox,
+  Link,
   Text,
   THEME_CONSTANTS,
 } from '../../../../design-system';
@@ -55,7 +56,8 @@ const VisitSettingsText = styled(Text)`
   letter-spacing: 0.0133em;
 `;
 
-const NavLink = styled(Text)`
+const NavLink = styled(Link)`
+  display: inline-block;
   margin: 0;
 `;
 
@@ -110,7 +112,7 @@ export const TelemetryOptInBanner = forwardRef(
             ref={checkboxRef}
           />
           <LabelText
-            as="span"
+            forwardedAs="span"
             aria-checked={checked}
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           >
@@ -119,7 +121,6 @@ export const TelemetryOptInBanner = forwardRef(
                 a: (
                   <NavLink
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                    as="a"
                     href={__(
                       'https://policies.google.com/privacy',
                       'web-stories'
@@ -142,14 +143,13 @@ export const TelemetryOptInBanner = forwardRef(
           </LabelText>
         </Label>
         <VisitSettingsText
-          as="span"
+          forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
         >
           <TranslateWithMarkup
             mapping={{
               a: (
                 <NavLink
-                  as="a"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
                   href={resolveRoute(APP_ROUTES.EDITOR_SETTINGS)}
                   aria-label={__('Settings', 'web-stories')}
