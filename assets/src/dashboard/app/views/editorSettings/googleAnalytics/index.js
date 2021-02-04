@@ -50,15 +50,9 @@ export const TEXT = {
   ),
   CONTEXT_LINK:
     'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
-  SECTION_HEADING: __('Google Analytics', 'web-stories'),
-  PLACEHOLDER: __(
-    'Enter your Google Analytics Tracking ID or Measurement ID',
-    'web-stories'
-  ),
-  ARIA_LABEL: __(
-    'Enter your Google Analytics Tracking ID or Measurement ID',
-    'web-stories'
-  ),
+  SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
+  PLACEHOLDER: __('Enter your Google Analytics Tracking ID', 'web-stories'),
+  ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
   SITE_KIT_NOT_INSTALLED: __(
@@ -187,7 +181,7 @@ function GoogleAnalyticsSettings({
             onClick={handleOnSave}
           >
             {TEXT.SUBMIT_BUTTON}
-          </SaveButton>
+          </Button>
         </InlineForm>
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

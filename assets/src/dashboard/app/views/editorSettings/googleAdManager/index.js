@@ -27,7 +27,6 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import { validateAdManagerSlotIdFormat } from '../../../../utils';
 import {
   InlineForm,
-  SaveButton,
   SettingForm,
   SettingHeading,
   SettingsTextInput,
@@ -116,7 +115,7 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
             onClick={onSaveSlotId}
           >
             {TEXT.SUBMIT_BUTTON}
-          </SaveButton>
+          </Button>
         </InlineForm>
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

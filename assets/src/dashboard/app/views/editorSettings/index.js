@@ -384,7 +384,7 @@ function EditorSettings() {
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
         <PageHeading
-          defaultTitle={__('Settings', 'web-stories')}
+          defaultTitle={__('Stories Global Settings', 'web-stories')}
           showTypeahead={false}
         />
         <Layout.Scrollable>
