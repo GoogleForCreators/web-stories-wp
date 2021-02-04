@@ -31,7 +31,7 @@ import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
-import { trackError } from '../../../tracking';
+import { trackError, getTimeTracker } from '../../../tracking';
 
 function useUploader() {
   const {
@@ -118,6 +118,11 @@ function useUploader() {
       };
 
       if (canTranscodeFile(file)) {
+        const trackTiming = getTimeTracker(
+          'video transcoding',
+          'editor',
+          'Media'
+        );
         try {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           const newFile = await transcodeVideo(file);
@@ -142,6 +147,8 @@ function useUploader() {
 
           const message = __('Video optimization failed', 'web-stories');
           throw createError('TranscodingError', file.name, message);
+        } finally {
+          trackTiming();
         }
       }
 
