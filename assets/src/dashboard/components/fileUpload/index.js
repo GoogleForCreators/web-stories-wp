@@ -34,6 +34,13 @@ import {
   Text,
   themeHelpers,
 } from '../../../design-system';
+import { focusCSS } from '../../../design-system/theme/helpers';
+
+const StyledButton = styled(Button)`
+  :focus-within {
+    ${({ theme }) => focusCSS(theme.colors.border.focus)}
+  }
+`;
 
 const StyledButton = styled(Button)`
   :focus-within {
