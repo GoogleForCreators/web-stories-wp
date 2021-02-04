@@ -24,26 +24,38 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Text } from '..';
+import { Text } from '../typography/text';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
+
+const Container = styled.div`
+  width: 100%;
+`;
+
+const Label = styled(Text)`
+  margin-bottom: 12px;
+`;
+
+const Hint = styled(Text)`
+  margin-top: 12px;
+`;
 
 const StyledInput = styled.input(
   ({ hasError, theme }) => css`
     box-sizing: border-box;
+    height: 36px;
     width: 100%;
-    margin: 12px 0;
     padding: 8px 12px;
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
       preset: {
-        ...theme.typography.presets.label[
+        ...theme.typography.presets.paragraph[
           THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
         ],
       },
       theme,
     })};
     background-color: ${theme.colors.bg.primary};
-    border: 2px solid
+    border: 1px solid
       ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
     border-radius: ${theme.borders.radius.small};
     color: ${theme.colors.fg.primary};
@@ -63,15 +75,28 @@ const StyledInput = styled.input(
   `
 );
 
-export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
+export const Input = ({
+  className,
+  disabled,
+  hasError,
+  hint,
+  id,
+  label,
+  ...props
+}) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
 
   return (
-    <div>
+    <Container className={className}>
       {label && (
-        <Text htmlFor={inputId} as="label" disabled={disabled}>
+        <Label
+          id="input-label"
+          htmlFor={inputId}
+          as="label"
+          disabled={disabled}
+        >
           {label}
-        </Text>
+        </Label>
       )}
       <StyledInput
         id={inputId}
@@ -79,8 +104,12 @@ export const Input = ({ disabled, hasError, hint, id, label, ...props }) => {
         hasError={hasError}
         {...props}
       />
-      {hint && <Text hasError={hasError}>{hint}</Text>}
-    </div>
+      {hint && (
+        <Hint id="input-hint" hasError={hasError}>
+          {hint}
+        </Hint>
+      )}
+    </Container>
   );
 };
 
@@ -121,6 +150,7 @@ export const labelAccessibilityValidator = function (props, _, componentName) {
 
 Input.propTypes = {
   'aria-label': labelAccessibilityValidator,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
