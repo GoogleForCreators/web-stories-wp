@@ -43,10 +43,6 @@ function handleErrors(event) {
  * @param {PromiseRejectionEvent} event Promise rejection event.
  */
 function handleUncaughtPromises(event) {
-  if (!event.filename.includes('web-stories')) {
-    return;
-  }
-
   const errorMessage = event.reason || 'Promise rejection';
   trackError('Promise rejection', errorMessage);
 }
