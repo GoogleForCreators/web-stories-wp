@@ -233,6 +233,7 @@ export const Search = ({
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           disabled={disabled}
           forwardedAs="span"
+          isBold
         >
           {label}
         </Label>
