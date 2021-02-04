@@ -71,6 +71,7 @@ const CheckboxContainer = styled.div(
         ~ ${Border} {
           border-color: ${theme.colors.border.disable};
         }
+
         ~ ${StyledCheckmark} {
           color: ${theme.colors.fg.disable};
         }
