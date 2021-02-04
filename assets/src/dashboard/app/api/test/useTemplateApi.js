@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import { toUTCDate } from '../../../../date';
+/**
+ * External dependencies
+ */
+import { toUTCDate } from '@web-stories-wp/date';
 import { reshapeTemplateObject } from '../useTemplateApi';
 
 describe('reshapeTemplateObject', () => {

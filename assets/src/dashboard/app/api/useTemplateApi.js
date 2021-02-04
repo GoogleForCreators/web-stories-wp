@@ -23,7 +23,7 @@ import queryString from 'query-string';
 /**
  * Internal dependencies
  */
-import { toUTCDate } from '../../../date';
+import { toUTCDate } from '@web-stories-wp/date';
 import base64Encode from '../../../edit-story/utils/base64Encode';
 import getAllTemplates from '../../templates';
 import { APP_ROUTES } from '../../constants';

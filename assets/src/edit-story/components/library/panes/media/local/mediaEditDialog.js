@@ -29,6 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { formatDate, toDate, isValid } from '@web-stories-wp/date';
 import { useAPI } from '../../../../../app/api';
 import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';
@@ -36,7 +37,6 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
-import { formatDate, toDate, isValid } from '../../../../../../date';
 import { trackError } from '../../../../../../tracking';
 
 const THUMBNAIL_WIDTH = 152;

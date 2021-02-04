@@ -27,8 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { trackEvent } from '../../../../tracking';
-import { toDate, isAfter, subMinutes, getOptions } from '../../../../date';
 import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';

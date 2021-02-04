@@ -25,8 +25,8 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
+import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '../tracking';
-import { updateSettings } from '../date';
 import App from './editorApp';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 

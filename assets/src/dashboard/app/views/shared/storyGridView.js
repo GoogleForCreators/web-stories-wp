@@ -27,6 +27,7 @@ import { useRef, useEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import {
   CardGrid,
   CardGridItem,
@@ -43,7 +44,6 @@ import {
   RenameStoryPropType,
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
-import { getRelativeDisplayDate } from '../../../../date';
 import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';

@@ -22,8 +22,8 @@ import { within } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import Fixture from '../../../../karma/fixture';
-import { getRelativeDisplayDate } from '../../../../../date';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,

@@ -23,7 +23,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { subMinutes } from '../../../../date';
+import { subMinutes } from '@web-stories-wp/date';
 import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
 import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';

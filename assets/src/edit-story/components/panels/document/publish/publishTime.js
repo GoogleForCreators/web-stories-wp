@@ -29,13 +29,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { format, formatTime, is12Hour } from '@web-stories-wp/date';
 import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';
 import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../../../design-system';
 import useFocusOut from '../../../../utils/useFocusOut';
-import { format, formatTime, is12Hour } from '../../../../../date';
 
 const StyledButton = styled.button`
   color: ${({ theme }) => theme.colors.fg.white};
