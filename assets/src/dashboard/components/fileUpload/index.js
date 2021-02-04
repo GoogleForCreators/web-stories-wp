@@ -31,7 +31,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { DEFAULT_FILE_UPLOAD_TYPES } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
-import { TypographyPresets } from '../typography';
 import {
   Button,
   BUTTON_SIZES,
@@ -82,7 +81,6 @@ const LoadingIndicator = styled.div`
   transition: opacity ease-in-out 300ms;
 
   p {
-    ${TypographyPresets.Small};
     font-style: italic;
   }
 `;
