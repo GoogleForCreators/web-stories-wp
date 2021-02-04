@@ -261,9 +261,9 @@ class Plugin {
 		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
 
 		// Gutenberg Blocks.
-		$this->embed_block       = new Embed_Block();
+		// $this->embed_block       = new Embed_Block();
 		$this->web_stories_block = new Web_Stories_Block();
-		add_action( 'init', [ $this->embed_block, 'init' ] );
+		// add_action( 'init', [ $this->embed_block, 'init' ] );
 		add_action( 'init', [ $this->web_stories_block, 'init' ] );
 
 		// Embed shortcode.

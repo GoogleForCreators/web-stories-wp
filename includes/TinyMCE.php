@@ -59,7 +59,9 @@ class TinyMCE {
 	 * @return array
 	 */
 	public function tinymce_web_stories_button( array $buttons ) {
-		array_push( $buttons, 'web_stories' );
+		if ( ! $this->is_block_editor() ) {
+			array_push( $buttons, 'web_stories' );
+		}
 
 		return $buttons;
 	}
@@ -72,7 +74,9 @@ class TinyMCE {
 	 * @return array
 	 */
 	public function web_stories_mce_plugin( array $plugins ) {
-		$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/web-stories-button.js';
+		if ( ! $this->is_block_editor() ) {
+			$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/web-stories-button.js';
+		}
 
 		return $plugins;
 	}

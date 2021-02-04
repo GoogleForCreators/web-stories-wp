@@ -45,7 +45,13 @@ import { icon } from './';
 const { config } = webStoriesBlockSettings;
 
 function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
-  const { blockType, viewType } = attributes;
+  const { blockType, viewType, url } = attributes;
+
+  if (!blockType && url && url.length) {
+    setAttributes({
+      blockType: BLOCK_TYPE_URL,
+    });
+  }
 
   if (!blockType) {
     return (

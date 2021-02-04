@@ -52,7 +52,7 @@ class Web_Stories_Block {
 	 *
 	 * @var string
 	 */
-	const BLOCK_NAME = 'web-stories/list';
+	const BLOCK_NAME = 'web-stories/embed';
 
 	/**
 	 * Current block's block attributes.
