@@ -31,7 +31,9 @@ const TOGGLE_WIDTH = 44;
 const CIRCLE_DIAMETER = 28;
 const CIRCLE_INITIAL_POSITION = (TOGGLE_HEIGHT - CIRCLE_DIAMETER) / 2;
 const CIRCLE_FINAL_POSITION =
-  TOGGLE_WIDTH - CIRCLE_DIAMETER - CIRCLE_INITIAL_POSITION;
+  TOGGLE_WIDTH +
+  CIRCLE_INITIAL_POSITION -
+  (CIRCLE_DIAMETER / 2 - CIRCLE_INITIAL_POSITION / 2);
 
 const ICON_WIDTH = 7;
 const ICON_TOP_POSITION = 8;
@@ -66,7 +68,7 @@ const Circle = styled.span(
       background-color: ${theme.colors.fg.secondary};
       border-radius: ${theme.borders.radius.round};
       cursor: pointer;
-      transition: background-color 0.3s, border-color 0.3s, left 0.15s;
+      transition: background-color 0.3s, border-color 0.3s, transform 0.15s;
     }
   `
 );
@@ -144,7 +146,7 @@ const ToggleContainer = styled.div(
         }
 
         ~ ${Circle}:after {
-          left: ${CIRCLE_FINAL_POSITION}px;
+          transform: translate3d(${CIRCLE_FINAL_POSITION}px, 0, 0);
           background-color: ${theme.colors.interactiveBg.positiveNormal};
         }
 

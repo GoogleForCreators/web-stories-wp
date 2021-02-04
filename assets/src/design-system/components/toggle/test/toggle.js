@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-
-/**
  * Internal dependencies
  */
 import { Toggle } from '..';
