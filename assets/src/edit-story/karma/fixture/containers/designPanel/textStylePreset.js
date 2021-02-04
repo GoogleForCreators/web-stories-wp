@@ -29,23 +29,23 @@ export class TextStylePreset extends AbstractPanel {
   }
 
   get add() {
-    return this.getByRole('button', { name: /Add style preset/ });
+    return this.getByRole('button', { name: /Add style/ });
   }
 
   get apply() {
-    return this.getByRole('button', { name: /Apply style preset/ });
+    return this.getByRole('button', { name: /Apply style/ });
   }
 
   get presets() {
-    return this.getAllByRole('button', { name: /Apply style preset/ });
+    return this.getAllByRole('button', { name: /Apply style/ });
   }
 
   get delete() {
-    return this.getByRole('button', { name: /Delete style preset/ });
+    return this.getByRole('button', { name: /Delete style/ });
   }
 
   get edit() {
-    return this.getByRole('button', { name: /Edit style presets/ });
+    return this.getByRole('button', { name: /Edit style/ });
   }
 
   get exit() {

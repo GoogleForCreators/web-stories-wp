@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -36,6 +36,7 @@ import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
 import { getElementMask, MaskTypes } from '../../masks';
+import useDoubleClick from '../../utils/useDoubleClick';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -61,7 +62,12 @@ const EmptyFrame = styled.div`
   pointer-events: none;
 `;
 
+const NOOP = () => {};
+
 function FrameElement({ element }) {
+  const { setEditingElement } = useCanvas((state) => ({
+    setEditingElement: state.actions.setEditingElement,
+  }));
   const { id, type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
@@ -108,6 +114,19 @@ function FrameElement({ element }) {
     setIsTransforming(transform !== null);
   });
 
+  // Media needs separate handler for double click.
+  const { isMedia } = getDefinitionForType(type);
+  const handleMediaDoubleClick = useCallback(
+    (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+      setEditingElement(id);
+    },
+    [id, setEditingElement, handleSelectElement, isSelected]
+  );
+  const handleMediaClick = useDoubleClick(NOOP, handleMediaDoubleClick);
+
   // For elements with no mask, handle events by the wrapper.
   const mask = getElementMask(element);
   const maskDisabled =
@@ -130,6 +149,7 @@ function FrameElement({ element }) {
     },
     onPointerEnter,
     onPointerLeave,
+    onClick: isMedia ? handleMediaClick(id) : null,
   };
 
   return (

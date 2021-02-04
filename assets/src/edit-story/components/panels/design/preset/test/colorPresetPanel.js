@@ -107,7 +107,7 @@ function setupPanel(extraStylePresets, extraStateProps, extraStoryPresets) {
 }
 
 describe('Panels/Preset', () => {
-  const EDIT_BUTTON_LABEL = 'Edit color presets';
+  const EDIT_BUTTON_LABEL = 'Edit colors';
   const APPLY_GLOBAL_PRESET = 'Apply global color';
   const ADD_LOCAL_LABEL = 'Add local color';
   const ADD_GLOBAL_LABEL = 'Add global color';

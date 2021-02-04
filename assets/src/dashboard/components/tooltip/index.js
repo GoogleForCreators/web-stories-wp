@@ -66,12 +66,17 @@ export default function Tooltip({ children, content, position }) {
   }, [content]);
 
   const offset = useMemo(() => {
-    if (!showTooltip) {
-      return {};
-    }
     let metrics = {};
 
-    if (!contentRef.current || !containerRef.current) {
+    if (!showTooltip && position === 'right') {
+      // have the tooltip render near where it will be displayed
+      // so that it doesn't interrupt the flow before being shown
+      metrics = {
+        right: 0,
+      };
+    }
+
+    if (!showTooltip || !contentRef.current || !containerRef.current) {
       return metrics;
     }
 
@@ -94,6 +99,7 @@ export default function Tooltip({ children, content, position }) {
         top: containerRect.height + 1,
       };
     }
+
     return metrics;
   }, [position, showTooltip]);
 

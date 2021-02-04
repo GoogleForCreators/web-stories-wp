@@ -26,7 +26,7 @@ const IGNORED_ERROR_MESSAGES = ['ResizeObserver loop limit exceeded'];
  * @param {ErrorEvent} event Error event.
  */
 function handleErrors(event) {
-  if (!event.filename.includes('web-stories')) {
+  if (event.filename && !event.filename.includes('web-stories')) {
     return;
   }
 

@@ -75,7 +75,12 @@ function DragHandle({
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    <Handle ref={handle} onDoubleClick={handleDoubleClick} $position={position}>
+    <Handle
+      ref={handle}
+      onClick={(e) => e.stopPropagation()}
+      onDoubleClick={handleDoubleClick}
+      $position={position}
+    >
       <Bar
         role="slider"
         aria-orientation="vertical"
