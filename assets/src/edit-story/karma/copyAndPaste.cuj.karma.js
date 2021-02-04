@@ -24,8 +24,8 @@ import { Fixture } from './fixture';
 
 /**
  * Takes an HTMLCollection and sequentially performs an
- * async action on each element in the collection. 
- 
+ * async action on each element in the collection.
+ *
  * Call order of operations is based on the order of
  * the elements in the collection
  *
@@ -116,7 +116,10 @@ function sequencedForEach(htmlCollection, op) {
       expect(selection).toEqual([newElement.id]);
     });
 
-    it('retains all foreground animations', async () => {
+    // Disable reason: flakey tests.
+    // See https://github.com/google/web-stories-wp/pull/6162
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('retains all foreground animations', async () => {
       // open effect chooser
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;

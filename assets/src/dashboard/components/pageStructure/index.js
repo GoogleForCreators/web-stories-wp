@@ -49,7 +49,9 @@ import {
   NavListItem,
 } from './navigationComponents';
 
-export const AppFrame = styled.div({});
+export const AppFrame = styled.div`
+  overflow-x: scroll;
+`;
 
 export const PageContent = styled.div`
   position: relative;
@@ -59,9 +61,11 @@ export const PageContent = styled.div`
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+  @media screen and (max-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET
+      .maxWidth}px) {
     left: 0;
     width: 100%;
+    min-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET.minWidth}px;
   }
 `;
 

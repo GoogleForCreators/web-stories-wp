@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use WP_Post_Type;
+
 /**
  * KSES class.
  *
@@ -33,13 +35,28 @@ namespace Google\Web_Stories;
  */
 class KSES {
 	/**
-	 * Initializes KSES filters for stories.
+	 * Initializes KSES filters for all post types if user can edit stories.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
 	public function init() {
+
+		$edit_posts       = false;
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if (
+			$post_type_object instanceof WP_Post_Type &&
+			property_exists( $post_type_object->cap, 'edit_posts' )
+		) {
+
+			$edit_posts = current_user_can( $post_type_object->cap->edit_posts );
+		}
+
+		if ( ! $edit_posts ) {
+			return;
+		}
+
 		if ( ! current_user_can( 'unfiltered_html' ) ) {
 			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
 			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
@@ -47,23 +64,6 @@ class KSES {
 			add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
 			remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		}
-	}
-
-	/**
-	 * Restores original KSES behavior.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function remove_filters() {
-		if ( ! current_user_can( 'unfiltered_html' ) ) {
-			remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10 );
-			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
-		}
-		kses_init();
 	}
 
 	/**

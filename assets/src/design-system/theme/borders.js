@@ -19,6 +19,6 @@ export const borders = {
     small: '4px',
     medium: '8px',
     x_large: '50px',
-    round: '50%',
+    round: '9999px',
   },
 };

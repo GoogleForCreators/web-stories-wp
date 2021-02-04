@@ -22,9 +22,9 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { migrate } from '../../../../migration';
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
-import { migrate } from '../../../migration';
 
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
@@ -53,6 +53,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           permalink_template: permalinkTemplate,
           style_presets: globalStoryStyles,
           password,
+          preview_link: previewLink,
           _embedded: embedded = {},
         } = post;
 
@@ -129,6 +130,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           permalinkConfig,
           publisherLogoUrl,
           password,
+          previewLink,
           currentStoryStyles: storyData?.currentStoryStyles || { colors: [] },
           globalStoryStyles,
           autoAdvance: storyData?.autoAdvance,

@@ -372,7 +372,7 @@ class Experiments {
 				'name'        => 'videoOptimization',
 				'label'       => __( 'Video optimization', 'web-stories' ),
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
-				'group'       => 'editor',
+				'group'       => 'general',
 			],
 		];
 	}

@@ -49,10 +49,10 @@ module.exports = function (config) {
       'karma-webpack',
       'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
-      require('./karma/karma-puppeteer-launcher/index.cjs'),
-      require('./karma/karma-puppeteer-client/index.cjs'),
-      require('./karma/karma-cuj-reporter/index.cjs'),
-      require('./karma/karma-failed-tests-reporter/index.cjs'),
+      require('./packages/karma-puppeteer-launcher/src/index.cjs'),
+      require('./packages/karma-puppeteer-client/src/index.cjs'),
+      require('./packages/karma-cuj-reporter/src/index.cjs'),
+      require('./packages/karma-failed-tests-reporter/src/index.cjs'),
     ],
 
     // Frameworks to use.
@@ -62,7 +62,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       { pattern: 'assets/src/edit-story/**/karma/**/*.js', watched: false },
-      { pattern: 'karma/fixture/init.js', watched: false },
+      { pattern: 'assets/src/karma-fixture/init.js', watched: false },
       {
         pattern: '__static__/**/*',
         watched: false,
@@ -131,6 +131,7 @@ module.exports = function (config) {
         slowMo: config.slowMo || 0,
         devtools: config.devtools || false,
         snapshots: config.snapshots || false,
+        snapshotsDir: '.test_artifacts/karma_snapshots',
         defaultViewport: getViewport(config.viewport),
       },
     },
@@ -176,6 +177,9 @@ module.exports = function (config) {
       terminal: false,
     },
 
+    // When a browser crashes,try to relaunch more than just 2 times (which is the default)
+    retryLimit: 5,
+
     // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
     browserNoActivityTimeout: 100000,
 
@@ -183,7 +187,8 @@ module.exports = function (config) {
     browserDisconnectTimeout: 10000,
 
     // Custom context file.
-    customClientContextFile: 'karma/fixture/client_with_context.html',
+    customClientContextFile:
+      'assets/src/karma-fixture/client_with_context.html',
   });
 };
 

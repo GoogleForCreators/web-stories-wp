@@ -27,9 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { addQueryArgs } from '../../../../design-system';
 import { trackEvent } from '../../../../tracking';
-import { useStory, useLocalMedia, useConfig } from '../../../app';
+import { useStory, useLocalMedia } from '../../../app';
 import { Outline } from '../../button';
 import escapeHTML from '../../../utils/escapeHTML';
 import PreviewErrorDialog from '../previewErrorDialog';
@@ -37,19 +36,18 @@ import PreviewErrorDialog from '../previewErrorDialog';
 const PREVIEW_TARGET = 'story-preview';
 
 function Preview() {
-  const { isSaving, link, status, autoSave, saveStory } = useStory(
+  const { isSaving, previewLink, status, autoSave, saveStory } = useStory(
     ({
       state: {
         meta: { isSaving },
-        story: { link, status },
+        story: { status, previewLink },
       },
       actions: { autoSave, saveStory },
-    }) => ({ isSaving, link, status, autoSave, saveStory })
+    }) => ({ isSaving, status, previewLink, autoSave, saveStory })
   );
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
-  const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
     null
@@ -61,11 +59,6 @@ function Preview() {
    */
   const openPreviewLink = useCallback(() => {
     trackEvent('preview_story', 'editor');
-
-    // Display the actual link in case of a draft.
-    const previewLink = isDraft
-      ? addQueryArgs(link, { preview: 'true' })
-      : autoSaveLink;
 
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
@@ -112,7 +105,7 @@ function Preview() {
         }
       })
       .catch(() => setPreviewLinkToOpenViaDialog(previewLink));
-  }, [autoSave, autoSaveLink, isDraft, link, saveStory]);
+  }, [autoSave, isDraft, previewLink, saveStory]);
 
   const openPreviewLinkSync = useCallback(
     (evt) => {

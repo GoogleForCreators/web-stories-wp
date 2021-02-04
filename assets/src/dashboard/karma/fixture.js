@@ -27,9 +27,9 @@ import Modal from 'react-modal';
  */
 import App from '../app';
 import ApiProvider from '../app/api/apiProvider';
-import FixtureEvents from '../../../../karma/fixture/events';
-import ComponentStub from '../../../../karma/fixture/componentStub';
-import actPromise from '../../../../karma/fixture/actPromise';
+import FixtureEvents from '../../karma-fixture/events';
+import ComponentStub from '../../karma-fixture/componentStub';
+import actPromise from '../../karma-fixture/actPromise';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 

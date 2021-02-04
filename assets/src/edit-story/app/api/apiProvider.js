@@ -28,16 +28,16 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import { DATA_VERSION } from '../../../migration';
 import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
-import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
 import getAllPageLayouts from './getAllPageLayouts';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck, metaBoxes },
+    api: { stories, media, link, users, statusCheck, metaBoxes, currentUser },
     encodeMarkup,
     cdnURL,
     assetsURL,
@@ -265,6 +265,12 @@ function APIProvider({ children }) {
     [users]
   );
 
+  const getCurrentUser = useCallback(() => {
+    return apiFetch({
+      path: currentUser,
+    });
+  }, [currentUser]);
+
   // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
   const saveMetaBoxes = useCallback(
     (story, formData) => {
@@ -325,6 +331,7 @@ function APIProvider({ children }) {
       saveMetaBoxes,
       getStatusCheck,
       getPageLayouts,
+      getCurrentUser,
     },
   };
 
