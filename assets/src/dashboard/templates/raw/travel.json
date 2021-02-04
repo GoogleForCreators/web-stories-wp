@@ -175,7 +175,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page1_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page1_bg.jpg",
             "width": 220,
             "height": 147,
             "poster": "",
@@ -313,7 +313,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-17T21:30:34",
-            "src": "https://replaceme.com/images/templates/travel/travel_icon_logo.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_icon_logo.png",
             "width": 32,
             "height": 10,
             "posterId": 0,
@@ -738,7 +738,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page2_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page2_image1.jpg",
             "width": 220,
             "height": 331,
             "poster": "",
@@ -928,7 +928,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page3_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page3_image1.jpg",
             "width": 220,
             "height": 275,
             "poster": "",
@@ -1184,7 +1184,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page4_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page4_bg.jpg",
             "width": 220,
             "height": 147,
             "poster": "",
@@ -1468,7 +1468,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page5_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page5_bg.jpg",
             "width": 220,
             "height": 149,
             "poster": "",
@@ -1775,7 +1775,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page6_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page6_bg.jpg",
             "width": 220,
             "height": 124,
             "poster": "",
@@ -1943,7 +1943,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/travel/travel_page6_image1.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page6_image1.png",
             "width": 220,
             "height": 371,
             "poster": "",
@@ -2240,7 +2240,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page7_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page7_image1.jpg",
             "width": 220,
             "height": 330,
             "poster": "",
@@ -2485,7 +2485,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page8_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page8_bg.jpg",
             "width": 220,
             "height": 147,
             "poster": "",
@@ -3361,7 +3361,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page9_image1.jpg",
             "width": 220,
             "height": 165,
             "poster": "",
@@ -3403,7 +3403,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page9_image2.jpg",
             "width": 220,
             "height": 124,
             "poster": "",
@@ -3445,7 +3445,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image4.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page9_image4.jpg",
             "width": 220,
             "height": 147,
             "poster": "",
@@ -3487,7 +3487,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image5.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page9_image5.jpg",
             "width": 220,
             "height": 330,
             "poster": "",
@@ -4032,7 +4032,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page10_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page10_image1.jpg",
             "width": 220,
             "height": 112,
             "poster": "",
@@ -4072,7 +4072,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page10_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page10_image2.jpg",
             "width": 220,
             "height": 83,
             "poster": "",
@@ -4114,7 +4114,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page10_image3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page10_image3.jpg",
             "width": 220,
             "height": 124,
             "poster": "",

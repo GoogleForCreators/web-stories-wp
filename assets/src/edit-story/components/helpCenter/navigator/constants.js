@@ -13,6 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const NAVIGATION_GUTTER = 24;
 export const NAVIGATION_HEIGHT = 48;
 export const NAVIGATION_WIDTH = 343;

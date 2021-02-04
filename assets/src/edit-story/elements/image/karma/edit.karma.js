@@ -59,10 +59,7 @@ describe('Image Editor', () => {
       expect(frame).toBeTruthy();
     });
 
-    // Disable reason: flakey tests.
-    // See https://github.com/google/web-stories-wp/pull/6162
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xdescribe('edit mode', () => {
+    describe('edit mode', () => {
       beforeEach(async () => {
         await fixture.events.click(frame);
         await fixture.events.click(frame);
