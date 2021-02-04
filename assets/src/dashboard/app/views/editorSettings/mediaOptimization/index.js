@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
 
 /**
@@ -41,17 +40,6 @@ export default function MediaOptimizationSettings({
   onCheckboxSelected,
   disabled,
 }) {
-  const checkboxRef = useRef();
-  const focusOnCheckbox = useRef(false);
-
-  const checked = Boolean(selected);
-
-  useEffect(() => {
-    if (focusOnCheckbox.current) {
-      checkboxRef.current.focus();
-    }
-  });
-
   return (
     <SettingForm>
       <div>
@@ -63,21 +51,14 @@ export default function MediaOptimizationSettings({
         <CheckboxLabel forwardedAs="label" htmlFor="media-optimization">
           <Checkbox
             id="media-optimization"
-            ref={checkboxRef}
             data-testid="media-optimization-settings-checkbox"
             disabled={disabled}
-            onChange={() => {
-              onCheckboxSelected();
-              focusOnCheckbox.current = true;
-            }}
-            onBlur={() => {
-              focusOnCheckbox.current = false;
-            }}
-            checked={checked}
+            onChange={onCheckboxSelected}
+            checked={Boolean(selected)}
           />
           <CheckboxLabelText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-            aria-checked={checked}
+            aria-checked={Boolean(selected)}
             forwardedAs="span"
           >
             {__(
