@@ -76,7 +76,7 @@ describe('Search <Search />', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('should show inputValue as selectedValue regardless of if selectedValue is found in options', async () => {
+  it('should allow inputValue to update outside of options in menu', async () => {
     const container = renderWithProviders(
       <Search
         options={basicDropDownOptions}
@@ -118,8 +118,8 @@ describe('Search <Search />', () => {
     expect(menu).toBeInTheDocument();
   });
 
-  it('should show an active icon on list item that is active', async () => {
-    const { getByRole, findByText } = renderWithProviders(
+  it('should show an active icon on list item that is active', () => {
+    const { getByRole } = renderWithProviders(
       <Search
         emptyText={'No options available'}
         ariaInputLabel={'label'}
@@ -131,12 +131,10 @@ describe('Search <Search />', () => {
 
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
-    fireEvent.focus(input);
+    fireEvent.click(input);
 
     // wait for debounced callback to allow a select click handler to process
-    await jest.runAllTimers();
-
-    await findByText(basicDropDownOptions[2].label);
+    jest.runOnlyPendingTimers();
 
     const activeMenuItem = getByRole('option', {
       name: `Selected ${basicDropDownOptions[2].label}`,

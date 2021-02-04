@@ -56,11 +56,13 @@ describe('useSearch()', function () {
     );
 
     act(() => {
-      result.current.inputValue.set('bogus value');
+      result.current.inputValue.set('freeform answer not in options');
     });
 
     expect(result.current.activeOption).toBeNull();
-    expect(result.current.inputValue.value).toBe('bogus value');
+    expect(result.current.inputValue.value).toBe(
+      'freeform answer not in options'
+    );
   });
 
   it('should return an empty array when no options are present', () => {
