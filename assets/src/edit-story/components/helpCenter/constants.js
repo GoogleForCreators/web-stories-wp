@@ -88,14 +88,27 @@ export const TIPS = {
   },
 };
 
-export const DONE_TIP = {
-  title: __('Done!', 'web-stories'),
-  description: [
-    __(
-      'You’re caught up with quick tips. We’ll notify you when we add new tips, but feel free to come back whenever you need help.',
-      'web-stories'
-    ),
-  ],
-};
+export const DONE_TIP_ENTRY = [
+  'done',
+  {
+    title: __('Done!', 'web-stories'),
+    description: [
+      __(
+        'You’re caught up with quick tips. We’ll notify you when we add new tips, but feel free to come back whenever you need help.',
+        'web-stories'
+      ),
+    ],
+  },
+];
 
 export const GUTTER_WIDTH = 24;
+
+export const TRANSITION_DURATION = 500;
+
+export const Z_INDEX = {
+  MENU: 1,
+  QUICK_TIP: 2,
+};
+
+// @TODO make this dynamic based off of unread tips.
+export const NAVIGATION_FLOW = [...Object.keys(TIPS), DONE_TIP_ENTRY[0]];

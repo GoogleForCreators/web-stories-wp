@@ -16,14 +16,22 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useRef } from 'react';
 import { useFeatures } from 'flagged';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme as dsTheme, ThemeGlobals } from '../../../design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+  useFocusOut,
+} from '../../../design-system';
+import { Navigator } from './navigator';
+import { Companion } from './companion';
 import { Toggle } from './toggle';
+import { useHelpCenter } from './useHelpCenter';
+import { Popup } from './popup';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -42,18 +50,41 @@ const Wrapper = styled.div`
   }
 `;
 
+const POPUP_ID = 'help_center_companion';
+
 export const HelpCenter = () => {
+  const ref = useRef(null);
   const { enableQuickTips } = useFeatures();
-  const [isOpen, setIsOpen] = useState(false);
+  const { state, actions } = useHelpCenter();
+
+  useFocusOut(ref, actions.close, []);
 
   return enableQuickTips ? (
     <ThemeProvider theme={dsTheme}>
       <ThemeGlobals.OverrideFocusOutline />
-      <Wrapper>
+      <Wrapper ref={ref}>
+        <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
+          <Navigator
+            onNext={actions.goToNext}
+            onPrev={actions.goToPrev}
+            onAllTips={actions.goToMenu}
+            onClose={actions.close}
+            hasBottomNavigation={state.hasBottomNavigation}
+            isNextDisabled={state.isNextDisabled}
+            isPrevDisabled={state.isPrevDisabled}
+          >
+            <Companion
+              tipKey={state.navigationFlow[state.navigationIndex]}
+              onTipSelect={actions.goToTip}
+              isLeftToRightTransition={state.isLeftToRightTransition}
+            />
+          </Navigator>
+        </Popup>
         <Toggle
-          isOpen={isOpen}
-          onClick={() => setIsOpen((v) => !v)}
+          isOpen={state.isOpen}
+          onClick={actions.toggle}
           notificationCount={1}
+          popupId={POPUP_ID}
         />
       </Wrapper>
     </ThemeProvider>
