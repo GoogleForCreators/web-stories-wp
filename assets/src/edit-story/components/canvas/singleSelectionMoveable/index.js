@@ -25,8 +25,7 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { useBatchingCallback } from '../../../../design-system';
-import { useStory, useCanvas } from '../../../app';
-import useLayout from '../../../app/layout/useLayout';
+import { useStory, useCanvas, useLayout } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';

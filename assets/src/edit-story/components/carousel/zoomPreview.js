@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import useLayout from '../../app/layout/useLayout';
+import { useLayout } from '../../app';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
 
 const Box = styled.aside`

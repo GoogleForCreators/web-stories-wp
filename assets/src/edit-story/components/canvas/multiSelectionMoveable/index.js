@@ -24,8 +24,7 @@ import { useRef, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import Moveable from '../../moveable';
-import { useStory, useCanvas } from '../../../app';
-import useLayout from '../../../app/layout/useLayout';
+import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';

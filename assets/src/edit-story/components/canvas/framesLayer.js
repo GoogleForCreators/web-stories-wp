@@ -31,8 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
-import { useStory, useDropTargets, useCanvas } from '../../app';
-import useLayout from '../../app/layout/useLayout';
+import { useStory, useDropTargets, useCanvas, useLayout } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
