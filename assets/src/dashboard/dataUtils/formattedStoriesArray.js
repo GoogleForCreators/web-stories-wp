@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { toUTCDate } from '../../date';
+import { toUTCDate } from '@web-stories-wp/date';
 
 const formattedStoriesArray = [
   {
