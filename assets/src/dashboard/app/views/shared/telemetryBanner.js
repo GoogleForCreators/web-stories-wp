@@ -33,7 +33,6 @@ import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
 const Banner = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,7 +52,8 @@ const Header = styled.div`
 const Title = styled.h1`
   display: inline-block;
   font-size: 18px;
-  font-weight: ${({ theme }) => theme.typography.weight.normal};
+  font-weight: ${({ theme }) =>
+    theme.DEPRECATED_THEME.typography.weight.normal};
   line-height: 24px;
   margin-bottom: 13px;
 `;
@@ -64,7 +64,7 @@ const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
 
 export const LabelText = styled.span`
   ${TypographyPresets.Small};
-  color: ${({ theme }) => theme.colors.gray400};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray400};
   margin-bottom: 16px;
   max-width: 600px;
 `;
@@ -81,7 +81,7 @@ const CheckBox = styled.input.attrs({
 `;
 
 const CloseIcon = styled(CloseSVG)`
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
   margin: 0 auto;
   padding: 2px;
   width: 14px;
@@ -98,19 +98,19 @@ const ToggleButton = styled.button.attrs({
   display: flex;
   height: 16px;
   width: 16px;
-  border: ${({ theme }) => theme.borders.transparent};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   border-radius: 50%;
   padding: 0;
-  background: ${({ theme }) => theme.colors.gray200};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
   cursor: pointer;
   float: right;
   margin-right: 14px;
 
   &:hover svg {
-    color: ${({ theme }) => theme.colors.gray50};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray50};
   }
   &:active svg {
-    color: ${({ theme }) => theme.colors.gray50};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray50};
   }
 `;
 
@@ -225,7 +225,7 @@ export default function TelemetryBannerContainer(props) {
   const ref = useRef();
 
   const {
-    actions: { setTelemetryBannerOpen, setTelemetryBannerHeight },
+    actions: { setTelemetryBannerOpen },
   } = useLayoutContext();
 
   const previousBannerVisible = useRef(bannerVisible);
@@ -237,13 +237,12 @@ export default function TelemetryBannerContainer(props) {
       ref.current
     ) {
       setTelemetryBannerOpen(true);
-      setTelemetryBannerHeight(ref.current.offsetHeight);
       previousBannerVisible.current = true;
     } else if (!bannerVisible && previousBannerVisible.current) {
       setTelemetryBannerOpen(false);
       previousBannerVisible.current = false;
     }
-  }, [bannerVisible, setTelemetryBannerOpen, setTelemetryBannerHeight]);
+  }, [bannerVisible, setTelemetryBannerOpen]);
 
   return (
     <TelemetryOptInBanner

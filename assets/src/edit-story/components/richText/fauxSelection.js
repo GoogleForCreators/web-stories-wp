@@ -50,7 +50,7 @@ export function useFauxSelection(editorState, setEditorState) {
     }
     const content = editorState.getCurrentContent();
     const currentSelection = editorState.getSelection();
-    const isFocused = currentSelection.getHasFocus();
+    const isFocused = currentSelection?.getHasFocus();
     const hasSelectionChanged = !isEqualSelectionIgnoreFocus(
       fauxSelection,
       currentSelection
@@ -117,10 +117,16 @@ export function useFauxSelection(editorState, setEditorState) {
   }, [fauxSelection, editorState, setEditorState]);
 }
 
-export function fauxStylesToCSS(styles) {
+export function fauxStylesToCSS(styles, css) {
   const hasFauxSelection = styles.includes(FAUX_SELECTION);
   if (!hasFauxSelection) {
     return null;
   }
-  return { backgroundColor: 'rgba(169, 169, 169, 0.7)' };
+  const style = {
+    backgroundColor: 'rgba(169, 169, 169, 0.7)',
+  };
+  if (css?.color) {
+    style.color = `var(--faux-selection-color, ${css.color})`;
+  }
+  return style;
 }

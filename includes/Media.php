@@ -27,6 +27,9 @@
 namespace Google\Web_Stories;
 
 use WP_Post;
+use WP_Query;
+use WP_REST_Request;
+use WP_Screen;
 
 /**
  * Class Media
@@ -145,20 +148,6 @@ class Media {
 
 		register_meta(
 			'post',
-			self::POSTER_POST_META_KEY,
-			[
-				'sanitize_callback' => 'rest_sanitize_boolean',
-				'type'              => 'boolean',
-				'description'       => __( 'Whether the attachment is a poster image.', 'web-stories' ),
-				'show_in_rest'      => true,
-				'default'           => false,
-				'single'            => true,
-				'object_subtype'    => 'attachment',
-			]
-		);
-
-		register_meta(
-			'post',
 			self::POSTER_ID_POST_META_KEY,
 			[
 				'sanitize_callback' => 'absint',
@@ -213,41 +202,117 @@ class Media {
 			false
 		);
 
-		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
-
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
 		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
+
+		// Hide video posters from Media grid view.
+		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
+		// Hide video posters from Media list view.
+		add_filter( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
+		// Hide video posters from web-stories/v1/media REST API requests.
+		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_poster_attachments' ], 10, 2 );
 	}
 
 	/**
-	 * Filters the current query to hide all automatically extracted poster image attachments.
+	 * Returns the tax query needed to exclude generated video poster images.
 	 *
-	 * Reduces unnecessary noise in the media library.
+	 * @param array $args Existing WP_Query args.
+	 *
+	 * @return array  Tax query arg.
+	 */
+	private function get_poster_tax_query( array $args ) {
+		$tax_query = [
+			[
+				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
+				'field'    => 'slug',
+				'terms'    => [ 'poster-generation' ],
+				'operator' => 'NOT IN',
+			],
+		];
+
+		/**
+		 *  Merge with existing tax query if needed,
+		 * in a nested way so WordPress will run them
+		 * with an 'AND' relation. Example:
+		 *
+		 * [
+		 *   'relation' => 'AND', // implicit.
+		 *   [ this query ],
+		 *   [ [ any ], [ existing ], [ tax queries] ]
+		 * ]
+		 */
+		if ( ! empty( $args['tax_query'] ) ) {
+			$tax_query[] = $args['tax_query'];
+		}
+
+		return $tax_query;
+	}
+
+	/**
+	 * Filters the attachment query args to hide generated video poster images.
+	 *
+	 * Reduces unnecessary noise in the Media grid view.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array $args Query args.
+	 *
+	 * @return array Filtered query args.
+	 */
+	public function filter_ajax_query_attachments_args( array $args ) {
+		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+
+		return $args;
+	}
+
+	/**
+	 * Filters the current query to hide generated video poster images.
+	 *
+	 * Reduces unnecessary noise in the Media list view.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param \WP_Query $query WP_Query instance, passed by reference.
+	 * @param WP_Query $query WP_Query instance, passed by reference.
 	 *
 	 * @return void
 	 */
 	public function filter_poster_attachments( &$query ) {
-		$post_type = (array) $query->get( 'post_type' );
+		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
-		if ( ! in_array( 'any', $post_type, true ) && ! in_array( 'attachment', $post_type, true ) ) {
+		if ( ! $current_screen instanceof WP_Screen ) {
 			return;
 		}
 
-		$meta_query = (array) $query->get( 'meta_query' );
+		if ( is_admin() && $query->is_main_query() && 'upload' === $current_screen->id ) {
+			$tax_query = $query->get( 'tax_query' );
 
-		$meta_query[] = [
-			'key'     => self::POSTER_POST_META_KEY,
-			'compare' => 'NOT EXISTS',
-		];
+			$query->set( 'tax_query', $this->get_poster_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		}
+	}
 
-		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
+	/**
+	 * Filters the current query to hide generated video poster images.
+	 *
+	 * Reduces unnecessary noise in media REST API requests.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array           $args Query args.
+	 * @param WP_REST_Request $request The current REST request.
+	 *
+	 * @return array Filtered query args.
+	 */
+	public function filter_rest_poster_attachments( array $args, WP_REST_Request $request ) {
+		if ( '/web-stories/v1/media' !== $request->get_route() ) {
+			return $args;
+		}
+
+		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+
+		return $args;
 	}
 
 	/**
@@ -280,7 +345,7 @@ class Media {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [ 'editor' ],
+					'enum'        => [ 'editor', 'poster-generation', 'video-optimization' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
@@ -412,7 +477,7 @@ class Media {
 	public function get_thumbnail_data( $thumbnail_id ) {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
 		list ( $src, $width, $height ) = $img_src;
-		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
+		$generated                     = $this->is_poster( $thumbnail_id );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
 
@@ -436,10 +501,29 @@ class Media {
 		}
 
 		// Used in favor of slow meta queries.
-		$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
-
+		$is_poster = $this->is_poster( $post_id );
 		if ( $is_poster ) {
 			wp_delete_attachment( $post_id, true );
 		}
+	}
+
+	/**
+	 * Helper util to check if attachment is a poster.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @param int $post_id Attachment ID.
+	 *
+	 * @return bool
+	 */
+	protected function is_poster( $post_id ) {
+		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
+		if ( is_array( $terms ) && ! empty( $terms ) ) {
+			$slugs = wp_list_pluck( $terms, 'slug' );
+
+			return in_array( 'poster-generation', $slugs, true );
+		}
+
+		return false;
 	}
 }

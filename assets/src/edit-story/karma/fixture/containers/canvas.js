@@ -192,10 +192,6 @@ class EditLayer extends Container {
   get sizeSlider() {
     return this.getByRole('slider');
   }
-
-  get sizeReset() {
-    return this.getByRole('button', { name: /reset/i });
-  }
 }
 
 /**
@@ -237,7 +233,7 @@ class Header extends Container {
   }
 
   get title() {
-    return this.getByRole('textbox', { name: 'Edit: Story title' });
+    return this.getByRole('textbox', { name: 'Story title' });
   }
 
   get saveDraft() {

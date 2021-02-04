@@ -25,8 +25,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import {
+  useKeyDownEffect,
+  useGlobalKeyDownEffect,
+} from '../../../design-system';
 import { useConfig } from '../../app';
-import { useKeyDownEffect, useGlobalKeyDownEffect } from '../keyboard';
+
+const ALERT_ICON_SIZE = 14;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -54,18 +59,10 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size};
   font-weight: ${({ theme }) => theme.fonts.tab.weight};
-  word-break: break-word;
-  opacity: 0.84;
   padding: 12px 0px;
   margin: 0px 16px;
   margin-bottom: -1px;
-
-  ${({ isActive }) =>
-    !isActive &&
-    `
-    opacity: .34;
-    &:hover { opacity: 1; }
-  `}
+  position: relative;
 
   ${({ isActive, theme }) =>
     isActive &&
@@ -73,17 +70,46 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     border-bottom: 1px solid ${theme.colors.accent.primary};
   `}
 
-  &:active,
-  &:hover {
-    opacity: 0.84;
-  }
-
   svg {
     display: block;
     width: 28px;
     height: 28px;
     transform-origin: center center;
     transition: transform 0.3s ease;
+  }
+
+  svg.alert {
+    width: ${ALERT_ICON_SIZE}px;
+    height: auto;
+    position: absolute;
+    left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
+    top: calc(
+      50% -
+        ${({ isActive }) =>
+          isActive
+            ? `${ALERT_ICON_SIZE / 2 - 1}px`
+            : `${ALERT_ICON_SIZE / 2}px`}
+    );
+    overflow: visible;
+    opacity: 1;
+    &.warning {
+      color: ${({ theme }) => theme.colors.fg.warning};
+    }
+    &.error {
+      color: ${({ theme }) => theme.colors.fg.negative};
+    }
+  }
+
+  span,
+  svg:not(.alert) {
+    opacity: ${({ isActive }) => (isActive ? '0.84' : '0.34')};
+  }
+
+  &:hover span,
+  &:hover svg:not(.alert),
+  &:active span,
+  &:active svg:not(.alert) {
+    opacity: 0.84;
   }
 `;
 
@@ -171,7 +197,7 @@ function TabView({
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
         >
-          {title}
+          {Boolean(title) && <span>{title}</span>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}
         </Tab>
       ))}

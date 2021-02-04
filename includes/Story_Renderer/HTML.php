@@ -78,16 +78,16 @@ class HTML {
 		$markup = $this->display_admin_bar( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
+		$markup = $this->print_analytics( $markup );
+		$markup = $this->print_bookend( $markup );
 
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
 		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
-			add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
-
 			return $markup;
 		}
 
-		$document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
+		$document = Document::fromHtml( $markup );
 
 		// This  should never actually happen.
 		if ( ! $document ) {
@@ -228,6 +228,10 @@ class HTML {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
+		// Replace malformed meta tags with correct tags.
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/>/i', $start_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/>/i', $end_tag, $content );
+
 		$start_tag_pos = strpos( $content, $start_tag );
 		$end_tag_pos   = strpos( $content, $end_tag );
 
@@ -310,6 +314,8 @@ class HTML {
 	/**
 	 * Force home urls to http / https based on context.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @param string $content String to replace.
 	 *
 	 * @return string
@@ -322,6 +328,85 @@ class HTML {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Print analytics code before closing `</amp-story>`.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $content String to replace.
+	 *
+	 * @return string
+	 */
+	protected function print_analytics( $content ) {
+		ob_start();
+
+		/**
+		 * Fires before the closing <amp-story> tag.
+		 *
+		 * Can be used to print <amp-analytics> configuration.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'web_stories_print_analytics' );
+
+		$output = (string) ob_get_clean();
+
+		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
+	}
+
+	/**
+	 * Print amp-story-bookend before closing `</amp-story>`.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $content String to replace.
+	 *
+	 * @return string
+	 */
+	protected function print_bookend( $content ) {
+		$share_providers = [
+			[
+				'provider' => 'twitter',
+			],
+			[
+				'provider' => 'linkedin',
+			],
+			[
+				'provider' => 'email',
+			],
+			[
+				'provider' => 'system',
+			],
+		];
+
+		/**
+		 * Filters the list of sharing providers in the Web Stories sharing dialog.
+		 *
+		 * @since 1.3.0
+		 *
+		 * @link https://amp.dev/documentation/components/amp-story-bookend/#social-sharing
+		 * @link https://amp.dev/documentation/components/amp-social-share/?format=stories#pre-configured-providers
+		 *
+		 * @param array[] $share_providers List of sharing providers.
+		 */
+		$share_providers = (array) apply_filters( 'web_stories_share_providers', $share_providers );
+
+		if ( empty( $share_providers ) ) {
+			return $content;
+		}
+
+		$config  = [
+			'bookendVersion' => 'v1.0',
+			'shareProviders' => $share_providers,
+		];
+		$bookend = sprintf(
+			'<amp-story-bookend layout="nodisplay"><script type="application/json">%s</script></amp-story-bookend>',
+			wp_json_encode( $config )
+		);
+
+		return str_replace( '</amp-story>', $bookend . '</amp-story>', $content );
 	}
 
 	/**

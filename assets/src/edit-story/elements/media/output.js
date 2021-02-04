@@ -37,6 +37,7 @@ function MediaOutput({
   element: { resource, scale, focalX, focalY },
   box: { width: vw, height: vh },
   children,
+  ...props
 }) {
   // Width and height are taken from the basis of 100% taking into account the
   // aspect ratio.
@@ -59,7 +60,11 @@ function MediaOutput({
     top: `${-editorPixels((mediaProps.offsetY / height) * 100)}%`,
   };
 
-  return <div style={wrapperStyle}>{children}</div>;
+  return (
+    <div style={wrapperStyle} {...props}>
+      {children}
+    </div>
+  );
 }
 
 MediaOutput.propTypes = {

@@ -37,6 +37,7 @@ import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import { formatDate, toDate, isValid } from '../../../../../../date';
+import { trackError } from '../../../../../../tracking';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -113,12 +114,14 @@ const DialogDescription = styled.p`
 
 const imageDialogTitle = __('Edit Image', 'web-stories');
 const videoDialogTitle = __('Edit Video', 'web-stories');
+const imageInputTitle = __('Assistive text', 'web-stories');
+const videoInputTitle = __('Video description', 'web-stories');
 const imageDialogDescription = __(
   'Describe the appearance and function of the image. Leave empty if the image is purely decorative.',
   'web-stories'
 );
 const videoDialogDescription = __(
-  'Describe the appearance and function of the video. Leave empty if the video is purely decorative.',
+  'For indexability and accessibility. Include any burned-in text inside the video.',
   'web-stories'
 );
 
@@ -165,17 +168,20 @@ function MediaEditDialog({ resource, onClose }) {
       updateMediaElement({ id, alt: altText });
       onClose();
     } catch (err) {
+      trackError('local media edit', err.message);
       showSnackbar({
         message: __('Failed to update, please try again.', 'web-stories'),
       });
     }
   }, [altText, id, onClose, showSnackbar, updateMedia, updateMediaElement]);
 
+  const isImage = type === 'image';
+
   return (
     <Dialog
       open={true}
       onClose={onClose}
-      title={type === 'image' ? imageDialogTitle : videoDialogTitle}
+      title={isImage ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
           <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
@@ -217,13 +223,13 @@ function MediaEditDialog({ resource, onClose }) {
           </MediaSizeText>
           <Input
             value={altText}
-            aria-label={__('Alt text', 'web-stories')}
+            aria-label={isImage ? imageInputTitle : videoInputTitle}
             type="text"
-            placeholder={__('Alt text', 'web-stories')}
+            placeholder={isImage ? imageInputTitle : videoInputTitle}
             onChange={handleAltTextChange}
           />
           <DialogDescription>
-            {type === 'image' ? imageDialogDescription : videoDialogDescription}
+            {isImage ? imageDialogDescription : videoDialogDescription}
           </DialogDescription>
         </MetadataTextContainer>
       </DialogBody>

@@ -24,7 +24,7 @@ import { useMemo } from 'react';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { createContext } from '../../utils';
+import { createContext } from '../../../design-system';
 import dataAdapter from './wpAdapter';
 import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
@@ -35,7 +35,7 @@ import useSettingsApi from './useSettingsApi';
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, editStoryURL, cdnURL } = useConfig();
+  const { api, editStoryURL, cdnURL, encodeMarkup } = useConfig();
 
   const { currentUser, api: usersApi } = useUsersApi(dataAdapter, {
     currentUserApi: api.currentUser,
@@ -44,11 +44,13 @@ export default function ApiProvider({ children }) {
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
     cdnURL,
     templateApi: api.templates,
+    encodeMarkup,
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
     editStoryURL,
     storyApi: api.stories,
+    encodeMarkup,
   });
 
   const { media, api: mediaApi } = useMediaApi(dataAdapter, {

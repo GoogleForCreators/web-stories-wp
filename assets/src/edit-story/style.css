@@ -22,22 +22,26 @@
 
 #screen-meta,
 #screen-meta-links,
-#screen-meta-links ~ :not(#edit-story):not(.clear):not(#web-stories-no-js) {
+#screen-meta-links ~ :not(.web-stories-wp):not(.clear) {
   display: none;
 }
 
-body.edit-story #wpcontent,
-body.edit-story #wpbody-content {
+body.js.edit-story #wpcontent,
+body.js.edit-story #wpbody-content {
   padding: 0;
 }
 
-body.edit-story #edit-story {
+body.edit-story .web-stories-wp {
+  position: relative;
+}
+
+body.js.edit-story #web-stories-editor {
   background-color: #1b1d1c; /* theme.colors.bg.workspace */
   position: relative;
   height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
 }
 
-body.edit-story .loading-message {
+body.js.edit-story #web-stories-editor .loading-message {
   color: #fff;
   text-align: center;
   margin: 0;
@@ -48,17 +52,8 @@ body.edit-story #wpfooter {
   display: none;
 }
 
-body.edit-story #edit-story .components-spinner {
-  float: none;
-  margin: 0 11px;
-}
-
 /* Copied from forms.css in WordPress, avoids issues with "Collapse menu" button */
 
 button {
   font-size: inherit;
-}
-
-#web-stories-no-js {
-  margin: 25px 20px 0px 20px;
 }

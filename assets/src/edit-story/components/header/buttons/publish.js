@@ -28,12 +28,13 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackEvent } from '../../../../tracking';
+import { toDate, isAfter, subMinutes, getOptions } from '../../../../date';
 import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { Primary } from '../../button';
 import TitleMissingDialog from '../titleMissingDialog';
 import useHeader from '../use';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Publish() {
   const { isSaving, date, storyId, saveStory, title } = useStory(
@@ -53,7 +54,11 @@ function Publish() {
   const { capabilities } = useConfig();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
-  const hasFutureDate = Date.now() < Date.parse(date);
+  // Offset the date by one minute to accommodate for network latency.
+  const hasFutureDate = isAfter(
+    subMinutes(toDate(date, getOptions()), 1),
+    toDate(new Date(), getOptions())
+  );
 
   const publish = useCallback(() => {
     trackEvent('publish_story', 'editor', '', '', {
@@ -90,12 +95,11 @@ function Publish() {
 
   return (
     <>
-      <Primary
+      <ButtonWithChecklistWarning
         onClick={handlePublish}
         isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
-      >
-        {text}
-      </Primary>
+        text={text}
+      />
       <TitleMissingDialog
         open={Boolean(showDialog)}
         onIgnore={publish}

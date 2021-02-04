@@ -40,5 +40,9 @@ class Settings extends \WP_UnitTestCase {
 
 		$options = get_registered_settings();
 		$this->assertArrayHasKey( $settings::SETTING_NAME_TRACKING_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_NETWORK, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_MANAGER_SLOT_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_SLOT_ID, $options );
 	}
 }

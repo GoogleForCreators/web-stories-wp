@@ -33,8 +33,8 @@ export const Menu = styled.ul`
   max-height: 300px;
   overflow-y: scroll;
   align-items: flex-start;
-  background-color: ${theme.colors.white};
-  box-shadow: ${theme.expandedTypeahead.boxShadow};
+  background-color: ${theme.DEPRECATED_THEME.colors.white};
+  box-shadow: ${theme.DEPRECATED_THEME.expandedTypeahead.boxShadow};
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -54,16 +54,18 @@ export const MenuItem = styled.li`
   ${({ theme, isDisabled, itemBgColor }) => `
   padding: 10px 20px;
   margin: 0; 
-  background-color: ${itemBgColor ? theme.colors[itemBgColor] : 'none'};
-  color: ${theme.colors.gray700};
+  background-color: ${
+    itemBgColor ? theme.DEPRECATED_THEME.colors[itemBgColor] : 'none'
+  };
+  color: ${theme.DEPRECATED_THEME.colors.gray700};
   cursor: ${isDisabled ? 'default' : 'pointer'};
   width: 100%;
-  border: ${theme.borders.transparent};
+  border: ${theme.DEPRECATED_THEME.borders.transparent};
   border-width: 2px;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: none;
-    border: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
+    border: 2px solid ${rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
   }
 `}
 `;

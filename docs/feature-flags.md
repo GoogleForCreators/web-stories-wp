@@ -57,3 +57,14 @@ At some point, a feature flag will be turned on permanently. To do this, add a `
 ```
 
 Before publishing the next release, all remnants of permanently enabled feature flags shall be removed from the code base.
+
+
+## Turning on/off feature flags with the Experiments tab
+
+Feature flags can be managed via a hidden "Experiements" tab within the Stories WordPress nav. There you can turn on/off all experiments defined in `includes/Experiments.php`.
+
+To turn it on, add the following to your `wp-config.php` file.
+
+```php
+define( 'WEBSTORIES_DEV_MODE', true );
+```

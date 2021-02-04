@@ -40,7 +40,7 @@ const Img = styled.img`
   ${mediaWithScale}
 `;
 
-function ImageDisplay({ element, box }) {
+function ImageDisplay({ element, box, previewMode }) {
   const { resource, scale, focalX, focalY } = element;
   const { width, height } = box;
   const ref = useRef();
@@ -73,18 +73,23 @@ function ImageDisplay({ element, box }) {
 
   useEffect(() => {
     let timeout;
+    let mounted = true;
     if (resourceList.get(resource.id)?.type !== 'fullsize') {
       timeout = setTimeout(async () => {
         const preloadedImg = await preloadImage(resource.src, srcSet);
-        resourceList.set(resource.id, {
-          type: 'fullsize',
-        });
-        setSrc(preloadedImg.currentSrc);
-        setSrcType('fullsize');
+        if (mounted) {
+          resourceList.set(resource.id, {
+            type: 'fullsize',
+          });
+          setSrc(preloadedImg.currentSrc);
+          setSrcType('fullsize');
+        }
       });
     }
-
-    return () => clearTimeout(timeout);
+    return () => {
+      mounted = false;
+      clearTimeout(timeout);
+    };
   }, [resource.id, resource.src, srcSet, srcType]);
 
   const showPlaceholder = srcType !== 'fullsize';
@@ -94,6 +99,7 @@ function ImageDisplay({ element, box }) {
       element={element}
       mediaRef={ref}
       showPlaceholder={showPlaceholder}
+      previewMode={previewMode}
     >
       <Img
         ref={ref}
@@ -102,6 +108,7 @@ function ImageDisplay({ element, box }) {
         srcSet={srcSet}
         alt={resource.alt}
         data-testid="imageElement"
+        data-leaf-element="true"
         {...imgProps}
       />
     </MediaDisplay>
@@ -114,6 +121,7 @@ ImageDisplay.propTypes = {
     StoryPropTypes.elements.gif,
   ]).isRequired,
   box: StoryPropTypes.box.isRequired,
+  previewMode: PropTypes.bool,
 };
 
 export default ImageDisplay;

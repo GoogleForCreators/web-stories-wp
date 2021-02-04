@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { MULTIPLE_DISPLAY_VALUE } from '../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
 describe('Styling single text field', () => {
@@ -151,7 +151,7 @@ describe('Styling single text field', () => {
       expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
-      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe('');
 
       // Toggle all styles
       await data.fixture.events.click(italic.button);

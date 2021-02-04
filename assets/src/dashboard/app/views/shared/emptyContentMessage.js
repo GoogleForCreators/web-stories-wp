@@ -28,7 +28,7 @@ import { TypographyPresets } from '../../../components';
 const Message = styled.p`
   ${TypographyPresets.Medium};
   margin-top: 40px;
-  color: ${({ theme }) => theme.colors.gray200};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
 `;
 
 function EmptyContentMessage({ children }) {

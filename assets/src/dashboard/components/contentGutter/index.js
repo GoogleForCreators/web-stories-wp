@@ -21,14 +21,14 @@ import styled from 'styled-components';
 
 export const StandardViewContentGutter = styled.div(
   ({ theme }) => `
-    margin: 0 ${theme.standardViewContentGutter.desktop}px;
+    margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
 
-    @media ${theme.breakpoint.largeDisplayPhone} {
-      margin: 0 ${theme.standardViewContentGutter.largeDisplayPhone}px;
+    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.largeDisplayPhone}px;
     }
 
-    @media ${theme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.standardViewContentGutter.smallDisplayPhone}px;
+    @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.smallDisplayPhone}px;
     }
   `
 );
@@ -36,20 +36,22 @@ export const StandardViewContentGutter = styled.div(
 export const DetailViewContentGutter = styled.div(
   ({ theme }) => `
     padding-top: ${
-      theme.navBar.height + theme.detailViewContentGutter.desktop / 2
+      theme.DEPRECATED_THEME.navBar.height +
+      theme.DEPRECATED_THEME.detailViewContentGutter.desktop / 2
     }px;
-    margin: 0 ${theme.detailViewContentGutter.desktop}px;
+    margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.desktop}px;
 
 
-    @media ${theme.breakpoint.tablet} {
+    @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
       padding-top: ${
-        theme.navBar.height + theme.detailViewContentGutter.tablet / 2
+        theme.DEPRECATED_THEME.navBar.height +
+        theme.DEPRECATED_THEME.detailViewContentGutter.tablet / 2
       }px;
-      margin: 0 ${theme.detailViewContentGutter.tablet}px;
+      margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.tablet}px;
     }
 
-    @media ${theme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.detailViewContentGutter.min}px;
+    @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.min}px;
     }
   `
 );

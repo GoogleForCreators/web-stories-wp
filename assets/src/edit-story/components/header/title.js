@@ -43,6 +43,10 @@ const Input = styled.input`
   background: none !important;
   border: none !important;
   text-align: start;
+  min-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 function Title() {
@@ -82,7 +86,7 @@ function Title() {
       onBlur={handleBlur}
       onChange={handleChange}
       placeholder={__('Add title', 'web-stories')}
-      aria-label={__('Edit: Story title', 'web-stories')}
+      aria-label={__('Story title', 'web-stories')}
     />
   );
 }

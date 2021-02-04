@@ -31,9 +31,9 @@ describe('Story Editor with disabled JavaScript', () => {
 
     await createNewStory();
 
-    await expect(page).toMatchElement('#web-stories-no-js');
+    await expect(page).toMatchElement('.web-stories-wp-no-js');
 
-    // Re-enable javascript for snapsnots.
+    // Re-enable javascript for snapshots.
     await page.setJavaScriptEnabled(true);
 
     await percySnapshot(page, 'Editor no js');

@@ -20,16 +20,44 @@
 import { EditorState, Modifier } from 'draft-js';
 import { useCallback } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import getPastedBlocks from './getPastedBlocks';
+import { COLOR } from './customConstants';
+import { getPrefixStylesInSelection } from './styleManipulation';
+
+/*
+ * This hook returns a function to handle text pasted while in edit-mode.
+ *
+ * Compare this with `usePasteTextContent` that handles generally pasting
+ * text without being in text edit-mode anywhere.
+ */
 function useHandlePastedText(setEditorState) {
   return useCallback(
     (text, html, state) => {
-      // TODO: handle pasted html content
-      // https://github.com/google/web-stories-wp/issues/760
       const content = state.getCurrentContent();
       const selection = state.getSelection();
-      const style = state.getCurrentInlineStyle();
-      const newState = Modifier.replaceText(content, selection, text, style);
-      const result = EditorState.push(state, newState, 'insert-characters');
+      let newState, stateChange;
+      if (html) {
+        // Get the styles of the current selection context (collapsed or not),
+        // that should be applied to the entirety of the pasted HTML.
+        // In this instance, we only care about the text color - all other existing
+        // styles will be ignored and overwritten by pasted content.
+        let existingStyles = getPrefixStylesInSelection(state, COLOR);
+        if (existingStyles.length > 1) {
+          // If selection has multiple colors, use only the first one
+          existingStyles = existingStyles.slice(0, 1);
+        }
+        const blocks = getPastedBlocks(html, existingStyles);
+        newState = Modifier.replaceWithFragment(content, selection, blocks);
+        stateChange = 'insert-fragment';
+      } else {
+        const style = state.getCurrentInlineStyle();
+        newState = Modifier.replaceText(content, selection, text, style);
+        stateChange = 'insert-characters';
+      }
+      const result = EditorState.push(state, newState, stateChange);
       setEditorState(result);
       return true;
     },

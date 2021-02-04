@@ -31,7 +31,7 @@ export default {
   component: Display,
 };
 
-const displayPresetSizes = THEME_CONSTANTS.DISPLAY_SIZES;
+const displayPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.DISPLAY_SIZES;
 const displayRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export const _default = () => (

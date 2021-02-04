@@ -23,7 +23,7 @@ import { useLayoutEffect, useCallback, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import useResizeEffect from '../../utils/useResizeEffect';
+import { useResizeEffect } from '../../../design-system';
 import { SCROLLBAR_WIDTH } from '../../constants';
 import { getTransforms, getOffset } from './utils';
 
@@ -59,6 +59,7 @@ const Container = styled.div.attrs(
     },
   })
 )`
+  /*! @noflip */
   left: 0px;
   top: 0px;
   position: fixed;

@@ -50,11 +50,12 @@ describe('Shape library integration', () => {
     // Switch to the shapes tab and drag the triangle to the canvas
     await fixture.events.click(fixture.editor.library.shapesTab);
     const triangle = fixture.editor.library.shapes.shape('Triangle');
-    const canvas = fixture.editor.canvas.framesLayer.container;
+    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(triangle, 10, 10),
       down(),
-      moveRel(canvas, 50, 50),
+      /* The steps give time for Moveable to react and display a clone to drag */
+      moveRel(bgFrame, 50, 50, { steps: 20 }),
       up(),
     ]);
 

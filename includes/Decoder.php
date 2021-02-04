@@ -35,36 +35,21 @@ namespace Google\Web_Stories;
  */
 class Decoder {
 	/**
-	 * Experiments instance.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
-	 * Dashboard constructor.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
-	}
-
-	/**
 	 * Determines whether encoding and decoding of story markup is supported.
-	 *
-	 * Depends on the encodeStoryMarkup feature flag.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @return bool Whether decoding is supported.
 	 */
 	public function supports_decoding() {
-		return $this->experiments->is_experiment_enabled( 'encodeStoryMarkup' );
+		/**
+		 * Filter whether the encoding requests.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enable_decoding Enable disable encoding.
+		 */
+		return apply_filters( 'web_stories_enable_decoding', true );
 	}
 
 	/**
@@ -79,7 +64,7 @@ class Decoder {
 		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
 
-			return mb_convert_encoding( base64_decode( $string ), 'UTF-8', 'UTF-16LE' );
+			return urldecode( base64_decode( $string ) );
 		}
 
 		return $string;

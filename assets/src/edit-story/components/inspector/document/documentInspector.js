@@ -17,11 +17,13 @@
 /**
  * Internal dependencies
  */
-import PublishPanel from './publish';
-import ExcerptPanel from './excerpt';
-import SlugPanel from './slug';
-import StatusPanel from './status';
-import PageAdvancement from './pageAdvancement';
+import {
+  PublishPanel,
+  ExcerptPanel,
+  SlugPanel,
+  StatusPanel,
+  PageAdvancementPanel,
+} from '../../panels/document';
 
 function DocumentInspector() {
   return (
@@ -30,7 +32,7 @@ function DocumentInspector() {
       <PublishPanel />
       <ExcerptPanel />
       <SlugPanel />
-      <PageAdvancement />
+      <PageAdvancementPanel />
     </>
   );
 }

@@ -99,14 +99,12 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     originalStoryData: {
       id: 167,
-      date: '2020-05-21T16:25:51',
-      date_gmt: '2020-05-21T23:25:51',
+      date: '2020-05-21T23:25:51',
       guid: {
         rendered: 'http://localhost:8899/?post_type=web-story&#038;p=167',
         raw: 'http://localhost:8899/?post_type=web-story&#038;p=167',
       },
-      modified: '2020-05-21T16:25:51',
-      modified_gmt: '2020-05-21T23:25:51',
+      modified: '2020-05-21T23:25:51',
       password: '',
       slug: 'orange-shapes',
       status: 'publish',
@@ -204,14 +202,16 @@ const formattedStoriesArray = [
         autoAdvance: true,
         defaultPageDuration: 7,
       },
-      featured_media_url: '',
       publisher_logo_url:
         'https://replaceme.com/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 3, name: 'Jango Fett' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 3, name: 'Jango Fett' }],
+      },
       _links: {
         self: [
           {
@@ -390,14 +390,12 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
     originalStoryData: {
       id: 165,
-      date: '2020-05-21T16:25:22',
-      date_gmt: '2020-05-21T23:25:22',
+      date: '2020-05-21T23:25:22',
       guid: {
         rendered: 'http://localhost:8899/?post_type=web-story&#038;p=165',
         raw: 'http://localhost:8899/?post_type=web-story&#038;p=165',
       },
-      modified: '2020-05-21T16:25:22',
-      modified_gmt: '2020-05-21T23:25:22',
+      modified: '2020-05-21T23:25:22',
       password: '',
       slug: 'green-shapes',
       status: 'draft',
@@ -502,7 +500,10 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 21, name: 'Chewbacca' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 21, name: 'Chewbacca' }],
+      },
       _links: {
         self: [
           {
@@ -827,14 +828,12 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
     originalStoryData: {
       id: 163,
-      date: '2020-05-21T16:24:47',
-      date_gmt: '2020-05-21T23:24:47',
+      date: '2020-05-21T23:24:47',
       guid: {
         rendered: 'http://localhost:8899/?post_type=web-story&#038;p=163',
         raw: 'http://localhost:8899/?post_type=web-story&#038;p=163',
       },
-      modified: '2020-05-21T16:24:47',
-      modified_gmt: '2020-05-21T23:24:47',
+      modified: '2020-05-21T23:24:47',
       password: '',
       slug: 'red-shapes',
       status: 'draft',
@@ -1085,7 +1084,10 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 4, name: 'Luke Skywalker' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 4, name: 'Luke Skywalker' }],
+      },
       _links: {
         self: [
           {
@@ -1321,14 +1323,12 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
     originalStoryData: {
       id: 161,
-      date: '2020-05-21T16:24:06',
-      date_gmt: '2020-05-21T23:24:06',
+      date: '2020-05-21T23:24:06',
       guid: {
         rendered: 'http://localhost:8899/?post_type=web-story&#038;p=161',
         raw: 'http://localhost:8899/?post_type=web-story&#038;p=161',
       },
-      modified: '2020-05-21T16:24:06',
-      modified_gmt: '2020-05-21T23:24:06',
+      modified: '2020-05-21T23:24:06',
       password: '',
       slug: 'blue-shapes',
       status: 'draft',
@@ -1490,7 +1490,10 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 2, name: 'Lando-Calrissian' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 2, name: 'Lando-Calrissian' }],
+      },
       _links: {
         self: [
           {

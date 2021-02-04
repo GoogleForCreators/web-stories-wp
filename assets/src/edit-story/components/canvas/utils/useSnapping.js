@@ -23,18 +23,22 @@ import { useCallback, useEffect } from 'react';
  * Internal dependencies
  */
 import { FULLBLEED_RATIO } from '../../../constants';
-import { useGlobalIsKeyPressed } from '../../keyboard';
+import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
-import useCanvas from '../useCanvas';
+import { useCanvas } from '../../../app';
 
-function useSnapping({ isDragging, canSnap, otherNodes }) {
+function useSnapping({
+  isDragging,
+  canSnap,
+  otherNodes,
+  snappingOffsetX = null,
+}) {
   const {
     canvasWidth,
     canvasHeight,
     pageContainer,
     canvasContainer,
     designSpaceGuideline,
-    showSafeZone,
   } = useCanvas(
     ({
       state: {
@@ -42,7 +46,6 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
         pageContainer,
         canvasContainer,
         designSpaceGuideline,
-        showSafeZone,
       },
     }) => ({
       canvasWidth,
@@ -50,7 +53,6 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
       pageContainer,
       canvasContainer,
       designSpaceGuideline,
-      showSafeZone,
     })
   );
   const { activeDropTargetId } = useDropTargets((state) => ({
@@ -73,13 +75,15 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
     ({ elements }) =>
       // Show design space if we're snapping to any of its edges
       toggleDesignSpace(
-        elements
-          .flat()
-          .some(
-            ({ center, element }) => element === designSpaceGuideline && !center
-          )
+        isDragging &&
+          elements
+            .flat()
+            .some(
+              ({ center, element }) =>
+                element === designSpaceGuideline && !center
+            )
       ),
-    [toggleDesignSpace, designSpaceGuideline]
+    [toggleDesignSpace, isDragging, designSpaceGuideline]
   );
 
   // Always hide design space guideline when dragging stops
@@ -96,7 +100,9 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
   const canvasRect = canvasContainer.getBoundingClientRect();
   const pageRect = pageContainer.getBoundingClientRect();
 
-  const offsetX = Math.ceil(pageRect.x - canvasRect.x);
+  const canvasOffsetX = snappingOffsetX ? snappingOffsetX : canvasRect.x;
+
+  const offsetX = Math.ceil(pageRect.x - canvasOffsetX);
   const offsetY = Math.floor(pageRect.y - canvasRect.y);
 
   const verticalGuidelines = canSnap
@@ -116,7 +122,7 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
     : [];
 
   const elementGuidelines = canSnap
-    ? [...otherNodes, ...(showSafeZone ? [designSpaceGuideline] : [])]
+    ? [...otherNodes, designSpaceGuideline]
     : [];
 
   return {

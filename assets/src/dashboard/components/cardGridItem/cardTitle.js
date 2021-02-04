@@ -30,6 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../constants';
+import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
@@ -45,8 +46,8 @@ const TitleStoryLink = styled(Link)`
   display: inline-block;
   max-width: 100%;
   margin-bottom: 2px;
-  color: ${({ theme }) => theme.colors.gray900};
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -54,17 +55,17 @@ const TitleStoryLink = styled(Link)`
 
 const TitleBodyText = styled(Paragraph2)`
   margin: 0;
-  color: ${({ theme }) => theme.colors.gray500};
-  font-weight: ${({ theme }) => theme.typography.weight.light};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.light};
 `;
 
 const DateHelperText = styled.span`
   text-transform: uppercase;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   &:after {
     content: '-';
-    color: ${({ theme }) => theme.colors.gray500};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
     font-weight: 400;
     padding: 0 0.25em;
   }
@@ -109,10 +110,6 @@ const CardTitle = ({
         );
     }
   }, [status, displayDate]);
-
-  const titleFormatted = (rawTitle) => {
-    return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
-  };
 
   return (
     <StyledCardTitle>

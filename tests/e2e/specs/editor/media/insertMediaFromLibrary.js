@@ -15,14 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
-import { createNewStory } from '../../../utils';
+import { createNewStory, deleteMedia, uploadMedia } from '../../../utils';
 
 describe('Inserting Media from Media Library', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -31,8 +26,13 @@ describe('Inserting Media from Media Library', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
+    const filename = await uploadMedia('example-1.jpg', true);
+
+    await page.waitForSelector('[data-testid="mediaElement-image"]');
     // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="mediaElement"]');
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+
+    await page.waitForSelector('[data-testid="frameElement"]:nth-of-type(2)');
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(
@@ -41,6 +41,6 @@ describe('Inserting Media from Media Library', () => {
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await percySnapshot(page, 'Inserting Image from Media Library');
+    await deleteMedia(filename);
   });
 });

@@ -17,7 +17,7 @@
 export const DEFAULT_DATE_SETTINGS = {
   dateFormat: 'Y-m-d',
   timeFormat: 'g:i a',
-  gmtOffset: null,
+  gmtOffset: 0,
   timezone: '',
   weekStartsOn: 0,
 };

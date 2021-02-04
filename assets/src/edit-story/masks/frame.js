@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
 
 /**
@@ -26,6 +26,7 @@ import { useRef, useEffect, useState } from 'react';
  */
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
+import getTransformFlip from '../elements/shared/getTransformFlip';
 import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
@@ -36,14 +37,26 @@ const FILL_STYLE = {
   bottom: 0,
 };
 
-const DropTargetSVG = styled.svg`
+const svgCss = css`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
+`;
+
+const DropTargetSVG = styled.svg`
+  ${svgCss}
   z-index: ${({ active }) => (active ? 1 : -1)};
+`;
+
+const Filler = styled.svg`
+  ${svgCss}
+`;
+
+const FillerPath = styled.path`
+  pointer-events: all;
 `;
 
 const DropTargetPath = styled.path`
@@ -74,6 +87,14 @@ function WithDropTarget({ element, children, hover }) {
     return children;
   }
 
+  const pathProps = {
+    vectorEffect: 'non-scaling-stroke',
+    fill: 'none',
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    d: mask?.path,
+    stroke: '#0063F9',
+  };
   return (
     <>
       {children}
@@ -88,13 +109,8 @@ function WithDropTarget({ element, children, hover }) {
       >
         {/** Suble indicator that the element has a drop target */}
         <DropTargetPath
-          vectorEffect="non-scaling-stroke"
+          {...pathProps}
           strokeWidth="4"
-          fill="none"
-          stroke="#0063F9"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d={mask?.path}
           style={
             (hover && !draggingResource) ||
             (Boolean(draggingResource) &&
@@ -107,13 +123,8 @@ function WithDropTarget({ element, children, hover }) {
         {/** Drop target shown when an element is in the drop target area  */}
         <DropTargetPath
           ref={pathRef}
-          vectorEffect="non-scaling-stroke"
+          {...pathProps}
           strokeWidth="48"
-          fill="none"
-          stroke="#0063F9"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d={mask?.path}
           active={activeDropTargetId === element.id}
         />
       </DropTargetSVG>
@@ -127,17 +138,27 @@ WithDropTarget.propTypes = {
   hover: PropTypes.bool,
 };
 
-export default function WithMask({ element, fill, style, children, ...rest }) {
+export default function WithMask({
+  element,
+  fill,
+  style,
+  children,
+  eventHandlers = null,
+  ...rest
+}) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
+  const { flip } = rest;
 
   const mask = getElementMask(element);
+  const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
   if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
     return (
       <div
         style={{
           ...(fill ? FILL_STYLE : {}),
           ...style,
+          ...flipStyle,
         }}
         {...rest}
       >
@@ -156,9 +177,11 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
       style={{
         ...(fill ? FILL_STYLE : {}),
         ...style,
+        ...flipStyle,
         ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
+      {...eventHandlers}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
     >
@@ -173,6 +196,14 @@ export default function WithMask({ element, fill, style, children, ...rest }) {
           </clipPath>
         </defs>
       </svg>
+      <Filler
+        viewBox={`0 0 1 ${1 / mask.ratio}`}
+        width="100%"
+        height="100%"
+        preserveAspectRatio="none"
+      >
+        <FillerPath fill="none" d={mask?.path} />
+      </Filler>
       <WithDropTarget element={element} hover={hover}>
         {children}
       </WithDropTarget>
@@ -184,5 +215,6 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
+  eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
 };

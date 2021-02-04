@@ -41,7 +41,7 @@ describe('Template Details <Header />', () => {
     );
     const nav = getByRole('navigation');
 
-    expect(nav).toBeDefined();
+    expect(nav).toBeInTheDocument();
   });
 
   it('should trigger mockHandleCtaClick when cta is clicked', () => {
@@ -55,7 +55,7 @@ describe('Template Details <Header />', () => {
     );
     const cta = getByText('Use template');
 
-    expect(cta).toBeDefined();
+    expect(cta).toBeInTheDocument();
 
     fireEvent.click(cta);
 
@@ -63,14 +63,14 @@ describe('Template Details <Header />', () => {
   });
 
   it('should not render bookmark button when onBookmarkClick is null', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryByRole } = renderWithProviders(
       <LayoutProvider>
         <Header onBookmarkClick={null} onHandleCtaClick={mockHandleCtaClick} />
       </LayoutProvider>
     );
-    const buttons = queryAllByRole('button');
+    const buttons = queryByRole('button');
 
-    expect(buttons).toHaveLength(1);
+    expect(buttons).toBeInTheDocument();
   });
 
   it('should render bookmark button when onBookmarkClick is truthy', () => {

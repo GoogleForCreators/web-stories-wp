@@ -31,9 +31,9 @@ describe('Stories Dashboard with disabled JavaScript', () => {
 
     await visitDashboard();
 
-    await expect(page).toMatchElement('#web-stories-no-js');
+    await expect(page).toMatchElement('.web-stories-wp-no-js');
 
-    // Re-enable javascript for snapsnots.
+    // Re-enable javascript for snapshots.
     await page.setJavaScriptEnabled(true);
 
     await percySnapshot(page, 'Dashboard no js');

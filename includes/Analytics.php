@@ -38,52 +38,7 @@ class Analytics {
 	 * @return void
 	 */
 	public function init() {
-		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 		add_action( 'web_stories_print_analytics', [ $this, 'print_analytics_tag' ] );
-	}
-
-	/**
-	 * Determines whether the built-in Analytics module in Site Kit is active.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return bool Whether Site Kit's analytics module is active.
-	 */
-	protected function is_site_kit_analytics_module_active() {
-		$modules = $this->get_site_kit_active_modules_option();
-
-		return in_array( 'analytics', $modules, true );
-	}
-
-	/**
-	 * Gets the option containing the active Site Kit modules.
-	 *
-	 * Checks two options as it was renamed at some point in Site Kit.
-	 *
-	 * Bails early if the Site Kit plugin itself is not active.
-	 *
-	 * @see \Google\Site_Kit\Core\Modules\Modules::get_active_modules_option
-	 *
-	 * @return array List of active module slugs.
-	 */
-	private function get_site_kit_active_modules_option() {
-		if ( ! defined( 'GOOGLESITEKIT_VERSION' ) ) {
-			return [];
-		}
-
-		$option = get_option( 'googlesitekit_active_modules' );
-
-		if ( is_array( $option ) ) {
-			return $option;
-		}
-
-		$legacy_option = get_option( 'googlesitekit-active-modules' );
-
-		if ( is_array( $legacy_option ) ) {
-			return $legacy_option;
-		}
-
-		return [];
 	}
 
 	/**
@@ -270,10 +225,6 @@ class Analytics {
 	 * @return void
 	 */
 	public function print_analytics_tag() {
-		if ( $this->is_site_kit_analytics_module_active() ) {
-			return;
-		}
-
 		$tracking_id = $this->get_tracking_id();
 
 		if ( ! $tracking_id ) {
@@ -286,31 +237,5 @@ class Analytics {
 			</script>
 		</amp-analytics>
 		<?php
-	}
-
-	/**
-	 * Filters Site Kit's Google Analytics configuration.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $gtag_opt Array of gtag configuration options.
-	 *
-	 * @return array Modified configuration options.
-	 */
-	public function filter_site_kit_gtag_opt( $gtag_opt ) {
-		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			return $gtag_opt;
-		}
-
-		$default_config             = $this->get_default_configuration( $gtag_opt['vars']['gtag_id'] );
-		$default_config['triggers'] = isset( $default_config['triggers'] ) ? $default_config['triggers'] : [];
-
-		$gtag_opt['triggers'] = isset( $gtag_opt['triggers'] ) ? $gtag_opt['triggers'] : [];
-		$gtag_opt['triggers'] = array_merge(
-			$default_config['triggers'],
-			$gtag_opt['triggers']
-		);
-
-		return $gtag_opt;
 	}
 }

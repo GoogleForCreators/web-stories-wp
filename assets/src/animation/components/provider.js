@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import {
   useCallback,
@@ -28,13 +27,15 @@ import {
   useState,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import 'web-animations-js/web-animations-next-lite.min.js';
+
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../edit-story/types';
-import clamp from '../../edit-story/utils/clamp';
-import { createContext } from '../../edit-story/utils/context';
-import { AnimationPart, throughput } from '../parts';
+import { clamp } from '../../animation';
+import { createContext } from '../../design-system';
+import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';
 
 const Context = createContext(null);
@@ -52,15 +53,26 @@ const WAAPIAnimationStateReducer = (state, action) => {
   return WAAPIAnimationMachine[state][action] || state;
 };
 
-const createOnFinishPromise = (animation) => {
+const createOnFinishPromise = ({ animation }) => {
   return new Promise((resolve) => {
     animation.onfinish = resolve;
   });
 };
 
-function Provider({ animations, elements, children, onWAAPIFinish }) {
-  const enableAnimation = useFeature('enableAnimation');
+const filterWAAPIAnimations = ({ animations, selectedElementIds }) =>
+  selectedElementIds.length > 0
+    ? animations.filter(({ elementId }) =>
+        selectedElementIds.includes(elementId)
+      )
+    : animations;
 
+function Provider({
+  animations,
+  elements,
+  children,
+  onWAAPIFinish,
+  selectedElementIds = [],
+}) {
   const elementsMap = useMemo(() => {
     return (elements || []).reduce((map, element) => {
       map.set(element.id, element);
@@ -78,15 +90,13 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
 
         map.set(t, [
           ...generatedParts,
-          enableAnimation
-            ? AnimationPart(type, { ...args, element })
-            : throughput(),
+          AnimationPart(type, { ...args, element }),
         ]);
       });
 
       return map;
     }, new Map());
-  }, [animations, enableAnimation, elementsMap]);
+  }, [animations, elementsMap]);
 
   const providerId = useMemo(() => uuidv4(), []);
 
@@ -112,22 +122,36 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
   );
   const WAAPIAnimationMap = useRef(new Map());
   const [WAAPIAnimations, setWAAPIAnimations] = useState([]);
+  const filteredWAAPIAnimations = useMemo(
+    () =>
+      filterWAAPIAnimations({
+        animations: WAAPIAnimations,
+        selectedElementIds,
+      }),
+    [selectedElementIds, WAAPIAnimations]
+  );
 
-  const hoistWAAPIAnimation = useCallback((WAPPIAnimation) => {
-    const symbol = Symbol();
-    WAAPIAnimationMap.current.set(symbol, WAPPIAnimation);
+  const hoistWAAPIAnimation = useCallback(
+    ({ animation: WAPPIAnimation, elementId }) => {
+      const symbol = Symbol();
+      WAAPIAnimationMap.current.set(symbol, {
+        animation: WAPPIAnimation,
+        elementId,
+      });
 
-    setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
-    return () => {
-      WAPPIAnimation?.cancel();
-      WAAPIAnimationMap.current.delete(symbol);
       setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
-    };
-  }, []);
+      return () => {
+        WAPPIAnimation?.cancel();
+        WAAPIAnimationMap.current.delete(symbol);
+        setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
+      };
+    },
+    []
+  );
 
   const WAAPIAnimationMethods = useMemo(() => {
     const play = () =>
-      WAAPIAnimations.forEach((animation) => {
+      filteredWAAPIAnimations.forEach(({ animation }) => {
         // Sometimes an animation part can get into a
         // stuck state where executing `play` doesn't
         // trigger the animation. A workaround to avoid
@@ -138,16 +162,16 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         animation?.play();
       });
     const pause = () =>
-      WAAPIAnimations.forEach((animation) => animation?.pause());
+      filteredWAAPIAnimations.forEach(({ animation }) => animation?.pause());
     const setCurrentTime = (time) =>
-      WAAPIAnimations.forEach((animation) => {
+      filteredWAAPIAnimations.forEach(({ animation }) => {
         const { duration, delay } =
           (animation.effect?.timing || animation.effect?.getTiming()) ?? {};
         const animationEndTime = (delay || 0) + (duration || 0);
         animation.currentTime =
           time === 'end'
             ? animationEndTime
-            : clamp(time, { MIN: 0, MAX: animationEndTime });
+            : clamp(time, [0, animationEndTime]);
       });
 
     return {
@@ -161,7 +185,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         });
       },
     };
-  }, [WAAPIAnimations]);
+  }, [filteredWAAPIAnimations]);
 
   /**
    * Browser support for `animation.finished` is no good.
@@ -172,20 +196,22 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
    */
   useEffect(() => {
     let cancel = () => {};
-    if ('idle' === WAAPIAnimationState && WAAPIAnimations.length) {
+    if ('idle' === WAAPIAnimationState && filteredWAAPIAnimations.length) {
       new Promise((resolve, reject) => {
         cancel = reject;
-        Promise.all(WAAPIAnimations.map(createOnFinishPromise)).then(() => {
-          cancel = () => {};
-          resolve();
-        });
+        Promise.all(filteredWAAPIAnimations.map(createOnFinishPromise)).then(
+          () => {
+            cancel = () => {};
+            resolve();
+          }
+        );
       })
         .then(() => dispatchWAAPIAnimationState('complete'))
         /* needed if promise gets canceled to swallow the error */
         .catch(() => {});
     }
     return cancel;
-  }, [WAAPIAnimations, WAAPIAnimationState]);
+  }, [filteredWAAPIAnimations, WAAPIAnimationState]);
 
   onWAAPIFinishRef.current = onWAAPIFinish;
   useEffect(() => {
@@ -224,6 +250,7 @@ Provider.propTypes = {
   elements: PropTypes.arrayOf(StoryPropTypes.element),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
+  selectedElementIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Provider;

@@ -50,6 +50,7 @@ function getMediaSizePositionProps(
     0,
     Math.min(mediaHeight * focalY * 0.01 - height * 0.5, mediaHeight - height)
   );
+
   return {
     width: mediaWidth,
     height: mediaHeight,

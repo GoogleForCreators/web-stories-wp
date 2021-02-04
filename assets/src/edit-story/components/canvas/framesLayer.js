@@ -31,14 +31,13 @@ import { __ } from '@wordpress/i18n';
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
-import { useStory, useDropTargets } from '../../app';
+import { useStory, useDropTargets, useCanvas } from '../../app';
+import useCanvasKeys from '../../app/canvas/useCanvasKeys';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
-import useCanvasKeys from './useCanvasKeys';
 import Selection from './selection';
-import useCanvas from './useCanvas';
 import PageNav from './pagenav';
 
 const FramesPageArea = withOverlay(
@@ -90,9 +89,8 @@ function FramesLayer() {
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));
-  const { showSafeZone, setDesignSpaceGuideline } = useCanvas(
-    ({ state: { showSafeZone }, actions: { setDesignSpaceGuideline } }) => ({
-      showSafeZone,
+  const { setDesignSpaceGuideline } = useCanvas(
+    ({ actions: { setDesignSpaceGuideline } }) => ({
       setDesignSpaceGuideline,
     })
   );
@@ -117,7 +115,6 @@ function FramesLayer() {
     >
       {!isAnimating && (
         <FramesPageArea
-          showSafeZone={showSafeZone}
           overlay={
             Boolean(draggingResource) &&
             isDropSource(draggingResource.type) &&

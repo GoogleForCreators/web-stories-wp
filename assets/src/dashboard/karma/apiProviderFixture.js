@@ -309,6 +309,7 @@ function updateStory(story, currentState) {
   const copy = { ...story };
 
   copy.title = copy.title.raw;
+  copy.content = copy.content?.raw;
   copy.modified = new Date();
   return {
     ...currentState,

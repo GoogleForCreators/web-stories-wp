@@ -26,7 +26,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../animation';
+import { getTotalDuration, StoryAnimation } from '../../animation';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
 import generatePatternStyles from '../utils/generatePatternStyles';
@@ -40,7 +40,15 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, animations, elements, backgroundColor } = page;
 
   const [backgroundElement, ...regularElements] = elements;
-  const longestMediaElement = getLongestMediaElement(elements);
+  const animationDuration = getTotalDuration({ animations }) / 1000;
+  const nonMediaPageDuration = Math.max(
+    animationDuration || 0,
+    defaultPageDuration
+  );
+  const longestMediaElement = getLongestMediaElement(
+    elements,
+    nonMediaPageDuration
+  );
 
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
@@ -55,7 +63,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
 
   const autoAdvanceAfter = longestMediaElement?.id
     ? `el-${longestMediaElement?.id}-media`
-    : `${defaultPageDuration}s`;
+    : `${nonMediaPageDuration}s`;
 
   const hasPageAttachment = page.pageAttachment?.url?.length > 0;
 
@@ -78,7 +86,11 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         <StoryAnimation.AMPAnimations />
 
         {backgroundElement && (
-          <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+          <amp-story-grid-layer
+            template="vertical"
+            aspect-ratio={ASPECT_RATIO}
+            class="grid-layer"
+          >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
                 <OutputElement element={backgroundElement} />
@@ -95,7 +107,11 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           </amp-story-grid-layer>
         )}
 
-        <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+        <amp-story-grid-layer
+          template="vertical"
+          aspect-ratio={ASPECT_RATIO}
+          class="grid-layer"
+        >
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {validElements.map((element) => (

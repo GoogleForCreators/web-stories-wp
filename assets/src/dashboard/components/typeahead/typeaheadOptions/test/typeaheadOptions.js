@@ -45,7 +45,7 @@ describe('TypeaheadOptions', () => {
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} />
     );
 
-    expect(getByText('one')).toBeDefined();
+    expect(getByText('one')).toBeInTheDocument();
   });
 
   it('should simulate a click on one of the items', () => {

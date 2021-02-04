@@ -24,14 +24,14 @@ describe('BookmarkChip', () => {
   it('should render a <BookmarkChip />', () => {
     const { getByRole } = renderWithProviders(<BookmarkChip />);
 
-    expect(getByRole('button')).toBeDefined();
+    expect(getByRole('button')).toBeInTheDocument();
   });
 
   it('should render `not-bookmarked` when `isBookmarked` is false', () => {
     const { queryByTestId } = renderWithProviders(<BookmarkChip />);
 
-    expect(queryByTestId('not-bookmarked')).toBeDefined();
-    expect(queryByTestId('is-bookmarked')).toBeNull();
+    expect(queryByTestId('not-bookmarked')).toBeInTheDocument();
+    expect(queryByTestId('is-bookmarked')).not.toBeInTheDocument();
   });
 
   it('should render `is-bookmarked` when `isBookmarked` is true', () => {
@@ -39,7 +39,7 @@ describe('BookmarkChip', () => {
       <BookmarkChip isBookmarked={true} />
     );
 
-    expect(queryByTestId('is-bookmarked')).toBeDefined();
-    expect(queryByTestId('not-bookmarked')).toBeNull();
+    expect(queryByTestId('is-bookmarked')).toBeInTheDocument();
+    expect(queryByTestId('not-bookmarked')).not.toBeInTheDocument();
   });
 });

@@ -21,7 +21,6 @@ import {
   activatePlugin,
   deactivatePlugin,
   createNewPost,
-  insertBlock,
   setPostContent,
 } from '@wordpress/e2e-test-utils';
 
@@ -32,6 +31,7 @@ import {
   addRequestInterception,
   publishPost,
   withDisabledToolbarOnFrontend,
+  insertBlock,
 } from '../../utils';
 
 const EMBED_BLOCK_CONTENT = `
@@ -80,11 +80,19 @@ describe('Embed Block', () => {
     });
     await insertBlock('Web Stories');
 
-    await page.keyboard.type(
+    await page.type(
+      'input[aria-label="Web Story URL"]',
       'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'
     );
-    await page.keyboard.press('Enter');
+    await expect(page).toClick('button', { text: 'Embed' });
 
+    await expect(page).not.toMatch(
+      'Sorry, this content could not be embedded.'
+    );
+
+    // Wait a little longer for embed REST API request to come back.
+    await page.waitForSelector('amp-story-player');
+    await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
   });
 

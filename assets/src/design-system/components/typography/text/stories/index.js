@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
  */
 import { Text } from '../';
+import { Headline } from '../..';
 import { THEME_CONSTANTS } from '../../../../';
 
 export default {
@@ -31,7 +31,8 @@ export default {
   component: Text,
 };
 
-const textPresetSizes = THEME_CONSTANTS.TEXT_SIZES;
+const booleanOptions = [true, false];
+const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 const textRenderAsOptions = ['p', 'a', 'span'];
 
 export const _default = () => (
@@ -67,17 +68,31 @@ export const Bold = () => (
   </>
 );
 
-export const Link = () => (
+export const Label = () => (
   <>
+    <Headline as="h1">{'Label'}</Headline>
     {textPresetSizes.map((presetSize) => (
       <Text
         key={`${presetSize}_text_link`}
         size={presetSize}
-        as={select('as', textRenderAsOptions, 'a')}
-        href="#"
-        onClick={action('anchor clicked! Do something.')}
+        as={select('label', textRenderAsOptions, 'label')}
+        isBold={select('isBold', booleanOptions, false)}
       >
-        {`${presetSize} - Click here for more information`}
+        {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+        <br />
+      </Text>
+    ))}
+    <br />
+    <Headline as="h1">{'Label - Disabled'}</Headline>
+    {textPresetSizes.map((presetSize) => (
+      <Text
+        key={`${presetSize}_text_link_disabled`}
+        size={presetSize}
+        as={select('label', textRenderAsOptions, 'label')}
+        isBold={select('isBold', booleanOptions, false)}
+        disabled
+      >
+        {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
         <br />
       </Text>
     ))}

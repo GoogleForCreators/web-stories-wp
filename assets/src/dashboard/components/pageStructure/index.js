@@ -29,6 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../../design-system';
 import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
@@ -49,42 +50,41 @@ import {
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  overflow-x: scroll;
 `;
 
 export const PageContent = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  padding-top: 10px;
+  width: ${({ fullWidth }) =>
+    fullWidth ? '100%' : `calc(100% - ${DASHBOARD_LEFT_NAV_WIDTH}px)`};
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
+  @media screen and (max-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET
+      .maxWidth}px) {
     left: 0;
+    width: 100%;
+    min-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET.minWidth}px;
   }
 `;
 
 export const LeftRailContainer = styled.nav.attrs({
   ['data-testid']: 'dashboard-left-rail',
 })`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  top: 0;
+  top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
-  background: ${({ theme }) => theme.colors.white};
-  border-right: ${({ theme }) => theme.borders.gray50};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
+  border-right: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray50};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
     padding-left: 0;
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};

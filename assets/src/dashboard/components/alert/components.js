@@ -60,9 +60,9 @@ export const AlertContainer = styled.div`
   width: 100%;
   padding: 10px 20px;
   margin-top: 20px;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
   background-color: ${({ theme, severity }) =>
-    theme.colors[getColor(severity)]};
+    theme.DEPRECATED_THEME.colors[getColor(severity)]};
   border-radius: 5px;
   animation: 0.5s ${slideIn} ease-out;
 `;
@@ -73,7 +73,7 @@ export const AlertText = styled.p`
 `;
 
 export const AlertTitle = styled.span`
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
   display: block;
 `;
 
@@ -83,11 +83,11 @@ export const DismissButton = styled.button`
   width: 36px;
   height: 36px;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.white};
-  border: ${({ theme }) => theme.borders.transparent};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   cursor: pointer;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) => theme.colors.action};
+    border-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.action};
   }
 `;

@@ -36,7 +36,6 @@ import {
   PageSizePropType,
 } from '../../../types';
 import {
-  PreviewPage,
   Table,
   TableAuthorHeaderCell,
   TableBody,
@@ -53,7 +52,6 @@ import {
   MoreVerticalButton,
   InlineInputForm,
   Paragraph2,
-  useLayoutContext,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -61,12 +59,11 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import {
-  FULLBLEED_RATIO,
-  DASHBOARD_TOP_MARGIN,
-  DEFAULT_DASHBOARD_TOP_SPACE,
-} from '../../../constants/pageStructure';
-import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+  PreviewPage,
+  PreviewErrorBoundary,
+} from '../../../../edit-story/components/previewPage';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
@@ -74,6 +71,7 @@ import {
 } from '../../../icons';
 import { getRelativeDisplayDate } from '../../../../date';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
+import { titleFormatted } from '../../../utils';
 
 const ListView = styled.div`
   width: 100%;
@@ -83,18 +81,20 @@ const PreviewContainer = styled.div`
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
+  width: ${({ theme }) => theme.DEPRECATED_THEME.previewWidth.thumbnail}px;
+  height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.borders.gray75};
+  border-radius: ${({ theme }) =>
+    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray75};
 `;
 
 const ArrowIcon = styled.div`
-  width: ${({ theme }) => theme.table.headerContentSize}px;
+  width: ${({ theme }) => theme.DEPRECATED_THEME.table.headerContentSize}px;
   height: 100%;
   display: inline-grid;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   vertical-align: middle;
 
   svg {
@@ -108,13 +108,13 @@ const ArrowIconWithTitle = styled(ArrowIcon)`
   margin-left: 6px;
   margin-top: -2px;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     margin-left: 4px;
   }
 `;
 
 const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
-  color: ${({ theme }) => theme.colors.bluePrimary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
   font-weight: 500;
   cursor: pointer;
 `;
@@ -150,10 +150,6 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
-function titleFormatted(rawTitle) {
-  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
-}
-
 function onFocusSelectAll(e) {
   window.getSelection().selectAllChildren(e.target);
 }
@@ -173,15 +169,6 @@ export default function StoryListView({
   storySort,
   storyStatus,
 }) {
-  const {
-    state: { squishContentHeight },
-  } = useLayoutContext();
-
-  // get sticky position from the squishContentHeight (header area),
-  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll & add default top padding.
-  const stickyTopPosition =
-    squishContentHeight - DASHBOARD_TOP_MARGIN + DEFAULT_DASHBOARD_TOP_SPACE;
-
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -206,7 +193,7 @@ export default function StoryListView({
   return (
     <ListView data-testid="story-list-view">
       <Table aria-label={__('List view of created stories', 'web-stories')}>
-        <StickyTableHeader top={stickyTopPosition}>
+        <StickyTableHeader>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}

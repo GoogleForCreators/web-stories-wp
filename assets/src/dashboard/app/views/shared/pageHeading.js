@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import {
@@ -35,16 +34,16 @@ import TelemetryBanner from './telemetryBanner';
 
 const StyledHeader = styled.h2`
   ${TypographyPresets.ExtraExtraLarge};
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
   display: flex;
   justify-content: flex-start;
   align-items: center;
   line-height: 1;
-  font-size: ${cssLerp('36px', '30px', '--squish-progress')};
+  font-size: 30px;
   white-space: nowrap;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    font-size: ${cssLerp('30px', '24px', '--squish-progress')};
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+    font-size: 24px;
   }
 `;
 
@@ -61,8 +60,9 @@ const SearchContainer = styled.div`
   position: relative;
   width: 100%;
   height: 29px;
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) => `${theme.standardViewContentGutter.min}px`};
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+    left: ${({ theme }) =>
+      `${theme.DEPRECATED_THEME.standardViewContentGutter.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }
@@ -83,7 +83,8 @@ const HeadingBodyWrapper = styled(StandardViewContentGutter)`
   align-items: center;
   height: 75px;
   padding-bottom: 3px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+  border-bottom: ${({ theme }) =>
+    theme.DEPRECATED_THEME.subNavigationBar.border};
 `;
 
 export const HeaderToggleButtonContainer = styled.div`

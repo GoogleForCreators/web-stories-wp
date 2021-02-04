@@ -28,6 +28,8 @@ class Plugin extends \WP_UnitTestCase {
 		$plugin = new \Google\Web_Stories\Plugin();
 		$plugin->register();
 
+		$this->assertSame( 10, has_action( 'init', [ $plugin->adsense, 'init' ] ) );
+		$this->assertSame( 10, has_action( 'init', [ $plugin->ad_manager, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->media, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->story, 'init' ] ) );
 		$this->assertSame( 10, has_action( 'init', [ $plugin->template, 'init' ] ) );
@@ -46,7 +48,7 @@ class Plugin extends \WP_UnitTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_is_am_endpoint_polyfill_on_wp_action() {
+	public function test_is_amp_endpoint_polyfill_on_wp_action() {
 		$this->assertFalse( function_exists( '\is_amp_endpoint' ) );
 		$this->go_to( '/' );
 		$this->assertTrue( function_exists( '\is_amp_endpoint' ) );

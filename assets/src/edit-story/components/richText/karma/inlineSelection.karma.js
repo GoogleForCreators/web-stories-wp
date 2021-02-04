@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { MULTIPLE_DISPLAY_VALUE } from '../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
 describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
@@ -132,7 +132,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
-      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe('');
 
       // Now toggle all toggles, and set new color and letter spacing
       await data.fixture.events.click(italic.button);

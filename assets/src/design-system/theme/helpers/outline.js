@@ -18,9 +18,37 @@
  */
 import { css } from 'styled-components';
 
-export const focusableOutlineCSS = (bg, accent) => css`
-  box-shadow: 0 0 0 2px ${bg};
-  &:focus {
-    box-shadow: 0 0 0 2px ${bg}, 0 0 0 4px ${accent};
-  }
+/**
+ * Internal dependencies
+ */
+import { FOCUS_VISIBLE_SELECTOR } from '../global';
+
+/**
+ * A css snippet that can be used for the focus styling.
+ *
+ * @param {string} accent the color of the focused border
+ * @param {string} background the background color used in between
+ * the edge of the element and the focused border.
+ * @return {*} css snippet
+ */
+export const focusCSS = (accent, background) => css`
+  outline: none;
+  box-shadow: ${({ theme }) =>
+    `0px 0px 0 2px ${background || theme.colors.bg.primary}, 0px 0px 0 4px ${
+      accent || theme.colors.border.focus
+    }`};
 `;
+
+export const focusableOutlineCSS = (colorOrProps, background) => {
+  const accent =
+    typeof colorOrProps === 'string'
+      ? colorOrProps
+      : colorOrProps?.theme?.colors?.border?.focus;
+  return css`
+    border: 2px solid transparent;
+
+    &.${FOCUS_VISIBLE_SELECTOR} {
+      ${focusCSS(accent, background)};
+    }
+  `;
+};

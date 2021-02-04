@@ -51,7 +51,7 @@ class Admin extends \WP_UnitTestCase {
 		self::$story_id       = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
+				'post_title'   => 'Admin Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
 			]
@@ -151,7 +151,7 @@ class Admin extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_title( 'current' );
-		$this->assertSame( 'Example title', $result );
+		$this->assertSame( 'Admin Test Story', $result );
 	}
 
 	/**

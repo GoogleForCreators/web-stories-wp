@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import useBatchingCallback from '../../../utils/useBatchingCallback';
+import { useBatchingCallback } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
 import { useUnits } from '../../../units';
 import { useStory } from '../../../app';
@@ -94,7 +94,7 @@ function useSingleSelectionDrag({
 
     // When dragging finishes, set the new properties based on the original + what moved meanwhile.
     const [deltaX, deltaY] = frame.translate;
-    if (deltaX !== 0 || deltaY !== 0 || isDropSource(selectedElement.type)) {
+    if (deltaX !== 0 || deltaY !== 0) {
       const properties = {
         x: roundToZero(selectedElement.x + editorToDataX(deltaX)),
         y: roundToZero(selectedElement.y + editorToDataY(deltaY)),

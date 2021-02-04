@@ -31,7 +31,7 @@ import { useFeature } from 'flagged';
  */
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
-import { PAGE_WIDTH, PAGE_HEIGHT, BORDER_POSITION } from '../../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { MaskTypes } from '../../masks';
 
 describe('Page output', () => {
@@ -92,12 +92,12 @@ describe('Page output', () => {
         'aspect-ratio',
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
-      expect(layer.firstElementChild.className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(layer.firstElementChild.firstElementChild.className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(layer.firstElementChild).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(
+        layer.firstElementChild.firstElementChild
+      ).toHaveClass('page-safe-area', { exact: true });
     });
 
     it('should render the layer for background', () => {
@@ -121,12 +121,12 @@ describe('Page output', () => {
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
       expect(bgLayer.children).toHaveLength(1);
-      expect(bgLayer.children[0].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(bgLayer.children[0].children[0].className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(bgLayer.children[0]).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(bgLayer.children[0].children[0]).toHaveClass('page-safe-area', {
+        exact: true,
+      });
     });
 
     it('should render the layer for background with overlay', () => {
@@ -821,7 +821,6 @@ describe('Page output', () => {
                 right: 10,
                 bottom: 10,
                 color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-                position: BORDER_POSITION.INSIDE,
               },
             },
           ],
@@ -914,6 +913,88 @@ describe('Page output', () => {
         },
       };
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    describe('borderRadius', () => {
+      const BACKGROUND_ELEMENT = {
+        isBackground: true,
+        id: 'baz',
+        type: 'image',
+        mimeType: 'image/png',
+        origRatio: 1,
+        x: 50,
+        y: 100,
+        scale: 1,
+        rotationAngle: 0,
+        width: 10,
+        height: 10,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          id: 123,
+          src: 'https://example.com/image.png',
+          poster: 'https://example.com/poster.png',
+          height: 1,
+          width: 1,
+        },
+      };
+
+      const MEDIA_ELEMENT = {
+        ...BACKGROUND_ELEMENT,
+        isBackground: false,
+        id: 'baz',
+        type: 'image',
+        borderRadius: {
+          topLeft: 10,
+          topRight: 20,
+          bottomRight: 10,
+          bottomLeft: 10,
+        },
+      };
+
+      it('should output element with border radius if the radius is set', () => {
+        const props = {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [BACKGROUND_ELEMENT, MEDIA_ELEMENT],
+          },
+          autoAdvance: false,
+          defaultPageDuration: 7,
+        };
+
+        const content = renderToStaticMarkup(<PageOutput {...props} />);
+        expect(content).toContain(
+          'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        );
+      });
+
+      it('should not output border if the element is not rectangular', () => {
+        const props = {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [
+              BACKGROUND_ELEMENT,
+              {
+                ...MEDIA_ELEMENT,
+                mask: {
+                  type: MaskTypes.CIRCLE,
+                },
+              },
+            ],
+          },
+          autoAdvance: false,
+          defaultPageDuration: 7,
+        };
+
+        const content = renderToStaticMarkup(<PageOutput {...props} />);
+        expect(content).not.toContain(
+          'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        );
+      });
     });
 
     describe('AMP validation', () => {

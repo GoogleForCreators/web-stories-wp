@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -44,6 +43,24 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
+		$factory->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$factory->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mov',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mov',
+				'post_title'     => 'Test Video Move',
+			]
+		);
+
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -64,7 +81,10 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
-		$story_post_type = new Story_Post_Type( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->add_caps_to_roles();
 	}
 
@@ -73,7 +93,10 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
-		$story_post_type = new Story_Post_Type( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->remove_caps_from_roles();
 
 		parent::tearDown();
@@ -94,5 +117,99 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'headers', $data );
 		$this->assertArrayHasKey( 'body', $data );
 		$this->assertArrayHasKey( 'status', $data );
+	}
+
+	/**
+	 * @covers ::get_items
+	 * @covers ::prepare_items_query
+	 */
+	public function test_get_items_filter_mime() {
+		wp_set_current_user( self::$user_id );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertCount( 2, $data );
+		$mime_type = wp_list_pluck( $data, 'mime_type' );
+		$this->assertNotContains( 'video/mov', $mime_type );
+		$this->assertContains( 'image/jpeg', $mime_type );
+		$this->assertContains( 'video/mp4', $mime_type );
+	}
+
+	/**
+	 * @covers ::get_items
+	 * @covers ::get_media_types
+	 */
+	public function test_get_items_filter_video() {
+		wp_set_current_user( self::$user_id );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
+		$request->set_param( 'media_type', 'video' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertCount( 1, $data );
+		$mime_type = wp_list_pluck( $data, 'mime_type' );
+		$this->assertNotContains( 'video/mov', $mime_type );
+		$this->assertContains( 'video/mp4', $mime_type );
+	}
+
+	/**
+	 * @covers ::create_item
+	 */
+	public function test_create_item() {
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		wp_set_current_user( self::$user_id );
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
+		$request->set_header( 'Content-Type', 'image/jpeg' );
+		$request->set_header( 'Content-Disposition', 'attachment; filename=canola.jpg' );
+		$request->set_param( 'title', 'My title is very cool' );
+		$request->set_param( 'caption', 'This is a better caption.' );
+		$request->set_param( 'description', 'Without a description, my attachment is descriptionless.' );
+		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
+		$request->set_param( 'post', $poster_attachment_id );
+
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/test-image.jpg' ) );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertEquals( 201, $response->get_status() );
+		$this->assertEquals( 'image', $data['media_type'] );
+
+		$this->assertArrayHasKey( 'post', $data );
+		$this->assertSame( $data['post'], $poster_attachment_id );
+	}
+
+	/**
+	 * @covers ::create_item
+	 */
+	public function test_create_item_with_revision() {
+		$revision_id = self::factory()->post->create_object(
+			[
+				'post_type'   => 'revision',
+				'post_author' => self::$user_id,
+			]
+		);
+		wp_set_current_user( self::$user_id );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
+		$request->set_header( 'Content-Type', 'image/jpeg' );
+		$request->set_header( 'Content-Disposition', 'attachment; filename=canola.jpg' );
+		$request->set_param( 'title', 'My title is very cool' );
+		$request->set_param( 'caption', 'This is a better caption.' );
+		$request->set_param( 'description', 'Without a description, my attachment is descriptionless.' );
+		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
+		$request->set_param( 'post', $revision_id );
+
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/test-image.jpg' ) );
+		$response = rest_get_server()->dispatch( $request );
+		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
 	}
 }

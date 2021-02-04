@@ -18,11 +18,11 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import { defaultUnit } from '../../utils/defaultUnit';
+import { defaultUnit, getGlobalSpace } from '../../utils';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
-  fill: 'forwards',
+  fill: 'both',
   duration: 1000,
 };
 
@@ -30,8 +30,10 @@ export function AnimationMove({
   overflowHidden = false,
   offsetX = 0,
   offsetY = 0,
+  element,
   ...args
 }) {
+  const global = getGlobalSpace(element);
   const timings = {
     ...defaults,
     ...args,
@@ -40,8 +42,11 @@ export function AnimationMove({
   const animationName = `x-${offsetX}-y-${offsetY}-${ANIMATION_TYPES.MOVE}`;
   const keyframes = {
     transform: [
-      `translate(${defaultUnit(offsetX, 'px')}, ${defaultUnit(offsetY, 'px')})`,
-      'translate(0%, 0%)',
+      global`translate3d(${defaultUnit(offsetX, 'px')}, ${defaultUnit(
+        offsetY,
+        'px'
+      )}, 0)`,
+      global`translate3d(${defaultUnit(0, 'px')}, ${defaultUnit(0, 'px')}, 0)`,
     ],
   };
 

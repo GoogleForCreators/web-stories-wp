@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { MULTIPLE_DISPLAY_VALUE } from '../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
 describe('Styling multiple text fields', () => {
@@ -147,10 +147,10 @@ describe('Styling multiple text fields', () => {
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
-      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontWeight.value).toBe('Mixed');
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
-      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe('');
 
       // Toggle all styles
       await data.fixture.events.click(italic.button);

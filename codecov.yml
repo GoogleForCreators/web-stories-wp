@@ -82,8 +82,12 @@ ignore:
   - web-stories.php
   - uninstall.php
   - includes/namespace.php
-  - includes/plugin-compat
+  - includes/compat
+  - includes/polyfills
   - includes/templates
+  - assets/src/migration/cli.js
+  - assets/src/karma-fixture
+  - packages/fonts/src/cli.js
   - includes/AMP/Integration/AMP_Story_Sanitizer.php
   - includes/REST_API/Stories_Settings_Controller.php
   - includes/REST_API/Stories_Users_Controller.php

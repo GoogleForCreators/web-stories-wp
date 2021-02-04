@@ -19,6 +19,7 @@ export const ADD_PAGE = 'ADD_PAGE';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const DELETE_PAGE = 'DELETE_PAGE';
 export const ARRANGE_PAGE = 'ARRANGE_PAGE';
+export const REPLACE_CURRENT_PAGE = 'REPLACE_CURRENT_PAGE';
 
 // Manipulate elements on a page.
 export const DELETE_ELEMENTS = 'DELETE_ELEMENTS';
@@ -43,6 +44,7 @@ export const UPDATE_STORY = 'UPDATE_STORY';
 
 // Manipulate animation state.
 export const UPDATE_ANIMATION_STATE = 'UPDATE_ANIMATION_STATE';
+export const ADD_ANIMATIONS = 'ADD_ANIMATIONS';
 
 // Manipulate entire internal state.
 export const RESTORE = 'RESTORE';

@@ -3,14 +3,13 @@
 /bin/local-env/data
 /build
 /docs
-assets/src/fonts/fonts.json
+packages/fonts/src/fonts.json
 /node_modules
 /vendor
 /assets/css
 /assets/js
 /assets/images
 /karma/karma-puppeteer-client/client.js
-.travis_deploy_key.enc
 .browserslistrc
 .distignore
 .editorconfig

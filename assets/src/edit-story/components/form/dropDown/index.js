@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback, useMemo, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
@@ -52,7 +52,7 @@ const DropDownContainer = styled.div`
   }
 `;
 
-const DropDownSelect = styled.button`
+export const DropDownSelect = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -66,17 +66,14 @@ const DropDownSelect = styled.button`
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
-
+  width: ${({ fitContentWidth }) =>
+    fitContentWidth ? `fit-content` : `inherit`};
   ${({ disabled }) =>
     disabled &&
-    `
+    css`
       pointer-events: none;
       opacity: 0.3;
     `}
-
-  :focus {
-    outline: none !important;
-  }
 
   svg {
     width: 28px;
@@ -86,7 +83,7 @@ const DropDownSelect = styled.button`
   }
 `;
 
-const DropDownTitle = styled.span`
+export const DropDownTitle = styled.span`
   user-select: none;
   color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.label.family};

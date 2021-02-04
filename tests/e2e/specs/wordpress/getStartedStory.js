@@ -30,19 +30,21 @@ import {
 
 describe('Get Started Story', () => {
   describe('Admin User', () => {
-    it('should prefill post title and post content', async () => {
+    it('should pre-fill post title and post content', async () => {
       await visitAdminPage(
         'post-new.php',
         'post_type=web-story&web-stories-demo=1'
       );
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
-      await expect(page).toMatch(/Tips to make the most/i);
-      await expect(page).toMatch(/to make the most of/i);
+      await expect(page).toMatch(
+        /Tips to make the most of the Web Stories Editor/i
+      );
 
-      await page.waitForSelector('[data-testid="mediaElement"]');
+      await page.waitForSelector('[data-testid="mediaElement-image"]');
+      await page.waitForSelector('[data-testid="frameElement"]');
 
-      await percySnapshot(page, 'Get Started Story (Admin)');
+      await percySnapshot(page, 'Get Started Story');
     });
   });
 
@@ -55,19 +57,19 @@ describe('Get Started Story', () => {
       await switchUserToAdmin();
     });
 
-    it('should prefill post title and post content', async () => {
+    it('should pre-fill post title and post content', async () => {
       await visitAdminPage(
         'post-new.php',
         'post_type=web-story&web-stories-demo=1'
       );
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
-      await expect(page).toMatch(/Tips to make the most/i);
-      await expect(page).toMatch(/to make the most of/i);
+      await expect(page).toMatch(
+        /Tips to make the most of the Web Stories Editor/i
+      );
 
-      await page.waitForSelector('[data-testid="mediaElement"]');
-
-      await percySnapshot(page, 'Get Started Story (Author)');
+      await page.waitForSelector('[data-testid="mediaElement-image"]');
+      await page.waitForSelector('[data-testid="frameElement"]');
     });
   });
 });

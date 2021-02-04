@@ -58,7 +58,7 @@ class Discovery extends \WP_UnitTestCase {
 		self::$story_id      = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
+				'post_title'   => 'Discovery Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
 				'post_author'  => self::$user_id,
@@ -72,6 +72,7 @@ class Discovery extends \WP_UnitTestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
+
 		wp_maybe_generate_attachment_metadata( get_post( self::$attachment_id ) );
 		set_post_thumbnail( self::$story_id, self::$attachment_id );
 
@@ -85,8 +86,17 @@ class Discovery extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
+
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
+	}
+
+	public function tearDown() {
+		$this->set_permalink_structure( '' );
+		// Set by go_to();
+		$_SERVER['REQUEST_URI'] = '';
+
+		parent::tearDown();
 	}
 
 	/**
@@ -150,6 +160,20 @@ class Discovery extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::get_open_graph_metadata
+	 */
+	public function test_get_open_graph_metadata() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_open_graph_metadata' );
+		$this->assertArrayHasKey( 'og:locale', $result );
+		$this->assertArrayHasKey( 'og:type', $result );
+		$this->assertArrayHasKey( 'og:description', $result );
+		$this->assertArrayHasKey( 'article:published_time', $result );
+		$this->assertArrayHasKey( 'article:modified_time', $result );
+		$this->assertArrayHasKey( 'og:image', $result );
+	}
+
+	/**
 	 * @covers ::print_feed_link
 	 */
 	public function test_print_feed_link() {
@@ -167,5 +191,39 @@ class Discovery extends \WP_UnitTestCase {
 		$output = get_echo( [ $object, 'print_twitter_metadata' ] );
 		$this->assertContains( 'twitter:card', $output );
 		$this->assertContains( 'twitter:image', $output );
+		$this->assertContains( 'twitter:image:alt', $output );
+		$this->assertContains( 'Discovery Test Story', $output );
+	}
+
+	/**
+	 * @covers ::get_twitter_metadata
+	 */
+	public function test_get_twitter_metadata() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_twitter_metadata' );
+		$this->assertArrayHasKey( 'twitter:card', $result );
+		$this->assertArrayHasKey( 'twitter:image', $result );
+		$this->assertArrayHasKey( 'twitter:image:alt', $result );
+		$this->assertSame( 'Discovery Test Story', $result['twitter:image:alt'] );
+	}
+
+	/**
+	 * @covers ::get_poster
+	 */
+	public function test_get_poster() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_poster', [ self::$story_id ] );
+		$this->assertArrayHasKey( 'src', $result );
+		$this->assertArrayHasKey( 'height', $result );
+		$this->assertArrayHasKey( 'width', $result );
+	}
+
+	/**
+	 * @covers ::get_poster
+	 */
+	public function test_get_poster_no() {
+		$object = new \Google\Web_Stories\Discovery();
+		$result = $this->call_private_method( $object, 'get_poster', [ -99 ] );
+		$this->assertFalse( $result );
 	}
 }

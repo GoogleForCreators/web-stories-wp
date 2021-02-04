@@ -23,7 +23,7 @@ import React from 'react';
  * Internal dependencies
  */
 import PageAttachment from '../index';
-import CanvasContext from '../../context';
+import CanvasContext from '../../../../app/canvas/context';
 import { renderWithTheme } from '../../../../testUtils';
 import StoryContext from '../../../../app/story/context';
 
@@ -65,7 +65,7 @@ describe('PageAttachment', () => {
   it('should display only wrapper in case of empty Page Attachment', () => {
     const { getByRole } = setup();
     const pageAttachment = getByRole('presentation');
-    expect(pageAttachment).toBeDefined();
+    expect(pageAttachment).toBeInTheDocument();
     expect(pageAttachment).toBeEmptyDOMElement();
   });
 
@@ -74,7 +74,7 @@ describe('PageAttachment', () => {
       pageAttachment: { url: 'http://example.test', ctaText: 'Click me!' },
     });
     const ctaText = getByText('Click me!');
-    expect(ctaText).toBeDefined();
+    expect(ctaText).toBeInTheDocument();
   });
 
   it('should display default CTA Text if none set', () => {
@@ -82,7 +82,7 @@ describe('PageAttachment', () => {
       pageAttachment: { url: 'http://example.test' },
     });
     const ctaText = getByText('Learn more');
-    expect(ctaText).toBeDefined();
+    expect(ctaText).toBeInTheDocument();
   });
 
   it('should display dotted line if link found in the area', () => {

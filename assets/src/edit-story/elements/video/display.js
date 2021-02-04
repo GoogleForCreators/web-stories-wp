@@ -40,7 +40,11 @@ const Image = styled.img`
   position: absolute;
   max-width: initial;
   max-height: initial;
-  ${videoWithScale}
+  object-fit: contain;
+  width: ${({ width }) => `${width}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
+  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 
 function VideoDisplay({ previewMode, box: { width, height }, element }) {
@@ -75,11 +79,16 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
   );
 
   return (
-    <MediaDisplay element={element} mediaRef={ref} showPlaceholder={true}>
+    <MediaDisplay
+      element={element}
+      mediaRef={ref}
+      showPlaceholder={true}
+      previewMode={previewMode}
+    >
       {previewMode ? (
         <Image
           src={poster || resource.poster}
-          alt={resource.title}
+          alt={element.alt || resource.alt}
           style={style}
           {...videoProps}
           ref={ref}
@@ -93,6 +102,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           loop={loop}
           preload="none"
           ref={ref}
+          data-testid="videoElement"
+          data-leaf-element="true"
         >
           <source src={resource.src} type={resource.mimeType} />
           {tracks &&
@@ -103,7 +114,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
                 kind={kind}
                 src={src}
                 key={key}
-                default={i == 0}
+                default={i === 0}
               />
             ))}
         </Video>

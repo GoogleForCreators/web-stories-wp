@@ -2,9 +2,9 @@
 
 Contributors:      google
 Requires at least: 5.3
-Tested up to:      5.5
+Tested up to:      5.6
 Requires PHP:      5.6
-Stable tag:        1.1.0
+Stable tag:        1.3.0
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
 Tags:              web stories, stories, amp, storytelling, google
@@ -110,6 +110,45 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.3.0 =
+
+**Release Date:** January 19, 2021.
+
+* New feature: support for monetization through Google AdSense and Google Ad Manager.
+* New feature: page layouts.
+* UI improvements in the editor
+* Bug fixes and performance improvements.
+
+= 1.2.1 =
+
+**Release Date:** December 17, 2020.
+
+* New feature: automated site environment compatibility checks.
+* Improved UI for border and corner radius panels.
+* Bug fixes and performance improvements.
+
+= 1.2.0 =
+
+**Release Date:** December 11, 2020.
+
+* New features: animations, pre-publish checklist.
+* Improved captions language selector.
+* Improved compatibility with Cloudflare WAF.
+
+= 1.1.1 =
+
+**Release Date:** November 11, 2020.
+
+* Bug fixes and performance improvements.
+
+= 1.1.0 =
+
+**Release Date:** October 28, 2020.
+
+* New features: text sets, Tenor GIFs, video captions.
+* Responsive design in Gutenberg block & shortcode support.
+* Improved compatibility with other WordPress plugins.
+
 = 1.0.0 =
 
 **Release Date:** September 22nd, 2020.
@@ -117,6 +156,22 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+
+New monetization capabilities, bug fixes and performance improvements.
+
+= 1.2.1 =
+
+Bug fixes and performance improvements.
+
+= 1.2.0 =
+
+Added basic animations and a pre-publish checklist.
+
+= 1.1.1 =
+
+Bug fixes and performance improvements.
 
 = 1.0.0 =
 

@@ -1,23 +1,23 @@
 {
-  "current": "e8f0424f-1545-4f97-951b-82acd0a94707",
+  "current": "f9edfdfb-84c5-48eb-8a55-8377d634102e",
   "selection": [],
   "story": {
-    "stylePresets": {
+    "globalStoryStyles": {
       "textStyles": [
         {
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 243,
+              "g": 21,
+              "b": 21
             }
           },
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
-            "family": "IBM Plex Serif",
+            "family": "Poppins",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
             "variants": [
               [0, 100],
@@ -27,31 +27,34 @@
               [0, 500],
               [0, 600],
               [0, 700],
+              [0, 800],
+              [0, 900],
               [1, 100],
               [1, 200],
               [1, 300],
               [1, 400],
               [1, 500],
               [1, 600],
-              [1, 700]
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
-          "fontSize": 37,
-          "lineHeight": 1.2,
+          "fontSize": 35,
+          "lineHeight": 1,
           "padding": {
-            "locked": true,
             "horizontal": 0,
             "vertical": 0
           },
           "textAlign": "initial",
           "color": {
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+              "r": 255,
+              "g": 255,
+              "b": 255
             }
           },
-          "fontWeight": 600,
+          "fontWeight": 400,
           "isItalic": false,
           "isUnderline": false,
           "letterSpacing": 0
@@ -60,98 +63,64 @@
       "colors": [
         {
           "color": {
-            "r": 33,
-            "g": 33,
-            "b": 33
-          }
-        },
-        {
-          "color": {
             "r": 0,
-            "g": 92,
-            "b": 255
+            "g": 0,
+            "b": 0
           }
         },
         {
           "color": {
-            "r": 61,
-            "g": 46,
-            "b": 255
+            "r": 22,
+            "g": 114,
+            "b": 175
           }
         },
         {
           "color": {
-            "r": 200,
-            "g": 122,
-            "b": 255
+            "r": 27,
+            "g": 219,
+            "b": 79
           }
         },
         {
           "color": {
-            "r": 255,
-            "g": 163,
-            "b": 214
+            "r": 196,
+            "g": 208,
+            "b": 215
           }
         },
         {
           "color": {
-            "r": 255,
-            "g": 187,
+            "r": 196,
+            "g": 208,
+            "b": 215
+          }
+        },
+        {
+          "color": {
+            "r": 196,
+            "g": 208,
+            "b": 215
+          }
+        },
+        {
+          "color": {
+            "r": 196,
+            "g": 208,
+            "b": 215
+          }
+        },
+        {
+          "color": {
+            "r": 196,
+            "g": 196,
             "b": 196
-          }
-        },
-        {
-          "color": {
-            "r": 255,
-            "g": 187,
-            "b": 196,
-            "a": 0.6
-          }
-        },
-        {
-          "color": {
-            "r": 246,
-            "g": 147,
-            "b": 147,
-            "a": 0.6
-          }
-        },
-        {
-          "color": {
-            "r": 240,
-            "g": 176,
-            "b": 119,
-            "a": 0.6
-          }
-        },
-        {
-          "color": {
-            "r": 220,
-            "g": 211,
-            "b": 67,
-            "a": 0.6
-          }
-        },
-        {
-          "color": {
-            "r": 153,
-            "g": 199,
-            "b": 39,
-            "a": 0.6
-          }
-        },
-        {
-          "color": {
-            "r": 119,
-            "g": 151,
-            "b": 18,
-            "a": 0.6
           }
         }
       ]
     }
   },
-  "version": 24,
+  "version": 25,
   "pages": [
     {
       "elements": [
@@ -180,7 +149,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "ca669203-934f-44e3-a94f-a04e4892c9e4"
+          "id": "cd465622-1638-4bfe-80f1-4ef75ec289a4"
         },
         {
           "opacity": 100,
@@ -189,36 +158,8 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "x": 41,
-          "y": 337,
-          "width": 112,
-          "height": 32,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "7739a64c-76d0-49d4-91fe-a177500601c7"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Roboto",
             "weights": [100, 300, 400, 500, 700, 900],
@@ -257,32 +198,34 @@
               "lGap": 0
             }
           },
-          "fontSize": 16,
+          "fontSize": 18,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
             }
           },
-          "lineHeight": 1.5,
+          "lineHeight": 1.8,
           "textAlign": "center",
           "padding": {
-            "locked": true,
-            "horizontal": 0,
+            "locked": false,
+            "horizontal": 3,
             "vertical": 0
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #fff\">CATEGORY</span>",
           "fontWeight": 400,
+          "marginOffset": 11.306249999999999,
           "x": 41,
-          "y": 345,
-          "width": 112,
-          "height": 19,
+          "y": 348,
+          "width": 114,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "ff9919e1-95ae-4276-9330-10a36a8d51d9"
+          "id": "fe03f64e-2976-45a0-a9fb-a477523ddf54"
         },
         {
           "opacity": 100,
@@ -356,7 +299,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "d774160a-9a92-4fb7-b49a-261032b332fe"
+          "id": "fec4e47a-0f6d-48c3-9e3b-35f4ccd12d84"
         },
         {
           "opacity": 100,
@@ -423,6 +366,7 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">By Agatha Android</span>",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
           "x": 41,
           "y": 545,
           "width": 156,
@@ -430,8 +374,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "2c2855fd-d71b-4041-b5a0-bcc78c55003a",
-          "marginOffset": 5.578125
+          "id": "3fc4426c-ef7b-4149-b420-4bf835697885"
         },
         {
           "opacity": 100,
@@ -505,7 +448,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "b8f9c01a-e1d2-44bb-b3e0-9f3b7b7b0cb7"
+          "id": "3fdad7d5-2aba-4901-b893-835253a11674"
         }
       ],
       "backgroundColor": {
@@ -516,7 +459,7 @@
         }
       },
       "type": "page",
-      "id": "e54fe990-3dbf-4d29-b64d-f862ff237392"
+      "id": "755f1d9e-aeb4-4c4d-ba7f-fac834434243"
     },
     {
       "backgroundOverlay": "none",
@@ -546,7 +489,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "14f53574-3915-4c23-927c-bf9ff0319aca"
+          "id": "eaf76058-26a2-4c86-91ab-fc083041c971"
         },
         {
           "opacity": 100,
@@ -564,6 +507,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "7739a64c-76d0-49d4-91fe-a177500601c7",
+          "x": 33,
+          "y": 360,
           "width": 332,
           "height": 1,
           "scale": 100,
@@ -572,10 +518,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "7739a64c-76d0-49d4-91fe-a177500601c7",
-          "id": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
-          "x": 33,
-          "y": 360
+          "id": "79d6bb35-390b-4ab1-9440-23bcb5a12cbd"
         },
         {
           "opacity": 100,
@@ -642,15 +585,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 600; letter-spacing: 0.05em\">CATEGORY</span>",
           "fontWeight": 400,
+          "basedOn": "ff9919e1-95ae-4276-9330-10a36a8d51d9",
+          "x": 33,
+          "y": 373,
           "width": 112,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "ff9919e1-95ae-4276-9330-10a36a8d51d9",
-          "id": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
-          "x": 33,
-          "y": 373
+          "id": "0ca88179-4c8a-40eb-a425-335aea48c82e"
         },
         {
           "opacity": 100,
@@ -717,15 +660,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 600\">The Local's Guide to San Francisco</span>",
           "fontWeight": 700,
+          "basedOn": "d774160a-9a92-4fb7-b49a-261032b332fe",
+          "x": 33,
+          "y": 399,
           "width": 313,
           "height": 84,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "d774160a-9a92-4fb7-b49a-261032b332fe",
-          "id": "607c25aa-8966-4232-80ac-a64ba70dd497",
-          "x": 33,
-          "y": 399
+          "id": "747ea170-3d1b-4652-ac15-bbee4a882d86"
         },
         {
           "opacity": 100,
@@ -790,16 +733,16 @@
           "type": "text",
           "content": "By Cali Crystal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;May 19, 2020",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "2c2855fd-d71b-4041-b5a0-bcc78c55003a",
+          "x": 33,
+          "y": 499,
           "width": 342,
           "height": 17,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "2c2855fd-d71b-4041-b5a0-bcc78c55003a",
-          "id": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
-          "x": 33,
-          "y": 499
+          "id": "3c0a2d83-d1bd-452a-834b-7de3c02a7788"
         },
         {
           "opacity": 100,
@@ -817,6 +760,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
+          "x": 33,
+          "y": 491,
           "width": 332,
           "height": 1,
           "scale": 100,
@@ -825,10 +771,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
-          "id": "1f4211cc-c2bd-4b7c-a897-f3d1d1871466",
-          "x": 33,
-          "y": 491
+          "id": "533a6377-3383-469f-8a16-bf8839619a7a"
         },
         {
           "opacity": 100,
@@ -846,6 +789,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
+          "x": 33,
+          "y": 523,
           "width": 332,
           "height": 1,
           "scale": 100,
@@ -854,10 +800,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
-          "id": "e6be672d-e0cb-4d5b-aef3-a223cf9914bf",
-          "x": 33,
-          "y": 523
+          "id": "845bb3db-26fc-4c8f-b3ab-0749479a1ae1"
         },
         {
           "opacity": 100,
@@ -875,6 +818,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
+          "x": 144,
+          "y": 500,
           "width": 1,
           "height": 14,
           "scale": 100,
@@ -883,10 +829,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
-          "id": "0e33182f-74b6-45fe-a6c0-7893611b182c",
-          "x": 144,
-          "y": 500
+          "id": "481812b5-b3b5-4c8c-acd5-49ab3c58ad9c"
         }
       ],
       "backgroundColor": {
@@ -897,7 +840,7 @@
         }
       },
       "type": "page",
-      "id": "92b7301d-85c4-41b6-aba0-387d66ea9ee9"
+      "id": "04a57b5d-b702-48a2-9c30-53ab7efe2691"
     },
     {
       "backgroundOverlay": "none",
@@ -927,7 +870,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "bf62d480-6490-451d-9ec8-1a403e8a24d3"
+          "id": "04fe3198-81fb-4832-a006-3da5526919a0"
         },
         {
           "opacity": 100,
@@ -1000,15 +943,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">CATEGORY</span>",
           "fontWeight": 400,
+          "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
+          "x": 33,
+          "y": 504,
           "width": 140,
           "height": 33,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
-          "id": "ebeb00e0-5e48-4b11-b213-2500d2474bc2",
-          "x": 33,
-          "y": 504
+          "id": "195687ca-1dfd-4829-b08b-33d0724cddde"
         },
         {
           "opacity": 100,
@@ -1081,15 +1024,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">Plants!</span>\n<span style=\"font-weight: 700; letter-spacing: 0.03em\">Fresh Decor For Modern Homes</span>",
           "fontWeight": 700,
+          "basedOn": "607c25aa-8966-4232-80ac-a64ba70dd497",
+          "x": 33,
+          "y": 308,
           "width": 313,
           "height": 201,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "607c25aa-8966-4232-80ac-a64ba70dd497",
-          "id": "41f72c82-5f33-4ec2-be22-755a93241212",
-          "x": 33,
-          "y": 308
+          "id": "467bdf56-0df2-42c5-97eb-9e6eeb3440d5"
         },
         {
           "opacity": 100,
@@ -1162,16 +1105,16 @@
           "type": "text",
           "content": "By Fern Greenthumb\nJanuary 31, 2020",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
+          "x": 33,
+          "y": 541,
           "width": 146,
           "height": 38,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
-          "id": "afe7d0a5-0c85-4d3a-a34b-8a890c9e4a1a",
-          "x": 33,
-          "y": 541
+          "id": "d07705f6-d260-4b59-95b9-2867be8ec7c3"
         }
       ],
       "backgroundColor": {
@@ -1182,7 +1125,7 @@
         }
       },
       "type": "page",
-      "id": "37304213-5ef8-4083-91e0-9f349ced3cbb"
+      "id": "d96cfe7f-359f-4916-b7c1-933da0b8e0df"
     },
     {
       "backgroundOverlay": "none",
@@ -1212,7 +1155,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "392150a7-487e-4910-ba2d-cb23dc592332"
+          "id": "b2fc6127-8e85-47f5-8486-37897347a51b"
         },
         {
           "opacity": 100,
@@ -1230,6 +1173,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
+          "x": 107,
+          "y": 380,
           "width": 32,
           "height": 1,
           "scale": 100,
@@ -1238,10 +1184,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
-          "id": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
-          "x": 107,
-          "y": 380
+          "id": "6faa1e81-41ed-4525-b2f4-ee94b8feb5b1"
         },
         {
           "opacity": 100,
@@ -1308,15 +1251,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.1em\">CATEGORY</span>",
           "fontWeight": 400,
+          "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
+          "x": 151,
+          "y": 370,
           "width": 112,
           "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
-          "id": "f77e3d81-d7d2-480a-b185-4a509a452b76",
-          "x": 151,
-          "y": 370
+          "id": "ec521544-fad3-47e2-a986-f6d7786de123"
         },
         {
           "opacity": 100,
@@ -1334,6 +1277,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
+          "x": 273,
+          "y": 380,
           "width": 32,
           "height": 1,
           "scale": 100,
@@ -1342,10 +1288,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
-          "id": "146eece8-418e-465e-ba9a-dfd25b1958f4",
-          "x": 273,
-          "y": 380
+          "id": "ba000ba1-9ebb-4583-b388-a0e16dcbe9c0"
         },
         {
           "opacity": 100,
@@ -1418,16 +1361,16 @@
           "type": "text",
           "content": "February 14, 2020",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
+          "x": 146,
+          "y": 545,
           "width": 122,
           "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
-          "id": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
-          "x": 146,
-          "y": 545
+          "id": "a2c9de84-83e8-43d2-a26f-8c2f4002ca67"
         },
         {
           "opacity": 100,
@@ -1494,15 +1437,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.04em\">HEALTHY HABITS TO FIND YOUR AUTHENTIC SELF</span>",
           "fontWeight": 700,
+          "basedOn": "41f72c82-5f33-4ec2-be22-755a93241212",
+          "x": 48,
+          "y": 398,
           "width": 313,
           "height": 115,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "41f72c82-5f33-4ec2-be22-755a93241212",
-          "id": "dd4ac41c-e4fb-451d-977b-9564d3ee28d4",
-          "x": 48,
-          "y": 398
+          "id": "269d472f-976d-4207-90f0-4a8309f16861"
         },
         {
           "opacity": 100,
@@ -1575,16 +1518,16 @@
           "type": "text",
           "content": "By Dr. Lora Poppins",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
+          "x": 139,
+          "y": 525,
           "width": 140,
           "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
-          "id": "9188e061-cd53-466f-9a7e-af78bf59d31e",
-          "x": 139,
-          "y": 525
+          "id": "c3ec2f27-c240-4496-812a-eb9e82b6a949"
         }
       ],
       "backgroundColor": {
@@ -1595,7 +1538,7 @@
         }
       },
       "type": "page",
-      "id": "1385a801-9bda-4720-8450-492ece575d7e"
+      "id": "870a951e-c4d3-454e-970f-c1acd564ebbf"
     },
     {
       "backgroundOverlay": "none",
@@ -1625,7 +1568,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "08de681c-ecaf-4f97-9bbe-fce65b589fdb"
+          "id": "20b485df-e817-4791-bafa-8036e7b4e92e"
         },
         {
           "opacity": 100,
@@ -1653,7 +1596,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "id": "cc7c5a89-9bec-4ba5-bf42-19ca9172942a"
+          "id": "fa13ba90-e095-4508-a8a6-a83f5bebcf29"
         },
         {
           "opacity": 100,
@@ -1714,16 +1657,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300; color: #fff\">Category</span>",
           "fontWeight": 400,
+          "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
+          "marginOffset": -7.049999999999997,
+          "x": 40,
+          "y": 350,
           "width": 112,
           "height": 35,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
-          "id": "ab4e5032-7d70-42c9-98bf-9761cb8be09b",
-          "x": 40,
-          "y": 350,
-          "marginOffset": -7.049999999999997
+          "id": "e8d26428-e5fc-4fe7-a1fc-e6e005bf4037"
         },
         {
           "opacity": 100,
@@ -1741,6 +1684,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "e6be672d-e0cb-4d5b-aef3-a223cf9914bf",
+          "x": 41,
+          "y": 387,
           "width": 331,
           "height": 1,
           "scale": 100,
@@ -1749,10 +1695,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "e6be672d-e0cb-4d5b-aef3-a223cf9914bf",
-          "id": "679372c2-385c-4dcc-ba9b-ebd100e813ee",
-          "x": 41,
-          "y": 387
+          "id": "51221f90-7fb2-4f31-9ca6-59893c45983c"
         },
         {
           "opacity": 100,
@@ -1813,16 +1756,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #fff\">A CONDENSED GUIDE TO MINIMALISM</span>",
           "fontWeight": 700,
+          "basedOn": "dd4ac41c-e4fb-451d-977b-9564d3ee28d4",
+          "marginOffset": -16.043999999999997,
+          "x": 41,
+          "y": 388,
           "width": 287,
           "height": 154,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "dd4ac41c-e4fb-451d-977b-9564d3ee28d4",
-          "id": "c1b1f578-0c36-4e88-8182-7dfcfebb8b86",
-          "x": 41,
-          "y": 388,
-          "marginOffset": -16.043999999999997
+          "id": "2375a3d4-4f13-4510-9612-893af7c538be"
         },
         {
           "opacity": 100,
@@ -1840,6 +1783,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "679372c2-385c-4dcc-ba9b-ebd100e813ee",
+          "x": 41,
+          "y": 548,
           "width": 331,
           "height": 1,
           "scale": 100,
@@ -1848,10 +1794,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "679372c2-385c-4dcc-ba9b-ebd100e813ee",
-          "id": "da8ea483-5ce8-4443-a069-bbed22a09a6e",
-          "x": 41,
-          "y": 548
+          "id": "7ef733fc-9ee8-463f-9304-39737161db36"
         },
         {
           "opacity": 100,
@@ -1912,16 +1855,16 @@
           "type": "text",
           "content": "<span style=\"color: #fff\">By Mary Apartment</span>",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
+          "x": 41,
+          "y": 557,
           "width": 163,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
-          "id": "5df6e87c-2062-4f33-8049-608df45f5ab0",
-          "x": 41,
-          "y": 557
+          "id": "b5b6fa73-47d2-47b7-a8e8-4d4568999294"
         },
         {
           "opacity": 100,
@@ -1982,16 +1925,16 @@
           "type": "text",
           "content": "<span style=\"color: #fff\">June 29, 2020</span>",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "5df6e87c-2062-4f33-8049-608df45f5ab0",
+          "x": 272,
+          "y": 557,
           "width": 122,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "5df6e87c-2062-4f33-8049-608df45f5ab0",
-          "id": "3477f800-c840-4dbd-b730-37e1597711e3",
-          "x": 272,
-          "y": 557
+          "id": "71dbc521-fca3-43dd-b35d-ad1d07947e84"
         }
       ],
       "backgroundColor": {
@@ -2002,7 +1945,7 @@
         }
       },
       "type": "page",
-      "id": "160e8c18-f3be-43fd-acdb-40f88066574b"
+      "id": "92858448-5995-4490-9c7d-ae1a4cd66739"
     },
     {
       "backgroundOverlay": "none",
@@ -2032,7 +1975,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "7f46527b-f6d9-427e-8a97-bb77e4dabdf1"
+          "id": "ab5e7bb6-884d-451d-b1e1-cc0cbdb24464"
         },
         {
           "opacity": 100,
@@ -2105,16 +2048,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.05em\">CATEGORY</span>",
           "fontWeight": 400,
+          "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
+          "marginOffset": 4.068000000000001,
+          "x": 40,
+          "y": 385,
           "width": 112,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
-          "id": "7dc69555-5731-4e30-b641-1431d189cdfe",
-          "x": 40,
-          "y": 385,
-          "marginOffset": 4.068000000000001
+          "id": "35c2a188-b282-4493-bc73-5dcf73a78e77"
         },
         {
           "opacity": 100,
@@ -2177,15 +2120,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">Coffee saved the world</span>",
           "fontWeight": 700,
+          "basedOn": "607c25aa-8966-4232-80ac-a64ba70dd497",
+          "x": 40,
+          "y": 418,
           "width": 313,
           "height": 90,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "607c25aa-8966-4232-80ac-a64ba70dd497",
-          "id": "f8175027-5283-4bfa-abe3-0d9d8e0197bf",
-          "x": 40,
-          "y": 418
+          "id": "267ef5db-ebee-4830-a7b2-a8b0afd85619"
         },
         {
           "opacity": 100,
@@ -2258,16 +2201,16 @@
           "type": "text",
           "content": "Caffeinated Historians",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
+          "x": 40,
+          "y": 528,
           "width": 164,
           "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
-          "id": "c6867853-e246-413a-b9df-29d184090da8",
-          "x": 40,
-          "y": 528
+          "id": "42556cb4-5e8f-42e3-b186-7893405180c6"
         },
         {
           "opacity": 100,
@@ -2285,6 +2228,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "0e33182f-74b6-45fe-a6c0-7893611b182c",
+          "x": 219,
+          "y": 532,
           "width": 1,
           "height": 14,
           "scale": 100,
@@ -2293,10 +2239,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "0e33182f-74b6-45fe-a6c0-7893611b182c",
-          "id": "ee502557-00dc-4206-be40-913a8f5cbfbc",
-          "x": 219,
-          "y": 532
+          "id": "9a3e70bb-45e1-465d-922b-06a9d0cf16c9"
         },
         {
           "opacity": 100,
@@ -2369,16 +2312,16 @@
           "type": "text",
           "content": "January 31, 2020",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "c6867853-e246-413a-b9df-29d184090da8",
+          "x": 232,
+          "y": 528,
           "width": 164,
           "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "c6867853-e246-413a-b9df-29d184090da8",
-          "id": "60ab74f6-b153-4ca1-8507-07dda1433fb5",
-          "x": 232,
-          "y": 528
+          "id": "8eb89dc5-ef0c-4167-8204-42c8b0ba62c8"
         }
       ],
       "backgroundColor": {
@@ -2389,7 +2332,7 @@
         }
       },
       "type": "page",
-      "id": "b0a31c77-faa8-47b3-8a5e-ac0ee0944fea"
+      "id": "970f0745-cd88-4500-a663-4331a97d1b4e"
     },
     {
       "backgroundOverlay": "none",
@@ -2419,7 +2362,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "5c52917f-60d1-43d1-a909-69fbc89f1f08"
+          "id": "72f7af44-2551-43ba-a467-99d02bab7b9c"
         },
         {
           "opacity": 100,
@@ -2485,15 +2428,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: rgba(0,0,0,0.15)\">All Work Should Be Play</span>",
           "fontWeight": 700,
+          "basedOn": "f8175027-5283-4bfa-abe3-0d9d8e0197bf",
+          "x": 44,
+          "y": 363,
           "width": 313,
           "height": 112,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "f8175027-5283-4bfa-abe3-0d9d8e0197bf",
-          "id": "1e7b6aad-8cc7-4404-a538-fbf9c9232588",
-          "x": 44,
-          "y": 363
+          "id": "a08bb658-d031-4dd4-9770-79cfcb13d600"
         },
         {
           "opacity": 100,
@@ -2559,15 +2502,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 900\">All Work Should Be Play</span>",
           "fontWeight": 700,
+          "basedOn": "1e7b6aad-8cc7-4404-a538-fbf9c9232588",
+          "x": 41,
+          "y": 359,
           "width": 313,
           "height": 112,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "1e7b6aad-8cc7-4404-a538-fbf9c9232588",
-          "id": "7754cac3-e8a6-49bb-9b4e-9a67164f479a",
-          "x": 41,
-          "y": 359
+          "id": "e861676a-0d4d-498c-a68d-06ad5cd702ee"
         },
         {
           "opacity": 100,
@@ -2640,16 +2583,16 @@
           "type": "text",
           "content": "By Industry Standard\nJanuary 31, 2020",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
+          "x": 121,
+          "y": 478,
           "width": 176,
           "height": 44,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
-          "id": "bbd94bfc-49d5-4280-b25d-df97697225e6",
-          "x": 121,
-          "y": 478
+          "id": "5de75e6e-b0ca-454c-9a6f-0efb44758caf"
         },
         {
           "opacity": 100,
@@ -2716,136 +2659,35 @@
           "textAlign": "center",
           "padding": {
             "locked": true,
-            "horizontal": 0,
-            "vertical": 0
+            "horizontal": 2,
+            "vertical": 2
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.01em\">CATEGORY</span>",
           "fontWeight": 400,
-          "width": 184,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "basedOn": "7dc69555-5731-4e30-b641-1431d189cdfe",
-          "id": "fff8ea88-c2fc-417e-8489-b88f887718ff",
-          "x": 111,
-          "y": 545
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "x": 124,
-          "y": 537,
-          "width": 4,
-          "height": 40,
+          "x": 129,
+          "y": 543,
+          "width": 149,
+          "height": 28,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "49aa3fb2-bc63-41ac-810f-d961a96d9f47"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
+          "id": "55b2ecb8-a727-4799-ae32-2e07fd832540",
+          "border": {
+            "left": 4,
+            "right": 4,
+            "top": 4,
+            "bottom": 4,
+            "lockedWidth": true,
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
             }
-          },
-          "type": "shape",
-          "width": 4,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "49aa3fb2-bc63-41ac-810f-d961a96d9f47",
-          "id": "87750f85-c55c-478a-b7f1-fd60b48e3e9e",
-          "x": 281,
-          "y": 537
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 161,
-          "height": 4,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "87750f85-c55c-478a-b7f1-fd60b48e3e9e",
-          "id": "0d7ac44c-8fd5-4383-bf39-d325ffcfc8fa",
-          "x": 124,
-          "y": 537
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 161,
-          "height": 4,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "0d7ac44c-8fd5-4383-bf39-d325ffcfc8fa",
-          "id": "ea329f35-fc03-4a8c-b8fc-5b9441d8d039",
-          "x": 124,
-          "y": 573
+          }
         }
       ],
       "backgroundColor": {
@@ -2856,7 +2698,7 @@
         }
       },
       "type": "page",
-      "id": "5dde9e25-8bc2-4584-ae74-87935dcb09fb"
+      "id": "f9edfdfb-84c5-48eb-8a55-8377d634102e"
     },
     {
       "backgroundOverlay": "none",
@@ -2886,7 +2728,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "0479e630-5db5-4c64-9a5e-13caa114be88"
+          "id": "f072f639-3c0d-4394-acde-744edf74043d"
         },
         {
           "opacity": 100,
@@ -2898,13 +2740,31 @@
           "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 0
             }
           },
           "type": "shape",
-          "width": 1,
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
+            "color": {
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            },
+            "position": "inside"
+          },
+          "x": 17,
+          "y": 331,
+          "width": 380,
           "height": 273,
           "scale": 100,
           "focalX": 50,
@@ -2912,97 +2772,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
-          "id": "39dd9085-76df-462d-9ca0-f09f3040fe18",
-          "x": 16,
-          "y": 331
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 1,
-          "height": 273,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "39dd9085-76df-462d-9ca0-f09f3040fe18",
-          "id": "e92fc3f9-3b43-4697-8201-392a09e3f9aa",
-          "x": 395,
-          "y": 331
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 380,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
-          "id": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
-          "x": 16,
-          "y": 331
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 380,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
-          "id": "1ef48d77-a32f-4a85-8c75-d132a2ab04b6",
-          "x": 16,
-          "y": 603
+          "id": "aca88807-e0f2-46ed-81ef-9a8ddd330a2e"
         },
         {
           "opacity": 100,
@@ -3071,16 +2841,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 200\">Hairstyle Hacks for Lazy Ladies</span>",
           "fontWeight": 700,
+          "basedOn": "7754cac3-e8a6-49bb-9b4e-9a67164f479a",
+          "marginOffset": -6.068000000000005,
+          "x": 41,
+          "y": 375,
           "width": 331,
           "height": 92,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "7754cac3-e8a6-49bb-9b4e-9a67164f479a",
-          "id": "0f5f6273-994d-45d6-923d-100b88051129",
-          "x": 41,
-          "y": 375,
-          "marginOffset": -6.068000000000005
+          "id": "b8546fb4-62be-4d60-b344-f3b8bf416a0d"
         },
         {
           "opacity": 100,
@@ -3098,6 +2868,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
+          "x": 109,
+          "y": 487,
           "width": 32,
           "height": 1,
           "scale": 100,
@@ -3106,10 +2879,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
-          "id": "5bde3567-9a2a-44e4-a183-4c8b62aae675",
-          "x": 109,
-          "y": 487
+          "id": "bc0bd49b-26b1-48e7-ab7f-8f930d6692bf"
         },
         {
           "opacity": 100,
@@ -3178,15 +2948,15 @@
           "type": "text",
           "content": "<span style=\"letter-spacing: 0.2em\">CATEGORY</span>",
           "fontWeight": 400,
+          "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
+          "x": 151,
+          "y": 477,
           "width": 112,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
-          "id": "9bd0f726-0d83-4066-a154-f6e415c3593d",
-          "x": 151,
-          "y": 477
+          "id": "3bea13e4-f64f-4830-9078-3bf88169f1d5"
         },
         {
           "opacity": 100,
@@ -3204,6 +2974,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "146eece8-418e-465e-ba9a-dfd25b1958f4",
+          "x": 271,
+          "y": 487,
           "width": 32,
           "height": 1,
           "scale": 100,
@@ -3212,10 +2985,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "146eece8-418e-465e-ba9a-dfd25b1958f4",
-          "id": "a5beb228-301e-478b-bda4-daf8d1294720",
-          "x": 271,
-          "y": 487
+          "id": "2db26456-cef4-4a3d-a16b-b4e797cd7573"
         },
         {
           "opacity": 100,
@@ -3274,16 +3044,16 @@
           "type": "text",
           "content": "By Style-ish Mag October 12, 2020",
           "fontWeight": 400,
+          "marginOffset": 5.578125,
+          "basedOn": "bbd94bfc-49d5-4280-b25d-df97697225e6",
+          "x": 125,
+          "y": 518,
           "width": 159,
           "height": 39,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 5.578125,
-          "basedOn": "bbd94bfc-49d5-4280-b25d-df97697225e6",
-          "id": "249be185-abeb-4282-8f56-4a61ab112160",
-          "x": 125,
-          "y": 518
+          "id": "66588fa9-1271-483c-b6b5-6376d33409bc"
         }
       ],
       "backgroundColor": {
@@ -3294,7 +3064,7 @@
         }
       },
       "type": "page",
-      "id": "7cf5cb87-0090-4ef4-b047-a745f8f6bfbe"
+      "id": "206d1872-6bb1-48e0-bf90-349595c84825"
     },
     {
       "backgroundOverlay": "none",
@@ -3324,7 +3094,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "392995ee-cc81-4cbf-91c2-840f0af3b2a7"
+          "id": "199de043-4703-40b7-a87f-bcdc65715e51"
         },
         {
           "opacity": 100,
@@ -3377,16 +3147,16 @@
           },
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.02em\">HOT GOSSIP ARTICLE</span>",
+          "marginOffset": -9.340000000000003,
+          "basedOn": "76231c03-8fa7-4106-b010-bc53c65e5fad",
+          "x": 40,
+          "y": 328,
           "width": 159,
           "height": 35,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": -9.340000000000003,
-          "basedOn": "76231c03-8fa7-4106-b010-bc53c65e5fad",
-          "id": "4ae5259b-cf6f-457d-ad0c-409111d9951e",
-          "x": 40,
-          "y": 328
+          "id": "e840bda8-086c-4074-9254-9e027872adfe"
         },
         {
           "opacity": 100,
@@ -3440,15 +3210,15 @@
           "type": "text",
           "content": "<span style=\"color: #f09; letter-spacing: 0.02em\">CELEBRITIES WHO LOVE PIZZA</span>",
           "fontWeight": 400,
+          "basedOn": "7f196d61-bc4a-45fd-bd22-95986d303feb",
+          "x": 40,
+          "y": 371,
           "width": 332,
           "height": 186,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "7f196d61-bc4a-45fd-bd22-95986d303feb",
-          "id": "f462a23e-9576-45f3-b449-2e13e087d496",
-          "x": 40,
-          "y": 371
+          "id": "8e4f558d-688a-4b35-8e09-e68b3f0c2174"
         }
       ],
       "backgroundColor": {
@@ -3459,7 +3229,7 @@
         }
       },
       "type": "page",
-      "id": "e8f0424f-1545-4f97-951b-82acd0a94707"
+      "id": "f99ae41b-b824-4b19-873e-ce5b9b5d68c8"
     },
     {
       "backgroundOverlay": "none",
@@ -3489,7 +3259,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "fb2e9804-a40b-4576-afd1-033b484e60b2"
+          "id": "d7a2fc7b-6127-4e58-8286-e9793dce4840"
         },
         {
           "opacity": 100,
@@ -3507,6 +3277,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "d99103e2-b50a-4987-ac0f-f777c07c130f",
+          "x": 40,
+          "y": 308,
           "width": 332,
           "height": 272,
           "scale": 100,
@@ -3515,10 +3288,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "d99103e2-b50a-4987-ac0f-f777c07c130f",
-          "id": "d238f35b-059d-4000-be60-20efa6d1e7db",
-          "x": 40,
-          "y": 308
+          "id": "642f946d-8680-4cc9-b27b-5eb3020e555b"
         },
         {
           "opacity": 100,
@@ -3536,35 +3306,9 @@
             }
           },
           "type": "shape",
-          "width": 298,
-          "height": 4,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
           "basedOn": "97002b98-b29b-4352-9b0c-86e9f2e30d42",
-          "id": "5f61d2b1-6a87-4fe3-9d38-f496aee557c1",
           "x": 58,
-          "y": 376
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
+          "y": 376,
           "width": 298,
           "height": 4,
           "scale": 100,
@@ -3573,10 +3317,36 @@
           "mask": {
             "type": "rectangle"
           },
+          "id": "41ace95f-a644-4bd8-b37e-2d070d785583"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
           "basedOn": "0d318915-a7aa-4283-a85c-d434b23e1dd1",
-          "id": "55f97950-aefb-4910-9fe4-759dacf8a24c",
           "x": 57,
-          "y": 506
+          "y": 506,
+          "width": 298,
+          "height": 4,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "059839ab-6d9d-4863-82c0-9b73eefb307b"
         },
         {
           "opacity": 100,
@@ -3594,18 +3364,18 @@
             }
           },
           "type": "shape",
-          "width": 139,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
           "basedOn": "22c352e3-c3e6-42b2-9ac2-77270913082a",
-          "id": "fdd8c8d1-aefd-4000-be60-84f1bc780fe5",
           "x": 58,
-          "y": 403
+          "y": 403,
+          "width": 139,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "dbd0d68a-0248-400e-aeed-278c68e3b6b3"
         },
         {
           "opacity": 100,
@@ -3623,6 +3393,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "92f1ee6c-a819-4409-9dbd-82a5a52281ff",
+          "x": 217,
+          "y": 403,
           "width": 139,
           "height": 1,
           "scale": 100,
@@ -3631,10 +3404,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "92f1ee6c-a819-4409-9dbd-82a5a52281ff",
-          "id": "887d3cf7-fba4-4e30-a68a-81f78bb36b39",
-          "x": 217,
-          "y": 403
+          "id": "3bbc2a0b-b250-4f96-a546-74db9fb64cda"
         },
         {
           "opacity": 100,
@@ -3652,6 +3422,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "1360b44a-cf4c-49cd-b241-a6687887e9aa",
+          "x": 205,
+          "y": 401,
           "width": 5,
           "height": 5,
           "scale": 100,
@@ -3660,10 +3433,7 @@
           "mask": {
             "type": "circle"
           },
-          "basedOn": "1360b44a-cf4c-49cd-b241-a6687887e9aa",
-          "id": "472ebca1-21a5-4a22-9b36-85a7bc9b27f9",
-          "x": 204.5,
-          "y": 401
+          "id": "42309eaf-cfb9-44e8-bdc2-def12ffac619"
         },
         {
           "opacity": 100,
@@ -3728,15 +3498,15 @@
           "type": "text",
           "content": "<span style=\"color: #fff; letter-spacing: 0.08em\">TEAM PRESENTS</span>",
           "fontWeight": 400,
+          "basedOn": "e666b825-d7f9-4c10-9c43-a4e31379f1f7",
+          "x": 149,
+          "y": 383,
           "width": 114,
           "height": 17,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "e666b825-d7f9-4c10-9c43-a4e31379f1f7",
-          "id": "47e743ab-fd08-481e-bdac-25ce29189aac",
-          "x": 149,
-          "y": 383
+          "id": "5d086af1-18da-4534-a717-202bee670b61"
         },
         {
           "opacity": 100,
@@ -3790,15 +3560,15 @@
           "type": "text",
           "content": "<span style=\"color: #d9b24d\">Rock Festival</span>",
           "fontWeight": 400,
+          "basedOn": "35d1fe06-206b-4633-a73d-3b5ceee841f4",
+          "x": 55,
+          "y": 419,
           "width": 302,
           "height": 55,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "35d1fe06-206b-4633-a73d-3b5ceee841f4",
-          "id": "932899a3-8ee2-4fa4-a80d-672be86f219d",
-          "x": 55,
-          "y": 419
+          "id": "15688993-939f-4cb6-a1bf-82bbf63a0041"
         },
         {
           "opacity": 100,
@@ -3865,16 +3635,16 @@
           "type": "text",
           "content": "<span style=\"color: #fff\">MARVIN MCKINNEY</span>",
           "fontWeight": 400,
+          "marginOffset": 2.504999999999999,
+          "basedOn": "9ddcc7df-8c81-432f-bd21-77ed9d773a6b",
+          "x": 40,
+          "y": 474,
           "width": 332,
           "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.504999999999999,
-          "basedOn": "9ddcc7df-8c81-432f-bd21-77ed9d773a6b",
-          "id": "101b113a-32b4-4e87-956a-127daa286e2f",
-          "x": 40,
-          "y": 474
+          "id": "f29a5c72-1f88-45d0-af15-7803a1fd8a0b"
         }
       ],
       "backgroundColor": {
@@ -3885,7 +3655,7 @@
         }
       },
       "type": "page",
-      "id": "0dd3de0f-7828-4c0d-9f62-b910a7bcacc7"
+      "id": "56e39edb-0d25-4186-b950-76d5c1536651"
     }
   ]
 }

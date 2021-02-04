@@ -30,9 +30,10 @@ import APIContext from '../../../api/context';
 import HistoryContext from '../../../history/context';
 
 const getStoryById = jest.fn();
+const getDemoStoryById = jest.fn();
 const clearHistory = jest.fn();
 
-const apiContextValue = { actions: { getStoryById } };
+const apiContextValue = { actions: { getStoryById, getDemoStoryById } };
 const historyContextValue = { actions: { clearHistory } };
 
 function ContextWrapper({ children }) {
@@ -52,10 +53,11 @@ ContextWrapper.propTypes = {
 describe('useLoadStory', () => {
   beforeEach(() => {
     getStoryById.mockReset();
+    getDemoStoryById.mockReset();
     clearHistory.mockReset();
   });
 
-  it('should load publish date with correct utc timezone', async () => {
+  it('should load story', async () => {
     getStoryById.mockReturnValue(
       Promise.resolve(
         createStory({
@@ -67,11 +69,28 @@ describe('useLoadStory', () => {
 
     const restore = jest.fn();
     await renderHook(
-      () => useLoadStory({ storyId: 11, shouldLoad: true, restore }),
+      () =>
+        useLoadStory({
+          storyId: 11,
+          shouldLoad: true,
+          restore,
+          isDemo: false,
+        }),
       { wrapper: ContextWrapper }
     );
+
     expect(restore.mock.calls[0][0].story).toStrictEqual(
-      expect.objectContaining({ date: '2020-01-01T20:20:20Z' })
+      expect.objectContaining({
+        storyId: 11,
+        title: 'title',
+        author: { id: 1, name: 'John Doe' },
+        excerpt: 'excerpt',
+        featuredMedia: { id: 0, height: 0, width: 0, url: '' },
+        permalinkConfig: {
+          prefix: 'http://localhost:8899/web-stories/',
+          suffix: '',
+        },
+      })
     );
   });
 });

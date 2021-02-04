@@ -42,6 +42,7 @@ export const BEZIER = {
   inCirc: 'cubic-bezier(0.6, 0.04, 0.98, 0.335)',
   outCirc: 'cubic-bezier(0.075, 0.82, 0.165, 1)',
   inOutCirc: 'cubic-bezier(0.785, 0.135, 0.15, 0.86)',
+  default: 'cubic-bezier(0.4, 0.4, 0.0, 1)',
 };
 
 export const ANIMATION_TYPES = {
@@ -67,11 +68,37 @@ export const ANIMATION_EFFECTS = {
     value: 'effect-whoosh-in',
     name: __('Whoosh In', 'web-stories'),
   },
-  ZOOM: { value: 'effect-zoom', name: __('Zoom', 'web-stories') },
+  ZOOM: { value: 'effect-zoom', name: __('Scale', 'web-stories') },
   ROTATE_IN: {
     value: 'effect-rotate-in',
     name: __('Rotate In', 'web-stories'),
   },
+};
+
+export const BACKGROUND_ANIMATION_EFFECTS = {
+  ZOOM: {
+    value: 'effect-background-zoom',
+    name: __('Zoom', 'web-stories'),
+  },
+  PAN: { value: 'effect-background-pan', name: ANIMATION_EFFECTS.PAN.name },
+};
+
+export const ANIMATION_PARTS = {
+  BLINK_ON: {
+    value: ANIMATION_TYPES.BLINK_ON,
+    name: __('Blink On', 'web-stories'),
+  },
+  BOUNCE: { value: ANIMATION_TYPES.BOUNCE, name: __('Bounce', 'web-stories') },
+  FADE: { value: ANIMATION_TYPES.FADE, name: __('Fade', 'web-stories') },
+  FLIP: { value: ANIMATION_TYPES.FLIP, name: __('Flip', 'web-stories') },
+  FLOAT_ON: {
+    value: ANIMATION_TYPES.FLOAT_ON,
+    name: __('Float On', 'web-stories'),
+  },
+  MOVE: { value: ANIMATION_TYPES.MOVE, name: __('Move', 'web-stories') },
+  PULSE: { value: ANIMATION_TYPES.PULSE, name: __('Pulse', 'web-stories') },
+  SPIN: { value: ANIMATION_TYPES.SPIN, name: __('Spin', 'web-stories') },
+  ZOOM: { value: ANIMATION_TYPES.ZOOM, name: __('Zoom', 'web-stories') },
 };
 
 export const DIRECTION = {
@@ -79,6 +106,26 @@ export const DIRECTION = {
   RIGHT_TO_LEFT: 'rightToLeft',
   BOTTOM_TO_TOP: 'bottomToTop',
   LEFT_TO_RIGHT: 'leftToRight',
+};
+
+export const SCALE_DIRECTION = {
+  SCALE_IN: 'scaleIn',
+  SCALE_OUT: 'scaleOut',
+  SCALE_OUT_TOP_RIGHT: 'scaleOutTopRight',
+  SCALE_OUT_BOTTOM_LEFT: 'scaleOutBottomLeft',
+  SCALE_IN_TOP_LEFT: 'scaleInTopLeft',
+  SCALE_IN_BOTTOM_RIGHT: 'scaleInBottomRight',
+};
+
+export const SCALE_DIRECTION_MAP = {
+  SCALE_IN: [
+    SCALE_DIRECTION.SCALE_IN_TOP_LEFT,
+    SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT,
+  ],
+  SCALE_OUT: [
+    SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT,
+    SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT,
+  ],
 };
 
 export const ROTATION = {
@@ -95,10 +142,13 @@ export const AXIS = {
 export const FIELD_TYPES = {
   DROPDOWN: 'dropdown',
   HIDDEN: 'hidden',
+  ROTATION_PICKER: 'rotation_picker',
+  DIRECTION_PICKER: 'direction_picker',
   NUMBER: 'number',
   FLOAT: 'float',
   TEXT: 'text',
   CHECKBOX: 'checkbox',
+  RANGE: 'RANGE',
 };
 
 export const STORY_ANIMATION_STATE = {
@@ -106,4 +156,8 @@ export const STORY_ANIMATION_STATE = {
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
+  PLAYING_SELECTED: 'playing-selected',
 };
+
+export const BG_MIN_SCALE = 100;
+export const BG_MAX_SCALE = 400;

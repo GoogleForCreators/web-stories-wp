@@ -18,15 +18,18 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
+import useAverageColor from '../../../../../elements/media/useAverageColor';
+import StoryPropTypes from '../../../../../types';
+import LibraryMoveable from '../../shared/libraryMoveable';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
-import useAverageColor from '../../../../../elements/media/useAverageColor';
 
 const styledTiles = css`
   width: 100%;
@@ -64,6 +67,13 @@ const HiddenPosterImage = styled.img`
   display: none;
 `;
 
+const CloneImg = styled.img`
+  opacity: 0;
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  position: absolute;
+`;
+
 function InnerElement({
   type,
   src,
@@ -74,10 +84,16 @@ function InnerElement({
   onClick,
   showVideoDetail,
   mediaElement,
+  active,
 }) {
   const newVideoPosterRef = useRef(null);
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
+
+  const {
+    state: { draggingResource },
+    actions: { handleDrag, handleDrop, setDraggingResource },
+  } = useDropTargets();
 
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
@@ -96,66 +112,24 @@ function InnerElement({
     }
   }, [resource.poster]);
 
-  const {
-    actions: { handleDrag, handleDrop, setDraggingResource },
-  } = useDropTargets();
-
-  const measureMediaElement = useCallback(
-    () => mediaElement?.current?.getBoundingClientRect(),
-    [mediaElement]
-  );
-
-  const dropTargetsBindings = useMemo(
-    () => (thumbnailURL) => ({
-      draggable: 'true',
-      onDragStart: (e) => {
-        resourceList.set(resource.id, {
-          url: thumbnailURL,
-          type: 'cached',
-        });
-        setDraggingResource(resource);
-        const { x, y, width: w, height: h } = measureMediaElement();
-        const offsetX = e.clientX - x;
-        const offsetY = e.clientY - y;
-        e.dataTransfer.setDragImage(mediaElement?.current, offsetX, offsetY);
-        e.dataTransfer.setData(
-          'resource/media',
-          JSON.stringify({
-            resource,
-            offset: { x: offsetX, y: offsetY, w, h },
-          })
-        );
-      },
-      onDrag: (e) => {
-        handleDrag(resource, e.clientX, e.clientY);
-      },
-      onDragEnd: (e) => {
-        e.preventDefault();
-        setDraggingResource(null);
-        handleDrop({
-          ...resource,
-          baseColor: mediaBaseColor.current,
-        });
-      },
-    }),
-    [
-      resource,
-      setDraggingResource,
-      measureMediaElement,
-      mediaElement,
-      handleDrag,
-      handleDrop,
-    ]
-  );
-
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
     }
   };
+  let media;
+  const cloneProps = {
+    width: width,
+    height: height,
+    alt: alt,
+    'aria-label': alt,
+    loading: 'lazy',
+    draggable: false,
+  };
+  const thumbnailURL = getSmallestUrlForWidth(width, resource);
+  const { lengthFormatted, poster, mimeType } = resource;
   if (['image', 'gif'].includes(type)) {
-    const thumbnailURL = getSmallestUrlForWidth(width, resource);
-    return (
+    media = (
       <Image
         key={src}
         src={thumbnailURL}
@@ -165,15 +139,14 @@ function InnerElement({
         alt={alt}
         aria-label={alt}
         loading={'lazy'}
-        onClick={onClick(thumbnailURL, mediaBaseColor.current)}
         onLoad={makeMediaVisible}
-        {...dropTargetsBindings(thumbnailURL)}
+        draggable={false}
       />
     );
+    cloneProps.src = thumbnailURL;
   } else if (type === 'video') {
-    const { lengthFormatted, poster, mimeType } = resource;
     const displayPoster = poster ? poster : newVideoPosterRef.current;
-    return (
+    media = (
       <>
         <Video
           key={src}
@@ -184,9 +157,7 @@ function InnerElement({
           preload="none"
           aria-label={alt}
           muted
-          onClick={onClick(poster, mediaBaseColor.current)}
           showWithoutDelay={newVideoPosterRef.current}
-          {...dropTargetsBindings(poster)}
         >
           <source
             src={getSmallestUrlForWidth(width, resource)}
@@ -205,8 +176,68 @@ function InnerElement({
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
+    cloneProps.src = poster;
   }
-  throw new Error('Invalid media element type.');
+  if (!media) {
+    throw new Error('Invalid media element type.');
+  }
+
+  const dragHandler = (event) => {
+    if (type === 'video' && !mediaElement.current?.paused) {
+      mediaElement.current.pause();
+    }
+    if (!draggingResource) {
+      // Drop-targets handling.
+      resourceList.set(resource.id, {
+        url: thumbnailURL,
+        type: 'cached',
+      });
+      setDraggingResource(resource);
+    }
+    handleDrag(resource, event.clientX, event.clientY);
+  };
+
+  return (
+    <>
+      {media}
+      <LibraryMoveable
+        active={active}
+        handleDrag={dragHandler}
+        handleDragEnd={() => {
+          handleDrop({
+            ...resource,
+            baseColor: mediaBaseColor.current,
+          });
+        }}
+        type={resource.type}
+        elementProps={{
+          resource: {
+            ...resource,
+            baseColor: mediaBaseColor.current,
+          },
+        }}
+        onClick={onClick(
+          type === 'image' ? thumbnailURL : poster,
+          mediaBaseColor.current
+        )}
+        cloneElement={CloneImg}
+        cloneProps={cloneProps}
+      />
+    </>
+  );
 }
+
+InnerElement.propTypes = {
+  type: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  resource: StoryPropTypes.imageResource,
+  alt: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
+  showVideoDetail: PropTypes.bool,
+  mediaElement: PropTypes.object,
+  active: PropTypes.bool.isRequired,
+};
 
 export default InnerElement;

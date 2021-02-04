@@ -22,11 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../';
+import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
-  ({ theme }) => css`
+  ({ size, theme }) => css`
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -35,77 +35,68 @@ const Base = styled.button(
     margin: 0;
     background: transparent;
     border: none;
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.primary,
-      theme.colors.accent.secondary
-    )};
     color: ${theme.colors.fg.primary};
     cursor: pointer;
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.button[
-          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      preset: {
+        ...theme.typography.presets.label[
+          size === BUTTON_SIZES.SMALL
+            ? THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+            : THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM
         ],
+      },
       theme,
     })};
-    &:disabled {
-      pointer-events: none;
-    }
-
-    &:focus {
-      outline: none;
-    }
 
     &:active {
-      outline: none;
+      background-color: ${theme.colors.interactiveBg.active};
+      color: ${theme.colors.interactiveFg.active};
     }
 
-    transition: background-color 0.6s ease 0s;
+    &:disabled {
+      pointer-events: none;
+      background-color: ${theme.colors.interactiveBg.disable};
+      color: ${theme.colors.fg.disable};
+    }
+
+    transition: background-color 0.6s ease 0s, color 0.6s ease 0s;
   `
 );
 
 const primaryColors = ({ theme }) => css`
-  background-color: ${theme.colors.accent.primary};
-
+  background-color: ${theme.colors.interactiveBg.brandNormal};
+  color: ${theme.colors.interactiveFg.brandNormal};
   &:hover,
-  &:focus,
-  &:active {
-    background-color: ${theme.colors.violet[40]};
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.brandHover};
+    color: ${theme.colors.interactiveFg.brandHover};
   }
-
-  &:disabled {
-    background-color: #efefef;
-    color: ${theme.colors.gray[20]};
+  &:active {
+    background-color: ${theme.colors.interactiveBg.active};
+    color: ${theme.colors.interactiveFg.active};
   }
 `;
 
 const secondaryColors = ({ theme }) => css`
-  background-color: #d1d1cc;
+  background-color: ${theme.colors.interactiveBg.secondaryNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: ${theme.colors.gray[20]};
-  }
-
-  &:disabled {
-    background-color: #efefef;
-    color: ${theme.colors.gray[20]};
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.secondaryHover};
   }
 `;
 
 const tertiaryColors = ({ theme }) => css`
-  background-color: ${theme.colors.standard.white};
+  background-color: ${theme.colors.interactiveBg.tertiaryNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: #efefef;
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.tertiaryHover};
   }
 
   &:disabled {
-    background-color: ${theme.colors.standard.white};
-    color: ${theme.colors.gray[20]};
+    background-color: ${theme.colors.interactiveBg.tertiaryNormal};
   }
 `;
 
@@ -117,48 +108,53 @@ const buttonColors = {
 
 const ButtonRectangle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-  min-width: 80px;
-  height: 36px;
-  padding: 8px 16px;
-  border-radius: 4px;
+  min-width: 1px;
+  min-height: 1em;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
+  padding: ${({ size }) =>
+    size === BUTTON_SIZES.SMALL ? '8px 16px' : '18px 32px'};
 `;
 
-const ButtonCircle = styled(Base)`
+const ButtonSquare = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 
   ${({ size }) => css`
     width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
     height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
-    border-radius: 50%;
 
-    & > svg {
+    svg {
       width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-      height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+      height: auto;
+    }
+  `}
+`;
+
+const ButtonCircle = styled(ButtonSquare)`
+  border-radius: ${({ theme }) => theme.borders.radius.round};
+`;
+
+const ButtonIcon = styled(Base)`
+  ${({ size }) => css`
+    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    svg {
+      width: 100%;
+      height: auto;
       margin: 0 auto;
     }
   `}
 `;
 
-const ButtonIcon = styled(Base)`
-  ${({ size }) => `
-    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-
-    & > svg {
-      width: 100%;
-      height:100%;
-    }
-  `}
-`;
-
-// TODO incorporate tooltip as a label on hover per figma
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
+  [BUTTON_VARIANTS.SQUARE]: ButtonSquare,
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
-export const Button = ({
+const Button = ({
   size = BUTTON_SIZES.MEDIUM,
   type = BUTTON_TYPES.PLAIN,
   variant = BUTTON_VARIANTS.RECTANGLE,
@@ -188,4 +184,4 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-export { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
+export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };

@@ -42,7 +42,7 @@ const CLOSE_MENU_ACTION = { value: STORY_CONTEXT_MENU_ACTIONS.CLOSE };
 
 export const MenuContainer = styled.ul`
   align-items: flex-start;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -70,29 +70,42 @@ export const MenuItem = styled.li`
   ${({ theme, isDisabled, isHovering }) => `
     margin-bottom: 0; /* override common js */
     padding: 5px 25px;
-    background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
-    color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+    background: ${
+      isHovering && !isDisabled ? theme.DEPRECATED_THEME.colors.gray25 : 'none'
+    };
+    color: ${
+      isDisabled
+        ? theme.DEPRECATED_THEME.colors.gray400
+        : theme.DEPRECATED_THEME.colors.gray700
+    };
     cursor: ${isDisabled ? 'default' : 'pointer'};
-    border: ${theme.borders.transparent};
+    border: ${theme.DEPRECATED_THEME.borders.transparent};
     border-width: 2px;
     display: flex;
     width: 100%;
 
     &.separatorTop {
-      border-top: 1px solid ${theme.colors.gray50};
+      border-top: 1px solid ${theme.DEPRECATED_THEME.colors.gray50};
     }
 
     &.separatorBottom {
-      border-bottom: 1px solid ${theme.colors.gray50};
+      border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.gray50};
     }
 
     &:focus, &:active, &:hover {
       outline: none;
-      color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+      color: ${
+        isDisabled
+          ? theme.DEPRECATED_THEME.colors.gray400
+          : theme.DEPRECATED_THEME.colors.gray700
+      };
     }
 
     ${KEYBOARD_USER_SELECTOR} &:focus {
-      border: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
+      border: 2px solid ${rgba(
+        theme.DEPRECATED_THEME.colors.bluePrimary,
+        0.85
+      )};
     }
 
   `}
@@ -171,7 +184,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
 
   useEffect(() => {
     if (listRef.current && isOpen) {
-      listRef.current?.children[currentValueIndex].focus();
+      listRef.current?.children[currentValueIndex]?.focus();
     }
     setHoveredIndex(currentValueIndex);
   }, [currentValueIndex, isOpen]);

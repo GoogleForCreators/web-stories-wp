@@ -28,7 +28,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
+use WP_Post_Type;
 use WP_Screen;
 
 /**
@@ -59,6 +61,13 @@ class Dashboard {
 	private $experiments;
 
 	/**
+	 * Site_Kit instance.
+	 *
+	 * @var Site_Kit Site_Kit instance.
+	 */
+	private $site_kit;
+
+	/**
 	 * Decoder instance.
 	 *
 	 * @var Decoder Decoder instance.
@@ -71,10 +80,12 @@ class Dashboard {
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
+	 * @param Site_Kit    $site_kit    Site_Kit instance.
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder( $this->experiments );
+		$this->decoder     = new Decoder();
+		$this->site_kit    = $site_kit;
 	}
 
 	/**
@@ -90,6 +101,7 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
+		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 	}
 
 	/**
@@ -193,9 +205,9 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/web-stories/v1/settings',
-			'/web-stories/v1/users/me',
-			'/web-stories/v1/web-story?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
+			'/web-stories/v1/settings/',
+			'/web-stories/v1/users/me/',
+			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
 		/**
@@ -209,22 +221,30 @@ class Dashboard {
 		 */
 		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
 
-		$_GET['_embed'] = 1;
-
 		$preload_data = array_reduce(
 			$preload_paths,
-			'rest_preload_api_request',
+			__NAMESPACE__ . '\rest_preload_api_request',
 			[]
 		);
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		unset( $_GET['_embed'] );
 
 		wp_add_inline_script(
 			'wp-api-fetch',
 			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 			'after'
 		);
+	}
+
+	/**
+	 * Find status of site kit plugin in site.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return boolean
+	 */
+	public function is_site_kit_plugin_installed() {
+		$all_plugins = get_plugins();
+
+		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
 	}
 
 	/**
@@ -314,6 +334,16 @@ class Dashboard {
 			$max_upload_size = 0;
 		}
 
+		$can_read_private_posts = false;
+
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if (
+			$post_type_object instanceof WP_Post_Type &&
+			property_exists( $post_type_object->cap, 'read_private_posts' )
+		) {
+			$can_read_private_posts = current_user_can( $post_type_object->cap->read_private_posts );
+		}
+
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
@@ -327,19 +357,21 @@ class Dashboard {
 				'version'            => WEBSTORIES_VERSION,
 				'encodeMarkup'       => $this->decoder->supports_decoding(),
 				'api'                => [
-					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'       => '/web-stories/v1/media',
-					'currentUser' => '/web-stories/v1/users/me',
-					'users'       => '/web-stories/v1/users',
-					'templates'   => '/web-stories/v1/web-story-template',
-					'settings'    => '/web-stories/v1/settings',
+					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'       => '/web-stories/v1/media/',
+					'currentUser' => '/web-stories/v1/users/me/',
+					'users'       => '/web-stories/v1/users/',
+					'templates'   => '/web-stories/v1/web-story-template/',
+					'settings'    => '/web-stories/v1/settings/',
 				],
 				'maxUpload'          => $max_upload_size,
 				'maxUploadFormatted' => size_format( $max_upload_size ),
 				'capabilities'       => [
-					'canManageSettings' => current_user_can( 'manage_options' ),
-					'canUploadFiles'    => current_user_can( 'upload_files' ),
+					'canManageSettings'   => current_user_can( 'manage_options' ),
+					'canUploadFiles'      => current_user_can( 'upload_files' ),
+					'canReadPrivatePosts' => $can_read_private_posts,
 				],
+				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

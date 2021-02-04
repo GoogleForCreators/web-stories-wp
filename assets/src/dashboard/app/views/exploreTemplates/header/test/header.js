@@ -112,7 +112,9 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { features: { enableInProgressTemplateActions: true } }
     );
-    expect(getByPlaceholderText('Search Templates').value).toBe('Harry Potter');
+    expect(getByPlaceholderText('Search Templates')).toHaveValue(
+      'Harry Potter'
+    );
     expect(getByText('8 results')).toBeInTheDocument();
   });
 
@@ -171,7 +173,7 @@ describe('Explore Templates <Header />', function () {
   });
 
   it('should not render with search when features:{enableInProgressTemplateActions is false}', function () {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryByRole } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -190,6 +192,6 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { features: { enableInProgressTemplateActions: false } }
     );
-    expect(queryAllByRole('textbox')).toHaveLength(0);
+    expect(queryByRole('textbox')).not.toBeInTheDocument();
   });
 });

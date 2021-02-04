@@ -52,6 +52,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param WP_Post         $post Post object.
@@ -62,8 +64,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
-		// $_GET param is available when the response iss preloaded in edit-story.php
-		if ( isset( $_GET['web-stories-demo'] ) && 'edit' === $context && 'auto-draft' === $post->post_status ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( wp_validate_boolean( $request['web_stories_demo'] ) && 'auto-draft' === $post->post_status ) {
 			$demo         = new Demo_Content();
 			$demo_content = $demo->get_content();
 			if ( ! empty( $demo_content ) ) {
@@ -83,6 +84,28 @@ class Stories_Controller extends Stories_Base_Controller {
 		if ( in_array( 'style_presets', $fields, true ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
+		}
+
+		if ( in_array( 'preview_link', $fields, true ) ) {
+			// Based on https://github.com/WordPress/wordpress-develop/blob/8153c8ba020c4aec0b9d94243cd39c689a0730f7/src/wp-admin/includes/post.php#L1445-L1457.
+			if ( 'draft' === $post->post_status || empty( $post->post_name ) ) {
+				$view_link = get_preview_post_link( $post );
+			} else {
+				if ( 'publish' === $post->post_status ) {
+					$view_link = get_permalink( $post );
+				} else {
+					if ( ! function_exists( 'get_sample_permalink' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/post.php';
+					}
+
+					list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
+
+					// Allow non-published (private, future) to be viewed at a pretty permalink, in case $post->post_name is set.
+					$view_link = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
+				}
+			}
+
+			$data['preview_link'] = $view_link;
 		}
 
 		$data  = $this->filter_response_by_context( $data, $context );
@@ -170,6 +193,14 @@ class Stories_Controller extends Stories_Base_Controller {
 			'description' => __( 'Style presets used by all stories', 'web-stories' ),
 			'type'        => 'object',
 			'context'     => [ 'view', 'edit' ],
+		];
+
+		$schema['properties']['preview_link'] = [
+			'description' => __( 'Preview Link.', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
 		];
 
 		$schema['properties']['status']['enum'][] = 'auto-draft';
@@ -338,10 +369,11 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// Add counts for other statuses.
 		$statuses = [
-			'all'     => [ 'publish', 'draft', 'future' ],
+			'all'     => [ 'publish', 'draft', 'future', 'private' ],
 			'publish' => 'publish',
 			'future'  => 'future',
 			'draft'   => 'draft',
+			'private' => 'private',
 		];
 
 		$statuses_count = [];
@@ -367,7 +399,7 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		if ( $request['_web_stories_envelope'] ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$response = rest_get_server()->envelope_response( $response, isset( $_GET['_embed'] ) );
+			$response = rest_get_server()->envelope_response( $response, isset( $request['_embed'] ) ? $request['_embed'] : false );
 		}
 		return $response;
 	}
@@ -384,6 +416,12 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$query_params['_web_stories_envelope'] = [
 			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		];
+
+		$query_params['web_stories_demo'] = [
+			'description' => __( 'Load demo data.', 'web-stories' ),
 			'type'        => 'boolean',
 			'default'     => false,
 		];

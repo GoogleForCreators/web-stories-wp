@@ -19,21 +19,21 @@
  */
 import { act, fireEvent } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
+import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
+import { renderWithTheme } from '../../../../testUtils/index';
+import FontContext from '../../../../app/font/context';
+import useFont from '../../../../app/font/useFont';
+import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
 import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
-import { renderWithTheme } from '../../../../testUtils/index';
+import useLibrary from '../../useLibrary';
 
 jest.mock('../../useLibrary');
 jest.mock('../../../../app/font/useFont');
-import useFont from '../../../../app/font/useFont';
-import useLibrary from '../../useLibrary';
-import FontContext from '../../../../app/font/context';
-import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
-import { curatedFontNames } from '../../../../app/font/curatedFonts';
 
 describe('TextPane', () => {
   const insertElement = jest.fn();

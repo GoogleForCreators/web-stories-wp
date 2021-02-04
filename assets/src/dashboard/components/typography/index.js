@@ -20,77 +20,85 @@
 import styled, { css } from 'styled-components';
 
 const ExtraExtraLarge = ({ theme }) => css`
-  font-size: ${theme.typography.presets.xxl.size}px;
-  font-family: ${theme.typography.presets.xxl.family};
-  font-weight: ${theme.typography.weight.normal};
-  line-height: ${theme.typography.presets.xxl.lineHeight}px;
-  letter-spacing: ${theme.typography.presets.xxl.letterSpacing}em;
+  font-size: ${theme.DEPRECATED_THEME.typography.presets.xxl.size}px;
+  font-family: ${theme.DEPRECATED_THEME.typography.presets.xxl.family};
+  font-weight: ${theme.DEPRECATED_THEME.typography.weight.normal};
+  line-height: ${theme.DEPRECATED_THEME.typography.presets.xxl.lineHeight}px;
+  letter-spacing: ${theme.DEPRECATED_THEME.typography.presets.xxl
+    .letterSpacing}em;
 
-  @media ${theme.breakpoint.smallDisplayPhone} {
-    font-size: ${theme.typography.presets.xxl.minSize}px;
-    line-height: ${theme.typography.presets.xxl.minLineHeight}px;
-    letter-spacing: ${theme.typography.presets.xxl.minLetterSpacing}em;
+  @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+    font-size: ${theme.DEPRECATED_THEME.typography.presets.xxl.minSize}px;
+    line-height: ${theme.DEPRECATED_THEME.typography.presets.xxl
+      .minLineHeight}px;
+    letter-spacing: ${theme.DEPRECATED_THEME.typography.presets.xxl
+      .minLetterSpacing}em;
   }
 `;
 
 const ExtraLarge = ({ theme }) => css`
-  font-size: ${theme.typography.presets.xl.size}px;
-  font-family: ${theme.typography.presets.xl.family};
-  font-weight: ${theme.typography.weight.normal};
-  line-height: ${theme.typography.presets.xl.lineHeight}px;
-  letter-spacing: ${theme.typography.presets.xl.letterSpacing}em;
+  font-size: ${theme.DEPRECATED_THEME.typography.presets.xl.size}px;
+  font-family: ${theme.DEPRECATED_THEME.typography.presets.xl.family};
+  font-weight: ${theme.DEPRECATED_THEME.typography.weight.normal};
+  line-height: ${theme.DEPRECATED_THEME.typography.presets.xl.lineHeight}px;
+  letter-spacing: ${theme.DEPRECATED_THEME.typography.presets.xl
+    .letterSpacing}em;
 `;
 
 const Large = ({ theme }) => css`
-  font-size: ${theme.typography.presets.l.size}px;
-  font-family: ${theme.typography.presets.l.family};
-  font-weight: ${theme.typography.weight.normal};
-  line-height: ${theme.typography.presets.l.lineHeight}px;
-  letter-spacing: ${theme.typography.presets.l.letterSpacing}em;
+  font-size: ${theme.DEPRECATED_THEME.typography.presets.l.size}px;
+  font-family: ${theme.DEPRECATED_THEME.typography.presets.l.family};
+  font-weight: ${theme.DEPRECATED_THEME.typography.weight.normal};
+  line-height: ${theme.DEPRECATED_THEME.typography.presets.l.lineHeight}px;
+  letter-spacing: ${theme.DEPRECATED_THEME.typography.presets.l
+    .letterSpacing}em;
 `;
 
 const Medium = ({ theme }) => css`
-  font-size: ${theme.typography.presets.m.size}px;
-  font-family: ${theme.typography.presets.m.family};
-  font-weight: ${theme.typography.weight.normal};
-  line-height: ${theme.typography.presets.m.lineHeight}px;
-  letter-spacing: ${theme.typography.presets.m.letterSpacing}em;
+  font-size: ${theme.DEPRECATED_THEME.typography.presets.m.size}px;
+  font-family: ${theme.DEPRECATED_THEME.typography.presets.m.family};
+  font-weight: ${theme.DEPRECATED_THEME.typography.weight.normal};
+  line-height: ${theme.DEPRECATED_THEME.typography.presets.m.lineHeight}px;
+  letter-spacing: ${theme.DEPRECATED_THEME.typography.presets.m
+    .letterSpacing}em;
 
-  @media ${theme.breakpoint.smallDisplayPhone} {
-    font-size: ${theme.typography.presets.m.minSize}px;
+  @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+    font-size: ${theme.DEPRECATED_THEME.typography.presets.m.minSize}px;
   }
 `;
 
 const Small = ({ theme }) => css`
-  font-size: ${theme.typography.presets.s.size}px;
-  font-family: ${theme.typography.presets.s.family};
-  font-weight: ${theme.typography.weight.normal};
-  line-height: ${theme.typography.presets.s.lineHeight}px;
-  letter-spacing: ${theme.typography.presets.s.letterSpacing}em;
+  font-size: ${theme.DEPRECATED_THEME.typography.presets.s.size}px;
+  font-family: ${theme.DEPRECATED_THEME.typography.presets.s.family};
+  font-weight: ${theme.DEPRECATED_THEME.typography.weight.normal};
+  line-height: ${theme.DEPRECATED_THEME.typography.presets.s.lineHeight}px;
+  letter-spacing: ${theme.DEPRECATED_THEME.typography.presets.s
+    .letterSpacing}em;
 `;
 
 const ExtraSmall = ({ theme }) => css`
-  font-size: ${theme.typography.presets.xs.size}px;
-  font-family: ${theme.typography.presets.xs.family};
-  font-weight: ${theme.typography.weight.normal};
-  line-height: ${theme.typography.presets.xs.lineHeight}px;
-  letter-spacing: ${theme.typography.presets.xs.letterSpacing}em;
+  font-size: ${theme.DEPRECATED_THEME.typography.presets.xs.size}px;
+  font-family: ${theme.DEPRECATED_THEME.typography.presets.xs.family};
+  font-weight: ${theme.DEPRECATED_THEME.typography.weight.normal};
+  line-height: ${theme.DEPRECATED_THEME.typography.presets.xs.lineHeight}px;
+  letter-spacing: ${theme.DEPRECATED_THEME.typography.presets.xs
+    .letterSpacing}em;
 `;
 
 export const Heading1 = styled.h1`
   ${ExtraExtraLarge}
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
 `;
 
 export const Heading2 = styled.h2`
   ${ExtraLarge}
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
 `;
 
 export const Paragraph1 = styled.p(Medium);
 
 export const DefaultParagraph1 = styled(Paragraph1)`
-  color: ${({ theme }) => theme.colors.gray200};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
 `;
 
 export const Paragraph2 = styled.p(Small);

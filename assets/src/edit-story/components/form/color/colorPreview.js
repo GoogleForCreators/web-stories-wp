@@ -23,20 +23,15 @@ import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
 import { parseToRgb, getLuminance } from 'polished';
 
 /**
- * WordPress dependencies
- */
-import { __, _x } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useUnmount from '../../../utils/useUnmount';
 import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { PatternPropType } from '../../../types';
-import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from '../multipleValue';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
-import { useKeyDownEffect } from '../../keyboard';
+import { useKeyDownEffect } from '../../../../design-system';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
@@ -90,7 +85,7 @@ const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
   ${buttonStyle}
   border-radius: 4px 0 0 4px;
   border-color: ${({ color, theme }) =>
-    getLuminance(color) > 0.2
+    color && getLuminance(color) > 0.2
       ? theme.colors.bg.v1
       : theme.colors.whiteout} !important;
 `;
@@ -142,7 +137,7 @@ const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   cursor: text;
   overflow: auto;
   border-radius: 0 4px 4px 0;
-  text-transform: uppercase;
+  text-transform: ${({ value }) => (value ? 'uppercase' : 'initial')};
 `;
 
 function ColorPreview({
@@ -152,9 +147,10 @@ function ColorPreview({
   value,
   label,
   colorPickerActions,
+  changedStyle,
 }) {
-  const isMultiple = value === MULTIPLE_VALUE;
-  value = isMultiple ? '' : value;
+  const isMixed = value === MULTIPLE_VALUE;
+  value = isMixed ? '' : value;
 
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
@@ -175,17 +171,12 @@ function ColorPreview({
   useEffect(() => setInputValue(previewText), [previewText]);
 
   const colorType = value?.type;
-  const isEditable =
-    !isMultiple &&
-    Boolean(previewText) &&
-    (!colorType || colorType === 'solid');
-
-  const editLabel = __('Edit', 'web-stories');
-  const inputLabel = __('Enter', 'web-stories');
+  // Allow editing always in case of solid color of if color type is missing (mixed)
+  const isEditable = !colorType || colorType === 'solid';
 
   const buttonProps = {
     onClick: () => setPickerOpen(true),
-    'aria-label': `${editLabel}: ${label}`,
+    'aria-label': label,
   };
 
   const validateAndSubmitInput = useCallback(
@@ -198,17 +189,14 @@ function ColorPreview({
         // Update actual color, which will in turn update hex input from value
         const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
 
-        // Keep same opacity as before though
-        const {
-          color: { a },
-        } = value;
-
+        // Keep same opacity as before though. In case of mixed values, set to default (1).
+        const a = isMixed ? 1 : value.color.a;
         onChange({ color: { r, g, b, a } });
       }
 
       selectInputContents.current = selectContentOnUpdate;
     },
-    [inputValue, previewText, onChange, value]
+    [inputValue, previewText, onChange, value, isMixed]
   );
 
   const handleInputChange = useCallback((evt) => {
@@ -297,17 +285,18 @@ function ColorPreview({
             {...buttonProps}
             color={previewStyle?.backgroundColor}
           >
-            {value.a < 1 && <Transparent />}
+            {(value?.a < 1 || isMixed) && <Transparent />}
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewButton>
           <TextualInput
             ref={inputRef}
             type="text"
-            aria-label={`${inputLabel}: ${label}`}
+            aria-label={label}
             value={inputValue ?? ''}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onFocus={handleFocus}
+            placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
         </Preview>
       ) : (
@@ -317,12 +306,7 @@ function ColorPreview({
             <Transparent />
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewInsideButton>
-          <TextualPreview>
-            {isMultiple
-              ? MULTIPLE_DISPLAY_VALUE
-              : previewText ||
-                _x('None', 'No color or gradient selected', 'web-stories')}
-          </TextualPreview>
+          <TextualPreview>{previewText}</TextualPreview>
         </PreviewButton>
       )}
       <Popup
@@ -333,12 +317,13 @@ function ColorPreview({
         spacing={spacing}
       >
         <ColorPicker
-          color={isMultiple ? null : value}
+          color={isMixed ? null : value}
           onChange={onChange}
           hasGradient={hasGradient}
           hasOpacity={hasOpacity}
           onClose={onClose}
           renderFooter={colorPickerActions}
+          changedStyle={changedStyle}
         />
       </Popup>
     </>
@@ -352,6 +337,7 @@ ColorPreview.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   colorPickerActions: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorPreview.defaultProps = {

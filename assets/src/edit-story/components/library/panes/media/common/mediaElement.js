@@ -28,14 +28,14 @@ import { rgba } from 'polished';
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../../../../keyboard';
+import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
-const Container = styled.button.attrs((props) => ({
+const Container = styled.div.attrs((props) => ({
   style: {
     width: props.width + 'px',
     height: props.height + 'px',
@@ -229,7 +229,7 @@ const MediaElement = ({
   return (
     <Container
       ref={ref}
-      data-testid="mediaElement"
+      data-testid={`mediaElement-${type}`}
       data-id={resourceId}
       className={'mediaElement'}
       width={width}
@@ -252,6 +252,7 @@ const MediaElement = ({
           height={height}
           onClick={onClick}
           showVideoDetail={showVideoDetail}
+          active={active}
         />
         {attribution}
         {local && (

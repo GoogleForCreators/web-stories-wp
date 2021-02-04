@@ -90,7 +90,7 @@ const EmbedPlaceholder = ({
 };
 
 EmbedPlaceholder.propTypes = {
-  icon: PropTypes.node,
+  icon: PropTypes.func,
   label: PropTypes.string,
   value: PropTypes.string,
   onSubmit: PropTypes.func,

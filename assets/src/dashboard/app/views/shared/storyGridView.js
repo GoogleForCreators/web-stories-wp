@@ -44,7 +44,7 @@ import {
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
 import { getRelativeDisplayDate } from '../../../../date';
-import { useGridViewKeys, useFocusOut } from '../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
@@ -56,11 +56,11 @@ export const DetailRow = styled.div`
 
 const StoryGrid = styled(CardGrid)`
   width: ${({ theme }) =>
-    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
+    `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px)`};
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
     width: ${({ theme }) =>
-      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
+      `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px)`};
   }
 `;
 
@@ -177,8 +177,8 @@ const StoryGridView = ({
                   }
                   displayDate={
                     story?.status === STORY_STATUS.DRAFT
-                      ? getRelativeDisplayDate(story?.modified)
-                      : getRelativeDisplayDate(story?.created)
+                      ? getRelativeDisplayDate(story?.modified_gmt)
+                      : getRelativeDisplayDate(story?.created_gmt)
                   }
                   {...titleRenameProps}
                 />

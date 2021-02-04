@@ -38,9 +38,11 @@ import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSets from './textSets';
 
+// Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
   overflow-y: scroll;
   max-height: 100%;
+  position: relative;
 `;
 
 function TextPane(props) {

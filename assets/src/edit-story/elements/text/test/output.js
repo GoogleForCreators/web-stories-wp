@@ -89,11 +89,10 @@ describe('TextOutput', () => {
     );
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('Content');
-    expect(output.className).toBe('fill');
+    expect(output).toHaveClass('fill', { exact: true });
     expect(output.style).toMatchObject({
       whiteSpace: 'pre-wrap',
       padding: '0% 0%',
-      backgroundColor: 'rgba(255, 0, 0, 0.3)',
       fontSize: '0.258900em',
       textAlign: 'left',
     });
@@ -128,7 +127,7 @@ describe('TextOutput', () => {
     );
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('Content');
-    expect(output.className).toBe('fill');
+    expect(output).toHaveClass('fill', { exact: true });
     expect(output.style).toMatchObject({
       padding: '20% 20%',
     });
@@ -194,6 +193,34 @@ describe('TextOutput', () => {
     );
     expect(output).toHaveStyle({
       fontFamily: '"Baloo Bhaina 2","Roboto",cursive',
+    });
+  });
+  it('should not have overflow: hidden style applied', () => {
+    const props = {
+      element: {
+        type: 'text',
+        id: '123',
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        content: 'Look Mom! No hands!',
+        color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        padding: {
+          horizontal: 0,
+          vertical: 0,
+        },
+        font: {
+          family: 'Roboto',
+        },
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    const output = renderViaString(<TextOutput {...props} />);
+    expect(output).not.toHaveStyle({
+      overflow: 'hidden',
     });
   });
 
