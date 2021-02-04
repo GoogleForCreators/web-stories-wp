@@ -33,11 +33,11 @@ import { DropDown } from '../../form';
 import { Placement } from '../../popup';
 
 const ZOOM_OPTIONS = [
-  { name: '100%', value: ZOOM_SETTING.SINGLE },
-  { name: '200%', value: ZOOM_SETTING.DOUBLE },
-  { name: '300%', value: ZOOM_SETTING.TRIPLE },
-  { name: 'Fill', value: ZOOM_SETTING.FILL },
-  { name: 'Fit', value: ZOOM_SETTING.FIT },
+  { name: _x('100%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.SINGLE },
+  { name: _x('200%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.DOUBLE },
+  { name: _x('300%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.TRIPLE },
+  { name: _x('Fill', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FILL },
+  { name: _x('Fit', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FIT },
 ];
 
 function ZoomSelector() {
