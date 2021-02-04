@@ -19,8 +19,8 @@
  */
 import ColorPresetActions from '../design/preset/colorPreset/colorPresetActions';
 
-function getColorPickerActions(color) {
-  return <ColorPresetActions color={color} />;
+function getColorPickerActions(color, pushUpdate) {
+  return <ColorPresetActions color={color} pushUpdate={pushUpdate} />;
 }
 
 export default getColorPickerActions;

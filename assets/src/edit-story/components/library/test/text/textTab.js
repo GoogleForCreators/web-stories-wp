@@ -18,19 +18,19 @@
  * External dependencies
  */
 import { act, fireEvent } from '@testing-library/react';
+import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
-import TextIcon from '../../panes/text/textIcon';
-import { DEFAULT_PRESET } from '../../panes/text/textPresets';
-import { renderWithTheme } from '../../../../testUtils/index';
-
-jest.mock('../../useLibrary');
-import useLibrary from '../../useLibrary';
+import { renderWithTheme } from '../../../../testUtils';
 import FontContext from '../../../../app/font/context';
 import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
-import { curatedFontNames } from '../../../../app/font/curatedFonts';
+import TextIcon from '../../panes/text/textIcon';
+import { DEFAULT_PRESET } from '../../panes/text/textPresets';
+import useLibrary from '../../useLibrary';
+
+jest.mock('../../useLibrary');
 
 describe('TextTab', () => {
   const insertElement = jest.fn();

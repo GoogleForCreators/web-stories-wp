@@ -189,9 +189,18 @@ class Plugin {
 	public $user_preferences;
 
 	/**
+	 * KSES.
+	 *
+	 * @var KSES
+	 */
+	public $kses;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @return void
 	 */
@@ -217,6 +226,11 @@ class Plugin {
 
 		$this->media = new Media();
 		add_action( 'init', [ $this->media, 'init' ] );
+
+		// KSES
+		// High priority to load after Story_Post_Type.
+		$this->kses = new KSES();
+		add_action( 'init', [ $this->kses, 'init' ], 11 );
 
 		$this->tracking = new Tracking();
 		add_action( 'init', [ $this->tracking, 'init' ] );

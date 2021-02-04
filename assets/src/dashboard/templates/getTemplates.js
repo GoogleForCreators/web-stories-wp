@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
+import { DATA_VERSION, migrate } from '../../migration/migrate';
 import { getTimeTracker } from '../../tracking';
 
 async function loadTemplate(title, imageBaseUrl) {
@@ -35,7 +35,7 @@ async function loadTemplate(title, imageBaseUrl) {
         }
         if (elem?.resource?.src) {
           elem.resource.src = elem.resource.src.replace(
-            'https://replaceme.com/',
+            '__WEB_STORIES_TEMPLATE_BASE_URL__',
             imageBaseUrl
           );
         }

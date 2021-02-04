@@ -54,7 +54,7 @@ export class ColorPreset extends AbstractPanel {
   }
 
   get edit() {
-    return this.getByRole('button', { name: /Edit color presets/ });
+    return this.getByRole('button', { name: /Edit colors/ });
   }
 
   get exit() {
