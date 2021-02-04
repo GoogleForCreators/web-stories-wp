@@ -35,17 +35,18 @@ const Container = styled.div`
   overflow-y: scroll;
 `;
 
-export function Menu({ onTipSelect = noop, ...transitionProps }) {
+export function Menu({ onTipSelect = noop, read, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
       <Container aria-label={__('Help Center Main Menu', 'web-stories')}>
         <Header />
-        <Tips onTipSelect={onTipSelect} />
+        <Tips read={read} onTipSelect={onTipSelect} />
         <Footer />
       </Container>
     </Transitioner>
   );
 }
 Menu.propTypes = {
+  read: PropTypes.arrayOf(PropTypes.string).isRequired,
   onTipSelect: PropTypes.func.isRequired,
 };

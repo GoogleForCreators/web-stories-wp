@@ -88,6 +88,7 @@ export const HelpCenter = () => {
               isPrevDisabled={state.isPrevDisabled}
             >
               <Companion
+                read={state.read}
                 tipKey={state.navigationFlow[state.navigationIndex]}
                 onTipSelect={actions.goToTip}
                 isLeftToRightTransition={state.isLeftToRightTransition}
@@ -97,7 +98,10 @@ export const HelpCenter = () => {
           <Toggle
             isOpen={state.isOpen}
             onClick={actions.toggle}
-            notificationCount={1}
+            notificationCount={
+              // navigation includes 'done' which does not get marked read
+              state.navigationFlow.length - state.read.length - 1
+            }
             popupId={POPUP_ID}
           />
         </Wrapper>

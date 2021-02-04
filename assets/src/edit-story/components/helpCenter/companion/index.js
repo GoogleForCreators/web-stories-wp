@@ -27,7 +27,12 @@ import { TIPS, DONE_TIP_ENTRY } from '../constants';
 
 const TIP_MAP = { ...TIPS, [DONE_TIP_ENTRY[0]]: DONE_TIP_ENTRY[1] };
 
-export function Companion({ tipKey, onTipSelect, isLeftToRightTransition }) {
+export function Companion({
+  read,
+  tipKey,
+  onTipSelect,
+  isLeftToRightTransition,
+}) {
   const tip = tipKey && TIP_MAP[tipKey];
   return (
     <TransitionGroup>
@@ -39,12 +44,18 @@ export function Companion({ tipKey, onTipSelect, isLeftToRightTransition }) {
           {...tip}
         />
       ) : (
-        <Menu key={'menu'} transitionKey={'menu'} onTipSelect={onTipSelect} />
+        <Menu
+          read={read}
+          key={'menu'}
+          transitionKey={'menu'}
+          onTipSelect={onTipSelect}
+        />
       )}
     </TransitionGroup>
   );
 }
 Companion.propTypes = {
+  read: PropTypes.arrayOf(PropTypes.string).isRequired,
   tipKey: PropTypes.oneOf(Object.keys(TIP_MAP)),
   onTipSelect: PropTypes.func.isRequired,
   isLeftToRightTransition: PropTypes.bool.isRequired,
