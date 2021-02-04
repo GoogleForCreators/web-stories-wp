@@ -19,7 +19,6 @@
  */
 import { useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -29,22 +28,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { SettingForm, SettingHeading, FormLabel } from '../components';
-
-const CheckBox = styled.input.attrs({
-  type: 'checkbox',
-  id: 'media-optimization',
-})`
-  height: 18px;
-  width: 18px;
-  margin: 0 12px 0 0;
-  flex: 1 0 18px;
-`;
-
-const Label = styled.label.attrs({ htmlFor: 'media-optimization' })`
-  display: flex;
-  justify-content: flex-start;
-`;
+import {
+  SettingForm,
+  SettingHeading,
+  CheckboxLabel,
+  CheckboxLabelText,
+} from '../components';
+import { Checkbox, THEME_CONSTANTS } from '../../../../../design-system';
 
 export default function MediaOptimizationSettings({
   selected,
@@ -70,8 +60,9 @@ export default function MediaOptimizationSettings({
         </SettingHeading>
       </div>
       <div>
-        <Label>
-          <CheckBox
+        <CheckboxLabel forwardedAs="label" htmlFor="media-optimization">
+          <Checkbox
+            id="media-optimization"
             ref={checkboxRef}
             data-testid="media-optimization-settings-checkbox"
             disabled={disabled}
@@ -84,13 +75,17 @@ export default function MediaOptimizationSettings({
             }}
             checked={checked}
           />
-          <FormLabel aria-checked={checked}>
+          <CheckboxLabelText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            aria-checked={checked}
+            forwardedAs="span"
+          >
             {__(
               'Automatically optimize videos used in Web Stories. We recommend enabling this feature. Video files that are too large or have an unsupported format (like .mov) will otherwise not display properly.',
               'web-stories'
             )}
-          </FormLabel>
-        </Label>
+          </CheckboxLabelText>
+        </CheckboxLabel>
       </div>
     </SettingForm>
   );

@@ -17,21 +17,23 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import {
-  TypographyPresets,
-  StandardViewContentGutter,
-  Button,
-  TextInput,
-} from '../../../components';
+import { StandardViewContentGutter } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
-import { Link } from '../../../components/link';
-import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../../constants';
+import { KEYBOARD_USER_SELECTOR } from '../../../constants';
+import {
+  Headline,
+  Input,
+  Link,
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '../../../../design-system';
 
 export const Wrapper = styled.div``;
 
@@ -50,59 +52,65 @@ export const SettingForm = styled.form`
   column-gap: 6.56%;
   padding-bottom: 52px;
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     grid-template-columns: 100%;
     row-gap: 20px;
   }
 `;
 
-export const SettingHeading = styled.h3`
-  ${TypographyPresets.Small};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.black};
-  padding-bottom: 8px;
+export const SettingHeading = styled(Headline).attrs({
+  as: 'h3',
+})`
+  ${({ theme }) =>
+    themeHelpers.expandPresetStyles({
+      preset: {
+        ...theme.typography.presets.label[
+          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.LARGE
+        ],
+      },
+      theme,
+    })};
+  margin: 8px 0;
 `;
 
 export const FormContainer = styled.div`
   input {
     width: 100%;
-    height: 32px;
   }
 `;
 
 export const InlineLink = styled(Link)`
-  margin-left: 0.25em;
+  display: inline-block;
 `;
 
-export const HelperText = styled.p`
-  ${TypographyPresets.Small};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
+export const HelperText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-export const DefaultLogoText = styled.p`
-  ${TypographyPresets.ExtraSmall};
-  margin: 0;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
-  width: 100%;
+export const CenterMutedText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   text-align: center;
 `;
+
+export const SettingSubheading = styled(HelperText)`
+  padding: 8px 0;
+`;
+
 export const TextInputHelperText = styled(HelperText)`
-  padding-top: 10px;
+  padding-top: 12px;
 `;
 
-export const FinePrintHelperText = styled.p`
-  ${TypographyPresets.ExtraSmall};
-  padding-top: 10px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
+export const CheckboxLabel = styled(Text)`
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 8px;
 `;
 
-export const FormLabel = styled.span`
-  ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray400};
+export const CheckboxLabelText = styled(HelperText)`
+  margin-left: 8px;
 `;
 
-export const Error = styled.p`
-  ${TypographyPresets.ExtraSmall};
+export const Error = styled(CenterMutedText)`
   padding-bottom: 10px;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.danger};
 `;
@@ -126,6 +134,12 @@ export const UploadedContainer = styled.div`
 
 export const GridItemContainer = styled.div`
   position: relative;
+  ${({ active, theme }) =>
+    active &&
+    css`
+      border: 1px solid ${theme.colors.border.defaultActive};
+      border-radius: ${theme.borders.radius.small};
+    `};
 
   &:hover,
   &:focus-within {
@@ -201,26 +215,15 @@ export const LogoMenuButton = styled.button`
   }
 `;
 
-export const SaveButton = styled(Button).attrs({
-  type: BUTTON_TYPES.PRIMARY,
-})``;
-
-export const ErrorText = styled.p`
-  ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.danger};
-  margin-left: 1em;
-  padding-top: 0.25em;
-`;
-
 export const InlineForm = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
+
 export const VisuallyHiddenLabel = styled.label(visuallyHiddenStyles);
-export const SettingsTextInput = styled(TextInput)`
-  flex: 3;
-  width: auto;
-  display: inline-block;
-  margin-right: 5px;
+
+export const SettingsTextInput = styled(Input)`
+  margin-right: 8px;
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);

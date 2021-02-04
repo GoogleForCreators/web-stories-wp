@@ -23,11 +23,11 @@ export const StandardViewContentGutter = styled.div(
   ({ theme }) => `
     margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
 
-    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+    @media ${theme.breakpoint.mobile} {
       margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.largeDisplayPhone}px;
     }
 
-    @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+    @media ${theme.breakpoint.min} {
       margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.smallDisplayPhone}px;
     }
   `

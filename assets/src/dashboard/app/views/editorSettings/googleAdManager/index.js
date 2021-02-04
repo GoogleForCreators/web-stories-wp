@@ -30,16 +30,20 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { validateAdManagerSlotIdFormat } from '../../../../utils';
 import {
-  ErrorText,
   FormContainer,
   SettingsTextInput,
   InlineForm,
-  SaveButton,
   SettingForm,
   SettingHeading,
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
+import { BUTTON_TYPES } from '../../../../constants';
+import {
+  Button,
+  BUTTON_SIZES,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 
 export const TEXT = {
   SLOT_ID_CONTEXT: sprintf(
@@ -102,21 +106,28 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
           </VisuallyHiddenLabel>
           <SettingsTextInput
             id="adManagerSlotId"
+            aria-label={TEXT.SLOT_ID_LABEL}
             value={slotId}
             onChange={onUpdateSlotId}
             onKeyDown={onKeyDownSlotId}
             placeholder={TEXT.SLOT_ID_PLACEHOLDER}
-            error={slotIdInputError}
+            hasError={Boolean(slotIdInputError)}
+            hint={slotIdInputError}
           />
-          <SaveButton
-            isDisabled={disableSlotIdSaveButton}
+          <Button
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            disabled={disableSlotIdSaveButton}
             onClick={onSaveSlotId}
           >
             {TEXT.SUBMIT_BUTTON}
-          </SaveButton>
+          </Button>
         </InlineForm>
-        {slotIdInputError && <ErrorText>{slotIdInputError}</ErrorText>}
-        <TextInputHelperText>{TEXT.SLOT_ID_CONTEXT}</TextInputHelperText>
+        <TextInputHelperText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {TEXT.SLOT_ID_CONTEXT}
+        </TextInputHelperText>
       </FormContainer>
     </SettingForm>
   );

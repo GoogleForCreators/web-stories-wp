@@ -24,27 +24,14 @@ import PropTypes from 'prop-types';
  */
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
-import {
-  TypographyPresets,
-  NavMenuButton,
-  StandardViewContentGutter,
-} from '../../../components';
+import { NavMenuButton, StandardViewContentGutter } from '../../../components';
+import { Headline, THEME_CONSTANTS } from '../../../../design-system';
 import TypeaheadSearch from './typeaheadSearch';
 import TelemetryBanner from './telemetryBanner';
 
-const StyledHeader = styled.h2`
-  ${TypographyPresets.ExtraExtraLarge};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
+const StyledHeadline = styled(Headline)`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  line-height: 1;
-  font-size: 30px;
   white-space: nowrap;
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
-    font-size: 24px;
-  }
 `;
 
 const Content = styled.div`
@@ -81,8 +68,8 @@ const HeadingBodyWrapper = styled(StandardViewContentGutter)`
   display: grid;
   grid-template-columns: 25% 50% 1fr;
   align-items: center;
-  height: 75px;
-  padding-bottom: 3px;
+  margin-top: 36px;
+  padding-bottom: 24px;
   border-bottom: ${({ theme }) =>
     theme.DEPRECATED_THEME.subNavigationBar.border};
 `;
@@ -107,10 +94,13 @@ const PageHeading = ({
     <>
       <TelemetryBanner />
       <HeadingBodyWrapper>
-        <StyledHeader>
+        <StyledHeadline
+          as="h2"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE}
+        >
           <NavMenuButton showOnlyOnSmallViewport />
           {defaultTitle}
-        </StyledHeader>
+        </StyledHeadline>
         <Content centerContent={centerContent}>{children}</Content>
         {showTypeahead && (
           <SearchContainer>

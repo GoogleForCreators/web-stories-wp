@@ -42,6 +42,7 @@ import { Dropdown } from '../../../../components';
 import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
 import { TranslateWithMarkup } from '../../../../../i18n';
 import { trackClick } from '../../../../../tracking';
+import { THEME_CONSTANTS } from '../../../../../design-system';
 
 const AdNetworkDropdown = styled(Dropdown)`
   & button {
@@ -149,7 +150,9 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
     <AdNetworkSettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
-        <TextInputHelperText>
+        <TextInputHelperText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
           <TranslateWithMarkup
             mapping={{
               a: (
@@ -158,6 +161,8 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
                   rel="noreferrer"
                   target="_blank"
                   onClick={handleMonetizationClick}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  as="a"
                 />
               ),
             }}
@@ -178,7 +183,9 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
           />
         </InlineForm>
         {message && (
-          <TextInputHelperText>
+          <TextInputHelperText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
             <TranslateWithMarkup
               mapping={{
                 a: (
@@ -187,6 +194,8 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
                     rel="noreferrer"
                     target="_blank"
                     onClick={handleAdNetworkClick}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="a"
                   />
                 ),
               }}
