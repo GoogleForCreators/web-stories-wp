@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 import FrameElement from '../frameElement';
 import DisplayElement from '../displayElement';
 import { CanvasProvider } from '../../../app/canvas';
-import { LayoutProvider } from '../../../app/layout';
+import LayoutContext from '../../../app/layout/context';
 import ConfigProvider from '../../../app/config/configProvider';
 import StoryContext from '../../../app/story/context';
 import { TransformProvider, useTransform } from '../../transform';
@@ -49,6 +49,13 @@ export function TestFrameElement({
       video: [],
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },
+  };
+  const layoutContext = {
+    state: {
+      pageWidth: 412,
+      pageHeight: 618,
+    },
+    actions: {},
   };
   const storyContext = {
     ...inputStoryContext,
@@ -74,7 +81,7 @@ export function TestFrameElement({
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
         <StoryContext.Provider value={storyContext}>
-          <LayoutProvider>
+          <LayoutContext.Provider value={layoutContext}>
             <CanvasProvider>
               <TransformProvider>
                 <WithRefs refs={refs}>
@@ -82,7 +89,7 @@ export function TestFrameElement({
                 </WithRefs>
               </TransformProvider>
             </CanvasProvider>
-          </LayoutProvider>
+          </LayoutContext.Provider>
         </StoryContext.Provider>
       </ConfigProvider>
     </ThemeProvider>
@@ -111,6 +118,13 @@ export function TestDisplayElement({
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },
   };
+  const layoutContext = {
+    state: {
+      pageWidth: 412,
+      pageHeight: 618,
+    },
+    actions: {},
+  };
   const storyContext = {
     ...inputStoryContext,
     state: {
@@ -134,7 +148,7 @@ export function TestDisplayElement({
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
         <StoryContext.Provider value={storyContext}>
-          <LayoutProvider>
+          <LayoutContext.Provider value={layoutContext}>
             <CanvasProvider>
               <TransformProvider>
                 <WithRefs refs={refs}>
@@ -142,7 +156,7 @@ export function TestDisplayElement({
                 </WithRefs>
               </TransformProvider>
             </CanvasProvider>
-          </LayoutProvider>
+          </LayoutContext.Provider>
         </StoryContext.Provider>
       </ConfigProvider>
     </ThemeProvider>
