@@ -26,11 +26,8 @@ import { useEffect } from 'react';
  * Internal dependencies
  */
 import { useFont } from '../../../app';
-import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_WIDTH } from '../../../constants';
 import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
-
-const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
 
 const Preview = styled.button`
   background: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
@@ -45,7 +42,7 @@ const Preview = styled.button`
 
 const Text = styled.span`
   background: none;
-  font-size: ${({ fontSize }) => fontSize * PREVIEW_EM_SCALE}px;
+  font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
   color: ${({ theme }) => theme.colors.fg.white};
