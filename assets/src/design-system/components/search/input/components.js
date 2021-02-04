@@ -42,7 +42,7 @@ InputContainer.propTypes = {
 };
 
 export const Input = styled.input(
-  ({ theme, alignCenter, isOpen, hasError }) => css`
+  ({ theme, alignCenter, hasError }) => css`
     position: absolute;
     padding: 8px 20px 8px ${alignCenter ? 'calc(50% - 8px)' : '32px'};
     height: 100%;
@@ -58,10 +58,13 @@ export const Input = styled.input(
       theme,
     })};
     color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
-    border: 1px solid
-      ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
+    border: 1px solid ${theme.colors.border.defaultNormal};
+
+    &[aria-expanded='true'] {
+      border-color: ${theme.colors.border.defaultActive};
+    }
+
     border-radius: ${theme.borders.radius.small};
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     &::-ms-clear {
       display: none;
@@ -75,16 +78,14 @@ export const Input = styled.input(
     }
 
     &:hover {
-      border-color: ${theme.colors.border[
-        isOpen ? 'defaultActive' : 'defaultHover'
-      ]};
+      border-color: ${theme.colors.border.defaultHover};
     }
+
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     ${hasError &&
     css`
-      ${themeHelpers.focusableOutlineCSS(
-        theme.colors.interactiveBg.negativeNormal
-      )};
+      border-color: ${theme.colors.interactiveBg.negativeHover};
 
       &:active,
       &:hover {
@@ -106,7 +107,6 @@ export const Input = styled.input(
 Input.propTypes = {
   alignCenter: PropTypes.bool,
   hasError: PropTypes.bool,
-  isOpen: PropTypes.bool,
 };
 
 const BaseDecorationContainer = css`

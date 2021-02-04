@@ -41,6 +41,7 @@ export const MenuContainer = styled.div(
     overscroll-behavior: none auto;
     z-index: 2;
     margin-top: 8px;
+    padding: 4px 0;
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     border: 2px solid ${theme.colors.divider.primary};

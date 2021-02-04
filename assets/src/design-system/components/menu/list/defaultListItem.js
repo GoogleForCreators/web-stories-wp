@@ -43,7 +43,7 @@ const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
       />
     )}
     <ListItemDisplayText
-      as="span"
+      forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
     >
       {option.label}
