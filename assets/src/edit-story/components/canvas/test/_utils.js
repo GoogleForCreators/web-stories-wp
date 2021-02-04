@@ -32,8 +32,17 @@ import StoryContext from '../../../app/story/context';
 import { TransformProvider, useTransform } from '../../transform';
 import theme from '../../../theme';
 import useEditingElement from '../../../app/canvas/useEditingElement';
+import { PAGE_WIDTH, PAGE_RATIO } from '../../../constants';
 
 jest.mock('../../../app/canvas/useEditingElement');
+
+const LAYOUT_CONTEXT = {
+  state: {
+    pageWidth: PAGE_WIDTH,
+    pageHeight: PAGE_WIDTH / PAGE_RATIO,
+  },
+  actions: {},
+};
 
 export function TestFrameElement({
   element,
@@ -49,13 +58,6 @@ export function TestFrameElement({
       video: [],
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },
-  };
-  const layoutContext = {
-    state: {
-      pageWidth: 412,
-      pageHeight: 618,
-    },
-    actions: {},
   };
   const storyContext = {
     ...inputStoryContext,
@@ -81,7 +83,7 @@ export function TestFrameElement({
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
         <StoryContext.Provider value={storyContext}>
-          <LayoutContext.Provider value={layoutContext}>
+          <LayoutContext.Provider value={LAYOUT_CONTEXT}>
             <CanvasProvider>
               <TransformProvider>
                 <WithRefs refs={refs}>
@@ -118,13 +120,6 @@ export function TestDisplayElement({
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },
   };
-  const layoutContext = {
-    state: {
-      pageWidth: 412,
-      pageHeight: 618,
-    },
-    actions: {},
-  };
   const storyContext = {
     ...inputStoryContext,
     state: {
@@ -148,7 +143,7 @@ export function TestDisplayElement({
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
         <StoryContext.Provider value={storyContext}>
-          <LayoutContext.Provider value={layoutContext}>
+          <LayoutContext.Provider value={LAYOUT_CONTEXT}>
             <CanvasProvider>
               <TransformProvider>
                 <WithRefs refs={refs}>
