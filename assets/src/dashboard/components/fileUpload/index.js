@@ -37,8 +37,16 @@ import {
   BUTTON_TYPES,
   Text,
 } from '../../../design-system';
+import { focusCSS } from '../../../design-system/theme/helpers';
+
+const StyledButton = styled(Button)`
+  :focus-within {
+    ${({ theme }) => focusCSS(theme.colors.border.focus)}
+  }
+`;
 
 const Input = styled.input(visuallyHiddenStyles);
+
 const UploadFormArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -172,8 +180,8 @@ const FileUpload = ({
       </LoadingIndicator>
       <UploadHelperText>{instructionalText}</UploadHelperText>
 
-      <Button
-        as="label"
+      <StyledButton
+        forwardedAs="label"
         htmlFor={id}
         aria-label={ariaLabel}
         type={BUTTON_TYPES.PRIMARY}
@@ -191,7 +199,7 @@ const FileUpload = ({
           aria-live="polite"
           aria-busy={isLoading}
         />
-      </Button>
+      </StyledButton>
     </UploadFormArea>
   );
 };
