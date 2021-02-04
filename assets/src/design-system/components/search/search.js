@@ -57,14 +57,14 @@ import useSearch from './useSearch';
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
  * @param {string} props.label If present, will display a text label above input. ariaLabel controls accessibility label of input since there are times search components are present without label text visible.
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding menu styles (container div > ul > li).
- * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option, or 'Enter' is pressed on input.
+ * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option, or 'Enter' is pressed on input. Returns an object containing label and value keys.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
  * @param {string} props.placeholder Placeholder text to display in input if no value is present.
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
  * @param {number} props.popupFillWidth Allows for an override of how much of popup width to take up for dropDown.
  * @param {number} props.popupZIndex Allows for an override of the default popup z index (2).
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
- * @param {string} props.selectedValue The selected value, should correspond to a value in the options array of objects.
+ * @param {string} props.selectedValue The selected value, should correspond to an object in the options array of objects.
  *
  */
 
@@ -82,7 +82,7 @@ export const Search = ({
   placement = PLACEMENT.BOTTOM,
   popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   popupZIndex,
-  selectedValue = '',
+  selectedValue = {},
   ...rest
 }) => {
   const listId = useMemo(() => `list-${uuidv4()}`, []);
@@ -94,6 +94,7 @@ export const Search = ({
 
   const {
     activeOption,
+    getActiveOption,
     inputValue,
     isMenuFocused,
     isOpen,
@@ -148,10 +149,14 @@ export const Search = ({
   const handleMenuItemClick = useCallback(
     (event, menuItem) => {
       isOpen.set(false);
-      inputValue.updateToOption(menuItem);
-      onMenuItemClick?.(event, menuItem);
+      const newOption = getActiveOption(menuItem) || {
+        label: menuItem,
+        value: menuItem,
+      };
+      inputValue.set(newOption.label);
+      onMenuItemClick?.(event, newOption);
     },
-    [inputValue, isOpen, onMenuItemClick]
+    [getActiveOption, inputValue, isOpen, onMenuItemClick]
   );
 
   const handleReturnToInput = useCallback(() => inputRef?.current?.focus(), []);
@@ -172,7 +177,7 @@ export const Search = ({
 
   const handleClearInputValue = useCallback(() => {
     inputValue.set('');
-    onMenuItemClick?.(null, '');
+    onMenuItemClick?.(null, { label: '', value: '' });
     handleReturnToInput();
   }, [handleReturnToInput, inputValue, onMenuItemClick]);
 
@@ -186,14 +191,17 @@ export const Search = ({
   ]);
 
   const trimInputValue = useCallback(() => {
-    if (inputValue.value.length !== inputValue.value.trim().length) {
+    if (
+      inputValue?.value &&
+      inputValue.value.length !== inputValue.value.trim().length
+    ) {
       inputValue.set((prevInputVal) => prevInputVal.trim());
     }
   }, [inputValue]);
 
   const handleEndSearch = useCallback(() => {
     trimInputValue();
-    if (isMenuHidden || inputValue.value.trim().length === 0) {
+    if (isMenuHidden || inputValue.value?.trim().length === 0) {
       isMenuFocused.set(false);
       isOpen.set(false);
     }
@@ -319,9 +327,12 @@ Search.propTypes = {
   popupFillWidth: PropTypes.number,
   popupZIndex: PropTypes.number,
   renderItem: PropTypes.object,
-  selectedValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.number,
-  ]),
+  selectedValue: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool,
+      PropTypes.number,
+    ]),
+  }),
 };

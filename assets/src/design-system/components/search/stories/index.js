@@ -42,13 +42,13 @@ const Container = styled.div`
 `;
 
 export const _default = () => {
-  const [selectedValue, setSelectedValue] = useState();
+  const [selectedValue, setSelectedValue] = useState(basicDropDownOptions[2]);
 
   const [inputValue, setInputValue] = useState('');
 
   const options = useMemo(() => {
     if (!inputValue || inputValue.length === 0) {
-      return [];
+      return basicDropDownOptions;
     }
 
     return basicDropDownOptions.filter(

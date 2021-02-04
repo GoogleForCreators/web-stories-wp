@@ -67,11 +67,11 @@ export default function useSearch({
    */
 
   const normalizedOptions = useMemo(() => {
-    if (!options || options.length == 0 || !isOpen.value) {
+    if (!options || options.length == 0) {
       return [];
     }
     return getOptions(options);
-  }, [isOpen.value, options]);
+  }, [options]);
 
   /**
    * the active option, if there is a selectedValue present that matches an option.
@@ -90,35 +90,31 @@ export default function useSearch({
     [normalizedOptions]
   );
 
+  const activeOption = useMemo(() => {
+    if (!selectedValue?.value || normalizedOptions.length === 0) {
+      return null;
+    }
+    return getActiveOption(selectedValue.value);
+  }, [selectedValue, normalizedOptions, getActiveOption]);
+
   /**
    * Monitor input value separate from selected value to respect user input while maintaining accurate results.
    */
-  const [_inputValue, setInputValue] = useState('');
-
-  const handleOptionSetAsInputValue = useCallback(
-    (newValue = '') => {
-      const newInputVal = getActiveOption(newValue)?.label;
-      setInputValue(newInputVal);
-    },
-    [getActiveOption]
-  );
+  const [_inputValue, setInputValue] = useState(undefined);
 
   const inputValue = useMemo(
     () => ({
       value: _inputValue,
       set: setInputValue,
-      updateToOption: handleOptionSetAsInputValue,
     }),
-    [_inputValue, handleOptionSetAsInputValue]
+    [_inputValue]
   );
 
-  const activeOption = useMemo(() => {
-    if (!selectedValue || normalizedOptions.length === 0) {
-      return null;
+  useEffect(() => {
+    if (inputValue?.value === undefined && selectedValue) {
+      inputValue.set(selectedValue?.label || '');
     }
-    return getActiveOption(selectedValue);
-  }, [selectedValue, normalizedOptions, getActiveOption]);
-
+  }, [inputValue, selectedValue]);
   /**
    * send the inputValue when it changes back to the parent so that any results that need to change can be changed.
    */
@@ -127,5 +123,12 @@ export default function useSearch({
     inputValue,
   ]);
 
-  return { activeOption, normalizedOptions, inputValue, isMenuFocused, isOpen };
+  return {
+    activeOption,
+    getActiveOption,
+    normalizedOptions,
+    inputValue,
+    isMenuFocused,
+    isOpen,
+  };
 }
