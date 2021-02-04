@@ -74,10 +74,11 @@ fdescribe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () =>
 
     textSet.scrollIntoView();
     await fixture.events.mouse.moveRel(textSet, 25, 25);
+    await fixture.events.sleep(1000);
     await fixture.events.mouse.down();
     await fixture.events.sleep(1000);
     await fixture.events.mouse.moveRel(textSet, 10, 10);
-    await fixture.events.sleep(1000);
+    await fixture.events.sleep(3000);
     await fixture.events.mouse.moveRel(page, 50, 100, { steps: 50 });
     await waitFor(
       () =>
