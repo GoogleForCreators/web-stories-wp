@@ -21,7 +21,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { themeHelpers, Text, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  themeHelpers,
+  Text,
+  THEME_CONSTANTS,
+  VisuallyHidden,
+} from '../../../../design-system';
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { TranslateWithMarkup } from '../../../../i18n';
 import { GUTTER_WIDTH } from '../constants';
@@ -40,14 +45,6 @@ const Overflow = styled.div`
 
   strong {
     font-weight: 700;
-  }
-
-  .screenreader {
-    position: absolute;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
   }
 `;
 
@@ -95,7 +92,7 @@ export function QuickTip({
             >
               <TranslateWithMarkup
                 mapping={{
-                  screenreader: <span className="screenreader" />,
+                  screenreader: <VisuallyHidden />,
                 }}
               >
                 {paragraph}
