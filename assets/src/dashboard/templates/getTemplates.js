@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
+import { DATA_VERSION, migrate } from '../../migration/migrate';
 import { getTimeTracker } from '../../tracking';
 
 async function loadTemplate(title, imageBaseUrl) {

@@ -21,7 +21,7 @@
 /**
  * Internal dependencies
  */
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
+import { migrate, DATA_VERSION } from '../../../migration/migrate';
 
 export default function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {

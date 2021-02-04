@@ -34,9 +34,7 @@ jobs:
           cache-name: cache-node-modules
 
       - name: Install dependencies
-        run: |
-          npm ci
-          npx rollup --config bin/rollup.config.migrate.js
+        run: npm ci
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
