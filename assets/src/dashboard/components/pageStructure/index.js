@@ -29,7 +29,6 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../design-system';
 import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
