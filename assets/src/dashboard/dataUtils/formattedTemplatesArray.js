@@ -15,9 +15,6 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { toUTCDate } from '@web-stories-wp/date';

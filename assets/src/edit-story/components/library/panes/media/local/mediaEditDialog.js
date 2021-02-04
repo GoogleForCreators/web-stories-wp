@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
-
+import { formatDate, toDate, isValid } from '@web-stories-wp/date';
 /**
  * WordPress dependencies
  */
@@ -29,7 +29,6 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { formatDate, toDate, isValid } from '@web-stories-wp/date';
 import { useAPI } from '../../../../../app/api';
 import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';

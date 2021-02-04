@@ -23,11 +23,11 @@ import { __, sprintf } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect, useState, useCallback } from 'react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
-import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import {
   CardGrid,
   CardGridItem,

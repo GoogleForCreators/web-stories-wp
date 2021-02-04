@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState } from 'react';
-
+import { format, formatTime, is12Hour } from '@web-stories-wp/date';
 /**
  * WordPress dependencies
  */
@@ -29,7 +29,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { format, formatTime, is12Hour } from '@web-stories-wp/date';
 import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';

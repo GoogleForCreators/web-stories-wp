@@ -21,11 +21,11 @@ import Modal from 'react-modal';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
+import { updateSettings } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
-import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '../tracking';
 import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.

@@ -19,11 +19,11 @@
  */
 import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { differenceInSeconds } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
-import { differenceInSeconds } from '@web-stories-wp/date';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import {

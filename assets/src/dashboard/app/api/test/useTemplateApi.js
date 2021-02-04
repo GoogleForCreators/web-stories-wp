@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
 /**
  * External dependencies
  */
 import { toUTCDate } from '@web-stories-wp/date';
+/**
+ * Internal dependencies
+ */
 import { reshapeTemplateObject } from '../useTemplateApi';
 
 describe('reshapeTemplateObject', () => {

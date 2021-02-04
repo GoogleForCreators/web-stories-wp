@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { text } from '@storybook/addon-knobs';
+import { subMinutes } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
-import { subMinutes } from '@web-stories-wp/date';
 import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
 import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
