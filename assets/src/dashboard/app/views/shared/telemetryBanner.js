@@ -89,7 +89,7 @@ export const TelemetryOptInBanner = forwardRef(
     return visible ? (
       <Banner
         backgroundUrl={`${assetsURL}images/dashboard/analytics-banner-bg.png`}
-        closeButtonLabel={__('Dismiss telemetry', 'web-stories')}
+        closeButtonLabel={__('Dismiss telemetry banner', 'web-stories')}
         onClose={onClose}
         title={title}
         ref={ref}
