@@ -18,6 +18,8 @@
  * External dependencies
  */
 import propTypes from 'prop-types';
+import { useMemo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -41,6 +43,8 @@ export default function TelemetrySettings({
   onCheckboxSelected,
   disabled,
 }) {
+  const telemetryOptInId = useMemo(() => `telemetry-opt-in-${uuidv4()}`, []);
+
   return (
     <SettingForm>
       <div>
@@ -49,9 +53,9 @@ export default function TelemetrySettings({
         </SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor="telemetry-opt-in">
+        <CheckboxLabel forwardedAs="label" htmlFor={telemetryOptInId}>
           <Checkbox
-            id="telemetry-opt-in"
+            id={telemetryOptInId}
             data-testid="telemetry-settings-checkbox"
             disabled={disabled}
             onChange={onCheckboxSelected}

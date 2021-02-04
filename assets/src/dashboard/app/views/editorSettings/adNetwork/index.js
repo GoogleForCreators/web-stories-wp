@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
  */
 import styled from 'styled-components';
 import {
-  FormContainer,
   InlineForm,
   InlineLink,
   SettingForm,
@@ -171,7 +170,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
           </TranslateWithMarkup>
         </TextInputHelperText>
       </div>
-      <FormContainer>
+      <div>
         <InlineForm>
           <VisuallyHiddenLabel>{TEXT.SLOT_ID_LABEL}</VisuallyHiddenLabel>
           <AdNetworkDropdown
@@ -204,7 +203,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
             </TranslateWithMarkup>
           </TextInputHelperText>
         )}
-      </FormContainer>
+      </div>
     </AdNetworkSettingForm>
   );
 }

@@ -30,7 +30,6 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { validateAdManagerSlotIdFormat } from '../../../../utils';
 import {
-  FormContainer,
   InlineForm,
   SaveButton,
   SettingForm,
@@ -39,8 +38,11 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
-import { BUTTON_TYPES } from '../../../../constants';
-import { BUTTON_SIZES, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 
 export const TEXT = {
   SLOT_ID_CONTEXT: sprintf(
@@ -96,7 +98,7 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <SettingHeading />
-      <FormContainer>
+      <div>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="adManagerSlotId">
             {TEXT.SLOT_ID_LABEL}
@@ -125,7 +127,7 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
         >
           {TEXT.SLOT_ID_CONTEXT}
         </TextInputHelperText>
-      </FormContainer>
+      </div>
     </SettingForm>
   );
 }

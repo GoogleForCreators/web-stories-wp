@@ -33,7 +33,6 @@ import {
   validateAdSenseSlotIdFormat,
 } from '../../../../utils';
 import {
-  FormContainer,
   InlineForm,
   InlineLink,
   SaveButton,
@@ -45,8 +44,11 @@ import {
 } from '../components';
 import { TranslateWithMarkup } from '../../../../../i18n';
 import { trackClick } from '../../../../../tracking';
-import { BUTTON_TYPES } from '../../../../constants';
-import { BUTTON_SIZES, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(
@@ -173,7 +175,7 @@ function GoogleAdSenseSettings({
     <>
       <SettingForm onSubmit={(e) => e.preventDefault()}>
         <SettingHeading />
-        <FormContainer>
+        <div>
           <InlineForm>
             <VisuallyHiddenLabel htmlFor="adSensePublisherId">
               {TEXT.PUBLISHER_ID_LABEL}
@@ -220,11 +222,11 @@ function GoogleAdSenseSettings({
               {TEXT.PUBLISHER_ID_CONTEXT}
             </TranslateWithMarkup>
           </TextInputHelperText>
-        </FormContainer>
+        </div>
       </SettingForm>
       <SettingForm onSubmit={(e) => e.preventDefault()}>
         <SettingHeading />
-        <FormContainer>
+        <div>
           <InlineForm>
             <VisuallyHiddenLabel htmlFor="adSenseSlotId">
               {TEXT.SLOT_ID_LABEL}
@@ -256,7 +258,7 @@ function GoogleAdSenseSettings({
           >
             {TEXT.SLOT_ID_CONTEXT}
           </TextInputHelperText>
-        </FormContainer>
+        </div>
       </SettingForm>
     </>
   );

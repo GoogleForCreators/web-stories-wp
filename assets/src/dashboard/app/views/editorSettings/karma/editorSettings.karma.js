@@ -81,9 +81,7 @@ describe('Settings View', () => {
   it('should render', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
-    const PageHeading = within(settingsView).getByText(
-      'Stories Global Settings'
-    );
+    const PageHeading = within(settingsView).getByText('Settings');
 
     expect(PageHeading).toBeTruthy();
   });

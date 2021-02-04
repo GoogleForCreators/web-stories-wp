@@ -18,6 +18,8 @@
  * External dependencies
  */
 import propTypes from 'prop-types';
+import { useMemo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -40,6 +42,11 @@ export default function MediaOptimizationSettings({
   onCheckboxSelected,
   disabled,
 }) {
+  const mediaOptimizationId = useMemo(
+    () => `media-optimization-${uuidv4()}`,
+    []
+  );
+
   return (
     <SettingForm>
       <div>
@@ -48,9 +55,9 @@ export default function MediaOptimizationSettings({
         </SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor="media-optimization">
+        <CheckboxLabel forwardedAs="label" htmlFor={mediaOptimizationId}>
           <Checkbox
-            id="media-optimization"
+            id={mediaOptimizationId}
             data-testid="media-optimization-settings-checkbox"
             disabled={disabled}
             onChange={onCheckboxSelected}

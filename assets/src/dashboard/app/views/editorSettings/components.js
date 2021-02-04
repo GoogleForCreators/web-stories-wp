@@ -25,15 +25,14 @@ import styled, { css } from 'styled-components';
 import { StandardViewContentGutter } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import {
+  Button,
   Headline,
   Input,
   Link,
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-  Button,
 } from '../../../../design-system';
-import { focusableOutlineCSS } from '../../../../design-system/theme/helpers';
 
 export const Wrapper = styled.div``;
 
@@ -71,12 +70,6 @@ export const SettingHeading = styled(Headline).attrs({
       theme,
     })};
   margin: 8px 0;
-`;
-
-export const FormContainer = styled.div`
-  input {
-    width: 100%;
-  }
 `;
 
 export const InlineLink = styled(Link)`
@@ -126,7 +119,7 @@ export const UploadedContainer = styled.div`
   border: 1px solid transparent;
   border-width: 2px;
 
-  ${({ theme }) => focusableOutlineCSS(theme.colors.border.focus)};
+  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 `;
 
 export const GridItemContainer = styled.div`
@@ -156,7 +149,7 @@ export const GridItemButton = styled.button`
   border-width: 2px;
   padding: 0;
 
-  ${({ theme }) => focusableOutlineCSS(theme.colors.border.focus)};
+  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 `;
 
 export const Logo = styled.img`
@@ -199,7 +192,7 @@ export const LogoMenuButton = styled.button`
     display: block;
   }
 
-  ${({ theme }) => focusableOutlineCSS(theme.colors.border.focus)};
+  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 `;
 
 export const SaveButton = styled(Button)`
