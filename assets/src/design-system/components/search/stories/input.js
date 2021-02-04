@@ -49,7 +49,6 @@ export const _default = () => (
         hasError={boolean('hasError')}
         id={'my-input-id'}
         inputValue={text('inputValue', '')}
-        isFlexibleValue={boolean('isFlexibleValue')}
         isOpen={boolean('isOpen')}
         listId={'my-list-id'}
         name={'my-input-id'}
@@ -74,7 +73,6 @@ export const LightTheme = () => (
       hasError={boolean('hasError')}
       id={'my-input-id'}
       inputValue={text('inputValue', '')}
-      isFlexibleValue={boolean('isFlexibleValue')}
       isOpen={boolean('isOpen')}
       listId={'my-list-id'}
       name={'my-input-id'}

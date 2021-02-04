@@ -91,7 +91,6 @@ describe('Search <Input />', () => {
         handleClearInputValue={handleClearInputMock}
         inputValue={'my input value'}
         placeholder={'search placeholder'}
-        isFlexibleValue={true}
       />
     );
 
@@ -131,39 +130,6 @@ describe('Search <Input />', () => {
 
     const chevron = getByTestId('chevron-search-icon');
     expect(chevron).toBeInTheDocument();
-  });
-
-  it('should show clear icon by while input is not open and input has value if isFlexibleValue true', () => {
-    const { getByTestId } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
-        inputValue={'existing value'}
-        isFlexibleValue={true}
-      />
-    );
-
-    const clear = getByTestId('clear-search-icon');
-    expect(clear).toBeInTheDocument();
-  });
-
-  it('should show clear icon by while input is open and input has value if isFlexibleValue true', () => {
-    const { getByTestId } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
-        inputValue={'existing value'}
-        isFlexibleValue={true}
-        isOpen={true}
-      />
-    );
-
-    const clear = getByTestId('clear-search-icon');
-    expect(clear).toBeInTheDocument();
   });
 
   it('should show clear icon by while input is open and input has value', () => {
@@ -227,37 +193,5 @@ describe('Search <Input />', () => {
 
     const search = getByTestId('search-search-icon');
     expect(search).toBeInTheDocument();
-  });
-
-  it('should show search icon if isOpen is false and isFlexibleValue is true and there is an inputValue', () => {
-    const { getByTestId } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
-        inputValue={'existing value'}
-        isFlexibleValue={true}
-      />
-    );
-
-    const search = getByTestId('search-search-icon');
-    expect(search).toBeInTheDocument();
-  });
-
-  it('should not show search icon if isOpen is false and isFlexibleValue is true and there is no inputValue', () => {
-    const { queryAllByTestId } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
-        inputValue={''}
-        isFlexibleValue={true}
-      />
-    );
-
-    const search = queryAllByTestId('search-search-icon');
-    expect(search).toStrictEqual([]);
   });
 });
