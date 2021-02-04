@@ -25,6 +25,7 @@ import { useFeature } from 'flagged';
  */
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
+import { getTimeTracker } from '../../../../tracking';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -47,6 +48,8 @@ function useTranscodeVideo() {
     const { createFFmpeg, fetchFile } = await import(
       /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
     );
+
+    const trackTiming = getTimeTracker('video transcoding', 'editor', 'Media');
     const ffmpeg = createFFmpeg({
       corePath: ffmpegCoreUrl,
       log: isDevelopment,
@@ -75,6 +78,8 @@ function useTranscodeVideo() {
       // Output filename. MUST be different from input filename.
       tempFileName
     );
+
+    trackTiming();
 
     const data = ffmpeg.FS('readFile', tempFileName);
     return new File(
