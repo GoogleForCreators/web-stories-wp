@@ -44,6 +44,11 @@ describe('useSearch()', function () {
       })
     );
 
+    act(() => {
+      result.current.inputValue.set(basicDropDownOptions[2].label);
+      result.current.isOpen.set(true);
+    });
+
     expect(result.current.activeOption).toMatchObject(basicDropDownOptions[2]);
   });
 
@@ -90,6 +95,12 @@ describe('useSearch()', function () {
     const { result } = renderHook(() =>
       useSearch({ selectedValue: null, options: nestedDropDownOptions })
     );
+
+    expect(result.current.normalizedOptions).toStrictEqual([]);
+
+    act(() => {
+      result.current.inputValue.set('b');
+    });
 
     expect(result.current.normalizedOptions).toStrictEqual([
       {

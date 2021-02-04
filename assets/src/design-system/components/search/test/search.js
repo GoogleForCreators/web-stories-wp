@@ -118,8 +118,8 @@ describe('Search <Search />', () => {
     expect(menu).toBeInTheDocument();
   });
 
-  it('should show an active icon on list item that is active', () => {
-    const { getByRole } = renderWithProviders(
+  it('should show an active icon on list item that is active', async () => {
+    const { getByRole, findByText } = renderWithProviders(
       <Search
         emptyText={'No options available'}
         ariaInputLabel={'label'}
@@ -131,10 +131,12 @@ describe('Search <Search />', () => {
 
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
-    fireEvent.click(input);
+    fireEvent.focus(input);
 
     // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
+    await jest.runAllTimers();
+
+    await findByText(basicDropDownOptions[2].label);
 
     const activeMenuItem = getByRole('option', {
       name: `Selected ${basicDropDownOptions[2].label}`,
@@ -164,13 +166,34 @@ describe('Search <Search />', () => {
     expect(menu).toStrictEqual([]);
   });
 
-  it('should trigger onMenuItemClick when item is clicked', () => {
-    const onClickMock = jest.fn();
-
-    const { getByRole, getAllByRole } = renderWithProviders(
+  it('should not expand menu with selected value when disabled is true', () => {
+    const { getByRole, queryAllByRole } = renderWithProviders(
       <Search
         options={basicDropDownOptions}
-        selectedValue={null}
+        selectedValue={basicDropDownOptions[2].value}
+        ariaInputLabel={'my label'}
+        disabled={true}
+      />
+    );
+
+    const input = getByRole('combobox');
+    expect(input).toBeInTheDocument();
+
+    fireEvent.click(input);
+
+    // wait for debounced callback to allow a select click handler to process
+    jest.runOnlyPendingTimers();
+
+    const menu = queryAllByRole('listbox');
+    expect(menu).toStrictEqual([]);
+  });
+
+  it('should trigger onMenuItemClick from input when input has value', () => {
+    const onClickMock = jest.fn();
+
+    const { getByRole } = renderWithProviders(
+      <Search
+        options={basicDropDownOptions}
         ariaInputLabel={'my dropDown label'}
         onMenuItemClick={onClickMock}
       />
@@ -178,7 +201,34 @@ describe('Search <Search />', () => {
 
     // Fire click event
     const input = getByRole('combobox');
-    fireEvent.click(input);
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: 'tapir' } });
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+
+    // wait for debounced callback to allow a select click handler to process
+    jest.runOnlyPendingTimers();
+
+    // first prop we get back is the event
+    expect(onClickMock).toHaveBeenCalledWith(expect.anything(), 'tapir');
+
+    expect(onClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should trigger onMenuItemClick from menu when input has value and menu can be seen', () => {
+    const onClickMock = jest.fn();
+
+    const { getByRole, getAllByRole } = renderWithProviders(
+      <Search
+        options={basicDropDownOptions}
+        ariaInputLabel={'my dropDown label'}
+        onMenuItemClick={onClickMock}
+      />
+    );
+
+    // Fire click event
+    const input = getByRole('combobox');
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: 'capybara' } });
 
     // wait for debounced callback to allow a select click handler to process
     jest.runOnlyPendingTimers();
