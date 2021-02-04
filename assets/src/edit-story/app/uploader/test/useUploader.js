@@ -29,9 +29,11 @@ import useTranscodeVideo from '../../media/utils/useTranscodeVideo';
 jest.mock('../../media/utils/useTranscodeVideo', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-    isTranscodingEnabled: jest.fn(),
-    transcodeVideo: jest.fn(),
+    isFeatureEnabled: true,
+    isTranscodingEnabled: true,
+    canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),
+    transcodeVideo: jest.fn(),
   })),
 }));
 
@@ -122,9 +124,11 @@ describe('useUploader', () => {
     it('throws an error if file is too large for transcoding', async () => {
       useTranscodeVideo.mockImplementationOnce(
         jest.fn(() => ({
-          isTranscodingEnabled: jest.fn(() => true),
-          transcodeVideo: jest.fn(),
+          isFeatureEnabled: true,
+          isTranscodingEnabled: true,
+          canTranscodeFile: jest.fn(() => true),
           isFileTooLarge: jest.fn(() => true),
+          transcodeVideo: jest.fn(),
         }))
       );
 
@@ -138,7 +142,7 @@ describe('useUploader', () => {
           type: 'video/mov',
         })
       ).rejects.toThrow(
-        'Your file is too large (3072 MB) and cannot be processed. Please try again with a smaller file.'
+        'Your file is too large (3072 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
       );
     });
 
@@ -151,9 +155,11 @@ describe('useUploader', () => {
       );
       useTranscodeVideo.mockImplementationOnce(
         jest.fn(() => ({
-          isTranscodingEnabled: jest.fn(() => true),
-          transcodeVideo,
+          isFeatureEnabled: true,
+          isTranscodingEnabled: true,
+          canTranscodeFile: jest.fn(() => true),
           isFileTooLarge: jest.fn(() => false),
+          transcodeVideo,
         }))
       );
 
@@ -174,8 +180,8 @@ describe('useUploader', () => {
       const transcodeVideo = jest.fn();
       useTranscodeVideo.mockImplementationOnce(
         jest.fn(() => ({
-          isTranscodingEnabled: jest.fn(() => false),
-          transcodeVideo,
+          isFeatureEnabled: false,
+          isTranscodingEnabled: false,
         }))
       );
 
@@ -197,9 +203,11 @@ describe('useUploader', () => {
         .mockRejectedValue(new Error('ffmpeg error'));
       useTranscodeVideo.mockImplementationOnce(
         jest.fn(() => ({
-          isTranscodingEnabled: jest.fn(() => true),
-          transcodeVideo,
+          isFeatureEnabled: true,
+          isTranscodingEnabled: true,
+          canTranscodeFile: jest.fn(() => true),
           isFileTooLarge: jest.fn(() => false),
+          transcodeVideo,
         }))
       );
 
@@ -211,33 +219,7 @@ describe('useUploader', () => {
       };
 
       await expect(uploadFile(file)).rejects.toThrow(
-        'Video optimization failed'
-      );
-      expect(transcodeVideo).toHaveBeenCalledTimes(1);
-      expect(transcodeVideo).toHaveBeenCalledWith(file);
-    });
-
-    it('throws an error if video transcoding failed for unsupported file type', async () => {
-      const transcodeVideo = jest
-        .fn()
-        .mockRejectedValue(new Error('ffmpeg error'));
-      useTranscodeVideo.mockImplementationOnce(
-        jest.fn(() => ({
-          isTranscodingEnabled: jest.fn(() => true),
-          transcodeVideo,
-          isFileTooLarge: jest.fn(() => false),
-        }))
-      );
-
-      const { uploadFile } = setup({});
-
-      const file = {
-        size: 20000,
-        type: 'video/mov',
-      };
-
-      await expect(uploadFile(file)).rejects.toThrow(
-        'Please choose only png, jpeg, jpg, gif, mp4 to upload.'
+        'Video could not be processed'
       );
       expect(transcodeVideo).toHaveBeenCalledTimes(1);
       expect(transcodeVideo).toHaveBeenCalledWith(file);

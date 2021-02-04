@@ -25,6 +25,7 @@ import { useFeature } from 'flagged';
  */
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
+import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -46,8 +47,6 @@ const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
  */
 const isVideo = ({ type }) => type.startsWith('video/');
 
-const GB_IN_BYTES = 1024 * 1024 * 1024;
-
 /**
  * Checks whether the file size is too large for transcoding.
  *
@@ -57,7 +56,7 @@ const GB_IN_BYTES = 1024 * 1024 * 1024;
  * @param {number} file.size File size.
  * @return {boolean} Whether the file is too  large.
  */
-const isFileTooLarge = ({ size }) => size >= 2 * GB_IN_BYTES;
+const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 function useTranscodeVideo() {
   const { ffmpegCoreUrl } = useConfig();
@@ -115,15 +114,18 @@ function useTranscodeVideo() {
     );
   }
 
-  const isTranscodingEnabled = (file) =>
-    isFeatureEnabled &&
-    isVideo(file) &&
-    currentUser.meta?.web_stories_media_optimization;
+  const canTranscodeFile = (file) => isVideo(file);
+
+  const isTranscodingEnabled = Boolean(
+    currentUser.meta?.web_stories_media_optimization
+  );
 
   return {
+    isFeatureEnabled,
     isTranscodingEnabled,
-    transcodeVideo,
+    canTranscodeFile,
     isFileTooLarge,
+    transcodeVideo,
   };
 }
 

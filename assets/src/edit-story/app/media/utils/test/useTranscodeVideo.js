@@ -62,41 +62,46 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
 }
 
 describe('useTranscodeVideo', () => {
-  describe('isTranscodingEnabled', () => {
-    it('should return true if feature is enabled and user has enabled setting', () => {
-      const file = new File(['foo'], 'foo.mp4', {
-        type: 'video/mp4',
-      });
-
+  describe('isFeatureEnabled', () => {
+    it('should return true if feature is enabled', () => {
       const { result } = arrange({
         isFeatureEnabled: true,
-        userSettingEnabled: true,
       });
-      expect(result.current.isTranscodingEnabled(file)).toBeTrue();
+      expect(result.current.isFeatureEnabled).toBeTrue();
     });
 
     it('should return false if feature is disabled', () => {
-      const file = new File(['foo'], 'foo.mp4', {
-        type: 'video/mp4',
-      });
-
       const { result } = arrange({
         isFeatureEnabled: false,
+      });
+      expect(result.current.isFeatureEnabled).toBeFalse();
+    });
+  });
+
+  describe('isTranscodingEnabled', () => {
+    it('should return true if user has enabled setting', () => {
+      const { result } = arrange({
         userSettingEnabled: true,
       });
-      expect(result.current.isTranscodingEnabled(file)).toBeFalse();
+      expect(result.current.isTranscodingEnabled).toBeTrue();
     });
 
     it('should return false if user disabled the setting', () => {
-      const file = new File(['foo'], 'foo.mp4', {
-        type: 'video/mp4',
-      });
-
       const { result } = arrange({
-        isFeatureEnabled: true,
         userSettingEnabled: false,
       });
-      expect(result.current.isTranscodingEnabled(file)).toBeFalse();
+      expect(result.current.isTranscodingEnabled).toBeFalse();
+    });
+  });
+
+  describe('canTranscodeFile', () => {
+    it('should return true for video files', () => {
+      const file = new File(['foo'], 'foo.mov', {
+        type: 'video/mov',
+      });
+
+      const { result } = arrange({});
+      expect(result.current.canTranscodeFile(file)).toBeTrue();
     });
 
     it('should return false if file is not a video', () => {
@@ -104,11 +109,8 @@ describe('useTranscodeVideo', () => {
         type: 'text/plain',
       });
 
-      const { result } = arrange({
-        isFeatureEnabled: true,
-        userSettingEnabled: true,
-      });
-      expect(result.current.isTranscodingEnabled(file)).toBeFalse();
+      const { result } = arrange({});
+      expect(result.current.canTranscodeFile(file)).toBeFalse();
     });
   });
 
