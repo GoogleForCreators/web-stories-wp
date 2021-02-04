@@ -89,12 +89,7 @@ export const Input = ({
   return (
     <Container className={className}>
       {label && (
-        <Label
-          id="input-label"
-          htmlFor={inputId}
-          as="label"
-          disabled={disabled}
-        >
+        <Label htmlFor={inputId} as="label" disabled={disabled}>
           {label}
         </Label>
       )}
@@ -104,11 +99,7 @@ export const Input = ({
         hasError={hasError}
         {...props}
       />
-      {hint && (
-        <Hint id="input-hint" hasError={hasError}>
-          {hint}
-        </Hint>
-      )}
+      {hint && <Hint hasError={hasError}>{hint}</Hint>}
     </Container>
   );
 };
