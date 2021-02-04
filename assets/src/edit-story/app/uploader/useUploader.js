@@ -51,7 +51,11 @@ function useUploader() {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
-  const { transcodeVideo, canTranscodeFile } = useTranscodeVideo();
+  const {
+    transcodeVideo,
+    isTranscodingEnabled,
+    isFileTooLarge,
+  } = useTranscodeVideo();
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -62,7 +66,7 @@ function useUploader() {
     [allowedMimeTypes]
   );
 
-  const fileSizeCheck = useCallback(
+  const isFileSizeWithinLimits = useCallback(
     ({ size }) => {
       return size <= maxUpload;
     },
@@ -77,6 +81,7 @@ function useUploader() {
    */
   const uploadFile = useCallback(
     async (file, _additionalData = {}) => {
+      // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
           'Sorry, you are unable to upload files.',
@@ -84,7 +89,9 @@ function useUploader() {
         );
         throw createError('PermissionError', file.name, message);
       }
-      if (!fileSizeCheck(file)) {
+
+      // The file is too large for the site anyway, abort.
+      if (!isFileSizeWithinLimits(file)) {
         const message = sprintf(
           /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
           __(
@@ -97,18 +104,22 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      if (!isValidType(file) && !canTranscodeFile(file)) {
-        /* translators: %s is a list of allowed file extensions. */
-        const message = sprintf(
-          /* translators: %s: list of allowed file types. */
-          __('Please choose only %s to upload.', 'web-stories'),
-          allowedFileTypes.join(
-            /* translators: delimiter used in a list */
-            __(', ', 'web-stories')
-          )
-        );
+      // The file type is not supported by default, but maybe it can be transcoded?
+      if (!isValidType(file)) {
+        // Nope, doesn't look like it! Bail now because it cannot be uploaded.
+        if (!isTranscodingEnabled(file)) {
+          /* translators: %s is a list of allowed file extensions. */
+          const message = sprintf(
+            /* translators: %s: list of allowed file types. */
+            __('Please choose only %s to upload.', 'web-stories'),
+            allowedFileTypes.join(
+              /* translators: delimiter used in a list */
+              __(', ', 'web-stories')
+            )
+          );
 
-        throw createError('ValidError', file.name, message);
+          throw createError('ValidError', file.name, message);
+        }
       }
 
       const additionalData = {
@@ -117,7 +128,22 @@ function useUploader() {
         ..._additionalData,
       };
 
-      if (canTranscodeFile(file)) {
+      // Transcoding is enabled, let's give it a try!
+      if (isTranscodingEnabled(file)) {
+        // Bail early if the file is too large for transcoding.
+        if (isFileTooLarge(file)) {
+          const message = sprintf(
+            /* translators: %s: File size. */
+            __(
+              'Your file is too large (%s MB) and cannot be processed. Please try again with a smaller file.',
+              'web-stories'
+            ),
+            bytesToMB(file.size)
+          );
+          throw createError('SizeError', file.name, message);
+        }
+
+        // Transcode video & upload it.
         try {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           const newFile = await transcodeVideo(file);
@@ -145,17 +171,19 @@ function useUploader() {
         }
       }
 
+      // At this point, just upload the file normally without any transcoding.
       return uploadMedia(file, additionalData);
     },
     [
       allowedFileTypes,
-      fileSizeCheck,
+      isFileSizeWithinLimits,
       hasUploadMediaAction,
       isValidType,
       maxUpload,
       uploadMedia,
       storyId,
-      canTranscodeFile,
+      isTranscodingEnabled,
+      isFileTooLarge,
       transcodeVideo,
     ]
   );
