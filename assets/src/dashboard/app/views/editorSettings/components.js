@@ -32,9 +32,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-  Button,
 } from '../../../../design-system';
-import { focusableOutlineCSS } from '../../../../design-system/theme/helpers';
 
 export const Wrapper = styled.div``;
 
