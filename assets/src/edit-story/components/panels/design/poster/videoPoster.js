@@ -68,6 +68,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
           alt={__('Preview poster image', 'web-stories')}
           type={allowedImageMimeTypes}
           ariaLabel={__('Video poster', 'web-stories')}
+          imgProps={{ style: { objectFit: 'contain' } }}
           canReset
         />
       </Row>

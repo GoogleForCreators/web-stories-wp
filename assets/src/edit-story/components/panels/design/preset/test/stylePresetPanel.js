@@ -96,8 +96,8 @@ function setupPanel(extraStylePresets, extraStateProps) {
 }
 
 describe('Panels/Preset', () => {
-  const EDIT_BUTTON_LABEL = 'Edit style presets';
-  const APPLY_PRESET = 'Apply style preset';
+  const EDIT_BUTTON_LABEL = 'Edit styles';
+  const APPLY_PRESET = 'Apply style';
   const PANEL_LABEL = 'Saved styles';
   const TEST_COLOR = {
     color: {
@@ -163,7 +163,7 @@ describe('Panels/Preset', () => {
   describe('Panels/Preset/Header', () => {
     it('should display only Add button if no presets exist', () => {
       const { queryByLabelText } = setupPanel();
-      const addButton = queryByLabelText('Add style preset');
+      const addButton = queryByLabelText('Add style');
       expect(addButton).toBeInTheDocument();
 
       const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
@@ -196,7 +196,7 @@ describe('Panels/Preset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add style preset');
+      const addButton = queryByLabelText('Add style');
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);

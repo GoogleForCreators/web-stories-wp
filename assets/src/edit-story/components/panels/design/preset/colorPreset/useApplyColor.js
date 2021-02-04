@@ -21,16 +21,11 @@ import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import useRichTextFormatting from '../textStyle/useRichTextFormatting';
-import { useStory } from '../../../../app/story';
-import { usePresubmitHandler } from '../../../form';
-import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
-import { areAllType } from './utils';
+import useRichTextFormatting from '../../textStyle/useRichTextFormatting';
+import { useStory } from '../../../../../app/story';
+import { areAllType } from '../utils';
 
-function useApplyPreset({ isColor, pushUpdate }) {
-  // Update size and position if relevant values have changed.
-  usePresubmitHandler(getUpdatedSizeAndPosition, []);
-
+function useApplyColor({ pushUpdate }) {
   const {
     currentPage,
     selectedElementIds,
@@ -70,62 +65,34 @@ function useApplyPreset({ isColor, pushUpdate }) {
   );
 
   const {
-    handlers: {
-      handleSetColor,
-      handleSetLetterSpacing,
-      handleClickUnderline,
-      handleClickItalic,
-      handleSelectFontWeight,
-    },
+    handlers: { handleSetColor },
   } = useRichTextFormatting(selectedElements, push);
 
-  const handleApplyPreset = useCallback(
-    (preset) => {
+  const handleApplyColor = useCallback(
+    (color) => {
       if (isText) {
-        if (isColor) {
-          handleSetColor(preset);
-          return;
-        }
-        const {
-          color,
-          fontWeight,
-          isItalic,
-          isUnderline,
-          letterSpacing,
-          ...rest
-        } = preset;
-        extraPropsToAdd.current = rest;
         handleSetColor(color);
-        handleSetLetterSpacing(letterSpacing);
-        handleSelectFontWeight(fontWeight);
-        handleClickUnderline(isUnderline);
-        handleClickItalic(isItalic);
       } else if (isBackground) {
         updateCurrentPageProperties({
-          properties: { backgroundColor: preset },
+          properties: { backgroundColor: color },
         });
       } else {
         updateElementsById({
           elementIds: selectedElementIds,
-          properties: { backgroundColor: preset },
+          properties: { backgroundColor: color },
         });
       }
     },
     [
       isBackground,
-      isColor,
       updateCurrentPageProperties,
       isText,
       handleSetColor,
       selectedElementIds,
       updateElementsById,
-      handleSetLetterSpacing,
-      handleClickUnderline,
-      handleClickItalic,
-      handleSelectFontWeight,
     ]
   );
-  return handleApplyPreset;
+  return handleApplyColor;
 }
 
-export default useApplyPreset;
+export default useApplyColor;
