@@ -180,9 +180,10 @@ export function LeftRail() {
             {enabledPrimaryPaths.map(({ Icon, ...path }) => (
               <NavListItem key={path.value}>
                 <NavLink
-                  as="a"
                   active={path.value === state.currentPath}
                   href={resolveRoute(path.value)}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  isBold
                   aria-label={
                     path.value === state.currentPath
                       ? sprintf(
@@ -199,11 +200,7 @@ export function LeftRail() {
                   })}
                 >
                   {Icon && <Icon width="22px" />}
-                  <PathName
-                    as="span"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    isBold
-                  >
+                  <PathName as="span" isBold>
                     {path.label}
                   </PathName>
                 </NavLink>
@@ -217,9 +214,9 @@ export function LeftRail() {
           {SECONDARY_PATHS.map((path) => (
             <NavListItem key={path.value}>
               <NavLink
-                as="a"
                 active={path.value === state.currentPath}
                 href={resolveRoute(path.value)}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 aria-label={
                   path.value === state.currentPath
                     ? sprintf(

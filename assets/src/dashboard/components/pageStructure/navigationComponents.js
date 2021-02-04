@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Button, Headline, Text } from '../../../design-system';
+import { Button, Headline, Link, Text } from '../../../design-system';
 
 export const Content = styled.div`
   display: flex;
@@ -49,10 +49,6 @@ export const NewStoryButton = styled(Button)(
     border: 2px solid ${theme.colors.border.defaultActive};
     border-radius: ${theme.borders.radius.medium};
     transition: background-color 0.25s linear, color 0.25s linear;
-
-    :focus {
-      box-shadow: none;
-    }
 
     :hover {
       color: ${theme.colors.bg.primary};
@@ -83,21 +79,18 @@ const activeLinkCss = css`
   }
 `;
 
-export const NavLink = styled(Text)(
-  ({ active }) => css`
+export const NavLink = styled(Link)(
+  ({ active, theme }) => css`
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-areas: 'icon link link link link';
+    color: ${theme.colors.fg.secondary};
 
     * {
       transition: color 0.25s linear, stroke 0.25s linear;
     }
 
     ${active && activeLinkCss};
-
-    :focus {
-      box-shadow: none;
-    }
 
     :hover {
       ${activeLinkCss};
