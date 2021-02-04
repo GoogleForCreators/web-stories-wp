@@ -39,7 +39,7 @@ describe('useSearch()', function () {
   it('should return object from options containing selectedValue as active option', () => {
     const { result } = renderHook(() =>
       useSearch({
-        selectedValue: basicDropDownOptions[2].value,
+        selectedValue: basicDropDownOptions[2],
         options: basicDropDownOptions,
       })
     );
@@ -50,7 +50,7 @@ describe('useSearch()', function () {
   it('should return null for activeOption when selectedValue is empty', () => {
     const { result } = renderHook(() =>
       useSearch({
-        selectedValue: '',
+        selectedValue: {},
         options: basicDropDownOptions,
       })
     );
@@ -65,7 +65,7 @@ describe('useSearch()', function () {
 
   it('should return an empty array when no options are present', () => {
     const { result } = renderHook(() =>
-      useSearch({ selectedValue: null, options: [] })
+      useSearch({ selectedValue: {}, options: [] })
     );
 
     expect(result.current.normalizedOptions).toStrictEqual([]);
@@ -74,7 +74,7 @@ describe('useSearch()', function () {
   it('should return an empty array when only bad options are present', function () {
     const { result } = renderHook(() =>
       useSearch({
-        selectedValue: null,
+        selectedValue: {},
         options: [
           'things that are not good for a dropDown',
           1,
@@ -88,7 +88,7 @@ describe('useSearch()', function () {
 
   it('should return only sanitized options that meet requirements', function () {
     const { result } = renderHook(() =>
-      useSearch({ selectedValue: null, options: nestedDropDownOptions })
+      useSearch({ selectedValue: {}, options: nestedDropDownOptions })
     );
 
     expect(result.current.normalizedOptions).toStrictEqual([

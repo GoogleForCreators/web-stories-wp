@@ -68,7 +68,7 @@ describe('Search <Search />', () => {
         options={basicDropDownOptions}
         placeholder={'select a value'}
         ariaInputLabel={'my aria label'}
-        selectedValue={basicDropDownOptions[2].value}
+        selectedValue={basicDropDownOptions[2]}
       />
     );
 
@@ -102,14 +102,14 @@ describe('Search <Search />', () => {
         emptyText={'No options available'}
         options={basicDropDownOptions}
         ariaInputLabel={'label'}
-        selectedValue={'a'}
       />
     );
 
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
-
     fireEvent.click(input);
+
+    fireEvent.change(input, { target: { value: 'bruce' } });
 
     // wait for debounced callback to allow a select click handler to process
     jest.runOnlyPendingTimers();
@@ -125,7 +125,7 @@ describe('Search <Search />', () => {
         ariaInputLabel={'label'}
         isKeepMenuOpenOnSelection={false}
         options={basicDropDownOptions}
-        selectedValue={basicDropDownOptions[2].value}
+        selectedValue={basicDropDownOptions[2]}
       />
     );
 
@@ -170,7 +170,7 @@ describe('Search <Search />', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
       <Search
         options={basicDropDownOptions}
-        selectedValue={basicDropDownOptions[2].value}
+        selectedValue={basicDropDownOptions[2]}
         ariaInputLabel={'my label'}
         disabled={true}
       />
@@ -209,7 +209,10 @@ describe('Search <Search />', () => {
     jest.runOnlyPendingTimers();
 
     // first prop we get back is the event
-    expect(onClickMock).toHaveBeenCalledWith(expect.anything(), 'tapir');
+    expect(onClickMock).toHaveBeenCalledWith(expect.anything(), {
+      label: 'tapir',
+      value: 'tapir',
+    });
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
@@ -244,7 +247,7 @@ describe('Search <Search />', () => {
     // first prop we get back is the event
     expect(onClickMock).toHaveBeenCalledWith(
       expect.anything(),
-      basicDropDownOptions[2].value
+      basicDropDownOptions[2]
     );
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
