@@ -18,14 +18,12 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 import { StandardViewContentGutter } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
-import { KEYBOARD_USER_SELECTOR } from '../../../constants';
 import {
   Headline,
   Input,
@@ -33,7 +31,9 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
+  Button,
 } from '../../../../design-system';
+import { focusableOutlineCSS } from '../../../../design-system/theme/helpers';
 
 export const Wrapper = styled.div``;
 
@@ -112,7 +112,7 @@ export const CheckboxLabelText = styled(HelperText)`
 
 export const Error = styled(CenterMutedText)`
   padding-bottom: 10px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.danger};
+  color: ${({ theme }) => theme.colors.fg.negative};
 `;
 
 export const UploadedContainer = styled.div`
@@ -121,15 +121,12 @@ export const UploadedContainer = styled.div`
   grid-auto-rows: 56px;
   grid-column-gap: 12px;
   grid-row-gap: 20px;
-  padding-bottom: 24px;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
+  padding-bottom: 20px;
+  margin-bottom: 4px;
+  border: 1px solid transparent;
   border-width: 2px;
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: none;
-    border-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
-  }
+  ${({ theme }) => focusableOutlineCSS(theme.colors.border.focus)};
 `;
 
 export const GridItemContainer = styled.div`
@@ -152,19 +149,14 @@ export const GridItemContainer = styled.div`
 export const GridItemButton = styled.button`
   display: block;
   background-color: transparent;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
+  border: 1px solid transparent;
   width: 100%;
   height: 100%;
   border-radius: 4px;
   border-width: 2px;
   padding: 0;
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
-    border-width: 2px;
-    outline: none;
-  }
+  ${({ theme }) => focusableOutlineCSS(theme.colors.border.focus)};
 `;
 
 export const Logo = styled.img`
@@ -193,10 +185,10 @@ export const LogoMenuButton = styled.button`
   height: 24px;
   text-align: center;
   padding: 0;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray700};
+  color: ${({ theme }) => theme.colors.standard.white};
+  background: ${({ theme }) => theme.colors.fg.secondary};
   border-radius: 50%;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
+  border: 1px solid transparent;
   cursor: pointer;
 
   & > svg {
@@ -207,12 +199,11 @@ export const LogoMenuButton = styled.button`
     display: block;
   }
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
-    border-width: 2px;
-    outline: none;
-  }
+  ${({ theme }) => focusableOutlineCSS(theme.colors.border.focus)};
+`;
+
+export const SaveButton = styled(Button)`
+  height: 36px;
 `;
 
 export const InlineForm = styled.div`

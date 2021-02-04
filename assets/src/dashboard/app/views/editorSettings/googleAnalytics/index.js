@@ -34,6 +34,7 @@ import {
   FormContainer,
   InlineForm,
   InlineLink,
+  SaveButton,
   SettingForm,
   SettingHeading,
   SettingsTextInput,
@@ -42,7 +43,6 @@ import {
   VisuallyHiddenLabel,
 } from '../components';
 import {
-  Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
@@ -169,14 +169,14 @@ function GoogleAnalyticsSettings({
             hint={inputError}
             disabled={analyticsActive}
           />
-          <Button
+          <SaveButton
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
             disabled={disableSaveButton}
             onClick={handleOnSave}
           >
             {TEXT.SUBMIT_BUTTON}
-          </Button>
+          </SaveButton>
         </InlineForm>
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

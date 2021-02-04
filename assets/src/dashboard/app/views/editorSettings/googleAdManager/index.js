@@ -31,19 +31,16 @@ import { __, sprintf } from '@wordpress/i18n';
 import { validateAdManagerSlotIdFormat } from '../../../../utils';
 import {
   FormContainer,
-  SettingsTextInput,
   InlineForm,
+  SaveButton,
   SettingForm,
   SettingHeading,
+  SettingsTextInput,
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
 import { BUTTON_TYPES } from '../../../../constants';
-import {
-  Button,
-  BUTTON_SIZES,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
+import { BUTTON_SIZES, THEME_CONSTANTS } from '../../../../../design-system';
 
 export const TEXT = {
   SLOT_ID_CONTEXT: sprintf(
@@ -114,14 +111,14 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
             hasError={Boolean(slotIdInputError)}
             hint={slotIdInputError}
           />
-          <Button
+          <SaveButton
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
             disabled={disableSlotIdSaveButton}
             onClick={onSaveSlotId}
           >
             {TEXT.SUBMIT_BUTTON}
-          </Button>
+          </SaveButton>
         </InlineForm>
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

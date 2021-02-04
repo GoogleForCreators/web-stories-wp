@@ -17,18 +17,18 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const StandardViewContentGutter = styled.div(
-  ({ theme }) => `
-    margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
+  ({ theme }) => css`
+    margin: 0 52px;
 
     @media ${theme.breakpoint.mobile} {
-      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.largeDisplayPhone}px;
+      margin: 0 10px;
     }
 
     @media ${theme.breakpoint.min} {
-      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.smallDisplayPhone}px;
+      margin: 0 10px;
     }
   `
 );

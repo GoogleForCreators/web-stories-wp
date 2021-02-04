@@ -34,22 +34,19 @@ import {
 } from '../../../../utils';
 import {
   FormContainer,
-  SettingsTextInput,
   InlineForm,
   InlineLink,
+  SaveButton,
   SettingForm,
   SettingHeading,
+  SettingsTextInput,
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
 import { TranslateWithMarkup } from '../../../../../i18n';
 import { trackClick } from '../../../../../tracking';
 import { BUTTON_TYPES } from '../../../../constants';
-import {
-  Button,
-  BUTTON_SIZES,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
+import { BUTTON_SIZES, THEME_CONSTANTS } from '../../../../../design-system';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(
@@ -193,7 +190,7 @@ function GoogleAdSenseSettings({
               hasError={Boolean(publisherIdInputError)}
               hint={publisherIdInputError}
             />
-            <Button
+            <SaveButton
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
               disabled={disablePublisherIdSaveButton}
@@ -201,7 +198,7 @@ function GoogleAdSenseSettings({
               data-testid="adSensePublisherIdButton"
             >
               {TEXT.SUBMIT_BUTTON}
-            </Button>
+            </SaveButton>
           </InlineForm>
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -244,7 +241,7 @@ function GoogleAdSenseSettings({
               hasError={Boolean(slotIdInputError)}
               hint={slotIdInputError}
             />
-            <Button
+            <SaveButton
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
               disabled={disableSlotIdSaveButton}
@@ -252,7 +249,7 @@ function GoogleAdSenseSettings({
               data-testid="adSenseSlotIdButton"
             >
               {TEXT.SUBMIT_BUTTON}
-            </Button>
+            </SaveButton>
           </InlineForm>
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
