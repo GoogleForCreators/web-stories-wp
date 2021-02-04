@@ -46,7 +46,18 @@ function loadTrackingScript(sendPageView = true) {
     // TODO: provide custom pageview-related parameters?
     // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
     gtag('config', config.trackingId, {
+      app_version: config.appVersion,
       anonymize_ip: true,
+      app_name: config.appName,
+      send_page_view: sendPageView,
+      // Setting the transport method to 'beacon' lets the hit be sent
+      // using 'navigator.sendBeacon' in browsers that support it.
+      transport_type: 'beacon',
+    });
+
+    // Support GA4 in parallel.
+    // At some point, only this will remain.
+    gtag('config', config.trackingIdGA4, {
       app_name: config.appName,
       send_page_view: sendPageView,
       // Setting the transport method to 'beacon' lets the hit be sent

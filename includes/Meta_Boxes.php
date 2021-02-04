@@ -37,7 +37,7 @@ class Meta_Boxes {
 	 *
 	 * @var string[]
 	 */
-	const LOCATIONS = [ 'normal', 'advanced' ];
+	const LOCATIONS = [ 'normal', 'advanced', 'side' ];
 
 	/**
 	 * Meta box priorities.
@@ -151,14 +151,23 @@ class Meta_Boxes {
 			return [];
 		}
 
-		/* This filter is documented in wp-admin/includes/post.php */
-		$_wp_meta_boxes = apply_filters( 'filter_block_editor_meta_boxes', $wp_meta_boxes );
+		/**
+		 * Filters meta box data before making it available to the editor.
+		 *
+		 * This allows for the modifications of meta boxes that are already
+		 * present by this point. Do not use as a means of adding meta box data.
+		 *
+		 * @since 1.3.0
+		 *
+		 * @param array $wp_meta_boxes Global meta box state.
+		 */
+		$_wp_meta_boxes = apply_filters( 'web_stories_editor_meta_boxes', $wp_meta_boxes );
 
 		$meta_boxes_per_location = [];
 		foreach ( self::LOCATIONS as $context ) {
 			$meta_boxes_per_location[ $context ] = [];
 
-			if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ] ) ) {
+			if ( ! isset( $_wp_meta_boxes[ $screen->id ][ $context ] ) ) {
 				continue;
 			}
 

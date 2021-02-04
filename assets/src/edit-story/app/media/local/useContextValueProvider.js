@@ -26,6 +26,7 @@ import { useAPI, useConfig } from '../..';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
+import { getTimeTracker } from '../../../../tracking';
 
 /**
  * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext
@@ -74,6 +75,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       callback
     ) => {
       fetchMediaStart({ pageToken: p });
+      const trackTiming = getTimeTracker('load', 'editor', 'Media');
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
@@ -95,7 +97,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
             totalItems,
           });
         })
-        .catch(fetchMediaError);
+        .catch(fetchMediaError)
+        .finally(() => {
+          trackTiming();
+        });
     },
     [fetchMediaError, fetchMediaStart, getMedia]
   );

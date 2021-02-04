@@ -93,7 +93,7 @@ describe('Element transform', () => {
         const elementBefore = await getSelectedElement();
         expect(elementBefore.rotationAngle).toEqual(0);
         await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-          moveRel(rotationHandle, 1, 1),
+          moveRel(rotationHandle, 3, 5),
           down(),
           moveBy(10, 0, { steps: 1 }),
           up(),

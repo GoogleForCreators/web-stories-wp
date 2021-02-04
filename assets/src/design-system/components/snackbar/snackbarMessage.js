@@ -28,6 +28,7 @@ import styled, { keyframes } from 'styled-components';
 import { THEME_CONSTANTS } from '../../theme';
 import { Button } from '../button';
 import { Text } from '../typography';
+import { focusableOutlineCSS } from '../../theme/helpers';
 import {
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
@@ -74,7 +75,12 @@ const ActionButton = styled(Button)`
   text-decoration: underline;
   color: ${({ theme }) => theme.colors.inverted.fg.linkNormal};
 
-  &:focus,
+  ${({ theme }) =>
+    focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.inverted.bg.primary
+    )}
+
   &:hover,
   &:active {
     color: ${({ theme }) => theme.colors.inverted.fg.linkHover};

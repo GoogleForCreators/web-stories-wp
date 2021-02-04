@@ -177,6 +177,7 @@ class Story_Post_Type {
 				],
 				'public'                => true,
 				'has_archive'           => true,
+				'exclude_from_search'   => true,
 				'show_ui'               => true,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Controller::class,
@@ -517,12 +518,6 @@ class Story_Post_Type {
 			$max_upload_size = 0;
 		}
 
-		$preview_query_args = [
-			'preview_id'    => $story_id,
-			// Leveraging the default WP post preview logic.
-			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
-		];
-
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$settings = [
@@ -535,7 +530,6 @@ class Story_Post_Type {
 				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
 				'storyId'          => $story_id,
-				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 				'assetsURL'        => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'           => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'        => $max_upload_size,
@@ -547,6 +541,7 @@ class Story_Post_Type {
 				],
 				'api'              => [
 					'users'       => '/web-stories/v1/users/',
+					'currentUser' => '/web-stories/v1/users/me/',
 					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
 					'media'       => '/web-stories/v1/media/',
 					'link'        => '/web-stories/v1/link/',
@@ -559,6 +554,7 @@ class Story_Post_Type {
 				'version'          => WEBSTORIES_VERSION,
 				'encodeMarkup'     => $this->decoder->supports_decoding(),
 				'metaBoxes'        => $this->meta_boxes->get_meta_boxes_per_location(),
+				'ffmpegCoreUrl'    => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

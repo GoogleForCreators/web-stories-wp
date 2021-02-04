@@ -29,7 +29,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     const testMissingCover = metadataGuidelines.storyCoverAttached(testStory);
     expect(testMissingCover).not.toBeUndefined();
     expect(testMissingCover.message).toMatchInlineSnapshot(
-      `"Missing story cover image"`
+      `"Add story cover image"`
     );
     expect(testMissingCover.storyId).toStrictEqual(testStory.id);
   });
@@ -54,12 +54,8 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testHappy).toBeUndefined();
     expect(testEmptyString).not.toBeUndefined();
     expect(testUndefined).not.toBeUndefined();
-    expect(testUndefined.message).toMatchInlineSnapshot(
-      `"Missing story title"`
-    );
-    expect(testEmptyString.message).toMatchInlineSnapshot(
-      `"Missing story title"`
-    );
+    expect(testUndefined.message).toMatchInlineSnapshot(`"Add story title"`);
+    expect(testEmptyString.message).toMatchInlineSnapshot(`"Add story title"`);
     expect(testUndefined.storyId).toStrictEqual(testUndefinedTitleStory.id);
     expect(testEmptyString.storyId).toStrictEqual(testEmptyStringStory.id);
   });
@@ -109,7 +105,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testNoAttachment).toBeUndefined();
     expect(testLinkInPageAttachment).not.toBeUndefined();
     expect(testLinkInPageAttachment.message).toMatchInlineSnapshot(
-      `"Link conflict with page attachment"`
+      `"Turn off Page Attachment or remove conflicting links"`
     );
     expect(testLinkInPageAttachment.pages).toHaveLength(1);
     expect(testLinkInPageAttachment.pages[0]).toStrictEqual(
@@ -156,7 +152,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth).not.toBeUndefined();
     expect(testWidth.storyId).toStrictEqual(testWidthStory.id);
     expect(test).not.toBeUndefined();
-    expect(test.message).toMatchInlineSnapshot(`"Publisher logo is too small"`);
+    expect(test.message).toMatchInlineSnapshot(`"Upload a bigger logo"`);
     expect(test.storyId).toStrictEqual(testStory.id);
   });
 
@@ -200,7 +196,9 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth).not.toBeUndefined();
     expect(testWidth.storyId).toStrictEqual(testWidthStory.id);
     expect(test).not.toBeUndefined();
-    expect(test.message).toMatchInlineSnapshot(`"Story cover image too small"`);
+    expect(test.message).toMatchInlineSnapshot(
+      `"Choose a bigger image for your story cover"`
+    );
     expect(test.storyId).toStrictEqual(testStory.id);
   });
 
@@ -221,7 +219,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testHappy).toBeUndefined();
     expect(test).not.toBeUndefined();
     expect(test.message).toMatchInlineSnapshot(
-      `"Story cover image wrong aspect ratio"`
+      `"Choose an image with the correct aspect ratio"`
     );
     expect(test.storyId).toStrictEqual(testStory.id);
   });

@@ -17,77 +17,59 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
-import { Panel } from '../../panel';
+import { Panel, PanelContent } from '../../panel';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
-import Presets from './presets';
 import Resize from './resize';
-import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
+import ColorPresetPanel from './colorPreset/colorPresetPanel';
+import useDeletePreset from './useDeletePreset';
+import StyleGroup from './stylePreset/styleGroup';
+import useApplyColor from './colorPreset/useApplyColor';
+import useApplyStyle from './stylePreset/useApplyStyle';
 
-function PresetPanel({
-  presetType = 'color',
-  title,
-  itemRenderer,
-  pushUpdate,
-}) {
+function PresetPanel({ presetType, title, pushUpdate }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
-  const { selectedElements, stylePresets, updateStory } = useStory(
+  const { currentStoryStyles, selectedElements, globalStoryStyles } = useStory(
     ({
       state: {
         selectedElements,
-        story: { stylePresets },
+        story: { globalStoryStyles, currentStoryStyles },
       },
-      actions: { updateStory },
     }) => {
       return {
+        currentStoryStyles,
         selectedElements,
-        stylePresets,
-        updateStory,
+        globalStoryStyles,
       };
     }
   );
 
-  const { colors, textStyles } = stylePresets;
-  const presets = isColor ? colors : textStyles;
-  const hasPresets = presets.length > 0;
+  const { colors, textStyles } = globalStoryStyles;
+  const globalPresets = isColor ? colors : textStyles;
+  const { colors: localColors } = currentStoryStyles;
+  const hasLocalPresets = localColors.length > 0;
+  // If there are any global presets or local colors in case of color.
+  const hasPresets = globalPresets.length > 0 || (isColor && hasLocalPresets);
 
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const isText = areAllType('text', selectedElements);
-  const isShape = areAllType('shape', selectedElements);
-
-  const handleApplyPreset = useApplyPreset(isColor, pushUpdate);
-  const handleAddPreset = useAddPreset(presetType);
-
-  const handleDeletePreset = useCallback(
-    (toDelete) => {
-      const updatedStyles = isColor
-        ? colors.filter((color) => color !== toDelete)
-        : textStyles.filter((style) => style !== toDelete);
-      updateStory({
-        properties: {
-          stylePresets: {
-            textStyles: isColor ? textStyles : updatedStyles,
-            colors: isColor ? updatedStyles : colors,
-          },
-        },
-      });
-      // If no styles left, exit edit mode.
-      if (updatedStyles.length === 0) {
-        setIsEditMode(false);
-      }
-    },
-    [colors, isColor, textStyles, updateStory]
-  );
+  const handleApplyColor = useApplyColor({ pushUpdate });
+  const handleApplyStyle = useApplyStyle({ pushUpdate });
+  const handleApplyPreset = isColor ? handleApplyColor : handleApplyStyle;
+  const { addGlobalPreset } = useAddPreset({ presetType });
+  const { deleteLocalPreset, deleteGlobalPreset } = useDeletePreset({
+    presetType,
+    setIsEditMode,
+  });
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
@@ -96,14 +78,24 @@ function PresetPanel({
     }
   }, [hasPresets, isEditMode]);
 
+  if (!isStyle && !isColor) {
+    return null;
+  }
+
+  const isText = areAllType('text', selectedElements);
+  const isShape = areAllType('shape', selectedElements);
   // Text and shape presets are not compatible.
   if (!isText && !isShape && selectedElements.length > 1) {
     return null;
   }
 
-  const handlePresetClick = (preset) => {
+  const handlePresetClick = (preset, isLocal = false) => {
     if (isEditMode) {
-      handleDeletePreset(preset);
+      if (isLocal) {
+        deleteLocalPreset(preset);
+      } else {
+        deleteGlobalPreset(preset);
+      }
     } else {
       handleApplyPreset(preset);
     }
@@ -111,43 +103,44 @@ function PresetPanel({
 
   const resizeable = hasPresets;
   const canCollapse = !isEditMode && (hasPresets || isColor);
-
-  if (!isStyle && !isColor) {
-    return null;
-  }
-
   return (
     <Panel
       name={`stylepreset-${presetType}`}
-      initialHeight={getPanelInitialHeight(isColor, presets)}
+      initialHeight={getPanelInitialHeight(isColor, globalPresets)}
       resizeable={resizeable}
       canCollapse={canCollapse}
     >
       <PresetsHeader
-        handleAddPreset={handleAddPreset}
-        presets={presets}
+        handleAddPreset={addGlobalPreset}
+        hasPresets={hasPresets}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
         canCollapse={canCollapse}
         title={title}
         presetType={presetType}
       />
-      <Presets
-        isEditMode={isEditMode}
-        presets={presets}
-        handleOnClick={handlePresetClick}
-        handleAddPreset={handleAddPreset}
-        itemRenderer={itemRenderer}
-        type={presetType}
-      />
+      <PanelContent isPrimary padding={!hasPresets && '0'}>
+        {isColor && (
+          <ColorPresetPanel
+            isEditMode={isEditMode}
+            handlePresetClick={handlePresetClick}
+          />
+        )}
+        {isStyle && (
+          <StyleGroup
+            styles={globalPresets}
+            isEditMode={isEditMode}
+            handleClick={handlePresetClick}
+          />
+        )}
+      </PanelContent>
       {resizeable && <Resize position="bottom" />}
     </Panel>
   );
 }
 
 PresetPanel.propTypes = {
-  presetType: PropTypes.string,
-  itemRenderer: PropTypes.func.isRequired,
+  presetType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };

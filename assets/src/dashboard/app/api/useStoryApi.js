@@ -102,11 +102,33 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           response.headers &&
           JSON.parse(response.headers['X-WP-TotalByStatus']);
 
+        // Hardening in case data returned by the server is malformed.
+        // For example, story_data could be missing/empty.
+        const cleanStories = response.body.filter((story) =>
+          Array.isArray(story?.story_data?.pages)
+        );
+
+        if (
+          cleanStories.length === 0 &&
+          cleanStories.length !== response.body.length
+        ) {
+          dispatch({
+            type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
+            payload: {
+              message: {
+                body: ERRORS.LOAD_STORIES.INCOMPLETE_DATA_MESSAGE,
+                title: ERRORS.LOAD_STORIES.TITLE,
+              },
+            },
+          });
+          return;
+        }
+
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
             editStoryURL,
-            stories: response.body,
+            stories: cleanStories,
             totalPages,
             totalStoriesByStatus: {
               ...totalStoriesByStatus,

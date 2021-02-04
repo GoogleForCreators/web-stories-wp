@@ -53,4 +53,17 @@ describe('Layer Panel', () => {
 
     await fixture.snapshot();
   });
+
+  it('should allow changing the layer panel height via slider', async () => {
+    expect(layerPanel.resizeHandle).toBeTruthy();
+    const section = layerPanel.resizeHandle.closest('section');
+    const initialHeight = section.clientHeight;
+    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+      moveRel(layerPanel.resizeHandle, 3, 3),
+      down(),
+      moveBy(0, -30, { steps: 6 }),
+      up(),
+    ]);
+    expect(section.clientHeight).toBe(initialHeight + 30);
+  });
 });

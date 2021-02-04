@@ -164,7 +164,7 @@ export class DesignPanel extends Container {
   }
 
   get layerPanel() {
-    // The whole panel is aria-hidden now for accessibiility reasons
+    // The whole panel is aria-hidden now for accessibility reasons
     // thus it cannot be accessed by role:
     return this._get(
       getByLabelText(this._node, 'Layers'),

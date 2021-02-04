@@ -227,7 +227,6 @@ class HTML extends WP_UnitTestCase {
 
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 * @covers ::remove_amp_attr
 	 */
 	public function test_add_poster_images_no_poster_no_amp() {
 		$post = self::factory()->post->create_and_get(
@@ -342,7 +341,7 @@ class HTML extends WP_UnitTestCase {
 	 */
 	public function test_print_bookend() {
 		$source   = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
-		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-bookend layout="nodisplay"><script type="application/json">{"bookendVersion":"v1.0","shareProviders":[{"provider":"facebook"},{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-bookend></amp-story></body></html>';
+		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-bookend layout="nodisplay"><script type="application/json">{"bookendVersion":"v1.0","shareProviders":[{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-bookend></amp-story></body></html>';
 
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
@@ -365,7 +364,7 @@ class HTML extends WP_UnitTestCase {
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
 		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
-		
+
 		$this->assertNotContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $source, $actual );
 
