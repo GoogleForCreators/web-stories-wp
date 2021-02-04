@@ -219,7 +219,9 @@ export const Search = ({
       } else if (key === 'ArrowDown') {
         focusSentToList();
       } else if (key === 'Enter') {
-        handleMenuItemClick(event, inputValue.value);
+        if (inputValue.value.trim().length > 0) {
+          handleMenuItemClick(event, inputValue.value);
+        }
       }
     },
     [
