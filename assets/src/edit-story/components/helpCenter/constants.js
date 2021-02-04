@@ -103,5 +103,12 @@ export const DONE_TIP_ENTRY = [
 
 export const GUTTER_WIDTH = 24;
 
+export const TRANSITION_DURATION = 500;
+
+export const Z_INDEX = {
+  MENU: 1,
+  QUICK_TIP: 2,
+};
+
 // @TODO make this dynamic based off of unread tips.
 export const NAVIGATION_FLOW = [...Object.keys(TIPS), DONE_TIP_ENTRY[0]];

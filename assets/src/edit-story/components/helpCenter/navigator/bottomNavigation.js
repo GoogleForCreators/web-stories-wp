@@ -27,12 +27,13 @@ import { __ } from '@wordpress/i18n';
  */
 import { BEZIER } from '../../../../animation';
 import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
+import { TRANSITION_DURATION } from '../constants';
 import { NavBar, NavButton } from './components';
 
 const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
-  transition: transform 600ms ${BEZIER.default};
+  transition: transform ${TRANSITION_DURATION}ms ${BEZIER.default};
   ${({ isHidden }) =>
     isHidden &&
     css`
@@ -92,9 +93,9 @@ export function BottomNavigation({
 }
 
 BottomNavigation.propTypes = {
-  onNext: PropTypes.func.required,
-  onPrev: PropTypes.func.required,
-  onAllTips: PropTypes.func.required,
+  onNext: PropTypes.func.isRequired,
+  onPrev: PropTypes.func.isRequired,
+  onAllTips: PropTypes.func.isRequired,
   hasBottomNavigation: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
   isPrevDisabled: PropTypes.bool,

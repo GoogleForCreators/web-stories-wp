@@ -58,8 +58,8 @@ export function Popup({ isOpen, popupId, children }) {
     <ScheduledTransition
       in={isOpen}
       timeout={DURATION}
-      mountOnEnter={true}
-      unmountOnExit={true}
+      mountOnEnter
+      unmountOnExit
     >
       {(state) => (
         <Controller id={popupId} aria-expanded="true" state={state}>

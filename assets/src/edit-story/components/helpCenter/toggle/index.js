@@ -71,6 +71,12 @@ const HelpIcon = styled(Icons.Help)`
 const ChevronIcon = styled(Icons.Chevron)`
   display: block;
   height: auto;
+  width: 100%;
+`;
+
+const Icon = styled.div`
+  display: block;
+  height: auto;
   width: 11px;
   transform-origin: 50% 50%;
   transform: rotate(${({ isOpen }) => (isOpen ? 360 : 180)}deg);
@@ -131,7 +137,9 @@ function Toggle({
           <NotificationBubble notificationCount={notificationCount} />
         </NotificationWrapper>
       )}
-      <ChevronIcon hasNotifications={hasNotifications} isOpen={isOpen} />
+      <Icon hasNotifications={hasNotifications} isOpen={isOpen}>
+        <ChevronIcon />
+      </Icon>
     </Button>
   );
 }

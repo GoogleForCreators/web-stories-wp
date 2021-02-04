@@ -23,9 +23,10 @@ import styled, { css } from 'styled-components';
  */
 import { BEZIER } from '../../../../animation';
 import { ScheduledTransition } from '../scheduledTransition';
+import { TRANSITION_DURATION, Z_INDEX } from '../constants';
 
-const DURATION = 520;
 const DELAY = 80;
+const DURATION = TRANSITION_DURATION - DELAY;
 
 const Opacity = styled.div``;
 
@@ -67,7 +68,7 @@ const Manager = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   transition: transform ${DURATION}ms ${BEZIER.default};
   transform-origin: 50% 50%;
-  z-index: 2;
+  z-index: ${Z_INDEX.QUICK_TIP};
   ${({ isLeftToRightTransition }) =>
     isLeftToRightTransition
       ? css`

@@ -23,14 +23,15 @@ import styled, { css } from 'styled-components';
  */
 import { BEZIER } from '../../../../animation';
 import { ScheduledTransition } from '../scheduledTransition';
+import { TRANSITION_DURATION, Z_INDEX } from '../constants';
 
-const DURATION = 800;
+const DURATION = 1.2 * TRANSITION_DURATION;
 
-const enterSyles = css`
+const enterStyles = css`
   opacity: 1;
   transform: none;
 `;
-const exitSyles = css`
+const exitStyles = css`
   position: absolute;
   bottom: 0;
   opacity: 0.6;
@@ -38,10 +39,10 @@ const exitSyles = css`
 `;
 
 const transitionStyles = {
-  entering: enterSyles,
-  entered: enterSyles,
-  exiting: exitSyles,
-  exited: exitSyles,
+  entering: enterStyles,
+  entered: enterStyles,
+  exiting: exitStyles,
+  exited: exitStyles,
 };
 
 const Manager = styled.div`
@@ -52,7 +53,7 @@ const Manager = styled.div`
   transform: scale(0.96);
   transition: transform ${DURATION}ms ${BEZIER.default},
     opacity ${DURATION}ms ${BEZIER.default};
-  z-index: 1;
+  z-index: ${Z_INDEX.MENU};
 
   ${({ state }) => transitionStyles[state]};
 `;
