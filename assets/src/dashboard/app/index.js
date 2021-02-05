@@ -25,6 +25,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { trackScreenView } from '../../tracking';
 import {
   theme as externalDesignSystemTheme,
   lightMode,
@@ -38,7 +39,6 @@ import {
   ROUTE_TITLES,
   ADMIN_TITLE,
 } from '../constants';
-
 import {
   AppFrame,
   LeftRail,
@@ -72,6 +72,8 @@ const AppContent = () => {
       dynamicPageTitle,
       ADMIN_TITLE
     );
+
+    trackScreenView(dynamicPageTitle);
   }, [currentPath]);
 
   const hideLeftRail =

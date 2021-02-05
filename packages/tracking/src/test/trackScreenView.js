@@ -41,18 +41,18 @@ describe('trackScreenView', () => {
       eventData.event_callback();
     });
 
-    await trackScreenView('/my-awesome-screen');
+    await trackScreenView('Explore Templates');
     expect(gtag).toHaveBeenCalledWith('event', 'screen_view', {
       app_name: 'Foo App',
       event_callback: expect.any(Function),
-      screen_name: '/my-awesome-screen',
+      screen_name: 'Explore Templates',
     });
   });
 
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
 
-    await trackScreenView('/my-awesome-screen');
+    await trackScreenView('Explore Templates');
     expect(gtag).not.toHaveBeenCalled();
   });
 });

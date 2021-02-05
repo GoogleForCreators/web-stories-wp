@@ -19,7 +19,7 @@
  */
 import { useRef, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { parse, stringify } from 'query-string';
+import { parse } from 'query-string';
 import { createHashHistory } from 'history';
 import { trackScreenView } from '@web-stories-wp/tracking';
 
@@ -45,15 +45,6 @@ function RouterProvider({ children, ...props }) {
       setCurrentPath(location.pathname);
     });
   }, []);
-
-  const currentScreen = useMemo(() => {
-    const query = stringify(queryParams);
-    return currentPath + (query ? `?${query}` : '');
-  }, [currentPath, queryParams]);
-
-  useEffect(() => {
-    trackScreenView(currentScreen);
-  }, [currentScreen]);
 
   // Sync up WP navigation bar with our hash location.
   useEffect(() => {

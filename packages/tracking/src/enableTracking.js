@@ -42,6 +42,12 @@ function loadTrackingScript(sendPageView = true) {
     script.addEventListener('error', reject);
     document.head.appendChild(script);
 
+    // This way we'll get "Editor" and "Dashboard" instead of "Edit Story ‹ Web Stories Dev — WordPress".
+    const pageTitle = config.appName;
+    // 'Plugin Activation' -> '/plugin-activation'
+    // This way we get nicer looking paths like '/editor' instead of 'wp-admin/post-new.php?post_type=web-story'.
+    const pagePath = '/'.config.appName.replace(/ /g, '-').toLowerCase();
+
     gtag('js', new Date());
     // TODO: provide custom pageview-related parameters?
     // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
@@ -53,6 +59,8 @@ function loadTrackingScript(sendPageView = true) {
       // Setting the transport method to 'beacon' lets the hit be sent
       // using 'navigator.sendBeacon' in browsers that support it.
       transport_type: 'beacon',
+      page_title: pageTitle,
+      page_path: pagePath,
     });
 
     // Support GA4 in parallel.
@@ -63,16 +71,9 @@ function loadTrackingScript(sendPageView = true) {
       // Setting the transport method to 'beacon' lets the hit be sent
       // using 'navigator.sendBeacon' in browsers that support it.
       transport_type: 'beacon',
+      page_title: pageTitle,
+      page_path: pagePath,
     });
-
-    // Clean up location param.
-    const url = new URL(window.location.href);
-    url.searchParams.delete('paged');
-    url.searchParams.delete('plugin_status');
-    url.searchParams.delete('post');
-    url.searchParams.delete('s');
-
-    gtag('set', 'location', url.toString());
   });
 }
 

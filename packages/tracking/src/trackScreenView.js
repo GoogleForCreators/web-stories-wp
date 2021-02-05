@@ -28,7 +28,7 @@ import isTrackingEnabled from './isTrackingEnabled';
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/screens
  *
- * @param {string} screenName Screen name.
+ * @param {string} screenName Screen name. Example: 'Explore Templates'.
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
