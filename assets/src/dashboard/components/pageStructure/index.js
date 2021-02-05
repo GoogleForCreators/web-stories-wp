@@ -22,7 +22,7 @@ import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
