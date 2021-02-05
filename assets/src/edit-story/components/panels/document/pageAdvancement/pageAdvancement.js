@@ -22,7 +22,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
 import { __, _x } from '@web-stories-wp/i18n';
 
