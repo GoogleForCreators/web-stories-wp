@@ -30,7 +30,6 @@ import { TransformProvider } from '../transform';
 import { UnitsProvider } from '../../units';
 import DisplayElement from '../canvas/displayElement';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import ZoomPreview from './zoomPreview';
 
 const Page = styled.button`
   display: block;
@@ -78,7 +77,7 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function CarouselPagePreview({ page, isCurrentPage, ...props }) {
+function CarouselPagePreview({ page, ...props }) {
   const { backgroundColor } = page;
   const { width, height } = props;
 
@@ -96,7 +95,6 @@ function CarouselPagePreview({ page, isCurrentPage, ...props }) {
               />
             ))}
           </PreviewWrapper>
-          {isCurrentPage && <ZoomPreview />}
         </Page>
       </TransformProvider>
     </UnitsProvider>
@@ -108,7 +106,6 @@ CarouselPagePreview.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,
-  isCurrentPage: PropTypes.bool,
   isActive: PropTypes.bool,
   tabIndex: PropTypes.number,
 };
