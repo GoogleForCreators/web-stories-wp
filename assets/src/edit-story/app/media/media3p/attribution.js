@@ -17,10 +17,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * External dependencies
- */
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';

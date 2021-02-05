@@ -22,7 +22,6 @@ import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { CSSTransition } from 'react-transition-group';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

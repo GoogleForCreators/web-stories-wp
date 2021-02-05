@@ -20,7 +20,6 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

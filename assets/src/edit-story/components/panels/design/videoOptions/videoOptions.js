@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

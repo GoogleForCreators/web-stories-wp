@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useState, useCallback } from 'react';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

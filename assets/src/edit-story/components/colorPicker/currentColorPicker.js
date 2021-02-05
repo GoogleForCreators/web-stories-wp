@@ -23,7 +23,6 @@ import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { useFeatures } from 'flagged';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

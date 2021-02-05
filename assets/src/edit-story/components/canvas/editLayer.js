@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { memo, useEffect, useRef } from 'react';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

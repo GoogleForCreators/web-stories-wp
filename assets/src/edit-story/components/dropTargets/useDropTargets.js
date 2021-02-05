@@ -15,10 +15,6 @@
  */
 
 /**
- 
- * Internal dependencies
- */
-/**
  * Internal dependencies
  */
 import { identity, useContextSelector } from '../../../design-system';

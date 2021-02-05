@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { memo, useCallback, useEffect, useMemo } from 'react';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

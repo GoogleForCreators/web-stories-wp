@@ -19,7 +19,6 @@
  */
 import styled, { css } from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

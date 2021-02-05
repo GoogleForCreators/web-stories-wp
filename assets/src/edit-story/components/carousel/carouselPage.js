@@ -19,10 +19,6 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * External dependencies
- */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**

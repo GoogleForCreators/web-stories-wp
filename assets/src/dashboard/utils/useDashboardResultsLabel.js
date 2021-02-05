@@ -18,10 +18,6 @@
  * External dependencies
  */
 import { sprintf, _n } from '@web-stories-wp/i18n';
-
-/**
- * External dependencies
- */
 import { useMemo } from 'react';
 
 /**

@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect } from 'react';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

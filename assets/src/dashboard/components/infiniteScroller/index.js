@@ -18,9 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-/**
- * External dependencies
- */
 import { useEffect, useRef, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';

@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

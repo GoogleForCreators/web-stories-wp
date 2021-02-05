@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useCallback } from 'react';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

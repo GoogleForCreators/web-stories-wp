@@ -20,7 +20,6 @@
 import { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

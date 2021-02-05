@@ -20,10 +20,6 @@
 import styled from 'styled-components';
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
-
-/**
- * External dependencies
- */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**

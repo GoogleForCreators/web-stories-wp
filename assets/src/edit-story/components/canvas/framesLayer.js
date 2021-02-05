@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import { memo, useRef } from 'react';
 import { rgba } from 'polished';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

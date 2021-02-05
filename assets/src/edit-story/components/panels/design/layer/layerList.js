@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import { Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

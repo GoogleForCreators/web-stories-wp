@@ -22,7 +22,6 @@ import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

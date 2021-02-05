@@ -18,10 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * External dependencies
- */
 import { useCallback, useState } from 'react';
 import { useFeatures } from 'flagged';
 

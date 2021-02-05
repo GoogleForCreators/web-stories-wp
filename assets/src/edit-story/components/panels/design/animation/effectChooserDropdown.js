@@ -21,7 +21,6 @@ import React, { useCallback, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**

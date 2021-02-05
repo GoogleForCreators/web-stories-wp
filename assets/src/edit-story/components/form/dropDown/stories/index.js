@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**
