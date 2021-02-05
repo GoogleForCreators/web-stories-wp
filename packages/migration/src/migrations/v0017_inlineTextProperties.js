@@ -128,8 +128,6 @@ function addInlineLetterSpacing(content, letterSpacing) {
   return wrapWithSpan(content, `letter-spacing: ${letterSpacing / 100}em`);
 }
 
-/* eslint-disable security/detect-non-literal-regexp */
-
 function stripTag(html, tag) {
   // This is a very naive strip. Can only remove non-self-closing tags with attributes, which is sufficient here
   return html.replace(new RegExp(`</?${tag}>`, 'gi'), '');
@@ -141,8 +139,6 @@ function replaceTagWithSpan(html, tag, style) {
     .replace(new RegExp(`<${tag}>`, 'gi'), `<span style="${style}">`)
     .replace(new RegExp(`</${tag}>`, 'gi'), '</span>');
 }
-
-/* eslint-enable security/detect-non-literal-regexp */
 
 function wrapWithSpan(html, style) {
   return `<span style="${style}">${html}</span>`;
