@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -87,7 +87,9 @@ describe('Search <Search />', () => {
 
     const input = container.getByPlaceholderText('select a value');
 
-    fireEvent.change(input, { target: { value: 'bruce wayne' } });
+    act(() => {
+      fireEvent.change(input, { target: { value: 'bruce wayne' } });
+    });
 
     await waitFor(() => {
       expect(container.getByDisplayValue('bruce wayne')).toBeInTheDocument();
@@ -107,12 +109,13 @@ describe('Search <Search />', () => {
 
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
-    fireEvent.click(input);
+    act(() => {
+      fireEvent.click(input);
+      fireEvent.change(input, { target: { value: 'bruce' } });
 
-    fireEvent.change(input, { target: { value: 'bruce' } });
-
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+    });
 
     const menu = getByRole('listbox');
     expect(menu).toBeInTheDocument();
@@ -131,10 +134,13 @@ describe('Search <Search />', () => {
 
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
-    fireEvent.click(input);
 
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
+    act(() => {
+      fireEvent.click(input);
+
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+    });
 
     const activeMenuItem = getByRole('option', {
       name: `Selected ${basicDropDownOptions[2].label}`,
@@ -155,10 +161,12 @@ describe('Search <Search />', () => {
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
 
-    fireEvent.click(input);
+    act(() => {
+      fireEvent.click(input);
 
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+    });
 
     const menu = queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
@@ -177,10 +185,12 @@ describe('Search <Search />', () => {
     const input = getByRole('combobox');
     expect(input).toBeInTheDocument();
 
-    fireEvent.click(input);
+    act(() => {
+      fireEvent.click(input);
 
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+    });
 
     const menu = queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
@@ -199,12 +209,15 @@ describe('Search <Search />', () => {
 
     // Fire click event
     const input = getByRole('combobox');
-    fireEvent.focus(input);
-    fireEvent.change(input, { target: { value: 'tapir' } });
-    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
+    act(() => {
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: 'tapir' } });
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+    });
+    act(() => {
+      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+    });
 
     // first prop we get back is the event
     expect(onClickMock).toHaveBeenCalledWith(expect.anything(), {
@@ -228,11 +241,14 @@ describe('Search <Search />', () => {
 
     // Fire click event
     const input = getByRole('combobox');
-    fireEvent.focus(input);
-    fireEvent.change(input, { target: { value: 'capybara' } });
 
-    // wait for debounced callback to allow a select click handler to process
-    jest.runOnlyPendingTimers();
+    act(() => {
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: 'capybara' } });
+
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+    });
 
     const menu = getByRole('listbox');
     expect(menu).toBeInTheDocument();
