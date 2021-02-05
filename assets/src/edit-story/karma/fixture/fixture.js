@@ -759,6 +759,11 @@ class APIProviderFixture {
         []
       );
 
+      const updateCurrentUser = useCallback(
+        () => jasmine.createSpy('updateCurrentUser'),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
@@ -787,6 +792,7 @@ class APIProviderFixture {
           getStatusCheck,
           getPageLayouts,
           getCurrentUser,
+          updateCurrentUser,
         },
       };
       return (
