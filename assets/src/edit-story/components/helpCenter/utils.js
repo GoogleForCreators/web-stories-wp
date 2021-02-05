@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import Inspector from '../inspector';
-import Canvas from '../canvas';
-import RichTextProvider from '../richText/provider';
-import ErrorBoundary from '../errorBoundary';
-import { CanvasArea, InspectorArea } from './layout';
+import { FOCUSABLE_POPUP_CHILDREN_SELECTOR, POPUP_ID } from './constants';
 
-function Workspace() {
-  return (
-    <RichTextProvider>
-      <CanvasArea>
-        <ErrorBoundary>
-          <Canvas />
-        </ErrorBoundary>
-      </CanvasArea>
-      <InspectorArea>
-        <ErrorBoundary>
-          <Inspector />
-        </ErrorBoundary>
-      </InspectorArea>
-    </RichTextProvider>
-  );
+export function forceFocusCompanion() {
+  document.querySelector(FOCUSABLE_POPUP_CHILDREN_SELECTOR)?.focus();
 }
 
-export default Workspace;
+export function forceFocusCompanionToggle() {
+  document.querySelector(`[aria-owns=${POPUP_ID}]`)?.focus();
+}
