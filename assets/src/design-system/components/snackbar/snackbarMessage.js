@@ -145,7 +145,7 @@ const SnackbarMessage = ({
   }, []);
 
   return (
-    <MessageContainer {...props} role="alert" hasAction={Boolean(actionLabel)}>
+    <MessageContainer role="alert" hasAction={Boolean(actionLabel)} {...props}>
       <Message size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {message}
       </Message>
