@@ -43,7 +43,7 @@ describe('Search <Search />', () => {
 
   it('should render a closed <Search /> menu with an input field on default', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
-      <Search options={basicDropDownOptions} ariaInputLabel={'label'} />
+      <Search options={basicDropDownOptions} ariaInputLabel="label" />
     );
 
     const input = getByRole('combobox');
@@ -55,7 +55,7 @@ describe('Search <Search />', () => {
 
   it('should show placeholder value when no selected value is found', () => {
     const { getByPlaceholderText } = renderWithProviders(
-      <Search options={basicDropDownOptions} placeholder={'select a value'} />
+      <Search options={basicDropDownOptions} placeholder="select a value" />
     );
 
     const placeholder = getByPlaceholderText('select a value');
@@ -66,8 +66,8 @@ describe('Search <Search />', () => {
     const container = renderWithProviders(
       <Search
         options={basicDropDownOptions}
-        placeholder={'select a value'}
-        ariaInputLabel={'my aria label'}
+        placeholder="select a value"
+        ariaInputLabel="my aria label"
         selectedValue={basicDropDownOptions[2]}
       />
     );
@@ -80,8 +80,8 @@ describe('Search <Search />', () => {
     const container = renderWithProviders(
       <Search
         options={basicDropDownOptions}
-        placeholder={'select a value'}
-        ariaInputLabel={'my label'}
+        placeholder="select a value"
+        ariaInputLabel="my label"
       />
     );
 
@@ -101,9 +101,9 @@ describe('Search <Search />', () => {
   it('should show <Search /> menu when input has more than 1 character', () => {
     const { getByRole } = renderWithProviders(
       <Search
-        emptyText={'No options available'}
+        emptyText="No options available"
         options={basicDropDownOptions}
-        ariaInputLabel={'label'}
+        ariaInputLabel="label"
       />
     );
 
@@ -124,8 +124,8 @@ describe('Search <Search />', () => {
   it('should show an active icon on list item that is active', () => {
     const { getByRole } = renderWithProviders(
       <Search
-        emptyText={'No options available'}
-        ariaInputLabel={'label'}
+        emptyText="No options available"
+        ariaInputLabel="label"
         isKeepMenuOpenOnSelection={false}
         options={basicDropDownOptions}
         selectedValue={basicDropDownOptions[2]}
@@ -153,8 +153,8 @@ describe('Search <Search />', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
       <Search
         options={basicDropDownOptions}
-        ariaInputLabel={'my label'}
-        disabled={true}
+        ariaInputLabel="my label"
+        disabled
       />
     );
 
@@ -177,8 +177,8 @@ describe('Search <Search />', () => {
       <Search
         options={basicDropDownOptions}
         selectedValue={basicDropDownOptions[2]}
-        ariaInputLabel={'my label'}
-        disabled={true}
+        ariaInputLabel="my label"
+        disabled
       />
     );
 
@@ -202,7 +202,7 @@ describe('Search <Search />', () => {
     const { getByRole } = renderWithProviders(
       <Search
         options={basicDropDownOptions}
-        ariaInputLabel={'my dropDown label'}
+        ariaInputLabel="my dropDown label"
         onMenuItemClick={onClickMock}
       />
     );
@@ -234,7 +234,7 @@ describe('Search <Search />', () => {
     const { getByRole, getAllByRole } = renderWithProviders(
       <Search
         options={basicDropDownOptions}
-        ariaInputLabel={'my dropDown label'}
+        ariaInputLabel="my dropDown label"
         onMenuItemClick={onClickMock}
       />
     );

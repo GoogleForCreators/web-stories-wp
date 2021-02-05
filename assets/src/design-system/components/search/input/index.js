@@ -89,7 +89,7 @@ const SearchInput = (
         aria-hidden={true}
         disabled={disabled}
       >
-        <SearchIcon id={clearId} data-testid="search-search-icon" />
+        <SearchIcon id={clearId} />
       </SearchDecoration>
 
       <ClearButton

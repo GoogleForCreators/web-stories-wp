@@ -56,7 +56,7 @@ describe('Search <Input />', () => {
         handleClearInputValue={handleClearInputMock}
         placeholder={'search placeholder'}
         inputValue={''}
-        disabled={true}
+        disabled
       />
     );
 
@@ -104,22 +104,23 @@ describe('Search <Input />', () => {
     expect(handleClearInputMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should show chevron icon by default while input is not open', () => {
-    const { getByTestId } = renderWithProviders(
+  it('should show chevron icon when there is an input value and menu is expanded', () => {
+    const { queryAllByTestId } = renderWithProviders(
       <SearchInput
         ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
-        inputValue={''}
+        inputValue={'e'}
+        isOpen
       />
     );
 
-    const chevron = getByTestId('chevron-search-icon');
-    expect(chevron).toBeInTheDocument();
+    const chevron = queryAllByTestId('chevron-search-icon');
+    expect(chevron).toStrictEqual([]);
   });
 
-  it('should still show chevron icon by default while input is not open and input has value', () => {
+  it('should show chevron when input is not open', () => {
     const { getByTestId } = renderWithProviders(
       <SearchInput
         ariaInputLabel={'search label'}
@@ -142,58 +143,11 @@ describe('Search <Input />', () => {
         onClick={onClickMock}
         handleClearInputValue={handleClearInputMock}
         inputValue={'existing value'}
-        isOpen={true}
+        isOpen
       />
     );
 
     const clear = getByTestId('clear-search-icon');
     expect(clear).toBeInTheDocument();
-  });
-
-  it('should show chevron icon by while input is open and input has no value', () => {
-    const { getByTestId } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
-        inputValue={''}
-        isOpen={true}
-      />
-    );
-
-    const chevron = getByTestId('chevron-search-icon');
-    expect(chevron).toBeInTheDocument();
-  });
-
-  it('should not show search icon by default', () => {
-    const { queryAllByTestId } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
-        inputValue={''}
-      />
-    );
-
-    const search = queryAllByTestId('search-search-icon');
-    expect(search).toStrictEqual([]);
-  });
-
-  it('should show search icon if isOpen is true', () => {
-    const { getByTestId } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
-        inputValue={''}
-        isOpen={true}
-      />
-    );
-
-    const search = getByTestId('search-search-icon');
-    expect(search).toBeInTheDocument();
   });
 });

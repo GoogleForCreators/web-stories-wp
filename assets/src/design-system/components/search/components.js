@@ -33,7 +33,7 @@ export const DropDownContainer = styled.div`
 export const Label = styled(Text)`
   margin-bottom: 8px;
   color: ${({ theme, disabled }) =>
-    disabled ? theme.colors.fg.disable : theme.colors.fg.primary};
+    theme.colors.fg[disabled ? 'disable' : 'primary']};
 `;
 Label.propTypes = {
   disabled: PropTypes.bool,
@@ -43,7 +43,7 @@ export const Hint = styled(Text)`
   margin-top: 12px;
   padding-left: 2px;
   color: ${({ theme, hasError }) =>
-    hasError ? theme.colors.fg.negative : theme.colors.fg.tertiary};
+    theme.colors.fg[hasError ? 'negative' : 'tertiary']};
 `;
 Hint.propTypes = {
   hasError: PropTypes.bool,
