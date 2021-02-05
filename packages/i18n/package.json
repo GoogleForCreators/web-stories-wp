@@ -12,10 +12,10 @@
   "type": "module",
   "dependencies": {
     "@wordpress/i18n": "^3.17.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0"
   },
   "devDependencies": {
-    "react": "^16.14.0",
     "react-dom": "^16.14.0"
   }
 }
