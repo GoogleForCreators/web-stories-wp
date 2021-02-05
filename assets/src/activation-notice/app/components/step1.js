@@ -19,7 +19,12 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
-import { __, _x, TranslateWithMarkup } from '@web-stories-wp/i18n';
+
+/**
+ * WordPress dependencies
+ */
+import { __, _x } from '@wordpress/i18n';
+import { createInterpolateElement as TranslateWithMarkup } from '@wordpress/element';
 
 /**
  * Internal dependencies

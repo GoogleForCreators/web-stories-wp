@@ -15,13 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-/**
  * WordPress dependencies
  */
 import { Spinner } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 const EmbedLoading = () => (
   <div className="wp-block-web-stories-embed is-loading">

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
@@ -32,6 +31,7 @@ import {
 } from '@wordpress/block-editor';
 import { withInstanceId } from '@wordpress/compose';
 import { createRef, useCallback } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 

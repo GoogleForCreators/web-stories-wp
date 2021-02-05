@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
@@ -29,6 +28,7 @@ import { ResizableBox } from '@wordpress/components';
 import * as compose from '@wordpress/compose';
 import { withViewportMatch } from '@wordpress/viewport';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies

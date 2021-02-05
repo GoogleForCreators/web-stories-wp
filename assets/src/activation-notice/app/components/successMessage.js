@@ -19,7 +19,11 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
-import { __ } from '@web-stories-wp/i18n';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
