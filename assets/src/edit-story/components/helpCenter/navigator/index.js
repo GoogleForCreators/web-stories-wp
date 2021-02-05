@@ -24,7 +24,7 @@ import styled from 'styled-components';
  */
 import { themeHelpers } from '../../../../design-system';
 import { BottomNavigation } from './bottomNavigation';
-import { NAVIGATION_HEIGHT, NAVIGATION_WIDTH } from './constants';
+import { NAVIGATION_WIDTH } from './constants';
 import { TopNavigation } from './topNavigation';
 import {
   removeInnerElementFromLayoutFlow,
@@ -43,11 +43,6 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
 const Layout = styled.div`
   ${themeHelpers.fullSizeRelative}
   contain: content;
@@ -55,8 +50,7 @@ const Layout = styled.div`
 
 const Content = styled.div``;
 const ContentInner = styled.div`
-  padding-bottom: ${({ hasBottomPadding }) =>
-    hasBottomPadding ? NAVIGATION_HEIGHT : 0}px;
+  position: relative;
 `;
 
 export function Navigator({
@@ -66,6 +60,8 @@ export function Navigator({
   onPrev,
   onAllTips,
   hasBottomNavigation,
+  isNextDisabled,
+  isPrevDisabled,
 }) {
   const innerRef = useRef(null);
   const layoutRef = useRef(null);
@@ -89,9 +85,7 @@ export function Navigator({
       <TopNavigation onClose={onClose} />
       <Layout ref={layoutRef}>
         <Content ref={innerRef}>
-          <ContentInner hasBottomPadding={hasBottomNavigation}>
-            <Container>{children}</Container>
-          </ContentInner>
+          <ContentInner>{children}</ContentInner>
         </Content>
       </Layout>
       <BottomNavigation
@@ -99,16 +93,20 @@ export function Navigator({
         onPrev={onPrev}
         onAllTips={onAllTips}
         hasBottomNavigation={hasBottomNavigation}
+        isNextDisabled={isNextDisabled}
+        isPrevDisabled={isPrevDisabled}
       />
     </Wrapper>
   );
 }
 
 Navigator.propTypes = {
-  children: PropTypes.node.required,
-  onClose: PropTypes.func.required,
-  onNext: PropTypes.func.required,
-  onPrev: PropTypes.func.required,
-  onAllTips: PropTypes.func.required,
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrev: PropTypes.func.isRequired,
+  onAllTips: PropTypes.func.isRequired,
   hasBottomNavigation: PropTypes.bool,
+  isNextDisabled: PropTypes.bool,
+  isPrevDisabled: PropTypes.bool,
 };

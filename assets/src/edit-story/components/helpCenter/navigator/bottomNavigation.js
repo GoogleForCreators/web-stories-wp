@@ -27,12 +27,13 @@ import { __ } from '@wordpress/i18n';
  */
 import { BEZIER } from '../../../../animation';
 import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
+import { TRANSITION_DURATION } from '../constants';
 import { NavBar, NavButton } from './components';
 
 const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
-  transition: 0.3s transform ${BEZIER.default};
+  transition: transform ${TRANSITION_DURATION}ms ${BEZIER.default};
   ${({ isHidden }) =>
     isHidden &&
     css`
@@ -50,6 +51,8 @@ export function BottomNavigation({
   onPrev,
   onNext,
   hasBottomNavigation,
+  isNextDisabled,
+  isPrevDisabled,
 }) {
   return (
     <BottomNavBar
@@ -68,34 +71,32 @@ export function BottomNavigation({
         </NavButton>
       </BottomNavButtons>
       <BottomNavButtons>
-        {Boolean(onPrev) && (
-          <NavButton
-            onClick={onPrev}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            disabled={!hasBottomNavigation}
-          >
-            {__('Previous', 'web-stories')}
-          </NavButton>
-        )}
-        {Boolean(onNext) && (
-          <NavButton
-            onClick={onNext}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            disabled={!hasBottomNavigation}
-          >
-            {__('Next', 'web-stories')}
-          </NavButton>
-        )}
+        <NavButton
+          onClick={onPrev}
+          type={BUTTON_TYPES.PLAIN}
+          size={BUTTON_SIZES.SMALL}
+          disabled={!hasBottomNavigation || isPrevDisabled}
+        >
+          {__('Previous', 'web-stories')}
+        </NavButton>
+        <NavButton
+          onClick={onNext}
+          type={BUTTON_TYPES.PLAIN}
+          size={BUTTON_SIZES.SMALL}
+          disabled={!hasBottomNavigation || isNextDisabled}
+        >
+          {__('Next', 'web-stories')}
+        </NavButton>
       </BottomNavButtons>
     </BottomNavBar>
   );
 }
 
 BottomNavigation.propTypes = {
-  onNext: PropTypes.func.required,
-  onPrev: PropTypes.func.required,
-  onAllTips: PropTypes.func.required,
+  onNext: PropTypes.func.isRequired,
+  onPrev: PropTypes.func.isRequired,
+  onAllTips: PropTypes.func.isRequired,
   hasBottomNavigation: PropTypes.bool,
+  isNextDisabled: PropTypes.bool,
+  isPrevDisabled: PropTypes.bool,
 };

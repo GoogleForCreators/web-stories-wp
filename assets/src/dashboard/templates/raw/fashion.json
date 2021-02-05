@@ -186,7 +186,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page1_hero.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page1_hero.jpg",
             "width": 220,
             "height": 297,
             "posterId": 0,
@@ -250,7 +250,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page1_logo-generic.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page1_logo-generic.png",
             "width": 32,
             "height": 10,
             "id": 1145,
@@ -875,7 +875,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page3_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page3_bg.jpg",
             "width": 220,
             "height": 261,
             "posterId": 0,
@@ -2282,7 +2282,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page5_handbag-alt.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page5_handbag-alt.png",
             "width": 272,
             "height": 251,
             "id": 1147,
@@ -3188,7 +3188,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3265,7 +3265,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3343,7 +3343,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3421,7 +3421,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3499,7 +3499,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page6_pinwheel-outline.png",
             "width": 28,
             "height": 28,
             "posterId": 0,
@@ -3896,7 +3896,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_hero.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page7_hero.jpg",
             "width": 220,
             "height": 274,
             "posterId": 0,
@@ -3981,7 +3981,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_pinwheel.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page7_pinwheel.png",
             "width": 123,
             "height": 123,
             "posterId": 0,
@@ -4157,7 +4157,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_arrow.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page7_arrow.png",
             "width": 8,
             "height": 4,
             "posterId": 0,
@@ -4503,7 +4503,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page8_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page8_bg.jpg",
             "width": 220,
             "height": 291,
             "posterId": 0,
@@ -5370,7 +5370,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item1-cropped.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page9_item1-cropped.png",
             "width": 43,
             "height": 43,
             "posterId": 0,
@@ -5412,7 +5412,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page9_item2.jpg",
             "width": 220,
             "height": 331,
             "posterId": 0,
@@ -5454,7 +5454,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page9_item3.jpg",
             "width": 229,
             "height": 157,
             "posterId": 0,
@@ -5493,7 +5493,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-29T20:54:29",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item4.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion/fashion_page9_item4.jpg",
             "width": 330,
             "height": 494,
             "posterId": 0,

@@ -19,6 +19,10 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
  * Internal dependencies
  */
 import { noop } from '../../../utils/noop';
@@ -29,13 +33,15 @@ import { Tips } from './tips';
 import { Transitioner } from './transitioner';
 
 const Container = styled.div`
-  padding: 0 ${GUTTER_WIDTH};
+  padding: 0 ${GUTTER_WIDTH}px;
+  max-height: 60vh;
+  overflow-y: scroll;
 `;
 
 export function Menu({ onTipSelect = noop, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
-      <Container>
+      <Container aria-label={__('Help Center Main Menu', 'web-stories')}>
         <Header />
         <Tips onTipSelect={onTipSelect} />
         <Footer />
@@ -44,5 +50,5 @@ export function Menu({ onTipSelect = noop, ...transitionProps }) {
   );
 }
 Menu.propTypes = {
-  onTipSelect: PropTypes.func,
+  onTipSelect: PropTypes.func.isRequired,
 };

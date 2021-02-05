@@ -60,5 +60,5 @@ export function TopNavigation({ onClose }) {
 }
 
 TopNavigation.propTypes = {
-  onClose: PropTypes.func.required,
+  onClose: PropTypes.func.isRequired,
 };

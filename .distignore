@@ -13,6 +13,7 @@ docs
 includes/composer.json
 karma
 node_modules
+packages
 patches
 plugin-assets
 public
