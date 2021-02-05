@@ -18,11 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
 import * as Components from '@wordpress/components';
 import {
   BlockControls,
