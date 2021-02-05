@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export { Banner } from './banner';
 export * from './button';
 export * from './checkbox';
 export { Dialog } from './dialog';
@@ -28,3 +29,4 @@ export * from './keyboard';
 export * from './keyboard/gridview';
 export * from './notificationBubble';
 export { Display, Headline, Link, Text } from './typography';
+export { VisuallyHidden } from './visuallyHidden';

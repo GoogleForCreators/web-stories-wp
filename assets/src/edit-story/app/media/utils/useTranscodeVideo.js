@@ -25,10 +25,38 @@ import { useFeature } from 'flagged';
  */
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
+import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
+/**
+ * Returns file basename without extension.
+ *
+ * @param {File} file File object.
+ * @param {string} file.name File name.
+ * @return {string} File name without extension.
+ */
 const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
+
+/**
+ * Determines whether it's a video file.
+ *
+ * @param {File} file File object.
+ * @param {string} file.type File type.
+ * @return {boolean} Whether it's a video file.
+ */
+const isVideo = ({ type }) => type.startsWith('video/');
+
+/**
+ * Checks whether the file size is too large for transcoding.
+ *
+ * @see https://github.com/ffmpegwasm/ffmpeg.wasm/tree/9b56b7f05b552c404aa0f62f46bed2592d9daf06#what-is-the-maximum-size-of-input-file
+ *
+ * @param {File} file File object.
+ * @param {number} file.size File size.
+ * @return {boolean} Whether the file is too  large.
+ */
+const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 function useTranscodeVideo() {
   const { ffmpegCoreUrl } = useConfig();
@@ -87,17 +115,17 @@ function useTranscodeVideo() {
     );
   }
 
-  // TODO: Check for ffmpeg's list of supported file types instead.
-  // See `ffmpeg -demuxers`
-  // TODO: Add max size check.
-  // See https://github.com/ffmpegwasm/ffmpeg.wasm#what-is-the-maximum-size-of-input-file
-  const canTranscodeFile = (file) =>
-    isFeatureEnabled &&
-    file.type.startsWith('video/') &&
-    currentUser.meta?.web_stories_media_optimization;
+  const canTranscodeFile = (file) => isVideo(file);
+
+  const isTranscodingEnabled = Boolean(
+    currentUser.meta?.web_stories_media_optimization
+  );
 
   return {
+    isFeatureEnabled,
+    isTranscodingEnabled,
     canTranscodeFile,
+    isFileTooLarge,
     transcodeVideo,
   };
 }

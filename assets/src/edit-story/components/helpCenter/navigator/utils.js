@@ -22,6 +22,7 @@ import ResizeObserver from 'resize-observer-polyfill';
  * Internal dependencies
  */
 import { BEZIER } from '../../../../animation';
+import { TRANSITION_DURATION } from '../constants';
 
 /**
  * Removes inner Element from the layout flow without disrupting
@@ -55,7 +56,7 @@ export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   // get applied is to do 2 frames from now.
   let id = requestAnimationFrame(() => {
     id = requestAnimationFrame(() => {
-      outerEl.style.transition = `0.3s height ${BEZIER.default}`;
+      outerEl.style.transition = `height ${TRANSITION_DURATION}ms ${BEZIER.default}`;
     });
   });
   return () => cancelAnimationFrame(id);

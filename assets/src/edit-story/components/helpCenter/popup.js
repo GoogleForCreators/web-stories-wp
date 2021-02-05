@@ -21,21 +21,18 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
-import { ScheduledTransition } from '../scheduledTransition';
-import { TRANSITION_DURATION, Z_INDEX } from '../constants';
+import { BEZIER } from '../../../animation';
+import { ScheduledTransition } from './scheduledTransition';
 
-const DURATION = 1.2 * TRANSITION_DURATION;
+const DURATION = 300;
 
 const enterStyles = css`
   opacity: 1;
   transform: none;
 `;
 const exitStyles = css`
-  position: absolute;
-  bottom: 0;
-  opacity: 0.6;
-  transform: scale(0.96);
+  opacity: 0;
+  transform: translateX(-20px);
 `;
 
 const transitionStyles = {
@@ -45,32 +42,35 @@ const transitionStyles = {
   exited: exitStyles,
 };
 
-const Manager = styled.div`
-  position: relative;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  opacity: 0.6;
-  transform-origin: 50% 50%;
-  transform: scale(0.96);
-  transition: transform ${DURATION}ms ${BEZIER.default},
-    opacity ${DURATION}ms ${BEZIER.default};
-  z-index: ${Z_INDEX.MENU};
+const Controller = styled.div`
+  position: absolute;
+  top: -12px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity ${DURATION}ms ${BEZIER.default},
+    transform ${DURATION}ms ${BEZIER.default};
 
-  ${({ state }) => transitionStyles[state]};
+  ${({ state }) => transitionStyles[state]}
 `;
 
-export function Transitioner({ children, ...props }) {
+export function Popup({ isOpen, popupId, children }) {
   return (
     <ScheduledTransition
-      {...props}
+      in={isOpen}
       timeout={DURATION}
       mountOnEnter
       unmountOnExit
     >
-      {(state) => <Manager state={state}>{children}</Manager>}
+      {(state) => (
+        <Controller id={popupId} aria-expanded="true" state={state}>
+          {children}
+        </Controller>
+      )}
     </ScheduledTransition>
   );
 }
-
-Transitioner.propTypes = {
-  children: PropTypes.node,
+Popup.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  popupId: PropTypes.string,
 };

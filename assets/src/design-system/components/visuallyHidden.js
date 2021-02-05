@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,17 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export const SnackbarContainer = styled.div`
-  position: fixed;
-  bottom: 16px;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: ${({ alignItems }) => alignItems};
-  width: 100%;
-  z-index: ${({ customZIndex }) => customZIndex || 15};
+/**
+ * Useful for rendering content for screen
+ * readers only
+ */
+export const VisuallyHidden = styled.span`
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
 `;
-
-SnackbarContainer.propTypes = {
-  alignItems: PropTypes.string,
-  customZIndex: PropTypes.number,
-};
-SnackbarContainer.defaultProps = {
-  alignItems: 'center',
-};

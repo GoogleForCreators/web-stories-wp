@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -115,20 +115,24 @@ function PreviewPage({
   onAnimationComplete,
   subscribeGlobalTime,
 }) {
+  // Preview is wrapped in StyleSheetManager w/ stylisPlugins={[]} in order to prevent
+  // elements from shifting when in RTL mode since these aren't relevant for story previews
   return (
-    <StoryAnimation.Provider
-      animations={page.animations}
-      elements={page.elements}
-      onWAAPIFinish={onAnimationComplete}
-    >
-      <PreviewPageController
-        page={page}
-        pageSize={pageSize}
-        animationState={animationState}
-        onAnimationComplete={onAnimationComplete}
-        subscribeGlobalTime={subscribeGlobalTime}
-      />
-    </StoryAnimation.Provider>
+    <StyleSheetManager stylisPlugins={[]}>
+      <StoryAnimation.Provider
+        animations={page.animations}
+        elements={page.elements}
+        onWAAPIFinish={onAnimationComplete}
+      >
+        <PreviewPageController
+          page={page}
+          pageSize={pageSize}
+          animationState={animationState}
+          onAnimationComplete={onAnimationComplete}
+          subscribeGlobalTime={subscribeGlobalTime}
+        />
+      </StoryAnimation.Provider>
+    </StyleSheetManager>
   );
 }
 

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-
+import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 /**
  * WordPress dependencies
  */
@@ -28,7 +28,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackEvent } from '../../../../tracking';
-import { toDate, isAfter, subMinutes, getOptions } from '../../../../date';
 import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';

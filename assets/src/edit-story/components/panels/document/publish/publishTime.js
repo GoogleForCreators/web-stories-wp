@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState } from 'react';
-
+import { format, formatTime, is12Hour } from '@web-stories-wp/date';
 /**
  * WordPress dependencies
  */
@@ -35,7 +35,6 @@ import { useStory } from '../../../../app/story';
 import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../../../design-system';
 import useFocusOut from '../../../../utils/useFocusOut';
-import { format, formatTime, is12Hour } from '../../../../../date';
 
 const StyledButton = styled.button`
   color: ${({ theme }) => theme.colors.fg.white};
