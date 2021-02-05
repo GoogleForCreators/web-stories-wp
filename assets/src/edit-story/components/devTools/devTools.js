@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from '../../../migration/migrate';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 import { useGlobalKeyDownEffect } from '../../../design-system';
 import { useStory } from '../../app/story';
 import { useSnackbar } from '../../app/snackbar';
