@@ -24,7 +24,7 @@ import { useCallback } from 'react';
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n';
-import { createInterpolateElement as TranslateWithMarkup } from '@wordpress/element';
+import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -92,8 +92,9 @@ function Step1() {
           }
         </Number>
         <Paragraph $secondary>
-          <TranslateWithMarkup
-            mapping={{
+          {createInterpolateElement(
+            __('Read the<br/><a>Get Started story</a>', 'web-stories'),
+            {
               a: (
                 <Link
                   href={demoStoryURL}
@@ -102,10 +103,9 @@ function Step1() {
                   rel="noreferrer"
                 />
               ),
-            }}
-          >
-            {__('Read the<br/><a>Get Started story</a>', 'web-stories')}
-          </TranslateWithMarkup>
+              br: <br />,
+            }
+          )}
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>
