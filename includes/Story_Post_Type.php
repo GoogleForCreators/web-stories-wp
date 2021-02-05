@@ -520,6 +520,12 @@ class Story_Post_Type {
 
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+		$lock_status = wp_refresh_post_lock(
+			[ 'post_id' => $story_id ],
+			[ 'wp-refresh-post-lock' => [ 'post_id' => $story_id ] ],
+			'web-story'
+		);
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -534,6 +540,7 @@ class Story_Post_Type {
 				'cdnURL'           => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'        => $max_upload_size,
 				'isDemo'           => $is_demo,
+				'lockStatus'       => $lock_status,
 				'capabilities'     => [
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,
