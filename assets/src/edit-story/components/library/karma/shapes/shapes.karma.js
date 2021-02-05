@@ -62,4 +62,24 @@ describe('Shape library integration', () => {
     // Now background + 1 extra element
     expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
   });
+
+  it('should not add shape dragged out of the page area', async () => {
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+    // Switch to the shapes tab and drag the triangle to the canvas
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    const triangle = fixture.editor.library.shapes.shape('Triangle');
+    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(triangle, 10, 10),
+      down(),
+      /* The steps give time for Moveable to react and display a clone to drag */
+      moveRel(bgFrame, -200, 50, { steps: 20 }),
+      up(),
+    ]);
+
+    // Still only background.
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+  });
 });
