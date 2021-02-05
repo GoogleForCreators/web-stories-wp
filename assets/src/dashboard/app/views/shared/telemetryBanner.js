@@ -23,8 +23,6 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { TypographyPresets, useLayoutContext } from '../../../components';
-import { Close as CloseSVG } from '../../../icons';
 import {
   Banner,
   Checkbox,
