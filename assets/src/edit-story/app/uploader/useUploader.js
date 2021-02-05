@@ -20,7 +20,7 @@
 import { useCallback, useMemo } from 'react';
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
