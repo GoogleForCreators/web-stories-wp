@@ -32,6 +32,7 @@ import {
   TypographyPresets,
 } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import TelemetryBanner from './telemetryBanner';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.DEPRECATED_THEME.formatContainer.height}px;
@@ -91,6 +92,7 @@ export default function BodyViewOptions({
 
   return (
     <StandardViewContentGutter>
+      <TelemetryBanner />
       <DisplayFormatContainer>
         <Label>{resultsLabel}</Label>
         <ControlsContainer>

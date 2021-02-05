@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export { Banner } from './banner';
 export * from './button';
 export * from './checkbox';
 export { Dialog } from './dialog';

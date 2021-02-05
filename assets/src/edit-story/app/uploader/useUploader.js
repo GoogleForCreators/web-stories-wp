@@ -28,6 +28,7 @@ import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
 import { trackError } from '../../../tracking';
+import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
 
 function useUploader() {
   const {
@@ -47,7 +48,13 @@ function useUploader() {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
-  const { transcodeVideo, canTranscodeFile } = useTranscodeVideo();
+  const {
+    isFeatureEnabled,
+    isTranscodingEnabled,
+    canTranscodeFile,
+    transcodeVideo,
+    isFileTooLarge,
+  } = useTranscodeVideo();
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -58,7 +65,7 @@ function useUploader() {
     [allowedMimeTypes]
   );
 
-  const fileSizeCheck = useCallback(
+  const isFileSizeWithinLimits = useCallback(
     ({ size }) => {
       return size <= maxUpload;
     },
@@ -73,6 +80,7 @@ function useUploader() {
    */
   const uploadFile = useCallback(
     async (file, _additionalData = {}) => {
+      // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
           'Sorry, you are unable to upload files.',
@@ -80,7 +88,9 @@ function useUploader() {
         );
         throw createError('PermissionError', file.name, message);
       }
-      if (!fileSizeCheck(file)) {
+
+      // The file is too large for the site anyway, abort.
+      if (!isFileSizeWithinLimits(file)) {
         const message = sprintf(
           /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
           __(
@@ -93,66 +103,78 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      if (!isValidType(file) && !canTranscodeFile(file)) {
-        /* translators: %s is a list of allowed file extensions. */
-        const message = sprintf(
-          /* translators: %s: list of allowed file types. */
-          __('Please choose only %s to upload.', 'web-stories'),
-          allowedFileTypes.join(
-            /* translators: delimiter used in a list */
-            __(', ', 'web-stories')
-          )
-        );
-
-        throw createError('ValidError', file.name, message);
-      }
-
       const additionalData = {
         post: storyId,
         media_source: 'editor',
         ..._additionalData,
       };
 
-      if (canTranscodeFile(file)) {
-        try {
-          // TODO: Only transcode & optimize video if needed (criteria TBD).
-          const newFile = await transcodeVideo(file);
-          additionalData.media_source = 'video-optimization';
-          return uploadMedia(newFile, additionalData);
-        } catch (err) {
-          trackError('video transcoding', err.message);
+      if (
+        !isFeatureEnabled ||
+        !isTranscodingEnabled ||
+        !canTranscodeFile(file)
+      ) {
+        // The file type is not supported by default, and cannot be transcoded either.
+        if (!isValidType(file)) {
+          /* translators: %s is a list of allowed file extensions. */
+          const message = sprintf(
+            /* translators: %s: list of allowed file types. */
+            __('Please choose only %s to upload.', 'web-stories'),
+            allowedFileTypes.join(
+              /* translators: delimiter used in a list */
+              __(', ', 'web-stories')
+            )
+          );
 
-          if (!isValidType(file)) {
-            /* translators: %s is a list of allowed file extensions. */
-            const message = sprintf(
-              /* translators: %s: list of allowed file types. */
-              __('Please choose only %s to upload.', 'web-stories'),
-              allowedFileTypes.join(
-                /* translators: delimiter used in a list */
-                __(', ', 'web-stories')
-              )
-            );
-
-            throw createError('ValidError', file.name, message);
-          }
-
-          const message = __('Video optimization failed', 'web-stories');
-          throw createError('TranscodingError', file.name, message);
+          throw createError('ValidError', file.name, message);
         }
+
+        // TODO: If !isTranscodingEnabled && canTranscodeFile(), tell user to enable transcoding.
+
+        // If transcoding is not enabled, just upload the file normally without any transcoding.
+        return uploadMedia(file, additionalData);
       }
 
-      return uploadMedia(file, additionalData);
+      // Bail early if the file is too large for transcoding.
+      if (isFileTooLarge(file)) {
+        const message = sprintf(
+          /* translators: 1: File size in MB. 2: Maximum allowed file size in MB. */
+          __(
+            'Your file is too large (%1$s MB) and cannot be processed. Please try again with a file that is smaller than %2$s MB.',
+            'web-stories'
+          ),
+          bytesToMB(file.size),
+          bytesToMB(MEDIA_TRANSCODING_MAX_FILE_SIZE)
+        );
+        throw createError('SizeError', file.name, message);
+      }
+
+      // Transcoding is enabled, let's give it a try!
+      try {
+        // TODO: Only transcode & optimize video if needed (criteria TBD).
+        const newFile = await transcodeVideo(file);
+        additionalData.media_source = 'video-optimization';
+        return uploadMedia(newFile, additionalData);
+      } catch (err) {
+        trackError('video transcoding', err.message);
+
+        const message = __('Video could not be processed', 'web-stories');
+        throw createError('TranscodingError', file.name, message);
+      }
     },
     [
       allowedFileTypes,
-      fileSizeCheck,
+      isFileSizeWithinLimits,
       hasUploadMediaAction,
       isValidType,
       maxUpload,
       uploadMedia,
       storyId,
+      isFeatureEnabled,
+      isTranscodingEnabled,
       canTranscodeFile,
       transcodeVideo,
+      isFileTooLarge,
     ]
   );
 
