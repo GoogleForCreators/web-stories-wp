@@ -24,7 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Text } from '..';
+import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 
 const StyledInput = styled.input(
