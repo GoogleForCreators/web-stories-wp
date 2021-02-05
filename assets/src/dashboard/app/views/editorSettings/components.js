@@ -117,7 +117,6 @@ export const UploadedContainer = styled.div`
   padding-bottom: 20px;
   margin-bottom: 4px;
   border: 1px solid transparent;
-  border-width: 2px;
 
   ${themeHelpers.focusableOutlineCSS};
 `;

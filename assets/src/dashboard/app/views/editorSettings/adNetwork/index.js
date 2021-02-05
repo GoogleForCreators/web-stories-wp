@@ -31,28 +31,17 @@ import {
   InlineLink,
   SettingForm,
   SettingHeading,
-  VisuallyHiddenLabel,
   TextInputHelperText,
 } from '../components';
-import { Dropdown } from '../../../../components';
 import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
-import { THEME_CONSTANTS } from '../../../../../design-system';
+import { TranslateWithMarkup } from '../../../../../i18n';
+import { trackClick } from '../../../../../tracking';
+import {
+  THEME_CONSTANTS,
+  DropDown,
+  PLACEMENT,
+} from '../../../../../design-system';
 
-const AdNetworkDropdown = styled(Dropdown)`
-  & button {
-    border: ${({ theme, error }) =>
-      error
-        ? theme.DEPRECATED_THEME.borders.danger
-        : theme.DEPRECATED_THEME.borders.gray100};
-
-    &:active:enabled {
-      border: ${({ theme, error }) =>
-        error
-          ? theme.DEPRECATED_THEME.borders.danger
-          : theme.DEPRECATED_THEME.borders.action};
-    }
-  }
-`;
 const AdNetworkSettingForm = styled(SettingForm)`
   padding-bottom: 0;
 `;
@@ -166,13 +155,14 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
       </div>
       <div>
         <InlineForm>
-          <VisuallyHiddenLabel>{TEXT.SLOT_ID_LABEL}</VisuallyHiddenLabel>
-          <AdNetworkDropdown
+          <DropDown
             ariaLabel={TEXT.SLOT_ID_LABEL}
-            items={OPTIONS}
+            options={OPTIONS}
             type={DROPDOWN_TYPES.MENU}
-            value={adNetwork}
-            onChange={(newAdNetwork) => handleUpdate(newAdNetwork.value)}
+            selectedValue={adNetwork}
+            onMenuItemClick={(_, newAdNetwork) => handleUpdate(newAdNetwork)}
+            placement={PLACEMENT.BOTTOM}
+            fillWidth={true}
           />
         </InlineForm>
         {message && (
