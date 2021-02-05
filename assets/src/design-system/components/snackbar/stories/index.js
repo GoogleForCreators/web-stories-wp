@@ -43,7 +43,7 @@ export const _default = () => (
     <Container>
       <SnackbarContainer customZIndex={number('customZIndex')}>
         <SnackbarMessage
-          actionLabel={text('actionLabel', 'Retry')}
+          actionLabel={text('actionLabel', '')}
           ariaLabel={text(
             'ariaLabel',
             'this is my aria label giving my message context for screen reader users'
@@ -52,6 +52,7 @@ export const _default = () => (
           handleDismiss={action('handle dismiss fired')}
           isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
           message={text('message', 'Sorry! File failed to upload.')}
+          showCloseButton
         />
       </SnackbarContainer>
     </Container>
@@ -59,6 +60,23 @@ export const _default = () => (
 );
 
 export const LightThemeDefault = () => (
+  <SnackbarContainer customZIndex={number('customZIndex')}>
+    <SnackbarMessage
+      actionLabel={text('actionLabel', '')}
+      ariaLabel={text(
+        'ariaLabel',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      handleAction={action('handle action clicked')}
+      handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
+      showCloseButton
+    />
+  </SnackbarContainer>
+);
+
+export const Action = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
       actionLabel={text('actionLabel', 'Retry')}
@@ -70,6 +88,25 @@ export const LightThemeDefault = () => (
       handleDismiss={action('handle dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
+      removeMessageTimeInterval={80000}
+    />
+  </SnackbarContainer>
+);
+
+export const EarlyDismissWithAction = () => (
+  <SnackbarContainer customZIndex={number('customZIndex')}>
+    <SnackbarMessage
+      actionLabel={text('actionLabel', 'Retry')}
+      ariaLabel={text(
+        'ariaLabel',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      handleAction={action('handle action clicked')}
+      handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
+      removeMessageTimeInterval={80000}
+      showCloseButton
     />
   </SnackbarContainer>
 );
@@ -106,6 +143,7 @@ export const LongMessage = () => (
         'message',
         'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
       )}
+      showCloseButton
     />
   </SnackbarContainer>
 );
