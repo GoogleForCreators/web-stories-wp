@@ -19,10 +19,6 @@
  */
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**

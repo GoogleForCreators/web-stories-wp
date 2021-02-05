@@ -19,10 +19,6 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
-
-/**
- * WordPress dependencies
- */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**

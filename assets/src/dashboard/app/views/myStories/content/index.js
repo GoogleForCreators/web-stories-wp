@@ -18,10 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**

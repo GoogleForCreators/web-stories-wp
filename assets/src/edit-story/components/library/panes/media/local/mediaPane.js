@@ -20,11 +20,6 @@
 import { useFeature } from 'flagged';
 import { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
 
 /**

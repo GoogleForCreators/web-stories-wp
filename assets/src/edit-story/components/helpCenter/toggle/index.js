@@ -18,9 +18,6 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * WordPress dependencies
- */
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
 
 /**
