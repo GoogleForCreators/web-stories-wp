@@ -23,15 +23,15 @@ import PropTypes from 'prop-types';
  */
 import { Menu } from '../menu';
 import { QuickTip } from '../quickTip';
-import { TIPS, DONE_TIP_ENTRY } from '../constants';
+import { TIPS, DONE_TIP_ENTRY, ReadTipsType } from '../constants';
 
 const TIP_MAP = { ...TIPS, [DONE_TIP_ENTRY[0]]: DONE_TIP_ENTRY[1] };
 
 export function Companion({
-  read,
   tipKey,
   onTipSelect,
   isLeftToRightTransition,
+  readTips,
 }) {
   const tip = tipKey && TIP_MAP[tipKey];
   return (
@@ -44,18 +44,13 @@ export function Companion({
           {...tip}
         />
       ) : (
-        <Menu
-          read={read}
-          key={'menu'}
-          transitionKey={'menu'}
-          onTipSelect={onTipSelect}
-        />
+        <Menu key="menu" readTips={readTips} onTipSelect={onTipSelect} />
       )}
     </TransitionGroup>
   );
 }
 Companion.propTypes = {
-  read: PropTypes.arrayOf(PropTypes.string).isRequired,
+  readTips: ReadTipsType,
   tipKey: PropTypes.oneOf(Object.keys(TIP_MAP)),
   onTipSelect: PropTypes.func.isRequired,
   isLeftToRightTransition: PropTypes.bool.isRequired,

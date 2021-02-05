@@ -16,12 +16,13 @@
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState, useMemo, useCallback } from 'react';
+import { useReducer, useEffect, useState, useMemo } from 'react';
 /**
  * Internal dependencies
  */
 import { clamp } from '../../../animation';
 import { useAPI } from '../../app';
+import usePrevious from '../../utils/usePrevious';
 import { DONE_TIP_ENTRY, NAVIGATION_FLOW } from './constants';
 
 /**
@@ -34,14 +35,30 @@ import { DONE_TIP_ENTRY, NAVIGATION_FLOW } from './constants';
  */
 export const deriveState = (previous, next) => {
   const isMenuIndex = next.navigationIndex < 0;
+  const isDoneIndex =
+    next.navigationFlow?.indexOf(DONE_TIP_ENTRY[0]) === next.navigationIndex;
+
+  const readTipKey =
+    !isDoneIndex &&
+    !isMenuIndex &&
+    next.navigationFlow &&
+    next.navigationFlow[next.navigationIndex];
+
   const isLTRTransition = next.navigationIndex - previous.navigationIndex > 0;
 
-  return {
+  const derivedState = {
+    readTips: {
+      ...previous.readTips,
+      ...next.readTips,
+      ...(readTipKey ? { [readTipKey]: true } : {}),
+    },
     hasBottomNavigation: !isMenuIndex,
     isLeftToRightTransition: !isMenuIndex && isLTRTransition,
     isPrevDisabled: next.navigationIndex <= 0,
     isNextDisabled: next.navigationIndex >= next.navigationFlow?.length - 1,
   };
+
+  return derivedState;
 };
 
 const reducer = ({ state, actions }, action) => {
@@ -62,11 +79,8 @@ const initial = {
     hasBottomNavigation: false,
     isPrevDisabled: true,
     isNextDisabled: false,
-    read: [],
-    fetchError: false,
+    readTips: {},
     readError: false,
-    loading: false,
-    updating: false,
   },
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //
@@ -92,34 +106,21 @@ const initial = {
     }),
     toggle: () => ({ isOpen }) => ({ isOpen: !isOpen }),
     close: () => () => ({ isOpen: false }),
-    fetchReadStart: () => () => ({ loading: true }),
-    fetchReadSuccess: (payload) => () => ({
-      ...payload,
-      loading: false,
+    hydrateReadTipsSuccess: (payload) => (state) => ({
+      readTips: {
+        ...(payload?.readTips ?? {}),
+        ...state.readTips,
+      },
     }),
-    fetchReadError: () => () => ({
-      fetchError: true,
-      loading: false,
-    }),
-    read: (key) => ({ read }) => ({
-      // optimistically update the notification as "read"
-      read: read.indexOf(key) === -1 ? read.concat(key) : read,
-      updating: true,
-    }),
-    readSuccess: () => () => ({
-      updating: false,
-    }),
-    readError: (key) => ({ read }) => ({
-      updating: false,
+    persistingReadTipsError: () => () => ({
       readError: true,
-      read: read.filter((tipKey) => tipKey !== key),
     }),
   },
 };
 
 export function useHelpCenter() {
   const [store, dispatch] = useReducer(reducer, initial);
-
+  const prevTips = usePrevious(store.state.readTips);
   const { getCurrentUser, updateCurrentUser } = useAPI(({ actions }) => ({
     getCurrentUser: actions.getCurrentUser,
     updateCurrentUser: actions.updateCurrentUser,
@@ -135,51 +136,27 @@ export function useHelpCenter() {
     [store.actions]
   );
 
-  const getReadTips = useCallback(async () => {
-    try {
-      actions.fetchReadStart();
-      const { meta } = await getCurrentUser();
-
-      actions.fetchReadSuccess({
-        read: meta.web_stories_onboarding ?? [],
-      });
-    } catch {
-      actions.fetchReadError();
-    }
+  useEffect(() => {
+    let isMounted = true;
+    getCurrentUser()
+      .then(({ meta }) => {
+        isMounted &&
+          actions.hydrateReadTipsSuccess({
+            readTips: meta.web_stories_onboarding ?? {},
+          });
+      })
+      .catch(actions.persitingReadTipsError);
+    return () => (isMounted = false);
   }, [actions, getCurrentUser]);
 
   useEffect(() => {
-    getReadTips();
-  }, [getReadTips]);
-
-  const updateReadStatus = useCallback(async () => {
-    const currentKey = store.state.navigationFlow[store.state.navigationIndex];
-    const [doneKey] = DONE_TIP_ENTRY;
-    // if the current status is not 'read'
-    if (
-      currentKey &&
-      store.state.read.indexOf(currentKey) === -1 &&
-      currentKey !== doneKey
-    ) {
-      try {
-        // optimistically mark it read
-        // whether the update call succeeds or not
-        actions.read(currentKey);
-        await updateCurrentUser({
-          meta: {
-            web_stories_onboarding: [...store.state.read, currentKey],
-          },
-        });
-        actions.readSuccess();
-      } catch (e) {
-        actions.readError(currentKey);
-      }
-    }
-  }, [store, actions, updateCurrentUser]);
-
-  useEffect(() => {
-    updateReadStatus();
-  }, [updateReadStatus, store.state.navigationIndex]);
+    // don't request to persist tips that are already read
+    Object.keys(prevTips ?? {}).length !==
+      Object.keys(store.state.readTips).length &&
+      updateCurrentUser({
+        meta: { web_stories_onboarding: store.state.readTips },
+      }).catch(actions.persitingReadTipsError);
+  }, [store.state.readTips, actions, prevTips, updateCurrentUser]);
 
   // Components wrapped in a Transition no longer recieve
   // prop updates once they start exiting. To work around

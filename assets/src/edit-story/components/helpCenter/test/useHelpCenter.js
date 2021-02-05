@@ -20,14 +20,9 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../../app';
+import APIContext from '../../../app/api/context';
 import { DONE_TIP_ENTRY } from '../constants';
-/**
- * Internal dependencies
- */
 import { useHelpCenter, deriveState } from '../useHelpCenter';
-
-jest.mock('../../../app/api/useAPI');
 
 describe('deriveState', () => {
   it('sets isPrevDisabled to true if navigationIndex becomes 0', () => {
@@ -117,18 +112,42 @@ describe('deriveState', () => {
     const { hasBottomNavigation } = deriveState(previousState, nextState);
     expect(hasBottomNavigation).toBe(false);
   });
+
+  it('sets a tip to read if the navigation index is not on the menu or done index', () => {
+    const previousState = {
+      navigationIndex: -1,
+      navigationFlow: ['tip_1', 'tip_2'],
+    };
+    const nextState = {
+      navigationIndex: 0,
+      navigationFlow: ['tip_1', 'tip_2'],
+    };
+    const { readTips } = deriveState(previousState, nextState);
+    expect(readTips['tip_1']).toBe(true);
+  });
 });
 
-describe('useHelpCenter', () => {
-  beforeEach(() => {
-    useAPI.mockReturnValue({
-      getCurrentUser: jest.fn(() => ({ meta: {} })),
-      updateCurrentUser: jest.fn(),
-    });
-  });
+function setup() {
+  const apiContextValue = {
+    actions: {
+      getCurrentUser: jest.fn(
+        () => new Promise((resolve) => resolve({ meta: {} }))
+      ),
+      updateCurrentUser: jest.fn(() => new Promise((resolve) => resolve())),
+    },
+  };
+  const wrapper = ({ children }) => (
+    <APIContext.Provider value={apiContextValue}>
+      {children}
+    </APIContext.Provider>
+  );
 
+  return renderHook(() => useHelpCenter(), { wrapper });
+}
+
+describe('useHelpCenter', () => {
   it('always returns the same actions by reference', async () => {
-    const { result } = renderHook(() => useHelpCenter());
+    const { result } = setup();
     const initialActionsReference = result.current.actions;
     const actions = Object.keys(initialActionsReference);
     for (let i = 0; i < actions.length - 1; i++) {
@@ -143,7 +162,7 @@ describe('useHelpCenter', () => {
 
   describe('goToNext', () => {
     it('doesnt increment out of navigation flow bounds', async () => {
-      const { result } = renderHook(() => useHelpCenter());
+      const { result } = setup();
 
       for (let i = 0; i < result.current.state.navigationFlow.length + 5; i++) {
         // eslint-disable-next-line no-await-in-loop
@@ -159,23 +178,25 @@ describe('useHelpCenter', () => {
     });
 
     it('updates the read status of the tip', async () => {
-      const { result } = renderHook(() => useHelpCenter());
+      const { result } = setup();
+      const expected = {};
       for (let i = 0; i < result.current.state.navigationFlow.length; i++) {
         // eslint-disable-next-line no-await-in-loop
         await act(async () => {
           await result.current.actions.goToNext();
         });
-        const expected = result.current.state.navigationFlow
-          .slice(0, i + 1)
-          .filter((key) => key !== DONE_TIP_ENTRY[0]);
-        expect(result.current.state.read).toStrictEqual(expected);
+        const expectedKey = result.current.state.navigationFlow[i];
+        if (expectedKey !== DONE_TIP_ENTRY[0]) {
+          expected[expectedKey] = true;
+        }
+        expect(result.current.state.readTips).toStrictEqual(expected);
       }
     });
   });
 
   describe('goToPrev', () => {
     it('doesnt decrement out of navigation flow bounds', async () => {
-      const { result } = renderHook(() => useHelpCenter());
+      const { result } = setup();
       // navigate to last tip in navigation flow
       for (let i = 0; i < result.current.state.navigationFlow.length; ++i) {
         // eslint-disable-next-line no-await-in-loop
@@ -198,7 +219,7 @@ describe('useHelpCenter', () => {
     });
 
     it('updates the read status of the tip', async () => {
-      const { result } = renderHook(() => useHelpCenter());
+      const { result } = setup();
 
       // go to the last (not "done") tip
       const lastTip =
@@ -208,18 +229,23 @@ describe('useHelpCenter', () => {
       await act(async () => {
         await result.current.actions.goToTip(lastTip);
       });
+
       // that tip should be read
-      expect(result.current.state.read).toStrictEqual([lastTip]);
+      const expected = { [lastTip]: true };
+      expect(result.current.state.readTips).toStrictEqual(expected);
 
       // go through the list backwards
-      for (let i = 0; i < result.current.state.navigationFlow.length - 1; i++) {
-        // each tip should be read in reverse
-        const expected = result.current.state.navigationFlow
-          .filter((key) => key !== DONE_TIP_ENTRY[0])
-          .reverse()
-          .slice(0, i + 1);
+      for (
+        let i = result.current.state.navigationFlow.length - 2;
+        i >= 0;
+        i--
+      ) {
+        const expectedKey = result.current.state.navigationFlow[i];
 
-        expect(result.current.state.read).toStrictEqual(expected);
+        if (expectedKey !== DONE_TIP_ENTRY[0]) {
+          expected[expectedKey] = true;
+        }
+        expect(result.current.state.readTips).toStrictEqual(expected);
         // eslint-disable-next-line no-await-in-loop
         await act(async () => {
           await result.current.actions.goToPrev();
@@ -230,7 +256,7 @@ describe('useHelpCenter', () => {
 
   describe('goToMenu', () => {
     it('always sets the navigationIndex to -1', async () => {
-      const { result } = renderHook(() => useHelpCenter());
+      const { result } = setup();
       for (let i = 0; i < 3; i++) {
         // eslint-disable-next-line no-await-in-loop
         await act(async () => {
@@ -246,7 +272,7 @@ describe('useHelpCenter', () => {
 
   describe('goToTip', () => {
     it('sets navigationIndex to -1 (main menu) if key isnt in navigationFlow', async () => {
-      const { result } = renderHook(() => useHelpCenter());
+      const { result } = setup();
       // navigate away from main menu
       await act(async () => {
         await result.current.actions.goToTip(
@@ -261,7 +287,7 @@ describe('useHelpCenter', () => {
     });
 
     it('sets navigationIndex to index of key in navigation flow', async () => {
-      const { result } = renderHook(() => useHelpCenter());
+      const { result } = setup();
       for (let i = 0; i < result.current.state.navigationFlow.length - 1; i++) {
         // eslint-disable-next-line no-await-in-loop
         await act(async () => {
