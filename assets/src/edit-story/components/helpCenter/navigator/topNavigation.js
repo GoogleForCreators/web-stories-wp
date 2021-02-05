@@ -31,6 +31,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '../../../../design-system';
+import { forceFocusCompanionToggle } from '../utils';
 import { NavBar, NavButton } from './components';
 
 const TopNavButtons = styled.div`
@@ -47,7 +48,10 @@ export function TopNavigation({ onClose }) {
       <Label>{__('Quick Tips', 'web-stories')}</Label>
       <TopNavButtons>
         <NavButton
-          onClick={onClose}
+          onClick={() => {
+            forceFocusCompanionToggle();
+            onClose();
+          }}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
           variant={BUTTON_VARIANTS.CIRCLE}

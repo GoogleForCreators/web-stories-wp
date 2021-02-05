@@ -21,6 +21,7 @@ import styled, { css } from 'styled-components';
 /**
  * WordPress dependencies
  */
+import { useEffect, useState, useRef } from 'react';
 import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
@@ -28,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 import { BEZIER } from '../../../../animation';
 import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
 import { TRANSITION_DURATION } from '../constants';
+import { forceFocusCompanion } from '../utils';
 import { NavBar, NavButton } from './components';
 
 const BottomNavBar = styled(NavBar)`
@@ -46,6 +48,12 @@ const BottomNavButtons = styled.div`
   padding: 0 8px;
 `;
 
+const onCondition = (condition) => (fn) => {
+  if (condition) {
+    fn();
+  }
+};
+
 export function BottomNavigation({
   onAllTips,
   onPrev,
@@ -54,6 +62,25 @@ export function BottomNavigation({
   isNextDisabled,
   isPrevDisabled,
 }) {
+  // If either the prev or next has focus and become disabled,
+  // we want to force focus to the companion instead of losing
+  // it to the canvas.
+  const prevButtonRef = useRef(null);
+  const nextButtonRef = useRef(null);
+  const [local, setLocal] = useState({
+    isPrevDisabled,
+    isNextDisabled,
+  });
+  // We want to force focus one render before we disable the actual
+  // DOM elements so we can see if they're currently focused.
+  useEffect(() => {
+    [
+      isPrevDisabled && document.activeElement === prevButtonRef.current,
+      isNextDisabled && document.activeElement === nextButtonRef.current,
+    ].forEach((condition) => onCondition(condition)(forceFocusCompanion));
+    setLocal({ isPrevDisabled, isNextDisabled });
+  }, [isPrevDisabled, isNextDisabled]);
+
   return (
     <BottomNavBar
       aria-hidden={hasBottomNavigation}
@@ -61,7 +88,10 @@ export function BottomNavigation({
     >
       <BottomNavButtons>
         <NavButton
-          onClick={onAllTips}
+          onClick={() => {
+            forceFocusCompanion();
+            onAllTips();
+          }}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
           disabled={!hasBottomNavigation}
@@ -72,18 +102,20 @@ export function BottomNavigation({
       </BottomNavButtons>
       <BottomNavButtons>
         <NavButton
+          ref={prevButtonRef}
           onClick={onPrev}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
-          disabled={!hasBottomNavigation || isPrevDisabled}
+          disabled={!hasBottomNavigation || local.isPrevDisabled}
         >
           {__('Previous', 'web-stories')}
         </NavButton>
         <NavButton
+          ref={nextButtonRef}
           onClick={onNext}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
-          disabled={!hasBottomNavigation || isNextDisabled}
+          disabled={!hasBottomNavigation || local.isNextDisabled}
         >
           {__('Next', 'web-stories')}
         </NavButton>
