@@ -22,8 +22,30 @@ import { useReducer, useEffect, useState, useMemo } from 'react';
  */
 import { clamp } from '../../../animation';
 import { useAPI } from '../../app';
-import usePrevious from '../../utils/usePrevious';
 import { DONE_TIP_ENTRY, NAVIGATION_FLOW } from './constants';
+
+/**
+ * Turns a boolean map into a string key
+ *
+ * @param {Object} map an object to stringify
+ * @return {string} a key to provide to useEffect
+ */
+const createKeyFromBooleanMap = (map) => Object.keys(map || {}).join(' ');
+
+/**
+ * reforms the boolean map from the key returned by createKeyFromBooleanMap
+ *
+ * @param {string} key a string of space-separated map keys
+ * @return {Object} the map of the provided keys with with true as the value
+ */
+const createBooleanMapFromKey = (key) =>
+  key.split(' ').reduce(
+    (accum, keyName) => ({
+      ...accum,
+      [keyName]: true,
+    }),
+    {}
+  );
 
 /**
  * Performs any state updates that result from
@@ -120,7 +142,6 @@ const initial = {
 
 export function useHelpCenter() {
   const [store, dispatch] = useReducer(reducer, initial);
-  const prevTips = usePrevious(store.state.readTips);
   const { getCurrentUser, updateCurrentUser } = useAPI(({ actions }) => ({
     getCurrentUser: actions.getCurrentUser,
     updateCurrentUser: actions.updateCurrentUser,
@@ -149,14 +170,12 @@ export function useHelpCenter() {
     return () => (isMounted = false);
   }, [actions, getCurrentUser]);
 
+  const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
   useEffect(() => {
-    // don't request to persist tips that are already read
-    Object.keys(prevTips ?? {}).length !==
-      Object.keys(store.state.readTips).length &&
-      updateCurrentUser({
-        meta: { web_stories_onboarding: store.state.readTips },
-      }).catch(actions.persitingReadTipsError);
-  }, [store.state.readTips, actions, prevTips, updateCurrentUser]);
+    updateCurrentUser({
+      meta: { web_stories_onboarding: createBooleanMapFromKey(persistenceKey) },
+    }).catch(actions.persitingReadTipsError);
+  }, [actions, updateCurrentUser, persistenceKey]);
 
   // Components wrapped in a Transition no longer recieve
   // prop updates once they start exiting. To work around
