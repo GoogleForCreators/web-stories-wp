@@ -30,7 +30,6 @@ import {
   StandardViewContentGutter,
 } from '../../../components';
 import TypeaheadSearch from './typeaheadSearch';
-import TelemetryBanner from './telemetryBanner';
 
 const StyledHeader = styled.h2`
   ${TypographyPresets.ExtraExtraLarge};
@@ -104,28 +103,25 @@ const PageHeading = ({
   typeaheadValue = '',
 }) => {
   return (
-    <>
-      <TelemetryBanner />
-      <HeadingBodyWrapper>
-        <StyledHeader>
-          <NavMenuButton showOnlyOnSmallViewport />
-          {defaultTitle}
-        </StyledHeader>
-        <Content centerContent={centerContent}>{children}</Content>
-        {showTypeahead && (
-          <SearchContainer>
-            <SearchInner>
-              <TypeaheadSearch
-                placeholder={searchPlaceholder}
-                currentValue={typeaheadValue}
-                stories={stories}
-                handleChange={handleTypeaheadChange}
-              />
-            </SearchInner>
-          </SearchContainer>
-        )}
-      </HeadingBodyWrapper>
-    </>
+    <HeadingBodyWrapper>
+      <StyledHeader>
+        <NavMenuButton showOnlyOnSmallViewport />
+        {defaultTitle}
+      </StyledHeader>
+      <Content centerContent={centerContent}>{children}</Content>
+      {showTypeahead && (
+        <SearchContainer>
+          <SearchInner>
+            <TypeaheadSearch
+              placeholder={searchPlaceholder}
+              currentValue={typeaheadValue}
+              stories={stories}
+              handleChange={handleTypeaheadChange}
+            />
+          </SearchInner>
+        </SearchContainer>
+      )}
+    </HeadingBodyWrapper>
   );
 };
 

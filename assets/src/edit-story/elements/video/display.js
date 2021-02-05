@@ -38,7 +38,6 @@ const Video = styled.video`
 
 const Image = styled.img`
   position: absolute;
-  max-width: initial;
   max-height: initial;
   object-fit: contain;
   width: ${({ width }) => `${width}px`};
