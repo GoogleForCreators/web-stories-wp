@@ -89,7 +89,7 @@ const SearchInput = (
         aria-hidden={true}
         disabled={disabled}
       >
-        <SearchIcon id={clearId} data-testid={'search-search-icon'} />
+        <SearchIcon id={clearId} data-testid="search-search-icon" />
       </SearchDecoration>
 
       <ClearButton
@@ -99,7 +99,7 @@ const SearchInput = (
         onClick={handleClearInputValue}
         onKeyDown={onClearButtonKeyDown}
       >
-        <ClearIcon id={clearId} data-testid={'clear-search-icon'} />
+        <ClearIcon id={clearId} data-testid="clear-search-icon" />
       </ClearButton>
 
       <ChevronDecoration
@@ -107,7 +107,7 @@ const SearchInput = (
         aria-hidden={activeInput}
         isVisible={!activeInput && inputValue.length > 0}
       >
-        <ChevronIcon isMenuOpen={isOpen} data-testid={'chevron-search-icon'} />
+        <ChevronIcon isMenuOpen={isOpen} data-testid="chevron-search-icon" />
       </ChevronDecoration>
     </InputContainer>
   );

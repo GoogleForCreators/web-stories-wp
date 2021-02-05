@@ -30,6 +30,8 @@ describe('Search <Input />', () => {
   const onClickMock = jest.fn();
   const handleClearInputMock = jest.fn();
 
+  beforeEach(jest.clearAllMocks);
+
   it('should render a <SearchInput /> combobox by default', () => {
     const { getByRole } = renderWithProviders(
       <SearchInput
