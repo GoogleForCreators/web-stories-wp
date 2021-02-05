@@ -81,12 +81,13 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
     expect(mockHandleDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it('should not find a button by default', () => {
+  it('should not render a button if showCloseButton is false', () => {
     const { queryByRole } = renderWithProviders(
       <SnackbarMessage
         aria-label="aria label for my alert"
         message="this is an error"
         handleDismiss={noop}
+        showCloseButton={false}
       />
     );
     const buttons = queryByRole('button');
