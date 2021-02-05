@@ -44,8 +44,8 @@ export const _default = () => (
       <SnackbarContainer customZIndex={number('customZIndex')}>
         <SnackbarMessage
           actionLabel={text('actionLabel', '')}
-          ariaLabel={text(
-            'ariaLabel',
+          aria-label={text(
+            'aria-label',
             'this is my aria label giving my message context for screen reader users'
           )}
           handleAction={action('handle action clicked')}
@@ -63,8 +63,8 @@ export const LightThemeDefault = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
       actionLabel={text('actionLabel', '')}
-      ariaLabel={text(
-        'ariaLabel',
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}
@@ -80,8 +80,8 @@ export const Action = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
       actionLabel={text('actionLabel', 'Retry')}
-      ariaLabel={text(
-        'ariaLabel',
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}
@@ -97,8 +97,8 @@ export const EarlyDismissWithAction = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
       actionLabel={text('actionLabel', 'Retry')}
-      ariaLabel={text(
-        'ariaLabel',
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}
@@ -115,8 +115,8 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
       actionLabel={text('actionLabel', '')}
-      ariaLabel={text(
-        'ariaLabel',
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}
@@ -132,8 +132,8 @@ export const LongMessage = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
       actionLabel={text('actionLabel', 'Retry')}
-      ariaLabel={text(
-        'ariaLabel',
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}

@@ -112,13 +112,13 @@ const CloseButton = styled(Button)`
 
 const SnackbarMessage = ({
   actionLabel,
-  ariaLabel,
   handleAction = () => {},
   handleDismiss,
   isPreventAutoDismiss,
   message,
   removeMessageTimeInterval,
   showCloseButton,
+  ...props
 }) => {
   const autoDismissRef = useRef();
   autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismiss;
@@ -145,11 +145,7 @@ const SnackbarMessage = ({
   }, []);
 
   return (
-    <MessageContainer
-      role="alert"
-      aria-label={ariaLabel}
-      hasAction={Boolean(actionLabel)}
-    >
+    <MessageContainer {...props} role="alert" hasAction={Boolean(actionLabel)}>
       <Message size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {message}
       </Message>
@@ -170,7 +166,7 @@ const SnackbarMessage = ({
 };
 
 SnackbarMessage.propTypes = {
-  ariaLabel: PropTypes.string.isRequired,
+  'aria-label': PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   handleDismiss: PropTypes.func.isRequired,
   actionLabel: PropTypes.string,
