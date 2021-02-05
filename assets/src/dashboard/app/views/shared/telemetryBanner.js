@@ -19,14 +19,10 @@
 import styled from 'styled-components';
 import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { TranslateWithMarkup } from '../../../../i18n';
 import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { useConfig } from '../../config';

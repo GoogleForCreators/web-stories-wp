@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ 
+ * Internal dependencies
  */
-
 /**
  * Internal dependencies
  */

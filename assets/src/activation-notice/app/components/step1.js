@@ -19,17 +19,12 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, _x } from '@wordpress/i18n';
+import { __, _x, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { trackClick } from '../../../tracking';
-import { TranslateWithMarkup } from '../../../i18n';
 import { useConfig } from '../config';
 
 import Paragraph from './paragraph';

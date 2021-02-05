@@ -18,11 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

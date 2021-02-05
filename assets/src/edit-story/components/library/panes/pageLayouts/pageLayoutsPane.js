@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { _x, sprintf } from '@wordpress/i18n';
+import { _x, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
