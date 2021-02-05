@@ -52,7 +52,6 @@ export const _default = () => (
           handleDismiss={action('handle dismiss fired')}
           isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
           message={text('message', 'Sorry! File failed to upload.')}
-          showCloseButton
         />
       </SnackbarContainer>
     </Container>
@@ -71,7 +70,6 @@ export const LightThemeDefault = () => (
       handleDismiss={action('handle dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
-      showCloseButton
     />
   </SnackbarContainer>
 );
@@ -89,6 +87,7 @@ export const Action = () => (
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
       removeMessageTimeInterval={80000}
+      showCloseButton={false}
     />
   </SnackbarContainer>
 );
@@ -106,7 +105,6 @@ export const EarlyDismissWithAction = () => (
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
       removeMessageTimeInterval={80000}
-      showCloseButton
     />
   </SnackbarContainer>
 );
@@ -124,6 +122,7 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
       removeMessageTimeInterval={80000}
+      showCloseButton={false}
     />
   </SnackbarContainer>
 );
@@ -143,7 +142,6 @@ export const LongMessage = () => (
         'message',
         'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
       )}
-      showCloseButton
     />
   </SnackbarContainer>
 );

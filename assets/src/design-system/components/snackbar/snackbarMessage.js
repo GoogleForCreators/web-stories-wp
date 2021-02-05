@@ -176,4 +176,8 @@ SnackbarMessage.propTypes = {
   showCloseButton: PropTypes.bool,
 };
 
+SnackbarMessage.defaultProps = {
+  showCloseButton: true,
+};
+
 export { SnackbarMessage };
