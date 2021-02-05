@@ -159,20 +159,20 @@ function useUploader() {
         'editor',
         'Media'
       );
-      
+
       // Transcoding is enabled, let's give it a try!
       try {
         // TODO: Only transcode & optimize video if needed (criteria TBD).
         const newFile = await transcodeVideo(file);
+        trackTiming();
         additionalData.media_source = 'video-optimization';
         return uploadMedia(newFile, additionalData);
       } catch (err) {
+        trackTiming();
         trackError('video transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
         throw createError('TranscodingError', file.name, message);
-      } finally {
-        trackTiming();
       }
     },
     [
