@@ -23,10 +23,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { DATA_VERSION } from '../../../migration/migrate';
 import { useGlobalKeyDownEffect } from '../../../design-system';
 import { useStory } from '../../app/story';
 import { useSnackbar } from '../../app/snackbar';
-import { DATA_VERSION } from '../../migration/migrate';
 import { dummyImage, dummyVideo } from './dummyData';
 
 const Container = styled.div`
@@ -109,12 +109,12 @@ function DevTools() {
     pages,
     current,
     selection,
-    story: { stylePresets },
+    story: { globalStoryStyles },
   } = reducerState;
   const reducerStateSlice = {
     current,
     selection,
-    story: { stylePresets },
+    story: { globalStoryStyles },
     version: DATA_VERSION,
     pages,
   };

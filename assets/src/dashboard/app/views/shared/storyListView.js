@@ -24,11 +24,11 @@ import { __ } from '@wordpress/i18n';
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { useCallback } from 'react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import {
   StoriesPropType,
   RenameStoryPropType,
@@ -52,7 +52,6 @@ import {
   MoreVerticalButton,
   InlineInputForm,
   Paragraph2,
-  useLayoutContext,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -60,11 +59,7 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import {
-  FULLBLEED_RATIO,
-  DASHBOARD_TOP_MARGIN,
-  DEFAULT_DASHBOARD_TOP_SPACE,
-} from '../../../constants/pageStructure';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import {
   PreviewPage,
   PreviewErrorBoundary,
@@ -74,7 +69,6 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import { getRelativeDisplayDate } from '../../../../date';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 import { titleFormatted } from '../../../utils';
 
@@ -174,15 +168,6 @@ export default function StoryListView({
   storySort,
   storyStatus,
 }) {
-  const {
-    state: { squishContentHeight },
-  } = useLayoutContext();
-
-  // get sticky position from the squishContentHeight (header area),
-  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll & add default top padding.
-  const stickyTopPosition =
-    squishContentHeight - DASHBOARD_TOP_MARGIN + DEFAULT_DASHBOARD_TOP_SPACE;
-
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -207,7 +192,7 @@ export default function StoryListView({
   return (
     <ListView data-testid="story-list-view">
       <Table aria-label={__('List view of created stories', 'web-stories')}>
-        <StickyTableHeader top={stickyTopPosition}>
+        <StickyTableHeader>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}

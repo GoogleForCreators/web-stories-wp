@@ -90,6 +90,7 @@ class Tracking {
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
 			'trackingIdGA4'   => self::TRACKING_ID_GA4,
+			'appVersion'      => WEBSTORIES_VERSION,
 		];
 	}
 

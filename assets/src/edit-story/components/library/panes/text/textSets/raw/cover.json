@@ -2,7 +2,7 @@
   "current": "f9edfdfb-84c5-48eb-8a55-8377d634102e",
   "selection": [],
   "story": {
-    "stylePresets": {
+    "globalStoryStyles": {
       "textStyles": [
         {
           "backgroundColor": {

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -43,6 +44,7 @@ import {
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import useTelemetryOptIn from '../shared/useTelemetryOptIn';
+import useMediaOptimization from '../shared/useMediaOptimization';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import GoogleAdSenseSettings from './googleAdSense';
 import GoogleAdManagerSettings from './googleAdManager';
@@ -50,6 +52,7 @@ import AdNetworkSettings from './adNetwork';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
+import MediaOptimizationSettings from './mediaOptimization';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
@@ -113,10 +116,18 @@ function EditorSettings() {
   } = useConfig();
 
   const {
-    disabled,
+    disabled: disableOptedIn,
     toggleWebStoriesTrackingOptIn,
     optedIn,
   } = useTelemetryOptIn();
+
+  const {
+    disabled: disableMediaOptimization,
+    toggleWebStoriesMediaOptimization,
+    mediaOptimization,
+  } = useMediaOptimization();
+
+  const videoOptimization = useFeature('videoOptimization');
 
   const [activeDialog, setActiveDialog] = useState(null);
   const [activeLogo, setActiveLogo] = useState('');
@@ -348,12 +359,10 @@ function EditorSettings() {
   return (
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
-        <Layout.Squishable>
-          <PageHeading
-            defaultTitle={__('Settings', 'web-stories')}
-            showTypeahead={false}
-          />
-        </Layout.Squishable>
+        <PageHeading
+          defaultTitle={__('Settings', 'web-stories')}
+          showTypeahead={false}
+        />
         <Layout.Scrollable>
           <Main>
             {canManageSettings && (
@@ -375,10 +384,17 @@ function EditorSettings() {
               />
             )}
             <TelemetrySettings
-              disabled={disabled}
+              disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
               selected={optedIn}
             />
+            {videoOptimization && canUploadFiles && (
+              <MediaOptimizationSettings
+                disabled={disableMediaOptimization}
+                onCheckboxSelected={toggleWebStoriesMediaOptimization}
+                selected={mediaOptimization}
+              />
+            )}
             {canManageSettings && (
               <>
                 <AdNetworkSettings

@@ -20,12 +20,13 @@
 * [Feature Flags](./feature-flags.md)
 * [Design Docs](./design-docs.md)
 * [External Template Creation](./external-template-creation.md)
+* [Page Layouts](./page-layouts.md)
 
 ## Testing
 
 * [Manual Testing (QA)](./testing-qa.md)
 * [Unit Tests](./unit-tests.md)
-* [Integration Tests](./integration-tests.md)
+* [Integration Tests (Karma)](./integration-tests.md)
 * [End-to-End Tests](./e2e-tests.md)
 * [Accessibility Testing](./accessibility-testiing.md)
 * [Testing Environments](./testing-environments.md)

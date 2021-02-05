@@ -17,9 +17,10 @@
 /**
  * Internal dependencies
  */
-import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
+import { DATA_VERSION, migrate } from '../../migration/migrate';
+import { getTimeTracker } from '../../tracking';
 
-export async function loadTemplate(title, imageBaseUrl) {
+async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
     /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}.json`
   );
@@ -34,7 +35,7 @@ export async function loadTemplate(title, imageBaseUrl) {
         }
         if (elem?.resource?.src) {
           elem.resource.src = elem.resource.src.replace(
-            'https://replaceme.com/',
+            '__WEB_STORIES_TEMPLATE_BASE_URL__',
             imageBaseUrl
           );
         }
@@ -49,8 +50,8 @@ export async function loadTemplate(title, imageBaseUrl) {
   };
 }
 
-export default async function loadTemplates(imageBaseUrl) {
-  const templates = [
+async function getTemplates(imageBaseUrl) {
+  const templateNames = [
     'beauty',
     'cooking',
     'diy',
@@ -61,11 +62,19 @@ export default async function loadTemplates(imageBaseUrl) {
     'wellbeing',
   ];
 
-  const result = await Promise.all(
-    templates.map(async (title) => {
+  const trackTiming = getTimeTracker('load', 'dashboard', 'Templates');
+
+  const templates = await Promise.all(
+    templateNames.map(async (title) => {
       return [title, await loadTemplate(title, imageBaseUrl)];
     })
   );
 
-  return Object.fromEntries(result);
+  const result = Object.fromEntries(templates);
+
+  trackTiming();
+
+  return result;
 }
+
+export default getTemplates;

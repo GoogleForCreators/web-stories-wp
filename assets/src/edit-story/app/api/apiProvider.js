@@ -28,16 +28,16 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import { DATA_VERSION } from '../../../migration';
 import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
-import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
 import getAllPageLayouts from './getAllPageLayouts';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck, metaBoxes },
+    api: { stories, media, link, users, statusCheck, metaBoxes, currentUser },
     encodeMarkup,
     cdnURL,
     assetsURL,
@@ -73,10 +73,11 @@ function APIProvider({ children }) {
     ({
       pages,
       featuredMedia,
-      stylePresets,
+      globalStoryStyles,
       publisherLogo,
       autoAdvance,
       defaultPageDuration,
+      currentStoryStyles,
       content,
       author,
       ...rest
@@ -87,9 +88,10 @@ function APIProvider({ children }) {
           pages,
           autoAdvance,
           defaultPageDuration,
+          currentStoryStyles,
         },
         featured_media: featuredMedia.id,
-        style_presets: stylePresets,
+        style_presets: globalStoryStyles,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
         author: author.id,
@@ -263,6 +265,12 @@ function APIProvider({ children }) {
     [users]
   );
 
+  const getCurrentUser = useCallback(() => {
+    return apiFetch({
+      path: currentUser,
+    });
+  }, [currentUser]);
+
   // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
   const saveMetaBoxes = useCallback(
     (story, formData) => {
@@ -272,8 +280,7 @@ function APIProvider({ children }) {
         story.comment_status ? ['comment_status', story.comment_status] : false,
         story.ping_status ? ['ping_status', story.ping_status] : false,
         story.sticky ? ['sticky', story.sticky] : false,
-        // TODO: Adapt once https://github.com/google/web-stories-wp/pull/5039 is merged.
-        story.author ? ['post_author', story.author] : false,
+        story.author ? ['post_author', story.author.id] : false,
       ].filter(Boolean);
 
       additionalData.forEach(([key, value]) => formData.append(key, value));
@@ -324,6 +331,7 @@ function APIProvider({ children }) {
       saveMetaBoxes,
       getStatusCheck,
       getPageLayouts,
+      getCurrentUser,
     },
   };
 

@@ -47,6 +47,7 @@ describe('Raw template files', () => {
   );
 
   // @see https://github.com/google/web-stories-wp/pull/4516
+  // @see https://github.com/google/web-stories-wp/pull/6159
   it.each(templates)(
     '%s template should contain replaceable URLs',
     (template) => {
@@ -64,7 +65,7 @@ describe('Raw template files', () => {
         for (const element of elements) {
           if (element?.resource?.src) {
             expect(element?.resource?.src).toStartWith(
-              `https://replaceme.com/images/templates/${templateName}`
+              `__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/${templateName}`
             );
           }
         }

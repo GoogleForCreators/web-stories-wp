@@ -40,7 +40,7 @@ import createSolid from '../../../../../utils/createSolid';
 
 jest.mock('../utils');
 
-function setupPanel(extraStylePresets, extraStateProps) {
+function setupPanel(extraStylePresets, extraStateProps, extraStoryPresets) {
   const updateStory = jest.fn();
   const updateElementsById = jest.fn();
   const updateCurrentPageProperties = jest.fn();
@@ -65,9 +65,13 @@ function setupPanel(extraStylePresets, extraStateProps) {
       selectedElements: [textElement],
       ...extraStateProps,
       story: {
-        stylePresets: {
+        globalStoryStyles: {
           ...{ colors: [], textStyles: [] },
           ...extraStylePresets,
+        },
+        currentStoryStyles: {
+          colors: [],
+          ...extraStoryPresets,
         },
       },
     },
@@ -103,8 +107,10 @@ function setupPanel(extraStylePresets, extraStateProps) {
 }
 
 describe('Panels/Preset', () => {
-  const EDIT_BUTTON_LABEL = 'Edit color presets';
-  const APPLY_PRESET = 'Apply color preset';
+  const EDIT_BUTTON_LABEL = 'Edit colors';
+  const APPLY_GLOBAL_PRESET = 'Apply global color';
+  const ADD_LOCAL_LABEL = 'Add local color';
+  const ADD_GLOBAL_LABEL = 'Add global color';
   const PANEL_LABEL = 'Saved colors';
   const TEST_COLOR = {
     color: {
@@ -179,13 +185,20 @@ describe('Panels/Preset', () => {
   });
 
   describe('Panels/Preset/Header', () => {
-    it('should display only Add button if no presets exist', () => {
+    it('should not display edit button if no presets exist', () => {
       const { queryByLabelText } = setupPanel();
-      const addButton = queryByLabelText('Add color preset');
-      expect(addButton).toBeInTheDocument();
 
       const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
       expect(editButton).not.toBeInTheDocument();
+    });
+
+    it('should display buttons for adding local/global color if no presets exist', () => {
+      const { queryByLabelText } = setupPanel();
+      const addLocal = queryByLabelText(ADD_LOCAL_LABEL);
+      expect(addLocal).toBeInTheDocument();
+
+      const addGlobal = queryByLabelText(ADD_GLOBAL_LABEL);
+      expect(addGlobal).toBeInTheDocument();
     });
 
     it('should have functional Edit button if relevant presets exist', () => {
@@ -232,15 +245,30 @@ describe('Panels/Preset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add color preset');
+      // Global color for the current story.
+      const addButton = queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
+          },
+        },
+      });
+
+      updateStory.mockReset();
+
+      // Local color for all stories.
+      const addLocal = queryByLabelText(ADD_LOCAL_LABEL);
+      fireEvent.click(addLocal);
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          currentStoryStyles: {
+            colors: [TEST_COLOR_2],
           },
         },
       });
@@ -268,15 +296,29 @@ describe('Panels/Preset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add color preset');
+      // Global color.
+      const addButton = queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
+          },
+        },
+      });
+
+      updateStory.mockReset();
+      // Color for current story.
+      const addLocal = queryByLabelText(ADD_LOCAL_LABEL);
+      fireEvent.click(addLocal);
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          currentStoryStyles: {
+            colors: [TEST_COLOR_2],
           },
         },
       });
@@ -303,15 +345,28 @@ describe('Panels/Preset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add color preset');
+      const addButton = queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
+          },
+        },
+      });
+
+      updateStory.mockReset();
+      // Color for current story.
+      const addLocal = queryByLabelText(ADD_LOCAL_LABEL);
+      fireEvent.click(addLocal);
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          currentStoryStyles: {
+            colors: [TEST_COLOR_2],
           },
         },
       });
@@ -336,15 +391,28 @@ describe('Panels/Preset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add color preset');
+      const addButton = queryByLabelText(ADD_GLOBAL_LABEL);
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
+          },
+        },
+      });
+
+      updateStory.mockReset();
+      // Color for current story.
+      const addLocal = queryByLabelText(ADD_LOCAL_LABEL);
+      fireEvent.click(addLocal);
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          currentStoryStyles: {
+            colors: [TEST_COLOR_2],
           },
         },
       });
@@ -356,20 +424,25 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR, TEST_COLOR_2],
       };
+      const extraStoryPresets = {
+        colors: [TEST_COLOR, TEST_COLOR_2],
+      };
       const { getByLabelText, queryAllByLabelText, updateStory } = setupPanel(
-        extraStylePresets
+        extraStylePresets,
+        null,
+        extraStoryPresets
       );
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
       fireEvent.click(editButton);
 
-      const deletePresets = queryAllByLabelText('Delete color preset');
+      const deletePresets = queryAllByLabelText('Delete global color');
       expect(deletePresets[0]).toBeDefined();
 
       fireEvent.click(deletePresets[0]);
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [TEST_COLOR_2],
             textStyles: [],
           },
@@ -393,7 +466,7 @@ describe('Panels/Preset', () => {
         extraStylePresets,
         extraStateProps
       );
-      const applyPreset = getByRole('button', { name: APPLY_PRESET });
+      const applyPreset = getByRole('button', { name: APPLY_GLOBAL_PRESET });
       expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
@@ -411,7 +484,7 @@ describe('Panels/Preset', () => {
         colors: [TEST_COLOR],
       };
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
-      const applyPreset = getByRole('button', { name: APPLY_PRESET });
+      const applyPreset = getByRole('button', { name: APPLY_GLOBAL_PRESET });
       expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
@@ -438,7 +511,7 @@ describe('Panels/Preset', () => {
       });
 
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
-      const applyPreset = getByRole('button', { name: APPLY_PRESET });
+      const applyPreset = getByRole('button', { name: APPLY_GLOBAL_PRESET });
       expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
@@ -449,26 +522,45 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         colors: [LINEAR_COLOR],
       };
+      const extraStoryPresets = {
+        colors: [LINEAR_COLOR],
+      };
 
       presetHasGradient.mockImplementation(({ type }) => {
         return Boolean(type) && 'solid' !== type;
       });
 
       const { getByLabelText, getByRole, updateStory } = setupPanel(
-        extraStylePresets
+        extraStylePresets,
+        null,
+        extraStoryPresets
       );
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
       fireEvent.click(editButton);
 
-      const deletePreset = getByRole('button', { name: 'Delete color preset' });
+      const deletePreset = getByRole('button', { name: 'Delete global color' });
 
       fireEvent.click(deletePreset);
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [],
             textStyles: [],
+          },
+        },
+      });
+
+      updateStory.mockReset();
+      const deleteStoryPreset = getByRole('button', {
+        name: 'Delete local color',
+      });
+      fireEvent.click(deleteStoryPreset);
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          currentStoryStyles: {
+            colors: [],
           },
         },
       });
@@ -493,7 +585,9 @@ describe('Panels/Preset', () => {
         extraStateProps
       );
 
-      const applyPresetButtons = getAllByRole('button', { name: APPLY_PRESET });
+      const applyPresetButtons = getAllByRole('button', {
+        name: APPLY_GLOBAL_PRESET,
+      });
       const applyPreset1 = applyPresetButtons[0];
       expect(applyPreset1).toBeDefined();
 
@@ -511,6 +605,9 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR],
       };
+      const extraStoryPresets = {
+        colors: [LINEAR_COLOR],
+      };
       const extraStateProps = {
         selectedElements: [
           {
@@ -520,10 +617,12 @@ describe('Panels/Preset', () => {
       };
       const { getByRole, updateCurrentPageProperties } = setupPanel(
         extraStylePresets,
-        extraStateProps
+        extraStateProps,
+        extraStoryPresets
       );
 
-      const applyPreset = getByRole('button', { name: APPLY_PRESET });
+      // Global color.
+      const applyPreset = getByRole('button', { name: APPLY_GLOBAL_PRESET });
       expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
@@ -531,6 +630,19 @@ describe('Panels/Preset', () => {
       expect(updateCurrentPageProperties).toHaveBeenCalledWith({
         properties: {
           backgroundColor: TEST_COLOR,
+        },
+      });
+
+      // Local color.
+      updateCurrentPageProperties.mockReset();
+      const applyStoryPreset = getByRole('button', {
+        name: 'Apply local color',
+      });
+      fireEvent.click(applyStoryPreset);
+      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(1);
+      expect(updateCurrentPageProperties).toHaveBeenCalledWith({
+        properties: {
+          backgroundColor: LINEAR_COLOR,
         },
       });
     });

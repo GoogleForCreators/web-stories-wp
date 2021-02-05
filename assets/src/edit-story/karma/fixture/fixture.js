@@ -25,14 +25,14 @@ import Modal from 'react-modal';
 /**
  * Internal dependencies
  */
-import FixtureEvents from '../../../../../karma/fixture/events';
+import { DATA_VERSION } from '../../../migration';
+import FixtureEvents from '../../../karma-fixture/events';
 import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
 import FileContext from '../../app/file/context';
 import Layout from '../../components/layout';
-import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
@@ -133,7 +133,7 @@ export class Fixture {
       'borderRadius',
       'borderStyle',
       'captions',
-      'stylePresets',
+      'globalStoryStyles',
       'colorPresets',
       'imageAccessibility',
       'layerStyle',
@@ -284,14 +284,17 @@ export class Fixture {
     // wait for the media gallery items to load, as many tests assume they're
     // there
     let mediaElements;
-    await waitFor(() => {
-      mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
-      if (!mediaElements?.length) {
-        throw new Error(
-          `Not ready: only found ${mediaElements?.length} media elements`
-        );
-      }
-    });
+    await waitFor(
+      () => {
+        mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
+        if (!mediaElements?.length) {
+          throw new Error(
+            `Not ready: only found ${mediaElements?.length} media elements`
+          );
+        }
+      },
+      { timeout: 5000 }
+    );
 
     // Check to see if Roboto font is loaded.
     await waitFor(async () => {
@@ -743,6 +746,19 @@ class APIProviderFixture {
 
       const getAuthors = useCallback(() => asyncResponse(users), [users]);
 
+      const getCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
@@ -770,6 +786,7 @@ class APIProviderFixture {
           updateMedia,
           getStatusCheck,
           getPageLayouts,
+          getCurrentUser,
         },
       };
       return (

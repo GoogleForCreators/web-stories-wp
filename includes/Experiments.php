@@ -350,6 +350,7 @@ class Experiments {
 				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
 				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
@@ -371,7 +372,7 @@ class Experiments {
 				'name'        => 'videoOptimization',
 				'label'       => __( 'Video optimization', 'web-stories' ),
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
-				'group'       => 'editor',
+				'group'       => 'general',
 			],
 		];
 	}

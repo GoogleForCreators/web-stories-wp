@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
+import { BREAKPOINTS } from './breakpoints';
 import * as TYPOGRAPHY from './typography';
 import * as WP_ADMIN from './wpAdmin';
-import { Z_INDEX } from './zIndex';
 
 export const THEME_CONSTANTS = {
+  BREAKPOINTS,
   TYPOGRAPHY,
-  Z_INDEX,
   WP_ADMIN,
 };
