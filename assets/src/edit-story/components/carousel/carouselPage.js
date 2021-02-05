@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
 import { __, sprintf } from '@web-stories-wp/i18n';
 
