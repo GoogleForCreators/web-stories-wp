@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
 
-export const defaultTypographyStyle = ({ theme }) => css`
-  font-family: ${theme.typography.family.primary};
-  color: ${theme.colors.fg.primary};
-  margin: 0;
-  padding: 0;
+const GB_IN_BYTES = 1024 * 1024 * 1024;
 
-  &:focus {
-    box-shadow: none;
-  }
-`;
+export const MEDIA_TRANSCODING_MAX_FILE_SIZE = 2 * GB_IN_BYTES;
