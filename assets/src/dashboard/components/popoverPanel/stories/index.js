@@ -20,7 +20,6 @@
 import { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
-
 import { __ } from '@web-stories-wp/i18n';
 
 /**
