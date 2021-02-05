@@ -29,7 +29,7 @@ import {
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
-import { trackError, getTimeTracker } from '../../../../tracking';
+import { trackError, trackEvent, getTimeTracker } from '../../../../tracking';
 
 function useUploadMedia({ media, setMedia }) {
   const { uploadFile } = useUploader();
@@ -90,6 +90,9 @@ function useUploadMedia({ media, setMedia }) {
       try {
         const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => {
+            trackEvent('upload_media', 'editor', '', '', {
+              type: localFile.file.type,
+            });
             const trackTiming = getTimeTracker(
               'upload_media',
               'editor',

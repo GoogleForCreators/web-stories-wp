@@ -31,7 +31,7 @@ import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
-import { trackError, getTimeTracker } from '../../../tracking';
+import { trackError, trackEvent, getTimeTracker } from '../../../tracking';
 
 function useUploader() {
   const {
@@ -118,6 +118,7 @@ function useUploader() {
       };
 
       if (canTranscodeFile(file)) {
+        trackEvent('video_transcoding', 'editor');
         const trackTiming = getTimeTracker(
           'video transcoding',
           'editor',
