@@ -36,6 +36,25 @@ describe('Library Media Tab', () => {
     fixture.restore();
   });
 
+  describe('CUJ: Creator Can Add Image/Video to Page: Can add media', () => {
+    it('should not add media when dragged out of Page from the library', async () => {
+      const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+      const mediaItem = fixture.editor.library.media.item(0);
+
+      const { width } = mediaItem.getBoundingClientRect();
+
+      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+        moveRel(mediaItem, 10, 10),
+        down(),
+        moveRel(bgFrame, -width, 0, { steps: 30 }),
+        up(),
+      ]);
+
+      // Only background, no media added.
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+    });
+  });
+
   describe('CUJ: Creator Can Add Image/Video to Page: Can edit/delete media', () => {
     it('should open the edit/delete menu', async () => {
       const mediaItem = fixture.editor.library.media.item(0);
