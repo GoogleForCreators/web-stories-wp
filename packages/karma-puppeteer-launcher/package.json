@@ -8,6 +8,6 @@
   "main": "./src/index.js",
   "dependencies": {
     "karma": "^5.2.3",
-    "puppeteer": "^5.3.1"
+    "puppeteer": "^7.0.1"
   }
 }
