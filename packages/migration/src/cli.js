@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console, node/shebang */
-
 /**
  * Internal dependencies
  */
@@ -31,6 +29,5 @@ if (!dir) {
 
 updateTemplates(dir);
 
+// eslint-disable-next-line no-console
 console.log("Files updated! Don't forget to run prettier!");
-
-/* eslint-enable no-console, node/shebang */

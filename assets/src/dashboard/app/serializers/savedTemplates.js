@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { migrate, DATA_VERSION } from '../../../migration/migrate';
+import { migrate, DATA_VERSION } from '@web-stories-wp/migration';
 
 // TODO: this is mostly placeholder to generally lend shape to saved templates that matches stories. We do no have stories formatted and returned in saved template API yet
 export default function reshapeSavedTemplateObject(originalSavedTemplateData) {

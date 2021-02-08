@@ -19,11 +19,11 @@
  */
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { migrate, DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
-import { migrate, DATA_VERSION } from '../../../../migration/migrate';
 import { StoryPropType } from '../../../types';
 
 const Title = styled.h2`
