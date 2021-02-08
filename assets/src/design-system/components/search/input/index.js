@@ -48,7 +48,7 @@ const SearchInput = (
   },
   ref
 ) => {
-  // Avoid conditional rendering in this input because it causes rerendering which if the keyboard is getting used to focus the input will remove the visible focus style.
+  // Avoid conditional rendering in this input because rerendering will remove the focus styling
 
   const activeInput = useMemo(() => inputValue.length > 0 && isOpen, [
     isOpen,
