@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 const titleFormatted = (rawTitle) => {
   return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
