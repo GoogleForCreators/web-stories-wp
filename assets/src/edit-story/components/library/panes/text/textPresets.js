@@ -33,13 +33,13 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 // Measured in editor. As small as you can make
 // width with preset font before line wraps
 const DEFAULT_WIDTH = {
-  DEFAULT: 160,
-  HEADING_1: 181,
-  HEADING_2: 139,
-  HEADING_3: 114,
+  DEFAULT: 165,
+  HEADING_1: 186,
+  HEADING_2: 145,
+  HEADING_3: 120,
   PARAGRAPH: 200,
-  CAPTION: 64,
-  LABEL: 52,
+  CAPTION: 70,
+  LABEL: 56,
 };
 
 // @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
