@@ -22,11 +22,10 @@ import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
 import { DATA_VERSION } from '@web-stories-wp/migration';
-
+import { FixtureEvents } from '@web-stories-wp/karma-fixture';
 /**
  * Internal dependencies
  */
-import FixtureEvents from '../../../karma-fixture/events';
 import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
