@@ -121,6 +121,21 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   }
 `;
 
+const ZOOM_PADDING = '72px';
+const PaddedPage = styled.div`
+  width: calc(
+    var(--page-width-px) +
+      ${({ addMargin }) => (addMargin ? ZOOM_PADDING : '0')}
+  );
+  height: calc(
+    var(--fullbleed-height-px) +
+      ${({ addMargin }) => (addMargin ? ZOOM_PADDING : '0')}
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 // Overflow is not hidden for media edit layer.
 const PageAreaWithOverflow = styled.div`
   ${({ background }) => generatePatternStyles(background)}
@@ -129,6 +144,7 @@ const PageAreaWithOverflow = styled.div`
   width: var(--page-width-px);
   height: var(--fullbleed-height-px);
   border-radius: 4px;
+
   ${({ isControlled }) =>
     isControlled &&
     css`
@@ -258,9 +274,17 @@ const PageArea = forwardRef(function PageArea(
     background,
     isControlled = false,
     hideScrollbars = false,
+    className = '',
   },
   ref
 ) {
+  const { hasVerticalOverflow, hasHorizontalOverflow } = useLayout(
+    ({ state: { hasVerticalOverflow, hasHorizontalOverflow } }) => ({
+      hasVerticalOverflow,
+      hasHorizontalOverflow,
+    })
+  );
+
   return (
     <PageAreaFullbleedContainer
       ref={fullbleedRef}
@@ -268,16 +292,19 @@ const PageArea = forwardRef(function PageArea(
       aria-label={__('Fullbleed area', 'web-stories')}
       role="region"
       hideScrollbars={hideScrollbars}
+      className={className}
     >
-      <PageAreaWithOverflow
-        showOverflow={showOverflow}
-        background={background}
-        isControlled={isControlled}
-      >
-        <PageAreaSafeZone ref={ref} data-testid="safezone">
-          {children}
-        </PageAreaSafeZone>
-      </PageAreaWithOverflow>
+      <PaddedPage addMargin={hasHorizontalOverflow && hasVerticalOverflow}>
+        <PageAreaWithOverflow
+          showOverflow={showOverflow}
+          background={background}
+          isControlled={isControlled}
+        >
+          <PageAreaSafeZone ref={ref} data-testid="safezone">
+            {children}
+          </PageAreaSafeZone>
+        </PageAreaWithOverflow>
+      </PaddedPage>
       {overlay}
     </PageAreaFullbleedContainer>
   );
@@ -291,6 +318,7 @@ PageArea.propTypes = {
   background: PropTypes.object,
   isControlled: PropTypes.bool,
   hideScrollbars: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export {
