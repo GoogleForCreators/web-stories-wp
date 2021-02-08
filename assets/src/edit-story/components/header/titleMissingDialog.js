@@ -19,16 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { TranslateWithMarkup } from '../../../i18n';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';

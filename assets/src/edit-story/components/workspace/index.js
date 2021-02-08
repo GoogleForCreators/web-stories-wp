@@ -21,14 +21,12 @@ import Inspector from '../inspector';
 import Canvas from '../canvas';
 import RichTextProvider from '../richText/provider';
 import ErrorBoundary from '../errorBoundary';
-import { HelpCenter } from '../helpCenter';
 import { CanvasArea, InspectorArea } from './layout';
 
 function Workspace() {
   return (
     <RichTextProvider>
       <CanvasArea>
-        <HelpCenter />
         <ErrorBoundary>
           <Canvas />
         </ErrorBoundary>

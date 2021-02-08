@@ -18,6 +18,8 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
@@ -28,7 +30,6 @@ import {
   VisuallyHidden,
 } from '../../../../design-system';
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
-import { TranslateWithMarkup } from '../../../../i18n';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';

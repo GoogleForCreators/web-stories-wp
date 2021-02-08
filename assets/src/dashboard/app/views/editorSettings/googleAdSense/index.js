@@ -19,11 +19,8 @@
  */
 import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -44,8 +41,6 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
-import { TranslateWithMarkup } from '../../../../../i18n';
-import { trackClick } from '../../../../../tracking';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(

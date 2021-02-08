@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { migrate } from '../../../../../../migration';
+import { migrate } from '@web-stories-wp/migration';
 
 function updateMinMax(minMax, element) {
   // Purposely mutating object so passed

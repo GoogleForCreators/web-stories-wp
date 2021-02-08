@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
 
 /**
  * External dependencies

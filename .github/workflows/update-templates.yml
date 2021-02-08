@@ -39,13 +39,8 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Update templates and FTUE story
+      - name: Update story data (templates, text sets, FTUE)
         run: npm run workflow:migrate
-
-      - name: Update text sets
-        run: |
-          npm run workflow:text-sets
-          npx prettier --write assets/src/edit-story/components/library/panes/text/textSets/raw/*.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
