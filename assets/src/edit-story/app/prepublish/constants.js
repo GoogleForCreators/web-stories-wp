@@ -15,12 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf, _n } from '@wordpress/i18n';
-/**
  * External dependencies
  */
+import { __, sprintf, _n } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 export const MIN_STORY_PAGES = 4;

@@ -27,7 +27,6 @@ import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 import { Headline, THEME_CONSTANTS } from '../../../../design-system';
 import TypeaheadSearch from './typeaheadSearch';
-import TelemetryBanner from './telemetryBanner';
 
 const StyledHeadline = styled(Headline)`
   display: flex;
@@ -91,31 +90,28 @@ const PageHeading = ({
   typeaheadValue = '',
 }) => {
   return (
-    <>
-      <TelemetryBanner />
-      <HeadingBodyWrapper>
-        <StyledHeadline
-          as="h2"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE}
-        >
-          <NavMenuButton showOnlyOnSmallViewport />
-          {defaultTitle}
-        </StyledHeadline>
-        <Content centerContent={centerContent}>{children}</Content>
-        {showTypeahead && (
-          <SearchContainer>
-            <SearchInner>
-              <TypeaheadSearch
-                placeholder={searchPlaceholder}
-                currentValue={typeaheadValue}
-                stories={stories}
-                handleChange={handleTypeaheadChange}
-              />
-            </SearchInner>
-          </SearchContainer>
-        )}
-      </HeadingBodyWrapper>
-    </>
+    <HeadingBodyWrapper>
+      <StyledHeadline
+        as="h2"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE}
+      >
+        <NavMenuButton showOnlyOnSmallViewport />
+        {defaultTitle}
+      </StyledHeadline>
+      <Content centerContent={centerContent}>{children}</Content>
+      {showTypeahead && (
+        <SearchContainer>
+          <SearchInner>
+            <TypeaheadSearch
+              placeholder={searchPlaceholder}
+              currentValue={typeaheadValue}
+              stories={stories}
+              handleChange={handleTypeaheadChange}
+            />
+          </SearchInner>
+        </SearchContainer>
+      )}
+    </HeadingBodyWrapper>
   );
 };
 

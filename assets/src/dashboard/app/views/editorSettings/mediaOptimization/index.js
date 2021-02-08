@@ -24,7 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

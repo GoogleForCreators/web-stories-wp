@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export const Z_INDEX = {
-  SNACKBAR: 15,
-};
+const GB_IN_BYTES = 1024 * 1024 * 1024;
+
+export const MEDIA_TRANSCODING_MAX_FILE_SIZE = 2 * GB_IN_BYTES;

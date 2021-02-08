@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-export { default as TranslateWithMarkup } from './translateWithMarkup';
+/**
+ * Internal dependencies
+ */
+import { Toggle } from '..';
+import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+
+describe('Toggle', () => {
+  it('should render the toggle', () => {
+    const { getByTestId } = renderWithProviders(
+      <Toggle data-testid="toggle" />
+    );
+
+    expect(getByTestId('toggle')).toBeInTheDocument();
+  });
+});

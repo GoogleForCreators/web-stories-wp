@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Copyright 2020 Google LLC
  *
@@ -15,22 +14,5 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console, node/shebang */
-
-/**
- * Internal dependencies
- */
-import updateTemplates from './utils/updateTemplates.js';
-
-const args = process.argv.slice(2);
-const dir = args[0] ? args[0] : undefined;
-
-if (!dir) {
-  throw new Error('Directory path was not provided');
-}
-
-updateTemplates(dir);
-
-console.log("Files updated! Don't forget to run prettier!");
-
-/* eslint-enable no-console, node/shebang */
+export { default as TranslateWithMarkup } from './translateWithMarkup';
+export { __, _x, _n, _nx, sprintf } from '@wordpress/i18n';

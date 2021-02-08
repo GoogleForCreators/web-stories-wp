@@ -20,12 +20,9 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
+import { formatDate, toDate, isValid } from '@web-stories-wp/date';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -36,8 +33,6 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
-import { formatDate, toDate, isValid } from '../../../../../../date';
-import { trackError } from '../../../../../../tracking';
 
 const THUMBNAIL_WIDTH = 152;
 

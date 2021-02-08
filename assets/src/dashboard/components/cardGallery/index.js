@@ -19,10 +19,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

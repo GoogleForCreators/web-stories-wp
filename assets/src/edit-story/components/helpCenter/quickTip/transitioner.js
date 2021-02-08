@@ -17,70 +17,81 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../../animation';
+import { ScheduledTransition } from '../scheduledTransition';
+import { TRANSITION_DURATION, Z_INDEX } from '../constants';
 
-const DURATION = 600;
+const DELAY = 80;
+const DURATION = TRANSITION_DURATION - DELAY;
 
 const Opacity = styled.div``;
+
+const enterStyles = () => css`
+  transition-delay: ${DELAY}ms;
+  transform: none;
+  ${Opacity} {
+    opacity: 1;
+  }
+`;
+
+const exitStyles = ({ isLeftToRightTransition }) => css`
+  position: absolute;
+  bottom: 0;
+
+  ${Opacity} {
+    opacity: 0;
+  }
+
+  ${isLeftToRightTransition
+    ? css`
+        transform: translateX(-100%);
+      `
+    : css`
+        transform: translateX(100%);
+      `}
+`;
+
+const transitionStyles = {
+  entering: enterStyles,
+  entered: enterStyles,
+  exiting: exitStyles,
+  exited: exitStyles,
+};
 
 const Manager = styled.div`
   position: relative;
   color: ${({ theme }) => theme.colors.fg.primary};
   background-color: ${({ theme }) => theme.colors.bg.primary};
-  transition: ${DURATION / 1000}s transform ${BEZIER.default};
+  transition: transform ${DURATION}ms ${BEZIER.default};
   transform-origin: 50% 50%;
-
+  z-index: ${Z_INDEX.QUICK_TIP};
   ${({ isLeftToRightTransition }) =>
     isLeftToRightTransition
       ? css`
-          transform: translateX(-100%);
+          transform: translateX(100%);
         `
       : css`
-          transform: translateX(100%);
+          transform: translateX(-100%);
         `}
 
   ${Opacity} {
     opacity: 0.6;
-    transition: ${DURATION / 1000}s opacity ${BEZIER.default};
+    transition: opacity ${DURATION}ms ${BEZIER.default};
   }
 
-  ${({ state }) =>
-    ['entered'].includes(state) &&
-    css`
-      transition-delay: 0.01s;
-      transform: none;
-      ${Opacity} {
-        opacity: 1;
-      }
-    `};
-
-  ${({ state }) =>
-    ['exiting', 'exited'].includes(state) &&
-    css`
-      position: absolute;
-      bottom: 0;
-      ${({ isLeftToRightTransition }) =>
-        isLeftToRightTransition
-          ? css`
-              transform: translateX(100%);
-            `
-          : css`
-              transform: translateX(-100%);
-            `}
-    `};
+  ${({ state, ...props }) => transitionStyles[state]?.(props)};
 `;
 
 export function Transitioner({ children, isLeftToRightTransition, ...props }) {
   return (
-    <Transition
+    <ScheduledTransition
       {...props}
       timeout={{
-        enter: 0,
+        enter: DURATION + DELAY,
         exit: DURATION,
       }}
       mountOnEnter
@@ -94,12 +105,11 @@ export function Transitioner({ children, isLeftToRightTransition, ...props }) {
           <Opacity>{children}</Opacity>
         </Manager>
       )}
-    </Transition>
+    </ScheduledTransition>
   );
 }
 
 Transitioner.propTypes = {
-  key: PropTypes.string.required,
   children: PropTypes.node,
   isLeftToRightTransition: PropTypes.bool,
 };

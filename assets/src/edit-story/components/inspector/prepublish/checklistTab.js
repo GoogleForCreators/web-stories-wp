@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useMemo, Fragment } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -126,10 +122,11 @@ const Checkmark = styled(CheckmarkIcon)`
   margin-bottom: 16px;
   height: 64px;
   width: 64px;
-  padding: 5px 12px 5px 15px;
+  padding: 8px 15px 5px 17px;
   border-radius: 50%;
   color: ${({ theme }) => theme.colors.fg.positive};
   border: 1px solid ${({ theme }) => theme.colors.fg.positive};
+  overflow: visible;
 `;
 
 const EmptyHeading = styled.h1`

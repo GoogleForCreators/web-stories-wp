@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
@@ -43,7 +44,6 @@ import {
   RenameStoryPropType,
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
-import { getRelativeDisplayDate } from '../../../../date';
 import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';

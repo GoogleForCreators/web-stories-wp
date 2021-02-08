@@ -17,47 +17,60 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../../animation';
+import { ScheduledTransition } from '../scheduledTransition';
+import { TRANSITION_DURATION, Z_INDEX } from '../constants';
 
-const DURATION = 500;
+const DURATION = 1.2 * TRANSITION_DURATION;
+
+const enterStyles = css`
+  opacity: 1;
+  transform: none;
+`;
+const exitStyles = css`
+  position: absolute;
+  bottom: 0;
+  opacity: 0.6;
+  transform: scale(0.96);
+`;
+
+const transitionStyles = {
+  entering: enterStyles,
+  entered: enterStyles,
+  exiting: exitStyles,
+  exited: exitStyles,
+};
 
 const Manager = styled.div`
   position: relative;
   color: ${({ theme }) => theme.colors.fg.primary};
-  transition: ${DURATION / 1000}s transform ${BEZIER.default},
-    ${DURATION / 1000}s opacity ${BEZIER.default};
-  opacity: 0.8;
-  transform: translateX(-40px) scale(0.99);
+  opacity: 0.6;
+  transform-origin: 50% 50%;
+  transform: scale(0.96);
+  transition: transform ${DURATION}ms ${BEZIER.default},
+    opacity ${DURATION}ms ${BEZIER.default};
+  z-index: ${Z_INDEX.MENU};
 
-  ${({ state }) =>
-    ['entered'].includes(state) &&
-    css`
-      opacity: 1;
-      transform: none;
-    `};
-
-  ${({ state }) =>
-    ['exiting', 'exited'].includes(state) &&
-    css`
-      position: absolute;
-      bottom: 0;
-    `};
+  ${({ state }) => transitionStyles[state]};
 `;
 
 export function Transitioner({ children, ...props }) {
   return (
-    <Transition {...props} timeout={DURATION} mountOnEnter unmountOnExit>
+    <ScheduledTransition
+      {...props}
+      timeout={DURATION}
+      mountOnEnter
+      unmountOnExit
+    >
       {(state) => <Manager state={state}>{children}</Manager>}
-    </Transition>
+    </ScheduledTransition>
   );
 }
 
 Transitioner.propTypes = {
-  key: PropTypes.string.required,
   children: PropTypes.node,
 };

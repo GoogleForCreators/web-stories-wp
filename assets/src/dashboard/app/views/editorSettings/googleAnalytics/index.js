@@ -19,17 +19,12 @@
  */
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
-import { TranslateWithMarkup } from '../../../../../i18n';
 import {
   InlineForm,
   InlineLink,

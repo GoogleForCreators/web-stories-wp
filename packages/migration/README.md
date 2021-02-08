@@ -15,7 +15,7 @@ This package contains the code to migrate stories and templates to the latest ve
 
 ## ES Module
 
-This package uses depends on third-party packages like [`polished`](https://www.npmjs.com/package/polished.
+This package uses depends on third-party packages like [`polished`](https://www.npmjs.com/package/polished).
 
 To ensure the migrations can be run via Node.js on CI, [Rollup](https://rollupjs.org/guide/en/) is used to create a working ES module for it.
 
