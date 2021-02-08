@@ -252,7 +252,7 @@ function EditorSettings() {
                 'web-stories'
               )
             : __(
-                'Sorry, one or more of these files are not a supported file type. Only jpg, png, and static gifs are supported for publisher logos.',
+                'Sorry, one or more of these files are of an unsupported file type. Only jpg, png, and static gifs are supported for publisher logos.',
                 'web-stories'
               );
         return setMediaError(errorText);
