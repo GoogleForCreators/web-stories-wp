@@ -18,6 +18,7 @@
     "polished": "^4.0.5"
   },
   "devDependencies": {
+    "rollup": "^2.36.2",
     "@rollup/plugin-node-resolve": "^11.1.1"
   }
 }
