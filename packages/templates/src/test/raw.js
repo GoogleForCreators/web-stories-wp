@@ -35,10 +35,7 @@ describe('Raw template files', () => {
     '%s template should not contain invisible characters',
     (template) => {
       const templateContent = readFileSync(
-        resolve(
-          process.cwd(),
-          `packages/templates/src/raw/${template}`
-        ),
+        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
         'utf8'
       );
 
@@ -53,10 +50,7 @@ describe('Raw template files', () => {
     (template) => {
       const templateName = basename(template, '.json');
       const templateContent = readFileSync(
-        resolve(
-          process.cwd(),
-          `packages/templates/src/raw/${template}`
-        ),
+        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
         'utf8'
       );
       const templateData = JSON.parse(templateContent);
@@ -78,10 +72,7 @@ describe('Raw template files', () => {
     '%s template should contain pageLayoutType',
     (template) => {
       const templateContent = readFileSync(
-        resolve(
-          process.cwd(),
-          `packages/templates/src/raw/${template}`
-        ),
+        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
         'utf8'
       );
       const templateData = JSON.parse(templateContent);
