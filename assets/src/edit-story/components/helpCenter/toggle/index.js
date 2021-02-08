@@ -54,7 +54,7 @@ const Label = styled.span`
 
   @media ${({ theme }) => theme.breakpoint.desktop} {
     display: block;
-    min-width: 115px;
+    min-width: 65px;
     text-align: left;
   }
 `;
@@ -128,7 +128,7 @@ function Toggle({
       size={BUTTON_SIZES.MEDIUM}
     >
       <HelpIcon />
-      <Label>{__('Help Center', 'web-stories')}</Label>
+      <Label>{__('Help', 'web-stories')}</Label>
       {hasNotifications && (
         <NotificationWrapper>
           <NotificationBubble notificationCount={notificationCount} />
