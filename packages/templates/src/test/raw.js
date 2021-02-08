@@ -20,16 +20,6 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 
-const PAGE_LAYOUT_TYPES = {
-  cover: { name: 'Cover' },
-  section: { name: 'Section' },
-  quote: { name: 'Quote' },
-  editorial: { name: 'Editorial' },
-  list: { name: 'List' },
-  table: { name: 'Table' },
-  steps: { name: 'Steps' },
-};
-
 describe('Raw template files', () => {
   const templates = readdirSync(
     resolve(process.cwd(), 'packages/templates/src/raw')
@@ -87,10 +77,7 @@ describe('Raw template files', () => {
           expect.objectContaining({
             pageLayoutType: expect.any(String),
           })
-        );
-        expect(Object.keys(PAGE_LAYOUT_TYPES)).toStrictEqual(
-          expect.arrayContaining([page.pageLayoutType])
-        );
+        );;
       }
     }
   );
