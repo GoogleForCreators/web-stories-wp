@@ -25,7 +25,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { SnackbarMessage } from '../snackbarMessage';
 import { AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX } from '../constants';
-import { noop } from '../../../testUtils/noop';
+import { noop } from '../../../utils/noop';
 
 describe('design-system/components/snackbar/SnackbarMessage', () => {
   beforeEach(jest.clearAllMocks);
