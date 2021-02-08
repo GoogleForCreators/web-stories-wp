@@ -45,12 +45,14 @@ import {
 } from '../../../icons';
 import WithTooltip from '../../tooltip';
 
-const HEIGHT = 28;
+export const PAGEMENU_HEIGHT = 28;
+export const PAGEMENU_MARGIN_TOP = 16;
+export const PAGEMENU_MARGIN_BOTTOM = 36;
 
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
-  height: ${20 + HEIGHT}px;
+  height: ${PAGEMENU_MARGIN_TOP + PAGEMENU_HEIGHT}px;
 `;
 
 const Box = styled.div`
@@ -59,7 +61,7 @@ const Box = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: ${HEIGHT}px;
+  height: ${PAGEMENU_HEIGHT}px;
   width: 100%;
 `;
 
@@ -80,7 +82,7 @@ const Options = styled.div`
 const Divider = styled.span`
   background-color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.3;
-  height: ${HEIGHT}px;
+  height: ${PAGEMENU_HEIGHT}px;
   width: 1px;
 `;
 

@@ -39,6 +39,11 @@ import {
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useLayout } from '../../app';
+import {
+  PAGEMENU_HEIGHT,
+  PAGEMENU_MARGIN_TOP,
+  PAGEMENU_MARGIN_BOTTOM,
+} from './pagemenu';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -51,7 +56,8 @@ export const Z_INDEX = {
 };
 
 const HEADER_SPACE = 16;
-const MENU_HEIGHT = 48;
+const MENU_HEIGHT =
+  PAGEMENU_HEIGHT + PAGEMENU_MARGIN_TOP + PAGEMENU_MARGIN_BOTTOM;
 const CAROUSEL_HEIGHT = 104;
 
 // @todo: the menu height is not responsive
