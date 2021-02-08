@@ -21,8 +21,8 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control {
-		background: ${({ theme }) => theme.designSystemTheme.colors.primary} !important;
-		border-radius: 0 !important;
+		background: ${({ theme }) =>
+      theme.designSystemTheme.colors.bg.primary} !important;
 		border: none !important;
 		box-sizing: border-box !important;
 	}
@@ -31,23 +31,25 @@ export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control.moveable-s,
 	.crop-moveable .moveable-control.moveable-e,
 	.crop-moveable .moveable-control.moveable-w {
-		border: 1px solid #fff !important;
+		border: 1px solid ${({ theme }) =>
+      theme.designSystemTheme.colors.blue[20]} !important;
+		border-radius: 4px;
 	}
 
 	.crop-moveable .moveable-control.moveable-n,
 	.crop-moveable .moveable-control.moveable-s {
-		width: 16px !important;
-		height: 4px !important;
-		margin-left: -8px !important;
-		margin-top: -1px !important;
+		width: 24px !important;
+		height: 8px !important;
+		margin-left: -12px !important;
+		margin-top: -4px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-e,
 	.crop-moveable .moveable-control.moveable-w {
-		width: 4px !important;
-		height: 16px !important;
-		margin-left: -1px !important;
-		margin-top: -8px !important;
+		width: 8px !important;
+		height: 24px !important;
+		margin-left: -4px !important;
+		margin-top: -12px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw,
@@ -56,8 +58,10 @@ export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control.moveable-se {
 		width: 24px !important;
 		height: 24px !important;
-		background: #fff !important;
+		background: ${({ theme }) =>
+      theme.designSystemTheme.colors.blue[20]} !important;
 		position: absolute !important;
+		border-radius: 2px;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw::before,
@@ -76,22 +80,22 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-control.moveable-nw,
 	.crop-moveable .moveable-control.moveable-ne {
-		margin-top: -2px !important;
+		margin-top: -4px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-sw,
 	.crop-moveable .moveable-control.moveable-se {
-		margin-top: -22px !important;
+		margin-top: -20px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw,
 	.crop-moveable .moveable-control.moveable-sw {
-		margin-left: -2px !important;
+		margin-left: -4px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-ne,
 	.crop-moveable .moveable-control.moveable-se {
-		margin-left: -22px !important;
+		margin-left: -20px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw {
@@ -107,17 +111,17 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-control.moveable-ne {
 		transform-origin: 14px 2px !important;
-		clip-path: polygon(0 0, 16px 0, 16px 16px, 12px 16px, 12px 4px, 0 4px) !important;
+		clip-path: polygon(0 0, 24px 0, 24px 24px, 16px 24px, 16px 8px, 0 8px) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-ne::before {
-		clip-path: polygon(0 0, 14px 0, 14px 14px, 12px 14px, 12px 2px, 0 2px) !important;
+		clip-path: polygon(0 0, 22px 0, 22px 22px, 16px 22px, 16px 6px, 0 6px) !important;
 		top: 1px;
 		right: -1px;
 	}
 
 	.crop-moveable .moveable-control.moveable-sw {
-		transform-origin: 2px 14px !important;
+		transform-origin: 2px 22px !important;
 		clip-path: polygon(0 0, 0 24px, 24px 24px, 24px 16px, 8px 16px, 8px 0) !important;
 	}
 
@@ -128,12 +132,12 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	.crop-moveable .moveable-control.moveable-se {
-		transform-origin: 14px 14px !important;
-		clip-path: polygon(16px 0, 16px 16px, 0 16px, 0 12px, 12px 12px, 12px 0) !important;
+		transform-origin: 22px 22px !important;
+		clip-path: polygon(24px 0, 24px 24px, 0 24px, 0 16px, 16px 16px, 16px 0) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-se::before {
-		clip-path: polygon(14px 0, 14px 14px, 0 14px, 0 12px, 12px 12px, 12px 0) !important;
+		clip-path: polygon(22px 0, 22px 22px, 0 22px, 0 16px, 16px 16px, 16px 0) !important;
 		bottom: -1px;
 		right: -1px;
 	}
