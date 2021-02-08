@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
-import { trackClick } from '../../../tracking';
 
 const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};

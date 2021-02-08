@@ -21,10 +21,11 @@ import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
-import { trackClick } from '../../../../tracking';
 import {
   Dropdown,
   StandardViewContentGutter,
