@@ -245,7 +245,7 @@ class Customizer {
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Show story title', 'web-stories' ),
 					'active_callback' => function() {
-						return $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' );
+						return $this->is_option_enabled( 'show_stories' );
 					},
 				]
 			);
@@ -368,12 +368,7 @@ class Customizer {
 	 * @return array An array of view type choices.
 	 */
 	private function get_view_type_choices( array $view_type ) {
-		$view_type_choices = [
-			'circles'  => __( 'Circles', 'web-stories' ),
-			'grid'     => __( 'Grid', 'web-stories' ),
-			'list'     => __( 'List', 'web-stories' ),
-			'carousel' => __( 'Carousel', 'web-stories' ),
-		];
+		$view_type_choices = get_layouts();
 
 		if ( empty( $view_type ) ) {
 			return $view_type_choices;
@@ -390,12 +385,7 @@ class Customizer {
 	 * @return array An array of order choices.
 	 */
 	private function get_order_choices( array $order ) {
-		$order_choices = [
-			'latest'               => __( 'Latest', 'web-stories' ),
-			'oldest'               => __( 'Oldest', 'web-stories' ),
-			'alphabetical'         => __( 'A -> Z', 'web-stories' ),
-			'reverse-alphabetical' => __( 'Z -> A', 'web-stories' ),
-		];
+		$order_choices = get_stories_order();
 
 		if ( empty( $order ) ) {
 			return $order_choices;
@@ -484,6 +474,7 @@ class Customizer {
 			'show_title'            => $theme_support['title-default'],
 			'show_author'           => $theme_support['author-default'],
 			'show_date'             => $theme_support['date-default'],
+			'show_excerpt'          => $theme_support['excerpt-default'],
 			'stories_archive_label' => $theme_support['stories-archive-label'],
 			'show_story_poster'     => $theme_support['show-story-poster-default'],
 			'number_of_columns'     => $theme_support['grid-columns-default'],

@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories\Traits;
 
+use function Google\Web_Stories\get_stories_order;
+
 /**
  * Trait ThemeSupport
  *
@@ -53,15 +55,13 @@ trait ThemeSupport {
 			'author-default'            => true,
 			'date'                      => false,
 			'date-default'              => false,
+			'excerpt'                   => false,
+			'excerpt-default'           => false,
+			'sharp-corners'             => false,
 			'stories-archive-link'      => false,
 			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
 			'number-of-stories'         => 10,
-			'order'                     => [
-				'latest'               => __( 'Latest', 'web-stories' ),
-				'oldest'               => __( 'Oldest', 'web-stories' ),
-				'alphabetical'         => __( 'A -> Z', 'web-stories' ),
-				'reverse-alphabetical' => __( 'Z -> A', 'web-stories' ),
-			],
+			'order'                     => get_stories_order(),
 			'order-default'             => 'latest',
 			'show-story-poster-default' => true,
 		];

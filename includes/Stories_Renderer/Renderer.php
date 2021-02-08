@@ -66,6 +66,18 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	const LIGHTBOX_SCRIPT_HANDLE = 'lightbox';
 
 	/**
+	 * Object ID for the Renderer class.
+	 * To enable support for multiple carousels and lightboxes
+	 * on the same page, we needed to identify each Renderer instance.
+	 *
+	 * This variable is used to add appropriate class to the Web Stories
+	 * wrapper.
+	 *
+	 * @var int
+	 */
+	public static $obj_id = 0;
+
+	/**
 	 * Stories object
 	 *
 	 * @var Stories Stories object
@@ -129,10 +141,19 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @param Stories $stories Stories instance.
 	 */
 	public function __construct( Stories $stories ) {
-
+		self::$obj_id          = ++self::$obj_id;
 		$this->stories         = $stories;
 		$this->attributes      = $this->stories->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'];
+	}
+
+	/**
+	 * Get current object id.
+	 *
+	 * @return int Object id.
+	 */
+	public static function get_obj_id() {
+		return self::$obj_id;
 	}
 
 	/**
@@ -460,7 +481,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function render_single_story_content() {
 		$single_story_classes = $this->get_single_story_classes();
-		$lightbox_state       = 'lightbox' . $this->current()->get_id();
+		$lightbox_state       = 'lightbox' . $this->current()->get_id() . $this::get_obj_id();
 
 		// Web Stories Styles for AMP and non-AMP pages.
 		wp_enqueue_style( self::STYLE_HANDLE );
@@ -637,8 +658,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function generate_amp_lightbox_html() {
 		$story          = $this->current();
-		$lightbox_state = "lightbox{$story->get_id()}";
-		$lightbox_id    = "lightbox-{$story->get_id()}";
+		$lightbox_state = 'lightbox' . $story->get_id() . $this::get_obj_id();
+		$lightbox_id    = 'lightbox-' . $story->get_id() . $this::get_obj_id();
 		?>
 		<amp-lightbox
 			id="<?php echo esc_attr( $lightbox_id ); ?>"
