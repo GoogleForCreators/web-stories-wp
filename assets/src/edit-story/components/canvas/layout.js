@@ -55,9 +55,9 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const HEADER_SPACE = 16;
+const HEADER_GAP = 16;
 const MENU_HEIGHT = PAGEMENU_HEIGHT + PAGEMENU_MARGIN_TOP;
-const MENU_SPACE = PAGEMENU_MARGIN_BOTTOM;
+const MENU_GAP = PAGEMENU_MARGIN_BOTTOM;
 const CAROUSEL_HEIGHT = 104;
 
 // @todo: the menu height is not responsive
@@ -76,13 +76,13 @@ const Layer = styled.section`
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(
-      ${HEADER_SPACE}px,
+      ${HEADER_GAP}px,
       1fr
     )
     '.         prev      page      next      .       ' var(--viewport-height-px)
     'menu      menu      menu      menu      menu    ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' minmax(
-      ${MENU_SPACE}px,
+      ${MENU_GAP}px,
       1fr
     )
     'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
@@ -198,9 +198,9 @@ function useLayoutParams(containerRef) {
     const maxHeight =
       height -
       HEADER_HEIGHT -
-      HEADER_SPACE -
+      HEADER_GAP -
       MENU_HEIGHT -
-      MENU_SPACE -
+      MENU_GAP -
       CAROUSEL_HEIGHT;
 
     setWorkspaceSize({ width: maxWidth, height: maxHeight });
