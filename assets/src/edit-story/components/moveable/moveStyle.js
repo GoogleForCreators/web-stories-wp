@@ -78,8 +78,8 @@ export const GlobalStyle = createGlobalStyle`
 	.default-moveable.moveable-control-box .moveable-line.moveable-direction {
 		background: ${({ theme }) =>
       theme.designSystemTheme.colors.blue[20]} !important;
-		width: 0.8px;
-		height: 0.8px;
+		width: 1px;
+		height: 1px;
 	}
 
 	.default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
