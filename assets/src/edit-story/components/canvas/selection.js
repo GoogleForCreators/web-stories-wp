@@ -23,7 +23,8 @@ import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 
 function Selection() {
-  const { selectedElements, isAnimating } = useStory((state) => ({
+  const { currentPage, selectedElements, isAnimating } = useStory((state) => ({
+    currentPage: state.state.currentPage,
     selectedElements: state.state.selectedElements,
     isAnimating: [
       STORY_ANIMATION_STATE.PLAYING,
@@ -39,13 +40,19 @@ function Selection() {
     })
   );
 
-  // Do not show selection for in editing mode.
-  if (editingElement || isAnimating) {
+  // No selection.
+  if (selectedElements.length === 0) {
     return null;
   }
 
-  // No selection.
-  if (selectedElements.length === 0) {
+  // No need for displaying non-functional frame for selected background.
+  const isBackground = selectedElements[0].id === currentPage.elements?.[0].id;
+  if (isBackground) {
+    return null;
+  }
+
+  // Do not show selection for in editing mode.
+  if (editingElement || isAnimating) {
     return null;
   }
 

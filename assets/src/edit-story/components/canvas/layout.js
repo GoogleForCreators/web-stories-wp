@@ -102,6 +102,21 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ isBackgroundSelected, theme }) =>
+    isBackgroundSelected &&
+    `
+    &:before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: ${theme.designSystemTheme.colors.blue[20]} 0.8px solid;
+      border-radius: 10px;
+    }
+  `}
 `;
 
 // Overflow is not hidden for media edit layer.
@@ -185,6 +200,7 @@ const PageArea = forwardRef(function PageArea(
     fullbleedRef = createRef(),
     overlay = [],
     background,
+    isBackgroundSelected = false,
   },
   ref
 ) {
@@ -193,6 +209,7 @@ const PageArea = forwardRef(function PageArea(
       ref={fullbleedRef}
       data-testid="fullbleed"
       aria-label={__('Fullbleed area', 'web-stories')}
+      isBackgroundSelected={isBackgroundSelected}
       role="region"
     >
       <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
@@ -211,6 +228,7 @@ PageArea.propTypes = {
   fullbleedRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   overlay: PropTypes.node,
   background: PropTypes.object,
+  isBackgroundSelected: PropTypes.bool,
 };
 
 export {
