@@ -113,7 +113,7 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
       left: -4px;
       right: -4px;
       bottom: -4px;
-      border: ${theme.designSystemTheme.colors.blue[20]} 0.8px solid;
+      border: ${theme.designSystemTheme.colors.blue[20]} 1px solid;
       border-radius: 10px;
     }
   `}
