@@ -18,6 +18,11 @@
  * External dependencies
  */
 import { useCallback, useRef, useState } from 'react';
+import {
+  trackError,
+  trackEvent,
+  getTimeTracker,
+} from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -29,7 +34,6 @@ import {
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
-import { trackError, trackEvent, getTimeTracker } from '../../../../tracking';
 
 function useUploadMedia({ media, setMedia }) {
   const { uploadFile } = useUploader();

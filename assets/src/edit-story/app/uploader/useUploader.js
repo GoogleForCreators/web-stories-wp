@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import {
+  trackError,
+  trackEvent,
+  getTimeTracker,
+} from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
-import { trackError, trackEvent, getTimeTracker } from '../../../tracking';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
 
 function useUploader() {

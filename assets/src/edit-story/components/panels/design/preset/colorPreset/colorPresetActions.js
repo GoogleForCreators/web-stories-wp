@@ -20,15 +20,12 @@
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+
 import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
 import { Add } from '../../../../../../design-system/icons';
 import { useStory } from '../../../../../app/story';
@@ -36,7 +33,6 @@ import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
 import { AdvancedDropDown } from '../../../../form';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
-import { TranslateWithMarkup } from '../../../../../../i18n';
 import ColorGroup from './colorGroup';
 import useApplyColor from './useApplyColor';
 

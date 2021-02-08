@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
