@@ -38,17 +38,6 @@ domReady(() => {
     return;
   }
 
-  const navArrows = {
-    prev: '.glider-prev',
-    next: '.glider-next',
-  };
-
-  // This is to add basic support for the RTL. We switch the nav arrows.
-  const navArrowsRTL = {
-    prev: '.glider-next',
-    next: '.glider-prev',
-  };
-
   /**
    * Override to add basic support for the nav arrows for RTL
    *
@@ -135,6 +124,20 @@ domReady(() => {
   };
 
   Array.from(carouselWrappers).forEach((carouselWrapper) => {
+    // For multiple instance of the glider we need to link nav arrows appropriately.
+    const carouselId = carouselWrapper.dataset.id;
+
+    const navArrows = {
+      prev: `.${carouselId} .glider-prev`,
+      next: `.${carouselId} .glider-next`,
+    };
+
+    // This is to add basic support for the RTL. We switch the nav arrows.
+    const navArrowsRTL = {
+      prev: `.${carouselId} .glider-next`,
+      next: `.${carouselId} .glider-prev`,
+    };
+
     /* eslint-disable-next-line no-new -- we do not store the object as no further computation required with the built object. */
     new Glider(carouselWrapper, {
       // Mobile-first defaults
