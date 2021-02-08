@@ -24,7 +24,7 @@ describe('Raw text set files', () => {
   const textSets = readdirSync(
     resolve(
       process.cwd(),
-      'assets/src/edit-story/components/library/panes/text/textSets/raw'
+      'packages/text-sets/src/raw'
     )
   );
 
@@ -35,7 +35,7 @@ describe('Raw text set files', () => {
       const rawData = readFileSync(
         resolve(
           process.cwd(),
-          `assets/src/edit-story/components/library/panes/text/textSets/raw/${category}.json`
+          `packages/text-sets/src/raw/${category}.json`
         ),
         'utf8'
       );
