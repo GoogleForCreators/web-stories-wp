@@ -21,11 +21,10 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control {
-		background: #000 !important;
+		background: ${({ theme }) => theme.designSystemTheme.colors.primary} !important;
 		border-radius: 0 !important;
 		border: none !important;
 		box-sizing: border-box !important;
-		box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 	}
 
 	.crop-moveable .moveable-control.moveable-n,
@@ -55,8 +54,8 @@ export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control.moveable-ne,
 	.crop-moveable .moveable-control.moveable-sw,
 	.crop-moveable .moveable-control.moveable-se {
-		width: 16px !important;
-		height: 16px !important;
+		width: 24px !important;
+		height: 24px !important;
 		background: #fff !important;
 		position: absolute !important;
 	}
@@ -66,12 +65,13 @@ export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control.moveable-sw::before,
 	.crop-moveable .moveable-control.moveable-se::before {
 		content: "" !important;
-		width: 16px !important;
-		height: 16px !important;
+		width: 24px !important;
+		height: 24px !important;
 		display: block !important;
 		position: absolute !important;
 		inset: 1px !important;
-		background: #000 !important;
+		background: ${({ theme }) =>
+      theme.designSystemTheme.colors.bg.primary} !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw,
@@ -81,7 +81,7 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-control.moveable-sw,
 	.crop-moveable .moveable-control.moveable-se {
-		margin-top: -14px !important;
+		margin-top: -22px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw,
@@ -91,16 +91,16 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-control.moveable-ne,
 	.crop-moveable .moveable-control.moveable-se {
-		margin-left: -14px !important;
+		margin-left: -22px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw {
 		transform-origin: 2px 2px !important;
-		clip-path: polygon(0 0, 16px 0, 16px 4px, 4px 4px, 4px 16px, 0 16px) !important;
+		clip-path: polygon(0 0, 24px 0, 24px 8px, 8px 8px, 8px 24px, 0 24px) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw::before {
-		clip-path: polygon(0 0, 14px 0, 14px 2px, 2px 2px, 2px 14px, 0 14px) !important;
+		clip-path: polygon(0 0, 22px 0, 22px 6px, 6px 6px, 6px 22px, 0 22px) !important;
 		top: 1px;
 		left: 1px;
 	}
@@ -118,11 +118,11 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-control.moveable-sw {
 		transform-origin: 2px 14px !important;
-		clip-path: polygon(0 0, 0 16px, 16px 16px, 16px 12px, 4px 12px, 4px 0) !important;
+		clip-path: polygon(0 0, 0 24px, 24px 24px, 24px 16px, 8px 16px, 8px 0) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-sw::before {
-		clip-path: polygon(0 0, 0 14px, 14px 14px, 14px 12px, 2px 12px, 2px 0) !important;
+		clip-path: polygon(0 0, 0 22px, 22px 22px, 22px 16px, 6px 16px, 6px 0) !important;
 		bottom: -1px;
 		left: 1px;
 	}
@@ -139,7 +139,8 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	.crop-moveable .moveable-direction.moveable-line {
-		background: ${({ theme }) => theme.colors.accent.primary} !important;
+		background: ${({ theme }) =>
+      theme.designSystemTheme.colors.blue[20]} !important;
 		width: 2px;
 		height: 2px;
 		pointer-events: none;

@@ -23,7 +23,11 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../design-system';
+import {
+  identity,
+  useContextSelector,
+  theme as designSystemTheme,
+} from '../design-system';
 import { SCROLLBAR_WIDTH } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
@@ -81,6 +85,7 @@ export function useTheme(selector) {
 }
 
 const theme = {
+  designSystemTheme,
   colors: {
     bg: {
       // Note: amp-story-page background color matches workspace background color.
