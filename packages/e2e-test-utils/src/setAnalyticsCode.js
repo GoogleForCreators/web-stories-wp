@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { visitDashboard } from './';
+import { visitDashboard } from './index';
 
 async function setAnalyticsCode(code) {
   await visitDashboard();
