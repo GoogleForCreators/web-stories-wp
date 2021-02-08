@@ -74,6 +74,9 @@ function loadTrackingScript(sendPageView = true) {
       page_title: pageTitle,
       page_path: pagePath,
     });
+
+    // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
+    gtag('set', 'user_properties', config.userProperties);
   });
 }
 

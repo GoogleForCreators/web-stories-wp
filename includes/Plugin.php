@@ -232,7 +232,7 @@ class Plugin {
 		$this->kses = new KSES();
 		add_action( 'init', [ $this->kses, 'init' ], 11 );
 
-		$this->tracking = new Tracking();
+		$this->tracking = new Tracking( $this->experiments );
 		add_action( 'init', [ $this->tracking, 'init' ] );
 
 		$this->template = new Template_Post_Type();

@@ -396,13 +396,7 @@ class Experiments {
 		$result = [];
 
 		foreach ( $experiments as $experiment ) {
-			if ( array_key_exists( 'default', $experiment ) ) {
-				$enabled = (bool) $experiment['default'];
-			} else {
-				$enabled = $this->is_experiment_enabled( $experiment['name'] );
-			}
-
-			$result[ $experiment['name'] ] = $enabled;
+			$result[ $experiment['name'] ] = $this->is_experiment_enabled( $experiment['name'] );
 		}
 
 		return $result;
@@ -443,5 +437,23 @@ class Experiments {
 
 		$experiments = get_option( Settings::SETTING_NAME_EXPERIMENTS );
 		return ! empty( $experiments[ $name ] );
+	}
+
+	/**
+	 * Returns the names of all enabled experiments.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return array List of all enabled experiments.
+	 */
+	public function get_enabled_experiments() {
+		$experiments = array_filter(
+			$this->get_experiments(),
+			function( $experiment ) {
+				$this->is_experiment_enabled( $experiment['name'] );
+			}
+		);
+
+		return wp_list_pluck( $experiments, 'name' );
 	}
 }
