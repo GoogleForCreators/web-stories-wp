@@ -18,16 +18,12 @@
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
 import {
   withExperimentalFeatures,
   createNewStory,
   uploadMedia,
   deleteMedia,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('SVG', () => {
   withExperimentalFeatures(['enableSVG']);

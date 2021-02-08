@@ -15,9 +15,13 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { createNewStory, uploadMedia, deleteMedia } from '../../../utils';
+import {
+  createNewStory,
+  uploadMedia,
+  deleteMedia,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting Media from Dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.

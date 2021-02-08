@@ -15,9 +15,13 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { createNewStory, deleteMedia, uploadMedia } from '../../../utils';
+import {
+  createNewStory,
+  deleteMedia,
+  uploadMedia,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting Media from Media Library', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.

@@ -15,7 +15,7 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   createNewStory,
@@ -23,7 +23,7 @@ import {
   insertStoryTitle,
   uploadMedia,
   deleteMedia,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media dialog it', async () => {

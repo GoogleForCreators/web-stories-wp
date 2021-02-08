@@ -15,14 +15,14 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   createNewStory,
   clickButton,
   uploadFile,
   deleteMedia,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
