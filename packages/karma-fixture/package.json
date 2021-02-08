@@ -1,0 +1,18 @@
+{
+  "name": "@web-stories-wp/karma-fixture",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {
+    "@testing-library/react": "^11.2.3",
+    "react": "^16.14.0"
+  }
+}
