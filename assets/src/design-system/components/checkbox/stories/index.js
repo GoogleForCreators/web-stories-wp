@@ -26,7 +26,7 @@ import { text } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import { Checkbox } from '..';
-import { Text } from '../..';
+import { Text } from '../../typography';
 import { DarkThemeProvider } from '../../../storybookUtils';
 
 export default {
