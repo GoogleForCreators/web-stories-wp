@@ -21,6 +21,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import APIContext from '../../../app/api/context';
+import { CurrentUserProvider } from '../../../app/currentUser';
 import { DONE_TIP_ENTRY } from '../constants';
 import { useHelpCenter, deriveState } from '../useHelpCenter';
 
@@ -128,17 +129,22 @@ describe('deriveState', () => {
 });
 
 function setup() {
+  const currentUser = { meta: {} };
+  const currentUserPromise = jest.fn(
+    () => new Promise((resolve) => resolve(currentUser))
+  );
   const apiContextValue = {
+    state: {
+      currentUser,
+    },
     actions: {
-      getCurrentUser: jest.fn(
-        () => new Promise((resolve) => resolve({ meta: {} }))
-      ),
-      updateCurrentUser: jest.fn(() => new Promise((resolve) => resolve())),
+      updateCurrentUser: currentUserPromise,
+      getCurrentUser: currentUserPromise,
     },
   };
   const wrapper = ({ children }) => (
     <APIContext.Provider value={apiContextValue}>
-      {children}
+      <CurrentUserProvider>{children}</CurrentUserProvider>
     </APIContext.Provider>
   );
 

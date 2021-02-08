@@ -21,7 +21,7 @@ import { useReducer, useEffect, useState, useMemo } from 'react';
  * Internal dependencies
  */
 import { clamp } from '../../../animation';
-import { useAPI } from '../../app';
+import { useCurrentUser } from '../../app';
 import { DONE_TIP_ENTRY, NAVIGATION_FLOW } from './constants';
 
 /**
@@ -142,10 +142,12 @@ const initial = {
 
 export function useHelpCenter() {
   const [store, dispatch] = useReducer(reducer, initial);
-  const { getCurrentUser, updateCurrentUser } = useAPI(({ actions }) => ({
-    getCurrentUser: actions.getCurrentUser,
-    updateCurrentUser: actions.updateCurrentUser,
-  }));
+  const { currentUser, updateCurrentUser } = useCurrentUser(
+    ({ state, actions }) => ({
+      currentUser: state.currentUser,
+      updateCurrentUser: actions.updateCurrentUser,
+    })
+  );
 
   // Wrap all actions in dispatch
   const actions = useMemo(
@@ -158,23 +160,19 @@ export function useHelpCenter() {
   );
 
   useEffect(() => {
-    let isMounted = true;
-    getCurrentUser()
-      .then(({ meta }) => {
-        isMounted &&
-          actions.hydrateReadTipsSuccess({
-            readTips: meta.web_stories_onboarding ?? {},
-          });
-      })
-      .catch(actions.persitingReadTipsError);
-    return () => (isMounted = false);
-  }, [actions, getCurrentUser]);
+    actions.hydrateReadTipsSuccess({
+      readTips: currentUser?.meta?.web_stories_onboarding ?? {},
+    });
+  }, [actions, currentUser]);
 
   const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
   useEffect(() => {
-    updateCurrentUser({
-      meta: { web_stories_onboarding: createBooleanMapFromKey(persistenceKey) },
-    }).catch(actions.persitingReadTipsError);
+    persistenceKey &&
+      updateCurrentUser({
+        meta: {
+          web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
+        },
+      }).catch(actions.persitingReadTipsError);
   }, [actions, updateCurrentUser, persistenceKey]);
 
   // Components wrapped in a Transition no longer recieve
