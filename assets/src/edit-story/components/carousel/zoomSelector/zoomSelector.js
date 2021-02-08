@@ -35,7 +35,6 @@ import { Placement } from '../../popup';
 const ZOOM_OPTIONS = [
   { name: _x('100%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.SINGLE },
   { name: _x('200%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.DOUBLE },
-  { name: _x('300%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.TRIPLE },
   { name: _x('Fill', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FILL },
   { name: _x('Fit', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FIT },
 ];
