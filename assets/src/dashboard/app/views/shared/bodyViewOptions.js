@@ -15,17 +15,12 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -37,6 +32,7 @@ import {
   TypographyPresets,
 } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import TelemetryBanner from './telemetryBanner';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.DEPRECATED_THEME.formatContainer.height}px;
@@ -96,6 +92,7 @@ export default function BodyViewOptions({
 
   return (
     <StandardViewContentGutter>
+      <TelemetryBanner />
       <DisplayFormatContainer>
         <Label>{resultsLabel}</Label>
         <ControlsContainer>

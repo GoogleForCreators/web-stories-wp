@@ -19,11 +19,7 @@
  */
 import { useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

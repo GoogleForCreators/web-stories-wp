@@ -20,11 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useMemo } from 'react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

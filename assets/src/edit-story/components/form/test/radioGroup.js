@@ -19,11 +19,7 @@
  */
 import { fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

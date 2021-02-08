@@ -15,3 +15,4 @@
  */
 
 export { default as TranslateWithMarkup } from './translateWithMarkup';
+export { __, _x, _n, _nx, sprintf } from '@wordpress/i18n';

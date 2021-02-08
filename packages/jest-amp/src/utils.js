@@ -18,7 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import AmpOptimizer from '@ampproject/toolbox-optimizer';
+import AmpOptimizer, {
+  TRANSFORMATIONS_AMP_FIRST,
+} from '@ampproject/toolbox-optimizer';
 import amphtmlValidator from 'amphtml-validator';
 
 /** @typedef {import('react').ReactElement} ReactElement */
@@ -89,7 +91,18 @@ async function getAMPValidationErrors(string, optimize = true) {
   let completeString = '<!DOCTYPE html>' + string;
 
   if (optimize) {
-    const ampOptimizer = AmpOptimizer.create();
+    // We only want the bare minimum here - adding missing tags & extensions.
+    // See https://www.npmjs.com/package/@ampproject/toolbox-optimizer#options
+    const ampOptimizer = AmpOptimizer.create({
+      autoAddMandatoryTags: true,
+      autoExtensionImport: true,
+      optimizeHeroImages: false,
+      blurredPlaceholders: false,
+      // Reduces debug noise due to missing dependencies.
+      transformations: TRANSFORMATIONS_AMP_FIRST.filter(
+        (transformation) => transformation !== 'AddBlurryImagePlaceholders'
+      ),
+    });
     const params = {
       canonical: 'https://example.com',
     };

@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@wordpress/i18n": "^3.17.0",
+    "@web-stories-wp/i18n": "*",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12"
   },

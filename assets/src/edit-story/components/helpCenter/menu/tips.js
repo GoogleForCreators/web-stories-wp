@@ -27,6 +27,7 @@ import {
   Icons,
   themeHelpers,
 } from '../../../../design-system';
+import { forceFocusCompanion } from '../utils';
 import { TIPS } from '../constants';
 
 const Panel = styled.div`
@@ -84,7 +85,13 @@ export function Tips({ onTipSelect = () => {} }) {
   return (
     <Panel>
       {TIPS_ITERABLE.map(([key, tip]) => (
-        <Tip key={key} onClick={() => onTipSelect(key)}>
+        <Tip
+          key={key}
+          onClick={() => {
+            forceFocusCompanion();
+            onTipSelect(key);
+          }}
+        >
           {tip.title}
         </Tip>
       ))}

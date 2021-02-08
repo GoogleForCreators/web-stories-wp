@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
-
+import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */

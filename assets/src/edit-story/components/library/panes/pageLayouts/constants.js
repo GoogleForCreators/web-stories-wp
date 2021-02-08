@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 export const PAGE_LAYOUT_TYPES = {
   cover: { name: __('Cover', 'web-stories') },

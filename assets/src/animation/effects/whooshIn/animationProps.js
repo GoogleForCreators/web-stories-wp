@@ -15,13 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, _x } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { __, _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
 /**
