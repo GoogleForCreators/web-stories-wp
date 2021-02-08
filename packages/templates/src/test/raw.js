@@ -20,10 +20,15 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 
-/**
- * Internal dependencies
- */
-import { PAGE_LAYOUT_TYPES } from '../../../../assets/src/edit-story/components/library/panes/pageLayouts/constants';
+const PAGE_LAYOUT_TYPES = {
+  cover: { name: 'Cover' },
+  section: { name: 'Section' },
+  quote: { name: 'Quote' },
+  editorial: { name: 'Editorial' },
+  list: { name: 'List' },
+  table: { name: 'Table' },
+  steps: { name: 'Steps' },
+};
 
 describe('Raw template files', () => {
   const templates = readdirSync(
