@@ -56,8 +56,8 @@ export const Z_INDEX = {
 };
 
 const HEADER_SPACE = 16;
-const MENU_HEIGHT =
-  PAGEMENU_HEIGHT + PAGEMENU_MARGIN_TOP + PAGEMENU_MARGIN_BOTTOM;
+const MENU_HEIGHT = PAGEMENU_HEIGHT + PAGEMENU_MARGIN_TOP;
+const MENU_SPACE = PAGEMENU_MARGIN_BOTTOM;
 const CAROUSEL_HEIGHT = 104;
 
 // @todo: the menu height is not responsive
@@ -81,7 +81,10 @@ const Layer = styled.section`
     )
     '.         prev      page      next      .       ' var(--viewport-height-px)
     'menu      menu      menu      menu      menu    ' ${MENU_HEIGHT}px
-    '.         .         .         .         .       ' 1fr
+    '.         .         .         .         .       ' minmax(
+      ${MENU_SPACE}px,
+      1fr
+    )
     'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
     /
     1fr
@@ -177,7 +180,12 @@ function useLayoutParams(containerRef) {
     // space for the page is:
     const maxWidth = width;
     const maxHeight =
-      height - HEADER_HEIGHT - HEADER_SPACE - MENU_HEIGHT - CAROUSEL_HEIGHT;
+      height -
+      HEADER_HEIGHT -
+      HEADER_SPACE -
+      MENU_HEIGHT -
+      MENU_SPACE -
+      CAROUSEL_HEIGHT;
 
     setWorkspaceSize({ width: maxWidth, height: maxHeight });
   });
