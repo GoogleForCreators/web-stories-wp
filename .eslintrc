@@ -418,6 +418,31 @@
         "header/header": "off",
         "prettier/prettier": "off"
       }
+    },
+    {
+      "files": [
+        "assets/src/animation/**/*.js",
+        "assets/src/dashboard/**/*.js",
+        "assets/src/design-system/**/*.js",
+        "assets/src/edit-story/**/*.js",
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        "packages/i18n/**/*.js"
+      ],
+      "rules":{
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@wordpress/i18n",
+                "message": "Use @web-stories-wp/i18n instead."
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
