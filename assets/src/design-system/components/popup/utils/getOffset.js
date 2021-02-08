@@ -79,6 +79,7 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
   }
 }
 
+// this might need something other than doc body for positioning with vertical scroll
 export function getOffset(placement, spacing, anchor, dock, popup) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
