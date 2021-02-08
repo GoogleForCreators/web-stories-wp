@@ -248,11 +248,11 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? __(
-                'Sorry, this file type is not supported. Please upload another file. ',
+                'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.',
                 'web-stories'
               )
             : __(
-                'Sorry, one or more of these files are not a supported file type. Make sure your logos are the correct file type.',
+                'Sorry, one or more of these files are not a supported file type. Only jpg, png, and static gifs are supported for publisher logos.',
                 'web-stories'
               );
         return setMediaError(errorText);
