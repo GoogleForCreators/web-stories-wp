@@ -95,7 +95,8 @@ function useUploadMedia({ media, setMedia }) {
         const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => {
             trackEvent('upload_media', 'editor', '', '', {
-              type: localFile.file.type,
+              file_size: localFile.file.size,
+              file_type: localFile.file.type,
             });
             const trackTiming = getTimeTracker(
               'upload_media',

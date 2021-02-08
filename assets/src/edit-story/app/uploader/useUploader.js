@@ -153,7 +153,10 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      trackEvent('video_transcoding', 'editor');
+      trackEvent('video_transcoding', 'editor', '', '', {
+        file_size: file.size,
+        file_type: file.type,
+      });
       const trackTiming = getTimeTracker(
         'video transcoding',
         'editor',
