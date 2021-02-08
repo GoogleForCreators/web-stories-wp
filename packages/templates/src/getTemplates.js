@@ -22,7 +22,7 @@ import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
-    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}.json`
+    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./src/raw`
   );
 
   const template = {

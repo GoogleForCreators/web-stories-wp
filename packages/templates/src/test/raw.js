@@ -23,11 +23,11 @@ import { resolve, basename } from 'path';
 /**
  * Internal dependencies
  */
-import { PAGE_LAYOUT_TYPES } from '../../../edit-story/components/library/panes/pageLayouts/constants';
+import { PAGE_LAYOUT_TYPES } from '../../../../assets/src/edit-story/components/library/panes/pageLayouts/constants';
 
 describe('Raw template files', () => {
   const templates = readdirSync(
-    resolve(process.cwd(), 'assets/src/dashboard/templates/raw')
+    resolve(process.cwd(), 'packages/templates/src/raw')
   );
 
   // @see https://github.com/google/web-stories-wp/issues/2473#issuecomment-651509687
@@ -37,7 +37,7 @@ describe('Raw template files', () => {
       const templateContent = readFileSync(
         resolve(
           process.cwd(),
-          `assets/src/dashboard/templates/raw/${template}`
+          `packages/templates/src/raw/${template}`
         ),
         'utf8'
       );
@@ -55,7 +55,7 @@ describe('Raw template files', () => {
       const templateContent = readFileSync(
         resolve(
           process.cwd(),
-          `assets/src/dashboard/templates/raw/${template}`
+          `packages/templates/src/raw/${template}`
         ),
         'utf8'
       );
@@ -80,7 +80,7 @@ describe('Raw template files', () => {
       const templateContent = readFileSync(
         resolve(
           process.cwd(),
-          `assets/src/dashboard/templates/raw/${template}`
+          `packages/templates/src/raw/${template}`
         ),
         'utf8'
       );
