@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/date",
+  "name": "@web-stories-wp/i18n",
   "private": true,
   "engines": {
     "node": ">= 15",
@@ -11,11 +11,11 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
-    "date-fns": "^2.16.1",
-    "date-fns-tz": "^1.0.12"
+    "@wordpress/i18n": "^3.17.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0"
   },
   "devDependencies": {
-    "mockdate": "^3.0.2"
+    "react-dom": "^16.14.0"
   }
 }

@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
 
 const formatDistanceLocale = {
   lessThanXMinutes(count) {

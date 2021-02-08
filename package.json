@@ -37,6 +37,7 @@
     "@ffmpeg/ffmpeg": "^0.9.6",
     "@web-stories-wp/date": "*",
     "@web-stories-wp/fonts": "*",
+    "@web-stories-wp/i18n": "*",
     "@web-stories-wp/jest-amp": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@wordpress/api-fetch": "^3.21.3",

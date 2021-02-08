@@ -15,13 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { __, sprintf } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
