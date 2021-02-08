@@ -98,7 +98,7 @@ describe('Search <Search />', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('should show <Search /> menu when input has more than 1 character', () => {
+  it('should show <Search /> menu when input has 1 or more characters', () => {
     const { getByRole } = renderWithProviders(
       <Search
         emptyText="No options available"
