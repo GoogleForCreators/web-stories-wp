@@ -19,11 +19,10 @@
  */
 import { useCallback, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../../packages/tracking/src';
 import { useStory, useLocalMedia } from '../../../app';
 import { Outline } from '../../button';
 import escapeHTML from '../../../utils/escapeHTML';

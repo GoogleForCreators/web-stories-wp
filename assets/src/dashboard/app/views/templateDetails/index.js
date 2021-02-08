@@ -19,12 +19,11 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
 import { clamp } from '../../../../animation';
-import { trackEvent } from '../../../../../../packages/tracking/src';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout, useToastContext } from '../../../components';
 import { ALERT_SEVERITY } from '../../../constants';

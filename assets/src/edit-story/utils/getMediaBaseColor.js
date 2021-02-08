@@ -18,10 +18,11 @@
  * External dependencies
  */
 import ColorThief from 'colorthief';
+import { trackError } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
-import { trackError } from '../../../../packages/tracking/src';
 const thief = new ColorThief();
 
 const STYLES = {

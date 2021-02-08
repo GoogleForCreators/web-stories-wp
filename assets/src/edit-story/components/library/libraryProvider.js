@@ -20,11 +20,10 @@
 import PropTypes from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
 import { useFeatures } from 'flagged';
-
+import { getTimeTracker } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { getTimeTracker } from '../../../../../packages/tracking/src';
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
 import { MediaPane, MediaIcon } from './panes/media/local';

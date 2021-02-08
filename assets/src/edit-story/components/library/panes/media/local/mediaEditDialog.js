@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
 import { formatDate, toDate, isValid } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -33,7 +33,6 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
-import { trackError } from '../../../../../../../../packages/tracking/src';
 
 const THUMBNAIL_WIDTH = 152;
 

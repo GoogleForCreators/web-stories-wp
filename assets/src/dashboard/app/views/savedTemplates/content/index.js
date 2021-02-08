@@ -21,13 +21,12 @@ import { useFeature } from 'flagged';
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../../edit-story/units';
-import { trackEvent } from '../../../../../../../packages/tracking/src';
 import {
   Layout,
   StandardViewContentGutter,

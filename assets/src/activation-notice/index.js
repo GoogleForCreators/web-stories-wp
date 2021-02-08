@@ -20,11 +20,11 @@
 import { FlagsProvider } from 'flagged';
 import { render } from 'react-dom';
 import { StrictMode } from 'react';
+import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../../../packages/tracking/src';
 import App from './app';
 
 __webpack_public_path__ = global.webStoriesActivationSettings.publicPath;

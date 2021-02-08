@@ -20,6 +20,7 @@
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useState } from 'react';
 import { useFeatures } from 'flagged';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
-import { getTimeTracker } from '../../../../../../packages/tracking/src';
 
 /**
  * Custom hook to save story.

@@ -21,11 +21,10 @@ import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../../../packages/tracking/src';
 import { ToggleButtonGroup, useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,

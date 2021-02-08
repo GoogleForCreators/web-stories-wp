@@ -20,6 +20,7 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import { _x, sprintf } from '@web-stories-wp/i18n';
 import { useAPI } from '../../../../app/api';
 import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
-import { getTimeTracker } from '../../../../../../../packages/tracking/src';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
 import { PAGE_LAYOUT_TYPES } from './constants';

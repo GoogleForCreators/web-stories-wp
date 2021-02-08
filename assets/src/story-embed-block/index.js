@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { initializeTracking } from '@web-stories-wp/tracking';
+
+/**
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
@@ -22,7 +27,6 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../../../packages/tracking/src';
 import { name, settings } from './block';
 
 __webpack_public_path__ = global.webStoriesEmbedBlockSettings.publicPath;

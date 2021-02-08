@@ -18,11 +18,10 @@
  * External dependencies
  */
 import { useEffect, useCallback, useState } from 'react';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../packages/tracking/src';
 import { useAPI } from '../../app';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';
