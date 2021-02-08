@@ -353,6 +353,14 @@
       }
     },
     {
+      "files": ["packages/e2e-test-utils/src/*.js"],
+      "rules": {
+        "eslint-comments/no-unused-disable": "off",
+        "jest/no-hooks": "off",
+        "no-undef": "off"
+      }
+    },
+    {
       "files": ["tests/e2e/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
