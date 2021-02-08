@@ -19,12 +19,12 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -83,13 +83,13 @@ function Step2() {
           }
         </Number>
         <Paragraph $secondary>
-          {createInterpolateElement(
-            __('Head to the<br/><a>Dashboard</a>', 'web-stories'),
-            {
+          <TranslateWithMarkup
+            mapping={{
               a: <Link href={dashboardURL} onClick={onClick} />,
-              br: <br />,
-            }
-          )}
+            }}
+          >
+            {__('Head to the<br/><a>Dashboard</a>', 'web-stories')}
+          </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>

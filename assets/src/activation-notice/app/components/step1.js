@@ -19,12 +19,12 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n';
-import { createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -92,9 +92,8 @@ function Step1() {
           }
         </Number>
         <Paragraph $secondary>
-          {createInterpolateElement(
-            __('Read the<br/><a>Get Started story</a>', 'web-stories'),
-            {
+          <TranslateWithMarkup
+            mapping={{
               a: (
                 <Link
                   href={demoStoryURL}
@@ -103,9 +102,10 @@ function Step1() {
                   rel="noreferrer"
                 />
               ),
-              br: <br />,
-            }
-          )}
+            }}
+          >
+            {__('Read the<br/><a>Get Started story</a>', 'web-stories')}
+          </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>
