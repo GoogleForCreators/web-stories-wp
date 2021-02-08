@@ -7,11 +7,12 @@
 |                                                                   | Link with Page Attachment                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Remove applied link                              | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | *[total]*                                        | 🚨 **42.86%** *(9 / 21)*    |
-| Creator Can Add Image/Video to Page                               | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
+| Creator Can Add Image/Video to Page                               | Can add media                                    | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Search media                                     | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
-|                                                                   | *[total]*                                        | 🚨 **20.00%** *(1 / 5)*     |
+|                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(6 / 6)*    |
 |                                                                   | Enter edit mode                                  | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
@@ -74,4 +75,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **77.95%** *(304 / 390)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **78.06%** *(306 / 392)* |
