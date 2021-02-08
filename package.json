@@ -98,7 +98,7 @@
     "@prettier/plugin-xml": "^0.13.0",
     "@rollup/plugin-node-resolve": "^11.1.1",
     "@storybook/addon-a11y": "^6.1.14",
-    "@storybook/addon-actions": "^6.1.14",
+    "@storybook/addon-actions": "^6.1.17",
     "@storybook/addon-backgrounds": "^6.1.14",
     "@storybook/addon-docs": "^6.1.14",
     "@storybook/addon-knobs": "^6.1.14",
