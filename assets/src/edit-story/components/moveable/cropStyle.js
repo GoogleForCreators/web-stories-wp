@@ -19,6 +19,14 @@
  */
 import { createGlobalStyle } from 'styled-components';
 
+const SIDE_WIDE = 24;
+const SIDE_NARROW = 8;
+const SIDES_DIFF = SIDE_WIDE - SIDE_NARROW;
+
+// Inner side is smaller by border 1px both sides,
+const INNER_SIDE_WIDE = 22;
+const INNER_SIDE_NARROW = 6;
+
 export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control {
 		background: ${({ theme }) =>
@@ -38,16 +46,16 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-control.moveable-n,
 	.crop-moveable .moveable-control.moveable-s {
-		width: 24px !important;
-		height: 8px !important;
+		width: ${SIDE_WIDE}px !important;
+		height: ${SIDE_NARROW}px !important;
 		margin-left: -12px !important;
 		margin-top: -4px !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-e,
 	.crop-moveable .moveable-control.moveable-w {
-		width: 8px !important;
-		height: 24px !important;
+		width: ${SIDE_NARROW}px !important;
+		height: ${SIDE_WIDE}px !important;
 		margin-left: -4px !important;
 		margin-top: -12px !important;
 	}
@@ -56,8 +64,8 @@ export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control.moveable-ne,
 	.crop-moveable .moveable-control.moveable-sw,
 	.crop-moveable .moveable-control.moveable-se {
-		width: 24px !important;
-		height: 24px !important;
+		width: ${SIDE_WIDE}px !important;
+		height: ${SIDE_WIDE}px !important;
 		background: ${({ theme }) =>
       theme.designSystemTheme.colors.blue[20]} !important;
 		position: absolute !important;
@@ -69,8 +77,8 @@ export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control.moveable-sw::before,
 	.crop-moveable .moveable-control.moveable-se::before {
 		content: "" !important;
-		width: 24px !important;
-		height: 24px !important;
+		width: ${SIDE_WIDE}px !important;
+		height: ${SIDE_WIDE}px !important;
 		display: block !important;
 		position: absolute !important;
 		inset: 1px !important;
@@ -100,44 +108,44 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-control.moveable-nw {
 		transform-origin: 2px 2px !important;
-		clip-path: polygon(0 0, 24px 0, 24px 8px, 8px 8px, 8px 24px, 0 24px) !important;
+		clip-path: polygon(0 0, ${SIDE_WIDE}px 0, ${SIDE_WIDE}px ${SIDE_NARROW}px, ${SIDE_NARROW}px ${SIDE_NARROW}px, ${SIDE_NARROW}px ${SIDE_WIDE}px, 0 ${SIDE_WIDE}px) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-nw::before {
-		clip-path: polygon(0 0, 22px 0, 22px 6px, 6px 6px, 6px 22px, 0 22px) !important;
+		clip-path: polygon(0 0, ${INNER_SIDE_WIDE}px 0, ${INNER_SIDE_WIDE}px ${INNER_SIDE_NARROW}px, ${INNER_SIDE_NARROW}px ${INNER_SIDE_NARROW}px, ${INNER_SIDE_NARROW}px ${INNER_SIDE_WIDE}px, 0 ${INNER_SIDE_WIDE}px) !important;
 		top: 1px;
 		left: 1px;
 	}
 
 	.crop-moveable .moveable-control.moveable-ne {
 		transform-origin: 14px 2px !important;
-		clip-path: polygon(0 0, 24px 0, 24px 24px, 16px 24px, 16px 8px, 0 8px) !important;
+		clip-path: polygon(0 0, ${SIDE_WIDE}px 0, ${SIDE_WIDE}px ${SIDE_WIDE}px, ${SIDES_DIFF}px ${SIDE_WIDE}px, ${SIDES_DIFF}px ${SIDE_NARROW}px, 0 ${SIDE_NARROW}px) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-ne::before {
-		clip-path: polygon(0 0, 22px 0, 22px 22px, 16px 22px, 16px 6px, 0 6px) !important;
+		clip-path: polygon(0 0, ${INNER_SIDE_WIDE}px 0, ${INNER_SIDE_WIDE}px ${INNER_SIDE_WIDE}px, ${SIDES_DIFF}px ${INNER_SIDE_WIDE}px, ${SIDES_DIFF}px ${INNER_SIDE_NARROW}px, 0 ${INNER_SIDE_NARROW}px) !important;
 		top: 1px;
 		right: -1px;
 	}
 
 	.crop-moveable .moveable-control.moveable-sw {
-		transform-origin: 2px 22px !important;
-		clip-path: polygon(0 0, 0 24px, 24px 24px, 24px 16px, 8px 16px, 8px 0) !important;
+		transform-origin: 2px ${INNER_SIDE_WIDE}px !important;
+		clip-path: polygon(0 0, 0 ${SIDE_WIDE}px, ${SIDE_WIDE}px ${SIDE_WIDE}px, ${SIDE_WIDE}px ${SIDES_DIFF}px, ${SIDE_NARROW}px ${SIDES_DIFF}px, ${SIDE_NARROW}px 0) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-sw::before {
-		clip-path: polygon(0 0, 0 22px, 22px 22px, 22px 16px, 6px 16px, 6px 0) !important;
+		clip-path: polygon(0 0, 0 ${INNER_SIDE_WIDE}px, ${INNER_SIDE_WIDE}px ${INNER_SIDE_WIDE}px, ${INNER_SIDE_WIDE}px ${SIDES_DIFF}px, ${INNER_SIDE_NARROW}px ${SIDES_DIFF}px, ${INNER_SIDE_NARROW}px 0) !important;
 		bottom: -1px;
 		left: 1px;
 	}
 
 	.crop-moveable .moveable-control.moveable-se {
-		transform-origin: 22px 22px !important;
-		clip-path: polygon(24px 0, 24px 24px, 0 24px, 0 16px, 16px 16px, 16px 0) !important;
+		transform-origin: ${INNER_SIDE_WIDE}px ${INNER_SIDE_WIDE}px !important;
+		clip-path: polygon(${SIDE_WIDE}px 0, ${SIDE_WIDE}px ${SIDE_WIDE}px, 0 ${SIDE_WIDE}px, 0 ${SIDES_DIFF}px, ${SIDES_DIFF}px ${SIDES_DIFF}px, ${SIDES_DIFF}px 0) !important;
 	}
 
 	.crop-moveable .moveable-control.moveable-se::before {
-		clip-path: polygon(22px 0, 22px 22px, 0 22px, 0 16px, 16px 16px, 16px 0) !important;
+		clip-path: polygon(${INNER_SIDE_WIDE}px 0, ${INNER_SIDE_WIDE}px ${INNER_SIDE_WIDE}px, 0 ${INNER_SIDE_WIDE}px, 0 ${SIDES_DIFF}px, ${SIDES_DIFF}px ${SIDES_DIFF}px, ${SIDES_DIFF}px 0) !important;
 		bottom: -1px;
 		right: -1px;
 	}
