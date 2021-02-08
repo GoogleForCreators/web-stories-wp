@@ -23,7 +23,7 @@ import getAllTemplates from '@web-stories-wp/templates';
  */
 import getAllPageLayouts from '../getAllPageLayouts';
 
-jest.mock('../../../../../../packages/templates');
+jest.mock('@web-stories-wp/templates');
 
 describe('getAllPageLayouts', () => {
   const cdnURL = 'https://test.url';
