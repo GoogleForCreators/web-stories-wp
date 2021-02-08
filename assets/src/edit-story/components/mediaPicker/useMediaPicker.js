@@ -19,13 +19,12 @@
  */
 import { useCallback, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
-import { trackEvent } from '../../../tracking';
 
 /**
  * Custom hook to open the WordPress media modal.

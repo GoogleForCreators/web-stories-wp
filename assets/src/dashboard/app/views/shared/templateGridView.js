@@ -20,11 +20,11 @@
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import {
   CardGridItem,

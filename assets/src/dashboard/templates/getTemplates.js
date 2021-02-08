@@ -17,11 +17,8 @@
 /**
  * External dependencies
  */
+import { getTimeTracker } from '@web-stories-wp/tracking';
 import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
-/**
- * Internal dependencies
- */
-import { getTimeTracker } from '../../tracking';
 
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
