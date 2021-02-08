@@ -33,7 +33,7 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
-import { trackError } from '../../../../../../tracking';
+import { trackError } from '../../../../../../../../packages/tracking/src';
 
 const THUMBNAIL_WIDTH = 152;
 

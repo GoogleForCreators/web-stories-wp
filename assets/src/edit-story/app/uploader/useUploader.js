@@ -27,7 +27,7 @@ import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
-import { trackError } from '../../../tracking';
+import { trackError } from '../../../../../packages/tracking/src';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
 
 function useUploader() {

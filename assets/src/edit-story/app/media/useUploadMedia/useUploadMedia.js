@@ -29,7 +29,7 @@ import {
   getResourceFromAttachment,
 } from '../../../app/media/utils';
 import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
-import { trackError } from '../../../../tracking';
+import { trackError } from '../../../../../../packages/tracking/src';
 
 function useUploadMedia({ media, setMedia }) {
   const { uploadFile } = useUploader();

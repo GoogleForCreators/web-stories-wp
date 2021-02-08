@@ -26,7 +26,7 @@ import { updateSettings } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
+import { initializeTracking } from '../../../packages/tracking/src';
 import App from './editorApp';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 

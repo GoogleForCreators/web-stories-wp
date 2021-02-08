@@ -31,7 +31,7 @@ import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useSnackbar } from '../../snackbar';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
-import { getTimeTracker } from '../../../../tracking';
+import { getTimeTracker } from '../../../../../../packages/tracking/src';
 
 /**
  * Custom hook to save story.

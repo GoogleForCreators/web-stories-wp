@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { DATA_VERSION, migrate } from '../../migration/migrate';
-import { getTimeTracker } from '../../tracking';
+import { getTimeTracker } from '../../../../packages/tracking/src';
 
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(

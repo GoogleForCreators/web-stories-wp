@@ -27,7 +27,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../../edit-story/units';
-import { trackEvent } from '../../../../../tracking';
+import { trackEvent } from '../../../../../../../packages/tracking/src';
 import {
   Layout,
   StandardViewContentGutter,

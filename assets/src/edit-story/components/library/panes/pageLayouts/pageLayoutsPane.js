@@ -27,7 +27,7 @@ import { _x, sprintf } from '@web-stories-wp/i18n';
 import { useAPI } from '../../../../app/api';
 import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
-import { getTimeTracker } from '../../../../../tracking';
+import { getTimeTracker } from '../../../../../../../packages/tracking/src';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
 import { PAGE_LAYOUT_TYPES } from './constants';

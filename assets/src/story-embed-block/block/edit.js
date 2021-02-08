@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../tracking';
+import { trackEvent } from '../../../../packages/tracking/src';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';

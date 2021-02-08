@@ -25,7 +25,7 @@ import { createHashHistory } from 'history';
 /**
  * Internal dependencies
  */
-import { trackScreenView } from '../../../tracking';
+import { trackScreenView } from '../../../../../packages/tracking/src';
 import { createContext } from '../../../design-system';
 
 export const RouterContext = createContext({ state: {}, actions: {} });

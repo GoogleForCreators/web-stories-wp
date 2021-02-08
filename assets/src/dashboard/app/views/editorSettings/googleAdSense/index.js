@@ -40,7 +40,7 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
-import { trackClick } from '../../../../../tracking';
+import { trackClick } from '../../../../../../../packages/tracking/src';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(

@@ -28,7 +28,7 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
-import { trackClick } from '../../../tracking';
+import { trackClick } from '../../../../../packages/tracking/src';
 
 const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};

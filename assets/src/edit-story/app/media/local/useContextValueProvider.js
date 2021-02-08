@@ -26,7 +26,7 @@ import { useAPI, useConfig } from '../..';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
-import { getTimeTracker } from '../../../../tracking';
+import { getTimeTracker } from '../../../../../../packages/tracking/src';
 
 /**
  * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext

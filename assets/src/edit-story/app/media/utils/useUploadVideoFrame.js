@@ -21,7 +21,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { getTimeTracker, trackError } from '../../../../tracking';
+import { getTimeTracker, trackError } from '../../../../../../packages/tracking/src';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';

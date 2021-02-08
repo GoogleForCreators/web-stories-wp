@@ -30,7 +30,7 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../../design-system';
-import { trackEvent } from '../../../../../tracking';
+import { trackEvent } from '../../../../../../../packages/tracking/src';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {

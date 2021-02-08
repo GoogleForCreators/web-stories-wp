@@ -22,7 +22,7 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
+import { initializeTracking } from '../../../packages/tracking/src';
 import { name, settings } from './block';
 
 __webpack_public_path__ = global.webStoriesEmbedBlockSettings.publicPath;

@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
-import { trackEvent } from '../../../tracking';
+import { trackEvent } from '../../../../../packages/tracking/src';
 
 /**
  * Custom hook to open the WordPress media modal.

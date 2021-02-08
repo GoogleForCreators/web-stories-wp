@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { trackClick } from '../../../tracking';
+import { trackClick } from '../../../../../packages/tracking/src';
 import { useConfig } from '../config';
 
 import Paragraph from './paragraph';

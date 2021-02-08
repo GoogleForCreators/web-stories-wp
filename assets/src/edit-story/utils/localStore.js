@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { trackError } from '../../tracking';
+import { trackError } from '../../../../packages/tracking/src';
 
 export const LOCAL_STORAGE_PREFIX = {
   PANEL: 'web_stories_ui_panel_settings',

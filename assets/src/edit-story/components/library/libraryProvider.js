@@ -24,7 +24,7 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-import { getTimeTracker } from '../../../tracking';
+import { getTimeTracker } from '../../../../../packages/tracking/src';
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
 import { MediaPane, MediaIcon } from './panes/media/local';

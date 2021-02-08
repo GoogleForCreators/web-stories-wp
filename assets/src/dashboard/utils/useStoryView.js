@@ -25,7 +25,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { clamp } from '../../animation';
-import { trackEvent } from '../../tracking';
+import { trackEvent } from '../../../../packages/tracking/src';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import { usePagePreviewSize } from './index';

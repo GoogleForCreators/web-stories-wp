@@ -25,7 +25,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../tracking';
+import { trackEvent } from '../../../../../../../packages/tracking/src';
 import { ToggleButtonGroup, useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,

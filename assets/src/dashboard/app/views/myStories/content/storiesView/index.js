@@ -46,7 +46,7 @@ import {
   ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
-import { trackEvent } from '../../../../../../tracking';
+import { trackEvent } from '../../../../../../../../packages/tracking/src';
 import { titleFormatted } from '../../../../../utils';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';

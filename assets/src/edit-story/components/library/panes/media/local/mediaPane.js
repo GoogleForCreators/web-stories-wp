@@ -25,7 +25,7 @@ import { __, _n, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../../tracking';
+import { trackEvent } from '../../../../../../../../packages/tracking/src';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';

@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
+import { trackEvent } from '../../../../../../packages/tracking/src';
 import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';

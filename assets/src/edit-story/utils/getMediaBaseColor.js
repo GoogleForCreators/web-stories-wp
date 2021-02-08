@@ -21,7 +21,7 @@ import ColorThief from 'colorthief';
 /**
  * Internal dependencies
  */
-import { trackError } from '../../tracking';
+import { trackError } from '../../../../packages/tracking/src';
 const thief = new ColorThief();
 
 const STYLES = {

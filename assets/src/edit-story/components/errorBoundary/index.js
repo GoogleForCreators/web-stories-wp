@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { trackError } from '../../../tracking';
+import { trackError } from '../../../../../packages/tracking/src';
 import ErrorActions from './errorActions';
 
 class ErrorBoundary extends Component {

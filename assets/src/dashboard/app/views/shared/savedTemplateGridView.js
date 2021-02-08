@@ -43,7 +43,7 @@ import { STORY_STATUS } from '../../../constants';
 import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
-import { trackEvent } from '../../../../tracking';
+import { trackEvent } from '../../../../../../packages/tracking/src';
 
 export const DetailRow = styled.div`
   display: flex;

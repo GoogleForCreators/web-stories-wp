@@ -22,7 +22,7 @@ import { useEffect, useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../tracking';
+import { trackEvent } from '../../../../../packages/tracking/src';
 import { useAPI } from '../../app';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';

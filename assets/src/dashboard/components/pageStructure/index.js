@@ -27,7 +27,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import { THEME_CONSTANTS } from '../../../design-system';
 import { BEZIER } from '../../../animation';
-import { trackEvent } from '../../../tracking';
+import { trackEvent } from '../../../../../packages/tracking/src';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';

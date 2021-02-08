@@ -24,7 +24,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
+import { trackEvent } from '../../../../../../packages/tracking/src';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import {
   CardGridItem,

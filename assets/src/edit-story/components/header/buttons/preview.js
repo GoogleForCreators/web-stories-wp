@@ -23,7 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
+import { trackEvent } from '../../../../../../packages/tracking/src';
 import { useStory, useLocalMedia } from '../../../app';
 import { Outline } from '../../button';
 import escapeHTML from '../../../utils/escapeHTML';

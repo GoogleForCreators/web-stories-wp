@@ -36,7 +36,7 @@ import {
 } from '../components';
 import { Dropdown } from '../../../../components';
 import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
-import { trackClick } from '../../../../../tracking';
+import { trackClick } from '../../../../../../../packages/tracking/src';
 
 const AdNetworkDropdown = styled(Dropdown)`
   & button {

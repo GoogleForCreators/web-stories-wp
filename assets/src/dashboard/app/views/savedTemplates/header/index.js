@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../tracking';
+import { trackEvent } from '../../../../../../../packages/tracking/src';
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,

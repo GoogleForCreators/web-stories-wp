@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { trackClick } from '../../../../tracking';
+import { trackClick } from '../../../../../../packages/tracking/src';
 import {
   Dropdown,
   StandardViewContentGutter,
