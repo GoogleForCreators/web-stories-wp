@@ -42,6 +42,7 @@ use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
 use Google\Web_Stories\Shortcode\Stories_Shortcode;
 use Google\Web_Stories\Block\Web_Stories_Block;
+use Google\Web_Stories\Integrations\Core_Themes_Support;
 use Google\Web_Stories\TinyMCE;
 
 /**
@@ -320,6 +321,11 @@ class Plugin {
 
 		$tinymce = new TinyMCE();
 		add_action( 'current_screen', [ $tinymce, 'init' ] );
+
+		// Embed Webstories using customizer settings for core themes.
+		$webstories_core_themes_support = new Core_Themes_Support();
+		add_action( 'after_setup_theme', [ $webstories_core_themes_support, 'init' ] );
+		$this->integrations['webstories_core_themes_support'] = $webstories_core_themes_support;
 	}
 
 	/**
