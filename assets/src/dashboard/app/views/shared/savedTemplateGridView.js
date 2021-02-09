@@ -79,8 +79,8 @@ const SavedTemplateGridView = ({
   // eslint-disable-next-line no-unused-vars
   const bottomTargetAction = useCallback(
     (template) => {
-      return async () => {
-        await trackEvent(
+      return () => {
+        trackEvent(
           'use_saved_template',
           'dashboard',
           template.title,

@@ -58,12 +58,12 @@ function Content({
   );
 
   const handleMenuItemSelected = useCallback(
-    async (sender, template) => {
+    (sender, template) => {
       setContextMenuId(-1);
 
       switch (sender.value) {
         case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          await trackEvent(
+          trackEvent(
             'use_saved_template_from_menu',
             'dashboard',
             template.title,

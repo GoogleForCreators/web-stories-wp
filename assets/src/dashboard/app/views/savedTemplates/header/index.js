@@ -60,8 +60,8 @@ function Header({ filter, search, sort, templates, view }) {
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_saved_templates', 'dashboard', '', '', {
+  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
+    trackEvent('search_saved_templates', 'dashboard', '', '', {
       search_term: value,
     });
     search.setKeyword(value);

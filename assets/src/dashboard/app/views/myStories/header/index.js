@@ -74,8 +74,8 @@ function Header({
   });
 
   const handleClick = useCallback(
-    async (filterValue) => {
-      await trackEvent('filter_stories', 'dashboard', '', '', {
+    (filterValue) => {
+      trackEvent('filter_stories', 'dashboard', '', '', {
         status: filterValue,
       });
       filter.set(filterValue);
@@ -136,8 +136,8 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_stories', 'dashboard', '', '', {
+  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
+    trackEvent('search_stories', 'dashboard', '', '', {
       search_term: value,
     });
     search.setKeyword(value);

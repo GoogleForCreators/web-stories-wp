@@ -60,8 +60,8 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const targetAction = useCallback(
     (template) => {
-      return async () => {
-        await trackEvent(
+      return () => {
+        trackEvent(
           'use_template',
           'dashboard',
           template.title,

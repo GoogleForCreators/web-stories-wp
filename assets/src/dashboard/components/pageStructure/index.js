@@ -139,8 +139,8 @@ export function LeftRail() {
     }
   }, [sideBarVisible]);
 
-  const onCreateNewStoryClick = useCallback(async () => {
-    await trackEvent('create_new_story', 'dashboard');
+  const onCreateNewStoryClick = useCallback(() => {
+    trackEvent('create_new_story', 'dashboard');
   }, []);
 
   const onExternalLinkClick = useCallback((path) => {

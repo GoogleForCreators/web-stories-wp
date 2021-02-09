@@ -107,34 +107,34 @@ function StoriesView({
   }, [activeDialog]);
 
   const handleOnRenameStory = useCallback(
-    async (story, newTitle) => {
+    (story, newTitle) => {
       setTitleRenameId(-1);
-      await trackEvent('rename_story', 'dashboard');
+      trackEvent('rename_story', 'dashboard');
       storyActions.updateStory({ ...story, title: { raw: newTitle } });
     },
     [storyActions]
   );
 
-  const handleOnDeleteStory = useCallback(async () => {
-    await trackEvent('delete_story', 'dashboard');
+  const handleOnDeleteStory = useCallback(() => {
+    trackEvent('delete_story', 'dashboard');
     storyActions.trashStory(activeStory);
     setFocusedStory({ id: activeStory.id, isDeleted: true });
     setActiveDialog('');
   }, [storyActions, activeStory]);
 
   const handleMenuItemSelected = useCallback(
-    async (sender, story) => {
+    (sender, story) => {
       setContextMenuId(-1);
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          await trackEvent('open_in_editor', 'dashboard');
+          trackEvent('open_in_editor', 'dashboard');
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
           setTitleRenameId(story.id);
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
-          await trackEvent('duplicate_story', 'dashboard');
+          trackEvent('duplicate_story', 'dashboard');
           storyActions.duplicateStory(story);
           break;
 
