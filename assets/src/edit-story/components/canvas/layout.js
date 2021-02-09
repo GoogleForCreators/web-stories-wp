@@ -109,7 +109,7 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
       left: -4px;
       right: -4px;
       bottom: -4px;
-      border: ${theme.designSystemTheme.colors.blue[20]} 1px solid;
+      border: ${theme.designSystemTheme.colors.border.selection} 1px solid;
       border-radius: 10px;
     }
   `}
@@ -125,7 +125,7 @@ const PageAreaWithOverflow = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 5px;
 `;
 
 const PageAreaSafeZone = styled.div`
