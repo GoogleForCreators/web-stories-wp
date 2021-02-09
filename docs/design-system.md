@@ -6,7 +6,9 @@ Web Stories exists as two apps right now, the editor and the dashboard. Both hav
 
 ## What goes in the design system?
 
-The Design System is **only** for shared basics and components. In [atomic design terms](https://bradfrost.com/blog/post/atomic-web-design) we are sharing atoms, molecules and (some) organisms.  If it is a small pattern that’s repeated in a more complicated structure (like a menu that’s used in a dropDown, a search component and a popover menu) then that structure should exist in the design system. If it’s shared across both the editor and the dashboard, it should exist in the design system - like a button or a dialog. If it’s something complex only used by the editor, say the color picker, which uses a slider and some other smaller components in the design system, the color picker would live in the editor because it is not shared by the dashboard. Things that are not easily generalized should not live in the design system.
+The Design System is **only** for shared basics and components. In [atomic design terms](https://bradfrost.com/blog/post/atomic-web-design) we are sharing atoms, molecules and (some) organisms.  If it is a small pattern that’s repeated in a more complicated structure (like a menu that’s used in a dropDown, a search component and a popover menu) then that structure should exist in the design system. If it’s shared across both the editor and the dashboard, it should exist in the design system - like a button or a dialog. 
+
+If it’s something complex only used by the editor, say the color picker, which uses a slider and some other smaller components in the design system, the color picker would live in the editor because it is not shared by the dashboard. Things that are not easily generalized should not live in the design system.
 
 ## Theme
 
