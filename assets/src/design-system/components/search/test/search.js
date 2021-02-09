@@ -196,7 +196,34 @@ describe('Search <Search />', () => {
     expect(menu).toStrictEqual([]);
   });
 
-  it('should trigger onMenuItemClick from input when input has value', () => {
+  it('should not trigger onMenuItemClick when "enter" is hit but input has no value', () => {
+    const onClickMock = jest.fn();
+
+    const { getByRole } = renderWithProviders(
+      <Search
+        options={basicDropDownOptions}
+        ariaInputLabel="my dropDown label"
+        onMenuItemClick={onClickMock}
+        selectedValue={basicDropDownOptions[2]}
+      />
+    );
+
+    // Fire click event
+    const input = getByRole('combobox');
+    act(() => {
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: '' } });
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+    });
+    act(() => {
+      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+    });
+
+    expect(onClickMock).toHaveBeenCalledTimes(0);
+  });
+
+  it('should trigger onMenuItemClick when "enter" is hit and input has value', () => {
     const onClickMock = jest.fn();
 
     const { getByRole } = renderWithProviders(

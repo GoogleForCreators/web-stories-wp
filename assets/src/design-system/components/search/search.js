@@ -90,7 +90,6 @@ export const Search = ({
   const clearId = useMemo(() => `clear-button-${uuidv4()}`, []);
 
   const inputRef = useRef();
-  const menuRef = useRef();
 
   const {
     activeOption,
@@ -293,7 +292,6 @@ export const Search = ({
             onMenuItemClick={handleMenuItemClick}
             options={normalizedOptions}
             parentId={inputId}
-            ref={menuRef}
             {...rest}
           />
         </Popup>

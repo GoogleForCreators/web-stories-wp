@@ -35,11 +35,11 @@ describe('Search <Input />', () => {
   it('should render a <SearchInput /> combobox by default', () => {
     const { getByRole } = renderWithProviders(
       <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
+        ariaInputLabel="search label"
+        ariaClearLabel="aria label for clearing value"
         onClick={onClickMock}
         handleClearInput={handleClearInputMock}
-        inputValue={''}
+        inputValue=""
       />
     );
 
@@ -50,12 +50,12 @@ describe('Search <Input />', () => {
   it('should not trigger onClickMock on click if input is disabled', () => {
     const { getByPlaceholderText } = renderWithProviders(
       <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
+        ariaInputLabel="search label"
+        ariaClearLabel="aria label for clearing value"
         onClick={onClickMock}
         handleClearInput={handleClearInputMock}
-        placeholder={'search placeholder'}
-        inputValue={''}
+        placeholder="search placeholder"
+        inputValue=""
         disabled
       />
     );
@@ -66,33 +66,15 @@ describe('Search <Input />', () => {
     expect(onClickMock).toHaveBeenCalledTimes(0);
   });
 
-  it('should trigger onClickMock on click if input is not disabled', () => {
-    const { getByPlaceholderText } = renderWithProviders(
-      <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
-        onClick={onClickMock}
-        handleClearInput={handleClearInputMock}
-        inputValue={''}
-        placeholder={'search placeholder'}
-      />
-    );
-
-    const input = getByPlaceholderText('search placeholder');
-    fireEvent.click(input);
-
-    expect(onClickMock).toHaveBeenCalledTimes(1);
-  });
-
   it('should trigger handleClearInputMock on click of clear button if input has content', () => {
     const { getByTestId } = renderWithProviders(
       <SearchInput
-        ariaInputLabel={'search label'}
-        ariaClearLabel={'aria label for clearing value'}
+        ariaInputLabel="search label"
+        ariaClearLabel="aria label for clearing value"
         onClick={onClickMock}
         handleClearInput={handleClearInputMock}
-        inputValue={'my input value'}
-        placeholder={'search placeholder'}
+        inputValue="my input value"
+        placeholder="search placeholder"
       />
     );
 

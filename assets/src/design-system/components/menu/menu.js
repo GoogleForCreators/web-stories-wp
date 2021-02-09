@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, forwardRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -49,27 +49,24 @@ import { EmptyList, ListGroupings } from './list';
  *
  */
 
-const Menu = (
-  {
-    dropDownHeight,
-    emptyText,
-    menuStylesOverride,
-    hasMenuRole,
-    handleReturnToParent,
-    isMenuFocused = true,
-    isRTL,
-    options = [],
-    listId,
-    onMenuItemClick,
-    onDismissMenu,
-    renderItem,
-    activeValue,
-    menuAriaLabel,
-    parentId,
-  },
-  ref
-) => {
-  const listRef = ref;
+const Menu = ({
+  dropDownHeight,
+  emptyText,
+  menuStylesOverride,
+  hasMenuRole,
+  handleReturnToParent,
+  isMenuFocused = true,
+  isRTL,
+  options = [],
+  listId,
+  onMenuItemClick,
+  onDismissMenu,
+  renderItem,
+  activeValue,
+  menuAriaLabel,
+  parentId,
+}) => {
+  const listRef = useRef();
   const optionsRef = useRef([]);
 
   const handleMenuItemSelect = useCallback(
@@ -106,7 +103,7 @@ const Menu = (
 
     highlighedOptionEl.focus();
     listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
-  }, [focusedIndex, isMenuFocused, listRef]);
+  }, [focusedIndex, isMenuFocused]);
 
   return (
     <MenuContainer
@@ -136,7 +133,7 @@ const Menu = (
   );
 };
 
-export default forwardRef(Menu);
+export default Menu;
 
 Menu.propTypes = {
   dropDownHeight: PropTypes.number,
