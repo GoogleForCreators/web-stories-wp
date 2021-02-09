@@ -103,6 +103,7 @@ function fields_states() {
 		'excerpt',
 		'sharp_corners',
 		'archive_link',
+		'circle_size',
 	];
 
 	$field_states = [];

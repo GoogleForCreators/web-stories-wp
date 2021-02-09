@@ -137,6 +137,21 @@ class BaseFieldState implements FieldState {
 	}
 
 	/**
+	 * Circle size field.
+	 *
+	 * @return BaseField
+	 */
+	public function circle_size() {
+		return new BaseField(
+			[
+				'label'    => __( 'Circle Size', 'web-stories' ),
+				'show'     => false,
+				'readonly' => false,
+			]
+		);
+	}
+
+	/**
 	 * Prepare a field object.
 	 *
 	 * @param array $args Arguments to build field.

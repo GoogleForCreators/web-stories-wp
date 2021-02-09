@@ -37,6 +37,19 @@ exports[`TinyMCE Controls Modal modal is opened and view is circle 1`] = `
     min={1}
     onChange={[Function]}
   />
+  <Range
+    label="Circle Size"
+    max={200}
+    min={80}
+    onChange={[Function]}
+    step={5}
+  />
+  <Range
+    label="Number of Columns"
+    max={4}
+    min={1}
+    onChange={[Function]}
+  />
   <Select
     label="Select Order"
     onChange={[Function]}

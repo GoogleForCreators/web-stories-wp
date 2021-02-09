@@ -40,18 +40,34 @@ const reactiveWidget = function (target, reset = false) {
   for (const [key, value] of Object.entries(state)) {
     const field = widget.querySelector(`.${key}.stories-widget-field`);
     const fieldWrapper = widget.querySelector(`.${key}_wrapper`);
-    if (field && fieldWrapper && 'checkbox' === field.getAttribute('type')) {
-      if (reset) {
-        field.checked = false;
+
+    if (field && fieldWrapper) {
+      const field_type = field.getAttribute('type');
+
+      switch (field_type) {
+        case 'checkbox':
+          if (reset) {
+            field.checked = false;
+          }
+          /**
+           * If this is readonly field.
+           * Assign the value automatically and hide it afterward.
+           */
+          if (value.readonly) {
+            field.checked = value.show;
+          }
+
+          fieldWrapper.style.display = value.readonly ? 'none' : 'block';
+          break;
+
+        default:
+          if (value.show) {
+            fieldWrapper.style.display = 'block';
+          } else {
+            fieldWrapper.style.display = 'none';
+          }
+          break;
       }
-      /**
-       * If this is readonly field.
-       * Assign the value automatically and hide it afterward.
-       */
-      if (value.readonly) {
-        field.checked = value.show;
-      }
-      fieldWrapper.style.display = value.readonly ? 'none' : 'block';
     }
   }
 };

@@ -58,6 +58,7 @@ trait ThemeSupport {
 			'stories-archive-link'      => true,
 			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
 			'number-of-stories'         => 10,
+			'default-circle-size'       => 150,
 			'order'                     => get_stories_order(),
 			'order-default'             => 'latest',
 			'show-story-poster-default' => true,

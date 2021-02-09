@@ -205,6 +205,32 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
+			self::STORY_OPTION . '[circle_size]',
+			[
+				'default' => $theme_support['default-circle-size'],
+				'type'    => 'option',
+			]
+		);
+
+		$wp_customize->add_control(
+			self::STORY_OPTION . '[circle_size]',
+			[
+				'section'         => self::SECTION_SLUG,
+				'label'           => __( 'Circle Size', 'web-stories' ),
+				'type'            => 'number',
+				'choices'         => $this->get_order_choices( $theme_support['order'] ),
+				'input_attrs'     => [
+					'min'  => 80,
+					'max'  => 200,
+					'step' => 5,
+				],
+				'active_callback' => function() {
+					return $this->is_view_type( 'circles' );
+				},
+			]
+		);
+
+		$wp_customize->add_setting(
 			self::STORY_OPTION . '[list_view_image_alignment]',
 			[
 				'type'    => 'option',
@@ -477,6 +503,7 @@ class Customizer {
 			'stories_archive_label' => $theme_support['stories-archive-label'],
 			'show_story_poster'     => $theme_support['show-story-poster-default'],
 			'number_of_columns'     => $theme_support['grid-columns-default'],
+			'circle_size'           => $theme_support['default-circle-size'],
 		];
 
 		$query_arguments = [

@@ -103,6 +103,7 @@ export const setDefaultStateSetting = () => {
       columns: 1,
       view: viewValue,
       order: orderlist ? 'latest' : orderlist[0].value,
+      circle_size: 150,
     };
   });
 

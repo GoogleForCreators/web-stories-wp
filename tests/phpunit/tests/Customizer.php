@@ -80,6 +80,7 @@ class Customizer extends \WP_UnitTestCase {
 				'stories-archive-link'      => true,
 				'stories-archive-label'     => 'View all stories',
 				'number-of-stories'         => 5,
+				'default-circle-size'       => 150,
 				'order'                     => [ 'alphabetical', 'reverse-alphabetical', 'latest', 'oldest' ],
 				'order-default'             => 'oldest',
 				'show-story-poster-default' => true,
@@ -124,7 +125,7 @@ class Customizer extends \WP_UnitTestCase {
 	 */
 	public function test_customizer_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->customizer_mock->expects( $this->exactly( 12 ) )->method( 'add_setting' );
+		$this->customizer_mock->expects( $this->exactly( 13 ) )->method( 'add_setting' );
 		$this->customizer->register_customizer_settings( $this->customizer_mock );
 	}
 
@@ -133,7 +134,7 @@ class Customizer extends \WP_UnitTestCase {
 	 */
 	public function test_customizer_show_stories_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->customizer_mock->expects( $this->exactly( 12 ) )->
+		$this->customizer_mock->expects( $this->exactly( 13 ) )->
 		method( 'add_setting' )->
 		withConsecutive(
 			[
@@ -171,6 +172,13 @@ class Customizer extends \WP_UnitTestCase {
 				[
 					'default' => 'oldest',
 					'type'    => 'option',
+				],
+			],
+			[
+				'story-options[circle_size]',
+				[
+					'default'           => 150,
+					'type'              => 'option',
 				],
 			],
 			[
@@ -289,6 +297,7 @@ class Customizer extends \WP_UnitTestCase {
 			'stories-archive-link'      => true,
 			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
 			'number-of-stories'         => 10,
+			'default-circle-size'       => 150,
 			'order'                     => [
 				'latest'               => __( 'Latest', 'web-stories' ),
 				'oldest'               => __( 'Oldest', 'web-stories' ),
@@ -324,6 +333,7 @@ class Customizer extends \WP_UnitTestCase {
 				'stories-archive-link'      => true,
 				'stories-archive-label'     => 'View all stories',
 				'number-of-stories'         => 5,
+				'default-circle-size'       => 150,
 				'order'                     => [ 'alphabetical', 'reverse-alphabetical', 'latest', 'oldest' ],
 				'order-default'             => 'oldest',
 				'show-story-poster-default' => true,

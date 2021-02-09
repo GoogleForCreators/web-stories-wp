@@ -91,6 +91,7 @@ class Stories extends WP_Widget {
 			'show_excerpt'              => (bool) $instance['show_excerpt'],
 			'list_view_image_alignment' => ( (bool) $instance['image_align_right'] ) ? 'right' : 'left',
 			'show_stories_archive_link' => (bool) $instance['archive_link'],
+			'circle_size'				=> $instance['circle_size'],
 		];
 
 		$story_args = [
@@ -124,6 +125,7 @@ class Stories extends WP_Widget {
 		$archive_link      = ! empty( $instance['archive_link'] ) ? (int) $instance['archive_link'] : '';
 		$image_align       = ! empty( $instance['image_align_right'] ) ? (int) $instance['image_align_right'] : '';
 		$number            = ! empty( $instance['number'] ) ? (int) $instance['number'] : 5;
+		$circle_size	   = ! empty( $instance['circle_size'] ) ? (int) $instance['circle_size'] : 100;
 
 		$this->input(
 			[
@@ -157,6 +159,24 @@ class Stories extends WP_Widget {
 				'wrapper_class' => 'number-stories_wrapper',
 				'value'         => $number,
 				'label_before'  => true,
+			]
+		);
+
+		$this->input(
+			[
+				'id'            => 'circle-size',
+				'name'          => 'circle_size',
+				'label'         => __( 'Circle size', 'web-stories' ),
+				'type'          => 'number',
+				'classname'     => 'widefat circle_size stories-widget-field',
+				'wrapper_class' => 'circle_size_wrapper',
+				'value'         => $circle_size,
+				'label_before'  => true,
+				'attributes'	=> [
+					'min'  => 80,
+					'max'  => 200,
+					'step' => 5,
+				],
 			]
 		);
 
@@ -256,6 +276,7 @@ class Stories extends WP_Widget {
 		$instance['archive_link']      = ( isset( $new_instance['archive_link'] ) ) ? 1 : '';
 		$instance['image_align_right'] = ( isset( $new_instance['image_align_right'] ) ) ? 1 : '';
 		$instance['number']            = min( absint( $new_instance['number'] ), 20 );
+		$instance['circle_size']	   = min( absint( $new_instance['circle_size'] ), 200 );
 
 		return $instance;
 	}
@@ -375,6 +396,14 @@ class Stories extends WP_Widget {
 			if ( $args['label_before'] ) {
 				echo $label;
 			}
+
+			$extra_attrs = '';
+
+			if ( ! empty( $args['attributes'] ) && is_array( $args['attributes'] ) ) {
+				foreach ( $args['attributes'] as $attr_key => $attr_val ) {
+					$extra_attrs .= sprintf( ' %1s=%2s', $attr_key, $attr_val );
+				}
+			}
 			?>
 
 			<input
@@ -388,6 +417,7 @@ class Stories extends WP_Widget {
 					checked( 1, $args['value'], true );
 				}
 				?>
+				<?php echo $extra_attrs; ?>
 			/>
 
 			<?php
