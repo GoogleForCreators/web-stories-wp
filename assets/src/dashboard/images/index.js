@@ -17,7 +17,4 @@
 /**
  * Internal dependencies
  */
-
-export { ReactComponent as Compass } from './compass.svg';
-export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
-export { ReactComponent as HomeWithHeart } from './home_with_heart.svg';
+export { ReactComponent as WebStoriesLogo } from './webStoriesFullLogo.svg';
