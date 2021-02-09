@@ -22,13 +22,12 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { rgba } from 'polished';
 import styled from 'styled-components';
-
+import { FIELD_TYPES } from '@web-stories-wp/animation';
+import { GeneralAnimationPropTypes } from '@web-stories-wp/animation/src/outputs';
+import { AnimationFormPropTypes } from '@web-stories-wp/animation/src/types';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../../../../animation';
-import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
-import { AnimationFormPropTypes } from '../../../../../animation/types';
 import { DropDown, BoxedNumeric } from '../../../form';
 import RangeInput from '../../../rangeInput';
 import { DirectionRadioInput } from './directionRadioInput';

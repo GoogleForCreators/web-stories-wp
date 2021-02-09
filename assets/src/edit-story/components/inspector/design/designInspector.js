@@ -19,11 +19,10 @@
  */
 import { useCallback } from 'react';
 import styled from 'styled-components';
-
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory } from '../../../app';
 import { LayerPanel } from '../../panels/design';
 import DesignPanels from './designPanels';

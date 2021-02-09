@@ -22,11 +22,10 @@ import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import Big from 'big.js';
-
+import { defaultUnit } from '@web-stories-wp/animation/src/utils/defaultUnit';
 /**
  * Internal dependencies
  */
-import { defaultUnit } from '../../../animation/utils/defaultUnit';
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
 import { useKeyDownEffect } from '../../../design-system';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../constants';

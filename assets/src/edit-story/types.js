@@ -18,11 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
+import { AnimationProps } from '@web-stories-wp/animation/src/parts/types';
 /**
  * Internal dependencies
  */
-import { AnimationProps } from '../animation/parts/types';
+
 import { OverlayType } from './utils/backgroundOverlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 

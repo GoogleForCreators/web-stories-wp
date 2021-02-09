@@ -20,11 +20,10 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useFeatures } from 'flagged';
 import { v4 as uuidv4 } from 'uuid';
-
+import { clamp, STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { clamp, STORY_ANIMATION_STATE } from '../../../../animation';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import stripHTML from '../../../../edit-story/utils/stripHTML';

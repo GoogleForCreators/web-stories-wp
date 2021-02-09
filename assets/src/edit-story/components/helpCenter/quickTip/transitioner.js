@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
+import { BEZIER } from '@web-stories-wp/animation';
 import { ScheduledTransition } from '../scheduledTransition';
 import { TRANSITION_DURATION, Z_INDEX } from '../constants';
 

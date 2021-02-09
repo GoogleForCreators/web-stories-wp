@@ -21,11 +21,10 @@ import styled from 'styled-components';
 import { memo, useRef } from 'react';
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
-
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
 import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useDropTargets, useCanvas } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';

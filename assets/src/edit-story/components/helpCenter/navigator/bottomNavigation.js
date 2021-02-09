@@ -20,10 +20,10 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useEffect, useState, useRef } from 'react';
+import { BEZIER } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
 import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
 import { TRANSITION_DURATION } from '../constants';
 import { forceFocusCompanion } from '../utils';

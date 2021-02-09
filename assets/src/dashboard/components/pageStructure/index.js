@@ -22,11 +22,11 @@ import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { BEZIER } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../design-system';
-import { BEZIER } from '../../../animation';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';

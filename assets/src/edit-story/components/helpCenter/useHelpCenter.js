@@ -17,10 +17,10 @@
  * External dependencies
  */
 import { useReducer, useEffect, useState, useMemo } from 'react';
+import { clamp } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../animation';
 import { NAVIGATION_FLOW } from './constants';
 
 /**

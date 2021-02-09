@@ -18,10 +18,10 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { BEZIER } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
 import { ScheduledTransition } from './scheduledTransition';
 
 const DURATION = 300;

@@ -20,14 +20,13 @@
 import PropTypes from 'prop-types';
 import { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
-
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import useFocusOut from '../../../../utils/useFocusOut';
-import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 

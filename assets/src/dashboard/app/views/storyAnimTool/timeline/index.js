@@ -20,16 +20,16 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-/**
- * Internal dependencies
- */
 import {
   clamp,
   getAnimationProps,
   getTotalDuration,
   ANIMATION_TYPES,
   FIELD_TYPES,
-} from '../../../../../animation';
+} from '@web-stories-wp/animation';
+/**
+ * Internal dependencies
+ */
 import { StoryPropType } from '../../../../types';
 import {
   AnimationList,

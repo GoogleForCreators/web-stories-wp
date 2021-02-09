@@ -21,11 +21,10 @@ import styled, { css } from 'styled-components';
 import { useCallback } from 'react';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import {

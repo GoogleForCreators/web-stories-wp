@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
-
-/**
- * Internal dependencies
- */
 import {
   ANIMATION_EFFECTS,
   DIRECTION,
   SCALE_DIRECTION,
-} from '../../../../../../animation';
+} from '@web-stories-wp/animation';
+/**
+ * Internal dependencies
+ */
 import { renderWithTheme } from '../../../../../testUtils';
 import EffectChooser from '../effectChooser';
 

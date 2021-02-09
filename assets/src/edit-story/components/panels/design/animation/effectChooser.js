@@ -27,6 +27,12 @@ import React, {
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  ANIMATION_EFFECTS,
+  BACKGROUND_ANIMATION_EFFECTS,
+  DIRECTION,
+  SCALE_DIRECTION,
+} from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
@@ -39,12 +45,6 @@ import {
 import loadStylesheet from '../../../../utils/loadStylesheet';
 import { useConfig } from '../../../../app/config';
 import { GOOGLE_MENU_FONT_URL } from '../../../../app/font';
-import {
-  ANIMATION_EFFECTS,
-  BACKGROUND_ANIMATION_EFFECTS,
-  DIRECTION,
-  SCALE_DIRECTION,
-} from '../../../../../animation';
 import WithTooltip from '../../../tooltip';
 import {
   GRID_ITEM_HEIGHT,

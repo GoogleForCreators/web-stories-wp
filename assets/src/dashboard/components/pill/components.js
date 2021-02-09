@@ -19,10 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { BEZIER } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
 import { Checkmark as CheckmarkIcon, Close as CloseIcon } from '../../icons';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { TypographyPresets } from '../typography';
@@ -59,7 +59,7 @@ export const PillLabel = styled.span(
       background-color: ${theme.DEPRECATED_THEME.colors.blueLight};
     }
 
-    ${PillInput}:focus + & { 
+    ${PillInput}:focus + & {
       border: ${theme.DEPRECATED_THEME.borders.action};
     }
 

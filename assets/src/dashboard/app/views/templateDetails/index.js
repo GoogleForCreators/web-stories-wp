@@ -20,10 +20,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { clamp } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout, useToastContext } from '../../../components';
 import { ALERT_SEVERITY } from '../../../constants';

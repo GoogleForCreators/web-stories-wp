@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
@@ -29,7 +29,6 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import useUnmount from '../../utils/useUnmount';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
 import EditCropMoveable from './editCropMoveable';

@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+/**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
 import { useStory, useCanvas } from '../../app';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';

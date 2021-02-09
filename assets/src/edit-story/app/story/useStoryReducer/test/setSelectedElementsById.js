@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { setupReducer } from './_utils';
 
 describe('setSelectedElementsById', () => {

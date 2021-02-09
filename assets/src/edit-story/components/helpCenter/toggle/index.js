@@ -23,7 +23,7 @@ import { __, _n, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
+import { BEZIER } from '@web-stories-wp/animation';
 import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,

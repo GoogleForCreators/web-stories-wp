@@ -21,7 +21,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
+import { BEZIER } from '@web-stories-wp/animation';
 import { TRANSITION_DURATION } from '../constants';
 
 /**

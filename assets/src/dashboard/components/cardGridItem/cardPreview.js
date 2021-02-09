@@ -21,12 +21,11 @@ import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-
+import { clamp, STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
 import { Button } from '..';
-import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,

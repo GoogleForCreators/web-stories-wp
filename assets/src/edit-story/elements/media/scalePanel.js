@@ -19,11 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import InOverlay from '../../components/overlay';
 import RangeInput from '../../components/rangeInput';
 import { Z_INDEX_CANVAS } from '../../constants';
@@ -54,10 +53,10 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
-        {/* 
+        {/*
           @todo: Should maxScale depend on the maximum resolution? Or should that
           be left up to the helper errors? Both? In either case there'd be maximum
-          bounding scale. 
+          bounding scale.
         */}
         <RangeInput
           min={BG_MIN_SCALE}

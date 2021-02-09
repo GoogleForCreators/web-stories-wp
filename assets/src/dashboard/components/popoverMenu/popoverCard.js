@@ -20,10 +20,10 @@
 import PropTypes from 'prop-types';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { BEZIER } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../constants';
 import Popover from './popover';
 import Shadow from './shadow';

@@ -15,11 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app';
-import { STORY_ANIMATION_STATE } from '../../../../../../animation';
 
 describe('Animation Panel', function () {
   let fixture;

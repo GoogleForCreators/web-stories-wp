@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { StoryAnimation } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../animation';
 import WithLink from '../components/elementLink/output';
 import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';

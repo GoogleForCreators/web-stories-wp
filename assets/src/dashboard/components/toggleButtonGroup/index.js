@@ -27,10 +27,10 @@ import {
 } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import styled from 'styled-components';
+import { BEZIER } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 import { TypographyPresets } from '../typography';
 
