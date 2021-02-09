@@ -76,7 +76,7 @@ describe('Search <Search />', () => {
     expect(input).toBeInTheDocument();
   });
 
-  it('should allow inputValue to update outside of options in menu', async () => {
+  it('should allow inputState to update outside of options in menu', async () => {
     const container = renderWithProviders(
       <Search
         options={basicDropDownOptions}

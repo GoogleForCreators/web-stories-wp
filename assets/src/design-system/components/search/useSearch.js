@@ -46,7 +46,9 @@ export default function useSearch({
    * Control whether focus is shifted to menu or input.
    */
   const [_isMenuFocused, _setIsMenuFocused] = useState(false);
-  const [setIsMenuFocused] = useDebouncedCallback(_setIsMenuFocused, 300);
+  const [setIsMenuFocused] = useDebouncedCallback(_setIsMenuFocused, 300, {
+    leading: true,
+  });
 
   const isMenuFocused = useMemo(
     () => ({
@@ -100,34 +102,34 @@ export default function useSearch({
   /**
    * Monitor input value separate from selected value to respect user input while maintaining accurate results.
    */
-  const [_inputValue, setInputValue] = useState(undefined);
+  const [_inputState, setInputState] = useState(undefined);
 
-  const inputValue = useMemo(
+  const inputState = useMemo(
     () => ({
-      value: _inputValue,
-      set: setInputValue,
+      value: _inputState,
+      set: setInputState,
     }),
-    [_inputValue]
+    [_inputState]
   );
 
   useEffect(() => {
-    if (inputValue?.value === undefined && selectedValue) {
-      inputValue.set(selectedValue?.label || '');
+    if (inputState?.value === undefined && selectedValue) {
+      inputState.set(selectedValue?.label || '');
     }
-  }, [inputValue, selectedValue]);
+  }, [inputState, selectedValue]);
   /**
-   * send the inputValue when it changes back to the parent so that any results that need to change can be changed.
+   * send the inputState when it changes back to the parent so that any results that need to change can be changed.
    */
-  useEffect(() => handleSearchValueChange?.(inputValue.value), [
+  useEffect(() => handleSearchValueChange?.(inputState.value), [
     handleSearchValueChange,
-    inputValue,
+    inputState,
   ]);
 
   return {
     activeOption,
     getActiveOption,
     normalizedOptions,
-    inputValue,
+    inputState,
     isMenuFocused,
     isOpen,
   };

@@ -56,11 +56,11 @@ describe('useSearch()', function () {
     );
 
     act(() => {
-      result.current.inputValue.set('freeform answer not in options');
+      result.current.inputState.set('freeform answer not in options');
     });
 
     expect(result.current.activeOption).toBeNull();
-    expect(result.current.inputValue.value).toBe(
+    expect(result.current.inputState.value).toBe(
       'freeform answer not in options'
     );
   });

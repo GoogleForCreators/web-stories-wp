@@ -51,7 +51,7 @@ import useSearch from './useSearch';
  * @param {boolean} props.disabled If true, menu will not be openable
  * @param {string} props.emptyText If the array of options is empty this text will display when menu is expanded.
  * @param {Function} props.handleSearchValueChange specific callback to monitor changes in input value separate from onMenuItemClick.
- * This is to separate the inputValue from the selectedValue should the search demand selection from a list as opposed to be freeform.
+ * This is to separate the inputState from the selectedValue should the search demand selection from a list as opposed to be freeform.
  * @param {boolean} props.hasError If true, input and hint (if present) will show error styles.
  * @param {string} props.hint Hint text to display below input (optional). If not present, no hint text will display.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
@@ -95,7 +95,7 @@ export const Search = ({
   const {
     activeOption,
     getActiveOption,
-    inputValue,
+    inputState,
     isMenuFocused,
     isOpen,
     normalizedOptions,
@@ -107,8 +107,8 @@ export const Search = ({
   });
 
   const isMenuHidden = useMemo(
-    () => disabled || inputValue?.value?.length === 0,
-    [disabled, inputValue]
+    () => disabled || inputState?.value?.length === 0,
+    [disabled, inputState]
   );
 
   /**
@@ -153,10 +153,10 @@ export const Search = ({
         label: menuItem,
         value: menuItem,
       };
-      inputValue.set(newOption.label);
+      inputState.set(newOption.label);
       onMenuItemClick?.(event, newOption);
     },
-    [getActiveOption, inputValue, isOpen, onMenuItemClick]
+    [getActiveOption, inputState, isOpen, onMenuItemClick]
   );
 
   const handleReturnToInput = useCallback(() => inputRef?.current?.focus(), []);
@@ -166,20 +166,20 @@ export const Search = ({
    */
   const handleInputChange = useCallback(
     ({ target }) => {
-      inputValue.set(target.value);
+      inputState.set(target.value);
 
       if (target.value.length > 0 && !isOpen.value) {
         isOpen.set(!isOpen.value);
       }
     },
-    [inputValue, isOpen]
+    [inputState, isOpen]
   );
 
-  const handleClearInputValue = useCallback(() => {
-    inputValue.set('');
+  const handleClearInputState = useCallback(() => {
+    inputState.set('');
     onMenuItemClick?.(null, { label: '', value: '' });
     handleReturnToInput();
-  }, [handleReturnToInput, inputValue, onMenuItemClick]);
+  }, [handleReturnToInput, inputState, onMenuItemClick]);
 
   const handleTabClearButton = useCallback(() => {
     isOpen.set(false);
@@ -190,22 +190,22 @@ export const Search = ({
     isMenuFocused,
   ]);
 
-  const trimInputValue = useCallback(() => {
+  const trimInputState = useCallback(() => {
     if (
-      inputValue?.value &&
-      inputValue.value.length !== inputValue.value.trim().length
+      inputState?.value &&
+      inputState.value.length !== inputState.value.trim().length
     ) {
-      inputValue.set((prevInputVal) => prevInputVal.trim());
+      inputState.set((prevInputVal) => prevInputVal.trim());
     }
-  }, [inputValue]);
+  }, [inputState]);
 
   const handleEndSearch = useCallback(() => {
-    trimInputValue();
-    if (isMenuHidden || inputValue.value?.trim().length === 0) {
+    trimInputState();
+    if (isMenuHidden || inputState.value?.trim().length === 0) {
       isMenuFocused.set(false);
       isOpen.set(false);
     }
-  }, [inputValue, isMenuFocused, isMenuHidden, isOpen, trimInputValue]);
+  }, [inputState, isMenuFocused, isMenuHidden, isOpen, trimInputState]);
 
   const handleInputKeyPress = useCallback(
     (event) => {
@@ -219,8 +219,8 @@ export const Search = ({
       } else if (key === 'ArrowDown') {
         focusSentToList();
       } else if (key === 'Enter') {
-        if (inputValue.value.trim().length > 0) {
-          handleMenuItemClick(event, inputValue.value);
+        if (inputState.value.trim().length > 0) {
+          handleMenuItemClick(event, inputState.value);
         }
       }
     },
@@ -230,7 +230,7 @@ export const Search = ({
       handleEndSearch,
       focusSentToList,
       handleMenuItemClick,
-      inputValue.value,
+      inputState.value,
     ]
   );
 
@@ -262,9 +262,9 @@ export const Search = ({
         ariaClearLabel={ariaClearLabel}
         clearId={clearId}
         disabled={disabled}
-        handleClearInputValue={handleClearInputValue}
+        handleClearInputState={handleClearInputState}
         handleTabClearButton={handleTabClearButton}
-        inputValue={inputValue?.value || ''}
+        inputValue={inputState?.value || ''}
         isOpen={isOpen?.value}
         listId={listId}
         ref={inputRef}
