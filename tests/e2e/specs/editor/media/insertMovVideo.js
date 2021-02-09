@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/* global __dirname */
 /**
  * External dependencies
  */
+import { join } from 'path';
 import {
   createNewStory,
   clickButton,
@@ -37,8 +38,8 @@ describe('Inserting .mov from dialog', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-
-    const fileName = await uploadFile('small-video.mov', false);
+    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.mov');
+    const fileName = await uploadFile(testMediaPath, false);
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 
     await clickButton(

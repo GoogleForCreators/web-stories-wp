@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/* global __dirname */
 /**
  * External dependencies
  */
+import { join } from 'path';
 import {
   createNewStory,
   previewStory,
@@ -31,7 +32,8 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    const filename = await uploadMedia('small-video.webm', false);
+    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.webm');
+    const filename = await uploadMedia(testMediaPath, false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
 
@@ -49,7 +51,8 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    const filename = await uploadMedia('small-video.webm');
+    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.webm');
+    const filename = await uploadMedia(testMediaPath);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
@@ -71,8 +74,8 @@ describe('Inserting WebM Video', () => {
     await insertStoryTitle('Publishing with video');
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
-    const filename = await uploadMedia('small-video.webm');
+    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.webm');
+    const filename = await uploadMedia(testMediaPath);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.

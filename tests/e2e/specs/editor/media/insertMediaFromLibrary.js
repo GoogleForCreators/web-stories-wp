@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/* global __dirname */
 /**
  * External dependencies
  */
+import { join } from 'path';
 import {
   createNewStory,
   deleteMedia,
@@ -29,8 +30,8 @@ describe('Inserting Media from Media Library', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
-    const filename = await uploadMedia('example-1.jpg', true);
+    const testMediaPath = join(__dirname, '..', 'assets', 'example-1.jpg');
+    const filename = await uploadMedia(testMediaPath, true);
 
     await page.waitForSelector('[data-testid="mediaElement-image"]');
     // Clicking will only act on the first element.

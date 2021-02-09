@@ -35,15 +35,11 @@ async function uploadFile(file, checkUpload = true) {
   const fileExtension = extname(file);
   await page.setDefaultTimeout(10000);
 
-  // TODO: Fix ESLint config.
-  // eslint-disable-next-line no-undef
-  const testMediaPath = join(__dirname, '..', 'assets', file);
-
   // Copy file to <newname>.ext for upload.
   const newBaseName = uuid();
   const newFileName = newBaseName + fileExtension;
   const tmpFileName = join(tmpdir(), newFileName);
-  copyFileSync(testMediaPath, tmpFileName);
+  copyFileSync(file, tmpFileName);
 
   // Wait for media modal to appear and upload file.
   await expect(page).toUploadFile('.media-modal input[type=file]', tmpFileName);
