@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -47,15 +47,34 @@ export default function useDropDownMenu({
   const listLength = allOptions.length;
   const [focusedValue, setFocusedValue] = useState(activeValue);
 
+  const getFocusedIndex = useCallback(
+    () =>
+      allOptions.findIndex(
+        (option) => option?.value?.toString() === focusedValue.toString()
+      ),
+    [allOptions, focusedValue]
+  );
+
+  // there's an edge case in this menu when the activeValue given to a menu isn't present in the options passed to it that we want to check against when this first renders.
+  useEffect(() => {
+    if (isNullOrUndefinedOrEmptyString(focusedValue)) {
+      return;
+    }
+    const validFocusedIndex = getFocusedIndex();
+
+    if (validFocusedIndex === -1) {
+      setFocusedValue(null);
+    }
+  }, [focusedValue, getFocusedIndex]);
+
   const focusedIndex = useMemo(() => {
     if (isNullOrUndefinedOrEmptyString(focusedValue)) {
       return 0;
     }
-    const foundIndex = allOptions.findIndex((option) => {
-      return option?.value?.toString() === focusedValue.toString();
-    });
+    const foundIndex = getFocusedIndex();
+
     return foundIndex;
-  }, [allOptions, focusedValue]);
+  }, [focusedValue, getFocusedIndex]);
 
   const handleMoveFocus = useCallback(
     (offset) => setFocusedValue(allOptions[focusedIndex + offset].value),
@@ -90,7 +109,6 @@ export default function useDropDownMenu({
       if (isDisabledItem) {
         return () => {};
       }
-
       const selectedValue = focusedValue || allOptions[focusedIndex].value;
       return handleMenuItemSelect(event, { value: selectedValue });
     },
