@@ -431,7 +431,8 @@
         "packages/**/*.js"
       ],
       "excludedFiles": [
-        "packages/i18n/**/*.js"
+        "packages/activation-notice/**/*.js",
+        "packages/i18n/**/*.js",
       ],
       "rules":{
         "no-restricted-imports": [
