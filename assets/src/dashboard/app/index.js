@@ -22,10 +22,11 @@ import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackScreenView } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
-import { trackScreenView } from '../../tracking';
 import {
   theme as externalDesignSystemTheme,
   lightMode,
