@@ -133,7 +133,7 @@ const Menu = ({
   );
 };
 
-Menu.propTypes = {
+export const MenuProps = {
   dropDownHeight: PropTypes.number,
   emptyText: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -150,5 +150,7 @@ Menu.propTypes = {
   activeValue: DROP_DOWN_VALUE_TYPE,
   parentId: PropTypes.string.isRequired,
 };
+
+Menu.propTypes = MenuProps;
 
 export { Menu };
