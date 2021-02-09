@@ -36,7 +36,7 @@ const Layout = styled.section.attrs({
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.old.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   max-height: 100%;
 `;
 

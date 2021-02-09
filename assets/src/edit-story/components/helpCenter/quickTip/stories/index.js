@@ -35,7 +35,7 @@ const Bg = styled.div`
   position: relative;
   top: 0;
   left: 0;
-  background-color: ${({ theme }) => theme.old.colors.bg.primary};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   padding: 0 50px;
 `;
 

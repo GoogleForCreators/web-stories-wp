@@ -49,7 +49,7 @@ const Bg = styled.div`
   top: 0;
   left: 0;
   height: 602px;
-  background-color: ${({ theme }) => theme.old.colors.bg.primary};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   padding: 0 50px;
 `;
 

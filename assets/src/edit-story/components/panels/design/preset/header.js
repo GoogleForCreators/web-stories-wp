@@ -33,7 +33,7 @@ const buttonCSS = css`
   background: transparent;
   width: 30px;
   height: 28px;
-  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.84)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
   cursor: pointer;
   padding: 0;
   display: flex;
@@ -55,7 +55,7 @@ const EditMode = styled.button`
   ${({ isEditMode }) =>
     isEditMode &&
     css`
-      color: ${({ theme }) => theme.old.colors.fg.white};
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
       font-size: 12px;
       line-height: 14px;
       padding: 7px;

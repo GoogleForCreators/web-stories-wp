@@ -39,7 +39,8 @@ export const GlobalStyle = createGlobalStyle`
 
   /* WP admin menu arrow color */
   ul#adminmenu a.wp-has-current-submenu::after {
-    border-right-color: ${({ theme }) => theme.old.colors.bg.panel};
+    border-right-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.bg.panel};
   }
 
   /**
@@ -57,7 +58,7 @@ export const GlobalStyle = createGlobalStyle`
   * {
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) => theme.colors.bg.primary}
-    ${({ theme }) => rgba(theme.old.colors.bg.black, 0.1)};
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
   }
 
   *::-webkit-scrollbar {
@@ -67,12 +68,14 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   *::-webkit-scrollbar-track {
-    background: ${({ theme }) => rgba(theme.old.colors.bg.black, 0.1)};
+    background: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
     border-radius: 6px;
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => rgba(theme.old.colors.bg.divider, 0.04)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.bg.divider, 0.04)};
     width: 3px;
     border-radius: 6px;
     border: 2px solid transparent;
@@ -86,7 +89,7 @@ export function useTheme(selector) {
 
 const theme = {
   ...designSystemTheme,
-  old: {
+  DEPRECATED_THEME: {
     colors: {
       bg: {
         // Note: amp-story-page background color matches workspace background color.

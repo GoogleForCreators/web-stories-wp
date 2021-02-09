@@ -55,8 +55,8 @@ const ButtonText = styled.span`
         height: 10px;
         width: 10px;
         margin-right: 16px;
-        border-radius: ${theme.old.borders.radius.round};
-        background-color: ${theme.old.colors.accent.primary};
+        border-radius: ${theme.borders.radius.round};
+        background-color: ${theme.colors.accent.primary};
       }
     `}
 `;

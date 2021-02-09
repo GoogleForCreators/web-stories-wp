@@ -62,48 +62,51 @@ const MetadataTextContainer = styled.div`
 `;
 
 const MediaDateText = styled.div`
-  font-family: ${({ theme }) => theme.old.fonts.date.family};
-  line-height: ${({ theme }) => theme.old.fonts.date.lineHeight};
-  font-size: ${({ theme }) => theme.old.fonts.date.size};
-  font-weight: ${({ theme }) => theme.old.fonts.date.weight};
-  color: ${({ theme }) => theme.old.grayout};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
   margin-bottom: 8px;
 `;
 
 const MediaTitleText = styled.div`
-  font-family: ${({ theme }) => theme.old.fonts.title.family};
-  line-height: ${({ theme }) => theme.old.fonts.title.lineHeight};
-  font-size: ${({ theme }) => theme.old.fonts.title.size};
-  font-weight: ${({ theme }) => theme.old.fonts.title.weight};
-  color: ${({ theme }) => theme.old.colors.bg.v9};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v9};
 `;
 
 const MediaSizeText = styled.div`
-  font-family: ${({ theme }) => theme.old.fonts.body1.family};
-  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
-  font-size: ${({ theme }) => theme.old.fonts.body1.size};
-  color: ${({ theme }) => theme.old.colors.bg.v11};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v11};
 `;
 
 const Input = styled.input`
-  background: ${({ theme }) => theme.old.colors.bg.white};
-  border: 1px solid ${({ theme }) => theme.old.colors.fg.v3};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.white};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
   box-sizing: border-box;
   border-radius: 4px;
-  font-family: ${({ theme }) => theme.old.fonts.input.family};
-  line-height: ${({ theme }) => theme.old.fonts.input.lineHeight};
-  font-size: ${({ theme }) => theme.old.fonts.input.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.size};
   padding: 7px 10px;
   margin-top: 20px;
   margin-bottom: 4px;
 `;
 
 const DialogDescription = styled.p`
-  font-family: ${({ theme }) => theme.old.fonts.description.family};
-  line-height: ${({ theme }) => theme.old.fonts.description.lineHeight};
-  font-weight: ${({ theme }) => theme.old.fonts.description.weight};
-  font-size: ${({ theme }) => theme.old.fonts.description.size};
-  color: ${({ theme }) => theme.old.grayout};
+  font-family: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.family};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.lineHeight};
+  font-weight: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.weight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
   margin: 0;
 `;
 

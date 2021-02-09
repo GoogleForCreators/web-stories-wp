@@ -30,12 +30,14 @@ import cleanForSlug from '../../utils/cleanForSlug';
 import useHeader from './use';
 
 const Input = styled.input`
-  color: ${({ theme }) => `${theme.old.colors.fg.white} !important`};
+  color: ${({ theme }) =>
+    `${theme.DEPRECATED_THEME.colors.fg.white} !important`};
   margin: 0;
-  font-family: ${({ theme }) => theme.old.fonts.body1.family};
-  font-size: ${({ theme }) => theme.old.fonts.body1.size};
-  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.old.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
   background: none !important;
   border: none !important;
   text-align: start;

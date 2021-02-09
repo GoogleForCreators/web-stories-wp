@@ -26,8 +26,8 @@ import styled from 'styled-components';
 import TabView from '../';
 
 const TabContent = styled.div`
-  color: ${({ theme }) => theme.old.colors.fg.white};
-  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   padding: 16px;
 `;
 

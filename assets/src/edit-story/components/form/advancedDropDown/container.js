@@ -37,8 +37,8 @@ const Container = styled.div`
   width: 100%;
   min-width: 160px;
   z-index: 2;
-  background-color: ${({ theme }) => theme.old.colors.bg.black};
-  border-radius: ${({ theme }) => theme.old.border.radius.default};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.black};
+  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
   padding: 5px;
   margin-top: 16px;
   ${({ isInline }) =>

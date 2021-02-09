@@ -30,7 +30,7 @@ export default {
 };
 
 const IconsList = styled.ul`
-  color: ${({ theme }) => theme.old.colors.grayout};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.grayout};
   list-style-type: none;
   li {
     padding: 10px 0;

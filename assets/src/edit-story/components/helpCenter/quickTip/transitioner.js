@@ -64,8 +64,8 @@ const transitionStyles = {
 
 const Manager = styled.div`
   position: relative;
-  color: ${({ theme }) => theme.old.colors.fg.primary};
-  background-color: ${({ theme }) => theme.old.colors.bg.primary};
+  color: ${({ theme }) => theme.colors.fg.primary};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   transition: transform ${DURATION}ms ${BEZIER.default};
   transform-origin: 50% 50%;
   z-index: ${Z_INDEX.QUICK_TIP};

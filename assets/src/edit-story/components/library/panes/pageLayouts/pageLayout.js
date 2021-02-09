@@ -45,8 +45,9 @@ const PreviewPageWrapper = styled.div`
   width: ${({ pageSize }) => pageSize.width}px;
   position: absolute;
   z-index: -1;
-  background-color: ${({ theme }) => theme.old.colors.loading.primary};
-  border-radius: ${({ theme }) => theme.old.border.radius.default};
+  background-color: ${({ theme }) =>
+    theme.DEPRECATED_THEME.colors.loading.primary};
+  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
   overflow: hidden;
 `;
 PreviewPageWrapper.propTypes = {
@@ -59,12 +60,12 @@ const HoverControls = styled.div`
   position: absolute;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
   cursor: pointer;
-  border-radius: ${({ theme }) => theme.old.border.radius.default};
+  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
   overflow: hidden;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
-      `2px solid ${theme.old.colors.selection} !important`};
+      `2px solid ${theme.DEPRECATED_THEME.colors.selection} !important`};
   }
 `;
 HoverControls.propTypes = {
@@ -75,7 +76,7 @@ HoverControls.propTypes = {
 const PageLayoutTitle = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.old.colors.grayout};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.grayout};
   padding: 8px;
   font-size: 12px;
   line-height: 22px;

@@ -44,7 +44,7 @@ const Tabs = styled.ul.attrs({
   padding: 0;
   list-style: none;
   border-bottom: 1px solid
-    ${({ theme }) => rgba(theme.old.colors.bg.white, 0.04)};
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.04)};
 `;
 
 const Tab = styled.li.attrs(({ isActive }) => ({
@@ -56,10 +56,10 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.old.colors.fg.white};
-  font-family: ${({ theme }) => theme.old.fonts.tab.family};
-  font-size: ${({ theme }) => theme.old.fonts.tab.size};
-  font-weight: ${({ theme }) => theme.old.fonts.tab.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
   padding: 12px 0px;
   margin: 0px 16px;
   margin-bottom: -1px;
@@ -68,7 +68,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.old.colors.accent.primary};
+    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.accent.primary};
   `}
 
   svg {
@@ -94,10 +94,10 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     overflow: visible;
     opacity: 1;
     &.warning {
-      color: ${({ theme }) => theme.old.colors.fg.warning};
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.warning};
     }
     &.error {
-      color: ${({ theme }) => theme.old.colors.fg.negative};
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.negative};
     }
   }
 

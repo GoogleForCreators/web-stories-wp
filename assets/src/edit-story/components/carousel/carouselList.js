@@ -54,7 +54,7 @@ const PageList = styled(Reorderable).attrs({
        * look the same. We do this only here because this scrollbar is always visible
        * if scroll is possible.
        */
-      scrollbar-color: ${({ theme }) => theme.old.colors.bg.v10}
+      scrollbar-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v10}
         ${({ theme }) => theme.colors.bg.primary} !important;
 
       &::-webkit-scrollbar-track {

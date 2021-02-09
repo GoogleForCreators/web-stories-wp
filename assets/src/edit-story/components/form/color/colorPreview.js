@@ -57,7 +57,8 @@ const buttonAttrs = {
 const buttonStyle = css`
   overflow: hidden;
   border: 0 solid;
-  border-color: ${({ theme }) => theme.old.colors.whiteout} !important;
+  border-color: ${({ theme }) =>
+    theme.DEPRECATED_THEME.colors.whiteout} !important;
   outline: none;
   ${KEYBOARD_USER_SELECTOR} &:focus {
     border-width: 1px;
@@ -86,8 +87,8 @@ const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
   border-radius: 4px 0 0 4px;
   border-color: ${({ color, theme }) =>
     color && getLuminance(color) > 0.2
-      ? theme.old.colors.bg.v1
-      : theme.old.colors.whiteout} !important;
+      ? theme.DEPRECATED_THEME.colors.bg.v1
+      : theme.DEPRECATED_THEME.colors.whiteout} !important;
 `;
 
 const VisualPreviewInsideButton = styled(VisualPreview)`

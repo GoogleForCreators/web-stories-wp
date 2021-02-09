@@ -64,7 +64,7 @@ const ExpandedNumeric = styled(BoxedNumeric)`
   flex-grow: 1;
 
   svg {
-    color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.3)};
+    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
     width: 16px;
     height: 16px;
   }

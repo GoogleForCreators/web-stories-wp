@@ -35,7 +35,7 @@ import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
   background-color: ${({ grayout, theme }) =>
-    grayout ? theme.old.colors.grayout : 'transparent'};
+    grayout ? theme.DEPRECATED_THEME.colors.grayout : 'transparent'};
 `;
 
 const EditPageArea = withOverlay(PageArea);

@@ -23,9 +23,10 @@ import { rgba } from 'polished';
 const Box = styled.div`
   height: 32px;
   width: 122px;
-  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.86)} !important;
+  color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)} !important;
   background-color: ${({ theme }) =>
-    rgba(theme.old.colors.bg.black, 0.3)} !important;
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)} !important;
   border-radius: 4px;
   overflow: hidden;
   align-items: center;
@@ -36,7 +37,8 @@ const inputStyles = css`
   border-color: transparent;
   outline: none;
   &:focus {
-    border-color: ${({ theme }) => theme.old.colors.whiteout} !important;
+    border-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.whiteout} !important;
     box-shadow: none !important;
   }
 `;

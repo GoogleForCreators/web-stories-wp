@@ -47,18 +47,18 @@ const Box = styled.div`
 `;
 
 const Heading = styled.h4`
-  color: ${({ theme }) => theme.old.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   margin: 0;
 `;
 
 const Text = styled.p`
-  color: ${({ theme }) => theme.old.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 const Icon = styled(UploadIcon)`
   height: 54px;
   width: 54px;
-  color: ${({ theme }) => theme.old.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {

@@ -38,8 +38,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  color: ${({ theme }) => theme.old.colors.fg.black};
-  font-family: ${({ theme }) => theme.old.fonts.body1.font};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.black};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.font};
 `;
 
 const DropDownSelect = styled.button`
@@ -50,8 +50,8 @@ const DropDownSelect = styled.button`
   flex-grow: 1;
   background-color: ${({ theme, lightMode }) =>
     lightMode
-      ? rgba(theme.old.colors.fg.white, 0.1)
-      : rgba(theme.old.colors.bg.black, 0.3)};
+      ? rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)
+      : rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -69,19 +69,20 @@ const DropDownSelect = styled.button`
     height: 28px;
     color: ${({ theme, lightMode }) =>
       lightMode
-        ? theme.old.colors.fg.white
-        : rgba(theme.old.colors.fg.white, 0.3)};
+        ? theme.DEPRECATED_THEME.colors.fg.white
+        : rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
   }
 `;
 
 const DropDownTitle = styled.span`
   user-select: none;
-  color: ${({ theme }) => theme.old.colors.fg.white};
-  font-family: ${({ theme }) => theme.old.fonts.label.family};
-  font-size: ${({ theme }) => theme.old.fonts.label.size};
-  line-height: ${({ theme }) => theme.old.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.old.fonts.label.weight};
-  letter-spacing: ${({ theme }) => theme.old.fonts.label.letterSpacing};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
 `;
 
 /**

@@ -25,13 +25,15 @@ const Button = styled.button.attrs(({ type }) => ({
   type: type || 'button',
   className: 'mousetrap',
 }))`
-  background: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.1)};
-  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.86)};
+  background: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
   border: none;
   border-radius: 4px;
-  font-family: ${({ theme }) => theme.old.fonts.body2.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
   font-size: ${({ size = 14 }) => `${size}px`};
-  letter-spacing: ${({ theme }) => theme.old.fonts.body2.letterSpacing};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   padding: ${({ size = 14 }) => `${(size - 2) / 2}px ${size}px`};
   display: flex;
   flex-direction: row;
@@ -47,7 +49,8 @@ const Button = styled.button.attrs(({ type }) => ({
     `}
 
   &:hover {
-    background: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.2)};
+    background: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.2)};
   }
 `;
 

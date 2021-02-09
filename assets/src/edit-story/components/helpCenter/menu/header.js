@@ -25,7 +25,7 @@ import { themeHelpers, Text, THEME_CONSTANTS } from '../../../../design-system';
 
 const Panel = styled.div`
   padding: 24px 0 16px 0;
-  border-bottom: 1px solid ${({ theme }) => theme.old.colors.bg.tertiary};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
 `;
 
 const Heading = styled.h4`

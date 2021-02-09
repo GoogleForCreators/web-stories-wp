@@ -25,16 +25,16 @@ const Input = styled.input`
   box-shadow: none !important;
   outline: none;
   background: transparent;
-  color: ${({ theme }) => theme.old.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   opacity: 0.86;
-  font-family: ${({ theme }) => theme.old.fonts.body2.family};
-  font-size: ${({ theme }) => theme.old.fonts.body2.size};
-  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
   border-radius: 0 !important;
 
   &:disabled {
     background: transparent;
-    color: ${({ theme }) => theme.old.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 

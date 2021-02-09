@@ -31,10 +31,12 @@ export const ScrollBarStyles = css`
 
   ::-webkit-scrollbar-thumb {
     border: none;
-    background-color: ${({ theme }) => rgba(theme.old.colors.bg.white, 0.38)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.38)};
   }
 
   :focus {
-    outline: 2px solid ${({ theme }) => theme.old.colors.accent.secondary};
+    outline: 2px solid
+      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
   }
 `;

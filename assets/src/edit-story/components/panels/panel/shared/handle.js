@@ -52,7 +52,8 @@ const Bar = styled.div`
 
   &:focus {
     height: 3px;
-    border-bottom: 1px solid ${({ theme }) => theme.old.colors.whiteout};
+    border-bottom: 1px solid
+      ${({ theme }) => theme.DEPRECATED_THEME.colors.whiteout};
   }
 `;
 

@@ -38,8 +38,8 @@ const MoreButton = styled(More)`
   width: 28px;
   height: 28px;
   padding: 0;
-  background: ${({ theme }) => theme.old.colors.bg.panel};
-  color: ${({ theme }) => theme.old.colors.fg.white};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   border-radius: 100%;
   border: 0;
 `;

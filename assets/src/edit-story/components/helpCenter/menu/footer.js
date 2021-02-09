@@ -31,7 +31,7 @@ import {
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;
-  border-top: 1px solid ${({ theme }) => theme.old.colors.bg.tertiary};
+  border-top: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
 `;
 
 const Links = styled.ul`

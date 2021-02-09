@@ -57,7 +57,7 @@ const Video = styled.video`
 
 const Title = styled.h1`
   ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
-  color: ${({ theme }) => theme.old.colors.fg.primary};
+  color: ${({ theme }) => theme.colors.fg.primary};
   line-height: 32px;
   margin: 0 0 8px 0;
 `;

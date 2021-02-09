@@ -39,11 +39,12 @@ const RangeContainer = styled.div`
 
 const Label = styled.label`
   display: block;
-  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.old.fonts.body2.family};
-  font-size: ${({ theme }) => theme.old.fonts.body2.size};
-  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.old.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
 `;
 
 function EffectInput({

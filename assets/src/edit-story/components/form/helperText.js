@@ -32,8 +32,10 @@ const HelperRow = styled(Row)`
 
 const Helper = styled.span`
   color: ${({ theme, warning }) =>
-    warning ? theme.old.colors.warning : rgba(theme.old.colors.fg.white, 0.54)};
-  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+    warning
+      ? theme.DEPRECATED_THEME.colors.warning
+      : rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.54)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-size: 12px;
   line-height: 16px;
 `;

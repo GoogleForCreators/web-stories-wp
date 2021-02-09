@@ -47,7 +47,7 @@ const transitionStyles = {
 
 const Manager = styled.div`
   position: relative;
-  color: ${({ theme }) => theme.old.colors.fg.primary};
+  color: ${({ theme }) => theme.colors.fg.primary};
   opacity: 0.6;
   transform-origin: 50% 50%;
   transform: scale(0.96);

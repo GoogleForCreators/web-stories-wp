@@ -30,23 +30,25 @@ const StyledTextArea = styled.textarea`
   box-shadow: none !important;
   outline: none;
   background-color: transparent;
-  color: ${({ theme }) => theme.old.colors.fg.white};
-  font-family: ${({ theme }) => theme.old.fonts.body2.family};
-  font-size: ${({ theme }) => theme.old.fonts.body2.size};
-  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.old.fonts.body2.letterSpacing};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   resize: ${({ resizeable }) => (resizeable ? 'auto' : 'none')};
 
   &:disabled {
     background-color: transparent;
-    color: ${({ theme }) => theme.old.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 
 const Container = styled.div`
   width: 100%;
-  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.3)};
-  background-color: ${({ theme }) => rgba(theme.old.colors.bg.black, 0.3)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
 
   ${({ disabled, readOnly }) => (disabled || readOnly) && `opacity: 0.3`};
 
@@ -55,13 +57,14 @@ const Container = styled.div`
   border-radius: 4px;
   border: 1px solid transparent;
   &:focus-within {
-    border-color: ${({ theme }) => theme.old.colors.whiteout} !important;
+    border-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.whiteout} !important;
   }
 `;
 
 const Counter = styled.div`
-  font-family: ${({ theme }) => theme.old.fonts.body2.family};
-  font-size: ${({ theme }) => theme.old.fonts.tab.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   text-align: right;
   line-height: 1;
   padding-right: 6px;

@@ -34,25 +34,25 @@ import {
 } from '../../../../design-system';
 
 const Button = styled(dsButton)`
-  border-color: ${({ theme }) => theme.old.colors.bg.tertiary};
+  border-color: ${({ theme }) => theme.colors.bg.tertiary};
   padding: 1px 14px 1px 4.5px;
 
-  @media ${({ theme }) => theme.old.breakpoint.desktop} {
+  @media ${({ theme }) => theme.breakpoint.desktop} {
     padding: 1px 16px 1px 14.5;
   }
 
   ${({ hasNotifications, theme }) =>
     hasNotifications &&
     css`
-      background-color: ${theme.old.colors.bg.secondary};
-      border-color: ${theme.old.colors.bg.secondary};
+      background-color: ${theme.colors.bg.secondary};
+      border-color: ${theme.colors.bg.secondary};
     `}
 `;
 
 const Label = styled.span`
   display: none;
 
-  @media ${({ theme }) => theme.old.breakpoint.desktop} {
+  @media ${({ theme }) => theme.breakpoint.desktop} {
     display: block;
     min-width: 65px;
     text-align: left;
@@ -79,7 +79,7 @@ const Icon = styled.div`
   transform: rotate(${({ isOpen }) => (isOpen ? 360 : 180)}deg);
   transition: transform 300ms ${BEZIER.default};
 
-  @media ${({ theme }) => theme.old.breakpoint.mobile} {
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     ${({ hasNotifications }) =>
       hasNotifications &&
       css`
@@ -89,7 +89,7 @@ const Icon = styled.div`
 `;
 
 const NotificationWrapper = styled.div`
-  @media ${({ theme }) => theme.old.breakpoint.tablet} {
+  @media ${({ theme }) => theme.breakpoint.tablet} {
     margin-right: 14.5px;
   }
 `;

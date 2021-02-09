@@ -29,7 +29,7 @@ export const NavBar = styled.div`
   align-items: center;
   width: 100%;
   height: ${NAVIGATION_HEIGHT}px;
-  background-color: ${({ theme }) => theme.old.colors.bg.secondary};
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
   ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
 `;
 

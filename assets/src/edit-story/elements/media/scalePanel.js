@@ -40,7 +40,7 @@ const Container = styled.div`
   width: ${({ width }) => `${Math.max(width, MIN_WIDTH)}px`};
   height: ${HEIGHT}px;
 
-  background: ${({ theme }) => theme.old.colors.t.bg};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.t.bg};
   border-radius: 100px;
 
   display: flex;

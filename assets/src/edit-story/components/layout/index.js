@@ -41,10 +41,11 @@ import LayoutProvider from '../../app/layout/layoutProvider';
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
 })`
-  font-family: ${({ theme }) => theme.old.fonts.body1.family};
-  font-size: ${({ theme }) => theme.old.fonts.body1.size};
-  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.old.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
   background-color: ${({ theme }) => theme.colors.bg.primary};
 
   position: relative;

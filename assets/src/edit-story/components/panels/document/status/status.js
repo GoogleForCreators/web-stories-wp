@@ -34,7 +34,7 @@ const BoxedTextInput = styled(TextInput)`
   border-radius: 4px;
   flex-grow: 1;
   &:focus {
-    background-color: ${({ theme }) => theme.old.colors.fg.white};
+    background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 

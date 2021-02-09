@@ -22,8 +22,8 @@ import styled from 'styled-components';
 const Link = styled.a`
   margin: 0;
   text-decoration: none;
-  color: ${({ theme }) => theme.old.colors.link};
-  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.link};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   cursor: pointer;
 
   &:hover,

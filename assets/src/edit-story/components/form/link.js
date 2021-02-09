@@ -45,7 +45,7 @@ const BoxedTextInput = styled(TextInput)`
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: ${({ theme }) => theme.old.colors.warning};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
 `;
 
 function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {

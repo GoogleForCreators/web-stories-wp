@@ -38,16 +38,16 @@ const Container = styled.div`
   flex-direction: column;
   width: 35%;
   height: 50%;
-  border: 6px solid ${({ theme }) => theme.old.colors.bg.panel};
+  border: 6px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
   background: ${({ theme }) => theme.colors.bg.primary};
-  color: ${({ theme }) => theme.old.colors.fg.v2};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v2};
 `;
 
 const Textarea = styled.textarea`
   flex: 1;
   border: 0;
   background: ${({ theme }) => theme.colors.bg.primary};
-  color: ${({ theme }) => theme.old.colors.fg.v2};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v2};
   white-space: nowrap;
   overflow: auto;
 `;

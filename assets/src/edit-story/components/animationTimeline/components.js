@@ -28,17 +28,17 @@ const TIMELINE_HEIGHT = 180;
 export const TimelineContainer = styled.div`
   display: flex;
   box-sizing: border-box;
-  font-family: ${({ theme }) => theme.old.fonts.label.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
   height: ${TIMELINE_HEIGHT}px;
-  background: ${({ theme }) => theme.old.colors.bg.v16};
-  color: ${({ theme }) => theme.old.colors.fg.white};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v16};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   overflow: scroll;
   position: relative;
 `;
 
 export const TimelineLegend = styled.div`
   min-width: ${LEGEND_WIDTH}px;
-  background: ${({ theme }) => theme.old.colors.bg.v16};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v16};
   height: max-content;
   position: sticky;
   left: 0;
@@ -58,8 +58,8 @@ export const TimelineTitleBar = styled.div`
   justify-content: flex-end;
   height: ${ROW_HEIGHT}px;
   min-width: 100%;
-  background: ${({ theme }) => theme.old.colors.bg.v16};
-  border-bottom: 1px solid ${({ theme }) => theme.old.colors.fg.v9};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v16};
+  border-bottom: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v9};
   z-index: 2;
 `;
 
@@ -70,7 +70,7 @@ export const TimelineRow = styled.div`
   min-width: 100%;
   ${({ alternating, theme }) =>
     alternating && {
-      backgroundColor: rgba(theme.old.colors.fg.white, 0.1),
+      backgroundColor: rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1),
     }}
 `;
 

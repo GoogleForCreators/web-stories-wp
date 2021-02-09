@@ -61,10 +61,12 @@ const Box = styled.div`
 `;
 
 const PlainStyled = styled(Plain)`
-  background-color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.1)};
-  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.86)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.25)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.25)};
   }
 `;
 
