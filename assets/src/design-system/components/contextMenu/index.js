@@ -127,7 +127,6 @@ InnerContent.propTypes = {
 const ContextMenu = ({ isOpen, ...props }) => {
   return (
     <Popover isOpen={isOpen}>
-      {/* <Shadow /> */}
       <InnerContent {...props} />
     </Popover>
   );
