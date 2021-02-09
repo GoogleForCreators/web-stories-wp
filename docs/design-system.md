@@ -48,7 +48,7 @@ There are going to be things missing from the design system. Designs have been i
 
 2. Typography
 
-- [design-system/typography](https://github.com/google/web-stories-wp/tree/main/assets/src/design-system/components/typography) has the only nested content. This follows the foundation set up in figma of Display, Headline, Label, Paragraph, Link.
+- [design-system/typography](https://github.com/google/web-stories-wp/tree/main/assets/src/design-system/components/typography) has the only nested content. This follows the foundation set up in the designs of `Display`, `Headline`, `Label`, `Paragraph`, `Link`.
 - Each typography type has a set of presets that are stored in the theme and matching constants ([theme/constants/typography](https://github.com/google/web-stories-wp/blob/main/assets/src/design-system/theme/constants/typography.js)).
 - The typography components are `<Display />`, `<Headline />`, `<Link />`, `<Text />`
 - Each is a styled component and can be passed whatever element you want it to be with `as` or `forwardedAs` depending on your situation.
