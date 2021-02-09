@@ -172,7 +172,7 @@ export function useHelpCenter() {
         meta: {
           web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
         },
-      }).catch(actions.persitingReadTipsError);
+      }).catch(actions.persistingReadTipsError);
   }, [actions, updateCurrentUser, persistenceKey]);
 
   // Components wrapped in a Transition no longer recieve
