@@ -36,6 +36,7 @@ import loadTextSets from './panes/text/textSets/loadTextSets';
 
 const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
 const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
+// @todo Confirm the expected behavior here.
 const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
 const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
 const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };

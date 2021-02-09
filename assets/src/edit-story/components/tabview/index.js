@@ -39,6 +39,8 @@ const Tabs = styled.ul.attrs({
 })`
   display: flex;
   flex-direction: row;
+  align-items: stretch;
+  width: 100%;
   justify-content: start;
   margin: 0;
   padding: 0;
@@ -64,17 +66,19 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   margin: 0px 16px;
   margin-bottom: -1px;
   position: relative;
+  flex: 1;
 
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.accent.primary};
+    border-bottom: 1px solid ${theme.colors.accent.primary};
   `}
 
   svg {
     display: block;
+    height: 16px;
     width: 28px;
-    height: 28px;
+    margin: 0 auto;
     transform-origin: center center;
     transition: transform 0.3s ease;
   }

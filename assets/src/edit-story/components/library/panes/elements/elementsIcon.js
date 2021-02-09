@@ -21,10 +21,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as ElementsTabIcon } from './elements.svg';
+import { Icons } from '../../../../../design-system';
 
 function ElementsIcon() {
-  return <ElementsTabIcon aria-label={__('Elements library', 'web-stories')} />;
+  return <Icons.Layout aria-label={__('Elements library', 'web-stories')} />;
 }
 
 export default ElementsIcon;

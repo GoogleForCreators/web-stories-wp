@@ -18,3 +18,4 @@
  * Internal dependencies
  */
 export { ReactComponent as Upload } from './upload.svg';
+export { ReactComponent as UploadMedia } from './upload_media.svg';

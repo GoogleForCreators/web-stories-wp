@@ -29,7 +29,6 @@ import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
-import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
 import createError from '../../../../../utils/createError';
 import {
@@ -50,6 +49,12 @@ import { DropDown } from '../../../../form';
 import { Placement } from '../../../../popup';
 import { PANE_PADDING } from '../../shared';
 import { useSnackbar } from '../../../../../app';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../../../../design-system';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 
@@ -293,9 +298,14 @@ function MediaPane(props) {
               </SearchCount>
             )}
             {!isSearching && (
-              <Primary onClick={openMediaPicker}>
+              <Button
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.PRIMARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={openMediaPicker}
+              >
                 {__('Upload', 'web-stories')}
-              </Primary>
+              </Button>
             )}
           </FilterArea>
         </PaneHeader>
