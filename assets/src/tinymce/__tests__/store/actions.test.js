@@ -27,7 +27,7 @@ describe("Test actions' returned object", () => {
       };
 
       const settingsActionObject = actions.setSettings({});
-      expect(settingsActionObject).toEqual(expected);
+      expect(settingsActionObject).toStrictEqual(expected);
     });
   });
 

@@ -35,7 +35,6 @@ import { prepareShortCode } from '../utils';
  *
  * @return {Object} Injected props.
  */
-// eslint-disable-next-line no-shadow
 const mapSelectToProps = (select) => {
   return {
     modalOpen: select(name).getModal(),
