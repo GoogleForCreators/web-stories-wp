@@ -21,7 +21,31 @@ import { useReducer, useEffect, useState, useMemo } from 'react';
  * Internal dependencies
  */
 import { clamp } from '../../../animation';
-import { NAVIGATION_FLOW } from './constants';
+import { useCurrentUser } from '../../app';
+import { DONE_TIP_ENTRY, NAVIGATION_FLOW } from './constants';
+
+/**
+ * Turns a boolean map into a string key
+ *
+ * @param {Object} map an object to stringify
+ * @return {string} a key to provide to useEffect
+ */
+const createKeyFromBooleanMap = (map) => Object.keys(map || {}).join(' ');
+
+/**
+ * reforms the boolean map from the key returned by createKeyFromBooleanMap
+ *
+ * @param {string} key a string of space-separated map keys
+ * @return {Object} the map of the provided keys with with true as the value
+ */
+const createBooleanMapFromKey = (key) =>
+  key.split(' ').reduce(
+    (accum, keyName) => ({
+      ...accum,
+      [keyName]: true,
+    }),
+    {}
+  );
 
 /**
  * Performs any state updates that result from
@@ -33,14 +57,30 @@ import { NAVIGATION_FLOW } from './constants';
  */
 export const deriveState = (previous, next) => {
   const isMenuIndex = next.navigationIndex < 0;
+  const isDoneIndex =
+    next.navigationFlow?.indexOf(DONE_TIP_ENTRY[0]) === next.navigationIndex;
+
+  const readTipKey =
+    !isDoneIndex &&
+    !isMenuIndex &&
+    next.navigationFlow &&
+    next.navigationFlow[next.navigationIndex];
+
   const isLTRTransition = next.navigationIndex - previous.navigationIndex > 0;
 
-  return {
+  const derivedState = {
+    readTips: {
+      ...previous.readTips,
+      ...next.readTips,
+      ...(readTipKey ? { [readTipKey]: true } : {}),
+    },
     hasBottomNavigation: !isMenuIndex,
     isLeftToRightTransition: !isMenuIndex && isLTRTransition,
     isPrevDisabled: next.navigationIndex <= 0,
     isNextDisabled: next.navigationIndex >= next.navigationFlow?.length - 1,
   };
+
+  return derivedState;
 };
 
 const reducer = ({ state, actions }, action) => {
@@ -61,6 +101,8 @@ const initial = {
     hasBottomNavigation: false,
     isPrevDisabled: true,
     isNextDisabled: false,
+    readTips: {},
+    readError: false,
   },
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //
@@ -86,11 +128,26 @@ const initial = {
     }),
     toggle: () => ({ isOpen }) => ({ isOpen: !isOpen }),
     close: () => () => ({ isOpen: false }),
+    hydrateReadTipsSuccess: (payload) => (state) => ({
+      readTips: {
+        ...(payload?.readTips ?? {}),
+        ...state.readTips,
+      },
+    }),
+    persistingReadTipsError: () => () => ({
+      readError: true,
+    }),
   },
 };
 
 export function useHelpCenter() {
   const [store, dispatch] = useReducer(reducer, initial);
+  const { currentUser, updateCurrentUser } = useCurrentUser(
+    ({ state, actions }) => ({
+      currentUser: state.currentUser,
+      updateCurrentUser: actions.updateCurrentUser,
+    })
+  );
 
   // Wrap all actions in dispatch
   const actions = useMemo(
@@ -101,6 +158,22 @@ export function useHelpCenter() {
       }, {}),
     [store.actions]
   );
+
+  useEffect(() => {
+    actions.hydrateReadTipsSuccess({
+      readTips: currentUser?.meta?.web_stories_onboarding ?? {},
+    });
+  }, [actions, currentUser]);
+
+  const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
+  useEffect(() => {
+    persistenceKey &&
+      updateCurrentUser({
+        meta: {
+          web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
+        },
+      }).catch(actions.persistingReadTipsError);
+  }, [actions, updateCurrentUser, persistenceKey]);
 
   // Components wrapped in a Transition no longer recieve
   // prop updates once they start exiting. To work around
