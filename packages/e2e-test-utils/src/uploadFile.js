@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { join, extname } from 'path';
+import { join, extname, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 import { v4 as uuid } from 'uuid';
@@ -35,11 +35,13 @@ async function uploadFile(file, checkUpload = true) {
   const fileExtension = extname(file);
   await page.setDefaultTimeout(10000);
 
+  const testMediaPath = resolve(process.cwd(), 'tests/e2e/assets/' + file);
+
   // Copy file to <newname>.ext for upload.
   const newBaseName = uuid();
   const newFileName = newBaseName + fileExtension;
   const tmpFileName = join(tmpdir(), newFileName);
-  copyFileSync(file, tmpFileName);
+  copyFileSync(testMediaPath, tmpFileName);
 
   // Wait for media modal to appear and upload file.
   await expect(page).toUploadFile('.media-modal input[type=file]', tmpFileName);

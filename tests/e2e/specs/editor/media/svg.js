@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* global __dirname */
 /**
  * External dependencies
  */
-import { join } from 'path';
 import { percySnapshot } from '@percy/puppeteer';
 import {
   withExperimentalFeatures,
@@ -55,8 +53,7 @@ describe('SVG', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const testMediaPath = join(__dirname, '../../..', 'assets', 'close.svg');
-    const filename = await uploadMedia(testMediaPath, false);
+    const filename = await uploadMedia('close.svg', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
 
