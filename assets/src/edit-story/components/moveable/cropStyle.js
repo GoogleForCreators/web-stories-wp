@@ -40,7 +40,7 @@ export const GlobalStyle = createGlobalStyle`
 	.crop-moveable .moveable-control.moveable-e,
 	.crop-moveable .moveable-control.moveable-w {
 		border: 1px solid ${({ theme }) =>
-      theme.designSystemTheme.colors.blue[20]} !important;
+      theme.designSystemTheme.colors.border.selection} !important;
 		border-radius: 4px;
 	}
 
@@ -80,7 +80,7 @@ export const GlobalStyle = createGlobalStyle`
 		width: ${SIDE_WIDE}px !important;
 		height: ${SIDE_WIDE}px !important;
 		background: ${({ theme }) =>
-      theme.designSystemTheme.colors.blue[20]} !important;
+      theme.designSystemTheme.colors.border.selection} !important;
 		position: absolute !important;
 		border-radius: 2px;
 	}
@@ -178,7 +178,7 @@ export const GlobalStyle = createGlobalStyle`
 
 	.crop-moveable .moveable-direction.moveable-line {
 		background: ${({ theme }) =>
-      theme.designSystemTheme.colors.blue[20]} !important;
+      theme.designSystemTheme.colors.border.selection} !important;
 		width: 2px;
 		height: 2px;
 		pointer-events: none;
