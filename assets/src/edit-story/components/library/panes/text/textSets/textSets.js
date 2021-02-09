@@ -140,6 +140,11 @@ function TextSets({ paneRef }) {
     localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
       selectedCategory,
     });
+    if (selectedCategory) {
+      trackEvent('textsets_select_category', 'editor', '', selectedCategory);
+    } else {
+      trackEvent('textsets_deselect_category', 'editor');
+    }
   }, []);
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
