@@ -51,11 +51,11 @@ const Label = styled.label`
 `;
 
 const LabelText = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.3)};
+  font-family: ${({ theme }) => theme.old.fonts.body2.family};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
+  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.old.fonts.body2.letterSpacing};
   text-align: center;
   width: 100%;
   display: inline-block;

@@ -33,7 +33,7 @@ import stripHTML from '../../../utils/stripHTML';
 const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
 
 const Preview = styled.button`
-  background: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
+  background: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.1)};
   padding: 12px 16px;
   margin-bottom: 12px;
   border-radius: 4px;
@@ -48,7 +48,7 @@ const Text = styled.span`
   font-size: ${({ fontSize }) => fontSize * PREVIEW_EM_SCALE}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
 `;
 
 function FontPreview({ title, element, onClick }) {

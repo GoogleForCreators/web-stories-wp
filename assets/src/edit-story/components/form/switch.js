@@ -32,13 +32,13 @@ import { useKeyDownEffect } from '../../../design-system';
 const SwitchContainer = styled.div`
   appearance: none;
   position: relative;
-  background: ${({ theme }) => rgba(theme.colors.bg.divider, 0.04)};
+  background: ${({ theme }) => rgba(theme.old.colors.bg.divider, 0.04)};
   border-radius: 100px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.86)};
+  font-family: ${({ theme }) => theme.old.fonts.body2.family};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
+  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.old.fonts.body2.letterSpacing};
   padding: 8px 4px;
   display: flex;
   flex-direction: row;
@@ -81,7 +81,7 @@ const Label = styled.label`
   flex: 1;
   padding: 0px 6px;
   color: ${({ hasOffset, theme }) =>
-    hasOffset ? theme.colors.bg.workspace : theme.colors.bg.divider};
+    hasOffset ? theme.old.colors.bg.workspace : theme.old.colors.bg.divider};
 
   ${({ disabled }) =>
     disabled &&
@@ -91,7 +91,7 @@ const Label = styled.label`
   `}
 
   ${KEYBOARD_USER_SELECTOR} &:focus-within ~ span {
-    background-color: ${({ theme }) => theme.colors.accent.primary};
+    background-color: ${({ theme }) => theme.old.colors.accent.primary};
   }
 `;
 
@@ -104,7 +104,7 @@ const SwitchSpan = styled.span`
   width: calc(50% - 3px);
   height: 28px;
   border-radius: 100px;
-  background-color: ${({ theme }) => theme.colors.fg.primary};
+  background-color: ${({ theme }) => theme.old.colors.fg.primary};
   transition: left 0.15s ease-out;
 
   ${({ hasOffset }) => hasOffset && `left: calc(50% + 2px);`}

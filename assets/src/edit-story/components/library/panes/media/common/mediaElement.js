@@ -51,7 +51,7 @@ const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  background-color: ${({ theme }) => rgba(theme.old.colors.bg.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
@@ -67,9 +67,9 @@ const UploadingIndicator = styled.div`
   height: 4px;
   background: linear-gradient(
     270deg,
-    ${({ theme }) => theme.colors.loading.primary} 15%,
-    ${({ theme }) => theme.colors.loading.secondary} 50%,
-    ${({ theme }) => theme.colors.loading.primary} 85%
+    ${({ theme }) => theme.old.colors.loading.primary} 15%,
+    ${({ theme }) => theme.old.colors.loading.secondary} 50%,
+    ${({ theme }) => theme.old.colors.loading.primary} 85%
   );
   background-size: 400% 400%;
   position: absolute;

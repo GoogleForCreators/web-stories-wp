@@ -62,7 +62,7 @@ const Handle = styled.div.attrs({ tabIndex: 0 })`
 `;
 
 const Label = styled.div.attrs({ tabIndex: 0 })`
-  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-family: ${({ theme }) => theme.old.fonts.label.family};
   flex: 1;
   font-weight: bold;
   font-size: 12px;

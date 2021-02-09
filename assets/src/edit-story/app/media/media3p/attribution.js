@@ -38,13 +38,13 @@ const AttributionPill = styled.div`
   display: flex;
   flex-wrap: nowrap;
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.fg.white};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.7)};
+  color: ${({ theme }) => theme.old.colors.fg.white};
+  background-color: ${({ theme }) => rgba(theme.old.colors.bg.black, 0.7)};
   cursor: pointer;
 `;
 
 const logo = css`
-  fill: ${({ theme }) => theme.colors.fg.white};
+  fill: ${({ theme }) => theme.old.colors.fg.white};
   margin-left: 6px;
   line-height: 14px;
 `;

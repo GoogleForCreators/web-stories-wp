@@ -56,17 +56,17 @@ const FrameSidebar = styled.div`
 
 const Hint = styled.div`
   padding: 12px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
+  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.54)};
+  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+  font-size: ${({ theme }) => theme.old.fonts.body1.size};
   line-height: 24px;
   text-align: right;
-  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.old.colors.bg.workspace};
 `;
 
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 const DesignSpaceGuideline = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.callout};
+  border: 1px solid ${({ theme }) => theme.old.colors.callout};
   left: ${marginRatio}%;
   right: ${marginRatio}%;
   top: 0;

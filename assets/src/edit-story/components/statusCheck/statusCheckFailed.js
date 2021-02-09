@@ -31,10 +31,10 @@ import Dialog from '../dialog';
 import Link from '../link';
 
 const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+  font-size: ${({ theme }) => theme.old.fonts.body1.size};
+  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.old.fonts.body1.letterSpacing};
 `;
 
 const SUPPORT_URL = __(

@@ -62,48 +62,48 @@ const MetadataTextContainer = styled.div`
 `;
 
 const MediaDateText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.date.family};
-  line-height: ${({ theme }) => theme.fonts.date.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.date.size};
-  font-weight: ${({ theme }) => theme.fonts.date.weight};
-  color: ${({ theme }) => theme.grayout};
+  font-family: ${({ theme }) => theme.old.fonts.date.family};
+  line-height: ${({ theme }) => theme.old.fonts.date.lineHeight};
+  font-size: ${({ theme }) => theme.old.fonts.date.size};
+  font-weight: ${({ theme }) => theme.old.fonts.date.weight};
+  color: ${({ theme }) => theme.old.grayout};
   margin-bottom: 8px;
 `;
 
 const MediaTitleText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.title.family};
-  line-height: ${({ theme }) => theme.fonts.title.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.title.size};
-  font-weight: ${({ theme }) => theme.fonts.title.weight};
-  color: ${({ theme }) => theme.colors.bg.v9};
+  font-family: ${({ theme }) => theme.old.fonts.title.family};
+  line-height: ${({ theme }) => theme.old.fonts.title.lineHeight};
+  font-size: ${({ theme }) => theme.old.fonts.title.size};
+  font-weight: ${({ theme }) => theme.old.fonts.title.weight};
+  color: ${({ theme }) => theme.old.colors.bg.v9};
 `;
 
 const MediaSizeText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  color: ${({ theme }) => theme.colors.bg.v11};
+  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
+  font-size: ${({ theme }) => theme.old.fonts.body1.size};
+  color: ${({ theme }) => theme.old.colors.bg.v11};
 `;
 
 const Input = styled.input`
-  background: ${({ theme }) => theme.colors.bg.white};
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
+  background: ${({ theme }) => theme.old.colors.bg.white};
+  border: 1px solid ${({ theme }) => theme.old.colors.fg.v3};
   box-sizing: border-box;
   border-radius: 4px;
-  font-family: ${({ theme }) => theme.fonts.input.family};
-  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.input.size};
+  font-family: ${({ theme }) => theme.old.fonts.input.family};
+  line-height: ${({ theme }) => theme.old.fonts.input.lineHeight};
+  font-size: ${({ theme }) => theme.old.fonts.input.size};
   padding: 7px 10px;
   margin-top: 20px;
   margin-bottom: 4px;
 `;
 
 const DialogDescription = styled.p`
-  font-family: ${({ theme }) => theme.fonts.description.family};
-  line-height: ${({ theme }) => theme.fonts.description.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.description.weight};
-  font-size: ${({ theme }) => theme.fonts.description.size};
-  color: ${({ theme }) => theme.grayout};
+  font-family: ${({ theme }) => theme.old.fonts.description.family};
+  line-height: ${({ theme }) => theme.old.fonts.description.lineHeight};
+  font-weight: ${({ theme }) => theme.old.fonts.description.weight};
+  font-size: ${({ theme }) => theme.old.fonts.description.size};
+  color: ${({ theme }) => theme.old.grayout};
   margin: 0;
 `;
 

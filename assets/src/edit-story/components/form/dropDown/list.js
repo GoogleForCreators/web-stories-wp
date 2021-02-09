@@ -40,7 +40,7 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.bg.black};
+  background-color: ${({ theme }) => theme.old.colors.bg.black};
 `;
 
 const List = styled.ul`
@@ -51,22 +51,23 @@ const List = styled.ul`
   text-align: left;
   list-style: none;
   background-clip: padding-box;
-  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.black, 0.175)};
+  box-shadow: 0 6px 12px
+    ${({ theme }) => rgba(theme.old.colors.bg.black, 0.175)};
 `;
 
 const Item = styled.li.attrs({ tabIndex: '0' })`
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
+  letter-spacing: ${({ theme }) => theme.old.fonts.label.letterSpacing};
   padding: 8px 16px;
   margin: 0;
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
+  font-family: ${({ theme }) => theme.old.fonts.label.family};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
+  font-weight: ${({ theme }) => theme.old.fonts.label.weight};
   line-height: 1;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.1)};
+    background-color: ${({ theme }) => rgba(theme.old.colors.bg.white, 0.1)};
     outline: none;
   }
 `;

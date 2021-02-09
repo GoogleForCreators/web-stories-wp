@@ -32,7 +32,7 @@ const Text = styled.span`
   font-size: 12px;
   line-height: 14px;
   font-style: italic;
-  color: ${({ theme }) => rgba(theme.colors.required, 0.55)};
+  color: ${({ theme }) => rgba(theme.old.colors.required, 0.55)};
 `;
 
 function Required() {

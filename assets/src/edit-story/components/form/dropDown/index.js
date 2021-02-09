@@ -39,12 +39,12 @@ const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  color: ${({ theme }) => theme.colors.fg.black};
-  font-family: ${({ theme }) => theme.fonts.body1.font};
+  color: ${({ theme }) => theme.old.colors.fg.black};
+  font-family: ${({ theme }) => theme.old.fonts.body1.font};
   border-radius: 4px;
   border: 1px solid transparent;
   ${KEYBOARD_USER_SELECTOR} &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout};
+    border-color: ${({ theme }) => theme.old.colors.whiteout};
   }
 `;
 
@@ -57,8 +57,8 @@ export const DropDownSelect = styled.button`
   border: 0;
   background-color: ${({ theme, lightMode }) =>
     lightMode
-      ? rgba(theme.colors.fg.white, 0.1)
-      : rgba(theme.colors.bg.black, 0.3)};
+      ? rgba(theme.old.colors.fg.white, 0.1)
+      : rgba(theme.old.colors.bg.black, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -75,18 +75,20 @@ export const DropDownSelect = styled.button`
     width: 28px;
     height: 28px;
     color: ${({ theme, lightMode }) =>
-      lightMode ? theme.colors.fg.white : rgba(theme.colors.fg.white, 0.3)};
+      lightMode
+        ? theme.old.colors.fg.white
+        : rgba(theme.old.colors.fg.white, 0.3)};
   }
 `;
 
 export const DropDownTitle = styled.span`
   user-select: none;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
+  color: ${({ theme }) => theme.old.colors.fg.white};
+  font-family: ${({ theme }) => theme.old.fonts.label.family};
+  font-size: ${({ theme }) => theme.old.fonts.label.size};
+  line-height: ${({ theme }) => theme.old.fonts.label.lineHeight};
+  font-weight: ${({ theme }) => theme.old.fonts.label.weight};
+  letter-spacing: ${({ theme }) => theme.old.fonts.label.letterSpacing};
 `;
 
 function DropDown({

@@ -53,8 +53,8 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   padding: 0 10px;
   cursor: pointer;
   text-decoration: none;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
+  font-family: ${({ theme }) => theme.old.fonts.body2.family};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
   line-height: 28px;
 
   &:active {
@@ -80,7 +80,7 @@ const StyledButton = styled(Base)`
   height: ${({ height }) => height}px;
   min-width: initial;
   visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
 
   svg {
     width: ${({ width }) => width}px;
@@ -100,39 +100,39 @@ const StyledButtonWithOpacity = styled(StyledButton)`
 `;
 
 const PrimaryButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.accent.primary};
-  background-color: ${({ theme }) => theme.colors.accent.primary};
-  color: ${({ theme }) => theme.colors.fg.white};
+  border-color: ${({ theme }) => theme.old.colors.accent.primary};
+  background-color: ${({ theme }) => theme.old.colors.accent.primary};
+  color: ${({ theme }) => theme.old.colors.fg.white};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.old.colors.fg.white};
   }
 `;
 
 const SecondaryButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.fg.white};
-  background-color: ${({ theme }) => theme.colors.fg.v3};
-  color: ${({ theme }) => theme.colors.bg.v5};
+  border-color: ${({ theme }) => theme.old.colors.fg.white};
+  background-color: ${({ theme }) => theme.old.colors.fg.v3};
+  color: ${({ theme }) => theme.old.colors.bg.v5};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.v5};
+    color: ${({ theme }) => theme.old.colors.fg.v5};
   }
 `;
 
 const OutlineButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.fg.v4};
-  color: ${({ theme }) => theme.colors.fg.white};
+  border-color: ${({ theme }) => theme.old.colors.fg.v4};
+  color: ${({ theme }) => theme.old.colors.fg.white};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.old.colors.fg.white};
   }
 `;
 
 const PlainButton = styled(Base)`
-  color: ${({ theme }) => theme.colors.accent.primary};
+  color: ${({ theme }) => theme.old.colors.accent.primary};
   border: none;
   transition: background-color 0.6s ease;
   text-transform: uppercase;
@@ -140,12 +140,13 @@ const PlainButton = styled(Base)`
   padding: 4px 14px;
   height: auto;
   font-weight: 500;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+  font-size: ${({ theme }) => theme.old.fonts.body1.size};
+  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.accent.primary, 0.15)};
+    background-color: ${({ theme }) =>
+      rgba(theme.old.colors.accent.primary, 0.15)};
   }
 `;
 

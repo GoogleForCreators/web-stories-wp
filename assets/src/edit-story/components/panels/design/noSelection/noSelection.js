@@ -27,12 +27,12 @@ import { Panel, PanelContent } from '../../panel';
 
 const Note = styled.p`
   font-style: italic;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
   opacity: 0.86;
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-family: ${({ theme }) => theme.old.fonts.label.family};
+  font-weight: ${({ theme }) => theme.old.fonts.label.weight};
+  font-size: ${({ theme }) => theme.old.fonts.label.size};
+  line-height: ${({ theme }) => theme.old.fonts.label.lineHeight};
   margin: 50px 0;
   text-align: center;
 `;

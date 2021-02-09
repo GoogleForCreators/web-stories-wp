@@ -50,7 +50,7 @@ const LayerButton = styled.button.attrs({
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      background: ${theme.colors.fg.gray24};
+      background: ${theme.old.colors.fg.gray24};
     `}
 
   &:active {
@@ -70,7 +70,7 @@ const LayerIconWrapper = styled.div`
     height: 28px;
     width: 28px;
     opacity: 0.5;
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.old.colors.fg.white};
   }
 `;
 
@@ -80,9 +80,9 @@ const LayerDescription = styled.div`
   align-items: center;
   margin-left: 0;
   text-align: left;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.description.family};
-  font-size: ${({ theme }) => theme.fonts.description.size};
+  color: ${({ theme }) => theme.old.colors.fg.white};
+  font-family: ${({ theme }) => theme.old.fonts.description.family};
+  font-size: ${({ theme }) => theme.old.fonts.description.size};
 `;
 
 const LockedIcon = styled(Locked)`

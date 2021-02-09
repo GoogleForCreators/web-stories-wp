@@ -25,9 +25,9 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  background-color: ${({ theme }) => theme.colors.fg.primary};
+  background-color: ${({ theme }) => theme.old.colors.fg.primary};
   border-radius: 4px;
-  color: ${({ theme }) => theme.colors.fg.black};
+  color: ${({ theme }) => theme.old.colors.fg.black};
   max-width: 456px;
   display: flex;
   flex-grow: 1;
@@ -37,8 +37,8 @@ const Main = styled.div`
   margin-bottom: ${({ place }) =>
     place.indexOf('bottom') === 0 ? '0.5em' : 0};
   margin-top: ${({ place }) => (place.indexOf('top') === 0 ? '0.5em' : 0)};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
+  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
   flex-direction: row;
 `;
 
@@ -60,9 +60,9 @@ const ActionButton = styled.button`
   background: transparent;
   display: flex;
   justify-content: center;
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
+  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
+  color: ${({ theme }) => theme.old.colors.fg.tertiary};
   outline: none;
   border: 0;
   cursor: pointer;

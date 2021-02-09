@@ -56,14 +56,14 @@ const Page = styled.button`
     border-width: 1px;
     border-radius: 8px;
     border-color: ${({ isActive, theme }) =>
-      isActive ? theme.colors.fg.primary : 'transparent'};
+      isActive ? theme.old.colors.fg.primary : 'transparent'};
   }
 
   ${({ isInteractive, isActive, theme }) =>
     isInteractive &&
     css`
       &:focus::after {
-        border-color: ${rgba(theme.colors.selection, isActive ? 1 : 0.7)};
+        border-color: ${rgba(theme.old.colors.selection, isActive ? 1 : 0.7)};
       }
     `}
 `;

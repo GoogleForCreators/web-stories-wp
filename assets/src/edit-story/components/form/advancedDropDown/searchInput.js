@@ -51,8 +51,8 @@ const inputIconStyles = css`
   > svg {
     height: 100%;
     width: auto;
-    color: ${({ theme }) => theme.colors.fg.white};
-    fill: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.old.colors.fg.white};
+    fill: ${({ theme }) => theme.old.colors.fg.white};
   }
 `;
 
@@ -80,14 +80,14 @@ const Input = styled.input.attrs({
 })`
   width: 100%;
   padding: 6px 20px 6px 30px;
-  border-radius: ${({ theme }) => theme.border.radius.default};
-  background: ${({ theme }) => theme.colors.input};
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-size: ${({ theme }) => theme.fonts.input.size};
-  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.input.weight};
-  font-family: ${({ theme }) => theme.fonts.input.family};
+  border-radius: ${({ theme }) => theme.old.border.radius.default};
+  background: ${({ theme }) => theme.old.colors.input};
+  border: 1px solid ${({ theme }) => rgba(theme.old.colors.bg.white, 0.24)};
+  color: ${({ theme }) => theme.old.colors.fg.white};
+  font-size: ${({ theme }) => theme.old.fonts.input.size};
+  line-height: ${({ theme }) => theme.old.fonts.input.lineHeight};
+  font-weight: ${({ theme }) => theme.old.fonts.input.weight};
+  font-family: ${({ theme }) => theme.old.fonts.input.family};
 
   &::-ms-clear {
     display: none;
@@ -101,7 +101,7 @@ const Input = styled.input.attrs({
   }
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.accent.secondary};
+    border-color: ${({ theme }) => theme.old.colors.accent.secondary};
   }
 `;
 

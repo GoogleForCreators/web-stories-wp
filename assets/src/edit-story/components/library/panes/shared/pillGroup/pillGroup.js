@@ -46,7 +46,7 @@ import useHandleRowVisibility from './useHandleRowVisibility';
 const Section = styled.div`
   height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
   min-height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
+  background-color: ${({ theme }) => rgba(theme.old.colors.bg.workspace, 0.8)};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -76,7 +76,7 @@ const ExpandButton = styled(ArrowDown)`
   display: flex;
   position: absolute;
   bottom: -16px;
-  background: ${({ theme }) => theme.colors.fg.gray16};
+  background: ${({ theme }) => theme.old.colors.fg.gray16};
   max-height: none;
   width: 32px;
   height: 32px;

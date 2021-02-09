@@ -38,21 +38,21 @@ const StyledInput = styled(Input)`
   border: none;
   padding-right: ${({ suffix }) => (suffix ? INPUT_PADDING : 0)}px;
   padding-left: ${({ label }) => (label ? INPUT_PADDING : 0)}px;
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  letter-spacing: ${({ theme }) => theme.old.fonts.body2.letterSpacing};
   ${({ textCenter }) => textCenter && `text-align: center`};
 `;
 
 const Container = styled.div`
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.3)};
+  font-family: ${({ theme }) => theme.old.fonts.body2.family};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
+  line-height: ${({ theme }) => theme.old.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.old.fonts.body2.letterSpacing};
   display: flex;
   flex-direction: row;
   align-items: center;
   font-style: italic;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  background-color: ${({ theme }) => rgba(theme.old.colors.bg.black, 0.3)};
   position: relative;
 
   ${({ disabled }) => disabled && `opacity: 0.3`};
@@ -60,7 +60,7 @@ const Container = styled.div`
   border-radius: 4px;
   border: 1px solid transparent;
   &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout} !important;
+    border-color: ${({ theme }) => theme.old.colors.whiteout} !important;
   }
 `;
 
@@ -76,7 +76,7 @@ const ClearBtn = styled.button`
 `;
 
 const CloseIcon = styled(Close)`
-  color: ${({ theme }) => theme.colors.whiteout};
+  color: ${({ theme }) => theme.old.colors.whiteout};
   width: 14px;
   height: 14px;
 `;

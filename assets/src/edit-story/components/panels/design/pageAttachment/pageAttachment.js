@@ -35,7 +35,7 @@ import { ExpandedTextInput } from '../../shared';
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.old.colors.warning};
 `;
 
 function PageAttachmentPanel() {

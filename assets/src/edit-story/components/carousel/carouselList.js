@@ -54,15 +54,15 @@ const PageList = styled(Reorderable).attrs({
        * look the same. We do this only here because this scrollbar is always visible
        * if scroll is possible.
        */
-      scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-        ${({ theme }) => theme.colors.bg.workspace} !important;
+      scrollbar-color: ${({ theme }) => theme.old.colors.bg.v10}
+        ${({ theme }) => theme.old.colors.bg.workspace} !important;
 
       &::-webkit-scrollbar-track {
-        background: ${({ theme }) => theme.colors.bg.workspace} !important;
+        background: ${({ theme }) => theme.old.colors.bg.workspace} !important;
       }
 
       &::-webkit-scrollbar-thumb {
-        border: 2px solid ${({ theme }) => theme.colors.bg.workspace} !important;
+        border: 2px solid ${({ theme }) => theme.old.colors.bg.workspace} !important;
         border-top-width: 3px !important;
       }
     `};

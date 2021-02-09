@@ -44,9 +44,9 @@ const Transparent = styled.div`
   height: 100%;
   position: absolute;
   background-image: conic-gradient(
-    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0.25turn,
+    ${({ theme }) => rgba(theme.old.colors.bg.white, 0.24)} 0.25turn,
     transparent 0turn 0.5turn,
-    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0turn 0.75turn,
+    ${({ theme }) => rgba(theme.old.colors.bg.white, 0.24)} 0turn 0.75turn,
     transparent 0turn 1turn
   );
   background-size: 35% 35%;
@@ -89,7 +89,7 @@ const ColorItem = styled.div`
   transform: rotate(-45deg);
 
   svg {
-    color: ${({ theme }) => theme.colors.fg.primary};
+    color: ${({ theme }) => theme.old.colors.fg.primary};
   }
 `;
 

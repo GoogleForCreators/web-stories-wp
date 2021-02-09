@@ -31,8 +31,8 @@ const Preview = styled.button`
   padding: 0;
   margin: 0;
   border: none;
-  background: ${({ theme }) => theme.colors.bg.v8};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.old.colors.bg.v8};
+  color: ${({ theme }) => theme.old.colors.fg.white};
 `;
 
 function EditablePreview({ label, value, width, format, onChange }) {

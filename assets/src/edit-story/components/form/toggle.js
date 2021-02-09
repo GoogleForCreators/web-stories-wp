@@ -48,7 +48,7 @@ const MarkSpan = styled.span`
   height: 28px;
 
   svg {
-    color: ${({ theme }) => theme.colors.mg.v2};
+    color: ${({ theme }) => theme.old.colors.mg.v2};
     width: 16px;
     height: 16px;
     margin: 6px;
@@ -64,7 +64,7 @@ const ContainerLabel = styled.label`
   ${({ boxed }) =>
     boxed &&
     `
-        border: 1px solid ${({ theme }) => theme.colors.fg.v3};
+        border: 1px solid ${({ theme }) => theme.old.colors.fg.v3};
         border-radius: 4px;
     `}
   ${({ expand = false }) => expand && `flex: 1;`}
@@ -79,7 +79,7 @@ const ContainerLabel = styled.label`
   border-radius: 4px;
   border: 1px solid transparent;
   ${KEYBOARD_USER_SELECTOR} &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout};
+    border-color: ${({ theme }) => theme.old.colors.whiteout};
   }
 `;
 

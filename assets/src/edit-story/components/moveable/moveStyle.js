@@ -22,7 +22,7 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 	.default-moveable .moveable-control,
 	.default-moveable .moveable-line.moveable-rotation-line .moveable-control {
-		background: ${({ theme }) => theme.colors.accent.primary} !important;
+		background: ${({ theme }) => theme.old.colors.accent.primary} !important;
 		border: 2px solid #fff !important;
 		margin-left: -6px;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
@@ -36,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
   .default-moveable .moveable-line {
-    background: ${({ theme }) => theme.colors.callout} !important;
+    background: ${({ theme }) => theme.old.colors.callout} !important;
   }
 
 	.default-moveable .moveable-control.moveable-s,

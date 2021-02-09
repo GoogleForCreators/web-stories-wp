@@ -32,16 +32,16 @@ const Tab = styled.button`
   padding: 6px 16px;
   height: 32px;
   display: inline-block;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-family: ${({ theme }) => theme.old.fonts.body2.family};
   background-color: ${({ active, theme }) =>
-    active ? theme.colors.fg.primary : 'transparent'};
+    active ? theme.old.colors.fg.primary : 'transparent'};
   text-align: center;
   opacity: 0.86;
   cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${({ active, theme }) =>
-    active ? theme.colors.fg.gray8 : theme.colors.fg.primary};
+    active ? theme.old.colors.fg.gray8 : theme.old.colors.fg.primary};
 
   &:last-child {
     margin-right: 0;

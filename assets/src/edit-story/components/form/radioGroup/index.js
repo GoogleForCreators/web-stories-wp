@@ -66,9 +66,9 @@ const Radio = styled.input.attrs({ className: 'mousetrap' })`
 
 const Helper = styled.div`
   margin-left: ${TEXT_OFFSET}px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
+  color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.54)};
   font-size: 12px;
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  line-height: ${({ theme }) => theme.old.fonts.label.lineHeight};
 `;
 
 function RadioGroup({ onChange, value: selectedValue, options }) {

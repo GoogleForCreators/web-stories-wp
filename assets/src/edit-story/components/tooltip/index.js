@@ -37,13 +37,13 @@ const Wrapper = styled.div`
 
 const Tooltip = styled.div`
   ${({ theme }) => css`
-    background-color: ${theme.colors.bg.black};
-    color: ${theme.colors.fg.white};
-    font-family: ${theme.fonts.tab.family};
-    font-size: ${theme.fonts.tab.size};
-    line-height: ${theme.fonts.tab.lineHeight};
-    letter-spacing: ${theme.fonts.tab.letterSpacing};
-    box-shadow: 0px 6px 10px ${rgba(theme.colors.bg.black, 0.1)};
+    background-color: ${theme.old.colors.bg.black};
+    color: ${theme.old.colors.fg.white};
+    font-family: ${theme.old.fonts.tab.family};
+    font-size: ${theme.old.fonts.tab.size};
+    line-height: ${theme.old.fonts.tab.lineHeight};
+    letter-spacing: ${theme.old.fonts.tab.letterSpacing};
+    box-shadow: 0px 6px 10px ${rgba(theme.old.colors.bg.black, 0.1)};
   `}
   padding: ${PADDING}px ${PADDING * 2}px;
   border-radius: 6px;
@@ -63,7 +63,8 @@ const TRANSPARENT_BORDER = `6px solid transparent`;
 
 const TooltipArrow = styled.div`
   position: absolute;
-  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
+  box-shadow: 0px 6px 10px
+    ${({ theme }) => rgba(theme.old.colors.bg.black, 0.1)};
   ${({ placement, theme, translateX }) => {
     switch (placement) {
       case Placement.TOP:
@@ -71,7 +72,7 @@ const TooltipArrow = styled.div`
       case Placement.TOP_END:
         return css`
           bottom: -6px;
-          border-top: 6px solid ${theme.colors.bg.black};
+          border-top: 6px solid ${theme.old.colors.bg.black};
           border-left: ${TRANSPARENT_BORDER};
           border-right: ${TRANSPARENT_BORDER};
           transform: translateX(${translateX}px);
@@ -81,7 +82,7 @@ const TooltipArrow = styled.div`
       case Placement.BOTTOM_END:
         return css`
           top: -6px;
-          border-bottom: 6px solid ${theme.colors.bg.black};
+          border-bottom: 6px solid ${theme.old.colors.bg.black};
           border-left: ${TRANSPARENT_BORDER};
           border-right: ${TRANSPARENT_BORDER};
           transform: translateX(${translateX}px);
@@ -93,7 +94,7 @@ const TooltipArrow = styled.div`
           right: -6px;
           border-top: ${TRANSPARENT_BORDER};
           border-bottom: ${TRANSPARENT_BORDER};
-          border-left: 6px solid ${theme.colors.bg.black};
+          border-left: 6px solid ${theme.old.colors.bg.black};
         `;
       case Placement.RIGHT:
       case Placement.RIGHT_START:
@@ -102,7 +103,7 @@ const TooltipArrow = styled.div`
           left: -6px;
           border-top: ${TRANSPARENT_BORDER};
           border-bottom: ${TRANSPARENT_BORDER};
-          border-right: 6px solid ${theme.colors.bg.black};
+          border-right: 6px solid ${theme.old.colors.bg.black};
         `;
       default:
         return ``;

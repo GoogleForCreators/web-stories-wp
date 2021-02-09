@@ -52,7 +52,7 @@ const ElementRow = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  border-top: 1px solid ${({ theme }) => theme.colors.bg.v9};
+  border-top: 1px solid ${({ theme }) => theme.old.colors.bg.v9};
   overflow: auto;
   overflow: overlay;
 `;
@@ -72,7 +72,7 @@ const Icon = styled.button.attrs({
   border-radius: 4px;
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
+    background-color: ${({ theme }) => rgba(theme.old.colors.fg.white, 0.1)};
   }
 
   &:disabled {
@@ -81,14 +81,14 @@ const Icon = styled.button.attrs({
   }
 
   svg {
-    color: ${({ theme }) => theme.colors.mg.v2};
+    color: ${({ theme }) => theme.old.colors.mg.v2};
     width: 28px;
     height: 28px;
   }
 `;
 
 const SeparateBorder = styled.div`
-  border-left: 1px dashed ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  border-left: 1px dashed ${({ theme }) => rgba(theme.old.colors.bg.black, 0.3)};
   height: 12px;
   margin-left: 4px;
   margin-right: 4px;

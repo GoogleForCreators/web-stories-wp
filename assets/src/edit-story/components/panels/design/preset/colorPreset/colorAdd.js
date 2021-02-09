@@ -44,7 +44,7 @@ const AddColorAction = styled.button`
 // @todo Use color from design system when theme reference changes.
 const Note = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.old.colors.fg.secondary};
   margin-bottom: 10px;
 `;
 

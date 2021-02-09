@@ -31,7 +31,7 @@ import ColorGroup from './colorGroup';
 
 const Title = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+  color: ${({ theme }) => theme.old.colors.fg.tertiary};
   margin-bottom: 10px;
 `;
 

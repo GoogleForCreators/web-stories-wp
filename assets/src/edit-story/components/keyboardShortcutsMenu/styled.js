@@ -35,8 +35,8 @@ export const Container = styled.div`
   border-radius: 4px;
   padding: 24px;
   padding-bottom: 0;
-  background-color: ${({ theme }) => theme.colors.bg.black};
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
+  background-color: ${({ theme }) => theme.old.colors.bg.black};
+  border: 1px solid ${({ theme }) => rgba(theme.old.colors.bg.white, 0.24)};
   overflow: auto;
 `;
 
@@ -46,7 +46,7 @@ export const PanelsWrapper = styled.dl`
 
 export const Panel = styled.div`
   width: 100%;
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
+  border: 1px solid ${({ theme }) => rgba(theme.old.colors.bg.white, 0.24)};
   border-radius: 4px;
   padding: 22px;
   margin-bottom: 24px;
@@ -67,11 +67,11 @@ export const MenuHeaderContainer = styled.dt`
 
 export const MenuHeader = styled.h1(
   ({ theme }) => `
-    color: ${theme.colors.fg.primary};
-    font-family: ${theme.fonts.title.family};
-    font-size: ${theme.fonts.title.size};
+    color: ${theme.old.colors.fg.primary};
+    font-family: ${theme.old.fonts.title.family};
+    font-size: ${theme.old.fonts.title.size};
     font-weight: 400;
-    line-height: ${theme.fonts.title.lineHeight};
+    line-height: ${theme.old.fonts.title.lineHeight};
     margin: 0;
     margin-right: 20px;
   `
@@ -79,11 +79,11 @@ export const MenuHeader = styled.h1(
 
 export const SectionHeader = styled.h2(
   ({ theme }) => `
-    color: ${rgba(theme.colors.fg.white, 0.54)};
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size};
+    color: ${rgba(theme.old.colors.fg.white, 0.54)};
+    font-family: ${theme.old.fonts.body2.family};
+    font-size: ${theme.old.fonts.body2.size};
     font-weight: 500;
-    line-height: ${theme.fonts.body2.lineHeight};
+    line-height: ${theme.old.fonts.body2.lineHeight};
     margin: 0;
     margin-bottom: 12px;
   `
@@ -120,10 +120,10 @@ export const Column = styled.div`
 
 export const Label = styled.dt(
   ({ theme }) => `
-    color: ${theme.colors.fg.white};
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size};
-    line-height: ${theme.fonts.body2.lineHeight};
+    color: ${theme.old.colors.fg.white};
+    font-family: ${theme.old.fonts.body2.family};
+    font-size: ${theme.old.fonts.body2.size};
+    line-height: ${theme.old.fonts.body2.lineHeight};
     margin: 0;
   `
 );
@@ -131,11 +131,11 @@ export const Label = styled.dt(
 export const PanelLabel = styled.dt(
   ({ theme }) => `
     width: 100%;
-    color: ${theme.colors.fg.secondary};
-    font-family: ${theme.fonts.tab.family};
-    font-size: ${theme.fonts.tab.size};
+    color: ${theme.old.colors.fg.secondary};
+    font-family: ${theme.old.fonts.tab.family};
+    font-size: ${theme.old.fonts.tab.size};
     font-weight: 500;
-    line-height: ${theme.fonts.tab.lineHeight};
+    line-height: ${theme.old.fonts.tab.lineHeight};
     margin: 0;
     margin-bottom: 16px;
     text-align: center;
@@ -151,10 +151,10 @@ export const ShortcutKeyWrapper = styled.dd`
 
 export const ShortcutKeyLabel = styled.span(
   ({ theme }) => `
-    color: ${theme.colors.fg.white};
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size};
-    line-height: ${theme.fonts.body2.lineHeight};
+    color: ${theme.old.colors.fg.white};
+    font-family: ${theme.old.fonts.body2.family};
+    font-size: ${theme.old.fonts.body2.size};
+    line-height: ${theme.old.fonts.body2.lineHeight};
     margin: 0 8px;
   `
 );
@@ -166,11 +166,11 @@ export const ShortcutKey = styled.span(
     align-items: center;
     width: ${keySize}px;
     height: 24px;
-    color: ${theme.colors.fg.white};
-    font-family: ${theme.fonts.body2.family};
-    font-size: ${theme.fonts.body2.size};
-    line-height: ${theme.fonts.body2.lineHeight};
-    background-color: ${theme.colors.fg.gray24};
+    color: ${theme.old.colors.fg.white};
+    font-family: ${theme.old.fonts.body2.family};
+    font-size: ${theme.old.fonts.body2.size};
+    line-height: ${theme.old.fonts.body2.lineHeight};
+    background-color: ${theme.old.colors.fg.gray24};
     border-radius: 4px;
 
     & + & {
@@ -186,7 +186,7 @@ export const CloseButton = styled.button`
   position: absolute;
   top: 0;
   right: 0;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
   cursor: pointer;
 `;
 

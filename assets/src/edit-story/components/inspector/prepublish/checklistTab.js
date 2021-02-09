@@ -45,9 +45,9 @@ const NumberBadge = styled.span`
   &::after {
     content: ${({ number }) => `"${annotateNumber(number)}"`};
   }
-  color: ${({ theme }) => theme.colors.bg.panel};
+  color: ${({ theme }) => theme.old.colors.bg.panel};
   background-color: ${({ theme, error }) =>
-    error ? theme.colors.fg.negative : theme.colors.fg.warning};
+    error ? theme.old.colors.fg.negative : theme.old.colors.fg.warning};
 `;
 
 const TitleWrapper = styled.div`
@@ -60,7 +60,7 @@ const TitleWrapper = styled.div`
 
 const PanelTitle = styled.span`
   color: ${({ theme, error }) =>
-    error ? theme.colors.fg.negative : theme.colors.fg.warning};
+    error ? theme.old.colors.fg.negative : theme.old.colors.fg.warning};
 `;
 
 const Row = styled.button`
@@ -68,18 +68,18 @@ const Row = styled.button`
   background: transparent;
   text-align: left;
   padding: 0;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
   line-height: 24px;
   &:not(:first-child) {
     margin-top: 9px;
   }
   margin-bottom: 16px;
   margin-left: ${({ pageGroup }) => (pageGroup ? '16px' : '0')};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
   width: calc(100% - 10px);
   max-width: 210px;
   &:focus {
-    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+    outline: 2px solid ${({ theme }) => theme.old.colors.accent.primary};
     outline-offset: 5px;
   }
 `;
@@ -91,8 +91,8 @@ const Underline = styled.span`
 
 const HelperText = styled.span`
   display: block;
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.old.fonts.body2.size};
+  color: ${({ theme }) => theme.old.colors.fg.secondary};
 `;
 
 const PageIndicator = styled(Label)`
@@ -124,22 +124,22 @@ const Checkmark = styled(CheckmarkIcon)`
   width: 64px;
   padding: 8px 15px 5px 17px;
   border-radius: 50%;
-  color: ${({ theme }) => theme.colors.fg.positive};
-  border: 1px solid ${({ theme }) => theme.colors.fg.positive};
+  color: ${({ theme }) => theme.old.colors.fg.positive};
+  border: 1px solid ${({ theme }) => theme.old.colors.fg.positive};
   overflow: visible;
 `;
 
 const EmptyHeading = styled.h1`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  color: ${({ theme }) => theme.old.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.old.fonts.body1.size};
+  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
   margin: 0;
 `;
 
 const EmptyParagraph = styled.p`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  font-size: ${({ theme }) => theme.fonts.description.size};
-  line-height: ${({ theme }) => theme.fonts.description.lineHeight};
+  color: ${({ theme }) => theme.old.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.old.fonts.description.size};
+  line-height: ${({ theme }) => theme.old.fonts.description.lineHeight};
   margin: 0;
 `;
 

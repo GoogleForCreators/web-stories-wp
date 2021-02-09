@@ -30,13 +30,13 @@ const Link = styled.a`
   width: 100%;
   padding: 8px;
   color: ${({ theme, active }) =>
-    rgba(theme.colors.fg.white, active ? 1.0 : 0.6)};
+    rgba(theme.old.colors.fg.white, active ? 1.0 : 0.6)};
   background-color: ${({ theme, active }) =>
-    rgba(theme.colors.bg.workspace, active ? 0.8 : 0.6)};
-  font-family: ${({ theme }) => theme.fonts.duration.family};
-  font-size: ${({ theme }) => theme.fonts.duration.size};
-  line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
+    rgba(theme.old.colors.bg.workspace, active ? 0.8 : 0.6)};
+  font-family: ${({ theme }) => theme.old.fonts.duration.family};
+  font-size: ${({ theme }) => theme.old.fonts.duration.size};
+  line-height: ${({ theme }) => theme.old.fonts.duration.lineHeight};
+  letter-spacing: ${({ theme }) => theme.old.fonts.duration.letterSpacing};
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

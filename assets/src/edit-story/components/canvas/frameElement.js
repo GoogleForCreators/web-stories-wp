@@ -52,7 +52,7 @@ const Wrapper = styled.div`
   &:active,
   &:hover {
     outline: ${({ theme, hasMask }) =>
-      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
+      hasMask ? 'none' : `1px solid ${theme.old.colors.selection}`};
   }
 `;
 

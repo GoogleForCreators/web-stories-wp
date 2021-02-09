@@ -35,8 +35,8 @@ const MoreButton = styled(More)`
   position: absolute;
   top: 8px;
   right: 8px;
-  background: ${({ theme }) => theme.colors.bg.panel};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.old.colors.bg.panel};
+  color: ${({ theme }) => theme.old.colors.fg.white};
   border-radius: 100%;
 `;
 

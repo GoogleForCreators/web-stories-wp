@@ -60,10 +60,10 @@ const Box = styled.div`
 `;
 
 const PageCount = styled.div`
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
   width: 62px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
+  font-family: ${({ theme }) => theme.old.fonts.body1.family};
+  font-size: ${({ theme }) => theme.old.fonts.body1.size};
   line-height: 24px;
 `;
 
@@ -71,11 +71,11 @@ const Options = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  color: ${({ theme }) => theme.colors.fg.v2};
+  color: ${({ theme }) => theme.old.colors.fg.v2};
 `;
 
 const Divider = styled.span`
-  background-color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.old.colors.fg.white};
   opacity: 0.3;
   height: ${HEIGHT}px;
   width: 1px;
@@ -91,7 +91,7 @@ const Icon = styled.button`
   border: 0;
   padding: 0;
   display: block;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.fg.white};
 
   ${({ disabled }) =>
     disabled &&

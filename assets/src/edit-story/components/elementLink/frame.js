@@ -30,15 +30,16 @@ import { getLinkFromElement } from './index';
 
 const Tooltip = styled.div`
   position: relative;
-  background-color: ${({ theme }) => theme.colors.fg.white};
-  color: ${({ theme }) => theme.colors.mg.v3};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  background-color: ${({ theme }) => theme.old.colors.fg.white};
+  color: ${({ theme }) => theme.old.colors.mg.v3};
+  font-family: ${({ theme }) => theme.old.fonts.body1.family};
   font-size: 14px;
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.old.fonts.body1.letterSpacing};
   padding: 6px;
   border-radius: 6px;
-  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
+  box-shadow: 0px 6px 10px
+    ${({ theme }) => rgba(theme.old.colors.bg.black, 0.1)};
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -49,17 +50,18 @@ const Tooltip = styled.div`
     content: '';
     position: absolute;
     bottom: -6px;
-    border-top: 6px solid ${({ theme }) => theme.colors.fg.white};
+    border-top: 6px solid ${({ theme }) => theme.old.colors.fg.white};
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
+    box-shadow: 0px 6px 10px
+      ${({ theme }) => rgba(theme.old.colors.bg.black, 0.1)};
   }
 `;
 
 const BrandIcon = styled.img`
   width: 24px;
   height: 24px;
-  background-color: ${({ theme }) => theme.colors.fg.v3};
+  background-color: ${({ theme }) => theme.old.colors.fg.v3};
   border: none;
   border-radius: 50%;
   margin-right: 8px;

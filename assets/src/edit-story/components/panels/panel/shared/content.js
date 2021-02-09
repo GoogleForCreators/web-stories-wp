@@ -35,9 +35,9 @@ const Container = styled.div`
   padding: ${({ padding }) => padding || '10px 20px'};
   overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
-    isSecondary ? rgba(theme.colors.fg.white, 0.07) : 'transparent'};
+    isSecondary ? rgba(theme.old.colors.fg.white, 0.07) : 'transparent'};
   ${({ hasBorder, theme }) =>
-    hasBorder && `border-top: 1px solid ${theme.colors.bg.v9};`}
+    hasBorder && `border-top: 1px solid ${theme.old.colors.bg.v9};`}
 `;
 
 function Content({ children, ...rest }) {

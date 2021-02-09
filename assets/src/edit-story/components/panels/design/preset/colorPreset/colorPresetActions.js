@@ -42,14 +42,14 @@ const COLOR_GAP = 6;
 
 const ActionsWrapper = styled.div`
   text-align: center;
-  border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
+  border-top: 1px solid ${({ theme }) => theme.old.colors.fg.v6};
   padding: 12px 12px 20px 12px;
 `;
 
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.old.colors.fg.secondary};
   cursor: pointer;
   padding: 8px 0px;
   line-height: 20px;
@@ -63,10 +63,10 @@ const CtaWrapper = styled.div`
   font-size: 14px;
   line-height: 30px;
   margin-right: 5px;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+  color: ${({ theme }) => theme.old.colors.fg.tertiary};
 
   svg {
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.old.colors.fg.white};
     width: 20px;
     height: 14px;
   }

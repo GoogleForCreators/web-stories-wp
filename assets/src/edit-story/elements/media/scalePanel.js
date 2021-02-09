@@ -40,7 +40,7 @@ const Container = styled.div`
   width: ${({ width }) => `${Math.max(width, MIN_WIDTH)}px`};
   height: ${HEIGHT}px;
 
-  background: ${({ theme }) => theme.colors.t.bg};
+  background: ${({ theme }) => theme.old.colors.t.bg};
   border-radius: 100px;
 
   display: flex;
@@ -54,10 +54,10 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
-        {/* 
+        {/*
           @todo: Should maxScale depend on the maximum resolution? Or should that
           be left up to the helper errors? Both? In either case there'd be maximum
-          bounding scale. 
+          bounding scale.
         */}
         <RangeInput
           min={BG_MIN_SCALE}
