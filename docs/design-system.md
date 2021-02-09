@@ -46,7 +46,7 @@ There are going to be things missing from the design system. Designs have been i
 - Button types, sizes, and variants (circle, rectangle, square, icon) are all available as constants and importable via `BUTTON_TYPES`, `BUTTON_SIZES`, `BUTTON_VARIANTS` so that we don’t have to worry about miscellaneous strings.
 - Every button combination has a [demo in storybook](https://google.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-button--default).
 
-1. Typography
+2. Typography
 
 - [design-system/typography](https://github.com/google/web-stories-wp/tree/main/assets/src/design-system/components/typography) has the only nested content. This follows the foundation set up in figma of Display, Headline, Label, Paragraph, Link.
 - Each typography type has a set of presets that are stored in the theme and matching constants ([theme/constants/typography](https://github.com/google/web-stories-wp/blob/main/assets/src/design-system/theme/constants/typography.js)).
