@@ -79,7 +79,7 @@ function CarouselScrollButton({ isNext = false }) {
 
   return (
     <Button
-      variant={BUTTON_VARIANTS.SQUARE}
+      variant={BUTTON_VARIANTS.CIRCLE}
       type={BUTTON_TYPES.PLAIN}
       size={BUTTON_SIZES.SMALL}
       isDisabled={!canScroll}
