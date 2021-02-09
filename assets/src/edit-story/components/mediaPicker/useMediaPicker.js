@@ -107,6 +107,11 @@ export default function useMediaPicker({
           .get('selection')
           .first()
           .toJSON();
+
+        // Only allow user to select a mime type from allowed list.
+        if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
+          return;
+        }
         onSelect(mediaPickerEl);
       });
 

@@ -69,7 +69,7 @@ function PublisherLogoSettings({
   publisherLogos,
   uploadError,
 }) {
-  const { isRTL } = useConfig();
+  const { isRTL, allowedImageMimeTypes } = useConfig();
 
   const containerRef = useRef();
   const gridRef = useRef();
@@ -251,6 +251,7 @@ function PublisherLogoSettings({
               isMultiple
               ariaLabel={TEXT.ARIA_LABEL}
               instructionalText={TEXT.HELPER_UPLOAD}
+              acceptableFormats={Object.values(allowedImageMimeTypes)}
             />
             <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
           </>

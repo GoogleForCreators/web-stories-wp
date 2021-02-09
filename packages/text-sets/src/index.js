@@ -13,20 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { visuallyHidden } from '../theme/helpers';
-
-/**
- * Useful for rendering content for screen
- * readers only
- */
-export const VisuallyHidden = styled.span`
-  ${visuallyHidden};
-`;
+export { default as loadTextSets } from './loadTextSets';

@@ -173,6 +173,7 @@ const darkTheme = {
     negativeHover: brand.red[30],
     negativePress: brand.red[20],
     negativeActive: brand.red[10],
+    selection: brand.blue[30],
   },
   divider: {
     primary: opacity.white24,
@@ -248,6 +249,7 @@ const lightTheme = {
     negativeHover: brand.red[30],
     negativePress: brand.red[40],
     negativeActive: brand.red[90],
+    selection: brand.blue[40],
   },
   divider: {
     primary: opacity.black24,
