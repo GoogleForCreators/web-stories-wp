@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useMemo, Fragment } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -32,7 +28,7 @@ import { SimplePanel } from '../../panels/panel';
 import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { Label } from '../../form';
-import { useStory } from '../../../app';
+import { useHighlights } from '../../../app/highlights';
 
 const MAX_NUMBER_FOR_BADGE = 99;
 
@@ -126,10 +122,11 @@ const Checkmark = styled(CheckmarkIcon)`
   margin-bottom: 16px;
   height: 64px;
   width: 64px;
-  padding: 5px 12px 5px 15px;
+  padding: 8px 15px 5px 17px;
   border-radius: 50%;
   color: ${({ theme }) => theme.colors.fg.positive};
   border: 1px solid ${({ theme }) => theme.colors.fg.positive};
+  overflow: visible;
 `;
 
 const EmptyHeading = styled.h1`
@@ -164,12 +161,10 @@ function annotateNumber(number) {
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
-  const { setSelectedElementsById, setCurrentPage } = useStory(
-    ({ actions }) => ({
-      setSelectedElementsById: actions.setSelectedElementsById,
-      setCurrentPage: actions.setCurrentPage,
-    })
-  );
+
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
 
   const { highPriority, recommended, pages } = useMemo(
     () =>
@@ -225,70 +220,46 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
-  const selectElement = useCallback(
-    ({ elementId, elements, pageId }) => {
-      if (pageId) {
-        setCurrentPage({ pageId });
+  const getOnPrepublishSelect = useCallback(
+    (args) => {
+      const { elements, elementId, pageId, highlight } = args;
+      if (!elements && !elementId && !pageId && !highlight) {
+        return {};
       }
-      if (Array.isArray(elements)) {
-        setSelectedElementsById({
-          elementIds: elements.map(({ id }) => id),
-        });
-      } else if (elementId) {
-        setSelectedElementsById({ elementIds: [elementId] });
-      }
-    },
-    [setCurrentPage, setSelectedElementsById]
-  );
 
-  const getOnClick = useCallback(
-    ({ elementId, pageId, elements }) => {
-      if (!elementId && !pageId && !elements) {
-        return undefined;
-      }
-      return () => selectElement({ elementId, pageId, elements });
-    },
-    [selectElement]
-  );
-
-  const getHandleKeyPress = useCallback(
-    ({ elementId, elements, pageId }) => {
-      if (!elementId && !pageId && !elements) {
-        return undefined;
-      }
-      return (event) => {
-        if (event.key === 'Enter') {
-          selectElement({ elementId, elements, pageId });
-        }
+      return {
+        onClick: () => setHighlights(args),
+        onKeyDown: (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            setHighlights(args);
+          }
+        },
       };
     },
-    [selectElement]
+    [setHighlights]
   );
 
   const renderRow = useCallback(
-    ({ message, help, id, pageGroup, ...args }) => {
-      const onClick = getOnClick(args);
-      const handleKeyPress = getHandleKeyPress(args);
+    (args) => {
+      const { id, message, help, pageGroup } = args;
+      const onPrepublish = getOnPrepublishSelect(args);
       const accessibleText = __('Select offending element', 'web-stories');
       return (
-        <Row
-          tabIndex={0}
-          onClick={onClick}
-          onKeyDown={handleKeyPress}
-          key={id}
-          pageGroup={pageGroup}
-        >
-          {onClick ? (
+        <Row {...onPrepublish} tabIndex={0} key={id} pageGroup={pageGroup}>
+          {onPrepublish.onClick ? (
             <Underline title={accessibleText}>{message}</Underline>
           ) : (
             message
           )}
           <HelperText>{help}</HelperText>
-          {onClick && <VisuallyHidden>{accessibleText}</VisuallyHidden>}
+          {onPrepublish.onClick && (
+            <VisuallyHidden>{accessibleText}</VisuallyHidden>
+          )}
         </Row>
       );
     },
-    [getOnClick, getHandleKeyPress]
+    [getOnPrepublishSelect]
   );
 
   const renderPageGroupedRow = useCallback(

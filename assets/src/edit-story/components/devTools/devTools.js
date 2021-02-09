@@ -23,10 +23,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { DATA_VERSION } from '@web-stories-wp/migration';
 import { useGlobalKeyDownEffect } from '../../../design-system';
 import { useStory } from '../../app/story';
 import { useSnackbar } from '../../app/snackbar';
-import { DATA_VERSION } from '../../migration/migrate';
 import { dummyImage, dummyVideo } from './dummyData';
 
 const Container = styled.div`

@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { getRelativeDisplayDate } from '../../../../../date';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,

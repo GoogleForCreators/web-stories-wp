@@ -18,15 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
 import { Row } from '../../../form';
 import {
   Note,
@@ -35,6 +32,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { SimplePanel } from '../../panel';
+import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
@@ -50,20 +48,26 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
+  const ref = useRef(null);
+  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
 
   return (
     <SimplePanel
+      css={highlight && styles.FLASH}
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
+      isPersistable={!highlight}
     >
       <Row>
         <ExpandedTextInput
+          ref={ref}
           placeholder={__('Assistive text', 'web-stories')}
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
           aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
+          css={highlight?.showEffect && styles.OUTLINE}
         />
       </Row>
       <Row>

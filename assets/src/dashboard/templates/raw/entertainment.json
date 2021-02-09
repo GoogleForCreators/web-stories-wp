@@ -140,7 +140,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page1_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page1_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -592,7 +592,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page2_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page2_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -1507,7 +1507,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page4_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page4_image1.jpg",
             "width": 220,
             "height": 329,
             "posterId": 0,
@@ -2109,7 +2109,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-15T20:53:50",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page5_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page5_image1.jpg",
             "width": 330,
             "height": 199,
             "posterId": 0,
@@ -2740,7 +2740,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page6_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page6_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -3224,7 +3224,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page7_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page7_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -3765,7 +3765,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page8_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image1.jpg",
             "width": 220,
             "height": 90,
             "posterId": 0,
@@ -3808,7 +3808,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-26T17:40:35",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page8_image3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image3.jpg",
             "width": 176,
             "height": 70,
             "posterId": 0,
@@ -3850,7 +3850,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page8_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image2.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -4584,7 +4584,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page9_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image1.jpg",
             "width": 220,
             "height": 165,
             "posterId": 0,
@@ -4626,7 +4626,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page9_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image2.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -4668,7 +4668,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/entertainment/ent_page9_image3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image3.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,

@@ -15,10 +15,10 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
-import { getTimeTracker } from '../../tracking';
+import { getTimeTracker } from '@web-stories-wp/tracking';
+import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
@@ -35,7 +35,7 @@ async function loadTemplate(title, imageBaseUrl) {
         }
         if (elem?.resource?.src) {
           elem.resource.src = elem.resource.src.replace(
-            'https://replaceme.com/',
+            '__WEB_STORIES_TEMPLATE_BASE_URL__',
             imageBaseUrl
           );
         }

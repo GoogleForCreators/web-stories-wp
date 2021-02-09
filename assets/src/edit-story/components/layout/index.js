@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -40,6 +36,7 @@ import {
 import withOverlay from '../overlay/withOverlay';
 import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
+import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
 
 const Editor = withOverlay(styled.section.attrs({
@@ -81,17 +78,19 @@ function Layout() {
   return (
     <LayoutProvider>
       <PrepublishChecklistProvider>
-        <Editor zIndex={3}>
-          <CanvasProvider>
-            <Area area="lib">
-              <Library />
-            </Area>
-            <Workspace />
-          </CanvasProvider>
-          <MetaBoxesArea>
-            <MetaBoxes />
-          </MetaBoxesArea>
-        </Editor>
+        <HighlightsProvider>
+          <Editor zIndex={3}>
+            <CanvasProvider>
+              <Area area="lib">
+                <Library />
+              </Area>
+              <Workspace />
+            </CanvasProvider>
+            <MetaBoxesArea>
+              <MetaBoxes />
+            </MetaBoxesArea>
+          </Editor>
+        </HighlightsProvider>
       </PrepublishChecklistProvider>
     </LayoutProvider>
   );

@@ -19,11 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -73,7 +69,7 @@ function PublisherLogoSettings({
   publisherLogos,
   uploadError,
 }) {
-  const { isRTL } = useConfig();
+  const { isRTL, allowedImageMimeTypes } = useConfig();
 
   const containerRef = useRef();
   const gridRef = useRef();
@@ -255,6 +251,7 @@ function PublisherLogoSettings({
               isMultiple
               ariaLabel={TEXT.ARIA_LABEL}
               instructionalText={TEXT.HELPER_UPLOAD}
+              acceptableFormats={Object.values(allowedImageMimeTypes)}
             />
             <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
           </>

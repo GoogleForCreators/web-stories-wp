@@ -34,22 +34,13 @@ jobs:
           cache-name: cache-node-modules
 
       - name: Install dependencies
-        run: |
-          npm ci
-          npx rollup --config bin/rollup.config.migrate.js
+        run: npm ci
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Update templates
-        run: |
-          npm run workflow:templates
-          npx prettier --write assets/src/dashboard/templates/raw/*.json
-
-      - name: Update text sets
-        run: |
-          npm run workflow:text-sets
-          npx prettier --write assets/src/edit-story/components/library/panes/text/textSets/raw/*.json
+      - name: Update story data (templates, text sets, FTUE)
+        run: npm run workflow:migrate
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3

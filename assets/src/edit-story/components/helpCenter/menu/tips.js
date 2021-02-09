@@ -27,7 +27,8 @@ import {
   Icons,
   themeHelpers,
 } from '../../../../design-system';
-import { TIPS } from '../constants';
+import { forceFocusCompanion } from '../utils';
+import { ReadTipsType, TIPS } from '../constants';
 
 const Panel = styled.div`
   padding: 24px 0;
@@ -66,10 +67,10 @@ const StyledArrow = styled(Icons.ArrowAlt)`
   transform: rotate(180deg);
 `;
 
-function Tip({ children, onClick }) {
+function Tip({ children, onClick, unread = true }) {
   return (
     <StyledButton size={BUTTON_SIZES.SMALL} onClick={onClick}>
-      <ButtonText unread={true}>{children}</ButtonText>
+      <ButtonText unread={unread}>{children}</ButtonText>
       <StyledArrow />
     </StyledButton>
   );
@@ -77,14 +78,22 @@ function Tip({ children, onClick }) {
 Tip.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
+  unread: PropTypes.bool,
 };
 
 const TIPS_ITERABLE = Object.entries(TIPS);
-export function Tips({ onTipSelect = () => {} }) {
+export function Tips({ onTipSelect = () => {}, readTips }) {
   return (
     <Panel>
       {TIPS_ITERABLE.map(([key, tip]) => (
-        <Tip key={key} onClick={() => onTipSelect(key)}>
+        <Tip
+          unread={!readTips[key]}
+          key={key}
+          onClick={() => {
+            forceFocusCompanion();
+            onTipSelect(key);
+          }}
+        >
           {tip.title}
         </Tip>
       ))}
@@ -92,5 +101,6 @@ export function Tips({ onTipSelect = () => {} }) {
   );
 }
 Tips.propTypes = {
+  readTips: ReadTipsType,
   onTipSelect: PropTypes.func,
 };

@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { useEffect } from 'react';
+import { migrate } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
-import { migrate } from '../../../migration';
 
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {

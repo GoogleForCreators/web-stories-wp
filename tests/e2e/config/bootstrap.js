@@ -19,6 +19,7 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { setDefaultOptions } from 'expect-puppeteer';
+import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 
 /**
  * WordPress dependencies
@@ -31,11 +32,6 @@ import {
 
 // Extend Jest matchers.
 import 'jest-extended';
-
-/**
- * Internal dependencies
- */
-import toBeValidAMP from '../matchers/toBeValidAMP';
 
 expect.extend({
   toBeValidAMP,
@@ -97,9 +93,6 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
-
-  // Known AMP Story bookend issue.
-  'Error fetching bookend configuration',
 ];
 
 export function addAllowedErrorMessage(message) {

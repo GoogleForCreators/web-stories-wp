@@ -15,13 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { sprintf, __ } from '@web-stories-wp/i18n';
 import { useState, useCallback, useRef, useEffect } from 'react';
 
 /**

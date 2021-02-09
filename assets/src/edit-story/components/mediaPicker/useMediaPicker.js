@@ -18,18 +18,13 @@
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
-import { trackEvent } from '../../../tracking';
 
 /**
  * Custom hook to open the WordPress media modal.
@@ -112,6 +107,11 @@ export default function useMediaPicker({
           .get('selection')
           .first()
           .toJSON();
+
+        // Only allow user to select a mime type from allowed list.
+        if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
+          return;
+        }
         onSelect(mediaPickerEl);
       });
 

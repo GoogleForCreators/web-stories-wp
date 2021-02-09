@@ -15,13 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';

@@ -18,16 +18,11 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
 import { useStory, useLocalMedia } from '../../../app';
 import { Outline } from '../../button';
 import escapeHTML from '../../../utils/escapeHTML';

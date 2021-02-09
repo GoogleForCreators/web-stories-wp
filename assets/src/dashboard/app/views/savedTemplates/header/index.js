@@ -19,16 +19,11 @@
  */
 import { useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../tracking';
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,

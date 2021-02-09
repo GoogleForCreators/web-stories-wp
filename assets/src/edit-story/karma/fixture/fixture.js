@@ -21,18 +21,18 @@ import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
-import FixtureEvents from '../../../../../karma/fixture/events';
+import FixtureEvents from '../../../karma-fixture/events';
 import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
 import FileContext from '../../app/file/context';
 import Layout from '../../components/layout';
-import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
@@ -759,6 +759,19 @@ class APIProviderFixture {
         []
       );
 
+      const updateCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
@@ -787,6 +800,7 @@ class APIProviderFixture {
           getStatusCheck,
           getPageLayouts,
           getCurrentUser,
+          updateCurrentUser,
         },
       };
       return (

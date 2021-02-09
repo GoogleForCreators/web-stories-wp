@@ -17,13 +17,9 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -31,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
+import { styles, states, useFocusHighlight } from '../../app/highlights';
 import useHeader from './use';
 
 const Input = styled.input`
@@ -40,13 +37,19 @@ const Input = styled.input`
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  background: none !important;
+  background: ${({ isHighlighted }) => !isHighlighted && 'none !important'};
   border: none !important;
   text-align: start;
   min-width: 60%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  ${({ isHighlighted }) =>
+    isHighlighted &&
+    css`
+      ${styles.OUTLINE}
+      ${styles.FLASH}
+    `}
 `;
 
 function Title() {
@@ -58,7 +61,10 @@ function Title() {
       actions: { updateStory },
     }) => ({ title, slug, updateStory })
   );
-  const { setTitleInput } = useHeader();
+  const { setTitleInput, titleInput } = useHeader();
+  const highlight = useFocusHighlight(states.STORY_TITLE, {
+    current: titleInput,
+  });
 
   const { storyId } = useConfig();
 
@@ -82,11 +88,12 @@ function Title() {
     <Input
       ref={setTitleInput}
       value={title}
-      type={'text'}
+      type="text"
       onBlur={handleBlur}
       onChange={handleChange}
       placeholder={__('Add title', 'web-stories')}
       aria-label={__('Story title', 'web-stories')}
+      isHighlighted={highlight?.showEffect}
     />
   );
 }

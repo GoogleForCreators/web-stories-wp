@@ -17,11 +17,7 @@
 /**
  * External dependencies
  */
-
-/**
- * Internal dependencies
- */
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
+import { migrate, DATA_VERSION } from '@web-stories-wp/migration';
 
 export default function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {

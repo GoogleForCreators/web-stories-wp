@@ -20,9 +20,9 @@
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { visitDashboard } from '../../../utils';
+import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {

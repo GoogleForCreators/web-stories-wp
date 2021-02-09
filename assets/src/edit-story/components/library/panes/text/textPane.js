@@ -21,11 +21,7 @@ import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import ResizeObserver from 'resize-observer-polyfill';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

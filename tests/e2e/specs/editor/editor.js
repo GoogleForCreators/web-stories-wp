@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
-import { createNewStory, deactivateRTL, activateRTL } from '../../utils';
+import {
+  createNewStory,
+  deactivateRTL,
+  activateRTL,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor', () => {
   it('should be able to create a blank story', async () => {

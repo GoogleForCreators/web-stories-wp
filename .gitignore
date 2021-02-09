@@ -6,6 +6,7 @@ node_modules
 /assets/css
 /assets/js
 /assets/testjs
+/packages/migration/module.js
 /build
 /bin/build
 /bin/local-env/data

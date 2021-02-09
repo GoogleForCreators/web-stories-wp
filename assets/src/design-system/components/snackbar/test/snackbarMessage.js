@@ -25,15 +25,18 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { SnackbarMessage } from '../snackbarMessage';
 import { AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX } from '../constants';
+import { noop } from '../../../utils/noop';
 
 describe('design-system/components/snackbar/SnackbarMessage', () => {
+  beforeEach(jest.clearAllMocks);
+
   const mockHandleDismiss = jest.fn();
 
   it('should render 1 alert', () => {
     const wrapper = renderWithProviders(
       <SnackbarMessage
-        message={'this is an error'}
-        ariaLabel={'aria label for my alert'}
+        message="this is an error"
+        aria-label="aria label for my alert"
         handleDismiss={mockHandleDismiss}
       />
     );
@@ -48,8 +51,8 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
 
     renderWithProviders(
       <SnackbarMessage
-        message={'this is an error'}
-        ariaLabel={'aria label for my alert'}
+        message="this is an error"
+        aria-label="aria label for my alert"
         handleDismiss={mockHandleDismiss}
       />
     );
@@ -59,9 +62,33 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
     });
   });
 
-  it('should not find a button by default', () => {
+  it('should call mockHandleDismiss when the close button is clicked', () => {
+    const { getByRole } = renderWithProviders(
+      <SnackbarMessage
+        aria-label="aria label for my alert"
+        message="this is an error"
+        handleDismiss={mockHandleDismiss}
+        showCloseButton
+      />
+    );
+
+    expect(mockHandleDismiss).not.toHaveBeenCalled();
+
+    const closeButton = getByRole('button');
+
+    fireEvent.click(closeButton);
+
+    expect(mockHandleDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not render a button if showCloseButton is false', () => {
     const { queryByRole } = renderWithProviders(
-      <SnackbarMessage message={'this is an error'} />
+      <SnackbarMessage
+        aria-label="aria label for my alert"
+        message="this is an error"
+        handleDismiss={noop}
+        showCloseButton={false}
+      />
     );
     const buttons = queryByRole('button');
 
@@ -72,9 +99,11 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
     const mockActionClick = jest.fn();
     const { getByText } = renderWithProviders(
       <SnackbarMessage
-        message={'this is an error'}
+        aria-label="aria label for my alert"
+        message="this is an error"
         handleAction={mockActionClick}
-        actionLabel={'retry'}
+        handleDismiss={noop}
+        actionLabel="retry"
       />
     );
 
