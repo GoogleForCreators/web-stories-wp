@@ -30,11 +30,16 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Primary } from '../../button';
 import WithTooltip from '../../tooltip';
 import { usePrepublishChecklist } from '../../inspector/prepublish';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
-import { ButtonContent, WarningIcon } from './styles';
+import {
+  Icons,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../../design-system';
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
   const { checklist, refreshChecklist } = usePrepublishChecklist();
@@ -46,12 +51,16 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
     : null;
 
   const button = (
-    <Primary onPointerEnter={refreshChecklist} {...buttonProps}>
-      <ButtonContent>
-        {text}
-        {tooltip && <WarningIcon />}
-      </ButtonContent>
-    </Primary>
+    <Button
+      variant={BUTTON_VARIANTS.RECTANGLE}
+      type={BUTTON_TYPES.PRIMARY}
+      size={BUTTON_SIZES.SMALL}
+      onPointerEnter={refreshChecklist}
+      {...buttonProps}
+    >
+      {text}
+      {tooltip && <Icons.Warning height={14} width={24} />}
+    </Button>
   );
 
   return tooltip ? <WithTooltip title={tooltip}>{button}</WithTooltip> : button;

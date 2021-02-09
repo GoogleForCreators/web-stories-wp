@@ -24,9 +24,15 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { useStory, useLocalMedia } from '../../../app';
-import { Outline } from '../../button';
 import escapeHTML from '../../../utils/escapeHTML';
 import PreviewErrorDialog from '../previewErrorDialog';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+} from '../../../../design-system';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -120,9 +126,16 @@ function Preview() {
 
   return (
     <>
-      <Outline onClick={openPreviewLink} isDisabled={isSaving || isUploading}>
-        {__('Preview', 'web-stories')}
-      </Outline>
+      <Button
+        variant={BUTTON_VARIANTS.CIRCLE}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={openPreviewLink}
+        disabled={isSaving || isUploading}
+        aria-label={__('Preview', 'web-stories')}
+      >
+        <Icons.Preview />
+      </Button>
       <PreviewErrorDialog
         open={Boolean(previewLinkToOpenViaDialog)}
         onClose={onDialogClose}

@@ -24,8 +24,14 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useStory, useLocalMedia, useHistory } from '../../../app';
 import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
-import { Outline } from '../../button';
-import { useGlobalKeyDownEffect } from '../../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  useGlobalKeyDownEffect,
+} from '../../../../design-system';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
@@ -72,21 +78,25 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline
+        <Button
+          variant={BUTTON_VARIANTS.CIRCLE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
           onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={
+          disabled={
             !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
           }
+          aria-label={__('Save draft', 'web-stories')}
         >
-          {text}
-        </Outline>
+          <Icons.Save />
+        </Button>
       );
   }
 
   return (
     <ButtonWithChecklistWarning
       onClick={() => saveStory()}
-      isDisabled={isSaving || isUploading}
+      disabled={isSaving || isUploading}
       text={text}
     />
   );
