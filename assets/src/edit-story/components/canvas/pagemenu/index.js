@@ -86,7 +86,7 @@ const Space = styled.div`
 function PageMenuButton({ children, ...rest }) {
   return (
     <Button
-      variant={BUTTON_VARIANTS.CIRCLE}
+      variant={BUTTON_VARIANTS.SQUARE}
       type={BUTTON_TYPES.TERTIARY}
       size={BUTTON_SIZES.SMALL}
       {...rest}

@@ -103,7 +103,7 @@ function CarouselMenu() {
                 placement={Placement.TOP}
               >
                 <Button
-                  variant={BUTTON_VARIANTS.CIRCLE}
+                  variant={BUTTON_VARIANTS.SQUARE}
                   type={BUTTON_TYPES.PLAIN}
                   size={BUTTON_SIZES.SMALL}
                   onClick={toggleMetaBoxesVisible}
@@ -123,7 +123,7 @@ function CarouselMenu() {
               placement={Placement.TOP}
             >
               <Button
-                variant={BUTTON_VARIANTS.CIRCLE}
+                variant={BUTTON_VARIANTS.SQUARE}
                 type={BUTTON_TYPES.PLAIN}
                 size={BUTTON_SIZES.SMALL}
                 onClick={openModal}
