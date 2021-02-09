@@ -98,12 +98,10 @@ const DEFAULT_PROVIDER_STATE = (index) => ({
       categories: [
         {
           id: `provider${index}/1`,
-          displayName: `Tiny dogs for provider ${index}`,
           label: `${index} Dogs`,
         },
         {
           id: `provider${index}/2`,
-          displayName: `Tiny cats for provider ${index}`,
           label: `${index} Cats`,
         },
       ],

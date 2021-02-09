@@ -38,7 +38,7 @@ const CATEGORIES_BODY_JSON = {
   categories: [
     {
       name: 'categories/unsplash:1',
-      displayName: 'Covid-19',
+      label: 'Covid-19',
     },
   ],
 };

@@ -22,6 +22,7 @@ import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -138,7 +139,18 @@ function Media3pPane(props) {
     }
   }, [isActive, selectedProvider, setSelectedProvider]);
 
-  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+  const onSearch = useCallback(
+    (value) => {
+      const trimText = value.trim();
+      if (trimText !== searchTerm) {
+        setSearchTerm({ searchTerm: trimText });
+        trackEvent('media3p_search_media', 'editor', '', '', {
+          search_term: trimText,
+        });
+      }
+    },
+    [searchTerm, setSearchTerm]
+  );
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
@@ -161,8 +173,28 @@ function Media3pPane(props) {
     const displayName = state.categories.selectedCategoryId
       ? state.categories.categories.find(
           (e) => e.id === state.categories.selectedCategoryId
-        ).displayName
+        ).label
       : __('Trending', 'web-stories');
+
+    const onSelectItem = (id) => {
+      actions.selectCategory(id);
+      const category =
+        state.categories.categories.find((e) => e.id === id)?.label || id;
+      trackEvent('media3p_select_category', 'editor', '', category, {
+        provider: providerType,
+      });
+    };
+
+    const onDeselectItem = () => {
+      actions.deselectCategory();
+      const category =
+        state.categories.categories.find(
+          (e) => e.id === state.categories.selectedCategoryId
+        )?.label || state.categories.selectedCategoryId;
+      trackEvent('media3p_deselect_category', 'editor', '', category, {
+        provider: providerType,
+      });
+    };
 
     // We display the media name if there's media to display or a category has
     // been selected.
@@ -180,8 +212,8 @@ function Media3pPane(props) {
           <PillGroup
             items={state.categories.categories}
             selectedItemId={state.categories.selectedCategoryId}
-            selectItem={actions.selectCategory}
-            deselectItem={actions.deselectCategory}
+            selectItem={onSelectItem}
+            deselectItem={onDeselectItem}
           />
         )}
         <MediaSubheading
