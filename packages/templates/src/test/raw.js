@@ -77,7 +77,7 @@ describe('Raw template files', () => {
           expect.objectContaining({
             pageLayoutType: expect.any(String),
           })
-        );;
+        );
       }
     }
   );
