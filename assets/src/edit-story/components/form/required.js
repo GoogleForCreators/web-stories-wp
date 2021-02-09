@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { _x } from '@wordpress/i18n';
+import { _x } from '@web-stories-wp/i18n';
 
 const RequiredWrapper = styled.div`
   display: flex;

@@ -20,16 +20,11 @@
 import { useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { TranslateWithMarkup } from '../../../../../i18n';
 import { SettingForm, SettingHeading, FormLabel } from '../components';
 
 const CheckBox = styled.input.attrs({

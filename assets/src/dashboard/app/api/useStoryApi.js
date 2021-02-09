@@ -20,11 +20,7 @@
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 import { useFeatures } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 export const TIPS = {
   addBackgroundMedia: {
@@ -119,3 +119,17 @@ export const Z_INDEX = {
 
 // @TODO make this dynamic based off of unread tips.
 export const NAVIGATION_FLOW = [...Object.keys(TIPS), DONE_TIP_ENTRY[0]];
+
+export const FOCUSABLE_SELECTORS = [
+  'button',
+  '[href]',
+  'input',
+  'select',
+  'textarea',
+  '[tabindex]:not([tabindex="-1"])',
+];
+
+export const POPUP_ID = 'help_center_companion';
+export const FOCUSABLE_POPUP_CHILDREN_SELECTOR = FOCUSABLE_SELECTORS.map(
+  (selector) => `#${POPUP_ID} ${selector}`
+).join(', ');

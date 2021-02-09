@@ -22,11 +22,11 @@ import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
+import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
 import App from './editorApp';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 

@@ -22,11 +22,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useRef, useCallback, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { _x } from '@wordpress/i18n';
+import { _x } from '@web-stories-wp/i18n';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
