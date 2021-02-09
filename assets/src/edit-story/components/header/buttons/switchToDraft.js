@@ -24,7 +24,13 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useStory, useLocalMedia } from '../../../app';
-import { Outline } from '../../button';
+import {
+  Icons,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../../design-system';
 
 function SwitchToDraft() {
   const { isSaving, saveStory } = useStory(
@@ -43,10 +49,18 @@ function SwitchToDraft() {
     saveStory,
   ]);
 
+  // @todo This should have its own icon!
   return (
-    <Outline onClick={handleUnPublish} isDisabled={isSaving || isUploading}>
-      {__('Switch to Draft', 'web-stories')}
-    </Outline>
+    <Button
+      variant={BUTTON_VARIANTS.CIRCLE}
+      type={BUTTON_TYPES.TERTIARY}
+      size={BUTTON_SIZES.SMALL}
+      onClick={handleUnPublish}
+      disabled={isSaving || isUploading}
+      aria-label={__('Switch to Draft', 'web-stories')}
+    >
+      <Icons.Save />
+    </Button>
   );
 }
 
