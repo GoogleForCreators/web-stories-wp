@@ -34,7 +34,7 @@ The hope here is to make the transition to using the components in the design sy
 
 ### How to add components to the design system
 
-There’s going to be things missing from the design system as of this writing. Our designs have been in flux and we’ve been adding things as we need them in the redesign. That said, feel free to add missing components. Components live in [design-system/components](https://github.com/google/web-stories-wp/tree/main/assets/src/design-system/components). This directory’s pretty flat so that things are easy to find at 1 level.  The general rule here, as with any shared design system, is that we keep things generic and non-opinionated as much as possible so that the usability remains flexible. All components have storybook demos that allow all props passed to the component to be seen as knobs as well as dark and light versions so that theme colors can be checked.
+There are going to be things missing from the design system. Designs have been in flux and we’ve been adding things as we need them in the redesign. That said, feel free to add missing components. Components live in [design-system/components](https://github.com/google/web-stories-wp/tree/main/assets/src/design-system/components). This directory’s pretty flat so that things are easy to find at 1 level.  The general rule here, as with any shared design system, is that we keep things generic and non-opinionated as much as possible so that the usability remains flexible. All components have storybook demos that allow all props passed to the component to be seen as knobs as well as dark and light versions so that theme colors can be checked.
 
 ### Some caveats
 
