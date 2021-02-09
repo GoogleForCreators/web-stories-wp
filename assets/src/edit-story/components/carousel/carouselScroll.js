@@ -19,15 +19,27 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  Icons,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../design-system';
 import { useConfig } from '../../app';
-import { LeftArrow, RightArrow } from '../button';
 import useCarousel from './useCarousel';
 
-function CarouselScrollButton({ isForward = false }) {
+const FlippableArrow = styled(Icons.Arrow)`
+  transform-origin: center center;
+  transform: rotate(${({ isLeft }) => (isLeft ? 0 : 0.5)}turn);
+`;
+
+function CarouselScrollButton({ isNext = false }) {
   const {
     hasOverflow,
     canScrollBack,
@@ -53,33 +65,38 @@ function CarouselScrollButton({ isForward = false }) {
     return null;
   }
 
-  const canScroll = isForward ? canScrollForward : canScrollBack;
-  const onClick = isForward ? scrollForward : scrollBack;
-  const label = isForward
+  const canScroll = isNext ? canScrollForward : canScrollBack;
+  const onClick = isNext ? scrollForward : scrollBack;
+  const label = isNext
     ? __('Scroll Forward', 'web-stories')
     : __('Scroll Back', 'web-stories');
 
-  // Show a right arrow if scrolling forward in LTR or not scrolling forward in RTL
-  const Button =
-    (!isRTL && isForward) || (isRTL && !isForward) ? RightArrow : LeftArrow;
+  // If reading direction is RTL and this is next button, it's pointing left.
+  // If reading direction is !RTL and this is !next button, it's pointing left.
+  // Otherwise it's a right.
+  // Thus, if the two bools are equal, it's a left button.
+  const isLeft = isRTL === isNext;
 
   return (
     <Button
+      variant={BUTTON_VARIANTS.SQUARE}
+      type={BUTTON_TYPES.PLAIN}
+      size={BUTTON_SIZES.SMALL}
       isDisabled={!canScroll}
       onClick={onClick}
-      width="24"
-      height="24"
       aria-label={label}
-    />
+    >
+      <FlippableArrow isLeft={isLeft} />
+    </Button>
   );
 }
 
 CarouselScrollButton.propTypes = {
-  isForward: PropTypes.bool,
+  isNext: PropTypes.bool,
 };
 
 function CarouselScrollForward() {
-  return <CarouselScrollButton isForward />;
+  return <CarouselScrollButton isNext />;
 }
 
 function CarouselScrollBack() {
