@@ -42,7 +42,7 @@ const BottomNavBar = styled(NavBar)`
 
 const BottomNavButtons = styled.div`
   display: flex;
-  padding: 0 8px;
+  padding: 0 16px;
 `;
 
 const onCondition = (condition) => (fn) => {
