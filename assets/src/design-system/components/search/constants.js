@@ -15,11 +15,11 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
-export const DEFAULT_POPUP_FILL_WIDTH = 240;
+export const DEFAULT_POPUP_FILL_WIDTH = 276;
 export const DEFAULT_PLACEHOLDER = __('Search', 'web-stories');
 export const DEFAULT_ARIA_CLEAR_LABEL = __('Clear Search', 'web-stories');
 export const DEFAULT_ARIA_INPUT_LABEL = __('Search', 'web-stories');

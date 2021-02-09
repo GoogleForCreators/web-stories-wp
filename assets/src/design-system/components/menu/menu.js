@@ -133,8 +133,6 @@ const Menu = ({
   );
 };
 
-export default Menu;
-
 Menu.propTypes = {
   dropDownHeight: PropTypes.number,
   emptyText: PropTypes.string,
@@ -152,3 +150,5 @@ Menu.propTypes = {
   activeValue: DROP_DOWN_VALUE_TYPE,
   parentId: PropTypes.string.isRequired,
 };
+
+export { Menu };
