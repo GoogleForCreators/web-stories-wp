@@ -20,12 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */

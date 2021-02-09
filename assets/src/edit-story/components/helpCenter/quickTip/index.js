@@ -18,6 +18,8 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
@@ -28,8 +30,8 @@ import {
   VisuallyHidden,
 } from '../../../../design-system';
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
-import { TranslateWithMarkup } from '../../../../i18n';
 import { GUTTER_WIDTH } from '../constants';
+import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';
 
 const Panel = styled.div`
@@ -48,9 +50,7 @@ const Overflow = styled.div`
   }
 `;
 
-// @TODO update with actual figure.
-const Figure = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.secondary};
+const Video = styled.video`
   height: 180px;
   margin-bottom: ${GUTTER_WIDTH}px;
 `;
@@ -73,8 +73,10 @@ export function QuickTip({
   title,
   description,
   isLeftToRightTransition = true,
+  figure,
   ...transitionProps
 }) {
+  const { cdnURL } = useConfig();
   return (
     <Transitioner
       {...transitionProps}
@@ -82,7 +84,11 @@ export function QuickTip({
     >
       <Panel>
         <Overflow>
-          <Figure />
+          {Boolean(figure) && (
+            <Video controls={false} autoPlay loop muted preload noControls>
+              <source src={`${cdnURL}${figure}`} type="video/webm" />
+            </Video>
+          )}
           <Title>{title}</Title>
           {description.map((paragraph, i) => (
             <Paragraph
@@ -109,5 +115,6 @@ QuickTip.propTypes = {
   figureSrc: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.arrayOf(PropTypes.string).isRequired,
+  figure: PropTypes.string,
   isLeftToRightTransition: PropTypes.bool,
 };

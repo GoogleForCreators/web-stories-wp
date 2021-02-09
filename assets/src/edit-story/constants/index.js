@@ -93,3 +93,5 @@ export const HIDDEN_PADDING = {
 
 export const SAVED_COLOR_SIZE = 30;
 export const SAVED_STYLE_HEIGHT = 48;
+
+export * from './media';

@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useMemo, Fragment } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

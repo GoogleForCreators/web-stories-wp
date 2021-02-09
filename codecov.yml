@@ -85,7 +85,7 @@ ignore:
   - includes/compat
   - includes/polyfills
   - includes/templates
-  - assets/src/migration/cli.js
+  - packages/migration/src/cli.js
   - assets/src/karma-fixture
   - packages/fonts/src/cli.js
   - includes/AMP/Integration/AMP_Story_Sanitizer.php

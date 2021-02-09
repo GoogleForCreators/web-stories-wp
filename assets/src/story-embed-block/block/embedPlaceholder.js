@@ -22,9 +22,9 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __, _x, sprintf } from '@wordpress/i18n';
 import { Button, Placeholder, ExternalLink } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
+import { __, _x, sprintf } from '@wordpress/i18n';
 
 const EmbedPlaceholder = ({
   icon,

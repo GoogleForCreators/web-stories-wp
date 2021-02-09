@@ -19,12 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { __ } from '@web-stories-wp/i18n';
+import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -33,7 +29,6 @@ import { Plain } from '../../../../button';
 import Dialog from '../../../../dialog';
 import { useSnackbar } from '../../../../../app/snackbar';
 import { useLocalMedia } from '../../../../../app/media';
-import { trackError } from '../../../../../../tracking';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
