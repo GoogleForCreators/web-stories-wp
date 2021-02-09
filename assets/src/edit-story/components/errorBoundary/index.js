@@ -19,11 +19,10 @@
  */
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackError } from '../../../tracking';
 import ErrorActions from './errorActions';
 
 class ErrorBoundary extends Component {

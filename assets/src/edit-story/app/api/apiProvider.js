@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * WordPress dependencies
@@ -28,7 +29,6 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from '../../../migration';
 import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
