@@ -22,8 +22,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import deprecated from '../../story-embed-block/block/deprecated';
-import save from '../../story-embed-block/block/save';
+import deprecated from './deprecated';
+import save from './save';
 import { ReactComponent as icon } from './icon.svg';
 import edit from './edit';
 import metadata from './block';

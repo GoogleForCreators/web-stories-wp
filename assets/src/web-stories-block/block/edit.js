@@ -23,11 +23,12 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import StoryEmbedEdit from '../../story-embed-block/block/edit';
+import StoryEmbedEdit from './block-types/story-embed-block/edit';
 import { ConfigProvider } from './config';
 import BlockConfigurationPanel from './components/storiesBlockConfigurationPanel';
 import LatestStoriesEdit from './block-types/latest-stories/edit';
@@ -47,11 +48,15 @@ const { config } = webStoriesBlockSettings;
 function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   const { blockType, viewType, url } = attributes;
 
-  if (!blockType && url && url.length) {
-    setAttributes({
-      blockType: BLOCK_TYPE_URL,
-    });
-  }
+  useEffect(() => {
+    // If block type is not set, but there is a URL,
+    // this block was likely migrated from its previous form.
+    if (!blockType && url?.length) {
+      setAttributes({
+        blockType: BLOCK_TYPE_URL,
+      });
+    }
+  }, [blockType, url, setAttributes]);
 
   if (!blockType) {
     return (

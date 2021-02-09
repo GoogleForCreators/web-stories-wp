@@ -258,39 +258,6 @@ const webStoriesScripts = {
   ].filter(Boolean),
 };
 
-const storyEmbedBlock = {
-  ...sharedConfig,
-  entry: {
-    'web-stories-embed-block': './assets/src/story-embed-block/index.js',
-  },
-  plugins: [
-    process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
-    new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
-    }),
-    new MiniCssExtractPlugin({
-      filename: '../css/[name].css',
-    }),
-    new WebpackBar({
-      name: 'Web Stories Block',
-      color: '#357BB5',
-    }),
-  ].filter(Boolean),
-  optimization: {
-    ...sharedConfig.optimization,
-    splitChunks: {
-      cacheGroups: {
-        stories: {
-          name: 'web-stories-embed-block',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
-  },
-};
-
 const webStoriesBlock = {
   ...sharedConfig,
   entry: {
@@ -376,7 +343,6 @@ const storiesMCEButton = {
 module.exports = [
   storiesEditor,
   dashboard,
-  storyEmbedBlock,
   activationNotice,
   webStoriesBlock,
   webStoriesScripts,

@@ -37,7 +37,7 @@ import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
 import EmbedPreview from './embedPreview';
-import { icon } from './';
+import { ReactComponent as icon } from './icon.svg';
 import './edit.css';
 
 const MIN_SIZE = 20;
