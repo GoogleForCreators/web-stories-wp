@@ -23,7 +23,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import APIContext from '../../../app/api/context';
 import { CurrentUserProvider } from '../../../app/currentUser';
 import { DONE_TIP_ENTRY } from '../constants';
-import { useHelpCenter, deriveState } from '../useHelpCenter';
+import { useHelpCenter, deriveState } from '../';
 
 describe('deriveState', () => {
   it('sets isPrevDisabled to true if navigationIndex becomes 0', () => {
@@ -125,6 +125,32 @@ describe('deriveState', () => {
     };
     const { readTips } = deriveState(previousState, nextState);
     expect(readTips['tip_1']).toBe(true);
+  });
+
+  it('resets the navigation index to the main menu when opening', () => {
+    const previousState = {
+      isOpen: false,
+      navigationIndex: 4,
+    };
+    const nextState = {
+      isOpen: true,
+      navigationIndex: 4,
+    };
+    const { navigationIndex } = deriveState(previousState, nextState);
+    expect(navigationIndex).toBe(-1);
+  });
+
+  it('retains navigation index when staying open between state transitions', () => {
+    const previousState = {
+      isOpen: true,
+      navigationIndex: 4,
+    };
+    const nextState = {
+      isOpen: true,
+      navigationIndex: 4,
+    };
+    const { navigationIndex } = deriveState(previousState, nextState);
+    expect(navigationIndex).toBe(4);
   });
 });
 
