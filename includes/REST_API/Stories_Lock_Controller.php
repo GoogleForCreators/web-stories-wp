@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use WP_REST_Server;
-use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;
@@ -38,7 +37,7 @@ use WP_Post_Type;
  *
  * Class Stories_Lock_Controller
  */
-class Stories_Lock_Controller extends WP_REST_Controller {
+class Stories_Lock_Controller extends Stories_Base_Controller {
 
 	/**
 	 * Constructor.
@@ -83,7 +82,6 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 * @since 1.1.0
 	 *
 	 */
 	public function lock_check( $request ) {
@@ -94,7 +92,6 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 	 * Checks if current user can alter post locking.
 	 *
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
-	 * @since 1.1.0
 	 *
 	 */
 	public function permissions_check() {
@@ -154,7 +151,6 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 	 *
 	 * @return int|false ID of the user with lock. False if the post does not exist, post is not locked,
 	 *                   the user with lock does not exist, or the post is locked by current user.
-	 * @since 2.5.0
 	 *
 	 */
 	protected function check_post_lock( $post_id ) {
@@ -193,7 +189,6 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 	 *
 	 * @return array|false Array of the lock time and user ID. False if the post does not exist, or
 	 *                     there is no current user.
-	 * @since 2.5.0
 	 *
 	 */
 	protected function set_post_lock( $post_id ) {
