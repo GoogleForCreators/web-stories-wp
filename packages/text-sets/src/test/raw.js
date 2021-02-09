@@ -22,10 +22,7 @@ import { resolve, basename } from 'path';
 
 describe('Raw text set files', () => {
   const textSets = readdirSync(
-    resolve(
-      process.cwd(),
-      'assets/src/edit-story/components/library/panes/text/textSets/raw'
-    )
+    resolve(process.cwd(), 'packages/text-sets/src/raw')
   );
 
   it.each(textSets)(
@@ -33,10 +30,7 @@ describe('Raw text set files', () => {
     (textSet) => {
       const category = basename(textSet, '.json');
       const rawData = readFileSync(
-        resolve(
-          process.cwd(),
-          `assets/src/edit-story/components/library/panes/text/textSets/raw/${category}.json`
-        ),
+        resolve(process.cwd(), `packages/text-sets/src/raw/${category}.json`),
         'utf8'
       );
       const data = JSON.parse(rawData);

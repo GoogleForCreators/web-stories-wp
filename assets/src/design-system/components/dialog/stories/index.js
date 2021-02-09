@@ -24,7 +24,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../';
+import { THEME_CONSTANTS } from '../../../theme';
 import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../button';
 import { Text } from '../../typography';
 import { Dialog } from '..';
