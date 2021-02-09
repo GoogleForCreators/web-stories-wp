@@ -31,18 +31,20 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
+  BUTTON_PIXELS,
 } from '../../../../design-system';
 import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import WithTooltip from '../../tooltip';
 
-const HEIGHT = 32;
+const BUTTON_HEIGHT = BUTTON_PIXELS.SMALL_BUTTON;
+const DIVIDER_HEIGHT = BUTTON_PIXELS.SMALL_ICON;
 
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
-  height: ${20 + HEIGHT}px;
+  height: ${20 + BUTTON_HEIGHT}px;
 `;
 
 const Box = styled.div`
@@ -51,7 +53,7 @@ const Box = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: ${HEIGHT}px;
+  height: ${BUTTON_HEIGHT}px;
   width: 100%;
 `;
 
@@ -73,7 +75,7 @@ const Options = styled.div`
 const Divider = styled.span`
   background-color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.3;
-  height: ${HEIGHT / 2}px;
+  height: ${DIVIDER_HEIGHT}px;
   width: 1px;
 `;
 

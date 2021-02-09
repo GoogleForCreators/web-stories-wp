@@ -25,13 +25,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useResizeEffect } from '../../../design-system';
+import { useResizeEffect, BUTTON_PIXELS } from '../../../design-system';
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
   ALLOWED_EDITOR_PAGE_WIDTHS,
   HEADER_HEIGHT,
-  PAGE_NAV_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
@@ -49,6 +48,7 @@ export const Z_INDEX = {
 
 const MENU_HEIGHT = 52;
 const CAROUSEL_HEIGHT = 104;
+const PAGE_NAV_WIDTH = BUTTON_PIXELS.LARGE_BUTTON;
 
 // @todo: the menu height is not responsive
 const Layer = styled.section`
@@ -72,8 +72,8 @@ const Layer = styled.section`
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
     'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
-    / 1fr auto var(--fullbleed-width-px)
-    auto 1fr;
+    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
+    ${PAGE_NAV_WIDTH}px 1fr;
   height: 100%;
 `;
 
