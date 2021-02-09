@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+
+/**
  * Internal dependencies
  */
-import * as metadataErrors from './metadata';
+import { useContextSelector, identity } from '../../../design-system';
+import Context from './context';
 
-export default {
-  story: [
-    metadataErrors.storyCoverAttached,
-    metadataErrors.storyTitle,
-    metadataErrors.storyCoverPortraitSize,
-    metadataErrors.storyCoverAspectRatio,
-    metadataErrors.publisherLogoSize,
-  ],
-  page: [metadataErrors.linkInPageAttachmentRegion],
-};
+function useHighlights(selector) {
+  const context = useContextSelector(Context, selector ?? identity);
+  if (!context) {
+    throw new Error(
+      'Must use `useHighlights()` within <highlights.Provider />'
+    );
+  }
+
+  return context;
+}
+export default useHighlights;
