@@ -73,8 +73,8 @@ export const _default = () => {
     <DarkThemeProvider>
       <Container>
         <Search
-          ariaClearLabel={text('ariaClearLabel', 'clear input')}
-          ariaInputLabel={text('ariaInputLabel')}
+          ariaClearLabel={text('ariaClearLabel', 'clear search')}
+          ariaInputLabel={text('ariaInputLabel', 'search for an image')}
           disabled={boolean('disabled')}
           emptyText={text('emptyText', 'No options available')}
           handleSearchValueChange={handleSearchValueChange}
@@ -129,7 +129,7 @@ export const LightTheme = () => {
     <Container>
       <Search
         ariaClearLabel={text('ariaClearLabel', 'clear input')}
-        ariaInputLabel={text('ariaInputLabel')}
+        ariaInputLabel={text('ariaInputLabel', 'search for stories')}
         disabled={boolean('disabled')}
         emptyText={text('emptyText', 'No options available')}
         handleSearchValueChange={handleSearchValueChange}

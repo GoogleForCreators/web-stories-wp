@@ -35,6 +35,7 @@ const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
     ref={ref}
     isSelected={isSelected}
     disabled={option.disabled}
+    aria-disabled={option.disabled}
   >
     {isSelected && (
       <Checkmark
