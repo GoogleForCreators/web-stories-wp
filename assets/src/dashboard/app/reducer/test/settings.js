@@ -56,8 +56,7 @@ describe('settingsReducer', () => {
       type: ACTION_TYPES.FETCH_SETTINGS_FAILURE,
       payload: {
         message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.LOAD_SETTINGS.TITLE,
+          body: ERRORS.LOAD_SETTINGS.MESSAGE,
         },
         code: 'my_error_code',
       },
@@ -66,8 +65,7 @@ describe('settingsReducer', () => {
       googleAnalyticsId: null,
       error: {
         message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.LOAD_SETTINGS.TITLE,
+          body: ERRORS.LOAD_SETTINGS.MESSAGE,
         },
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
@@ -80,8 +78,7 @@ describe('settingsReducer', () => {
       type: ACTION_TYPES.UPDATE_SETTINGS_FAILURE,
       payload: {
         message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
+          body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
         },
         code: 'my_error_code',
       },
@@ -90,8 +87,7 @@ describe('settingsReducer', () => {
       googleAnalyticsId: null,
       error: {
         message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
+          body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
         },
         id: MOCK_ERROR_ID,
         code: 'my_error_code',

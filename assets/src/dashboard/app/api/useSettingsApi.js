@@ -42,7 +42,6 @@ export default function useSettingsApi(
         payload: {
           message: {
             body: ERRORS.LOAD_SETTINGS.DEFAULT_MESSAGE,
-            title: ERRORS.LOAD_SETTINGS.TITLE,
           },
         },
       });
@@ -71,8 +70,7 @@ export default function useSettingsApi(
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
           message: {
-            body: err.message,
-            title: ERRORS.LOAD_SETTINGS.TITLE,
+            body: ERRORS.LOAD_SETTINGS.MESSAGE,
           },
         },
       });
@@ -152,8 +150,7 @@ export default function useSettingsApi(
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
+              body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
             },
           },
         });

@@ -36,8 +36,7 @@ describe('useSettingsApi', () => {
     });
 
     expect(result.current.settings.error.message).toStrictEqual({
-      body: 'The response is not a valid JSON response.',
-      title: ERRORS.LOAD_SETTINGS.TITLE,
+      body: ERRORS.LOAD_SETTINGS.MESSAGE,
     });
   });
 
@@ -51,8 +50,7 @@ describe('useSettingsApi', () => {
     });
 
     expect(result.current.settings.error.message).toStrictEqual({
-      body: 'The response is not a valid JSON response.',
-      title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
+      body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
     });
   });
 });

@@ -65,7 +65,6 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           payload: {
             message: {
               body: ERRORS.LOAD_STORIES.DEFAULT_MESSAGE,
-              title: ERRORS.LOAD_STORIES.TITLE,
             },
           },
         });
@@ -140,8 +139,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.LOAD_STORIES.TITLE,
+              body: ERRORS.LOAD_STORIES.MESSAGE,
             },
             code: err.code,
           },
@@ -185,8 +183,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           type: STORY_ACTION_TYPES.UPDATE_STORY_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.UPDATE_STORY.TITLE,
+              body: ERRORS.UPDATE_STORY.MESSAGE,
             },
             code: err.code,
           },
@@ -209,8 +206,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           type: STORY_ACTION_TYPES.TRASH_STORY_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.DELETE_STORY.TITLE,
+              body: ERRORS.DELETE_STORY.MESSAGE,
             },
             code: err.code,
           },
@@ -294,8 +290,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.RENDER_PREVIEW.TITLE,
+              body: ERRORS.RENDER_PREVIEW.MESSAGE,
             },
             code: err.code,
           },
@@ -356,8 +351,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.CREATE_STORY_FROM_TEMPLATE.TITLE,
+              body: ERRORS.CREATE_STORY_FROM_TEMPLATE.MESSAGE,
             },
             code: err.code,
           },
@@ -421,8 +415,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           type: STORY_ACTION_TYPES.DUPLICATE_STORY_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.DUPLICATE_STORY.TITLE,
+              body: ERRORS.DUPLICATE_STORY.MESSAGE,
             },
             code: err.code,
           },

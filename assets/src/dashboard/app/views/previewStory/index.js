@@ -143,7 +143,7 @@ const PreviewStory = ({ story, handleClose }) => {
       localStorage.removeItem(AMP_LOCAL_STORAGE);
     }
     if (!story || !story.pages.length) {
-      setPreviewError(ERRORS.RENDER_PREVIEW.TITLE);
+      setPreviewError(ERRORS.RENDER_PREVIEW.MESSAGE);
     } else {
       createStoryPreview(story);
     }

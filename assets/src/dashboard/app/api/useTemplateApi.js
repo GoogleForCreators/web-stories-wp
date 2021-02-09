@@ -135,7 +135,6 @@ const useTemplateApi = (dataAdapter, config) => {
           payload: {
             message: {
               body: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-              title: ERRORS.LOAD_TEMPLATES.TITLE,
             },
           },
         });
@@ -183,8 +182,7 @@ const useTemplateApi = (dataAdapter, config) => {
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.LOAD_TEMPLATES.TITLE,
+              body: ERRORS.LOAD_TEMPLATES.MESSAGE,
             },
             code: err.code,
           },
@@ -282,8 +280,7 @@ const useTemplateApi = (dataAdapter, config) => {
           type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
           payload: {
             message: {
-              body: err.message,
-              title: ERRORS.CREATE_TEMPLATE_FROM_STORY.TITLE,
+              body: ERRORS.CREATE_TEMPLATE_FROM_STORY.MESSAGE,
             },
             code: err.code,
           },
