@@ -331,7 +331,10 @@
       }
     },
     {
-      "files": ["tests/e2e/**/*.js"],
+      "files": [
+        "packages/e2e-test-utils/**/*.js",
+        "tests/e2e/**/*.js"
+      ],
       "extends": [
         "plugin:jest/all"
       ],
@@ -350,14 +353,6 @@
         "browser": "readonly",
         "page": "readonly",
         "wp": "readonly"
-      }
-    },
-    {
-      "files": ["packages/e2e-test-utils/src/*.js"],
-      "rules": {
-        "eslint-comments/no-unused-disable": "off",
-        "jest/no-hooks": "off",
-        "no-undef": "off"
       }
     },
     {
