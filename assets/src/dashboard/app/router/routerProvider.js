@@ -21,11 +21,11 @@ import { useRef, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { parse, stringify } from 'query-string';
 import { createHashHistory } from 'history';
+import { trackScreenView } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackScreenView } from '../../../tracking';
 import { createContext } from '../../../design-system';
 
 export const RouterContext = createContext({ state: {}, actions: {} });

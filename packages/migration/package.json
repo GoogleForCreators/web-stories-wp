@@ -1,0 +1,24 @@
+{
+  "name": "@web-stories-wp/migration",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "type": "module",
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "bin": {
+    "migration": "./src/cli.js"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2",
+    "polished": "^4.0.5"
+  },
+  "devDependencies": {
+    "rollup": "^2.36.2",
+    "@rollup/plugin-node-resolve": "^11.1.1"
+  }
+}

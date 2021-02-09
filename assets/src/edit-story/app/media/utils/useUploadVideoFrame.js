@@ -18,10 +18,10 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { getTimeTracker, trackError } from '../../../../tracking';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';

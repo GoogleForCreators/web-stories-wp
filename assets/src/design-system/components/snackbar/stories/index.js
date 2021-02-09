@@ -43,9 +43,9 @@ export const _default = () => (
     <Container>
       <SnackbarContainer customZIndex={number('customZIndex')}>
         <SnackbarMessage
-          actionLabel={text('actionLabel', 'Retry')}
-          ariaLabel={text(
-            'ariaLabel',
+          actionLabel={text('actionLabel', '')}
+          aria-label={text(
+            'aria-label',
             'this is my aria label giving my message context for screen reader users'
           )}
           handleAction={action('handle action clicked')}
@@ -61,9 +61,9 @@ export const _default = () => (
 export const LightThemeDefault = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
-      actionLabel={text('actionLabel', 'Retry')}
-      ariaLabel={text(
-        'ariaLabel',
+      actionLabel={text('actionLabel', '')}
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}
@@ -74,12 +74,30 @@ export const LightThemeDefault = () => (
   </SnackbarContainer>
 );
 
-export const NoActionWithRemoveMessageTimingOverride = () => (
+export const Action = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
-      actionLabel={text('actionLabel', '')}
-      ariaLabel={text(
-        'ariaLabel',
+      actionLabel={text('actionLabel', 'Retry')}
+      aria-label={text(
+        'aria-label',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      handleAction={action('handle action clicked')}
+      handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
+      removeMessageTimeInterval={80000}
+      showCloseButton={false}
+    />
+  </SnackbarContainer>
+);
+
+export const EarlyDismissWithAction = () => (
+  <SnackbarContainer customZIndex={number('customZIndex')}>
+    <SnackbarMessage
+      actionLabel={text('actionLabel', 'Retry')}
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}
@@ -91,12 +109,30 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
   </SnackbarContainer>
 );
 
+export const NoActionWithRemoveMessageTimingOverride = () => (
+  <SnackbarContainer customZIndex={number('customZIndex')}>
+    <SnackbarMessage
+      actionLabel={text('actionLabel', '')}
+      aria-label={text(
+        'aria-label',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      handleAction={action('handle action clicked')}
+      handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
+      removeMessageTimeInterval={80000}
+      showCloseButton={false}
+    />
+  </SnackbarContainer>
+);
+
 export const LongMessage = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
       actionLabel={text('actionLabel', 'Retry')}
-      ariaLabel={text(
-        'ariaLabel',
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleAction={action('handle action clicked')}

@@ -24,16 +24,15 @@ import PropTypes from 'prop-types';
  */
 import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
 import { ResizableBox } from '@wordpress/components';
 import * as compose from '@wordpress/compose';
 import { withViewportMatch } from '@wordpress/viewport';
 import { useDispatch, useSelect } from '@wordpress/data';
-
+import { __ } from '@wordpress/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../tracking';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';

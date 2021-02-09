@@ -15,10 +15,10 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { DATA_VERSION, migrate } from '../../migration/migrate';
-import { getTimeTracker } from '../../tracking';
+import { getTimeTracker } from '@web-stories-wp/tracking';
+import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
