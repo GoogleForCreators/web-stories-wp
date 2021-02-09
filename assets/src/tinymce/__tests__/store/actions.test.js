@@ -39,7 +39,7 @@ describe("Test actions' returned object", () => {
       };
 
       const toggleModal = actions.toggleModal(true);
-      expect(toggleModal).toEqual(expected);
+      expect(toggleModal).toStrictEqual(expected);
     });
 
     it('pass false', () => {
@@ -49,7 +49,7 @@ describe("Test actions' returned object", () => {
       };
 
       const toggleModal = actions.toggleModal(false);
-      expect(toggleModal).toEqual(expected);
+      expect(toggleModal).toStrictEqual(expected);
     });
   });
 
@@ -61,7 +61,7 @@ describe("Test actions' returned object", () => {
       };
 
       const Editor = actions.setEditor('test_editor');
-      expect(Editor).toEqual(expected);
+      expect(Editor).toStrictEqual(expected);
     });
   });
 
@@ -73,7 +73,7 @@ describe("Test actions' returned object", () => {
       };
 
       const View = actions.setCurrentView('list');
-      expect(View).toEqual(expected);
+      expect(View).toStrictEqual(expected);
     });
   });
 
@@ -88,7 +88,7 @@ describe("Test actions' returned object", () => {
       };
 
       const ViewSettings = actions.setViewSettings('list', { test: 'test' });
-      expect(ViewSettings).toEqual(expected);
+      expect(ViewSettings).toStrictEqual(expected);
     });
   });
 });

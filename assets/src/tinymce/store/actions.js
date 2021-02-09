@@ -39,7 +39,8 @@ export function setEditor(editor) {
  * Set current view.
  *
  * @param {string} view Current view.
- * @return {{currentView: string, type: string}}
+ *
+ * @return {Object} Current view action object.
  */
 export function setCurrentView(view) {
   return {
@@ -53,6 +54,8 @@ export function setCurrentView(view) {
  *
  * @param {Array} view Views list.
  * @param {Object} settings Settings object.
+ *
+ * @return {Object} View settings object.
  */
 export function setViewSettings(view, settings) {
   return {

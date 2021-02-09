@@ -26,9 +26,9 @@ import name from './name';
 /**
  * Retrieve settings.
  *
- * @param state State of store.
+ * @param {Object} state State of store.
  *
- * @return {Object}
+ * @return {Object} Settings object.
  */
 export function getSettings(state) {
   return state.settings;
@@ -48,6 +48,8 @@ export function getModal(state) {
  * Get editor instance.
  *
  * @param {Object} state State for the store.
+ *
+ * @return {string} Editor ID.
  */
 export function getEditor(state) {
   return state.editor;
@@ -56,8 +58,9 @@ export function getEditor(state) {
 /**
  * Get current view for the store.
  *
- * @param state
- * @return {string}
+ * @param {Object} state State object.
+ *
+ * @return {string} Current view name.
  */
 export function getCurrentView(state) {
   return state.currentView;
@@ -66,8 +69,9 @@ export function getCurrentView(state) {
 /**
  *Get settings for current view.
  *
- * @param state
- * @return {string}
+ * @param {Object} state State object.
+ *
+ * @return {Object} Settings object for current view.
  */
 export function getCurrentViewSettings(state) {
   const currentView = select(name).getCurrentView();

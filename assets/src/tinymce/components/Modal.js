@@ -55,6 +55,7 @@ const WebStoriesModal = (props) => {
   const { views, orderlist } = webStoriesData;
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {modalOpen && (
         <Modal

@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { ToggleControl } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
@@ -31,17 +30,16 @@ import { updateViewSettings } from '../../utils';
 /**
  * Toggle component for TinyMCE popup.
  *
- * @param fieldObj.fieldObj
- * @param fieldObj
- * @param field
- * @param fieldObj.field
- * @return {JSX.Element}
- * @class
+ * @param {Object} props Component props.
+ *
+ * @return {*} React component.
  */
-const TinyMCEToggle = ({ fieldObj, field }) => {
+const TinyMCEToggle = (props) => {
+  const { fieldObj, field } = props;
   const { show, readonly: isReadonly, label } = fieldObj;
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {!isReadonly && (
         <ToggleControl

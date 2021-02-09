@@ -27,7 +27,7 @@ import { webStoriesData } from './globals';
 /**
  * Get current view.
  *
- * @return {string}
+ * @return {string} View name.
  */
 export const currentView = () => {
   return select(name).getCurrentView();
@@ -112,7 +112,7 @@ export const setDefaultStateSetting = () => {
 /**
  * Build the shortcode tag based on the selected attributes.
  *
- * @return {string}
+ * @return {string} Shortcode.
  */
 export const prepareShortCode = () => {
   let shortCode = `[${webStoriesData.tag}`;

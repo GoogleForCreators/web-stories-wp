@@ -73,6 +73,6 @@ describe('Test default state for store', () => {
       currentView: 'circles',
     };
 
-    expect(DEFAULT_STATE).toEqual(expected);
+    expect(DEFAULT_STATE).toStrictEqual(expected);
   });
 });

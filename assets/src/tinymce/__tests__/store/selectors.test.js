@@ -35,7 +35,7 @@ describe('Test Store Selectors', () => {
     };
 
     const Settings = selector.getSettings(state);
-    expect(Settings).toEqual(expected);
+    expect(Settings).toStrictEqual(expected);
   });
 
   it('get modal open state', () => {
@@ -75,6 +75,6 @@ describe('Test Store Selectors', () => {
     };
 
     const CurrentView = selector.getCurrentViewSettings(state);
-    expect(CurrentView).toEqual({ test: 'dummy' });
+    expect(CurrentView).toStrictEqual({ test: 'dummy' });
   });
 });
