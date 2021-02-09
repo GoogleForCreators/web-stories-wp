@@ -35,7 +35,6 @@ import { useConfig } from '../../app';
 import useCarousel from './useCarousel';
 
 const FlippableArrow = styled(Icons.Arrow)`
-  transform-origin: center center;
   transform: rotate(${({ isLeft }) => (isLeft ? 0 : 0.5)}turn);
 `;
 

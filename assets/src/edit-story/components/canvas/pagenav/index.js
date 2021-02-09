@@ -45,7 +45,6 @@ const Wrapper = styled.div`
 `;
 
 const FlippableArrow = styled(Icons.Arrow)`
-  transform-origin: center center;
   transform: rotate(${({ isLeft }) => (isLeft ? 0 : 0.5)}turn);
 `;
 
