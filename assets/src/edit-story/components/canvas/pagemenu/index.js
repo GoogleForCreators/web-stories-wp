@@ -17,31 +17,26 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useCallback } from 'react';
-import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  Icons,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../../design-system';
 import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
-import {
-  Delete,
-  Duplicate,
-  UndoAlt as LeftArrow,
-  RedoAlt as RightArrow,
-  Add,
-  PlayCircular,
-  StopCircular,
-  LayoutHelper,
-  Text,
-} from '../../../icons';
 import WithTooltip from '../../tooltip';
 
-const HEIGHT = 28;
+const HEIGHT = 32;
 
 const Wrapper = styled.div`
   display: flex;
@@ -77,34 +72,12 @@ const Options = styled.div`
 const Divider = styled.span`
   background-color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.3;
-  height: ${HEIGHT}px;
+  height: ${HEIGHT / 2}px;
   width: 1px;
 `;
 
 const Space = styled.div`
   width: ${({ isDouble }) => (isDouble ? 20 : 10)}px;
-`;
-
-const Icon = styled.button`
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  display: block;
-  color: ${({ theme }) => theme.colors.fg.white};
-
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      opacity: 0.3;
-      pointer-events: none;
-    `}
-
-  svg {
-    width: 28px;
-    height: 28px;
-    display: block;
-  }
 `;
 
 function PageMenu() {
@@ -140,7 +113,6 @@ function PageMenu() {
     pageSize: state.state.pageSize,
   }));
   const { isRTL } = useConfig();
-  const { showTextMagicAndHelperMode } = useFeatures();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -193,52 +165,67 @@ function PageMenu() {
             </>
           )}
           <WithTooltip title={__('Delete page', 'web-stories')}>
-            <Icon
+            <Button
+              variant={BUTTON_VARIANTS.CIRCLE}
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
               onClick={handleDeletePage}
               aria-label={__('Delete Page', 'web-stories')}
             >
-              <Delete />
-            </Icon>
+              <Icons.Trash />
+            </Button>
           </WithTooltip>
           <Space />
           <WithTooltip title={__('Duplicate page', 'web-stories')}>
-            <Icon
+            <Button
+              variant={BUTTON_VARIANTS.CIRCLE}
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
               onClick={handleDuplicatePage}
               aria-label={__('Duplicate Page', 'web-stories')}
             >
-              <Duplicate />
-            </Icon>
+              <Icons.Duplicate />
+            </Button>
           </WithTooltip>
           <Space />
           <WithTooltip title={__('New page', 'web-stories')}>
-            <Icon
+            <Button
+              variant={BUTTON_VARIANTS.CIRCLE}
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
               onClick={handleAddPage}
               aria-label={__('Add New Page', 'web-stories')}
             >
-              <Add />
-            </Icon>
+              <Icons.AddOutlined />
+            </Button>
           </WithTooltip>
           <Space />
           <Divider />
           <Space />
           <WithTooltip title={__('Undo', 'web-stories')} shortcut="mod+z">
-            <Icon
+            <Button
+              variant={BUTTON_VARIANTS.CIRCLE}
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
               disabled={!canUndo}
               onClick={handleUndo}
               aria-label={__('Undo Changes', 'web-stories')}
             >
-              {isRTL ? <RightArrow /> : <LeftArrow />}
-            </Icon>
+              {isRTL ? <Icons.Redo /> : <Icons.Undo />}
+            </Button>
           </WithTooltip>
           <Space />
           <WithTooltip title={__('Redo', 'web-stories')} shortcut="shift+mod+z">
-            <Icon
+            <Button
+              variant={BUTTON_VARIANTS.CIRCLE}
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
               disabled={!canRedo}
               onClick={handleRedo}
               aria-label={__('Redo Changes', 'web-stories')}
             >
-              {isRTL ? <LeftArrow /> : <RightArrow />}
-            </Icon>
+              {isRTL ? <Icons.Undo /> : <Icons.Redo />}
+            </Button>
           </WithTooltip>
           <Space />
           {[
@@ -249,40 +236,35 @@ function PageMenu() {
               style={{ marginLeft: 'auto' }}
               title={__('Stop', 'web-stories')}
             >
-              <Icon
+              <Button
+                variant={BUTTON_VARIANTS.CIRCLE}
+                type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
                 onClick={toggleAnimationState}
                 disabled={!hasAnimations}
                 aria-label={__('Stop Page Animations', 'web-stories')}
               >
-                <StopCircular />
-              </Icon>
+                <Icons.StopAnimation />
+              </Button>
             </WithTooltip>
           ) : (
             <WithTooltip
               style={{ marginLeft: 'auto' }}
               title={__('Play', 'web-stories')}
             >
-              <Icon
+              <Button
+                variant={BUTTON_VARIANTS.CIRCLE}
+                type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
                 onClick={toggleAnimationState}
                 disabled={!hasAnimations}
                 aria-label={__('Play Page Animations', 'web-stories')}
               >
-                <PlayCircular />
-              </Icon>
+                <Icons.PlayAnimation />
+              </Button>
             </WithTooltip>
           )}
         </Options>
-        {showTextMagicAndHelperMode && (
-          <Options>
-            <Icon disabled>
-              <LayoutHelper />
-            </Icon>
-            <Space isDouble />
-            <Icon disabled>
-              <Text />
-            </Icon>
-          </Options>
-        )}
       </Box>
     </Wrapper>
   );

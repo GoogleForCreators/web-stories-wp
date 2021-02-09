@@ -47,7 +47,7 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const MENU_HEIGHT = 48;
+const MENU_HEIGHT = 52;
 const CAROUSEL_HEIGHT = 104;
 
 // @todo: the menu height is not responsive
@@ -123,7 +123,7 @@ const PageAreaSafeZone = styled.div`
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
 
-const MenuArea = styled(Area).attrs({ area: 'menu', overflowAllowed: false })``;
+const MenuArea = styled(Area).attrs({ area: 'menu', overflowAllowed: true })``;
 
 const NavArea = styled(Area).attrs({ overflowAllowed: false })`
   display: flex;
