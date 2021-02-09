@@ -24,7 +24,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { StoryAnimation, useStoryAnimationContext } from '../index';
+import { StoryAnimation, useStoryAnimationContext } from '../';
 
 describe('useStoryAnimationContext()', () => {
   useFeature.mockImplementation(() => true);

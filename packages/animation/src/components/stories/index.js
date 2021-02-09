@@ -22,7 +22,7 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../index';
+import { StoryAnimation } from '../';
 import { ANIMATION_TYPES } from '../../constants';
 import { PlayButton } from '../../storybookUtils';
 

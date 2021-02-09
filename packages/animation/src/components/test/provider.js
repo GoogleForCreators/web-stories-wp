@@ -25,7 +25,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { StoryAnimation, useStoryAnimationContext } from '../index';
+import { StoryAnimation, useStoryAnimationContext } from '../';
 import * as animationParts from '../../parts';
 
 function flushPromiseQueue() {

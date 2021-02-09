@@ -23,7 +23,7 @@ import { render } from '@testing-library/react';
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import { AnimationPart, throughput } from '../index';
+import { AnimationPart, throughput } from '../';
 
 describe('AnimationPart', () => {
   /**

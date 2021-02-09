@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { getGlobalSpace, literal } from '../index';
+import { getGlobalSpace, literal } from '../';
 
 describe('literal', () => {
   it('interpolates the same as a template literal given an empty string', () => {
