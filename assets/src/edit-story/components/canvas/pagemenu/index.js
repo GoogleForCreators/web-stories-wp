@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
@@ -79,6 +80,23 @@ const Divider = styled.span`
 const Space = styled.div`
   width: ${({ isDouble }) => (isDouble ? 20 : 10)}px;
 `;
+
+function PageMenuButton({ children, ...rest }) {
+  return (
+    <Button
+      variant={BUTTON_VARIANTS.CIRCLE}
+      type={BUTTON_TYPES.TERTIARY}
+      size={BUTTON_SIZES.SMALL}
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+}
+
+PageMenuButton.propTypes = {
+  children: PropTypes.node,
+};
 
 function PageMenu() {
   const {
@@ -165,67 +183,52 @@ function PageMenu() {
             </>
           )}
           <WithTooltip title={__('Delete page', 'web-stories')}>
-            <Button
-              variant={BUTTON_VARIANTS.CIRCLE}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
+            <PageMenuButton
               onClick={handleDeletePage}
               aria-label={__('Delete Page', 'web-stories')}
             >
               <Icons.Trash />
-            </Button>
+            </PageMenuButton>
           </WithTooltip>
           <Space />
           <WithTooltip title={__('Duplicate page', 'web-stories')}>
-            <Button
-              variant={BUTTON_VARIANTS.CIRCLE}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
+            <PageMenuButton
               onClick={handleDuplicatePage}
               aria-label={__('Duplicate Page', 'web-stories')}
             >
               <Icons.Duplicate />
-            </Button>
+            </PageMenuButton>
           </WithTooltip>
           <Space />
           <WithTooltip title={__('New page', 'web-stories')}>
-            <Button
-              variant={BUTTON_VARIANTS.CIRCLE}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
+            <PageMenuButton
               onClick={handleAddPage}
               aria-label={__('Add New Page', 'web-stories')}
             >
               <Icons.AddOutlined />
-            </Button>
+            </PageMenuButton>
           </WithTooltip>
           <Space />
           <Divider />
           <Space />
           <WithTooltip title={__('Undo', 'web-stories')} shortcut="mod+z">
-            <Button
-              variant={BUTTON_VARIANTS.CIRCLE}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
+            <PageMenuButton
               disabled={!canUndo}
               onClick={handleUndo}
               aria-label={__('Undo Changes', 'web-stories')}
             >
               {isRTL ? <Icons.Redo /> : <Icons.Undo />}
-            </Button>
+            </PageMenuButton>
           </WithTooltip>
           <Space />
           <WithTooltip title={__('Redo', 'web-stories')} shortcut="shift+mod+z">
-            <Button
-              variant={BUTTON_VARIANTS.CIRCLE}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
+            <PageMenuButton
               disabled={!canRedo}
               onClick={handleRedo}
               aria-label={__('Redo Changes', 'web-stories')}
             >
               {isRTL ? <Icons.Undo /> : <Icons.Redo />}
-            </Button>
+            </PageMenuButton>
           </WithTooltip>
           <Space />
           {[
@@ -236,32 +239,26 @@ function PageMenu() {
               style={{ marginLeft: 'auto' }}
               title={__('Stop', 'web-stories')}
             >
-              <Button
-                variant={BUTTON_VARIANTS.CIRCLE}
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
+              <PageMenuButton
                 onClick={toggleAnimationState}
                 disabled={!hasAnimations}
                 aria-label={__('Stop Page Animations', 'web-stories')}
               >
                 <Icons.StopAnimation />
-              </Button>
+              </PageMenuButton>
             </WithTooltip>
           ) : (
             <WithTooltip
               style={{ marginLeft: 'auto' }}
               title={__('Play', 'web-stories')}
             >
-              <Button
-                variant={BUTTON_VARIANTS.CIRCLE}
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
+              <PageMenuButton
                 onClick={toggleAnimationState}
                 disabled={!hasAnimations}
                 aria-label={__('Play Page Animations', 'web-stories')}
               >
                 <Icons.PlayAnimation />
-              </Button>
+              </PageMenuButton>
             </WithTooltip>
           )}
         </Options>
