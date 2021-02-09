@@ -25,7 +25,10 @@ import { useFeature } from 'flagged';
  */
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
-import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
+import {
+  MEDIA_TRANSCODING_MAX_FILE_SIZE,
+  MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES,
+} from '../../../constants';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -37,15 +40,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  * @return {string} File name without extension.
  */
 const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
-
-/**
- * Determines whether it's a video file.
- *
- * @param {File} file File object.
- * @param {string} file.type File type.
- * @return {boolean} Whether it's a video file.
- */
-const isVideo = ({ type }) => type.startsWith('video/');
 
 /**
  * Checks whether the file size is too large for transcoding.
@@ -114,7 +108,8 @@ function useTranscodeVideo() {
     );
   }
 
-  const canTranscodeFile = (file) => isVideo(file);
+  const canTranscodeFile = (file) =>
+    MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES.includes(file.type);
 
   const isTranscodingEnabled = Boolean(
     currentUser.meta?.web_stories_media_optimization
