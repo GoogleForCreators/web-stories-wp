@@ -72,8 +72,8 @@ const Layer = styled.section`
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
     'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
-    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
-    ${PAGE_NAV_WIDTH}px 1fr;
+    / 1fr auto var(--fullbleed-width-px)
+    auto 1fr;
   height: 100%;
 `;
 
