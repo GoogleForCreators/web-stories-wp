@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { visitDashboard } from '../../utils';
+import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Admin Menu', () => {
   it('should sync the WP nav with the dashboard nav', async () => {

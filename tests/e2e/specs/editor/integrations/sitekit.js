@@ -18,15 +18,16 @@
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   addTextElement,
   createNewStory,
   previewStory,
   insertStoryTitle,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Site Kit integration with editor', () => {
   beforeAll(async () => {
