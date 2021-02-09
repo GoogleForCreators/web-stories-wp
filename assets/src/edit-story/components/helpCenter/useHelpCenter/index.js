@@ -16,20 +16,20 @@
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 /**
-* Internal dependencies
-*/
-import {  NAVIGATION_FLOW } from '../constants';
+ * Internal dependencies
+ */
 import { clamp } from '../../../../animation';
 import { useCurrentUser } from '../../../app';
-import { NAVIGATION_FLOW } from '../constants';
+import { NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
 import {
-  resetNavigationIndexOnOpen,
-  deriveBottomNavigation,
-  deriveTransitionDirection,
-  deriveDisabledButtons,
   createEffectRun,
+  deriveBottomNavigation,
+  deriveDisabledButtons,
+  deriveReadTip,
+  deriveTransitionDirection,
+  resetNavigationIndexOnOpen,
 } from './effects';
 
 /**
@@ -110,6 +110,32 @@ const initial = {
   },
 };
 
+/**
+ * Turns a boolean map into a string key
+ *
+ * @param {Object} map an object to stringify
+ * @return {string} a key to provide to useEffect
+ */
+const createKeyFromBooleanMap = (map) => Object.keys(map || {}).join(' ');
+
+/**
+ * reforms the boolean map from the key returned by createKeyFromBooleanMap
+ *
+ * @param {string} key a string of space-separated map keys
+ * @return {Object} the map of the provided keys with with true as the value
+ */
+const createBooleanMapFromKey = (key) =>
+  key
+    .split(' ')
+    .sort((a, b) => a.localeCompare(b))
+    .reduce(
+      (accum, keyName) => ({
+        ...accum,
+        [keyName]: true,
+      }),
+      {}
+    );
+
 export function useHelpCenter() {
   const [store, dispatch] = useReducer(reducer, initial);
   const { currentUser, updateCurrentUser } = useCurrentUser(
@@ -137,12 +163,23 @@ export function useHelpCenter() {
 
   const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
   useEffect(() => {
-    persistenceKey &&
-      updateCurrentUser({
-        meta: {
-          web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
-        },
-      }).catch(actions.persistingReadTipsError);
+    if (!persistenceKey) {
+      return () => {};
+    }
+    // The call to `updateCurrentUser` causes the entire app to rerender
+    // which causes noticable jank in our transition. This is just
+    // a short term fix to not have that render occur during
+    // the transition.
+    const id = setTimeout(
+      () =>
+        updateCurrentUser({
+          meta: {
+            web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
+          },
+        }).catch(actions.persistingReadTipsError),
+      TRANSITION_DURATION
+    );
+    return () => clearTimeout(id);
   }, [actions, updateCurrentUser, persistenceKey]);
 
   // Components wrapped in a Transition no longer recieve

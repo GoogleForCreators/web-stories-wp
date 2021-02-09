@@ -25,11 +25,14 @@ const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
 
 const isMenuIndex = (previous, next) => next.navigationIndex < 0;
 const navigationFlowTips = (previous, next) =>
-  next.navigationFlow.filter((key) => TIP_KEYS_MAP[key]);
+  (next.navigationFlow || []).filter((key) => TIP_KEYS_MAP[key]);
 
-export const resetNavigationIndexOnOpen = (previous, next) => ({
-  navigationIndex: !previous.isOpen && next.isOpen ? -1 : next.navigationIndex,
-});
+export const resetNavigationIndexOnOpen = (previous, next) => {
+  const isOpening = !previous.isOpen && next.isOpen;
+  return {
+    navigationIndex: isOpening ? -1 : next.navigationIndex,
+  };
+};
 
 export const deriveBottomNavigation = (previous, next) => ({
   hasBottomNavigation: !isMenuIndex(previous, next),
@@ -48,7 +51,8 @@ export const deriveDisabledButtons = (previous, next) => ({
 
 export const deriveReadTip = (previous, next) => {
   const readTipKey =
-    !isMenuIndex(next) && navigationFlowTips(next)?.[next.navigationIndex];
+    !isMenuIndex(previous, next) &&
+    navigationFlowTips(previous, next)?.[next.navigationIndex];
 
   const readTips = readTipKey
     ? {
