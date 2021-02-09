@@ -155,7 +155,7 @@ const ButtonOptions = {
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
-const Button = (
+const Button = forwardRef(function Button(
   {
     size = BUTTON_SIZES.MEDIUM,
     type = BUTTON_TYPES.PLAIN,
@@ -164,7 +164,7 @@ const Button = (
     ...rest
   },
   ref
-) => {
+) {
   const isLink = rest.href !== undefined;
   const StyledButton = ButtonOptions[variant];
 
@@ -179,7 +179,7 @@ const Button = (
       {children}
     </StyledButton>
   );
-};
+});
 
 Button.propTypes = {
   size: PropTypes.oneOf(Object.values(BUTTON_SIZES)),
@@ -189,6 +189,4 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-const ButtonWithRef = forwardRef(Button);
-
-export { ButtonWithRef as Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
+export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
