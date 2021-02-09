@@ -25,12 +25,16 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import {
-  GridView as GridViewButton,
-  MetaBoxes as MetaBoxesButton,
-  Plain,
-} from '../button';
+  Button,
+  Icons,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../design-system';
+import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
+import { Plain } from '../button';
+import { Widgets } from '../../icons';
 import Modal from '../modal';
 import WithTooltip from '../tooltip';
 import { Placement } from '../popup';
@@ -68,11 +72,6 @@ const PlainStyled = styled(Plain)`
   }
 `;
 
-const StyledGridViewButton = styled(GridViewButton).attrs({
-  height: '16',
-  width: '16',
-})``;
-
 const GridViewContainer = styled.section.attrs({
   'aria-label': __('Grid View', 'web-stories'),
 })`
@@ -80,11 +79,6 @@ const GridViewContainer = styled.section.attrs({
   margin: 70px 170px 70px 170px;
   pointer-events: all;
 `;
-
-const StyledMetaBoxesButton = styled(MetaBoxesButton).attrs({
-  height: '24',
-  width: '24',
-})``;
 
 function CarouselMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -108,10 +102,15 @@ function CarouselMenu() {
                 title={__('Third-Party Meta Boxes', 'web-stories')}
                 placement={Placement.TOP}
               >
-                <StyledMetaBoxesButton
+                <Button
+                  variant={BUTTON_VARIANTS.CIRCLE}
+                  type={BUTTON_TYPES.PLAIN}
+                  size={BUTTON_SIZES.SMALL}
                   onClick={toggleMetaBoxesVisible}
                   aria-label={__('Third-Party Meta Boxes', 'web-stories')}
-                />
+                >
+                  <Widgets />
+                </Button>
               </WithTooltip>
             </Box>
           )}
@@ -123,10 +122,15 @@ function CarouselMenu() {
               title={__('Grid View', 'web-stories')}
               placement={Placement.TOP}
             >
-              <StyledGridViewButton
+              <Button
+                variant={BUTTON_VARIANTS.CIRCLE}
+                type={BUTTON_TYPES.PLAIN}
+                size={BUTTON_SIZES.SMALL}
                 onClick={openModal}
                 aria-label={__('Grid View', 'web-stories')}
-              />
+              >
+                <Icons.GridMany />
+              </Button>
             </WithTooltip>
           </Box>
         </MenuItems>
