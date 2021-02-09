@@ -40,7 +40,7 @@ There are going to be things missing from the design system. Designs have been i
 
 1. Buttons!
 
-- Figma has 3 types of buttons: Primary, Secondary, Tertiary. The difference between a secondary button and a tertiary button is the active state.
+- The designs have 3 types of buttons: Primary, Secondary, Tertiary. The difference between a secondary button and a tertiary button is the active state.
 - There’s a 4th type of button in the design system called Plain - this button type has no styles, it’s just a reset button without any outline or background color that can be used when we need something to semantically be a button but the designs disagree. This shouldn’t happen often and should be a bit of an escape hatch.
 - Button variants in the designs are square and rectangle. The additional variants of circle and icon were added because there are occasions in the editor and dashboard where there are no shared button styles but the element is expected to behave as a button. By having a button variant of icon we can eliminate the need of having specific exportable buttons like `ArrowDown`.
 - Button types, sizes, and variants (circle, rectangle, square, icon) are all available as constants and importable via `BUTTON_TYPES`, `BUTTON_SIZES`, `BUTTON_VARIANTS` so that we don’t have to worry about miscellaneous strings.
