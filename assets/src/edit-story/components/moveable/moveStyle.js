@@ -25,8 +25,7 @@ export const GlobalStyle = createGlobalStyle`
 		background: ${({ theme }) =>
       theme.designSystemTheme.colors.bg.primary} !important;
 		border: 1px solid ${({ theme }) =>
-      theme.designSystemTheme.colors.blue[20]} !important;
-    border-radius: 0px;
+      theme.designSystemTheme.colors.border.selection} !important;
 	}
 
 	.default-moveable.type-text .moveable-direction.moveable-n, .default-moveable.type-text .moveable-direction.moveable-s {
@@ -50,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
 	.default-moveable .moveable-control.moveable-ne,
 	.default-moveable .moveable-control.moveable-sw,
 	.default-moveable .moveable-control.moveable-se {
-	  border-radius: 0px;
+	  border-radius: 2px;
 	  width: 8px;
 	  height: 8px;
 	  margin-left: -4px;
@@ -60,7 +59,7 @@ export const GlobalStyle = createGlobalStyle`
 	.default-moveable .moveable-control.moveable-s {
 		height: 6px !important;
 		width: 16px !important;
-		margin-top: -2px !important;
+		margin-top: -3px !important;
 	}
 
 	.default-moveable .moveable-control.moveable-e {
@@ -77,14 +76,14 @@ export const GlobalStyle = createGlobalStyle`
 
 	.default-moveable.moveable-control-box .moveable-line.moveable-direction {
 		background: ${({ theme }) =>
-      theme.designSystemTheme.colors.blue[20]} !important;
+      theme.designSystemTheme.colors.border.selection} !important;
 		width: 1px;
 		height: 1px;
 	}
 
 	.default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
 		background: ${({ theme }) =>
-      theme.designSystemTheme.colors.blue[20]} !important;
+      theme.designSystemTheme.colors.border.selection} !important;
 		width: 1px;
 		top: -12px;
 		height: 12px;
