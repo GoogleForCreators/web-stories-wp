@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -144,14 +145,20 @@ function TextSets({ paneRef }) {
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
+  const onChangeShowInUse = useCallback(
+    (value) => {
+      requestAnimationFrame(() => setShowInUse(value));
+      trackEvent('textsets_toggle_show_in_use', 'editor', '', value);
+    },
+    [setShowInUse]
+  );
+
   return (
     <SectionContainer id={sectionId}>
       <TitleBar>
         <SectionTitle>{title}</SectionTitle>
         <Switch
-          onChange={(value) => {
-            requestAnimationFrame(() => setShowInUse(value));
-          }}
+          onChange={onChangeShowInUse}
           value={showInUse}
           label={__('Match fonts from story', 'web-stories')}
         />
