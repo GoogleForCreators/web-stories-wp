@@ -2,7 +2,7 @@
 
 ## Overview
 
-Web Stories exists as two apps right now, the editor and the dashboard. Both have their own set of components that they are built off of. Now that we have a robust design system in figma ([here](https://www.figma.com/file/bMhG3KyrJF8vIAODgmbeqT/Design-System?node-id=1906%3A0)), we should stop duplicating foundational and base components by having separate copies in the editor and dashboard. The idea here is to make this transition as painless as possible, no massive structure changes just consolidating components and themes.
+Web Stories exists as two apps right now, the editor and the dashboard. Both have their own set of components that they are built off of. Now that we have a robust design system in figma ([here](https://www.figma.com/file/bMhG3KyrJF8vIAODgmbeqT/Design-System?node-id=1906%3A0)), we won't need to duplicate foundational and base components by having separate copies in the editor and dashboard. The idea here is to make this transition as painless as possible, no massive structural changes. This is a consolidation of components and themes.
 
 ## What goes in the design system?
 
