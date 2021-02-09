@@ -73,30 +73,17 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
       url: 'http://bomb.com',
     };
     const testNoLink = metadataGuidelines.linkInPageAttachmentRegion({
-      pages: [
-        {
-          pageAttachment: testPageAttachment,
-          elements: [elementInRegion],
-        },
-      ],
+      pageAttachment: testPageAttachment,
+      elements: [elementInRegion],
     });
     const testNoAttachment = metadataGuidelines.linkInPageAttachmentRegion({
-      pages: [
-        {
-          pageAttachment: undefined,
-          elements: [{ ...elementInRegion, link: { url: 'bomb.com' } }],
-        },
-      ],
+      pageAttachment: undefined,
+      elements: [{ ...elementInRegion, link: { url: 'bomb.com' } }],
     });
     const testLinkInPageAttachmentStory = {
-      id: 123,
-      pages: [
-        {
-          id: 890,
-          pageAttachment: testPageAttachment,
-          elements: [{ ...elementInRegion, link: { url: 'bomb.com ' } }],
-        },
-      ],
+      id: 890,
+      pageAttachment: testPageAttachment,
+      elements: [{ ...elementInRegion, link: { url: 'bomb.com ' } }],
     };
     const testLinkInPageAttachment = metadataGuidelines.linkInPageAttachmentRegion(
       testLinkInPageAttachmentStory
@@ -107,12 +94,11 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testLinkInPageAttachment.message).toMatchInlineSnapshot(
       `"Turn off Page Attachment or remove conflicting links"`
     );
-    expect(testLinkInPageAttachment.pages).toHaveLength(1);
-    expect(testLinkInPageAttachment.pages[0]).toStrictEqual(
-      testLinkInPageAttachmentStory.pages[0].id
-    );
-    expect(testLinkInPageAttachment.storyId).toStrictEqual(
+    expect(testLinkInPageAttachment.pageId).toStrictEqual(
       testLinkInPageAttachmentStory.id
+    );
+    expect(testLinkInPageAttachment.elements).toStrictEqual(
+      testLinkInPageAttachmentStory.elements
     );
   });
 

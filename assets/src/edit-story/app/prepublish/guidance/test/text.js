@@ -101,12 +101,15 @@ describe('Pre-publish checklist - text guidelines (guidance)', () => {
           },
         ],
       };
-      expect(storyTooLittleText(story)).toStrictEqual({
-        storyId: story.id,
-        type: 'guidance',
-        message: MESSAGES.TEXT.TOO_LITTLE_TEXT.MAIN_TEXT,
-        help: MESSAGES.TEXT.TOO_LITTLE_TEXT.HELPER_TEXT,
-      });
+      const test = storyTooLittleText(story);
+      expect(test.storyId).toStrictEqual(story.id);
+      expect(test.type).toStrictEqual('guidance');
+      expect(test.message).toStrictEqual(
+        MESSAGES.TEXT.TOO_LITTLE_TEXT.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.TEXT.TOO_LITTLE_TEXT.HELPER_TEXT
+      );
     });
 
     it('should return undefined if there is enough text', () => {

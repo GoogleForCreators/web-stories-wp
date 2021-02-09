@@ -17,6 +17,7 @@ Array [
         Maintain a 3:4 aspect ratio
       </li>
     </constants__DashedList>,
+    "highlight": "COVER",
     "message": "Add story cover image",
     "storyId": 120,
     "type": "error",
@@ -30,6 +31,7 @@ Array [
         Don't exceed 40 characters
       </li>
     </constants__DashedList>,
+    "highlight": "STORY_TITLE",
     "message": "Add story title",
     "storyId": 120,
     "type": "error",
@@ -40,6 +42,7 @@ Array [
         Incorporate a brief description for better user experience
       </li>
     </constants__DashedList>,
+    "highlight": "EXCERPT",
     "message": "Add story description",
     "storyId": 120,
     "type": "warning",

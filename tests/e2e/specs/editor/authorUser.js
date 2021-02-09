@@ -20,14 +20,14 @@
 import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   createNewStory,
   previewStory,
   addTextElement,
   insertStoryTitle,
-} from '../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 async function publishStory() {
   await expect(page).toClick('button', { text: 'Publish' });
