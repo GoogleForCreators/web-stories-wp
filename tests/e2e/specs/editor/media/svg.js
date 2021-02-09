@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
 import {
   withExperimentalFeatures,
   createNewStory,
   uploadMedia,
   deleteMedia,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
@@ -58,7 +53,6 @@ describe('SVG', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
     const filename = await uploadMedia('close.svg', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });

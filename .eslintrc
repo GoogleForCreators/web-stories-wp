@@ -331,7 +331,10 @@
       }
     },
     {
-      "files": ["tests/e2e/**/*.js"],
+      "files": [
+        "packages/e2e-test-utils/**/*.js",
+        "tests/e2e/**/*.js"
+      ],
       "extends": [
         "plugin:jest/all"
       ],
