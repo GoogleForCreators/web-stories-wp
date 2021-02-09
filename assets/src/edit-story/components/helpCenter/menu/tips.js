@@ -27,6 +27,7 @@ import {
   Icons,
   themeHelpers,
 } from '../../../../design-system';
+import { useConfig } from '../../../app/config';
 import { forceFocusCompanion } from '../utils';
 import { ReadTipsType, TIPS } from '../constants';
 
@@ -61,17 +62,24 @@ const ButtonText = styled.span`
     `}
 `;
 
-const StyledArrow = styled(Icons.ArrowAlt)`
+const ArrowWrap = styled.div`
   width: 13px;
   transform-origin: 50% 50%;
-  transform: rotate(180deg);
+  transform: ${({ isRTL }) => (isRTL ? 'none' : 'rotate(180deg)')};
+`;
+
+const StyledArrow = styled(Icons.ArrowAlt)`
+  width: 100%;
 `;
 
 function Tip({ children, onClick, unread = true }) {
+  const { isRTL } = useConfig();
   return (
     <StyledButton size={BUTTON_SIZES.SMALL} onClick={onClick}>
       <ButtonText unread={unread}>{children}</ButtonText>
-      <StyledArrow />
+      <ArrowWrap isRTL={isRTL}>
+        <StyledArrow />
+      </ArrowWrap>
     </StyledButton>
   );
 }
