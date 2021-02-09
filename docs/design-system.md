@@ -20,7 +20,7 @@ The design system contains a full new color palette and theme. The structure is 
 4. Subdirectory called `global` - these are exported as `ThemeGlobals` and should be added to the app root to handle global styles for both the dashboard and editor. Currently only the focus override exists here.
 5. Subdirectory called `constants` - these are constants that are used in the dashboard, the editor and across the  design system so that we can have a single source of truth. You can import them via `THEME _CONSTANTS`. These include things like static widths of wordPress menus that all projects reference.
 
-It’s important to note that this is a living resource - I fully anticipate that we need to add to the theme as we begin to use it more robustly. The design system is being created iteratively as we go through implementing new designs. If there’s a new need for a helper, add it! If there’s a color lacking, add it in following the existing patterns. My goal here was to create a base that we can easily keep updating and avoid needless duplication.
+It’s important to note that this is a living resource - we fully anticipate the need to add to the theme as we begin to use it more robustly. The design system is being created iteratively as we go through implementing new designs. If there’s a new need for a helper, add it! If there’s a color lacking, add it in following the existing patterns. Our goal here was to create a base that we could easily keep updated to avoid needless duplication.
 
 ## Components
 
