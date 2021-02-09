@@ -57,7 +57,7 @@ There are going to be things missing from the design system. Designs have been i
 
 3. Circular dependencies
 
-- If you are adding a component and you need to reference anything in the design-system you’ll need to import it from the nearest location to that import not the top level index.
+- If you are adding a component and you need to reference anything in the design-system you’ll need to import it from its nearest location. Do not import it from the top level index.
 - While this works just fine in the app (because you’re outside of the design system), storybook will yell at you because it thinks that imports aren’t loaded in time.
 - As an example, I’m creating this new `<Taco />` and I need a `<Text />` component. I’d need to `import { Text } from ‘../typography’;` not `../` if I’m in `components/taco`.
 
