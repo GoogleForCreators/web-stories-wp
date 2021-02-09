@@ -30,7 +30,12 @@ describe('Inserting Media from Dialog', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const testMediaPath = join(__dirname, '..', 'assets', 'example-1.jpg');
+    const testMediaPath = join(
+      __dirname,
+      '../../..',
+      'assets',
+      'example-1.jpg'
+    );
     const filename = await uploadMedia(testMediaPath, false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });

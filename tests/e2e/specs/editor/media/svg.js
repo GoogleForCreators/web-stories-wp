@@ -55,7 +55,7 @@ describe('SVG', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const testMediaPath = join(__dirname, '..', 'assets', 'close.svg');
+    const testMediaPath = join(__dirname, '../../..', 'assets', 'close.svg');
     const filename = await uploadMedia(testMediaPath, false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });

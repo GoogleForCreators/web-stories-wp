@@ -32,7 +32,12 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.webm');
+    const testMediaPath = join(
+      __dirname,
+      '../../..',
+      'assets',
+      'small-video.webm'
+    );
     const filename = await uploadMedia(testMediaPath, false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
@@ -51,7 +56,12 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.webm');
+    const testMediaPath = join(
+      __dirname,
+      '../../..',
+      'assets',
+      'small-video.webm'
+    );
     const filename = await uploadMedia(testMediaPath);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
@@ -74,7 +84,12 @@ describe('Inserting WebM Video', () => {
     await insertStoryTitle('Publishing with video');
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.webm');
+    const testMediaPath = join(
+      __dirname,
+      '../../..',
+      'assets',
+      'small-video.webm'
+    );
     const filename = await uploadMedia(testMediaPath);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');

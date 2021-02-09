@@ -38,7 +38,12 @@ describe('Inserting .mov from dialog', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    const testMediaPath = join(__dirname, '..', 'assets', 'small-video.mov');
+    const testMediaPath = join(
+      __dirname,
+      '../../..',
+      'assets',
+      'small-video.mov'
+    );
     const fileName = await uploadFile(testMediaPath, false);
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 

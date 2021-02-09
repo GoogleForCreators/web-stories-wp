@@ -30,7 +30,12 @@ describe('Inserting Media from Media Library', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const testMediaPath = join(__dirname, '..', 'assets', 'example-1.jpg');
+    const testMediaPath = join(
+      __dirname,
+      '../../..',
+      'assets',
+      'example-1.jpg'
+    );
     const filename = await uploadMedia(testMediaPath, true);
 
     await page.waitForSelector('[data-testid="mediaElement-image"]');
