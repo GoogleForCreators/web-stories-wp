@@ -34,7 +34,7 @@ const Background = styled.header.attrs({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.old.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 const Head = styled.div`

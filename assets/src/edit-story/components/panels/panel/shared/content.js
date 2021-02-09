@@ -19,12 +19,11 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { useContext } from '../../../../../design-system';
+import { useContext } from 'use-context-selector';
 
 /**
  * Internal dependencies
@@ -35,7 +34,7 @@ const Container = styled.div`
   padding: ${({ padding }) => padding || '10px 20px'};
   overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
-    isSecondary ? rgba(theme.old.colors.fg.white, 0.07) : 'transparent'};
+    isSecondary ? theme.colors.interactiveBg.secondaryNormal : 'transparent'};
   ${({ hasBorder, theme }) =>
     hasBorder && `border-top: 1px solid ${theme.old.colors.bg.v9};`}
 `;

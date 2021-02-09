@@ -81,7 +81,7 @@ const Label = styled.label`
   flex: 1;
   padding: 0px 6px;
   color: ${({ hasOffset, theme }) =>
-    hasOffset ? theme.old.colors.bg.workspace : theme.old.colors.bg.divider};
+    hasOffset ? theme.colors.bg.primary : theme.old.colors.bg.divider};
 
   ${({ disabled }) =>
     disabled &&

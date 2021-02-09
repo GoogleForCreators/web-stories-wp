@@ -61,7 +61,7 @@ const Hint = styled.div`
   font-size: ${({ theme }) => theme.old.fonts.body1.size};
   line-height: 24px;
   text-align: right;
-  background-color: ${({ theme }) => theme.old.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);

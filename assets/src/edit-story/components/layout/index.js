@@ -45,7 +45,7 @@ const Editor = withOverlay(styled.section.attrs({
   font-size: ${({ theme }) => theme.old.fonts.body1.size};
   line-height: ${({ theme }) => theme.old.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.old.fonts.body1.letterSpacing};
-  background-color: ${({ theme }) => theme.old.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 
   position: relative;
   height: 100%;

@@ -44,7 +44,7 @@ const Page = styled.button`
   border: 0;
   border-top: ${THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
-      isActive ? theme.old.colors.selection : theme.old.colors.bg.workspace};
+      isActive ? theme.old.colors.selection : theme.colors.bg.primary};
   height: ${({ height }) => height}px;
   background-color: transparent;
   width: ${({ width }) => width}px;

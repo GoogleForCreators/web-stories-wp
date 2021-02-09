@@ -54,7 +54,7 @@ const Duration = styled.div`
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: ${({ theme }) => rgba(theme.old.colors.bg.workspace, 0.6)};
+  background: ${({ theme }) => rgba(theme.colors.bg.primary, 0.6)};
   font-family: ${({ theme }) => theme.old.fonts.duration.family};
   font-size: ${({ theme }) => theme.old.fonts.duration.size};
   line-height: ${({ theme }) => theme.old.fonts.duration.lineHeight};

@@ -55,14 +55,14 @@ const PageList = styled(Reorderable).attrs({
        * if scroll is possible.
        */
       scrollbar-color: ${({ theme }) => theme.old.colors.bg.v10}
-        ${({ theme }) => theme.old.colors.bg.workspace} !important;
+        ${({ theme }) => theme.colors.bg.primary} !important;
 
       &::-webkit-scrollbar-track {
-        background: ${({ theme }) => theme.old.colors.bg.workspace} !important;
+        background: ${({ theme }) => theme.colors.bg.primary} !important;
       }
 
       &::-webkit-scrollbar-thumb {
-        border: 2px solid ${({ theme }) => theme.old.colors.bg.workspace} !important;
+        border: 2px solid ${({ theme }) => theme.colors.bg.primary} !important;
         border-top-width: 3px !important;
       }
     `};

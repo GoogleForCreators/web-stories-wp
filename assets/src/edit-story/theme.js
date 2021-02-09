@@ -56,7 +56,7 @@ export const GlobalStyle = createGlobalStyle`
    */
   * {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.old.colors.bg.workspace}
+    scrollbar-color: ${({ theme }) => theme.colors.bg.primary}
     ${({ theme }) => rgba(theme.old.colors.bg.black, 0.1)};
   }
 

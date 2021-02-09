@@ -37,7 +37,7 @@ import CanvasElementDropzone from './canvasElementDropzone';
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
 })`
-  background-color: ${({ theme }) => theme.old.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   width: 100%;
   height: 100%;
   position: relative;
