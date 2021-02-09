@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,27 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { rgba } from 'polished';
+import { css, keyframes } from 'styled-components';
+/**
  * Internal dependencies
  */
-import * as metadataErrors from './metadata';
+import { theme as dsTheme } from '../../../design-system';
 
-export default {
-  story: [
-    metadataErrors.storyCoverAttached,
-    metadataErrors.storyTitle,
-    metadataErrors.storyCoverPortraitSize,
-    metadataErrors.storyCoverAspectRatio,
-    metadataErrors.publisherLogoSize,
-  ],
-  page: [metadataErrors.linkInPageAttachmentRegion],
-};
+const flash = keyframes`
+  50% {
+    background-color: ${rgba(dsTheme.colors.standard.white, 0.3)};
+  }
+`;
+
+export const FLASH = css`
+  background-color: ${rgba(dsTheme.colors.standard.white, 0)};
+  animation: ${flash} 0.3s ease-in-out 2;
+`;
+
+export const OUTLINE = css`
+  box-shadow: 0 0 0 2px ${dsTheme.colors.border.focus};
+  border-radius: ${dsTheme.borders.radius.small};
+`;

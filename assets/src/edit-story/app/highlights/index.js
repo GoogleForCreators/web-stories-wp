@@ -16,15 +16,14 @@
 /**
  * Internal dependencies
  */
-import * as metadataErrors from './metadata';
+import { OUTLINE, FLASH } from './styles';
 
-export default {
-  story: [
-    metadataErrors.storyCoverAttached,
-    metadataErrors.storyTitle,
-    metadataErrors.storyCoverPortraitSize,
-    metadataErrors.storyCoverAspectRatio,
-    metadataErrors.publisherLogoSize,
-  ],
-  page: [metadataErrors.linkInPageAttachmentRegion],
+export { default as useHighlights } from './useHighlights';
+export { default as useFocusHighlight } from './useFocusHighlight';
+export { default as HighlightsProvider } from './provider';
+export { default as states } from './states';
+
+export const styles = {
+  OUTLINE,
+  FLASH,
 };
