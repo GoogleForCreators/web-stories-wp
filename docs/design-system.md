@@ -12,7 +12,7 @@ If it’s something complex only used by the editor, say the color picker, which
 
 ## Theme
 
-With this update we get a full new color palette and theme. The structure is changing a little bit to try and keep things more organized. You can dig into the app [assets/src/design-system/theme](https://github.com/google/web-stories-wp/tree/main/assets/src/design-system) to see organization. Here’s brief overview of the organization to contextualize what you’re looking at.
+The design system contains a full new color palette and theme. The structure is changing a little bit to try and keep things more organized. You can dig into the app [assets/src/design-system/theme](https://github.com/google/web-stories-wp/tree/main/assets/src/design-system) to see organization. Here’s brief overview of the organization to contextualize what you’re looking at.
 
 1. Colors, Typography, Borders, Breakpoints are in separate files and all added to the index’s `theme` that can be ingested at the root of each app. This file separation makes it easier to find theme values for developers who prefer to look in source code for the value they need.
 2. The new theme provides a dark and a light variant. The dark is the default. All colors are available regardless of variant, but the `theme.colors.bg` and `theme.colors.fg` are what you should gravitate towards using because the light and dark theme colors mirror each other. This will make dark and light mode functionality easier to handle down the road.
