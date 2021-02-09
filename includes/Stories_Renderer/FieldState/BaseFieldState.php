@@ -146,7 +146,7 @@ class BaseFieldState implements FieldState {
 			[
 				'label'    => __( 'Circle Size', 'web-stories' ),
 				'show'     => false,
-				'readonly' => false,
+				'readonly' => true,
 			]
 		);
 	}

@@ -177,8 +177,8 @@ class Customizer extends \WP_UnitTestCase {
 			[
 				'story-options[circle_size]',
 				[
-					'default'           => 150,
-					'type'              => 'option',
+					'default' => 150,
+					'type'    => 'option',
 				],
 			],
 			[
