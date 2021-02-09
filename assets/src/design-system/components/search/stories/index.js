@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
+import { useCallback, useMemo, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { boolean, number, select, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { useCallback, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies

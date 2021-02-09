@@ -38,7 +38,7 @@ describe('Search <Input />', () => {
         ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
+        handleClearInput={handleClearInputMock}
         inputValue={''}
       />
     );
@@ -53,7 +53,7 @@ describe('Search <Input />', () => {
         ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
+        handleClearInput={handleClearInputMock}
         placeholder={'search placeholder'}
         inputValue={''}
         disabled
@@ -72,7 +72,7 @@ describe('Search <Input />', () => {
         ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
+        handleClearInput={handleClearInputMock}
         inputValue={''}
         placeholder={'search placeholder'}
       />
@@ -90,7 +90,7 @@ describe('Search <Input />', () => {
         ariaInputLabel={'search label'}
         ariaClearLabel={'aria label for clearing value'}
         onClick={onClickMock}
-        handleClearInputValue={handleClearInputMock}
+        handleClearInput={handleClearInputMock}
         inputValue={'my input value'}
         placeholder={'search placeholder'}
       />

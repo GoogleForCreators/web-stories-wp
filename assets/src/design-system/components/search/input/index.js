@@ -39,8 +39,8 @@ const SearchInput = (
     ariaClearLabel,
     clearId,
     disabled,
-    handleClearInputValue,
-    handleTabClearButton,
+    handleClearInput = () => {},
+    handleTabClear,
     inputValue,
     isOpen,
     listId,
@@ -62,10 +62,10 @@ const SearchInput = (
   const onClearButtonKeyDown = useCallback(
     ({ key }) => {
       if (key === 'Tab') {
-        handleTabClearButton?.();
+        handleTabClear?.();
       }
     },
-    [handleTabClearButton]
+    [handleTabClear]
   );
 
   return (
@@ -96,7 +96,7 @@ const SearchInput = (
         isVisible={activeInput}
         tabIndex={0}
         aria-label={activeInput && ariaClearLabel}
-        onClick={handleClearInputValue}
+        onClick={handleClearInput}
         onKeyDown={onClearButtonKeyDown}
       >
         <ClearIcon id={clearId} data-testid="clear-search-icon" />
@@ -120,8 +120,8 @@ SearchInput.propTypes = {
   clearId: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   listId: PropTypes.string.isRequired,
-  handleClearInputValue: PropTypes.func.isRequired,
-  handleTabClearButton: PropTypes.func.isRequired,
+  handleClearInput: PropTypes.func.isRequired,
+  handleTabClear: PropTypes.func.isRequired,
   inputValue: PropTypes.string,
   isOpen: PropTypes.bool,
 };

@@ -175,13 +175,13 @@ export const Search = ({
     [inputState, isOpen]
   );
 
-  const handleClearInputState = useCallback(() => {
+  const handleClearInput = useCallback(() => {
     inputState.set('');
     onMenuItemClick?.(null, { label: '', value: '' });
     handleReturnToInput();
   }, [handleReturnToInput, inputState, onMenuItemClick]);
 
-  const handleTabClearButton = useCallback(() => {
+  const handleTabClear = useCallback(() => {
     isOpen.set(false);
     isMenuFocused.set(false);
   }, [isOpen, isMenuFocused]);
@@ -262,8 +262,8 @@ export const Search = ({
         ariaClearLabel={ariaClearLabel}
         clearId={clearId}
         disabled={disabled}
-        handleClearInputState={handleClearInputState}
-        handleTabClearButton={handleTabClearButton}
+        handleClearInput={handleClearInput}
+        handleTabClear={handleTabClear}
         inputValue={inputState?.value || ''}
         isOpen={isOpen?.value}
         listId={listId}
