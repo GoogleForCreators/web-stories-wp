@@ -16,7 +16,7 @@ The design system contains a full new color palette and theme. The structure is 
 
 1. Colors, Typography, Borders, Breakpoints are in separate files and all added to the index’s `theme` that can be ingested at the root of each app. This file separation makes it easier to find theme values for developers who prefer to look in source code for the value they need.
 2. The new theme provides a dark and a light variant. Dark is the default. All colors are available regardless of variant, but the `theme.colors.bg` and `theme.colors.fg` are what you should gravitate towards using because the light and dark theme colors mirror each other. This will make dark and light mode functionality easier to handle down the road.
-3. Subdirectory called `helpers` - these are styles meant to be quick references for one off components in the editor and dashboard that aren’t in the design system.They’re also used in the design system for continuity.
+3. Subdirectory called `helpers` - these are styles meant to be quick references for one off components in the editor and dashboard that aren’t in the design system. They’re also used in the design system for continuity.
 4. Subdirectory called `global` - these are exported as `ThemeGlobals` and should be added to app root code to handle global styles for both the dashboard and editor. Currently only the focus override exists here.
 5. Subdirectory called `constants` - these are constants that are used in both the dashboard and the editor (or needed also in the design system) so that we can have a single source of truth. You can import them via `THEME _CONSTANTS`. These include things like static widths of wordPress menus that all projects reference.
 
