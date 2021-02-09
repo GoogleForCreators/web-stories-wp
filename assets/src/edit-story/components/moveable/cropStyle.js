@@ -59,9 +59,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   .crop-moveable .moveable-control.moveable-w {
     margin-top: 0 !important;
+    margin-left: -8px !important;
   }
-
-
 
   .crop-moveable .moveable-control.moveable-e,
   .crop-moveable .moveable-control.moveable-w {
