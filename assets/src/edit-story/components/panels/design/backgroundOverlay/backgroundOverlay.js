@@ -21,9 +21,9 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

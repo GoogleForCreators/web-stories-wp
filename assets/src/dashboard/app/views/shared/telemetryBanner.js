@@ -19,10 +19,7 @@
 import styled from 'styled-components';
 import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -33,7 +30,6 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '../../../../design-system';
-import { TranslateWithMarkup } from '../../../../i18n';
 import { useLayoutContext } from '../../../components';
 import { useConfig } from '../../config';
 import { APP_ROUTES } from '../../../constants';

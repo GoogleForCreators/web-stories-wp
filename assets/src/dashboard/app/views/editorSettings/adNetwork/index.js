@@ -19,11 +19,8 @@
  */
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -40,8 +37,6 @@ import {
 } from '../components';
 import { Dropdown } from '../../../../components';
 import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
-import { TranslateWithMarkup } from '../../../../../i18n';
-import { trackClick } from '../../../../../tracking';
 
 const AdNetworkDropdown = styled(Dropdown)`
   & button {

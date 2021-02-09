@@ -20,11 +20,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { _x, __ } from '@wordpress/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

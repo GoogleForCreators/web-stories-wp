@@ -20,17 +20,11 @@
 import { useFeature } from 'flagged';
 import { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-
-import { __, _n, sprintf } from '@wordpress/i18n';
-
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../../tracking';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';

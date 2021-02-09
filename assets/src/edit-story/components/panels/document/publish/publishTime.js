@@ -21,10 +21,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState } from 'react';
 import { format, formatTime, is12Hour } from '@web-stories-wp/date';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

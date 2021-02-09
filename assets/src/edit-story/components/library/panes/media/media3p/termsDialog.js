@@ -18,11 +18,7 @@
  */
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -32,7 +28,6 @@ import localStore, {
 } from '../../../../../utils/localStore';
 import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';
-import { TranslateWithMarkup } from '../../../../../../i18n';
 
 const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
