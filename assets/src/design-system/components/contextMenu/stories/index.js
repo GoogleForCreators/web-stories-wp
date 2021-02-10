@@ -25,6 +25,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import ContextMenu from '..';
+import { DarkThemeProvider } from '../../../storybookUtils';
 
 const items = [
   { label: 'Copy', shortcut: '⌘ X' },
@@ -88,6 +89,24 @@ export const _default = () => {
         isOpen={boolean('isOpen', true)}
       />
     </Container>
+  );
+};
+
+export const DarkMode = () => {
+  const itemsWithEventHandlers = items.map((item) => ({
+    ...item,
+    onClick: action(`Clicked on \`${item.label}\``),
+  }));
+
+  return (
+    <DarkThemeProvider>
+      <Container>
+        <ContextMenu
+          items={itemsWithEventHandlers}
+          isOpen={boolean('isOpen', true)}
+        />
+      </Container>
+    </DarkThemeProvider>
   );
 };
 
