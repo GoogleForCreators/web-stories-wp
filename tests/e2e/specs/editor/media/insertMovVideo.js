@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   createNewStory,
   clickButton,
   uploadFile,
   deleteMedia,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
@@ -37,7 +36,6 @@ describe('Inserting .mov from dialog', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-
     const fileName = await uploadFile('small-video.mov', false);
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 

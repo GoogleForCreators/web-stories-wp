@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { join, extname } from 'path';
+import { join, extname, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 import { v4 as uuid } from 'uuid';
@@ -35,9 +35,7 @@ async function uploadFile(file, checkUpload = true) {
   const fileExtension = extname(file);
   await page.setDefaultTimeout(10000);
 
-  // TODO: Fix ESLint config.
-  // eslint-disable-next-line no-undef
-  const testMediaPath = join(__dirname, '..', 'assets', file);
+  const testMediaPath = resolve(process.cwd(), 'tests/e2e/assets/' + file);
 
   // Copy file to <newname>.ext for upload.
   const newBaseName = uuid();

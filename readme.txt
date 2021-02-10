@@ -99,7 +99,7 @@ Web Stories created using Web Stories for WordPress use what’s provided in the
 
 There are two ways to include analytics in your Web Stories:
 
-* Add your Google Analytics ID in the “Editor Settings”.
+* Add your Google Analytics ID in the "Settings”.
 * If you use the [Site Kit by Google](https://wordpress.org/plugins/google-site-kit/) WordPress plugin, you can set up Google Analytics there.
 
 = What do I do about an AMP validation issue in Search Console? =

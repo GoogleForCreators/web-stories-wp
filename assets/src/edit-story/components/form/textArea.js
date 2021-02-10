@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -70,66 +70,74 @@ const Counter = styled.div`
   padding-right: 6px;
 `;
 
-function TextArea({
-  className,
-  placeholder,
-  value,
-  maxLength,
-  readOnly,
-  disabled,
-  resizeable,
-  showTextLimit,
-  rows,
-  onTextChange,
-  onBlur,
-  ...rest
-}) {
-  const hasMaxLength = typeof maxLength === 'number';
-  const showCounter = showTextLimit && hasMaxLength;
-
-  const handleChange = useCallback(
-    (e) => {
-      const str = e.target.value || '';
-      const text = hasMaxLength ? str.slice(0, maxLength) : str;
-
-      onTextChange(text, e);
+const TextArea = forwardRef(
+  (
+    {
+      className,
+      placeholder,
+      value,
+      maxLength,
+      readOnly,
+      disabled,
+      resizeable,
+      showTextLimit,
+      rows,
+      onTextChange,
+      onBlur,
+      ...rest
     },
-    [onTextChange, hasMaxLength, maxLength]
-  );
+    ref
+  ) => {
+    const hasMaxLength = typeof maxLength === 'number';
+    const showCounter = showTextLimit && hasMaxLength;
 
-  const handleBlur = useCallback(
-    (e) => {
-      if (e.target.form) {
-        e.target.form.dispatchEvent(
-          new window.Event('submit', { cancelable: true })
-        );
-      }
+    const handleChange = useCallback(
+      (e) => {
+        const str = e.target.value || '';
+        const text = hasMaxLength ? str.slice(0, maxLength) : str;
 
-      if (onBlur) {
-        onBlur(e);
-      }
-    },
-    [onBlur]
-  );
+        onTextChange(text, e);
+      },
+      [onTextChange, hasMaxLength, maxLength]
+    );
 
-  return (
-    <Container className={className}>
-      <StyledTextArea
-        placeholder={placeholder}
-        maxLength={maxLength}
-        disabled={disabled}
-        readOnly={readOnly}
-        resizeable={resizeable}
-        rows={rows}
-        value={value}
-        {...rest}
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
-      {showCounter && <Counter>{`${value.length}/${maxLength}`}</Counter>}
-    </Container>
-  );
-}
+    const handleBlur = useCallback(
+      (e) => {
+        if (e.target.form) {
+          e.target.form.dispatchEvent(
+            new window.Event('submit', { cancelable: true })
+          );
+        }
+
+        if (onBlur) {
+          onBlur(e);
+        }
+      },
+      [onBlur]
+    );
+
+    return (
+      <Container className={className}>
+        <StyledTextArea
+          placeholder={placeholder}
+          maxLength={maxLength}
+          disabled={disabled}
+          readOnly={readOnly}
+          resizeable={resizeable}
+          rows={rows}
+          value={value}
+          {...rest}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          ref={ref}
+        />
+        {showCounter && <Counter>{`${value.length}/${maxLength}`}</Counter>}
+      </Container>
+    );
+  }
+);
+
+TextArea.displayName = 'TextArea';
 
 TextArea.propTypes = {
   className: PropTypes.string,

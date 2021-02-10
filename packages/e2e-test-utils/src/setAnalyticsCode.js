@@ -26,7 +26,7 @@ async function setAnalyticsCode(code) {
   );
 
   await expect(dashboardNavigation).toClick('a', {
-    text: 'Editor Settings',
+    text: 'Settings',
   });
 
   const inputSelector =

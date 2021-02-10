@@ -41,6 +41,7 @@ const defaultProviderValues = {
   },
   config: {
     capabilities: { canReadPrivatePosts: true },
+    allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
   },
   api: {},
 };

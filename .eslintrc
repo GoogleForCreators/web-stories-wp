@@ -331,7 +331,10 @@
       }
     },
     {
-      "files": ["tests/e2e/**/*.js"],
+      "files": [
+        "packages/e2e-test-utils/**/*.js",
+        "tests/e2e/**/*.js"
+      ],
       "extends": [
         "plugin:jest/all"
       ],
@@ -417,6 +420,32 @@
         "no-unused-vars": "off",
         "header/header": "off",
         "prettier/prettier": "off"
+      }
+    },
+    {
+      "files": [
+        "assets/src/animation/**/*.js",
+        "assets/src/dashboard/**/*.js",
+        "assets/src/design-system/**/*.js",
+        "assets/src/edit-story/**/*.js",
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        "packages/activation-notice/**/*.js",
+        "packages/i18n/**/*.js",
+      ],
+      "rules":{
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@wordpress/i18n",
+                "message": "Use @web-stories-wp/i18n instead."
+              }
+            ]
+          }
+        ]
       }
     }
   ]

@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
 import {
   withExperimentalFeatures,
   createNewStory,
   uploadMedia,
   deleteMedia,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
+
+const MODAL = '.media-modal';
 
 describe('SVG', () => {
   withExperimentalFeatures(['enableSVG']);
@@ -56,7 +53,6 @@ describe('SVG', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
     const filename = await uploadMedia('close.svg', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
@@ -66,5 +62,31 @@ describe('SVG', () => {
     await percySnapshot(page, 'Uploading SVG to editor');
 
     await deleteMedia(filename);
+  });
+
+  it('not should be to select SVG as publisher logo', async () => {
+    await createNewStory();
+
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+    await expect(page).toClick('[aria-label="Publisher logo"]');
+
+    await page.waitForSelector(MODAL, {
+      visible: true,
+    });
+
+    await expect(page).toMatch('Select as publisher logo');
+    await expect(page).toClick('button', { text: 'Media Library' });
+
+    await expect(page).not.toMatchElement(
+      '.attachments-browser .attachments .attachment[aria-label="video-play"]'
+    );
+
+    await page.keyboard.press('Escape');
+
+    await page.waitForSelector(MODAL, {
+      visible: false,
+    });
   });
 });

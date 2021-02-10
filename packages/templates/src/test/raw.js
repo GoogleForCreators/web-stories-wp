@@ -20,14 +20,9 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 
-/**
- * Internal dependencies
- */
-import { PAGE_LAYOUT_TYPES } from '../../../edit-story/components/library/panes/pageLayouts/constants';
-
 describe('Raw template files', () => {
   const templates = readdirSync(
-    resolve(process.cwd(), 'assets/src/dashboard/templates/raw')
+    resolve(process.cwd(), 'packages/templates/src/raw')
   );
 
   // @see https://github.com/google/web-stories-wp/issues/2473#issuecomment-651509687
@@ -35,10 +30,7 @@ describe('Raw template files', () => {
     '%s template should not contain invisible characters',
     (template) => {
       const templateContent = readFileSync(
-        resolve(
-          process.cwd(),
-          `assets/src/dashboard/templates/raw/${template}`
-        ),
+        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
         'utf8'
       );
 
@@ -53,10 +45,7 @@ describe('Raw template files', () => {
     (template) => {
       const templateName = basename(template, '.json');
       const templateContent = readFileSync(
-        resolve(
-          process.cwd(),
-          `assets/src/dashboard/templates/raw/${template}`
-        ),
+        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
         'utf8'
       );
       const templateData = JSON.parse(templateContent);
@@ -78,10 +67,7 @@ describe('Raw template files', () => {
     '%s template should contain pageLayoutType',
     (template) => {
       const templateContent = readFileSync(
-        resolve(
-          process.cwd(),
-          `assets/src/dashboard/templates/raw/${template}`
-        ),
+        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
         'utf8'
       );
       const templateData = JSON.parse(templateContent);
@@ -91,9 +77,6 @@ describe('Raw template files', () => {
           expect.objectContaining({
             pageLayoutType: expect.any(String),
           })
-        );
-        expect(Object.keys(PAGE_LAYOUT_TYPES)).toStrictEqual(
-          expect.arrayContaining([page.pageLayoutType])
         );
       }
     }
