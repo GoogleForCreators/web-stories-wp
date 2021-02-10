@@ -20,10 +20,10 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import APIContext from '../../../app/api/context';
-import { CurrentUserProvider } from '../../../app/currentUser';
-import { DONE_TIP_ENTRY } from '../constants';
-import { useHelpCenter, deriveState } from '../useHelpCenter';
+import APIContext from '../../../../app/api/context';
+import { CurrentUserProvider } from '../../../../app/currentUser';
+import { DONE_TIP_ENTRY, TIPS } from '../../constants';
+import { useHelpCenter, deriveState } from '../';
 
 describe('deriveState', () => {
   it('sets isPrevDisabled to true if navigationIndex becomes 0', () => {
@@ -115,16 +115,43 @@ describe('deriveState', () => {
   });
 
   it('sets a tip to read if the navigation index is not on the menu or done index', () => {
+    const navigationFlow = Object.keys(TIPS);
     const previousState = {
       navigationIndex: -1,
-      navigationFlow: ['tip_1', 'tip_2'],
+      navigationFlow: navigationFlow,
     };
     const nextState = {
       navigationIndex: 0,
-      navigationFlow: ['tip_1', 'tip_2'],
+      navigationFlow: navigationFlow,
     };
     const { readTips } = deriveState(previousState, nextState);
-    expect(readTips['tip_1']).toBe(true);
+    expect(readTips[navigationFlow[0]]).toBe(true);
+  });
+
+  it('resets the navigation index to the main menu when opening', () => {
+    const previousState = {
+      isOpen: false,
+      navigationIndex: 4,
+    };
+    const nextState = {
+      isOpen: true,
+      navigationIndex: 4,
+    };
+    const { navigationIndex } = deriveState(previousState, nextState);
+    expect(navigationIndex).toBe(-1);
+  });
+
+  it('retains navigation index when staying open between state transitions', () => {
+    const previousState = {
+      isOpen: true,
+      navigationIndex: 4,
+    };
+    const nextState = {
+      isOpen: true,
+      navigationIndex: 4,
+    };
+    const { navigationIndex } = deriveState(previousState, nextState);
+    expect(navigationIndex).toBe(4);
   });
 });
 
