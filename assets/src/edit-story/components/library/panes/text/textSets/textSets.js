@@ -143,9 +143,9 @@ function TextSets({ paneRef }) {
     if (selectedCategory) {
       trackEvent('textsets_select_category', 'editor', '', selectedCategory);
     } else {
-      trackEvent('textsets_deselect_category', 'editor');
+      trackEvent('textsets_deselect_category', 'editor', selectedCat);
     }
-  }, []);
+  }, [selectedCat]);
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);

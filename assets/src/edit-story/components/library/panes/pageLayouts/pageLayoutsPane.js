@@ -20,7 +20,7 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
-import { getTimeTracker } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -115,9 +115,22 @@ function PageLayoutsPane(props) {
     [pageLayouts, selectedPageLayoutType]
   );
 
-  const handleSelectPageLayoutType = useCallback((key) => {
-    setSelectedPageLayoutType(key);
-  }, []);
+  const handleSelectPageLayoutType = useCallback(
+    (key) => {
+      setSelectedPageLayoutType(key);
+      if (key) {
+        trackEvent('page_layouts_select_category', 'editor', '', key);
+      } else {
+        trackEvent(
+          'page_layouts_deselect_category',
+          'editor',
+          '',
+          selectedPageLayoutType
+        );
+      }
+    },
+    [selectedPageLayoutType]
+  );
 
   return (
     <StyledPane id={paneId} {...props}>
