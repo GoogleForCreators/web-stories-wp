@@ -21,10 +21,11 @@ import {
   switchUserToAdmin,
   visitAdminPage,
 } from '@wordpress/e2e-test-utils';
+
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { createNewStory } from '../../utils';
+import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Quick Edit', () => {
   beforeAll(async () => {

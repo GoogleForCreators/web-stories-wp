@@ -60,7 +60,7 @@ const Wrapper = styled.div`
   #poststuff .stuffbox > h3,
   #poststuff h2.hndle {
     box-sizing: border-box;
-    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
     font-size: 14px;
     font-weight: 500;
     outline: none;
@@ -76,9 +76,10 @@ const Wrapper = styled.div`
 
   .postbox > .hndle,
   .postbox .postbox-header {
-    background: ${({ theme }) => theme.colors.bg.panel};
-    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
-    border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.04)};
+    background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
+    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
+    border-bottom: 1px solid
+      ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.04)};
   }
 
   .postbox .handlediv {
@@ -87,15 +88,16 @@ const Wrapper = styled.div`
   }
 
   .postbox .handlediv .toggle-indicator {
-    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
   }
 
   .postbox .handle-order-higher,
   .postbox .handle-order-lower {
-    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
 
     &[aria-disabled='true'] {
-      color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+      color: ${({ theme }) =>
+        rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
     }
   }
 

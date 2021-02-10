@@ -26,8 +26,7 @@ const SIDES_DIFF = SIDE_WIDE - SIDE_NARROW;
 
 export const GlobalStyle = createGlobalStyle`
   .crop-moveable .moveable-control {
-    background: ${({ theme }) =>
-      theme.designSystemTheme.colors.bg.primary} !important;
+    background: ${({ theme }) => theme.colors.bg.primary} !important;
     border: none !important;
     box-sizing: border-box !important;
   }
@@ -37,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
   .crop-moveable .moveable-control.moveable-e,
   .crop-moveable .moveable-control.moveable-w {
     border: 1px solid ${({ theme }) =>
-      theme.designSystemTheme.colors.border.selection} !important;
+      theme.colors.border.selection} !important;
     border-radius: 4px;
   }
 
@@ -85,12 +84,10 @@ export const GlobalStyle = createGlobalStyle`
     right: initial !important;
     top: initial !important;
     bottom: initial !important;
-    background: ${({ theme }) =>
-      theme.designSystemTheme.colors.bg.primary} !important;
+    background: ${({ theme }) => theme.colors.bg.primary} !important;
     position: absolute !important;
     border-style: solid !important;
-    border-color: ${({ theme }) =>
-      theme.designSystemTheme.colors.border.selection} !important;
+    border-color: ${({ theme }) => theme.colors.border.selection} !important;
   }
 
   .crop-moveable .moveable-control.moveable-nw::before,
@@ -235,8 +232,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .crop-moveable .moveable-direction.moveable-line {
-    background: ${({ theme }) =>
-      theme.designSystemTheme.colors.border.selection} !important;
+    background: ${({ theme }) => theme.colors.border.selection} !important;
     width: 2px;
     height: 2px;
     pointer-events: none;

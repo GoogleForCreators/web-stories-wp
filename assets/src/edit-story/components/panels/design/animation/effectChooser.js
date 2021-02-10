@@ -82,7 +82,7 @@ const ContentWrapper = styled.div`
 const GridItem = styled.button.attrs({ role: 'listitem' })`
   border: none;
   background: ${({ active, theme }) =>
-    active ? theme.colors.accent.primary : '#333'};
+    active ? theme.DEPRECATED_THEME.colors.accent.primary : '#333'};
   border-radius: 4px;
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
@@ -90,7 +90,7 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   font-family: 'Teko', sans-serif;
   font-size: 20px;
   line-height: 1;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   text-transform: uppercase;
   transition: background 0.1s linear;
 
@@ -105,7 +105,7 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   &:hover:not([aria-disabled='true']),
   &:focus:not([aria-disabled='true']) {
     background: ${({ active, theme }) =>
-      active ? theme.colors.accent.primary : '#1C73E8'};
+      active ? theme.DEPRECATED_THEME.colors.accent.primary : '#1C73E8'};
 
     ${BaseAnimationCell} {
       display: inline-block;
@@ -143,9 +143,9 @@ const NoEffect = styled(GridItemFullRow)`
     padding: 8px 15px;
     height: auto;
     text-transform: capitalize;
-    font-family: ${theme.fonts.paragraph.small.family};
-    font-size: ${theme.fonts.paragraph.small.size};
-    line-height: ${theme.fonts.paragraph.small.lineHeight};
+    font-family: ${theme.DEPRECATED_THEME.fonts.paragraph.small.family};
+    font-size: ${theme.DEPRECATED_THEME.fonts.paragraph.small.size};
+    line-height: ${theme.DEPRECATED_THEME.fonts.paragraph.small.lineHeight};
     font-weight: normal;
   `}
 `;
@@ -153,7 +153,7 @@ const GridLabel = styled.div`
   grid-column-start: span 4;
   padding: 15px 15px 0 18px;
   span {
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
     font-weight: 500;
     font-size: 14px;
   }

@@ -54,11 +54,13 @@ const Duration = styled.div`
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.6)};
-  font-family: ${({ theme }) => theme.fonts.duration.family};
-  font-size: ${({ theme }) => theme.fonts.duration.size};
-  line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
+  background: ${({ theme }) => rgba(theme.colors.bg.primary, 0.6)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.size};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.duration.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.duration.letterSpacing};
   padding: 0 6px;
   border-radius: 10px;
 `;

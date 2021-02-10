@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import memoize from '../utils/memoize';
+import memoize from './utils/memoize';
 import getTemplates from './getTemplates';
 
 const memoizedGetTemplates = memoize(getTemplates);

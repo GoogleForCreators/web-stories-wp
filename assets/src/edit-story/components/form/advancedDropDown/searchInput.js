@@ -51,8 +51,8 @@ const inputIconStyles = css`
   > svg {
     height: 100%;
     width: auto;
-    color: ${({ theme }) => theme.colors.fg.white};
-    fill: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 
@@ -80,14 +80,15 @@ const Input = styled.input.attrs({
 })`
   width: 100%;
   padding: 6px 20px 6px 30px;
-  border-radius: ${({ theme }) => theme.border.radius.default};
-  background: ${({ theme }) => theme.colors.input};
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-size: ${({ theme }) => theme.fonts.input.size};
-  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.input.weight};
-  font-family: ${({ theme }) => theme.fonts.input.family};
+  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.input};
+  border: 1px solid
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.24)};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.lineHeight};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.weight};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.family};
 
   &::-ms-clear {
     display: none;
@@ -101,7 +102,8 @@ const Input = styled.input.attrs({
   }
 
   &:focus {
-    border-color: ${({ theme }) => theme.colors.accent.secondary};
+    border-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.accent.secondary};
   }
 `;
 

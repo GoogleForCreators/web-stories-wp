@@ -69,11 +69,10 @@ const Paragraph = styled(Text)`
 `;
 
 export function QuickTip({
-  figureSrc,
   title,
   description,
   isLeftToRightTransition = true,
-  figure,
+  figureSrc,
   ...transitionProps
 }) {
   const { cdnURL } = useConfig();
@@ -84,9 +83,16 @@ export function QuickTip({
     >
       <Panel>
         <Overflow>
-          {Boolean(figure) && (
-            <Video controls={false} autoPlay loop muted preload noControls>
-              <source src={`${cdnURL}${figure}`} type="video/webm" />
+          {Boolean(figureSrc) && (
+            <Video
+              controls={false}
+              autoPlay
+              loop
+              muted
+              noControls
+              preload="true"
+            >
+              <source src={`${cdnURL}${figureSrc}`} type="video/webm" />
             </Video>
           )}
           <Title>{title}</Title>
@@ -112,9 +118,8 @@ export function QuickTip({
 }
 
 QuickTip.propTypes = {
-  figureSrc: PropTypes.string.isRequired,
+  figureSrc: PropTypes.string,
   title: PropTypes.string.isRequired,
   description: PropTypes.arrayOf(PropTypes.string).isRequired,
-  figure: PropTypes.string,
   isLeftToRightTransition: PropTypes.bool,
 };

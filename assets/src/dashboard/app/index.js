@@ -28,6 +28,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   theme as externalDesignSystemTheme,
   lightMode,
+  ThemeGlobals,
 } from '../../design-system';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
@@ -129,6 +130,7 @@ function App({ config }) {
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
+        <ThemeGlobals.OverrideFocusOutline />
         <ConfigProvider config={config}>
           <ToastProvider>
             <ApiProvider>
