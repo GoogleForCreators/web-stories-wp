@@ -35,7 +35,10 @@ async function uploadFile(file, checkUpload = true) {
   const fileExtension = extname(file);
   await page.setDefaultTimeout(10000);
 
-  const testMediaPath = resolve(process.cwd(), 'packages/e2e-tests/src/assets/' + file);
+  const testMediaPath = resolve(
+    process.cwd(),
+    'packages/e2e-tests/src/assets/' + file
+  );
 
   // Copy file to <newname>.ext for upload.
   const newBaseName = uuid();
