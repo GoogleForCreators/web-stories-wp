@@ -21,6 +21,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import {
+  Compass,
+  FloppyDisk,
+  HomeWithHeart,
+} from '../../design-system/icons/dashboard';
 import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
@@ -64,22 +69,31 @@ export const ROUTE_TITLES = {
     'Template Details',
     'web-stories'
   ),
-  [APP_ROUTES.EDITOR_SETTINGS]: __('Editor Settings', 'web-stories'),
+  [APP_ROUTES.EDITOR_SETTINGS]: __('Settings', 'web-stories'),
   [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
   DEFAULT: __('My Stories', 'web-stories'),
 };
 
 export const PRIMARY_PATHS = [
-  { value: APP_ROUTES.MY_STORIES, label: ROUTE_TITLES[APP_ROUTES.MY_STORIES] },
+  {
+    value: APP_ROUTES.MY_STORIES,
+    label: ROUTE_TITLES[APP_ROUTES.MY_STORIES],
+    Icon: HomeWithHeart,
+  },
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
     inProgress: true,
+    Icon: FloppyDisk,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
+    Icon: Compass,
   },
+];
+
+export const SECONDARY_PATHS = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],

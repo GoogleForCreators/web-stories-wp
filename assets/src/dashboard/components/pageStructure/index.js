@@ -25,23 +25,29 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../design-system';
 import { BEZIER } from '../../../animation';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';
+import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../design-system';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
-import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
+import { WebStoriesLogo } from '../../images';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
   Header,
-  NavButton,
   NavLink,
   NavList,
   NavListItem,
+  NewStoryButton,
+  PathName,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -74,8 +80,7 @@ export const LeftRailContainer = styled.nav.attrs({
   top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  border-right: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray50};
+  background: ${({ theme }) => theme.colors.bg.primary};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
@@ -113,7 +118,7 @@ export function LeftRail() {
     [toggleSideBar, leftRailRef, upperContentRef]
   );
 
-  const enabledPaths = useMemo(() => {
+  const enabledPrimaryPaths = useMemo(() => {
     if (enableInProgressViews) {
       return PRIMARY_PATHS;
     }
@@ -152,26 +157,28 @@ export function LeftRail() {
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <Header>
+        <Header as="h1">
           <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
         </Header>
         <Content>
-          <NavButton
-            type={BUTTON_TYPES.CTA}
+          <NewStoryButton
+            type={BUTTON_TYPES.PLAIN}
+            size={BUTTON_SIZES.SMALL}
             href={newStoryURL}
-            isLink
             onClick={onCreateNewStoryClick}
           >
             {__('Create New Story', 'web-stories')}
-          </NavButton>
+          </NewStoryButton>
         </Content>
         <Content>
           <NavList>
-            {enabledPaths.map((path) => (
+            {enabledPrimaryPaths.map(({ Icon, ...path }) => (
               <NavListItem key={path.value}>
                 <NavLink
                   active={path.value === state.currentPath}
                   href={resolveRoute(path.value)}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  isBold
                   aria-label={
                     path.value === state.currentPath
                       ? sprintf(
@@ -187,7 +194,10 @@ export function LeftRail() {
                     onClick: () => onExternalLinkClick(path),
                   })}
                 >
-                  {path.label}
+                  {Icon && <Icon width="22px" />}
+                  <PathName as="span" isBold>
+                    {path.label}
+                  </PathName>
                 </NavLink>
               </NavListItem>
             ))}
@@ -195,7 +205,40 @@ export function LeftRail() {
         </Content>
       </div>
       <Content>
-        <AppInfo>
+        <NavList>
+          {SECONDARY_PATHS.map((path) => (
+            <NavListItem key={path.value}>
+              <NavLink
+                active={path.value === state.currentPath}
+                href={resolveRoute(path.value)}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                aria-label={
+                  path.value === state.currentPath
+                    ? sprintf(
+                        /* translators: %s: the current page, for example "My Stories". */
+                        __('%s (active view)', 'web-stories'),
+                        path.label
+                      )
+                    : path.label
+                }
+                {...(path.isExternal && {
+                  rel: 'noreferrer',
+                  target: '_blank',
+                  onClick: () => onExternalLinkClick(path),
+                })}
+              >
+                <Text
+                  as="span"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  isBold
+                >
+                  {path.label}
+                </Text>
+              </NavLink>
+            </NavListItem>
+          ))}
+        </NavList>
+        <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {sprintf(
             /* translators: %s: Current Year, %v: App Version */
             __('\u00A9 %s Google Version %v', 'web-stories'),

@@ -71,7 +71,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.colors.accent.primary};
+    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.accent.primary};
   `}
 
   svg {
