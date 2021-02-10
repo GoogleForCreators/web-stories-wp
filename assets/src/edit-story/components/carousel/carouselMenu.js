@@ -102,7 +102,7 @@ function CarouselMenu() {
 
       return newIsOpen;
     });
-  }, [isGridViewOpen, setIsGridViewOpen]);
+  }, [setIsGridViewOpen]);
 
   const {
     metaBoxesVisible,
