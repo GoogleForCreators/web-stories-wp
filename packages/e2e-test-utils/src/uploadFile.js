@@ -37,7 +37,7 @@ async function uploadFile(file, checkUpload = true) {
 
   const testMediaPath = resolve(
     process.cwd(),
-    'packages/e2e-tests/src/assets/' + file
+    `packages/e2e-tests/src/assets/${file}`
   );
 
   // Copy file to <newname>.ext for upload.
