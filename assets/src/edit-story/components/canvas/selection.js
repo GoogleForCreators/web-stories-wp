@@ -46,7 +46,7 @@ function Selection() {
   }
 
   // No need for displaying non-functional frame for selected background.
-  const isBackground = selectedElements[0].id === currentPage.elements?.[0].id;
+  const isBackground = selectedElements[0].id === currentPage.elements?.[0]?.id;
   if (isBackground) {
     return null;
   }
