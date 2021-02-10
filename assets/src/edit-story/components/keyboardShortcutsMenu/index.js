@@ -20,6 +20,7 @@
 import { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -52,6 +53,10 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
           // When menu closes, return focus to toggle menu button
           anchorRef.current.focus?.();
         }
+
+        trackEvent('shortcuts_menu_toggled', 'editor', null, null, {
+          status: menuOpen ? 'open' : 'closed',
+        });
 
         return menuOpen;
       });
