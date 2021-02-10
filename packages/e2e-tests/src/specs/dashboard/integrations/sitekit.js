@@ -26,11 +26,11 @@ import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
-    await activatePlugin('e2e-tests-site-kit-mock');
+    await activatePlugin('e2e-tests-tests-site-kit-mock');
   });
 
   afterAll(async () => {
-    await deactivatePlugin('e2e-tests-site-kit-mock');
+    await deactivatePlugin('e2e-tests-tests-site-kit-mock');
   });
 
   it('should be able see Site Kit specific message', async () => {
