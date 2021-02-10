@@ -58,7 +58,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.fg.primary};
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
