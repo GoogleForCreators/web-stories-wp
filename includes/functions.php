@@ -35,7 +35,7 @@ use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
  *
  * @param array $args Arguments for fetching stories.
  *
- * @return string|void
+ * @return void
  */
 function stories( $args = [] ) {
 	$attrs = [];
