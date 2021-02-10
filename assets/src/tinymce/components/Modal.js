@@ -185,6 +185,7 @@ WebStoriesModal.propTypes = {
     columns: PropTypes.number,
     order: PropTypes.string,
     view: PropTypes.string,
+    circle_size: PropTypes.number,
   }),
   prepareShortCode: PropTypes.func,
 };
