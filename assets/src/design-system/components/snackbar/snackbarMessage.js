@@ -33,6 +33,7 @@ import { focusableOutlineCSS } from '../../theme/helpers';
 import {
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
+  DEFAULT_MESSAGE_Z_INDEX,
 } from './constants';
 
 const slideIn = keyframes`
@@ -58,9 +59,13 @@ const MessageContainer = styled.div`
   border: ${({ theme }) =>
     `1px solid ${rgba(theme.colors.standard.white, 0.24)}`};
   border-radius: ${({ theme }) => theme.borders.radius.medium};
+  z-index: ${({ customZIndex }) => customZIndex || DEFAULT_MESSAGE_Z_INDEX};
 
   animation: 0.5s ${slideIn} ease-out;
 `;
+MessageContainer.propTypes = {
+  customZIndex: PropTypes.number,
+};
 
 const Message = styled(Text)`
   max-width: 206px;
@@ -167,6 +172,7 @@ const SnackbarMessage = ({
 
 SnackbarMessage.propTypes = {
   'aria-label': PropTypes.string.isRequired,
+  customZIndex: PropTypes.number,
   message: PropTypes.string.isRequired,
   handleDismiss: PropTypes.func.isRequired,
   actionLabel: PropTypes.string,

@@ -23,13 +23,7 @@ import { useContext } from 'react';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../design-system';
-import {
-  DASHBOARD_LEFT_NAV_WIDTH,
-  DASHBOARD_LEFT_RAIL_VISIBLE_CLASSNAME,
-  DASHBOARD_SNACKBAR_ID,
-  DROPDOWN_TYPES,
-} from './constants';
+import { DROPDOWN_TYPES } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -40,26 +34,6 @@ export const GlobalStyle = createGlobalStyle`
     
   h1, h2, h3, h4, h5, h6, p, a {
     margin: 0;
-  }
-
-  /* The snackbar associated with the dashboard needs to be positioned across the entire available width of the dashboard, relative to the wordpress menu and left nav. */
-  #${DASHBOARD_SNACKBAR_ID} {
-    width: calc(100vw - ${THEME_CONSTANTS.WP_ADMIN.MENU_WIDTH}px);
-    left: 0;
-  }
-
-  .${DASHBOARD_LEFT_RAIL_VISIBLE_CLASSNAME} #${DASHBOARD_SNACKBAR_ID} {
-    left: -${DASHBOARD_LEFT_NAV_WIDTH}px;
-  }
-  
-  body.folded #${DASHBOARD_SNACKBAR_ID} {
-    width: calc(100vw - ${THEME_CONSTANTS.WP_ADMIN.MENU_FOLDED_WIDTH}px);
-  }
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
-    .${DASHBOARD_LEFT_RAIL_VISIBLE_CLASSNAME} #${DASHBOARD_SNACKBAR_ID} {
-      left: 0;
-    }
   }
 
 `;

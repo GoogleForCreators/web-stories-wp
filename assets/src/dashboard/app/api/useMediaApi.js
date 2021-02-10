@@ -96,12 +96,10 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_FAILURE,
           payload: {
-            message: {
-              body:
-                ERRORS.UPLOAD_PUBLISHER_LOGO[
-                  files.length > 1 ? 'MESSAGE_PLURAL' : 'MESSAGE'
-                ],
-            },
+            message:
+              ERRORS.UPLOAD_PUBLISHER_LOGO[
+                files.length > 1 ? 'MESSAGE_PLURAL' : 'MESSAGE'
+              ],
           },
         });
       }

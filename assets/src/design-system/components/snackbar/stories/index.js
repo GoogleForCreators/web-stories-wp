@@ -67,6 +67,7 @@ export const LightThemeDefault = () => (
         'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
+      customZIndex={number('customZIndex')}
       handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
@@ -83,6 +84,7 @@ export const Action = () => (
         'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
+      customZIndex={number('customZIndex')}
       handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
