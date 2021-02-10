@@ -98,6 +98,7 @@ jobs:
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
           DOCKER_BUILDKIT: true
+          COMPOSE_DOCKER_CLI_BUILD: true
           WP_VERSION: ${{ matrix.wp }}
 
       - name: Run E2E tests with percy
