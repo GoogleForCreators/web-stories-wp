@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef } from 'react';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -56,7 +57,10 @@ export default function useMediaOptimization() {
 
   const _toggleWebStoriesMediaOptimization = useCallback(() => {
     toggleWebStoriesMediaOptimization();
-  }, [toggleWebStoriesMediaOptimization]);
+    trackEvent('video_optimization_optin', 'dashboard', null, null, {
+      status: mediaOptimization ? 'off' : 'on',
+    });
+  }, [mediaOptimization, toggleWebStoriesMediaOptimization]);
 
   return {
     mediaOptimization,
