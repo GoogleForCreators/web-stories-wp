@@ -70,3 +70,27 @@ export const AllIcons = () => {
     </>
   );
 };
+
+export const ColorfulIcons = () => {
+  const colors = ['blue', 'hotpink', 'rebeccapurple', 'lightgreen', 'red'];
+  return (
+    <>
+      <Text>{`Total Icons: ${Object.values(Icons).length}`}</Text>
+
+      <IconsList>
+        {Object.keys(Icons).map((iconName, index) => {
+          // eslint-disable-next-line import/namespace
+          const Icon = Icons[iconName];
+          return (
+            <li key={iconName}>
+              <Icon style={{ color: colors[index % colors.length] }} />
+              <Text as="span" isBold>
+                {iconName}
+              </Text>
+            </li>
+          );
+        })}
+      </IconsList>
+    </>
+  );
+};
