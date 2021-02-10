@@ -22,37 +22,81 @@
  * Internal dependencies
  */
 import ContextMenu from '..';
-import { linkOrButtonValidator } from '../menu-item';
+import { MenuItem, linkOrButtonValidator } from '../menu-item';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+import { noop } from '../../../utils';
 
-describe('Input', () => {
-  it('should render the input', () => {
-    const { getByPlaceholderText } = renderWithProviders(
-      <ContextMenu aria-label="test" placeholder="my placeholder" />
+const items = [
+  { label: 'this is a button', onClick: noop },
+  { label: 'this is a link', href: 'my-link' },
+  { label: 'this is neither a button nor a link' },
+];
+
+describe('ContextMenu', () => {
+  it('contextMenu should be invisible', () => {
+    const { queryByRole } = renderWithProviders(<ContextMenu items={items} />);
+
+    expect(queryByRole('button')).not.toBeInTheDocument();
+    expect(queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('contextMenu should be visible', () => {
+    const { getByRole } = renderWithProviders(
+      <ContextMenu items={items} isOpen />
     );
 
-    expect(getByPlaceholderText('my placeholder')).toBeInTheDocument();
+    expect(getByRole('button')).toBeInTheDocument();
+    expect(getByRole('link')).toBeInTheDocument();
   });
 });
 
-// describe('linkOrButtonValidator', () => {
-//   it('should return null if `label` or `aria-label` are passed in as a prop', () => {
-//     expect(linkOrButtonValidator({ label: 'test' }, '', 'Test')).toBeNull();
-//     expect(
-//       linkOrButtonValidator({ 'aria-label': 'test' }, '', 'Test')
-//     ).toBeNull();
-//     expect(
-//       linkOrButtonValidator({ label: 'test', 'aria-label': 'test' }, '', 'Test')
-//     ).toBeNull();
-//   });
+describe('MenuItem', () => {
+  it('should render a button if `onClick` is passed as a prop', () => {
+    const { queryByRole, getByText } = renderWithProviders(
+      <MenuItem label="my label" onClick={noop} />
+    );
 
-//   it.each`
-//     propName
-//     ${'label'}
-//     ${'aria-label'}
-//   `('should throw an error if `label` is not a string type', ({ propName }) => {
-//     expect(linkOrButtonValidator({ [propName]: 2 }, '', 'Test')).toStrictEqual(
-//       expect.any(Error)
-//     );
-//   });
-// });
+    expect(getByText('my label')).toBeInTheDocument();
+    expect(queryByRole('button')).toBeInTheDocument();
+    expect(queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('should render a link if `href` is passed as a prop', () => {
+    const { queryByRole, getByText } = renderWithProviders(
+      <MenuItem label="my label" href="test" />
+    );
+
+    expect(getByText('my label')).toBeInTheDocument();
+    expect(queryByRole('button')).not.toBeInTheDocument();
+    expect(queryByRole('link')).toBeInTheDocument();
+  });
+
+  it('should render a div if neither `onClick` nor `href` are passed as props', () => {
+    const { queryByRole, getByText } = renderWithProviders(
+      <MenuItem label="my label" />
+    );
+
+    expect(getByText('my label')).toBeInTheDocument();
+    expect(queryByRole('button')).not.toBeInTheDocument();
+    expect(queryByRole('link')).not.toBeInTheDocument();
+  });
+});
+
+describe('linkOrButtonValidator', () => {
+  it('should return null only `onClick` or `href` included', () => {
+    expect(linkOrButtonValidator({ onClick: noop }, '', 'Test')).toBeNull();
+    expect(linkOrButtonValidator({ href: 'test' }, '', 'Test')).toBeNull();
+  });
+
+  it('should throw an error if `onClick` and `href` both included', () => {
+    expect(
+      linkOrButtonValidator({ onClick: noop, href: 'test' }, '', 'Test')
+    ).toStrictEqual(expect.any(Error));
+  });
+
+  it('should throw an error if `href` and `disabled` are both included', () => {
+    expect(
+      linkOrButtonValidator({ disabled: true, href: 'test' }, '', 'Test')
+    ).toStrictEqual(expect.any(Error));
+  });
+});

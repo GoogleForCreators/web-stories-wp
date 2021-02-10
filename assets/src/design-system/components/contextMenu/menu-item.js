@@ -67,11 +67,11 @@ export const MenuItem = ({ disabled, href, label, onClick, shortcut }) => {
 };
 
 /**
- * Custom propTypes validator. Used to check:
- * 1. `onClick` and `href` cannot both be passed to a MenuItem
- * 2. A link cannot be disabled
+ * Custom propTypes validator. Used to check that:
+ * 1. Only one of [`onClick`, `href`] can be passed to a `MenuItem`
+ * 2. Only one of ['href', 'disabled'] can be passed to a `MenuItem`
  *
- * This also checks that they are of the correct type.
+ * This also checks that [`onClick`, `href`] are of the correct type.
  *
  * @param {Object} props the props supplied to the component.
  * @param {string} _ the name of the prop.

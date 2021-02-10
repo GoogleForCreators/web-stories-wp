@@ -93,8 +93,8 @@ const MenuContainer = styled.ul(
       }
 
       :hover a,
-      :hover button:not(:disabled),
-      button:active {
+      button:active,
+      :hover button:not(:disabled) {
         background-color: ${theme.colors.bg.secondary};
       }
     }
@@ -107,20 +107,18 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
   return (
     <Popover isOpen={isOpen} {...props}>
       <MenuContainer>
-        {items.map(({ separator, ...itemProps }, index) => {
-          return (
-            <li
-              key={ids[index]}
-              className={
-                (separator === 'top' && 'separatorTop') ||
-                (separator === 'bottom' && 'separatorBottom') ||
-                ''
-              }
-            >
-              <MenuItem {...itemProps} />
-            </li>
-          );
-        })}
+        {items.map(({ separator, ...itemProps }, index) => (
+          <li
+            key={ids[index]}
+            className={
+              (separator === 'top' && 'separatorTop') ||
+              (separator === 'bottom' && 'separatorBottom') ||
+              ''
+            }
+          >
+            <MenuItem {...itemProps} />
+          </li>
+        ))}
       </MenuContainer>
     </Popover>
   );
