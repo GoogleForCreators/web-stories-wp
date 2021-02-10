@@ -31,8 +31,8 @@ import { PanelTitle } from '../../panel';
 const buttonCSS = css`
   border: none;
   background: transparent;
-  width: 30px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
   cursor: pointer;
   padding: 0;
@@ -40,8 +40,8 @@ const buttonCSS = css`
   align-items: center;
   justify-content: center;
   svg {
-    width: 15px;
-    height: 15px;
+    width: 32px;
+    height: 32px;
   }
 `;
 
