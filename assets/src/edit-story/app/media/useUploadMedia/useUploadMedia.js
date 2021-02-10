@@ -19,6 +19,7 @@
  */
 import { useCallback, useRef, useState } from 'react';
 import { trackError } from '@web-stories-wp/tracking';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -82,7 +83,12 @@ function useUploadMedia({ media, setMedia }) {
         setMedia({ media });
         setIsUploading(false);
         showSnackbar({
-          message: e.message,
+          message:
+            e.message ||
+            __(
+              'File could not be uploaded. Please try a different file.',
+              'web-stories'
+            ),
         });
         return;
       }
