@@ -105,10 +105,12 @@ const initial = {
       });
       return { isOpen: !isOpen };
     },
-    close: () => () => {
-      trackEvent('help_center_toggled', 'editor', null, null, {
-        status: 'closed',
-      });
+    close: () => ({ isOpen }) => {
+      if (isOpen) {
+        trackEvent('help_center_toggled', 'editor', null, null, {
+          status: 'closed',
+        });
+      }
       return { isOpen: false };
     },
     hydrateReadTipsSuccess: (payload) => (state) => ({
