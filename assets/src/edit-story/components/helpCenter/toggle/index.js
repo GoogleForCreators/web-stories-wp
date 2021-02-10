@@ -73,7 +73,7 @@ const Icon = styled.div`
   height: auto;
   width: 32px;
   transform-origin: 50% 50%;
-  transform: rotate(${({ isOpen }) => (isOpen ? 360 : 180)}deg);
+  transform: rotate(${({ isOpen }) => (isOpen ? 180 : 360)}deg);
   transition: transform 300ms ${BEZIER.default};
 `;
 
