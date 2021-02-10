@@ -33,7 +33,7 @@ import { POPUP_ID } from './constants';
 import { Toggle } from './toggle';
 import { useHelpCenter } from './useHelpCenter';
 import { Popup } from './popup';
-import { forceFocusCompanion } from './utils';
+import { forceFocusCompanion, getUnreadTips } from './utils';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -94,12 +94,7 @@ export const HelpCenter = () => {
           <Toggle
             isOpen={state.isOpen}
             onClick={actions.toggle}
-            notificationCount={
-              // navigation includes 'done' which does not get marked read
-              state.navigationFlow.length -
-              Object.keys(state.readTips).length -
-              1
-            }
+            notificationCount={getUnreadTips(state).length}
             popupId={POPUP_ID}
           />
         </Wrapper>

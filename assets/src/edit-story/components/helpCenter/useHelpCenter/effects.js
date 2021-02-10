@@ -16,14 +16,17 @@
 /**
  * Internal dependencies
  */
-import { TIPS } from '../constants';
-
-const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
-  keyMap[key] = true;
-  return keyMap;
-}, {});
+import {
+  DONE_TIP_ENTRY,
+  BASE_NAVIGATION_FLOW,
+  TIP_KEYS_MAP,
+} from '../constants';
 
 const isMenuIndex = (previous, next) => next.navigationIndex < 0;
+
+const isComingFromMenu = (previous, next) =>
+  previous.navigationIndex < 0 && next.navigationIndex >= 0;
+
 const navigationFlowTips = (previous, next) =>
   (next.navigationFlow || []).filter((key) => TIP_KEYS_MAP[key]);
 
@@ -62,6 +65,24 @@ export const deriveReadTip = (previous, next) => {
     : next.readTips;
 
   return { readTips };
+};
+
+export const createDynamicNavigationFlow = (previous, next) => {
+  if (!isComingFromMenu(previous, next)) {
+    return {};
+  }
+  const appendedTips = BASE_NAVIGATION_FLOW
+    // Tips before current index
+    .slice(0, next.navigationIndex)
+    // Filter out read tips
+    .filter((tip) => !next.readTips[tip]);
+  return {
+    navigationFlow: [
+      ...BASE_NAVIGATION_FLOW,
+      ...appendedTips,
+      DONE_TIP_ENTRY[0],
+    ],
+  };
 };
 
 /**

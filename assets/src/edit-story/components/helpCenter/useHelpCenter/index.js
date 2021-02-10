@@ -22,8 +22,9 @@ import { useEffect, useMemo, useReducer, useState } from 'react';
  */
 import { clamp } from '../../../../animation';
 import { useCurrentUser } from '../../../app';
-import { NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
+import { BASE_NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
 import {
+  createDynamicNavigationFlow,
   createEffectRun,
   deriveBottomNavigation,
   deriveDisabledButtons,
@@ -46,6 +47,7 @@ export const deriveState = createEffectRun(
   // one after the other.
   [
     resetNavigationIndexOnOpen,
+    createDynamicNavigationFlow,
     deriveBottomNavigation,
     deriveTransitionDirection,
     deriveDisabledButtons,
@@ -66,7 +68,7 @@ const initial = {
     isOpen: false,
     navigationIndex: -1,
     // @TODO make this dynamic based off of unread tips.
-    navigationFlow: NAVIGATION_FLOW,
+    navigationFlow: BASE_NAVIGATION_FLOW,
     isLeftToRightTransition: true,
     hasBottomNavigation: false,
     isPrevDisabled: true,
@@ -177,7 +179,8 @@ export function useHelpCenter() {
             web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
           },
         }).catch(actions.persistingReadTipsError),
-      TRANSITION_DURATION
+      // duration of menu transition which takes the longest
+      TRANSITION_DURATION * 1.2
     );
     return () => clearTimeout(id);
   }, [actions, updateCurrentUser, persistenceKey]);
