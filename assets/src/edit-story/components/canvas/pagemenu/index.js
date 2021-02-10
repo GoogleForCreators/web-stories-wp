@@ -44,7 +44,7 @@ const DIVIDER_HEIGHT = BUTTON_PIXELS.SMALL_ICON;
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
-  height: ${20 + BUTTON_HEIGHT}px;
+  height: ${BUTTON_HEIGHT}px;
 `;
 
 const Box = styled.div`

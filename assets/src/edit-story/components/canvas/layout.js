@@ -46,11 +46,12 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const MENU_HEIGHT = 52;
+const MENU_HEIGHT = 32;
+const MENU_GAP = 16;
 const CAROUSEL_HEIGHT = 104;
 const PAGE_NAV_WIDTH = BUTTON_PIXELS.LARGE_BUTTON;
+const PAGE_NAV_GAP = 24;
 
-// @todo: the menu height is not responsive
 const Layer = styled.section`
   ${pointerEventsCss}
 
@@ -63,17 +64,37 @@ const Layer = styled.section`
   ${({ zIndex }) => (typeof zIndex === 'number' ? `z-index: ${zIndex};` : '')}
 
   display: grid;
+  /*
+    . = empty space
+    h = header
+    b = back navigation
+    f = forward navigation
+    p = canvas page
+    m = page action menu
+    c = thumbnail carousel
+
+    Also note that we need to specify all the widths and heights
+    even though some of the elements could just use the size that
+    the element takes up. This is because we reuse this grid in 3
+    different layers on top of each other and some elements are
+    missing in some layers, but we still need them to align perfectly.
+  */
   grid:
-    'head      head      head      head      head    ' ${HEADER_HEIGHT}px
-    '.         .         .         .         .       ' minmax(16px, 1fr)
-    '.         prev      page      next      .       ' var(
-      --fullbleed-height-px
-    )
-    '.         .         menu      .         .       ' ${MENU_HEIGHT}px
-    '.         .         .         .         .       ' 1fr
-    'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
-    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
-    ${PAGE_NAV_WIDTH}px 1fr;
+    'h h h h h h h' ${HEADER_HEIGHT}px
+    '. . . . . . .' minmax(16px, 1fr)
+    '. b . p . f .' var(--fullbleed-height-px)
+    '. . . . . . .' ${MENU_GAP}px
+    '. . . m . . .' ${MENU_HEIGHT}px
+    '. . . . . . .' 1fr
+    'c c c c c c c' ${CAROUSEL_HEIGHT}px
+    /
+    1fr
+    ${PAGE_NAV_WIDTH}px
+    ${PAGE_NAV_GAP}px
+    var(--fullbleed-width-px)
+    ${PAGE_NAV_GAP}px
+    ${PAGE_NAV_WIDTH}px
+    1fr;
   height: 100%;
 `;
 
@@ -81,8 +102,7 @@ const Area = styled.div`
   ${pointerEventsCss}
 
   grid-area: ${({ area }) => area};
-  overflow: ${({ overflowAllowed }) =>
-    overflowAllowed ? 'visible' : 'hidden'};
+  overflow: ${({ canOverflow }) => (canOverflow ? 'visible' : 'hidden')};
   position: relative;
   width: 100%;
   height: 100%;
@@ -92,8 +112,8 @@ const Area = styled.div`
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
 const PageAreaFullbleedContainer = styled(Area).attrs({
-  area: 'page',
-  overflowAllowed: true,
+  area: 'p',
+  canOverflow: true,
 })`
   display: flex;
   justify-content: center;
@@ -121,23 +141,29 @@ const PageAreaSafeZone = styled.div`
   margin: auto 0;
 `;
 
-const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
+const HeadArea = styled(Area).attrs({ area: 'h' })``;
 
-const MenuArea = styled(Area).attrs({ area: 'menu', overflowAllowed: true })``;
+const MenuArea = styled(Area).attrs({ area: 'm', canOverflow: true })``;
 
-const NavArea = styled(Area).attrs({ overflowAllowed: false })`
+const NavArea = styled(Area)`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const NavPrevArea = styled(NavArea).attrs({ area: 'prev' })``;
+const NavPrevArea = styled(NavArea).attrs({
+  area: 'b',
+  canOverflow: true,
+})``;
 
-const NavNextArea = styled(NavArea).attrs({ area: 'next' })``;
+const NavNextArea = styled(NavArea).attrs({
+  area: 'f',
+  canOverflow: true,
+})``;
 
 const CarouselArea = styled(Area).attrs({
-  area: 'carousel',
-  overflowAllowed: true,
+  area: 'c',
+  canOverflow: true,
 })``;
 
 /**
