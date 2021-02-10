@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
-import { createNewStory } from '../../utils';
+import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor with disabled JavaScript', () => {
   it('should display error message', async () => {

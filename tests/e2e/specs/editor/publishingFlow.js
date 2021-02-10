@@ -24,14 +24,14 @@ import {
 } from '@wordpress/e2e-test-utils';
 
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   createNewStory,
   addRequestInterception,
   publishPost,
   insertStoryTitle,
-} from '../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Publishing Flow', () => {
   let stopRequestInterception;

@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Types;
 use WP_Post_Type;
 use WP_Screen;
 
@@ -38,6 +39,7 @@ use WP_Screen;
  */
 class Dashboard {
 	use Assets;
+	use Types;
 
 	/**
 	 * Script handle.
@@ -347,16 +349,17 @@ class Dashboard {
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
-				'isRTL'              => is_rtl(),
-				'locale'             => ( new Locale() )->get_locale_settings(),
-				'newStoryURL'        => $new_story_url,
-				'editStoryURL'       => $edit_story_url,
-				'wpListURL'          => $classic_wp_list_url,
-				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
-				'version'            => WEBSTORIES_VERSION,
-				'encodeMarkup'       => $this->decoder->supports_decoding(),
-				'api'                => [
+				'isRTL'                 => is_rtl(),
+				'locale'                => ( new Locale() )->get_locale_settings(),
+				'newStoryURL'           => $new_story_url,
+				'editStoryURL'          => $edit_story_url,
+				'wpListURL'             => $classic_wp_list_url,
+				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
+				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
+				'version'               => WEBSTORIES_VERSION,
+				'encodeMarkup'          => $this->decoder->supports_decoding(),
+				'api'                   => [
 					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
 					'media'       => '/web-stories/v1/media/',
 					'currentUser' => '/web-stories/v1/users/me/',
@@ -364,14 +367,14 @@ class Dashboard {
 					'templates'   => '/web-stories/v1/web-story-template/',
 					'settings'    => '/web-stories/v1/settings/',
 				],
-				'maxUpload'          => $max_upload_size,
-				'maxUploadFormatted' => size_format( $max_upload_size ),
-				'capabilities'       => [
+				'maxUpload'             => $max_upload_size,
+				'maxUploadFormatted'    => size_format( $max_upload_size ),
+				'capabilities'          => [
 					'canManageSettings'   => current_user_can( 'manage_options' ),
 					'canUploadFiles'      => current_user_can( 'upload_files' ),
 					'canReadPrivatePosts' => $can_read_private_posts,
 				],
-				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
+				'siteKitStatus'         => $this->site_kit->get_plugin_status(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
