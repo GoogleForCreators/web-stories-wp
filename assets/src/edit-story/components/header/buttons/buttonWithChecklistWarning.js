@@ -30,7 +30,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import WithTooltip from '../../tooltip';
 import { usePrepublishChecklist } from '../../inspector/prepublish';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
 import {
@@ -39,6 +38,8 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  TOOLTIP_PLACEMENT,
+  Tooltip,
 } from '../../../../design-system';
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
@@ -63,7 +64,17 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
     </Button>
   );
 
-  return tooltip ? <WithTooltip title={tooltip}>{button}</WithTooltip> : button;
+  return tooltip ? (
+    <Tooltip
+      title={tooltip}
+      placement={TOOLTIP_PLACEMENT.BOTTOM}
+      hasTail={true}
+    >
+      {button}
+    </Tooltip>
+  ) : (
+    button
+  );
 }
 
 ButtonWithChecklistWarning.propTypes = {

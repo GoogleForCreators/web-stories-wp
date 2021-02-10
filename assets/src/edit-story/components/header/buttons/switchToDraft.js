@@ -30,8 +30,9 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  TOOLTIP_PLACEMENT,
+  Tooltip,
 } from '../../../../design-system';
-import WithTooltip from '../../tooltip';
 
 function SwitchToDraft() {
   const { isSaving, saveStory } = useStory(
@@ -52,7 +53,11 @@ function SwitchToDraft() {
 
   const label = __('Switch to Draft', 'web-stories');
   return (
-    <WithTooltip title={label}>
+    <Tooltip
+      title={label}
+      placement={TOOLTIP_PLACEMENT.BOTTOM}
+      hasTail={true}
+    >
       <Button
         variant={BUTTON_VARIANTS.CIRCLE}
         type={BUTTON_TYPES.TERTIARY}
@@ -63,7 +68,7 @@ function SwitchToDraft() {
       >
         <Icons.SwitchToDraft />
       </Button>
-    </WithTooltip>
+    </Tooltip>
   );
 }
 

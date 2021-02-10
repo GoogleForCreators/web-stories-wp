@@ -30,10 +30,11 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
   useGlobalKeyDownEffect,
 } from '../../../../design-system';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
-import WithTooltip from '../../tooltip';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -79,7 +80,11 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <WithTooltip title={text}>
+        <Tooltip
+          title={text}
+          placement={TOOLTIP_PLACEMENT.BOTTOM}
+          hasTail={true}
+        >
           <Button
             variant={BUTTON_VARIANTS.CIRCLE}
             type={BUTTON_TYPES.TERTIARY}
@@ -92,7 +97,7 @@ function Update() {
           >
             <Icons.Save />
           </Button>
-        </WithTooltip>
+        </Tooltip>
       );
   }
 

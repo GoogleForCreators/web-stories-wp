@@ -32,8 +32,9 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
 } from '../../../../design-system';
-import WithTooltip from '../../tooltip';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -128,7 +129,11 @@ function Preview() {
   const label = __('Preview', 'web-stories');
   return (
     <>
-      <WithTooltip title={label}>
+      <Tooltip
+        title={label}
+        placement={TOOLTIP_PLACEMENT.BOTTOM}
+        hasTail={true}
+      >
         <Button
           variant={BUTTON_VARIANTS.CIRCLE}
           type={BUTTON_TYPES.TERTIARY}
@@ -139,7 +144,7 @@ function Preview() {
         >
           <Icons.Preview />
         </Button>
-      </WithTooltip>
+      </Tooltip>
       <PreviewErrorDialog
         open={Boolean(previewLinkToOpenViaDialog)}
         onClose={onDialogClose}
