@@ -271,6 +271,17 @@ function APIProvider({ children }) {
     });
   }, [currentUser]);
 
+  const updateCurrentUser = useCallback(
+    (data) => {
+      return apiFetch({
+        path: currentUser,
+        method: 'POST',
+        data,
+      });
+    },
+    [currentUser]
+  );
+
   // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
   const saveMetaBoxes = useCallback(
     (story, formData) => {
@@ -332,6 +343,7 @@ function APIProvider({ children }) {
       getStatusCheck,
       getPageLayouts,
       getCurrentUser,
+      updateCurrentUser,
     },
   };
 

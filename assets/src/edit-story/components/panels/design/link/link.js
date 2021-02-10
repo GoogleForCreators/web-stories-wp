@@ -38,11 +38,12 @@ import { SimplePanel } from '../../panel';
 import { ExpandedTextInput, useCommonObjectValue } from '../../shared';
 
 const IconText = styled.span`
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
 `;
 
 const IconInfo = styled.div`
@@ -65,7 +66,7 @@ const CloseIcon = styled(Close)`
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {

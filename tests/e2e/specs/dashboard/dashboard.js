@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * Internal dependencies
- */
-import { activateRTL, deactivateRTL, visitDashboard } from '../../utils';
+import {
+  activateRTL,
+  deactivateRTL,
+  visitDashboard,
+} from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 

@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
 
-import { createNewStory } from '../../utils';
+/**
+ * External dependencies
+ */
+import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 // todo enable tests when feature flag is on
 // eslint-disable-next-line jest/no-disabled-tests

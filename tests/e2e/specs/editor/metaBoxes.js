@@ -18,16 +18,12 @@
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
+import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
-
-/**
- * Internal dependencies
- */
-import { createNewStory } from '../../utils';
 
 describe('Custom Meta Boxes', () => {
   describe('Unavailable', () => {
