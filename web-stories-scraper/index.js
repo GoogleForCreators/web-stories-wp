@@ -245,30 +245,34 @@ class WebStoriesScraperPlugin {
           )
           // Fix schema data.
           .replace(
-            /<script type="application\/ld\+json">(.*)<\/script>/gm,
+            /<script type="application\/ld\+json">([\s\S]*?)<\/script>/gm,
             (match, p1) => {
-              const metadata = JSON.parse(p1);
-              if (metadata.image) {
-                metadata.image =
-                  `${WEBSITE_LOCATION}${storySlug}/` +
-                  fileContents.match(/poster-portrait-src="([^"]+)"/)[1];
+              try {
+                const metadata = JSON.parse(p1);
+                if (metadata.image) {
+                  metadata.image =
+                    `${WEBSITE_LOCATION}${storySlug}/` +
+                    fileContents.match(/poster-portrait-src="([^"]+)"/)[1];
+                }
+                if (metadata?.publisher?.name) {
+                  metadata.publisher.name = PUBLISHER_NAME;
+                }
+                if (metadata?.publisher?.logo) {
+                  metadata.publisher.logo.url =
+                    `${WEBSITE_LOCATION}${storySlug}/` +
+                    fileContents.match(/publisher-logo-src="([^"]+)"/)[1];
+                }
+                if (metadata.author) {
+                  metadata.author['@type'] = 'Organization';
+                  metadata.author['name'] = PUBLISHER_NAME;
+                }
+                metadata.mainEntityOfPage = `${WEBSITE_LOCATION}${storySlug}`;
+                return `<script type="application/ld+json">${JSON.stringify(
+                  metadata
+                )}</script>`;
+              } catch (err) {
+                console.log('Could not extract & modify schema.org metadata.');
               }
-              if (metadata.publisher.name) {
-                metadata.publisher.name = PUBLISHER_NAME;
-              }
-              if (metadata.publisher.logo) {
-                metadata.publisher.logo.url =
-                  `${WEBSITE_LOCATION}${storySlug}/` +
-                  fileContents.match(/publisher-logo-src="([^"]+)"/)[1];
-              }
-              if (metadata.author) {
-                metadata.author['@type'] = 'Organization';
-                metadata.author['name'] = PUBLISHER_NAME;
-              }
-              metadata.mainEntityOfPage = `${WEBSITE_LOCATION}${storySlug}`;
-              return `<script type="application/ld+json">${JSON.stringify(
-                metadata
-              )}</script>`;
             }
           )
           // Workaround for https://github.com/website-scraper/node-website-scraper/issues/355.
