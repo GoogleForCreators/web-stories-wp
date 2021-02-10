@@ -44,9 +44,10 @@ function loadTrackingScript(sendPageView = true) {
 
     // This way we'll get "Editor" and "Dashboard" instead of "Edit Story ‹ Web Stories Dev — WordPress".
     const pageTitle = config.appName;
+
     // 'Plugin Activation' -> '/plugin-activation'
     // This way we get nicer looking paths like '/editor' instead of 'wp-admin/post-new.php?post_type=web-story'.
-    const pagePath = '/'.config.appName.replace(/ /g, '-').toLowerCase();
+    const pagePath = '/' + config.appName.replace(/ /g, '-').toLowerCase();
 
     gtag('js', new Date());
     // TODO: provide custom pageview-related parameters?
