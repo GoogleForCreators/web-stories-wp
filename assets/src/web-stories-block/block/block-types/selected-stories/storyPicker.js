@@ -50,6 +50,7 @@ const ModalContent = styled.div`
   height: calc(100% - 93px);
   margin: -24px -24px 0;
   padding: 0;
+  overflow-y: scroll;
 `;
 
 const ModalContentInner = styled.div`

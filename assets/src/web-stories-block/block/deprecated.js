@@ -113,11 +113,20 @@ const v2 = {
     return {
       ...attrs,
       blockType: 'url',
+      stories: [],
+      viewType: '',
+      numOfStories: 5,
+      numOfColumns: 2,
+      sizeOfCircles: 96,
+      orderByValue: '',
+      viewAllLinkLabel: '',
+      authors: [],
+      fieldState: {},
     };
   },
   save: saveV2,
-  isEligible({ url }) {
-    return Boolean(url.length);
+  isEligible({ url, blockType }) {
+    return Boolean(!blockType && url && url.trim().length);
   },
 };
 
