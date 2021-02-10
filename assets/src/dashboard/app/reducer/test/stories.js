@@ -89,9 +89,7 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.TRASH_STORY_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.DELETE_STORY.MESSAGE,
-          },
+          message: ERRORS.DELETE_STORY.MESSAGE,
           code: 'my_error_code',
         },
       }
@@ -100,9 +98,7 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          body: ERRORS.DELETE_STORY.MESSAGE,
-        },
+        message: ERRORS.DELETE_STORY.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -159,9 +155,7 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.DUPLICATE_STORY_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.DUPLICATE_STORY.MESSAGE,
-          },
+          message: ERRORS.DUPLICATE_STORY.MESSAGE,
           code: 'my_error_code',
         },
       }
@@ -170,9 +164,7 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          body: ERRORS.DUPLICATE_STORY.MESSAGE,
-        },
+        message: ERRORS.DUPLICATE_STORY.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -375,9 +367,7 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.FETCH_STORIES_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.LOAD_STORIES.MESSAGE,
-          },
+          message: ERRORS.LOAD_STORIES.MESSAGE,
           code: 'my_error_code',
         },
       }
@@ -386,9 +376,7 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          body: ERRORS.LOAD_STORIES.MESSAGE,
-        },
+        message: ERRORS.LOAD_STORIES.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -401,9 +389,7 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.CREATE_STORY_FROM_TEMPLATE.MESSAGE,
-          },
+          message: ERRORS.CREATE_STORY_FROM_TEMPLATE.MESSAGE,
           code: 'my_error_code',
         },
       }
@@ -412,9 +398,7 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          body: ERRORS.CREATE_STORY_FROM_TEMPLATE.MESSAGE,
-        },
+        message: ERRORS.CREATE_STORY_FROM_TEMPLATE.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -455,9 +439,7 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.UPDATE_STORY_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.UPDATE_STORY.MESSAGE,
-          },
+          message: ERRORS.UPDATE_STORY.MESSAGE,
           code: 'my_error_code',
         },
       }
@@ -466,9 +448,7 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          body: ERRORS.UPDATE_STORY.MESSAGE,
-        },
+        message: ERRORS.UPDATE_STORY.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -512,9 +492,7 @@ describe('storyReducer', () => {
       {
         type: ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.RENDER_PREVIEW.MESSAGE,
-          },
+          message: ERRORS.RENDER_PREVIEW.MESSAGE,
           code: 'my_error_code',
         },
       }
@@ -523,9 +501,7 @@ describe('storyReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          body: ERRORS.RENDER_PREVIEW.MESSAGE,
-        },
+        message: ERRORS.RENDER_PREVIEW.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },

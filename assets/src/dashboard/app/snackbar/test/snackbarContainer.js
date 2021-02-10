@@ -26,10 +26,7 @@ import { renderWithProviders } from '../../../testUtils/';
 import SnackbarContainer from '../snackbarContainer';
 
 const testMessage = {
-  message: {
-    body: 'i am an error',
-    title: 'i am some extra context for a label',
-  },
+  message: 'i am an error',
   id: 1997687,
 };
 
@@ -48,19 +45,16 @@ describe('app/snackbar/snackbarContainer', () => {
     expect(alert).toBeInTheDocument();
   });
 
-  it('should render message.body visibly and message.title as aria label', () => {
-    const { getByLabelText, getByText } = renderWithProviders(
+  it('should render message in snackbar', () => {
+    const { getByText } = renderWithProviders(
       <SnackbarContainer
         activeSnackbarMessage={testMessage}
         handleDismissMessage={mockRemoveSnackbarMessageClick}
       />
     );
 
-    const displayText = getByText(testMessage.message.body);
+    const displayText = getByText(testMessage.message);
     expect(displayText).toBeInTheDocument();
-
-    const labelText = getByLabelText(testMessage.message.title);
-    expect(labelText).toBeInTheDocument();
   });
 
   it('should dismiss alert after 10000ms (default)', async () => {

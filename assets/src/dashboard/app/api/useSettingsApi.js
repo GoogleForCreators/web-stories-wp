@@ -40,9 +40,7 @@ export default function useSettingsApi(
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.LOAD_SETTINGS.DEFAULT_MESSAGE,
-          },
+          message: ERRORS.LOAD_SETTINGS.DEFAULT_MESSAGE,
         },
       });
     }
@@ -69,9 +67,7 @@ export default function useSettingsApi(
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
-          message: {
-            body: ERRORS.LOAD_SETTINGS.MESSAGE,
-          },
+          message: ERRORS.LOAD_SETTINGS.MESSAGE,
         },
       });
     }
@@ -149,9 +145,7 @@ export default function useSettingsApi(
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
-            },
+            message: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
           },
         });
       }

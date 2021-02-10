@@ -55,18 +55,14 @@ describe('settingsReducer', () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.FETCH_SETTINGS_FAILURE,
       payload: {
-        message: {
-          body: ERRORS.LOAD_SETTINGS.MESSAGE,
-        },
+        message: ERRORS.LOAD_SETTINGS.MESSAGE,
         code: 'my_error_code',
       },
     });
     expect(result).toMatchObject({
       googleAnalyticsId: null,
       error: {
-        message: {
-          body: ERRORS.LOAD_SETTINGS.MESSAGE,
-        },
+        message: ERRORS.LOAD_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -77,18 +73,14 @@ describe('settingsReducer', () => {
     const result = settingsReducer(initialState, {
       type: ACTION_TYPES.UPDATE_SETTINGS_FAILURE,
       payload: {
-        message: {
-          body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
-        },
+        message: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
         code: 'my_error_code',
       },
     });
     expect(result).toMatchObject({
       googleAnalyticsId: null,
       error: {
-        message: {
-          body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
-        },
+        message: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },

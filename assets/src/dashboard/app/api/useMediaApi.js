@@ -59,9 +59,7 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
         dispatch({
           type: MEDIA_ACTION_TYPES.FETCH_MEDIA_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.LOAD_MEDIA.MESSAGE,
-            },
+            message: ERRORS.LOAD_MEDIA.MESSAGE,
           },
         });
       }

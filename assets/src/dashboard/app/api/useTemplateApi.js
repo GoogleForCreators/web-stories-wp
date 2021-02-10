@@ -133,9 +133,7 @@ const useTemplateApi = (dataAdapter, config) => {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-            },
+            message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
           },
         });
       }
@@ -181,9 +179,7 @@ const useTemplateApi = (dataAdapter, config) => {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.LOAD_TEMPLATES.MESSAGE,
-            },
+            message: ERRORS.LOAD_TEMPLATES.MESSAGE,
             code: err.code,
           },
         });
@@ -279,9 +275,7 @@ const useTemplateApi = (dataAdapter, config) => {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.CREATE_TEMPLATE_FROM_STORY.MESSAGE,
-            },
+            message: ERRORS.CREATE_TEMPLATE_FROM_STORY.MESSAGE,
             code: err.code,
           },
         });

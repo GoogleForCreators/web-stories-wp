@@ -63,9 +63,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.LOAD_STORIES.DEFAULT_MESSAGE,
-            },
+            message: ERRORS.LOAD_STORIES.DEFAULT_MESSAGE,
           },
         });
         return;
@@ -110,10 +108,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           dispatch({
             type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
             payload: {
-              message: {
-                body: ERRORS.LOAD_STORIES.INCOMPLETE_DATA_MESSAGE,
-                title: ERRORS.LOAD_STORIES.TITLE,
-              },
+              message: ERRORS.LOAD_STORIES.INCOMPLETE_DATA_MESSAGE,
             },
           });
           return;
@@ -138,9 +133,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.LOAD_STORIES.MESSAGE,
-            },
+            message: ERRORS.LOAD_STORIES.MESSAGE,
             code: err.code,
           },
         });
@@ -182,9 +175,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.UPDATE_STORY.MESSAGE,
-            },
+            message: ERRORS.UPDATE_STORY.MESSAGE,
             code: err.code,
           },
         });
@@ -205,9 +196,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.DELETE_STORY.MESSAGE,
-            },
+            message: ERRORS.DELETE_STORY.MESSAGE,
             code: err.code,
           },
         });
@@ -289,9 +278,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.RENDER_PREVIEW.MESSAGE,
-            },
+            message: ERRORS.RENDER_PREVIEW.MESSAGE,
             code: err.code,
           },
         });
@@ -350,9 +337,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.CREATE_STORY_FROM_TEMPLATE.MESSAGE,
-            },
+            message: ERRORS.CREATE_STORY_FROM_TEMPLATE.MESSAGE,
             code: err.code,
           },
         });
@@ -414,9 +399,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         dispatch({
           type: STORY_ACTION_TYPES.DUPLICATE_STORY_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.DUPLICATE_STORY.MESSAGE,
-            },
+            message: ERRORS.DUPLICATE_STORY.MESSAGE,
             code: err.code,
           },
         });

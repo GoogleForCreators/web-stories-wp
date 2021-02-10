@@ -121,7 +121,7 @@ function TemplateDetails() {
       .then(setTemplate)
       .catch(() => {
         addSnackbarMessage({
-          message: { body: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE },
+          message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
           severity: ALERT_SEVERITY.ERROR,
           id: Date.now(),
         });

@@ -54,18 +54,14 @@ describe('mediaReducer', () => {
     const result = mediaReducer(initialState, {
       type: ACTION_TYPES.FETCH_MEDIA_FAILURE,
       payload: {
-        message: {
-          body: ERRORS.LOAD_MEDIA.MESSAGE,
-        },
+        message: ERRORS.LOAD_MEDIA.MESSAGE,
         code: 'my_error_code',
       },
     });
 
     expect(result).toMatchObject({
       error: {
-        message: {
-          body: ERRORS.LOAD_MEDIA.MESSAGE,
-        },
+        message: ERRORS.LOAD_MEDIA.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -79,18 +75,14 @@ describe('mediaReducer', () => {
     const result = mediaReducer(initialState, {
       type: ACTION_TYPES.ADD_MEDIA_FAILURE,
       payload: {
-        message: {
-          body: ERRORS.UPLOAD_PUBLISHER_LOGO.MESSAGE,
-        },
+        message: ERRORS.UPLOAD_PUBLISHER_LOGO.MESSAGE,
         code: 'my_error_code',
       },
     });
 
     expect(result).toMatchObject({
       error: {
-        message: {
-          body: ERRORS.UPLOAD_PUBLISHER_LOGO.MESSAGE,
-        },
+        message: ERRORS.UPLOAD_PUBLISHER_LOGO.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },

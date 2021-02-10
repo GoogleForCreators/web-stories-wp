@@ -35,9 +35,9 @@ describe('useSettingsApi', () => {
       await result.current.api.fetchSettings();
     });
 
-    expect(result.current.settings.error.message).toStrictEqual({
-      body: ERRORS.LOAD_SETTINGS.MESSAGE,
-    });
+    expect(result.current.settings.error.message).toStrictEqual(
+      ERRORS.LOAD_SETTINGS.MESSAGE
+    );
   });
 
   it('should return an error when updating settings API request fails', async () => {
@@ -49,8 +49,8 @@ describe('useSettingsApi', () => {
       await result.current.api.updateSettings('2738237892739');
     });
 
-    expect(result.current.settings.error.message).toStrictEqual({
-      body: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
-    });
+    expect(result.current.settings.error.message).toStrictEqual(
+      ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE
+    );
   });
 });
