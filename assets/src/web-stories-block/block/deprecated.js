@@ -19,6 +19,11 @@
  */
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import { default as saveV2 } from './save';
+
 const blockAttributes = {
   url: {
     type: 'string',
@@ -97,11 +102,25 @@ save.propTypes = {
   }).isRequired,
 };
 
-const deprecated = [
-  {
-    attributes: blockAttributes,
-    save,
+const v1 = {
+  attributes: blockAttributes,
+  save,
+};
+
+const v2 = {
+  attributes: blockAttributes,
+  migrate(attrs) {
+    return {
+      ...attrs,
+      blockType: 'url',
+    };
   },
-];
+  save: saveV2,
+  isEligible({ url }) {
+    return Boolean(url.length);
+  },
+};
+
+const deprecated = [v1, v2];
 
 export default deprecated;

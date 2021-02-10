@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -46,17 +45,7 @@ import { icon } from './';
 const { config } = webStoriesBlockSettings;
 
 function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
-  const { blockType, viewType, url } = attributes;
-
-  useEffect(() => {
-    // If block type is not set, but there is a URL,
-    // this block was likely migrated from its previous form.
-    if (!blockType && url?.length) {
-      setAttributes({
-        blockType: BLOCK_TYPE_URL,
-      });
-    }
-  }, [blockType, url, setAttributes]);
+  const { blockType, viewType } = attributes;
 
   if (!blockType) {
     return (
