@@ -47,15 +47,20 @@ const Space = styled.div`
   width: 6px;
 `;
 
+const Spinner = styled.div`
+  position: absolute;
+`;
+
 function Loading() {
   const { isSaving } = useStory((state) => ({
     isSaving: state.state.meta.isSaving,
   }));
   return (
-    <>
-      {isSaving && <CircularProgress size={30} />}
-      <Space />
-    </>
+    isSaving && (
+      <Spinner>
+        <CircularProgress size={32} />
+      </Spinner>
+    )
   );
 }
 
