@@ -27,7 +27,6 @@ import * as ActionIcons from '../action';
 import * as AlertIcons from '../alert';
 import * as AvIcons from '../av';
 import * as ContentIcons from '../content';
-import * as DashboardIcons from '../dashboard';
 import * as EditorIcons from '../editor';
 import * as FileIcons from '../file';
 import * as NavigationIcons from '../navigation';
@@ -143,25 +142,6 @@ export const Content = () => {
       {Object.keys(ContentIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
         const Icon = ContentIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Dashboard = () => {
-  return (
-    <IconsList>
-      {Object.keys(DashboardIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = DashboardIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />

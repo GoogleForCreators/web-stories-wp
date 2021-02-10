@@ -21,7 +21,6 @@ export * from './action';
 export * from './alert';
 export * from './av';
 export * from './content';
-export * from './dashboard';
 export * from './editor';
 export * from './file';
 export * from './navigation';

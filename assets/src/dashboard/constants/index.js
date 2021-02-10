@@ -21,11 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Compass,
-  FloppyDisk,
-  HomeWithHeart,
-} from '../../design-system/icons/dashboard';
+import { Compass, FloppyDisk, HomeWithHeart } from '../icons';
 import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
