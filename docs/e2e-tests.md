@@ -80,4 +80,4 @@ Sometimes one might want to test additional scenarios that aren't possible in a 
 
 These plugins can be added to `packages/e2e-tests/src/plugins` and then activated via the WordPress admin.
 
-Test utilities like `createNewStory()` reside in the `packages/e2e-tests/src/utils` folder.
+Test utilities like `createNewStory()` reside in the `packages/e2e-test-utils/src` folder.
