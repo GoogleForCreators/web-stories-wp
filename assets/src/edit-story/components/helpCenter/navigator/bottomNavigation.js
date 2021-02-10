@@ -25,6 +25,7 @@ import { useEffect, useState, useRef } from 'react';
  */
 import { BEZIER } from '../../../../animation';
 import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
+import { useConfig } from '../../../app/config';
 import { TRANSITION_DURATION } from '../constants';
 import { forceFocusCompanion } from '../utils';
 import { NavBar, NavButton } from './components';
@@ -45,6 +46,11 @@ const BottomNavButtons = styled.div`
   padding: 0 8px;
 `;
 
+const ArrowWrap = styled.div`
+  transform-origin: 50% 50%;
+  transform: ${({ isRTL }) => (isRTL ? 'rotate(180deg)' : 'none')};
+`;
+
 const onCondition = (condition) => (fn) => {
   if (condition) {
     fn();
@@ -59,6 +65,7 @@ export function BottomNavigation({
   isNextDisabled,
   isPrevDisabled,
 }) {
+  const { isRTL } = useConfig();
   // If either the prev or next has focus and become disabled,
   // we want to force focus to the companion instead of losing
   // it to the canvas.
@@ -94,7 +101,9 @@ export function BottomNavigation({
           size={BUTTON_SIZES.SMALL}
           disabled={!hasBottomNavigation}
         >
-          <Icons.Arrow />
+          <ArrowWrap isRTL={isRTL}>
+            <Icons.Arrow />
+          </ArrowWrap>
           <span>{__('All Tips', 'web-stories')}</span>
         </NavButton>
       </BottomNavButtons>
