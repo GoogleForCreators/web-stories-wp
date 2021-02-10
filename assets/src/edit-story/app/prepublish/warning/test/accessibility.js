@@ -164,7 +164,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const largeGreyTextEl = {
         ...textEl,
         content: '<span style="color:#777777">I woke up like this</span>',
-        fontSize: 18,
+        fontSize: 84,
       };
       const smallGreyTextEl = {
         ...textEl,
@@ -181,39 +181,25 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
           },
         },
       };
-      expect(
-        await accessibilityChecks.pageBackgroundTextLowContrast({
-          ...whiteBgPage,
-          elements: [bgEl, largeGreyTextEl],
-        })
-      ).toBeUndefined();
-      expect(
-        await accessibilityChecks.pageBackgroundTextLowContrast({
-          ...whiteBgPage,
-          elements: [bgEl, smallGreyTextEl],
-        })
-      ).not.toBeUndefined();
+      const [pass] = await accessibilityChecks.pageBackgroundTextLowContrast({
+        ...whiteBgPage,
+        elements: [bgEl, largeGreyTextEl],
+      });
+      expect(pass).toBeUndefined();
+      const [fail] = await accessibilityChecks.pageBackgroundTextLowContrast({
+        ...whiteBgPage,
+        elements: [bgEl, smallGreyTextEl],
+      });
+      expect(fail).not.toBeUndefined();
     });
 
     it('should return undefined if the contrast is great enough', async () => {
       const whiteBackgroundColor = { color: { r: 255, g: 255, b: 255 } };
-      expect(
-        await accessibilityChecks.pageBackgroundTextLowContrast({
-          ...page,
-          backgroundColor: whiteBackgroundColor,
-        })
-      ).toStrictEqual([
-        {
-          message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
-          help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
-          elements: [
-            { ...bgEl, backgroundColor: whiteBackgroundColor },
-            textEl,
-          ],
-          pageId: page.id,
-          type: 'warning',
-        },
-      ]);
+      const [check] = await accessibilityChecks.pageBackgroundTextLowContrast({
+        ...page,
+        backgroundColor: whiteBackgroundColor,
+      });
+      expect(check).toBeUndefined();
     });
   });
 
