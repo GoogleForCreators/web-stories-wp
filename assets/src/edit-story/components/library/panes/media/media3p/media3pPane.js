@@ -180,9 +180,10 @@ function Media3pPane(props) {
       actions.selectCategory(id);
       const category =
         state.categories.categories.find((e) => e.id === id)?.label || id;
-      trackEvent('media3p_select_category', 'editor', null, null, {
+      trackEvent('media3p_toggle_category', 'editor', null, null, {
         category,
         provider: providerType,
+        status: 'selected',
       });
     };
 
@@ -192,9 +193,10 @@ function Media3pPane(props) {
         state.categories.categories.find(
           (e) => e.id === state.categories.selectedCategoryId
         )?.label || state.categories.selectedCategoryId;
-      trackEvent('media3p_deselect_category', 'editor', null, null, {
+      trackEvent('media3p_toggle_category', 'editor', null, null, {
         category,
         provider: providerType,
+        status: 'deselected',
       });
     };
 

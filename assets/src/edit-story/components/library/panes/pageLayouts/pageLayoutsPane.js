@@ -118,15 +118,10 @@ function PageLayoutsPane(props) {
   const handleSelectPageLayoutType = useCallback(
     (key) => {
       setSelectedPageLayoutType(key);
-      if (key) {
-        trackEvent('page_layouts_select_category', 'editor', null, null, {
-          category: key,
-        });
-      } else {
-        trackEvent('page_layouts_deselect_category', 'editor', null, null, {
-          category: selectedPageLayoutType,
-        });
-      }
+      trackEvent('page_layouts_toggle_category', 'editor', null, null, {
+        category: key || selectedPageLayoutType,
+        status: key ? 'selected' : 'deselected',
+      });
     },
     [selectedPageLayoutType]
   );

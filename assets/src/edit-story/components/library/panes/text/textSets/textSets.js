@@ -141,15 +141,10 @@ function TextSets({ paneRef }) {
       localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
         selectedCategory,
       });
-      if (selectedCategory) {
-        trackEvent('textsets_select_category', 'editor', null, null, {
-          category: selectedCategory,
-        });
-      } else {
-        trackEvent('textsets_deselect_category', 'editor', null, null,{
-          category: selectedCat,
-        });
-      }
+      trackEvent('textsets_toggle_category', 'editor', null, null, {
+        category: selectedCategory || selectedCat,
+        status: selectedCategory ? 'selected' : 'deselected',
+      });
     },
     [selectedCat]
   );
