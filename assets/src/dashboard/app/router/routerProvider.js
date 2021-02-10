@@ -21,7 +21,6 @@ import { useRef, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import { createHashHistory } from 'history';
-import { trackScreenView } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
