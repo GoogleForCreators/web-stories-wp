@@ -86,7 +86,7 @@ function Update() {
           hasTail={true}
         >
           <Button
-            variant={BUTTON_VARIANTS.CIRCLE}
+            variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
             onClick={() => saveStory({ status: 'draft' })}
