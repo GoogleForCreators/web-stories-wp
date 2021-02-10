@@ -58,7 +58,7 @@ function InspectorLayout() {
   const onTabChange = useCallback(
     (id) => {
       setTab(id);
-      trackEvent('inspector_tab_change', 'editor', '', id);
+      trackEvent('inspector_tab_change', 'editor', null, null, { tab: id });
     },
     [setTab]
   );

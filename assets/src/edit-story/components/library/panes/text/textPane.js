@@ -53,7 +53,7 @@ function TextPane(props) {
   const onClick = useCallback(
     (title, element) => {
       insertPreset(element);
-      trackEvent('insert_text_preset', 'editor', title);
+      trackEvent('insert_text_preset', 'editor', null, null, { name: title });
     },
     [insertPreset]
   );

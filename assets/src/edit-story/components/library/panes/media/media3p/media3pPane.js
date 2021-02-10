@@ -144,7 +144,7 @@ function Media3pPane(props) {
       const trimText = value.trim();
       if (trimText !== searchTerm) {
         setSearchTerm({ searchTerm: trimText });
-        trackEvent('media3p_search_media', 'editor', '', '', {
+        trackEvent('media3p_search_media', 'editor', null, null, {
           search_term: trimText,
         });
       }
@@ -180,7 +180,8 @@ function Media3pPane(props) {
       actions.selectCategory(id);
       const category =
         state.categories.categories.find((e) => e.id === id)?.label || id;
-      trackEvent('media3p_select_category', 'editor', '', category, {
+      trackEvent('media3p_select_category', 'editor', null, null, {
+        category,
         provider: providerType,
       });
     };
@@ -191,7 +192,8 @@ function Media3pPane(props) {
         state.categories.categories.find(
           (e) => e.id === state.categories.selectedCategoryId
         )?.label || state.categories.selectedCategoryId;
-      trackEvent('media3p_deselect_category', 'editor', '', category, {
+      trackEvent('media3p_deselect_category', 'editor', null, null, {
+        category,
         provider: providerType,
       });
     };

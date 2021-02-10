@@ -135,17 +135,24 @@ function TextSets({ paneRef }) {
     overscan: 5,
   });
 
-  const handleSelectedCategory = useCallback((selectedCategory) => {
-    setSelectedCat(selectedCategory);
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
-      selectedCategory,
-    });
-    if (selectedCategory) {
-      trackEvent('textsets_select_category', 'editor', '', selectedCategory);
-    } else {
-      trackEvent('textsets_deselect_category', 'editor', selectedCat);
-    }
-  }, [selectedCat]);
+  const handleSelectedCategory = useCallback(
+    (selectedCategory) => {
+      setSelectedCat(selectedCategory);
+      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+        selectedCategory,
+      });
+      if (selectedCategory) {
+        trackEvent('textsets_select_category', 'editor', null, null, {
+          category: selectedCategory,
+        });
+      } else {
+        trackEvent('textsets_deselect_category', 'editor', null, null,{
+          category: selectedCat,
+        });
+      }
+    },
+    [selectedCat]
+  );
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);
@@ -153,7 +160,9 @@ function TextSets({ paneRef }) {
   const onChangeShowInUse = useCallback(
     (value) => {
       requestAnimationFrame(() => setShowInUse(value));
-      trackEvent('textsets_toggle_show_in_use', 'editor', '', value);
+      trackEvent('textsets_toggle_show_in_use', 'editor', null, null, {
+        value,
+      });
     },
     [setShowInUse]
   );

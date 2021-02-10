@@ -167,7 +167,7 @@ function Title({
   const toggle = isCollapsed ? expand : collapse;
   const onToggle = useCallback(() => {
     toggle();
-    trackEvent('panel_toggled', 'editor', '', '', {
+    trackEvent('panel_toggled', 'editor', null, null, {
       panel_id: panelTitleReadable,
       status: isCollapsed ? 'collapsed' : 'expanded',
     });

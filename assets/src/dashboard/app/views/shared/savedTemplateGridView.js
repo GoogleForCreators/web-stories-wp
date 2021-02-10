@@ -80,12 +80,10 @@ const SavedTemplateGridView = ({
   const bottomTargetAction = useCallback(
     (template) => {
       return () => {
-        trackEvent(
-          'use_saved_template',
-          'dashboard',
-          template.title,
-          template.id
-        );
+        trackEvent('use_saved_template', 'dashboard', null, null, {
+          template_name: template.title,
+          template_id: template.id,
+        });
         actions.createStoryFromTemplate(template);
       };
     },

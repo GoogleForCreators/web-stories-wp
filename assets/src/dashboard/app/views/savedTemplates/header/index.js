@@ -61,7 +61,7 @@ function Header({ filter, search, sort, templates, view }) {
   );
 
   const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
-    trackEvent('search_saved_templates', 'dashboard', '', '', {
+    trackEvent('search_saved_templates', 'dashboard', null, null, {
       search_term: value,
     });
     search.setKeyword(value);

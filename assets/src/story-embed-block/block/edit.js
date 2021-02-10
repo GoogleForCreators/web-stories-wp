@@ -75,7 +75,7 @@ function StoryEmbedEdit({
 
   useEffect(() => {
     setLocalURL(outerURL);
-    trackEvent('story_embedded', 'block-editor', '', '', { url: outerURL });
+    trackEvent('story_embedded', 'block-editor', null, null, { url: outerURL });
   }, [outerURL]);
 
   useEffect(() => {

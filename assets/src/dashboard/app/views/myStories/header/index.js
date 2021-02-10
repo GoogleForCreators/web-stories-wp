@@ -75,7 +75,7 @@ function Header({
 
   const handleClick = useCallback(
     (filterValue) => {
-      trackEvent('filter_stories', 'dashboard', '', '', {
+      trackEvent('filter_stories', 'dashboard', null, null, {
         status: filterValue,
       });
       filter.set(filterValue);
@@ -137,7 +137,7 @@ function Header({
   );
 
   const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
-    trackEvent('search_stories', 'dashboard', '', '', {
+    trackEvent('search_stories', 'dashboard', null, null, {
       search_term: value,
     });
     search.setKeyword(value);

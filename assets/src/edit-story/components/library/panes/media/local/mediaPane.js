@@ -205,7 +205,7 @@ function MediaPane(props) {
   const onFilter = useCallback(
     (filter) => {
       setMediaType({ mediaType: filter });
-      trackEvent('filter_media', 'editor', '', '', {
+      trackEvent('filter_media', 'editor', null, null, {
         type: filter,
       });
     },
@@ -248,7 +248,7 @@ function MediaPane(props) {
     const trimText = value.trim();
     if (trimText !== searchTerm) {
       setSearchTerm({ searchTerm: trimText });
-      trackEvent('search_media', 'editor', '', '', {
+      trackEvent('search_media', 'editor', null, null, {
         search_term: trimText,
       });
     }

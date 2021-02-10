@@ -58,7 +58,7 @@ export default function useStoryView({ filters, totalPages }) {
   const setSort = useCallback(
     (newSort) => {
       if (newSort !== sort) {
-        trackEvent('sort_stories', 'dashboard', '', '', {
+        trackEvent('sort_stories', 'dashboard', null, null, {
           order: sortDirection,
           orderby: newSort,
         });
@@ -81,7 +81,7 @@ export default function useStoryView({ filters, totalPages }) {
   const setSortDirection = useCallback(
     (newSortDirection) => {
       if (newSortDirection !== sortDirection) {
-        trackEvent('sort_stories', 'dashboard', '', '', {
+        trackEvent('sort_stories', 'dashboard', null, null, {
           order: newSortDirection,
           orderby: sort,
         });
@@ -93,7 +93,7 @@ export default function useStoryView({ filters, totalPages }) {
   );
 
   const setViewStyle = useCallback((newViewStyle) => {
-    trackEvent('toggle_stories_view', 'dashboard', '', '', {
+    trackEvent('toggle_stories_view', 'dashboard', null, null, {
       mode: newViewStyle,
     });
     _setViewStyle(newViewStyle);

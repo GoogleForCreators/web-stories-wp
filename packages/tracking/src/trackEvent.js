@@ -29,8 +29,8 @@ import track from './track';
  *
  * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
  * @param {string} eventCategory The category of the event. (e.g. 'editor'). Default: 'engagement'.
- * @param {string} [eventLabel] The event label. Default: '(not set)'.
- * @param {string} [eventValue] The event value. Default: '(not set)'.
+ * @param {?string} [eventLabel] The event label. Default: '(not set)'.
+ * @param {?number} [eventValue] A non-negative integer. Default: '(not set)'.
  * @param {Object<*>} [additionalData] Additional event data to send.
  * @return {Promise<void>} Promise that always resolves.
  */
@@ -38,8 +38,8 @@ import track from './track';
 async function trackEvent(
   eventName,
   eventCategory,
-  eventLabel = '',
-  eventValue = '',
+  eventLabel = null,
+  eventValue = null,
   additionalData = {}
 ) {
   if (!isTrackingEnabled()) {

@@ -119,14 +119,13 @@ function PageLayoutsPane(props) {
     (key) => {
       setSelectedPageLayoutType(key);
       if (key) {
-        trackEvent('page_layouts_select_category', 'editor', '', key);
+        trackEvent('page_layouts_select_category', 'editor', null, null, {
+          category: key,
+        });
       } else {
-        trackEvent(
-          'page_layouts_deselect_category',
-          'editor',
-          '',
-          selectedPageLayoutType
-        );
+        trackEvent('page_layouts_deselect_category', 'editor', null, null, {
+          category: selectedPageLayoutType,
+        });
       }
     },
     [selectedPageLayoutType]

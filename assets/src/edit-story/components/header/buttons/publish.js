@@ -56,7 +56,7 @@ function Publish() {
   );
 
   const publish = useCallback(() => {
-    trackEvent('publish_story', 'editor', '', '', {
+    trackEvent('publish_story', 'editor', null, null, {
       status: hasFutureDate ? 'future' : 'publish',
     });
 

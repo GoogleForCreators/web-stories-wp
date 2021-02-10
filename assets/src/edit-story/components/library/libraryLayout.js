@@ -62,7 +62,7 @@ function LibraryLayout() {
   const onTabChange = useCallback(
     (id) => {
       setTab(id);
-      trackEvent('library_tab_change', 'editor', '', id);
+      trackEvent('library_tab_change', 'editor', null, null, { tab: id });
     },
     [setTab]
   );

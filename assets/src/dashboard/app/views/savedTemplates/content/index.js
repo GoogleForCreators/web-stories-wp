@@ -63,12 +63,10 @@ function Content({
 
       switch (sender.value) {
         case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          trackEvent(
-            'use_saved_template_from_menu',
-            'dashboard',
-            template.title,
-            template.id
-          );
+          trackEvent('use_saved_template_from_menu', 'dashboard', null, null, {
+            template_name: template.title,
+            template_id: template.id,
+          });
           actions.createStoryFromTemplate(template);
           break;
 

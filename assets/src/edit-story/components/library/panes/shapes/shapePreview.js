@@ -145,7 +145,7 @@ function ShapePreview({ mask, isPreview }) {
   const onClick = useCallback(() => {
     // Shapes inserted with a specific size.
     insertElement('shape', shapeData);
-    trackEvent('insert_shape', 'editor', mask.type);
+    trackEvent('insert_shape', 'editor', null, null, { type: mask.type });
   }, [insertElement, shapeData, mask.type]);
 
   const getSVG = (displayLabel = true) => {
