@@ -38,9 +38,43 @@ use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
  * @return string|void
  */
 function stories( $args = [] ) {
-	$story_query = new Story_Query( $args );
-	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $story_query->render();
+	$attrs = [];
+
+	if ( empty( $args ) ) {
+		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo get_plugin_instance()->customizer->render_stories();
+	} else {
+		$default_attributes = [
+			'view_type',
+			'number-of-stories',
+			'number_of_columns',
+			'show_title',
+			'show_excerpt',
+			'show_author',
+			'show_date',
+			'show_stories_archive_link',
+			'stories_archive_label',
+			'list_view_image_alignment',
+			'class',
+			'circle_size',
+		];
+
+		$intersection = array_intersect_key( $args, array_flip( $default_attributes ) );
+
+		/**
+		 * Create a new array of attributes.
+		 */
+		if ( $intersection ) {
+			foreach ( $intersection as $key => $val ) {
+				$attrs[ $key ] = $val;
+				unset( $args[ $key ] );
+			}
+		}
+
+		$story_query = new Story_Query( $attrs, $args );
+		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $story_query->render();
+	}
 }
 
 /**
