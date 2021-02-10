@@ -16,46 +16,94 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { useFeatures } from 'flagged';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
+
 /**
  * Internal dependencies
  */
-import { theme as dsTheme, ThemeGlobals } from '../../../design-system';
+import { ThemeGlobals, useFocusOut } from '../../../design-system';
+import { useConfig } from '../../app/config';
+import { Z_INDEX } from '../canvas/layout';
+import { Navigator } from './navigator';
+import { Companion } from './companion';
+import { POPUP_ID } from './constants';
 import { Toggle } from './toggle';
+import { useHelpCenter } from './useHelpCenter';
+import { Popup } from './popup';
+import { forceFocusCompanion } from './utils';
 
 const Wrapper = styled.div`
   position: absolute;
   bottom: 16px;
-  left: 12px;
-  z-index: 10;
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    bottom: 24px;
-    left: 24px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    bottom: 36px;
-    left: 8px;
-  }
+  left: 8px;
+  /**
+   * sibling inherits parent z-index of Z_INDEX.EDIT
+   * so this needs to be placed above that while still
+   * retaining its postion in the DOM for focus purposes
+   */
+  z-index: ${Z_INDEX.EDIT + 1};
 `;
 
+const withRTLPlugins = [stylisRTLPlugin];
+const withoutRTLPlugins = [];
+
 export const HelpCenter = () => {
+  const { isRTL } = useConfig();
+  const ref = useRef(null);
   const { enableQuickTips } = useFeatures();
-  const [isOpen, setIsOpen] = useState(false);
+  const { state, actions } = useHelpCenter();
+
+  useFocusOut(ref, actions.close, []);
+
+  // Set Focus on the expanded companion
+  // whenever it opens
+  useEffect(() => {
+    if (state.isOpen) {
+      forceFocusCompanion();
+    }
+  }, [state.isOpen]);
 
   return enableQuickTips ? (
-    <ThemeProvider theme={dsTheme}>
-      <ThemeGlobals.OverrideFocusOutline />
-      <Wrapper>
-        <Toggle
-          isOpen={isOpen}
-          onClick={() => setIsOpen((v) => !v)}
-          notificationCount={1}
-        />
-      </Wrapper>
-    </ThemeProvider>
+    <StyleSheetManager
+      stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
+    >
+      <>
+        <ThemeGlobals.OverrideFocusOutline />
+        <Wrapper ref={ref}>
+          <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
+            <Navigator
+              onNext={actions.goToNext}
+              onPrev={actions.goToPrev}
+              onAllTips={actions.goToMenu}
+              onClose={actions.close}
+              hasBottomNavigation={state.hasBottomNavigation}
+              isNextDisabled={state.isNextDisabled}
+              isPrevDisabled={state.isPrevDisabled}
+            >
+              <Companion
+                readTips={state.readTips}
+                tipKey={state.navigationFlow[state.navigationIndex]}
+                onTipSelect={actions.goToTip}
+                isLeftToRightTransition={state.isLeftToRightTransition}
+              />
+            </Navigator>
+          </Popup>
+          <Toggle
+            isOpen={state.isOpen}
+            onClick={actions.toggle}
+            notificationCount={
+              // navigation includes 'done' which does not get marked read
+              state.navigationFlow.length -
+              Object.keys(state.readTips).length -
+              1
+            }
+            popupId={POPUP_ID}
+          />
+        </Wrapper>
+      </>
+    </StyleSheetManager>
   ) : null;
 };

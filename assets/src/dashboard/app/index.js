@@ -15,24 +15,20 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-
+import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
 import {
   theme as externalDesignSystemTheme,
   lightMode,
+  ThemeGlobals,
 } from '../../design-system';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
@@ -134,6 +130,7 @@ function App({ config }) {
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
+        <ThemeGlobals.OverrideFocusOutline />
         <ConfigProvider config={config}>
           <ToastProvider>
             <ApiProvider>

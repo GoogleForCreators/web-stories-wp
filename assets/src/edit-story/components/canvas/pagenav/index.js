@@ -20,11 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -36,7 +32,7 @@ import { LeftArrow, RightArrow } from '../../button';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   width: ${PAGE_NAV_BUTTON_SIZE}px;
   height: ${PAGE_NAV_BUTTON_SIZE}px;
 

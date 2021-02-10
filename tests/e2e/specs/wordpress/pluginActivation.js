@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
+import { activateRTL, deactivateRTL } from '@web-stories-wp/e2e-test-utils';
 /**
  * WordPress dependencies
  */
@@ -27,11 +27,6 @@ import {
   deactivatePlugin,
   visitAdminPage,
 } from '@wordpress/e2e-test-utils';
-
-/**
- * Internal dependencies
- */
-import { activateRTL, deactivateRTL } from '../../utils';
 
 const percyCSS = `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`;
 

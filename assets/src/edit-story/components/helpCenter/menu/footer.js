@@ -18,10 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -96,7 +93,7 @@ export function Footer() {
           {__('Visit support forum', 'web-stories')}
         </Link>
         <Link
-          href="https://www.youtube.com/watch?v=MCcHkmzrIVY&list=PLfVPq9A6B0RNoQ3HTE9LQzgAdVzcb7tmt"
+          href="https://youtube.com/playlist?list=PLfVPq9A6B0RNoQ3HTE9LQzgAdVzcb7tmt"
           target="_blank"
           rel="noreferrer"
         >

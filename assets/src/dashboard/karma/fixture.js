@@ -40,6 +40,7 @@ const defaultConfig = {
     canInstallPlugins: true,
     siteKitPluginStatus: false,
   },
+  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
   siteKitStatus: {
     installed: false,
     active: false,
@@ -61,7 +62,7 @@ const defaultConfig = {
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
   wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories/assets',
-  cdnURL: 'https://replaceme.com',
+  cdnURL: 'https://cdn.example.com/',
   version: '1.0.0-alpha.9',
   api: {
     stories: '/web-stories/v1/web-story',

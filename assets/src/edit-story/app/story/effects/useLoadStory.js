@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useEffect } from 'react';
+import { migrate } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
-import { migrate } from '../../../../migration';
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
 

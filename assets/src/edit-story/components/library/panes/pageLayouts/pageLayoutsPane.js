@@ -19,11 +19,8 @@
  */
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { _x, sprintf } from '@wordpress/i18n';
+import { _x, sprintf } from '@web-stories-wp/i18n';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -31,7 +28,6 @@ import { _x, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../../../app/api';
 import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
-import { getTimeTracker } from '../../../../../tracking';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
 import { PAGE_LAYOUT_TYPES } from './constants';

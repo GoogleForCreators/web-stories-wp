@@ -19,11 +19,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { THEME_CONSTANTS } from '../../theme';
-
 export const SnackbarContainer = styled.div`
   position: fixed;
   bottom: 16px;
@@ -33,8 +28,7 @@ export const SnackbarContainer = styled.div`
   flex-direction: column;
   align-items: ${({ alignItems }) => alignItems};
   width: 100%;
-  z-index: ${({ customZIndex }) =>
-    customZIndex || THEME_CONSTANTS.Z_INDEX.SNACKBAR};
+  z-index: ${({ customZIndex }) => customZIndex || 15};
 `;
 
 SnackbarContainer.propTypes = {

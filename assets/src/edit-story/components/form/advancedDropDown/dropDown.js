@@ -22,11 +22,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -42,8 +38,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  color: ${({ theme }) => theme.colors.fg.black};
-  font-family: ${({ theme }) => theme.fonts.body1.font};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.black};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.font};
 `;
 
 const DropDownSelect = styled.button`
@@ -54,8 +50,8 @@ const DropDownSelect = styled.button`
   flex-grow: 1;
   background-color: ${({ theme, lightMode }) =>
     lightMode
-      ? rgba(theme.colors.fg.white, 0.1)
-      : rgba(theme.colors.bg.black, 0.3)};
+      ? rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)
+      : rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -72,18 +68,21 @@ const DropDownSelect = styled.button`
     width: 28px;
     height: 28px;
     color: ${({ theme, lightMode }) =>
-      lightMode ? theme.colors.fg.white : rgba(theme.colors.fg.white, 0.3)};
+      lightMode
+        ? theme.DEPRECATED_THEME.colors.fg.white
+        : rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
   }
 `;
 
 const DropDownTitle = styled.span`
   user-select: none;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
 `;
 
 /**

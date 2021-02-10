@@ -23,11 +23,7 @@ import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { useFeatures } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -45,7 +41,7 @@ const CONTROLS_BORDER_RADIUS = 6;
 const OPACITY_WIDTH = 32;
 
 const Container = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

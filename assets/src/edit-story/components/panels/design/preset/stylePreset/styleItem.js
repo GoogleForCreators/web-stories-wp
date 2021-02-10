@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -39,7 +35,8 @@ import generatePatternStyles from '../../../../../utils/generatePatternStyles';
 const REMOVE_ICON_SIZE = 16;
 
 const PresetButton = styled.button`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.16)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.16)};
   display: inline-block;
   border-color: transparent;
   position: relative;
@@ -55,7 +52,7 @@ const PresetButton = styled.button`
     position: absolute;
     top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
     left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-    color: ${({ theme }) => theme.colors.fg.primary};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
   }
 `;
 

@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -58,15 +54,15 @@ const PageList = styled(Reorderable).attrs({
        * look the same. We do this only here because this scrollbar is always visible
        * if scroll is possible.
        */
-      scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-        ${({ theme }) => theme.colors.bg.workspace} !important;
+      scrollbar-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v10}
+        ${({ theme }) => theme.colors.bg.primary} !important;
 
       &::-webkit-scrollbar-track {
-        background: ${({ theme }) => theme.colors.bg.workspace} !important;
+        background: ${({ theme }) => theme.colors.bg.primary} !important;
       }
 
       &::-webkit-scrollbar-thumb {
-        border: 2px solid ${({ theme }) => theme.colors.bg.workspace} !important;
+        border: 2px solid ${({ theme }) => theme.colors.bg.primary} !important;
         border-top-width: 3px !important;
       }
     `};

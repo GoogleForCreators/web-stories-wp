@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useState, useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -65,10 +61,12 @@ const Box = styled.div`
 `;
 
 const PlainStyled = styled(Plain)`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.25)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.25)};
   }
 `;
 

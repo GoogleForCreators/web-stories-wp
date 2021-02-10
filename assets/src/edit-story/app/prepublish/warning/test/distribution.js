@@ -26,12 +26,15 @@ describe('Pre-publish checklist - distribution issues (warnings)', () => {
       const story = {
         id: 'storyid',
       };
-      expect(distributionChecks.storyMissingExcerpt(story)).toStrictEqual({
-        message: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT,
-        help: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT,
-        storyId: story.id,
-        type: 'warning',
-      });
+      const test = distributionChecks.storyMissingExcerpt(story);
+      expect(test.message).toStrictEqual(
+        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT
+      );
+      expect(test.storyId).toStrictEqual(story.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return a warning if story has empty excerpt', () => {
@@ -39,12 +42,16 @@ describe('Pre-publish checklist - distribution issues (warnings)', () => {
         id: 'storyid',
         excerpt: '',
       };
-      expect(distributionChecks.storyMissingExcerpt(story)).toStrictEqual({
-        message: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT,
-        help: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT,
-        storyId: story.id,
-        type: 'warning',
-      });
+      const test = distributionChecks.storyMissingExcerpt(story);
+
+      expect(test.message).toStrictEqual(
+        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT
+      );
+      expect(test.storyId).toStrictEqual(story.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return undefined if story has excerpt', () => {
@@ -52,7 +59,8 @@ describe('Pre-publish checklist - distribution issues (warnings)', () => {
         id: 'storyid',
         excerpt: 'This is an excerpt',
       };
-      expect(distributionChecks.storyMissingExcerpt(story)).toBeUndefined();
+      const test = distributionChecks.storyMissingExcerpt(story);
+      expect(test).toBeUndefined();
     });
   });
 });

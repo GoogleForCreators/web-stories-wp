@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -39,7 +35,7 @@ import { ExpandedTextInput } from '../../shared';
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
 `;
 
 function PageAttachmentPanel() {

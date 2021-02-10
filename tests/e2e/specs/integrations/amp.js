@@ -18,8 +18,9 @@
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   addTextElement,
@@ -27,7 +28,7 @@ import {
   previewStory,
   insertStoryTitle,
   setAnalyticsCode,
-} from '../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('AMP integrations with editor', () => {
   beforeAll(async () => {

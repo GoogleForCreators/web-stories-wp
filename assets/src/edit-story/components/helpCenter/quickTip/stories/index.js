@@ -43,7 +43,7 @@ const Container = styled.div`
   position: relative;
   width: 340px;
   height: 100%;
-  height: 352px;
+  height: 400px;
   overflow: hidden;
 `;
 

@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { visitDashboard } from '../../utils';
+import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Document Title', () => {
   it('should update the document title during navigation', async () => {

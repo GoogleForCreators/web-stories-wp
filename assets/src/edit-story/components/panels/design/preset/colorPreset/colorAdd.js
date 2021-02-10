@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -48,7 +44,7 @@ const AddColorAction = styled.button`
 // @todo Use color from design system when theme reference changes.
 const Note = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   margin-bottom: 10px;
 `;
 

@@ -27,7 +27,9 @@ import {
   Icons,
   themeHelpers,
 } from '../../../../design-system';
-import { TIPS } from '../constants';
+import { useConfig } from '../../../app/config';
+import { forceFocusCompanion } from '../utils';
+import { ReadTipsType, TIPS } from '../constants';
 
 const Panel = styled.div`
   padding: 24px 0;
@@ -60,31 +62,46 @@ const ButtonText = styled.span`
     `}
 `;
 
-const StyledArrow = styled(Icons.ArrowAlt)`
+const ArrowWrap = styled.div`
   width: 13px;
   transform-origin: 50% 50%;
-  transform: rotate(180deg);
+  transform: ${({ isRTL }) => (isRTL ? 'none' : 'rotate(180deg)')};
 `;
 
-function Tip({ children, onClick }) {
+const StyledArrow = styled(Icons.ArrowAlt)`
+  width: 100%;
+`;
+
+function Tip({ children, onClick, unread = true }) {
+  const { isRTL } = useConfig();
   return (
     <StyledButton size={BUTTON_SIZES.SMALL} onClick={onClick}>
-      <ButtonText unread={true}>{children}</ButtonText>
-      <StyledArrow />
+      <ButtonText unread={unread}>{children}</ButtonText>
+      <ArrowWrap isRTL={isRTL}>
+        <StyledArrow />
+      </ArrowWrap>
     </StyledButton>
   );
 }
 Tip.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
+  unread: PropTypes.bool,
 };
 
 const TIPS_ITERABLE = Object.entries(TIPS);
-export function Tips({ onTipSelect = () => {} }) {
+export function Tips({ onTipSelect = () => {}, readTips }) {
   return (
     <Panel>
       {TIPS_ITERABLE.map(([key, tip]) => (
-        <Tip key={key} onClick={() => onTipSelect(key)}>
+        <Tip
+          unread={!readTips[key]}
+          key={key}
+          onClick={() => {
+            forceFocusCompanion();
+            onTipSelect(key);
+          }}
+        >
           {tip.title}
         </Tip>
       ))}
@@ -92,5 +109,6 @@ export function Tips({ onTipSelect = () => {} }) {
   );
 }
 Tips.propTypes = {
+  readTips: ReadTipsType,
   onTipSelect: PropTypes.func,
 };

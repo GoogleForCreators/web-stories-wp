@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 /**
@@ -154,18 +155,22 @@ const ButtonOptions = {
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
-const Button = ({
-  size = BUTTON_SIZES.MEDIUM,
-  type = BUTTON_TYPES.PLAIN,
-  variant = BUTTON_VARIANTS.RECTANGLE,
-  children,
-  ...rest
-}) => {
+const Button = forwardRef(function Button(
+  {
+    size = BUTTON_SIZES.MEDIUM,
+    type = BUTTON_TYPES.PLAIN,
+    variant = BUTTON_VARIANTS.RECTANGLE,
+    children,
+    ...rest
+  },
+  ref
+) {
   const isLink = rest.href !== undefined;
   const StyledButton = ButtonOptions[variant];
 
   return (
     <StyledButton
+      ref={ref}
       as={isLink ? 'a' : 'button'}
       size={size}
       type={type}
@@ -174,7 +179,7 @@ const Button = ({
       {children}
     </StyledButton>
   );
-};
+});
 
 Button.propTypes = {
   size: PropTypes.oneOf(Object.values(BUTTON_SIZES)),

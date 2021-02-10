@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -39,8 +35,8 @@ const Layout = styled.section.attrs({
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.bg.panel};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   max-height: 100%;
 `;
 

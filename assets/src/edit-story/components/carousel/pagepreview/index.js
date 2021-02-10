@@ -44,7 +44,9 @@ const Page = styled.button`
   border: 0;
   border-top: ${THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
-      isActive ? theme.colors.selection : theme.colors.bg.workspace};
+      isActive
+        ? theme.DEPRECATED_THEME.colors.selection
+        : theme.colors.bg.primary};
   height: ${({ height }) => height}px;
   background-color: transparent;
   width: ${({ width }) => width}px;
@@ -53,7 +55,8 @@ const Page = styled.button`
   outline: 0;
 
   &:focus {
-    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+    outline: 2px solid
+      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
   }
 
   ${({ isActive, isInteractive, theme }) =>
@@ -63,7 +66,7 @@ const Page = styled.button`
       &:hover,
       &:focus {
         border-top: ${THUMB_INDICATOR_HEIGHT}px solid
-          ${rgba(theme.colors.selection, 0.3)};
+          ${rgba(theme.DEPRECATED_THEME.colors.selection, 0.3)};
       }
     `}
 `;

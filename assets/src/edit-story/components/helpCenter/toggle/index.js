@@ -18,10 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * WordPress dependencies
- */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -41,7 +38,7 @@ const Button = styled(dsButton)`
   padding: 1px 14px 1px 4.5px;
 
   @media ${({ theme }) => theme.breakpoint.desktop} {
-    padding: 1px 16px 1px 14.5;
+    padding: 1px 16px 1px 14.5px;
   }
 
   ${({ hasNotifications, theme }) =>
@@ -57,7 +54,7 @@ const Label = styled.span`
 
   @media ${({ theme }) => theme.breakpoint.desktop} {
     display: block;
-    min-width: 115px;
+    min-width: 65px;
     text-align: left;
   }
 `;
@@ -71,10 +68,16 @@ const HelpIcon = styled(Icons.Help)`
 const ChevronIcon = styled(Icons.Chevron)`
   display: block;
   height: auto;
+  width: 100%;
+`;
+
+const Icon = styled.div`
+  display: block;
+  height: auto;
   width: 11px;
   transform-origin: 50% 50%;
   transform: rotate(${({ isOpen }) => (isOpen ? 360 : 180)}deg);
-  transition: 0.2s transform ${BEZIER.outSine};
+  transition: transform 300ms ${BEZIER.default};
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
     ${({ hasNotifications }) =>
@@ -125,13 +128,15 @@ function Toggle({
       size={BUTTON_SIZES.MEDIUM}
     >
       <HelpIcon />
-      <Label>{__('Help Center', 'web-stories')}</Label>
+      <Label>{__('Help', 'web-stories')}</Label>
       {hasNotifications && (
         <NotificationWrapper>
           <NotificationBubble notificationCount={notificationCount} />
         </NotificationWrapper>
       )}
-      <ChevronIcon hasNotifications={hasNotifications} isOpen={isOpen} />
+      <Icon hasNotifications={hasNotifications} isOpen={isOpen}>
+        <ChevronIcon />
+      </Icon>
     </Button>
   );
 }

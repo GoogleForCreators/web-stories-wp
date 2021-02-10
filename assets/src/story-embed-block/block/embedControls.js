@@ -22,7 +22,6 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
 import * as Components from '@wordpress/components';
 import {
   BlockControls,
@@ -32,6 +31,7 @@ import {
 } from '@wordpress/block-editor';
 import { withInstanceId } from '@wordpress/compose';
 import { createRef, useCallback } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
 const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 

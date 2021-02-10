@@ -32,17 +32,22 @@ const PillContainer = styled.button`
   padding: 7px 16px 8px;
   height: ${PILL_HEIGHT}px;
   border-radius: 18px;
-  font-size: ${({ theme }) => theme.fonts.paragraph.small.size};
-  line-height: ${({ theme }) => theme.fonts.paragraph.small.lineHeight};
+  font-size: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.paragraph.small.size};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.paragraph.small.lineHeight};
   user-select: none;
   cursor: pointer;
   margin-bottom: 12px;
-  font-family: ${({ theme }) => theme.fonts.paragraph.small.family};
+  font-family: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.paragraph.small.family};
   border-color: ${({ theme, isSelected }) =>
-    isSelected ? 'transparent' : theme.colors.fg.gray16};
+    isSelected ? 'transparent' : theme.DEPRECATED_THEME.colors.fg.gray16};
   background-color: ${({ theme, isSelected }) =>
-    isSelected ? rgba(theme.colors.bg.divider, 0.04) : 'transparent'};
-  color: ${({ theme }) => theme.colors.fg.primary};
+    isSelected
+      ? rgba(theme.DEPRECATED_THEME.colors.bg.divider, 0.04)
+      : 'transparent'};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
   background-clip: padding-box;
   transition: opacity 0.2s;
   &.invisible {

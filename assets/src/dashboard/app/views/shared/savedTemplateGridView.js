@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect, useState, useCallback } from 'react';
-
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -43,11 +41,9 @@ import {
   TemplateActionsPropType,
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
-import { getRelativeDisplayDate } from '../../../../date';
 import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
-import { trackEvent } from '../../../../tracking';
 
 export const DetailRow = styled.div`
   display: flex;

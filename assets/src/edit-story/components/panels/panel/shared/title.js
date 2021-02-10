@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -30,15 +30,14 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../../design-system';
-import { trackEvent } from '../../../../../tracking';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
   if (isPrimary) {
-    return rgba(theme.colors.bg.black, 0.07);
+    return rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.07);
   }
   if (isSecondary) {
-    return rgba(theme.colors.fg.white, 0.07);
+    return theme.colors.bg.tertiary;
   }
   return 'transparent';
 }
@@ -46,10 +45,11 @@ function getBackgroundColor(isPrimary, isSecondary, theme) {
 const Header = styled.h2.attrs({ role: 'button' })`
   background-color: ${({ isPrimary, isSecondary, theme }) =>
     getBackgroundColor(isPrimary, isSecondary, theme)};
-  border: 0 solid ${({ theme }) => rgba(theme.colors.fg.gray16, 0.6)};
+  border: 0 solid
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.gray16, 0.6)};
   border-top-width: ${({ isPrimary, isSecondary }) =>
     isPrimary || isSecondary ? 0 : '1px'};
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+  color: ${({ theme }) => theme.colors.fg.secondary};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;

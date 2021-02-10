@@ -19,17 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { Add } from '../../../../../../design-system/icons/action';
-import { TranslateWithMarkup } from '../../../../../../i18n';
 import ColorAdd from './colorAdd';
 
 const ActionWrapper = styled.div`
@@ -47,7 +42,7 @@ const Wrapper = styled.div`
 // @todo Use color from design system when theme reference changes.
 const Note = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   margin-bottom: 10px;
 `;
 

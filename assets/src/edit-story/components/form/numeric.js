@@ -42,25 +42,28 @@ const StyledInput = styled(Input)`
   border: none;
   padding-right: ${({ suffix }) => (suffix ? 6 : 0)}px;
   padding-left: ${({ prefix, label }) => (prefix || label ? 6 : 0)}px;
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   ${({ textCenter }) => textCenter && `text-align: center`};
 `;
 
 const Container = styled.div`
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
   flex-basis: ${({ flexBasis }) => defaultUnit(flexBasis, 'px')};
   border: 1px solid;
   border-color: ${({ theme, focused }) =>
-    focused ? theme.colors.whiteout : 'transparent'};
+    focused ? theme.DEPRECATED_THEME.colors.whiteout : 'transparent'};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
 `;
 
@@ -70,7 +73,7 @@ const Suffix = styled.span`
     css`
       flex-shrink: 0;
       display: inline-block;
-      width: ${({ theme }) => theme.fonts.body2.size};
+      width: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
       text-align: center;
     `}
 `;

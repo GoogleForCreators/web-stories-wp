@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   createNewStory,
@@ -23,14 +22,13 @@ import {
   insertStoryTitle,
   uploadMedia,
   deleteMedia,
-} from '../../../utils';
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media dialog it', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
     const filename = await uploadMedia('small-video.webm', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
@@ -48,7 +46,6 @@ describe('Inserting WebM Video', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
     const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
@@ -71,7 +68,6 @@ describe('Inserting WebM Video', () => {
     await insertStoryTitle('Publishing with video');
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
     const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');

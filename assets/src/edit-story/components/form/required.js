@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { _x } from '@wordpress/i18n';
+import { _x } from '@web-stories-wp/i18n';
 
 const RequiredWrapper = styled.div`
   display: flex;
@@ -36,7 +32,7 @@ const Text = styled.span`
   font-size: 12px;
   line-height: 14px;
   font-style: italic;
-  color: ${({ theme }) => rgba(theme.colors.required, 0.55)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.required, 0.55)};
 `;
 
 function Required() {
