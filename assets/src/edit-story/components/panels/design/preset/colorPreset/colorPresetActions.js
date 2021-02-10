@@ -51,24 +51,25 @@ const AddColorPreset = styled.button`
   border: none;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   cursor: pointer;
-  padding: 8px 0px;
+  padding: 0;
   line-height: 20px;
   svg {
-    width: 16px;
-    height: 16px;
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    width: 32px;
+    height: 32px;
   }
 `;
 
 const CtaWrapper = styled.div`
   font-size: 14px;
-  line-height: 30px;
-  margin-right: 5px;
+  line-height: 32px;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
 
   svg {
     color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-    width: 20px;
-    height: 14px;
+    width: 32px;
+    height: 32px;
+    vertical-align: bottom;
   }
 `;
 
