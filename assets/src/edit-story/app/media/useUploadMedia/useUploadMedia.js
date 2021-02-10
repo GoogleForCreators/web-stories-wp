@@ -93,6 +93,21 @@ function useUploadMedia({ media, setMedia }) {
         return;
       }
 
+      // TODO: Revisit local resource handling.
+      // See https://github.com/google/web-stories-wp/issues/6053 and https://github.com/google/web-stories-wp/issues/6088
+      if (localFiles.length !== files.length) {
+        showSnackbar({
+          message: __(
+            'One or more files could not be uploaded. Please try a different file.',
+            'web-stories'
+          ),
+        });
+      }
+
+      if (localFiles.length === 0) {
+        return;
+      }
+
       try {
         const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => ({
