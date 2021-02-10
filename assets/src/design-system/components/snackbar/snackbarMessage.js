@@ -95,7 +95,7 @@ const ActionButton = styled(Button)`
 
 const CloseButton = styled(Button)`
   height: 2em;
-  padding: 12px 6px;
+  padding: 0;
   margin-left: 16px;
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
 
@@ -106,7 +106,7 @@ const CloseButton = styled(Button)`
     )}
 
   svg {
-    height: 16px;
+    height: 32px;
   }
 `;
 
