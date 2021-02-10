@@ -39,6 +39,7 @@ async function trackScreenView(screenName) {
 
   const eventData = {
     app_name: config.appName,
+    app_version: config.appVersion,
     screen_name: screenName,
   };
 
