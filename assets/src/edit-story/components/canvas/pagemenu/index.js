@@ -21,6 +21,7 @@ import styled, { css } from 'styled-components';
 import { useCallback } from 'react';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -159,18 +160,22 @@ function PageMenu() {
 
   const handleRedo = useCallback(() => redo(), [redo]);
 
-  const toggleAnimationState = useCallback(
-    () =>
-      updateAnimationState({
-        animationState: [
-          STORY_ANIMATION_STATE.PLAYING,
-          STORY_ANIMATION_STATE.PLAYING_SELECTED,
-        ].includes(animationState)
-          ? STORY_ANIMATION_STATE.RESET
-          : STORY_ANIMATION_STATE.PLAYING,
-      }),
-    [animationState, updateAnimationState]
-  );
+  const toggleAnimationState = useCallback(() => {
+    const isPlaying = [
+      STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.PLAYING_SELECTED,
+    ].includes(animationState);
+
+    updateAnimationState({
+      animationState: isPlaying
+        ? STORY_ANIMATION_STATE.RESET
+        : STORY_ANIMATION_STATE.PLAYING,
+    });
+
+    trackEvent('play_animations', 'editor', null, null, {
+      status: isPlaying ? 'stop' : 'play',
+    });
+  }, [animationState, updateAnimationState]);
 
   if (!currentPage) {
     return null;
