@@ -102,7 +102,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
     });
   });
 
-  describe('pageBackgrounTextLowContrast', () => {
+  describe('pageBackgroundTextLowContrast', () => {
     it('should return a warning if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
       const bgEl = {
         x: 1,
