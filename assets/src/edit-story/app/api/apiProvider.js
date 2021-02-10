@@ -37,7 +37,7 @@ import getAllPageLayouts from './getAllPageLayouts';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck, metaBoxes, currentUser },
+    api: { stories, media, link, users, statusCheck, metaBoxes, currentUser, postLock },
     encodeMarkup,
     cdnURL,
     assetsURL,
@@ -312,6 +312,19 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
+  /**
+   * Post Lock Status.
+   *
+   * @param  {number} storyId
+   * @return {Promise} Result promise
+   */
+  const getPostLock = useCallback(
+    (storyId) => {
+      const path = 'web-stories/v1/post-lock/' + `${storyId}/`;
+      return apiFetch({ path });
+    },[postLock]
+  );
+
   const getPageLayouts = useCallback(() => {
     return getAllPageLayouts({ cdnURL, assetsURL });
   }, [cdnURL, assetsURL]);
@@ -332,6 +345,7 @@ function APIProvider({ children }) {
       getStatusCheck,
       getPageLayouts,
       getCurrentUser,
+      getPostLock
     },
   };
 
