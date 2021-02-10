@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import { MESSAGES } from '../../constants';
 import * as accessibilityChecks from '../accessibility';
 
@@ -98,6 +99,64 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       expect(
         accessibilityChecks.textElementFontLowContrast(element)
       ).toBeUndefined();
+    });
+  });
+
+  describe('pageBackgrounTextLowContrast', () => {
+    it('should return a warning if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
+      const bgEl = {
+        x: 1,
+        y: 1,
+        type: 'shape',
+        isBackground: true,
+        height: PAGE_HEIGHT,
+        width: PAGE_WIDTH,
+        backgroundColor: {
+          color: {
+            r: 255,
+            g: 255,
+            b: 255,
+          },
+        },
+      };
+      const textEl = {
+        type: 'text',
+        backgroundTextMode: 'NONE',
+        content: 'Fill with text',
+        x: 1,
+        y: 1,
+        width: 175,
+        height: 36,
+      };
+      const page = {
+        id: 123,
+        pageSize: {
+          height: PAGE_HEIGHT,
+          width: PAGE_WIDTH,
+        },
+        elements: [bgEl, textEl],
+        backgroundColor: {
+          color: {
+            r: 2,
+            g: 12,
+            b: 1,
+          },
+        },
+      };
+      expect(
+        await accessibilityChecks.pageBackgroundTextLowContrast(page)
+      ).toStrictEqual([
+        {
+          message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
+          help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
+          elements: [
+            { ...bgEl, backgroundColor: page.backgroundColor },
+            textEl,
+          ],
+          pageId: page.id,
+          type: 'warning',
+        },
+      ]);
     });
   });
 
