@@ -22,10 +22,8 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 	.default-moveable .moveable-control,
 	.default-moveable .moveable-line.moveable-rotation-line .moveable-control {
-		background: ${({ theme }) => theme.colors.accent.primary} !important;
-		border: 2px solid #fff !important;
-		margin-left: -6px;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+		background: ${({ theme }) => theme.colors.bg.primary} !important;
+		border: 1px solid ${({ theme }) => theme.colors.border.selection} !important;
 	}
 
 	.default-moveable.type-text .moveable-direction.moveable-n, .default-moveable.type-text .moveable-direction.moveable-s {
@@ -76,15 +74,13 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	.default-moveable.moveable-control-box .moveable-line.moveable-direction {
-		background: ${({ theme }) =>
-      theme.designSystemTheme.colors.border.selection} !important;
+		background: ${({ theme }) => theme.colors.border.selection} !important;
 		width: 1px;
 		height: 1px;
 	}
 
 	.default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
-		background: ${({ theme }) =>
-      theme.designSystemTheme.colors.border.selection} !important;
+		background: ${({ theme }) => theme.colors.border.selection} !important;
 		width: 1px;
 		top: -12px;
 		height: 12px;
