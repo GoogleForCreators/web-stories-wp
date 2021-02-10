@@ -54,7 +54,7 @@ const StyledSpinner = styled.svg`
 
 const StyledCircle = styled.circle`
   animation: ${circleRotation} 1.4s ease-in-out infinite;
-  stroke: ${({ theme }) => `${theme.colors.loading.primary}`};
+  stroke: ${({ theme }) => `${theme.DEPRECATED_THEME.colors.loading.primary}`};
 `;
 
 function CircularProgress({ size, thickness }) {

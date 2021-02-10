@@ -38,7 +38,7 @@ const Button = styled(dsButton)`
   padding: 1px 14px 1px 4.5px;
 
   @media ${({ theme }) => theme.breakpoint.desktop} {
-    padding: 1px 16px 1px 14.5;
+    padding: 1px 16px 1px 14.5px;
   }
 
   ${({ hasNotifications, theme }) =>

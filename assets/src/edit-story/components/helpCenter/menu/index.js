@@ -23,7 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { noop } from '../../../utils/noop';
-import { GUTTER_WIDTH } from '../constants';
+import { GUTTER_WIDTH, ReadTipsType } from '../constants';
 import { Footer } from './footer';
 import { Header } from './header';
 import { Tips } from './tips';
@@ -35,17 +35,18 @@ const Container = styled.div`
   overflow-y: scroll;
 `;
 
-export function Menu({ onTipSelect = noop, ...transitionProps }) {
+export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
       <Container aria-label={__('Help Center Main Menu', 'web-stories')}>
         <Header />
-        <Tips onTipSelect={onTipSelect} />
+        <Tips readTips={readTips} onTipSelect={onTipSelect} />
         <Footer />
       </Container>
     </Transitioner>
   );
 }
 Menu.propTypes = {
+  readTips: ReadTipsType,
   onTipSelect: PropTypes.func.isRequired,
 };

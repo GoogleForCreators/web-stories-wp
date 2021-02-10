@@ -71,7 +71,7 @@ const Container = styled.div.attrs(
   * {
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) =>
-      `${theme.colors.bg.v10} ${theme.colors.bg.v12}`};
+      `${theme.DEPRECATED_THEME.colors.bg.v10} ${theme.DEPRECATED_THEME.colors.bg.v12}`};
   }
 
   *::-webkit-scrollbar {
@@ -80,12 +80,12 @@ const Container = styled.div.attrs(
   }
 
   *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.v12};
+    background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v12};
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.fg.v5};
-    border: 2px solid ${({ theme }) => theme.colors.bg.v12};
+    background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v5};
+    border: 2px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v12};
     border-left-width: 3px;
     border-top-width: 3px;
     border-radius: 6px;

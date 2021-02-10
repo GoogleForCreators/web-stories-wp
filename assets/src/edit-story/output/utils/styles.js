@@ -41,7 +41,7 @@ function CustomStyles() {
 
   // Match page background color to the workspace background color.
   // Validate since we're using dangerouslySetInnerHTML with imported variable.
-  const workspaceColor = theme.colors.bg.workspace;
+  const workspaceColor = theme.colors.bg.primary;
   const pageBackgroundColor = isHexColorString(workspaceColor)
     ? workspaceColor
     : '#1B1D1C';

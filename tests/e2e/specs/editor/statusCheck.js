@@ -15,9 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  addRequestInterception,
+  createNewStory,
+} from '@web-stories-wp/e2e-test-utils';
+/**
  * Internal dependencies
  */
-import { addRequestInterception, createNewStory } from '../../utils';
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
 async function interceptStatusCheck(status, body) {

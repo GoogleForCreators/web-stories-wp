@@ -25,7 +25,7 @@ import styled from 'styled-components';
 import { Warning } from '../../../../design-system/icons';
 
 export const WarningIcon = styled(Warning)`
-  color: $(({theme}) => theme.colors.fg.white);
+  color: $(({theme}) => theme.DEPRECATED_THEME.colors.fg.white);
   width: 14px;
   height: 14px;
   margin-left: 8px;

@@ -28,7 +28,7 @@ import { SimplePanel } from '../../panels/panel';
 import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { Label } from '../../form';
-import { useStory } from '../../../app';
+import { useHighlights } from '../../../app/highlights';
 
 const MAX_NUMBER_FOR_BADGE = 99;
 
@@ -45,9 +45,11 @@ const NumberBadge = styled.span`
   &::after {
     content: ${({ number }) => `"${annotateNumber(number)}"`};
   }
-  color: ${({ theme }) => theme.colors.bg.panel};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
   background-color: ${({ theme, error }) =>
-    error ? theme.colors.fg.negative : theme.colors.fg.warning};
+    error
+      ? theme.DEPRECATED_THEME.colors.fg.negative
+      : theme.DEPRECATED_THEME.colors.fg.warning};
 `;
 
 const TitleWrapper = styled.div`
@@ -60,7 +62,9 @@ const TitleWrapper = styled.div`
 
 const PanelTitle = styled.span`
   color: ${({ theme, error }) =>
-    error ? theme.colors.fg.negative : theme.colors.fg.warning};
+    error
+      ? theme.DEPRECATED_THEME.colors.fg.negative
+      : theme.DEPRECATED_THEME.colors.fg.warning};
 `;
 
 const Row = styled.button`
@@ -68,18 +72,19 @@ const Row = styled.button`
   background: transparent;
   text-align: left;
   padding: 0;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   line-height: 24px;
   &:not(:first-child) {
     margin-top: 9px;
   }
   margin-bottom: 16px;
   margin-left: ${({ pageGroup }) => (pageGroup ? '16px' : '0')};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
   width: calc(100% - 10px);
   max-width: 210px;
   &:focus {
-    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+    outline: 2px solid
+      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
     outline-offset: 5px;
   }
 `;
@@ -91,8 +96,8 @@ const Underline = styled.span`
 
 const HelperText = styled.span`
   display: block;
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
 `;
 
 const PageIndicator = styled(Label)`
@@ -124,22 +129,23 @@ const Checkmark = styled(CheckmarkIcon)`
   width: 64px;
   padding: 8px 15px 5px 17px;
   border-radius: 50%;
-  color: ${({ theme }) => theme.colors.fg.positive};
-  border: 1px solid ${({ theme }) => theme.colors.fg.positive};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.positive};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.positive};
   overflow: visible;
 `;
 
 const EmptyHeading = styled.h1`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
   margin: 0;
 `;
 
 const EmptyParagraph = styled.p`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  font-size: ${({ theme }) => theme.fonts.description.size};
-  line-height: ${({ theme }) => theme.fonts.description.lineHeight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.lineHeight};
   margin: 0;
 `;
 
@@ -161,12 +167,10 @@ function annotateNumber(number) {
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
-  const { setSelectedElementsById, setCurrentPage } = useStory(
-    ({ actions }) => ({
-      setSelectedElementsById: actions.setSelectedElementsById,
-      setCurrentPage: actions.setCurrentPage,
-    })
-  );
+
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
 
   const { highPriority, recommended, pages } = useMemo(
     () =>
@@ -222,70 +226,46 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
-  const selectElement = useCallback(
-    ({ elementId, elements, pageId }) => {
-      if (pageId) {
-        setCurrentPage({ pageId });
+  const getOnPrepublishSelect = useCallback(
+    (args) => {
+      const { elements, elementId, pageId, highlight } = args;
+      if (!elements && !elementId && !pageId && !highlight) {
+        return {};
       }
-      if (Array.isArray(elements)) {
-        setSelectedElementsById({
-          elementIds: elements.map(({ id }) => id),
-        });
-      } else if (elementId) {
-        setSelectedElementsById({ elementIds: [elementId] });
-      }
-    },
-    [setCurrentPage, setSelectedElementsById]
-  );
 
-  const getOnClick = useCallback(
-    ({ elementId, pageId, elements }) => {
-      if (!elementId && !pageId && !elements) {
-        return undefined;
-      }
-      return () => selectElement({ elementId, pageId, elements });
-    },
-    [selectElement]
-  );
-
-  const getHandleKeyPress = useCallback(
-    ({ elementId, elements, pageId }) => {
-      if (!elementId && !pageId && !elements) {
-        return undefined;
-      }
-      return (event) => {
-        if (event.key === 'Enter') {
-          selectElement({ elementId, elements, pageId });
-        }
+      return {
+        onClick: () => setHighlights(args),
+        onKeyDown: (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            setHighlights(args);
+          }
+        },
       };
     },
-    [selectElement]
+    [setHighlights]
   );
 
   const renderRow = useCallback(
-    ({ message, help, id, pageGroup, ...args }) => {
-      const onClick = getOnClick(args);
-      const handleKeyPress = getHandleKeyPress(args);
+    (args) => {
+      const { id, message, help, pageGroup } = args;
+      const onPrepublish = getOnPrepublishSelect(args);
       const accessibleText = __('Select offending element', 'web-stories');
       return (
-        <Row
-          tabIndex={0}
-          onClick={onClick}
-          onKeyDown={handleKeyPress}
-          key={id}
-          pageGroup={pageGroup}
-        >
-          {onClick ? (
+        <Row {...onPrepublish} tabIndex={0} key={id} pageGroup={pageGroup}>
+          {onPrepublish.onClick ? (
             <Underline title={accessibleText}>{message}</Underline>
           ) : (
             message
           )}
           <HelperText>{help}</HelperText>
-          {onClick && <VisuallyHidden>{accessibleText}</VisuallyHidden>}
+          {onPrepublish.onClick && (
+            <VisuallyHidden>{accessibleText}</VisuallyHidden>
+          )}
         </Row>
       );
     },
-    [getOnClick, getHandleKeyPress]
+    [getOnPrepublishSelect]
   );
 
   const renderPageGroupedRow = useCallback(
