@@ -63,12 +63,13 @@ const ButtonText = styled.span`
 `;
 
 const ArrowWrap = styled.div`
-  width: 13px;
+  width: 32px;
+  margin: -9px;
   transform-origin: 50% 50%;
   transform: ${({ isRTL }) => (isRTL ? 'none' : 'rotate(180deg)')};
 `;
 
-const StyledArrow = styled(Icons.ArrowRight)`
+const StyledArrow = styled(Icons.ArrowLeft)`
   width: 100%;
 `;
 
