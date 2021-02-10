@@ -68,7 +68,7 @@ const ArrowWrap = styled.div`
   transform: ${({ isRTL }) => (isRTL ? 'none' : 'rotate(180deg)')};
 `;
 
-const StyledArrow = styled(Icons.ArrowAlt)`
+const StyledArrow = styled(Icons.ArrowRight)`
   width: 100%;
 `;
 

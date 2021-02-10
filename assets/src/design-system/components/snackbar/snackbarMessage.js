@@ -27,7 +27,7 @@ import styled, { keyframes } from 'styled-components';
  */
 import { THEME_CONSTANTS } from '../../theme';
 import { Button } from '../button';
-import { Close } from '../../icons/navigation';
+import { Cross } from '../../icons';
 import { Text } from '../typography';
 import { focusableOutlineCSS } from '../../theme/helpers';
 import {
@@ -156,7 +156,7 @@ const SnackbarMessage = ({
           )}
           {showCloseButton && (
             <CloseButton onClick={handleDismiss}>
-              <Close aria-hidden />
+              <Cross aria-hidden />
             </CloseButton>
           )}
         </ActionContainer>

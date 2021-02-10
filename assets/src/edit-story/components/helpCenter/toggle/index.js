@@ -59,13 +59,13 @@ const Label = styled.span`
   }
 `;
 
-const HelpIcon = styled(Icons.Help)`
+const HelpIcon = styled(Icons.QuestionmarkOutline)`
   height: 32px;
   width: auto;
   margin-right: 4.5px;
 `;
 
-const ChevronIcon = styled(Icons.Chevron)`
+const ChevronIcon = styled(Icons.ChevronDown)`
   display: block;
   height: auto;
   width: 100%;

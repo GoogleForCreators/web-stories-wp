@@ -22,9 +22,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Warning } from '../../../../design-system/icons';
+import { Icons } from '../../../../design-system';
 
-export const WarningIcon = styled(Warning)`
+export const WarningIcon = styled(Icons.ExclamationTriangle)`
   color: $(({theme}) => theme.DEPRECATED_THEME.colors.fg.white);
   width: 14px;
   height: 14px;

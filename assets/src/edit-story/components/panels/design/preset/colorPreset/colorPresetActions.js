@@ -27,7 +27,7 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
  */
 
 import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
-import { Add } from '../../../../../../design-system/icons';
+import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
@@ -195,7 +195,7 @@ function ColorPresetActions({ color, pushUpdate }) {
             aria-label={__('Add color', 'web-stories')}
             onClick={() => handleAddColorPreset(color)}
           >
-            <Add />
+            <Icons.Plus />
           </AddColorPreset>
         </ButtonWrapper>
       </HeaderRow>
@@ -214,7 +214,7 @@ function ColorPresetActions({ color, pushUpdate }) {
           <CtaWrapper>
             <TranslateWithMarkup
               mapping={{
-                i: <Add />,
+                i: <Icons.Plus />,
               }}
             >
               {__('Click <i></i> to save a color', 'web-stories')}

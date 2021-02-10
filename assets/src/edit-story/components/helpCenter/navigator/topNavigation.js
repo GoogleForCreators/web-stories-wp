@@ -54,7 +54,7 @@ export function TopNavigation({ onClose }) {
           size={BUTTON_SIZES.SMALL}
           variant={BUTTON_VARIANTS.CIRCLE}
         >
-          <Icons.Close />
+          <Icons.Cross />
         </NavButton>
       </TopNavButtons>
     </NavBar>

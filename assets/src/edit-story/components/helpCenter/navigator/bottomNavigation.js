@@ -102,7 +102,7 @@ export function BottomNavigation({
           disabled={!hasBottomNavigation}
         >
           <ArrowWrap isRTL={isRTL}>
-            <Icons.Arrow />
+            <Icons.ArrowLeft />
           </ArrowWrap>
           <span>{__('All Tips', 'web-stories')}</span>
         </NavButton>

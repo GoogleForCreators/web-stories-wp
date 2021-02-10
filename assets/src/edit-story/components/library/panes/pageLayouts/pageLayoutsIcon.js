@@ -23,9 +23,9 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Layout } from '../../../../../design-system/icons/editor';
+import { Icons } from '../../../../../design-system';
 
-const StyledLayoutIcon = styled(Layout)({
+const StyledLayoutIcon = styled(Icons.Box4Alternate)({
   transform: 'scale(0.71)',
 });
 

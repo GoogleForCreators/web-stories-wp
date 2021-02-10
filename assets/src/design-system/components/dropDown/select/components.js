@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Chevron } from '../../../icons';
+import { ChevronDown } from '../../../icons';
 import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
@@ -91,7 +91,7 @@ SelectButton.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const StyledChevron = styled(Chevron)(
+export const StyledChevron = styled(ChevronDown)(
   ({ theme, isOpen }) => css`
     color: ${theme.colors.fg.secondary};
     width: 8px;

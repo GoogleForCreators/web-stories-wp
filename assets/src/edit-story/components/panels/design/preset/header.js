@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Add, Edit } from '../../../../../design-system/icons';
+import { Icons } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
 
 const buttonCSS = css`
@@ -90,7 +90,7 @@ function PresetsHeader({
             }
             isEditMode={isEditMode}
           >
-            {isEditMode ? __('Done', 'web-stories') : <Edit />}
+            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
           </EditMode>
         )}
         {!isEditMode && !isColor && (
@@ -98,7 +98,7 @@ function PresetsHeader({
             onClick={handleAddPreset}
             aria-label={__('Add style', 'web-stories')}
           >
-            <Add />
+            <Icons.Plus />
           </AddPresetButton>
         )}
       </>
