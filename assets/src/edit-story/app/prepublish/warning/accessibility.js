@@ -243,14 +243,20 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
   });
 }
 
-function textBgColorsLowContrast({ backgroundColor, textColors, ...elements }) {
+function textBgColorsLowContrast({
+  backgroundColor,
+  textColors,
+  fontSize,
+  ...elements
+}) {
   const someTextHasLowContrast = textColors.some((styleColor) => {
     const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
     const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
-      backgroundLuminance
+      backgroundLuminance,
+      fontSize
     );
     return !contrastCheck.WCAG_AA;
   });
@@ -385,6 +391,7 @@ export async function pageBackgroundTextLowContrast(page) {
             return {
               backgroundColor: resolvedBgColor,
               textColors,
+              fontSize: element.fontSize,
               pageId: page.id,
               elements: [backgroundElement, element],
             };
@@ -393,6 +400,7 @@ export async function pageBackgroundTextLowContrast(page) {
           backgroundColorResult = {
             backgroundColor,
             textColors,
+            fontSize: element.fontSize,
             pageId: page.id,
             elements: [backgroundElement, element],
           };
