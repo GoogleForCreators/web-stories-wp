@@ -40,7 +40,7 @@ const EMBED_BLOCK_CONTENT = `
 <!-- /wp:web-stories/embed -->
 `;
 
-describe('Embed Block', () => {
+describe('Web Stories Block', () => {
   let stopRequestInterception;
 
   beforeAll(async () => {
@@ -74,11 +74,16 @@ describe('Embed Block', () => {
     stopRequestInterception();
   });
 
-  it('should insert a new embed block', async () => {
+  it('should insert a new web stories block', async () => {
     await createNewPost({
       showWelcomeGuide: false,
     });
     await insertBlock('Web Stories');
+
+    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
+    await expect(page).toClick('div.components-card__body', {
+      text: 'Story URL',
+    });
 
     await page.type(
       'input[aria-label="Story URL"]',

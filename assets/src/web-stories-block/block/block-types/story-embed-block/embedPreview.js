@@ -77,6 +77,8 @@ function EmbedPreview({ url, title, poster, isSelected, width, height }, ref) {
   /* eslint-enable jsx-a11y/no-static-element-interactions */
 }
 
+const EmbedPreviewWithRef = forwardRef(EmbedPreview);
+
 EmbedPreview.propTypes = {
   url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -85,7 +87,5 @@ EmbedPreview.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };
-
-const EmbedPreviewWithRef = forwardRef(EmbedPreview);
 
 export default EmbedPreviewWithRef;

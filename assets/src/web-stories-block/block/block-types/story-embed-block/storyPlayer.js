@@ -46,6 +46,8 @@ function StoryPlayer({ url, title, poster, width, height }, ref) {
   );
 }
 
+const StoryPlayerWithRef = forwardRef(StoryPlayer);
+
 StoryPlayer.propTypes = {
   url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -53,7 +55,5 @@ StoryPlayer.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
 };
-
-const StoryPlayerWithRef = forwardRef(StoryPlayer);
 
 export default StoryPlayerWithRef;

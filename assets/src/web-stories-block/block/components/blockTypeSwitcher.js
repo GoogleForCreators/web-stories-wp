@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { DropdownMenu } from '@wordpress/components';
+import { DropdownMenu, Toolbar, ToolbarItem } from '@wordpress/components';
 import { update } from '@wordpress/icons';
 
 /**
@@ -33,18 +33,25 @@ import { BLOCK_TYPES } from '../constants';
 
 function BlockTypeSwitcher({ selectedBlockType, setAttributes }) {
   return (
-    <DropdownMenu
-      icon={update}
-      label={__('Change Block Type', 'web-stories')}
-      controls={BLOCK_TYPES.filter(
-        (blockType) => blockType.id !== selectedBlockType
-      ).map((blockType) => {
-        return {
-          title: blockType.label,
-          onClick: () => setAttributes({ blockType: blockType.id }),
-        };
-      })}
-    />
+    <Toolbar label={__('Change Block Type', 'web-stories')}>
+      <ToolbarItem>
+        {(toolbarItemHTMLProps) => (
+          <DropdownMenu
+            icon={update}
+            toggleProps={toolbarItemHTMLProps}
+            label={__('Change block type dropdown', 'web-stories')}
+            controls={BLOCK_TYPES.filter(
+              (blockType) => blockType.id !== selectedBlockType
+            ).map((blockType) => {
+              return {
+                title: blockType.label,
+                onClick: () => setAttributes({ blockType: blockType.id }),
+              };
+            })}
+          />
+        )}
+      </ToolbarItem>
+    </Toolbar>
   );
 }
 
