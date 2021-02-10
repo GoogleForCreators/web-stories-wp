@@ -27,10 +27,10 @@ import track from './track';
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
  * @see  https://support.google.com/analytics/answer/1033068#Anatomy
  *
- * @param {string} eventName The event name (e.g. 'search').
- * @param {string} eventCategory The event category (e.g. 'editor'). GA defaults this to 'engagement'.
- * @param {string} [eventLabel] The event label (e.g. 'search_term').
- * @param {string} [eventValue] The event value (e.g. the actual search term).
+ * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
+ * @param {string} eventCategory The category of the event. (e.g. 'editor'). Default: 'engagement'.
+ * @param {string} [eventLabel] The event label. Default: '(not set)'.
+ * @param {string} [eventValue] The event value. Default: '(not set)'.
  * @param {Object<*>} [additionalData] Additional event data to send.
  * @return {Promise<void>} Promise that always resolves.
  */
@@ -50,7 +50,7 @@ async function trackEvent(
     send_to: config.trackingId,
     event_category: eventCategory,
     event_label: eventLabel,
-    event_value: eventValue,
+    value: eventValue,
     ...additionalData,
   };
 
