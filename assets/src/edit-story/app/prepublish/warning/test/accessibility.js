@@ -103,46 +103,48 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
   });
 
   describe('pageBackgroundTextLowContrast', () => {
-    it('should return a warning if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
-      const bgEl = {
-        x: 1,
-        y: 1,
-        type: 'shape',
-        isBackground: true,
+    const bgEl = {
+      x: 1,
+      y: 1,
+      type: 'shape',
+      isBackground: true,
+      height: PAGE_HEIGHT,
+      width: PAGE_WIDTH,
+      backgroundColor: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
+      },
+    };
+    const textEl = {
+      type: 'text',
+      backgroundTextMode: 'NONE',
+      content: 'Fill with text',
+      x: 1,
+      y: 1,
+      width: 175,
+      height: 36,
+      fontSize: 12,
+    };
+    const page = {
+      id: 123,
+      pageSize: {
         height: PAGE_HEIGHT,
         width: PAGE_WIDTH,
-        backgroundColor: {
-          color: {
-            r: 255,
-            g: 255,
-            b: 255,
-          },
+      },
+      elements: [bgEl, textEl],
+      backgroundColor: {
+        color: {
+          r: 2,
+          g: 12,
+          b: 1,
         },
-      };
-      const textEl = {
-        type: 'text',
-        backgroundTextMode: 'NONE',
-        content: 'Fill with text',
-        x: 1,
-        y: 1,
-        width: 175,
-        height: 36,
-      };
-      const page = {
-        id: 123,
-        pageSize: {
-          height: PAGE_HEIGHT,
-          width: PAGE_WIDTH,
-        },
-        elements: [bgEl, textEl],
-        backgroundColor: {
-          color: {
-            r: 2,
-            g: 12,
-            b: 1,
-          },
-        },
-      };
+      },
+    };
+
+    it('should return a warning if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
       expect(
         await accessibilityChecks.pageBackgroundTextLowContrast(page)
       ).toStrictEqual([
@@ -151,6 +153,61 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
           help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
           elements: [
             { ...bgEl, backgroundColor: page.backgroundColor },
+            textEl,
+          ],
+          pageId: page.id,
+          type: 'warning',
+        },
+      ]);
+    });
+    it('should return undefined if the text size is large enough', async () => {
+      const largeGreyTextEl = {
+        ...textEl,
+        content: '<span style="color:#777777">I woke up like this</span>',
+        fontSize: 18,
+      };
+      const smallGreyTextEl = {
+        ...textEl,
+        content: '<span style="color:#777777">I woke up like this</span>',
+      };
+
+      const whiteBgPage = {
+        ...page,
+        backgroundColor: {
+          color: {
+            r: 255,
+            g: 255,
+            b: 255,
+          },
+        },
+      };
+      expect(
+        await accessibilityChecks.pageBackgroundTextLowContrast({
+          ...whiteBgPage,
+          elements: [bgEl, largeGreyTextEl],
+        })
+      ).toBeUndefined();
+      expect(
+        await accessibilityChecks.pageBackgroundTextLowContrast({
+          ...whiteBgPage,
+          elements: [bgEl, smallGreyTextEl],
+        })
+      ).not.toBeUndefined();
+    });
+
+    it('should return undefined if the contrast is great enough', async () => {
+      const whiteBackgroundColor = { color: { r: 255, g: 255, b: 255 } };
+      expect(
+        await accessibilityChecks.pageBackgroundTextLowContrast({
+          ...page,
+          backgroundColor: whiteBackgroundColor,
+        })
+      ).toStrictEqual([
+        {
+          message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
+          help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
+          elements: [
+            { ...bgEl, backgroundColor: whiteBackgroundColor },
             textEl,
           ],
           pageId: page.id,

@@ -24,8 +24,8 @@ import {
 } from '../../../utils/contrastUtils';
 import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
-import { getBox } from '../../../units/dimensions';
+import { PAGE_RATIO, FULLBLEED_RATIO, DEFAULT_EM } from '../../../constants';
+import { dataToFontSizeEm, getBox } from '../../../units/dimensions';
 import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
 import {
   setOrCreateImage,
@@ -57,6 +57,10 @@ function getSpansFromContent(content) {
   return Array.prototype.slice.call(
     spansFromContentBuffer.getElementsByTagName('span')
   );
+}
+
+function getPtFromEditorFontSize(fontSize) {
+  return dataToFontSizeEm(fontSize, 100) * DEFAULT_EM;
 }
 
 function getOverlappingArea(a, b) {
@@ -256,7 +260,7 @@ function textBgColorsLowContrast({
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
       backgroundLuminance,
-      fontSize
+      getPtFromEditorFontSize(fontSize)
     );
     return !contrastCheck.WCAG_AA;
   });
@@ -320,7 +324,7 @@ export function textElementFontLowContrast(element) {
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
       backgroundLuminance,
-      element.fontSize
+      getPtFromEditorFontSize(element.fontSize)
     );
     return !contrastCheck.WCAG_AA;
   });

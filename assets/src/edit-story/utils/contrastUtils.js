@@ -19,11 +19,6 @@
  */
 
 import * as hues from '@ap.cx/hues';
-/**
- * Internal dependencies
- */
-import { DEFAULT_EM } from '../constants';
-import { dataToEditorY } from '../units';
 
 /**
  * Calculate luminance from RGB Object
@@ -67,6 +62,5 @@ export function calculateLuminanceFromStyleColor(styleColor) {
  */
 export function checkContrastFromLuminances(luminanceA, luminanceB, fontSize) {
   const ratio = hues.contrast(luminanceA, luminanceB);
-  const ptValue = (dataToEditorY(fontSize, 100) / 10) * DEFAULT_EM;
-  return { ratio, WCAG_AA: hues.aa(ratio, ptValue) };
+  return { ratio, WCAG_AA: hues.aa(ratio, fontSize) };
 }
