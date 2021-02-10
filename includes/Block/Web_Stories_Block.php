@@ -30,15 +30,13 @@ use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Assets;
 use WP_Post_Type;
 use function Google\Web_Stories\fields_states;
 
 /**
  * Latest Stories block class.
  */
-class Web_Stories_Block {
-	use Assets;
+class Web_Stories_Block extends Embed_Base {
 
 	/**
 	 * Script handle.
@@ -77,7 +75,7 @@ class Web_Stories_Block {
 	 */
 	public function init() {
 		$this->register_script( self::SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE, Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE );
+		$this->register_style( self::SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE, Embed_Base::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
@@ -153,7 +151,7 @@ class Web_Stories_Block {
 						'default' => [],
 					],
 				],
-				'render_callback' => [ $this, 'render' ],
+				'render_callback' => [ $this, 'render_block' ],
 				'editor_script'   => self::SCRIPT_HANDLE,
 				'editor_style'    => self::SCRIPT_HANDLE,
 			]
@@ -232,7 +230,7 @@ class Web_Stories_Block {
 	 *
 	 * @return string Rendered block type output.*
 	 */
-	public function render( array $attributes ) {
+	public function render_block( array $attributes ) {
 
 		if ( false === $this->initialize_block_attributes( $attributes ) ) {
 			return '';
@@ -256,9 +254,11 @@ class Web_Stories_Block {
 			return $stories->render();
 		}
 
-		$embed_block = new Embed_Base();
+		$attributes = wp_parse_args( $attributes, $this->default_attrs() );
 
-		return $embed_block->render( $attributes );
+		$attributes['class'] = 'wp-block-web-stories-embed';
+
+		return $this->render( $attributes );
 	}
 
 	/**

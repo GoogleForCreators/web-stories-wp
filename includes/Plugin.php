@@ -37,7 +37,6 @@ use Google\Web_Stories\REST_API\Status_Check_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
-use Google\Web_Stories\Block\Embed_Block;
 use Google\Web_Stories\REST_API\Stories_Settings_Controller;
 use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
@@ -92,13 +91,6 @@ class Plugin {
 	 * @var Admin
 	 */
 	public $admin;
-
-	/**
-	 * Gutenberg Blocks.
-	 *
-	 * @var Embed_Block
-	 */
-	public $embed_block;
 
 	/**
 	 * Web Stories Block.
@@ -261,9 +253,7 @@ class Plugin {
 		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
 
 		// Gutenberg Blocks.
-		// $this->embed_block       = new Embed_Block();
 		$this->web_stories_block = new Web_Stories_Block();
-		// add_action( 'init', [ $this->embed_block, 'init' ] );
 		add_action( 'init', [ $this->web_stories_block, 'init' ] );
 
 		// Embed shortcode.
