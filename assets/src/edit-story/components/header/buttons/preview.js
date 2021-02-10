@@ -33,6 +33,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '../../../../design-system';
+import WithTooltip from '../../tooltip';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -124,18 +125,21 @@ function Preview() {
     []
   );
 
+  const label = __('Preview', 'web-stories');
   return (
     <>
-      <Button
-        variant={BUTTON_VARIANTS.CIRCLE}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        onClick={openPreviewLink}
-        disabled={isSaving || isUploading}
-        aria-label={__('Preview', 'web-stories')}
-      >
-        <Icons.Preview />
-      </Button>
+      <WithTooltip title={label}>
+        <Button
+          variant={BUTTON_VARIANTS.CIRCLE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={openPreviewLink}
+          disabled={isSaving || isUploading}
+          aria-label={label}
+        >
+          <Icons.Preview />
+        </Button>
+      </WithTooltip>
       <PreviewErrorDialog
         open={Boolean(previewLinkToOpenViaDialog)}
         onClose={onDialogClose}

@@ -33,6 +33,7 @@ import {
   useGlobalKeyDownEffect,
 } from '../../../../design-system';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
+import WithTooltip from '../../tooltip';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -78,18 +79,20 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Button
-          variant={BUTTON_VARIANTS.CIRCLE}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={() => saveStory({ status: 'draft' })}
-          disabled={
-            !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
-          }
-          aria-label={__('Save draft', 'web-stories')}
-        >
-          <Icons.Save />
-        </Button>
+        <WithTooltip title={text}>
+          <Button
+            variant={BUTTON_VARIANTS.CIRCLE}
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={() => saveStory({ status: 'draft' })}
+            disabled={
+              !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
+            }
+            aria-label={text}
+          >
+            <Icons.Save />
+          </Button>
+        </WithTooltip>
       );
   }
 

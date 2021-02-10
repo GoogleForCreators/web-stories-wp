@@ -37,5 +37,6 @@ export { ReactComponent as Preview } from './preview.svg';
 export { ReactComponent as Save } from './save.svg';
 export { ReactComponent as Search } from './search.svg';
 export { ReactComponent as Settings } from './settings.svg';
+export { ReactComponent as SwitchToDraft } from './switchToDraft.svg';
 export { ReactComponent as Trash } from './trash.svg';
 export { ReactComponent as Unlock } from './unlock.svg';

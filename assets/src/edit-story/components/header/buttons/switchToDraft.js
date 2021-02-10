@@ -31,6 +31,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../../../design-system';
+import WithTooltip from '../../tooltip';
 
 function SwitchToDraft() {
   const { isSaving, saveStory } = useStory(
@@ -49,18 +50,20 @@ function SwitchToDraft() {
     saveStory,
   ]);
 
-  // @todo This should have its own icon!
+  const label = __('Switch to Draft', 'web-stories');
   return (
-    <Button
-      variant={BUTTON_VARIANTS.CIRCLE}
-      type={BUTTON_TYPES.TERTIARY}
-      size={BUTTON_SIZES.SMALL}
-      onClick={handleUnPublish}
-      disabled={isSaving || isUploading}
-      aria-label={__('Switch to Draft', 'web-stories')}
-    >
-      <Icons.Save />
-    </Button>
+    <WithTooltip title={label}>
+      <Button
+        variant={BUTTON_VARIANTS.CIRCLE}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={handleUnPublish}
+        disabled={isSaving || isUploading}
+        aria-label={label}
+      >
+        <Icons.SwitchToDraft />
+      </Button>
+    </WithTooltip>
   );
 }
 
