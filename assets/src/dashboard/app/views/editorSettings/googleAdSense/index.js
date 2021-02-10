@@ -157,12 +157,7 @@ function GoogleAdSenseSettings({
 
   const handleClick = useCallback(
     (evt) =>
-      trackClick(
-        evt,
-        'monetization',
-        'dashboard',
-        TEXT.PUBLISHER_ID_CONTEXT_LINK
-      ),
+      trackClick(evt, 'outbound', 'dashboard', TEXT.PUBLISHER_ID_CONTEXT_LINK),
     []
   );
 

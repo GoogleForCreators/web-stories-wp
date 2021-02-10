@@ -20,6 +20,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -119,6 +120,15 @@ function GoogleAnalyticsSettings({
     [handleOnSave]
   );
 
+  const onSiteKitClick = useCallback(
+    (evt) => trackClick(evt, 'site_kit', 'dashboard', link),
+    [link]
+  );
+  const onContextClick = useCallback(
+    (evt) => trackClick(evt, 'outbound', 'dashboard', TEXT.CONTEXT_LINK),
+    []
+  );
+
   const siteKitDisplayText = useMemo(() => {
     if (analyticsActive) {
       return TEXT.SITE_KIT_IN_USE;
@@ -134,6 +144,7 @@ function GoogleAnalyticsSettings({
               target="_blank"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               as="a"
+              onClick={onSiteKitClick}
             />
           ),
         }}
@@ -141,7 +152,7 @@ function GoogleAnalyticsSettings({
         {installed ? TEXT.SITE_KIT_INSTALLED : TEXT.SITE_KIT_NOT_INSTALLED}
       </TranslateWithMarkup>
     );
-  }, [analyticsActive, installed, link]);
+  }, [analyticsActive, installed, link, onSiteKitClick]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -190,6 +201,7 @@ function GoogleAnalyticsSettings({
                   target="_blank"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                   as="a"
+                  onClick={onContextClick}
                 />
               ),
             }}

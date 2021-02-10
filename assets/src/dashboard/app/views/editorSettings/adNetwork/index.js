@@ -131,12 +131,11 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   }, [adNetwork]);
 
   const handleMonetizationClick = useCallback(
-    (evt) =>
-      trackClick(evt, 'monetization', 'dashboard', TEXT.HELPER_LINK_NONE),
+    (evt) => trackClick(evt, 'outbound', 'dashboard', TEXT.HELPER_LINK_NONE),
     []
   );
   const handleAdNetworkClick = useCallback(
-    (evt) => trackClick(evt, 'monetization', 'dashboard', link),
+    (evt) => trackClick(evt, 'outbound', 'dashboard', link),
     [link]
   );
 

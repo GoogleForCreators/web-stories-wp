@@ -39,13 +39,13 @@ const Paragraph = styled.p`
 `;
 
 const SUPPORT_URL = __(
-  'https://wordpress.org/support/plugin/web-stories/#new-topic-0',
+  'https://wordpress.org/support/plugin/web-stories/',
   'web-stories'
 );
 
 function StatusCheckFailed({ open, onClose }) {
   const onSupportClick = useCallback((evt) => {
-    trackClick(evt, 'contact_support', 'editor', SUPPORT_URL);
+    trackClick(evt, 'outbound', 'editor', SUPPORT_URL);
   }, []);
 
   return (
