@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import getAllTemplates from '@web-stories-wp/templates';
 
 /**
  * Internal dependencies
  */
-import getAllTemplates from '../../../dashboard/templates';
 import { PAGE_WIDTH } from '../../constants';
 
 const PLACEHOLDER_WIDTH = 1680;

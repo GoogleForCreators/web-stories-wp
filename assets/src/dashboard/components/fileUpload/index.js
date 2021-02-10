@@ -27,10 +27,22 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { DEFAULT_FILE_UPLOAD_TYPES } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
-import { DefaultButton } from '../button';
-import { TypographyPresets } from '../typography';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Button,
+  Text,
+  themeHelpers,
+} from '../../../design-system';
+
+const StyledButton = styled(Button)`
+  :focus-within {
+    ${({ theme }) => themeHelpers.focusCSS(theme.colors.border.focus)}
+  }
+`;
 
 const Input = styled.input(visuallyHiddenStyles);
+
 const UploadFormArea = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,26 +62,11 @@ const UploadFormArea = styled.div`
   transition: border-color 300ms ease-in;
 `;
 
-const UploadHelperText = styled.span`
-  ${TypographyPresets.ExtraSmall};
+const UploadHelperText = styled(Text)`
   margin: 0 auto 16px;
   padding: 0 20%;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
-`;
-
-/* TODO: new button styles */
-const UploadLabelAsCta = styled(DefaultButton).attrs({
-  as: 'label',
-})`
-  margin: 0 auto;
-  align-self: flex-end;
-  z-index: 10;
-  font-size: 14px;
-  line-height: 16px;
-
-  &:focus-within {
-    border: ${({ theme }) => theme.DEPRECATED_THEME.borders.action};
-  }
+  text-align: center;
+  color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
 const LoadingIndicator = styled.div`
@@ -83,11 +80,11 @@ const LoadingIndicator = styled.div`
   background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
   opacity: ${({ isLoading }) => (isLoading ? 0.6 : 0)};
   z-index: ${({ isLoading }) => (isLoading ? '100' : '0')};
+  pointer-events: none;
 
   transition: opacity ease-in-out 300ms;
 
   p {
-    ${TypographyPresets.Small};
     font-style: italic;
   }
 `;
@@ -179,7 +176,13 @@ const FileUpload = ({
       </LoadingIndicator>
       <UploadHelperText>{instructionalText}</UploadHelperText>
 
-      <UploadLabelAsCta htmlFor={id} aria-label={ariaLabel}>
+      <StyledButton
+        forwardedAs="label"
+        htmlFor={id}
+        aria-label={ariaLabel}
+        type={BUTTON_TYPES.PRIMARY}
+        size={BUTTON_SIZES.SMALL}
+      >
         {label}
         <Input
           ref={fileInputRef}
@@ -192,7 +195,7 @@ const FileUpload = ({
           aria-live="polite"
           aria-busy={isLoading}
         />
-      </UploadLabelAsCta>
+      </StyledButton>
     </UploadFormArea>
   );
 };

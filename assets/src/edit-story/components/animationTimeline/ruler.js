@@ -25,14 +25,14 @@ import { rgba } from 'polished';
 
 const Path = styled.path`
   fill: none;
-  stroke: ${({ theme }) => rgba(theme.colors.fg.white, 0.4)};
+  stroke: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.4)};
   shape-rendering: crispEdges;
 `;
 
 const Text = styled.text`
-  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
   font-size: 13px;
-  fill: ${({ theme }) => rgba(theme.colors.fg.white, 0.8)};
+  fill: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.8)};
 `;
 
 export const MARK_OFFSET = 40.0;

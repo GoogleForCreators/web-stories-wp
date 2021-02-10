@@ -310,6 +310,7 @@ class HTML {
 
 		$config  = [
 			'bookendVersion' => 'v1.0',
+			'components'     => [],
 			'shareProviders' => $share_providers,
 		];
 		$bookend = sprintf(

@@ -27,6 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Row, Media } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue, Note } from '../../shared';
+import { useConfig } from '../../../../app/config';
 
 const DEFAULT_RESOURCE = {
   poster: null,
@@ -40,6 +41,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   );
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
+  const { allowedImageMimeTypes } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) => {
@@ -61,7 +63,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           alt={__('Preview poster image', 'web-stories')}
-          type={'image'}
+          type={allowedImageMimeTypes}
           ariaLabel={__('Video poster', 'web-stories')}
           imgProps={{ style: { objectFit: 'contain' } }}
           canReset

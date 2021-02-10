@@ -57,7 +57,7 @@ const QuickAction = styled.button`
   line-height: 1;
   overflow: hidden;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 const TextIconContainer = styled.div`
