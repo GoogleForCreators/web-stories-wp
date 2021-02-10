@@ -20,12 +20,11 @@ import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-
 /**
  * Internal dependencies
  */
-import { Link } from '../typography/link';
-import { Text } from '../typography/text';
+import { BUTTON_TRANSITION_TIMING } from '../button/constants';
+import { MenuItem, MenuItemProps } from './menu-item';
 
 const Popover = styled.div(
   ({ isOpen, theme }) => css`
@@ -47,93 +46,94 @@ const Popover = styled.div(
   `
 );
 
-const MenuContainer = styled.ul`
-  background-color: ${({ theme }) => theme.colors.standard.white};
-  border-radius: 8px;
-  margin: 0;
-  min-width: 210px;
-  padding: 5px 0;
-  pointer-events: auto;
-  list-style: none;
+const MenuContainer = styled.ul(
+  ({ theme }) => css`
+    background-color: ${theme.colors.bg.primary};
+    border-radius: 8px;
+    margin: 0;
+    min-width: 210px;
+    padding: 5px 0;
+    pointer-events: auto;
+    list-style: none;
 
-  a {
-    background-color: none;
-    text-decoration: none;
-  }
-
-  li {
     a {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 16px;
+      background-color: none;
+      text-decoration: none;
     }
 
-    &.separatorTop {
-      border-top: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
-    }
+    li {
+      a,
+      button,
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 18px;
+        border: 0;
+        transition: background-color ${BUTTON_TRANSITION_TIMING};
+      }
 
-    &.separatorBottom {
-      border-bottom: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
-    }
-  }
-`;
+      button,
+      button:disabled {
+        width: 100%;
+        border-radius: 0;
+        background-color: transparent;
+      }
 
-const MenuItem = styled(Text)(
-  ({ theme }) => css`
-    max-width: 200px;
+      button:disabled * {
+        color: ${theme.colors.bg.tertiary};
+      }
+
+      &.separatorTop {
+        border-top: 1px solid ${theme.colors.bg.tertiary};
+      }
+
+      &.separatorBottom {
+        border-bottom: 1px solid ${theme.colors.bg.tertiary};
+      }
+
+      :hover a,
+      :hover button:not(:disabled),
+      button:active {
+        background-color: ${theme.colors.bg.secondary};
+      }
+    }
   `
 );
-const Shortcut = styled(Text)(
-  ({ theme }) => css`
-    margin-right: 5px;
-    color: ${theme.colors.bg.tertiary};
-  `
-);
 
-const InnerContent = ({ items }) => {
+const ContextMenu = ({ isOpen, items, ...props }) => {
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   return (
-    <MenuContainer>
-      {items.map((item, index) => (
-        <li
-          key={ids[index]}
-          className={
-            (item.separator === 'top' && 'separatorTop') ||
-            (item.separator === 'bottom' && 'separatorBottom')
-          }
-        >
-          <Link>
-            <MenuItem forwardedAs="span">{item.label}</MenuItem>
-            <Shortcut forwardedAs="span">{'%C'}</Shortcut>
-          </Link>
-        </li>
-      ))}
-    </MenuContainer>
-  );
-};
-
-InnerContent.propTypes = {
-  items: PropTypes.arrayOf({
-    disabled: PropTypes.bool,
-    label: PropTypes.string.isRequired,
-    separator: PropTypes.oneOf(['bottom', 'top']),
-    shortcut: PropTypes.string,
-    value: PropTypes.string.isRequired,
-  }),
-};
-
-const ContextMenu = ({ isOpen, ...props }) => {
-  return (
-    <Popover isOpen={isOpen}>
-      <InnerContent {...props} />
+    <Popover isOpen={isOpen} {...props}>
+      <MenuContainer>
+        {items.map(({ separator, ...itemProps }, index) => {
+          return (
+            <li
+              key={ids[index]}
+              className={
+                (separator === 'top' && 'separatorTop') ||
+                (separator === 'bottom' && 'separatorBottom') ||
+                ''
+              }
+            >
+              <MenuItem {...itemProps} />
+            </li>
+          );
+        })}
+      </MenuContainer>
     </Popover>
   );
 };
 
 ContextMenu.propTypes = {
   isOpen: PropTypes.bool,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      ...MenuItemProps,
+      separator: PropTypes.oneOf(['bottom', 'top']),
+    }).isRequired
+  ),
 };
 
 export default ContextMenu;
