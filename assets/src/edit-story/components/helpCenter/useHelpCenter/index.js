@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { useReducer, useEffect, useState, useMemo } from 'react';
+import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -96,8 +99,18 @@ const initial = {
     goToTip: (key) => ({ navigationFlow }) => ({
       navigationIndex: navigationFlow.findIndex((v) => v === key),
     }),
-    toggle: () => ({ isOpen }) => ({ isOpen: !isOpen }),
-    close: () => () => ({ isOpen: false }),
+    toggle: () => ({ isOpen }) => {
+      trackEvent('help_center_toggled', 'editor', null, null, {
+        status: isOpen ? 'closed' : 'open',
+      });
+      return { isOpen: !isOpen };
+    },
+    close: () => () => {
+      trackEvent('help_center_toggled', 'editor', null, null, {
+        status: 'closed',
+      });
+      return { isOpen: false };
+    },
     hydrateReadTipsSuccess: (payload) => (state) => ({
       readTips: {
         ...(payload?.readTips ?? {}),
@@ -182,12 +195,12 @@ export function useHelpCenter() {
     return () => clearTimeout(id);
   }, [actions, updateCurrentUser, persistenceKey]);
 
-  // Components wrapped in a Transition no longer recieve
+  // Components wrapped in a Transition no longer receive
   // prop updates once they start exiting. To work around
   // this, we're passing them all state they need to
   // initialize their animations, then scheduling the
   // state update that causes them to transition 1 render
-  // after they recieve those transition initializing props.
+  // after they receive those transition initializing props.
   const [nextRenderState, setNextRenderState] = useState(store.state);
   useEffect(() => setNextRenderState(store.state), [store.state]);
 
@@ -201,6 +214,26 @@ export function useHelpCenter() {
     !nextRenderState.isOpen && store.state.isOpen
       ? store.state.navigationIndex
       : nextRenderState.navigationIndex;
+
+  useEffect(() => {
+    if (
+      navigationIndex > -1 &&
+      store.state.navigationFlow.length >= navigationIndex
+    ) {
+      const currentTip = store.state.navigationFlow[navigationIndex];
+      // navigation includes 'done' which does not get marked read
+      const unreadCount =
+        store.state.navigationFlow.length -
+        Object.keys(store.state.readTips).length -
+        1;
+
+      trackEvent('help_center_read_tip', 'editor', currentTip, null, {
+        unread_count: unreadCount,
+      });
+    }
+    // Disable reason: avoid sending duplicate tracking events.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigationIndex]);
 
   return useMemo(
     () => ({
