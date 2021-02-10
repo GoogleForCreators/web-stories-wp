@@ -41,7 +41,7 @@ const CONTROLS_BORDER_RADIUS = 6;
 const OPACITY_WIDTH = 32;
 
 const Container = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

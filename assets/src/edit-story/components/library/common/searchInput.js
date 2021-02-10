@@ -40,7 +40,7 @@ const Search = styled(TextInput)`
   flex-grow: 1;
   border-radius: 4px;
   padding: 8px 16px 8px 16px;
-  border: 1px solid ${({ theme }) => theme.colors.outline};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.outline};
   background-color: transparent;
 
   input {
@@ -51,7 +51,7 @@ const Search = styled(TextInput)`
 const CloseIcon = styled(Close)`
   width: 14px;
   height: 14px;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 /**
