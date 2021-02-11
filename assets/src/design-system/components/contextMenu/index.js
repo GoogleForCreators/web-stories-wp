@@ -58,7 +58,7 @@ const MenuContainer = styled.ul(
     list-style: none;
 
     a {
-      background-color: none;
+      background-color: transparent;
       text-decoration: none;
     }
 
@@ -78,13 +78,22 @@ const MenuContainer = styled.ul(
         transition: color ${BUTTON_TRANSITION_TIMING};
       }
 
+      :active span,
+      :hover span {
+        color: ${theme.colors.fg.primary};
+      }
+
       button {
         width: 100%;
         border-radius: 0;
         background-color: transparent;
 
         :disabled {
-          color: ${theme.colors.bg.tertiary};
+          background-color: transparent;
+
+          span {
+            color: ${theme.colors.bg.tertiary};
+          }
         }
       }
 
@@ -94,11 +103,6 @@ const MenuContainer = styled.ul(
 
       &.separatorBottom {
         border-bottom: 1px solid ${theme.colors.bg.tertiary};
-      }
-
-      :active span,
-      :hover span {
-        color: ${theme.colors.fg.primary};
       }
 
       :active a,
