@@ -18,8 +18,12 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { trackError } from '@web-stories-wp/tracking';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  trackError,
+  trackEvent,
+  getTimeTracker,
+} from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -149,12 +153,25 @@ function useUploadMedia({ media, setMedia }) {
         // Upload all the files one by one and get the new resource
         // from the uploaded attachment returned by the server.
         const uploadedFiles = await Promise.all(
-          localFiles.map(async (localFile) => ({
-            ...localFile,
-            fileUploaded: getResourceFromAttachment(
+          localFiles.map(async (localFile) => {
+            trackEvent('upload_media', 'editor', '', '', {
+              file_size: localFile.file.size,
+              file_type: localFile.file.type,
+            });
+            const trackTiming = getTimeTracker(
+              'upload_media',
+              'editor',
+              'Media'
+            );
+            const fileUploaded = getResourceFromAttachment(
               await uploadFile(localFile.file)
-            ),
-          }))
+            );
+            trackTiming();
+            return {
+              ...localFile,
+              fileUploaded,
+            };
+          })
         );
 
         setIsUploading(false);

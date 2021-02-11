@@ -25,7 +25,7 @@ import { v4 as uuid } from 'uuid';
 /**
  * Uploads a file to the Media Library, and awaits its upload.
  *
- * The file should reside in tests/e2e/assets/.
+ * The file should reside in packages/e2e-tests/src/assets/.
  *
  * @param {string|null} file The file name to upload, for example 'foo.mp4'.
  * @param {boolean} checkUpload Check upload was successfully.
@@ -35,7 +35,10 @@ async function uploadFile(file, checkUpload = true) {
   const fileExtension = extname(file);
   await page.setDefaultTimeout(10000);
 
-  const testMediaPath = resolve(process.cwd(), 'tests/e2e/assets/' + file);
+  const testMediaPath = resolve(
+    process.cwd(),
+    `packages/e2e-tests/src/assets/${file}`
+  );
 
   // Copy file to <newname>.ext for upload.
   const newBaseName = uuid();

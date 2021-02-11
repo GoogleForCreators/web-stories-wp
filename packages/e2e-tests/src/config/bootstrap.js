@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { setDefaultOptions } from 'expect-puppeteer';
 import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 
