@@ -78,11 +78,6 @@ const MenuContainer = styled.ul(
         transition: color ${BUTTON_TRANSITION_TIMING};
       }
 
-      :active span,
-      :hover span {
-        color: ${theme.colors.fg.primary};
-      }
-
       button {
         width: 100%;
         border-radius: 0;
@@ -95,6 +90,11 @@ const MenuContainer = styled.ul(
             color: ${theme.colors.bg.tertiary};
           }
         }
+
+        :active span,
+        :hover span {
+          color: ${theme.colors.fg.primary};
+        }
       }
 
       &.separatorTop {
@@ -102,17 +102,17 @@ const MenuContainer = styled.ul(
       }
 
       &.separatorBottom {
-        border-bottom: 1px solid ${theme.colors.bg.tertiary};
-      }
-
-      :active a,
-      :active button:not(:disabled) {
-        background-color: ${theme.colors.interactiveBg.secondaryPress};
+        border-bottom: 1px so lid ${theme.colors.bg.tertiary};
       }
 
       :hover a,
-      :hover button:not(:disabled) {
+      button:hover:not(:disabled) {
         background-color: ${theme.colors.interactiveBg.secondaryHover};
+      }
+
+      :active a,
+      button:active:not(:disabled) {
+        background-color: ${theme.colors.interactiveBg.secondaryPress};
       }
     }
   `
