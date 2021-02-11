@@ -63,6 +63,10 @@ const Box = styled.div`
   align-items: center;
 `;
 
+const Space = styled.span`
+  width: 8px;
+`;
+
 const PlainStyled = styled(Plain)`
   background-color: ${({ theme }) =>
     rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
@@ -98,26 +102,30 @@ function CarouselMenu() {
       <Wrapper>
         <MenuItems>
           {hasMetaBoxes && (
-            <Box>
-              <WithTooltip
-                title={__('Third-Party Meta Boxes', 'web-stories')}
-                placement={Placement.TOP}
-              >
-                <Button
-                  variant={BUTTON_VARIANTS.SQUARE}
-                  type={BUTTON_TYPES.PLAIN}
-                  size={BUTTON_SIZES.SMALL}
-                  onClick={toggleMetaBoxesVisible}
-                  aria-label={__('Third-Party Meta Boxes', 'web-stories')}
+            <>
+              <Box>
+                <WithTooltip
+                  title={__('Third-Party Meta Boxes', 'web-stories')}
+                  placement={Placement.TOP}
                 >
-                  <Icons.LetterMOutline />
-                </Button>
-              </WithTooltip>
-            </Box>
+                  <Button
+                    variant={BUTTON_VARIANTS.SQUARE}
+                    type={BUTTON_TYPES.TERTIARY}
+                    size={BUTTON_SIZES.SMALL}
+                    onClick={toggleMetaBoxesVisible}
+                    aria-label={__('Third-Party Meta Boxes', 'web-stories')}
+                  >
+                    <Icons.LetterMOutline />
+                  </Button>
+                </WithTooltip>
+              </Box>
+              <Space />
+            </>
           )}
           <Box>
             <KeyboardShortcutsMenu />
           </Box>
+          <Space />
           <Box>
             <WithTooltip
               title={__('Grid View', 'web-stories')}

@@ -82,7 +82,7 @@ function PageNav({ isNext = true }) {
     <Wrapper>
       <Button
         variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.PLAIN}
+        type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.MEDIUM}
         isDisabled={!displayNav}
         isHidden={!displayNav}
