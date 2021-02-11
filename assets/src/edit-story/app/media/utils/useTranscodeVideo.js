@@ -67,6 +67,7 @@ function useTranscodeVideo() {
     const { createFFmpeg, fetchFile } = await import(
       /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
     );
+
     const ffmpeg = createFFmpeg({
       corePath: ffmpegCoreUrl,
       log: isDevelopment,
