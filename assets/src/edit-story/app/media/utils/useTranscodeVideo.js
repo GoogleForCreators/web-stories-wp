@@ -26,17 +26,9 @@ import { useFeature } from 'flagged';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
+import getFileName from './getFileName';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-
-/**
- * Returns file basename without extension.
- *
- * @param {File} file File object.
- * @param {string} file.name File name.
- * @return {string} File name without extension.
- */
-const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
 
 /**
  * Determines whether it's a video file.

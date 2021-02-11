@@ -70,36 +70,40 @@ export const HelpCenter = () => {
     <StyleSheetManager
       stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
     >
-      <ThemeGlobals.OverrideFocusOutline />
-      <Wrapper ref={ref}>
-        <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
-          <Navigator
-            onNext={actions.goToNext}
-            onPrev={actions.goToPrev}
-            onAllTips={actions.goToMenu}
-            onClose={actions.close}
-            hasBottomNavigation={state.hasBottomNavigation}
-            isNextDisabled={state.isNextDisabled}
-            isPrevDisabled={state.isPrevDisabled}
-          >
-            <Companion
-              readTips={state.readTips}
-              tipKey={state.navigationFlow[state.navigationIndex]}
-              onTipSelect={actions.goToTip}
-              isLeftToRightTransition={state.isLeftToRightTransition}
-            />
-          </Navigator>
-        </Popup>
-        <Toggle
-          isOpen={state.isOpen}
-          onClick={actions.toggle}
-          notificationCount={
-            // navigation includes 'done' which does not get marked read
-            state.navigationFlow.length - Object.keys(state.readTips).length - 1
-          }
-          popupId={POPUP_ID}
-        />
-      </Wrapper>
+      <>
+        <ThemeGlobals.OverrideFocusOutline />
+        <Wrapper ref={ref}>
+          <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
+            <Navigator
+              onNext={actions.goToNext}
+              onPrev={actions.goToPrev}
+              onAllTips={actions.goToMenu}
+              onClose={actions.close}
+              hasBottomNavigation={state.hasBottomNavigation}
+              isNextDisabled={state.isNextDisabled}
+              isPrevDisabled={state.isPrevDisabled}
+            >
+              <Companion
+                readTips={state.readTips}
+                tipKey={state.navigationFlow[state.navigationIndex]}
+                onTipSelect={actions.goToTip}
+                isLeftToRightTransition={state.isLeftToRightTransition}
+              />
+            </Navigator>
+          </Popup>
+          <Toggle
+            isOpen={state.isOpen}
+            onClick={actions.toggle}
+            notificationCount={
+              // navigation includes 'done' which does not get marked read
+              state.navigationFlow.length -
+              Object.keys(state.readTips).length -
+              1
+            }
+            popupId={POPUP_ID}
+          />
+        </Wrapper>
+      </>
     </StyleSheetManager>
   ) : null;
 };
