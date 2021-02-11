@@ -29,17 +29,9 @@ import {
   MEDIA_TRANSCODING_MAX_FILE_SIZE,
   MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES,
 } from '../../../constants';
+import getFileName from './getFileName';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-
-/**
- * Returns file basename without extension.
- *
- * @param {File} file File object.
- * @param {string} file.name File name.
- * @return {string} File name without extension.
- */
-const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
 
 /**
  * Checks whether the file size is too large for transcoding.

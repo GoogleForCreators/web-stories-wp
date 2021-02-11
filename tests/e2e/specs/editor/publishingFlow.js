@@ -99,6 +99,8 @@ describe('Publishing Flow', () => {
       await page.waitForSelector('body:not(.is-fullscreen-mode)');
     }
 
+    await page.waitForSelector('amp-story-player');
+    await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
 
     expect(await getEditedPostContent()).toMatchSnapshot();
@@ -110,8 +112,9 @@ describe('Publishing Flow', () => {
 
     await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
 
-    await expect(page).toMatch('Publishing Flow Test');
+    await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
+    await expect(page).toMatch('Publishing Flow Test');
   });
 
   describe('Classic Editor', () => {
@@ -162,8 +165,9 @@ describe('Publishing Flow', () => {
 
       await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
 
-      await expect(page).toMatch('Publishing Flow Test');
+      await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');
+      await expect(page).toMatch('Publishing Flow Test');
     });
   });
 });
