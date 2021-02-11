@@ -85,6 +85,10 @@ const StyledInput = styled.input(
     :disabled {
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
+
+      & ~ div svg {
+        color: ${theme.colors.fg.disable};
+      }
     }
 
     & ~ p {
@@ -120,7 +124,7 @@ export const Input = ({
       />
       {Icon && (
         <IconContainer data-testid="input-icon">
-          <Icon />
+          <Icon aria-hidden />
         </IconContainer>
       )}
       {hint && <Hint hasError={hasError}>{hint}</Hint>}
