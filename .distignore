@@ -21,6 +21,7 @@ static
 tests
 third-party/composer.json
 /vendor
+/php7
 web-stories-scraper
 .browserslistrc
 .DS_Store
