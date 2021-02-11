@@ -114,7 +114,7 @@ const ButtonRectangle = styled(Base)`
   border-radius: ${({ theme }) => theme.borders.radius.small};
 
   padding: ${({ size }) =>
-    size === BUTTON_SIZES.SMALL ? '4px 12px' : '18px 32px'};
+    size === BUTTON_SIZES.SMALL ? '8px 16px' : '18px 32px'};
 `;
 
 const ButtonSquare = styled(Base)`
