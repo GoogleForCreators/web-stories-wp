@@ -20,7 +20,7 @@
 import { percySnapshot } from '@percy/puppeteer';
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
-const percyCSS = `.dashboard-media-element { background-color: none; }`;
+const percyCSS = `.dashboard-media-element { background-color: transparent !important; }`;
 
 describe('Template', () => {
   it('should be able use existing template for new story', async () => {
