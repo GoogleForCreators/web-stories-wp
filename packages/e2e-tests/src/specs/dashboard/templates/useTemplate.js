@@ -20,8 +20,6 @@
 import { percySnapshot } from '@percy/puppeteer';
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
-const percyCSS = `.dashboard-media-element { background-color: transparent !important; }`;
-
 describe('Template', () => {
   it('should be able use existing template for new story', async () => {
     await visitDashboard();
@@ -40,7 +38,7 @@ describe('Template', () => {
       '[data-testid="template-grid-item-1"]'
     );
 
-    await percySnapshot(page, 'Explore Templates', { percyCSS });
+    await percySnapshot(page, 'Explore Templates');
 
     await expect(firstTemplate).toClick('button', { text: 'Use template' });
     await page.waitForNavigation();
