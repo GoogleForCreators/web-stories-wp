@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const Container = styled.div`
   position: relative;
   margin-top: 28px;
   margin-bottom: 28px;
@@ -30,44 +30,20 @@ const Container = styled.div`
   }
 `;
 
-const TitleAndTools = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: no-wrap;
-  align-items: center;
-  height: 30px;
-  margin-bottom: 8px;
-`;
-
-const Title = styled.h2`
+export const Title = styled.h2`
   flex: 1 1 auto;
-  color: ${({ theme }) => theme.colors.fg.white};
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
   font-weight: 500;
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
+  margin-bottom: 28px;
 `;
 
-const Tools = styled.div`
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: no-wrap;
-  justify-content: center;
-  align-items: center;
-  margin-left: 8px;
-`;
-
-export default function Section({ title, titleTools, children, ...rest }) {
+export default function Section({ title, children, ...rest }) {
   return (
     <Container {...rest}>
-      {(title || titleTools) && (
-        <TitleAndTools>
-          {title && <Title>{title}</Title>}
-          {titleTools && <Tools>{titleTools}</Tools>}
-        </TitleAndTools>
-      )}
+      <Title>{title}</Title>
       {children}
     </Container>
   );
@@ -75,10 +51,6 @@ export default function Section({ title, titleTools, children, ...rest }) {
 
 Section.propTypes = {
   title: PropTypes.string.isRequired,
-  titleTools: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

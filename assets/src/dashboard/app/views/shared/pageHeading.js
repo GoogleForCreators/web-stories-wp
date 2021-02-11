@@ -22,30 +22,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import cssLerp from '../../../utils/cssLerp';
 import { StoriesPropType } from '../../../types';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
-import {
-  TypographyPresets,
-  NavMenuButton,
-  StandardViewContentGutter,
-} from '../../../components';
+import { NavMenuButton, StandardViewContentGutter } from '../../../components';
+import { Headline, THEME_CONSTANTS } from '../../../../design-system';
 import TypeaheadSearch from './typeaheadSearch';
-import TelemetryBanner from './telemetryBanner';
 
-const StyledHeader = styled.h2`
-  ${TypographyPresets.ExtraExtraLarge};
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+const StyledHeadline = styled(Headline)`
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  line-height: 1;
-  font-size: ${cssLerp('36px', '30px', '--squish-progress')};
   white-space: nowrap;
-
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    font-size: ${cssLerp('30px', '24px', '--squish-progress')};
-  }
 `;
 
 const Content = styled.div`
@@ -61,8 +46,9 @@ const SearchContainer = styled.div`
   position: relative;
   width: 100%;
   height: 29px;
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) => `${theme.standardViewContentGutter.min}px`};
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+    left: ${({ theme }) =>
+      `${theme.DEPRECATED_THEME.standardViewContentGutter.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }
@@ -81,9 +67,10 @@ const HeadingBodyWrapper = styled(StandardViewContentGutter)`
   display: grid;
   grid-template-columns: 25% 50% 1fr;
   align-items: center;
-  height: 75px;
-  padding-bottom: 3px;
-  border-bottom: ${({ theme }) => theme.subNavigationBar.border};
+  margin-top: 36px;
+  padding-bottom: 24px;
+  border-bottom: ${({ theme }) =>
+    theme.DEPRECATED_THEME.subNavigationBar.border};
 `;
 
 export const HeaderToggleButtonContainer = styled.div`
@@ -103,28 +90,28 @@ const PageHeading = ({
   typeaheadValue = '',
 }) => {
   return (
-    <>
-      <TelemetryBanner />
-      <HeadingBodyWrapper>
-        <StyledHeader>
-          <NavMenuButton showOnlyOnSmallViewport />
-          {defaultTitle}
-        </StyledHeader>
-        <Content centerContent={centerContent}>{children}</Content>
-        {showTypeahead && (
-          <SearchContainer>
-            <SearchInner>
-              <TypeaheadSearch
-                placeholder={searchPlaceholder}
-                currentValue={typeaheadValue}
-                stories={stories}
-                handleChange={handleTypeaheadChange}
-              />
-            </SearchInner>
-          </SearchContainer>
-        )}
-      </HeadingBodyWrapper>
-    </>
+    <HeadingBodyWrapper>
+      <StyledHeadline
+        as="h2"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE}
+      >
+        <NavMenuButton showOnlyOnSmallViewport />
+        {defaultTitle}
+      </StyledHeadline>
+      <Content centerContent={centerContent}>{children}</Content>
+      {showTypeahead && (
+        <SearchContainer>
+          <SearchInner>
+            <TypeaheadSearch
+              placeholder={searchPlaceholder}
+              currentValue={typeaheadValue}
+              stories={stories}
+              handleChange={handleTypeaheadChange}
+            />
+          </SearchInner>
+        </SearchContainer>
+      )}
+    </HeadingBodyWrapper>
   );
 };
 

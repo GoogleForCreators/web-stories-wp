@@ -15,14 +15,14 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { isPlatformMacOS } from '../keyboard';
+import { isPlatformMacOS } from '../../../design-system';
 import { SPECIAL_KEYS } from './constants';
 
 function getKeyboardShortcuts() {

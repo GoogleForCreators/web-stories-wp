@@ -24,13 +24,14 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { clamp } from '../../animation';
 import {
   TEMPLATES_GALLERY_SORT_OPTIONS,
   TEMPLATES_GALLERY_STATUS,
   VIEW_STYLE,
 } from '../constants';
 import { PageSizePropType } from '../types';
-import { clamp, usePagePreviewSize } from './index';
+import { usePagePreviewSize } from './index';
 
 export default function useTemplateView({ totalPages }) {
   const enableTemplatePreviews = useFeature('enableTemplatePreviews');

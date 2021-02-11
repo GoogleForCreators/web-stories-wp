@@ -25,28 +25,38 @@ function defaultForUndefined(value, def) {
 }
 
 function VideoOutput({ element, box }) {
-  const { resource, loop } = element;
+  const { resource, loop, tracks } = element;
 
   const sourceProps = {
     type: resource.mimeType,
     src: resource.src,
   };
 
-  const props = {
+  const videoProps = {
     autoPlay: 'autoplay',
     poster: defaultForUndefined(element.poster, resource.poster),
     artwork: defaultForUndefined(element.poster, resource.poster),
-    title: defaultForUndefined(element.title, resource.title),
+    title: defaultForUndefined(element.alt, resource.alt),
     alt: defaultForUndefined(element.alt, resource.alt),
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
   };
 
-  // crossorigin='anonymous' is required to play videos from other domains.
   return (
-    <MediaOutput element={element} box={box}>
-      <amp-video {...props} id={`el-${element.id}-media`}>
+    <MediaOutput element={element} box={box} data-leaf-element="true">
+      <amp-video {...videoProps} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
+        {tracks &&
+          tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
+            <track
+              srcLang={srclang}
+              label={label}
+              kind={kind}
+              src={src}
+              key={key}
+              default={i === 0}
+            />
+          ))}
       </amp-video>
     </MediaOutput>
   );

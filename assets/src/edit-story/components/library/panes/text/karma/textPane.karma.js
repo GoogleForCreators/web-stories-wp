@@ -24,26 +24,32 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
-import { dataFontEm } from '../../../../../units';
+import { dataFontEm, dataPixels } from '../../../../../units';
 import stripHTML from '../../../../../utils/stripHTML';
 import { PRESETS } from '../textPresets';
 
 describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => {
   let fixture;
+  let originalTimeout;
+
   beforeEach(async () => {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
   });
 
   afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     fixture.restore();
   });
 
   it('should add text presets below each other if added consecutively', async () => {
     await fixture.editor.library.textTab.click();
-    // @todo Remove this once #4094 gets fixed!
-    // Wait until the history has changed to its initial (incorrect due to a bug) position.
-    await fixture.events.sleep(300);
+
+    await waitFor(() =>
+      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+    );
 
     await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
     await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
@@ -68,7 +74,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await waitFor(() => {
         expect(stripHTML(element.content)).toEqual(content);
         const preset = PRESETS.find(({ title }) => name === title);
-        expect(element.y).toEqual(preset.element.y);
+        expect(element.y).toEqual(dataPixels(preset.element.y));
       });
       nextY = element.y;
       nextHeight = element.height;
@@ -82,7 +88,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       const element = storyContext.state.selectedElements[0];
       await waitFor(() => {
         expect(stripHTML(element.content)).toEqual(content);
-        expect(element.y).toEqual(lastY + lastHeight + POSITION_MARGIN);
+        expect(element.y).toEqual(
+          dataPixels(lastY + lastHeight + POSITION_MARGIN)
+        );
       });
       nextY = element.y;
       nextHeight = element.height;
@@ -90,9 +98,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     await fixture.editor.library.textTab.click();
 
-    // @todo Remove this once #4094 gets fixed!
-    // Wait until the history has changed to its initial (incorrect due to a bug) position.
-    await fixture.events.sleep(500);
+    await waitFor(() =>
+      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+    );
 
     // Stagger all different text presets.
 
@@ -108,18 +116,18 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
+    // Heading 3 should be positioned in the default position again.
     await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
-    await verifyStaggeredPosition('Heading 3');
+    await verifyDefaultPosition('Heading 3', 'Heading 3');
 
-    // Caption should be positioned in the default position again.
     await fixture.events.click(fixture.editor.library.text.preset('Caption'));
-    await verifyDefaultPosition('Caption', 'Caption');
+    await verifyStaggeredPosition('Caption');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    await fixture.events.click(fixture.editor.library.text.preset('OVERLINE'));
-    await verifyStaggeredPosition('OVERLINE');
+    await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+    await verifyStaggeredPosition('LABEL');
 
     await fixture.snapshot('staggered all text presets');
   });

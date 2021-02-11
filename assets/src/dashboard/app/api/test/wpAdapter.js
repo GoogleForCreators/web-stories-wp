@@ -80,14 +80,13 @@ describe('wpAdapter', () => {
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(
-      'https://stories.google.com?_locale=user',
+      'https://stories.google.com?_method=DELETE&_locale=user',
       {
+        body: undefined,
         credentials: 'include',
         method: 'POST',
         headers: {
           Accept: 'application/json, */*;q=0.1',
-          'Content-Type': 'application/json',
-          'X-HTTP-Method-Override': 'DELETE',
         },
       }
     );

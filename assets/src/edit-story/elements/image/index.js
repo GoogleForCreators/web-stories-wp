@@ -17,16 +17,16 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
+import PanelTypes from '../../components/panels/design/types';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
-export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
 export { default as Output } from './output';
-export { default as TextContent } from './textContent';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
+export { default as Display } from '../media/imageDisplay';
+export { default as TextContent } from '../media/textContent';
 export {
   canFlip,
   isMaskable,
@@ -44,6 +44,5 @@ export const defaultAttributes = {
 export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
   ...MEDIA_PANELS,
-  PanelTypes.LINK,
   PanelTypes.IMAGE_ACCESSIBILITY,
 ];

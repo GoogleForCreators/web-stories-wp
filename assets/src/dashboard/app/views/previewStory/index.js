@@ -15,74 +15,69 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Modal, TypographyPresets, Button } from '../../../components';
-import { WPBODY_ID, BUTTON_TYPES } from '../../../constants';
-import dashboardTheme from '../../../theme';
-import { Close as CloseIcon } from '../../../icons';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Modal,
+  Text,
+  useResizeEffect,
+} from '../../../../design-system';
+import { WPBODY_ID } from '../../../constants';
 import { StoryPropType } from '../../../types';
-import { useResizeEffect } from '../../../utils';
 import useApi from '../../api/useApi';
+import { ERRORS } from '../../textContent';
 
-const CLOSE_BUTTON_SIZE = {
-  HEIGHT: 30,
-  WIDTH: 30,
-};
 const AMP_LOCAL_STORAGE = 'amp-story-state';
 const PREVIEW_CONTAINER_ID = 'previewContainer';
 
-const CloseButton = styled.button`
+const CloseButtonContainer = styled.div`
   align-self: flex-end;
-  color: ${({ theme }) => theme.colors.white};
-  margin-top: 20px;
-  margin-right: 11px;
-  width: ${CLOSE_BUTTON_SIZE.WIDTH}px;
-  height: ${CLOSE_BUTTON_SIZE.HEIGHT}px;
-  border: ${({ theme }) => theme.borders.transparent};
-  background-color: transparent;
-  z-index: 10;
-
-  &:hover {
-    cursor: pointer;
-  }
+  margin: 14px 10px 4px 0;
 `;
 
+const CloseButton = styled(Button)`
+  color: ${({ theme }) => theme.colors.standard.white};
+`;
+
+// 54 getting subtracted from height is the size of the close button + margin. The Iframe wants specifics in safari, this is important to make sure the close button is visible.
 const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
-  height: ${({ dimensions }) =>
-    `${dimensions.height - CLOSE_BUTTON_SIZE.HEIGHT}px`};
-  min-height: 90vh;
+
+  height: ${({ dimensions }) => `${dimensions.height - 54}px`};
+  max-height: calc(100vh - 54px);
 
   &:focus {
-    border: ${({ theme }) => theme.borders.bluePrimary};
+    border: ${({ theme }) => theme.DEPRECATED_THEME.borders.bluePrimary};
     border-width: 2px;
   }
 `;
 
-const HelperText = styled.p`
-  ${TypographyPresets.Large};
-  margin: 0;
+const HelperText = styled(Text)`
   padding-bottom: 20px;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.standard.white};
 `;
 
 const HelperContainer = styled.div`
   position: ${({ overlay }) => (overlay ? 'absolute' : 'inherit')};
   width: 100%;
-  min-height: 90vh;
+  height: calc(100% - 40px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,6 +108,8 @@ const PreviewStory = ({ story, handleClose }) => {
     })
   );
 
+  const theme = useContext(ThemeContext);
+
   const containerRef = useRef(document.getElementById(WPBODY_ID));
   const iframeContainerRef = useRef();
 
@@ -125,7 +122,7 @@ const PreviewStory = ({ story, handleClose }) => {
   useEffect(() => {
     const iframeContainer = document.getElementById(PREVIEW_CONTAINER_ID);
     if (previewMarkup.length > 0 && iframeContainer) {
-      let iframe = document.createElement('iframe');
+      const iframe = document.createElement('iframe');
       iframeContainer.appendChild(iframe);
       iframe.setAttribute('style', 'height:100%;width:100%;border:none;');
       iframe.setAttribute('title', __('AMP preview', 'web-stories'));
@@ -145,9 +142,8 @@ const PreviewStory = ({ story, handleClose }) => {
     if (localStorage.getItem(AMP_LOCAL_STORAGE)) {
       localStorage.removeItem(AMP_LOCAL_STORAGE);
     }
-
-    if (!story) {
-      setPreviewError(__('Unable to Render Preview', 'web-stories'));
+    if (!story || !story.pages.length) {
+      setPreviewError(ERRORS.RENDER_PREVIEW.TITLE);
     } else {
       createStoryPreview(story);
     }
@@ -199,17 +195,21 @@ const PreviewStory = ({ story, handleClose }) => {
       overlayStyles={{
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        backgroundColor: dashboardTheme.colors.storyPreviewBackground,
+        backgroundColor: theme.colors.bg.storyPreview,
       }}
     >
       <>
-        <CloseButton
-          onClick={handleClose}
-          aria-label={__('close preview', 'web-stories')}
-        >
-          <CloseIcon aria-hidden={true} />
-        </CloseButton>
-
+        <CloseButtonContainer>
+          <CloseButton
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.PLAIN}
+            size={BUTTON_SIZES.SMALL}
+            onClick={handleClose}
+            aria-label={__('close preview', 'web-stories')}
+          >
+            <Icons.Close aria-hidden={true} />
+          </CloseButton>
+        </CloseButtonContainer>
         {!previewError && (
           <IframeContainer
             ref={iframeContainerRef}
@@ -230,7 +230,11 @@ const PreviewStory = ({ story, handleClose }) => {
         {previewError && (
           <HelperContainer>
             <HelperText>{previewError}</HelperText>
-            <Button type={BUTTON_TYPES.CTA} onClick={handleClose}>
+            <Button
+              type={BUTTON_TYPES.PRIMARY}
+              size={BUTTON_SIZES.MEDIUM}
+              onClick={handleClose}
+            >
               {__('Close Preview', 'web-stories')}
             </Button>
           </HelperContainer>

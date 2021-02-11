@@ -70,6 +70,7 @@ export const _default = () => {
     return (
       <>
         {dummyData.map((data, index) => (
+          //eslint-disable-next-line react/no-array-index-key
           <Item key={index}>
             {data} {index}
           </Item>

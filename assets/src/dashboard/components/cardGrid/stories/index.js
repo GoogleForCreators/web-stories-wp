@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { text } from '@storybook/addon-knobs';
+import { subMinutes } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
-import { subMinutes } from '../../../../date';
 import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
 import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
@@ -45,6 +45,7 @@ const Card = styled.div`
 const StorybookGridItem = (
   <CardGridItem>
     <CardPreviewContainer
+      ariaLabel="Preview aria label"
       bottomAction={{
         targetAction: 'https://www.google.com',
         label: 'Open in Editor',
@@ -75,6 +76,7 @@ export const _default = () => {
   return (
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       {itemArray.map((gridItem, index) => (
+        //eslint-disable-next-line react/no-array-index-key
         <div key={index}>{gridItem}</div>
       ))}
     </CardGrid>

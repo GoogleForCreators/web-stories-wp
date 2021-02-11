@@ -27,7 +27,9 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
+use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
+use function Google\Web_Stories\is_amp;
 
 /**
  * Class Embed
@@ -63,45 +65,68 @@ class Embed {
 	 * @return string Rendered block type output.
 	 */
 	public function render( array $args = [] ) {
-		$defaults     = [
+		$defaults = [
 			'align'  => 'none',
+			'class'  => 'wp-block-web-stories-embed',
 			'height' => 600,
 			'width'  => 360,
 		];
-		$args         = wp_parse_args( $args, $defaults );
-		$align        = sprintf( 'align%s', $args['align'] );
-		$url          = $this->story->get_url();
-		$title        = $this->story->get_title();
-		$poster       = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
-		$margin       = ( 'center' === $args['align'] ) ? 'auto' : '0';
-		$player_style = sprintf( 'width: %dpx;height: %dpx;margin: %s', absint( $args['width'] ), absint( $args['height'] ), esc_attr( $margin ) );
-		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
-		ob_start();
+		$args   = wp_parse_args( $args, $defaults );
+		$align  = sprintf( 'align%s', $args['align'] );
+		$class  = $args['class'];
+		$url    = $this->story->get_url();
+		$title  = $this->story->get_title();
+		$poster = ! empty( $this->story->get_poster_portrait() ) ? esc_url_raw( $this->story->get_poster_portrait() ) : '';
 
-		if (
-			( function_exists( 'amp_is_request' ) && amp_is_request() ) ||
-			( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() )
-		) {
-			$player_style = sprintf( 'margin: %s', esc_attr( $margin ) );
+		$poster_style  = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
+		$wrapper_style = sprintf(
+			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
+			0 !== $args['width'] ? $args['height'] / $args['width'] : 1,
+			(int) $args['width'],
+			(int) $args['height']
+		);
+
+		// This CSS is used for AMP and non-AMP.
+		wp_enqueue_style( Embed_Base::SCRIPT_HANDLE );
+
+		if ( is_amp() ) {
+			ob_start();
 			?>
-			<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-				<amp-story-player width="<?php echo esc_attr( $args['width'] ); ?>" height="<?php echo esc_attr( $args['height'] ); ?>" style="<?php echo esc_attr( $player_style ); ?>">
-					<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
-				</amp-story-player>
+			<div class="<?php echo esc_attr( "$class web-stories-embed web-stories-embed-amp $align" ); ?>">
+				<div class="wp-block-embed__wrapper">
+					<amp-story-player
+						width="<?php echo esc_attr( $args['width'] ); ?>"
+						height="<?php echo esc_attr( $args['height'] ); ?>"
+						layout="responsive">
+						<a
+							href="<?php echo esc_url( $url ); ?>"
+							style="<?php echo esc_attr( $poster_style ); ?>">
+							<?php echo esc_html( $title ); ?>
+						</a>
+					</amp-story-player>
+				</div>
 			</div>
 			<?php
 
 			return (string) ob_get_clean();
 		}
 
-		wp_enqueue_style( 'standalone-amp-story-player' );
-		wp_enqueue_script( 'standalone-amp-story-player' );
+		wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
+		wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
+
+		ob_start();
 		?>
-		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>">
-				<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
-			</amp-story-player>
+		<div class="<?php echo esc_attr( "$class web-stories-embed $align" ); ?>">
+			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
+				<amp-story-player>
+					<a
+						href="<?php echo esc_url( $url ); ?>"
+						style="<?php echo esc_attr( $poster_style ); ?>">
+						<?php echo esc_html( $title ); ?>
+					</a>
+				</amp-story-player>
+			</div>
 		</div>
 		<?php
 

@@ -23,7 +23,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { Pane } from '../../shared';
+import { Pane, PANE_PADDING } from '../../shared';
 
 export const PaneInner = styled.div`
   height: 100%;
@@ -38,7 +38,7 @@ export const PaneHeader = styled.div`
 export const MediaGalleryContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 0 24px;
+  padding: 0 ${PANE_PADDING};
   margin-top: 1em;
   position: relative;
   width: 100%;
@@ -66,22 +66,25 @@ export const MediaGalleryLoadingPill = styled.div`
   width: 240px;
   text-align: center;
   padding: 8px 80px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.4)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.4)};
   border-radius: 100px;
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
   font-weight: 500;
 `;
 
 export const MediaGalleryMessage = styled.div`
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   padding: 1em;
-  font-family: ${({ theme }) => theme.fonts.mediaError.family};
-  font-style: ${({ theme }) => theme.fonts.mediaError.style};
-  line-height: ${({ theme }) => theme.fonts.mediaError.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.mediaError.weight};
-  font-size: ${({ theme }) => theme.fonts.mediaError.size};
-  text-align: ${({ theme }) => theme.fonts.mediaError.textAlign};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.family};
+  font-style: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.style};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.mediaError.lineHeight};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.weight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.size};
+  text-align: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.mediaError.textAlign};
   opacity: 0.54;
 `;
 
@@ -92,5 +95,5 @@ export const StyledPane = styled(Pane)`
 `;
 
 export const SearchInputContainer = styled.div`
-  padding: 0 24px;
+  padding: 0 ${PANE_PADDING};
 `;

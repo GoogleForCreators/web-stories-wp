@@ -10,7 +10,7 @@ The following command will automatically verify whether Docker, Composer and Nod
 npm run env:start
 ```
 
-The WordPress installation should be available at `http://localhost:8899` (**Username**: `admin`, **Password**: `password`).
+The WordPress installation should be available at `http://localhost:8899`. To access the dashboard visit `http://localhost:8899/wp-admin` (**Username**: `admin`, **Password**: `password`).
 
 To later turn off the local environment, you can run:
 
@@ -28,6 +28,14 @@ Also, if you need to reset the local environment's database, you can run:
 
 ```bash
 npm run env:reset-site
+```
+
+## Specifying PHP Version
+
+It is also possible to run the local environment in different PHP versions, like so: 
+
+```bash
+PHP_VERSION=8.0 npm run env:start
 ```
 
 ## Custom Environment

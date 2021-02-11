@@ -8,18 +8,46 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
+  excludes_analyse:
+    - includes/vendor/*
+    - includes/polyfills/*
+  scanDirectories:
+    - third-party/
+  scanFiles:
+    - tests/phpstan/stubs/amp.php
+    - tests/phpstan/stubs/wordpress-seo.php
+    - tests/phpstan/stubs/wp-cli.php
+    - tests/phpstan/stubs/wpdotcom.php
   bootstrapFiles:
     - tests/phpstan/bootstrap.php
-  scanFiles:
-    - includes/namespace.php
   dynamicConstantNames:
+    - WP_DEBUG
+    - WP_DEBUG_LOG
+    - EMPTY_TRASH_DAYS
+    - WP_CLI
     - WEBSTORIES_DEV_MODE
     - WPCOM_IS_VIP_ENV
     - IS_WPCOM
-    - WP_CLI
     - GOOGLESITEKIT_VERSION
+    - AMP__VERSION
+  earlyTerminatingFunctionCalls:
+    - wp_die
+    - wp_send_json
+    - wp_send_json_success
+    - wp_send_json_error
+    - wp_nonce_ays
+    - dead_db
   ignoreErrors:
     # Uses func_get_args()
     - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
+
     # False positive for wp_unslash()
-    - '#^Cannot cast array<string>\|string to string\.$#'
+    - '#^Cannot cast array<string>\|string to string.$#'
+
+    # wp_die() is called with [ 'exit' => false ]
+    - message: '#^Unreachable statement - code above always terminates.$#'
+      path: includes/Story_Renderer/HTML.php
+
+    # wp_robots() is called.
+    - message: '/^Parameter #2 \$function_to_add of function add_action expects callable\(\): mixed, \S+ given\.$/'
+      path: includes/Discovery.php

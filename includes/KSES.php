@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use WP_Post_Type;
+
 /**
  * KSES class.
  *
@@ -33,13 +35,28 @@ namespace Google\Web_Stories;
  */
 class KSES {
 	/**
-	 * Initializes KSES filters for stories.
+	 * Initializes KSES filters for all post types if user can edit stories.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
 	public function init() {
+
+		$edit_posts       = false;
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if (
+			$post_type_object instanceof WP_Post_Type &&
+			property_exists( $post_type_object->cap, 'edit_posts' )
+		) {
+
+			$edit_posts = current_user_can( $post_type_object->cap->edit_posts );
+		}
+
+		if ( ! $edit_posts ) {
+			return;
+		}
+
 		if ( ! current_user_can( 'unfiltered_html' ) ) {
 			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
 			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
@@ -47,23 +64,6 @@ class KSES {
 			add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
 			remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		}
-	}
-
-	/**
-	 * Restores original KSES behavior.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function remove_filters() {
-		if ( ! current_user_can( 'unfiltered_html' ) ) {
-			remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10 );
-			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-			remove_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
-		}
-		kses_init();
 	}
 
 	/**
@@ -104,6 +104,8 @@ class KSES {
 	 *
 	 * @see safecss_filter_attr()
 	 * @todo Use safe_style_disallowed_chars filter once WP 5.5+ is required.
+	 *
+	 * @SuppressWarnings(PHPMD)
 	 *
 	 * @since 1.0.0
 	 *
@@ -319,10 +321,14 @@ class KSES {
 			}
 
 			if ( $found && $url_attr ) {
+				$url_matches = [];
+
 				// Simplified: matches the sequence `url(*)`.
 				preg_match_all( '/url\([^)]+\)/', $parts[1], $url_matches );
 
 				foreach ( $url_matches[0] as $url_match ) {
+					$url_pieces = [];
+
 					// Clean up the URL from each of the matches above.
 					preg_match( '/^url\(\s*([\'\"]?)(.*)(\g1)\s*\)$/', $url_match, $url_pieces );
 
@@ -352,10 +358,14 @@ class KSES {
 			}
 
 			if ( $found && $color_attr ) {
+				$color_matches = [];
+
 				// Simplified: matches the sequence `rgb(*)` and `rgba(*)`.
 				preg_match_all( '/rgba?\([^)]+\)/', $parts[1], $color_matches );
 
 				foreach ( $color_matches[0] as $color_match ) {
+					$color_pieces = [];
+
 					// Clean up the color from each of the matches above.
 					preg_match( '/^rgba?\([^)]*\)$/', $color_match, $color_pieces );
 
@@ -391,6 +401,8 @@ class KSES {
 	/**
 	 * Filter the allowed tags for KSES to allow for complete amp-story document markup.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param array|string $allowed_tags Allowed tags.
@@ -418,6 +430,7 @@ class KSES {
 				'async'          => true,
 				'src'            => true,
 				'custom-element' => true,
+				'type'           => true,
 			],
 			'noscript'                  => [],
 			'link'                      => [
@@ -448,6 +461,7 @@ class KSES {
 				'id'                 => true,
 			],
 			'amp-story-page-attachment' => [
+				'href'  => true,
 				'theme' => true,
 			],
 			'amp-story-grid-layer'      => [

@@ -20,11 +20,7 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -46,6 +42,7 @@ function ColorInput({
   value,
   label,
   colorPickerActions,
+  changedStyle,
 }) {
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
@@ -67,6 +64,7 @@ function ColorInput({
         value={value}
         label={label}
         colorPickerActions={colorPickerActions}
+        changedStyle={changedStyle}
       />
       {hasOpacity && (
         <OpacityPreview value={value} onChange={handleOpacityChange} />
@@ -82,6 +80,7 @@ ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   colorPickerActions: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorInput.defaultProps = {

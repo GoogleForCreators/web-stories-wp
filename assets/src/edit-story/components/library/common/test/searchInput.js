@@ -49,7 +49,7 @@ describe('SearchInput', () => {
       />
     );
 
-    expect(getByRole('textbox')).toBeDefined();
+    expect(getByRole('textbox')).toBeInTheDocument();
   });
 
   it('should not trigger onSearch when incremental is false and text changes', () => {

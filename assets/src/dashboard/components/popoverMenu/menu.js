@@ -20,11 +20,17 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { KEYS, STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
+import { rgba } from 'polished';
+import {
+  KEYS,
+  STORY_CONTEXT_MENU_ACTIONS,
+  KEYBOARD_USER_SELECTOR,
+} from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { TypographyPresets } from '../typography';
 
@@ -32,7 +38,7 @@ const CLOSE_MENU_ACTION = { value: STORY_CONTEXT_MENU_ACTIONS.CLOSE };
 
 export const MenuContainer = styled.ul`
   align-items: flex-start;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -60,23 +66,42 @@ export const MenuItem = styled.li`
   ${({ theme, isDisabled, isHovering }) => `
     margin-bottom: 0; /* override common js */
     padding: 5px 25px;
-    background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
-    color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+    background: ${
+      isHovering && !isDisabled ? theme.DEPRECATED_THEME.colors.gray25 : 'none'
+    };
+    color: ${
+      isDisabled
+        ? theme.DEPRECATED_THEME.colors.gray400
+        : theme.DEPRECATED_THEME.colors.gray700
+    };
     cursor: ${isDisabled ? 'default' : 'pointer'};
+    border: ${theme.DEPRECATED_THEME.borders.transparent};
+    border-width: 2px;
     display: flex;
     width: 100%;
 
     &.separatorTop {
-      border-top: 1px solid ${theme.colors.gray50};
+      border-top: 1px solid ${theme.DEPRECATED_THEME.colors.gray50};
     }
 
     &.separatorBottom {
-      border-bottom: 1px solid ${theme.colors.gray50};
+      border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.gray50};
     }
 
     &:focus, &:active, &:hover {
       outline: none;
-      color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+      color: ${
+        isDisabled
+          ? theme.DEPRECATED_THEME.colors.gray400
+          : theme.DEPRECATED_THEME.colors.gray700
+      };
+    }
+
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+      border: 2px solid ${rgba(
+        theme.DEPRECATED_THEME.colors.bluePrimary,
+        0.85
+      )};
     }
 
   `}
@@ -95,8 +120,8 @@ const MenuItemContent = styled.span`
 
 const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
   const [hoveredIndex, setHoveredIndex] = useState(currentValueIndex);
+  const [focusedIndex, setFocusedIndex] = useState(currentValueIndex);
   const listRef = useRef(null);
-
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isOpen) {
@@ -105,30 +130,32 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
         switch (event.key) {
           case KEYS.UP:
             event.preventDefault();
-            if (hoveredIndex > 0) {
-              setHoveredIndex(hoveredIndex - 1);
+            if (focusedIndex > 0) {
+              setFocusedIndex(focusedIndex - 1);
               if (listRef.current) {
-                listRef.current.children[hoveredIndex - 1].focus();
+                listRef.current.children[focusedIndex - 1].focus();
               }
             }
             break;
 
           case KEYS.DOWN:
             event.preventDefault();
-            if (hoveredIndex < items.length - 1) {
-              setHoveredIndex(hoveredIndex + 1);
+            if (focusedIndex < items.length - 1) {
+              setFocusedIndex(focusedIndex + 1);
               if (listRef.current) {
-                listRef.current.children[hoveredIndex + 1].focus();
+                listRef.current.children[focusedIndex + 1].focus();
               }
             }
             break;
 
           case KEYS.ENTER:
             // let anchor items be handled natively by browser
-            if (!items[hoveredIndex].url) {
+            if (!items[focusedIndex].url) {
               event.preventDefault();
-              if (onSelect) {
-                onSelect(items[hoveredIndex]);
+              const itemIsDisabled =
+                !items[focusedIndex].value && items[focusedIndex].value !== 0;
+              if (onSelect && !itemIsDisabled) {
+                onSelect(items[focusedIndex]);
               }
             }
             break;
@@ -149,11 +176,11 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
       listRefEl.addEventListener('keydown', handleKeyDown);
       return () => listRefEl.removeEventListener('keydown', handleKeyDown);
     }
-  }, [hoveredIndex, items, onSelect, isOpen]);
+  }, [focusedIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
     if (listRef.current && isOpen) {
-      listRef.current?.children[currentValueIndex].focus();
+      listRef.current?.children[currentValueIndex]?.focus();
     }
     setHoveredIndex(currentValueIndex);
   }, [currentValueIndex, isOpen]);
@@ -181,7 +208,18 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
           isHovering={index === hoveredIndex}
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
           onMouseEnter={() => setHoveredIndex(index)}
+          onFocus={() => setFocusedIndex(index)}
           isDisabled={itemIsDisabled}
+          aria-label={
+            // allow users to know what is in menu while still telling them items are disabled
+            itemIsDisabled
+              ? sprintf(
+                  /* translators: %s: item label.*/
+                  __('%s (currently unavailable)', 'web-stories'),
+                  item.label
+                )
+              : item.label
+          }
           className={
             (item.separator === 'top' && 'separatorTop') ||
             (item.separator === 'bottom' && 'separatorBottom')

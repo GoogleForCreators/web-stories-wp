@@ -25,7 +25,7 @@ import Moveable from 'react-moveable';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import { MARK_OFFSET, MS_DIVISOR } from './ruler';
 
 const BAR_HEIGHT = 24;
@@ -62,7 +62,7 @@ const Handle = styled.div.attrs({ tabIndex: 0 })`
 `;
 
 const Label = styled.div.attrs({ tabIndex: 0 })`
-  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
   flex: 1;
   font-weight: bold;
   font-size: 12px;

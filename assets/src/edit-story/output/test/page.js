@@ -32,6 +32,7 @@ import { useFeature } from 'flagged';
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
+import { MaskTypes } from '../../masks';
 
 describe('Page output', () => {
   useFeature.mockImplementation((feature) => {
@@ -91,12 +92,12 @@ describe('Page output', () => {
         'aspect-ratio',
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
-      expect(layer.firstElementChild.className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(layer.firstElementChild.firstElementChild.className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(layer.firstElementChild).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(
+        layer.firstElementChild.firstElementChild
+      ).toHaveClass('page-safe-area', { exact: true });
     });
 
     it('should render the layer for background', () => {
@@ -120,12 +121,12 @@ describe('Page output', () => {
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
       expect(bgLayer.children).toHaveLength(1);
-      expect(bgLayer.children[0].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(bgLayer.children[0].children[0].className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(bgLayer.children[0]).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(bgLayer.children[0].children[0]).toHaveClass('page-safe-area', {
+        exact: true,
+      });
     });
 
     it('should render the layer for background with overlay', () => {
@@ -599,6 +600,274 @@ describe('Page output', () => {
     });
   });
 
+  describe('background color', () => {
+    const BACKGROUND_ELEMENT = {
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+        baseColor: [0, 55, 155],
+      },
+    };
+
+    it('should output background media base color if available', () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          id: '123',
+          elements: [BACKGROUND_ELEMENT],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('background-color:rgb(0,55,155)');
+    });
+
+    it('should output the page background color in case of default background element', () => {
+      const props = {
+        page: {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255, a: 0.5 } },
+          elements: [
+            {
+              id: '123',
+              type: 'shape',
+              isBackground: true,
+              isDefaultBackground: true,
+              x: 1,
+              y: 1,
+              width: 1,
+              height: 1,
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('background-color:rgba(255,255,255,0.5)');
+    });
+  });
+
+  describe('link', () => {
+    const BACKGROUND_ELEMENT = {
+      isBackground: true,
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+      },
+    };
+
+    const TEXT_ELEMENT = {
+      id: 'baz',
+      type: 'text',
+      content: 'Hello, link!',
+      x: 50,
+      y: PAGE_HEIGHT,
+      height: 300,
+      width: 100,
+      rotationAngle: 10,
+      padding: {
+        vertical: 0,
+        horizontal: 0,
+      },
+      fontSize: 30,
+      font: {
+        family: 'Roboto',
+        service: 'fonts.google.com',
+      },
+      color: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+          a: 0.5,
+        },
+      },
+    };
+
+    it('should output element with link if the url is set', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...TEXT_ELEMENT,
+              link: {
+                url: 'https://hello.example',
+                desc: 'Hello, example!',
+                icon: 'https://hello.example/icon.png',
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('Hello, example!');
+      expect(content).toContain('https://hello.example');
+    });
+
+    it('should not output element link if the url is empty', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...TEXT_ELEMENT,
+              link: {
+                url: '',
+                desc: 'Hello, example!',
+                icon: 'https://hello.example/icon.png',
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).not.toContain('Hello, example!');
+      expect(content).not.toContain('https://hello.example');
+    });
+  });
+
+  describe('border', () => {
+    const BACKGROUND_ELEMENT = {
+      isBackground: true,
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+      },
+    };
+
+    const MEDIA_ELEMENT = {
+      ...BACKGROUND_ELEMENT,
+      isBackground: false,
+      id: 'baz',
+      type: 'image',
+    };
+
+    it('should output element with border if border is set', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...MEDIA_ELEMENT,
+              border: {
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 10,
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('border-width:10px 10px 10px 10px;');
+      expect(content).toContain('border-color:rgba(255,255,255,1);');
+    });
+
+    it('should not output border if the element is not rectangular', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...MEDIA_ELEMENT,
+              border: {
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 10,
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                position: 'center',
+              },
+              mask: {
+                type: MaskTypes.CIRCLE,
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).not.toContain('border-width:10px 10px 10px 10px;');
+      expect(content).not.toContain('border-color:rgba(255,255,255,1);');
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       const props = {
@@ -644,6 +913,88 @@ describe('Page output', () => {
         },
       };
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    describe('borderRadius', () => {
+      const BACKGROUND_ELEMENT = {
+        isBackground: true,
+        id: 'baz',
+        type: 'image',
+        mimeType: 'image/png',
+        origRatio: 1,
+        x: 50,
+        y: 100,
+        scale: 1,
+        rotationAngle: 0,
+        width: 10,
+        height: 10,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          id: 123,
+          src: 'https://example.com/image.png',
+          poster: 'https://example.com/poster.png',
+          height: 1,
+          width: 1,
+        },
+      };
+
+      const MEDIA_ELEMENT = {
+        ...BACKGROUND_ELEMENT,
+        isBackground: false,
+        id: 'baz',
+        type: 'image',
+        borderRadius: {
+          topLeft: 10,
+          topRight: 20,
+          bottomRight: 10,
+          bottomLeft: 10,
+        },
+      };
+
+      it('should output element with border radius if the radius is set', () => {
+        const props = {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [BACKGROUND_ELEMENT, MEDIA_ELEMENT],
+          },
+          autoAdvance: false,
+          defaultPageDuration: 7,
+        };
+
+        const content = renderToStaticMarkup(<PageOutput {...props} />);
+        expect(content).toContain(
+          'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        );
+      });
+
+      it('should not output border if the element is not rectangular', () => {
+        const props = {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [
+              BACKGROUND_ELEMENT,
+              {
+                ...MEDIA_ELEMENT,
+                mask: {
+                  type: MaskTypes.CIRCLE,
+                },
+              },
+            ],
+          },
+          autoAdvance: false,
+          defaultPageDuration: 7,
+        };
+
+        const content = renderToStaticMarkup(<PageOutput {...props} />);
+        expect(content).not.toContain(
+          'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        );
+      });
     });
 
     describe('AMP validation', () => {

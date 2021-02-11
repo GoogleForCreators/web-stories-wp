@@ -17,105 +17,131 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { useCallback, useEffect } from 'react';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
-import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';
-import { trackEvent } from '../../../tracking';
 
+/**
+ * Custom hook to open the WordPress media modal.
+ *
+ * @param {Object} props Props.
+ * @param {string} [props.title] Media modal title.
+ * @param {string} [props.buttonInsertText] Text to use for the "Insert" button.
+ * @param {Function} props.onSelect Selection callback. Used to process the inserted image.
+ * @param {Function?} props.onClose Close Callback.
+ * @param {Function?} props.onPermissionError Callback for when user does not have upload permissions.
+ * @param {string} props.type Media type.
+ * @param {boolean} props.multiple Whether multi-selection should be allowed.
+ * @return {Function} Callback to open the media picker.
+ */
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
-  onSelect = () => {},
-  onClose = () => {},
+  onSelect,
+  onClose,
+  onPermissionError,
   type = '',
   multiple = false,
 }) {
-  const { uploadVideoPoster } = useLocalMedia((state) => ({
-    uploadVideoPoster: state.actions.uploadVideoPoster,
-  }));
   const {
     actions: { updateMedia },
   } = useAPI();
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const { showSnackbar } = useSnackbar();
   useEffect(() => {
     try {
       // Work around that forces default tab as upload tab.
-      wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
+      global.wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
     } catch (e) {
       // Silence.
     }
   });
   useEffect(() => {
     try {
+      // Handles the video processing logic from WordPress.
+      // The Uploader.success callback is invoked when a user uploads a file.
+      // Race condition concern: the video content is not guaranteed to be
+      // available in this callback. For the video poster insertion, please check: assets/src/edit-story/components/library/panes/media/local/mediaPane.js
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
-        if (attributes.type === 'video') {
-          uploadVideoPoster(attributes.id, attributes.url);
-        }
       };
     } catch (e) {
       // Silence.
     }
-  }, [uploadVideoPoster, updateMedia]);
+  }, [updateMedia]);
 
-  const openMediaPicker = (evt) => {
-    trackEvent('open_media_modal', 'editor');
+  const openMediaPicker = useCallback(
+    (evt) => {
+      trackEvent('open_media_modal', 'editor');
 
-    // If a user does not have the rights to upload to the media library, do not show the media picker.
-    if (!hasUploadMediaAction) {
-      const message = __(
-        'Sorry, you are unable to upload files.',
-        'web-stories'
-      );
-      showSnackbar({ message });
+      // If a user does not have the rights to upload to the media library, do not show the media picker.
+      if (!hasUploadMediaAction) {
+        if (onPermissionError) {
+          onPermissionError();
+        }
+        evt.preventDefault();
+      }
+
+      // Create the media frame.
+      const fileFrame = global.wp.media({
+        title,
+        library: {
+          type,
+        },
+        button: {
+          text: buttonInsertText,
+        },
+        multiple,
+      });
+
+      // When an image is selected, run a callback.
+      fileFrame.once('select', () => {
+        const mediaPickerEl = fileFrame
+          .state()
+          .get('selection')
+          .first()
+          .toJSON();
+
+        // Only allow user to select a mime type from allowed list.
+        if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
+          return;
+        }
+        onSelect(mediaPickerEl);
+      });
+
+      if (onClose) {
+        fileFrame.once('close', onClose);
+      }
+
+      fileFrame.once('content:activate:browse', () => {
+        // Force-refresh media modal contents every time
+        // to avoid stale data.
+        fileFrame.content?.get()?.collection?._requery(true);
+        fileFrame.content?.get()?.options?.selection?.reset();
+      });
+
+      // Finally, open the modal
+      fileFrame.open();
+
       evt.preventDefault();
-      return false;
-    }
-
-    // Create the media frame.
-    const fileFrame = wp.media({
-      title,
-      library: {
-        type,
-      },
-      button: {
-        text: buttonInsertText,
-      },
+    },
+    [
+      hasUploadMediaAction,
+      onPermissionError,
+      onClose,
+      onSelect,
+      buttonInsertText,
       multiple,
-    });
-
-    // When an image is selected, run a callback.
-    fileFrame.on('select', () => {
-      const mediaPickerEl = fileFrame.state().get('selection').first().toJSON();
-      onSelect(mediaPickerEl);
-    });
-
-    if (onClose) {
-      fileFrame.on('close', onClose);
-    }
-
-    // Finally, open the modal
-    fileFrame.open();
-
-    evt.preventDefault();
-
-    // Might be useful to return the media frame here.
-    return fileFrame;
-  };
+      type,
+      title,
+    ]
+  );
 
   return openMediaPicker;
 }

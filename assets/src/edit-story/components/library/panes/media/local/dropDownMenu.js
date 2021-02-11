@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -39,13 +35,17 @@ const MoreButton = styled(More)`
   position: absolute;
   top: 8px;
   right: 8px;
-  background: ${({ theme }) => theme.colors.bg.panel};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   border-radius: 100%;
 `;
 
 const DropDownContainer = styled.div`
   margin-top: 10px;
+`;
+
+const MenuContainer = styled.div`
+  z-index: 1;
 `;
 
 /**
@@ -104,7 +104,7 @@ function DropDownMenu({
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     !resource.local && ( // Don't show menu if resource not uploaded to server yet.
-      <div>
+      <MenuContainer>
         {(display || isMenuOpen) && (
           <>
             <MoreButton
@@ -140,7 +140,7 @@ function DropDownMenu({
         {showEditDialog && (
           <MediaEditDialog resource={resource} onClose={onEditDialogClose} />
         )}
-      </div>
+      </MenuContainer>
     )
   );
 }

@@ -33,6 +33,7 @@ function useLoadFonts({ fonts, setFonts }) {
     async function loadFonts() {
       const newFonts = await getFonts();
       const formattedFonts = newFonts.map((font) => ({
+        id: font.family,
         name: font.family,
         value: font.family,
         ...font,

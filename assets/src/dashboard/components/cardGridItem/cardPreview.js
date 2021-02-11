@@ -26,7 +26,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { Button } from '..';
-import { STORY_ANIMATION_STATE } from '../../../animation';
+import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
@@ -34,16 +34,19 @@ import {
   KEYBOARD_USER_SELECTOR,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
-import { clamp, useFocusOut } from '../../utils';
-import PreviewErrorBoundary from '../previewErrorBoundary';
-import PreviewPage from '../previewPage';
+import { useFocusOut } from '../../utils';
+import {
+  PreviewErrorBoundary,
+  PreviewPage,
+} from '../../../edit-story/components/previewPage';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
+  border-radius: ${({ theme }) =>
+    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
   height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
-  border: ${({ theme }) => theme.borders.gray75};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray75};
   width: 100%;
   overflow: hidden;
   z-index: -1;
@@ -61,16 +64,20 @@ const EditControls = styled.div`
   justify-content: space-between;
   padding: 0;
   transition: opacity ease-in-out 300ms;
-  background: ${({ theme }) => theme.cardItem.previewOverlay};
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
+  background: ${({ theme }) => theme.DEPRECATED_THEME.cardItem.previewOverlay};
+  border-radius: ${({ theme }) =>
+    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
-      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)}`};
+      `2px solid ${rgba(
+        theme.DEPRECATED_THEME.colors.bluePrimary,
+        0.85
+      )} !important`};
   }
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
     button,
     a {
       min-width: ${({ cardSize }) => cardSize.width};
@@ -224,15 +231,20 @@ const CardPreviewContainer = ({
             </Button>
           </ActionContainer>
         )}
-        <ActionContainer>
-          <Button
-            {...getActionAttributes(bottomAction.targetAction)}
-            tabIndex={tabIndex}
-            aria-label={bottomAction.ariaLabel}
-          >
-            {bottomAction.label}
-          </Button>
-        </ActionContainer>
+        {bottomAction?.label ? (
+          <ActionContainer>
+            <Button
+              {...getActionAttributes(bottomAction.targetAction)}
+              tabIndex={tabIndex}
+              aria-label={bottomAction.ariaLabel}
+              isDisabled={!bottomAction.targetAction}
+            >
+              {bottomAction.label}
+            </Button>
+          </ActionContainer>
+        ) : (
+          <EmptyActionContainer />
+        )}
       </EditControls>
     </>
   );
@@ -246,10 +258,10 @@ const ActionButtonPropType = PropTypes.shape({
 });
 
 CardPreviewContainer.propTypes = {
-  ariaLabel: PropTypes.string, //TODO will be required after updating story grids
+  ariaLabel: PropTypes.string.isRequired,
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
-  bottomAction: ActionButtonPropType.isRequired,
+  bottomAction: ActionButtonPropType,
   topAction: ActionButtonPropType,
   containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,

@@ -19,27 +19,22 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
+import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout, useToastContext } from '../../../components';
-import { clamp, useTemplateView, usePagePreviewSize } from '../../../utils/';
+import { ALERT_SEVERITY } from '../../../constants';
+import { useTemplateView, usePagePreviewSize } from '../../../utils/';
+import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
+import { ERRORS } from '../../textContent';
 import { PreviewStoryView } from '..';
-
-import useApi from '../../api/useApi';
-import { ALERT_SEVERITY } from '../../../constants';
 import Header from './header';
 import Content from './content';
 
@@ -123,7 +118,7 @@ function TemplateDetails() {
       .then(setTemplate)
       .catch(() => {
         addToast({
-          message: { body: __('Could not load the template.', 'web-stories') },
+          message: { body: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE },
           severity: ALERT_SEVERITY.ERROR,
           id: Date.now(),
         });

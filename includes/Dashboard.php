@@ -28,15 +28,19 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Types;
+use WP_Post_Type;
 use WP_Screen;
 
 /**
  * Dashboard class.
  */
 class Dashboard {
-
 	use Assets;
+	use Types;
+
 	/**
 	 * Script handle.
 	 *
@@ -45,11 +49,11 @@ class Dashboard {
 	const SCRIPT_HANDLE = 'stories-dashboard';
 
 	/**
-	 * Admin page hook suffix.
+	 * Admin page hook suffixes.
 	 *
-	 * @var string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @var array List of the admin pages' hook_suffix values.
 	 */
-	private $hook_suffix;
+	private $hook_suffix = [];
 
 	/**
 	 * Experiments instance.
@@ -59,14 +63,31 @@ class Dashboard {
 	private $experiments;
 
 	/**
+	 * Site_Kit instance.
+	 *
+	 * @var Site_Kit Site_Kit instance.
+	 */
+	private $site_kit;
+
+	/**
+	 * Decoder instance.
+	 *
+	 * @var Decoder Decoder instance.
+	 */
+	private $decoder;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
+	 * @param Site_Kit    $site_kit    Site_Kit instance.
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;
+		$this->decoder     = new Decoder();
+		$this->site_kit    = $site_kit;
 	}
 
 	/**
@@ -82,6 +103,7 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
+		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 	}
 
 	/**
@@ -89,10 +111,16 @@ class Dashboard {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @param string $key The current admin page key.
+	 *
+	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
-	public function get_hook_suffix() {
-		return $this->hook_suffix;
+	public function get_hook_suffix( $key ) {
+		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
+			return false;
+		}
+
+		return $this->hook_suffix[ $key ];
 	}
 
 	/**
@@ -103,19 +131,43 @@ class Dashboard {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$this->hook_suffix = add_submenu_page(
-			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
+		$parent = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
+
+		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
+			$parent,
 			__( 'Dashboard', 'web-stories' ),
-			__( 'Dashboard', 'web-stories' ),
+			__( 'My Stories', 'web-stories' ),
 			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0
 		);
+
+		$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
+			$parent,
+			__( 'Explore Templates', 'web-stories' ),
+			__( 'Explore Templates', 'web-stories' ),
+			'edit_web-stories',
+			'stories-dashboard#/templates-gallery',
+			'__return_null',
+			1
+		);
+
+		$this->hook_suffix['stories-dashboard-settings'] = add_submenu_page(
+			$parent,
+			__( 'Settings', 'web-stories' ),
+			__( 'Settings', 'web-stories' ),
+			'edit_web-stories',
+			'stories-dashboard#/editor-settings',
+			'__return_null',
+			20
+		);
 	}
 
 	/**
 	 * Redirects to the correct Dashboard page when clicking on the top-level "Stories" menu item.
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @since 1.0.0
 	 *
@@ -124,8 +176,13 @@ class Dashboard {
 	public function redirect_menu_page() {
 		global $pagenow;
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'stories-dashboard' === $_GET['page'] ) {
+		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		$page = sanitize_text_field( (string) wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( 'admin.php' === $pagenow && 'stories-dashboard' === $page ) {
 			wp_safe_redirect(
 				add_query_arg(
 					[
@@ -150,8 +207,9 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/wp/v2/settings',
-			'/web-stories/v1/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
+			'/web-stories/v1/settings/',
+			'/web-stories/v1/users/me/',
+			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
 		/**
@@ -167,7 +225,7 @@ class Dashboard {
 
 		$preload_data = array_reduce(
 			$preload_paths,
-			'rest_preload_api_request',
+			__NAMESPACE__ . '\rest_preload_api_request',
 			[]
 		);
 
@@ -176,6 +234,19 @@ class Dashboard {
 			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 			'after'
 		);
+	}
+
+	/**
+	 * Find status of site kit plugin in site.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return boolean
+	 */
+	public function is_site_kit_plugin_installed() {
+		$all_plugins = get_plugins();
+
+		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
 	}
 
 	/**
@@ -199,7 +270,7 @@ class Dashboard {
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
-		if ( $this->hook_suffix !== $hook_suffix ) {
+		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}
 
@@ -265,31 +336,45 @@ class Dashboard {
 			$max_upload_size = 0;
 		}
 
+		$can_read_private_posts = false;
+
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		if (
+			$post_type_object instanceof WP_Post_Type &&
+			property_exists( $post_type_object->cap, 'read_private_posts' )
+		) {
+			$can_read_private_posts = current_user_can( $post_type_object->cap->read_private_posts );
+		}
+
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
-				'isRTL'              => is_rtl(),
-				'locale'             => ( new Locale() )->get_locale_settings(),
-				'newStoryURL'        => $new_story_url,
-				'editStoryURL'       => $edit_story_url,
-				'wpListURL'          => $classic_wp_list_url,
-				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
-				'version'            => WEBSTORIES_VERSION,
-				'api'                => [
-					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'       => '/web-stories/v1/media',
-					'currentUser' => '/wp/v2/users/me',
-					'users'       => '/wp/v2/users',
-					'templates'   => '/web-stories/v1/web-story-template',
-					'settings'    => '/wp/v2/settings',
+				'isRTL'                 => is_rtl(),
+				'locale'                => ( new Locale() )->get_locale_settings(),
+				'newStoryURL'           => $new_story_url,
+				'editStoryURL'          => $edit_story_url,
+				'wpListURL'             => $classic_wp_list_url,
+				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
+				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
+				'version'               => WEBSTORIES_VERSION,
+				'encodeMarkup'          => $this->decoder->supports_decoding(),
+				'api'                   => [
+					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'       => '/web-stories/v1/media/',
+					'currentUser' => '/web-stories/v1/users/me/',
+					'users'       => '/web-stories/v1/users/',
+					'templates'   => '/web-stories/v1/web-story-template/',
+					'settings'    => '/web-stories/v1/settings/',
 				],
-				'maxUpload'          => $max_upload_size,
-				'maxUploadFormatted' => size_format( $max_upload_size ),
-				'capabilities'       => [
-					'canManageSettings' => current_user_can( 'manage_options' ),
-					'canUploadFiles'    => current_user_can( 'upload_files' ),
+				'maxUpload'             => $max_upload_size,
+				'maxUploadFormatted'    => size_format( $max_upload_size ),
+				'capabilities'          => [
+					'canManageSettings'   => current_user_can( 'manage_options' ),
+					'canUploadFiles'      => current_user_can( 'upload_files' ),
+					'canReadPrivatePosts' => $can_read_private_posts,
 				],
+				'siteKitStatus'         => $this->site_kit->get_plugin_status(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

@@ -17,18 +17,15 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import { useResizeEffect } from '../../../design-system';
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
@@ -37,9 +34,8 @@ import {
   PAGE_NAV_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
-import useResizeEffect from '../../utils/useResizeEffect';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import useCanvas from './useCanvas';
+import { useCanvas } from '../../app';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -52,20 +48,7 @@ export const Z_INDEX = {
 };
 
 const MENU_HEIGHT = 48;
-
-export const CAROUSEL_VERTICAL_PADDING = 24;
-export const COMPACT_CAROUSEL_VERTICAL_PADDING = 32;
-
-export const COMPACT_THUMB_WIDTH = 72;
-export const COMPACT_THUMB_HEIGHT = 8;
-
-const MAX_CAROUSEL_THUMB_HEIGHT = 128;
-export const MIN_CAROUSEL_THUMB_HEIGHT = 52;
-
-const MIN_CAROUSEL_HEIGHT =
-  COMPACT_CAROUSEL_VERTICAL_PADDING * 2 + COMPACT_THUMB_HEIGHT;
-const MAX_CAROUSEL_HEIGHT =
-  MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
+const CAROUSEL_HEIGHT = 104;
 
 // @todo: the menu height is not responsive
 const Layer = styled.section`
@@ -88,10 +71,7 @@ const Layer = styled.section`
     )
     '.         .         menu      .         .       ' ${MENU_HEIGHT}px
     '.         .         .         .         .       ' 1fr
-    'carousel  carousel  carousel  carousel  carousel' minmax(
-      ${MIN_CAROUSEL_HEIGHT}px,
-      ${MAX_CAROUSEL_HEIGHT}px
-    )
+    'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
     / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
     ${PAGE_NAV_WIDTH}px 1fr;
   height: 100%;
@@ -130,6 +110,7 @@ const PageAreaWithOverflow = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 4px;
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -138,26 +119,6 @@ const PageAreaSafeZone = styled.div`
   overflow: visible;
   position: relative;
   margin: auto 0;
-
-  ${({ showSafeZone }) =>
-    showSafeZone &&
-    css`
-      &::before,
-      &::after {
-        content: '';
-        width: 12px;
-        height: var(--page-height-px);
-        position: absolute;
-        border-top: 1px solid rgba(255, 255, 255, 0.4);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-      }
-      &::before {
-        left: -12px;
-      }
-      &::after {
-        right: -12px;
-      }
-    `}
 `;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
@@ -191,10 +152,9 @@ function useLayoutParams(containerRef) {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
     // space for the page is:
     const maxWidth = width - PAGE_NAV_WIDTH * 2;
-    const maxHeight =
-      height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
+    const maxHeight = height - HEADER_HEIGHT - MENU_HEIGHT - CAROUSEL_HEIGHT;
 
-    let bestSize =
+    const bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
         (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
       ) || ALLOWED_EDITOR_PAGE_WIDTHS[ALLOWED_EDITOR_PAGE_WIDTHS.length - 1];
@@ -217,7 +177,6 @@ function useLayoutParamsCssVars() {
 const PageArea = forwardRef(function PageArea(
   {
     children,
-    showSafeZone = false,
     showOverflow = false,
     fullbleedRef = createRef(),
     overlay = [],
@@ -233,11 +192,7 @@ const PageArea = forwardRef(function PageArea(
       role="region"
     >
       <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
-        <PageAreaSafeZone
-          ref={ref}
-          data-testid="safezone"
-          showSafeZone={showSafeZone}
-        >
+        <PageAreaSafeZone ref={ref} data-testid="safezone">
           {children}
         </PageAreaSafeZone>
       </PageAreaWithOverflow>
@@ -248,7 +203,6 @@ const PageArea = forwardRef(function PageArea(
 
 PageArea.propTypes = {
   children: PropTypes.node,
-  showSafeZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
   fullbleedRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   overlay: PropTypes.node,

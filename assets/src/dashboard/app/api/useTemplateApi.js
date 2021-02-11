@@ -19,22 +19,19 @@
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { toUTCDate } from '@web-stories-wp/date';
+import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies
  */
-import { toUTCDate } from '../../../date';
-import getAllTemplates from '../../templates';
+import base64Encode from '../../../edit-story/utils/base64Encode';
+
 import { APP_ROUTES } from '../../constants';
 import templateReducer, {
   defaultTemplatesState,
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
 } from '../reducer/templates';
+import { ERRORS } from '../textContent';
 
 export function reshapeTemplateObject(isLocal) {
   return ({
@@ -97,7 +94,7 @@ export function reshapeSavedTemplates({
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { cdnURL, templateApi } = config;
+  const { cdnURL, templateApi, encodeMarkup } = config;
 
   const fetchSavedTemplates = useCallback(() => {
     // Saved Templates = Bookmarked Templates + My Templates
@@ -137,8 +134,8 @@ const useTemplateApi = (dataAdapter, config) => {
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
           payload: {
             message: {
-              body: __('Cannot connect to data source', 'web-stories'),
-              title: __('Unable to Load Templates', 'web-stories'),
+              body: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
+              title: ERRORS.LOAD_TEMPLATES.TITLE,
             },
           },
         });
@@ -187,7 +184,7 @@ const useTemplateApi = (dataAdapter, config) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Load Templates', 'web-stories'),
+              title: ERRORS.LOAD_TEMPLATES.TITLE,
             },
             code: err.code,
           },
@@ -268,7 +265,7 @@ const useTemplateApi = (dataAdapter, config) => {
 
         await dataAdapter.post(templateApi, {
           data: {
-            content,
+            content: encodeMarkup ? base64Encode(content.raw) : content.raw,
             story_data,
             featured_media,
             style_presets,
@@ -286,7 +283,7 @@ const useTemplateApi = (dataAdapter, config) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Create Template from Story', 'web-stories'),
+              title: ERRORS.CREATE_TEMPLATE_FROM_STORY.TITLE,
             },
             code: err.code,
           },
@@ -298,7 +295,7 @@ const useTemplateApi = (dataAdapter, config) => {
         });
       }
     },
-    [dataAdapter, templateApi]
+    [dataAdapter, templateApi, encodeMarkup]
   );
 
   const fetchRelatedTemplates = useCallback(

@@ -19,11 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -33,7 +29,7 @@ import { useNavContext } from '../navProvider';
 
 const MenuIcon = styled(MenuSvg).attrs({ width: 24, height: 24 })`
   display: block;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
 `;
 
 const TransparentButton = styled.button`
@@ -44,18 +40,18 @@ const TransparentButton = styled.button`
   height: 24px;
   padding: 0;
   margin-right: 16px;
-  border: ${({ theme }) => theme.borders.transparent};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   background: transparent;
 
   &:focus {
-    border: ${({ theme }) => theme.borders.action};
+    border: ${({ theme }) => theme.DEPRECATED_THEME.borders.action};
   }
 
   ${({ showOnlyOnSmallViewport }) =>
     showOnlyOnSmallViewport &&
     css`
       display: none;
-      @media ${({ theme }) => theme.breakpoint.tablet} {
+      @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
         display: inline-block;
       }
     `}

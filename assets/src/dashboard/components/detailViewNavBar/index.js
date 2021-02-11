@@ -15,20 +15,21 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * External dependencies
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { BUTTON_TYPES } from '../../constants';
+import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
 import { BookmarkChip, Button } from '../../components';
 import { parentRoute } from '../../app/router/route';
 import { TypographyPresets } from '../typography';
@@ -38,22 +39,22 @@ const Nav = styled.nav`
   position: relative;
   justify-content: space-between;
   align-items: center;
-  border-bottom: ${theme.borders.gray50};
-  background-color: ${theme.colors.white};
+  border-bottom: ${theme.DEPRECATED_THEME.borders.gray50};
+  background-color: ${theme.DEPRECATED_THEME.colors.white};
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: ${theme.navBar.height}px;
+  height: ${theme.DEPRECATED_THEME.navBar.height}px;
 
-  padding: 0 ${theme.detailViewContentGutter.desktop}px;
+  padding: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.desktop}px;
 
-  @media ${theme.breakpoint.tablet} {
-    padding: 0 ${theme.detailViewContentGutter.tablet}px;
+  @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
+    padding: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.tablet}px;
   }
 
-  @media ${theme.breakpoint.smallDisplayPhone} {
+  @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
-    padding: 0 ${theme.detailViewContentGutter.min}px;
+    padding: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.min}px;
   }
   `}
 `;
@@ -71,19 +72,33 @@ const CloseLink = styled.a`
   ${TypographyPresets.Medium};
   ${({ theme }) => `
     text-decoration: none;
-    font-weight: ${theme.typography.weight.bold};
-    color: ${theme.colors.gray700};
+    font-weight: ${theme.DEPRECATED_THEME.typography.weight.bold};
+    color: ${theme.DEPRECATED_THEME.colors.gray700};
+
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+      outline: 2px solid ${rgba(
+        theme.DEPRECATED_THEME.colors.bluePrimary,
+        0.85
+      )} !important;
+    }
   `}
 `;
 const CapitalizedButton = styled(Button)`
   text-transform: uppercase;
 `;
 
-export function DetailViewNavBar({ handleCta, handleBookmarkClick, ctaText }) {
+export function DetailViewNavBar({
+  closeViewAriaLabel = __('Close', 'web-stories'),
+  handleCta,
+  handleBookmarkClick,
+  ctaText,
+}) {
   return (
     <Nav>
       <Container>
-        <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
+        <CloseLink aria-label={closeViewAriaLabel} href={parentRoute()}>
+          {__('Close', 'web-stories')}
+        </CloseLink>
       </Container>
       <Container>
         {handleBookmarkClick && (
@@ -100,6 +115,7 @@ export function DetailViewNavBar({ handleCta, handleBookmarkClick, ctaText }) {
 }
 
 DetailViewNavBar.propTypes = {
+  closeViewAriaLabel: PropTypes.string,
   ctaText: PropTypes.string,
   handleBookmarkClick: PropTypes.func,
   handleCta: PropTypes.func.isRequired,

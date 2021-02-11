@@ -20,18 +20,14 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { _x, __ } from '@wordpress/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
 import useFocusAndSelect from '../../../utils/useFocusAndSelect';
-import { MULTIPLE_VALUE } from '../';
+import { MULTIPLE_VALUE } from '../../../constants';
 import getPreviewText from './getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
 import { ColorInput } from './colorBox';

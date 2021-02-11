@@ -21,12 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -34,43 +29,36 @@ import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
-import { useContext } from '../../../../utils/context';
-import { trackEvent } from '../../../../../tracking';
+import { useContext } from '../../../../../design-system';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
   if (isPrimary) {
-    return rgba(theme.colors.bg.black, 0.07);
+    return rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.07);
   }
   if (isSecondary) {
-    return rgba(theme.colors.fg.white, 0.07);
+    return theme.colors.bg.tertiary;
   }
   return 'transparent';
 }
 
-const Header = styled.h2`
+const Header = styled.h2.attrs({ role: 'button' })`
   background-color: ${({ isPrimary, isSecondary, theme }) =>
     getBackgroundColor(isPrimary, isSecondary, theme)};
-  border: 0 solid ${({ theme }) => rgba(theme.colors.fg.gray16, 0.6)};
+  border: 0 solid
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.gray16, 0.6)};
   border-top-width: ${({ isPrimary, isSecondary }) =>
     isPrimary || isSecondary ? 0 : '1px'};
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+  color: ${({ theme }) => theme.colors.fg.secondary};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
+  flex-direction: row;
   user-select: none;
-`;
-
-const HeaderButton = styled.div.attrs({ role: 'button' })`
-  color: inherit;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
   cursor: pointer;
 `;
 
@@ -80,6 +68,7 @@ const Heading = styled.span`
   font-weight: 500;
   font-size: 14px;
   line-height: 19px;
+  width: 100%;
 `;
 
 const HeaderActions = styled.div`
@@ -123,6 +112,7 @@ Toggle.propTypes = {
 };
 
 function Title({
+  ariaLabel,
   children,
   isPrimary,
   isSecondary,
@@ -174,10 +164,6 @@ function Title({
     }
   }, [setExpandToHeight, height, resizeable]);
 
-  const titleLabel = isCollapsed
-    ? __('Expand panel', 'web-stories')
-    : __('Collapse panel', 'web-stories');
-
   const toggle = isCollapsed ? expand : collapse;
   const onToggle = useCallback(() => {
     toggle();
@@ -192,6 +178,10 @@ function Title({
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
+      aria-label={ariaLabel}
+      aria-expanded={!isCollapsed}
+      aria-controls={panelContentId}
+      onClick={onToggle}
     >
       {isResizable && (
         <DragHandle
@@ -204,29 +194,25 @@ function Title({
           tabIndex={ariaHidden ? -1 : 0}
         />
       )}
-      <HeaderButton onClick={onToggle}>
-        <Heading id={panelTitleId}>{children}</Heading>
-        <HeaderActions>
-          {secondaryAction}
-          {canCollapse && (
-            <Toggle
-              isCollapsed={isCollapsed}
-              toggle={onToggle}
-              aria-label={titleLabel}
-              aria-expanded={!isCollapsed}
-              aria-controls={panelContentId}
-              tabIndex={ariaHidden ? -1 : 0}
-            >
-              <Arrow />
-            </Toggle>
-          )}
-        </HeaderActions>
-      </HeaderButton>
+      <Heading id={panelTitleId}>{children}</Heading>
+      <HeaderActions>
+        {secondaryAction}
+        {canCollapse && (
+          <Toggle
+            isCollapsed={isCollapsed}
+            toggle={onToggle}
+            tabIndex={ariaHidden ? -1 : 0}
+          >
+            <Arrow />
+          </Toggle>
+        )}
+      </HeaderActions>
     </Header>
   );
 }
 
 Title.propTypes = {
+  ariaLabel: PropTypes.string,
   children: PropTypes.node,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,

@@ -35,6 +35,11 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     fixture.restore();
   });
 
+  async function clickOnTarget(target) {
+    const { x, y, width, height } = target.getBoundingClientRect();
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+  }
+
   async function getSelection() {
     const storyContext = await fixture.renderHook(() => useStory());
     return storyContext.state.selectedElementIds;
@@ -53,6 +58,38 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     await fixture.events.click(fixture.editor.library.textAdd);
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
+  });
+
+  it('should allow selecting background through the empty area of a triangle', async () => {
+    // Switch to shapes tab and click the triangle
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
+
+    // Click on the upper left corner of the triangle -- that's empty area.
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(frame1, 7, 7),
+      down(),
+      up(),
+    ]);
+    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+    expect(await getSelection()).toEqual([bgFrame.dataset.elementId]);
+  });
+
+  it('should show the selection lines when an element is being selected', async () => {
+    await fixture.events.click(fixture.editor.library.textAdd);
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+    // De-select element by clicking somewhere else.
+    const { x, y } = fullbleed.getBoundingClientRect();
+    await fixture.events.mouse.click(x - 50, y);
+    expect(await getSelection()).toEqual([]);
+    // Select the element again.
+    await clickOnTarget(frame1);
+    expect(
+      fixture.querySelector('.moveable-line.moveable-direction.moveable-n')
+    ).toBeDefined();
+    await fixture.snapshot('text element is selected');
   });
 
   it('should show the selection lines when out of page area', async () => {

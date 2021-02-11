@@ -15,14 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { FlagsProvider } from 'flagged';
-
-/**
  * Internal dependencies
  */
-import App from '../../../assets/src/edit-story/app';
+import App from '../../../assets/src/edit-story/editorApp';
 
 export default {
   title: 'Playground/Stories Editor',
@@ -56,8 +51,4 @@ const config = {
   },
 };
 
-export const _default = () => (
-  <FlagsProvider features={{}}>
-    <App config={config} />
-  </FlagsProvider>
-);
+export const _default = () => <App config={config} />;

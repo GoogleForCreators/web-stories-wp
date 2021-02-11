@@ -38,7 +38,8 @@ function SimpleAnimation(
   animationName,
   keyframes,
   timings,
-  useClippingContainer
+  useClippingContainer,
+  targetLeafElement = false
 ) {
   const id = uuidv4();
 
@@ -46,11 +47,14 @@ function SimpleAnimation(
     const target = useRef(null);
 
     useEffect(() => {
-      if (!target.current) {
+      const targetEl = targetLeafElement
+        ? target.current?.querySelector('[data-leaf-element="true"]')
+        : target.current;
+      if (!targetEl) {
         return () => {};
       }
       const effect = createKeyframeEffect(
-        target.current,
+        targetEl,
         keyframes,
         sanitizeTimings(timings)
       );
@@ -69,16 +73,19 @@ function SimpleAnimation(
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
   const AMPTarget = function ({ children, style = {} }) {
+    const initialStylesFromKeyframes = targetLeafElement
+      ? {}
+      : getInitialStyleFromKeyframes(keyframes);
     const options = useClippingContainer
       ? {
           useClippingContainer: useClippingContainer,
           style,
-          animationStyle: getInitialStyleFromKeyframes(keyframes),
+          animationStyle: initialStylesFromKeyframes,
         }
       : {
           style: {
             ...style,
-            ...getInitialStyleFromKeyframes(keyframes),
+            ...initialStylesFromKeyframes,
           },
         };
 
@@ -92,11 +99,10 @@ function SimpleAnimation(
   AMPTarget.propTypes = AMPAnimationProps;
 
   const AMPAnimation = function () {
-    return (
-      <AnimationOutput
-        config={{ selector: `#anim-${id}`, keyframes, ...timings }}
-      />
-    );
+    const selector = targetLeafElement
+      ? `#anim-${id} [data-leaf-element="true"]`
+      : `#anim-${id}`;
+    return <AnimationOutput config={{ selector, keyframes, ...timings }} />;
   };
 
   AMPAnimation.propTypes = AMPAnimationProps;

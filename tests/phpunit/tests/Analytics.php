@@ -26,59 +26,13 @@ class Analytics extends \WP_UnitTestCase {
 	use Private_Access;
 
 	/**
-	 * Story id.
-	 *
-	 * @var int
-	 */
-	protected static $story_id;
-
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$story_id = $factory->post->create(
-			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
-				'post_status'  => 'publish',
-				'post_content' => 'Example content',
-			]
-		);
-	}
-
-	/**
 	 * @covers ::init
 	 */
 	public function test_init() {
 		$analytics = new \Google\Web_Stories\Analytics();
 		$analytics->init();
 
-		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $analytics, 'filter_site_kit_gtag_opt' ] ) );
 		$this->assertSame( 10, has_filter( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
-	}
-
-	/**
-	 * @covers ::filter_site_kit_gtag_opt
-	 */
-	public function test_filter_site_kit_gtag_opt() {
-		$gtag = [
-			'vars'     => [
-				'gtag_id' => 'hello',
-			],
-			'triggers' => [],
-		];
-
-		$analytics = new \Google\Web_Stories\Analytics();
-
-
-		$result = $analytics->filter_site_kit_gtag_opt( $gtag );
-		$this->assertSame( $result, $gtag );
-
-		$this->go_to( get_permalink( self::$story_id ) );
-
-		$result = $analytics->filter_site_kit_gtag_opt( $gtag );
-
-		$this->assertArrayHasKey( 'storyProgress', $result['triggers'] );
-		$this->assertArrayHasKey( 'storyEnd', $result['triggers'] );
-		$this->assertSame( '${title}', $result['triggers']['storyProgress']['vars']['event_category'] );
-		$this->assertSame( '${title}', $result['triggers']['storyEnd']['vars']['event_category'] );
 	}
 
 	/**
@@ -130,50 +84,5 @@ class Analytics extends \WP_UnitTestCase {
 
 		$this->assertEmpty( $actual_before );
 		$this->assertContains( '<amp-analytics', $actual_after );
-	}
-
-	/**
-	 * @covers ::print_analytics_tag
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
-	 */
-	public function test_print_analytics_tag_with_site_kit() {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
-
-		$analytics = new \Google\Web_Stories\Analytics();
-
-		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
-		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
-
-		$actual = get_echo( [ $analytics, 'print_analytics_tag' ] );
-
-		$this->assertEmpty( $actual );
-	}
-
-	/**
-	 * @covers ::is_site_kit_analytics_module_active
-	 * @covers ::get_site_kit_active_modules_option
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
-	 */
-	public function test_is_site_kit_analytics_module_active() {
-		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
-
-		$analytics = new \Google\Web_Stories\Analytics();
-
-		$actual_before = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );
-
-		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
-
-		$actual_after = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );
-
-		delete_option( 'googlesitekit_active_modules' );
-		update_option( 'googlesitekit-active-modules', [ 'analytics' ], false );
-
-		$actual_after_legacy = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );
-
-		$this->assertFalse( $actual_before );
-		$this->assertTrue( $actual_after );
-		$this->assertTrue( $actual_after_legacy );
 	}
 }

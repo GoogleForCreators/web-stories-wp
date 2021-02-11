@@ -36,16 +36,29 @@ describe('save', () => {
       <div
         class="wp-block-web-stories-embed alignnone"
       >
-        <amp-story-player
-          data-testid="amp-story-player"
+        <a
+          href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
         >
-          <a
-            href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
-            style="--story-player-poster: url('https://amp.dev/static/samples/img/story_dog2_portrait.jpg');"
-          >
-            Stories in AMP
-          </a>
-        </amp-story-player>
+          <img
+            alt="Stories in AMP"
+            src="https://amp.dev/static/samples/img/story_dog2_portrait.jpg"
+          />
+        </a>
+      </div>
+    `);
+  });
+
+  it('should render nothing if poster is missing', () => {
+    const { container } = render(<Save attributes={{ url, title }} />);
+    expect(container.firstChild).toMatchInlineSnapshot(`
+      <div
+        class="wp-block-web-stories-embed alignnone"
+      >
+        <a
+          href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
+        >
+          Stories in AMP
+        </a>
       </div>
     `);
   });

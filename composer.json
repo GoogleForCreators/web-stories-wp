@@ -5,46 +5,112 @@
   "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
   "require": {
-    "php": "^5.6 || ^7.0",
+    "php": "^5.6 || ^7.0 || ^8.0",
     "ext-dom": "*",
+    "ext-iconv": "*",
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "civicrm/composer-downloads-plugin": "^2.1"
+    "ampproject/amp-wp": "^2.0.10",
+    "civicrm/composer-downloads-plugin": "^3.0",
+    "cweagans/composer-patches": "^1.6",
+    "enshrined/svg-sanitize": "^0.14.0",
+    "mcaskill/composer-exclude-files": "^2.0",
+    "sabberworm/php-css-parser": "dev-master#bfdd976",
+    "symfony/polyfill-mbstring": "^1.18"
+  },
+  "provide": {
+    "ampproject/common": "dev-develop",
+    "ampproject/optimizer": "dev-develop"
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "wp-coding-standards/wpcs": "^2.2"
   },
   "config": {
+    "discard-changes": true,
     "platform": {
       "php": "5.6"
     },
     "sort-packages": true
   },
+  "extra": {
+    "downloads": {
+      "composer-normalize": {
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.9.0/composer-normalize.phar",
+        "path": "vendor/bin/composer-normalize",
+        "type": "phar"
+      },
+      "php-scoper": {
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.13.5/php-scoper.phar",
+        "path": "vendor/bin/php-scoper",
+        "type": "phar"
+      }
+    },
+    "enable-patching": true,
+    "exclude-from-files": [
+      "ampproject/amp-wp/back-compat/back-compat.php",
+      "ampproject/amp-wp/includes/amp-helper-functions.php",
+      "ampproject/amp-wp/includes/admin/functions.php",
+      "ampproject/amp-wp/includes/deprecated.php",
+      "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
+    ]
+  },
   "autoload": {
     "psr-4": {
-      "Google\\Web_Stories\\": "includes"
-    }
+      "Google\\Web_Stories\\": "includes",
+      "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
+      "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
+    },
+    "files": [
+      "includes/polyfills/mbstring.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
       "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ampproject/amp-wp",
+      "no-api": true
+    }
+  ],
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
+    "post-install-cmd": [
+      "@prefix-dependencies"
+    ],
+    "post-update-cmd": [
+      "@prefix-dependencies"
+    ],
+    "composer-normalize": "composer-normalize",
+    "phpcbf": "phpcbf",
     "phpcs": "phpcs",
+    "phpmd": "phpmd . text phpmd.xml",
     "phpstan": [
       "mkdir php7 || echo",
       "composer --working-dir=php7 show --path szepeviktor/phpstan-wordpress || composer --working-dir=php7 require --dev --ignore-platform-reqs szepeviktor/phpstan-wordpress",
       "php7/vendor/bin/phpstan analyze --memory-limit=2G"
+    ],
+    "prefix-dependencies": [
+      "php-scoper add-prefix --output-dir=./third-party --force --quiet",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",
+      "@composer dump-autoload --working-dir ./third-party --no-dev --classmap-authoritative",
+      "sed -i'.bak' -e 's/Composer\\\\Autoload/Google_Web_Stories_Composer\\\\Autoload/' third-party/vendor/composer/*.php && rm -rf third-party/vendor/composer/*.php.bak",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./includes/composer.json",
+      "@composer dump-autoload --working-dir ./includes --no-dev --classmap-authoritative",
+      "sed -i'.bak' -e 's/Composer\\\\Autoload/Google_Web_Stories_Composer\\\\Autoload/' includes/vendor/composer/*.php && rm -rf includes/vendor/composer/*.php.bak"
     ]
   }
 }

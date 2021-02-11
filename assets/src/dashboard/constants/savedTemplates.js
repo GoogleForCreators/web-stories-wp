@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 export const SAVED_TEMPLATES_STATUS = {
   ALL: 'bookmarked, current_user',
@@ -50,3 +50,41 @@ export const SAVED_TEMPLATES_VIEWING_LABELS = {
     'web-stories'
   ),
 };
+
+export const SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS = {
+  OPEN_IN_EDITOR: 'open-template-in-editor-action',
+  PREVIEW: 'preview-action',
+  RENAME: 'rename-action',
+  DUPLICATE: 'duplicate-action',
+  MODIFY_TEMPLATE: 'modify-template-action',
+  DELETE: 'delete-story-action',
+  CLOSE: 'close-menu',
+};
+
+export const SAVED_TEMPLATE_CONTEXT_MENU_ITEMS = [
+  {
+    label: __('Open in editor', 'web-stories'),
+    value: false, // SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
+  },
+  {
+    label: __('Preview', 'web-stories'),
+    value: SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.PREVIEW,
+  },
+  {
+    label: __('Rename', 'web-stories'),
+    value: false, // SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.RENAME,
+    separator: 'top',
+  },
+  {
+    label: __('Duplicate', 'web-stories'),
+    value: false, // SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.DUPLICATE,
+  },
+  {
+    label: __('Modify', 'web-stories'),
+    value: false, // SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.MODIFY_TEMPLATE,
+  },
+  {
+    label: __('Delete', 'web-stories'),
+    value: false, // SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.DELETE,
+  },
+];

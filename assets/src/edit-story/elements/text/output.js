@@ -62,6 +62,7 @@ export function TextOutputWithUnits({
     backgroundColor,
     backgroundTextMode,
     padding,
+    borderRadius,
     ...rest
   } = element;
   if (!dataToFontSizeY) {
@@ -97,7 +98,6 @@ export function TextOutputWithUnits({
   );
   const fillStyle = {
     ...styles,
-    ...bgColor,
     color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     overflowWrap: 'break-word',
@@ -114,6 +114,7 @@ export function TextOutputWithUnits({
 
   const highlightStyle = {
     ...fillStyle,
+    ...bgColor,
     margin: 0,
     padding: 0,
     background: 'none',
@@ -125,6 +126,8 @@ export function TextOutputWithUnits({
     ...highlightStyle,
     position: 'absolute',
     top: 0,
+    left: 0,
+    right: 0,
   };
 
   const marginStyle = (el) => {
@@ -132,21 +135,26 @@ export function TextOutputWithUnits({
     return {
       display: 'block',
       position: 'relative',
-      // margin: `0 ${paddingStyles.horizontal}`,
-      left: `-${paddingStyles.horizontal}`,
+      left: 0,
       top: '0',
       margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
+      /* stylelint-disable-next-line */
+      WebkitBoxDecorationBreak: 'clone',
+      boxDecorationBreak: 'clone',
     };
   };
 
   const textStyle = {
     ...bgColor,
-    /* stylelint-disable */
+    /* stylelint-disable-next-line */
     WebkitBoxDecorationBreak: 'clone',
-    /* stylelint-enable */
     boxDecorationBreak: 'clone',
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+    textAlign: styles.textAlign,
+    borderRadius: `${borderRadius?.topLeft || 0}px ${
+      borderRadius?.topRight || 0
+    }px ${borderRadius?.bottomRight || 0}px ${borderRadius?.bottomLeft || 0}px`,
   };
 
   const backgroundTextStyle = {

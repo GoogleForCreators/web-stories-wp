@@ -22,11 +22,11 @@ Once obtained, follow these steps to configure the project appropriately:
 
 ```bash
 export GOOGLE_FONTS_API_KEY=your-api-key
-npm run workflow:build-fonts
+npm run workflow:fonts
 ```
 
 This script does the following:
 
 1. Downloads all available fonts from Google Fonts
 1. Merges font list with a set of system fonts and prepares them for usage in the editor.
-1. Saves changes to `assets/src/fonts/fonts.json`.
+1. Saves changes to `packages/fonts/src/fonts.json`.

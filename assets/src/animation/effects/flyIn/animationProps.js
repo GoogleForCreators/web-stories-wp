@@ -15,13 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { __, _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
 /**
@@ -37,7 +33,7 @@ export const FlyInEffectInputPropTypes = {
 export default {
   flyInDir: {
     label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
+    type: FIELD_TYPES.DIRECTION_PICKER,
     values: [
       DIRECTION.TOP_TO_BOTTOM,
       DIRECTION.BOTTOM_TO_TOP,
@@ -45,5 +41,11 @@ export default {
       DIRECTION.RIGHT_TO_LEFT,
     ],
     defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  },
+  duration: {
+    label: __('Duration', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    defaultValue: 600,
   },
 };

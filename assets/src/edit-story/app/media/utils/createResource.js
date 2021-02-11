@@ -59,6 +59,7 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
  * @property {Object} sizes Object of image sizes.
+ * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  */
 
 /**
@@ -99,6 +100,7 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
  * @property {Attribution|null} attribution An optional attribution for the
  * resource.
+ * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  */
 
 /**
@@ -124,6 +126,7 @@ function createResource({
   local,
   sizes,
   attribution,
+  output,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -142,6 +145,7 @@ function createResource({
     local,
     sizes,
     attribution,
+    output,
   };
 }
 

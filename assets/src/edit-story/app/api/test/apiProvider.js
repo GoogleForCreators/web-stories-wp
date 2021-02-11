@@ -29,6 +29,10 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
+
+jest.mock('../getAllPageLayouts');
+import getAllPageLayouts from '../getAllPageLayouts';
+
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
@@ -76,5 +80,28 @@ describe('APIProvider', () => {
       path:
         '/mediaPath?context=edit&per_page=100&page=1&_web_stories_envelope=true&cache_bust=true',
     });
+  });
+
+  it('getPageLayouts gets pageLayouts w/ cdnURL', async () => {
+    const pageLayouts = [{ id: 'templateid' }];
+    getAllPageLayouts.mockResolvedValue(pageLayouts);
+
+    const cdnURL = 'https://test.url';
+    const assetsURL = 'https://plugin.url/assets/';
+    const { result } = renderApiProvider({
+      configValue: {
+        api: {},
+        cdnURL,
+        assetsURL,
+      },
+    });
+
+    let pageLayoutsResult;
+    await act(async () => {
+      pageLayoutsResult = await result.current.actions.getPageLayouts();
+    });
+
+    expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL, assetsURL });
+    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
   });
 });

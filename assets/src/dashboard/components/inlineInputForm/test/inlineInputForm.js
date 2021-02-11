@@ -41,7 +41,7 @@ describe('InlineInputForm', () => {
     const labelPosition = window.getComputedStyle(label).position;
 
     expect(labelPosition).toBe('absolute');
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
   });
   it('should call onEditCancel when focus is removed from input', () => {
     const mockCancel = jest.fn();
@@ -57,7 +57,7 @@ describe('InlineInputForm', () => {
     );
 
     const input = wrapper.getByRole('textbox');
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
 
     fireEvent.keyDown(input, { key: 'escape', keyCode: 27 });
 
@@ -78,7 +78,7 @@ describe('InlineInputForm', () => {
     );
 
     const input = wrapper.getByRole('textbox');
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
 
     fireEvent.keyDown(input, { key: 'enter', keyCode: 13 });
 

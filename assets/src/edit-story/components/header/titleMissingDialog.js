@@ -19,11 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -33,10 +29,11 @@ import Dialog from '../dialog';
 import Link from '../link';
 
 const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
 `;
 
 function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
@@ -59,13 +56,16 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
       }
     >
       <Paragraph>
-        {__(
-          'We recommend adding a title to the story prior to publishing.',
-          'web-stories'
-        )}{' '}
-        <Link href={link} target="_blank" rel="noopener noreferrer">
-          {__('Learn more.', 'web-stories')}
-        </Link>
+        <TranslateWithMarkup
+          mapping={{
+            a: <Link href={link} target="_blank" rel="noopener noreferrer" />,
+          }}
+        >
+          {__(
+            'We recommend adding a title to the story prior to publishing. <a>Learn more</a>.',
+            'web-stories'
+          )}
+        </TranslateWithMarkup>
       </Paragraph>
     </Dialog>
   );

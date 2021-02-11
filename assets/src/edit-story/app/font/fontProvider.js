@@ -15,15 +15,12 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useMemo } from 'react';
+import { curatedFontNames } from '@web-stories-wp/fonts';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -32,9 +29,8 @@ import loadStylesheet from '../../utils/loadStylesheet';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
-import { curatedFontNames } from './curatedFonts';
 
-const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
+export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);

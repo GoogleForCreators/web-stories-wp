@@ -19,37 +19,40 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import {
-  DefaultLogoText,
+  CenterMutedText,
   Error,
   GridItemButton,
   GridItemContainer,
   Logo,
   SettingForm,
-  HelperText,
-  FinePrintHelperText,
+  SettingSubheading,
   UploadedContainer,
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { useGridViewKeys, useFocusOut } from '../../../../utils';
+import {
+  useGridViewKeys,
+  useFocusOut,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 import { useConfig } from '../../../config';
 import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
 import PopoverLogoContextMenu from './popoverLogoContextMenu';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
-  CONTEXT: __(
+  UPLOAD_CONTEXT: __(
     'Upload your logos here and they will become available to any stories you create.',
+    'web-stories'
+  ),
+  CLICK_CONTEXT: __(
+    'Click on logo to set as default if you want that logo to be used on default logo for all your stories.',
     'web-stories'
   ),
   INSTRUCTIONS: __(
@@ -73,13 +76,13 @@ function PublisherLogoSettings({
   publisherLogos,
   uploadError,
 }) {
-  const { isRTL } = useConfig();
+  const { isRTL, allowedImageMimeTypes } = useConfig();
 
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
 
-  const [activePublisherLogo, setActivePublisherLogoId] = useState(null);
+  const [activePublisherLogoId, setActivePublisherLogoId] = useState(null);
   const [indexRemoved, setIndexRemoved] = useState(null);
 
   const [contextMenuId, setContextMenuId] = useState(null);
@@ -126,23 +129,22 @@ function PublisherLogoSettings({
       return setIndexRemoved(null);
     }
     return undefined;
-  }, [
-    activePublisherLogo,
-    indexRemoved,
-    publisherLogosById,
-    setActivePublisherLogoId,
-  ]);
+  }, [indexRemoved, publisherLogosById, setActivePublisherLogoId]);
 
   useGridViewKeys({
     containerRef,
     gridRef,
     itemRefs,
     isRTL,
-    currentItemId: activePublisherLogo,
+    currentItemId: activePublisherLogoId,
     items: publisherLogos,
   });
 
   const showLogoContextMenu = !hasOnlyOneLogo;
+
+  const onMenuItemToggle = useCallback((newMenuId) => {
+    setActivePublisherLogoId(newMenuId);
+  }, []);
 
   const onMenuItemSelected = useCallback(
     (sender, logo, index) => {
@@ -164,13 +166,25 @@ function PublisherLogoSettings({
     [handleUpdateDefaultLogo, handleRemoveLogoClick]
   );
 
-  useFocusOut(containerRef, () => setActivePublisherLogoId(null), []);
+  useFocusOut(
+    containerRef,
+    () => {
+      setActivePublisherLogoId(null);
+      setContextMenuId(null);
+    },
+    []
+  );
 
   return (
     <SettingForm>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
-        <HelperText>{TEXT.CONTEXT}</HelperText>
+        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {TEXT.UPLOAD_CONTEXT}
+        </SettingSubheading>
+        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {TEXT.CLICK_CONTEXT}
+        </SettingSubheading>
       </div>
       <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
@@ -178,22 +192,23 @@ function PublisherLogoSettings({
             tabIndex={0}
             ref={gridRef}
             role="list"
-            ariaLabel={__('Viewing existing publisher logos', 'web-stories')}
+            aria-label={__('Viewing existing publisher logos', 'web-stories')}
           >
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
                 return null;
               }
 
-              const isActive = activePublisherLogo === publisherLogo.id;
+              const isActive = activePublisherLogoId === publisherLogo.id;
 
               return (
                 <GridItemContainer
-                  key={`${publisherLogo.title}_${idx}`}
+                  key={publisherLogo.id}
                   ref={(el) => {
                     itemRefs.current[publisherLogo.id] = el;
                   }}
                   role="listitem"
+                  active={publisherLogo.isDefault}
                 >
                   <GridItemButton
                     onFocus={() => {
@@ -207,28 +222,28 @@ function PublisherLogoSettings({
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
                     aria-label={sprintf(
-                      /* translators: %s: logo number.*/
-                      __(
-                        'Publisher Logo %s (currently selected)',
-                        'web-stories'
-                      ),
-                      idx + 1
+                      /* translators: %s: logo title.*/
+                      __('Publisher Logo %s', 'web-stories'),
+                      publisherLogo.title
                     )}
                   >
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   </GridItemButton>
                   {publisherLogo.isDefault && (
-                    <DefaultLogoText>
+                    <CenterMutedText
+                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    >
                       {__('Default', 'web-stories')}
-                    </DefaultLogoText>
+                    </CenterMutedText>
                   )}
                   {showLogoContextMenu && (
                     <PopoverLogoContextMenu
                       isActive={isActive}
-                      activePublisherLogo={activePublisherLogo}
+                      activePublisherLogo={activePublisherLogoId}
                       idx={idx}
                       publisherLogo={publisherLogo}
                       onMenuItemSelected={onMenuItemSelected}
+                      onMenuItemToggle={onMenuItemToggle}
                       contextMenuId={{
                         set: setContextMenuId,
                         value: contextMenuId,
@@ -251,8 +266,13 @@ function PublisherLogoSettings({
               isMultiple
               ariaLabel={TEXT.ARIA_LABEL}
               instructionalText={TEXT.HELPER_UPLOAD}
+              acceptableFormats={Object.values(allowedImageMimeTypes)}
             />
-            <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+            <SettingSubheading
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {TEXT.INSTRUCTIONS}
+            </SettingSubheading>
           </>
         )}
       </div>

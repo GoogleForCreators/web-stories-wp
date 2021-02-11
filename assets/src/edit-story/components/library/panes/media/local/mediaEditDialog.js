@@ -20,12 +20,9 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
+import { formatDate, toDate, isValid } from '@web-stories-wp/date';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -36,7 +33,6 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
-import { formatDate, toDate, isValid } from '../../../../../../date';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -66,59 +62,64 @@ const MetadataTextContainer = styled.div`
 `;
 
 const MediaDateText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.date.family};
-  line-height: ${({ theme }) => theme.fonts.date.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.date.size};
-  font-weight: ${({ theme }) => theme.fonts.date.weight};
-  color: ${({ theme }) => theme.grayout};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
   margin-bottom: 8px;
 `;
 
 const MediaTitleText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.title.family};
-  line-height: ${({ theme }) => theme.fonts.title.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.title.size};
-  font-weight: ${({ theme }) => theme.fonts.title.weight};
-  color: ${({ theme }) => theme.colors.bg.v9};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v9};
 `;
 
 const MediaSizeText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  color: ${({ theme }) => theme.colors.bg.v11};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v11};
 `;
 
 const Input = styled.input`
-  background: ${({ theme }) => theme.colors.bg.white};
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.white};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
   box-sizing: border-box;
   border-radius: 4px;
-  font-family: ${({ theme }) => theme.fonts.input.family};
-  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.input.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.size};
   padding: 7px 10px;
   margin-top: 20px;
   margin-bottom: 4px;
 `;
 
 const DialogDescription = styled.p`
-  font-family: ${({ theme }) => theme.fonts.description.family};
-  line-height: ${({ theme }) => theme.fonts.description.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.description.weight};
-  font-size: ${({ theme }) => theme.fonts.description.size};
-  color: ${({ theme }) => theme.grayout};
+  font-family: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.family};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.lineHeight};
+  font-weight: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.weight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
   margin: 0;
 `;
 
 const imageDialogTitle = __('Edit Image', 'web-stories');
 const videoDialogTitle = __('Edit Video', 'web-stories');
+const imageInputTitle = __('Assistive text', 'web-stories');
+const videoInputTitle = __('Video description', 'web-stories');
 const imageDialogDescription = __(
   'Describe the appearance and function of the image. Leave empty if the image is purely decorative.',
   'web-stories'
 );
 const videoDialogDescription = __(
-  'Describe the appearance and function of the video. Leave empty if the video is purely decorative.',
+  'For indexability and accessibility. Include any burned-in text inside the video.',
   'web-stories'
 );
 
@@ -165,17 +166,20 @@ function MediaEditDialog({ resource, onClose }) {
       updateMediaElement({ id, alt: altText });
       onClose();
     } catch (err) {
+      trackError('local media edit', err.message);
       showSnackbar({
         message: __('Failed to update, please try again.', 'web-stories'),
       });
     }
   }, [altText, id, onClose, showSnackbar, updateMedia, updateMediaElement]);
 
+  const isImage = type === 'image';
+
   return (
     <Dialog
       open={true}
       onClose={onClose}
-      title={type === 'image' ? imageDialogTitle : videoDialogTitle}
+      title={isImage ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
           <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
@@ -217,13 +221,13 @@ function MediaEditDialog({ resource, onClose }) {
           </MediaSizeText>
           <Input
             value={altText}
-            aria-label={__('Alt text', 'web-stories')}
+            aria-label={isImage ? imageInputTitle : videoInputTitle}
             type="text"
-            placeholder={__('Alt text', 'web-stories')}
+            placeholder={isImage ? imageInputTitle : videoInputTitle}
             onChange={handleAltTextChange}
           />
           <DialogDescription>
-            {type === 'image' ? imageDialogDescription : videoDialogDescription}
+            {isImage ? imageDialogDescription : videoDialogDescription}
           </DialogDescription>
         </MetadataTextContainer>
       </DialogBody>

@@ -19,26 +19,23 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useCallback } from 'react';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
-import { trackClick } from '../../../tracking';
 
 const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
 `;
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
@@ -71,15 +68,23 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
       }
     >
       <Paragraph>
-        {__('Your story has been successfully published!', 'web-stories')}{' '}
-        <Link
-          href={storyURL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onViewStoryClick}
+        <TranslateWithMarkup
+          mapping={{
+            a: (
+              <Link
+                href={storyURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onViewStoryClick}
+              />
+            ),
+          }}
         >
-          {__('View story.', 'web-stories')}
-        </Link>
+          {__(
+            'Your story has been successfully published! <a>View story</a>.',
+            'web-stories'
+          )}
+        </TranslateWithMarkup>
       </Paragraph>
       <Paragraph>
         {__('Would you like to include it on a new post?', 'web-stories')}

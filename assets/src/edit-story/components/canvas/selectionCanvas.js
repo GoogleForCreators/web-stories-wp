@@ -24,12 +24,11 @@ import { useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
 import { useUnits } from '../../units';
 import { PAGE_RATIO } from '../../constants';
-import useCanvas from './useCanvas';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
 
@@ -53,7 +52,7 @@ const Container = withOverlay(styled.div`
 const Lasso = styled.div`
   display: none;
   position: absolute;
-  border: 1px dotted ${({ theme }) => theme.colors.selection};
+  border: 1px dotted ${({ theme }) => theme.DEPRECATED_THEME.colors.selection};
   z-index: 1;
 `;
 

@@ -20,39 +20,28 @@
  * Hides all controls that interfere with the dashboard UI.
  */
 
-body {
+body.js {
   background: #fff;
-  color: #1a1d1f;
+  color: #1a1d1f; /* theme.colors.gray900 */
 }
 
 #screen-meta,
-#screen-meta
-  ~ :not(#web-stories-dashboard):not(.clear):not(#web-stories-no-js) {
+#screen-meta-links ~ :not(.web-stories-wp):not(.clear) {
   display: none;
 }
 
 body.web-story_page_stories-dashboard {
   position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 #adminmenuback {
   z-index: 4;
 }
 
-body.web-story_page_stories-dashboard #wpwrap,
-body.web-story_page_stories-dashboard #wpbody-content {
-  position: absolute;
-  overflow: hidden;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-}
-
-body.web-story_page_stories-dashboard #wpcontent,
-body.web-story_page_stories-dashboard #wpbody-content {
+body.js.web-story_page_stories-dashboard #wpcontent,
+body.js.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
 }
 
@@ -74,8 +63,4 @@ body.web-story_page_stories-dashboard #wpfooter {
 
 button {
   font-size: inherit;
-}
-
-#web-stories-no-js {
-  margin: 25px 20px 0px 20px;
 }

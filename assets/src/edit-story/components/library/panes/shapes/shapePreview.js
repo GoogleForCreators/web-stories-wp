@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import React, { createRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
@@ -27,19 +27,55 @@ import styled from 'styled-components';
 import useLibrary from '../../useLibrary';
 import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
+import LibraryMoveable from '../shared/libraryMoveable';
+import { useUnits } from '../../../../units';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
-const ShapePreviewContainer = styled.button`
-  background: transparent;
-  border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
-  border-radius: 4px;
+const createGrid = ({ columns, gap, minWidth }) => css`
+  min-width: ${minWidth}px;
+  width: calc(${100 / columns}% - ${(gap * (columns - 1)) / columns}px);
+  margin-top: 0px;
+  margin-left: ${gap}px;
+  &:nth-of-type(n + ${columns + 1}) {
+    margin-top: ${gap}px;
+  }
+  &:nth-of-type(${columns}n + 1) {
+    margin-left: 0;
+  }
+`;
+
+// Using button directly breaks the DOM nesting for tests.
+const Aspect = styled.div.attrs({ role: 'button' })`
   position: relative;
-  margin: 12px 10px;
-  flex: 0 0 64px;
-  height: 67px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  @media screen and (min-width: 1220px) {
+    ${createGrid({ columns: 4, gap: 12, minWidth: 50 })}
+  }
+  @media screen and (min-width: 1100px) and (max-width: 1220px) {
+    ${createGrid({ columns: 3, gap: 12, minWidth: 50 })}
+  }
+  @media screen and (max-width: 1100px) {
+    ${createGrid({ columns: 2, gap: 12, minWidth: 50 })}
+  }
+`;
+
+const AspectInner = styled.div`
+  position: relative;
+  padding-bottom: 95.5%;
+`;
+
+const ShapePreviewContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray24};
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,17 +88,38 @@ const ShapePreviewContainer = styled.button`
   }
 `;
 
+const ShapeClone = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  svg {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    path {
+      fill: #c4c4c4;
+    }
+  }
+`;
+
 const ShapePreviewSizer = styled.div`
   padding-top: 100%;
 `;
 
 const Path = styled.path`
-  fill: ${({ theme }) => theme.colors.fg.white};
+  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 function ShapePreview({ mask, isPreview }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
+  }));
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
   }));
 
   // Creating a ref to the Path so that it can be used as a drag icon.
@@ -81,49 +138,50 @@ function ShapePreview({ mask, isPreview }) {
     },
   };
 
-  const svg = (
-    <svg
-      viewBox={`0 0 1 ${
-        1 / (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
-      }`}
-      width={
-        PREVIEW_SIZE *
-        (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
-      }
-      height={PREVIEW_SIZE}
-    >
-      <title>{mask.name}</title>
-      <Path
-        d={isPreview && mask.iconPath ? mask.iconPath : mask.path}
-        ref={pathRef}
-      />
-    </svg>
-  );
-
-  // Callback that sets the drag image and adds information about the shape
-  // to be used in an [insertElement] call on the drop handler.
-  const onDragStart = (e) => {
-    const { x, y } = pathRef.current.getBoundingClientRect();
-    const offsetX = e.clientX - x;
-    const offsetY = e.clientY - y;
-    e.dataTransfer.setDragImage(pathRef.current, offsetX, offsetY);
-    e.dataTransfer.setData('shape', JSON.stringify(shapeData));
+  const getSVG = (displayLabel = true) => {
+    return (
+      <svg
+        viewBox={`0 0 1 ${
+          1 / (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+        }`}
+        width={
+          PREVIEW_SIZE *
+          (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+        }
+        height={PREVIEW_SIZE}
+      >
+        {displayLabel && <title>{mask.name}</title>}
+        <Path
+          d={isPreview && mask.iconPath ? mask.iconPath : mask.path}
+          ref={pathRef}
+        />
+      </svg>
+    );
   };
 
   return (
-    <ShapePreviewContainer
-      key={mask.type}
-      draggable={true}
-      aria-label={mask.name}
-      onClick={() => {
-        // Shapes inserted with a specific size.
-        insertElement('shape', shapeData);
-      }}
-      onDragStart={onDragStart}
-    >
-      <ShapePreviewSizer />
-      {svg}
-    </ShapePreviewContainer>
+    <Aspect>
+      <AspectInner>
+        <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
+          <ShapePreviewSizer />
+          {getSVG()}
+        </ShapePreviewContainer>
+      </AspectInner>
+      <LibraryMoveable
+        type={'shape'}
+        elementProps={shapeData}
+        onClick={() => {
+          // Shapes inserted with a specific size.
+          insertElement('shape', shapeData);
+        }}
+        cloneElement={ShapeClone}
+        cloneProps={{
+          width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * mask.ratio),
+          height: dataToEditorY(DEFAULT_ELEMENT_WIDTH),
+          children: getSVG(false),
+        }}
+      />
+    </Aspect>
   );
 }
 ShapePreview.propTypes = {

@@ -29,12 +29,12 @@ function nativeCopyPasteExpected() {
     'true' === contentEditable ||
     'textarea' === tagName.toLowerCase() ||
     ('input' === tagName.toLowerCase() &&
-      ('text' === type || 'number' === type))
+      ['text', 'number', 'search', 'email', 'tel', 'url'].includes(type))
   ) {
     return true;
   }
 
-  const selection = window.getSelection();
+  const selection = global.getSelection();
   const range = selection.rangeCount ? selection.getRangeAt(0) : null;
 
   return Boolean(range && !range.collapsed);

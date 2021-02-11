@@ -1,0 +1,6 @@
+<svg viewBox="0 0 29 28" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+  <g fill-rule="nonzero">
+    <path d="M14.0000024 0c-7.728 0-14 6.272-14 14s6.272 14 14 14 14-6.272 14-14-6.272-14-14-14z" fill="currentColor" />
+    <path d="M10.0000024 14c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm2 0c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2zm8 2c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#fff"/>
+  </g>
+</svg>

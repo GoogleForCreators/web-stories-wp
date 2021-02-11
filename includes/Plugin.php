@@ -28,15 +28,24 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\AMP;
+use Google\Web_Stories\Integrations\Jetpack;
+use Google\Web_Stories\Integrations\NextGen_Gallery;
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
-use Google\Web_Stories\REST_API\Fonts_Controller;
+use Google\Web_Stories\REST_API\Status_Check_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
-use WP_Post;
+use Google\Web_Stories\Block\Embed_Block;
+use Google\Web_Stories\REST_API\Stories_Settings_Controller;
+use Google\Web_Stories\REST_API\Stories_Users_Controller;
+use Google\Web_Stories\Shortcode\Embed_Shortcode;
 
 /**
  * Plugin class.
+ *
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class Plugin {
 	/**
@@ -89,6 +98,20 @@ class Plugin {
 	public $embed_block;
 
 	/**
+	 * Embed shortcode
+	 *
+	 * @var Embed_Shortcode
+	 */
+	public $embed_shortcode;
+
+	/**
+	 * Embed base
+	 *
+	 * @var Embed_Base
+	 */
+	public $embed_base;
+
+	/**
 	 * Frontend.
 	 *
 	 * @var Discovery
@@ -117,6 +140,20 @@ class Plugin {
 	public $analytics;
 
 	/**
+	 * AdSense.
+	 *
+	 * @var AdSense
+	 */
+	public $adsense;
+
+	/**
+	 * Ad Manager.
+	 *
+	 * @var Ad_Manager
+	 */
+	public $ad_manager;
+
+	/**
 	 * Experiments.
 	 *
 	 * @var Experiments
@@ -124,9 +161,46 @@ class Plugin {
 	public $experiments;
 
 	/**
+	 * 3P integrations.
+	 *
+	 * @var array
+	 */
+	public $integrations = [];
+
+	/**
+	 * Meta boxes.
+	 *
+	 * @var Meta_Boxes
+	 */
+	public $meta_boxes;
+
+	/**
+	 * SVG.
+	 *
+	 * @var SVG
+	 */
+	public $svg;
+
+	/**
+	 * User_Preferences.
+	 *
+	 * @var User_Preferences
+	 */
+	public $user_preferences;
+
+	/**
+	 * KSES.
+	 *
+	 * @var KSES
+	 */
+	public $kses;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @return void
 	 */
@@ -137,7 +211,6 @@ class Plugin {
 		// Settings.
 		$this->settings = new Settings();
 		add_action( 'init', [ $this->settings, 'init' ], 5 );
-
 
 		$this->experiments = new Experiments();
 		add_action( 'init', [ $this->experiments, 'init' ], 7 );
@@ -154,25 +227,38 @@ class Plugin {
 		$this->media = new Media();
 		add_action( 'init', [ $this->media, 'init' ] );
 
+		// KSES
+		// High priority to load after Story_Post_Type.
+		$this->kses = new KSES();
+		add_action( 'init', [ $this->kses, 'init' ], 11 );
+
 		$this->tracking = new Tracking();
 		add_action( 'init', [ $this->tracking, 'init' ] );
 
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
 
-		$this->dashboard = new Dashboard( $this->experiments );
-		add_action( 'init', [ $this->dashboard, 'init' ] );
+		$this->meta_boxes = new Meta_Boxes();
+		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
 
-		$this->story = new Story_Post_Type( $this->experiments );
+		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
 		add_action( 'init', [ $this->story, 'init' ] );
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
+		// Embed base.
+		$this->embed_base = new Embed_Base();
+		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
+
 		// Gutenberg Blocks.
 		$this->embed_block = new Embed_Block();
 		add_action( 'init', [ $this->embed_block, 'init' ] );
+
+		// Embed shortcode.
+		$this->embed_shortcode = new Embed_Shortcode();
+		add_action( 'init', [ $this->embed_shortcode, 'init' ] );
 
 		// Frontend.
 		$this->discovery = new Discovery();
@@ -181,6 +267,18 @@ class Plugin {
 		$this->analytics = new Analytics();
 		add_action( 'init', [ $this->analytics, 'init' ] );
 
+		$this->adsense = new AdSense();
+		add_action( 'init', [ $this->adsense, 'init' ] );
+
+		$this->ad_manager = new Ad_Manager();
+		add_action( 'init', [ $this->ad_manager, 'init' ] );
+
+		$this->user_preferences = new User_Preferences();
+		add_action( 'init', [ $this->user_preferences, 'init' ] );
+
+		$this->svg = new SVG( $this->experiments );
+		add_action( 'init', [ $this->svg, 'init' ] );
+
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.
 		$activation_flag = new Activation_Flag();
@@ -188,6 +286,26 @@ class Plugin {
 
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
+
+		$amp = new AMP();
+		add_action( 'init', [ $amp, 'init' ] );
+		$this->integrations['amp'] = $amp;
+
+		$jetpack = new Jetpack();
+		add_action( 'init', [ $jetpack, 'init' ] );
+		$this->integrations['jetpack'] = $jetpack;
+
+		// This runs at init priority -2 because NextGEN inits at -1.
+		$nextgen_gallery = new NextGen_Gallery();
+		add_action( 'init', [ $nextgen_gallery, 'init' ], -2 );
+		$this->integrations['nextgen_gallery'] = $nextgen_gallery;
+
+		$site_kit = new Site_Kit( $this->analytics );
+		add_action( 'init', [ $site_kit, 'init' ] );
+		$this->integrations['site-kit'] = $site_kit;
+
+		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
+		add_action( 'init', [ $this->dashboard, 'init' ] );
 	}
 
 	/**
@@ -200,7 +318,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function load_amp_plugin_compat() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/plugin-compat/amp.php';
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
 	}
 
 	/**
@@ -215,6 +333,9 @@ class Plugin {
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();
 
+		$status_check = new Status_Check_Controller();
+		$status_check->register_routes();
+
 		$embed_controller = new Embed_Controller();
 		$embed_controller->register_routes();
 
@@ -226,5 +347,11 @@ class Plugin {
 
 		$stories_media = new Stories_Media_Controller( 'attachment' );
 		$stories_media->register_routes();
+
+		$stories_users = new Stories_Users_Controller();
+		$stories_users->register_routes();
+
+		$stories_settings = new Stories_Settings_Controller();
+		$stories_settings->register_routes();
 	}
 }

@@ -19,7 +19,7 @@
  */
 import React from 'react';
 import { FlagsProvider } from 'flagged';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -27,9 +27,9 @@ import Modal from 'react-modal';
  */
 import App from '../app';
 import ApiProvider from '../app/api/apiProvider';
-import FixtureEvents from '../../../../karma/fixture/events';
-import ComponentStub from '../../../../karma/fixture/componentStub';
-import actPromise from '../../../../karma/fixture/actPromise';
+import FixtureEvents from '../../karma-fixture/events';
+import ComponentStub from '../../karma-fixture/componentStub';
+import actPromise from '../../karma-fixture/actPromise';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
@@ -37,6 +37,15 @@ const defaultConfig = {
   capabilities: {
     canManageSettings: true,
     canUploadFiles: true,
+    canInstallPlugins: true,
+    siteKitPluginStatus: false,
+  },
+  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
+  siteKitStatus: {
+    installed: false,
+    active: false,
+    analyticActive: false,
+    link: 'https://example.com/wp-admin/plugins.php',
   },
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',
@@ -53,7 +62,7 @@ const defaultConfig = {
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
   wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories/assets',
-  cdnURL: 'https://replaceme.com',
+  cdnURL: 'https://cdn.example.com/',
   version: '1.0.0-alpha.9',
   api: {
     stories: '/web-stories/v1/web-story',
@@ -166,7 +175,7 @@ export default class Fixture {
    *
    * @return {Promise} Yields when the editor rendering is complete.
    */
-  render() {
+  async render() {
     const root = document.querySelector('test-root');
 
     // see http://reactcommunity.org/react-modal/accessibility/
@@ -187,9 +196,14 @@ export default class Fixture {
     this._container = container;
     this._screen = screen;
 
-    // @todo: find a stable way to wait for the story to fully render. Can be
-    // implemented via `waitFor`.
-    return Promise.resolve();
+    // Check to see if Google Sans font is loaded.
+    await waitFor(async () => {
+      const font = '12px "Google Sans"';
+      await document.fonts.load(font, '');
+      if (!document.fonts.check(font, '')) {
+        throw new Error('Not ready: Google Sans font could not be loaded');
+      }
+    });
   }
 
   restore() {

@@ -27,7 +27,7 @@ import React, { forwardRef } from 'react';
  */
 import { UnitsProvider } from '../../../../edit-story/units';
 import withOverlay from '../../overlay/withOverlay';
-import CanvasContext from '../context';
+import CanvasContext from '../../../app/canvas/context';
 import Selection from '../selection';
 import StoryContext from '../../../app/story/context';
 import TransformProvider from '../../transform/transformProvider';

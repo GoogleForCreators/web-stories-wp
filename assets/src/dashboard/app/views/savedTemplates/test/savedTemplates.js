@@ -15,14 +15,16 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
+
+/**
+ * Internal dependencies
+ */
 import { SavedTemplatesContent, SavedTemplatesHeader } from '../index';
 import { renderWithProviders } from '../../../../testUtils';
+import formattedTemplatesArray from '../../../../dataUtils/formattedTemplatesArray';
 import {
   STORY_SORT_OPTIONS,
   VIEW_STYLE,
@@ -30,34 +32,10 @@ import {
 } from '../../../../constants';
 import LayoutProvider from '../../../../components/layout/provider';
 
-const fakeStories = [
-  {
-    id: 1,
-    status: 'publish',
-    title: 'Story A',
-    pages: [{ id: '10' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-  {
-    id: 2,
-    status: 'draft',
-    title: 'Story B',
-    pages: [{ id: '20' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-  {
-    id: 3,
-    status: 'publish',
-    title: 'Story C',
-    pages: [{ id: '30' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-];
-
-jest.mock('../../../../components/previewPage.js', () => () => null);
+jest.mock(
+  '../../../../../edit-story/components/previewPage/previewPage.js',
+  () => () => null
+);
 jest.mock('../../../../app/font/fontProvider.js', () => ({ children }) =>
   children
 );
@@ -67,57 +45,14 @@ describe('<SavedTemplates />', function () {
     jest.resetAllMocks();
   });
 
-  it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithProviders(
-      <LayoutProvider>
-        <SavedTemplatesHeader
-          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
-          stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-        />
-      </LayoutProvider>,
-      { features: { enableInProgressStoryActions: false } }
-    );
-    expect(getByPlaceholderText('Search Templates').value).toBe('Harry Potter');
-    expect(getByText('3 results')).toBeInTheDocument();
-  });
-
-  it('should call the set keyword function when new text is searched', function () {
-    const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithProviders(
-      <LayoutProvider>
-        <SavedTemplatesHeader
-          filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
-          stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
-          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-        />
-      </LayoutProvider>,
-      { features: { enableInProgressStoryActions: false } }
-    );
-    fireEvent.change(getByPlaceholderText('Search Templates'), {
-      target: { value: 'Hermione Granger' },
-    });
-    expect(setKeywordFn).toHaveBeenCalledWith('Hermione Granger');
-  });
-
-  it('should call the set sort function when a new sort is selected', function () {
+  it('should call the set sort function when a new sort is selected', async function () {
     const setSortFn = jest.fn();
     const { getAllByText, getByText } = renderWithProviders(
       <LayoutProvider>
         <SavedTemplatesHeader
           filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
-          stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
+          templates={formattedTemplatesArray}
+          search={{ keyword: '', setKeyword: jest.fn() }}
           sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -127,17 +62,19 @@ describe('<SavedTemplates />', function () {
       </LayoutProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
-    fireEvent.click(getAllByText('Created by')[0].parentElement);
-    fireEvent.click(getByText('Last modified'));
+    fireEvent.click(getAllByText('Last modified')[0].parentElement);
+    fireEvent.click(getByText('Date created'));
 
-    expect(setSortFn).toHaveBeenCalledWith('modified');
+    await waitFor(() => {
+      expect(setSortFn).toHaveBeenCalledWith('modified');
+    });
   });
 
-  it('should render the content grid with the correct story count.', function () {
+  it('should render the content grid with the correct saved template count.', function () {
     const { getAllByText } = renderWithProviders(
       <LayoutProvider>
         <SavedTemplatesContent
-          stories={fakeStories}
+          templates={formattedTemplatesArray}
           page={{
             requestNextPage: jest.fn(),
           }}
@@ -150,6 +87,8 @@ describe('<SavedTemplates />', function () {
       { features: { enableInProgressStoryActions: false } }
     );
 
-    expect(getAllByText('Use template')).toHaveLength(fakeStories.length);
+    expect(getAllByText('See details')).toHaveLength(
+      formattedTemplatesArray.length
+    );
   });
 });

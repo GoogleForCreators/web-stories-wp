@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
 describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
@@ -91,12 +92,22 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Set letter spacing
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
+      await data.fixture.events.keyboard.press('Enter');
       // Press escape to leave input field (does not leave edit-mode)
       await data.fixture.events.keyboard.press('Escape');
 
-      // Set color using hex input
+      // Set color using 3 digit hex input
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
-      await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.type('A1F');
+      await data.fixture.events.keyboard.press('Tab');
+
+      expect(fontColor.hex.value).toBe('AA11FF');
+
+      // Set color using 6 digit hex input
+      await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
+      await data.fixture.events.keyboard.type('FF6600');
+      await data.fixture.events.keyboard.press('Tab');
+
       // Press escape to leave input field (does not leave edit-mode)
       await data.fixture.events.keyboard.press('Escape');
       // */
@@ -107,7 +118,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(underline.checked).toBe(true);
       expect(fontWeight.value).toBe('Black');
       expect(letterSpacing.value).toBe('50%');
-      expect(fontColor.hex.value).toBe('FF00FF');
+      expect(fontColor.hex.value).toBe('FF6600');
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
       await setSelection(6, 9);
@@ -118,18 +129,15 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(underline.checked).toBe(false);
 
       // Expect font weight, letter spacing and font color to be "multiple"
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
-      expect(letterSpacing.placeholder).toBe('multiple');
-      expect(fontColor.output).toBe('Multiple');
+      expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe('');
 
       // Now toggle all toggles, and set new color and letter spacing
       await data.fixture.events.click(italic.button);
-      await richTextHasFocus();
       await data.fixture.events.click(underline.button);
-      await richTextHasFocus();
       await data.fixture.events.click(bold.button);
-      await richTextHasFocus();
 
       // We have to open the color picker, as there's no direct hex input when "multiple"
       await data.fixture.events.click(fontColor.button);
@@ -141,6 +149,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles again
@@ -160,7 +169,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         'font-weight: 900',
         'font-style: italic',
         'text-decoration: underline',
-        'color: #f0f',
+        'color: #f60',
         'letter-spacing: 0.5em',
       ].join('; ');
       const secondCSS = [
@@ -256,7 +265,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is on but font weight is "multiple"
         expect(bold.checked).toBe(true);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -285,7 +294,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is off but font weight is "multiple"
         expect(bold.checked).toBe(false);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -320,7 +329,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is off but font weight is "multiple"
         expect(bold.checked).toBe(false);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -367,6 +376,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Change line height to 5
       await data.fixture.events.click(lineHeight, { clickCount: 3 });
       await data.fixture.events.keyboard.type('5');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
       // Exit edit-mode

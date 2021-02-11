@@ -33,7 +33,6 @@ import {
 } from '../../../../../constants';
 import {
   formattedStoriesArray,
-  formattedUsersObject,
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
 import Content from '../';
@@ -92,7 +91,6 @@ const defaultProps = {
   sort: sort,
   stories: longerListOfStories,
   storyActions: storyActions,
-  users: formattedUsersObject,
   view: view,
 };
 
@@ -178,7 +176,6 @@ export const _StoriesViewGrid = () => (
         sort={sort}
         storyActions={storyActions}
         stories={formattedStoriesArray}
-        users={formattedUsersObject}
         view={view}
       />
     </ToastProvider>
@@ -193,7 +190,6 @@ export const _StoriesViewList = () => (
         sort={sort}
         storyActions={storyActions}
         stories={formattedStoriesArray}
-        users={formattedUsersObject}
         view={{ ...view, style: VIEW_STYLE.LIST }}
       />
     </ToastProvider>

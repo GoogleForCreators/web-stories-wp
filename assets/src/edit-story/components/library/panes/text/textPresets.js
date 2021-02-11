@@ -15,21 +15,50 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH, FONT_WEIGHT } from '../../../../constants';
+import {
+  PAGE_HEIGHT,
+  FONT_WEIGHT,
+  BACKGROUND_TEXT_MODE,
+  HIDDEN_PADDING,
+} from '../../../../constants';
 import { dataFontEm } from '../../../../units';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
-// By default, the element should be 50% of the page.
-const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 2;
+// Measured in editor. As small as you can make
+// width with preset font before line wraps
+const DEFAULT_WIDTH = {
+  DEFAULT: 160,
+  HEADING_1: 181,
+  HEADING_2: 139,
+  HEADING_3: 114,
+  PARAGRAPH: 200,
+  CAPTION: 64,
+  LABEL: 52,
+};
+
 // @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
 const DEFAULT_LEFT_MARGIN = 40;
+
+const DEFAULT_TEXT_BORDER_RADIUS = {
+  locked: true,
+  topLeft: 2,
+  topRight: 2,
+  bottomRight: 2,
+  bottomLeft: 2,
+};
+
+const DEFAULT_TEXT_PADDING = {
+  locked: true,
+  hasHiddenPadding: true,
+  ...HIDDEN_PADDING,
+};
 
 const DEFAULT_PRESET = {
   content: __('Fill in some text', 'web-stories'),
@@ -39,8 +68,9 @@ const DEFAULT_PRESET = {
   x: DEFAULT_LEFT_MARGIN,
   y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
   font: TEXT_ELEMENT_DEFAULT_FONT,
-  width: 160,
+  width: DEFAULT_WIDTH.DEFAULT,
   textAlign: 'center',
+  borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
 };
 
 const PRESETS = [
@@ -52,44 +82,53 @@ const PRESETS = [
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.BOLD,
-      fontSize: dataFontEm(2.7),
-      lineHeight: 1.1,
+      fontSize: dataFontEm(2.667),
+      lineHeight: 1.19,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(2.7)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(2.667)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      width: DEFAULT_ELEMENT_WIDTH,
+      width: DEFAULT_WIDTH.HEADING_1,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      padding: DEFAULT_TEXT_PADDING,
     },
   },
   {
     title: __('Heading 2', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.MEDIUM}">${__(
         'Heading 2',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
+      fontWeight: FONT_WEIGHT.MEDIUM,
       fontSize: dataFontEm(2),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      width: DEFAULT_ELEMENT_WIDTH,
+      width: DEFAULT_WIDTH.HEADING_2,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      padding: DEFAULT_TEXT_PADDING,
     },
   },
   {
     title: __('Heading 3', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${__(
         'Heading 3',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
+      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(1.6),
-      lineHeight: 1.3,
+      lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(1.6)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      width: DEFAULT_ELEMENT_WIDTH,
+      width: DEFAULT_WIDTH.HEADING_3,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      padding: DEFAULT_TEXT_PADDING,
     },
   },
   {
@@ -100,38 +139,50 @@ const PRESETS = [
         'web-stories'
       ),
       fontWeight: FONT_WEIGHT.NORMAL,
-      fontSize: dataFontEm(1.3),
-      lineHeight: 1.5,
+      fontSize: dataFontEm(1.33),
+      lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1.3)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(1.33)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      width: DEFAULT_ELEMENT_WIDTH,
+      width: DEFAULT_WIDTH.PARAGRAPH,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
+      padding: DEFAULT_TEXT_PADDING,
     },
   },
   {
     title: __('Caption', 'web-stories'),
     element: {
-      content: __('Caption', 'web-stories'),
-      fontWeight: FONT_WEIGHT.NORMAL,
+      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+        'Caption',
+        'web-stories'
+      )}</span>`,
+      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(1),
-      lineHeight: 1.5,
+      lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
       y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      width: DEFAULT_ELEMENT_WIDTH,
+      width: DEFAULT_WIDTH.CAPTION,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      padding: DEFAULT_TEXT_PADDING,
     },
   },
   {
-    title: __('OVERLINE', 'web-stories'),
+    title: __('LABEL', 'web-stories'),
     element: {
-      content: __('OVERLINE', 'web-stories'),
+      content: __('LABEL', 'web-stories'),
       fontWeight: FONT_WEIGHT.NORMAL,
-      fontSize: dataFontEm(0.9),
-      lineHeight: 1.5,
+      fontSize: dataFontEm(0.888),
+      lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(0.9)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(0.888)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
-      width: DEFAULT_ELEMENT_WIDTH,
+      width: DEFAULT_WIDTH.LABEL,
+      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      padding: DEFAULT_TEXT_PADDING,
     },
   },
 ];

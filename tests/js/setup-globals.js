@@ -14,36 +14,29 @@
  * limitations under the License.
  */
 
-window.webStoriesEditorSettings = {};
-window.webStoriesDashboardSettings = {};
+global.webStoriesEditorSettings = {};
+global.webStoriesDashboardSettings = {};
 
-global.wp = {
-  media: {
-    controller: {
-      Library: {
-        prototype: {
-          defaults: {
-            contentUserSetting: jest.fn(),
-          },
-        },
-      },
-      Cropper: {
-        extend: jest.fn(),
-      },
-    },
-    View: {
-      extend: jest.fn(),
-    },
-    view: {
-      Toolbar: {
-        Select: {
-          extend: jest.fn(),
-        },
-      },
-      MediaFrame: {
-        Select: {
-          extend: jest.fn(),
-        },
+global.wp = {};
+// eslint-disable-next-line jest/prefer-spy-on
+global.wp.media = jest.fn(() => ({
+  state: () => ({
+    get: () => ({
+      first: () => ({
+        toJSON: () => ({ url: 'http://dummy:url/' }),
+      }),
+    }),
+  }),
+  on: (type, callback) => callback(),
+  once: (type, callback) => callback(),
+  open: () => {},
+}));
+
+global.wp.media.controller = {
+  Library: {
+    prototype: {
+      defaults: {
+        contentUserSetting: jest.fn(),
       },
     },
   },

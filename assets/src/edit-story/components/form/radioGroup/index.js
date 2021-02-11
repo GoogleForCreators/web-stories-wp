@@ -28,7 +28,7 @@ import { useMemo, useRef } from 'react';
  */
 import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
-import useRadioNavigation from './useRadioNavigation';
+import useRadioNavigation from '../shared/useRadioNavigation';
 
 const RadioButton = styled.label`
   display: block;
@@ -66,9 +66,9 @@ const Radio = styled.input.attrs({ className: 'mousetrap' })`
 
 const Helper = styled.div`
   margin-left: ${TEXT_OFFSET}px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.54)};
   font-size: 12px;
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
 `;
 
 function RadioGroup({ onChange, value: selectedValue, options }) {

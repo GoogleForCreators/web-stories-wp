@@ -20,11 +20,7 @@
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -107,7 +103,10 @@ function GradientLine({
       {stops.map(({ position }, index) => (
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}
-          key={index}
+          key={
+            /* eslint-disable-next-line react/no-array-index-key */
+            index
+          }
           index={index}
           isSelected={index === currentStopIndex}
           position={position}

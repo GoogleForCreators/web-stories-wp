@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { MaskTypes } from '../../../../masks';
 import { setupReducer } from './_utils';
 
 describe('combineElements', () => {
@@ -34,20 +35,13 @@ describe('combineElements', () => {
   it('should do nothing if second element is missing', () => {
     const { restore, combineElements } = setupReducer();
 
-    const initial = restore(getDefaultState1());
+    const state = getDefaultState1();
+    const initial = restore(state);
 
     // Combine 456 into nothing
-    const result = combineElements({ firstId: '456' });
-
-    expect(result).toStrictEqual(initial);
-  });
-  it('should do nothing if first element does not exist', () => {
-    const { restore, combineElements } = setupReducer();
-
-    const initial = restore(getDefaultState1());
-
-    // Combine non-existing element abc into 789
-    const result = combineElements({ firstId: 'abc', secondId: '789' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+    });
 
     expect(result).toStrictEqual(initial);
   });
@@ -55,10 +49,14 @@ describe('combineElements', () => {
   it('should do nothing if second element does not exist', () => {
     const { restore, combineElements } = setupReducer();
 
-    const initial = restore(getDefaultState1());
+    const state = getDefaultState1();
+    const initial = restore(state);
 
     // Combine 456 into non-existing element abc
-    const result = combineElements({ firstId: '456', secondId: 'abc' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: 'abc',
+    });
 
     expect(result).toStrictEqual(initial);
   });
@@ -66,21 +64,92 @@ describe('combineElements', () => {
   it('should do nothing if first element does not have a resource', () => {
     const { restore, combineElements } = setupReducer();
 
-    const initial = restore(getDefaultState1());
+    const state = getDefaultState1();
+    const initial = restore(state);
 
     // Combine element 789 into 456 (789 does not have a resource)
-    const result = combineElements({ firstId: '789', secondId: '456' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[2],
+      secondId: '456',
+    });
 
     expect(result).toStrictEqual(initial);
+  });
+
+  it('should combine elements when the origin does not exist as an element', () => {
+    const { restore, combineElements } = setupReducer();
+
+    const state = getDefaultState1();
+    restore(state);
+
+    // Combine non-existing element into 789
+    const result = combineElements({
+      firstElement: {
+        id: 'abc',
+        type: 'video',
+        focalX: 20,
+        resource: { type: 'video', src: '1' },
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+      },
+      secondId: '789',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        type: 'shape',
+        isBackground: true,
+        isDefaultBackground: true,
+        x: 1,
+        y: 1,
+        width: 1,
+        height: 1,
+      },
+      {
+        id: '456',
+        type: 'video',
+        focalX: 20,
+        resource: { type: 'video', src: '1' },
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+        tracks: ['track-1'],
+      },
+      {
+        id: '789',
+        resource: { type: 'video', src: '1' },
+        type: 'video',
+        // Note that focalX is copied and focalY is reset to 50
+        focalX: 20,
+        focalY: 50,
+        scale: 100,
+        x: 20,
+        y: 20,
+        width: 20,
+        height: 20,
+        flip: {
+          vertical: false,
+          horizontal: true,
+        },
+      },
+    ]);
   });
 
   it('should add the relevant properties from first to second', () => {
     const { restore, combineElements } = setupReducer();
 
-    restore(getDefaultState1());
+    const state = getDefaultState1();
+    restore(state);
 
     // Combine element 456 into 789
-    const result = combineElements({ firstId: '456', secondId: '789' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '789',
+    });
 
     expect(result.pages[0].elements).toStrictEqual([
       {
@@ -95,28 +164,36 @@ describe('combineElements', () => {
       },
       {
         id: '789',
-        resource: { type: 'image', src: '1' },
-        type: 'image',
+        resource: { type: 'video', src: '1' },
+        type: 'video',
         // Note that focalX is copied and focalY is reset to 50
         focalX: 20,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 20,
         y: 20,
         width: 20,
         height: 20,
+        tracks: ['track-1'],
+        flip: {
+          vertical: false,
+          horizontal: true,
+        },
       },
     ]);
   });
 
-  it('should remove background overlay if present on second element', () => {
+  it('should not remove background overlay if present on second element', () => {
     const { restore, combineElements } = setupReducer();
 
+    const state = getDefaultState3();
     restore(getDefaultState3());
 
     // Combine element 456 into 123
-    const result = combineElements({ firstId: '456', secondId: '123' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
 
     expect(result.pages[0].elements).toStrictEqual([
       {
@@ -126,7 +203,7 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        flip: {},
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
         x: 10,
         y: 10,
         width: 10,
@@ -139,10 +216,14 @@ describe('combineElements', () => {
   it('should copy dimensions too if combining with background element', () => {
     const { restore, combineElements } = setupReducer();
 
-    restore(getDefaultState2());
+    const state = getDefaultState2();
+    restore(state);
 
     // Combine element 456 into 123
-    const result = combineElements({ firstId: '456', secondId: '123' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
 
     expect(result.pages[0].elements).toStrictEqual([
       {
@@ -152,7 +233,6 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 10,
         y: 10,
         width: 10,
@@ -188,7 +268,6 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        flip: {},
         x: 30,
         y: 30,
         width: 30,
@@ -210,10 +289,14 @@ describe('combineElements', () => {
   it('should create default background element when combining into that', () => {
     const { restore, combineElements } = setupReducer();
 
-    restore(getDefaultState1());
+    const state = getDefaultState1();
+    restore(state);
 
     // Combine element 456 into 123
-    const result = combineElements({ firstId: '456', secondId: '123' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
 
     expect(result.pages[0].defaultBackgroundElement).toStrictEqual({
       // Note that id is regenerated. It doesn't matter what it is, just
@@ -226,6 +309,313 @@ describe('combineElements', () => {
       y: 1,
       width: 1,
       height: 1,
+    });
+  });
+
+  describe('combine elements with links', () => {
+    it('should not preserve link if combining with background element', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState4();
+      restore(state);
+
+      // Combine element 456 into 123
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '123',
+      });
+
+      expect(result.pages[0].elements[0]).toStrictEqual({
+        id: '123',
+        isBackground: true,
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should preserve the origin element link if combining with another', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState4();
+      restore(state);
+
+      // Combine element 456 into 789
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+      });
+
+      expect(result.pages[0].elements[1]).toStrictEqual({
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        id: '789',
+        link: {
+          url: 'https://link456.example/',
+          icon: 'https://link456.example/image.png',
+          desc: 'Lorem ipsum dolor',
+        },
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should preserve the target element link if the origin is without link', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState4();
+      restore(state);
+
+      // Combine element 456 into 789
+      const result = combineElements({
+        firstElement: state.pages[0].elements[3],
+        secondId: '789',
+      });
+
+      expect(result.pages[0].elements[2]).toStrictEqual({
+        height: 10,
+        id: '789',
+        link: {
+          url: 'https://link789.example/',
+          icon: 'https://link789.example/image.png',
+          desc: 'Lorem ipsum dolor',
+        },
+        resource: {
+          src: '3',
+          type: 'video',
+        },
+        scale: 100,
+        type: 'video',
+        width: 10,
+        x: 10,
+        y: 10,
+        focalX: 50,
+        focalY: 50,
+      });
+    });
+  });
+
+  describe('combine elements with borders', () => {
+    it('should not preserve border if combining with background element', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState5();
+      restore(state);
+
+      // Combine element 456 into 123
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '123',
+      });
+
+      expect(result.pages[0].elements[0]).toStrictEqual({
+        id: '123',
+        isBackground: true,
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should preserve the origin element border if combining into rectangle', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState5();
+      restore(state);
+
+      // Combine element 456 into 101
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '101',
+      });
+
+      expect(result.pages[0].elements[2]).toStrictEqual({
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        id: '101',
+        mask: {
+          type: MaskTypes.RECTANGLE,
+        },
+        border: {
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: 10,
+        },
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should not preserve the border of origin element when combining with non-rectangular', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState5();
+      restore(state);
+
+      // Combine element 456 into 789
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+      });
+
+      expect(result.pages[0].elements[1]).toStrictEqual({
+        height: 10,
+        id: '789',
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        mask: {
+          type: 'circle',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+        focalX: 50,
+        focalY: 50,
+      });
+    });
+  });
+
+  describe('combine elements with border radius', () => {
+    it('should not preserve border if combining with background element', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState6();
+      restore(state);
+
+      // Combine element 456 into 123
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '123',
+      });
+
+      expect(result.pages[0].elements[0]).toStrictEqual({
+        id: '123',
+        isBackground: true,
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should preserve the origin element border if combining into rectangle', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState6();
+      restore(state);
+
+      // Combine element 456 into 101
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '101',
+      });
+
+      expect(result.pages[0].elements[2]).toStrictEqual({
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        id: '101',
+        mask: {
+          type: MaskTypes.RECTANGLE,
+        },
+        borderRadius: {
+          topLeft: 10,
+          topRight: 10,
+          bottomRight: 10,
+          bottomLeft: 10,
+        },
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should not preserve the border of origin element when combining with non-rectangular', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState6();
+      restore(state);
+
+      // Combine element 456 into 789
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+      });
+
+      expect(result.pages[0].elements[1]).toStrictEqual({
+        height: 10,
+        id: '789',
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        mask: {
+          type: 'circle',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+        focalX: 50,
+        focalY: 50,
+      });
     });
   });
 });
@@ -248,13 +638,14 @@ function getDefaultState1() {
           },
           {
             id: '456',
-            type: 'image',
+            type: 'video',
             focalX: 20,
-            resource: { type: 'image', src: '1' },
+            resource: { type: 'video', src: '1' },
             x: 10,
             y: 10,
             width: 10,
             height: 10,
+            tracks: ['track-1'],
           },
           {
             id: '789',
@@ -265,6 +656,10 @@ function getDefaultState1() {
             y: 20,
             width: 20,
             height: 20,
+            flip: {
+              vertical: false,
+              horizontal: true,
+            },
           },
         ],
       },
@@ -328,6 +723,201 @@ function getDefaultState3() {
             y: 10,
             width: 10,
             height: 10,
+          },
+        ],
+      },
+    ],
+    current: '111',
+  };
+}
+
+// State with background element, 2 elements with links, 1 without.
+function getDefaultState4() {
+  return {
+    pages: [
+      {
+        id: '111',
+        elements: [
+          {
+            id: '123',
+            type: 'image',
+            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            isBackground: true,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+          },
+          {
+            id: '456',
+            type: 'image',
+            resource: { type: 'image', src: '1' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            link: {
+              url: 'https://link456.example/',
+              icon: 'https://link456.example/image.png',
+              desc: 'Lorem ipsum dolor',
+            },
+          },
+          {
+            id: '789',
+            type: 'video',
+            resource: { type: 'video', src: '2' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            link: {
+              url: 'https://link789.example/',
+              icon: 'https://link789.example/image.png',
+              desc: 'Lorem ipsum dolor',
+            },
+          },
+          {
+            id: '007',
+            type: 'video',
+            resource: { type: 'video', src: '3' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+          },
+        ],
+      },
+    ],
+    current: '111',
+  };
+}
+
+// Page with rectangular element with border, circular without border, rectangle without border.
+function getDefaultState5() {
+  return {
+    pages: [
+      {
+        id: '111',
+        elements: [
+          {
+            id: '123',
+            type: 'image',
+            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            isBackground: true,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+          },
+          {
+            id: '456',
+            type: 'image',
+            resource: { type: 'image', src: '1' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            border: {
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: 10,
+            },
+          },
+          {
+            id: '789',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            mask: {
+              type: MaskTypes.CIRCLE,
+            },
+          },
+          {
+            id: '101',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            mask: {
+              type: MaskTypes.RECTANGLE,
+            },
+            border: {
+              top: 2,
+              left: 2,
+              right: 2,
+              bottom: 2,
+            },
+          },
+        ],
+      },
+    ],
+    current: '111',
+  };
+}
+
+// Page with rectangular element with border radius, circular without, rectangle without.
+function getDefaultState6() {
+  return {
+    pages: [
+      {
+        id: '111',
+        elements: [
+          {
+            id: '123',
+            type: 'image',
+            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            isBackground: true,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+          },
+          {
+            id: '456',
+            type: 'image',
+            resource: { type: 'image', src: '1' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            borderRadius: {
+              topLeft: 10,
+              topRight: 10,
+              bottomRight: 10,
+              bottomLeft: 10,
+            },
+          },
+          {
+            id: '789',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            mask: {
+              type: MaskTypes.CIRCLE,
+            },
+          },
+          {
+            id: '101',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            mask: {
+              type: MaskTypes.RECTANGLE,
+            },
+            borderRadius: {
+              topLeft: 1,
+              topRight: 1,
+              bottomRight: 1,
+              bottomLeft: 1,
+            },
           },
         ],
       },

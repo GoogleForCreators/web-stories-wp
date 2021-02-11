@@ -19,7 +19,7 @@
  */
 import { Fixture } from '../../../../karma/fixture';
 
-describe('TextEdit integration', () => {
+describe('Shape library integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -50,15 +50,39 @@ describe('TextEdit integration', () => {
     // Switch to the shapes tab and drag the triangle to the canvas
     await fixture.events.click(fixture.editor.library.shapesTab);
     const triangle = fixture.editor.library.shapes.shape('Triangle');
-    const canvas = fixture.editor.canvas.framesLayer.container;
+    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(triangle, 10, 10),
       down(),
-      moveRel(canvas, 50, 50),
+      /* The steps give time for Moveable to react and display a clone to drag */
+      moveRel(bgFrame, 50, 50, { steps: 20 }),
       up(),
     ]);
 
     // Now background + 1 extra element
     expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+  });
+
+  it('should not add shape dragged out of the page area', async () => {
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+    // Switch to the shapes tab and drag the triangle to the canvas
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    const triangle = fixture.editor.library.shapes.shape('Triangle');
+    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+
+    // Shape is 1/3 of the page's width by default.
+    const { width: pageWidth } = bgFrame.getBoundingClientRect();
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(triangle, 10, 10),
+      down(),
+      /* The steps give time for Moveable to react and display a clone to drag */
+      moveRel(bgFrame, -(pageWidth / 3 + 20), 50, { steps: 20 }),
+      up(),
+    ]);
+
+    // Still only background.
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
   });
 });

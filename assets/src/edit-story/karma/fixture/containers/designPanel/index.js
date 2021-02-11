@@ -23,15 +23,18 @@ import { getByLabelText } from '@testing-library/react';
  * Internal dependencies
  */
 import { Container } from '../container';
-import { TextStyle } from './textStyle';
 import { Alignment } from './alignment';
+import { Animation } from './animationPanel';
 import { BackgroundOverlay } from './backgroundOverlay';
-import { Link } from './link';
-import { VideoAccessibility } from './videoAccessibility';
-import { Layers } from './layers';
-import { TextStylePreset } from './textStylePreset';
+import { Border } from './border';
+import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
-
+import { Layers } from './layers';
+import { Link } from './link';
+import { SizePosition } from './sizePosition';
+import { TextStyle } from './textStyle';
+import { TextStylePreset } from './textStylePreset';
+import { VideoPoster } from './videoPoster';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -69,11 +72,11 @@ export class DesignPanel extends Container {
     return this._get(this.getByRole('region', { name: /Link/ }), 'link', Link);
   }
 
-  get videoAccessibility() {
+  get videoPoster() {
     return this._get(
-      this.getByRole('region', { name: /accessibility/i }),
-      'videoAccessibility',
-      VideoAccessibility
+      this.getByRole('region', { name: /Poster/ }),
+      'poster',
+      VideoPoster
     );
   }
 
@@ -90,6 +93,14 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /Saved colors/ }),
       'colorPreset',
       ColorPreset
+    );
+  }
+
+  get borderRadius() {
+    return this._get(
+      this.getByRole('region', { name: /Corner radius/ }),
+      'borderRadius',
+      BorderRadius
     );
   }
 
@@ -124,8 +135,19 @@ export class DesignPanel extends Container {
   }
 
   get sizePosition() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Size & position/i }),
+      'sizePosition',
+      SizePosition
+    );
+  }
+
+  get border() {
+    return this._get(
+      this.getByRole('region', { name: /Border/i }),
+      'borderStyle',
+      Border
+    );
   }
 
   get videoOptions() {
@@ -133,8 +155,16 @@ export class DesignPanel extends Container {
     return null;
   }
 
+  get animation() {
+    return this._get(
+      this.getByRole('region', { name: /Animation/ }),
+      'animation',
+      Animation
+    );
+  }
+
   get layerPanel() {
-    // The whole panel is aria-hidden now for accessibiility reasons
+    // The whole panel is aria-hidden now for accessibility reasons
     // thus it cannot be accessed by role:
     return this._get(
       getByLabelText(this._node, 'Layers'),

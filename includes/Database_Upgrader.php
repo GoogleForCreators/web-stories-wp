@@ -29,6 +29,8 @@ namespace Google\Web_Stories;
 /**
  * Class Database_Upgrader
  *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
  * @package Google\Web_Stories
  */
 class Database_Upgrader {
@@ -65,6 +67,10 @@ class Database_Upgrader {
 			'3.0.0' => 'add_stories_caps',
 			'3.0.1' => 'rewrite_flush',
 			'3.0.2' => 'rewrite_flush',
+			'3.0.3' => 'yoast_reindex_stories',
+			'3.0.4' => 'add_poster_generation_media_source',
+			'3.0.5' => 'remove_unneeded_attachment_meta',
+			'3.0.6' => 'v_3_add_term',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -257,7 +263,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function add_stories_caps() {
-		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
 		$story_post_type->add_caps_to_roles();
 	}
 
@@ -272,6 +278,115 @@ class Database_Upgrader {
 		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 		}
+	}
+
+	/**
+	 * Re-index stories in Yoast SEO if permalinks are outdated.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @return void
+	 */
+	protected function yoast_reindex_stories() {
+		if (
+			! function_exists( 'YoastSEO' ) ||
+			! class_exists( '\Yoast\WP\SEO\Repositories\Indexable_Repository' ) ||
+			! class_exists( '\Yoast\WP\SEO\Builders\Indexable_Builder' ) ||
+			! is_a( YoastSEO(), '\Yoast\WP\SEO\Main' )
+		) {
+			return;
+		}
+
+		/**
+		 * Indexable Repository.
+		 *
+		 * @var \Yoast\WP\SEO\Repositories\Indexable_Repository $repository Indexable Repository.
+		 */
+		$repository = YoastSEO()->classes->get( 'Yoast\WP\SEO\Repositories\Indexable_Repository' );
+
+		/**
+		 * Indexable Builder.
+		 *
+		 * @var \Yoast\WP\SEO\Builders\Indexable_Builder $builder Indexable Builder.
+		 */
+		$builder = YoastSEO()->classes->get( 'Yoast\WP\SEO\Builders\Indexable_Builder' );
+
+		$indexable_before = $repository->find_for_post_type_archive( Story_Post_Type::POST_TYPE_SLUG, false );
+
+		if ( ! $indexable_before || false === strpos( $indexable_before->permalink, '/web-stories/' ) ) {
+			$builder->build_for_post_type_archive( Story_Post_Type::POST_TYPE_SLUG, $indexable_before );
+		}
+
+		$all_stories = get_posts(
+			[
+				'fields'                 => 'ids',
+				'suppress_filters'       => false,
+				'post_type'              => [ Story_Post_Type::POST_TYPE_SLUG ],
+				'posts_per_page'         => 100,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+			]
+		);
+
+		foreach ( $all_stories as $post_id ) {
+			$indexable_before = $repository->find_by_id_and_type( $post_id, 'post', false );
+
+			if ( ! $indexable_before || false === strpos( $indexable_before->permalink, '/web-stories/' ) ) {
+				$builder->build_for_id_and_type( $post_id, 'post', $indexable_before );
+			}
+		}
+	}
+
+	/**
+	 * Migration media post meta to taxonomy term.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @global \wpdb $wpdb WordPress database abstraction object.
+	 *
+	 * @return void
+	 */
+	protected function add_poster_generation_media_source() {
+		global $wpdb;
+
+		wp_insert_term( 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
+
+		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s",
+				Media::POSTER_POST_META_KEY
+			)
+		);
+
+		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
+			foreach ( $post_ids as $post_id ) {
+				wp_set_object_terms( (int) $post_id, 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
+			}
+		}
+	}
+
+	/**
+	 * Delete old attachment post meta.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @global \wpdb $wpdb WordPress database abstraction object.
+	 *
+	 * @return void
+	 */
+	protected function remove_unneeded_attachment_meta() {
+		delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
+	}
+
+	/**
+	 * Add the video optimization term, to make sure it exists.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return void
+	 */
+	protected function v_3_add_term() {
+		wp_insert_term( 'video-optimization', Media::STORY_MEDIA_TAXONOMY );
 	}
 
 	/**

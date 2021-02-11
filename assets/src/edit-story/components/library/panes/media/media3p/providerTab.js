@@ -23,7 +23,7 @@ import { useCallback, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../../keyboard';
+import { useKeyDownEffect } from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
 import { narrowPill } from './pill';
 
@@ -32,16 +32,18 @@ const Tab = styled.button`
   padding: 6px 16px;
   height: 32px;
   display: inline-block;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
   background-color: ${({ active, theme }) =>
-    active ? theme.colors.fg.primary : 'transparent'};
+    active ? theme.DEPRECATED_THEME.colors.fg.primary : 'transparent'};
   text-align: center;
   opacity: 0.86;
   cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${({ active, theme }) =>
-    active ? theme.colors.fg.gray8 : theme.colors.fg.primary};
+    active
+      ? theme.DEPRECATED_THEME.colors.fg.gray8
+      : theme.DEPRECATED_THEME.colors.fg.primary};
 
   &:last-child {
     margin-right: 0;

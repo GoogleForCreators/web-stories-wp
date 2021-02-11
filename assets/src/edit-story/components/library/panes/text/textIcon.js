@@ -20,12 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -62,7 +57,7 @@ const QuickAction = styled.button`
   line-height: 1;
   overflow: hidden;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 const TextIconContainer = styled.div`

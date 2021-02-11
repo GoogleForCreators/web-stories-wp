@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { object } from '@storybook/addon-knobs';
+import { object, boolean } from '@storybook/addon-knobs';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -48,5 +49,18 @@ export const _default = () => {
     ],
   });
 
-  return <ColorPicker color={initialColor} onChange={() => {}} />;
+  const eyeDropper = boolean('Enable Eyedropper', false);
+  const hasGradient = boolean('Has Gradients', false);
+  const hasOpacity = boolean('Has Opacity', true);
+
+  return (
+    <FlagsProvider features={{ eyeDropper }}>
+      <ColorPicker
+        color={initialColor}
+        onChange={() => {}}
+        hasGradient={hasGradient}
+        hasOpacity={hasOpacity}
+      />
+    </FlagsProvider>
+  );
 };

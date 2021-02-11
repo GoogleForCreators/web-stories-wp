@@ -20,16 +20,12 @@
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 import { useFeatures } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
+import base64Encode from '../../../edit-story/utils/base64Encode';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
@@ -41,10 +37,11 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { getStoryPropsToSave, addQueryArgs } from '../../utils';
+import { addQueryArgs } from '../../../design-system';
 import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
+import { ERRORS } from '../textContent';
 
-const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
+const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const flags = useFeatures();
 
@@ -67,8 +64,8 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
           payload: {
             message: {
-              body: __('Cannot connect to data source', 'web-stories'),
-              title: __('Unable to Load Stories', 'web-stories'),
+              body: ERRORS.LOAD_STORIES.DEFAULT_MESSAGE,
+              title: ERRORS.LOAD_STORIES.TITLE,
             },
           },
         });
@@ -76,6 +73,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       }
 
       const query = {
+        _embed: 'author',
         context: 'edit',
         _web_stories_envelope: true,
         search: searchTerm || undefined,
@@ -100,11 +98,33 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           response.headers &&
           JSON.parse(response.headers['X-WP-TotalByStatus']);
 
+        // Hardening in case data returned by the server is malformed.
+        // For example, story_data could be missing/empty.
+        const cleanStories = response.body.filter((story) =>
+          Array.isArray(story?.story_data?.pages)
+        );
+
+        if (
+          cleanStories.length === 0 &&
+          cleanStories.length !== response.body.length
+        ) {
+          dispatch({
+            type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
+            payload: {
+              message: {
+                body: ERRORS.LOAD_STORIES.INCOMPLETE_DATA_MESSAGE,
+                title: ERRORS.LOAD_STORIES.TITLE,
+              },
+            },
+          });
+          return;
+        }
+
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
             editStoryURL,
-            stories: response.body,
+            stories: cleanStories,
             totalPages,
             totalStoriesByStatus: {
               ...totalStoriesByStatus,
@@ -121,7 +141,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Load Stories', 'web-stories'),
+              title: ERRORS.LOAD_STORIES.TITLE,
             },
             code: err.code,
           },
@@ -139,9 +159,23 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const updateStory = useCallback(
     async (story) => {
       try {
-        const response = await dataAdapter.post(`${storyApi}/${story.id}`, {
-          data: story,
+        const path = queryString.stringifyUrl({
+          url: `${storyApi}${story.id}/`,
+          query: {
+            _embed: 'author',
+          },
         });
+
+        const data = {
+          id: story.id,
+          author: story.originalStoryData.author,
+          title: story.title?.raw || story.title,
+        };
+
+        const response = await dataAdapter.post(path, {
+          data,
+        });
+
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
@@ -152,7 +186,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Update Story', 'web-stories'),
+              title: ERRORS.UPDATE_STORY.TITLE,
             },
             code: err.code,
           },
@@ -165,9 +199,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`, {
-          data: story,
-        });
+        await dataAdapter.deleteRequest(`${storyApi}${story.id}`);
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
@@ -178,7 +210,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Delete Story', 'web-stories'),
+              title: ERRORS.DELETE_STORY.TITLE,
             },
             code: err.code,
           },
@@ -214,7 +246,10 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           status,
         } = dashboardStory;
 
-        const storyProps = await getStoryPropsToSave({
+        const getStoryPropsToSave = await import(
+          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
+        );
+        const storyProps = await getStoryPropsToSave.default({
           story: {
             status: status || 'auto-draft',
             title: title,
@@ -222,7 +257,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
             slug: title,
             date: created || Date.now().toString(),
             modified: modified || Date.now().toString(),
-            featuredMedia: 0,
+            featuredMedia: {
+              id: 0,
+            },
             password: password || '',
             excerpt: excerpt || '',
           },
@@ -236,6 +273,10 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         });
 
         const preppedStoryProps = reshapeStoryPreview(storyProps);
+
+        const getStoryMarkup = await import(
+          /* webpackChunkName: "chunk-getStoryMarkup" */ '../../../edit-story/output/utils/getStoryMarkup'
+        );
 
         const markup = await getStoryMarkup(
           preppedStoryProps.story,
@@ -254,7 +295,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Render Preview', 'web-stories'),
+              title: ERRORS.RENDER_PREVIEW.TITLE,
             },
             code: err.code,
           },
@@ -273,9 +314,15 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
 
       try {
         const { createdBy, pages, version } = template;
-        const storyPropsToSave = await getStoryPropsToSave({
+        const getStoryPropsToSave = await import(
+          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
+        );
+        const storyPropsToSave = await getStoryPropsToSave.default({
           story: {
             status: 'auto-draft',
+            featuredMedia: {
+              id: 0,
+            },
           },
           pages,
           metadata: {
@@ -310,7 +357,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Create Story From Template', 'web-stories'),
+              title: ERRORS.CREATE_STORY_FROM_TEMPLATE.TITLE,
             },
             code: err.code,
           },
@@ -337,9 +384,20 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           title,
         } = story.originalStoryData;
 
-        const response = await dataAdapter.post(storyApi, {
+        const path = queryString.stringifyUrl({
+          url: storyApi,
+          query: {
+            _embed: 'author',
+          },
+        });
+
+        const storyContent = encodeMarkup
+          ? base64Encode(content?.raw)
+          : content?.raw;
+
+        const response = await dataAdapter.post(path, {
           data: {
-            content,
+            content: content?.raw ? storyContent : undefined,
             story_data,
             featured_media,
             style_presets,
@@ -364,14 +422,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to Duplicate Story', 'web-stories'),
+              title: ERRORS.DUPLICATE_STORY.TITLE,
             },
             code: err.code,
           },
         });
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL, encodeMarkup]
   );
 
   const api = useMemo(

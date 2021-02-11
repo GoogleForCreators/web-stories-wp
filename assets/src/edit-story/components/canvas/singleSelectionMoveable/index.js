@@ -24,15 +24,15 @@ import classnames from 'classnames';
 /**
  * Internal dependencies
  */
-import { useDropTargets } from '../../../app';
+import { useBatchingCallback } from '../../../../design-system';
+import { useStory, useCanvas } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
-import useBatchingCallback from '../../../utils/useBatchingCallback';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
-import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
+import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
@@ -56,17 +56,16 @@ function SingleSelectionMoveable({
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    state: { activeDropTargetId, draggingResource },
-  } = useDropTargets();
-
-  const otherNodes = Object.values(
-    objectWithout(nodesById, [selectedElement.id])
-  );
 
   const actionsEnabled = !selectedElement.isBackground;
 
   const latestEvent = useRef();
+
+  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
+    backgroundElement: currentPage.elements[0] ?? {},
+  }));
+
+  useWindowResizeHandler(moveable);
 
   useEffect(() => {
     latestEvent.current = pushEvent;
@@ -97,7 +96,7 @@ function SingleSelectionMoveable({
   });
 
   const box = getBox(selectedElement);
-  let frame = useMemo(
+  const frame = useMemo(
     () => ({
       translate: [0, 0],
       rotate: box.rotationAngle,
@@ -148,9 +147,8 @@ function SingleSelectionMoveable({
     [frame, pushTransform, selectedElement.id]
   );
 
-  const canSnap =
-    !isEditMode && (!isDragging || (isDragging && !activeDropTargetId));
-  const hideHandles = isDragging || Boolean(draggingResource);
+  const canSnap = !isEditMode;
+  const hideHandles = isDragging;
 
   const classNames = classnames('default-moveable', {
     'hide-handles': hideHandles,
@@ -191,7 +189,13 @@ function SingleSelectionMoveable({
     resetMoveable,
   });
 
+  // Get a list of all the other non-bg nodes
+  const otherNodes = Object.values(
+    objectWithout(nodesById, [selectedElement.id, backgroundElement.id])
+  );
+
   const snapProps = useSnapping({
+    isDragging,
     otherNodes,
     canSnap: canSnap && actionsEnabled,
   });

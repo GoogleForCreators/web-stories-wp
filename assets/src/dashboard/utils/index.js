@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export { default as clamp } from './clamp';
-export { default as getCurrentYAxis } from './getCurrentYAxis';
-export { default as groupBy } from './groupBy';
+export { default as titleFormatted } from './titleFormatted';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
-export { default as memoize } from './memoize';
 export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
 export { default as useFocusOut } from './useFocusOut';
-export { default as useGridViewKeys } from './useGridViewKeys';
 export {
   default as usePagePreviewSize,
   getPagePreviewHeights,
@@ -31,23 +26,9 @@ export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
 export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnalyticsIdFormat';
 
-export { default as addQueryArgs } from '../../edit-story/utils/addQueryArgs';
-export { default as getStoryPropsToSave } from '../../edit-story/app/story/utils/getStoryPropsToSave';
-export { useKeyDownEffect } from '../../edit-story/components/keyboard';
-export {
-  focusOnPage,
-  getArrowDir,
-  getGridColumnAndRowCount,
-  getRow,
-  getColumn,
-  getIndex,
-} from '../../edit-story/components/canvas/gridview/useGridViewKeys';
-export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';
+export { default as validateAdSensePublisherIdFormat } from './validateAdSensePublisherIdFormat';
+export { default as validateAdSenseSlotIdFormat } from './validateAdSenseSlotIdFormat';
+export { default as validateAdManagerSlotIdFormat } from './validateAdManagerSlotIdFormat';
+
 // TODO use these shared utils to structure image resources mirroring editor
-export { default as getTypeFromMime } from '../../edit-story/app/media/utils/getTypeFromMime';
 export { default as getResourceFromLocalFile } from '../../edit-story/app/media/utils/getResourceFromLocalFile';
-export {
-  createContext,
-  identity,
-  useContextSelector,
-} from '../../edit-story/utils/context';

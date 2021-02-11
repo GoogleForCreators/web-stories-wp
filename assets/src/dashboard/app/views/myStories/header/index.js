@@ -20,26 +20,18 @@
 import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../tracking';
-import {
-  Layout,
-  ToggleButtonGroup,
-  useLayoutContext,
-} from '../../../../components';
+import { ToggleButtonGroup, useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
+  STORY_STATUS,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -57,6 +49,7 @@ import {
   HeaderToggleButtonContainer,
   PageHeading,
 } from '../../shared';
+import { useConfig } from '../../../config';
 
 function Header({
   filter,
@@ -70,6 +63,8 @@ function Header({
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
+
+  const { capabilities: { canReadPrivatePosts } = {} } = useConfig();
 
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
@@ -101,6 +96,14 @@ function Header({
       <HeaderToggleButtonContainer>
         <ToggleButtonGroup
           buttons={STORY_STATUSES.map((storyStatus) => {
+            if (
+              storyStatus.status === STORY_STATUS.PRIVATE &&
+              (!totalStoriesByStatus.private ||
+                totalStoriesByStatus.private < 1 ||
+                !canReadPrivatePosts)
+            ) {
+              return null;
+            }
             return {
               handleClick: () => {
                 handleClick(storyStatus.value);
@@ -108,17 +111,22 @@ function Header({
               key: storyStatus.value,
               isActive: filter.value === storyStatus.value,
               disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
+              ['aria-label']: sprintf(
+                /* translators: %s is story status */
+                __('Filter stories by %s', 'web-stories'),
+                storyStatus.label
+              ),
               text: `${storyStatus.label} ${
                 totalStoriesByStatus?.[storyStatus.status]
                   ? `(${totalStoriesByStatus?.[storyStatus.status]})`
                   : ''
               }`,
             };
-          })}
+          }).filter(Boolean)}
         />
       </HeaderToggleButtonContainer>
     );
-  }, [filter, totalStoriesByStatus, handleClick]);
+  }, [totalStoriesByStatus, canReadPrivatePosts, filter.value, handleClick]);
 
   const onSortChange = useCallback(
     (newSort) => {
@@ -136,7 +144,7 @@ function Header({
   }, TEXT_INPUT_DEBOUNCE);
 
   return (
-    <Layout.Squishable>
+    <>
       <PageHeading
         defaultTitle={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
@@ -161,7 +169,7 @@ function Header({
           'web-stories'
         )}
       />
-    </Layout.Squishable>
+    </>
   );
 }
 

@@ -92,6 +92,15 @@ export function updateElementWithUpdater(element, properties) {
   return { ...element, ...allowedProperties };
 }
 
+export function removeAnimationsWithElementIds(animations, ids) {
+  return (animations || []).reduce((accum, animation) => {
+    if (ids.some((id) => animation.targets?.includes(id))) {
+      return accum;
+    }
+    return [...accum, animation];
+  }, []);
+}
+
 export function updateAnimations(oldAnimations, animationUpdates) {
   const newAnimations = oldAnimations.reduce((animations, animation) => {
     const updatedAnimation = animationUpdates[animation.id];
@@ -115,4 +124,39 @@ export function updateAnimations(oldAnimations, animationUpdates) {
   Object.values(animationUpdates).forEach((a) => newAnimations.push(a));
 
   return newAnimations;
+}
+
+/**
+ * Entry must have {id: string, ...} prop on it. WIP
+ * on enforcing this with jsdocs.
+ *
+ * @typedef {Object.<string, any>} Entry
+ */
+
+/**
+ * Remove duplicate entries. Uses last instance if
+ * multiple entries share the same id.
+ *
+ * @param {Array<Entry>} entries - set of entries with possible duplicate Ids
+ * @return {Array<Entry>} New set of entries with only unique Ids
+ */
+export function removeDuplicates(entries = []) {
+  // Use only last of multiple elements with same id by turning into an object and getting the values.
+  return Object.values(
+    Object.fromEntries(entries.map((entry) => [entry.id, entry]))
+  );
+}
+
+/**
+ * Takes to sets of entries and returns unique entries
+ * (keying on id) of right set not present in left set.
+ *
+ * @param {Array<Entry>} left - base set of entries
+ * @param {Array<Entry>} right - new entries
+ * @return {Array<Entry>} - right exclusion of sets set
+ */
+export function exclusion(left = [], right = []) {
+  const rightSet = removeDuplicates(right);
+  const leftJoinKeys = left.map(({ id }) => id);
+  return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
 }

@@ -20,35 +20,33 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
 import {
-  StoriesPropType,
-  StoryActionsPropType,
-  UsersPropType,
-} from '../../../../../types';
+  Dialog,
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../../../../design-system';
+
+import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
-import { Button, Dialog, useToastContext } from '../../../../../components';
+import { useToastContext } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
-  BUTTON_TYPES,
   ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
-import { trackEvent } from '../../../../../../tracking';
+import { titleFormatted } from '../../../../../utils';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -56,7 +54,6 @@ function StoriesView({
   sort,
   storyActions,
   stories,
-  users,
   view,
   initialFocusStoryId = null,
 }) {
@@ -159,7 +156,7 @@ function StoriesView({
               body:
                 story.title.length > 0
                   ? sprintf(
-                      /* translators: %s is the story title. */
+                      /* translators: %s: story title. */
                       __(
                         '%s has been copied to your clipboard.',
                         'web-stories'
@@ -224,7 +221,6 @@ function StoriesView({
         storyMenu={storyMenu}
         storySort={sort.value}
         storyStatus={filterValue}
-        users={users}
       />
     ) : (
       <StoryGridView
@@ -237,7 +233,6 @@ function StoriesView({
         previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
-        users={users}
         returnStoryFocusId={returnStoryFocusId}
         initialFocusStoryId={initialFocusStoryId}
       />
@@ -258,15 +253,30 @@ function StoriesView({
           actions={
             <>
               <Button
-                type={BUTTON_TYPES.DEFAULT}
+                type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
                 onClick={() => {
                   setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
                 }}
+                aria-label={sprintf(
+                  /* translators: %s: story title */
+                  __('Cancel deleting story "%s"', 'web-stories'),
+                  titleFormatted(activeStory.title)
+                )}
               >
                 {__('Cancel', 'web-stories')}
               </Button>
-              <Button type={BUTTON_TYPES.DEFAULT} onClick={handleOnDeleteStory}>
+              <Button
+                type={BUTTON_TYPES.PRIMARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={handleOnDeleteStory}
+                aria-label={sprintf(
+                  /* translators: %s: story title */
+                  __('Confirm deleting story "%s"', 'web-stories'),
+                  titleFormatted(activeStory.title)
+                )}
+              >
                 {__('Delete', 'web-stories')}
               </Button>
             </>
@@ -275,7 +285,7 @@ function StoriesView({
           {sprintf(
             /* translators: %s: story title. */
             __('Are you sure you want to delete "%s"?', 'web-stories'),
-            activeStory.title
+            titleFormatted(activeStory.title)
           )}
         </Dialog>
       )}
@@ -288,7 +298,6 @@ StoriesView.propTypes = {
   sort: SortPropTypes,
   storyActions: StoryActionsPropType,
   stories: StoriesPropType,
-  users: UsersPropType,
   view: ViewPropTypes,
   initialFocusStoryId: PropTypes.number,
 };

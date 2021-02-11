@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import formattedUsersObject from '../../../../../dataUtils/formattedUsersObject';
 
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
@@ -55,7 +54,10 @@ const fakeStories = [
   },
 ];
 
-jest.mock('../../../../../components/previewPage.js', () => () => null);
+jest.mock(
+  '../../../../../../edit-story/components/previewPage/previewPage.js',
+  () => () => null
+);
 jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
   children
 );
@@ -73,7 +75,6 @@ describe('My Stories <Content />', function () {
             filter={STORY_STATUSES[0]}
             search={{ keyword: '' }}
             stories={fakeStories}
-            users={formattedUsersObject}
             page={{
               requestNextPage: jest.fn,
             }}
@@ -104,7 +105,6 @@ describe('My Stories <Content />', function () {
             filter={STORY_STATUSES[0]}
             search={{ keyword: '' }}
             stories={[]}
-            users={{}}
             page={{
               requestNextPage: jest.fn,
             }}
@@ -135,7 +135,6 @@ describe('My Stories <Content />', function () {
             filter={STORY_STATUSES[0]}
             search={{ keyword: 'scooby dooby doo' }}
             stories={[]}
-            users={{}}
             page={{
               requestNextPage: jest.fn,
             }}

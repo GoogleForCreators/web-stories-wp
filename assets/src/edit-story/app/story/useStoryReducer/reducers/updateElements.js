@@ -46,9 +46,11 @@ function updateElements(
   { elementIds, properties: propertiesOrUpdater }
 ) {
   if (
-    [STORY_ANIMATION_STATE.PLAYING, STORY_ANIMATION_STATE.SCRUBBING].includes(
-      state.animationState
-    )
+    [
+      STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.PLAYING_SELECTED,
+      STORY_ANIMATION_STATE.SCRUBBING,
+    ].includes(state.animationState)
   ) {
     return state;
   }

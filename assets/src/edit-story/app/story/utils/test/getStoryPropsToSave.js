@@ -25,16 +25,16 @@ describe('getStoryPropsToSave', () => {
   it('should return correct story properties', () => {
     const neededProps = {
       title: 'Story!',
-      author: 1,
+      author: { id: 1, name: 'John Doe' },
       slug: 'story',
       publisherLogo: 1,
       status: 'publish',
       date: '2020-04-10T07:06:26',
       modified: '',
       excerpt: '',
-      featuredMedia: 0,
+      featuredMedia: { id: 0 },
       password: '',
-      stylePresets: '',
+      globalStoryStyles: '',
       autoAdvance: 'manual',
       defaultPageDuration: 7,
     };

@@ -18,15 +18,16 @@
  * External dependencies
  */
 import Modal from 'react-modal';
+import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
+import { updateSettings } from '@web-stories-wp/date';
+import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { updateSettings } from '../date';
-import App from './app';
+import App from './editorApp';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 __webpack_public_path__ = global.webStoriesEditorSettings.publicPath;
@@ -50,7 +51,9 @@ const initialize = (id, config, flags) => {
 
   render(
     <FlagsProvider features={flags}>
-      <App config={config} />
+      <StrictMode>
+        <App config={config} />
+      </StrictMode>
     </FlagsProvider>,
     appElement
   );

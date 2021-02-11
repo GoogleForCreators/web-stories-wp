@@ -76,19 +76,18 @@ export const generateFontFamily = ({ family, fallbacks } = {}) => {
 
 export const getHighlightLineheight = function (
   lineHeight,
-  verticalPadding,
+  verticalPadding = 0,
   unit = 'px'
 ) {
-  return `calc(
-    ${lineHeight}em
-    ${verticalPadding > 0 ? '+' : '-'}
-    ${2 * Math.abs(verticalPadding)}${unit}
-  )`;
+  if (verticalPadding === 0) {
+    return `${lineHeight}em`;
+  }
+  return `calc(${lineHeight}em ${verticalPadding > 0 ? '+' : '-'} ${
+    2 * Math.abs(verticalPadding)
+  }${unit})`;
 };
 
 export function calcFontMetrics(element) {
-  let marginOffset, contentAreaPx, lineBoxPx;
-
   if (!element.font.metrics) {
     return {
       contentAreaPx: 0,
@@ -107,9 +106,9 @@ export function calcFontMetrics(element) {
 
   // We cant to cut some of the "virtual-area"
   // More info: https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
-  contentAreaPx = ((asc - des) / upm) * fontSize;
-  lineBoxPx = lineHeight * fontSize;
-  marginOffset = lineBoxPx - contentAreaPx;
+  const contentAreaPx = ((asc - des) / upm) * fontSize;
+  const lineBoxPx = lineHeight * fontSize;
+  const marginOffset = lineBoxPx - contentAreaPx;
 
   return {
     marginOffset,

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
+import PanelTypes from '../../components/panels/design/types';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import createSolidFromString from '../../utils/createSolidFromString';
 export { default as Display } from './display';
@@ -50,8 +50,10 @@ export const panels = [
   PanelTypes.COLOR_PRESETS,
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
+  PanelTypes.BORDER,
   PanelTypes.LAYER_STYLE,
   PanelTypes.LINK,
   PanelTypes.SHAPE_STYLE,
+  PanelTypes.BORDER_RADIUS,
   PanelTypes.ANIMATION,
 ];

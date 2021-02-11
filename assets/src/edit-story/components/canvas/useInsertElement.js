@@ -22,7 +22,6 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useLocalMedia, useStory } from '../../app';
@@ -84,12 +83,6 @@ function useInsertElement() {
    */
   const insertElement = useCallback(
     (type, props) => {
-      if (type == 'gif') {
-        // Treat GIFs just like images
-        type = 'image';
-        props.resource.type = 'image';
-      }
-
       const element = createElementForCanvas(type, props);
       const { id, resource } = element;
       addElement({ element });
@@ -166,8 +159,9 @@ function getElementProperties(
   if (!isNum(y)) {
     y = 0;
   }
-  x = dataPixels(Math.min(x, PAGE_WIDTH - width));
-  y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
+
+  x = dataPixels(x);
+  y = dataPixels(y);
 
   return {
     ...attrs,

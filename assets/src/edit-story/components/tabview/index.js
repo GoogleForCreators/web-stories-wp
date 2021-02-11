@@ -25,8 +25,13 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import {
+  useKeyDownEffect,
+  useGlobalKeyDownEffect,
+} from '../../../design-system';
 import { useConfig } from '../../app';
-import { useKeyDownEffect, useGlobalKeyDownEffect } from '../keyboard';
+
+const ALERT_ICON_SIZE = 14;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -38,7 +43,8 @@ const Tabs = styled.ul.attrs({
   margin: 0;
   padding: 0;
   list-style: none;
-  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.04)};
+  border-bottom: 1px solid
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.04)};
 `;
 
 const Tab = styled.li.attrs(({ isActive }) => ({
@@ -50,33 +56,20 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.tab.family};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
-  font-weight: ${({ theme }) => theme.fonts.tab.weight};
-  word-break: break-word;
-  opacity: 0.84;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
   padding: 12px 0px;
   margin: 0px 16px;
   margin-bottom: -1px;
-
-  ${({ isActive }) =>
-    !isActive &&
-    `
-    opacity: .34;
-    &:hover { opacity: 1; }
-  `}
+  position: relative;
 
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.colors.accent.primary};
+    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.accent.primary};
   `}
-
-  &:active,
-  &:hover {
-    opacity: 0.84;
-  }
 
   svg {
     display: block;
@@ -84,6 +77,40 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     height: 28px;
     transform-origin: center center;
     transition: transform 0.3s ease;
+  }
+
+  svg.alert {
+    width: ${ALERT_ICON_SIZE}px;
+    height: auto;
+    position: absolute;
+    left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
+    top: calc(
+      50% -
+        ${({ isActive }) =>
+          isActive
+            ? `${ALERT_ICON_SIZE / 2 - 1}px`
+            : `${ALERT_ICON_SIZE / 2}px`}
+    );
+    overflow: visible;
+    opacity: 1;
+    &.warning {
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.warning};
+    }
+    &.error {
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.negative};
+    }
+  }
+
+  span,
+  svg:not(.alert) {
+    opacity: ${({ isActive }) => (isActive ? '0.84' : '0.34')};
+  }
+
+  &:hover span,
+  &:hover svg:not(.alert),
+  &:active span,
+  &:active svg:not(.alert) {
+    opacity: 0.84;
   }
 `;
 
@@ -171,7 +198,7 @@ function TabView({
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
         >
-          {title}
+          {Boolean(title) && <span>{title}</span>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}
         </Tab>
       ))}

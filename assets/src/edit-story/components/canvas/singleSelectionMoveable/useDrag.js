@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import useBatchingCallback from '../../../utils/useBatchingCallback';
+import { useBatchingCallback } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
 import { useUnits } from '../../../units';
 import { useStory } from '../../../app';
@@ -57,6 +57,7 @@ function useSingleSelectionDrag({
   );
 
   const onDrag = ({ target, beforeTranslate, clientX, clientY }) => {
+    setIsDragging(true);
     if (isDropSource(selectedElement.type)) {
       setDraggingResource(selectedElement.resource);
     }
@@ -74,6 +75,7 @@ function useSingleSelectionDrag({
   };
 
   const onDragStart = ({ set }) => {
+    // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
     return undefined;
   };
@@ -87,12 +89,15 @@ function useSingleSelectionDrag({
       setDraggingResource(null);
       return undefined;
     }
+
+    const roundToZero = (num) => (Math.abs(num) <= 1 ? 0 : num);
+
     // When dragging finishes, set the new properties based on the original + what moved meanwhile.
     const [deltaX, deltaY] = frame.translate;
-    if (deltaX !== 0 || deltaY !== 0 || isDropSource(selectedElement.type)) {
+    if (deltaX !== 0 || deltaY !== 0) {
       const properties = {
-        x: selectedElement.x + editorToDataX(deltaX),
-        y: selectedElement.y + editorToDataY(deltaY),
+        x: roundToZero(selectedElement.x + editorToDataX(deltaX)),
+        y: roundToZero(selectedElement.y + editorToDataY(deltaY)),
       };
       updateSelectedElements({ properties });
       if (isDropSource(selectedElement.type)) {

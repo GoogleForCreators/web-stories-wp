@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TermsDialog should render 1`] = `
+<a
+  aria-label="Learn more by visiting Web Stories for WordPress"
+  href="https://wp.stories.google/docs#Terms"
+  rel="noreferrer"
+  target="_blank"
+>
+  Learn more.
+</a>
+`;

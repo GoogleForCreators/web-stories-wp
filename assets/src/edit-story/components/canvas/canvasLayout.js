@@ -17,17 +17,14 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { memo, useRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import styled, { StyleSheetManager } from 'styled-components';
+import { memo, useRef, useCallback } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import { useCanvas } from '../../app';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -40,7 +37,7 @@ import CanvasElementDropzone from './canvasElementDropzone';
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
 })`
-  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   width: 100%;
   height: 100%;
   position: relative;
@@ -48,24 +45,42 @@ const Background = styled.section.attrs({
 `;
 
 function CanvasLayout() {
+  const { setCanvasContainer } = useCanvas((state) => ({
+    setCanvasContainer: state.actions.setCanvasContainer,
+  }));
+
   const backgroundRef = useRef(null);
+
+  const setBackgroundRef = useCallback(
+    (ref) => {
+      backgroundRef.current = ref;
+      setCanvasContainer(ref);
+    },
+    [setCanvasContainer]
+  );
 
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
 
+  // Elsewhere we use stylisRTLPlugin in case of RTL, however, since we're
+  // forcing the canvas to always be LTR due to problems that otherwise come up
+  // with Moveable and left-right direction, for this subtree, we are not using any plugin.
+  // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
-    <Background ref={backgroundRef} style={layoutParamsCss}>
-      <CanvasUploadDropTarget>
-        <CanvasElementDropzone>
-          <SelectionCanvas>
-            <DisplayLayer />
-            <FramesLayer />
-            <NavLayer />
-          </SelectionCanvas>
-          <EditLayer />
-        </CanvasElementDropzone>
-      </CanvasUploadDropTarget>
-    </Background>
+    <StyleSheetManager stylisPlugins={[]}>
+      <Background ref={setBackgroundRef} style={layoutParamsCss}>
+        <CanvasUploadDropTarget>
+          <CanvasElementDropzone>
+            <SelectionCanvas>
+              <DisplayLayer />
+              <FramesLayer />
+              <NavLayer />
+            </SelectionCanvas>
+            <EditLayer />
+          </CanvasElementDropzone>
+        </CanvasUploadDropTarget>
+      </Background>
+    </StyleSheetManager>
   );
 }
 

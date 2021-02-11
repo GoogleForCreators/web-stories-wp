@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-export { default as MULTIPLE_VALUE } from './multipleValue';
 export { default as Button } from './button';
 export { default as Color } from './color';
 export { default as Input } from './input';
@@ -24,7 +23,6 @@ export { default as Media } from './media';
 export { default as Numeric } from './numeric';
 export { default as BoxedNumeric } from './shared/boxedNumeric';
 export { default as Row } from './row';
-export { default as Spacer } from './spacer';
 export { default as Switch } from './switch';
 export { default as TextInput } from './text';
 export { default as TextArea } from './textArea';
@@ -32,6 +30,7 @@ export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
 export { default as usePresubmitHandler } from './usePresubmitHandler';
 export { default as DropDown } from './dropDown';
+export { default as AdvancedDropDown } from './advancedDropDown';
 export { default as DateTime } from './dateTime';
 export { default as HelperText } from './helperText';
 export { default as Required } from './required';

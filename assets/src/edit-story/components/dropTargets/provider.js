@@ -27,10 +27,11 @@ import { useStory } from '../../app';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
 import { getDefinitionForType } from '../../elements';
+import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
 import Context from './context';
 
-const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
-const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
+const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];
+const DROP_TARGET_ALLOWED_TYPES = ['image', 'gif', 'video', 'shape'];
 
 const isDropSource = (type) => DROP_SOURCE_ALLOWED_TYPES.includes(type);
 const isDropTarget = (type) => DROP_TARGET_ALLOWED_TYPES.includes(type);
@@ -164,8 +165,9 @@ function DropTargetsProvider({ children }) {
         secondId: activeDropTargetId,
       };
 
-      if (selfId) {
-        combineArgs.firstId = selfId;
+      const firstElement = elements.find(({ id }) => id === selfId);
+      if (firstElement) {
+        combineArgs.firstElement = firstElement;
       } else {
         // Create properties as you'd create them for a new element to be added
         // Then merge these into the existing element using the same logic as
@@ -174,26 +176,37 @@ function DropTargetsProvider({ children }) {
           resource,
         });
       }
-      combineElements(combineArgs);
+      const finalizeDrop = (baseColor = null) => {
+        if (baseColor) {
+          combineArgs.firstElement.resource.baseColor = baseColor;
+        }
+        combineElements(combineArgs);
 
-      // Reset styles on visisble elements
-      elements
-        .filter(({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId)
-        .forEach((el) => {
-          pushTransform(el.id, {
-            dropTargets: {
-              active: false,
-              replacement: null,
-            },
+        // Reset styles on visible elements
+        elements
+          .filter(({ id }) => dropTargets[id] && id !== selfId)
+          .forEach((el) => {
+            pushTransform(el.id, {
+              dropTargets: {
+                active: false,
+                replacement: null,
+              },
+            });
+            pushTransform(el.id, null);
           });
-          pushTransform(el.id, null);
-        });
 
-      setActiveDropTargetId(null);
+        setActiveDropTargetId(null);
 
-      const { onDropHandler } = getDefinitionForType(resource.type);
-      if (onDropHandler) {
-        onDropHandler(activeDropTargetId);
+        const { onDropHandler } = getDefinitionForType(resource.type);
+        if (onDropHandler) {
+          onDropHandler(activeDropTargetId);
+        }
+      };
+      // Skip if we already have the color.
+      if (firstElement?.resource?.baseColor) {
+        finalizeDrop();
+      } else {
+        getMediaBaseColor(resource, finalizeDrop);
       }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]

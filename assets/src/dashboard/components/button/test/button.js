@@ -35,7 +35,7 @@ describe('Button', () => {
       <Button onClick={onClickMock}>{buttonText}</Button>
     );
 
-    expect(getByText(buttonText)).toBeDefined();
+    expect(getByText(buttonText)).toBeInTheDocument();
   });
 
   it('should not allow onClick action when <Button /> is disabled', () => {

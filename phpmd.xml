@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<ruleset
+  name="Web Stories PHPMD rule set"
+  xmlns="http://pmd.sf.net/ruleset/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                       http://pmd.sf.net/ruleset_xml_schema.xsd"
+  xsi:noNamespaceSchemaLocation="
+                       http://pmd.sf.net/ruleset_xml_schema.xsd"
+>
+
+  <rule ref="rulesets/codesize.xml">
+    <exclude name="CyclomaticComplexity" />
+  </rule>
+  <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+    <properties>
+      <property name="reportLevel" value="20" />
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/cleancode.xml">
+    <exclude name="ElseExpression" />
+    <exclude name="StaticAccess" />
+  </rule>
+
+  <rule ref="rulesets/unusedcode.xml">
+    <exclude name="UnusedFormalParameter" />
+  </rule>
+
+  <!-- Third-party or auto-generated code -->
+  <exclude-pattern>*/build/*</exclude-pattern>
+  <exclude-pattern>*/data/*</exclude-pattern>
+  <exclude-pattern>*/node_modules/*</exclude-pattern>
+  <exclude-pattern>*/tests/*</exclude-pattern>
+  <exclude-pattern>*/third-party/*</exclude-pattern>
+  <exclude-pattern>*/vendor/*</exclude-pattern>
+  <exclude-pattern>assets/js/*.asset.php</exclude-pattern>
+  <exclude-pattern>includes/polyfills/mbstring.php</exclude-pattern>
+</ruleset>

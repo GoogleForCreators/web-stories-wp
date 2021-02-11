@@ -41,7 +41,7 @@ const Color = styled.div`
     height: ${size}px;
     border-radius: 50%;
     background-color: ${color};
-    ${borderLookup(theme.colors.gray50)[color] || ''};
+    ${borderLookup(theme.DEPRECATED_THEME.colors.gray50)[color] || ''};
 
     & + & {
       margin-left: ${spacing || 10}px;
@@ -52,9 +52,9 @@ const Color = styled.div`
 function ColorList({ colors, size, spacing }) {
   return (
     <ColorContainer>
-      {colors.map(({ label, color }, index) => (
+      {colors.map(({ label, color }) => (
         <Color
-          key={index}
+          key={color}
           size={size}
           spacing={spacing}
           color={color}

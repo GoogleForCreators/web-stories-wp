@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+export { Radio } from './radio';
 export { Toggle } from './toggle';
 export { Select } from './select';
 export { Color } from './color';

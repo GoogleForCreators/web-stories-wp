@@ -110,4 +110,27 @@ describe('TelemetryBanner', () => {
 
     expect(checkbox).not.toBeChecked();
   });
+
+  it('should keep focus on the checkbox when checking/unchecking via', () => {
+    const { getByRole } = renderWithProviders(<TelemetryBannerTestContainer />);
+
+    const checkbox = getByRole('checkbox');
+
+    // Tab to Dismiss button
+    userEvent.tab();
+
+    // Tab to checkbox
+    userEvent.tab();
+
+    expect(checkbox).toHaveFocus();
+
+    expect(checkbox).not.toBeChecked();
+
+    // Check the checkbox via keyboard
+    userEvent.type(checkbox, '{space}');
+
+    expect(checkbox).toHaveFocus();
+
+    expect(checkbox).toBeChecked();
+  });
 });

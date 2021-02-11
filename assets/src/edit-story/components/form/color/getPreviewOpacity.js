@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import MULTIPLE_VALUE from '../multipleValue';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 function getPreviewOpacity(pattern) {
   if (!pattern || pattern === MULTIPLE_VALUE) {

@@ -83,6 +83,10 @@ class Link_Controller extends WP_REST_Controller {
 	/**
 	 * Parses a URL to return some metadata for inserting links.
 	 *
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
@@ -177,7 +181,7 @@ class Link_Controller extends WP_REST_Controller {
 			$title_node = $title_query->item( 0 );
 
 			if ( $title_node instanceof DOMElement ) {
-				$title = $title_node->textContent; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				$title = $title_node->textContent;
 			}
 		}
 

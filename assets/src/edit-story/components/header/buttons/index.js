@@ -23,7 +23,7 @@ import { useState, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import addQueryArgs from '../../../utils/addQueryArgs';
+import { addQueryArgs } from '../../../../design-system';
 import { useStory } from '../../../app';
 import CircularProgress from '../../circularProgress';
 import PostPublishDialog from '../postPublishDialog';

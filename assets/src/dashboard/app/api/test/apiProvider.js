@@ -22,7 +22,6 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { toUTCDate } from '../../../../date';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 import useApi from '../useApi';
@@ -41,36 +40,54 @@ jest.mock('../wpAdapter', () => ({
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
-          title: { rendered: 'Carlos', raw: 'Carlos' },
+          preview_link: 'https://www.story-link.com/?preview=true',
+          title: { raw: 'Carlos', rendered: 'Carlos' },
+          content: { raw: 'Content', rendered: 'Content' },
           story_data: { pages: [{ id: 1, elements: [] }] },
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000',
+          modified_gmt: '1970-01-01T00:00:00.000',
+          date: '1970-01-01T00:00:00.000',
+          date_gmt: '1970-01-01T00:00:00.000',
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
       ],
     }),
   post: (path, { data }) => {
     const title = typeof data.title === 'string' ? data.title : data.title.raw;
+    const content =
+      typeof data.content === 'string' ? data.content : data?.content?.raw;
     return Promise.resolve({
       id: data.id || 456,
       status: 'publish',
-      title: { rendered: title, raw: title },
+      title: { raw: title, rendered: title },
+      content: { raw: content, rendered: content },
       author: 1,
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified_gmt: '1970-01-01T00:00:00.000Z',
-      date_gmt: '1970-01-01T00:00:00.000Z',
+      modified: '1970-01-01T00:00:00.000',
+      modified_gmt: '1970-01-01T00:00:00.000',
+      date: '1970-01-01T00:00:00.000',
+      date_gmt: '1970-01-01T00:00:00.000',
       link: 'https://www.story-link.com',
+      preview_link: 'https://www.story-link.com/?preview=true',
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     });
   },
-  deleteRequest: (path, { data }) =>
+  deleteRequest: (path) => {
+    const id = path.split('/')[1];
     Promise.resolve({
-      id: data.id,
+      id: id,
       status: 'publish',
-      title: { rendered: data.title, raw: data.title },
+      title: { raw: 'Carlos', rendered: 'Carlos' },
+      content: { raw: 'Content', rendered: 'Content' },
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified_gmt: '1970-01-01T00:00:00.000Z',
-      date_gmt: '1970-01-01T00:00:00.000Z',
+      modified: '1970-01-01T00:00:00.000',
+      modified_gmt: '1970-01-01T00:00:00.000',
+      date: '1970-01-01T00:00:00.000',
+      date_gmt: '1970-01-01T00:00:00.000',
       link: 'https://www.story-link.com',
-    }),
+      preview_link: 'https://www.story-link.com/?preview=true',
+    });
+  },
 }));
 
 describe('ApiProvider', () => {
@@ -96,14 +113,20 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: '1970-01-01T00:00:00.000',
+        modified_gmt: '1970-01-01T00:00:00.000Z',
+
+        created: '1970-01-01T00:00:00.000',
+        created_gmt: '1970-01-01T00:00:00.000Z',
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000',
+          modified_gmt: '1970-01-01T00:00:00.000',
+          preview_link: 'https://www.story-link.com/?preview=true',
+          date: '1970-01-01T00:00:00.000',
+          date_gmt: '1970-01-01T00:00:00.000',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
@@ -119,6 +142,11 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
+          content: {
+            raw: 'Content',
+            rendered: 'Content',
+          },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -126,6 +154,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
+        previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'Carlos',
       },
@@ -151,7 +180,7 @@ describe('ApiProvider', () => {
     await act(async () => {
       await result.current.actions.storyApi.updateStory({
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        modified: undefined,
         pages: [
           {
             elements: [],
@@ -159,8 +188,13 @@ describe('ApiProvider', () => {
           },
         ],
         status: 'publish',
-        title: 'New Title',
+        title: { raw: 'New Title' },
+        content: { raw: 'Content', rendered: 'Content' },
         link: 'https://www.story-link.com',
+        preview_link: 'https://www.story-link.com/?preview=true',
+        originalStoryData: {
+          author: 1,
+        },
       });
     });
 
@@ -170,14 +204,19 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: '1970-01-01T00:00:00.000',
+        modified_gmt: '1970-01-01T00:00:00.000Z',
+        created: '1970-01-01T00:00:00.000',
+        created_gmt: '1970-01-01T00:00:00.000Z',
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000',
+          modified_gmt: '1970-01-01T00:00:00.000',
+          preview_link: 'https://www.story-link.com/?preview=true',
+          date: '1970-01-01T00:00:00.000',
+          date_gmt: '1970-01-01T00:00:00.000',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
@@ -193,6 +232,11 @@ describe('ApiProvider', () => {
             raw: 'New Title',
             rendered: 'New Title',
           },
+          content: {
+            raw: undefined,
+            rendered: undefined,
+          },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -200,6 +244,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
+        previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'New Title',
       },
@@ -248,6 +293,9 @@ describe('ApiProvider', () => {
           title: {
             raw: 'Carlos',
           },
+          content: {
+            raw: 'Content',
+          },
         },
       });
     });
@@ -258,14 +306,19 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: '1970-01-01T00:00:00.000',
+        modified_gmt: '1970-01-01T00:00:00.000Z',
+        created: '1970-01-01T00:00:00.000',
+        created_gmt: '1970-01-01T00:00:00.000Z',
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000',
+          modified_gmt: '1970-01-01T00:00:00.000',
+          preview_link: 'https://www.story-link.com/?preview=true',
+          date: '1970-01-01T00:00:00.000',
+          date_gmt: '1970-01-01T00:00:00.000',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
@@ -281,6 +334,11 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
+          content: {
+            raw: 'Content',
+            rendered: 'Content',
+          },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -288,6 +346,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
+        previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'Carlos',
       },
@@ -296,14 +355,19 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=456',
         id: 456,
-        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
-        created: toUTCDate('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: '1970-01-01T00:00:00.000',
+        modified_gmt: '1970-01-01T00:00:00.000Z',
+        created: '1970-01-01T00:00:00.000',
+        created_gmt: '1970-01-01T00:00:00.000Z',
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 456,
-          modified_gmt: '1970-01-01T00:00:00.000Z',
-          date_gmt: '1970-01-01T00:00:00.000Z',
+          modified: '1970-01-01T00:00:00.000',
+          modified_gmt: '1970-01-01T00:00:00.000',
+          preview_link: 'https://www.story-link.com/?preview=true',
+          date: '1970-01-01T00:00:00.000',
+          date_gmt: '1970-01-01T00:00:00.000',
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
@@ -319,6 +383,11 @@ describe('ApiProvider', () => {
             raw: 'Carlos (Copy)',
             rendered: 'Carlos (Copy)',
           },
+          content: {
+            raw: 'Content',
+            rendered: 'Content',
+          },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -326,6 +395,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
+        previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'Carlos (Copy)',
       },

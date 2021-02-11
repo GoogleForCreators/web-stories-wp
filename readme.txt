@@ -2,9 +2,9 @@
 
 Contributors:      google
 Requires at least: 5.3
-Tested up to:      5.5
+Tested up to:      5.6
 Requires PHP:      5.6
-Stable tag:        1.0.0
+Stable tag:        1.3.0
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
 Tags:              web stories, stories, amp, storytelling, google
@@ -43,6 +43,10 @@ Using the Web Stories editor for WordPress, you can easily create visual narrati
 === Audience: Everyone ===
 
 Web Stories are for everyone! If you are a site owner, content creator, or publisher on the web, embracing the Web Stories format would be great as a way to enhance the quality of your content strategy, the value you bring to your readers, and consequently your chances of achieving sustainable success.
+
+=== Terms of Service ===
+
+By using this plugin, you agree to [Google's Terms of Service](https://policies.google.com/terms). By using third-party imagery and video provided by [Unsplash](https://unsplash.com/terms), [Coverr](https://coverr.co/license) and [Tenor](https://tenor.com/legal-terms), you agree to adhere to the respective Terms of Service.
 
 == Installation ==
 
@@ -95,7 +99,7 @@ Web Stories created using Web Stories for WordPress use what’s provided in the
 
 There are two ways to include analytics in your Web Stories:
 
-* Add your Google Analytics ID in the “Editor Settings”.
+* Add your Google Analytics ID in the "Settings”.
 * If you use the [Site Kit by Google](https://wordpress.org/plugins/google-site-kit/) WordPress plugin, you can set up Google Analytics there.
 
 = What do I do about an AMP validation issue in Search Console? =
@@ -106,6 +110,45 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.3.0 =
+
+**Release Date:** January 19, 2021.
+
+* New feature: support for monetization through Google AdSense and Google Ad Manager.
+* New feature: page layouts.
+* UI improvements in the editor
+* Bug fixes and performance improvements.
+
+= 1.2.1 =
+
+**Release Date:** December 17, 2020.
+
+* New feature: automated site environment compatibility checks.
+* Improved UI for border and corner radius panels.
+* Bug fixes and performance improvements.
+
+= 1.2.0 =
+
+**Release Date:** December 11, 2020.
+
+* New features: animations, pre-publish checklist.
+* Improved captions language selector.
+* Improved compatibility with Cloudflare WAF.
+
+= 1.1.1 =
+
+**Release Date:** November 11, 2020.
+
+* Bug fixes and performance improvements.
+
+= 1.1.0 =
+
+**Release Date:** October 28, 2020.
+
+* New features: text sets, Tenor GIFs, video captions.
+* Responsive design in Gutenberg block & shortcode support.
+* Improved compatibility with other WordPress plugins.
+
 = 1.0.0 =
 
 **Release Date:** September 22nd, 2020.
@@ -113,6 +156,22 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+
+New monetization capabilities, bug fixes and performance improvements.
+
+= 1.2.1 =
+
+Bug fixes and performance improvements.
+
+= 1.2.0 =
+
+Added basic animations and a pre-publish checklist.
+
+= 1.1.1 =
+
+Bug fixes and performance improvements.
 
 = 1.0.0 =
 

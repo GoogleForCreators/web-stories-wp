@@ -19,17 +19,13 @@
  */
 import { Fragment, useMemo, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { Close as CloseIcon } from '../../icons';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import getKeyboardShortcuts from './getKeyboardShortcuts';
 import ShortcutLabel from './shortcutLabel';
 import {

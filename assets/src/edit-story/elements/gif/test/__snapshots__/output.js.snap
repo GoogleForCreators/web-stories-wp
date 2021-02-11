@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gif Output should include poster image if available 1`] = `"<div style=\\"position:absolute;width:100%;height:100%;left:0%;top:0%\\" data-leaf-element=\\"true\\"><amp-video id=\\"el-048426c8-69ae-4e04-80f1-8f3fd4434261-media\\" autoplay=\\"autoplay\\" loop=\\"loop\\" noaudio=\\"noaudio\\" poster=\\"https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah-poster.png\\" layout=\\"fill\\" alt=\\"\\"><source type=\\"video/mp4\\" src=\\"https://c.tenor.com/4F2m7BWP6KYAAAPo/flying-kiss-muah.mp4\\"/></amp-video></div>"`;
+
+exports[`Gif Output should produce an AMP video with autoplay, no controls, no audio, and loop 1`] = `"<div style=\\"position:absolute;width:100%;height:100%;left:0%;top:0%\\" data-leaf-element=\\"true\\"><amp-video id=\\"el-048426c8-69ae-4e04-80f1-8f3fd4434261-media\\" autoplay=\\"autoplay\\" loop=\\"loop\\" noaudio=\\"noaudio\\" poster=\\"\\" layout=\\"fill\\" alt=\\"\\"><source type=\\"video/mp4\\" src=\\"https://c.tenor.com/4F2m7BWP6KYAAAPo/flying-kiss-muah.mp4\\"/></amp-video></div>"`;

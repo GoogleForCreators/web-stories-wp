@@ -22,8 +22,6 @@ import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { FlagsProvider } from 'flagged';
-import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
@@ -35,10 +33,15 @@ import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/compon
 import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
 } from '../assets/src/dashboard/theme';
-import { GlobalStyle as DashboardModalGlobalStyle } from '../assets/src/dashboard/components/modal';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
 import { ConfigProvider } from '../assets/src/dashboard/app/config';
 import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
+
+import {
+  theme as designSystemTheme,
+  lightMode,
+  ThemeGlobals,
+} from '../assets/src/design-system/theme';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -81,35 +84,48 @@ addParameters({
 addDecorator(withKnobs);
 
 addDecorator((story, { id }) => {
-  const useDashboardTheme = id.startsWith('dashboard');
+  const isDesignSystemStorybook = id.startsWith('designsystem');
+  const isDashboardStorybook = id.startsWith('dashboard');
 
-  if (useDashboardTheme) {
+  if (isDashboardStorybook) {
     return (
-      <FlagsProvider features={{ enableAnimation: true }}>
-        <ThemeProvider theme={dashboardTheme}>
-          <ConfigProvider
-            config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
-          >
-            <ApiProvider>
-              <DashboardGlobalStyle />
-              <DashboardModalGlobalStyle />
-              <DashboardKeyboardOnlyOutline />
-              {story()}
-            </ApiProvider>
-          </ConfigProvider>
-        </ThemeProvider>
-      </FlagsProvider>
+      <ThemeProvider
+        theme={{
+          DEPRECATED_THEME: dashboardTheme,
+          ...designSystemTheme,
+          colors: lightMode,
+        }}
+      >
+        <ConfigProvider
+          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
+        >
+          <ApiProvider>
+            <DashboardGlobalStyle />
+            <DashboardKeyboardOnlyOutline />
+            {story()}
+          </ApiProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    );
+  }
+
+  if (isDesignSystemStorybook) {
+    // override darkMode colors
+    const dsTheme = { ...designSystemTheme, colors: lightMode };
+    return (
+      <ThemeProvider theme={dsTheme}>
+        <ThemeGlobals.OverrideFocusOutline />
+        {story()}
+      </ThemeProvider>
     );
   }
 
   return (
-    <FlagsProvider features={{ enableAnimation: true }}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <CropMoveableGlobalStyle />
-        <ModalGlobalStyle />
-        {story()}
-      </ThemeProvider>
-    </FlagsProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <CropMoveableGlobalStyle />
+      <ModalGlobalStyle />
+      {story()}
+    </ThemeProvider>
   );
 });

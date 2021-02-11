@@ -25,64 +25,18 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import { getDefinitionForType } from '../elements';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
-import escapeHTML from './escapeHTML';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
-const ALLOWED_CONTENT_NODES = ['strong', 'em', 'u'];
-const TAG_REPLACEMENTS = {
-  b: 'strong',
-  i: 'em',
-};
-
-/**
- * Gets content of one node.
- *
- * @param {string} content Content.
- * @param {Node}   node Node to process.
- * @return {string} Content.
- */
-function getNodeContent(content, node) {
-  const originalTag = node.tagName?.toLowerCase();
-  const tag = TAG_REPLACEMENTS[originalTag] ?? originalTag;
-  const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
-  if (!stripTags) {
-    content += `<${tag}>`;
-  }
-  if (node.childNodes.length > 0) {
-    if ('p' === tag && content.trim().length) {
-      content += '\n';
-    }
-    content = processPastedNodeList(node.childNodes, content);
-  } else {
-    content += escapeHTML(node.textContent);
-  }
-  if (!stripTags) {
-    content += `</${tag}>`;
-  }
-  return content;
-}
-
-/**
- * Processes pasted node list.
- *
- * @param {NodeList} nodeList Node list to process.
- * @param {string}   content Initial content.
- * @return {string} Processed content.
- */
-export function processPastedNodeList(nodeList, content) {
-  const nodeArray = Array.from(nodeList);
-  return nodeArray.reduce(getNodeContent, content);
-}
 
 /**
  * Processes pasted content to find story elements.
  *
  * @param {DocumentFragment} content NodeList representation of the content.
  * @param {Object}           currentPage Current page.
- * @return {[]} Array of found elements.
+ * @return {Object} Object containing found elements and animations arrays.
  */
 export function processPastedElements(content, currentPage) {
-  let foundElements = [];
+  let foundElementsAndAnimations = { animations: [], elements: [] };
   for (let n = content.firstChild; n; n = n.nextSibling) {
     if (
       n.nodeType !== /* COMMENT */ 8 ||
@@ -96,9 +50,18 @@ export function processPastedElements(content, currentPage) {
     if (payload.sentinel !== 'story-elements') {
       continue;
     }
-    foundElements = [
-      ...foundElements,
-      ...payload.items.map(({ x, y, basedOn, ...rest }) => {
+
+    const processedPayload = payload.items.reduce(
+      (accum, { x, y, basedOn, ...rest }) => {
+        const elementId = uuidv4();
+        const elementAnimations = payload.animations
+          .filter((animation) => animation.targets.includes(basedOn))
+          .map((animation) => ({
+            ...animation,
+            targets: [elementId],
+            id: uuidv4(),
+          }));
+
         currentPage.elements.forEach((element) => {
           if (element.id === basedOn || element.basedOn === basedOn) {
             const pastedXY = getPastedCoordinates(x, y);
@@ -106,18 +69,37 @@ export function processPastedElements(content, currentPage) {
             y = pastedXY.y;
           }
         });
+
         return {
-          ...rest,
-          basedOn,
-          id: uuidv4(),
-          x,
-          y,
+          elements: [
+            ...accum.elements,
+            {
+              ...rest,
+              basedOn,
+              id: elementId,
+              x,
+              y,
+            },
+          ],
+          animations: [...accum.animations, ...elementAnimations],
         };
-      }),
-    ];
-    return foundElements;
+      },
+      { animations: [], elements: [] }
+    );
+
+    foundElementsAndAnimations = {
+      animations: [
+        ...foundElementsAndAnimations.animations,
+        ...processedPayload.animations,
+      ],
+      elements: [
+        ...foundElementsAndAnimations.elements,
+        ...processedPayload.elements,
+      ],
+    };
+    return foundElementsAndAnimations;
   }
-  return foundElements;
+  return foundElementsAndAnimations;
 }
 
 /**
@@ -125,9 +107,10 @@ export function processPastedElements(content, currentPage) {
  *
  * @param {Object} page Page which all the elements belong to.
  * @param {Array} elements Array of story elements.
+ * @param {Array} animations Array of story animations.
  * @param {Object} evt Copy/cut event object.
  */
-export function addElementsToClipboard(page, elements, evt) {
+export function addElementsToClipboard(page, elements, animations, evt) {
   if (!elements.length || !evt) {
     return;
   }
@@ -145,6 +128,7 @@ export function addElementsToClipboard(page, elements, evt) {
       basedOn: element.id,
       id: undefined,
     })),
+    animations,
   };
   const serializedPayload = JSON.stringify(payload).replace(
     /--/g,

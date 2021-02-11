@@ -17,24 +17,22 @@
 /**
  * External dependencies
  */
-
-/**
- * Internal dependencies
- */
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
-import { toUTCDate } from '../../../date';
+import { migrate, DATA_VERSION } from '@web-stories-wp/migration';
 
 export default function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {
     const {
       id,
       title,
-      modified_gmt,
       status,
+      date,
       date_gmt,
-      author,
+      modified,
+      modified_gmt,
       link,
+      preview_link: previewLink,
       story_data: storyData,
+      _embedded: { author = [] } = {},
     } = originalStoryData;
     if (
       !Array.isArray(storyData.pages) ||
@@ -53,13 +51,16 @@ export default function reshapeStoryObject(editStoryURL) {
       id,
       status,
       title: title.raw,
-      modified: toUTCDate(modified_gmt),
-      created: toUTCDate(date_gmt),
+      created: date,
+      created_gmt: `${date_gmt}Z`,
+      modified,
+      modified_gmt: `${modified_gmt}Z`,
       pages: updatedStoryData.pages,
-      author,
+      author: author[0]?.name || '',
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
       editStoryLink: `${editStoryURL}&post=${id}`,
+      previewLink,
       link,
       originalStoryData,
     };

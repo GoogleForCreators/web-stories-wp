@@ -61,3 +61,4 @@ if ( is_multisite() ) {
 } else {
 	\Google\Web_Stories\delete_site();
 }
+\Google\Web_Stories\delete_stories_user_meta();

@@ -15,29 +15,23 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { useCallback } from 'react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import {
   StoriesPropType,
-  UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
 } from '../../../types';
 import {
-  PreviewPage,
   Table,
   TableAuthorHeaderCell,
   TableBody,
@@ -54,7 +48,6 @@ import {
   MoreVerticalButton,
   InlineInputForm,
   Paragraph2,
-  useLayoutContext,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -62,19 +55,18 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import {
-  FULLBLEED_RATIO,
-  DASHBOARD_TOP_MARGIN,
-  DEFAULT_DASHBOARD_TOP_SPACE,
-} from '../../../constants/pageStructure';
-import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
+  PreviewPage,
+  PreviewErrorBoundary,
+} from '../../../../edit-story/components/previewPage';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import { getRelativeDisplayDate } from '../../../../date';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
+import { titleFormatted } from '../../../utils';
 
 const ListView = styled.div`
   width: 100%;
@@ -84,18 +76,20 @@ const PreviewContainer = styled.div`
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
+  width: ${({ theme }) => theme.DEPRECATED_THEME.previewWidth.thumbnail}px;
+  height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.borders.gray75};
+  border-radius: ${({ theme }) =>
+    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray75};
 `;
 
 const ArrowIcon = styled.div`
-  width: ${({ theme }) => theme.table.headerContentSize}px;
+  width: ${({ theme }) => theme.DEPRECATED_THEME.table.headerContentSize}px;
   height: 100%;
   display: inline-grid;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   vertical-align: middle;
 
   svg {
@@ -109,13 +103,13 @@ const ArrowIconWithTitle = styled(ArrowIcon)`
   margin-left: 6px;
   margin-top: -2px;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     margin-left: 4px;
   }
 `;
 
 const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
-  color: ${({ theme }) => theme.colors.bluePrimary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
   font-weight: 500;
   cursor: pointer;
 `;
@@ -151,10 +145,6 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
-function titleFormatted(rawTitle) {
-  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
-}
-
 function onFocusSelectAll(e) {
   window.getSelection().selectAllChildren(e.target);
 }
@@ -173,17 +163,7 @@ export default function StoryListView({
   storyMenu,
   storySort,
   storyStatus,
-  users,
 }) {
-  const {
-    state: { squishContentHeight },
-  } = useLayoutContext();
-
-  // get sticky position from the squishContentHeight (header area),
-  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll & add default top padding.
-  const stickyTopPosition =
-    squishContentHeight - DASHBOARD_TOP_MARGIN + DEFAULT_DASHBOARD_TOP_SPACE;
-
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -207,20 +187,29 @@ export default function StoryListView({
 
   return (
     <ListView data-testid="story-list-view">
-      <Table>
-        <StickyTableHeader top={stickyTopPosition}>
+      <Table aria-label={__('List view of created stories', 'web-stories')}>
+        <StickyTableHeader>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
               onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
-              <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
+              <SelectableTitle
+                aria-label={__(
+                  'Title, select to sort table by story title',
+                  'web-stories'
+                )}
+              >
+                {__('Title', 'web-stories')}
+              </SelectableTitle>
             </TablePreviewHeaderCell>
             <TableTitleHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
               onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
-              <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
+              <SelectableTitle aria-hidden="true">
+                {__('Title', 'web-stories')}
+              </SelectableTitle>
               <ArrowIcon active={storySort === STORY_SORT_OPTIONS.NAME}>
                 {sortDirection === SORT_DIRECTION.DESC ? (
                   <ArrowAlphaDescendingSvg />
@@ -231,6 +220,10 @@ export default function StoryListView({
             </TableTitleHeaderCell>
             <TableAuthorHeaderCell>
               <SelectableTitle
+                aria-label={__(
+                  'Author, select to sort table by story author',
+                  'web-stories'
+                )}
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
                 }
@@ -252,6 +245,10 @@ export default function StoryListView({
             </TableAuthorHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
+                aria-label={__(
+                  'Creation date, select to sort table by date story was created',
+                  'web-stories'
+                )}
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.DATE_CREATED)
                 }
@@ -262,6 +259,7 @@ export default function StoryListView({
                 {__('Date Created', 'web-stories')}
               </SelectableTitle>
               <ArrowIconWithTitle
+                aria-hidden={true}
                 active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
@@ -270,6 +268,10 @@ export default function StoryListView({
             </TableDateHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
+                aria-label={__(
+                  'Modification date, select to sort table by date story was last modified',
+                  'web-stories'
+                )}
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
@@ -280,6 +282,7 @@ export default function StoryListView({
                 {__('Last Modified', 'web-stories')}
               </SelectableTitle>
               <ArrowIconWithTitle
+                aria-hidden={true}
                 active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
@@ -331,7 +334,7 @@ export default function StoryListView({
                   )}
                 </TitleTableCellContainer>
               </TableCell>
-              <TableCell>{users[story.author]?.name || '—'}</TableCell>
+              <TableCell>{story.author || '—'}</TableCell>
               <TableCell>{getRelativeDisplayDate(story.created)}</TableCell>
               <TableCell>{getRelativeDisplayDate(story.modified)}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
@@ -360,5 +363,4 @@ StoryListView.propTypes = {
   storySort: PropTypes.string.isRequired,
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
-  users: UsersPropType.isRequired,
 };

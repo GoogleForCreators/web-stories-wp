@@ -19,11 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -41,6 +37,7 @@ function PopoverLogoContextMenu({
   publisherLogo,
   contextMenuId,
   onMenuItemSelected,
+  onMenuItemToggle,
 }) {
   const popoverMenuContainerRef = useRef(null);
 
@@ -53,10 +50,10 @@ function PopoverLogoContextMenu({
   );
 
   const handleFocusOut = useCallback(() => {
-    if (contextMenuId === activePublisherLogo) {
+    if (contextMenuId.value === activePublisherLogo) {
       onMoreButtonSelected(-1);
     }
-  }, [activePublisherLogo, contextMenuId, onMoreButtonSelected]);
+  }, [activePublisherLogo, contextMenuId.value, onMoreButtonSelected]);
 
   useFocusOut(popoverMenuContainerRef, handleFocusOut, [contextMenuId]);
 
@@ -74,7 +71,11 @@ function PopoverLogoContextMenu({
         )}
         onClick={(e) => {
           e.preventDefault();
+          onMenuItemToggle(isPopoverMenuOpen ? null : publisherLogo.id);
           onMoreButtonSelected(isPopoverMenuOpen ? -1 : publisherLogo.id);
+        }}
+        onFocus={() => {
+          onMenuItemToggle(isPopoverMenuOpen ? null : publisherLogo.id);
         }}
       >
         <EditPencilIcon aria-hidden="true" />
@@ -117,6 +118,7 @@ PopoverLogoContextMenu.propTypes = {
     set: PropTypes.func,
   }).isRequired,
   onMenuItemSelected: PropTypes.func.isRequired,
+  onMenuItemToggle: PropTypes.func.isRequired,
 };
 
 export default PopoverLogoContextMenu;

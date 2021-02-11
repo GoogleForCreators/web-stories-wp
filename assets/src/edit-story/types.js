@@ -24,14 +24,23 @@ import PropTypes from 'prop-types';
  */
 import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/backgroundOverlay';
-import { BACKGROUND_TEXT_MODE } from './constants';
-import MULTIPLE_VALUE from './components/form/multipleValue';
+import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
   g: PropTypes.number.isRequired,
   b: PropTypes.number.isRequired,
   a: PropTypes.number,
+});
+
+export const BorderPropTypes = PropTypes.shape({
+  color: HexPropType.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number,
+  right: PropTypes.number,
+  bottom: PropTypes.number,
+  locked: PropTypes.bool.isRequired,
+  position: PropTypes.string.isRequired,
 });
 
 export const ColorStopPropType = PropTypes.shape({
@@ -60,19 +69,34 @@ export const StylePresetPropType = PropTypes.shape({
   textStyles: PropTypes.array,
 });
 
+export const PageSizePropType = PropTypes.shape({
+  width: PropTypes.number,
+  height: PropTypes.number,
+  containerHeight: PropTypes.number,
+});
+
 const StoryPropTypes = {};
 
 StoryPropTypes.story = PropTypes.shape({
   storyId: PropTypes.number,
   title: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  author: PropTypes.number.isRequired,
+  author: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    name: PropTypes.string.isRequired,
+  }),
   slug: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   modified: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
-  featuredMedia: PropTypes.number.isRequired,
+  featuredMedia: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    url: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }),
   password: PropTypes.string.isRequired,
+  currentStoryStyles: PropTypes.array,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 });
@@ -107,33 +131,91 @@ StoryPropTypes.page = PropTypes.shape({
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
+StoryPropTypes.resourceSize = PropTypes.shape({
+  file: PropTypes.string,
+  source_url: PropTypes.string.isRequired,
+  mime_type: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+});
+
+StoryPropTypes.imageResourceSizes = PropTypes.shape({
+  full: StoryPropTypes.resourceSize,
+  large: StoryPropTypes.resourceSize,
+  web_stories_thumbnail: StoryPropTypes.resourceSize,
+});
+
+StoryPropTypes.videoResourceSizes = PropTypes.oneOfType([
+  PropTypes.array,
+  PropTypes.shape({
+    full: StoryPropTypes.resourceSize,
+    preview: StoryPropTypes.resourceSize,
+  }),
+]);
+
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   alt: PropTypes.string,
   title: PropTypes.string,
+  sizes: StoryPropTypes.imageResourceSizes,
+});
+
+StoryPropTypes.trackResource = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  track: PropTypes.string.isRequired,
+  trackId: PropTypes.number,
+  trackName: PropTypes.string.isRequired,
+  kind: PropTypes.string,
+  srclang: PropTypes.string,
+  label: PropTypes.string,
 });
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
+  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
   alt: PropTypes.string,
   title: PropTypes.string,
+  sizes: StoryPropTypes.videoResourceSizes,
+});
+
+StoryPropTypes.gifResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  mimeType: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  alt: PropTypes.string,
+  local: PropTypes.bool,
+  sizes: PropTypes.imageResourceSizes,
+  output: PropTypes.shape({
+    mimeType: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    sizes: PropTypes.shape({
+      mp4: StoryPropTypes.videoResourceSizes,
+      webm: StoryPropTypes.videoResourceSizes,
+    }),
+  }),
 });
 
 StoryPropTypes.resource = PropTypes.oneOfType([
   StoryPropTypes.imageResource,
   StoryPropTypes.videoResource,
+  StoryPropTypes.trackResource,
+  StoryPropTypes.gifResource,
 ]);
 
 const StoryLayerPropTypes = {
@@ -184,12 +266,20 @@ StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryMediaPropTypes,
   resource: StoryPropTypes.videoResource,
   poster: PropTypes.string,
+  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
   loop: PropTypes.bool,
+});
+
+StoryPropTypes.elements.gif = PropTypes.shape({
+  ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
+  resource: StoryPropTypes.gifResource,
 });
 
 StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.image,
   StoryPropTypes.elements.video,
+  StoryPropTypes.elements.gif,
 ]);
 
 export const AnimationPropType = PropTypes.shape(AnimationProps);
@@ -255,7 +345,35 @@ export default StoryPropTypes;
  * Page object.
  *
  * @typedef {Page} Page
- * @property {Array} elements Array of all elements.
+ * @property {Element[]} elements Array of all elements.
+ */
+
+/**
+ * Element object
+ *
+ * @typedef {Element} Element A story element
+ * @property {string} id  A unique uuid for the element
+ * @property {string} type The type of the element, e.g. video, gif, image
+ * @property {number} x The x position of the element, its top left corner
+ * @property {number} y The y position of the element, its top left corner
+ * @property {number} width The width of the element
+ * @property {number} height The height of the element
+ * @property {Object} flip If the element has been flipped vertical/horizontal
+ * @property {number} rotationAngle The element's rotation angle
+ * @property {Object} mask The type of mask applied to the element
+ * @property {Object} link The url, icon and description of a link applied to element
+ * @property {number} opacity The opacity of the element
+ * @property {boolean} lockAspectRatio Whether the element's aspect ratio is locked
+ * @property {Resource} resource The element's resource object
+ */
+
+/**
+ * Resource object
+ *
+ * @typedef {Resource} Resource Resource data for elements
+ * @property {{ full: { height: number, width: number }, output: Object }} sizes The data for the full-size element
+ * @property {boolean} local Whether the media was uploaded by the user
+ * @property {string} src The source string for the resource
  */
 
 /**
@@ -267,12 +385,12 @@ export default StoryPropTypes;
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
  * @property {Array<Page>} pages Array of all pages.
- * @property {number} author User ID of story author.
+ * @property {Object} author Story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.
  * @property {string} modified The modified date of the story.
  * @property {string} content AMP HTML content.
  * @property {string} excerpt Short description.
- * @property {number} featuredMedia Featured media ID.
+ * @property {Object} featuredMedia Featured media object.
  * @property {string} password Password
  */

@@ -19,6 +19,7 @@
  */
 import storyReducer, { ACTION_TYPES } from '../stories';
 import { STORY_STATUS } from '../../../constants';
+import { ERRORS } from '../../textContent';
 
 describe('storyReducer', () => {
   const initialState = {
@@ -90,7 +91,7 @@ describe('storyReducer', () => {
         payload: {
           message: {
             body: 'my trash story failure message',
-            title: 'Unable to Delete Story',
+            title: ERRORS.DELETE_STORY.TITLE,
           },
           code: 'my_error_code',
         },
@@ -102,7 +103,7 @@ describe('storyReducer', () => {
       error: {
         message: {
           body: 'my trash story failure message',
-          title: 'Unable to Delete Story',
+          title: ERRORS.DELETE_STORY.TITLE,
         },
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
@@ -161,7 +162,7 @@ describe('storyReducer', () => {
         type: ACTION_TYPES.DUPLICATE_STORY_FAILURE,
         payload: {
           message: {
-            title: 'Unable to Duplciate Story',
+            title: ERRORS.DUPLICATE_STORY.TITLE,
             body: 'my duplicate story failure message',
           },
           code: 'my_error_code',
@@ -173,7 +174,7 @@ describe('storyReducer', () => {
       ...initialState,
       error: {
         message: {
-          title: 'Unable to Duplciate Story',
+          title: ERRORS.DUPLICATE_STORY.TITLE,
           body: 'my duplicate story failure message',
         },
         id: MOCK_ERROR_ID,
@@ -195,6 +196,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 65,
@@ -203,6 +205,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 78,
@@ -211,6 +214,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 12,
@@ -219,6 +223,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
         ],
         totalStoriesByStatus: {
@@ -265,6 +270,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 65,
@@ -273,6 +279,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 78,
@@ -281,6 +288,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 12,
@@ -289,6 +297,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
           ],
           totalStoriesByStatus: {
@@ -371,7 +380,7 @@ describe('storyReducer', () => {
         type: ACTION_TYPES.FETCH_STORIES_FAILURE,
         payload: {
           message: {
-            title: 'Unable to Load Stories',
+            title: ERRORS.LOAD_STORIES.TITLE,
             body: 'my error message',
           },
           code: 'my_error_code',
@@ -383,7 +392,7 @@ describe('storyReducer', () => {
       ...initialState,
       error: {
         message: {
-          title: 'Unable to Load Stories',
+          title: ERRORS.LOAD_STORIES.TITLE,
           body: 'my error message',
         },
         id: MOCK_ERROR_ID,
@@ -399,7 +408,7 @@ describe('storyReducer', () => {
         type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
         payload: {
           message: {
-            title: 'Unable to Create Story From Template',
+            title: ERRORS.CREATE_STORY_FROM_TEMPLATE.TITLE,
             body: 'my error message',
           },
           code: 'my_error_code',
@@ -411,7 +420,7 @@ describe('storyReducer', () => {
       ...initialState,
       error: {
         message: {
-          title: 'Unable to Create Story From Template',
+          title: ERRORS.CREATE_STORY_FROM_TEMPLATE.TITLE,
           body: 'my error message',
         },
         id: MOCK_ERROR_ID,
@@ -455,7 +464,7 @@ describe('storyReducer', () => {
         type: ACTION_TYPES.UPDATE_STORY_FAILURE,
         payload: {
           message: {
-            title: 'Unable to Update Story',
+            title: ERRORS.UPDATE_STORY.TITLE,
             body: 'my error message',
           },
           code: 'my_error_code',
@@ -467,7 +476,7 @@ describe('storyReducer', () => {
       ...initialState,
       error: {
         message: {
-          title: 'Unable to Update Story',
+          title: ERRORS.UPDATE_STORY.TITLE,
           body: 'my error message',
         },
         id: MOCK_ERROR_ID,
@@ -514,7 +523,7 @@ describe('storyReducer', () => {
         type: ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
         payload: {
           message: {
-            title: 'Unable to Create Story Preview From Template',
+            title: ERRORS.RENDER_PREVIEW.TITLE,
             body: 'my error message',
           },
           code: 'my_error_code',
@@ -526,7 +535,7 @@ describe('storyReducer', () => {
       ...initialState,
       error: {
         message: {
-          title: 'Unable to Create Story Preview From Template',
+          title: ERRORS.RENDER_PREVIEW.TITLE,
           body: 'my error message',
         },
         id: MOCK_ERROR_ID,

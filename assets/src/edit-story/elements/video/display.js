@@ -38,9 +38,12 @@ const Video = styled.video`
 
 const Image = styled.img`
   position: absolute;
-  max-width: initial;
   max-height: initial;
-  ${videoWithScale}
+  object-fit: contain;
+  width: ${({ width }) => `${width}px`};
+  left: ${({ offsetX }) => `${-offsetX}px`};
+  top: ${({ offsetY }) => `${-offsetY}px`};
+  max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 
 function VideoDisplay({ previewMode, box: { width, height }, element }) {
@@ -48,6 +51,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     id,
     poster,
     resource,
+    tracks,
     isBackground,
     scale,
     focalX,
@@ -72,12 +76,18 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalX,
     focalY
   );
+
   return (
-    <MediaDisplay element={element} mediaRef={ref} showPlaceholder={true}>
+    <MediaDisplay
+      element={element}
+      mediaRef={ref}
+      showPlaceholder={true}
+      previewMode={previewMode}
+    >
       {previewMode ? (
         <Image
           src={poster || resource.poster}
-          alt={resource.title}
+          alt={element.alt || resource.alt}
           style={style}
           {...videoProps}
           ref={ref}
@@ -91,8 +101,21 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           loop={loop}
           preload="none"
           ref={ref}
+          data-testid="videoElement"
+          data-leaf-element="true"
         >
           <source src={resource.src} type={resource.mimeType} />
+          {tracks &&
+            tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
+              <track
+                srcLang={srclang}
+                label={label}
+                kind={kind}
+                src={src}
+                key={key}
+                default={i === 0}
+              />
+            ))}
         </Video>
       )}
     </MediaDisplay>

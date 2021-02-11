@@ -22,11 +22,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useFeatures } from 'flagged';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -41,9 +38,10 @@ const HEADER_FOOTER_HEIGHT = 42;
 const BODY_HEIGHT = 140;
 const CONTROLS_WIDTH = 12;
 const CONTROLS_BORDER_RADIUS = 6;
+const OPACITY_WIDTH = 32;
 
 const Container = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -86,22 +84,33 @@ const AlphaWrapper = styled.div`
 `;
 
 const Footer = styled.div`
-  padding: ${CONTAINER_PADDING}px 0px;
   height: ${HEADER_FOOTER_HEIGHT}px;
   font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
   position: relative;
+  margin-top: 7px;
+  display: grid;
+  grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / ${EYEDROPPER_ICON_SIZE}px 1fr ${OPACITY_WIDTH}px;
+  grid-gap: 10px;
+`;
+
+const HexValue = styled.div`
+  grid-area: hex;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
 `;
 
 const EyedropperButton = styled(Eyedropper)`
   line-height: ${EYEDROPPER_ICON_SIZE}px;
+  grid-area: eyedropper;
 `;
 
-const OpacityPlaceholder = styled.div`
-  width: 32px;
+const Opacity = styled.div`
+  grid-area: opacity;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
@@ -122,6 +131,8 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       onChange({ ...rgb, a: isNaN(value) ? 1 : parseInt(value) / 100 }),
     [rgb, onChange]
   );
+
+  const { eyeDropper } = useFeatures();
 
   return (
     <Container>
@@ -164,30 +175,33 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         )}
       </Body>
       <Footer>
-        {/* TODO: implement (see https://github.com/google/web-stories-wp/issues/262) */}
-        <EyedropperButton
-          width={EYEDROPPER_ICON_SIZE}
-          height={EYEDROPPER_ICON_SIZE}
-          aria-label={__('Select color', 'web-stories')}
-          isDisabled
-        />
-        <EditablePreview
-          label={__('Edit hex value', 'web-stories')}
-          value={hexValue}
-          onChange={handleHexInputChange}
-          width={56}
-          format={handleFormatHex}
-        />
-        {showOpacity ? (
-          <EditablePreview
-            label={__('Edit opacity', 'web-stories')}
-            value={alphaPercentage}
-            width={32}
-            format={handleFormatPercentage}
-            onChange={handleOpacityInputChange}
+        {eyeDropper && (
+          <EyedropperButton
+            width={EYEDROPPER_ICON_SIZE}
+            height={EYEDROPPER_ICON_SIZE}
+            aria-label={__('Select color', 'web-stories')}
+            isDisabled
           />
-        ) : (
-          <OpacityPlaceholder />
+        )}
+        <HexValue>
+          <EditablePreview
+            label={__('Edit hex value', 'web-stories')}
+            value={hexValue}
+            onChange={handleHexInputChange}
+            width={56}
+            format={handleFormatHex}
+          />
+        </HexValue>
+        {showOpacity && (
+          <Opacity>
+            <EditablePreview
+              label={__('Edit opacity', 'web-stories')}
+              value={alphaPercentage}
+              width={OPACITY_WIDTH}
+              format={handleFormatPercentage}
+              onChange={handleOpacityInputChange}
+            />
+          </Opacity>
         )}
       </Footer>
     </Container>

@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -94,7 +94,6 @@ export const PROVIDERS = {
   },
   [ProviderType.TENOR]: {
     displayName: __('GIFs', 'web-stories'),
-    featureName: 'showGifTab',
     contentTypeFilter: ContentType.GIF,
     supportsCategories: true,
     requiresAuthorAttribution: false,

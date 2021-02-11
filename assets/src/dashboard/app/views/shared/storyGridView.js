@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
@@ -39,13 +40,11 @@ import {
 import {
   StoriesPropType,
   StoryMenuPropType,
-  UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
-import { getRelativeDisplayDate } from '../../../../date';
-import { useGridViewKeys, useFocusOut } from '../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
@@ -57,17 +56,16 @@ export const DetailRow = styled.div`
 
 const StoryGrid = styled(CardGrid)`
   width: ${({ theme }) =>
-    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
+    `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px)`};
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
     width: ${({ theme }) =>
-      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
+      `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px)`};
   }
 `;
 
 const StoryGridView = ({
   stories,
-  users,
   centerActionLabelByStatus,
   bottomActionLabel,
   isSavedTemplate,
@@ -175,14 +173,12 @@ const StoryGridView = ({
                   status={story?.status}
                   id={story.id}
                   secondaryTitle={
-                    isSavedTemplate
-                      ? __('Google', 'web-stories')
-                      : users[story.author]?.name
+                    isSavedTemplate ? __('Google', 'web-stories') : story.author
                   }
                   displayDate={
                     story?.status === STORY_STATUS.DRAFT
-                      ? getRelativeDisplayDate(story?.modified)
-                      : getRelativeDisplayDate(story?.created)
+                      ? getRelativeDisplayDate(story?.modified_gmt)
+                      : getRelativeDisplayDate(story?.created_gmt)
                   }
                   {...titleRenameProps}
                 />
@@ -212,7 +208,6 @@ StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
-  users: UsersPropType,
   centerActionLabelByStatus: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.string),
     PropTypes.bool,

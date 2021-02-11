@@ -19,21 +19,21 @@
  */
 import { act, fireEvent } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
+import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
-import TextPane from '../../panes/text/textPane';
-import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import { renderWithTheme } from '../../../../testUtils/index';
+import FontContext from '../../../../app/font/context';
+import useFont from '../../../../app/font/useFont';
+import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
+import TextPane from '../../panes/text/textPane';
+import { PRESETS } from '../../panes/text/textPresets';
+import useLibrary from '../../useLibrary';
 
 jest.mock('../../useLibrary');
 jest.mock('../../../../app/font/useFont');
-import useFont from '../../../../app/font/useFont';
-import useLibrary from '../../useLibrary';
-import FontContext from '../../../../app/font/context';
-import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
-import { curatedFontNames } from '../../../../app/font/curatedFonts';
 
 describe('TextPane', () => {
   const insertElement = jest.fn();
@@ -54,7 +54,7 @@ describe('TextPane', () => {
     }));
   });
 
-  it('should insert text with default text style on pressing quick action', async () => {
+  it('should insert text with preset text style on pressing a preset', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
       (font) => curatedFontNames.indexOf(font.name) > 0
     );
@@ -83,10 +83,10 @@ describe('TextPane', () => {
         </FlagsProvider>
       );
 
-      fireEvent.click(getByRole('button', { name: 'Add new text' }));
+      fireEvent.click(getByRole('button', { name: 'Heading 1' }));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
+    expect(insertElement).toHaveBeenCalledWith('text', PRESETS[0].element);
   });
 });

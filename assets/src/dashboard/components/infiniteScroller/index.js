@@ -15,28 +15,29 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-/**
  * External dependencies
  */
-import { useEffect, useRef, useReducer } from 'react';
+import { __ } from '@web-stories-wp/i18n';
+import { useEffect, useRef, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { TypographyPresets } from '../typography';
 
 const ScrollMessage = styled.div`
   ${TypographyPresets.Small};
   width: 100%;
-  margin: 40px auto;
+  padding: 140px 0 40px;
+  margin: -100px auto 0;
   text-align: center;
-  color: ${({ theme }) => theme.colors.gray500};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
 `;
+
+const AriaOnlyAlert = styled.span(visuallyHiddenStyles);
 
 const STATE = {
   loadable: 'loadable',
@@ -77,9 +78,11 @@ const loadReducer = (state, action) => {
 
 const InfiniteScroller = ({
   allDataLoadedMessage = __('No More Stories', 'web-stories'),
+  allDataLoadedAriaMessage = __('All stories are loaded', 'web-stories'),
   onLoadMore,
   canLoadMore,
   isLoading,
+  loadingAriaMessage = __('Loading more stories', 'web-stories'),
   loadingMessage = __('Loading…', 'web-stories'),
 }) => {
   const loadingRef = useRef(null);
@@ -87,6 +90,15 @@ const InfiniteScroller = ({
   onLoadMoreRef.current = onLoadMore;
 
   const [loadState, dispatch] = useReducer(loadReducer, STATE.loadable);
+
+  const loadingAlert = useMemo(() => {
+    if (loadState === STATE.loading_internal) {
+      return loadingAriaMessage;
+    } else if (!canLoadMore) {
+      return allDataLoadedAriaMessage;
+    }
+    return null;
+  }, [allDataLoadedAriaMessage, loadingAriaMessage, loadState, canLoadMore]);
 
   useEffect(() => {
     if (loadState === STATE.loading_internal) {
@@ -110,7 +122,7 @@ const InfiniteScroller = ({
     if (canLoadMore) {
       dispatch(ACTION.ON_CAN_LOAD_MORE);
     }
-  }, [canLoadMore, loadState]);
+  }, [canLoadMore]);
 
   useEffect(() => {
     if (!loadingRef.current) {
@@ -127,7 +139,7 @@ const InfiniteScroller = ({
       },
       {
         rootMargin: '0px',
-        threshold: 1,
+        threshold: 0,
       }
     );
 
@@ -140,6 +152,9 @@ const InfiniteScroller = ({
 
   return (
     <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
+      {loadingAlert && (
+        <AriaOnlyAlert role="status">{loadingAlert}</AriaOnlyAlert>
+      )}
       {!canLoadMore ? allDataLoadedMessage : loadingMessage}
     </ScrollMessage>
   );
@@ -149,7 +164,9 @@ InfiniteScroller.propTypes = {
   isLoading: PropTypes.bool,
   onLoadMore: PropTypes.func.isRequired,
   allDataLoadedMessage: PropTypes.string,
+  allDataLoadedAriaMessage: PropTypes.string,
   canLoadMore: PropTypes.bool,
+  loadingAriaMessage: PropTypes.string,
   loadingMessage: PropTypes.string,
 };
 export default InfiniteScroller;

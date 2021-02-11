@@ -1,6 +1,6 @@
 # Creating an External Template
 
-`src/dashbpard/templates/raw` is a dumping ground for raw story json output from the editor, which is then interpreted as a template.
+`packages/templates/src/raw` is a dumping ground for raw story json output from the editor, which is then interpreted as a template.
 
 ## Getting The Raw Story JSON
 
@@ -33,4 +33,4 @@ This is an important note to make when naming images for upload into a story as 
 
 ## Adding Your Template
 
-Once you've added your template's raw story json to `src/dashboard/templates/raw/<template_name>.json`, you can import it into `src/dashboard/templates/getTemplates` and add to the function `loadTemplates(imageBaseUrl)`. It should then be accessible in `src/dashboard/templates/index`.
+Once you've added your template's raw story json to `packages/templates/src/raw/<template_name>.json`, you can import it into `packages/templates/src/getTemplates` and add to the function `loadTemplates(imageBaseUrl)`. It should then be accessible in `packages/templates/src/index`.

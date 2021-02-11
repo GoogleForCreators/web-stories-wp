@@ -29,7 +29,6 @@ const animations = [
   {
     targets: ['e1'],
     type: ANIMATION_EFFECTS.PULSE,
-    iterations: 1,
     delay: 500,
   },
   {
@@ -114,6 +113,11 @@ export const _default = () => {
           <StoryAnimation.AMPAnimations />
           <p style={{ textAlign: 'center', color: '#fff' }}>
             {'Custom Pulse Effect'}
+          </p>
+          <p style={{ textAlign: 'center', color: '#fff' }}>
+            {
+              'Only first element reflects amp-story preset, rest highlight greater configurability'
+            }
           </p>
 
           <amp-story-grid-layer template="vertical">

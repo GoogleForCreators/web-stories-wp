@@ -16,7 +16,9 @@
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 	</rule>
 
-	<rule ref="WordPress-VIP-Go" />
+	<rule ref="WordPress-VIP-Go">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
@@ -29,10 +31,23 @@
 	<rule ref="WordPress.NamingConventions.ValidVariableName">
 		<properties>
 			<property name="customPropertiesWhitelist" type="array">
-				<!-- DOMDocument::$documentElement -->
-				<element value="documentElement" />
-				<!-- DOMElement::$parentNode -->
+				<element value="childNodes" />
+				<element value="tagName" />
+				<element value="textContent" />
 				<element value="parentNode" />
+				<element value="nodeType" />
+				<element value="nodeName" />
+				<element value="nextSibling" />
+				<element value="previousSibling" />
+				<element value="firstChild" />
+				<element value="lastChild" />
+				<element value="nodeValue" />
+				<element value="ownerElement" />
+				<element value="documentElement" />
+				<element value="removeChild" />
+				<element value="ownerDocument" />
+				<element value="strictErrorChecking" />
+				<element value="preserveWhiteSpace" />
 			</property>
 		</properties>
 	</rule>
@@ -46,6 +61,7 @@
 	<!-- The main plugin file should be parsable by PHP < 5.6. -->
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
 		<exclude-pattern>web-stories.php</exclude-pattern>
+		<exclude-pattern>includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
 	</rule>
 
 	<!-- Show details about violated sniffs -->
@@ -64,8 +80,12 @@
 	<!-- Third-party or auto-generated code -->
 	<exclude-pattern>*/build/*</exclude-pattern>
 	<exclude-pattern>*/data/*</exclude-pattern>
+	<exclude-pattern>packages/e2e-tests/src/plugins/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/third-party/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>assets/js/*.asset.php</exclude-pattern>
+	<exclude-pattern>includes/polyfills/mbstring.php</exclude-pattern>
 	<exclude-pattern>tests/phpstan/*</exclude-pattern>
+	<exclude-pattern>tests/phpunit/includes/MarkupComparison.php</exclude-pattern>
 </ruleset>

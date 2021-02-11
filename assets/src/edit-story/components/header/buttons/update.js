@@ -15,16 +15,18 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory, useLocalMedia, useHistory } from '../../../app';
-import { Outline, Primary } from '../../button';
-import { useGlobalKeyDownEffect } from '../../keyboard';
+import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
+import { Outline } from '../../button';
+import { useGlobalKeyDownEffect } from '../../../../design-system';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -42,6 +44,9 @@ function Update() {
   const {
     state: { hasNewChanges },
   } = useHistory();
+  const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+  }));
 
   useGlobalKeyDownEffect(
     { key: ['mod+s'] },
@@ -69,7 +74,9 @@ function Update() {
       return (
         <Outline
           onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={isSaving || isUploading || !hasNewChanges}
+          isDisabled={
+            !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
+          }
         >
           {text}
         </Outline>
@@ -77,9 +84,11 @@ function Update() {
   }
 
   return (
-    <Primary onClick={() => saveStory()} isDisabled={isSaving || isUploading}>
-      {text}
-    </Primary>
+    <ButtonWithChecklistWarning
+      onClick={() => saveStory()}
+      isDisabled={isSaving || isUploading}
+      text={text}
+    />
   );
 }
 

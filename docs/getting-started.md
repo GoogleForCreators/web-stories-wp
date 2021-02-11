@@ -5,7 +5,7 @@
 To contribute to this plugin, you need the following tools installed on your computer:
 
 - [PHP](https://www.php.net/) - version 7.2 or higher, preferably installed via [Homebrew](https://brew.sh/)
-- [Composer](https://getcomposer.org/) (PHP package manager) - to install PHP dependencies.
+- [Composer](https://getcomposer.org/) (PHP package manager) - to install PHP dependencies. Preferably version 1.x (see #5083 for Composer v2 support).
 - [Node.js](https://nodejs.org/en/) (current LTS) - to install JavaScript dependencies.
 - [WordPress](https://wordpress.org/download/) - to run the actual plugin.
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/install/) - for using the local environment
@@ -26,8 +26,26 @@ Check out the [Local Environment](./local-environment.md) document.
 
 First of all, you need to make sure that all PHP and JavaScript dependencies are installed:
 
+Install Composer by following [installation instructions](https://getcomposer.org/download/). Make sure to add `composer` to your PATH if it is not already there, and then ensure to downgrade to version 1:
+
+```bash
+composer self-update --1
+```
+
+Install all the required composer packages, run:
+
 ```bash
 composer install
+```
+
+---
+The local environment won't run unless `composer` is in your PATH.
+
+---
+
+Install all the required npm packages, run:
+
+```bash
 npm install
 ```
 
@@ -46,3 +64,13 @@ To get a production build, run:
 ```bash
 npm run build:js
 ```
+
+### Local Development
+
+You will need a WordPress environment to run the plugin. To run a local instance of WordPress with Docker, in a separate terminal:
+
+```bash
+npm run env:start
+```
+
+See [local environment documentation](https://github.com/google/web-stories-wp/blob/main/docs/local-environment.md) for more information.

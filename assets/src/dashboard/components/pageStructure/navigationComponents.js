@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import Button from '../button';
-import { TypographyPresets } from '../typography';
+import { Button, Headline, Link, Text } from '../../../design-system';
 
 export const Content = styled.div`
   display: flex;
@@ -34,7 +33,7 @@ export const Content = styled.div`
   }
 `;
 
-export const Header = styled.h1`
+export const Header = styled(Headline)`
   margin: 42px 0px 72px;
 
   & > svg {
@@ -43,22 +42,21 @@ export const Header = styled.h1`
   }
 `;
 
-export const NavButton = styled(Button)`
-  margin-bottom: 0;
-  margin-top: 0;
-  background-color: ${({ theme }) => theme.colors.foreground.gray12};
-  color: ${({ theme }) => theme.colors.black};
-  border-radius: 4px;
-  border-color: ${({ theme }) => theme.colors.foreground.gray12};
-  height: 36px;
+export const NewStoryButton = styled(Button)(
+  ({ theme }) => css`
+    margin-bottom: 0;
+    margin-top: 0;
+    border: 2px solid ${theme.colors.border.defaultActive};
+    border-radius: ${theme.borders.radius.medium};
+    transition: background-color 0.25s linear, color 0.25s linear;
 
-  &:hover,
-  &:focus,
-  &:focus-within {
-    background-color: ${({ theme }) => theme.colors.foreground.gray16};
-    color: ${({ theme }) => theme.colors.black};
-  }
-`;
+    :hover {
+      color: ${theme.colors.bg.primary};
+      background-color: ${theme.colors.interactiveBg.brandPress};
+      border-color: ${theme.colors.interactiveFg.brandPress};
+    }
+  `
+);
 
 export const NavList = styled.ul`
   margin: 0;
@@ -66,32 +64,46 @@ export const NavList = styled.ul`
 `;
 
 export const NavListItem = styled.li`
-  margin: 8px 0;
+  margin: 10px 28px;
   padding: 0;
   list-style-type: none;
 `;
 
-export const NavLink = styled.a`
-  ${TypographyPresets.Medium};
-  ${({ theme, active }) => `
-    display: block;
-    padding: 4px 28px;
-    margin: 4px 0;
-    font-weight: ${theme.typography.weight[active ? 'bold' : 'normal']};
-    text-decoration: none;
-    color: ${active ? theme.colors.gray900 : theme.colors.gray600};
+const activeLinkCss = css`
+  span {
+    color: ${({ theme }) => theme.colors.interactiveFg.brandPress};
+  }
 
-    &:focus {
-      color: ${active ? theme.colors.gray900 : theme.colors.gray600};
-    }
-    &:hover {
-      color: ${active ? theme.colors.gray900 : theme.colors.gray600};
-      background-color: ${theme.colors.gray50};
-    }
-  `}
+  svg path {
+    stroke: ${({ theme }) => theme.colors.interactiveFg.brandPress};
+  }
 `;
 
-export const AppInfo = styled.div`
-  ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.colors.gray500};
+export const NavLink = styled(Link)(
+  ({ active, theme }) => css`
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: 'icon link link link link';
+    color: ${theme.colors.fg.secondary};
+
+    * {
+      transition: color 0.25s linear, stroke 0.25s linear;
+    }
+
+    ${active && activeLinkCss};
+
+    :hover {
+      ${activeLinkCss};
+    }
+  `
+);
+
+export const PathName = styled(Text)`
+  grid-area: link;
 `;
+
+export const AppInfo = styled(Text)(
+  ({ theme }) => css`
+    color: ${theme.colors.fg.secondary};
+  `
+);

@@ -20,17 +20,13 @@
 import styled, { css } from 'styled-components';
 import { useCallback } from 'react';
 import { useFeatures } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../../animation';
-import { useStory, useHistory, useConfig } from '../../../app';
+import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import {
   Delete,
@@ -44,7 +40,6 @@ import {
   Text,
 } from '../../../icons';
 import WithTooltip from '../../tooltip';
-import useCanvas from '../useCanvas';
 
 const HEIGHT = 28;
 
@@ -65,10 +60,10 @@ const Box = styled.div`
 `;
 
 const PageCount = styled.div`
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   width: 62px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
   line-height: 24px;
 `;
 
@@ -76,11 +71,11 @@ const Options = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  color: ${({ theme }) => theme.colors.fg.v2};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v2};
 `;
 
 const Divider = styled.span`
-  background-color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   opacity: 0.3;
   height: ${HEIGHT}px;
   width: 1px;
@@ -96,7 +91,7 @@ const Icon = styled.button`
   border: 0;
   padding: 0;
   display: block;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 
   ${({ disabled }) =>
     disabled &&
@@ -145,7 +140,7 @@ function PageMenu() {
     pageSize: state.state.pageSize,
   }));
   const { isRTL } = useConfig();
-  const { showTextMagicAndHelperMode, enableAnimation } = useFeatures();
+  const { showTextMagicAndHelperMode } = useFeatures();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -167,10 +162,12 @@ function PageMenu() {
   const toggleAnimationState = useCallback(
     () =>
       updateAnimationState({
-        animationState:
-          animationState === STORY_ANIMATION_STATE.PLAYING
-            ? STORY_ANIMATION_STATE.RESET
-            : STORY_ANIMATION_STATE.PLAYING,
+        animationState: [
+          STORY_ANIMATION_STATE.PLAYING,
+          STORY_ANIMATION_STATE.PLAYING_SELECTED,
+        ].includes(animationState)
+          ? STORY_ANIMATION_STATE.RESET
+          : STORY_ANIMATION_STATE.PLAYING,
       }),
     [animationState, updateAnimationState]
   );
@@ -244,34 +241,36 @@ function PageMenu() {
             </Icon>
           </WithTooltip>
           <Space />
-          {enableAnimation &&
-            (animationState === STORY_ANIMATION_STATE.PLAYING ? (
-              <WithTooltip
-                style={{ marginLeft: 'auto' }}
-                title={__('Stop', 'web-stories')}
+          {[
+            STORY_ANIMATION_STATE.PLAYING,
+            STORY_ANIMATION_STATE.PLAYING_SELECTED,
+          ].includes(animationState) ? (
+            <WithTooltip
+              style={{ marginLeft: 'auto' }}
+              title={__('Stop', 'web-stories')}
+            >
+              <Icon
+                onClick={toggleAnimationState}
+                disabled={!hasAnimations}
+                aria-label={__('Stop Page Animations', 'web-stories')}
               >
-                <Icon
-                  onClick={toggleAnimationState}
-                  disabled={!hasAnimations}
-                  aria-label={__('Stop Page Animations', 'web-stories')}
-                >
-                  <StopCircular />
-                </Icon>
-              </WithTooltip>
-            ) : (
-              <WithTooltip
-                style={{ marginLeft: 'auto' }}
-                title={__('Play', 'web-stories')}
+                <StopCircular />
+              </Icon>
+            </WithTooltip>
+          ) : (
+            <WithTooltip
+              style={{ marginLeft: 'auto' }}
+              title={__('Play', 'web-stories')}
+            >
+              <Icon
+                onClick={toggleAnimationState}
+                disabled={!hasAnimations}
+                aria-label={__('Play Page Animations', 'web-stories')}
               >
-                <Icon
-                  onClick={toggleAnimationState}
-                  disabled={!hasAnimations}
-                  aria-label={__('Play Page Animations', 'web-stories')}
-                >
-                  <PlayCircular />
-                </Icon>
-              </WithTooltip>
-            ))}
+                <PlayCircular />
+              </Icon>
+            </WithTooltip>
+          )}
         </Options>
         {showTextMagicAndHelperMode && (
           <Options>

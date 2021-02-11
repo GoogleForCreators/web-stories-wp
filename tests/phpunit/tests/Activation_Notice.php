@@ -26,12 +26,15 @@ class Activation_Notice extends \WP_UnitTestCase {
 	protected $activation_flag;
 
 	public function setUp() {
+		parent::setUp();
 		$this->activation_flag = new \Google\Web_Stories\Activation_Flag();
 		$this->activation_flag->set_activation_flag();
 	}
 
 	public function tearDown() {
 		$this->activation_flag->delete_activation_flag();
+
+		parent::tearDown();
 	}
 
 	/**

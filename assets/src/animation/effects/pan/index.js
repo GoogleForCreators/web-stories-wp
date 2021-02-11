@@ -45,7 +45,7 @@ function getTargetScale({ width, height }) {
 
 export function EffectPan({
   panDir = DIRECTION.RIGHT_TO_LEFT,
-  duration = 500,
+  duration = 1000,
   delay,
   easing,
   element,

@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\KSES;
+use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Media;
 use stdClass;
 use WP_Error;
@@ -42,6 +42,12 @@ use WP_REST_Response;
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
+	 * Decoder instance.
+	 *
+	 * @var Decoder Decoder instance.
+	 */
+	private $decoder;
+	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
@@ -53,9 +59,11 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
 		$this->namespace = 'web-stories/v1';
+		$this->decoder   = new Decoder();
 	}
+
 	/**
-	 * Prepares a single template for create or update. Add post_content_filtered field to save/insert.
+	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
 	 *
 	 * @since 1.0.0
 	 *
@@ -64,11 +72,12 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return stdClass|WP_Error Post object or WP_Error.
 	 */
 	protected function prepare_item_for_database( $request ) {
-		$prepared_template = parent::prepare_item_for_database( $request );
+		$prepared_post = parent::prepare_item_for_database( $request );
 
-		if ( is_wp_error( $prepared_template ) ) {
-			return $prepared_template;
+		if ( is_wp_error( $prepared_post ) ) {
+			return $prepared_post;
 		}
+
 		// Ensure that content and story_data are updated together.
 		if (
 			( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
@@ -77,12 +86,16 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
 		}
 
-		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
-		if ( isset( $request['story_data'] ) ) {
-			$prepared_template->post_content_filtered = wp_json_encode( $request['story_data'] );
+		if ( isset( $request['content'] ) ) {
+			$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
 		}
 
-		return $prepared_template;
+		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
+		if ( isset( $request['story_data'] ) ) {
+			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
+		}
+
+		return $prepared_post;
 	}
 
 	/**
@@ -129,39 +142,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
 
-	/**
-	 * Creates a single post.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function create_item( $request ) {
-		$kses = new KSES();
-		$kses->init();
-		$response = parent::create_item( $request );
-		$kses->remove_filters();
-		return $response;
-	}
-
-	/**
-	 * Updates a single post.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function update_item( $request ) {
-		$kses = new KSES();
-		$kses->init();
-		$response = parent::update_item( $request );
-		$kses->remove_filters();
-		return $response;
-	}
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.

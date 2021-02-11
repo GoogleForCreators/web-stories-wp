@@ -59,7 +59,7 @@ describe('useAutoSave', () => {
     const story = {
       storyId: 1,
       title: 'Story!',
-      author: 1,
+      author: { id: 1, name: 'John Doe' },
       slug: 'story',
       publisherLogo: 1,
       defaultPageDuration: 7,
@@ -67,9 +67,9 @@ describe('useAutoSave', () => {
       date: '2020-04-10T07:06:26',
       modified: '',
       excerpt: '',
-      featuredMedia: 0,
+      featuredMedia: { id: 0 },
       password: '',
-      stylePresets: '',
+      globalStoryStyles: '',
     };
     const pages = [
       {

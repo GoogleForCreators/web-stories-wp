@@ -17,97 +17,44 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, forwardRef } from 'react';
+import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { TypographyPresets, useLayoutContext } from '../../../components';
-import { Close as CloseSVG } from '../../../icons';
+import {
+  Banner,
+  Checkbox,
+  Link,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../design-system';
+import { useLayoutContext } from '../../../components';
 import { useConfig } from '../../config';
+import { APP_ROUTES } from '../../../constants';
+import { resolveRoute } from '../../router';
 import useTelemetryOptIn from './useTelemetryOptIn';
-
-const Banner = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0 20px;
-  padding-top: 24px;
-  background-image: url('${({ backgroundUrl }) => backgroundUrl}');
-  background-size: cover;
-  border-radius: 8px;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  text-align: center;
-`;
-
-const Title = styled.h1`
-  display: inline-block;
-  font-size: 18px;
-  font-weight: ${({ theme }) => theme.typography.weight.normal};
-  line-height: 24px;
-  margin-bottom: 13px;
-`;
 
 const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
   display: flex;
 `;
 
-export const LabelText = styled.span`
-  ${TypographyPresets.Small};
-  color: ${({ theme }) => theme.colors.gray400};
+const LabelText = styled(Text)`
   margin-bottom: 16px;
-  max-width: 600px;
+  margin-left: 8px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  letter-spacing: 0.0133em;
 `;
 
-const VisitSettingsText = styled(LabelText)``;
-
-const CheckBox = styled.input.attrs({
-  type: 'checkbox',
-  id: 'telemetry-banner-opt-in',
-})`
-  height: 18px;
-  width: 18px;
-  margin: 5px 12px 0 0;
+const VisitSettingsText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+  letter-spacing: 0.0133em;
 `;
 
-const CloseIcon = styled(CloseSVG)`
-  color: ${({ theme }) => theme.colors.white};
-  margin: 0 auto;
-  padding: 2px;
-  width: 14px;
-  height: auto;
+const NavLink = styled(Link)`
   display: inline-block;
-`;
-
-const ToggleButton = styled.button.attrs({
-  ['aria-label']: __('Dismiss Notice', 'web-stories'),
-})`
-  display: flex;
-  height: 16px;
-  width: 16px;
-  border: ${({ theme }) => theme.borders.transparent};
-  border-radius: 50%;
-  padding: 0;
-  background: ${({ theme }) => theme.colors.gray200};
-  cursor: pointer;
-  float: right;
-  margin-right: 14px;
-
-  &:hover svg {
-    color: ${({ theme }) => theme.colors.gray50};
-  }
-  &:active svg {
-    color: ${({ theme }) => theme.colors.gray50};
-  }
+  margin: 0;
 `;
 
 export const TelemetryOptInBanner = forwardRef(
@@ -122,48 +69,95 @@ export const TelemetryOptInBanner = forwardRef(
     ref
   ) => {
     const { assetsURL } = useConfig();
+    const checkboxRef = useRef();
+    const focusOnCheckbox = useRef(false);
+    const title = checked
+      ? __(
+          'Your selection has been updated. Thank you for helping to improve the editor!',
+          'web-stories'
+        )
+      : __('Help improve the editor!', 'web-stories');
+
+    useEffect(() => {
+      if (focusOnCheckbox.current) {
+        checkboxRef.current.focus();
+      }
+    });
 
     return visible ? (
       <Banner
-        ref={ref}
         backgroundUrl={`${assetsURL}images/dashboard/analytics-banner-bg.png`}
+        closeButtonLabel={__('Dismiss telemetry banner', 'web-stories')}
+        onClose={onClose}
+        title={title}
+        ref={ref}
+        isDashboard
       >
-        <Header>
-          <Title>
-            {checked
-              ? __(
-                  'Your selection has been updated. Thank you for helping to improve the editor!',
-                  'web-stories'
-                )
-              : __('Help improve the editor!', 'web-stories')}
-          </Title>
-          <ToggleButton onClick={onClose}>
-            <CloseIcon />
-          </ToggleButton>
-        </Header>
         <Label>
-          <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
-          <LabelText aria-checked={checked}>
-            {__(
-              'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with Google Privacy Policy.',
-              'web-stories'
-            )}
-            &nbsp;
-            <a
-              href={__('https://policies.google.com/privacy', 'web-stories')}
-              rel="noreferrer"
-              target="_blank"
+          <Checkbox
+            id="telemetry-banner-opt-in"
+            checked={checked}
+            disabled={disabled}
+            onChange={() => {
+              onChange();
+              focusOnCheckbox.current = true;
+            }}
+            onBlur={() => {
+              focusOnCheckbox.current = false;
+            }}
+            ref={checkboxRef}
+          />
+          <LabelText
+            forwardedAs="span"
+            aria-checked={checked}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          >
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <NavLink
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    href={__(
+                      'https://policies.google.com/privacy',
+                      'web-stories'
+                    )}
+                    rel="noreferrer"
+                    target="_blank"
+                    aria-label={__(
+                      'Learn more by visiting Google Privacy Policy',
+                      'web-stories'
+                    )}
+                  />
+                ),
+              }}
             >
-              {__('Learn more', 'web-stories')}
-              {'.'}
-            </a>
+              {__(
+                'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with <a>Google Privacy Policy</a>.',
+                'web-stories'
+              )}
+            </TranslateWithMarkup>
           </LabelText>
         </Label>
-        <VisitSettingsText>
-          {__(
-            'You can update your selection later by visiting Settings.',
-            'web-stories'
-          )}
+        <VisitSettingsText
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+        >
+          <TranslateWithMarkup
+            mapping={{
+              a: (
+                <NavLink
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  href={resolveRoute(APP_ROUTES.EDITOR_SETTINGS)}
+                  aria-label={__('Settings', 'web-stories')}
+                />
+              ),
+            }}
+          >
+            {__(
+              'You can update your selection later by visiting <a>Settings</a>.',
+              'web-stories'
+            )}
+          </TranslateWithMarkup>
         </VisitSettingsText>
       </Banner>
     ) : null;
@@ -191,7 +185,7 @@ export default function TelemetryBannerContainer(props) {
   const ref = useRef();
 
   const {
-    actions: { setTelemetryBannerOpen, setTelemetryBannerHeight },
+    actions: { setTelemetryBannerOpen },
   } = useLayoutContext();
 
   const previousBannerVisible = useRef(bannerVisible);
@@ -203,13 +197,12 @@ export default function TelemetryBannerContainer(props) {
       ref.current
     ) {
       setTelemetryBannerOpen(true);
-      setTelemetryBannerHeight(ref.current.offsetHeight);
       previousBannerVisible.current = true;
     } else if (!bannerVisible && previousBannerVisible.current) {
       setTelemetryBannerOpen(false);
       previousBannerVisible.current = false;
     }
-  }, [bannerVisible, setTelemetryBannerOpen, setTelemetryBannerHeight]);
+  }, [bannerVisible, setTelemetryBannerOpen]);
 
   return (
     <TelemetryOptInBanner

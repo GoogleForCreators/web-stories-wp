@@ -21,11 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -44,6 +40,8 @@ import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import resourceList from '../../../../../utils/resourceList';
 import { PillGroup } from '../../shared';
+import TermsDialog from './termsDialog';
+
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -209,43 +207,47 @@ function Media3pPane(props) {
 
   // TODO(#2368): handle pagination / infinite scrolling
   return (
-    <StyledPane id={paneId} {...props}>
-      <PaneInner>
-        <PaneHeader>
-          <SearchInputContainer>
-            <SearchInput
-              initialValue={searchTerm}
-              placeholder={__('Search', 'web-stories')}
-              onSearch={onSearch}
-              incremental={incrementalSearchDebounceMedia}
-              disabled={Boolean(
-                selectedProvider &&
-                  PROVIDERS[selectedProvider].supportsCategories &&
-                  media3p[selectedProvider]?.state.categories.selectedCategoryId
-              )}
-            />
-          </SearchInputContainer>
-          <ProviderTabSection>
-            {enabledProviders.map((providerType, index) => (
-              <ProviderTab
-                key={`provider-tab-${providerType}`}
-                index={index}
-                id={`provider-tab-${providerType}`}
-                name={PROVIDERS[providerType].displayName}
-                active={selectedProvider === providerType}
-                providerType={providerType}
-                setSelectedProvider={setSelectedProvider}
+    <>
+      {isActive && <TermsDialog />}
+      <StyledPane id={paneId} {...props}>
+        <PaneInner>
+          <PaneHeader>
+            <SearchInputContainer>
+              <SearchInput
+                initialValue={searchTerm}
+                placeholder={__('Search', 'web-stories')}
+                onSearch={onSearch}
+                incremental={incrementalSearchDebounceMedia}
+                disabled={Boolean(
+                  selectedProvider &&
+                    PROVIDERS[selectedProvider].supportsCategories &&
+                    media3p[selectedProvider]?.state.categories
+                      .selectedCategoryId
+                )}
               />
-            ))}
-          </ProviderTabSection>
-        </PaneHeader>
-        <PaneBottom ref={paneBottomRef}>
-          {enabledProviders.map((providerType) =>
-            getProviderMediaAndCategories(providerType)
-          )}
-        </PaneBottom>
-      </PaneInner>
-    </StyledPane>
+            </SearchInputContainer>
+            <ProviderTabSection>
+              {enabledProviders.map((providerType, index) => (
+                <ProviderTab
+                  key={`provider-tab-${providerType}`}
+                  index={index}
+                  id={`provider-tab-${providerType}`}
+                  name={PROVIDERS[providerType].displayName}
+                  active={selectedProvider === providerType}
+                  providerType={providerType}
+                  setSelectedProvider={setSelectedProvider}
+                />
+              ))}
+            </ProviderTabSection>
+          </PaneHeader>
+          <PaneBottom ref={paneBottomRef}>
+            {enabledProviders.map((providerType) =>
+              getProviderMediaAndCategories(providerType)
+            )}
+          </PaneBottom>
+        </PaneInner>
+      </StyledPane>
+    </>
   );
 }
 

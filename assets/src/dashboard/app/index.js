@@ -15,21 +15,21 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-
+import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import {
+  theme as externalDesignSystemTheme,
+  lightMode,
+  ThemeGlobals,
+} from '../../design-system';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
@@ -121,9 +121,16 @@ const AppContent = () => {
 
 function App({ config }) {
   const { isRTL } = config;
+  // TODO strip local dashboard theme out and rely on theme from design-system
+  const activeTheme = {
+    DEPRECATED_THEME: theme,
+    ...externalDesignSystemTheme,
+    colors: lightMode,
+  };
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={activeTheme}>
+        <ThemeGlobals.OverrideFocusOutline />
         <ConfigProvider config={config}>
           <ToastProvider>
             <ApiProvider>

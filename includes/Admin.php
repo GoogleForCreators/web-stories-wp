@@ -28,8 +28,11 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Story_Renderer\Image;
 use WP_Post;
 use WP_Screen;
+
 
 /**
  * Admin class.
@@ -44,7 +47,7 @@ class Admin {
 	 */
 	public function init() {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
-		add_filter( 'default_content', [ $this, 'prefill_post_content' ] );
+		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
 	}
 
@@ -71,8 +74,8 @@ class Admin {
 			return $class;
 		}
 
-		// Default WordPress posts list table screen.
-		if ( 'edit' === $screen->base ) {
+		// Default WordPress posts list table screen and dashboard.
+		if ( 'post' !== $screen->base ) {
 			return $class;
 		}
 
@@ -91,11 +94,12 @@ class Admin {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $content Default post content.
+	 * @param string   $content Default post content.
+	 * @param \WP_Post $post    Post object.
 	 *
 	 * @return string Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content ) {
+	public function prefill_post_content( $content, $post ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
@@ -110,49 +114,46 @@ class Admin {
 			return $content;
 		}
 
-		$block_markup_with_poster = <<<BLOCK
-<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":"%3\$s"} -->
-<div class="wp-block-web-stories-embed alignnone">
-	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-			href="%1\$s"
-			style="--story-player-poster:url('%3\$s')">%4\$s</a>
-	</amp-story-player>
-</div>
-<!-- /wp:web-stories/embed -->
-BLOCK;
+		$story = new Story();
+		if ( ! $story->load_from_post( $post_id ) ) {
+			return $content;
+		}
 
-		$block_markup_without_poster = <<<BLOCK
-<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":""} -->
-<div class="wp-block-web-stories-embed alignnone">
-	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-			href="%1\$s"
-			>%3\$s</a>
-	</amp-story-player>
-</div>
-<!-- /wp:web-stories/embed -->
-BLOCK;
+		$args = [
+			'align'  => 'none',
+			'height' => 600,
+			'width'  => 360,
+		];
 
-		$url        = (string) get_the_permalink( $post_id );
-		$title      = (string) get_the_title( $post_id );
-		$has_poster = has_post_thumbnail( $post_id );
+		if ( ! use_block_editor_for_post( $post ) ) {
 
-		if ( $has_poster ) {
-			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			$content = '[web_stories_embed url="%1$s" title="%2$s" poster="%3$s" width="%4$s" height="%5$s" align="%6$s"]';
 
 			return sprintf(
-				$block_markup_with_poster,
-				esc_url( $url ),
-				esc_js( $title ),
-				esc_url( $poster ),
-				esc_html( $title )
+				$content,
+				esc_url( $story->get_url() ),
+				esc_attr( $story->get_title() ),
+				esc_url( $story->get_poster_portrait() ),
+				absint( $args['width'] ),
+				absint( $args['height'] ),
+				esc_attr( $args['align'] )
 			);
 		}
 
+		$renderer = new Image( $story );
+		$html     = $renderer->render( $args );
+
+		$content = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s"} -->%7$s<!-- /wp:web-stories/embed -->';
+
 		return sprintf(
-			$block_markup_without_poster,
-			esc_url( $url ),
-			esc_js( $title ),
-			esc_html( $title )
+			$content,
+			esc_url( $story->get_url() ),
+			esc_js( $story->get_title() ),
+			esc_url( $story->get_poster_portrait() ),
+			absint( $args['width'] ),
+			absint( $args['height'] ),
+			esc_js( $args['align'] ),
+			$html
 		);
 	}
 

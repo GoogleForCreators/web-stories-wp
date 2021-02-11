@@ -15,15 +15,12 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useState } from 'react';
 import { useFeatures } from 'flagged';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -69,6 +66,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         story.status
       );
 
+      const trackTiming = getTimeTracker('save story', 'editor', 'Publish');
+
       return saveStoryById({
         storyId,
         ...getStoryPropsToSave({ story, pages, metadata, flags }),
@@ -78,6 +77,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           const properties = {
             ...objectPick(post, ['status', 'slug', 'link']),
             featuredMediaUrl: post.featured_media_url,
+            previewLink: post.preview_link,
           };
           updateStory({ properties });
 
@@ -94,6 +94,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         .finally(() => {
           setIsSaving(false);
           resetNewChanges();
+          trackTiming();
         });
     },
     [

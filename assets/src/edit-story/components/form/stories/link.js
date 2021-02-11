@@ -18,11 +18,7 @@
  * External dependencies
  */
 import React, { useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -51,7 +47,7 @@ export const _default = () => {
       onFocus={() => {}}
       value={value}
       clear
-      aria-label={__('Edit: Test URL', 'web-stories')}
+      aria-label={__('Test URL', 'web-stories')}
     />
   );
 };

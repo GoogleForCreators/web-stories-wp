@@ -31,6 +31,6 @@ describe('ScrollToTop', () => {
 
     const Button = getByTestId('scroll-to-top-button');
 
-    expect(Button).toBeDefined();
+    expect(Button).toBeInTheDocument();
   });
 });

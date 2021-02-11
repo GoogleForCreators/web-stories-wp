@@ -32,7 +32,7 @@ import useApi from '../../../api/useApi';
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
   let fixture;
-  let enableTemplatePreviews = false;
+  const enableTemplatePreviews = false;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -108,8 +108,10 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
   }
 
   describe('Action: See pre-built template details page', () => {
-    it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
-      const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
+    it('should navigate to "Explore Templates" when "Go to Explore Templates" is clicked', async () => {
+      const closeLink = fixture.screen.getByRole('link', {
+        name: /^Go to Explore Templates$/,
+      });
 
       await fixture.events.click(closeLink);
 
@@ -125,7 +127,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       expect(firstPage).toBeTruthy();
 
-      let activePage = fixture.screen.getByLabelText(
+      const activePage = fixture.screen.getByLabelText(
         'Active Page Preview - Page 1'
       );
 
@@ -144,7 +146,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
     it('should update the "Active Preview Page" when using keyboard to navigate gallery', async () => {
       await focusOnCardGallery();
-      let page1 = fixture.screen.getByRole('button', { name: /Page 1/ });
+      const page1 = fixture.screen.getByRole('button', { name: /Page 1/ });
       expect(page1).toEqual(document.activeElement);
 
       // go right by 1
@@ -190,7 +192,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
         name: /Template Details/,
       });
 
-      let utils = within(templateDetailsSection);
+      const utils = within(templateDetailsSection);
 
       // Assert that the rendered title matches the title from state
       const initialTemplateTitle = utils.getByRole('heading', {
@@ -229,7 +231,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
         name: /Template Details/,
       });
 
-      let utils = within(templateDetailsSection);
+      const utils = within(templateDetailsSection);
 
       // Assert that the rendered title matches the title from state
       const initialTemplateTitle = utils.getByRole('heading', {
@@ -265,7 +267,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       expect(currentTemplateId).toEqual(initialTemplateId);
 
-      let currentTemplateTitle = utils.getByRole('heading', {
+      const currentTemplateTitle = utils.getByRole('heading', {
         name: /Template Title/,
       });
 

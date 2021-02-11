@@ -18,20 +18,20 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import Moveable from '../../moveable';
-import { useStory } from '../../../app';
+import { useStory, useCanvas } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
-import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
+import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
@@ -41,9 +41,14 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 function MultiSelectionMoveable({ selectedElements }) {
   const moveable = useRef();
 
-  const { updateElementsById, deleteElementsById } = useStory((state) => ({
+  const {
+    updateElementsById,
+    deleteElementsById,
+    backgroundElement,
+  } = useStory((state) => ({
     updateElementsById: state.actions.updateElementsById,
     deleteElementsById: state.actions.deleteElementsById,
+    backgroundElement: state.state.currentPage.elements[0] ?? {},
   }));
   const { nodesById, fullbleedContainer } = useCanvas(
     ({ state: { nodesById, fullbleedContainer } }) => ({
@@ -59,6 +64,8 @@ function MultiSelectionMoveable({ selectedElements }) {
   const {
     actions: { pushTransform },
   } = useTransform();
+
+  useWindowResizeHandler(moveable);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -76,12 +83,7 @@ function MultiSelectionMoveable({ selectedElements }) {
       .updateForResizeEvent,
   }));
 
-  const otherNodes = Object.values(
-    objectWithout(
-      nodesById,
-      selectedElements.map((element) => element.id)
-    )
-  );
+  const [isDragging, setIsDragging] = useState(false);
 
   /**
    * Set style to the element.
@@ -148,9 +150,11 @@ function MultiSelectionMoveable({ selectedElements }) {
       // Update position in all cases.
       const frame = frames[i];
       const { direction } = frame;
+
+      const roundToZero = (num) => (Math.abs(num) <= 1 ? 0 : num);
       const properties = {
-        x: element.x + editorToDataX(frame.translate[0]),
-        y: element.y + editorToDataY(frame.translate[1]),
+        x: roundToZero(element.x + editorToDataX(frame.translate[0])),
+        y: roundToZero(element.y + editorToDataY(frame.translate[1])),
       };
       if (isRotate) {
         properties.rotationAngle = frame.rotate;
@@ -181,13 +185,27 @@ function MultiSelectionMoveable({ selectedElements }) {
     resetMoveable();
   };
 
-  const snapProps = useSnapping({ canSnap: true, otherNodes });
+  // Get a list of all the other non-bg nodes
+  const otherNodes = Object.values(
+    objectWithout(nodesById, [
+      ...selectedElements.map((element) => element.id),
+      backgroundElement.id,
+    ])
+  ).filter(({ isBackground }) => !isBackground);
+
+  const snapProps = useSnapping({
+    isDragging,
+    canSnap: true,
+    otherNodes,
+  });
   const dragProps = useDrag({
     targetList,
     frames,
     setTransformStyle,
     onGroupEventStart,
     onGroupEventEnd,
+    isDragging,
+    setIsDragging,
   });
   const resizeProps = useResize({
     onGroupEventEnd,

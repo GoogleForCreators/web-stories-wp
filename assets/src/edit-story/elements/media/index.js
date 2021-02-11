@@ -23,7 +23,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
-import { PanelTypes } from '../../components/panels';
+import PanelTypes from '../../components/panels/design/types';
+import { elementWithBorderRadius } from '../shared';
 
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
@@ -35,6 +36,7 @@ export const CropBox = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
+  ${elementWithBorderRadius}
 
   &::after {
     content: '';
@@ -44,7 +46,7 @@ export const CropBox = styled.div`
     top: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid ${({ theme }) => theme.colors.mg.v1};
+    border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.mg.v1};
     pointer-events: none;
   }
 `;
@@ -80,5 +82,8 @@ export const MEDIA_PANELS = [
   PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.SIZE_POSITION,
+  PanelTypes.BORDER_RADIUS,
+  PanelTypes.BORDER,
   PanelTypes.ANIMATION,
+  PanelTypes.LINK,
 ];

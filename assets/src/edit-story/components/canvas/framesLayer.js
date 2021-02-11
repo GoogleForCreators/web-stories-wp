@@ -20,24 +20,20 @@
 import styled from 'styled-components';
 import { memo, useRef } from 'react';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
-import { useStory, useDropTargets } from '../../app';
+import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
+import { useStory, useDropTargets, useCanvas } from '../../app';
+import useCanvasKeys from '../../app/canvas/useCanvasKeys';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
-import useCanvasKeys from './useCanvasKeys';
 import Selection from './selection';
-import useCanvas from './useCanvas';
 import PageNav from './pagenav';
 
 const FramesPageArea = withOverlay(
@@ -60,12 +56,25 @@ const FrameSidebar = styled.div`
 
 const Hint = styled.div`
   padding: 12px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.54)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
   line-height: 24px;
   text-align: right;
-  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+`;
+
+const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
+const DesignSpaceGuideline = styled.div`
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.callout};
+  left: ${marginRatio}%;
+  right: ${marginRatio}%;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  visibility: hidden;
 `;
 
 function FramesLayer() {
@@ -76,9 +85,11 @@ function FramesLayer() {
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));
-  const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
-    showSafeZone,
-  }));
+  const { setDesignSpaceGuideline } = useCanvas(
+    ({ actions: { setDesignSpaceGuideline } }) => ({
+      setDesignSpaceGuideline,
+    })
+  );
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
@@ -100,7 +111,6 @@ function FramesLayer() {
     >
       {!isAnimating && (
         <FramesPageArea
-          showSafeZone={showSafeZone}
           overlay={
             Boolean(draggingResource) &&
             isDropSource(draggingResource.type) &&
@@ -117,6 +127,7 @@ function FramesLayer() {
             currentPage.elements.map(({ id, ...rest }) => {
               return <FrameElement key={id} element={{ id, ...rest }} />;
             })}
+          <DesignSpaceGuideline ref={setDesignSpaceGuideline} />
         </FramesPageArea>
       )}
       <MenuArea

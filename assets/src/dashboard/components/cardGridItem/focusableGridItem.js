@@ -24,6 +24,6 @@ export const FocusableGridItem = styled.button`
   width: 1%;
   height: 1%;
   background-color: transparent;
-  border: ${({ theme }) => theme.borders.transparent};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   outline: none;
 `;

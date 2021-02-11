@@ -26,12 +26,12 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\KSES;
 use Google\Web_Stories\Media;
 use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
+use WP_REST_Posts_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -39,7 +39,7 @@ use WP_REST_Server;
 /**
  * Stories_Autosaves_Controller class.
  *
- * Override the WP_REST_Autosaves_Controller class to modify KSES behavior.
+ * Override the WP_REST_Autosaves_Controller class.
  */
 class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	/**
@@ -83,7 +83,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		if ( ! $parent_controller ) {
-			$parent_controller = new \WP_REST_Posts_Controller( $parent_post_type );
+			$parent_controller = new WP_REST_Posts_Controller( $parent_post_type );
 		}
 
 		$this->parent_controller = $parent_controller;
@@ -128,23 +128,6 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 			],
 			true // required so that the existing route is overridden.
 		);
-	}
-
-	/**
-	 * Creates, updates or deletes an autosave revision.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function create_item( $request ) {
-		$kses = new KSES();
-		$kses->init();
-		$response = parent::create_item( $request );
-		$kses->remove_filters();
-		return $response;
 	}
 
 	/**

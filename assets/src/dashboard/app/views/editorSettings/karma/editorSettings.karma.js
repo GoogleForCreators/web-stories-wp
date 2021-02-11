@@ -47,10 +47,11 @@ describe('Settings View', () => {
     );
 
     expect(publisherLogosContainer).toBeTruthy();
+    await fixture.events.click(publisherLogosContainer);
 
     while (
       !publisherLogosContainer.contains(document.activeElement) &&
-      limit < 8
+      limit < 10
     ) {
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('tab');
@@ -64,7 +65,7 @@ describe('Settings View', () => {
 
   function navigateToEditorSettings() {
     const editorSettingsMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Editor Settings$/,
+      name: /^Settings$/,
     });
     return fixture.events.click(editorSettingsMenuItem);
   }
@@ -336,7 +337,7 @@ describe('Settings View', () => {
 
     await focusOnPublisherLogos();
 
-    let page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
+    const page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
     await fixture.events.keyboard.press('right');
     expect(page1).toEqual(document.activeElement);
 

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -62,10 +62,15 @@ function WAAPIWrapper({ children, target }) {
     actions: { getAnimationParts, hoistWAAPIAnimation },
   } = useStoryAnimationContext();
 
+  const hoistAnimation = useCallback(
+    (animation) => hoistWAAPIAnimation({ animation, elementId: target }),
+    [target, hoistWAAPIAnimation]
+  );
+
   return (
     <ComposableWrapper
       animationParts={getAnimationParts(target)}
-      hoistAnimation={hoistWAAPIAnimation}
+      hoistAnimation={hoistAnimation}
     >
       {children}
     </ComposableWrapper>

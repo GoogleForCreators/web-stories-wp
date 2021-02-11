@@ -208,9 +208,9 @@ describe('StoryAnimation.Provider', () => {
 
       let unhoist;
       act(() => {
-        unhoist = result.current.actions.hoistWAAPIAnimation(
-          mockWAAPIAnimation()
-        );
+        unhoist = result.current.actions.hoistWAAPIAnimation({
+          animation: mockWAAPIAnimation(),
+        });
       });
       expect(typeof unhoist).toBe('function');
     });
@@ -232,10 +232,9 @@ describe('StoryAnimation.Provider', () => {
 
       const cancel = jest.fn();
       act(() => {
-        let unhoist;
-        unhoist = result.current.actions.hoistWAAPIAnimation(
-          mockWAAPIAnimation({ cancel })
-        );
+        const unhoist = result.current.actions.hoistWAAPIAnimation({
+          animation: mockWAAPIAnimation({ cancel }),
+        });
         unhoist();
       });
       expect(cancel).toHaveBeenCalledWith();
@@ -266,7 +265,7 @@ describe('StoryAnimation.Provider', () => {
           },
         });
         act(() => {
-          result.current.actions.hoistWAAPIAnimation(animation);
+          result.current.actions.hoistWAAPIAnimation({ animation });
         });
         return animation;
       });
@@ -281,6 +280,54 @@ describe('StoryAnimation.Provider', () => {
       expect(pause).toHaveBeenCalledTimes(numCalls);
       animations.forEach((animation) => {
         expect(animation.currentTime).toStrictEqual(200);
+      });
+    });
+
+    it('calls all selectedElement hoisted Animation methods when called and passed selected elements', () => {
+      const selectedElementIds = ['a', 'b', 'c'];
+      const allElementIds = [...selectedElementIds, 'd', 'e'];
+      const { result } = renderHook(() => useStoryAnimationContext(), {
+        wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+          animations: [],
+          selectedElementIds,
+        }),
+      });
+
+      const animationsWithIds = allElementIds.map((elementId) => {
+        const animation = mockWAAPIAnimation({
+          play: jest.fn(),
+          pause: jest.fn(),
+          currentTime: 0,
+          effect: {
+            getTiming: () => ({
+              duration: 300,
+              delay: 0,
+            }),
+          },
+        });
+        const animationWithElementId = { animation, elementId };
+        act(() => {
+          result.current.actions.hoistWAAPIAnimation({ animation, elementId });
+        });
+        return animationWithElementId;
+      });
+
+      act(() => result.current.actions.WAAPIAnimationMethods.play());
+      act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      act(() =>
+        result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
+      );
+
+      animationsWithIds.forEach(({ animation, elementId }) => {
+        expect(animation.currentTime).toStrictEqual(
+          selectedElementIds.includes(elementId) ? 200 : 0
+        );
+        expect(animation.play).toHaveBeenCalledTimes(
+          selectedElementIds.includes(elementId) ? 1 : 0
+        );
+        expect(animation.pause).toHaveBeenCalledTimes(
+          selectedElementIds.includes(elementId) ? 1 : 0
+        );
       });
     });
 
@@ -313,7 +360,7 @@ describe('StoryAnimation.Provider', () => {
       const unhoists = animations.map((animation) => {
         let unhoist;
         act(() => {
-          unhoist = result.current.actions.hoistWAAPIAnimation(animation);
+          unhoist = result.current.actions.hoistWAAPIAnimation({ animation });
         });
         return unhoist;
       });
@@ -359,7 +406,7 @@ describe('StoryAnimation.Provider', () => {
         );
         animations.forEach((animation) => {
           act(() => {
-            result.current.actions.hoistWAAPIAnimation(animation);
+            result.current.actions.hoistWAAPIAnimation({ animation });
           });
         });
 

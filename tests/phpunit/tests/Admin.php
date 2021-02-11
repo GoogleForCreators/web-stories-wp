@@ -36,6 +36,13 @@ class Admin extends \WP_UnitTestCase {
 	 */
 	protected static $story_id;
 
+	/**
+	 * Post ID.
+	 *
+	 * @var int
+	 */
+	protected static $post_id;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
@@ -44,11 +51,12 @@ class Admin extends \WP_UnitTestCase {
 		self::$story_id       = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
+				'post_title'   => 'Admin Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
 			]
 		);
+		self::$post_id        = $factory->post->create( [] );
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
@@ -91,7 +99,7 @@ class Admin extends \WP_UnitTestCase {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $admin->prefill_post_content( 'current' );
+		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertContains( 'wp-block-web-stories-embed', $result );
 		$this->assertContains( $poster, $result );
@@ -104,8 +112,24 @@ class Admin extends \WP_UnitTestCase {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( 0 );
 		$_GET['from-web-story'] = self::$story_id;
-		$result                 = $admin->prefill_post_content( 'current' );
+		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$this->assertSame( 'current', $result );
+	}
+
+
+	/**
+	 * @covers ::prefill_post_content
+	 */
+	public function test_prefill_post_content_shortcode() {
+		add_filter( 'use_block_editor_for_post', '__return_false' );
+		$admin = new \Google\Web_Stories\Admin();
+		wp_set_current_user( self::$admin_id );
+		$_GET['from-web-story'] = self::$story_id;
+		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
+		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE );
+		$this->assertContains( '[web_stories_embed', $result );
+		$this->assertContains( $poster, $result );
+		remove_filter( 'use_block_editor_for_post', '__return_false' );
 	}
 
 	/**
@@ -115,7 +139,7 @@ class Admin extends \WP_UnitTestCase {
 		$admin = new \Google\Web_Stories\Admin();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = 999999999;
-		$result                 = $admin->prefill_post_content( 'current' );
+		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
 		$this->assertSame( 'current', $result );
 	}
 
@@ -127,7 +151,7 @@ class Admin extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_title( 'current' );
-		$this->assertSame( 'Example title', $result );
+		$this->assertSame( 'Admin Test Story', $result );
 	}
 
 	/**

@@ -37,6 +37,7 @@ describe('Video output', () => {
       width: 1080,
       rotationAngle: 0,
       loop: true,
+      tracks: [],
       resource: {
         type: 'video',
         mimeType: 'video/mp4',
@@ -53,6 +54,24 @@ describe('Video output', () => {
 
   it('should produce valid AMP output', async () => {
     await expect(<VideoOutput {...baseProps} />).toBeValidAMPStoryElement();
+  });
+
+  it('should produce valid AMP output with track', async () => {
+    const props = {
+      ...baseProps,
+      tracks: [
+        {
+          track: 'https://example.com/track.vtt',
+          trackId: 123,
+          trackName: 'track.vtt',
+          id: 'rersd-fdfd-fdfd-fdfd',
+          srcLang: '',
+          label: '',
+          kind: 'caption',
+        },
+      ],
+    };
+    await expect(<VideoOutput {...props} />).toBeValidAMPStoryElement();
   });
 
   it('an undefined alt tag in the element should fall back to the resource', async () => {

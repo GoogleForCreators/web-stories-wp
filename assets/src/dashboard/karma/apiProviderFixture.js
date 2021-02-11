@@ -19,18 +19,17 @@
  */
 import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { differenceInSeconds } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
-import { differenceInSeconds } from '../../date';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import {
   publisherLogoIds as fillerPublisherLogoIds,
   rawPublisherLogos,
 } from '../dataUtils/formattedPublisherLogos';
-import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
@@ -41,7 +40,6 @@ export default function ApiProviderFixture({ children }) {
   const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
-  const [users] = useState(formattedUsersObject);
   const [currentUser, setCurrentUser] = useState(getCurrentUserState());
 
   const settingsApi = useMemo(
@@ -106,7 +104,6 @@ export default function ApiProviderFixture({ children }) {
 
   const usersApi = useMemo(
     () => ({
-      fetchUsers: jasmine.createSpy('fetchUsers'),
       fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
       toggleWebStoriesTrackingOptIn: () =>
         setCurrentUser(toggleOptInTracking(currentUser)),
@@ -121,7 +118,6 @@ export default function ApiProviderFixture({ children }) {
         settings,
         stories,
         templates,
-        users,
         currentUser,
       },
       actions: {
@@ -137,7 +133,6 @@ export default function ApiProviderFixture({ children }) {
       settings,
       stories,
       templates,
-      users,
       currentUser,
       mediaApi,
       settingsApi,
@@ -291,9 +286,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
-          value = formattedUsersObject[a.author].name.localeCompare(
-            formattedUsersObject[b.author].name
-          );
+          value = a.author.localeCompare(b.author);
           break;
         }
         default: {
@@ -316,6 +309,7 @@ function updateStory(story, currentState) {
   const copy = { ...story };
 
   copy.title = copy.title.raw;
+  copy.content = copy.content?.raw;
   copy.modified = new Date();
   return {
     ...currentState,
@@ -326,8 +320,8 @@ function updateStory(story, currentState) {
   };
 }
 
-function duplicateStory(story, currenState) {
-  const copiedState = { ...currenState };
+function duplicateStory(story, currentState) {
+  const copiedState = { ...currentState };
   const copiedStory = { ...story };
 
   // Update fields on copy

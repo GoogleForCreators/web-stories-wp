@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * External dependencies
@@ -76,6 +76,14 @@ function Content({
                     isLoading={isLoading}
                     allDataLoadedMessage={__(
                       'No more templates',
+                      'web-stories'
+                    )}
+                    allDataLoadedAriaMessage={__(
+                      'All templates are loaded',
+                      'web-stories'
+                    )}
+                    loadingAriaMessage={__(
+                      'Loading more templates',
                       'web-stories'
                     )}
                     onLoadMore={page.requestNextPage}

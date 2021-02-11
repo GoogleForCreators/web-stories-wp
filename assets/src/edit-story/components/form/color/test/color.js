@@ -31,10 +31,10 @@ jest.mock('../applyOpacityChange', () => jest.fn());
 
 function arrange(props = {}) {
   const onChange = jest.fn();
-  const { queryByLabelText } = renderWithTheme(
+  const { queryByLabelText, getByRole } = renderWithTheme(
     <Color label="Color" onChange={onChange} {...props} />
   );
-  const colorPreview = queryByLabelText(/Edit: Color/);
+  const colorPreview = getByRole('button', { name: 'Color' });
   const opacityInput = queryByLabelText(/Opacity/);
   return {
     colorPreview,
@@ -49,13 +49,6 @@ describe('<Color />', () => {
 
     expect(colorPreview).toBeInTheDocument();
     expect(opacityInput).toBeInTheDocument();
-  });
-
-  it('should not render opacity input when disabled', () => {
-    const { colorPreview, opacityInput } = arrange({ hasOpacity: false });
-
-    expect(colorPreview).toBeInTheDocument();
-    expect(opacityInput).toBeNull();
   });
 
   it('should update via `applyOpacityChange` when opacity changes', () => {

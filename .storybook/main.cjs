@@ -18,9 +18,10 @@ module.exports = {
   stories: [
     './stories/**/*.js',
     '../assets/src/dashboard/**/stories/*.@(js|mdx)',
+    '../assets/src/design-system/**/stories/*.@(js|mdx)',
     '../assets/src/edit-story/**/stories/*.@(js|mdx)',
     '../assets/src/animation/**/stories/*.@(js|mdx)',
-    '../assets/src/activation-notice/**/stories/*.@(js|mdx)',
+    '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
   ],
   addons: [
     '@storybook/addon-a11y/register',
@@ -31,6 +32,10 @@ module.exports = {
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',
   ],
+  reactOptions: {
+    fastRefresh: true,
+    strictMode: true,
+  },
   //eslint-disable-next-line require-await
   webpackFinal: async (config) => {
     // Modifies storybook's webpack config to use svgr instead of file-loader.

@@ -23,23 +23,23 @@ import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
 import { parseToRgb, getLuminance } from 'polished';
 
 /**
- * WordPress dependencies
- */
-import { __, _x } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useUnmount from '../../../utils/useUnmount';
+import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { PatternPropType } from '../../../types';
-import MULTIPLE_VALUE from '../multipleValue';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
+import { useKeyDownEffect } from '../../../../design-system';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
+import getHexFromValue from './getHexFromValue';
 import { ColorBox } from './colorBox';
+
+const SELECT_CONTENTS_DELAY = 10;
 
 const Preview = styled(ColorBox)`
   display: flex;
@@ -57,7 +57,8 @@ const buttonAttrs = {
 const buttonStyle = css`
   overflow: hidden;
   border: 0 solid;
-  border-color: ${({ theme }) => theme.colors.whiteout} !important;
+  border-color: ${({ theme }) =>
+    theme.DEPRECATED_THEME.colors.whiteout} !important;
   outline: none;
   ${KEYBOARD_USER_SELECTOR} &:focus {
     border-width: 1px;
@@ -85,9 +86,9 @@ const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
   ${buttonStyle}
   border-radius: 4px 0 0 4px;
   border-color: ${({ color, theme }) =>
-    getLuminance(color) > 0.2
-      ? theme.colors.bg.v1
-      : theme.colors.whiteout} !important;
+    color && getLuminance(color) > 0.2
+      ? theme.DEPRECATED_THEME.colors.bg.v1
+      : theme.DEPRECATED_THEME.colors.whiteout} !important;
 `;
 
 const VisualPreviewInsideButton = styled(VisualPreview)`
@@ -137,6 +138,7 @@ const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   cursor: text;
   overflow: auto;
   border-radius: 0 4px 4px 0;
+  text-transform: ${({ value }) => (value ? 'uppercase' : 'initial')};
 `;
 
 function ColorPreview({
@@ -146,70 +148,133 @@ function ColorPreview({
   value,
   label,
   colorPickerActions,
+  changedStyle,
 }) {
-  const isMultiple = value === MULTIPLE_VALUE;
-  value = isMultiple ? '' : value;
+  const isMixed = value === MULTIPLE_VALUE;
+  value = isMixed ? '' : value;
+
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
 
-  const [hexInputValue, setHexInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [pickerOpen, setPickerOpen] = useState(false);
+
   const previewRef = useRef(null);
+  const inputRef = useRef(null);
+  const skipValidationRef = useRef(false);
+  const selectInputContents = useRef(false);
 
   const {
     refs: { inspector },
   } = useInspector();
 
-  useEffect(() => setHexInputValue(previewText), [previewText]);
+  const { handleFocus, handleBlur } = useFocusAndSelect(inputRef);
+  useEffect(() => setInputValue(previewText), [previewText]);
 
   const colorType = value?.type;
-  const isEditable =
-    !isMultiple &&
-    Boolean(previewText) &&
-    (!colorType || colorType === 'solid');
-
-  const editLabel = __('Edit', 'web-stories');
-  const inputLabel = __('Enter', 'web-stories');
+  // Allow editing always in case of solid color of if color type is missing (mixed)
+  const isEditable = !colorType || colorType === 'solid';
 
   const buttonProps = {
     onClick: () => setPickerOpen(true),
-    'aria-label': `${editLabel}: ${label}`,
+    'aria-label': label,
   };
 
-  const handleInputChange = useCallback(
-    (evt) => {
-      // Trim and strip initial '#' (might very well be pasted in)
-      const val = evt.target.value.trim().replace(/^#/, '');
-      setHexInputValue(val);
-      const hasNonHex = /[^0-9a-f]/i.test(val);
-      const hasValidLength = val.length === 6;
-      if (hasNonHex || !hasValidLength) {
-        // Invalid color hex, just allow it for now
-        // but don't pass it upstream
-        return;
+  const validateAndSubmitInput = useCallback(
+    ({ selectContentOnUpdate } = {}) => {
+      const hex = getHexFromValue(inputValue) ?? previewText;
+      setInputValue(hex);
+
+      // Only trigger onChange when hex has been changed
+      if (hex !== previewText) {
+        // Update actual color, which will in turn update hex input from value
+        const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
+
+        // Keep same opacity as before though. In case of mixed values, set to default (1).
+        const a = isMixed ? 1 : value.color.a;
+        onChange({ color: { r, g, b, a } });
       }
 
-      // Update actual color, which will in turn update hex input from value
-      const { red: r, green: g, blue: b } = parseToRgb(`#${val}`);
-      // Keep same opacity as before though
-      const {
-        color: { a },
-      } = value;
-      onChange({ color: { r, g, b, a } });
+      selectInputContents.current = selectContentOnUpdate;
     },
-    [value, onChange]
+    [inputValue, previewText, onChange, value, isMixed]
   );
 
-  // Reset to last known "valid" color on blur
-  const handleInputBlur = useCallback(() => setHexInputValue(previewText), [
-    previewText,
-  ]);
+  const handleInputChange = useCallback((evt) => {
+    // Trim and strip initial '#' (might very well be pasted in)
+    const val = evt.target.value.trim().replace(/^#/, '');
+    setInputValue(val);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    if (!skipValidationRef.current) {
+      validateAndSubmitInput();
+    }
+
+    // Reset flag after use
+    skipValidationRef.current = false;
+
+    handleBlur();
+  }, [handleBlur, validateAndSubmitInput]);
+
+  const handleEsc = useCallback(() => {
+    // Revert input value and exit input focus without
+    // triggering blur validation
+    setInputValue(previewText);
+    skipValidationRef.current = true;
+    inputRef.current.blur();
+  }, [previewText]);
+
+  const handleEnter = useCallback(() => {
+    validateAndSubmitInput({ selectContentOnUpdate: true });
+  }, [validateAndSubmitInput]);
 
   // Always hide color picker on unmount - note the double arrows
   useUnmount(() => () => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
   const spacing = useMemo(() => ({ x: 20 }), []);
+
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['escape'],
+      editable: true,
+    },
+    handleEsc,
+    [handleEsc]
+  );
+
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['enter'],
+      editable: true,
+    },
+    handleEnter,
+    [handleEnter]
+  );
+
+  useEffect(() => {
+    let selectContentsTimeout = -1;
+
+    if (selectInputContents.current) {
+      if (inputRef.current) {
+        inputRef.current.select();
+      }
+
+      // When we want to select the content of the input
+      // we hold open the door for a slight moment to allow
+      // all the data to flush down the pipeline.
+      selectContentsTimeout = window.setTimeout(() => {
+        selectInputContents.current = false;
+      }, SELECT_CONTENTS_DELAY);
+    }
+
+    return () => {
+      window.clearTimeout(selectContentsTimeout);
+    };
+  }, [inputValue]);
 
   return (
     <>
@@ -221,15 +286,18 @@ function ColorPreview({
             {...buttonProps}
             color={previewStyle?.backgroundColor}
           >
-            {value.a < 1 && <Transparent />}
+            {(value?.a < 1 || isMixed) && <Transparent />}
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewButton>
           <TextualInput
+            ref={inputRef}
             type="text"
-            aria-label={`${inputLabel}: ${label}`}
-            value={hexInputValue ?? ''}
+            aria-label={label}
+            value={inputValue ?? ''}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
+            onFocus={handleFocus}
+            placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
         </Preview>
       ) : (
@@ -239,12 +307,7 @@ function ColorPreview({
             <Transparent />
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewInsideButton>
-          <TextualPreview>
-            {isMultiple
-              ? __('Multiple', 'web-stories')
-              : previewText ||
-                _x('None', 'No color or gradient selected', 'web-stories')}
-          </TextualPreview>
+          <TextualPreview>{previewText}</TextualPreview>
         </PreviewButton>
       )}
       <Popup
@@ -255,12 +318,13 @@ function ColorPreview({
         spacing={spacing}
       >
         <ColorPicker
-          color={isMultiple ? null : value}
+          color={isMixed ? null : value}
           onChange={onChange}
           hasGradient={hasGradient}
           hasOpacity={hasOpacity}
           onClose={onClose}
           renderFooter={colorPickerActions}
+          changedStyle={changedStyle}
         />
       </Popup>
     </>
@@ -274,6 +338,7 @@ ColorPreview.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   colorPickerActions: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorPreview.defaultProps = {

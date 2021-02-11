@@ -18,16 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useEscapeToBlurEffect } from '../keyboard';
+import { useEscapeToBlurEffect } from '../../../design-system';
 import TabView from '../tabview';
 import useInspector from './useInspector';
 import InspectorContent from './inspectorContent';
@@ -39,8 +35,8 @@ const Layout = styled.section.attrs({
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.bg.panel};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const InspectorContainer = styled.div`

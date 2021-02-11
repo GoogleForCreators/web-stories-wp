@@ -1,5 +1,4 @@
 .test_artifacts
-.travis_deploy_key
 .idea/
 .vscode/
 .DS_Store
@@ -7,12 +6,16 @@ node_modules
 /assets/css
 /assets/js
 /assets/testjs
+/packages/migration/module.js
 /build
 /bin/build
 /bin/local-env/data
+/includes/vendor
+/includes/composer.json
 /plugin-assets
 /public
 /static
+/third-party
 /vendor
 /php7
 phpcs.xml

@@ -29,7 +29,10 @@ import {
 import { renderWithProviders } from '../../../../testUtils';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
+import { TEXT as AD_NETWORK_TEXT } from '../adNetwork';
+
 import EditorSettings from '../';
+import { AD_NETWORK_TYPE } from '../../../../constants';
 
 const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
@@ -43,11 +46,16 @@ function createProviderValues({
   activeLogoId,
   isLoading,
   googleAnalyticsId,
+  adSensePublisherId = '',
+  adSenseSlotId = '',
+  adManagerSlotId = '',
+  adNetwork = AD_NETWORK_TYPE.NONE,
   logoIds,
   logos,
 }) {
   return {
     config: {
+      allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
       capabilities: {
         canUploadFiles: canUploadFiles,
         canManageSettings: canManageSettings,
@@ -59,6 +67,10 @@ function createProviderValues({
       state: {
         settings: {
           googleAnalyticsId,
+          adSensePublisherId,
+          adSenseSlotId,
+          adManagerSlotId,
+          adNetwork,
           activePublisherLogoId: activeLogoId,
           publisherLogoIds: logoIds,
         },
@@ -73,6 +85,7 @@ function createProviderValues({
             id: 1,
             meta: {
               web_stories_tracking_optin: true,
+              web_stories_media_optimization: true,
             },
           },
         },
@@ -112,13 +125,15 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(googleAnalyticsHeading).toBeInTheDocument();
 
     const input = getByRole('textbox');
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
 
-    expect(input.value).toBe('UA-098909-05');
+    expect(input).toHaveValue('UA-098909-05');
 
     expect(getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)).toBeInTheDocument();
     expect(getByTestId('upload-file-input')).toBeInTheDocument();
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
+
+    expect(getByText(AD_NETWORK_TEXT.SECTION_HEADING)).toBeInTheDocument();
   });
 
   it('should render settings page with publisher logos', function () {
@@ -161,20 +176,20 @@ describe('Editor Settings: <Editor Settings />', function () {
     fireEvent.click(ContextMenuButton);
 
     const ContextMenu = getByTestId('publisher-logo-context-menu-1');
-    expect(ContextMenu).toBeDefined();
+    expect(ContextMenu).toBeInTheDocument();
 
     const { getByText } = within(ContextMenu);
 
     const DeleteFileButton = getByText('Delete');
-    expect(DeleteFileButton).toBeDefined();
+    expect(DeleteFileButton).toBeInTheDocument();
 
     fireEvent.click(DeleteFileButton);
 
     const DeleteDialog = getByRole('dialog');
-    expect(DeleteDialog).toBeDefined();
+    expect(DeleteDialog).toBeInTheDocument();
 
     const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
-    expect(ConfirmDeleteButton).toBeDefined();
+    expect(ConfirmDeleteButton).toBeInTheDocument();
 
     fireEvent.click(ConfirmDeleteButton);
 
@@ -182,7 +197,7 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', function () {
-    const { queryAllByTestId } = renderWithProviders(
+    const { queryByTestId } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -194,6 +209,29 @@ describe('Editor Settings: <Editor Settings />', function () {
       })
     );
 
-    expect(queryAllByTestId('upload-file-input')).toHaveLength(0);
+    expect(queryByTestId('upload-file-input')).not.toBeInTheDocument();
+  });
+
+  it('should render settings page with adsense', function () {
+    const { getByText } = renderWithProviders(
+      <EditorSettings />,
+      createProviderValues({
+        googleAnalyticsId: 'UA-098909-05',
+        canUploadFiles: true,
+        canManageSettings: true,
+        isLoading: false,
+        adSensePublisherId: '123',
+        adSenseSlotId: '456',
+        adManagerSlotId: '',
+        adNetwork: AD_NETWORK_TYPE.ADSENSE,
+        logoIds: [],
+        logos: {},
+      })
+    );
+
+    const helperLink = getByText('how to monetize your Web Stories', {
+      selector: 'a',
+    });
+    expect(helperLink).toBeInTheDocument();
   });
 });

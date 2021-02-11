@@ -20,14 +20,14 @@
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../tracking';
+import { clamp } from '../../animation';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
-import { clamp, usePagePreviewSize } from './index';
+import { usePagePreviewSize } from './index';
 
 export default function useStoryView({ filters, totalPages }) {
   const enableStoryPreviews = useFeature('enableStoryPreviews');

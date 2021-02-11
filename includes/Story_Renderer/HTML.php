@@ -26,10 +26,14 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
+use AmpProject\Dom\Document as AMP_Document;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
-use DOMDocument;
-use DOMElement;
+use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
+use Google\Web_Stories\AMP\Story_Sanitizer;
+use Google\Web_Stories\AMP\Optimization;
+use Google\Web_Stories\AMP\Sanitization;
 
 /**
  * Class Story_Renderer
@@ -45,59 +49,18 @@ class HTML {
 	protected $story;
 
 	/**
-	 * DOMDocument instance.
+	 * Document instance.
 	 *
-	 * @var DOMDocument DOMDocument instance.
+	 * @var Document Document instance.
 	 */
 	protected $document;
 
 	/**
-	 * AMP requires the HTML markup to be encoded in UTF-8.
-	 *
-	 * @var string
-	 */
-	const AMP_ENCODING = 'utf-8';
-
-	/**
-	 * Encoding identifier to use for an unknown encoding.
-	 *
-	 * "auto" is recognized by mb_convert_encoding() as a special value.
-	 *
-	 * @var string
-	 */
-	const UNKNOWN_ENCODING = 'auto';
-
-	/**
-	 * Default document type to use.
-	 *
-	 * @var string
-	 */
-	const DEFAULT_DOCTYPE = '<!DOCTYPE html>';
-
-	/**
-	 * Encoding detection order in case we have to guess.
-	 *
-	 * This list of encoding detection order is just a wild guess and might need fine-tuning over time.
-	 * If the charset was not provided explicitly, we can really only guess, as the detection can
-	 * never be 100% accurate and reliable.
-	 *
-	 * @var string
-	 */
-	const ENCODING_DETECTION_ORDER = 'UTF-8, EUC-JP, eucJP-win, JIS, ISO-2022-JP, ISO-8859-15, ISO-8859-1, ASCII';
-
-	/**
-	 * AMP boilerplate <noscript> fallback.
-	 *
-	 * @var string
-	 */
-	const AMP_NOSCRIPT_BOILERPLATE = '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>';
-
-	/**
-	 * Story_Renderer constructor.
+	 * HTML constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story $story Post object.
+	 * @param Story $story Story object.
 	 */
 	public function __construct( Story $story ) {
 		$this->story = $story;
@@ -111,143 +74,101 @@ class HTML {
 	 * @return string The complete HTML markup for the story.
 	 */
 	public function render() {
-		$markup = self::DEFAULT_DOCTYPE . $this->story->get_markup();
-		$markup = $this->adapt_encoding( $markup );
+		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
-		$markup = $this->remove_noscript_amp_boilerplate( $markup );
+		$markup = $this->replace_url_scheme( $markup );
+		$markup = $this->print_analytics( $markup );
+		$markup = $this->print_bookend( $markup );
 
-		$this->document = $this->load_html( $markup );
+		// If the AMP plugin is installed and available in a version >= than ours,
+		// all sanitization and optimization should be delegated to the AMP plugin.
+		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
+			return $markup;
+		}
 
-		// Run all further transformations on the DOMDocument.
+		$document = Document::fromHtml( $markup );
 
-		$this->add_noscript_amp_boilerplate();
-		$this->transform_html_start_tag();
-		$this->transform_a_tags();
-		$this->insert_analytics_configuration();
+		// This  should never actually happen.
+		if ( ! $document ) {
+			ob_start();
+			wp_die(
+				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
+				esc_html__( 'Web Stories', 'web-stories' ),
+				[
+					'response'  => 500,
+					'link_url'  => esc_url( __( 'https://wordpress.org/support/plugin/web-stories/', 'web-stories' ) ),
+					'link_text' => esc_html__( 'Visit Support Forums', 'web-stories' ),
+					'exit'      => false,
+				]
+			);
 
-		$this->add_poster_images();
-		$this->add_publisher_logo();
+			return (string) ob_get_clean();
+		}
+
+		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
+
+		/**
+		 * Document instance.
+		 *
+		 * @var Document $document
+		 */
+		$this->document = $document;
+
+		$this->sanitize_markup();
+		$this->optimize_markup();
 
 		return trim( (string) $this->document->saveHTML() );
 	}
 
 	/**
-	 * Adapt the encoding of the content.
-	 *
-	 * @link https://github.com/ampproject/amp-wp/blob/a393acf701e8e44d80225affed99d528ee751cb9/lib/common/src/Dom/Document.php
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $markup Source content to adapt the encoding of.
-	 *
-	 * @return string Adapted content.
-	 */
-	protected function adapt_encoding( $markup ) {
-		$encoding = self::UNKNOWN_ENCODING;
-
-		if ( function_exists( 'mb_detect_encoding' ) ) {
-			$encoding = mb_detect_encoding( $markup, self::ENCODING_DETECTION_ORDER, true );
-		}
-
-		if ( function_exists( 'mb_convert_encoding' ) ) {
-			$markup = mb_convert_encoding( $markup, 'HTML-ENTITIES', $encoding );
-		}
-
-		return $markup;
-	}
-
-	/**
-	 * Loads a full HTML document and returns a DOMDocument instance.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $string Input string.
-	 * @param int    $options Optional. Specify additional Libxml parameters.
-	 *
-	 * @return DOMDocument DOMDocument instance.
-	 */
-	protected function load_html( $string, $options = 0 ) {
-		$options |= LIBXML_COMPACT;
-
-		/*
-		 * LIBXML_HTML_NODEFDTD is only available for libxml 2.7.8+.
-		 * This should be the case for PHP 5.4+, but some systems seem to compile against a custom libxml version that
-		 * is lower than expected.
-		 */
-		if ( defined( 'LIBXML_HTML_NODEFDTD' ) ) {
-			$options |= constant( 'LIBXML_HTML_NODEFDTD' );
-		}
-
-		$libxml_previous_state = libxml_use_internal_errors( true );
-
-		$doc = new DOMDocument( '1.0', self::AMP_ENCODING );
-		$doc->loadHTML( $string, $options );
-
-		libxml_clear_errors();
-		libxml_use_internal_errors( $libxml_previous_state );
-
-		return $doc;
-	}
-
-	/**
-	 * Returns the first found element with a given tag name.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $name Tag name.
-	 *
-	 * @return DOMElement|null
-	 */
-	protected function get_element_by_tag_name( $name ) {
-		return $this->document->getElementsByTagName( $name )->item( 0 );
-	}
-
-	/**
-	 * Replaces the HTML start tag to make the language attributes dynamic.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function transform_html_start_tag() {
-		/* @var DOMElement $html The <html> element */
-		$html = $this->get_element_by_tag_name( 'html' );
-
-		if ( ! $html ) {
-			return;
-		}
-
-		$html->setAttribute( 'amp', '' );
-
-		// See get_language_attributes().
-		if ( is_rtl() ) {
-			$html->setAttribute( 'dir', 'rtl' );
-		}
-
-		$lang = get_bloginfo( 'language' );
-		if ( $lang ) {
-			$html->setAttribute( 'lang', esc_attr( $lang ) );
-		}
-	}
-
-	/**
-	 * Transform all a tags to add target and rel attributes.
+	 * Filters the Web Stories AMP sanitizers.
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return void
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
 	 */
-	protected function transform_a_tags() {
-		$hyperlinks = $this->document->getElementsByTagName( 'a' );
-		/* @var DOMElement $hyperlink The <a> element */
-		foreach ( $hyperlinks as $hyperlink ) {
-			if ( ! $hyperlink->getAttribute( 'target' ) ) {
-				$hyperlink->setAttribute( 'target', '_blank' );
-			}
-			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
-				$hyperlink->setAttribute( 'rel', 'noreferrer' );
-			}
-		}
+	public function add_web_stories_amp_content_sanitizers( $sanitizers ) {
+		$sanitizers[ Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => $this->get_poster_images(),
+		];
+
+		return $sanitizers;
+	}
+
+	/**
+	 * Filters the AMP plugin's sanitizers.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
+	 */
+	public function add_amp_content_sanitizers( $sanitizers ) {
+		$sanitizers[ AMP_Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => $this->get_poster_images(),
+		];
+
+		return $sanitizers;
+	}
+
+	/**
+	 * Get story meta images.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string[] Images.
+	 */
+	protected function get_poster_images() {
+		return [
+			'poster-portrait-src'  => $this->story->get_poster_portrait(),
+			'poster-square-src'    => $this->story->get_poster_square(),
+			'poster-landscape-src' => $this->story->get_poster_landscape(),
+		];
 	}
 
 	/**
@@ -285,6 +206,10 @@ class HTML {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
+		// Replace malformed meta tags with correct tags.
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/>/i', $start_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/>/i', $end_tag, $content );
+
 		$start_tag_pos = strpos( $content, $start_tag );
 		$end_tag_pos   = strpos( $content, $end_tag );
 
@@ -297,191 +222,126 @@ class HTML {
 	}
 
 	/**
-	 * Remove <noscript> AMP boilerplate fragment from the existing markup.
+	 * Force home urls to http / https based on context.
 	 *
-	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
-	 * That's why we temporarily remove this fragment and re-add it later.
+	 * @since 1.1.0
 	 *
-	 * @see https://github.com/ampproject/amp-wp/pull/5097
-	 * @see http://xmlsoft.org/news.html
+	 * @param string $content String to replace.
 	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $content Story markup.
-	 *
-	 * @return string Filtered content.
+	 * @return string
 	 */
-	protected function remove_noscript_amp_boilerplate( $content ) {
-		return str_replace( self::AMP_NOSCRIPT_BOILERPLATE, '', $content );
+	protected function replace_url_scheme( $content ) {
+		if ( is_ssl() ) {
+			$search  = home_url( '', 'http' );
+			$replace = home_url( '', 'https' );
+			$content = str_replace( $search, $replace, $content );
+		}
+
+		return $content;
+
 	}
 
 	/**
-	 * Re-add <noscript> AMP boilerplate using DOMDocument.
+	 * Print analytics code before closing `</amp-story>`.
 	 *
-	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
-	 * That's why we temporarily remove this fragment and re-add it later.
+	 * @since 1.2.0
 	 *
-	 * @see https://github.com/ampproject/amp-wp/pull/5097
-	 * @see http://xmlsoft.org/news.html
+	 * @param string $content String to replace.
 	 *
-	 * @return void
+	 * @return string
 	 */
-	protected function add_noscript_amp_boilerplate() {
-		$fragment = $this->document->createDocumentFragment();
-		$fragment->appendXml( self::AMP_NOSCRIPT_BOILERPLATE );
+	protected function print_analytics( $content ) {
+		ob_start();
 
-		$head = $this->get_element_by_tag_name( 'head' );
+		/**
+		 * Fires before the closing <amp-story> tag.
+		 *
+		 * Can be used to print <amp-analytics> configuration.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'web_stories_print_analytics' );
 
-		if ( $head ) {
-			$head->appendChild( $fragment );
-		}
+		$output = (string) ob_get_clean();
+
+		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
 	}
 
 	/**
-	 * Replaces the placeholder of publisher logo in the content.
+	 * Print amp-story-bookend before closing `</amp-story>`.
 	 *
-	 * @since 1.0.0
+	 * @since 1.3.0
 	 *
-	 * @return void
+	 * @param string $content String to replace.
+	 *
+	 * @return string
 	 */
-	protected function add_publisher_logo() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+	protected function print_bookend( $content ) {
+		$share_providers = [
+			[
+				'provider' => 'twitter',
+			],
+			[
+				'provider' => 'linkedin',
+			],
+			[
+				'provider' => 'email',
+			],
+			[
+				'provider' => 'system',
+			],
+		];
 
-		if ( ! $story_element ) {
-			return;
+		/**
+		 * Filters the list of sharing providers in the Web Stories sharing dialog.
+		 *
+		 * @since 1.3.0
+		 *
+		 * @link https://amp.dev/documentation/components/amp-story-bookend/#social-sharing
+		 * @link https://amp.dev/documentation/components/amp-social-share/?format=stories#pre-configured-providers
+		 *
+		 * @param array[] $share_providers List of sharing providers.
+		 */
+		$share_providers = (array) apply_filters( 'web_stories_share_providers', $share_providers );
+
+		if ( empty( $share_providers ) ) {
+			return $content;
 		}
 
-		$publisher_logo_src = $story_element->getAttribute( 'publisher-logo-src' );
-		if ( empty( $publisher_logo_src ) || $publisher_logo_src === $this->get_publisher_logo_placeholder() ) {
-			$story_element->removeAttribute( 'publisher-logo-src' );
-		}
+		$config  = [
+			'bookendVersion' => 'v1.0',
+			'components'     => [],
+			'shareProviders' => $share_providers,
+		];
+		$bookend = sprintf(
+			'<amp-story-bookend layout="nodisplay"><script type="application/json">%s</script></amp-story-bookend>',
+			wp_json_encode( $config )
+		);
 
-		$publisher_logo = $this->get_publisher_logo();
-		if ( ! empty( $publisher_logo ) ) {
-			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
-		}
-
-		if ( ! $story_element->getAttribute( 'publisher-logo-src' ) ) {
-			$this->remove_amp_attr();
-		}
+		return str_replace( '</amp-story>', $bookend . '</amp-story>', $content );
 	}
 
 	/**
-	 * If there is a missing attribute a story becomes invalid AMP.
-	 * Remove the 'amp' attribute to not mark it as an AMP document anymore,
-	 * preventing errors from showing up in GSC and other tools.
+	 * Sanitizes markup to be valid AMP.
 	 *
 	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
-	protected function remove_amp_attr() {
-		/* @var DOMElement $html The <html> element */
-		$html = $this->get_element_by_tag_name( 'html' );
-
-		if ( $html ) {
-			$html->removeAttribute( 'amp' );
-		}
+	protected function sanitize_markup() {
+		$sanitization = new Sanitization();
+		$sanitization->sanitize_document( $this->document );
 	}
 
 	/**
-	 * Adds square, and landscape poster images to the <amp-story>.
+	 * Optimizes AMP markup.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
-	protected function add_poster_images() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		$poster_images = $this->get_poster_images();
-
-		foreach ( $poster_images as $attr => $url ) {
-			$story_element->setAttribute( $attr, esc_url( $url ) );
-		}
-
-		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
-			$this->remove_amp_attr();
-		}
-	}
-
-	/**
-	 * Print amp-analytics script.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function insert_amp_analytics_extension() {
-		$script = $this->document->createElement( 'script' );
-		$script->setAttribute( 'src', 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js' );
-		$script->setAttribute( 'async', 'async' );
-		$script->setAttribute( 'custom-element', 'amp-analytics' );
-
-		/* @var DOMElement $head The <head> element. */
-		$head = $this->get_element_by_tag_name( 'head' );
-
-		if ( $head ) {
-			$head->appendChild( $script );
-		}
-	}
-
-	/**
-	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function insert_analytics_configuration() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		ob_start();
-
-		do_action( 'web_stories_print_analytics' );
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$fragment = $this->document->createDocumentFragment();
-		$fragment->appendXml( $output );
-
-		$story_element->appendChild( $fragment );
-
-		/*
-		 * $fragment could contain anything (amp-analytics, amp-pixel, etc.).
-		 *
-		 * @todo Only insert extension when it actually contains amp-analytics.
-		 */
-		$this->insert_amp_analytics_extension();
-	}
-
-	/**
-	 * Get story meta images.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string[] Images.
-	 */
-	protected function get_poster_images() {
-		return [
-			'poster-portrait-src'  => $this->story->get_poster_portrait(),
-			'poster-square-src'    => $this->story->get_poster_square(),
-			'poster-landscape-src' => $this->story->get_poster_landscape(),
-		];
+	protected function optimize_markup() {
+		$optimization = new Optimization();
+		$optimization->optimize_document( $this->document );
 	}
 }

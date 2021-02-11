@@ -47,7 +47,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should not render fileUpload container when canUploadFiles is false', () => {
-    const { queryAllByTestId } = renderWithProviders(
+    const { queryByTestId } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={jest.fn}
@@ -57,7 +57,7 @@ describe('PublisherLogo', () => {
       />
     );
 
-    expect(queryAllByTestId('upload-file-input')).toHaveLength(0);
+    expect(queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 
   it('should render an image for each publisherLogo in the array', () => {
@@ -75,7 +75,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should specify the first logo displayed as default', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { getAllByRole } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={jest.fn}
@@ -85,10 +85,9 @@ describe('PublisherLogo', () => {
       />
     );
 
-    const FirstGridItem = queryAllByRole('listitem')[0];
-    expect(FirstGridItem).toBeDefined();
+    const FirstGridItem = getAllByRole('listitem')[0];
     const Default = within(FirstGridItem).getByText('Default');
-    expect(Default).toBeDefined();
+    expect(Default).toBeInTheDocument();
   });
 
   it('should render a context menu button for each uploaded logo', () => {
@@ -142,7 +141,7 @@ describe('PublisherLogo', () => {
     fireEvent.click(ContextMenuButton);
 
     const ContextMenu = getByTestId('publisher-logo-context-menu-2');
-    expect(ContextMenu).toBeDefined();
+    expect(ContextMenu).toBeInTheDocument();
 
     const MenuItems = within(ContextMenu).queryAllByRole('listitem');
     const DeleteFileButton = MenuItems[1];
@@ -170,10 +169,10 @@ describe('PublisherLogo', () => {
     );
 
     const ContextMenu = getByTestId('publisher-logo-context-menu-1');
-    expect(ContextMenu).toBeDefined();
+    expect(ContextMenu).toBeInTheDocument();
 
     const DeleteFileButton = within(ContextMenu).getByText(/^Delete$/);
-    expect(DeleteFileButton).toBeDefined();
+    expect(DeleteFileButton).toBeInTheDocument();
 
     fireEvent.click(DeleteFileButton);
     expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
@@ -193,7 +192,7 @@ describe('PublisherLogo', () => {
     );
 
     const ContextMenu = getByTestId('publisher-logo-context-menu-1');
-    expect(ContextMenu).toBeDefined();
+    expect(ContextMenu).toBeInTheDocument();
 
     const UpdateDefaultLogoButton = within(ContextMenu)
       .getByText(/^Set as Default$/)
@@ -223,7 +222,7 @@ describe('PublisherLogo', () => {
     fireEvent.click(ContextMenuButton);
 
     const ContextMenu = getByTestId('publisher-logo-context-menu-1');
-    expect(ContextMenu).toBeDefined();
+    expect(ContextMenu).toBeInTheDocument();
 
     const UpdateDefaultLogoButton = within(ContextMenu)
       .getByText(/^Set as Default$/)

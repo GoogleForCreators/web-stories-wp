@@ -17,39 +17,65 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { __ } from '@web-stories-wp/i18n';
+import { useState, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useVirtual } from 'react-virtual';
 
 /**
  * Internal dependencies
  */
-import { Section } from '../../../common';
+import { FullWidthWrapper } from '../../common/styles';
+import PillGroup from '../../shared/pillGroup';
+import localStore, {
+  LOCAL_STORAGE_PREFIX,
+} from '../../../../../utils/localStore';
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
-import PillGroup from '../../shared/pillGroup';
-import { PANE_PADDING } from '../../shared';
-import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { getTextSets } from './utils';
+import useLibrary from '../../../useLibrary';
+import useStory from '../../../../../app/story/useStory';
+import {
+  getInUseFontsForPages,
+  getTextSetsForFonts,
+} from '../../../../../utils/getInUseFonts';
+import Switch from '../../../../switch';
+import {
+  Container as SectionContainer,
+  Title as SectionTitle,
+} from '../../../common/section';
 import TextSet from './textSet';
 
+const TEXT_SET_ROW_GAP = 12;
+
 const TextSetContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 12px;
-  column-gap: 12px;
+  height: ${({ height }) => `${height}px`};
+  width: 100%;
+  position: relative;
   margin-top: 28px;
+  overflow-x: hidden;
 `;
 
-/* Undo the -1.5em set by the Pane */
-const CategoryWrapper = styled.div`
-  margin-left: -${PANE_PADDING};
-  margin-right: -${PANE_PADDING};
+const TextSetRow = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${({ height }) => `${height}px`};
+  transform: ${({ translateY }) => `translateY(${translateY}px)`};
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 12px;
+`;
+
+const TitleBar = styled.div`
+  display: flex;
+
+  label {
+    margin-top: 14px;
+    margin-bottom: 28px;
+  }
 `;
 
 const CATEGORIES = {
@@ -63,58 +89,122 @@ const CATEGORIES = {
   quote: __('Quote', 'web-stories'),
 };
 
-function TextSets() {
-  const [textSets, setTextSets] = useState([]);
-  const [selectedCat, setSelectedCat] = useState(null);
-  const ref = useRef();
+function TextSets({ paneRef }) {
+  const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+  const [showInUse, setShowInUse] = useState(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
-  const filteredTextSets = useMemo(
-    () => (selectedCat ? textSets[selectedCat] : allTextSets),
-    [selectedCat, textSets, allTextSets]
+  const storyPages = useStory(({ state: { pages } }) => pages);
+
+  const [selectedCat, setSelectedCat] = useState(
+    localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
+      ?.selectedCategory
   );
-  const categories = useMemo(
+
+  const getTextSetsForInUseFonts = useCallback(
     () =>
-      Object.keys(textSets).map((cat) => ({
+      getTextSetsForFonts({
+        fonts: getInUseFontsForPages(storyPages),
+        textSets: selectedCat ? textSets[selectedCat] : allTextSets,
+      }),
+    [allTextSets, storyPages, selectedCat, textSets]
+  );
+
+  const filteredTextSets = useMemo(() => {
+    if (showInUse) {
+      return getTextSetsForInUseFonts();
+    }
+    return selectedCat ? textSets[selectedCat] : allTextSets;
+  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts, showInUse]);
+
+  const categories = useMemo(
+    () => [
+      ...Object.keys(textSets).map((cat) => ({
         id: cat,
         label: CATEGORIES[cat] ?? cat,
       })),
+    ],
     [textSets]
   );
 
-  useEffect(() => {
-    getTextSets().then(setTextSets);
+  const rowVirtualizer = useVirtual({
+    size: Math.ceil((filteredTextSets || []).length / 2),
+    parentRef: paneRef,
+    estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
+    overscan: 5,
+  });
+
+  const handleSelectedCategory = useCallback((selectedCategory) => {
+    setSelectedCat(selectedCategory);
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+      selectedCategory,
+    });
   }, []);
 
-  useRovingTabIndex({ ref });
+  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
+  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
-  const sectionId = `section-${uuidv4()}`;
-  const title = __('Text Sets', 'web-stories');
   return (
-    <Section id={sectionId} title={title}>
-      <CategoryWrapper>
+    <SectionContainer id={sectionId}>
+      <TitleBar>
+        <SectionTitle>{title}</SectionTitle>
+        <Switch
+          onChange={(value) => {
+            requestAnimationFrame(() => setShowInUse(value));
+          }}
+          value={showInUse}
+          label={__('Match fonts from story', 'web-stories')}
+        />
+      </TitleBar>
+      <FullWidthWrapper>
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
-          selectItem={setSelectedCat}
-          deselectItem={() => setSelectedCat(null)}
+          selectItem={handleSelectedCategory}
+          deselectItem={() => handleSelectedCategory(null)}
         />
-      </CategoryWrapper>
-      <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
-        <UnitsProvider
-          pageSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE / PAGE_RATIO,
-          }}
-        >
-          {filteredTextSets.map(
-            (elements, index) =>
-              elements.length > 0 && <TextSet key={index} elements={elements} />
-          )}
-        </UnitsProvider>
-      </TextSetContainer>
-    </Section>
+      </FullWidthWrapper>
+      <UnitsProvider
+        pageSize={{
+          width: TEXT_SET_SIZE,
+          height: TEXT_SET_SIZE / PAGE_RATIO,
+        }}
+      >
+        <TextSetContainer height={rowVirtualizer.totalSize}>
+          {rowVirtualizer.virtualItems.map((virtualRow) => {
+            const firstColumnIndex = virtualRow.index * 2;
+            const secondColumnIndex = firstColumnIndex + 1;
+
+            return (
+              <TextSetRow
+                key={virtualRow.index}
+                height={virtualRow.size}
+                translateY={virtualRow.start}
+              >
+                {(filteredTextSets[firstColumnIndex] || []).length > 0 && (
+                  <TextSet
+                    key={firstColumnIndex}
+                    elements={filteredTextSets[firstColumnIndex]}
+                  />
+                )}
+                {filteredTextSets[secondColumnIndex] &&
+                  (filteredTextSets[secondColumnIndex] || []).length > 0 && (
+                    <TextSet
+                      key={secondColumnIndex}
+                      elements={filteredTextSets[secondColumnIndex]}
+                    />
+                  )}
+              </TextSetRow>
+            );
+          })}
+        </TextSetContainer>
+      </UnitsProvider>
+    </SectionContainer>
   );
 }
+
+TextSets.propTypes = {
+  paneRef: PropTypes.object,
+};
 
 export default TextSets;

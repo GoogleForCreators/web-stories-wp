@@ -2,7 +2,7 @@
 
 A living components library is maintained using [Storybook](https://storybook.js.org/).
 
-The latest version of the project's storybook can be found at [https://google.github.io/web-stories-wp/](https://google.github.io/web-stories-wp/).
+The latest version of the project's storybook can be found at [https://google.github.io/web-stories-wp/storybook](https://google.github.io/web-stories-wp/storybook).
 
 To run it locally, use the following command:
 

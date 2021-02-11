@@ -17,33 +17,28 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useLayout } from '../../../../../app/layout';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import { TEXT_SET_SIZE } from '../../../../../constants';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useLibrary from '../../../useLibrary';
 import { dataToEditorX, dataToEditorY } from '../../../../../units';
+import LibraryMoveable from '../../shared/libraryMoveable';
 import TextSetElements from './textSetElements';
 
-const TextSetItem = styled.button`
-  border: 0;
-  outline: 0;
+const TextSetItem = styled.div`
   position: relative;
   width: ${TEXT_SET_SIZE}px;
   height: ${TEXT_SET_SIZE}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.07)};
   border-radius: 4px;
   cursor: pointer;
   ${KEYBOARD_USER_SELECTOR} &:focus {
@@ -51,18 +46,13 @@ const TextSetItem = styled.button`
   }
 `;
 
-const DragWrapper = styled.div.attrs({
-  role: 'listitem',
-})``;
-
 const DragContainer = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
+  opacity: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.2)};
 `;
 
 function TextSet({ elements }) {
@@ -70,64 +60,45 @@ function TextSet({ elements }) {
     insertTextSet: state.actions.insertTextSet,
   }));
 
-  const elementRef = useRef();
-
   const { canvasPageSize } = useLayout(({ state }) => ({
     canvasPageSize: state.canvasPageSize,
   }));
-
-  const handleDragStart = useCallback(
-    (e) => {
-      const { x, y } = e.target.getBoundingClientRect();
-      const offsetX = e.clientX - x;
-      const offsetY = e.clientY - y;
-
-      e.dataTransfer.setDragImage(elementRef.current, offsetX, offsetY);
-      e.dataTransfer.setData(
-        'textset',
-        JSON.stringify({
-          grabOffsetX: -offsetX,
-          grabOffsetY: -offsetY,
-          elements,
-        })
-      );
-    },
-    [elements]
-  );
 
   const { textSetHeight, textSetWidth } = elements[0];
   const { width: pageWidth, height: pageHeight } = canvasPageSize;
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
-
   return (
-    <DragWrapper>
-      <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
-        <TextSetElements
-          elements={elements}
-          pageSize={{
-            width: pageWidth,
-            height: pageHeight,
-          }}
-        />
-      </DragContainer>
-      <TextSetItem
-        role="listitem"
-        draggable={true}
-        onDragStart={handleDragStart}
-        aria-label={__('Insert Text Set', 'web-stories')}
+    <TextSetItem
+      role="listitem"
+      aria-label={__('Insert Text Set', 'web-stories')}
+    >
+      <TextSetElements isForDisplay elements={elements} />
+      <LibraryMoveable
+        type={'textSet'}
+        elements={elements}
+        elementProps={{}}
         onClick={() => insertTextSet(elements)}
-      >
-        <TextSetElements
-          isForDisplay
-          elements={elements}
-          pageSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE / PAGE_RATIO,
-          }}
-        />
-      </TextSetItem>
-    </DragWrapper>
+        previewSize={{
+          width: TEXT_SET_SIZE,
+          height: TEXT_SET_SIZE,
+        }}
+        cloneElement={DragContainer}
+        cloneProps={{
+          width: dragWidth,
+          height: dragHeight,
+          children: (
+            <TextSetElements
+              elements={elements}
+              pageSize={{
+                width: pageWidth,
+                height: pageHeight,
+              }}
+            />
+          ),
+        }}
+      />
+    </TextSetItem>
   );
 }
 
