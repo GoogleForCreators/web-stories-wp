@@ -78,6 +78,13 @@ const MenuContainer = styled.ul(
         transition: color ${BUTTON_TRANSITION_TIMING};
       }
 
+      a {
+        :active span,
+        :hover span {
+          color: ${theme.colors.fg.primary};
+        }
+      }
+
       button {
         width: 100%;
         border-radius: 0;
