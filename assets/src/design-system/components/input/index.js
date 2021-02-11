@@ -89,7 +89,7 @@ export const Input = ({
   return (
     <Container className={className}>
       {label && (
-        <Label htmlFor={inputId} as="label" disabled={disabled}>
+        <Label htmlFor={inputId} forwardedAs="label" disabled={disabled}>
           {label}
         </Label>
       )}
