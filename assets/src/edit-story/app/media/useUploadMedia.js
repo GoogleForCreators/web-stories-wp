@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useUploader } from '../../uploader';
-import { useSnackbar } from '../../snackbar';
-import {
-  getResourceFromLocalFile,
-  getResourceFromAttachment,
-} from '../../../app/media/utils';
-import usePreventWindowUnload from '../../../utils/usePreventWindowUnload';
+import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
+import { useUploader } from '../uploader';
+import { useSnackbar } from '../snackbar';
+import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
 
 function useUploadMedia({ media, setMedia }) {
   const { uploadFile } = useUploader();
