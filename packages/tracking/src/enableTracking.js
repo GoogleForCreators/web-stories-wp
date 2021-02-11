@@ -50,6 +50,12 @@ function loadTrackingScript(sendPageView = true) {
     const pagePath = '/' + config.appName.replace(/ /g, '-').toLowerCase();
 
     gtag('js', new Date());
+
+    // Note: `set` commands need to be placed before `config` commands to ensure those values are passed along with page views.
+    // See https://developers.google.com/analytics/devguides/collection/ga4/persistent-values
+    // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
+    gtag('set', 'user_properties', config.userProperties);
+
     // TODO: provide custom pageview-related parameters?
     // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
     gtag('config', config.trackingId, {
@@ -76,9 +82,6 @@ function loadTrackingScript(sendPageView = true) {
       page_title: pageTitle,
       page_path: pagePath,
     });
-
-    // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
-    gtag('set', 'user_properties', config.userProperties);
   });
 }
 
