@@ -19,6 +19,10 @@
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import styled, { css } from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { THEME_CONSTANTS } from '../../theme';
 
 /**
  * Internal dependencies
@@ -27,50 +31,36 @@ import { Button } from '../button';
 import { Link } from '../typography/link';
 import { Text } from '../typography/text';
 
-const reverseCss = ({ isLTR }) => css`
-  flex-direction: ${isLTR ? 'row-reverse' : 'row'};
-
-  span {
-    text-align: ${isLTR ? 'right' : 'left'};
-  }
-`;
-
-const ReversableButton = styled(Button)`
-  ${reverseCss};
-`;
-
-const ReversableLink = styled(Link)`
-  ${reverseCss};
-`;
-
-const ReversableContainer = styled.div`
-  ${reverseCss};
-`;
-
 const ItemText = styled(Text)`
   width: 200px;
+  text-align: left;
 `;
 
 const Shortcut = styled(Text)(
   ({ theme }) => css`
-    margin-right: 5px;
     color: ${theme.colors.border.disable};
+    white-space: nowrap;
   `
 );
 
-export const MenuItem = ({
-  disabled,
-  href,
-  isLTR,
-  label,
-  onClick,
-  shortcut,
-}) => {
+export const MenuItem = ({ disabled, href, label, onClick, shortcut }) => {
   const textContent = useMemo(
     () => (
       <>
-        <ItemText forwardedAs="span">{label}</ItemText>
-        {shortcut && <Shortcut forwardedAs="span">{shortcut}</Shortcut>}
+        <ItemText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          forwardedAs="span"
+        >
+          {label}
+        </ItemText>
+        {shortcut && (
+          <Shortcut
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            forwardedAs="span"
+          >
+            {shortcut}
+          </Shortcut>
+        )}
       </>
     ),
     [label, shortcut]
@@ -78,24 +68,19 @@ export const MenuItem = ({
 
   if (onClick) {
     return (
-      <ReversableButton
-        aria-label={label}
-        disabled={disabled}
-        onClick={onClick}
-        isLTR={isLTR}
-      >
+      <Button aria-label={label} disabled={disabled} onClick={onClick}>
         {textContent}
-      </ReversableButton>
+      </Button>
     );
   } else if (href) {
     return (
-      <ReversableLink aria-label={label} href={href} isLTR={isLTR}>
+      <Link aria-label={label} href={href}>
         {textContent}
-      </ReversableLink>
+      </Link>
     );
   }
 
-  return <ReversableContainer isLTR={isLTR}>{textContent}</ReversableContainer>;
+  return <div>{textContent}</div>;
 };
 
 /**
@@ -144,7 +129,6 @@ export const linkOrButtonValidator = function (props, _, componentName) {
 export const MenuItemProps = {
   disabled: PropTypes.bool,
   href: linkOrButtonValidator,
-  isLTR: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onClick: linkOrButtonValidator,
   shortcut: PropTypes.string,

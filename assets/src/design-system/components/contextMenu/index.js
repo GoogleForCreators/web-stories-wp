@@ -26,6 +26,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
 import { MenuItem, MenuItemProps } from './menu-item';
 
+const SEPARATOR_TOP_CLASS = 'separatorTop';
+const SEPARATOR_BOTTOM_CLASS = 'separatorBottom';
+
 const Popover = styled.div(
   ({ isOpen, theme }) => css`
     position: absolute;
@@ -36,6 +39,7 @@ const Popover = styled.div(
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 200px;
 
     ${isOpen &&
     css`
@@ -52,7 +56,7 @@ const MenuContainer = styled.ul(
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     margin: 0;
-    min-width: 210px;
+    /* min-width: 200px; */
     padding: 5px 0;
     pointer-events: auto;
     list-style: none;
@@ -125,22 +129,23 @@ const MenuContainer = styled.ul(
   `
 );
 
-const ContextMenu = ({ isOpen, isLTR, items, ...props }) => {
+const ContextMenu = ({ isOpen, items, ...props }) => {
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   return (
-    <Popover isOpen={isOpen} {...props}>
+    <Popover role="dialog" isOpen={isOpen} {...props}>
       <MenuContainer>
         {items.map(({ separator, ...itemProps }, index) => (
           <li
+            aria-label={itemProps.label}
             key={ids[index]}
             className={
-              (separator === 'top' && 'separatorTop') ||
-              (separator === 'bottom' && 'separatorBottom') ||
+              (separator === 'top' && SEPARATOR_TOP_CLASS) ||
+              (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
               ''
             }
           >
-            <MenuItem {...itemProps} isLTR={isLTR} />
+            <MenuItem {...itemProps} />
           </li>
         ))}
       </MenuContainer>
@@ -149,7 +154,6 @@ const ContextMenu = ({ isOpen, isLTR, items, ...props }) => {
 };
 
 ContextMenu.propTypes = {
-  isLTR: PropTypes.bool,
   isOpen: PropTypes.bool,
   items: PropTypes.arrayOf(
     PropTypes.shape({

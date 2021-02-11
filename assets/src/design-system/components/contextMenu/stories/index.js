@@ -43,8 +43,8 @@ const items = [
   { label: 'Copy style', shortcut: '⌥ ⌘ C' },
   { label: 'Paste Style', shortcut: '⌥ ⌘ V' },
   { label: 'Clear text styles' },
-  { label: 'Add style to "Saved styles"' },
-  { label: 'Add color to "Saved colors' },
+  { label: 'Add style to "Saved style"' },
+  { label: 'Add color to "Saved colors"' },
 ];
 
 const randomItems = [
@@ -92,7 +92,6 @@ export const _default = () => {
       <ContextMenu
         items={itemsWithEventHandlers}
         isOpen={boolean('isOpen', true)}
-        isLTR={boolean('Left To Right', false)}
       />
     </Container>
   );
@@ -110,7 +109,6 @@ export const DarkMode = () => {
         <ContextMenu
           items={itemsWithEventHandlers}
           isOpen={boolean('isOpen', true)}
-          isLTR={boolean('Left To Right', false)}
         />
       </Container>
     </DarkThemeProvider>
@@ -134,7 +132,6 @@ export const RandomItemsInMenu = () => {
       <ContextMenu
         items={itemsWithEventHandlers}
         isOpen={boolean('isOpen', true)}
-        isLTR={boolean('Left To Right', false)}
       />
     </Container>
   );
