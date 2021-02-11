@@ -38,7 +38,7 @@ const ItemText = styled(Text)`
 const Shortcut = styled(Text)(
   ({ theme }) => css`
     margin-right: 5px;
-    color: ${theme.colors.bg.tertiary};
+    color: ${theme.colors.border.disable};
   `
 );
 

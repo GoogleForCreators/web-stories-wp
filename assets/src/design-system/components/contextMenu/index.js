@@ -31,9 +31,10 @@ const Popover = styled.div(
     position: absolute;
     display: none;
     margin: 5px 0 0;
-    background-color: transparent;
+    background-color: ${theme.colors.bg.primary};
     pointer-events: none;
     border-radius: ${theme.borders.radius.small};
+    border: 1px solid ${theme.colors.border.disable};
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     ${isOpen &&
@@ -49,7 +50,7 @@ const Popover = styled.div(
 const MenuContainer = styled.ul(
   ({ theme }) => css`
     background-color: ${theme.colors.bg.primary};
-    border-radius: 8px;
+    border-radius: ${theme.borders.radius.small};
     margin: 0;
     min-width: 210px;
     padding: 5px 0;
@@ -73,15 +74,18 @@ const MenuContainer = styled.ul(
         transition: background-color ${BUTTON_TRANSITION_TIMING};
       }
 
-      button,
-      button:disabled {
+      span {
+        transition: color ${BUTTON_TRANSITION_TIMING};
+      }
+
+      button {
         width: 100%;
         border-radius: 0;
         background-color: transparent;
-      }
 
-      button:disabled * {
-        color: ${theme.colors.bg.tertiary};
+        :disabled {
+          color: ${theme.colors.bg.tertiary};
+        }
       }
 
       &.separatorTop {
@@ -92,10 +96,19 @@ const MenuContainer = styled.ul(
         border-bottom: 1px solid ${theme.colors.bg.tertiary};
       }
 
+      :active span,
+      :hover span {
+        color: ${theme.colors.fg.primary};
+      }
+
+      :active a,
+      :active button:not(:disabled) {
+        background-color: ${theme.colors.interactiveBg.secondaryPress};
+      }
+
       :hover a,
-      button:active,
       :hover button:not(:disabled) {
-        background-color: ${theme.colors.bg.secondary};
+        background-color: ${theme.colors.interactiveBg.secondaryHover};
       }
     }
   `

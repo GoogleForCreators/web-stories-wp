@@ -74,6 +74,10 @@ export default {
 
 const Container = styled.div`
   position: relative;
+  height: 700px;
+  width: 500px;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 export const _default = () => {
