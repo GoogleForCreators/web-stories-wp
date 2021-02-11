@@ -300,7 +300,7 @@ function MediaPane(props) {
             {!isSearching && (
               <Button
                 variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.PRIMARY}
+                type={BUTTON_TYPES.SECONDARY}
                 size={BUTTON_SIZES.SMALL}
                 onClick={openMediaPicker}
               >
