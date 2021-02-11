@@ -19,14 +19,11 @@
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import styled, { css } from 'styled-components';
-/**
- * Internal dependencies
- */
-import { Button } from '../button';
 
 /**
  * Internal dependencies
  */
+import { Button } from '../button';
 import { Link } from '../typography/link';
 import { Text } from '../typography/text';
 
