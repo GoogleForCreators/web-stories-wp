@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -30,23 +30,25 @@ const StyledTextArea = styled.textarea`
   box-shadow: none !important;
   outline: none;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   resize: ${({ resizeable }) => (resizeable ? 'auto' : 'none')};
 
   &:disabled {
     background-color: transparent;
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 
 const Container = styled.div`
   width: 100%;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
 
   ${({ disabled, readOnly }) => (disabled || readOnly) && `opacity: 0.3`};
 
@@ -55,78 +57,87 @@ const Container = styled.div`
   border-radius: 4px;
   border: 1px solid transparent;
   &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout} !important;
+    border-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.whiteout} !important;
   }
 `;
 
 const Counter = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   text-align: right;
   line-height: 1;
   padding-right: 6px;
 `;
 
-function TextArea({
-  className,
-  placeholder,
-  value,
-  maxLength,
-  readOnly,
-  disabled,
-  resizeable,
-  showTextLimit,
-  rows,
-  onTextChange,
-  onBlur,
-  ...rest
-}) {
-  const hasMaxLength = typeof maxLength === 'number';
-  const showCounter = showTextLimit && hasMaxLength;
-
-  const handleChange = useCallback(
-    (e) => {
-      const str = e.target.value || '';
-      const text = hasMaxLength ? str.slice(0, maxLength) : str;
-
-      onTextChange(text, e);
+const TextArea = forwardRef(
+  (
+    {
+      className,
+      placeholder,
+      value,
+      maxLength,
+      readOnly,
+      disabled,
+      resizeable,
+      showTextLimit,
+      rows,
+      onTextChange,
+      onBlur,
+      ...rest
     },
-    [onTextChange, hasMaxLength, maxLength]
-  );
+    ref
+  ) => {
+    const hasMaxLength = typeof maxLength === 'number';
+    const showCounter = showTextLimit && hasMaxLength;
 
-  const handleBlur = useCallback(
-    (e) => {
-      if (e.target.form) {
-        e.target.form.dispatchEvent(
-          new window.Event('submit', { cancelable: true })
-        );
-      }
+    const handleChange = useCallback(
+      (e) => {
+        const str = e.target.value || '';
+        const text = hasMaxLength ? str.slice(0, maxLength) : str;
 
-      if (onBlur) {
-        onBlur(e);
-      }
-    },
-    [onBlur]
-  );
+        onTextChange(text, e);
+      },
+      [onTextChange, hasMaxLength, maxLength]
+    );
 
-  return (
-    <Container className={className}>
-      <StyledTextArea
-        placeholder={placeholder}
-        maxLength={maxLength}
-        disabled={disabled}
-        readOnly={readOnly}
-        resizeable={resizeable}
-        rows={rows}
-        value={value}
-        {...rest}
-        onChange={handleChange}
-        onBlur={handleBlur}
-      />
-      {showCounter && <Counter>{`${value.length}/${maxLength}`}</Counter>}
-    </Container>
-  );
-}
+    const handleBlur = useCallback(
+      (e) => {
+        if (e.target.form) {
+          e.target.form.dispatchEvent(
+            new window.Event('submit', { cancelable: true })
+          );
+        }
+
+        if (onBlur) {
+          onBlur(e);
+        }
+      },
+      [onBlur]
+    );
+
+    return (
+      <Container className={className}>
+        <StyledTextArea
+          placeholder={placeholder}
+          maxLength={maxLength}
+          disabled={disabled}
+          readOnly={readOnly}
+          resizeable={resizeable}
+          rows={rows}
+          value={value}
+          {...rest}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          ref={ref}
+        />
+        {showCounter && <Counter>{`${value.length}/${maxLength}`}</Counter>}
+      </Container>
+    );
+  }
+);
+
+TextArea.displayName = 'TextArea';
 
 TextArea.propTypes = {
   className: PropTypes.string,

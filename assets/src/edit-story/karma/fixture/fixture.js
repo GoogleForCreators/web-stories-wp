@@ -21,11 +21,11 @@ import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from '../../../migration';
 import FixtureEvents from '../../../karma-fixture/events';
 import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
@@ -759,6 +759,19 @@ class APIProviderFixture {
         []
       );
 
+      const updateCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
@@ -787,6 +800,7 @@ class APIProviderFixture {
           getStatusCheck,
           getPageLayouts,
           getCurrentUser,
+          updateCurrentUser,
         },
       };
       return (

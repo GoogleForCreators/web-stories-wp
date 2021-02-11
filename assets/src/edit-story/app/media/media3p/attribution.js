@@ -38,13 +38,14 @@ const AttributionPill = styled.div`
   display: flex;
   flex-wrap: nowrap;
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.fg.white};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.7)};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.7)};
   cursor: pointer;
 `;
 
 const logo = css`
-  fill: ${({ theme }) => theme.colors.fg.white};
+  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   margin-left: 6px;
   line-height: 14px;
 `;

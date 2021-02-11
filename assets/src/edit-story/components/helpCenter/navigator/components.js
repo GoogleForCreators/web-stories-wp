@@ -35,6 +35,13 @@ export const NavBar = styled.div`
 
 export const NavButton = styled(Button)`
   ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )}
+  padding: 2px 6px;
+
   svg {
     width: 14px;
   }

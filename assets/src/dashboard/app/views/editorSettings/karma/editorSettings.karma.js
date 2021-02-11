@@ -65,7 +65,7 @@ describe('Settings View', () => {
 
   function navigateToEditorSettings() {
     const editorSettingsMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Editor Settings$/,
+      name: /^Settings$/,
     });
     return fixture.events.click(editorSettingsMenuItem);
   }

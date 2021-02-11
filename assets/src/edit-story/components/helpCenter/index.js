@@ -18,17 +18,13 @@
  */
 import { useRef, useEffect } from 'react';
 import { useFeatures } from 'flagged';
-import styled, { ThemeProvider, StyleSheetManager } from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 
 /**
  * Internal dependencies
  */
-import {
-  theme as dsTheme,
-  ThemeGlobals,
-  useFocusOut,
-} from '../../../design-system';
+import { ThemeGlobals, useFocusOut } from '../../../design-system';
 import { useConfig } from '../../app/config';
 import { Z_INDEX } from '../canvas/layout';
 import { Navigator } from './navigator';
@@ -74,7 +70,7 @@ export const HelpCenter = () => {
     <StyleSheetManager
       stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
     >
-      <ThemeProvider theme={dsTheme}>
+      <>
         <ThemeGlobals.OverrideFocusOutline />
         <Wrapper ref={ref}>
           <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
@@ -88,6 +84,7 @@ export const HelpCenter = () => {
               isPrevDisabled={state.isPrevDisabled}
             >
               <Companion
+                readTips={state.readTips}
                 tipKey={state.navigationFlow[state.navigationIndex]}
                 onTipSelect={actions.goToTip}
                 isLeftToRightTransition={state.isLeftToRightTransition}
@@ -97,11 +94,16 @@ export const HelpCenter = () => {
           <Toggle
             isOpen={state.isOpen}
             onClick={actions.toggle}
-            notificationCount={1}
+            notificationCount={
+              // navigation includes 'done' which does not get marked read
+              state.navigationFlow.length -
+              Object.keys(state.readTips).length -
+              1
+            }
             popupId={POPUP_ID}
           />
         </Wrapper>
-      </ThemeProvider>
+      </>
     </StyleSheetManager>
   ) : null;
 };

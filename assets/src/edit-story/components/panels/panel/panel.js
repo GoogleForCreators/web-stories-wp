@@ -47,6 +47,7 @@ function Panel({
   ariaLabel = null,
   ariaHidden = false,
   isPersistable = true,
+  ...rest
 }) {
   const { selectedElementIds } = useStory(
     ({ state: { selectedElementIds } }) => {
@@ -200,7 +201,7 @@ function Panel({
   );
 
   return (
-    <Wrapper {...wrapperProps} aria-hidden={ariaHidden}>
+    <Wrapper {...wrapperProps} aria-hidden={ariaHidden} {...rest}>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );
