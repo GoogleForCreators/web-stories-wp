@@ -108,6 +108,9 @@ class Tracking {
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
 			'trackingIdGA4'   => self::TRACKING_ID_GA4,
+			// This doesn't seem to be fully working for web properties.
+			// So we send it as both app_version and a user property.
+			// See https://support.google.com/analytics/answer/9268042.
 			'appVersion'      => WEBSTORIES_VERSION,
 			'userProperties'  => $this->get_user_properties(),
 		];
@@ -135,6 +138,7 @@ class Tracking {
 			'enabledExperiments' => $experiments,
 			'wpVersion'          => $wp_version,
 			'phpVersion'         => PHP_VERSION,
+			'pluginVersion'      => WEBSTORIES_VERSION,
 			'numberOfUsers'      => is_multisite() ? get_user_count() : count_users()['total_users'],
 		];
 	}

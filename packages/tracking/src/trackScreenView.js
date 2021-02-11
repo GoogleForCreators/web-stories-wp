@@ -24,8 +24,6 @@ import isTrackingEnabled from './isTrackingEnabled';
 /**
  * Send an Analytics screen_view event.
  *
- * @todo Provide more data like app_version?
- *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/screens
  *
  * @param {string} screenName Screen name. Example: 'Explore Templates'.

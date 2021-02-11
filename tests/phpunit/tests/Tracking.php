@@ -52,6 +52,8 @@ class Tracking extends \WP_UnitTestCase {
 	 * @covers ::get_settings
 	 */
 	public function test_get_settings() {
+		global $wp_version;
+
 		wp_set_current_user( self::$user_id );
 
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
@@ -75,9 +77,13 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'enabledExperiments', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'wpVersion', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'phpVersion', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'pluginVersion', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'numberOfUsers', $settings['userProperties'] );
 		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
 		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
+		$this->assertSame( PHP_VERSION, $settings['userProperties']['phpVersion'] );
+		$this->assertSame( $wp_version, $settings['userProperties']['wpVersion'] );
+		$this->assertSame( WEBSTORIES_VERSION, $settings['userProperties']['pluginVersion'] );
 		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
 		$this->assertSame( 'enableFoo,enableBar', $settings['userProperties']['enabledExperiments'] );
 		$this->assertInternalType( 'string', $settings['userProperties']['wpVersion'] );
@@ -96,11 +102,11 @@ class Tracking extends \WP_UnitTestCase {
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
-		$settings        = ( new \Google\Web_Stories\Tracking( $experiments ) )->get_settings();
-		$trackingAllowed = $settings['trackingAllowed'];
+		$settings         = ( new \Google\Web_Stories\Tracking( $experiments ) )->get_settings();
+		$tracking_allowed = $settings['trackingAllowed'];
 
 		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY );
 
-		$this->assertTrue( $trackingAllowed );
+		$this->assertTrue( $tracking_allowed );
 	}
 }

@@ -74,6 +74,9 @@ function loadTrackingScript(sendPageView = true) {
     // At some point, only this will remain.
     gtag('config', config.trackingIdGA4, {
       app_name: config.appName,
+      // This doesn't seem to be fully working for web properties.
+      // So we send it as both app_version and a user property.
+      // See https://support.google.com/analytics/answer/9268042
       app_version: config.appVersion,
       send_page_view: sendPageView,
       // Setting the transport method to 'beacon' lets the hit be sent
