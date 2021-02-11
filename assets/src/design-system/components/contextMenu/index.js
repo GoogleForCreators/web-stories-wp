@@ -102,7 +102,7 @@ const MenuContainer = styled.ul(
       }
 
       &.separatorBottom {
-        border-bottom: 1px so lid ${theme.colors.bg.tertiary};
+        border-bottom: 1px solid ${theme.colors.bg.tertiary};
       }
 
       :hover a,
