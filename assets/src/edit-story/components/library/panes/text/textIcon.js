@@ -17,15 +17,106 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
 /**
  * Internal dependencies
  */
+import useLibrary from '../../useLibrary';
 import { Icons } from '../../../../../design-system';
+import { DEFAULT_PRESET } from './textPresets';
 
-function TextIcon() {
-  return <Icons.Text aria-label={__('Explore Media', 'web-stories')} />;
+const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
+  // Necessary because of https://github.com/styled-components/styled-components/pull/2093
+  <Icons.Text {...rest} />
+)).attrs(({ isSecondary }) => ({
+  style: {
+    // scales 14px to 11px
+    transform: isSecondary ? 'scale(0.78)' : 'none',
+  },
+}))``;
+
+const AnimatedTextAddIcon = styled(({ isPrimary, ...rest }) => (
+  // Necessary because of https://github.com/styled-components/styled-components/pull/2093
+  <Icons.AddFilled {...rest} />
+)).attrs(({ isPrimary }) => ({
+  style: {
+    // scales 12px to 16px
+    transform: isPrimary ? 'scale(1.33)' : 'none',
+  },
+}))``;
+
+const QuickAction = styled.button`
+  background: transparent;
+  border: 0;
+  padding: 0;
+  line-height: 1;
+  cursor: pointer;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  flex: 1;
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+`;
+
+const IconWrapper = styled.div`
+  margin: 0;
+  flex: 1;
+  svg {
+    width: 13px;
+    height: 14px;
+  }
+`;
+
+const TextIconContainer = styled.div`
+  display: flex;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+`;
+
+function TextIcon(props) {
+  const {
+    actions: { insertElement },
+  } = useLibrary();
+
+  const [isHoveringQuick, setIsHoveringQuick] = useState(false);
+  const [isFocusingQuick, setIsFocusingQuick] = useState(false);
+
+  const handleAddText = (evt) => {
+    evt.stopPropagation();
+    insertElement('text', DEFAULT_PRESET);
+  };
+  const { isActive } = props;
+  return (
+    <TextIconContainer>
+      <IconWrapper onPointerOut={() => setIsHoveringQuick(false)}>
+        <AnimatedTextIcon
+          id="text-tab-icon"
+          isSecondary={isHoveringQuick || isFocusingQuick}
+          aria-label={__('Text library', 'web-stories')}
+        />
+      </IconWrapper>
+      <QuickAction
+        aria-label={__('Add new text element', 'web-stories')}
+        onClick={handleAddText}
+        tabIndex={isActive ? 0 : -1}
+        onFocus={() => setIsFocusingQuick(true)}
+        onBlur={() => setIsFocusingQuick(false)}
+        onPointerOver={() => setIsHoveringQuick(true)}
+      >
+        <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
+      </QuickAction>
+    </TextIconContainer>
+  );
 }
+
+TextIcon.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+};
 
 export default TextIcon;

@@ -41,12 +41,12 @@ const Tabs = styled.ul.attrs({
   flex-direction: row;
   align-items: stretch;
   width: 100%;
+  max-width: 100%;
   justify-content: start;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-bottom: 1px solid
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.04)};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
 `;
 
 const Tab = styled.li.attrs(({ isActive }) => ({
@@ -71,13 +71,13 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.accent.primary};
+    border-bottom: 1px solid ${theme.colors.accent.primary};
   `}
 
   svg {
     display: block;
     height: 16px;
-    width: 28px;
+    width: 24px;
     margin: 0 auto;
     transform-origin: center center;
     transition: transform 0.3s ease;
