@@ -57,7 +57,7 @@ const MenuContainer = styled.ul(
     border-radius: ${theme.borders.radius.small};
     margin: 0;
     /* min-width: 200px; */
-    padding: 5px 0;
+    padding: 4px 0;
     pointer-events: auto;
     list-style: none;
 
@@ -73,7 +73,7 @@ const MenuContainer = styled.ul(
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px 18px;
+        padding: 8px 16px;
         border: 0;
         transition: background-color ${BUTTON_TRANSITION_TIMING};
       }
@@ -137,7 +137,6 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
       <MenuContainer>
         {items.map(({ separator, ...itemProps }, index) => (
           <li
-            aria-label={itemProps.label}
             key={ids[index]}
             className={
               (separator === 'top' && SEPARATOR_TOP_CLASS) ||
