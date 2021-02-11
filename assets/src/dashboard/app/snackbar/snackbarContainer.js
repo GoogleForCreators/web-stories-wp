@@ -22,20 +22,19 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Snackbar } from '../../../design-system';
-import { DASHBOARD_SNACKBAR_ID } from '../../constants';
 
 function SnackbarContainer({
   activeSnackbarMessage = {},
   handleDismissMessage,
 }) {
   return (
-    <Snackbar.Container id={DASHBOARD_SNACKBAR_ID}>
+    <Snackbar.Container>
       {activeSnackbarMessage?.id && (
         <Snackbar.Message
           key={`alert_${activeSnackbarMessage.id}`}
-          ariaLabel={activeSnackbarMessage.message.title}
+          aria-label={activeSnackbarMessage.message}
           handleDismiss={() => handleDismissMessage(activeSnackbarMessage.id)}
-          message={activeSnackbarMessage.message.body}
+          message={activeSnackbarMessage.message}
         />
       )}
     </Snackbar.Container>
@@ -46,8 +45,7 @@ SnackbarContainer.propTypes = {
   handleDismissMessage: PropTypes.func.isRequired,
   activeSnackbarMessage: PropTypes.shape({
     id: PropTypes.number,
-    title: PropTypes.string,
-    body: PropTypes.string,
+    message: PropTypes.string,
   }),
 };
 export default SnackbarContainer;

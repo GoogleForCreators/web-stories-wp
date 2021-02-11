@@ -32,7 +32,6 @@ import {
   BUTTON_SIZES,
 } from '../../../../../../design-system';
 
-import { trackEvent } from '../../../../../../tracking';
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
 import {
@@ -152,23 +151,17 @@ function StoriesView({
           global.navigator.clipboard.writeText(story.link);
 
           addSnackbarMessage({
-            message: {
-              title: __('URL copied', 'web-stories'),
-              body:
-                story.title.length > 0
-                  ? sprintf(
-                      /* translators: %s: story title. */
-                      __(
-                        '%s has been copied to your clipboard.',
-                        'web-stories'
-                      ),
-                      story.title
-                    )
-                  : __(
-                      '(no title) has been copied to your clipboard.',
-                      'web-stories'
-                    ),
-            },
+            message:
+              story.title.length > 0
+                ? sprintf(
+                    /* translators: %s: story title. */
+                    __('%s has been copied to your clipboard.', 'web-stories'),
+                    story.title
+                  )
+                : __(
+                    '(no title) has been copied to your clipboard.',
+                    'web-stories'
+                  ),
             severity: ALERT_SEVERITY.SUCCESS,
             id: Date.now(),
           });

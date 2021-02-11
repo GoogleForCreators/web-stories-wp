@@ -196,10 +196,7 @@ describe('templateReducer', () => {
       {
         type: ACTION_TYPES.FETCH_TEMPLATES_FAILURE,
         payload: {
-          message: {
-            title: ERRORS.LOAD_TEMPLATES.TITLE,
-            body: 'test error message',
-          },
+          message: ERRORS.LOAD_TEMPLATES.MESSAGE,
           code: 'test-error-code',
         },
       }
@@ -208,10 +205,7 @@ describe('templateReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          title: ERRORS.LOAD_TEMPLATES.TITLE,
-          body: 'test error message',
-        },
+        message: ERRORS.LOAD_TEMPLATES.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'test-error-code',
       },
@@ -224,10 +218,7 @@ describe('templateReducer', () => {
       {
         type: ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
         payload: {
-          message: {
-            title: ERRORS.CREATE_TEMPLATE_FROM_STORY.TITLE,
-            body: 'test error message',
-          },
+          message: ERRORS.CREATE_TEMPLATE_FROM_STORY.MESSAGE,
           code: 'test-error-code',
         },
       }
@@ -236,10 +227,7 @@ describe('templateReducer', () => {
     expect(result).toMatchObject({
       ...initialState,
       error: {
-        message: {
-          title: ERRORS.CREATE_TEMPLATE_FROM_STORY.TITLE,
-          body: 'test error message',
-        },
+        message: ERRORS.CREATE_TEMPLATE_FROM_STORY.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'test-error-code',
       },

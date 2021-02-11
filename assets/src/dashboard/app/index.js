@@ -36,7 +36,6 @@ import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
   APP_ROUTES,
-  DASHBOARD_LEFT_RAIL_VISIBLE_CLASSNAME,
   NESTED_APP_ROUTES,
   ROUTE_TITLES,
   ADMIN_TITLE,
@@ -119,10 +118,7 @@ const AppContent = () => {
   return (
     <AppFrame>
       {!hideLeftRail && <LeftRail />}
-      <PageContent
-        fullWidth={hideLeftRail}
-        className={!hideLeftRail && DASHBOARD_LEFT_RAIL_VISIBLE_CLASSNAME}
-      >
+      <PageContent fullWidth={hideLeftRail}>
         <Route
           exact
           path={APP_ROUTES.MY_STORIES}
