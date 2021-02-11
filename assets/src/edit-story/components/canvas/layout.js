@@ -84,7 +84,7 @@ const Layer = styled.section`
     '. . . . . . .' minmax(16px, 1fr)
     '. b . p . f .' var(--fullbleed-height-px)
     '. . . . . . .' ${MENU_GAP}px
-    '. . . m . . .' ${MENU_HEIGHT}px
+    'm m m m m m m' ${MENU_HEIGHT}px
     '. . . . . . .' 1fr
     'c c c c c c c' ${CAROUSEL_HEIGHT}px
     /
