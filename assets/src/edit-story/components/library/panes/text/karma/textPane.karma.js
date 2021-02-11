@@ -118,13 +118,13 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     // Heading 3 should be positioned in the default position again.
     await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
-    await verifyDefaultPosition('Heading 3', 'Heading 3');
+    await verifyStaggeredPosition('Heading 3');
 
     await fixture.events.click(fixture.editor.library.text.preset('Caption'));
     await verifyStaggeredPosition('Caption');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await verifyStaggeredPosition(PARAGRAPH_TEXT);
+    await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
 
     await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
     await verifyStaggeredPosition('LABEL');
