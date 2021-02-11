@@ -22,6 +22,7 @@
  * Internal dependencies
  */
 import { Input, labelAccessibilityValidator } from '../';
+import { LetterSpacing } from '../../../icons';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Input', () => {
@@ -47,6 +48,14 @@ describe('Input', () => {
     );
 
     expect(getByText('This is my input hint')).toBeInTheDocument();
+  });
+
+  it('should render an icon', () => {
+    const { getByTestId } = renderWithProviders(
+      <Input aria-label="test" Icon={LetterSpacing} />
+    );
+
+    expect(getByTestId('input-icon')).toBeInTheDocument();
   });
 });
 

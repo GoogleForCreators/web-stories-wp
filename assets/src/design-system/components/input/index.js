@@ -28,7 +28,9 @@ import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
+  min-width: 150px;
 `;
 
 const Label = styled(Text)`
@@ -39,13 +41,25 @@ const Hint = styled(Text)`
   margin-top: 12px;
 `;
 
+const IconContainer = styled.div`
+  position: absolute;
+  background: ${({ theme }) => theme.colors.bg.primary};
+  right: 12px;
+  top: 46px;
+
+  svg {
+    height: 16px;
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+  }
+`;
+
 const StyledInput = styled.input(
   ({ hasError, theme }) => css`
     box-sizing: border-box;
     height: 36px;
     width: 100%;
     padding: 8px 12px;
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+    ${themeHelpers.focusableOutlineCSS};
     ${themeHelpers.expandPresetStyles({
       preset: {
         ...theme.typography.presets.paragraph[
@@ -62,6 +76,10 @@ const StyledInput = styled.input(
 
     :active {
       border-color: ${theme.colors.border.defaultActive};
+
+      & ~ div svg {
+        color: ${theme.colors.fg.primary};
+      }
     }
 
     :disabled {
@@ -69,7 +87,7 @@ const StyledInput = styled.input(
       border-color: ${theme.colors.border.disable};
     }
 
-    & + p {
+    & ~ p {
       color: ${theme.colors.fg[hasError ? 'negative' : 'tertiary']};
     }
   `
@@ -80,6 +98,7 @@ export const Input = ({
   disabled,
   hasError,
   hint,
+  Icon,
   id,
   label,
   ...props
@@ -99,6 +118,11 @@ export const Input = ({
         hasError={hasError}
         {...props}
       />
+      {Icon && (
+        <IconContainer data-testid="input-icon">
+          <Icon />
+        </IconContainer>
+      )}
       {hint && <Hint hasError={hasError}>{hint}</Hint>}
     </Container>
   );
@@ -145,6 +169,7 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
+  Icon: PropTypes.elementType,
   id: PropTypes.string,
   label: labelAccessibilityValidator,
 };

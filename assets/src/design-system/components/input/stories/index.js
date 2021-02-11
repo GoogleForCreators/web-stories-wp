@@ -28,6 +28,7 @@ import { text } from '@storybook/addon-knobs';
 import { Input } from '..';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../..';
+import { Close, LetterSpacing } from '../../../icons';
 
 export default {
   title: 'DesignSystem/Components/Input',
@@ -44,7 +45,7 @@ const Container = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-column: 1 / -1;
   grid-column-gap: 60px;
 
@@ -59,9 +60,11 @@ export const _default = () => {
     oneLight: 'Text',
     twoLight: 'we have an error',
     threeLight: 'disabled',
+    fourLight: 'disabled',
     oneDark: 'Dark mode text',
     twoDark: '',
     threeDark: '',
+    fourDark: '',
   });
 
   const handleChange = (event) => {
@@ -97,6 +100,17 @@ export const _default = () => {
             name="twoLight"
             value={inputState.twoLight}
             onChange={handleChange}
+            label={text('Input 2 Label', 'Icon')}
+            hint={text('Hint', 'Hint')}
+            placeholder="placeholder"
+            Icon={Close}
+          />
+          <Input
+            aria-label="input-three"
+            id="three-light"
+            name="threeLight"
+            value={inputState.threeLight}
+            onChange={handleChange}
             label={text('Input 2 Label', 'Error')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
@@ -104,9 +118,9 @@ export const _default = () => {
           />
           <Input
             aria-label="disabled-input-one"
-            id="three-light"
-            name="threeLight"
-            value={inputState.threeLight}
+            id="four-light"
+            name="fourLight"
+            value={inputState.fourLight}
             onChange={handleChange}
             label={text('Input 3 Label', 'Disabled')}
             hint={text('Hint', 'Hint')}
@@ -119,7 +133,7 @@ export const _default = () => {
         <Container darkMode>
           <Row>
             <Input
-              aria-label="input-three"
+              aria-label="input-four"
               id="one-dark"
               name="oneDark"
               value={inputState.oneDark}
@@ -129,10 +143,21 @@ export const _default = () => {
               placeholder="placeholder"
             />
             <Input
-              aria-label="input-four"
+              aria-label="input-five"
               id="two-dark"
               name="twoDark"
               value={inputState.twoDark}
+              onChange={handleChange}
+              label={text('Input 2 Label', 'Icon')}
+              hint={text('Hint', 'Hint')}
+              placeholder="placeholder"
+              Icon={LetterSpacing}
+            />
+            <Input
+              aria-label="input-six"
+              id="three-dark"
+              name="threeDark"
+              value={inputState.threeDark}
               onChange={handleChange}
               label={text('Input 2 Label', 'Error')}
               hint={text('Hint', 'Hint')}
@@ -141,9 +166,9 @@ export const _default = () => {
             />
             <Input
               aria-label="disabled-input-two"
-              id="three-dark"
-              name="threeDark"
-              value={inputState.threeDark}
+              id="four-dark"
+              name="fourDark"
+              value={inputState.fourDark}
               onChange={handleChange}
               label={text('Input 3 Label', 'Disabled')}
               hint={text('Hint', 'Hint')}
