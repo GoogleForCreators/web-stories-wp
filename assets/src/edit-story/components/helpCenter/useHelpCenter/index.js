@@ -24,8 +24,8 @@ import { clamp } from '../../../../animation';
 import { useCurrentUser } from '../../../app';
 import { BASE_NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
 import {
+  composeEffects,
   createDynamicNavigationFlow,
-  createEffectRun,
   deriveBottomNavigation,
   deriveDisabledButtons,
   deriveReadTip,
@@ -41,7 +41,7 @@ import {
  * @param {*} next - next state
  * @return {*} partial of state
  */
-export const deriveState = createEffectRun(
+export const deriveState = composeEffects(
   // Order matters here as effects run
   // sequentially and alter next state
   // one after the other.
@@ -63,7 +63,7 @@ const reducer = ({ state, actions }, action) => {
   };
 };
 
-const initial = {
+export const initial = {
   state: {
     isOpen: false,
     navigationIndex: -1,

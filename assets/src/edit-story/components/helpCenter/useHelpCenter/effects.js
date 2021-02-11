@@ -93,7 +93,7 @@ export const createDynamicNavigationFlow = (previous, next) => {
  * @param {Array<Function>} effects arry of effects
  * @return {Function} (previous, next) => <object in shape of next>
  */
-export const createEffectRun = (effects = []) => (previous, next) =>
+export const composeEffects = (effects = []) => (previous, next) =>
   effects.reduce(
     (effectedNext, effect) => ({
       ...next,
