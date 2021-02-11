@@ -59,6 +59,10 @@ export const NewStoryButton = styled(Button)(
     :focus {
       color: ${theme.colors.fg.primary};
     }
+
+    :active {
+      color: ${theme.colors.bg.primary};
+    }
   `
 );
 
