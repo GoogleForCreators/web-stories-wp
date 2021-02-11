@@ -25,10 +25,9 @@ import styled from 'styled-components';
 import { Icons } from '../../../../design-system';
 
 export const WarningIcon = styled(Icons.ExclamationTriangle)`
-  color: $(({theme}) => theme.DEPRECATED_THEME.colors.fg.white);
-  width: 14px;
-  height: 14px;
-  margin-left: 8px;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  width: 32px !important;
+  padding-left: 8px;
 `;
 
 export const ButtonContent = styled.div`

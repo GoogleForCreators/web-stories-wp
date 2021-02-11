@@ -43,7 +43,7 @@ const Border = styled.div(
 
 const StyledCheckmark = styled(Checkmark)`
   height: auto;
-  width: 16px;
+  width: 32px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 

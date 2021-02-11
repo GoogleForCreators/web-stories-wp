@@ -52,13 +52,7 @@ const Label = styled.span`
     display: block;
     min-width: 65px;
     text-align: left;
-  }
-`;
-
-const Space = styled.div`
-  width: 89px;
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    width: 48px;
+    padding-right: 20px;
   }
 `;
 
@@ -119,7 +113,6 @@ function Toggle({
       size={BUTTON_SIZES.MEDIUM}
     >
       <Label>{__('Help Center', 'web-stories')}</Label>
-      <Space />
       <IconWrapper>
         {hasNotifications ? (
           <NotificationWrapper>
