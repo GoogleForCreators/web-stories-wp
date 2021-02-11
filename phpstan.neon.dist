@@ -20,6 +20,8 @@ parameters:
     - tests/phpstan/stubs/wpdotcom.php
   bootstrapFiles:
     - tests/phpstan/bootstrap.php
+    - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
+    - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
   dynamicConstantNames:
     - WP_DEBUG
     - WP_DEBUG_LOG
