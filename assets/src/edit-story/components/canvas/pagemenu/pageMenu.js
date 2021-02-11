@@ -42,10 +42,13 @@ const Wrapper = styled.div`
 
 const PageCount = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
-  width: 62px;
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
   line-height: 24px;
+`;
+
+const PageCountSpace = styled.div`
+  width: 24px;
 `;
 
 const Divider = styled.span`
@@ -123,7 +126,7 @@ function PageMenu() {
               currentPageNumber
             )}
           </PageCount>
-          <Space />
+          <PageCountSpace />
         </>
       )}
       <PageMenuButton
