@@ -50,13 +50,14 @@ const items = [
 const randomItems = [
   { label: 'one' },
   { label: 'two', shortcut: '%C' },
-  { label: 'i am a button!' },
+  { label: 'i am a button!', shortcut: '$$$' },
   { label: 'neither a button nor a link' },
   { label: 'this is disabled', disabled: true },
   { label: 'three', separator: 'top' },
   {
     label: 'i am a link!',
     href: 'https://www.google.com/',
+    shortcut: '⌥ ⌘ A',
   },
   {
     label: 'i am a very very very very very very very long label',

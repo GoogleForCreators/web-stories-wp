@@ -89,7 +89,7 @@ export const MenuItem = ({
     );
   } else if (href) {
     return (
-      <ReversableLink href={href} isLTR={isLTR}>
+      <ReversableLink aria-label={label} href={href} isLTR={isLTR}>
         {textContent}
       </ReversableLink>
     );
