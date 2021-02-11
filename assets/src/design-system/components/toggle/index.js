@@ -35,9 +35,9 @@ const CIRCLE_FINAL_POSITION =
   CIRCLE_INITIAL_POSITION -
   (CIRCLE_DIAMETER / 2 - CIRCLE_INITIAL_POSITION / 2);
 
-const ICON_WIDTH = 7;
-const ICON_TOP_POSITION = 8;
-const ICON_LEFT_POSITION = 30.5;
+const ICON_WIDTH = 18;
+const ICON_TOP_POSITION = 2;
+const ICON_LEFT_POSITION = 26;
 
 const Background = styled.div(
   ({ theme }) => css`
