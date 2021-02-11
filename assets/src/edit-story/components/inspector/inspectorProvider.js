@@ -25,12 +25,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useResizeEffect } from '../../../design-system';
+import { Icons, useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
-import { Error, Warning } from '../../../design-system/icons/alert';
 import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
 import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
@@ -64,9 +63,9 @@ function InspectorProvider({ children }) {
   const prepublishAlert = useCallback(
     () =>
       checklist.some(({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR) ? (
-        <Error className="alert error" />
+        <Icons.ExclamationOutline className="alert error" />
       ) : (
-        <Warning className="alert warning" />
+        <Icons.ExclamationTriangle className="alert warning" />
       ),
     [checklist]
   );

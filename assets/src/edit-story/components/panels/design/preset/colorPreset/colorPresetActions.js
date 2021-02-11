@@ -27,7 +27,7 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
  */
 
 import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
-import { Add } from '../../../../../../design-system/icons';
+import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
@@ -42,33 +42,34 @@ const COLOR_GAP = 6;
 
 const ActionsWrapper = styled.div`
   text-align: center;
-  border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
+  border-top: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v6};
   padding: 12px 12px 20px 12px;
 `;
 
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   cursor: pointer;
-  padding: 8px 0px;
+  padding: 0;
   line-height: 20px;
   svg {
-    width: 16px;
-    height: 16px;
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    width: 32px;
+    height: 32px;
   }
 `;
 
 const CtaWrapper = styled.div`
   font-size: 14px;
-  line-height: 30px;
-  margin-right: 5px;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+  line-height: 32px;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
 
   svg {
-    color: ${({ theme }) => theme.colors.fg.white};
-    width: 20px;
-    height: 14px;
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    width: 32px;
+    height: 32px;
+    vertical-align: bottom;
   }
 `;
 
@@ -195,7 +196,7 @@ function ColorPresetActions({ color, pushUpdate }) {
             aria-label={__('Add color', 'web-stories')}
             onClick={() => handleAddColorPreset(color)}
           >
-            <Add />
+            <Icons.Plus />
           </AddColorPreset>
         </ButtonWrapper>
       </HeaderRow>
@@ -214,7 +215,7 @@ function ColorPresetActions({ color, pushUpdate }) {
           <CtaWrapper>
             <TranslateWithMarkup
               mapping={{
-                i: <Add />,
+                i: <Icons.Plus />,
               }}
             >
               {__('Click <i></i> to save a color', 'web-stories')}

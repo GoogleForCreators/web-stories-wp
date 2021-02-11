@@ -18,17 +18,13 @@
  */
 import { useRef, useEffect } from 'react';
 import { useFeatures } from 'flagged';
-import styled, { ThemeProvider, StyleSheetManager } from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 
 /**
  * Internal dependencies
  */
-import {
-  theme as dsTheme,
-  ThemeGlobals,
-  useFocusOut,
-} from '../../../design-system';
+import { ThemeGlobals, useFocusOut } from '../../../design-system';
 import { useConfig } from '../../app/config';
 import { Z_INDEX } from '../canvas/layout';
 import { Navigator } from './navigator';
@@ -74,7 +70,7 @@ export const HelpCenter = () => {
     <StyleSheetManager
       stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
     >
-      <ThemeProvider theme={dsTheme}>
+      <>
         <ThemeGlobals.OverrideFocusOutline />
         <Wrapper ref={ref}>
           <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
@@ -107,7 +103,7 @@ export const HelpCenter = () => {
             popupId={POPUP_ID}
           />
         </Wrapper>
-      </ThemeProvider>
+      </>
     </StyleSheetManager>
   ) : null;
 };

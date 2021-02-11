@@ -33,9 +33,4 @@ export const BUTTON_VARIANTS = {
   ICON: 'icon',
 };
 
-export const BUTTON_PIXELS = {
-  SMALL_BUTTON: 32,
-  LARGE_BUTTON: 56,
-  SMALL_ICON: 14,
-  LARGE_ICON: 20,
-};
+export const BUTTON_SIZE = 32;

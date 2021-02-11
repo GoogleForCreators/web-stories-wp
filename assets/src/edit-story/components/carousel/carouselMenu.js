@@ -34,7 +34,6 @@ import {
 } from '../../../design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import { Plain } from '../button';
-import { Widgets } from '../../icons';
 import Modal from '../modal';
 import WithTooltip from '../tooltip';
 import { Placement } from '../popup';
@@ -65,10 +64,12 @@ const Box = styled.div`
 `;
 
 const PlainStyled = styled(Plain)`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.25)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.25)};
   }
 `;
 
@@ -109,7 +110,7 @@ function CarouselMenu() {
                   onClick={toggleMetaBoxesVisible}
                   aria-label={__('Third-Party Meta Boxes', 'web-stories')}
                 >
-                  <Widgets />
+                  <Icons.LetterMOutline />
                 </Button>
               </WithTooltip>
             </Box>
@@ -129,7 +130,7 @@ function CarouselMenu() {
                 onClick={openModal}
                 aria-label={__('Grid View', 'web-stories')}
               >
-                <Icons.GridMany />
+                <Icons.Box4 />
               </Button>
             </WithTooltip>
           </Box>

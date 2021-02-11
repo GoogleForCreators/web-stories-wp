@@ -19,7 +19,6 @@
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
 import { rgba } from 'polished';
-import deepmerge from 'deepmerge';
 
 /**
  * Internal dependencies
@@ -40,7 +39,8 @@ export const GlobalStyle = createGlobalStyle`
 
   /* WP admin menu arrow color */
   ul#adminmenu a.wp-has-current-submenu::after {
-    border-right-color: ${({ theme }) => theme.colors.bg.panel};
+    border-right-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.bg.panel};
   }
 
   /**
@@ -57,8 +57,8 @@ export const GlobalStyle = createGlobalStyle`
    */
   * {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.workspace}
-    ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
+    scrollbar-color: ${({ theme }) => theme.colors.bg.primary}
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
   }
 
   *::-webkit-scrollbar {
@@ -68,12 +68,14 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   *::-webkit-scrollbar-track {
-    background: ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
+    background: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
     border-radius: 6px;
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => rgba(theme.colors.bg.divider, 0.04)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.bg.divider, 0.04)};
     width: 3px;
     border-radius: 6px;
     border: 2px solid transparent;
@@ -85,8 +87,9 @@ export function useTheme(selector) {
   return useContextSelector(ThemeContext, selector ?? identity);
 }
 
-const theme = deepmerge(
-  {
+const theme = {
+  ...designSystemTheme,
+  DEPRECATED_THEME: {
     colors: {
       bg: {
         // Note: amp-story-page background color matches workspace background color.
@@ -254,7 +257,6 @@ const theme = deepmerge(
       },
     },
   },
-  designSystemTheme
-);
+};
 
 export default theme;

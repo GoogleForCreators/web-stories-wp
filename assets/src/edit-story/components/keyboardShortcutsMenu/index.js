@@ -84,7 +84,7 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
           aria-label={__('Open Keyboard Shortcuts', 'web-stories')}
           onClick={toggleMenu}
         >
-          <Icons.KeyboardShortcut />
+          <Icons.Keyboard />
         </Button>
       </WithTooltip>
       <Modal

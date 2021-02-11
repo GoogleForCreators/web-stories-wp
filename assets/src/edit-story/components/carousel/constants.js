@@ -17,14 +17,14 @@
 /**
  * Internal dependencies
  */
-import { BUTTON_PIXELS } from '../../../design-system';
+import { THEME_CONSTANTS } from '../../../design-system';
 
 // If the workspace is wider than this limit, this margin will be applied to the right
 export const VERY_WIDE_WORKSPACE_LIMIT = 1000;
 export const VERY_WIDE_MARGIN = 8;
 
 // The buttons and menu gutters
-export const BUTTON_WIDTH = BUTTON_PIXELS.SMALL_BUTTON;
+export const BUTTON_WIDTH = THEME_CONSTANTS.ICON_SIZE;
 export const BUTTON_GAP = 8;
 export const BUTTON_GUTTER = BUTTON_WIDTH + BUTTON_GAP;
 export const MENU_GUTTER = 167;

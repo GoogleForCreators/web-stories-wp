@@ -31,7 +31,7 @@ import {
 } from '../../../design-system';
 import { useConfig } from '../../app';
 
-const ALERT_ICON_SIZE = 14;
+const ALERT_ICON_SIZE = 32;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -43,7 +43,8 @@ const Tabs = styled.ul.attrs({
   margin: 0;
   padding: 0;
   list-style: none;
-  border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.04)};
+  border-bottom: 1px solid
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.04)};
 `;
 
 const Tab = styled.li.attrs(({ isActive }) => ({
@@ -55,10 +56,10 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.tab.family};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
-  font-weight: ${({ theme }) => theme.fonts.tab.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
   padding: 12px 0px;
   margin: 0px 16px;
   margin-bottom: -1px;
@@ -67,13 +68,13 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.colors.accent.primary};
+    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.accent.primary};
   `}
 
   svg {
     display: block;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     transform-origin: center center;
     transition: transform 0.3s ease;
   }
@@ -82,21 +83,17 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     width: ${ALERT_ICON_SIZE}px;
     height: auto;
     position: absolute;
-    left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
+    left: 100%;
     top: calc(
-      50% -
-        ${({ isActive }) =>
-          isActive
-            ? `${ALERT_ICON_SIZE / 2 - 1}px`
-            : `${ALERT_ICON_SIZE / 2}px`}
+      50% - ${({ isActive }) => ALERT_ICON_SIZE / 2 + 2 - (isActive ? 1 : 0)}px
     );
     overflow: visible;
     opacity: 1;
     &.warning {
-      color: ${({ theme }) => theme.colors.fg.warning};
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.warning};
     }
     &.error {
-      color: ${({ theme }) => theme.colors.fg.negative};
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.negative};
     }
   }
 

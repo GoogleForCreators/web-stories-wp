@@ -31,15 +31,15 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-  BUTTON_PIXELS,
+  THEME_CONSTANTS,
 } from '../../../../design-system';
 import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import WithTooltip from '../../tooltip';
 
-const BUTTON_HEIGHT = BUTTON_PIXELS.SMALL_BUTTON;
-const DIVIDER_HEIGHT = BUTTON_PIXELS.SMALL_ICON;
+const BUTTON_HEIGHT = THEME_CONSTANTS.ICON_SIZE;
+const DIVIDER_HEIGHT = 16;
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,10 +58,10 @@ const Box = styled.div`
 `;
 
 const PageCount = styled.div`
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   width: 62px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
   line-height: 24px;
 `;
 
@@ -69,18 +69,18 @@ const Options = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  color: ${({ theme }) => theme.colors.fg.v2};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v2};
 `;
 
 const Divider = styled.span`
-  background-color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   opacity: 0.3;
   height: ${DIVIDER_HEIGHT}px;
   width: 1px;
 `;
 
 const Space = styled.div`
-  width: ${({ isDouble }) => (isDouble ? 20 : 10)}px;
+  width: 16px;
 `;
 
 function PageMenuButton({ children, ...rest }) {
@@ -198,7 +198,7 @@ function PageMenu() {
               onClick={handleDuplicatePage}
               aria-label={__('Duplicate Page', 'web-stories')}
             >
-              <Icons.Duplicate />
+              <Icons.PagePlus />
             </PageMenuButton>
           </WithTooltip>
           <Space />
@@ -207,7 +207,7 @@ function PageMenu() {
               onClick={handleAddPage}
               aria-label={__('Add New Page', 'web-stories')}
             >
-              <Icons.AddOutlined />
+              <Icons.PlusOutline />
             </PageMenuButton>
           </WithTooltip>
           <Space />
@@ -219,7 +219,11 @@ function PageMenu() {
               onClick={handleUndo}
               aria-label={__('Undo Changes', 'web-stories')}
             >
-              {isRTL ? <Icons.Redo /> : <Icons.Undo />}
+              {isRTL ? (
+                <Icons.ArrowDownrightCurved />
+              ) : (
+                <Icons.ArrowDownleftCurved />
+              )}
             </PageMenuButton>
           </WithTooltip>
           <Space />
@@ -229,39 +233,45 @@ function PageMenu() {
               onClick={handleRedo}
               aria-label={__('Redo Changes', 'web-stories')}
             >
-              {isRTL ? <Icons.Undo /> : <Icons.Redo />}
+              {isRTL ? (
+                <Icons.ArrowDownleftCurved />
+              ) : (
+                <Icons.ArrowDownrightCurved />
+              )}
             </PageMenuButton>
           </WithTooltip>
-          <Space />
-          {[
-            STORY_ANIMATION_STATE.PLAYING,
-            STORY_ANIMATION_STATE.PLAYING_SELECTED,
-          ].includes(animationState) ? (
-            <WithTooltip
-              style={{ marginLeft: 'auto' }}
-              title={__('Stop', 'web-stories')}
-            >
-              <PageMenuButton
-                onClick={toggleAnimationState}
-                disabled={!hasAnimations}
-                aria-label={__('Stop Page Animations', 'web-stories')}
-              >
-                <Icons.StopAnimation />
-              </PageMenuButton>
-            </WithTooltip>
-          ) : (
-            <WithTooltip
-              style={{ marginLeft: 'auto' }}
-              title={__('Play', 'web-stories')}
-            >
-              <PageMenuButton
-                onClick={toggleAnimationState}
-                disabled={!hasAnimations}
-                aria-label={__('Play Page Animations', 'web-stories')}
-              >
-                <Icons.PlayAnimation />
-              </PageMenuButton>
-            </WithTooltip>
+          {hasAnimations && (
+            <>
+              <Space />
+              {[
+                STORY_ANIMATION_STATE.PLAYING,
+                STORY_ANIMATION_STATE.PLAYING_SELECTED,
+              ].includes(animationState) ? (
+                <WithTooltip
+                  style={{ marginLeft: 'auto' }}
+                  title={__('Stop', 'web-stories')}
+                >
+                  <PageMenuButton
+                    onClick={toggleAnimationState}
+                    aria-label={__('Stop Page Animations', 'web-stories')}
+                  >
+                    <Icons.StopOutline />
+                  </PageMenuButton>
+                </WithTooltip>
+              ) : (
+                <WithTooltip
+                  style={{ marginLeft: 'auto' }}
+                  title={__('Play', 'web-stories')}
+                >
+                  <PageMenuButton
+                    onClick={toggleAnimationState}
+                    aria-label={__('Play Page Animations', 'web-stories')}
+                  >
+                    <Icons.PlayOutline />
+                  </PageMenuButton>
+                </WithTooltip>
+              )}
+            </>
           )}
         </Options>
       </Box>

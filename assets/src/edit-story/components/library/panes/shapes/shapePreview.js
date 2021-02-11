@@ -74,7 +74,7 @@ const ShapePreviewContainer = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray24};
   border-radius: 4px;
   display: flex;
   justify-content: center;
@@ -110,7 +110,7 @@ const ShapePreviewSizer = styled.div`
 `;
 
 const Path = styled.path`
-  fill: ${({ theme }) => theme.colors.fg.white};
+  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 function ShapePreview({ mask, isPreview }) {

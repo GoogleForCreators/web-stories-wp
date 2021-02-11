@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useResizeEffect, BUTTON_PIXELS } from '../../../design-system';
+import { useResizeEffect, THEME_CONSTANTS } from '../../../design-system';
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
@@ -46,10 +46,10 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const MENU_HEIGHT = 32;
+const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE;
 const MENU_GAP = 16;
 const CAROUSEL_HEIGHT = 104;
-const PAGE_NAV_WIDTH = BUTTON_PIXELS.LARGE_BUTTON;
+const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE;
 const PAGE_NAV_GAP = 24;
 
 const Layer = styled.section`

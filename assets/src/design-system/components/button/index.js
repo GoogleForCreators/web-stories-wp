@@ -24,12 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { THEME_CONSTANTS, themeHelpers } from '../../theme';
-import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  BUTTON_PIXELS,
-} from './constants';
+import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
   ({ size, theme }) => css`
@@ -128,19 +123,17 @@ const ButtonSquare = styled(Base)`
 
   ${({ size }) => css`
     width: ${size === BUTTON_SIZES.SMALL
-      ? BUTTON_PIXELS.SMALL_BUTTON
-      : BUTTON_PIXELS.LARGE_BUTTON}px;
+      ? THEME_CONSTANTS.ICON_SIZE
+      : THEME_CONSTANTS.LARGE_BUTTON_SIZE}px;
     height: ${size === BUTTON_SIZES.SMALL
-      ? BUTTON_PIXELS.SMALL_BUTTON
-      : BUTTON_PIXELS.LARGE_BUTTON}px;
-
-    svg {
-      width: ${size === BUTTON_SIZES.SMALL
-        ? BUTTON_PIXELS.SMALL_ICON
-        : BUTTON_PIXELS.LARGE_ICON}px;
-      height: auto;
-    }
+      ? THEME_CONSTANTS.ICON_SIZE
+      : THEME_CONSTANTS.LARGE_BUTTON_SIZE}px;
   `}
+
+  svg {
+    width: ${THEME_CONSTANTS.ICON_SIZE}px;
+    height: ${THEME_CONSTANTS.ICON_SIZE}px;
+  }
 `;
 
 const ButtonCircle = styled(ButtonSquare)`
@@ -148,19 +141,12 @@ const ButtonCircle = styled(ButtonSquare)`
 `;
 
 const ButtonIcon = styled(Base)`
-  ${({ size }) => css`
-    width: ${size === BUTTON_SIZES.SMALL
-      ? BUTTON_PIXELS.SMALL_ICON
-      : BUTTON_PIXELS.LARGE_ICON}px;
-    height: ${size === BUTTON_SIZES.SMALL
-      ? BUTTON_PIXELS.SMALL_ICON
-      : BUTTON_PIXELS.LARGE_ICON}px;
-    svg {
-      width: 100%;
-      height: auto;
-      margin: 0 auto;
-    }
-  `}
+  width: ${THEME_CONSTANTS.ICON_SIZE}px;
+  height: ${THEME_CONSTANTS.ICON_SIZE}px;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const ButtonOptions = {
@@ -204,4 +190,4 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS, BUTTON_PIXELS };
+export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
