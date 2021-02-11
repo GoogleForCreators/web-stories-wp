@@ -53,11 +53,7 @@ function SwitchToDraft() {
 
   const label = __('Switch to Draft', 'web-stories');
   return (
-    <Tooltip
-      title={label}
-      placement={TOOLTIP_PLACEMENT.BOTTOM}
-      hasTail={true}
-    >
+    <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail={true}>
       <Button
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.TERTIARY}
