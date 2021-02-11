@@ -29,14 +29,9 @@ import { Search } from '..';
 describe('Search <Search />', () => {
   // Mock scrollTo
   const scrollTo = jest.fn();
-  let nativeScrollTo;
-  beforeEach(() => {
-    nativeScrollTo = window.scrollTo;
-    window.scrollTo = scrollTo;
-  });
-
-  afterEach(() => {
-    window.scrollTo = nativeScrollTo;
+  Object.defineProperty(window.Element.prototype, 'scrollTo', {
+    writable: true,
+    value: scrollTo,
   });
 
   jest.useFakeTimers();
