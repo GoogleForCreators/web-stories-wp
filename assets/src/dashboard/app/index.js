@@ -59,14 +59,35 @@ import {
   TemplateDetailsView,
   ToasterView,
 } from './views';
+import useApi from './api/useApi';
 
 const AppContent = () => {
   const {
-    state: { currentPath },
+    state: {
+      currentPath,
+      queryParams: { id: templateId },
+    },
   } = useRouteHistory();
+  const { currentTemplate } = useApi(
+    ({
+      state: {
+        templates: { templates },
+      },
+    }) => ({
+      currentTemplate:
+        templateId !== undefined ? templates[templateId]?.title : undefined,
+    })
+  );
 
   useEffect(() => {
-    const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
+    let dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
+    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && currentTemplate) {
+      dynamicPageTitle = sprintf(
+        /* translators: %s: Template name. */
+        __('Template: %s', 'web-stories'),
+        currentTemplate
+      );
+    }
 
     document.title = sprintf(
       /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
@@ -75,8 +96,12 @@ const AppContent = () => {
       ADMIN_TITLE
     );
 
-    trackScreenView(dynamicPageTitle);
-  }, [currentPath]);
+    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && currentTemplate) {
+      trackScreenView(dynamicPageTitle);
+    } else if (!currentTemplate) {
+      trackScreenView(dynamicPageTitle);
+    }
+  }, [currentPath, currentTemplate]);
 
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
