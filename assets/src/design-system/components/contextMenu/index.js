@@ -118,7 +118,7 @@ const MenuContainer = styled.ul(
   `
 );
 
-const ContextMenu = ({ isOpen, items, ...props }) => {
+const ContextMenu = ({ isOpen, isLTR, items, ...props }) => {
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   return (
@@ -133,7 +133,7 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
               ''
             }
           >
-            <MenuItem {...itemProps} />
+            <MenuItem {...itemProps} isLTR={isLTR} />
           </li>
         ))}
       </MenuContainer>
@@ -142,6 +142,7 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
 };
 
 ContextMenu.propTypes = {
+  isLTR: PropTypes.bool,
   isOpen: PropTypes.bool,
   items: PropTypes.arrayOf(
     PropTypes.shape({
