@@ -37,7 +37,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  --pagemenu-space: ${({ isWidePage }) => (isWidePage ? 16 : 10)}px;
+  --pagemenu-icon-space: ${({ isWidePage }) => (isWidePage ? 16 : 10)}px;
+  --pagemenu-count-space: ${({ isWidePage }) => (isWidePage ? 24 : 12)}px;
 `;
 
 const PageCount = styled.div`
@@ -47,10 +48,6 @@ const PageCount = styled.div`
   line-height: 24px;
 `;
 
-const PageCountSpace = styled.div`
-  width: 24px;
-`;
-
 const Divider = styled.span`
   background-color: ${({ theme }) => theme.colors.bg.tertiary};
   opacity: 0.3;
@@ -58,8 +55,12 @@ const Divider = styled.span`
   width: 1px;
 `;
 
-const Space = styled.div`
-  width: var(--pagemenu-space);
+const CountSpace = styled.div`
+  width: var(--pagemenu-count-space);
+`;
+
+const IconSpace = styled.div`
+  width: var(--pagemenu-icon-space);
 `;
 
 function PageMenu() {
@@ -117,18 +118,14 @@ function PageMenu() {
 
   return (
     <Wrapper isWidePage={isWidePage}>
-      {isWidePage && (
-        <>
-          <PageCount>
-            {sprintf(
-              /* translators: %s: page number. */
-              __('Page %s', 'web-stories'),
-              currentPageNumber
-            )}
-          </PageCount>
-          <PageCountSpace />
-        </>
-      )}
+      <PageCount>
+        {sprintf(
+          /* translators: %s: page number. */
+          __('Page %s', 'web-stories'),
+          currentPageNumber
+        )}
+      </PageCount>
+      <CountSpace />
       <PageMenuButton
         title={__('Delete page', 'web-stories')}
         onClick={handleDeletePage}
@@ -136,7 +133,7 @@ function PageMenu() {
       >
         <Icons.Trash />
       </PageMenuButton>
-      <Space />
+      <IconSpace />
       <PageMenuButton
         title={__('Duplicate page', 'web-stories')}
         onClick={handleDuplicatePage}
@@ -144,7 +141,7 @@ function PageMenu() {
       >
         <Icons.PagePlus />
       </PageMenuButton>
-      <Space />
+      <IconSpace />
       <PageMenuButton
         title={__('New page', 'web-stories')}
         onClick={handleAddPage}
@@ -152,9 +149,9 @@ function PageMenu() {
       >
         <Icons.PlusOutline />
       </PageMenuButton>
-      <Space />
+      <IconSpace />
       <Divider />
-      <Space />
+      <IconSpace />
       <PageMenuButton
         title={__('Undo', 'web-stories')}
         shortcut="mod+z"
@@ -164,7 +161,7 @@ function PageMenu() {
       >
         {isRTL ? <Icons.ArrowDownrightCurved /> : <Icons.ArrowDownleftCurved />}
       </PageMenuButton>
-      <Space />
+      <IconSpace />
       <PageMenuButton
         title={__('Redo', 'web-stories')}
         shortcut="shift+mod+z"
@@ -176,9 +173,9 @@ function PageMenu() {
       </PageMenuButton>
       {hasAnimations && (
         <>
-          <Space />
+          <IconSpace />
           <Divider />
-          <Space />
+          <IconSpace />
           <AnimationToggle />
         </>
       )}
