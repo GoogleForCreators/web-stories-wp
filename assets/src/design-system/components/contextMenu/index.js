@@ -24,10 +24,10 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
+import { useKeyDownEffect } from '../keyboard';
+import { KEYS } from '../../utils/constants';
 import { MenuItem, MenuItemProps } from './menu-item';
 
-const DOWN = 'ArrowDown';
-const UP = 'ArrowUp';
 const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
 
 const SEPARATOR_TOP_CLASS = 'separatorTop';
@@ -138,61 +138,45 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
   const listRef = useRef(null);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
+  const totalIndex = useMemo(() => items.length - 1, [items]);
+
   /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
    *
-   * @param {Event} ev The synthetic event
+   * @param {Event} event The synthetic event
    * @return {void} void
    */
-  const handleKeyDown = useCallback(
-    (ev) => {
-      switch (ev.key) {
-        case DOWN:
-          ev.preventDefault();
-          if (listRef.current && focusedIndex < items.length - 1) {
-            let index = focusedIndex + 1;
+  const handleKeyboardNav = useCallback(
+    ({ key }) => {
+      const isAscending = key === KEYS.UP;
+      let index = focusedIndex + (isAscending ? -1 : 1);
+      let terminate = isAscending ? index < 0 : index > totalIndex;
 
-            while (index < items.length) {
-              const element = listRef.current?.children?.[index]?.children?.[0];
-              if (
-                FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
-                !element?.disabled
-              ) {
-                setFocusedIndex(index);
-                return;
-              }
-              index++;
-            }
-          }
-          break;
-        case UP:
-          ev.preventDefault();
-          if (listRef.current && focusedIndex > -1) {
-            let index = focusedIndex - 1;
+      while (!terminate) {
+        const element = listRef.current?.children?.[index]?.children?.[0];
 
-            while (index > -1) {
-              const element = listRef.current?.children?.[index]?.children?.[0];
-              if (
-                FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
-                !element?.disabled
-              ) {
-                setFocusedIndex(index);
-                return;
-              }
-              index--;
-            }
-          }
-          break;
-        default:
-          break;
+        if (
+          FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+          !element?.disabled
+        ) {
+          setFocusedIndex(index);
+          return;
+        }
+
+        index = isAscending ? index - 1 : index + 1;
+        terminate = isAscending ? index < 0 : index > totalIndex;
       }
     },
-    [focusedIndex, items.length]
+    [focusedIndex, totalIndex]
   );
+
+  useKeyDownEffect(listRef, { key: ['down', 'up'] }, handleKeyboardNav, [
+    handleKeyboardNav,
+  ]);
 
   return (
     <Popover role="dialog" isOpen={isOpen} {...props}>
-      <MenuContainer ref={listRef} onKeyDown={handleKeyDown}>
+      <MenuContainer ref={listRef}>
         {items.map(({ separator, ...itemProps }, index) => (
           <li
             key={ids[index]}
