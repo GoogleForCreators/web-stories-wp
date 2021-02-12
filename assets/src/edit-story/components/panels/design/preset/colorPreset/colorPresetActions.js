@@ -95,6 +95,11 @@ const ButtonWrapper = styled.div`
   flex-grow: 1;
 `;
 
+const Strong = styled.span`
+  font-size: 24px;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+`;
+
 function ColorPresetActions({ color, pushUpdate }) {
   const [showLocalColors, setShowLocalColors] = useState(true);
   const {
@@ -215,10 +220,10 @@ function ColorPresetActions({ color, pushUpdate }) {
           <CtaWrapper>
             <TranslateWithMarkup
               mapping={{
-                i: <Icons.Plus />,
+                b: <Strong />,
               }}
             >
-              {__('Click <i></i> to save a color', 'web-stories')}
+              {__('Click <b>+</b> to save a color', 'web-stories')}
             </TranslateWithMarkup>
           </CtaWrapper>
         )}
