@@ -22,14 +22,9 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../theme';
-
-/**
- * Internal dependencies
- */
 import { Button } from '../button';
-import { Link } from '../typography/link';
-import { Text } from '../typography/text';
+import { Text, Link } from '../typography';
+import { THEME_CONSTANTS } from '../../theme/constants';
 
 const ItemText = styled(Text)`
   width: 200px;

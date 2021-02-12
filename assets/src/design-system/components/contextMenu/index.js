@@ -60,7 +60,6 @@ const MenuContainer = styled.ul(
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     margin: 0;
-    /* min-width: 200px; */
     padding: 4px 0;
     pointer-events: auto;
     list-style: none;
