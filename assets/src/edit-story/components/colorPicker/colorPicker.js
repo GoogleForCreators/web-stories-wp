@@ -40,9 +40,9 @@ import Header from './header';
 import useColor from './useColor';
 
 const Container = styled.div`
-  border-radius: 6px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v8};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  border-radius: 8px;
+  background: ${({ theme }) => theme.colors.bg.secondary};
+  color: ${({ theme }) => theme.colors.fg.primary};
   width: 256px;
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-style: normal;
