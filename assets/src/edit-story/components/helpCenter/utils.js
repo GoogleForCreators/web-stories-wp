@@ -16,11 +16,7 @@
 /**
  * Internal dependencies
  */
-import { FOCUSABLE_POPUP_CHILDREN_SELECTOR, POPUP_ID, TIPS } from './constants';
-
-export function getUnreadTips(state) {
-  return Object.keys(TIPS).filter((tip) => !state.readTips[tip]) || [];
-}
+import { FOCUSABLE_POPUP_CHILDREN_SELECTOR, POPUP_ID } from './constants';
 
 export function forceFocusCompanion() {
   document.querySelector(FOCUSABLE_POPUP_CHILDREN_SELECTOR)?.focus();

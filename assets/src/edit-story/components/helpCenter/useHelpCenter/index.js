@@ -30,6 +30,7 @@ import {
   deriveDisabledButtons,
   deriveReadTip,
   deriveTransitionDirection,
+  deriveUnreadTipsCount,
   resetNavigationIndexOnOpen,
 } from './effects';
 
@@ -52,6 +53,7 @@ export const deriveState = composeEffects(
     deriveTransitionDirection,
     deriveDisabledButtons,
     deriveReadTip,
+    deriveUnreadTipsCount,
   ]
 );
 
@@ -75,6 +77,7 @@ export const initial = {
     isNextDisabled: false,
     readTips: {},
     readError: false,
+    unreadTipsCount: 0,
   },
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //

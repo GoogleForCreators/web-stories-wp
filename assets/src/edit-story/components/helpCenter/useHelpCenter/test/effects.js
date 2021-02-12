@@ -32,6 +32,7 @@ const mockState = (overrides) => ({
 // @TODO describe('deriveTransitionDirection');
 // @TODO describe('deriveDisabledButtons');
 // @TODO describe('deriveReadTip');
+// @TODO describe('deriveUnreadTipsCount');
 
 describe('createDynamicNavigationFlow', () => {
   it('should do nothing if not navigating from the main menu', () => {

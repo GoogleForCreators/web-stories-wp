@@ -85,6 +85,14 @@ export const createDynamicNavigationFlow = (previous, next) => {
   };
 };
 
+export function deriveUnreadTipsCount(previous, next) {
+  return {
+    unreadTipsCount:
+      Object.keys(TIP_KEYS_MAP).filter((tip) => !next.readTips[tip])?.length ||
+      0,
+  };
+}
+
 /**
  * Takes an array of effects and returns a composed function
  * that given next and previous state runs through each effect
