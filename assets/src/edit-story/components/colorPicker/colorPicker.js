@@ -42,12 +42,7 @@ import useColor from './useColor';
 const Container = styled.div`
   border-radius: 8px;
   background: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.colors.fg.primary};
   width: 256px;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
   user-select: none;
   display: flex;
   flex-direction: column;

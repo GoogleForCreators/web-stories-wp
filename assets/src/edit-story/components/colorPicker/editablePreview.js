@@ -25,7 +25,11 @@ import { useCallback, useMemo, useRef, useLayoutEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useKeyDownEffect,
+} from '../../../design-system';
 
 const Preview = styled.button`
   padding: 0;
@@ -84,7 +88,9 @@ function EditablePreview({ label, value, width, format, onChange }) {
   if (!isEditing) {
     return (
       <Preview aria-label={label} onClick={enableEditing}>
-        {format(value)}
+        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {format(value)}
+        </Text>
       </Preview>
     );
   }
