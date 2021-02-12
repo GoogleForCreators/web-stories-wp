@@ -113,7 +113,7 @@ export { ReactComponent as PlayOutline } from './play_outline.svg';
 export { ReactComponent as Plus } from './plus.svg';
 export { ReactComponent as PlusFilled } from './plus_filled.svg';
 export { ReactComponent as PlusOutline } from './plus_outline.svg';
-export { ReactComponent as QuestionmarkOutline } from './questionmark_outline.svg';
+export { ReactComponent as QuestionMarkOutline } from './question_mark_outline.svg';
 export { ReactComponent as Shapes } from './shapes.svg';
 export { ReactComponent as Sparkles } from './sparkles.svg';
 export { ReactComponent as StepsDown } from './steps_down.svg';

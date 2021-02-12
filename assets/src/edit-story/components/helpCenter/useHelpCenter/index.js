@@ -157,7 +157,7 @@ export function useHelpCenter() {
 
   useEffect(() => {
     actions.hydrateReadTipsSuccess({
-      readTips: currentUser?.meta?.web_stories_onboarding ?? {},
+      readTips: {}, //currentUser?.meta?.web_stories_onboarding ?? {},
     });
   }, [actions, currentUser]);
 

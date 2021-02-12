@@ -23,7 +23,6 @@ import { __, _n, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
 import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
@@ -34,14 +33,15 @@ import {
 } from '../../../../design-system';
 
 const Button = styled(dsButton)`
-  border-color: ${({ theme }) => theme.colors.border.defaultNormal};
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   padding: 8px;
+  color: ${({ theme }) => theme.colors.fg.primary};
 
-  ${({ hasNotifications, theme }) =>
-    hasNotifications &&
+  ${({ isOpen, theme }) =>
+    isOpen &&
     css`
+      border-color: ${theme.colors.bg.secondary};
       background-color: ${theme.colors.bg.secondary};
-      border-color: ${theme.colors.border.defaultNormal};
     `}
 `;
 
@@ -50,33 +50,28 @@ const Label = styled.span`
 
   @media ${({ theme }) => theme.breakpoint.desktop} {
     display: block;
-    min-width: 65px;
+    line-height: 20px;
     text-align: left;
-    padding-right: 20px;
+
+    & ~ div {
+      margin-left: 20px;
+    }
   }
 `;
 
-const ChevronIcon = styled(Icons.ChevronDown)`
-  display: block;
-  height: auto;
-  width: 100%;
-`;
-
-const Icon = styled.div`
-  display: block;
-  height: auto;
-  width: 32px;
-  transform-origin: 50% 50%;
-  transform: rotate(${({ isOpen }) => (isOpen ? 180 : 360)}deg);
-  transition: transform 300ms ${BEZIER.default};
-`;
-
 const NotificationWrapper = styled.div`
-  margin: 4px;
+  margin: -2px 0 -2px 8px;
 `;
 
-const IconWrapper = styled.div`
+const HelpIcon = styled(Icons.QuestionMarkOutline)`
+  display: block;
   margin: -6px 0;
+  width: 32px;
+  height: 32px;
+
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    display: none;
+  }
 `;
 
 function Toggle({
@@ -108,22 +103,18 @@ function Toggle({
       }
       onClick={onClick}
       hasNotifications={hasNotifications}
+      isOpen={isOpen}
       type={BUTTON_TYPES.PLAIN}
       variant={BUTTON_VARIANTS.RECTANGLE}
       size={BUTTON_SIZES.MEDIUM}
     >
+      <HelpIcon />
       <Label>{__('Help Center', 'web-stories')}</Label>
-      <IconWrapper>
-        {hasNotifications ? (
-          <NotificationWrapper>
-            <NotificationBubble notificationCount={notificationCount} />
-          </NotificationWrapper>
-        ) : (
-          <Icon isOpen={isOpen}>
-            <ChevronIcon />
-          </Icon>
-        )}
-      </IconWrapper>
+      {hasNotifications && (
+        <NotificationWrapper>
+          <NotificationBubble notificationCount={notificationCount} />
+        </NotificationWrapper>
+      )}
     </Button>
   );
 }
