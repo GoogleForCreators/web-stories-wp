@@ -36,7 +36,7 @@ const CIRCLE_FINAL_POSITION =
   (CIRCLE_DIAMETER / 2 - CIRCLE_INITIAL_POSITION / 2);
 
 const ICON_WIDTH = 18;
-const ICON_TOP_POSITION = 2;
+const ICON_TOP_POSITION = 1;
 const ICON_LEFT_POSITION = 26;
 
 const Background = styled.div(
@@ -83,10 +83,7 @@ const StyledCheckmark = styled(Checkmark)(
     opacity: 0;
     transition: opacity 0.15s;
     pointer-events: none;
-
-    path {
-      fill: ${theme.colors.standard.white};
-    }
+    color: ${theme.colors.standard.white};
   `
 );
 
