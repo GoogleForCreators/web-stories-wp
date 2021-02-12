@@ -62,6 +62,7 @@ const HighlightRow = styled(Row)`
     left: -20px;
     right: -10px;
     ${({ isHighlighted }) => isHighlighted && styles.FLASH}
+    pointer-events: none;
   }
 `;
 

@@ -108,7 +108,7 @@ function Toggle({
       }
       onClick={onClick}
       hasNotifications={hasNotifications}
-      type={hasNotifications ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.PLAIN}
+      type={BUTTON_TYPES.PLAIN}
       variant={BUTTON_VARIANTS.RECTANGLE}
       size={BUTTON_SIZES.MEDIUM}
     >
