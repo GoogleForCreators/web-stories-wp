@@ -76,8 +76,9 @@ function isOverlapSignificant(overlapArea, textBoxArea) {
 function getBackgroundsForElement(
   textElement,
   potentialBackgroundElements,
-  pageSize
+  page
 ) {
+  const { pageSize } = page;
   const textPos = getBox(textElement, pageSize?.width, pageSize?.height);
   const textBox = getBoundRect([textPos]);
   const textBoxArea = textBox.width * textBox.height;
@@ -87,7 +88,16 @@ function getBackgroundsForElement(
       const bgPos = getBox(element, pageSize?.width, pageSize?.height);
       const bgBox = getBoundRect([bgPos]);
       const overlappingArea = getOverlappingArea(textBox, bgBox);
-      return { element, area: overlappingArea, index };
+      return {
+        element:
+          // if the element is the background element use the page's background color
+          // image backgrounds will ignore this property
+          element.isBackground || element.isDefaultBackground
+            ? { ...element, backgroundColor: page?.backgroundColor }
+            : element,
+        area: overlappingArea,
+        index,
+      };
     })
     // elements are ordered from lowest to highest
     // so the first elements in the reversed array are occluding the text box area behind it;
@@ -335,18 +345,21 @@ export async function pageBackgroundTextLowContrast(page) {
 
   page.elements.forEach((element, index) => {
     if (element.type === 'text' && element.backgroundTextMode === 'NONE') {
-      const potentialBackgroundElements = page.elements.slice(0, index);
       const spans = getSpansFromContent(element.content);
       const textColors = spans.map((span) => span.style?.color).filter(Boolean);
       // if no colors were retrieved but there are spans, there is a black default color
-      if (textColors.length === 0 && spans.length !== textColors.length) {
+      const noColorStyleOnSpans = textColors.length === 0 && spans.length !== 0;
+      // if no spans were retrieved but there is content, there is a black default color
+      const noSpans = element.content.length !== 0 && spans.length === 0;
+      if (noColorStyleOnSpans || noSpans) {
         textColors.push('rgb(0, 0, 0)');
       }
 
+      const potentialBackgroundElements = page.elements.slice(0, index);
       const textBackgrounds = getBackgroundsForElement(
         element,
         potentialBackgroundElements,
-        page.pageSize
+        page
       );
 
       for (const backgroundElement of textBackgrounds) {
@@ -362,7 +375,6 @@ export async function pageBackgroundTextLowContrast(page) {
         };
 
         const getBackgroundColor = getBackgroundColorByType(backgroundElement);
-
         const backgroundColor = getBackgroundColor(args);
 
         let backgroundColorResult;
