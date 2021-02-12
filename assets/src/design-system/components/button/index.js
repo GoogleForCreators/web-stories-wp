@@ -126,8 +126,8 @@ const ButtonSquare = styled(Base)`
     height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
 
     svg {
-      width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-      height: auto;
+      width: 32px;
+      height: 32px;
     }
   `}
 `;
@@ -137,15 +137,13 @@ const ButtonCircle = styled(ButtonSquare)`
 `;
 
 const ButtonIcon = styled(Base)`
-  ${({ size }) => css`
-    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    svg {
-      width: 100%;
-      height: auto;
-      margin: 0 auto;
-    }
-  `}
+  width: 32px;
+  height: 32px;
+  svg {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
 `;
 
 const ButtonOptions = {

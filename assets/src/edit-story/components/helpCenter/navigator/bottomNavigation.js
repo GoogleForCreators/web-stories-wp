@@ -44,11 +44,20 @@ const BottomNavBar = styled(NavBar)`
 const BottomNavButtons = styled.div`
   display: flex;
   padding: 0 16px;
+  white-space: nowrap;
 `;
 
 const ArrowWrap = styled.div`
-  transform-origin: 50% 50%;
-  transform: ${({ isRTL }) => (isRTL ? 'rotate(180deg)' : 'none')};
+  margin: -5px -16px;
+  ${({ isRTL }) =>
+    isRTL &&
+    css`
+      transform: rotate(180deg);
+    `}
+
+  svg {
+    display: block;
+  }
 `;
 
 const onCondition = (condition) => (fn) => {
@@ -101,7 +110,7 @@ export function BottomNavigation({
           disabled={!hasBottomNavigation}
         >
           <ArrowWrap isRTL={isRTL}>
-            <Icons.Arrow />
+            <Icons.ArrowLeft />
           </ArrowWrap>
           <span>{__('All Tips', 'web-stories')}</span>
         </NavButton>
