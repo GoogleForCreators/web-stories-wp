@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { Button, ToolbarGroup, ToolbarButton } from '@wordpress/components';
+import { Button, ToolbarGroup } from '@wordpress/components';
 import { BlockControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
@@ -54,29 +54,17 @@ const StoriesBlockControls = ({ blockType, viewType, setAttributes }) => {
       <ToolbarGroup>
         {blockType && BLOCK_TYPE_URL !== blockType && (
           <Fragment>
-            {VIEW_TYPES.map((view) => {
-              return ToolbarButton ? (
-                <ToolbarButton
-                  key={view.id}
-                  label={view.label}
-                  icon={view.icon}
-                  onClick={() => {
-                    setAttributes({ viewType: view.id });
-                  }}
-                  isPressed={view.id === viewType}
-                />
-              ) : (
-                <Button
-                  key={view.id}
-                  label={view.label}
-                  icon={view.icon}
-                  onClick={() => {
-                    setAttributes({ viewType: view.id });
-                  }}
-                  isPressed={view.id === viewType}
-                />
-              );
-            })}
+            {VIEW_TYPES.map((view) => (
+              <Button
+                key={view.id}
+                label={view.label}
+                icon={view.icon}
+                onClick={() => {
+                  setAttributes({ viewType: view.id });
+                }}
+                isPressed={view.id === viewType}
+              />
+            ))}
           </Fragment>
         )}
         <BlockTypeSwitcher

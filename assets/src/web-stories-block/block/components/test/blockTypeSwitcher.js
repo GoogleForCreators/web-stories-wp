@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 /**
  * Internal dependencies
@@ -31,7 +32,7 @@ describe('Tests BlockTypeSwitcher', () => {
       <BlockTypeSwitcher selectedBlockType={''} setAttributes={setAttributes} />
     );
 
-    const switchButton = screen.getByLabelText('Change block type dropdown');
+    const switchButton = screen.getByLabelText('Change Block Type');
     expect(switchButton).toBeInTheDocument();
   });
 
@@ -41,10 +42,10 @@ describe('Tests BlockTypeSwitcher', () => {
       <BlockTypeSwitcher selectedBlockType={''} setAttributes={setAttributes} />
     );
 
-    const switchButton = screen.getByLabelText('Change block type dropdown');
+    const switchButton = screen.getByLabelText('Change Block Type');
 
     // Opens Switcher dropdown menu.
-    fireEvent.click(switchButton);
+    userEvent.click(switchButton);
 
     const selectionMenu = await screen.findByRole('menu');
 
@@ -54,7 +55,7 @@ describe('Tests BlockTypeSwitcher', () => {
     const menuItem = screen.getByText('Latest Stories');
 
     // Select block type.
-    fireEvent.click(menuItem);
+    userEvent.click(menuItem);
 
     // Confirm that the menuItem was clicked.
     expect(setAttributes).toHaveBeenCalledTimes(1);

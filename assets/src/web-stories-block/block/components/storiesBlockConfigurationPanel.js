@@ -82,7 +82,6 @@ function BlockConfigurationPanel({
       icon={<BlockIcon icon={icon} showColors />}
       label={label}
       instructions={instruction}
-      data-testid="ws-block-configuration-panel"
     >
       <TypeGrid $columnCount={columnCount}>
         {selectionOptions.map((option) => (
@@ -107,7 +106,7 @@ function BlockConfigurationPanel({
 
 BlockConfigurationPanel.propTypes = {
   selectionType: PropTypes.string,
-  selectionOptions: PropTypes.array,
+  selectionOptions: PropTypes.object,
   instruction: PropTypes.string,
   columnCount: PropTypes.number,
   icon: PropTypes.func,
