@@ -50,7 +50,7 @@ const StyledButton = styled(Button)(
 
 const DropUpArrowIcon = styled(Icons.ChevronUp)`
   position: relative;
-  transform: scale(2);
+  transform: scale(2.4);
 `;
 
 const ScrollToTop = () => {
