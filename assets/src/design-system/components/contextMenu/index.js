@@ -195,7 +195,6 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
       <MenuContainer ref={listRef} onKeyDown={handleKeyDown}>
         {items.map(({ separator, ...itemProps }, index) => (
           <li
-            id={ids[index]}
             key={ids[index]}
             className={
               (separator === 'top' && SEPARATOR_TOP_CLASS) ||
