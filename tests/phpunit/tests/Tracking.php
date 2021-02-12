@@ -52,8 +52,6 @@ class Tracking extends \WP_UnitTestCase {
 	 * @covers ::get_settings
 	 */
 	public function test_get_settings() {
-		global $wp_version;
-
 		wp_set_current_user( self::$user_id );
 
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
@@ -82,7 +80,7 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
 		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
 		$this->assertSame( PHP_VERSION, $settings['userProperties']['phpVersion'] );
-		$this->assertSame( $wp_version, $settings['userProperties']['wpVersion'] );
+		$this->assertSame( get_bloginfo('version'), $settings['userProperties']['wpVersion'] );
 		$this->assertSame( WEBSTORIES_VERSION, $settings['userProperties']['pluginVersion'] );
 		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
 		$this->assertSame( 'enableFoo,enableBar', $settings['userProperties']['enabledExperiments'] );

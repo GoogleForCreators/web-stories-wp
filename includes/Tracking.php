@@ -121,13 +121,9 @@ class Tracking {
 	 *
 	 * @since 1.4.0
 	 *
-	 * @global string $wp_version WordPress version.
-	 *
 	 * @return array User properties.
 	 */
 	private function get_user_properties() {
-		global $wp_version;
-
 		$role        = ! empty( wp_get_current_user()->roles ) ? wp_get_current_user()->roles[0] : '';
 		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
 
@@ -136,7 +132,7 @@ class Tracking {
 			'userLocale'         => get_user_locale(),
 			'userRole'           => $role,
 			'enabledExperiments' => $experiments,
-			'wpVersion'          => $wp_version,
+			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
 			'pluginVersion'      => WEBSTORIES_VERSION,
 			'isMultisite'        => (int) is_multisite(),
