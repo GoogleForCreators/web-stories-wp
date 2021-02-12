@@ -26,7 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '../../../../../design-system';
 
 const StyledLayoutIcon = styled(Icons.Box4Alternate)({
-  transform: 'scale(0.71)',
+  transform: 'scale(1.41)',
 });
 
 function PageLayoutsIcon() {

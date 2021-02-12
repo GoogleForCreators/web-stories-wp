@@ -42,8 +42,8 @@ const IconsList = styled.ul`
     align-items: center;
   }
   svg {
-    height: 40px;
-    width: 40px;
+    height: 32px;
+    width: 32px;
     margin-bottom: 10px;
   }
 `;

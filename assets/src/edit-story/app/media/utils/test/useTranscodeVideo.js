@@ -97,7 +97,7 @@ describe('useTranscodeVideo', () => {
   describe('canTranscodeFile', () => {
     it('should return true for video files', () => {
       const file = new File(['foo'], 'foo.mov', {
-        type: 'video/mov',
+        type: 'video/quicktime',
       });
 
       const { result } = arrange({});
@@ -137,7 +137,7 @@ describe('useTranscodeVideo', () => {
   describe('transcodeVideo', () => {
     it('should transcode a MOV file into an MP4', async () => {
       const file = new File(['foo'], 'foo.mov', {
-        type: 'video/mov',
+        type: 'video/quicktime',
       });
 
       const { result } = arrange({});
