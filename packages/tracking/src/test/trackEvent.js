@@ -39,12 +39,12 @@ describe('trackEvent', () => {
       eventData.event_callback();
     });
 
-    await trackEvent('name', 'category', 'label', 'value');
+    await trackEvent('name', 'category', 'label', 123);
     expect(gtag).toHaveBeenCalledWith('event', 'name', {
       event_callback: expect.any(Function),
       event_category: 'category',
       event_label: 'label',
-      event_value: 'value',
+      value: 123,
       send_to: 'UA-12345678-1',
     });
   });
@@ -52,7 +52,7 @@ describe('trackEvent', () => {
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
 
-    await trackEvent('test-category', 'test-name', 'test-label', 'test-value');
+    await trackEvent('test-category', 'test-name', 'test-label', 123);
     expect(gtag).not.toHaveBeenCalled();
   });
 });
