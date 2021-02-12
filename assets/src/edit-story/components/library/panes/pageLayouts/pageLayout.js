@@ -40,7 +40,7 @@ const PageLayoutWrapper = styled.div`
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
-  ${themeHelpers.focusableOutlineCSS()};
+  ${themeHelpers.focusableOutlineCSS};
 `;
 PageLayoutWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
