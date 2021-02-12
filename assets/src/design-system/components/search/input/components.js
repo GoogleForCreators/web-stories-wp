@@ -22,7 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Chevron, Close as Clear, Search } from '../../../icons';
+import {
+  ChevronDown as Chevron,
+  CrossSmall as Clear,
+  Magnifier as Search,
+} from '../../../icons';
 import { themeHelpers, THEME_CONSTANTS } from '../../../theme';
 import { Z_INDEX } from '../constants';
 
