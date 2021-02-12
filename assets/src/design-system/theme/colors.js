@@ -103,6 +103,7 @@ const opacity = {
   white64: rgba(standard.white, 0.64),
   white24: rgba(standard.white, 0.24),
   white16: rgba(standard.white, 0.16),
+  white8: rgba(standard.white, 0.8),
   black64: rgba(standard.black, 0.64),
   black24: rgba(standard.black, 0.24),
   black10: rgba(standard.black, 0.1),
@@ -178,7 +179,7 @@ const darkTheme = {
   },
   divider: {
     primary: opacity.white24,
-    secondary: opacity.white16,
+    secondary: opacity.white8,
   },
   form: {
     dropDownSubtitle: brand.gray[20], // equivalent to fg.secondary

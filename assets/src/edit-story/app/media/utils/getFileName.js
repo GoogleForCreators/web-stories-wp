@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,5 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Returns file basename without extension.
+ *
+ * @param {File} file File object.
+ * @param {string} file.name File name.
+ * @return {string} File name without extension.
+ */
+const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
 
-export { default } from './useUploadMedia';
+export default getFileName;

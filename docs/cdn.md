@@ -15,7 +15,7 @@ Assets are versioned. Whenever new assets have been added, or existing assets mo
 
 To keep repository size reasonable, CDN assets are stored with [Git Large File Storage (LFS)](https://docs.github.com/en/github/managing-large-files/about-git-large-file-storage).
 
-In order to be able to add new assets, you hae to [install Git LFS](https://docs.github.com/en/github/managing-large-files/installing-git-large-file-storage) on your machine.
+In order to be able to add new assets, you have to [install Git LFS](https://docs.github.com/en/github/managing-large-files/installing-git-large-file-storage) on your machine.
 
 You can download it from [git-lfs.github.com](https://git-lfs.github.com/) (or use `brew install git-lfs` if you're on Mac).
 
