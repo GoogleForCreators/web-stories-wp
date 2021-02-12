@@ -81,10 +81,11 @@ const CheckmarkContainer = styled.div`
   border-radius: ${dsTheme.borders.radius.round};
   height: 135px;
   width: 135px;
-  padding: 55px;
   background: ${dsTheme.colors.gray[5]};
   overflow: hidden;
   & > svg {
+    height: 55px;
+    width: 55px;
     overflow: visible;
     color: ${({ theme }) => theme.DEPRECATED_THEME.colors.hover};
     border: 3px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.hover};
