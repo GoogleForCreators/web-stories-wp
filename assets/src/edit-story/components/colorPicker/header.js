@@ -28,7 +28,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Close } from '../button';
 
 const CONTAINER_PADDING = 12;
-const HEADER_FOOTER_HEIGHT = 50;
+const HEADER_FOOTER_HEIGHT = 52;
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,27 +47,38 @@ const CloseButton = styled(Close)`
 `;
 
 const TypeSelector = styled.button`
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.shadow.active};
   border: 0;
+  border-radius: 100px;
   opacity: 1;
   margin-right: 22px;
 `;
 
 const Solid = styled(TypeSelector)`
-  background-color: ${({ isActive }) => (isActive ? '#448FFF' : '#808080')};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.accent.secondary : theme.colors.fg.tertiary};
 `;
 
-const insertActiveColor = ({ isActive }) => (isActive ? '#2F7BF6' : '#3A3A3A');
-
 const Linear = styled(TypeSelector)`
-  /* Looks better with color stops 10% in */
-  background-image: linear-gradient(white 10%, ${insertActiveColor} 90%);
+  background: linear-gradient(
+    180deg,
+    ${({ isActive, theme }) =>
+      isActive
+        ? '#A4CBFF 0%, #255CA4 100%'
+        : `rgba(255, 255, 255, 0.52) 0%, ${theme.colors.opacity.footprint} 106.28%`}
+  );
 `;
 
 const Radial = styled(TypeSelector)`
-  background-image: radial-gradient(white, ${insertActiveColor});
+  background: radial-gradient(
+    97.5% 97.5% at 50% 50%,
+    ${({ isActive, theme }) =>
+      isActive
+        ? `${theme.colors.accent.secondary} 0%, rgba(121, 179, 255, 0.13) 57.29%`
+        : `${theme.colors.opacity.white64} 0%, rgba(255, 255, 255, 0) 57.29%`}
+  );
 `;
 
 function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
