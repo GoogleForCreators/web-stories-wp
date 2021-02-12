@@ -24,8 +24,14 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Add } from '../../../../../../design-system/icons/action';
+import { Icons } from '../../../../../../design-system';
 import ColorAdd from './colorAdd';
+
+const InlineIcon = styled(Icons.Plus)`
+  display: inline-block;
+  width: 17px;
+  margin: -3px;
+`;
 
 const ActionWrapper = styled.div`
   width: 50%;
@@ -52,7 +58,7 @@ function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
       <Note>
         <TranslateWithMarkup
           mapping={{
-            i: <Add width={18} height={13} />,
+            i: <InlineIcon />,
           }}
         >
           {__(
