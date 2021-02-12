@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -43,7 +43,28 @@ const Shortcut = styled(Text)(
   `
 );
 
-export const MenuItem = ({ disabled, href, label, onClick, shortcut }) => {
+export const MenuItem = ({
+  disabled,
+  focusedIndex,
+  href,
+  index,
+  label,
+  onClick,
+  setFocusedIndex,
+  shortcut,
+}) => {
+  const itemRef = useRef(null);
+
+  const handleFocus = () => {
+    setFocusedIndex(index);
+  };
+
+  useEffect(() => {
+    if (focusedIndex === index) {
+      itemRef.current?.focus();
+    }
+  }, [focusedIndex, index]);
+
   const textContent = useMemo(
     () => (
       <>
@@ -68,13 +89,19 @@ export const MenuItem = ({ disabled, href, label, onClick, shortcut }) => {
 
   if (onClick) {
     return (
-      <Button aria-label={label} disabled={disabled} onClick={onClick}>
+      <Button
+        ref={itemRef}
+        aria-label={label}
+        disabled={disabled}
+        onClick={onClick}
+        onFocus={handleFocus}
+      >
         {textContent}
       </Button>
     );
   } else if (href) {
     return (
-      <Link aria-label={label} href={href}>
+      <Link ref={itemRef} aria-label={label} href={href} onFocus={handleFocus}>
         {textContent}
       </Link>
     );
@@ -128,9 +155,12 @@ export const linkOrButtonValidator = function (props, _, componentName) {
 
 export const MenuItemProps = {
   disabled: PropTypes.bool,
+  focusedIndex: PropTypes.number,
   href: linkOrButtonValidator,
+  index: PropTypes.number,
   label: PropTypes.string.isRequired,
   onClick: linkOrButtonValidator,
+  setFocusedIndex: PropTypes.func,
   shortcut: PropTypes.string,
 };
 

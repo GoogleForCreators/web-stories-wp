@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -25,6 +25,9 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
 import { MenuItem, MenuItemProps } from './menu-item';
+
+const DOWN = 'ArrowDown';
+const UP = 'ArrowUp';
 
 const SEPARATOR_TOP_CLASS = 'separatorTop';
 const SEPARATOR_BOTTOM_CLASS = 'separatorBottom';
@@ -130,13 +133,66 @@ const MenuContainer = styled.ul(
 );
 
 const ContextMenu = ({ isOpen, items, ...props }) => {
+  const [focusedIndex, setFocusedIndex] = useState(-1);
+  const listRef = useRef(null);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
+
+  /**
+   * Allow navigation of the list using the UP and DOWN arrow keys.
+   *
+   * @param {Event} ev The synthetic event
+   * @return {void} void
+   */
+  const handleKeyDown = useCallback(
+    (ev) => {
+      switch (ev.key) {
+        case DOWN:
+          ev.preventDefault();
+          if (listRef.current && focusedIndex < items.length - 1) {
+            let index = focusedIndex + 1;
+            while (index < items.length) {
+              const element = listRef.current.children[index].children[0];
+              if (
+                ['A', 'BUTTON'].includes(element.tagName) &&
+                !element.disabled
+              ) {
+                setFocusedIndex(index);
+                return;
+              }
+              index++;
+            }
+          }
+          break;
+        case UP:
+          ev.preventDefault();
+          if (listRef.current && focusedIndex > -1) {
+            let index = focusedIndex - 1;
+            while (index > -1) {
+              const element = listRef.current.children[index].children[0];
+              if (
+                ['A', 'BUTTON'].includes(element.tagName) &&
+                !element.disabled
+              ) {
+                setFocusedIndex(index);
+                return;
+              }
+              index--;
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    },
+    [focusedIndex, items.length]
+  );
 
   return (
     <Popover role="dialog" isOpen={isOpen} {...props}>
-      <MenuContainer>
+      <MenuContainer ref={listRef} onKeyDown={handleKeyDown}>
         {items.map(({ separator, ...itemProps }, index) => (
           <li
+            id={ids[index]}
             key={ids[index]}
             className={
               (separator === 'top' && SEPARATOR_TOP_CLASS) ||
@@ -144,7 +200,12 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
               ''
             }
           >
-            <MenuItem {...itemProps} />
+            <MenuItem
+              setFocusedIndex={setFocusedIndex}
+              focusedIndex={focusedIndex}
+              index={index}
+              {...itemProps}
+            />
           </li>
         ))}
       </MenuContainer>
