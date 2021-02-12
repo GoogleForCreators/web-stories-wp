@@ -55,7 +55,7 @@ export const Menu = () => {
       <Bg>
         <Container>
           <TransitionGroup component={null}>
-            {mounted && <HelpCenterMenu key="someKey" readTips={[]} />}
+            {mounted && <HelpCenterMenu key="someKey" readTips={{}} />}
           </TransitionGroup>
         </Container>
       </Bg>
