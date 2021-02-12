@@ -28,13 +28,12 @@ import {
   Text,
   THEME_CONSTANTS,
   VisuallyHidden,
-  theme as dsTheme,
 } from '../../../../design-system';
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';
-import { Checkmark } from '../../../../design-system/icons';
 import { Transitioner } from './transitioner';
+import { ReactComponent as DoneCheckmark } from './doneCheckmark.svg';
 
 const Panel = styled.div`
   width: 100%;
@@ -72,37 +71,14 @@ const Paragraph = styled(Text)`
 
 const DoneContainer = styled.div`
   ${themeHelpers.centerContent}
-  height: 135px;
-  width: 100%;
-`;
-
-const CheckmarkContainer = styled.div`
-  ${themeHelpers.centerContent}
-  border-radius: ${dsTheme.borders.radius.round};
-  height: 135px;
-  width: 135px;
-  background: ${dsTheme.colors.gray[5]};
-  overflow: hidden;
-  & > svg {
-    height: 55px;
-    width: 55px;
-    overflow: visible;
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.hover};
-    border: 3px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.hover};
-    border-radius: ${dsTheme.borders.radius.round};
-    padding: 16px 12px 14px 12px;
+  height: 180px;
+  margin-bottom: ${GUTTER_WIDTH}px;
+  svg {
+    width: 135px;
+    height: 135px;
+    display: block;
   }
 `;
-
-const DoneIcon = () => {
-  return (
-    <DoneContainer>
-      <CheckmarkContainer>
-        <Checkmark />
-      </CheckmarkContainer>
-    </DoneContainer>
-  );
-};
 
 export function QuickTip({
   title,
@@ -133,7 +109,11 @@ export function QuickTip({
               <source src={`${cdnURL}${figureSrc}.mp4`} type="video/mp4" />
             </Video>
           )}
-          {isDone && <DoneIcon />}
+          {isDone && (
+            <DoneContainer>
+              <DoneCheckmark />
+            </DoneContainer>
+          )}
           <Title>{title}</Title>
           {description.map((paragraph, i) => (
             <Paragraph
