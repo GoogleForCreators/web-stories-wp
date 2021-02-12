@@ -25,6 +25,7 @@ export const LOCAL_STORAGE_PREFIX = {
   TERMS_MEDIA3P: 'web_stories_media3p_terms_agreement',
   VIDEO_OPTIMIZATION_DIALOG_DISMISSED:
     'web_stories_video_optimization_dialog_dismissed',
+  FTUE: 'web_stories_ftue',
 };
 
 function getItemByKey(key) {

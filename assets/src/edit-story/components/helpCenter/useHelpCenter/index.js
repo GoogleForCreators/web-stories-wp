@@ -25,6 +25,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { clamp } from '../../../../animation';
 import { useCurrentUser } from '../../../app';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 import { BASE_NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
 import {
   composeEffects,
@@ -35,6 +36,7 @@ import {
   deriveTransitionDirection,
   deriveUnreadTipsCount,
   resetNavigationIndexOnOpen,
+  deriveAutoOpen,
 } from './effects';
 
 /**
@@ -57,6 +59,7 @@ export const deriveState = composeEffects(
     deriveDisabledButtons,
     deriveReadTip,
     deriveUnreadTipsCount,
+    deriveAutoOpen,
   ]
 );
 
@@ -72,7 +75,6 @@ export const initial = {
   state: {
     isOpen: false,
     navigationIndex: -1,
-    // @TODO make this dynamic based off of unread tips.
     navigationFlow: BASE_NAVIGATION_FLOW,
     isLeftToRightTransition: true,
     hasBottomNavigation: false,
@@ -81,6 +83,7 @@ export const initial = {
     readTips: {},
     readError: false,
     unreadTipsCount: 0,
+    isHydrated: false,
   },
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //
@@ -123,6 +126,7 @@ export const initial = {
         ...(payload?.readTips ?? {}),
         ...state.readTips,
       },
+      isHydrated: true,
     }),
     persistingReadTipsError: () => () => ({
       readError: true,
@@ -175,11 +179,24 @@ export function useHelpCenter() {
     [store.actions]
   );
 
+  // Once app is hydrated, start persisting unreadTips
+  const { isHydrated, unreadTipsCount } = store.state;
   useEffect(() => {
-    actions.hydrateReadTipsSuccess({
-      readTips: currentUser?.meta?.web_stories_onboarding ?? {},
-    });
-  }, [actions, currentUser]);
+    if (isHydrated) {
+      localStore.setItemByKey(LOCAL_STORAGE_PREFIX.FTUE, {
+        unreadTipsCount,
+      });
+    }
+  }, [isHydrated, unreadTipsCount]);
+
+  // Hydrate unread tips once from current user endpoint.
+  useEffect(() => {
+    if (!isHydrated && currentUser?.meta?.web_stories_onboarding) {
+      actions.hydrateReadTipsSuccess({
+        readTips: currentUser.meta.web_stories_onboarding,
+      });
+    }
+  }, [actions, currentUser, isHydrated]);
 
   const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
   useEffect(() => {

@@ -16,6 +16,7 @@
 /**
  * Internal dependencies
  */
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 import {
   DONE_TIP_ENTRY,
   BASE_NAVIGATION_FLOW,
@@ -29,6 +30,9 @@ const isComingFromMenu = (previous, next) =>
 
 const navigationFlowTips = (previous, next) =>
   (next.navigationFlow || []).filter((key) => TIP_KEYS_MAP[key]);
+
+const isInitialHydrate = (previous, next) =>
+  !previous.isHydrated && next.isHydrated;
 
 export const resetNavigationIndexOnOpen = (previous, next) => {
   const isOpening = !previous.isOpen && next.isOpen;
@@ -91,6 +95,17 @@ export function deriveUnreadTipsCount(previous, next) {
       Object.keys(TIP_KEYS_MAP).filter((tip) => !next.readTips[tip])?.length ||
       0,
   };
+}
+
+export function deriveAutoOpen(previous, next) {
+  if (isInitialHydrate(previous, next)) {
+    const ftueLocalStore = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
+    const maxUnreadTips = Object.keys(TIP_KEYS_MAP).length;
+    const hasNewTips =
+      (ftueLocalStore?.unreadTipsCount || maxUnreadTips) < next.unreadTipsCount;
+    return hasNewTips ? { isOpen: true } : {};
+  }
+  return {};
 }
 
 /**
