@@ -139,7 +139,7 @@ class Tracking {
 			'wpVersion'          => $wp_version,
 			'phpVersion'         => PHP_VERSION,
 			'pluginVersion'      => WEBSTORIES_VERSION,
-			'numberOfUsers'      => (int) ( is_multisite() ? get_user_count() : count_users()['total_users'] ),
+			'isMultisite'        => (int) is_multisite(),
 		];
 	}
 
