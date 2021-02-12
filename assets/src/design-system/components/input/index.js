@@ -46,6 +46,7 @@ const IconContainer = styled.div`
   background: ${({ theme }) => theme.colors.bg.primary};
   right: 12px;
   top: 46px;
+  pointer-events: none;
 
   svg {
     height: 16px;
