@@ -24,7 +24,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
+import { Icons, Text, THEME_CONSTANTS } from '../../../../design-system';
 import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import PageMenuButton from './pageMenuButton';
@@ -39,13 +39,6 @@ const Wrapper = styled.div`
 
   --pagemenu-icon-space: ${({ isWidePage }) => (isWidePage ? 16 : 10)}px;
   --pagemenu-count-space: ${({ isWidePage }) => (isWidePage ? 24 : 12)}px;
-`;
-
-const PageCount = styled.div`
-  color: ${({ theme }) => theme.colors.fg.primary};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: 24px;
 `;
 
 const Divider = styled.span`
@@ -118,13 +111,13 @@ function PageMenu() {
 
   return (
     <Wrapper isWidePage={isWidePage}>
-      <PageCount>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {sprintf(
           /* translators: %s: page number. */
           __('Page %s', 'web-stories'),
           currentPageNumber
         )}
-      </PageCount>
+      </Text>
       <CountSpace />
       <PageMenuButton
         title={__('Delete page', 'web-stories')}
@@ -159,7 +152,7 @@ function PageMenu() {
         onClick={handleUndo}
         aria-label={__('Undo Changes', 'web-stories')}
       >
-        {isRTL ? <Icons.ArrowDownrightCurved /> : <Icons.ArrowDownleftCurved />}
+        {isRTL ? <Icons.ArrowDownRightCurved /> : <Icons.ArrowDownLeftCurved />}
       </PageMenuButton>
       <IconSpace />
       <PageMenuButton
@@ -169,7 +162,7 @@ function PageMenu() {
         onClick={handleRedo}
         aria-label={__('Redo Changes', 'web-stories')}
       >
-        {isRTL ? <Icons.ArrowDownleftCurved /> : <Icons.ArrowDownrightCurved />}
+        {isRTL ? <Icons.ArrowDownLeftCurved /> : <Icons.ArrowDownRightCurved />}
       </PageMenuButton>
       {hasAnimations && (
         <>
