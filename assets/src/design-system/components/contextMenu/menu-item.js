@@ -56,7 +56,9 @@ export const MenuItem = ({
   const itemRef = useRef(null);
 
   const handleFocus = () => {
-    setFocusedIndex(index);
+    if (focusedIndex !== index) {
+      setFocusedIndex(index);
+    }
   };
 
   useEffect(() => {
