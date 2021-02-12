@@ -158,7 +158,7 @@ function useUploader() {
         file_type: file.type,
       });
       const trackTiming = getTimeTracker(
-        'video transcoding',
+        'video_transcoding',
         'editor',
         'Media'
       );
@@ -172,7 +172,7 @@ function useUploader() {
         return uploadMedia(newFile, additionalData);
       } catch (err) {
         trackTiming();
-        trackError('video transcoding', err.message);
+        trackError('video_transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
         throw createError('TranscodingError', file.name, message);
