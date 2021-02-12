@@ -87,12 +87,11 @@ export function BottomNavigation({
 
   return (
     <BottomNavBar
-      aria-hidden={hasBottomNavigation}
+      aria-hidden={!hasBottomNavigation}
       isHidden={!hasBottomNavigation}
     >
       <BottomNavButtons>
         <NavButton
-          aria-label={__('Navigate to Help Center Main Menu', 'web-stories')}
           onClick={() => {
             forceFocusCompanion();
             onAllTips();
@@ -110,7 +109,6 @@ export function BottomNavigation({
       <BottomNavButtons>
         <NavButton
           ref={prevButtonRef}
-          aria-label={__('Navigate to Previous Tip', 'web-stories')}
           onClick={onPrev}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
@@ -120,7 +118,6 @@ export function BottomNavigation({
         </NavButton>
         <NavButton
           ref={nextButtonRef}
-          aria-label={__('Navigate to Next Tip', 'web-stories')}
           onClick={onNext}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
