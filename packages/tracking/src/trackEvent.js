@@ -25,7 +25,7 @@ import track from './track';
  * Send an Analytics tracking event.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
- * @see  https://support.google.com/analytics/answer/1033068#Anatomy
+ * @see https://support.google.com/analytics/answer/1033068#Anatomy
  *
  * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
  * @param {string} eventCategory The category of the event. (e.g. 'editor'). Default: 'engagement'.

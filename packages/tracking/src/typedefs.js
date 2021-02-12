@@ -18,8 +18,8 @@
  * @typedef EventData
  * @property {string} send_to Tracking ID
  * @property {string} event_category The event category (e.g. 'editor'). GA defaults this to 'engagement'.
- * @property {string} event_label The event label (e.g. 'search_term').
- * @property {string} event_value The event value (e.g. the actual search term).
+ * @property {?string} [event_label] The event label (e.g. 'search_term').
+ * @property {?number} [value] The event value (e.g. the actual search term).
  */
 
 // This is required so that the IDE doesn't ignore this file.
