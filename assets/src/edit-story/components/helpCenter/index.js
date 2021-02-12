@@ -94,12 +94,7 @@ export const HelpCenter = () => {
           <Toggle
             isOpen={state.isOpen}
             onClick={actions.toggle}
-            notificationCount={
-              // navigation includes 'done' which does not get marked read
-              state.navigationFlow.length -
-              Object.keys(state.readTips).length -
-              1
-            }
+            notificationCount={state.unreadTipsCount}
             popupId={POPUP_ID}
           />
         </Wrapper>

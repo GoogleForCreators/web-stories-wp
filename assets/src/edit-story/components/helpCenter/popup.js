@@ -62,7 +62,7 @@ export function Popup({ isOpen, popupId, children }) {
       unmountOnExit
     >
       {(state) => (
-        <Controller id={popupId} aria-expanded="true" state={state}>
+        <Controller id={popupId} role="dialog" state={state}>
           {children}
         </Controller>
       )}
