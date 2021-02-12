@@ -92,7 +92,7 @@ export const TIPS = {
     figureSrc: 'images/help-center/page_attachment_module_7.webm',
     description: [
       __(
-        'Go to the Design tab. Scroll down to <strong>Swipe-up Link</strong> and enter a web address and a call to action to describe the link.',
+        'Go to the Design tab. Navigate to <strong>Page Attachment</strong> and enter a web address and a call to action to describe the link.',
         'web-stories'
       ),
     ],
