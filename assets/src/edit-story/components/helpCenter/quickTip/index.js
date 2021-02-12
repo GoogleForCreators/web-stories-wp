@@ -129,7 +129,8 @@ export function QuickTip({
               noControls
               preload="true"
             >
-              <source src={`${cdnURL}${figureSrc}`} type="video/webm" />
+              <source src={`${cdnURL}${figureSrc}.webm`} type="video/webm" />
+              <source src={`${cdnURL}${figureSrc}.mp4`} type="video/mp4" />
             </Video>
           )}
           {isDone && <DoneIcon />}
