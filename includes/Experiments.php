@@ -450,7 +450,7 @@ class Experiments {
 		$experiments = array_filter(
 			$this->get_experiments(),
 			function( $experiment ) {
-				$this->is_experiment_enabled( $experiment['name'] );
+				return $this->is_experiment_enabled( $experiment['name'] );
 			}
 		);
 
