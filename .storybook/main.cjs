@@ -49,7 +49,29 @@ module.exports = {
 
     config.module.rules.unshift({
       test: /\.svg$/,
-      use: ['@svgr/webpack', 'url-loader', assetLoader],
+      use: [
+        {
+          loader: '@svgr/webpack',
+          // These should be sync'd with the config in `webpack.config.cjs`.
+          options: {
+            titleProp: true,
+            svgo: true,
+            svgoConfig: {
+              plugins: [
+                {
+                  removeViewBox: false,
+                  removeDimensions: true,
+                  convertColors: {
+                    currentColor: /^(?!url|none)/i,
+                  },
+                },
+              ],
+            },
+          },
+        },
+        'url-loader',
+        assetLoader,
+      ],
     });
 
     // only the first matching rule is used when there is a match.

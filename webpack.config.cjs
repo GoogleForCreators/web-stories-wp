@@ -93,8 +93,21 @@ const sharedConfig = {
         use: [
           {
             loader: '@svgr/webpack',
+            // These should be sync'd with the config in `.storybook/main.cjs`.
             options: {
               titleProp: true,
+              svgo: true,
+              svgoConfig: {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                    removeDimensions: true,
+                    convertColors: {
+                      currentColor: /^(?!url|none)/i,
+                    },
+                  },
+                ],
+              },
             },
           },
           'url-loader',
