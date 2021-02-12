@@ -121,8 +121,7 @@ export const Z_INDEX = {
   QUICK_TIP: 2,
 };
 
-// @TODO make this dynamic based off of unread tips.
-export const NAVIGATION_FLOW = [...Object.keys(TIPS), DONE_TIP_ENTRY[0]];
+export const BASE_NAVIGATION_FLOW = Object.keys(TIPS);
 
 export const FOCUSABLE_SELECTORS = [
   'button',
@@ -147,3 +146,8 @@ export const ReadTipsType = PropTypes.shape({
     {}
   ),
 });
+
+export const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
+  keyMap[key] = true;
+  return keyMap;
+}, {});
