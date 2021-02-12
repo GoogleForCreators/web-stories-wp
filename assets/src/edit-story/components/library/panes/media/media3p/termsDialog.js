@@ -19,7 +19,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
+import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -50,6 +50,7 @@ function TermsDialog() {
   const acknowledgeTerms = useCallback(() => {
     setDialogOpen(false);
     localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
+    trackEvent('media3p_terms_acknowledged', 'editor');
   }, []);
 
   useEffect(() => {
