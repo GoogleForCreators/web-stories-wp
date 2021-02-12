@@ -102,7 +102,7 @@ export const TIPS = {
 export const DONE_TIP_ENTRY = [
   'done',
   {
-    title: __('Done!', 'web-stories'),
+    title: __('Done', 'web-stories'),
     description: [
       __(
         'You’re caught up with quick tips. We’ll notify you when we add new tips, but feel free to come back whenever you need help.',
