@@ -229,14 +229,8 @@ export function useHelpCenter() {
       store.state.navigationFlow.length >= navigationIndex
     ) {
       const currentTip = store.state.navigationFlow[navigationIndex];
-      // navigation includes 'done' which does not get marked read
-      const unreadCount =
-        store.state.navigationFlow.length -
-        Object.keys(store.state.readTips).length -
-        1;
-
       trackEvent('help_center_read_tip', 'editor', currentTip, null, {
-        unread_count: unreadCount,
+        unread_count: store.state.unreadTipsCount,
       });
     }
     // Disable reason: avoid sending duplicate tracking events.
