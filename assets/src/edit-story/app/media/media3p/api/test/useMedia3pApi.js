@@ -104,11 +104,11 @@ describe('useMedia3pApi', () => {
       categories: [
         {
           name: 'categories/unsplash:1',
-          label: 'Covid-19',
+          displayName: 'Covid-19',
         },
         {
           name: 'categories/unsplash:2',
-          label: 'Mountains',
+          displayName: 'Mountains',
         },
       ],
     })

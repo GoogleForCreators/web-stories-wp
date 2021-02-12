@@ -120,7 +120,7 @@ function useUploadMedia({ media, setMedia }) {
       } catch (e) {
         // Catching errors from getResourceFromLocalFile() above.
 
-        trackError('upload media', e.message);
+        trackError('upload_media', e.message);
 
         setIsUploading(false);
 
@@ -199,7 +199,7 @@ function useUploadMedia({ media, setMedia }) {
           }),
         });
       } catch (e) {
-        trackError('upload media', e.message);
+        trackError('upload_media', e.message);
 
         showSnackbar({
           message: e.message,

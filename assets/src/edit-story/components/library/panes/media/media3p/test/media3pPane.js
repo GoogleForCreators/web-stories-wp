@@ -232,6 +232,6 @@ describe('Media3pPane', () => {
     const subHeading = getByTestId('media-subheading');
 
     expect(getComputedStyle(subHeading).display).not.toBe('none');
-    expect(subHeading).toHaveTextContent('Tiny dogs for provider 1');
+    expect(subHeading).toHaveTextContent('1 Dogs');
   });
 });

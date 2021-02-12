@@ -225,7 +225,7 @@ describe('ApiFetcher', () => {
       });
 
       const result = await apiFetcher.listCategories();
-      expect(result.categories[0].displayName).toBe('Covid-19');
+      expect(result.categories[0].label).toBe('Covid-19');
     });
 
     it('should throw when the API returns an error', async () => {
@@ -255,7 +255,7 @@ describe('ApiFetcher', () => {
         filter,
       });
 
-      expect(result.categories[0].displayName).toBe('Covid-19');
+      expect(result.categories[0].label).toBe('Covid-19');
       expect(global.fetch).toHaveBeenCalledTimes(1);
       const fetchArg = fetch.mock.calls[0][0];
       const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
