@@ -26,7 +26,7 @@ import styled from 'styled-components';
 import { __ } from '@wordpress/i18n';
 import { Button, Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
-import { useEffect, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -74,12 +74,6 @@ const EmbedPlaceholder = ({
     setIsSortingStories(true);
     openStoryPicker();
   };
-
-  useEffect(() => {
-    if (!selectedStories.length && !isStoryPickerOpen) {
-      openStoryPicker();
-    }
-  }, [selectedStories, isStoryPickerOpen]);
 
   if (selectedStoriesObject.length) {
     placeholderIcon = false;

@@ -1,18 +1,26 @@
 /* Web Stories: Circles View */
-.web-stories-list.is-view-type-circles .web-stories-list__inner-wrapper {
+.web-stories-list {
+  max-width: var(
+    --ws-container-max-width
+  ); /* Limit the width so that the nav arrows don't stick to the edges of the viewport. */
+  margin: 0 auto;
+}
+
+.web-stories-list.is-carousel .web-stories-list__carousel {
   display: flex;
-  flex-wrap: nowrap;
-  position: relative;
-  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.web-stories-list.is-view-type-circles .glider-track {
+  align-items: flex-start;
+  margin: 0 auto;
 }
 
 .web-stories-list.is-view-type-circles .web-stories-list__story {
   max-width: var(--ws-circle-size);
-  min-width: initial;
+  min-width: var(--ws-circle-size);
   margin: 0 5px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
 }
 
 .web-stories-list.is-view-type-circles .web-stories-list__story-poster img {

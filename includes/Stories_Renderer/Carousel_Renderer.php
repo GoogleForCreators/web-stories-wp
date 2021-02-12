@@ -123,7 +123,7 @@ class Carousel_Renderer extends Renderer {
 					wp_enqueue_script( self::SCRIPT_HANDLE );
 					wp_enqueue_style( self::SCRIPT_HANDLE );
 					?>
-					<div class="web-stories-list__carousel" data-id="<?php echo esc_attr( 'carousel-' . $this::get_obj_id() ); ?>">
+					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this::get_obj_id() ); ?>">
 						<?php
 						foreach ( $this->story_posts as $story ) {
 							$this->render_single_story_content();

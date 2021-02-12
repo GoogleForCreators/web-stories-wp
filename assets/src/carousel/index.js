@@ -128,37 +128,58 @@ domReady(() => {
     const carouselId = carouselWrapper.dataset.id;
 
     const navArrows = {
-      prev: `.${carouselId} .glider-prev`,
-      next: `.${carouselId} .glider-next`,
+      prev: !isRTL
+        ? `.${carouselId} .glider-prev`
+        : `.${carouselId} .glider-next`,
+      next: !isRTL
+        ? `.${carouselId} .glider-next`
+        : `.${carouselId} .glider-prev`,
     };
 
-    // This is to add basic support for the RTL. We switch the nav arrows.
-    const navArrowsRTL = {
-      prev: `.${carouselId} .glider-next`,
-      next: `.${carouselId} .glider-prev`,
-    };
+    const isCircles = carouselWrapper.classList.contains('circles');
+    const itemStyle = window.getComputedStyle(
+      carouselWrapper.querySelector('.web-stories-list__story')
+    );
 
-    /* eslint-disable-next-line no-new -- we do not store the object as no further computation required with the built object. */
-    new Glider(carouselWrapper, {
-      // Mobile-first defaults
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      scrollLock: true,
-      arrows: !isRTL ? navArrows : navArrowsRTL,
-      responsive: [
-        {
-          // screens greater than >= 775px
-          breakpoint: 775,
-          settings: {
-            // Set to `auto` and provide item width to adjust to viewport
-            slidesToShow: 'auto',
-            slidesToScroll: 'auto',
-            itemWidth: carouselWrapper.querySelector('.web-stories-list__story')
-              .offsetWidth,
-            duration: 0.25,
+    const itemWidth =
+      parseFloat(itemStyle.width) +
+      (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
+
+    // For circles view we would want to keep it auto.
+    if (isCircles) {
+      /* eslint-disable-next-line no-new -- we do not store the object as no further computation required with the built object. */
+      new Glider(carouselWrapper, {
+        // Set to `auto` and provide item width to adjust to viewport
+        slidesToShow: 'auto',
+        slidesToScroll: 'auto',
+        itemWidth,
+        duration: 0.25,
+        scrollLock: true,
+        arrows: navArrows,
+      });
+    } else {
+      // For Box Carousel we are showing single slide below tablets viewport.
+      /* eslint-disable-next-line no-new -- we do not store the object as no further computation required with the built object. */
+      new Glider(carouselWrapper, {
+        // Mobile-first defaults
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        scrollLock: true,
+        arrows: navArrows,
+        responsive: [
+          {
+            // screens greater than >= 775px
+            breakpoint: 775,
+            settings: {
+              // Set to `auto` and provide item width to adjust to viewport
+              slidesToShow: 'auto',
+              slidesToScroll: 'auto',
+              itemWidth,
+              duration: 0.25,
+            },
           },
-        },
-      ],
-    });
+        ],
+      });
+    }
   });
 });

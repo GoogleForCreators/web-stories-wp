@@ -286,10 +286,7 @@ class Customizer extends \WP_UnitTestCase {
 			'author-default'            => true,
 			'date'                      => false,
 			'date-default'              => false,
-			'excerpt'                   => false,
-			'excerpt-default'           => false,
-			'sharp-corners'             => false,
-			'stories-archive-link'      => false,
+			'stories-archive-link'      => true,
 			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
 			'number-of-stories'         => 10,
 			'order'                     => [

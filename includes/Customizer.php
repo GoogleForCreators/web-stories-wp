@@ -474,7 +474,6 @@ class Customizer {
 			'show_title'            => $theme_support['title-default'],
 			'show_author'           => $theme_support['author-default'],
 			'show_date'             => $theme_support['date-default'],
-			'show_excerpt'          => $theme_support['excerpt-default'],
 			'stories_archive_label' => $theme_support['stories-archive-label'],
 			'show_story_poster'     => $theme_support['show-story-poster-default'],
 			'number_of_columns'     => $theme_support['grid-columns-default'],

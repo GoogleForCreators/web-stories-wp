@@ -13,10 +13,14 @@
   transition: opacity 0.2s linear;
 }
 
+.admin-bar .web-stories-list .web-stories-list__lightbox {
+  top: 46px;
+}
+
 .web-stories-list .web-stories-list__lightbox.show {
   opacity: 1;
   display: flex;
-  z-index: 99999;
+  z-index: 999;
 }
 
 .web-stories-list .web-stories-list__lightbox amp-story-player {
@@ -28,7 +32,7 @@
   display: inline-block;
   position: fixed;
   left: 0;
-  top: 5px;
+  top: 52px;
   cursor: pointer;
   height: 40px;
   width: 40px;
@@ -65,7 +69,6 @@ html:not([amp])
 
 @media all and (min-width: 676px) {
   .web-stories-list .story-lightbox__close-button {
-    top: 15px;
     left: 10px;
   }
 
@@ -73,5 +76,11 @@ html:not([amp])
     left: 20px;
     top: 5px;
     height: 25px;
+  }
+}
+
+@media all and (min-width: 783px) {
+  .admin-bar .web-stories-list .web-stories-list__lightbox {
+    top: 32px;
   }
 }

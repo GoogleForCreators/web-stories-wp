@@ -117,14 +117,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var int
 	 */
-	protected $height = 430;
+	protected $height = 308;
 
 	/**
 	 * Width for displaying story.
 	 *
 	 * @var int
 	 */
-	protected $width = 285;
+	protected $width = 185;
 
 	/**
 	 * Whether content overlay is enabled for story.
@@ -483,8 +483,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $this->current()->get_id() . $this::get_obj_id();
 
-		// Web Stories Styles for AMP and non-AMP pages.
-		wp_enqueue_style( self::STYLE_HANDLE );
+		// No need to load these styles on admin as editor styles are being loaded by the block.
+		if ( ! is_admin() ) {
+			// Web Stories Styles for AMP and non-AMP pages.
+			wp_enqueue_style( self::STYLE_HANDLE );
+		}
 
 		if ( $this->is_amp_request() ) {
 			?>

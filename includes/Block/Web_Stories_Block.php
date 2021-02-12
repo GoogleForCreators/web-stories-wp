@@ -282,7 +282,7 @@ class Web_Stories_Block extends Embed_Base {
 		$controls_state = [];
 
 		foreach ( $controls as $control => $field ) {
-			$controls_state[ $control ] = $this->block_attributes['fieldState'][ 'show_' . $field ];
+			$controls_state[ $control ] = isset( $this->block_attributes['fieldState'][ 'show_' . $field ] ) ? $this->block_attributes['fieldState'][ 'show_' . $field ] : false;
 		}
 
 		return $controls_state;

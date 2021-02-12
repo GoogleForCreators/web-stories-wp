@@ -43,6 +43,12 @@
   transform: translateY(-50%);
 }
 
+.glider-next.disabled,
+.glider-prev.disabled,
+.web-stories-list.is-carousel .amp-carousel-button.amp-disabled {
+  opacity: 0;
+}
+
 /* Temporary till we have full support for the RTL carousel. */
 html[dir='rtl'] .glider-next.disabled,
 html[dir='rtl'] .glider-prev.disabled {

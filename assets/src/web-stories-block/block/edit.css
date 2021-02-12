@@ -1,3 +1,6 @@
+/* Load main styles on edit screen. */
+@import '../css/style.css';
+
 /* Carousel view styles */
 .web-stories-list.is-view-type-carousel .web-stories-list__inner-wrapper,
 .web-stories-list.is-view-type-circles .web-stories-list__inner-wrapper {
@@ -9,6 +12,10 @@
   margin-right: 10px;
   min-width: 235px;
   flex-shrink: 0;
+}
+
+.web-stories-list .web-stories-list__story-poster img {
+  height: 100%;
 }
 
 .web-stories-list .story-content-overlay__excerpt p {
