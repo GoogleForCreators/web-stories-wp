@@ -458,13 +458,13 @@ class Customizer {
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
-	 * @return string|void
+	 * @return string
 	 */
 	public function render_stories() {
 		$options = get_option( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
-			return;
+			return '';
 		}
 
 		$theme_support = $this->get_stories_theme_support();
