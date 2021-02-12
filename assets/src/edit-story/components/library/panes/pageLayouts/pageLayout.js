@@ -24,11 +24,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useFocusOut } from '../../../../../design-system';
+import { themeHelpers, useFocusOut } from '../../../../../design-system';
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
-import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 
 const PageLayoutWrapper = styled.div`
   position: absolute;
@@ -41,9 +40,7 @@ const PageLayoutWrapper = styled.div`
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) => `2px solid ${theme.colors.selection} !important`};
-  }
+  ${themeHelpers.focusableOutlineCSS()};
 `;
 PageLayoutWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
@@ -57,7 +54,7 @@ const PreviewPageWrapper = styled.div`
   z-index: -1;
   background-color: ${({ theme }) =>
     theme.DEPRECATED_THEME.colors.loading.primary};
-  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
 `;
 PreviewPageWrapper.propTypes = {
@@ -67,8 +64,8 @@ PreviewPageWrapper.propTypes = {
 const PageLayoutTitle = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.grayout};
-  border-radius: ${({ theme }) => theme.border.radius.default};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.grayout};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
@@ -138,5 +135,7 @@ PageLayout.propTypes = {
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
 };
+
+PageLayout.displayName = 'PageLayout';
 
 export default forwardRef(PageLayout);

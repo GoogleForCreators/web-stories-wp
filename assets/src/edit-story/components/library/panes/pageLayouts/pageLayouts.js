@@ -61,6 +61,7 @@ const PageLayoutsVirtualizedContainer = styled.div`
   gap: ${PAGE_LAYOUT_ROW_GAP}px;
   width: 100%;
   height: 100%;
+  margin-top: 4px;
 `;
 
 function PageLayouts({ pages, parentRef }) {
