@@ -45,7 +45,11 @@ function useUploadVideoFrame({ updateMediaElement }) {
   );
 
   const processData = async (id, src) => {
-    const trackTiming = getTimeTracker('video_poster_generation', 'editor', 'Media');
+    const trackTiming = getTimeTracker(
+      'video_poster_generation',
+      'editor',
+      'Media'
+    );
     try {
       const obj = await getFirstFrameOfVideo(src);
       obj.name = getFileName(src) + '-poster.jpeg';
