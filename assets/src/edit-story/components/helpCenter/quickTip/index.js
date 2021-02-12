@@ -28,10 +28,12 @@ import {
   Text,
   THEME_CONSTANTS,
   VisuallyHidden,
+  theme as dsTheme,
 } from '../../../../design-system';
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';
+import { Checkmark } from '../../../../design-system/icons';
 import { Transitioner } from './transitioner';
 
 const Panel = styled.div`
@@ -68,11 +70,45 @@ const Paragraph = styled(Text)`
   }
 `;
 
+const DoneContainer = styled.div`
+  ${themeHelpers.centerContent}
+  height: 135px;
+  width: 100%;
+`;
+
+const CheckmarkContainer = styled.div`
+  ${themeHelpers.centerContent}
+  border-radius: ${dsTheme.borders.radius.round};
+  height: 135px;
+  width: 135px;
+  padding: 55px;
+  background: ${dsTheme.colors.gray[5]};
+  overflow: hidden;
+  & > svg {
+    overflow: visible;
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.hover};
+    border: 3px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.hover};
+    border-radius: ${dsTheme.borders.radius.round};
+    padding: 16px 12px 14px 12px;
+  }
+`;
+
+const DoneIcon = () => {
+  return (
+    <DoneContainer>
+      <CheckmarkContainer>
+        <Checkmark />
+      </CheckmarkContainer>
+    </DoneContainer>
+  );
+};
+
 export function QuickTip({
   title,
   description,
   isLeftToRightTransition = true,
   figureSrc,
+  isDone = false,
   ...transitionProps
 }) {
   const { cdnURL } = useConfig();
@@ -95,6 +131,7 @@ export function QuickTip({
               <source src={`${cdnURL}${figureSrc}`} type="video/webm" />
             </Video>
           )}
+          {isDone && <DoneIcon />}
           <Title>{title}</Title>
           {description.map((paragraph, i) => (
             <Paragraph
@@ -119,6 +156,7 @@ export function QuickTip({
 
 QuickTip.propTypes = {
   figureSrc: PropTypes.string,
+  isDone: PropTypes.bool,
   title: PropTypes.string.isRequired,
   description: PropTypes.arrayOf(PropTypes.string).isRequired,
   isLeftToRightTransition: PropTypes.bool,

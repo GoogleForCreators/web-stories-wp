@@ -39,6 +39,7 @@ export function Companion({
       {tip ? (
         <QuickTip
           key={tipKey}
+          isDone={tipKey == DONE_TIP_ENTRY[0]}
           transitionKey={tipKey}
           isLeftToRightTransition={isLeftToRightTransition}
           {...tip}
