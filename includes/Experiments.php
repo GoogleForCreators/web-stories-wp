@@ -448,12 +448,10 @@ class Experiments {
 	 */
 	public function get_enabled_experiments() {
 		$experiments = array_filter(
-			$this->get_experiments(),
-			function( $experiment ) {
-				return $this->is_experiment_enabled( $experiment['name'] );
-			}
+			wp_list_pluck( $this->get_experiments(), 'name' ),
+			[ $this, 'is_experiment_enabled' ]
 		);
 
-		return wp_list_pluck( $experiments, 'name' );
+		return $experiments;
 	}
 }
