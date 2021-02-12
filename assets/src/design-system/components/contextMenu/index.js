@@ -28,6 +28,7 @@ import { MenuItem, MenuItemProps } from './menu-item';
 
 const DOWN = 'ArrowDown';
 const UP = 'ArrowUp';
+const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
 
 const SEPARATOR_TOP_CLASS = 'separatorTop';
 const SEPARATOR_BOTTOM_CLASS = 'separatorBottom';
@@ -150,11 +151,12 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
           ev.preventDefault();
           if (listRef.current && focusedIndex < items.length - 1) {
             let index = focusedIndex + 1;
+
             while (index < items.length) {
-              const element = listRef.current.children[index].children[0];
+              const element = listRef.current?.children?.[index]?.children?.[0];
               if (
-                ['A', 'BUTTON'].includes(element.tagName) &&
-                !element.disabled
+                FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+                !element?.disabled
               ) {
                 setFocusedIndex(index);
                 return;
@@ -167,11 +169,12 @@ const ContextMenu = ({ isOpen, items, ...props }) => {
           ev.preventDefault();
           if (listRef.current && focusedIndex > -1) {
             let index = focusedIndex - 1;
+
             while (index > -1) {
-              const element = listRef.current.children[index].children[0];
+              const element = listRef.current?.children?.[index]?.children?.[0];
               if (
-                ['A', 'BUTTON'].includes(element.tagName) &&
-                !element.disabled
+                FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+                !element?.disabled
               ) {
                 setFocusedIndex(index);
                 return;
