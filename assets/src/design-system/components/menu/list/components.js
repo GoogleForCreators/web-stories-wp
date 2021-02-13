@@ -45,7 +45,7 @@ export const ListItemLabel = styled.li`
 export const ListItem = styled.li(
   ({ disabled, theme }) => css`
     display: grid;
-    grid-template-columns: 16px 1fr;
+    grid-template-columns: 32px 1fr;
     padding: 6px 2px 6px 8px;
     margin: 4px 8px;
     border-radius: ${theme.borders.radius.small};
@@ -69,8 +69,6 @@ export const ListItem = styled.li(
 
     svg {
       color: ${theme.colors.fg.primary};
-      height: 8px;
-      width: auto;
     }
 
     & > span {

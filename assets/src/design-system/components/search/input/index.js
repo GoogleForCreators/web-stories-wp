@@ -86,7 +86,7 @@ const SearchInput = (
       />
       <SearchDecoration
         alignCenter={alignInputCenter}
-        aria-hidden={true}
+        aria-hidden
         disabled={disabled}
       >
         <SearchIcon id={clearId} />

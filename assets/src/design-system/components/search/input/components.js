@@ -42,7 +42,7 @@ export const InputContainer = styled.div(
     color: ${theme.colors.fg.primary};
 
     input {
-      padding: 8px 20px 8px ${alignCenter ? 'calc(50% - 8px)' : '32px'};
+      padding: 8px 20px 8px ${alignCenter ? 'calc(50% - 18px)' : '40px'};
     }
   `
 );
@@ -123,11 +123,11 @@ Input.propTypes = {
 const BaseDecorationContainer = css`
   display: flex;
   align-items: center;
-  width: 16px;
+  width: 32px;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.fg.secondary};
   border: 0;
-  margin: auto 12px auto auto;
+  margin: auto 0 auto auto;
   padding: 0;
   align-self: flex-end;
   cursor: pointer;
@@ -138,7 +138,7 @@ export const ClearButton = styled.button`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
 
   ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-  height: 16px;
+  height: 32px;
   z-index: ${Z_INDEX.CLEAR_BUTTON};
 `;
 ClearButton.propTypes = {
@@ -146,7 +146,7 @@ ClearButton.propTypes = {
 };
 
 export const ClearIcon = styled(Clear)`
-  width: 8px;
+  width: 32px;
   height: auto;
   margin: auto;
 `;
@@ -168,7 +168,7 @@ ChevronDecoration.propTypes = {
 };
 
 export const ChevronIcon = styled(Chevron)`
-  width: 8px;
+  width: 32px;
   height: auto;
   margin: auto;
 
@@ -188,7 +188,7 @@ export const SearchDecoration = styled.div(
     position: absolute;
     height: 100%;
     margin: 0;
-    left: ${alignCenter ? 'calc(50% - 32px)' : '8px'};
+    left: ${alignCenter ? 'calc(50% - 48px)' : '8px'};
     color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
 
     ${disabled &&
@@ -204,7 +204,7 @@ SearchDecoration.propTypes = {
 
 export const SearchIcon = styled(Search)`
   position: relative;
-  width: 16px;
+  width: 32px;
   height: auto;
   margin: auto;
 `;

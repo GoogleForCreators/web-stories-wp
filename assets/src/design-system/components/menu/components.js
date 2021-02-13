@@ -44,7 +44,7 @@ export const MenuContainer = styled.div(
     padding: 4px 0;
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
-    border: 2px solid ${theme.colors.divider.primary};
+    border: 1px solid ${theme.colors.divider.primary};
     ${styleOverride}
   `
 );

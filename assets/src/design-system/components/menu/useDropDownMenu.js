@@ -25,6 +25,7 @@ import useFocusOut from '../../utils/useFocusOut';
 import isNullOrUndefinedOrEmptyString from '../../utils/isNullOrUndefinedOrEmptyString';
 import { useKeyDownEffect } from '../keyboard';
 import {
+  KEYS,
   KEYS_CLOSE_MENU,
   KEYS_SELECT_ITEM,
   KEYS_SHIFT_FOCUS,
@@ -55,7 +56,9 @@ export default function useDropDownMenu({
     [allOptions, focusedValue]
   );
 
-  // there's an edge case in this menu when the activeValue given to a menu isn't present in the options passed to it that we want to check against when this first renders.
+  // there's an edge case in this menu when the activeValue given to a menu isn't present
+  // in the options passed to it that we want to check against when this first renders.
+
   useEffect(() => {
     if (isNullOrUndefinedOrEmptyString(focusedValue)) {
       return;
@@ -84,17 +87,23 @@ export default function useDropDownMenu({
   const handleFocusChange = useCallback(
     ({ key }) => {
       if (
-        ['ArrowUp', isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key) &&
+        [KEYS.ARROW_UP, isRTL ? KEYS.ARROW_RIGHT : KEYS.ARROW_LEFT].includes(
+          key
+        ) &&
         focusedIndex !== 0
       ) {
         handleMoveFocus(-1);
       } else if (
-        ['ArrowDown', isRTL ? 'ArrowLeft' : 'ArrowRight'].includes(key) &&
+        [KEYS.ARROW_DOWN, isRTL ? KEYS.ARROW_LEFT : KEYS.ARROW_RIGHT].includes(
+          key
+        ) &&
         focusedIndex < listLength - 1
       ) {
         handleMoveFocus(1);
       } else if (
-        ['ArrowUp', isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key) &&
+        [KEYS.ARROW_UP, isRTL ? KEYS.ARROW_RIGHT : KEYS.ARROW_LEFT].includes(
+          key
+        ) &&
         focusedIndex === 0
       ) {
         handleReturnToParent?.();
