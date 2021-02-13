@@ -34,7 +34,9 @@ import { EmptyList, ListGroupings } from './list';
  * @param {number} props.dropDownHeight Sets a specific height as max for the list to display in a given container. Defaults to DEFAULT_DROPDOWN_HEIGHT.
  * @param {string} props.emptyText If the array of options is empty this text will display.
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding dropdown menu styles (container div > ul > li).
- * @param {boolean} props.hasMenuRole if true, the aria role used for the list is 'menu' instead of 'listbox'.
+ * @param {Function} props.handleReturnToParent If present, when focus is on first option and user keys up, this function will be triggered, meant to pass function to controlling element.
+ * @param {boolean} props.hasMenuRole If true, the aria role used for the list is 'menu' instead of 'listbox'.
+ * @param {boolean} props.isMenuFocused Defaults to true, if false will prevent useEffect from passing focus to menu items, meant to aid search and typeahead utility.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list. These options need to be sanitized with utils/getOptions.
  * @param {string} props.listId ID that comes from parent component that attaches this list to that parent. Used for a11y.
@@ -52,6 +54,8 @@ const Menu = ({
   emptyText,
   menuStylesOverride,
   hasMenuRole,
+  handleReturnToParent,
+  isMenuFocused = true,
   isRTL,
   options = [],
   listId,
@@ -77,13 +81,16 @@ const Menu = ({
     options,
     listRef,
     onDismissMenu,
+    handleReturnToParent,
   });
 
   useEffect(() => {
-    const listEl = listRef.current;
-    if (!listEl || focusedIndex === null) {
+    const listEl = listRef?.current;
+
+    if (!listEl || focusedIndex === null || !isMenuFocused) {
       return;
     }
+
     if (focusedIndex === -1) {
       listEl.scrollTo(0, 0);
       return;
@@ -96,7 +103,7 @@ const Menu = ({
 
     highlighedOptionEl.focus();
     listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
-  }, [focusedIndex]);
+  }, [focusedIndex, isMenuFocused]);
 
   return (
     <MenuContainer
@@ -131,6 +138,8 @@ Menu.propTypes = {
   emptyText: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   hasMenuRole: PropTypes.bool,
+  handleReturnToParent: PropTypes.func,
+  isMenuFocused: PropTypes.bool,
   isRTL: PropTypes.bool,
   options: MENU_OPTIONS,
   listId: PropTypes.string.isRequired,

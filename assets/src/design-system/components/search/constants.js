@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-export const DEFAULT_DROPDOWN_HEIGHT = 208;
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
 
-export const KEYS_SHIFT_FOCUS = ['up', 'down', 'left', 'right'];
-export const KEYS_CLOSE_MENU = ['esc', 'tab'];
-export const KEYS_SELECT_ITEM = ['space', 'enter'];
+export const DEFAULT_POPUP_FILL_WIDTH = 276;
+export const DEFAULT_PLACEHOLDER = __('Search', 'web-stories');
+export const DEFAULT_ARIA_CLEAR_LABEL = __('Clear Search', 'web-stories');
+export const DEFAULT_ARIA_INPUT_LABEL = __('Search', 'web-stories');
 
-export const KEYS = {
-  ARROW_RIGHT: 'ArrowRight',
-  ARROW_LEFT: 'ArrowLeft',
-  ARROW_UP: 'ArrowUp',
-  ARROW_DOWN: 'ArrowDown',
+export const Z_INDEX = {
+  CLEAR_BUTTON: 5,
 };

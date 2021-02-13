@@ -38,16 +38,16 @@ export const SelectButton = styled.button(
 
     border-radius: ${theme.borders.radius.small};
     background-color: ${theme.colors.bg.primary};
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-    border-color: ${theme.colors.border[
-      isOpen ? 'defaultActive' : 'defaultNormal'
-    ]};
+    border: 1px solid
+      ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
 
     padding: 8px 0 8px 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+
+    ${themeHelpers.focusableOutlineCSS};
 
     &:hover {
       border-color: ${theme.colors.border[

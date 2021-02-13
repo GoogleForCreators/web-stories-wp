@@ -13,35 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
-import { ListItemLabel, ListItemLabelDisplayText } from './components';
+import { Text } from '../typography/text';
 
-const GroupLabel = ({ label }) => {
-  if (!label) {
-    return null;
-  }
-  return (
-    <ListItemLabel id={`dropDownMenuLabel-${label}`} role="presentation">
-      <ListItemLabelDisplayText
-        forwardedAs="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.EXTRA_SMALL}
-      >
-        {label}
-      </ListItemLabelDisplayText>
-    </ListItemLabel>
-  );
+export const DropDownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const Label = styled(Text)`
+  margin-bottom: 8px;
+  color: ${({ theme, disabled }) =>
+    theme.colors.fg[disabled ? 'disable' : 'primary']};
+`;
+Label.propTypes = {
+  disabled: PropTypes.bool,
 };
 
-GroupLabel.propTypes = {
-  label: PropTypes.string,
+export const Hint = styled(Text)`
+  margin-top: 12px;
+  padding-left: 2px;
+  color: ${({ theme, hasError }) =>
+    theme.colors.fg[hasError ? 'negative' : 'tertiary']};
+`;
+Hint.propTypes = {
+  hasError: PropTypes.bool,
 };
-
-export default GroupLabel;
