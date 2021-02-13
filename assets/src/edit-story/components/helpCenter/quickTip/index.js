@@ -74,8 +74,6 @@ const DoneContainer = styled.div`
   height: 180px;
   margin-bottom: ${GUTTER_WIDTH}px;
   svg {
-    width: 135px;
-    height: 135px;
     display: block;
   }
 `;
@@ -111,7 +109,7 @@ export function QuickTip({
           )}
           {isDone && (
             <DoneContainer>
-              <DoneCheckmark />
+              <DoneCheckmark height={135} width={135} />
             </DoneContainer>
           )}
           <Title>{title}</Title>
