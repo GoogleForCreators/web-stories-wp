@@ -117,7 +117,7 @@ function Panel({
         status: 'expanded',
       });
     },
-    [resizeable, expandToHeight, names]
+    [resizeable, expandToHeight, name]
   );
 
   // Expand panel on first mount/on selection change if it can't be persisted.
