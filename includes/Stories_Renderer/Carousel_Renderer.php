@@ -116,7 +116,7 @@ class Carousel_Renderer extends Renderer {
 
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( $container_classes ); ?>">
+		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this::get_obj_id() ); ?>">
 			<div class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this::get_obj_id() ); ?>" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
 				if ( ! $this->is_amp_request() ) {

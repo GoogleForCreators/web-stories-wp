@@ -78,7 +78,7 @@ class Generic_Renderer extends Renderer {
 
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( $container_classes ); ?>">
+		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this::get_obj_id() ); ?>">
 			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
 				foreach ( $this->story_posts as $story ) {

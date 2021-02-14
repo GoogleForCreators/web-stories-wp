@@ -75,7 +75,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var int
 	 */
-	public static $obj_id = 0;
+	protected static $obj_id = 0;
 
 	/**
 	 * Stories object
@@ -152,7 +152,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return int Object id.
 	 */
-	public static function get_obj_id() {
+	protected static function get_obj_id() {
 		return self::$obj_id;
 	}
 
