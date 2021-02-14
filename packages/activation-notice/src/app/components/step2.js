@@ -56,12 +56,9 @@ const ParagraphWrapper = styled.div`
 function Step2() {
   const { dashboardURL } = useConfig();
 
-  const onClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_dashboard');
-    },
-    []
-  );
+  const onClick = useCallback((evt) => {
+    trackClick(evt, 'open_dashboard');
+  }, []);
 
   return (
     <Wrapper>

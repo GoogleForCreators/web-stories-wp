@@ -61,12 +61,9 @@ const ParagraphWrapper = styled.div`
 function Step1() {
   const { demoStoryURL } = useConfig();
 
-  const onClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_demo_story');
-    },
-    []
-  );
+  const onClick = useCallback((evt) => {
+    trackClick(evt, 'open_demo_story');
+  }, []);
 
   return (
     <Wrapper>

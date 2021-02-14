@@ -54,12 +54,9 @@ const ParagraphWrapper = styled.div`
 function Step3() {
   const { newStoryURL } = useConfig();
 
-  const onClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_story_editor');
-    },
-    []
-  );
+  const onClick = useCallback((evt) => {
+    trackClick(evt, 'open_story_editor');
+  }, []);
 
   return (
     <Wrapper>
