@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integrations;
 
-use Google\Web_Stories\Integrations\Core_Themes_Support as Testee;
 use Google\Web_Stories\Tests\Private_Access;
 
 /**
@@ -29,15 +28,23 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	/**
 	 * Stub for the conditional tests.
 	 *
-	 * @var null|Testee
+	 * @var null
 	 */
 	protected $stub = null;
+
+	/**
+	 * Current template.
+	 *
+	 * @var null
+	 */
+	protected $template = null;
 
 	/**
 	 * Runs prior to each test and sets up the testee object.
 	 */
 	public function setUp() {
-		$this->stub = $this->getMockBuilder( Testee::class )->setMethods( [ 'get_current_theme' ] )->getMock();
+		$this->template = get_template();
+		$this->stub     = new \Google\Web_Stories\Integrations\Core_Themes_Support();
 	}
 
 	/**
@@ -50,15 +57,12 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 			remove_theme_support( 'web-stories' );
 		}
 
-		unset( $this->stub );
-	}
+		update_option( 'template', $this->template );
 
-	/**
-	 * Helper function to mock current theme value.
-	 * This will help in running tests for core and non-core themes.
-	 */
-	public function mock_template_value( $template = 'default' ) {
-		$this->stub->expects( $this->any() )->method( 'get_current_theme' )->willReturn( $template );
+		unset( $this->stub );
+		unset( $this->template );
+
+		parent::tearDown();
 	}
 
 	/**
@@ -67,7 +71,6 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::init
 	 */
 	public function test_init() {
-		$this->mock_template_value();
 		$this->stub->init();
 
 		$this->assertEquals( 10, has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
@@ -79,7 +82,8 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::init
 	 */
 	public function test_init_non_core_theme() {
-		$this->mock_template_value( '' );
+		update_option( 'template', '' );
+
 		$this->stub->init();
 
 		$this->assertFalse( has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
@@ -89,7 +93,6 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::get_supported_themes
 	 */
 	public function test_get_supported_themes() {
-		$core_support = new \Google\Web_Stories\Integrations\Core_Themes_Support();
 
 		$expected = [
 			'twentytwentyone',
@@ -107,7 +110,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 			'default',
 		];
 
-		$actual = $core_support::get_supported_themes();
+		$actual = \Google\Web_Stories\Integrations\Core_Themes_Support::$supported_themes;
 
 		$this->assertEquals( $actual, $expected );
 	}
@@ -118,7 +121,6 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::extend_theme_support
 	 */
 	public function test_extend_theme_support() {
-		$this->mock_template_value();
 		$this->stub->init();
 
 		$this->assertTrue( get_theme_support( 'web-stories' ) );
@@ -130,7 +132,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::extend_theme_support
 	 */
 	public function test_extend_theme_support_non_core_themes() {
-		$this->mock_template_value( '' );
+		update_option( 'template', '' );
 		$this->stub->init();
 
 		$this->assertFalse( get_theme_support( 'web-stories' ) );

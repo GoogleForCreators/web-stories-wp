@@ -34,18 +34,11 @@ use Google\Web_Stories\Customizer;
 class Core_Themes_Support {
 
 	/**
-	 * Current theme
-	 *
-	 * @var string
-	 */
-	protected $template = '';
-
-	/**
 	 * Default array of core themes to add support to.
 	 *
 	 * @var array
 	 */
-	protected static $supported_themes = [
+	public static $supported_themes = [
 		'twentytwentyone',
 		'twentytwenty',
 		'twentynineteen',
@@ -60,17 +53,6 @@ class Core_Themes_Support {
 		'classic',
 		'default',
 	];
-
-	/**
-	 * Get list of supported core themes.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return string[] Slugs for supported themes.
-	 */
-	public static function get_supported_themes() {
-		return self::$supported_themes;
-	}
 
 	/**
 	 * Adds theme support for Web Stories.
@@ -96,23 +78,8 @@ class Core_Themes_Support {
 	 * @return void
 	 */
 	public function embed_web_stories() {
-
-		if ( class_exists( 'Google\Web_Stories\Customizer' ) ) {
-			$customizer = new Customizer();
-			echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML.
-		}
-
-	}
-
-	/**
-	 * Sets current theme.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return string
-	 */
-	public function get_current_theme() {
-		return get_template();
+		$customizer = new Customizer();
+		echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML.
 	}
 
 	/**
@@ -124,9 +91,7 @@ class Core_Themes_Support {
 	 */
 	public function init() {
 
-		$this->template = $this->get_current_theme();
-
-		if ( ! in_array( $this->template, self::get_supported_themes(), true ) ) {
+		if ( ! in_array( get_template(), self::$supported_themes, true ) ) {
 			return;
 		}
 
