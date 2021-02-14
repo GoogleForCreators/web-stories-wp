@@ -65,7 +65,7 @@ function Step1() {
     (evt) => {
       trackClick(evt, 'open_demo_story');
     },
-    [demoStoryURL]
+    []
   );
 
   return (

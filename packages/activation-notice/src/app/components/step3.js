@@ -58,7 +58,7 @@ function Step3() {
     (evt) => {
       trackClick(evt, 'open_story_editor');
     },
-    [newStoryURL]
+    []
   );
 
   return (

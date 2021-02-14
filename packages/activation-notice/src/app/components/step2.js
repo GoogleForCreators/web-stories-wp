@@ -60,7 +60,7 @@ function Step2() {
     (evt) => {
       trackClick(evt, 'open_dashboard');
     },
-    [dashboardURL]
+    []
   );
 
   return (

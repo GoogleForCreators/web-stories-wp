@@ -19,6 +19,4 @@
  */
 import trackEvent from './trackEvent';
 
-export {
-  trackEvent,
-};
+export { trackEvent };
