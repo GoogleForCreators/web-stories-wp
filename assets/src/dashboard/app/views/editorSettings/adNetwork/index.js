@@ -136,7 +136,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   );
   const handleAdNetworkClick = useCallback(
     (evt) => trackClick(evt, 'click_ad_network_docs'),
-    [link]
+    []
   );
 
   return (

@@ -149,8 +149,8 @@ export function LeftRail() {
     trackEventGA4('create_new_story');
   }, []);
 
-  const onExternalLinkClick = useCallback((path) => {
-    trackClick(path.trackingEvent);
+  const onExternalLinkClick = useCallback((evt, path) => {
+    trackClick(evt, path.trackingEvent);
   }, []);
 
   return (
@@ -197,7 +197,7 @@ export function LeftRail() {
                   {...(path.isExternal && {
                     rel: 'noreferrer',
                     target: '_blank',
-                    onClick: () => onExternalLinkClick(path),
+                    onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
                   {Icon && <Icon width="22px" />}
@@ -230,7 +230,7 @@ export function LeftRail() {
                 {...(path.isExternal && {
                   rel: 'noreferrer',
                   target: '_blank',
-                  onClick: () => onExternalLinkClick(path),
+                  onClick: (evt) => onExternalLinkClick(evt, path),
                 })}
               >
                 <Text

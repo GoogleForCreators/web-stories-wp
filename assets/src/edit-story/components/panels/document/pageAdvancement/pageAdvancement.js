@@ -78,13 +78,18 @@ function PageAdvancementPanel() {
   const updateAutoAdvance = useCallback(
     (value) => {
       updateStory({ properties: { autoAdvance: value } });
-      trackEvent('change_page_advancement', 'editor', autoAdvance ? 'auto' : 'manual', duration);
+      trackEvent(
+        'change_page_advancement',
+        'editor',
+        autoAdvance ? 'auto' : 'manual',
+        duration
+      );
       trackEventGA4('change_page_advancement', {
         advancement: value ? 'auto' : 'manual',
         duration: duration,
       });
     },
-    [updateStory, duration]
+    [updateStory, duration, autoAdvance]
   );
 
   const [updateDefaultPageDuration] = useDebouncedCallback((value) => {
@@ -96,7 +101,12 @@ function PageAdvancementPanel() {
       updateStory({
         properties: { defaultPageDuration: newValue },
       });
-      trackEvent('change_page_advancement', 'editor', autoAdvance ? 'auto' : 'manual', newValue);
+      trackEvent(
+        'change_page_advancement',
+        'editor',
+        autoAdvance ? 'auto' : 'manual',
+        newValue
+      );
       trackEventGA4('change_page_advancement', {
         advancement: autoAdvance ? 'auto' : 'manual',
         duration: newValue,

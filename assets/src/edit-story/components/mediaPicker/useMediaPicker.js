@@ -19,7 +19,8 @@
  */
 import { useCallback, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */

@@ -156,8 +156,7 @@ function GoogleAdSenseSettings({
   );
 
   const handleClick = useCallback(
-    (evt) =>
-      trackClick(evt, 'click_adsense_publisher_id_docs'),
+    (evt) => trackClick(evt, 'click_adsense_publisher_id_docs'),
     []
   );
 

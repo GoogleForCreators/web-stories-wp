@@ -195,10 +195,6 @@ function Media3pPane(props) {
 
     const onDeselectItem = () => {
       actions.deselectCategory();
-      const category =
-        state.categories.categories.find(
-          (e) => e.id === state.categories.selectedCategoryId
-        )?.label || state.categories.selectedCategoryId;
       trackEventGA4('search', {
         search_type: 'media3p',
         search_filter: providerType,

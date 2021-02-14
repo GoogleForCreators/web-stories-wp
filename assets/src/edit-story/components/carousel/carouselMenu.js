@@ -117,7 +117,11 @@ function CarouselMenu() {
 
   const handleMetaBoxesClick = useCallback(() => {
     toggleMetaBoxesVisible();
-    trackEvent('meta_boxes_toggled', 'editor', metaBoxesVisible ? 'visible' : 'hidden');
+    trackEvent(
+      'meta_boxes_toggled',
+      'editor',
+      metaBoxesVisible ? 'visible' : 'hidden'
+    );
     trackEventGA4('meta_boxes_toggled', {
       status: metaBoxesVisible ? 'visible' : 'hidden',
     });

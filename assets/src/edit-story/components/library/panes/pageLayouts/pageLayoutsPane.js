@@ -115,17 +115,14 @@ function PageLayoutsPane(props) {
     [pageLayouts, selectedPageLayoutType]
   );
 
-  const handleSelectPageLayoutType = useCallback(
-    (key) => {
-      setSelectedPageLayoutType(key);
-      trackEventGA4('search', {
-        search_type: 'page_layouts',
-        search_term: '',
-        search_category: key,
-      });
-    },
-    []
-  );
+  const handleSelectPageLayoutType = useCallback((key) => {
+    setSelectedPageLayoutType(key);
+    trackEventGA4('search', {
+      search_type: 'page_layouts',
+      search_term: '',
+      search_category: key,
+    });
+  }, []);
 
   return (
     <StyledPane id={paneId} {...props}>

@@ -30,7 +30,7 @@ export const setSelectedProvider = (dispatch) => ({ provider }) => {
   // Tracked here because this action is called from multiple places.
   trackEvent('media3p_change_tab', 'editor', provider);
   trackEventGA4('media3p_change_tab', {
-    provider
+    provider,
   });
 
   dispatch({

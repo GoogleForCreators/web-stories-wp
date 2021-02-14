@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
-import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -127,7 +127,6 @@ function Title({
       resizeable,
       panelContentId,
       panelTitleId,
-      panelTitleReadable,
       ariaHidden,
     },
     actions: {
@@ -193,7 +192,7 @@ function Title({
         {canCollapse && (
           <Toggle
             isCollapsed={isCollapsed}
-            toggle={onToggle}
+            toggle={toggle}
             tabIndex={ariaHidden ? -1 : 0}
           >
             <Arrow />

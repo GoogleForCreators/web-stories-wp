@@ -105,6 +105,8 @@ const AppContent = () => {
     } else if (!currentTemplate) {
       trackScreenView(dynamicPageTitle);
     }
+    // Disable reason: avoid sending duplicate tracking events.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fullPath]);
 
   const hideLeftRail =

@@ -22,7 +22,8 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   trackError,
   trackEvent,
-  getTimeTracker, trackEventGA4,
+  getTimeTracker,
+  trackEventGA4,
 } from '@web-stories-wp/tracking';
 
 /**
