@@ -52,6 +52,26 @@ function loadTrackingScript(sendPageView = true) {
     gtag('js', new Date());
 
     // Note: `set` commands need to be placed before `config` commands to ensure those values are passed along with page views.
+
+    // Universal Analytics custom dimensions.
+    gtag('set', {
+      custom_map: {
+        dimension3: 'order',
+        dimension4: 'orderby',
+        dimension5: 'file_size',
+        dimension6: 'file_type',
+        dimension7: 'status',
+        dimension8: 'siteLocale',
+        dimension9: 'userLocale',
+        dimension10: 'userRole',
+        dimension11: 'enabledExperiments',
+        dimension12: 'wpVersion',
+        dimension13: 'phpVersion',
+        dimension14: 'isMultisite',
+      },
+    });
+
+    // Google Analytics 4 user properties.
     // See https://developers.google.com/analytics/devguides/collection/ga4/persistent-values
     // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
     gtag('set', 'user_properties', config.userProperties);
@@ -66,14 +86,7 @@ function loadTrackingScript(sendPageView = true) {
       transport_type: 'beacon',
       page_title: pageTitle,
       page_path: pagePath,
-      // Only needed for universal analytics.
-      custom_map: {
-        dimension3: 'order',
-        dimension4: 'orderby',
-        dimension5: 'file_size',
-        dimension6: 'file_type',
-        dimension7: 'status',
-      },
+      ...config.userProperties,
     });
 
     // Support GA4 in parallel.
@@ -81,7 +94,6 @@ function loadTrackingScript(sendPageView = true) {
     gtag('config', config.trackingIdGA4, {
       app_name: config.appName,
       // This doesn't seem to be fully working for web properties.
-      // So we send it as both app_version and a user property.
       // See https://support.google.com/analytics/answer/9268042
       app_version: config.appVersion,
       send_page_view: sendPageView,

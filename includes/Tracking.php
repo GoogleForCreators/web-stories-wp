@@ -134,7 +134,6 @@ class Tracking {
 			'enabledExperiments' => $experiments,
 			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
-			'pluginVersion'      => WEBSTORIES_VERSION,
 			'isMultisite'        => (int) is_multisite(),
 		];
 	}

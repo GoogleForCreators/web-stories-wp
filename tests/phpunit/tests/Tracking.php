@@ -75,13 +75,11 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'enabledExperiments', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'wpVersion', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'phpVersion', $settings['userProperties'] );
-		$this->assertArrayHasKey( 'pluginVersion', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'isMultisite', $settings['userProperties'] );
 		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
 		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
 		$this->assertSame( PHP_VERSION, $settings['userProperties']['phpVersion'] );
 		$this->assertSame( get_bloginfo( 'version' ), $settings['userProperties']['wpVersion'] );
-		$this->assertSame( WEBSTORIES_VERSION, $settings['userProperties']['pluginVersion'] );
 		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
 		$this->assertSame( 'enableFoo,enableBar', $settings['userProperties']['enabledExperiments'] );
 		$this->assertInternalType( 'string', $settings['userProperties']['wpVersion'] );
