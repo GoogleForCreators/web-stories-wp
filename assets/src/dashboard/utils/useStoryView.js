@@ -20,7 +20,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -62,6 +62,10 @@ export default function useStoryView({ filters, totalPages }) {
           order: sortDirection,
           orderby: newSort,
         });
+        trackEventGA4('sort_stories', {
+          order: sortDirection,
+          orderby: newSort,
+        });
       }
 
       _setSort(newSort);
@@ -85,6 +89,10 @@ export default function useStoryView({ filters, totalPages }) {
           order: newSortDirection,
           orderby: sort,
         });
+        trackEventGA4('sort_stories', 'dashboard', null, null, {
+          order: newSortDirection,
+          orderby: sort,
+        });
 
         _setSortDirection(newSortDirection);
       }
@@ -93,7 +101,8 @@ export default function useStoryView({ filters, totalPages }) {
   );
 
   const setViewStyle = useCallback((newViewStyle) => {
-    trackEvent('toggle_stories_view', 'dashboard', null, null, {
+    trackEvent('toggle_stories_view', 'dashboard', newViewStyle);
+    trackEventGA4('toggle_stories_view', {
       mode: newViewStyle,
     });
     _setViewStyle(newViewStyle);

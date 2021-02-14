@@ -21,7 +21,12 @@ import styled from 'styled-components';
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import {
+  trackClick,
+  trackEvent,
+  trackEventGA4,
+} from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -141,10 +146,11 @@ export function LeftRail() {
 
   const onCreateNewStoryClick = useCallback(() => {
     trackEvent('create_new_story', 'dashboard');
+    trackEventGA4('create_new_story');
   }, []);
 
   const onExternalLinkClick = useCallback((path) => {
-    trackEvent(path.trackingEvent, 'dashboard');
+    trackClick(path.trackingEvent);
   }, []);
 
   return (

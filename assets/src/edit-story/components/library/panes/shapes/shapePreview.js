@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import React, { createRef, useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -145,7 +145,8 @@ function ShapePreview({ mask, isPreview }) {
   const onClick = useCallback(() => {
     // Shapes inserted with a specific size.
     insertElement('shape', shapeData);
-    trackEvent('insert_shape', 'editor', null, null, { type: mask.type });
+    trackEvent('insert_shape', 'editor', mask.type);
+    trackEventGA4('insert_shape', { name: mask.type });
   }, [insertElement, shapeData, mask.type]);
 
   const getSVG = (displayLabel = true) => {

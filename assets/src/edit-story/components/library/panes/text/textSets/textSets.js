@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -141,12 +141,14 @@ function TextSets({ paneRef }) {
       localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
         selectedCategory,
       });
-      trackEvent('textsets_toggle_category', 'editor', null, null, {
-        category: selectedCategory || selectedCat,
-        status: selectedCategory ? 'selected' : 'deselected',
+      trackEventGA4('search', {
+        search_type: 'textsets',
+        search_term: '',
+        search_category: selectedCategory,
+        show_in_use: showInUse,
       });
     },
-    [selectedCat]
+    [showInUse]
   );
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
@@ -155,11 +157,14 @@ function TextSets({ paneRef }) {
   const onChangeShowInUse = useCallback(
     (value) => {
       requestAnimationFrame(() => setShowInUse(value));
-      trackEvent('textsets_toggle_show_in_use', 'editor', null, null, {
-        value,
+      trackEventGA4('search', {
+        search_type: 'textsets',
+        search_term: '',
+        search_category: selectedCat,
+        show_in_use: value,
       });
     },
-    [setShowInUse]
+    [setShowInUse, selectedCat]
   );
 
   return (

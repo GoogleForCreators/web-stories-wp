@@ -17,25 +17,8 @@
 /**
  * Internal dependencies
  */
-import initializeTracking from './initializeTracking';
-import enableTracking from './enableTracking';
-import disableTracking from './disableTracking';
-import isTrackingEnabled from './isTrackingEnabled';
-import trackClick from './trackClick';
-import trackError from './trackError';
-import trackScreenView from './trackScreenView';
-import getTimeTracker from './getTimeTracker';
-
-export { trackEvent as trackEventGA4 } from './ga4';
-export { trackEvent, trackTimingComplete } from './universal';
+import trackEvent from './trackEvent';
 
 export {
-  initializeTracking,
-  enableTracking,
-  disableTracking,
-  isTrackingEnabled,
-  trackScreenView,
-  trackClick,
-  trackError,
-  getTimeTracker,
+  trackEvent,
 };

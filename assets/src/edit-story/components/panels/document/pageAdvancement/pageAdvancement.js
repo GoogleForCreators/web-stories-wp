@@ -25,7 +25,7 @@ import { useDebouncedCallback } from 'use-debounce';
  * External dependencies
  */
 import { __, _x } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -78,7 +78,8 @@ function PageAdvancementPanel() {
   const updateAutoAdvance = useCallback(
     (value) => {
       updateStory({ properties: { autoAdvance: value } });
-      trackEvent('change_page_advancement', 'editor', null, null, {
+      trackEvent('change_page_advancement', 'editor', autoAdvance ? 'auto' : 'manual', duration);
+      trackEventGA4('change_page_advancement', {
         advancement: value ? 'auto' : 'manual',
         duration: duration,
       });
@@ -95,7 +96,8 @@ function PageAdvancementPanel() {
       updateStory({
         properties: { defaultPageDuration: newValue },
       });
-      trackEvent('change_page_advancement', 'editor', null, null, {
+      trackEvent('change_page_advancement', 'editor', autoAdvance ? 'auto' : 'manual', newValue);
+      trackEventGA4('change_page_advancement', {
         advancement: autoAdvance ? 'auto' : 'manual',
         duration: newValue,
       });

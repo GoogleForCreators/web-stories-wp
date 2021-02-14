@@ -68,9 +68,7 @@ function PageLayouts(props) {
     (page) => {
       const duplicatedPage = duplicatePage(page);
       replaceCurrentPage({ page: duplicatedPage });
-      trackEvent('insert_page_layout', 'editor', null, null, {
-        name: page.title,
-      });
+      trackEvent('insert_page_layout', 'editor', page.title);
     },
     [replaceCurrentPage]
   );

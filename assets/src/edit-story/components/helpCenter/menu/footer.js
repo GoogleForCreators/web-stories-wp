@@ -85,15 +85,15 @@ const DOCS_URL = 'https://wp.stories.google/docs/';
 
 export function Footer() {
   const onSupportClick = useCallback((evt) => {
-    trackClick(evt, 'outbound', 'dashboard', SUPPORT_URL);
+    trackClick(evt, 'click_support_page');
   }, []);
 
   const onDocsClick = useCallback((evt) => {
-    trackClick(evt, 'outbound', 'dashboard', DOCS_URL);
+    trackClick(evt, 'click_website_docs');
   }, []);
 
   const onYouTubeClick = useCallback((evt) => {
-    trackClick(evt, 'outbound', 'dashboard', YOUTUBE_URL);
+    trackClick(evt, 'click_storytime_channel');
   }, []);
 
   return (

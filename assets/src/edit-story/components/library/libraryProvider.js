@@ -97,7 +97,7 @@ function LibraryProvider({ children }) {
 
   useEffect(() => {
     async function getTextSets() {
-      const trackTiming = getTimeTracker('load', 'editor', 'Text Sets');
+      const trackTiming = getTimeTracker('load_text_sets');
       setTextSets(await loadTextSets());
       trackTiming();
     }

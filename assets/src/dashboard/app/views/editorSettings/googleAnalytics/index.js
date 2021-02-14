@@ -121,11 +121,11 @@ function GoogleAnalyticsSettings({
   );
 
   const onSiteKitClick = useCallback(
-    (evt) => trackClick(evt, 'site_kit', 'dashboard', link),
+    (evt) => trackClick(evt, 'click_site_kit_link'),
     [link]
   );
   const onContextClick = useCallback(
-    (evt) => trackClick(evt, 'outbound', 'dashboard', TEXT.CONTEXT_LINK),
+    (evt) => trackClick(evt, 'click_analytics_docs'),
     []
   );
 

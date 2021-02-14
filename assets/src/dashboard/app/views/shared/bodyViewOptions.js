@@ -86,7 +86,7 @@ export default function BodyViewOptions({
 }) {
   const handleClassicListViewClick = useCallback(
     (evt) => {
-      trackClick(evt, 'open_classic_list_view', 'dashboard', wpListURL);
+      trackClick(evt, 'open_classic_list_view');
     },
     [wpListURL]
   );

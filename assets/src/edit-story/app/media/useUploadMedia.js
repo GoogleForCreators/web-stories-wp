@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 import {
   trackError,
   trackEvent,
-  getTimeTracker,
+  getTimeTracker, trackEventGA4,
 } from '@web-stories-wp/tracking';
 
 /**
@@ -154,15 +154,15 @@ function useUploadMedia({ media, setMedia }) {
         // from the uploaded attachment returned by the server.
         const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => {
-            trackEvent('upload_media', 'editor', '', '', {
+            trackEvent('upload_media', 'editor', null, null, {
               file_size: localFile.file.size,
               file_type: localFile.file.type,
             });
-            const trackTiming = getTimeTracker(
-              'upload_media',
-              'editor',
-              'Media'
-            );
+            trackEventGA4('upload_media', {
+              file_size: localFile.file.size,
+              file_type: localFile.file.type,
+            });
+            const trackTiming = getTimeTracker('load_upload_media');
             const fileUploaded = getResourceFromAttachment(
               await uploadFile(localFile.file)
             );

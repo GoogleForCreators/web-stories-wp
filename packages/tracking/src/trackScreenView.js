@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,16 @@
 /**
  * Internal dependencies
  */
-import { config } from './shared';
 import track from './track';
 import isTrackingEnabled from './isTrackingEnabled';
 
 /**
- * Send an Analytics screen_view event.
+ * Send an analytics screen_view event.
+ *
+ * Works for both Universal Analytics and Google Analytics 4.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/screens
+ * @see https://developers.google.com/analytics/devguides/collection/ga4/screen-view
  *
  * @param {string} screenName Screen name. Example: 'Explore Templates'.
  * @return {Promise<void>} Promise that always resolves.
@@ -36,7 +38,6 @@ async function trackScreenView(screenName) {
   }
 
   const eventData = {
-    app_name: config.appName,
     screen_name: screenName,
   };
 

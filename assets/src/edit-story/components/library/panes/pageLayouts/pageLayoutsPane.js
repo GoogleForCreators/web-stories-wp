@@ -20,7 +20,7 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -65,7 +65,7 @@ function PageLayoutsPane(props) {
   // load and process pageLayouts
   useEffect(() => {
     async function loadPageLayouts() {
-      const trackTiming = getTimeTracker('load', 'editor', 'Page Layouts');
+      const trackTiming = getTimeTracker('load_page_layouts');
       setPageLayouts(await getPageLayouts());
       trackTiming();
     }
@@ -118,12 +118,13 @@ function PageLayoutsPane(props) {
   const handleSelectPageLayoutType = useCallback(
     (key) => {
       setSelectedPageLayoutType(key);
-      trackEvent('page_layouts_toggle_category', 'editor', null, null, {
-        category: key || selectedPageLayoutType,
-        status: key ? 'selected' : 'deselected',
+      trackEventGA4('search', {
+        search_type: 'page_layouts',
+        search_term: '',
+        search_category: key,
       });
     },
-    [selectedPageLayoutType]
+    []
   );
 
   return (

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,41 +17,32 @@
 /**
  * Internal dependencies
  */
-import { config } from './shared';
-import isTrackingEnabled from './isTrackingEnabled';
-import track from './track';
+import { config } from '../shared';
+import isTrackingEnabled from '../isTrackingEnabled';
+import track from '../track';
 
 /**
- * Send an Analytics tracking event.
+ * Send a Google Analytics 4 tracking event.
  *
- * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
- * @see https://support.google.com/analytics/answer/1033068#Anatomy
+ * Only use custom events if the existing events don't handle your use case.
+ *
+ * @see https://developers.google.com/analytics/devguides/collection/ga4/events
+ * @see https://support.google.com/analytics/answer/9267735
+ * @see https://support.google.com/analytics/answer/9310895?hl=en
  *
  * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
- * @param {string} eventCategory The category of the event. (e.g. 'editor'). Default: 'engagement'.
- * @param {?string} [eventLabel] The event label. Default: '(not set)'.
- * @param {?number} [eventValue] A non-negative integer. Default: '(not set)'.
- * @param {Object<*>} [additionalData] Additional event data to send.
+ * @param {Object<*>} [eventParameters] Event parameters.
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
-async function trackEvent(
-  eventName,
-  eventCategory,
-  eventLabel = null,
-  eventValue = null,
-  additionalData = {}
-) {
+async function trackEvent(eventName, eventParameters = {}) {
   if (!isTrackingEnabled()) {
     return Promise.resolve();
   }
 
   const eventData = {
-    send_to: config.trackingId,
-    event_category: eventCategory,
-    event_label: eventLabel,
-    value: eventValue,
-    ...additionalData,
+    send_to: config.trackingIdGA4,
+    ...eventParameters,
   };
 
   return track(eventName, eventData);

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
+jest.mock('../../shared');
 
 /**
  * Internal dependencies
  */
-import trackError from '../trackError';
-import { config, gtag } from '../shared';
+import trackEvent from '../trackEvent';
+import { config, gtag } from '../../shared';
 
-describe('trackError', () => {
+describe('trackEvent', () => {
   afterEach(() => {
     config.trackingAllowed = false;
     config.trackingEnabled = false;
@@ -33,23 +33,26 @@ describe('trackError', () => {
   it('adds a tracking event to the dataLayer', async () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    const error = new Error('mock error');
+    config.trackingId = 'UA-12345678-1';
 
     gtag.mockImplementationOnce((type, eventName, eventData) => {
       eventData.event_callback();
     });
-    await trackError(error.message);
-    expect(gtag).toHaveBeenCalledWith('event', 'exception', {
-      description: 'mock error',
-      fatal: false,
+
+    await trackEvent('name', 'category', 'label', 123);
+    expect(gtag).toHaveBeenCalledWith('event', 'name', {
       event_callback: expect.any(Function),
+      send_to: 'UA-12345678-1',
+      event_category: 'category',
+      event_label: 'label',
+      value: 123,
     });
   });
 
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
-    const error = new Error('mock error');
-    await trackError(error.message);
+
+    await trackEvent('test-category', 'test-name', 'test-label', 123);
     expect(gtag).not.toHaveBeenCalled();
   });
 });

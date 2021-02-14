@@ -79,6 +79,7 @@ export default function useMediaPicker({
   const openMediaPicker = useCallback(
     (evt) => {
       trackEvent('open_media_modal', 'editor');
+      trackEventGA4('open_media_modal');
 
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {

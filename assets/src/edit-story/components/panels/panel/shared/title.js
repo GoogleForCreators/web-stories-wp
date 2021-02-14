@@ -165,13 +165,6 @@ function Title({
   }, [setExpandToHeight, height, resizeable]);
 
   const toggle = isCollapsed ? expand : collapse;
-  const onToggle = useCallback(() => {
-    toggle();
-    trackEvent('panel_toggled', 'editor', null, null, {
-      panel_id: panelTitleReadable,
-      status: isCollapsed ? 'collapsed' : 'expanded',
-    });
-  }, [panelTitleReadable, isCollapsed, toggle]);
 
   return (
     <Header
@@ -181,7 +174,7 @@ function Title({
       aria-label={ariaLabel}
       aria-expanded={!isCollapsed}
       aria-controls={panelContentId}
-      onClick={onToggle}
+      onClick={toggle}
     >
       {isResizable && (
         <DragHandle

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -28,7 +28,10 @@ import * as types from './types';
 
 export const setSelectedProvider = (dispatch) => ({ provider }) => {
   // Tracked here because this action is called from multiple places.
-  trackEvent('media3p_change_tab', 'editor', '', provider);
+  trackEvent('media3p_change_tab', 'editor', provider);
+  trackEventGA4('media3p_change_tab', {
+    provider
+  });
 
   dispatch({
     type: types.MEDIA3P_SET_SELECTED_PROVIDER,

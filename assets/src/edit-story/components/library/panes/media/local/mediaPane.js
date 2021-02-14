@@ -21,7 +21,7 @@ import { useFeature } from 'flagged';
 import { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -205,11 +205,14 @@ function MediaPane(props) {
   const onFilter = useCallback(
     (filter) => {
       setMediaType({ mediaType: filter });
-      trackEvent('filter_media', 'editor', null, null, {
-        type: filter,
+      trackEvent('filter_media', 'editor', filter);
+      trackEventGA4('search', {
+        search_type: 'media',
+        search_term: searchTerm,
+        search_filter: filter,
       });
     },
-    [setMediaType]
+    [setMediaType, searchTerm]
   );
 
   /**
@@ -248,8 +251,13 @@ function MediaPane(props) {
     const trimText = value.trim();
     if (trimText !== searchTerm) {
       setSearchTerm({ searchTerm: trimText });
-      trackEvent('search_media', 'editor', null, null, {
+      trackEvent('search', 'media', null, null, {
         search_term: trimText,
+      });
+      trackEventGA4('search', {
+        search_type: 'media',
+        search_term: trimText,
+        search_filter: mediaType,
       });
     }
   };

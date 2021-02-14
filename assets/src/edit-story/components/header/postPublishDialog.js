@@ -41,14 +41,14 @@ const Paragraph = styled.p`
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
   const onAddToPostClick = useCallback(
     (evt) => {
-      trackClick(evt, 'add_story_to_new_post', 'editor', confirmURL);
+      trackClick(evt, 'add_story_to_new_post');
     },
     [confirmURL]
   );
 
   const onViewStoryClick = useCallback(
     (evt) => {
-      trackClick(evt, 'view_story', 'editor', storyURL);
+      trackClick(evt, 'view_story');
     },
     [storyURL]
   );

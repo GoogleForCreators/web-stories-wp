@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 /**
  * Internal dependencies
  */
-import track from './track';
-import isTrackingEnabled from './isTrackingEnabled';
+import track from '../track';
+import isTrackingEnabled from '../isTrackingEnabled';
+import { config } from '../shared';
 
 /**
  * Send an Analytics timing_complete event.
@@ -26,9 +27,9 @@ import isTrackingEnabled from './isTrackingEnabled';
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings
  *
  * @param {string} name The variable being recorded (e.g. 'load').
- * @param {number} value The number of milliseconds in elapsed time to report to Google Analytics (e.g. 20).
- * @param {string} eventCategory A string for categorizing all user timing variables into logical groups (e.g. 'JS Dependencies').
- * @param {string} eventLabel A string that can be used to add flexibility in visualizing user timings in the reports (e.g. 'Google CDN').
+ * @param {number} value Elapsed time in milliseconds to report to Google Analytics (e.g. 20).
+ * @param {string?} [eventCategory] A string for categorizing all user timing variables into logical groups (e.g. 'JS Dependencies').
+ * @param {string?} [eventLabel] A string that can be used to add flexibility in visualizing user timings in the reports (e.g. 'Google CDN').
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
@@ -38,6 +39,7 @@ async function trackTimingComplete(name, value, eventCategory, eventLabel) {
   }
 
   const eventData = {
+    send_to: config.trackingId,
     name,
     value,
     event_category: eventCategory,

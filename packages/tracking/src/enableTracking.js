@@ -56,8 +56,6 @@ function loadTrackingScript(sendPageView = true) {
     // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
     gtag('set', 'user_properties', config.userProperties);
 
-    // TODO: provide custom pageview-related parameters?
-    // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
     gtag('config', config.trackingId, {
       anonymize_ip: true,
       app_name: config.appName,
@@ -68,6 +66,14 @@ function loadTrackingScript(sendPageView = true) {
       transport_type: 'beacon',
       page_title: pageTitle,
       page_path: pagePath,
+      // Only needed for universal analytics.
+      custom_map: {
+        dimension3: 'order',
+        dimension4: 'orderby',
+        dimension5: 'file_size',
+        dimension6: 'file_type',
+        dimension7: 'status',
+      },
     });
 
     // Support GA4 in parallel.

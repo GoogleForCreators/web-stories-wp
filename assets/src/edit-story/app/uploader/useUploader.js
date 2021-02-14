@@ -22,7 +22,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   trackError,
   trackEvent,
-  getTimeTracker,
+  getTimeTracker, trackEventGA4,
 } from '@web-stories-wp/tracking';
 
 /**
@@ -153,15 +153,15 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      trackEvent('video_transcoding', 'editor', '', '', {
+      trackEvent('video_transcoding', 'editor', null, null, {
         file_size: file.size,
         file_type: file.type,
       });
-      const trackTiming = getTimeTracker(
-        'video_transcoding',
-        'editor',
-        'Media'
-      );
+      trackEventGA4('video_transcoding', {
+        file_size: file.size,
+        file_type: file.type,
+      });
+      const trackTiming = getTimeTracker('video_transcoding');
 
       // Transcoding is enabled, let's give it a try!
       try {

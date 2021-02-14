@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState, useEffect, useRef } from 'react';
+import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -64,6 +65,14 @@ export default function useTelemetryOptIn() {
   const optedIn = Boolean(currentUser.data.meta?.web_stories_tracking_optin);
 
   const dataFetched = useRef(false);
+
+  useEffect(() => {
+    if (optedIn) {
+      enableTracking();
+    } else {
+      disableTracking();
+    }
+  }, [optedIn]);
 
   useEffect(() => {
     if (!dataIsLoaded && !dataFetched.current) {

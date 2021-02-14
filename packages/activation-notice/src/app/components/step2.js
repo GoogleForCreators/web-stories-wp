@@ -58,7 +58,7 @@ function Step2() {
 
   const onClick = useCallback(
     (evt) => {
-      trackClick(evt, 'open_dashboard', 'activation-notice', dashboardURL);
+      trackClick(evt, 'open_dashboard');
     },
     [dashboardURL]
   );

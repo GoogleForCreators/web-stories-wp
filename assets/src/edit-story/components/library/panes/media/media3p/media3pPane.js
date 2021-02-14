@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -144,12 +144,17 @@ function Media3pPane(props) {
       const trimText = value.trim();
       if (trimText !== searchTerm) {
         setSearchTerm({ searchTerm: trimText });
-        trackEvent('media3p_search_media', 'editor', null, null, {
+        trackEvent('search', 'media3p', null, null, {
           search_term: trimText,
+        });
+        trackEventGA4('search', {
+          search_type: 'media3p',
+          search_term: trimText,
+          search_filter: selectedProvider,
         });
       }
     },
-    [searchTerm, setSearchTerm]
+    [searchTerm, setSearchTerm, selectedProvider]
   );
 
   const incrementalSearchDebounceMedia = useFeature(
@@ -180,10 +185,11 @@ function Media3pPane(props) {
       actions.selectCategory(id);
       const category =
         state.categories.categories.find((e) => e.id === id)?.label || id;
-      trackEvent('media3p_toggle_category', 'editor', null, null, {
-        category,
-        provider: providerType,
-        status: 'selected',
+      trackEventGA4('search', {
+        search_type: 'media3p',
+        search_filter: providerType,
+        search_term: searchTerm,
+        search_category: category,
       });
     };
 
@@ -193,10 +199,10 @@ function Media3pPane(props) {
         state.categories.categories.find(
           (e) => e.id === state.categories.selectedCategoryId
         )?.label || state.categories.selectedCategoryId;
-      trackEvent('media3p_toggle_category', 'editor', null, null, {
-        category,
-        provider: providerType,
-        status: 'deselected',
+      trackEventGA4('search', {
+        search_type: 'media3p',
+        search_filter: providerType,
+        search_term: searchTerm,
       });
     };
 

@@ -20,7 +20,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -192,7 +192,8 @@ function EditorSettings() {
   const handleUpdateAdNetwork = useCallback(
     (newAdNetwork) => {
       updateSettings({ adNetwork: newAdNetwork });
-      trackEvent('change_ad_network', 'dashboard', null, null, {
+      trackEvent('change_ad_network', 'dashboard', newAdNetwork);
+      trackEventGA4('change_ad_network', {
         network: newAdNetwork,
       });
     },

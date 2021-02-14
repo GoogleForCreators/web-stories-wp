@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,13 +26,11 @@ describe('trackScreenView', () => {
   afterEach(() => {
     config.trackingAllowed = false;
     config.trackingEnabled = false;
-    config.appName = undefined;
 
     jest.clearAllMocks();
   });
 
   it('adds a tracking event to the dataLayer', async () => {
-    config.appName = 'Foo App';
     config.trackingAllowed = true;
     config.trackingEnabled = true;
     config.trackingId = 'UA-12345678-1';
@@ -43,7 +41,6 @@ describe('trackScreenView', () => {
 
     await trackScreenView('Explore Templates');
     expect(gtag).toHaveBeenCalledWith('event', 'screen_view', {
-      app_name: 'Foo App',
       event_callback: expect.any(Function),
       screen_name: 'Explore Templates',
     });

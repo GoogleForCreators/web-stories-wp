@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback } from 'react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -62,7 +62,10 @@ function LibraryLayout() {
   const onTabChange = useCallback(
     (id) => {
       setTab(id);
-      trackEvent('library_tab_change', 'editor', null, null, { tab: id });
+      trackEvent('library_tab_change', 'editor', id);
+      trackEventGA4('library_tab_change', {
+        tab: id,
+      });
     },
     [setTab]
   );

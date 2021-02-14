@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
+jest.mock('../../shared');
 
 /**
  * Internal dependencies
  */
 import trackEvent from '../trackEvent';
-import { config, gtag } from '../shared';
+import { config, gtag } from '../../shared';
 
 describe('trackEvent', () => {
   afterEach(() => {
@@ -33,26 +33,26 @@ describe('trackEvent', () => {
   it('adds a tracking event to the dataLayer', async () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    config.trackingId = 'UA-12345678-1';
+    config.trackingIdGA4 = 'G-ABC1234567';
 
     gtag.mockImplementationOnce((type, eventName, eventData) => {
       eventData.event_callback();
     });
 
-    await trackEvent('name', 'category', 'label', 123);
+    await trackEvent('name', { foo: 'abc', bar: 'def', baz: 'ghi' });
     expect(gtag).toHaveBeenCalledWith('event', 'name', {
       event_callback: expect.any(Function),
-      event_category: 'category',
-      event_label: 'label',
-      value: 123,
-      send_to: 'UA-12345678-1',
+      send_to: 'G-ABC1234567',
+      foo: 'abc',
+      bar: 'def',
+      baz: 'ghi',
     });
   });
 
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
 
-    await trackEvent('test-category', 'test-name', 'test-label', 123);
+    await trackEvent('name', { foo: 'abc', bar: 'def', baz: 'ghi' });
     expect(gtag).not.toHaveBeenCalled();
   });
 });

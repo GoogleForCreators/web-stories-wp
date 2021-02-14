@@ -479,9 +479,7 @@ export const MESSAGES = {
               href={VIDEO_DOCUMENTATION_URL}
               rel="noreferrer"
               target="_blank"
-              onClick={(evt) =>
-                trackClick(evt, 'outbound', 'editor', VIDEO_DOCUMENTATION_URL)
-              }
+              onClick={(evt) => trackClick(evt, 'click_pre_publish_video_docs')}
             >
               {__(
                 'Use full screen videos and images whenever possible to create a more immersive experience (more info)',

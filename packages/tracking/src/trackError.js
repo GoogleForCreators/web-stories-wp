@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,42 +17,30 @@
 /**
  * Internal dependencies
  */
-import { config } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
 
 /**
- * @typedef {import('react').ErrorInfo} ErrorInfo
- */
-
-/**
- * Send an Analytics tracking event for exceptions.
+ * Send an analytics tracking event for exceptions.
+ *
+ * Works for both Universal Analytics and Google Analytics 4.
  *
  * @see https://developers.google.com/analytics/devguides/collection/ga4/exceptions
+ * @see https://developers.google.com/analytics/devguides/collection/gtagjs/exceptions
  *
- * @param {string} errorCategory The error category label.
- * @param {string} errorMessage The error message.
- * @param {boolean} [fatal] Report whether there is a fatal error.
- * @param {Object<*>} [additionalData] Additional event data to send.
+ * @param {string} description The error description.
+ * @param {boolean} [fatal=false] Report whether there is a fatal error.
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
-async function trackError(
-  errorCategory,
-  errorMessage,
-  fatal = false,
-  additionalData = {}
-) {
+async function trackError(description, fatal = false) {
   if (!isTrackingEnabled()) {
     return Promise.resolve();
   }
 
   const eventData = {
-    send_to: config.trackingId,
-    event_category: errorCategory,
-    description: errorMessage,
+    description,
     fatal,
-    ...additionalData,
   };
 
   return track('exception', eventData);

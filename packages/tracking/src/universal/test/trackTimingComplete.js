@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-jest.mock('../shared');
+jest.mock('../../shared');
 
 /**
  * Internal dependencies
  */
 import trackTimingComplete from '../trackTimingComplete';
-import { config, gtag } from '../shared';
+import { config, gtag } from '../../shared';
 
 describe('trackTimingComplete', () => {
   afterEach(() => {
@@ -41,20 +41,21 @@ describe('trackTimingComplete', () => {
       eventData.event_callback();
     });
 
-    await trackTimingComplete('load', 20, 'Dependencies', 'CDN');
+    await trackTimingComplete('load_dependencies', 20, 'Category', 'Label');
     expect(gtag).toHaveBeenCalledWith('event', 'timing_complete', {
       event_callback: expect.any(Function),
-      event_category: 'Dependencies',
-      event_label: 'CDN',
-      name: 'load',
+      event_category: 'Category',
+      event_label: 'Label',
+      name: 'load_dependencies',
       value: 20,
+      send_to: 'UA-12345678-1',
     });
   });
 
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
 
-    await trackTimingComplete('load', 20, 'Dependencies', 'CDN');
+    await trackTimingComplete('load_dependencies', 20, 'Category', 'Label');
     expect(gtag).not.toHaveBeenCalled();
   });
 });

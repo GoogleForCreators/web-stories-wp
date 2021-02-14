@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
@@ -79,6 +79,10 @@ const AppContent = () => {
     })
   );
 
+  const fullPath = useMemo(() => {
+    return templateId ? `${currentPath}/${templateId}` : currentPath;
+  }, [currentPath, templateId]);
+
   useEffect(() => {
     let dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
     if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && currentTemplate) {
@@ -101,7 +105,7 @@ const AppContent = () => {
     } else if (!currentTemplate) {
       trackScreenView(dynamicPageTitle);
     }
-  }, [currentPath, currentTemplate]);
+  }, [fullPath]);
 
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||

@@ -82,13 +82,13 @@ function SuccessMessage() {
 
   const onClickPrimary = useCallback(
     (evt) => {
-      trackClick(evt, 'open_dashboard', 'activation-notice', dashboardURL);
+      trackClick(evt, 'open_dashboard');
     },
     [dashboardURL]
   );
   const onClickSecondary = useCallback(
     (evt) => {
-      trackClick(evt, 'open_demo_story', 'activation-notice', demoStoryURL);
+      trackClick(evt, 'open_demo_story');
     },
     [demoStoryURL]
   );

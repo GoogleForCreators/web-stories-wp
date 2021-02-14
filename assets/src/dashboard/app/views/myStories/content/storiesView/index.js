@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -110,6 +110,7 @@ function StoriesView({
     (story, newTitle) => {
       setTitleRenameId(-1);
       trackEvent('rename_story', 'dashboard');
+      trackEventGA4('rename_story');
       storyActions.updateStory({ ...story, title: { raw: newTitle } });
     },
     [storyActions]
@@ -117,6 +118,7 @@ function StoriesView({
 
   const handleOnDeleteStory = useCallback(() => {
     trackEvent('delete_story', 'dashboard');
+    trackEventGA4('delete_story');
     storyActions.trashStory(activeStory);
     setFocusedStory({ id: activeStory.id, isDeleted: true });
     setActiveDialog('');
@@ -128,6 +130,7 @@ function StoriesView({
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
           trackEvent('open_in_editor', 'dashboard');
+          trackEventGA4('open_in_editor');
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
           setTitleRenameId(story.id);
@@ -135,6 +138,7 @@ function StoriesView({
 
         case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
           trackEvent('duplicate_story', 'dashboard');
+          trackEventGA4('duplicate_story');
           storyActions.duplicateStory(story);
           break;
 

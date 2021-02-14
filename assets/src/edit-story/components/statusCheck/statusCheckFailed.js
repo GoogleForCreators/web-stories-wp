@@ -45,7 +45,7 @@ const SUPPORT_URL = __(
 
 function StatusCheckFailed({ open, onClose }) {
   const onSupportClick = useCallback((evt) => {
-    trackClick(evt, 'outbound', 'editor', SUPPORT_URL);
+    trackClick(evt, 'click_support_page');
   }, []);
 
   return (

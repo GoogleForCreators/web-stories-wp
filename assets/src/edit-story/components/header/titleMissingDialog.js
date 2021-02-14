@@ -45,7 +45,7 @@ const RECOMMENDATION_URL = __(
 
 function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
   const onClick = useCallback(
-    (evt) => trackClick(evt, 'outbound', 'editor', RECOMMENDATION_URL),
+    (evt) => trackClick(evt, 'click_stories_best_practices_docs'),
     []
   );
   return (

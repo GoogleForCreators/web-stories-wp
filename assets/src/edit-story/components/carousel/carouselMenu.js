@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useState, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -96,7 +96,8 @@ function CarouselMenu() {
     setIsGridViewOpen((prevIsOpen) => {
       const newIsOpen = !prevIsOpen;
 
-      trackEvent('grid_view_toggled', 'editor', null, null, {
+      trackEvent('grid_view_toggled', 'editor', newIsOpen ? 'open' : 'closed');
+      trackEventGA4('grid_view_toggled', {
         status: newIsOpen ? 'open' : 'closed',
       });
 
@@ -116,7 +117,8 @@ function CarouselMenu() {
 
   const handleMetaBoxesClick = useCallback(() => {
     toggleMetaBoxesVisible();
-    trackEvent('meta_boxes_toggled', 'editor', null, null, {
+    trackEvent('meta_boxes_toggled', 'editor', metaBoxesVisible ? 'visible' : 'hidden');
+    trackEventGA4('meta_boxes_toggled', {
       status: metaBoxesVisible ? 'visible' : 'hidden',
     });
   }, [metaBoxesVisible, toggleMetaBoxesVisible]);
