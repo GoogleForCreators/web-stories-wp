@@ -80,12 +80,22 @@ const AppContent = () => {
   );
 
   const fullPath = useMemo(() => {
-    return templateId ? `${currentPath}/${templateId}` : currentPath;
-  }, [currentPath, templateId]);
+    return currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) &&
+      templateId &&
+      currentTemplate
+      ? `${currentPath}/${templateId}`
+      : currentPath;
+    // Disable reason: avoid sending duplicate tracking events.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPath, currentTemplate]);
 
   useEffect(() => {
+    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && !currentTemplate) {
+      return;
+    }
+
     let dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
-    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && currentTemplate) {
+    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL)) {
       dynamicPageTitle = sprintf(
         /* translators: %s: Template name. */
         __('Template: %s', 'web-stories'),
@@ -100,11 +110,8 @@ const AppContent = () => {
       ADMIN_TITLE
     );
 
-    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && currentTemplate) {
-      trackScreenView(dynamicPageTitle);
-    } else if (!currentTemplate) {
-      trackScreenView(dynamicPageTitle);
-    }
+    trackScreenView(dynamicPageTitle);
+
     // Disable reason: avoid sending duplicate tracking events.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fullPath]);
