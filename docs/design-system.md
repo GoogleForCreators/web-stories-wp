@@ -67,9 +67,17 @@ Icons are separated from components and already exported as `ReactComponent` . Y
 
 ### How to add icons
 
-Icons are separated into sections to make traversing the directory a little easier when you’re unsure of what all is in there. [Material Design icon categories](https://material.io/resources/icons/?style=baseline) were used as the naming convention so as not to reinvent the wheel.
+Icons are all located directly in the `design-system/icons/` folder. A few things to note:
 
-1. Export your SVG & compress it (example: [https://jakearchibald.github.io/svgomg/](https://jakearchibald.github.io/svgomg/))
-2. Add the file to the appropriate directory in [design-system/icons](../assets/src/design-system/icons/index.js)
-3. Export it from the index of that directory as a ReactComponent
+- All icons are 32x32px and should never be resized or scaled in any way.
+- Icons are named after their symbol, not their function. So a ⚙️  icon is named `Gear`, and not `Settings` or some other function, it might serve.
+- If an icon has several sizes, denote this as a suffix as `GearLarge`, `GearTiny` etc.
+- If an icon has a border, name it either just as `GearOutline` or as the shape of the border - e.g. `GearTriangle` if it's a gear inside a triangular border.
+- Try to group similar icons alphabetically, so name icons e.g. `MagnifierPlus` and `MagnifierMinus` rather than `PlusMagnifier` and `MinusMagnifier`.
+
+The process for adding an icon is as follows:
+
+1. Export your SVG from Figma by selecting the 32x32px icon boundary box and selecting _"Export"_ in the right panel
+2. Add the file to directory [design-system/icons](../assets/src/design-system/icons/index.js)
+3. Export it from the index of that directory as a ReactComponent (please alphabetize the list, thanks!)
 4. Import from the design-system wherever you want to use it.

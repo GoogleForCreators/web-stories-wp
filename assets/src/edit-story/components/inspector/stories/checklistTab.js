@@ -46,9 +46,9 @@ export const _default = () => {
     {
       type: 'error',
       storyId: 120,
-      message: 'Missing story cover image',
+      message: 'Missing poster image',
       help:
-        'Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
+        'Used as the poster image for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
     },
     {
       type: 'error',
@@ -85,9 +85,9 @@ export const withPages = () => {
     {
       type: 'error',
       storyId: 120,
-      message: 'Missing story cover image',
+      message: 'Missing poster image',
       help:
-        'Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
+        'Used as the poster image for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
     },
     {
       type: 'error',

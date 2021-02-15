@@ -31,7 +31,7 @@ import {
 } from '../../../design-system';
 import { useConfig } from '../../app';
 
-const ALERT_ICON_SIZE = 14;
+const ALERT_ICON_SIZE = 32;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -73,8 +73,8 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 
   svg {
     display: block;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     transform-origin: center center;
     transition: transform 0.3s ease;
   }
@@ -83,13 +83,9 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     width: ${ALERT_ICON_SIZE}px;
     height: auto;
     position: absolute;
-    left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
+    left: 100%;
     top: calc(
-      50% -
-        ${({ isActive }) =>
-          isActive
-            ? `${ALERT_ICON_SIZE / 2 - 1}px`
-            : `${ALERT_ICON_SIZE / 2}px`}
+      50% - ${({ isActive }) => ALERT_ICON_SIZE / 2 + 2 - (isActive ? 1 : 0)}px
     );
     overflow: visible;
     opacity: 1;
