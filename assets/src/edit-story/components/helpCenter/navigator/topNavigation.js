@@ -45,7 +45,7 @@ export function TopNavigation({ onClose }) {
       <Label>{__('Quick Tips', 'web-stories')}</Label>
       <TopNavButtons>
         <NavButton
-          aria-label={__('Close Help Center', 'web-stories')}
+          aria-label={__('Close', 'web-stories')}
           onClick={() => {
             forceFocusCompanionToggle();
             onClose();
@@ -54,7 +54,7 @@ export function TopNavigation({ onClose }) {
           size={BUTTON_SIZES.SMALL}
           variant={BUTTON_VARIANTS.CIRCLE}
         >
-          <Icons.Close />
+          <Icons.Cross />
         </NavButton>
       </TopNavButtons>
     </NavBar>

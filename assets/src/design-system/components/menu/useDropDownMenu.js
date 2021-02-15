@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -25,6 +25,7 @@ import useFocusOut from '../../utils/useFocusOut';
 import isNullOrUndefinedOrEmptyString from '../../utils/isNullOrUndefinedOrEmptyString';
 import { useKeyDownEffect } from '../keyboard';
 import {
+  KEYS,
   KEYS_CLOSE_MENU,
   KEYS_SELECT_ITEM,
   KEYS_SHIFT_FOCUS,
@@ -33,6 +34,7 @@ import {
 export default function useDropDownMenu({
   activeValue,
   handleMenuItemSelect,
+  handleReturnToParent,
   isRTL,
   options = [],
   listRef,
@@ -46,15 +48,36 @@ export default function useDropDownMenu({
   const listLength = allOptions.length;
   const [focusedValue, setFocusedValue] = useState(activeValue);
 
+  const getFocusedIndex = useCallback(
+    () =>
+      allOptions.findIndex(
+        (option) => option?.value?.toString() === focusedValue.toString()
+      ),
+    [allOptions, focusedValue]
+  );
+
+  // there's an edge case in this menu when the activeValue given to a menu isn't present
+  // in the options passed to it that we want to check against when this first renders.
+
+  useEffect(() => {
+    if (isNullOrUndefinedOrEmptyString(focusedValue)) {
+      return;
+    }
+    const validFocusedIndex = getFocusedIndex();
+
+    if (validFocusedIndex === -1) {
+      setFocusedValue(null);
+    }
+  }, [focusedValue, getFocusedIndex]);
+
   const focusedIndex = useMemo(() => {
     if (isNullOrUndefinedOrEmptyString(focusedValue)) {
       return 0;
     }
-    const foundIndex = allOptions.findIndex((option) => {
-      return option?.value?.toString() === focusedValue.toString();
-    });
+    const foundIndex = getFocusedIndex();
+
     return foundIndex;
-  }, [allOptions, focusedValue]);
+  }, [focusedValue, getFocusedIndex]);
 
   const handleMoveFocus = useCallback(
     (offset) => setFocusedValue(allOptions[focusedIndex + offset].value),
@@ -64,18 +87,29 @@ export default function useDropDownMenu({
   const handleFocusChange = useCallback(
     ({ key }) => {
       if (
-        ['ArrowUp', isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key) &&
+        [KEYS.ARROW_UP, isRTL ? KEYS.ARROW_RIGHT : KEYS.ARROW_LEFT].includes(
+          key
+        ) &&
         focusedIndex !== 0
       ) {
         handleMoveFocus(-1);
       } else if (
-        ['ArrowDown', isRTL ? 'ArrowLeft' : 'ArrowRight'].includes(key) &&
+        [KEYS.ARROW_DOWN, isRTL ? KEYS.ARROW_LEFT : KEYS.ARROW_RIGHT].includes(
+          key
+        ) &&
         focusedIndex < listLength - 1
       ) {
         handleMoveFocus(1);
+      } else if (
+        [KEYS.ARROW_UP, isRTL ? KEYS.ARROW_RIGHT : KEYS.ARROW_LEFT].includes(
+          key
+        ) &&
+        focusedIndex === 0
+      ) {
+        handleReturnToParent?.();
       }
     },
-    [focusedIndex, handleMoveFocus, isRTL, listLength]
+    [focusedIndex, handleMoveFocus, handleReturnToParent, isRTL, listLength]
   );
 
   const handleMenuItemEnter = useCallback(
@@ -84,8 +118,8 @@ export default function useDropDownMenu({
       if (isDisabledItem) {
         return () => {};
       }
-
-      return handleMenuItemSelect(event, { value: focusedValue });
+      const selectedValue = focusedValue || allOptions[focusedIndex].value;
+      return handleMenuItemSelect(event, { value: selectedValue });
     },
     [allOptions, focusedIndex, focusedValue, handleMenuItemSelect]
   );
@@ -97,15 +131,18 @@ export default function useDropDownMenu({
     [handleMenuItemEnter]
   );
 
-  useKeyDownEffect(listRef, { key: KEYS_CLOSE_MENU }, () => onDismissMenu?.(), [
-    onDismissMenu,
-  ]);
+  useKeyDownEffect(
+    listRef,
+    { key: KEYS_CLOSE_MENU },
+    (event) => onDismissMenu?.(event),
+    [onDismissMenu]
+  );
 
   useKeyDownEffect(listRef, { key: KEYS_SHIFT_FOCUS }, handleFocusChange, [
     handleFocusChange,
   ]);
 
-  useFocusOut(listRef, () => onDismissMenu?.(), []);
+  useFocusOut(listRef, (event) => onDismissMenu?.(event), []);
 
   return useMemo(
     () => ({
