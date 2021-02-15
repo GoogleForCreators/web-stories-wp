@@ -52,7 +52,7 @@ trait ThemeSupport {
 			'title'                     => true,
 			'title-default'             => true,
 			'author'                    => true,
-			'author-default'            => true,
+			'author-default'            => false,
 			'date'                      => false,
 			'date-default'              => false,
 			'stories-archive-link'      => true,

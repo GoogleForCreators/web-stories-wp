@@ -20,22 +20,17 @@
  * Displays the story that user interacted with in a lightbox.
  */
 class Lightbox {
-  constructor(wrapperDiv) {
-    if ('undefined' === typeof wrapperDiv) {
+  constructor(wrapperDiv, lightboxElement) {
+    if (!wrapperDiv || !wrapperDiv.length) {
       return;
     }
 
     this.lightboxInitialized = false;
     this.wrapperDiv = wrapperDiv;
-    this.lightboxElement = this.wrapperDiv.querySelector(
-      '.web-stories-list__lightbox'
-    );
+    this.lightboxElement = lightboxElement;
     this.player = this.lightboxElement.querySelector('amp-story-player');
 
-    if (
-      'undefined' === typeof this.player ||
-      'undefined' === typeof this.lightboxElement
-    ) {
+    if ('undefined' === typeof this.player) {
       return;
     }
 
@@ -57,37 +52,36 @@ class Lightbox {
   }
 
   initializeLightbox() {
-    /**
-     * Stop stories from auto-play.
-     *
-     * https://github.com/ampproject/amphtml/issues/31334#issuecomment-733998656
-     */
-    this.player.pause();
-
     this.stories = this.player.getStories();
-    this.bindStoryClickListeners();
+    window.wsPlayer = this.player;
     this.lightboxInitialized = true;
-  }
-
-  bindStoryClickListeners() {
-    const cards = this.wrapperDiv.querySelectorAll('.web-stories-list__story');
-
-    cards.forEach((card, index) => {
-      card.addEventListener('click', (event) => {
-        event.preventDefault();
-        this.player.show(this.stories[index].href);
-        this.lightboxElement.classList.toggle('show');
-      });
-    });
   }
 }
 
 export default function initializeWebStoryLightbox() {
   const webStoryBlocks = document.getElementsByClassName('web-stories-list');
-  if ('undefined' !== typeof webStoryBlocks) {
+  const wrapperDiv = document.getElementsByClassName(
+    'web-stories-list__lightbox-wrapper'
+  );
+  const lightboxElement = document.querySelector('.web-stories-list__lightbox');
+
+  const lightBox = new Lightbox(wrapperDiv, lightboxElement);
+
+  const bindStoryClickListeners = (webStoryBlock) => {
+    const cards = webStoryBlock.querySelectorAll('.web-stories-list__story');
+
+    cards.forEach((card, index) => {
+      card.addEventListener('click', (event) => {
+        event.preventDefault();
+        lightBox.player.show(lightBox.stories[index].href);
+        lightBox.lightboxElement.classList.toggle('show');
+      });
+    });
+  };
+
+  if ('undefined' !== typeof webStoryBlocks && lightBox) {
     Array.from(webStoryBlocks).forEach((webStoryBlock) => {
-      /* eslint-disable-next-line no-new -- we do not store the object as no further computation required. */
-      new Lightbox(webStoryBlock);
+      bindStoryClickListeners(webStoryBlock);
     });
   }
 }

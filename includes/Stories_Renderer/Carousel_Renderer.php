@@ -134,7 +134,6 @@ class Carousel_Renderer extends Renderer {
 					<div tabindex="0" aria-label="<?php esc_attr_e( 'Previous', 'web-stories' ); ?>" class="glider-prev"></div>
 					<div tabindex="0" aria-label="<?php esc_attr_e( 'Next', 'web-stories' ); ?>" class="glider-next"></div>
 					<?php
-					$this->render_stories_with_lightbox_noamp();
 				} else {
 					?>
 					<amp-carousel
@@ -153,7 +152,6 @@ class Carousel_Renderer extends Renderer {
 						?>
 					</amp-carousel>
 					<?php
-					$this->render_stories_with_lightbox_amp();
 				}
 				?>
 			</div>

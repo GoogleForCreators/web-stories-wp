@@ -24,6 +24,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Interfaces\FieldState;
+use Google\Web_Stories\Stories_Renderer\Renderer;
 use Google\Web_Stories\Stories_Renderer\FieldState\BaseFieldState as GridView;
 use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
 use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
@@ -167,3 +168,19 @@ function get_stories_order() {
 		]
 	);
 }
+
+/**
+ * Renders lightbox markup.
+ *
+ * @return void
+ */
+function render_stories_lightboxes() {
+
+	if ( is_amp() ) {
+		Renderer::render_stories_with_lightbox_amp();
+	} else {
+		Renderer::render_stories_with_lightbox_noamp();
+	}
+}
+
+add_action( 'wp_footer', 'Google\Web_Stories\render_stories_lightboxes' );

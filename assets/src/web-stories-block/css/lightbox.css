@@ -1,34 +1,32 @@
 /* Lightbox styles */
-.web-stories-list .web-stories-list__lightbox {
-  display: none;
+.web-stories-list__lightbox {
   justify-content: center;
   align-items: center;
   position: fixed;
   background: black;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
   opacity: 0;
-  transition: opacity 0.2s linear;
 }
 
-.admin-bar .web-stories-list .web-stories-list__lightbox {
+.admin-bar .web-stories-list__lightbox {
   top: 46px;
 }
 
-.web-stories-list .web-stories-list__lightbox.show {
+.web-stories-list__lightbox.show {
   opacity: 1;
-  display: flex;
+  left: 0;
+  visibility: visible;
   z-index: 999;
 }
 
-.web-stories-list .web-stories-list__lightbox amp-story-player {
+.web-stories-list__lightbox amp-story-player {
   width: 100%;
   height: 100%;
 }
 
-.web-stories-list .story-lightbox__close-button {
+.story-lightbox__close-button {
   display: inline-block;
   position: fixed;
   left: 0;
@@ -39,7 +37,7 @@
   z-index: 1;
 }
 
-.web-stories-list .story-lightbox__close-button--stick {
+.story-lightbox__close-button--stick {
   display: inline-block;
   position: absolute;
   left: 20px;
@@ -50,7 +48,7 @@
   transform: rotateZ(45deg);
 }
 
-.web-stories-list .story-lightbox__close-button--stick:first-child {
+.story-lightbox__close-button--stick:first-child {
   transform: rotateZ(-45deg);
 }
 
@@ -68,11 +66,11 @@ html:not([amp])
 }
 
 @media all and (min-width: 676px) {
-  .web-stories-list .story-lightbox__close-button {
+  .story-lightbox__close-button {
     left: 10px;
   }
 
-  .web-stories-list .story-lightbox__close-button--stick {
+  .story-lightbox__close-button--stick {
     left: 20px;
     top: 5px;
     height: 25px;
@@ -80,7 +78,7 @@ html:not([amp])
 }
 
 @media all and (min-width: 783px) {
-  .admin-bar .web-stories-list .web-stories-list__lightbox {
+  .admin-bar .web-stories-list__lightbox {
     top: 32px;
   }
 }
