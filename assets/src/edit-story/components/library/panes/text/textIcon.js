@@ -30,7 +30,7 @@ import { DEFAULT_PRESET } from './textPresets';
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
   // Necessary because of https://github.com/styled-components/styled-components/pull/2093
-  <Icons.Text {...rest} />
+  <Icons.LetterT {...rest} />
 )).attrs(({ isSecondary }) => ({
   style: {
     // scales 14px to 11px
@@ -40,7 +40,7 @@ const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
 
 const AnimatedTextAddIcon = styled(({ isPrimary, ...rest }) => (
   // Necessary because of https://github.com/styled-components/styled-components/pull/2093
-  <Icons.AddFilled {...rest} />
+  <Icons.PlusFilled {...rest} />
 )).attrs(({ isPrimary }) => ({
   style: {
     // scales 12px to 16px
@@ -56,19 +56,13 @@ const QuickAction = styled.button`
   cursor: pointer;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   flex: 1;
-  svg {
-    width: 12px;
-    height: 12px;
-  }
+  width: 24px;
 `;
 
 const IconWrapper = styled.div`
   margin: 0;
   flex: 1;
-  svg {
-    width: 13px;
-    height: 14px;
-  }
+  width: 24px;
 `;
 
 const TextIconContainer = styled.div`

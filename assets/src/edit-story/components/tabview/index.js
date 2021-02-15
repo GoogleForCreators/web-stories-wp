@@ -78,6 +78,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     display: block;
     width: 32px;
     height: 32px;
+    margin: 0 auto;
     transform-origin: center center;
     transition: transform 0.3s ease;
   }

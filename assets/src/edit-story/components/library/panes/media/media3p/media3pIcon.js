@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '../../../../../../design-system';
 
 function Media3pIcon() {
-  return <Icons.Media aria-label={__('Explore Media', 'web-stories')} />;
+  return <Icons.Picture aria-label={__('Explore Media', 'web-stories')} />;
 }
 
 export default Media3pIcon;
