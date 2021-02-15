@@ -129,11 +129,7 @@ function Preview() {
   const label = __('Preview', 'web-stories');
   return (
     <>
-      <Tooltip
-        title={label}
-        placement={TOOLTIP_PLACEMENT.BOTTOM}
-        hasTail={true}
-      >
+      <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
         <Button
           variant={BUTTON_VARIANTS.SQUARE}
           type={BUTTON_TYPES.TERTIARY}

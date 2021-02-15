@@ -68,6 +68,11 @@ function Update() {
     [saveStory, isSaving]
   );
 
+  // The button is enabled only if we're not already saving nor uploading. And
+  // then only if there are new changes or the story has meta-boxes – as these
+  // can update without us knowing it.
+  const isEnabled =
+    !isSaving && !isUploading && (hasNewChanges || hasMetaBoxes);
   let text;
   switch (status) {
     case 'publish':
@@ -80,19 +85,13 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Tooltip
-          title={text}
-          placement={TOOLTIP_PLACEMENT.BOTTOM}
-          hasTail={true}
-        >
+        <Tooltip title={text} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
           <Button
             variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
             onClick={() => saveStory({ status: 'draft' })}
-            disabled={
-              !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
-            }
+            disabled={!isEnabled}
             aria-label={text}
           >
             <Icons.FloppyDisk />

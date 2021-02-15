@@ -65,11 +65,7 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
   );
 
   return tooltip ? (
-    <Tooltip
-      title={tooltip}
-      placement={TOOLTIP_PLACEMENT.BOTTOM}
-      hasTail={true}
-    >
+    <Tooltip title={tooltip} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
       {button}
     </Tooltip>
   ) : (
