@@ -48,11 +48,14 @@ const Wrapper = styled.div`
 	${elementWithRotation}
   pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
 
+  outline: 1px solid transparent;
+  transition: outline-color 0.5s;
+
   &:focus,
   &:active,
   &:hover {
-    outline: ${({ theme, hasMask }) =>
-      hasMask ? 'none' : `1px solid ${theme.colors.border.selection}`};
+    outline-color: ${({ theme, hasMask }) =>
+      hasMask ? 'transparent' : theme.colors.border.selection};
   }
 `;
 

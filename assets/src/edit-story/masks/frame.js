@@ -70,21 +70,19 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  ${({ hasBackgroundOutline }) =>
-    hasBackgroundOutline &&
-    css`
-      ::before {
-        display: block;
-        content: '';
-        position: absolute;
-        width: calc(100% + 10px);
-        height: calc(100% + 10px);
-        border-radius: 8px;
-        left: -5px;
-        top: -5px;
-        border: 1px solid ${({ theme }) => theme.colors.border.selection};
-      }
-    `}
+  ::before {
+    transition: opacity 0.5s;
+    opacity: ${({ hasBackgroundOutline }) => (hasBackgroundOutline ? 1 : 0)};
+    display: block;
+    content: '';
+    position: absolute;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    border-radius: 8px;
+    left: -4px;
+    top: -4px;
+    border: 1px solid ${({ theme }) => theme.colors.border.selection};
+  }
 `;
 
 function WithDropTarget({ element, children, hover }) {
