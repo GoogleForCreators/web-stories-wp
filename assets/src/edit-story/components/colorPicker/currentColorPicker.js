@@ -29,8 +29,8 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Eyedropper } from '../button';
+import { Input } from '../../../design-system';
 import Pointer from './pointer';
-import EditablePreview from './editablePreview';
 
 const CONTAINER_PADDING = 12;
 const EYEDROPPER_ICON_SIZE = 15;
@@ -38,7 +38,8 @@ const HEADER_FOOTER_HEIGHT = 42;
 const BODY_HEIGHT = 140;
 const CONTROLS_HEIGHT = 28;
 const CONTROLS_BORDER_RADIUS = 50;
-const OPACITY_WIDTH = 32;
+const OPACITY_WIDTH = 64;
+const HEX_WIDTH = 80;
 
 const Container = styled.div`
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
@@ -93,6 +94,7 @@ const HexValue = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: ${HEX_WIDTH}px;
 `;
 
 const EyedropperButton = styled(Eyedropper)`
@@ -105,20 +107,21 @@ const Opacity = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: ${OPACITY_WIDTH}px;
+`;
+
+const TransparentInput = styled(Input)`
+  background: transparent;
 `;
 
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
-  const handleFormatHex = useCallback((v) => `#${v}`, []);
-
   const handleHexInputChange = useCallback(
     (value) => onChange({ hex: value }),
     [onChange]
   );
-
-  const handleFormatPercentage = useCallback((v) => `${v}%`, []);
 
   const handleOpacityInputChange = useCallback(
     (value) =>
@@ -185,22 +188,21 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
           />
         )}
         <HexValue>
-          <EditablePreview
-            label={__('Edit hex value', 'web-stories')}
+          <TransparentInput
+            aria-label={__('Edit hex value', 'web-stories')}
             value={hexValue}
             onChange={handleHexInputChange}
-            width={56}
-            format={handleFormatHex}
+            placeholder={__('Enter hex', 'web-stories')}
           />
         </HexValue>
         {showOpacity && (
           <Opacity>
-            <EditablePreview
-              label={__('Edit opacity', 'web-stories')}
+            {/* @todo This needs % as suffix */}
+            <TransparentInput
+              aria-label={__('Edit opacity', 'web-stories')}
               value={alphaPercentage}
-              width={OPACITY_WIDTH}
-              format={handleFormatPercentage}
               onChange={handleOpacityInputChange}
+              placeholder={__('Enter opacity', 'web-stories')}
             />
           </Opacity>
         )}
