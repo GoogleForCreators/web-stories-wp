@@ -55,7 +55,7 @@ const Line = styled.div.attrs(({ stops }) => ({
 }))`
   width: ${LINE_FULL_LENGTH}px;
   height: ${LINE_WIDTH}px;
-  border-radius: ${LINE_WIDTH / 2}px;
+  border-radius: 2px;
   position: relative;
 
   &:focus {

@@ -25,7 +25,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Close } from '../button';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../design-system/components/button';
+import { Button, Icons } from '../../../design-system';
 
 const CONTAINER_PADDING = 12;
 const HEADER_FOOTER_HEIGHT = 52;
@@ -33,16 +38,13 @@ const HEADER_FOOTER_HEIGHT = 52;
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   height: ${HEADER_FOOTER_HEIGHT}px;
   padding: ${CONTAINER_PADDING}px;
   position: relative;
 `;
 
-const CloseButton = styled(Close)`
-  opacity: 1;
-  font-size: 15px;
-  line-height: 20px;
+const CloseButton = styled(Button)`
   margin-left: auto;
 `;
 
@@ -53,7 +55,7 @@ const TypeSelector = styled.button`
   border: 0;
   border-radius: 100px;
   opacity: 1;
-  margin-right: 22px;
+  margin-right: 16px;
 `;
 
 const Solid = styled(TypeSelector)`
@@ -117,11 +119,14 @@ function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
         </>
       )}
       <CloseButton
-        width={10}
-        height={10}
         aria-label={__('Close', 'web-stories')}
         onClick={onClose}
-      />
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.CIRCLE}
+      >
+        <Icons.Cross />
+      </CloseButton>
     </Wrapper>
   );
 }

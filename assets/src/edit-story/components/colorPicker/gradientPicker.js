@@ -26,9 +26,11 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { ColorStopPropType } from '../../types';
 import {
-  GradientReverser as Reverse,
-  GradientRotator as Rotate,
-} from '../../icons';
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../design-system/components/button';
+import { Button, Icons } from '../../../design-system';
 import GradientLine from './gradientLine';
 
 const Wrapper = styled.div`
@@ -38,19 +40,6 @@ const Wrapper = styled.div`
   margin-right: -3px;
   padding: 0 12px;
   height: 58px;
-`;
-
-const Button = styled.button`
-  border: 0;
-  padding: 0;
-  background: transparent;
-  display: flex;
-  color: white;
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
 `;
 
 function GradientPicker({
@@ -76,16 +65,22 @@ function GradientPicker({
         onMove={onMove}
       />
       <Button
-        onClick={onReverse}
         aria-label={__('Reverse gradient stops', 'web-stories')}
+        onClick={onReverse}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.CIRCLE}
       >
-        <Reverse />
+        <Icons.ArrowsLeftright />
       </Button>
       <Button
         onClick={onRotate}
         aria-label={__('Rotate gradient', 'web-stories')}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.CIRCLE}
       >
-        <Rotate id="gradient-rotator" />
+        <Icons.ArrowRightCurved id="gradient-rotator" />
       </Button>
     </Wrapper>
   );
