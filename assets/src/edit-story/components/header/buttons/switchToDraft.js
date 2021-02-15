@@ -62,7 +62,7 @@ function SwitchToDraft() {
         disabled={isSaving || isUploading}
         aria-label={label}
       >
-        <Icons.SwitchToDraft />
+        <Icons.PageSwap />
       </Button>
     </Tooltip>
   );

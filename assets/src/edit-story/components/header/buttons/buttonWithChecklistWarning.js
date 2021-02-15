@@ -60,7 +60,7 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       {...buttonProps}
     >
       {text}
-      {tooltip && <Icons.Warning height={14} width={24} />}
+      {tooltip && <Icons.ExclamationTriangle height={24} width={24} />}
     </Button>
   );
 

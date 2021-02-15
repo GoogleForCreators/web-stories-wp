@@ -41,6 +41,7 @@ const ButtonList = styled.nav`
 
 const List = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Space = styled.div`
@@ -49,6 +50,11 @@ const Space = styled.div`
 
 const Spinner = styled.div`
   position: absolute;
+  top: 0;
+`;
+
+const IconWithSpinner = styled.div`
+  position: relative;
 `;
 
 function Loading() {
@@ -93,9 +99,11 @@ function Buttons() {
     <>
       <ButtonList>
         <List>
-          <Loading />
-          {isDraft && <Update />}
-          {!isDraft && <SwitchToDraft />}
+          <IconWithSpinner>
+            {isDraft && <Update />}
+            {!isDraft && <SwitchToDraft />}
+            <Loading />
+          </IconWithSpinner>
           <Space />
           <Preview />
           <Space />

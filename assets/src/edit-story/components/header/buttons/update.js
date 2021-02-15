@@ -95,7 +95,7 @@ function Update() {
             }
             aria-label={text}
           >
-            <Icons.Save />
+            <Icons.FloppyDisk />
           </Button>
         </Tooltip>
       );

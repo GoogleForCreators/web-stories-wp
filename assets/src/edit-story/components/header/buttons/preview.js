@@ -142,7 +142,7 @@ function Preview() {
           disabled={isSaving || isUploading}
           aria-label={label}
         >
-          <Icons.Preview />
+          <Icons.Eye />
         </Button>
       </Tooltip>
       <PreviewErrorDialog
