@@ -34,9 +34,10 @@ import GradientLine from './gradientLine';
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   margin-right: -3px;
-  padding: 12px;
+  padding: 0 12px;
+  height: 58px;
 `;
 
 const Button = styled.button`

@@ -25,19 +25,21 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import Pointer from './pointer';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
+const POINTER_SIZE = 14;
+const POINTER_MARGIN = 10;
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
     left: `${position * LINE_LENGTH + LINE_WIDTH / 2}px`,
   },
 }))`
   position: absolute;
+  top: -${POINTER_MARGIN + POINTER_SIZE}px;
   background: transparent;
   border: 0;
   padding: 0;
-  top: ${LINE_WIDTH / 2}px;
 
   &:focus {
     /* We auto-select stops on focus, so no extra focus display is necessary */
@@ -46,20 +48,19 @@ const Stop = styled.button.attrs(({ position }) => ({
 
   ${({ isSelected }) =>
     isSelected &&
-    `
-      transform-origin: 0 0;
-      transform: scale(1.333);
-    `}
+    ``}
+`;
+
+const StopPointer = styled.div`
+  transform: translate(${({ offset }) => `${offset}px`}, 0);
+  width: ${POINTER_SIZE}px;
+  height: ${POINTER_SIZE}px;
+  border-radius: 2px;
+  ${({ color }) => generatePatternStyles(color)}
 `;
 
 function GradientStopWithRef(
-  {
-    position,
-    index,
-    isSelected,
-
-    onSelect,
-  },
+  { position, index, isSelected, color, onSelect },
   ref
 ) {
   return (
@@ -77,7 +78,7 @@ function GradientStopWithRef(
         Math.round(position * 100)
       )}
     >
-      <Pointer offset={-6} />
+      <StopPointer color={color} offset={-8} />
     </Stop>
   );
 }
@@ -88,7 +89,7 @@ GradientStop.propTypes = {
   position: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   isSelected: PropTypes.bool.isRequired,
-
+  color: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

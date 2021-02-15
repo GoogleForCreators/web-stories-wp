@@ -62,7 +62,7 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v6};
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
 
 function ColorPicker({

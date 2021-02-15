@@ -15,7 +15,7 @@
  */
 
 export const LINE_LENGTH = 155;
-export const LINE_WIDTH = 12;
+export const LINE_WIDTH = 16;
 
 export const TYPE_SOLID = 'solid';
 export const TYPE_LINEAR = 'linear';

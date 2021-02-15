@@ -100,7 +100,7 @@ function GradientLine({
       ref={line}
       aria-label={__('Gradient line', 'web-stories')}
     >
-      {stops.map(({ position }, index) => (
+      {stops.map(({ position, color }, index) => (
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}
           key={
@@ -111,6 +111,7 @@ function GradientLine({
           isSelected={index === currentStopIndex}
           position={position}
           onSelect={onSelect}
+          color={{ color }}
         >
           <Pointer offset={-LINE_WIDTH / 2} />
         </GradientStop>
