@@ -170,8 +170,8 @@ function ColorPicker({
           setToSolid={setToSolid}
           onClose={handleCloseAndRefocus}
         />
-        {type !== 'solid' && (
-          <Body>
+        <Body>
+          {type !== 'solid' && (
             <GradientPicker
               stops={stops}
               currentStopIndex={currentStopIndex}
@@ -182,9 +182,7 @@ function ColorPicker({
               onRotate={rotateClockwise}
               onMove={moveCurrentStopBy}
             />
-          </Body>
-        )}
-        <Body>
+          )}
           <CurrentColorPicker
             color={currentColor}
             onChange={updateCurrentColor}
