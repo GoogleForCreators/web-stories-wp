@@ -95,6 +95,7 @@ function TextIcon(props) {
           id="text-tab-icon"
           isSecondary={isHoveringQuick || isFocusingQuick}
           aria-label={__('Text library', 'web-stories')}
+          onPointerOver={() => setIsHoveringQuick(false)}
         />
       </IconWrapper>
       <QuickAction
@@ -104,7 +105,6 @@ function TextIcon(props) {
         onFocus={() => setIsFocusingQuick(true)}
         onBlur={() => setIsFocusingQuick(false)}
         onPointerOver={() => setIsHoveringQuick(true)}
-        onPointerOut={() => setIsHoveringQuick(false)}
       >
         <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
       </QuickAction>
