@@ -63,7 +63,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
   padding: 12px 0px;
-  margin: 0px 16px;
+  margin: 0 18px;
   margin-bottom: -1px;
   position: relative;
   flex: 1;
