@@ -38,7 +38,7 @@ const Text = styled.span`
 function Required() {
   return (
     <RequiredWrapper>
-      <Text>{_x('required', 'required form input', 'web-stories')}</Text>
+      <Text>{_x('Required', 'Required form input', 'web-stories')}</Text>
     </RequiredWrapper>
   );
 }

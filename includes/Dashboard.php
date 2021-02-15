@@ -209,7 +209,7 @@ class Dashboard {
 		$preload_paths = [
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/users/me/',
-			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
+			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture%2Cprivate&_web_stories_envelope=true',
 		];
 
 		/**
@@ -276,7 +276,7 @@ class Dashboard {
 
 		wp_register_style(
 			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
 			[],
 			WEBSTORIES_VERSION
 		);

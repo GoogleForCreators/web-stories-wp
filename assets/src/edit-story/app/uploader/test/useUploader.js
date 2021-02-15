@@ -115,7 +115,7 @@ describe('useUploader', () => {
       const { uploadFile } = setup({});
 
       await expect(
-        uploadFile({ size: 20000, type: 'video/mov' })
+        uploadFile({ size: 20000, type: 'video/quicktime' })
       ).rejects.toThrow(
         'Please choose only png, jpeg, jpg, gif, mp4 to upload.'
       );
@@ -139,7 +139,7 @@ describe('useUploader', () => {
       await expect(
         uploadFile({
           size: 1024 * 1024 * 1024 * 3,
-          type: 'video/mov',
+          type: 'video/quicktime',
         })
       ).rejects.toThrow(
         'Your file is too large (3072 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
@@ -167,7 +167,7 @@ describe('useUploader', () => {
 
       const file = {
         size: 20000,
-        type: 'video/mov',
+        type: 'video/quicktime',
       };
 
       const result = await uploadFile(file);

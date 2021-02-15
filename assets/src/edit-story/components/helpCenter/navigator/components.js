@@ -40,10 +40,9 @@ export const NavButton = styled(Button)`
       theme.colors.border.focus,
       theme.colors.bg.secondary
     )}
-  padding: 2px 6px;
 
   svg {
-    width: 14px;
+    width: 32px;
   }
 
   * + * {

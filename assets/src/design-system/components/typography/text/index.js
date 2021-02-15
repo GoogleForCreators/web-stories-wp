@@ -27,7 +27,7 @@ import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
 const textCss = ({ isBold, size, theme }) => css`
-  ${defaultTypographyStyle}
+  ${defaultTypographyStyle};
   ${themeHelpers.expandPresetStyles({
     preset: theme.typography.presets.paragraph[size],
     theme,

@@ -283,11 +283,11 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
 
-      const noCoverImage = fixture.screen.getByText(
-        MESSAGES.CRITICAL_METADATA.MISSING_COVER.MAIN_TEXT
+      const noPosterImage = fixture.screen.getByText(
+        MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
       );
       await openPrepublishPanel();
-      await fixture.events.mouse.clickOn(noCoverImage);
+      await fixture.events.mouse.clickOn(noPosterImage);
       await waitFor(() => {
         expect(
           fixture.editor.inspector.documentPanel.node.querySelector(

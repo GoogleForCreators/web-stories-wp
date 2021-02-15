@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -24,9 +25,13 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Icons } from '../../../../../design-system';
 
+const StyledLayoutIcon = styled(Icons.Box4Alternate)({
+  transform: 'scale(1.41)',
+});
+
 function PageLayoutsIcon() {
   return (
-    <Icons.Layout aria-label={__('Page layouts library', 'web-stories')} />
+    <StyledLayoutIcon aria-label={__('Page layouts library', 'web-stories')} />
   );
 }
 
