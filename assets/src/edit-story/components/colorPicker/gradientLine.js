@@ -113,7 +113,7 @@ function GradientLine({
           onSelect={onSelect}
           color={{ color }}
         >
-          <Pointer offset={-LINE_WIDTH / 2} />
+          <Pointer offsetX={-LINE_WIDTH / 2} />
         </GradientStop>
       ))}
       {tempPointerPosition && (

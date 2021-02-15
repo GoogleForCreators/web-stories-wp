@@ -19,7 +19,7 @@
  */
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { useFeatures } from 'flagged';
@@ -36,8 +36,8 @@ const CONTAINER_PADDING = 12;
 const EYEDROPPER_ICON_SIZE = 15;
 const HEADER_FOOTER_HEIGHT = 42;
 const BODY_HEIGHT = 140;
-const CONTROLS_WIDTH = 12;
-const CONTROLS_BORDER_RADIUS = 6;
+const CONTROLS_HEIGHT = 28;
+const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 32;
 
 const Container = styled.div`
@@ -52,40 +52,34 @@ const Container = styled.div`
 
 const Body = styled.div`
   padding-bottom: 0;
-  display: grid;
-  grid: ${({ showOpacity }) =>
-    showOpacity
-      ? `'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px`
-      : `'saturation hue' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px`};
-  grid-gap: 10px;
 `;
 
 const SaturationWrapper = styled.div`
   position: relative;
-  width: 100%;
   height: ${BODY_HEIGHT}px;
-  grid-area: saturation;
+  margin-bottom: 16px;
+`;
+
+const wrapperCSS = css`
+  margin-bottom: 16px;
+  border: 1px solid ${({ theme }) => theme.colors.shadow.active};
+  height: ${CONTROLS_HEIGHT}px;
+  position: relative;
+  border-radius: ${CONTROLS_BORDER_RADIUS}px;
+  background-clip: padding-box;
 `;
 
 const HueWrapper = styled.div`
-  position: relative;
-  height: ${BODY_HEIGHT}px;
-  width: ${CONTROLS_WIDTH}px;
-  grid-area: hue;
+  ${wrapperCSS}
 `;
 
 const AlphaWrapper = styled.div`
-  position: relative;
-  height: ${BODY_HEIGHT}px;
-  width: ${CONTROLS_WIDTH}px;
   background: #fff;
-  border-radius: ${CONTROLS_BORDER_RADIUS}px;
-  grid-area: alpha;
+  ${wrapperCSS}
 `;
 
 const Footer = styled.div`
   height: ${HEADER_FOOTER_HEIGHT}px;
-  font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
   position: relative;
   margin-top: 7px;
@@ -139,8 +133,10 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       <Body showOpacity={showOpacity}>
         <SaturationWrapper>
           <Saturation
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={-6} currentColor={rgb} />}
+            radius="8px"
+            pointer={() => (
+              <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
+            )}
             hsl={hsl}
             hsv={hsv}
             onChange={onChange}
@@ -148,11 +144,12 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         </SaturationWrapper>
         <HueWrapper>
           <Hue
-            direction="vertical"
-            width={`${CONTROLS_WIDTH}px`}
-            height={`${BODY_HEIGHT}px`}
+            direction="horizontal"
+            height={`${CONTROLS_HEIGHT}px`}
             radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={0} currentColor={rgb} />}
+            pointer={() => (
+              <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
+            )}
             hsl={hsl}
             onChange={onChange}
           />
@@ -160,12 +157,16 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         {showOpacity && (
           <AlphaWrapper>
             <Alpha
-              direction="vertical"
-              width={`${CONTROLS_WIDTH}px`}
-              height={`${BODY_HEIGHT}px`}
+              direction="horizontal"
+              height={`${CONTROLS_HEIGHT}px`}
               radius={`${CONTROLS_BORDER_RADIUS}px`}
               pointer={() => (
-                <Pointer offset={-3} currentColor={rgb} withAlpha />
+                <Pointer
+                  offsetX={-12}
+                  offsetY={1}
+                  currentColor={rgb}
+                  withAlpha
+                />
               )}
               rgb={rgb}
               hsl={hsl}
