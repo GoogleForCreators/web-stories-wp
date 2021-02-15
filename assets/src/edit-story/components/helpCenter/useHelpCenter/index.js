@@ -22,13 +22,15 @@ import { useEffect, useMemo, useReducer, useState } from 'react';
  */
 import { clamp } from '../../../../animation';
 import { useCurrentUser } from '../../../app';
-import { NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
+import { BASE_NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
 import {
-  createEffectRun,
+  composeEffects,
+  createDynamicNavigationFlow,
   deriveBottomNavigation,
   deriveDisabledButtons,
   deriveReadTip,
   deriveTransitionDirection,
+  deriveUnreadTipsCount,
   resetNavigationIndexOnOpen,
 } from './effects';
 
@@ -40,16 +42,18 @@ import {
  * @param {*} next - next state
  * @return {*} partial of state
  */
-export const deriveState = createEffectRun(
+export const deriveState = composeEffects(
   // Order matters here as effects run
   // sequentially and alter next state
   // one after the other.
   [
     resetNavigationIndexOnOpen,
+    createDynamicNavigationFlow,
     deriveBottomNavigation,
     deriveTransitionDirection,
     deriveDisabledButtons,
     deriveReadTip,
+    deriveUnreadTipsCount,
   ]
 );
 
@@ -61,18 +65,19 @@ const reducer = ({ state, actions }, action) => {
   };
 };
 
-const initial = {
+export const initial = {
   state: {
     isOpen: false,
     navigationIndex: -1,
     // @TODO make this dynamic based off of unread tips.
-    navigationFlow: NAVIGATION_FLOW,
+    navigationFlow: BASE_NAVIGATION_FLOW,
     isLeftToRightTransition: true,
     hasBottomNavigation: false,
     isPrevDisabled: true,
     isNextDisabled: false,
     readTips: {},
     readError: false,
+    unreadTipsCount: 0,
   },
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //
@@ -177,7 +182,8 @@ export function useHelpCenter() {
             web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
           },
         }).catch(actions.persistingReadTipsError),
-      TRANSITION_DURATION
+      // duration of menu transition which takes the longest
+      TRANSITION_DURATION * 1.2
     );
     return () => clearTimeout(id);
   }, [actions, updateCurrentUser, persistenceKey]);

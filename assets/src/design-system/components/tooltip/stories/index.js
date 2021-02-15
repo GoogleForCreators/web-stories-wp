@@ -25,7 +25,7 @@ import { useCallback, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import { theme } from '../../../theme';
-import { List } from '../../../icons';
+import { Table } from '../../../icons';
 import {
   Button,
   BUTTON_SIZES,
@@ -90,7 +90,7 @@ export const _default = () => (
         title={text('Tooltip for icon - content', 'To save draft click enter')}
       >
         <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
-          <List aria-hidden={true} />
+          <Table aria-hidden={true} />
         </Button>
       </Tooltip>
 
@@ -144,7 +144,7 @@ export const LightMode = () => (
       title={text('Tooltip for icon - content', 'To save draft click enter')}
     >
       <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
-        <List aria-hidden={true} />
+        <Table aria-hidden={true} />
       </Button>
     </Tooltip>
 

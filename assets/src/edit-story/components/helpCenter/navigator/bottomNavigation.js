@@ -34,6 +34,7 @@ const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
   transition: transform ${TRANSITION_DURATION}ms ${BEZIER.default};
+  z-index: 2;
   ${({ isHidden }) =>
     isHidden &&
     css`
@@ -44,11 +45,20 @@ const BottomNavBar = styled(NavBar)`
 const BottomNavButtons = styled.div`
   display: flex;
   padding: 0 16px;
+  white-space: nowrap;
 `;
 
 const ArrowWrap = styled.div`
-  transform-origin: 50% 50%;
-  transform: ${({ isRTL }) => (isRTL ? 'rotate(180deg)' : 'none')};
+  margin: -5px -16px;
+  ${({ isRTL }) =>
+    isRTL &&
+    css`
+      transform: rotate(180deg);
+    `}
+
+  svg {
+    display: block;
+  }
 `;
 
 const onCondition = (condition) => (fn) => {
@@ -87,12 +97,11 @@ export function BottomNavigation({
 
   return (
     <BottomNavBar
-      aria-hidden={hasBottomNavigation}
+      aria-hidden={!hasBottomNavigation}
       isHidden={!hasBottomNavigation}
     >
       <BottomNavButtons>
         <NavButton
-          aria-label={__('Navigate to Help Center Main Menu', 'web-stories')}
           onClick={() => {
             forceFocusCompanion();
             onAllTips();
@@ -102,7 +111,7 @@ export function BottomNavigation({
           disabled={!hasBottomNavigation}
         >
           <ArrowWrap isRTL={isRTL}>
-            <Icons.Arrow />
+            <Icons.ArrowLeft />
           </ArrowWrap>
           <span>{__('All Tips', 'web-stories')}</span>
         </NavButton>
@@ -110,7 +119,6 @@ export function BottomNavigation({
       <BottomNavButtons>
         <NavButton
           ref={prevButtonRef}
-          aria-label={__('Navigate to Previous Tip', 'web-stories')}
           onClick={onPrev}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
@@ -120,7 +128,6 @@ export function BottomNavigation({
         </NavButton>
         <NavButton
           ref={nextButtonRef}
-          aria-label={__('Navigate to Next Tip', 'web-stories')}
           onClick={onNext}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
