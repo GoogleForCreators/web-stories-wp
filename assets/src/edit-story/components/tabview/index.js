@@ -66,7 +66,6 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   margin: 0 18px;
   margin-bottom: -1px;
   position: relative;
-  flex: 1;
 
   ${({ isActive, theme }) =>
     isActive &&
