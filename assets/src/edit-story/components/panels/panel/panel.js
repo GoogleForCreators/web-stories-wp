@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -92,11 +92,8 @@ function Panel({
       setHeight(0);
     }
 
-    trackEvent('panel_toggled', 'editor', name, null, {
-      status: 'collapsed',
-    });
-    trackEventGA4('panel_toggled', {
-      panel_name: name,
+    trackEvent('panel_toggled', {
+      name: name,
       status: 'collapsed',
     });
   }, [resizeable, canCollapse, name]);
@@ -109,11 +106,8 @@ function Panel({
         setHeight(expandToHeight);
       }
 
-      trackEvent('panel_toggled', 'editor', name, null, {
-        status: 'expanded',
-      });
-      trackEventGA4('panel_toggled', {
-        panel_name: name,
+      trackEvent('panel_toggled', {
+        name: name,
         status: 'expanded',
       });
     },

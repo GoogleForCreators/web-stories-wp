@@ -17,12 +17,11 @@
 /**
  * Internal dependencies
  */
-import { config } from '../shared';
-import isTrackingEnabled from '../isTrackingEnabled';
-import track from '../track';
+import isTrackingEnabled from './isTrackingEnabled';
+import track from './track';
 
 /**
- * Send a Google Analytics 4 tracking event.
+ * Send an Analytics tracking event.
  *
  * Only use custom events if the existing events don't handle your use case.
  *
@@ -40,12 +39,7 @@ async function trackEvent(eventName, eventParameters = {}) {
     return Promise.resolve();
   }
 
-  const eventData = {
-    send_to: config.trackingIdGA4,
-    ...eventParameters,
-  };
-
-  return track(eventName, eventData);
+  return track(eventName, eventParameters);
 }
 
 export default trackEvent;

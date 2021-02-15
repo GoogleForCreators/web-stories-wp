@@ -20,7 +20,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -58,16 +58,14 @@ function Publish() {
 
   useEffect(() => {
     if (showDialog) {
-      trackEvent('missing_title_dialog', 'editor');
-      trackEventGA4('missing_title_dialog');
+      trackEvent('missing_title_dialog');
     }
   }, [showDialog]);
 
   const publish = useCallback(() => {
-    trackEvent('publish_story', 'editor', title.length > 0);
-    trackEventGA4('publish_story', {
+    trackEvent('publish_story', {
       status: hasFutureDate ? 'future' : 'publish',
-      has_title: title.length > 0,
+      title_length: title.length,
     });
 
     setShowDialog(false);

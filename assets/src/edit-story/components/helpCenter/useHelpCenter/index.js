@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useReducer, useEffect, useState, useMemo } from 'react';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -105,16 +105,14 @@ export const initial = {
       navigationIndex: navigationFlow.findIndex((v) => v === key),
     }),
     toggle: () => ({ isOpen }) => {
-      trackEvent('help_center_toggled', 'editor', isOpen ? 'closed' : 'open');
-      trackEventGA4('help_center_toggled', {
+      trackEvent('help_center_toggled', {
         status: isOpen ? 'closed' : 'open',
       });
       return { isOpen: !isOpen };
     },
     close: () => ({ isOpen }) => {
       if (isOpen) {
-        trackEvent('help_center_toggled', 'editor', 'closed');
-        trackEventGA4('help_center_toggled', {
+        trackEvent('help_center_toggled', {
           status: 'closed',
         });
       }
@@ -231,23 +229,17 @@ export function useHelpCenter() {
       store.state.navigationFlow.length >= navigationIndex
     ) {
       const currentTip = store.state.navigationFlow[navigationIndex];
-      trackEvent(
-        'help_center_read_tip',
-        'editor',
-        currentTip,
-        store.state.unreadTipsCount
-      );
-      trackEventGA4('help_center_read_tip', {
-        tip: currentTip,
+      trackEvent('help_center_read_tip', {
+        name: currentTip,
         unread_count: store.state.unreadTipsCount,
       });
 
       if (store.state.unreadTipsCount === store.state.navigationFlow.length) {
-        trackEventGA4('tutorial_begin');
+        trackEvent('tutorial_begin');
       }
 
       if ('done' === currentTip) {
-        trackEventGA4('tutorial_complete');
+        trackEvent('tutorial_complete');
       }
     }
     // Disable reason: avoid sending duplicate tracking events.

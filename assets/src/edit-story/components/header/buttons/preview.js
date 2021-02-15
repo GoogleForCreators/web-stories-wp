@@ -19,7 +19,7 @@
  */
 import { useCallback, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -53,8 +53,7 @@ function Preview() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
-    trackEvent('preview_story', 'editor');
-    trackEventGA4('preview_story');
+    trackEvent('preview_story');
 
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.

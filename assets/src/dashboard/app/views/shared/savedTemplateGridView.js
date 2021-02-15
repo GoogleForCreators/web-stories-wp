@@ -21,7 +21,8 @@ import styled from 'styled-components';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -80,9 +81,8 @@ const SavedTemplateGridView = ({
   const bottomTargetAction = useCallback(
     (template) => {
       return () => {
-        trackEvent('use_saved_template', 'dashboard', template.title);
-        trackEventGA4('use_saved_template', {
-          template_name: template.title,
+        trackEvent('use_saved_template', {
+          name: template.title,
           template_id: template.id,
         });
         actions.createStoryFromTemplate(template);

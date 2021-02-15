@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -61,9 +61,8 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
   const targetAction = useCallback(
     (template) => {
       return () => {
-        trackEvent('use_template', 'dashboard', template.title);
-        trackEventGA4('use_template', {
-          template_name: template.title,
+        trackEvent('use_template', {
+          name: template.title,
           template_id: template.id,
         });
         templateActions.createStoryFromTemplate(template);

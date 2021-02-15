@@ -21,7 +21,7 @@ import { useFeature } from 'flagged';
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -64,9 +64,8 @@ function Content({
 
       switch (sender.value) {
         case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          trackEvent('use_saved_template', 'dashboard', template.title);
-          trackEventGA4('use_saved_template', {
-            template_name: template.title,
+          trackEvent('use_saved_template', {
+            name: template.title,
             template_id: template.id,
           });
           actions.createStoryFromTemplate(template);

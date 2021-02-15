@@ -68,7 +68,7 @@ function TextSet({ elements }) {
 
   const onClick = useCallback(() => {
     insertTextSet(elements);
-    trackEvent('insert_textset', 'editor');
+    trackEvent('insert_textset');
   }, [elements, insertTextSet]);
 
   const { textSetHeight, textSetWidth } = elements[0];

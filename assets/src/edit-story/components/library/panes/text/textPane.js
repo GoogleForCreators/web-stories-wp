@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import ResizeObserver from 'resize-observer-polyfill';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -53,8 +53,7 @@ function TextPane(props) {
   const onClick = useCallback(
     (title, element) => {
       insertPreset(element);
-      trackEvent('insert_text_preset', 'editor', null, null, { name: title });
-      trackEventGA4('insert_text_preset', { name: title });
+      trackEvent('insert_text_preset', { name: title });
     },
     [insertPreset]
   );

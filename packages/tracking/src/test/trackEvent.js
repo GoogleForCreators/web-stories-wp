@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-jest.mock('../../shared');
+jest.mock('../shared');
 
 /**
  * Internal dependencies
  */
 import trackEvent from '../trackEvent';
-import { config, gtag } from '../../shared';
+import { config, gtag } from '../shared';
 
 describe('trackEvent', () => {
   afterEach(() => {
@@ -33,7 +33,6 @@ describe('trackEvent', () => {
   it('adds a tracking event to the dataLayer', async () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    config.trackingIdGA4 = 'G-ABC1234567';
 
     gtag.mockImplementationOnce((type, eventName, eventData) => {
       eventData.event_callback();
@@ -42,7 +41,6 @@ describe('trackEvent', () => {
     await trackEvent('name', { foo: 'abc', bar: 'def', baz: 'ghi' });
     expect(gtag).toHaveBeenCalledWith('event', 'name', {
       event_callback: expect.any(Function),
-      send_to: 'G-ABC1234567',
       foo: 'abc',
       bar: 'def',
       baz: 'ghi',

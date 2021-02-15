@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
-import { trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -135,21 +135,12 @@ function TextSets({ paneRef }) {
     overscan: 5,
   });
 
-  const handleSelectedCategory = useCallback(
-    (selectedCategory) => {
-      setSelectedCat(selectedCategory);
-      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
-        selectedCategory,
-      });
-      trackEventGA4('search', {
-        search_type: 'textsets',
-        search_term: '',
-        search_category: selectedCategory,
-        show_in_use: showInUse,
-      });
-    },
-    [showInUse]
-  );
+  const handleSelectedCategory = useCallback((selectedCategory) => {
+    setSelectedCat(selectedCategory);
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+      selectedCategory,
+    });
+  }, []);
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);
@@ -157,15 +148,18 @@ function TextSets({ paneRef }) {
   const onChangeShowInUse = useCallback(
     (value) => {
       requestAnimationFrame(() => setShowInUse(value));
-      trackEventGA4('search', {
-        search_type: 'textsets',
-        search_term: '',
-        search_category: selectedCat,
-        show_in_use: value,
-      });
     },
-    [setShowInUse, selectedCat]
+    [setShowInUse]
   );
+
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'textsets',
+      search_term: '',
+      search_category: selectedCat,
+      show_in_use: showInUse,
+    });
+  }, [selectedCat, showInUse]);
 
   return (
     <SectionContainer id={sectionId}>

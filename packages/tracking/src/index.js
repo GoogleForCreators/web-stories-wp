@@ -23,11 +23,9 @@ import disableTracking from './disableTracking';
 import isTrackingEnabled from './isTrackingEnabled';
 import trackClick from './trackClick';
 import trackError from './trackError';
+import trackEvent from './trackEvent';
 import trackScreenView from './trackScreenView';
 import getTimeTracker from './getTimeTracker';
-
-export { trackEvent as trackEventGA4 } from './ga4';
-export { trackEvent, trackTimingComplete } from './universal';
 
 export {
   initializeTracking,
@@ -37,5 +35,6 @@ export {
   trackScreenView,
   trackClick,
   trackError,
+  trackEvent,
   getTimeTracker,
 };

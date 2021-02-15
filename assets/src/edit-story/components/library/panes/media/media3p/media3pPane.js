@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -139,22 +139,25 @@ function Media3pPane(props) {
     }
   }, [isActive, selectedProvider, setSelectedProvider]);
 
+  const selectedCategoryId =
+    media3p[selectedProvider]?.state?.categories?.selectedCategoryId;
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'media3p',
+      search_term: searchTerm,
+      search_filter: selectedProvider,
+      search_category: selectedCategoryId,
+    });
+  }, [selectedProvider, searchTerm, selectedCategoryId]);
+
   const onSearch = useCallback(
     (value) => {
       const trimText = value.trim();
       if (trimText !== searchTerm) {
         setSearchTerm({ searchTerm: trimText });
-        trackEvent('search', 'media3p', null, null, {
-          search_term: trimText,
-        });
-        trackEventGA4('search', {
-          search_type: 'media3p',
-          search_term: trimText,
-          search_filter: selectedProvider,
-        });
       }
     },
-    [searchTerm, setSearchTerm, selectedProvider]
+    [searchTerm, setSearchTerm]
   );
 
   const incrementalSearchDebounceMedia = useFeature(
@@ -181,27 +184,6 @@ function Media3pPane(props) {
         ).label
       : __('Trending', 'web-stories');
 
-    const onSelectItem = (id) => {
-      actions.selectCategory(id);
-      const category =
-        state.categories.categories.find((e) => e.id === id)?.label || id;
-      trackEventGA4('search', {
-        search_type: 'media3p',
-        search_filter: providerType,
-        search_term: searchTerm,
-        search_category: category,
-      });
-    };
-
-    const onDeselectItem = () => {
-      actions.deselectCategory();
-      trackEventGA4('search', {
-        search_type: 'media3p',
-        search_filter: providerType,
-        search_term: searchTerm,
-      });
-    };
-
     // We display the media name if there's media to display or a category has
     // been selected.
     const shouldDisplayMediaSubheading = Boolean(
@@ -218,8 +200,8 @@ function Media3pPane(props) {
           <PillGroup
             items={state.categories.categories}
             selectedItemId={state.categories.selectedCategoryId}
-            selectItem={onSelectItem}
-            deselectItem={onDeselectItem}
+            selectItem={actions.selectCategory}
+            deselectItem={actions.deselectCategory}
           />
         )}
         <MediaSubheading

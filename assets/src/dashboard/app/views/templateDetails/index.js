@@ -19,7 +19,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -183,9 +183,8 @@ function TemplateDetails() {
   const handleBookmarkClickSelected = useCallback(() => {}, []);
 
   const onHandleCta = useCallback(() => {
-    trackEvent('use_template', 'dashboard', template.title);
-    trackEventGA4('use_template', {
-      template_name: template.title,
+    trackEvent('use_template', {
+      name: template.title,
       template_id: template.id,
     });
     createStoryFromTemplate(template);

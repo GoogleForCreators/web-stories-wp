@@ -58,25 +58,12 @@ trackError('Division by zero', false);
 
 ### Tracking Events
 
-At the core of this package is the `trackEvent` function, with its GA4 counterpart `trackEventGA4`.
+At the core of this package is the `trackEvent` function.
 
-For tracking events ["the old fashioned way"](https://developers.google.com/analytics/devguides/collection/gtagjs/events) using `gtag.js`, you need to provide the following values:
-
-* Event action - The value that will appear as the event action in Google Analytics Event reports.
-* Event category - The category of the event. (optional) 
-* Event label - The label of the event. (optional)
-* Event value - A non-negative integer that will appear as the event value. (optional)
-
-Example:
+All you need to provide is the event name (aka event action in Universal Analyticcs), and as many optional event parameters as you want:
 
 ```js
-trackEvent('insert_template', 'editor', 'Awesome Template');
-```
-
-For [Google Analytics 4](https://developers.google.com/analytics/devguides/collection/ga4/events), all you need to provide is the event name (née event action), and as many optional event parameters as you want:
-
-```js
-trackEventGA4('insert_template', {
+trackEvent('insert_template', {
 template_name: 'Awesome Template',
 });
 ```
@@ -87,19 +74,23 @@ template_name: 'Awesome Template',
 You can do so using the following helper function which will start a timer and return a callback to stop it:
 
 ```js
-const trackTiming = getTimeTracker(
-  'video_transcoding',
-);
+const trackTiming = getTimeTracker('video_transcoding');
 // Perform some long task...
 trackTiming();
 ```
 
 ## Custom Dimensions
 
-While Google Analytics 4 supports any arbitrary custom event parameters, the `gtag.js` configuration currently only supports the following custom dimensions:
+While Google Analytics 4 supports any arbitrary custom event parameters, the Universal Analytics (`gtag.js`) configuration currently only supports the following custom dimensions:
 
 * `order`
 * `orderby`
 * `file_size`
 * `file_type`
 * `status`
+* `name`
+* `duration`
+* `duration`
+* `title_length`
+* `unread_count`
+* `template_id`

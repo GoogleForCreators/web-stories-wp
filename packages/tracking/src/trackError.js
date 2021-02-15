@@ -21,7 +21,7 @@ import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
 
 /**
- * Send an analytics tracking event for exceptions.
+ * Send an Analytics tracking event for exceptions.
  *
  * Works for both Universal Analytics and Google Analytics 4.
  *

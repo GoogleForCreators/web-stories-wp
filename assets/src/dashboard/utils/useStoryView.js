@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -32,7 +33,7 @@ import { usePagePreviewSize } from './index';
 export default function useStoryView({ filters, totalPages }) {
   const enableStoryPreviews = useFeature('enableStoryPreviews');
 
-  const [viewStyle, _setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
     filters.length > 0 ? filters[0].value : null
@@ -57,21 +58,10 @@ export default function useStoryView({ filters, totalPages }) {
 
   const setSort = useCallback(
     (newSort) => {
-      if (newSort !== sort) {
-        trackEvent('sort_stories', 'dashboard', null, null, {
-          order: sortDirection,
-          orderby: newSort,
-        });
-        trackEventGA4('sort_stories', {
-          order: sortDirection,
-          orderby: newSort,
-        });
-      }
-
       _setSort(newSort);
       setPageClamped(1);
     },
-    [sort, sortDirection, setPageClamped]
+    [setPageClamped]
   );
 
   const setFilter = useCallback(
@@ -85,28 +75,11 @@ export default function useStoryView({ filters, totalPages }) {
   const setSortDirection = useCallback(
     (newSortDirection) => {
       if (newSortDirection !== sortDirection) {
-        trackEvent('sort_stories', 'dashboard', null, null, {
-          order: newSortDirection,
-          orderby: sort,
-        });
-        trackEventGA4('sort_stories', 'dashboard', null, null, {
-          order: newSortDirection,
-          orderby: sort,
-        });
-
         _setSortDirection(newSortDirection);
       }
     },
-    [sort, sortDirection]
+    [sortDirection]
   );
-
-  const setViewStyle = useCallback((newViewStyle) => {
-    trackEvent('toggle_stories_view', 'dashboard', newViewStyle);
-    trackEventGA4('toggle_stories_view', {
-      mode: newViewStyle,
-    });
-    _setViewStyle(newViewStyle);
-  }, []);
 
   const toggleViewStyle = useCallback(() => {
     const newViewStyle =
@@ -145,6 +118,17 @@ export default function useStoryView({ filters, totalPages }) {
     page,
     setPageClamped,
   ]);
+
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'dashboard_stories',
+      search_term: searchKeyword,
+      search_filter: filter,
+      search_order: sortDirection,
+      search_orderby: sort,
+      search_view: viewStyle,
+    });
+  }, [searchKeyword, filter, sortDirection, sort, viewStyle]);
 
   return useMemo(
     () => ({

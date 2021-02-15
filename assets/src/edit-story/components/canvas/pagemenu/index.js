@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 import { useCallback } from 'react';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -172,8 +172,7 @@ function PageMenu() {
         : STORY_ANIMATION_STATE.PLAYING,
     });
 
-    trackEvent('canvas_play_animations', 'editor', isPlaying ? 'stop' : 'play');
-    trackEventGA4('canvas_play_animations', {
+    trackEvent('canvas_play_animations', {
       status: isPlaying ? 'stop' : 'play',
     });
   }, [animationState, updateAnimationState]);

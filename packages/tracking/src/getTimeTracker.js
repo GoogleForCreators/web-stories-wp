@@ -17,8 +17,7 @@
 /**
  * Internal dependencies
  */
-import trackTimingComplete from './universal/trackTimingComplete';
-import trackEventGA4 from './ga4/trackEvent';
+import trackEvent from './trackEvent';
 import isTrackingEnabled from './isTrackingEnabled';
 import { config } from './shared';
 
@@ -41,8 +40,15 @@ function getTimeTracker(eventName) {
 
     const after = window.performance.now();
     const value = after - before;
-    trackTimingComplete(eventName, value);
-    trackEventGA4(eventName, {
+
+    // Universal Analytics has a special `timing_complete` event which
+    // does not exist in GA4.
+    trackEvent('timing_complete', {
+      name: eventName,
+      value,
+      send_to: config.trackingId,
+    });
+    trackEvent(eventName, {
       value,
       send_to: config.trackingIdGA4,
     });

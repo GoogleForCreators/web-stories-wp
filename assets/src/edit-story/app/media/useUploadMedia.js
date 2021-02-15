@@ -21,9 +21,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   trackError,
-  trackEvent,
   getTimeTracker,
-  trackEventGA4,
+  trackEvent,
 } from '@web-stories-wp/tracking';
 
 /**
@@ -155,11 +154,7 @@ function useUploadMedia({ media, setMedia }) {
         // from the uploaded attachment returned by the server.
         const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => {
-            trackEvent('upload_media', 'editor', null, null, {
-              file_size: localFile.file.size,
-              file_type: localFile.file.type,
-            });
-            trackEventGA4('upload_media', {
+            trackEvent('upload_media', {
               file_size: localFile.file.size,
               file_type: localFile.file.type,
             });

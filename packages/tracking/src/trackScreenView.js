@@ -21,7 +21,7 @@ import track from './track';
 import isTrackingEnabled from './isTrackingEnabled';
 
 /**
- * Send an analytics screen_view event.
+ * Send an Analytics screen_view event.
  *
  * Works for both Universal Analytics and Google Analytics 4.
  *

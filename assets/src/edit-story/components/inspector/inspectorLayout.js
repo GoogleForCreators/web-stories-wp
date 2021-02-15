@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent, trackEventGA4 } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -58,9 +58,8 @@ function InspectorLayout() {
   const onTabChange = useCallback(
     (id) => {
       setTab(id);
-      trackEvent('inspector_tab_change', 'editor', id);
-      trackEventGA4('inspector_tab_change', {
-        tab: id,
+      trackEvent('inspector_tab_change', {
+        name: id,
       });
     },
     [setTab]

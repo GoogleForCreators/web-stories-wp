@@ -68,6 +68,11 @@ function loadTrackingScript(sendPageView = true) {
         dimension12: 'wpVersion',
         dimension13: 'phpVersion',
         dimension14: 'isMultisite',
+        dimension15: 'name',
+        dimension16: 'duration',
+        dimension17: 'title_length',
+        dimension18: 'unread_count',
+        dimension19: 'template_id',
       },
     });
 

@@ -20,7 +20,7 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
-import { getTimeTracker, trackEventGA4 } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -117,7 +117,7 @@ function PageLayoutsPane(props) {
 
   const handleSelectPageLayoutType = useCallback((key) => {
     setSelectedPageLayoutType(key);
-    trackEventGA4('search', {
+    trackEvent('search', {
       search_type: 'page_layouts',
       search_term: '',
       search_category: key,
