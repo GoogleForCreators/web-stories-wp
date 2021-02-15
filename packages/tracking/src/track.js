@@ -19,13 +19,11 @@
  */
 import { gtag } from './shared';
 
-/** @typedef {import('../typedefs.js').EventData} EventData */
-
 /**
  * Send an Analytics tracking event.
  *
  * @param {string} eventName Event name, either 'screen_view', 'timing_complete', or something custom.
- * @param {EventData?} [eventData] The event data to send.
+ * @param {Object<*>?} [eventData] The event data to send.
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await

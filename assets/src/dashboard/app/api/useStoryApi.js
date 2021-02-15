@@ -244,7 +244,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         payload: true,
       });
 
-      const trackTiming = getTimeTracker('create_story_preview');
+      const trackTiming = getTimeTracker('load_create_story_preview');
 
       try {
         const {

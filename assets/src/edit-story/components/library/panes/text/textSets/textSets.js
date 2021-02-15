@@ -157,7 +157,7 @@ function TextSets({ paneRef }) {
       search_type: 'textsets',
       search_term: '',
       search_category: selectedCat,
-      show_in_use: showInUse,
+      search_filter: showInUse ? 'show_in_use' : undefined,
     });
   }, [selectedCat, showInUse]);
 

@@ -158,7 +158,7 @@ function useUploader() {
         file_type: file.type,
       });
 
-      const trackTiming = getTimeTracker('video_transcoding');
+      const trackTiming = getTimeTracker('load_video_transcoding');
 
       // Transcoding is enabled, let's give it a try!
       try {

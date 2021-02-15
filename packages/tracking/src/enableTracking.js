@@ -56,8 +56,9 @@ function loadTrackingScript(sendPageView = true) {
     // Universal Analytics custom dimensions.
     gtag('set', {
       custom_map: {
-        dimension3: 'order',
-        dimension4: 'orderby',
+        // 1 and 2 are deprecated/unused.
+        dimension3: 'search_order',
+        dimension4: 'search_orderby',
         dimension5: 'file_size',
         dimension6: 'file_type',
         dimension7: 'status',
@@ -69,10 +70,6 @@ function loadTrackingScript(sendPageView = true) {
         dimension13: 'phpVersion',
         dimension14: 'isMultisite',
         dimension15: 'name',
-        dimension16: 'duration',
-        dimension17: 'title_length',
-        dimension18: 'unread_count',
-        dimension19: 'template_id',
       },
     });
 

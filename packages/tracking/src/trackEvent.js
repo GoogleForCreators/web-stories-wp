@@ -17,13 +17,14 @@
 /**
  * Internal dependencies
  */
+import { config } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
 
 /**
  * Send an Analytics tracking event.
  *
- * Only use custom events if the existing events don't handle your use case.
+ * Note: Only use custom events if the existing events don't handle your use case.
  *
  * @see https://developers.google.com/analytics/devguides/collection/ga4/events
  * @see https://support.google.com/analytics/answer/9267735
@@ -36,6 +37,44 @@ import track from './track';
 //eslint-disable-next-line require-await
 async function trackEvent(eventName, eventParameters = {}) {
   if (!isTrackingEnabled()) {
+    return Promise.resolve();
+  }
+
+  let gtagEventParameters = {};
+
+  // Universal Analytics backwards compatibility.
+  const {
+    search_type,
+    duration,
+    title_length,
+    unread_count,
+    ...rest
+  } = eventParameters;
+  if (search_type) {
+    gtagEventParameters = {
+      ...rest,
+      event_label: search_type,
+    };
+  } else if (duration) {
+    gtagEventParameters = {
+      ...rest,
+      value: duration,
+    };
+  } else if (title_length) {
+    gtagEventParameters = {
+      ...rest,
+      value: title_length,
+    };
+  } else if (unread_count) {
+    gtagEventParameters = {
+      ...rest,
+      value: unread_count,
+    };
+  }
+
+  if (Object.values(gtagEventParameters).length) {
+    track(eventName, { ...gtagEventParameters, send_to: config.trackingId });
+    track(eventName, { ...eventParameters, send_to: config.trackingIdGA4 });
     return Promise.resolve();
   }
 
