@@ -63,6 +63,28 @@ const DropTargetPath = styled.path`
   transition: opacity 0.5s;
   pointer-events: visibleStroke;
   opacity: ${({ active }) => (active ? 0.3 : 0)};
+  stroke: ${({ theme }) => theme.colors.border.selection};
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  ${({ hasBackgroundOutline }) =>
+    hasBackgroundOutline &&
+    css`
+      ::before {
+        display: block;
+        content: '';
+        position: absolute;
+        width: calc(100% + 10px);
+        height: calc(100% + 10px);
+        border-radius: 8px;
+        left: -5px;
+        top: -5px;
+        border: 1px solid ${({ theme }) => theme.colors.border.selection};
+      }
+    `}
 `;
 
 function WithDropTarget({ element, children, hover }) {
@@ -73,7 +95,7 @@ function WithDropTarget({ element, children, hover }) {
     actions: { isDropSource, registerDropTarget, unregisterDropTarget },
   } = useDropTargets();
 
-  const { id, resource } = element;
+  const { id, resource, isBackground } = element;
   const mask = getElementMask(element);
 
   useEffect(() => {
@@ -87,16 +109,27 @@ function WithDropTarget({ element, children, hover }) {
     return children;
   }
 
+  // Show a outline if hovering when not draggin
+  // or if dragging another droppable element
+  const hasOutline =
+    (hover && !draggingResource) ||
+    (Boolean(draggingResource) &&
+      isDropSource(draggingResource.type) &&
+      draggingResource !== resource);
+
+  const hasThinOutline = hasOutline && !isBackground;
+  const hasBackgroundOutline = hasOutline && isBackground;
+
   const pathProps = {
     vectorEffect: 'non-scaling-stroke',
     fill: 'none',
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
     d: mask?.path,
-    stroke: '#0063F9',
   };
+
   return (
-    <>
+    <Wrapper hasBackgroundOutline={hasBackgroundOutline}>
       {children}
       <DropTargetSVG
         viewBox={`0 0 1 ${1 / mask.ratio}`}
@@ -107,18 +140,11 @@ function WithDropTarget({ element, children, hover }) {
         // reaching the frame through zIndex
         active={activeDropTargetId === element.id}
       >
-        {/** Suble indicator that the element has a drop target */}
+        {/** Suble indicator that the element is a drop target */}
         <DropTargetPath
           {...pathProps}
-          strokeWidth="4"
-          style={
-            (hover && !draggingResource) ||
-            (Boolean(draggingResource) &&
-              isDropSource(draggingResource.type) &&
-              draggingResource !== resource)
-              ? { opacity: 1 }
-              : {}
-          }
+          strokeWidth="3"
+          style={{ opacity: hasThinOutline ? 1 : 0 }}
         />
         {/** Drop target shown when an element is in the drop target area  */}
         <DropTargetPath
@@ -128,7 +154,7 @@ function WithDropTarget({ element, children, hover }) {
           active={activeDropTargetId === element.id}
         />
       </DropTargetSVG>
-    </>
+    </Wrapper>
   );
 }
 

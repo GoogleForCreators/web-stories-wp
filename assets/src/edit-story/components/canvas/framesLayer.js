@@ -44,7 +44,7 @@ const FramesPageArea = withOverlay(
 
 const FrameSidebar = styled.div`
   position: absolute;
-  left: -200px;
+  left: -205px;
   width: 200px;
   height: 100%;
   display: flex;
