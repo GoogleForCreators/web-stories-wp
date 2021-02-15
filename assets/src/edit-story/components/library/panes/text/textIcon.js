@@ -54,15 +54,17 @@ const QuickAction = styled.button`
   padding: 0;
   line-height: 1;
   cursor: pointer;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   flex: 1;
-  width: 24px;
+  width: 22px;
+  svg {
+    width: 24px;
+  }
 `;
 
 const IconWrapper = styled.div`
   margin: 0;
   flex: 1;
-  width: 24px;
+  width: 26px;
 `;
 
 const TextIconContainer = styled.div`
@@ -88,7 +90,7 @@ function TextIcon(props) {
   const { isActive } = props;
   return (
     <TextIconContainer>
-      <IconWrapper onPointerOut={() => setIsHoveringQuick(false)}>
+      <IconWrapper>
         <AnimatedTextIcon
           id="text-tab-icon"
           isSecondary={isHoveringQuick || isFocusingQuick}
@@ -102,6 +104,7 @@ function TextIcon(props) {
         onFocus={() => setIsFocusingQuick(true)}
         onBlur={() => setIsFocusingQuick(false)}
         onPointerOver={() => setIsHoveringQuick(true)}
+        onPointerOut={() => setIsHoveringQuick(false)}
       >
         <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
       </QuickAction>

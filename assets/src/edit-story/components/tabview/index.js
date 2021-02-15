@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
@@ -58,7 +57,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.colors.fg.primary};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
@@ -80,6 +79,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     margin: 0 auto;
     transform-origin: center center;
     transition: transform 0.3s ease;
+    color: ${({ theme }) => theme.colors.fg.tertiary};
   }
 
   svg.alert {
@@ -102,14 +102,14 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 
   span,
   svg:not(.alert) {
-    opacity: ${({ isActive }) => (isActive ? '0.84' : '0.34')};
+    ${({ isActive, theme }) => isActive && `color: ${theme.colors.fg.primary}`};
   }
 
   &:hover span,
   &:hover svg:not(.alert),
   &:active span,
   &:active svg:not(.alert) {
-    opacity: 0.84;
+    color: ${({ theme }) => theme.colors.fg.primary};
   }
 `;
 
