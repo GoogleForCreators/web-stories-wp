@@ -32,7 +32,7 @@ const LandmarksWrapper = styled.dl`
   margin: 0;
   padding: 16px 24px;
   display: flex;
-  justify-items: space-between;
+  justify-content: space-between;
 `;
 
 const Landmark = styled.div`
@@ -48,22 +48,17 @@ const Label = styled(Text).attrs({
   white-space: nowrap;
 `;
 
-const Space = styled.span`
-  width: 36px;
-`;
-
 function LandmarkShortcuts() {
   const { landmarks } = useKeyboardShortcuts();
 
   return (
     <LandmarksWrapper role="group">
-      {landmarks.map(({ label, shortcut }, index) => (
+      {landmarks.map(({ label, shortcut }) => (
         <Fragment key={label}>
           <Landmark role="listitem">
             <Label>{label}</Label>
             <ShortcutLabel keys={shortcut} />
           </Landmark>
-          {index < landmarks.length - 1 && <Space />}
         </Fragment>
       ))}
     </LandmarksWrapper>
