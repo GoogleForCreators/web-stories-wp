@@ -144,13 +144,8 @@ function WithDropTarget({ element, children, hover }) {
           strokeWidth="3"
           style={{ opacity: hasThinOutline ? 1 : 0 }}
         />
-        {/** Drop target shown when an element is in the drop target area  */}
-        <DropTargetPath
-          ref={pathRef}
-          {...pathProps}
-          strokeWidth="48"
-          active={activeDropTargetId === element.id}
-        />
+        {/** Drop target snap border when an element is in the drop target area */}
+        <DropTargetPath ref={pathRef} strokeWidth="48" {...pathProps} />
       </DropTargetSVG>
     </Wrapper>
   );
