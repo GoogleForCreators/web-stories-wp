@@ -112,7 +112,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.4.0 =
 
-**Release Date:** Februar 17, 2021.
+**Release Date:** February 17, 2021.
 
 * New feature: a new help center in the editor to get started.
 * New feature: support for custom meta boxes.
