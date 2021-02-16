@@ -44,13 +44,9 @@ import {
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
   const { checklist, refreshChecklist } = usePrepublishChecklist();
-
-  const tooltip = checklist.some(
+  const hasErrors = checklist.some(
     ({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type
-  )
-    ? __('There are items in the checklist to resolve', 'web-stories')
-    : null;
-
+  );
   const button = (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}
@@ -60,12 +56,16 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       {...buttonProps}
     >
       {text}
-      {tooltip && <Icons.ExclamationTriangle height={24} width={24} />}
+      {hasErrors && <Icons.ExclamationTriangle height={24} width={24} />}
     </Button>
   );
 
-  return tooltip ? (
-    <Tooltip title={tooltip} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+  return hasErrors ? (
+    <Tooltip
+      title={__('There are items in the checklist to resolve', 'web-stories')}
+      placement={TOOLTIP_PLACEMENT.BOTTOM}
+      hasTail
+    >
       {button}
     </Tooltip>
   ) : (

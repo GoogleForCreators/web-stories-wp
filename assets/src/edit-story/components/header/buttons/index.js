@@ -45,7 +45,7 @@ const List = styled.div`
 `;
 
 const Space = styled.div`
-  width: 6px;
+  width: 12px;
 `;
 
 const Spinner = styled.div`
@@ -100,8 +100,7 @@ function Buttons() {
       <ButtonList>
         <List>
           <IconWithSpinner>
-            {isDraft && <Update />}
-            {!isDraft && <SwitchToDraft />}
+            {isDraft ? <Update /> : <SwitchToDraft />}
             <Loading />
           </IconWithSpinner>
           <Space />
