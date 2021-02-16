@@ -24,8 +24,9 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect, useFocusOut } from '../../../design-system';
 import { Close as CloseIcon } from '../../icons';
-import { useKeyDownEffect } from '../../../design-system';
+import useFocusTrapping from '../../utils/useFocusTrapping';
 import getKeyboardShortcuts from './getKeyboardShortcuts';
 import ShortcutLabel from './shortcutLabel';
 import {
@@ -131,6 +132,10 @@ function ShortcutMenu({ toggleMenu }) {
   useKeyDownEffect(containerRef, TOGGLE_SHORTCUTS_MENU, toggleMenu, [
     toggleMenu,
   ]);
+
+  useFocusOut(containerRef, toggleMenu);
+  useKeyDownEffect(containerRef, 'esc', toggleMenu);
+  useFocusTrapping({ ref: containerRef });
 
   return (
     <Container ref={containerRef} role="list" aria-labelledby={headerLabels}>

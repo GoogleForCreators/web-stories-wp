@@ -25,72 +25,78 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
-import { useGlobalKeyDownEffect } from '../../../design-system';
-import WithTooltip from '../tooltip';
-import { Placement } from '../popup';
-import Modal from '../modal';
-import { Keyboard as KeyboardShortcutsButton } from '../button';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  useGlobalKeyDownEffect,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+} from '../../../design-system';
+import Popup, { Placement } from '../popup';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
-function KeyboardShortcutsMenu({ onMenuToggled }) {
+function KeyboardShortcutsMenu({ menuRef }) {
   const anchorRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = useCallback(
-    (e, showMenu) => {
-      e.preventDefault();
+  const toggleMenu = useCallback((e, showMenu) => {
+    e.preventDefault();
 
-      setIsOpen((prevIsOpen) => {
-        const menuOpen = showMenu ?? !prevIsOpen;
+    setIsOpen((prevIsOpen) => {
+      const menuOpen = showMenu ?? !prevIsOpen;
 
-        if (onMenuToggled) {
-          onMenuToggled(menuOpen);
-        }
+      if (isKeyboardUser() && !menuOpen) {
+        // When menu closes, return focus to toggle menu button
+        anchorRef.current.focus?.();
+      }
 
-        if (isKeyboardUser() && !menuOpen) {
-          // When menu closes, return focus to toggle menu button
-          anchorRef.current.focus?.();
-        }
+      return menuOpen;
+    });
+  }, []);
 
-        return menuOpen;
-      });
-    },
-    [onMenuToggled]
-  );
+  const label = __('Open Keyboard Shortcuts', 'web-stories');
 
   useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggleMenu, [toggleMenu]);
 
   return (
     <>
-      <WithTooltip
-        title={__('Open Keyboard Shortcuts', 'web-stories')}
-        placement={Placement.TOP}
+      <Tooltip
+        title={label}
+        placement={TOOLTIP_PLACEMENT.TOP}
+        shortcut="mod+/"
+        hasTail
       >
-        <KeyboardShortcutsButton
+        <Button
           ref={anchorRef}
-          width="24"
-          height="24"
-          aria-pressed={isOpen}
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          aria-label={label}
           aria-haspopup={true}
           aria-expanded={isOpen}
-          aria-label={__('Open Keyboard Shortcuts', 'web-stories')}
           onClick={toggleMenu}
-        />
-      </WithTooltip>
-      <Modal
-        contentLabel={__('Keyboard Shortcuts Menu', 'web-stories')}
-        open={isOpen}
-        onClose={toggleMenu}
+        >
+          <Icons.Keyboard />
+        </Button>
+      </Tooltip>
+      <Popup
+        anchor={menuRef}
+        isOpen={isOpen}
+        placement={Placement.TOP_END}
+        spacing={{ y: 8 }}
       >
         <ShortcutMenu toggleMenu={toggleMenu} />
-      </Modal>
+      </Popup>
     </>
   );
 }
 
 KeyboardShortcutsMenu.propTypes = {
-  onMenuToggled: PropTypes.func,
+  menuRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 export default KeyboardShortcutsMenu;

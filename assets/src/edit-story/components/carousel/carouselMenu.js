@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -92,6 +92,7 @@ function CarouselMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const openModal = useCallback(() => setIsGridViewOpen(true), []);
   const closeModal = useCallback(() => setIsGridViewOpen(false), []);
+  const menuRef = useRef();
 
   const { toggleMetaBoxesVisible, hasMetaBoxes } = useMetaBoxes(
     ({ state, actions }) => ({
@@ -103,7 +104,7 @@ function CarouselMenu() {
   return (
     <>
       <Wrapper>
-        <MenuItems>
+        <MenuItems ref={menuRef}>
           {hasMetaBoxes && (
             <Box>
               <WithTooltip
@@ -118,7 +119,7 @@ function CarouselMenu() {
             </Box>
           )}
           <Box>
-            <KeyboardShortcutsMenu />
+            <KeyboardShortcutsMenu menuRef={menuRef} />
           </Box>
           <Box>
             <WithTooltip
