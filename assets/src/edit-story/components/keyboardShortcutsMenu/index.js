@@ -37,7 +37,7 @@ import {
 } from '../../../design-system';
 import Popup, { Placement } from '../popup';
 import ShortcutMenu from './shortcutMenu';
-import { TOGGLE_SHORTCUTS_MENU } from './constants';
+import { TOGGLE_SHORTCUTS_MENU, BOTTOM_MARGIN } from './constants';
 
 function KeyboardShortcutsMenu({ menuRef }) {
   const anchorRef = useRef();
@@ -45,7 +45,6 @@ function KeyboardShortcutsMenu({ menuRef }) {
 
   const toggleMenu = useCallback((e, showMenu) => {
     e.preventDefault();
-
     setIsOpen((prevIsOpen) => {
       const menuOpen = showMenu ?? !prevIsOpen;
 
@@ -87,7 +86,7 @@ function KeyboardShortcutsMenu({ menuRef }) {
         anchor={menuRef}
         isOpen={isOpen}
         placement={Placement.TOP_END}
-        spacing={{ y: 8 }}
+        spacing={{ y: BOTTOM_MARGIN }}
       >
         <ShortcutMenu toggleMenu={toggleMenu} />
       </Popup>

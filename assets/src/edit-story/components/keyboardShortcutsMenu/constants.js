@@ -18,18 +18,31 @@
  * External dependencies
  */
 import { __, _x } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Up, Down } from './styled';
+import { KeyArrowUp } from '../../icons';
+
+export const TOP_MARGIN = 16;
+export const BOTTOM_MARGIN = 8;
 
 export const TOGGLE_SHORTCUTS_MENU = 'mod+/';
 
 export const KEY_SIZE = {
   NORMAL: 24,
-  LARGE: 56,
+  LARGE: 52,
 };
+
+const Up = styled(KeyArrowUp)`
+  width: 12px;
+  transform-origin: 50% 50%;
+`;
+
+const Down = styled(Up)`
+  transform: rotate(0.5turn);
+`;
 
 export const SPECIAL_KEYS = {
   COMMAND: {

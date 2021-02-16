@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createGlobalStyle, ThemeContext } from 'styled-components';
+import { createGlobalStyle, ThemeContext, css } from 'styled-components';
 import { rgba } from 'polished';
 
 /**
@@ -30,41 +30,20 @@ import {
 } from '../design-system';
 import { SCROLLBAR_WIDTH } from './constants';
 
-export const GlobalStyle = createGlobalStyle`
-	*,
-	*::after,
-	*::before {
-		box-sizing: border-box;
-	}
-
-  /* WP admin menu arrow color */
-  ul#adminmenu a.wp-has-current-submenu::after {
-    border-right-color: ${({ theme }) =>
-      theme.DEPRECATED_THEME.colors.bg.panel};
-  }
-
-  /**
-   * Override the shell (WP) the default styling used for stories content.
-   */
-  .web-stories-content b, .web-stories-content strong {
-    font-weight: bold;
-  }
-
+export const scrollBarStyles = css`
   /*
    * Custom dark scrollbars for Chromium & Firefox.
-   * Scoped to <Editor> to make sure we don't mess with WP dialogs
-   * like the Backbone Media Gallery dialog.
    */
   * {
     scrollbar-width: thin;
     scrollbar-color: ${({ theme }) => theme.colors.bg.primary}
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
+      ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
   }
 
   *::-webkit-scrollbar {
     width: ${SCROLLBAR_WIDTH}px;
     height: ${SCROLLBAR_WIDTH}px;
-    position:fixed;
+    position: fixed;
   }
 
   *::-webkit-scrollbar-track {
@@ -81,6 +60,33 @@ export const GlobalStyle = createGlobalStyle`
     border: 2px solid transparent;
     background-clip: content-box;
   }
+`;
+
+export const GlobalStyle = createGlobalStyle`
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  /* WP admin menu arrow color */
+  ul#adminmenu a.wp-has-current-submenu::after {
+    border-right-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.bg.panel};
+  }
+
+  /**
+   * Override the shell (WP) the default styling used for stories content.
+   */
+  .web-stories-content b, .web-stories-content strong {
+    font-weight: bold;
+  }
+
+  /*
+   * Scrollbars are scoped to <Editor> to make sure we don't mess with
+   * WP dialogs like the Backbone Media Gallery dialog.
+   */
+  ${scrollBarStyles}
 `;
 
 export function useTheme(selector) {

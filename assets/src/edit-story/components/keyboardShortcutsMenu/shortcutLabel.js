@@ -17,27 +17,56 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { ShortcutKeyWrapper, ShortcutKey, ShortcutKeyLabel } from './styled';
+import { Text, THEME_CONSTANTS } from '../../../design-system';
 import { KEY_SIZE } from './constants';
 
+const Wrapper = styled.dd`
+  display: flex;
+  justify-content: ${({ alignment }) => alignment};
+  align-items: center;
+  margin: 0;
+`;
+
+const KeyboardKey = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${({ keySize }) => keySize}px;
+  height: 24px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  color: ${({ theme }) => theme.colors.fg.primary};
+
+  & + & {
+    margin-left: 2px;
+  }
+`;
+
+const TextOnly = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+  margin: 0 4px;
+`;
+
 function ShortCutLabel({ keys, alignment = 'center', ...rest }) {
-  const commands = useMemo(
-    () =>
-      keys.map((key, index) =>
+  return (
+    <Wrapper alignment={alignment} {...rest}>
+      {keys.map((key, index) =>
         key.label ? (
           // Disable reason: some keys consist of just a word, e.g. "or" -- there is nothing else than index unique in these.
           // eslint-disable-next-line react/no-array-index-key
-          <ShortcutKeyLabel key={`${key.label}-${index}`}>
-            {key.label}
-          </ShortcutKeyLabel>
+          <TextOnly key={`${key.label}-${index}`}>{key.label}</TextOnly>
         ) : (
-          <ShortcutKey
+          <KeyboardKey
             key={JSON.stringify(key)}
             aria-label={key.title}
             title={key.title}
@@ -46,16 +75,10 @@ function ShortCutLabel({ keys, alignment = 'center', ...rest }) {
             }
           >
             {key.symbol || key}
-          </ShortcutKey>
+          </KeyboardKey>
         )
-      ),
-    [keys]
-  );
-
-  return (
-    <ShortcutKeyWrapper alignment={alignment} {...rest}>
-      {commands}
-    </ShortcutKeyWrapper>
+      )}
+    </Wrapper>
   );
 }
 

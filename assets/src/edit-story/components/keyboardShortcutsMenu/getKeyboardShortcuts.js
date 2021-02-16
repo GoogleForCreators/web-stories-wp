@@ -31,28 +31,23 @@ function getKeyboardShortcuts() {
   const optionOrAlt = isMacOs ? SPECIAL_KEYS.OPTION : SPECIAL_KEYS.ALT;
 
   return {
-    headers: [
+    header: {
+      label: __('Keyboard Shortcuts', 'web-stories'),
+      shortcut: [cmdOrCtrl, '/'],
+    },
+
+    landmarks: [
       {
-        label: __('Keyboard Shortcuts', 'web-stories'),
-        shortcut: [cmdOrCtrl, '/'],
+        label: __('Element', 'web-stories'),
+        shortcut: [cmdOrCtrl, optionOrAlt, '1'],
       },
-    ],
-    panels: [
       {
-        label: __(
-          'Switch between element, workspace and design panels',
-          'web-stories'
-        ),
-        shortcut: [
-          cmdOrCtrl,
-          optionOrAlt,
-          { label: __('+', 'web-stories') },
-          '1',
-          { label: __('or', 'web-stories') },
-          '2',
-          { label: __('or', 'web-stories') },
-          '3',
-        ],
+        label: __('Workspace', 'web-stories'),
+        shortcut: [cmdOrCtrl, optionOrAlt, '2'],
+      },
+      {
+        label: __('Design panels', 'web-stories'),
+        shortcut: [cmdOrCtrl, optionOrAlt, '3'],
       },
     ],
     sections: [
@@ -127,7 +122,7 @@ function getKeyboardShortcuts() {
             ],
           },
           {
-            label: __('Move forward or backward', 'web-stories'),
+            label: __('Move forward or back', 'web-stories'),
             shortcut: [
               cmdOrCtrl,
               SPECIAL_KEYS.UP,
@@ -163,8 +158,8 @@ function getKeyboardShortcuts() {
             shortcut: [cmdOrCtrl, 'K'],
           },
           {
-            label: __('Disable snapping while moving', 'web-stories'),
-            shortcut: [cmdOrCtrl],
+            label: __('Disable snapping', 'web-stories'),
+            shortcut: [{ label: __('Hold', 'web-stories') }, cmdOrCtrl],
           },
         ],
       },

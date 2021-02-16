@@ -17,116 +17,107 @@
 /**
  * External dependencies
  */
-import { Fragment, useMemo, useCallback, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect, useFocusOut } from '../../../design-system';
-import { Close as CloseIcon } from '../../icons';
-import useFocusTrapping from '../../utils/useFocusTrapping';
-import getKeyboardShortcuts from './getKeyboardShortcuts';
-import ShortcutLabel from './shortcutLabel';
 import {
-  Container,
-  PanelsWrapper,
-  Panel,
-  HeaderWrapper,
-  HeaderRow,
-  MenuHeaderContainer,
-  MenuHeader,
-  SectionHeader,
-  SectionWrapper,
-  SectionContent,
-  ContentWrapper,
-  Column,
-  Label,
-  PanelLabel,
-  CloseButton,
-} from './styled';
-import { TOGGLE_SHORTCUTS_MENU } from './constants';
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  useKeyDownEffect,
+  useFocusOut,
+} from '../../../design-system';
+import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
+import useFocusTrapping from '../../utils/useFocusTrapping';
+import { ADMIN_TOOLBAR_HEIGHT, HEADER_HEIGHT } from '../../constants';
+import HeaderShortcut from './headerShortcut';
+import LandmarkShortcuts from './landmarkShortcuts';
+import RegularShortcuts from './regularShortcuts';
+import { TOGGLE_SHORTCUTS_MENU, TOP_MARGIN } from './constants';
+
+const BORDER_WIDTH = 1;
+const Container = styled.div`
+  position: relative;
+  width: 352px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  border: ${BORDER_WIDTH}px solid
+    ${({ theme }) => theme.colors.border.defaultNormal};
+`;
+
+// How much less space than the full browser height can the popup occupy?
+const EXTRA_SPACE =
+  ADMIN_TOOLBAR_HEIGHT + HEADER_HEIGHT + TOP_MARGIN - 2 * BORDER_WIDTH;
+const FlexContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-height: calc(
+    100vh - ${EXTRA_SPACE}px - ${({ bottomOffset }) => bottomOffset}px
+  );
+`;
+
+const CloseContainer = styled.aside`
+  position: absolute;
+  right: 4px;
+  top: 4px;
+`;
+
+const ScrollableContent = styled.div`
+  overflow: auto;
+  flex-shrink: 1;
+`;
 
 function ShortcutMenu({ toggleMenu }) {
   const containerRef = useRef();
   const closeRef = useRef();
-  const keyboardShortcuts = useMemo(() => getKeyboardShortcuts(), []);
 
-  // Filter out disabled keyboard shortcuts for headers, panels, sections
-  const headers = useMemo(
-    () => keyboardShortcuts.headers.filter((o) => !o.disabled),
-    [keyboardShortcuts]
-  );
-  const panels = useMemo(
-    () => keyboardShortcuts.panels.filter((o) => !o.disabled),
-    [keyboardShortcuts]
-  );
-  const sections = useMemo(
-    () =>
-      keyboardShortcuts.sections.map((section) => ({
-        ...section,
-        commands: section.commands.filter((o) => !o.disabled),
-      })),
-    [keyboardShortcuts]
-  );
-
-  const headerLabels = useMemo(() => headers.map((h) => h.label).join(' '), [
-    headers,
-  ]);
-
-  const leftHalfCount = Math.ceil(sections.length / 2);
-  const { leftSideSections, rightSideSections } = useMemo(
-    () =>
-      sections.reduce(
-        ({ leftSideSections, rightSideSections }, section, index) => {
-          if (index < leftHalfCount) {
-            return {
-              leftSideSections: [...leftSideSections, section],
-              rightSideSections,
-            };
-          } else {
-            return {
-              leftSideSections,
-              rightSideSections: [...rightSideSections, section],
-            };
-          }
-        },
-        {
-          leftSideSections: [],
-          rightSideSections: [],
-        }
-      ),
-    [sections, leftHalfCount]
-  );
-
-  const renderSection = useCallback(
-    ({ title, commands }) => (
-      <SectionWrapper key={title}>
-        <SectionHeader id={title}>{title}</SectionHeader>
-        <SectionContent role="group" aria-labelledby={title}>
-          {commands.map(({ label, shortcut }) => (
-            <Fragment key={label}>
-              <Label role="listitem">{label}</Label>
-              <ShortcutLabel
-                role="listitem"
-                keys={shortcut}
-                alignment={'left'}
-              />
-            </Fragment>
-          ))}
-        </SectionContent>
-      </SectionWrapper>
-    ),
-    []
-  );
+  const [bottomOffset, setBottomOffset] = useState(0);
+  useLayoutEffect(() => {
+    const node = containerRef.current;
+    if (!node) {
+      return undefined;
+    }
+    const calc = () => {
+      // Find node bottom offset from bottom of browser window
+      const nodeRect = node.getBoundingClientRect();
+      const docRect = node.ownerDocument.documentElement.getBoundingClientRect();
+      setBottomOffset(docRect.height - nodeRect.y - nodeRect.height);
+    };
+    // Call it now
+    calc();
+    // Call it in a frame
+    // Disable reason: No need to cancel this one
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(calc);
+    // And call it every time the window resizes
+    window.addEventListener('resize', calc);
+    return () => window.removeEventListener('resize', calc);
+  }, []);
 
   const handleCloseClick = useCallback((e) => toggleMenu(e, false), [
     toggleMenu,
   ]);
 
   useEffect(() => {
-    closeRef.current.focus?.();
+    // When the popup opens, move focus inside it
+    // However, only move it to the close button if the user actually uses the keyboard
+    // otherwise the close button hover state will be triggered for a mouse user.
+    const targetRef = isKeyboardUser() ? closeRef : containerRef;
+    targetRef.current?.focus?.();
   }, []);
 
   useKeyDownEffect(containerRef, TOGGLE_SHORTCUTS_MENU, toggleMenu, [
@@ -137,38 +128,36 @@ function ShortcutMenu({ toggleMenu }) {
   useKeyDownEffect(containerRef, 'esc', toggleMenu);
   useFocusTrapping({ ref: containerRef });
 
+  const headerLabelId = `kb-header-${uuidv4()}`;
+  const closeLabel = __('Close menu', 'web-stories');
+
   return (
-    <Container ref={containerRef} role="list" aria-labelledby={headerLabels}>
-      <CloseButton
-        ref={closeRef}
-        onClick={handleCloseClick}
-        title={__('Close menu', 'web-stories')}
-        aria-label={__('Close menu', 'web-stories')}
-      >
-        <CloseIcon width="14px" height="14px" />
-      </CloseButton>
-      <HeaderWrapper role="group">
-        {headers.map(({ label, shortcut }) => (
-          <HeaderRow key={label}>
-            <MenuHeaderContainer role="listitem">
-              <MenuHeader id={label}>{label}</MenuHeader>
-            </MenuHeaderContainer>
-            <ShortcutLabel role="listitem" keys={shortcut} />
-          </HeaderRow>
-        ))}
-      </HeaderWrapper>
-      <PanelsWrapper role="group">
-        {panels.map(({ label, shortcut }) => (
-          <Panel key={label}>
-            <PanelLabel role="listitem">{label}</PanelLabel>
-            <ShortcutLabel keys={shortcut} role="listitem" />
-          </Panel>
-        ))}
-      </PanelsWrapper>
-      <ContentWrapper>
-        <Column>{leftSideSections.map(renderSection)}</Column>
-        <Column>{rightSideSections.map(renderSection)}</Column>
-      </ContentWrapper>
+    <Container
+      ref={containerRef}
+      tabIndex="-1"
+      role="list"
+      aria-labelledby={headerLabelId}
+    >
+      <CloseContainer>
+        <Button
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          ref={closeRef}
+          onClick={handleCloseClick}
+          title={closeLabel}
+          aria-label={closeLabel}
+        >
+          <Icons.CrossSmall />
+        </Button>
+      </CloseContainer>
+      <FlexContent bottomOffset={bottomOffset}>
+        <HeaderShortcut id={headerLabelId} />
+        <ScrollableContent>
+          <LandmarkShortcuts />
+          <RegularShortcuts />
+        </ScrollableContent>
+      </FlexContent>
     </Container>
   );
 }
