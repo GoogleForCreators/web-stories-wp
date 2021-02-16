@@ -41,31 +41,31 @@ const Hint = styled(Text)`
   margin-top: 12px;
 `;
 
-const SuffixContainer = styled.div`
+const Suffix = styled(Text)`
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 4px;
-  top: 38px;
+  right: 3px;
+  top: ${({ hasLabel }) => (hasLabel ? 38 : 2)}px;
   height: 32px;
   width: 32px;
-  background: ${({ theme }) => theme.colors.bg.primary};
+  background: transparent;
   color: ${({ theme }) => theme.colors.fg.tertiary};
   pointer-events: none;
   overflow: hidden;
-
-  * {
-    color: ${({ theme }) => theme.colors.fg.tertiary};
-  }
 `;
 
 const StyledInput = styled.input(
-  ({ hasError, theme }) => css`
+  ({ hasError, hasSuffix, theme }) => css`
     box-sizing: border-box;
     height: 36px;
     width: 100%;
     padding: 8px 12px;
+    ${hasSuffix &&
+    css`
+      padding-right: 32px;
+    `};
     ${themeHelpers.focusableOutlineCSS};
     ${themeHelpers.expandPresetStyles({
       preset: {
@@ -81,21 +81,21 @@ const StyledInput = styled.input(
     border-radius: ${theme.borders.radius.small};
     color: ${theme.colors.fg.primary};
 
-    :active {
-      border-color: ${theme.colors.border.defaultActive};
-      color: ${theme.colors.fg.primary};
-
-      & ~ ${SuffixContainer}, & ~ ${SuffixContainer} * {
-        color: ${theme.colors.fg.primary};
-      }
-    }
-
     :disabled {
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
 
-      & ~ ${SuffixContainer} * {
+      & ~ ${Suffix} {
         color: ${theme.colors.fg.disable};
+      }
+    }
+
+    :active:enabled {
+      border-color: ${theme.colors.border.defaultActive};
+      color: ${theme.colors.fg.primary};
+
+      & ~ ${Suffix} {
+        color: ${theme.colors.fg.primary};
       }
     }
 
@@ -128,9 +128,14 @@ export const Input = ({
         id={inputId}
         disabled={disabled}
         hasError={hasError}
+        hasSuffix={Boolean(suffix)}
         {...props}
       />
-      {suffix && <SuffixContainer>{suffix}</SuffixContainer>}
+      {suffix && (
+        <Suffix hasLabel={Boolean(label)} forwardedAs="span">
+          {suffix}
+        </Suffix>
+      )}
       {hint && <Hint hasError={hasError}>{hint}</Hint>}
     </Container>
   );
