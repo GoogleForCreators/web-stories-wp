@@ -147,7 +147,7 @@ const MediaElement = ({
   activeRef.current = active;
 
   useEffect(() => {
-    if (type !== 'video') {
+    if (!['video', 'gif'].includes(type)) {
       return undefined;
     }
     const resetHoverTime = () => {

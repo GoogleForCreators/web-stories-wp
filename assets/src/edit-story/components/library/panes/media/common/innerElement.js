@@ -104,88 +104,110 @@ function InnerElement({
   };
 
   useAverageColor(
-    type === 'video' ? hiddenPoster : mediaElement,
+    ['video', 'gif'].includes(type) ? hiddenPoster : mediaElement,
     setAverageColor
   );
 
   useEffect(() => {
+    // assign display poster for videos
     if (resource.poster && resource.poster.includes('blob')) {
       newVideoPosterRef.current = resource.poster;
     }
   }, [resource.poster]);
+
+  useEffect(() => {
+    // assign poster for gifs
+    if (type === 'gif' && resource.output.poster) {
+      newVideoPosterRef.current = resource.output.poster;
+    }
+  }, [type, resource.output]);
 
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
     }
   };
+
   let media;
-  const cloneProps = {
+  const thumbnailURL = getSmallestUrlForWidth(width, resource);
+  const { lengthFormatted, poster, mimeType, output } = resource;
+  const posterSrc = type === 'gif' ? output.poster : poster;
+  const displayPoster = posterSrc ?? newVideoPosterRef.current;
+
+  const commonProps = {
     width: width,
     height: height,
     alt: alt,
     'aria-label': alt,
+  };
+  const cloneProps = {
+    ...commonProps,
     loading: 'lazy',
     draggable: false,
   };
-  const thumbnailURL = getSmallestUrlForWidth(width, resource);
-  const { lengthFormatted, poster, mimeType } = resource;
-  if (['image', 'gif'].includes(type)) {
-    media = (
-      <Image
-        key={src}
-        src={thumbnailURL}
-        ref={mediaElement}
-        width={width}
-        height={height}
-        alt={alt}
-        aria-label={alt}
-        loading={'lazy'}
-        onLoad={makeMediaVisible}
-        draggable={false}
-      />
-    );
+  const imageProps = {
+    ...cloneProps,
+    src: thumbnailURL,
+    onLoad: makeMediaVisible,
+  };
+  const videoProps = {
+    ...commonProps,
+    loop: type === 'gif',
+    muted: true,
+    preload: 'none',
+    poster: displayPoster,
+    showWithoutDelay: Boolean(newVideoPosterRef.current),
+  };
+
+  if (type === 'image') {
+    media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
-  } else if (type === 'video') {
-    const displayPoster = poster ? poster : newVideoPosterRef.current;
+  } else if (['gif', 'video'].includes(type)) {
     media = (
       <>
-        <Video
-          key={src}
-          ref={mediaElement}
-          poster={displayPoster}
-          width={width}
-          height={height}
-          preload="none"
-          aria-label={alt}
-          muted
-          showWithoutDelay={newVideoPosterRef.current}
-        >
-          <source
-            src={getSmallestUrlForWidth(width, resource)}
-            type={mimeType}
-          />
+        <Video key={src} {...videoProps} ref={mediaElement}>
+          {type === 'gif' ? (
+            <>
+              <source
+                src={getSmallestUrlForWidth(width, {
+                  ...resource,
+                  sizes: resource.output.sizes.mp4,
+                })}
+                type="video/mp4"
+              />
+              <source
+                src={getSmallestUrlForWidth(width, {
+                  ...resource,
+                  sizes: resource.output.sizes.webm,
+                })}
+                type="video/webm"
+              />
+            </>
+          ) : (
+            <source
+              src={getSmallestUrlForWidth(width, resource)}
+              type={mimeType}
+            />
+          )}
         </Video>
-        {/* This hidden image allows us to fade in the poster image in the
-        gallery as there's no event when a video's poster loads. */}
         {!newVideoPosterRef.current && (
           <HiddenPosterImage
             ref={hiddenPoster}
-            src={poster}
+            src={posterSrc}
             onLoad={makeMediaVisible}
           />
         )}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
-    cloneProps.src = poster;
+    cloneProps.src = posterSrc;
   }
   if (!media) {
     throw new Error('Invalid media element type.');
   }
 
   const dragHandler = (event) => {
-    if (type === 'video' && !mediaElement.current?.paused) {
+    if (['video', 'gif'].includes(type) && !mediaElement.current?.paused) {
       mediaElement.current.pause();
     }
     if (!draggingResource) {
