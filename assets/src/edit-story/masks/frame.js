@@ -107,7 +107,7 @@ function WithDropTarget({ element, children, hover }) {
     return children;
   }
 
-  // Show a outline if hovering when not draggin
+  // Show an outline if hovering when not dragging
   // or if dragging another droppable element
   const hasOutline =
     (hover && !draggingResource) ||
