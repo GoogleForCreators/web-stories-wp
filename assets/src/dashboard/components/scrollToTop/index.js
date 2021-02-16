@@ -73,6 +73,7 @@ const ScrollToTop = () => {
 
   return (
     <StyledButton
+      aria-hidden={isVisible}
       aria-label={__('scroll back to top', 'web-stories')}
       data-testid="scroll-to-top-button"
       isVisible={isVisible}
