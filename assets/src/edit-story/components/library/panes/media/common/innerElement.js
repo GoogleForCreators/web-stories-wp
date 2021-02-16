@@ -30,6 +30,7 @@ import StoryPropTypes from '../../../../../types';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
+import { ContentType } from '../../../../../app/media';
 
 const styledTiles = css`
   width: 100%;
@@ -104,7 +105,9 @@ function InnerElement({
   };
 
   useAverageColor(
-    ['video', 'gif'].includes(type) ? hiddenPoster : mediaElement,
+    [ContentType.VIDEO, ContentType.GIF].includes(type)
+      ? hiddenPoster
+      : mediaElement,
     setAverageColor
   );
 
@@ -117,7 +120,7 @@ function InnerElement({
 
   useEffect(() => {
     // assign poster for gifs
-    if (type === 'gif' && resource.output.poster) {
+    if (type === ContentType.GIF && resource.output.poster) {
       newVideoPosterRef.current = resource.output.poster;
     }
   }, [type, resource.output]);
@@ -131,7 +134,7 @@ function InnerElement({
   let media;
   const thumbnailURL = getSmallestUrlForWidth(width, resource);
   const { lengthFormatted, poster, mimeType, output } = resource;
-  const posterSrc = type === 'gif' ? output.poster : poster;
+  const posterSrc = type === ContentType.GIF ? output.poster : poster;
   const displayPoster = posterSrc ?? newVideoPosterRef.current;
 
   const commonProps = {
@@ -152,21 +155,21 @@ function InnerElement({
   };
   const videoProps = {
     ...commonProps,
-    loop: type === 'gif',
+    loop: type === ContentType.GIF,
     muted: true,
     preload: 'none',
     poster: displayPoster,
     showWithoutDelay: Boolean(newVideoPosterRef.current),
   };
 
-  if (type === 'image') {
+  if (type === ContentType.IMAGE) {
     media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
-  } else if (['gif', 'video'].includes(type)) {
+  } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
         <Video key={src} {...videoProps} ref={mediaElement}>
-          {type === 'gif' ? (
+          {type === ContentType.GIF ? (
             <>
               <source
                 src={getSmallestUrlForWidth(width, {
@@ -207,7 +210,10 @@ function InnerElement({
   }
 
   const dragHandler = (event) => {
-    if (['video', 'gif'].includes(type) && !mediaElement.current?.paused) {
+    if (
+      [ContentType.VIDEO, ContentType.GIF].includes(type) &&
+      !mediaElement.current?.paused
+    ) {
       mediaElement.current.pause();
     }
     if (!draggingResource) {
@@ -241,7 +247,7 @@ function InnerElement({
           },
         }}
         onClick={onClick(
-          type === 'image' ? thumbnailURL : poster,
+          type === ContentType.IMAGE ? thumbnailURL : poster,
           mediaBaseColor.current
         )}
         cloneElement={CloneImg}

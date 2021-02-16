@@ -30,6 +30,7 @@ import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import { ContentType } from '../../../../../app/media';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 
@@ -147,7 +148,7 @@ const MediaElement = ({
   activeRef.current = active;
 
   useEffect(() => {
-    if (!['video', 'gif'].includes(type)) {
+    if (![ContentType.VIDEO, ContentType.GIF].includes(type)) {
       return undefined;
     }
     const resetHoverTime = () => {
