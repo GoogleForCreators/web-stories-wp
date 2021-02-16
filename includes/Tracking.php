@@ -135,6 +135,7 @@ class Tracking {
 			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
 			'isMultisite'        => (int) is_multisite(),
+			'adNetwork'          => (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ),
 		];
 	}
 

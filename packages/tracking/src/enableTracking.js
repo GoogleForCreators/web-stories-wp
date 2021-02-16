@@ -51,12 +51,14 @@ function loadTrackingScript(sendPageView = true) {
 
     gtag('js', new Date());
 
-    // Note: `set` commands need to be placed before `config` commands to ensure those values are passed along with page views.
+    // Note: `set` commands need to be placed before `config` commands to ensure
+    // those values are passed along with the initial config.
 
     // Universal Analytics custom dimensions.
     gtag('set', {
       custom_map: {
-        // 1 and 2 are deprecated/unused.
+        // 1 is deprecated/unused.
+        dimension2: 'adNetwork',
         dimension3: 'search_order',
         dimension4: 'search_orderby',
         dimension5: 'file_size',
@@ -88,6 +90,7 @@ function loadTrackingScript(sendPageView = true) {
       transport_type: 'beacon',
       page_title: pageTitle,
       page_path: pagePath,
+      // Re-using user properties values for the custom dimensions.
       ...config.userProperties,
     });
 

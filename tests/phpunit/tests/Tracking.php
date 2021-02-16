@@ -76,6 +76,7 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'wpVersion', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'phpVersion', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'isMultisite', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'adNetwork', $settings['userProperties'] );
 		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
 		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
 		$this->assertSame( PHP_VERSION, $settings['userProperties']['phpVersion'] );
@@ -85,6 +86,7 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertInternalType( 'string', $settings['userProperties']['wpVersion'] );
 		$this->assertInternalType( 'string', $settings['userProperties']['phpVersion'] );
 		$this->assertInternalType( 'int', $settings['userProperties']['isMultisite'] );
+		$this->assertInternalType( 'string', $settings['userProperties']['adNetwork'] );
 	}
 
 	/**
