@@ -41,7 +41,7 @@ const KeyboardKey = styled(Text).attrs({
   align-items: center;
   width: ${({ keySize }) => keySize}px;
   height: 24px;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   color: ${({ theme }) => theme.colors.fg.primary};
 
