@@ -23,8 +23,9 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { Button } from '../button';
-import { Text, Link } from '../typography';
-import { THEME_CONSTANTS } from '../../theme/constants';
+import { Link } from '../typography/link';
+import { Text } from '../typography/text';
+import { THEME_CONSTANTS } from '../../theme';
 
 const ItemText = styled(Text)`
   width: 200px;
