@@ -88,12 +88,12 @@ const sharedConfig = {
           },
         ],
       },
+      // These should be sync'd with the config in `.storybook/main.cjs`.
       {
         test: /\.svg$/,
         use: [
           {
             loader: '@svgr/webpack',
-            // These should be sync'd with the config in `.storybook/main.cjs`.
             options: {
               titleProp: true,
               svgo: true,
@@ -112,6 +112,33 @@ const sharedConfig = {
           },
           'url-loader',
         ],
+        exclude: [/images\/.*\.svg$/],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              titleProp: true,
+              svgo: true,
+              svgoConfig: {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                    removeDimensions: true,
+                    convertColors: {
+                      // See https://github.com/google/web-stories-wp/pull/6361
+                      currentColor: false,
+                    },
+                  },
+                ],
+              },
+            },
+          },
+          'url-loader',
+        ],
+        include: [/images\/.*\.svg$/],
       },
       {
         test: /\.css$/,
