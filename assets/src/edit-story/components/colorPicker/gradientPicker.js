@@ -30,16 +30,29 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../../design-system/components/button';
-import { Button, Icons } from '../../../design-system';
+import { Button, Icons, Tooltip } from '../../../design-system';
 import GradientLine from './gradientLine';
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
-  margin-right: -3px;
   padding: 0 12px;
   height: 58px;
+`;
+
+const SmallButton = styled(Button)`
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-bottom: -3px;
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const Space = styled.div`
+  width: 6px;
 `;
 
 function GradientPicker({
@@ -54,6 +67,8 @@ function GradientPicker({
   onRotate,
   onReverse,
 }) {
+  const reverseLabel = __('Reverse gradient stops', 'web-stories');
+  const rotateLabel = __('Rotate gradient', 'web-stories');
   return (
     <Wrapper>
       <GradientLine
@@ -64,24 +79,29 @@ function GradientPicker({
         onDelete={onDelete}
         onMove={onMove}
       />
-      <Button
-        aria-label={__('Reverse gradient stops', 'web-stories')}
-        onClick={onReverse}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.CIRCLE}
-      >
-        <Icons.ArrowsLeftright />
-      </Button>
-      <Button
-        onClick={onRotate}
-        aria-label={__('Rotate gradient', 'web-stories')}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.CIRCLE}
-      >
-        <Icons.ArrowRightCurved id="gradient-rotator" />
-      </Button>
+      <Space />
+      <Tooltip hasTail title={reverseLabel}>
+        <SmallButton
+          aria-label={reverseLabel}
+          onClick={onReverse}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.RECTANGLE}
+        >
+          <Icons.ArrowsLeftright />
+        </SmallButton>
+      </Tooltip>
+      <Tooltip hasTail title={rotateLabel}>
+        <SmallButton
+          onClick={onRotate}
+          aria-label={rotateLabel}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.RECTANGLE}
+        >
+          <Icons.ArrowRightCurved id="gradient-rotator" />
+        </SmallButton>
+      </Tooltip>
     </Wrapper>
   );
 }
