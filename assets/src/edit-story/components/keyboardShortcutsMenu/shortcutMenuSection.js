@@ -42,6 +42,7 @@ const List = styled.dl`
   row-gap: 12px;
   column-gap: 5px;
   align-items: center;
+  margin: 12px 0 0;
 `;
 
 const Label = styled(Text).attrs({
