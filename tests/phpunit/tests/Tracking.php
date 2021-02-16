@@ -42,6 +42,22 @@ class Tracking extends \WP_UnitTestCase {
 	 * @covers ::init
 	 */
 	public function test_register_tracking_script() {
+		$site_kit = $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class );
+		$site_kit->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed'       => true,
+				'active'          => true,
+				'analyticsActive' => true,
+				'link'            => 'https://example.com',
+			]
+		);
+
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'get_enabled_experiments' )
+					->willReturn( [ 'enableFoo', 'enableBar' ] );
+
+		$tracking = new \Google\Web_Stories\Tracking( $experiments, $site_kit );
+		$tracking->init();
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ]->src );
 		$after = wp_scripts()->get_data( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'after' );
@@ -54,11 +70,21 @@ class Tracking extends \WP_UnitTestCase {
 	public function test_get_settings() {
 		wp_set_current_user( self::$user_id );
 
+		$site_kit = $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class );
+		$site_kit->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed'       => true,
+				'active'          => true,
+				'analyticsActive' => true,
+				'link'            => 'https://example.com',
+			]
+		);
+
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
-		$settings = ( new \Google\Web_Stories\Tracking( $experiments ) )->get_settings();
+		$settings = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit ) )->get_settings();
 
 		$this->assertArrayHasKey( 'trackingAllowed', $settings );
 		$this->assertArrayHasKey( 'trackingId', $settings );
@@ -69,6 +95,7 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertSame( \Google\Web_Stories\Tracking::TRACKING_ID, $settings['trackingId'] );
 		$this->assertSame( \Google\Web_Stories\Tracking::TRACKING_ID_GA4, $settings['trackingIdGA4'] );
 		$this->assertSame( WEBSTORIES_VERSION, $settings['appVersion'] );
+
 		$this->assertArrayHasKey( 'siteLocale', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'userLocale', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'userRole', $settings['userProperties'] );
@@ -77,6 +104,8 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'phpVersion', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'isMultisite', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'adNetwork', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'analytics', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'activePlugins', $settings['userProperties'] );
 		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
 		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
 		$this->assertSame( PHP_VERSION, $settings['userProperties']['phpVersion'] );
@@ -87,6 +116,8 @@ class Tracking extends \WP_UnitTestCase {
 		$this->assertInternalType( 'string', $settings['userProperties']['phpVersion'] );
 		$this->assertInternalType( 'int', $settings['userProperties']['isMultisite'] );
 		$this->assertInternalType( 'string', $settings['userProperties']['adNetwork'] );
+		$this->assertInternalType( 'string', $settings['userProperties']['analytics'] );
+		$this->assertInternalType( 'string', $settings['userProperties']['activePlugins'] );
 	}
 
 	/**
@@ -96,11 +127,21 @@ class Tracking extends \WP_UnitTestCase {
 		wp_set_current_user( self::$user_id );
 		add_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY, true );
 
+		$site_kit = $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class );
+		$site_kit->method( 'get_plugin_status' )->willReturn(
+			[
+				'installed'       => true,
+				'active'          => true,
+				'analyticsActive' => true,
+				'link'            => 'https://example.com',
+			]
+		);
+
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
-		$settings         = ( new \Google\Web_Stories\Tracking( $experiments ) )->get_settings();
+		$settings         = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit ) )->get_settings();
 		$tracking_allowed = $settings['trackingAllowed'];
 
 		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY );
