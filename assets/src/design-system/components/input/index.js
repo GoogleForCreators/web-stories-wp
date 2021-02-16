@@ -85,8 +85,7 @@ const StyledInput = styled.input(
       border-color: ${theme.colors.border.defaultActive};
       color: ${theme.colors.fg.primary};
 
-      & ~ div,
-      & ~ div * {
+      & ~ ${SuffixContainer}, & ~ ${SuffixContainer} * {
         color: ${theme.colors.fg.primary};
       }
     }
