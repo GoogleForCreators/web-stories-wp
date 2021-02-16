@@ -68,22 +68,22 @@ const Base = styled.button(
 const primaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.brandNormal};
   color: ${theme.colors.interactiveFg.brandNormal};
-  &:hover,
-  &:focus {
-    background-color: ${theme.colors.interactiveBg.brandHover};
-    color: ${theme.colors.interactiveFg.brandHover};
-  }
   &:active {
     background-color: ${theme.colors.interactiveBg.active};
     color: ${theme.colors.interactiveFg.active};
+  }
+  &:hover:enabled,
+  &:focus:enabled {
+    background-color: ${theme.colors.interactiveBg.brandHover};
+    color: ${theme.colors.interactiveFg.brandHover};
   }
 `;
 
 const secondaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.secondaryNormal};
 
-  &:hover,
-  &:focus {
+  &:hover:enabled,
+  &:focus:enabled {
     background-color: ${theme.colors.interactiveBg.secondaryHover};
   }
 `;
@@ -91,13 +91,13 @@ const secondaryColors = ({ theme }) => css`
 const tertiaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.tertiaryNormal};
 
-  &:hover,
-  &:focus {
-    background-color: ${theme.colors.interactiveBg.tertiaryHover};
-  }
-
   &:disabled {
     background-color: ${theme.colors.interactiveBg.tertiaryNormal};
+  }
+
+  &:hover:enabled,
+  &:focus:enabled {
+    background-color: ${theme.colors.interactiveBg.tertiaryHover};
   }
 `;
 
