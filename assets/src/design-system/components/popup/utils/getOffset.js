@@ -79,13 +79,11 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
   }
 }
 
-// this might need something other than doc body for positioning with vertical scroll
 export function getOffset(placement, spacing, anchor, dock, popup) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
   const popupRect = popup.current?.getBoundingClientRect();
   const dockRect = dock?.current?.getBoundingClientRect();
-
   // Adjust dimensions based on the popup content's inner dimensions
   if (popupRect) {
     popupRect.height = Math.max(popupRect.height, popup.current?.scrollHeight);
@@ -107,13 +105,22 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
 
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
+
+  // use window.pageYOffset instead of bodyRect.height to account for scroll
   const maxOffsetY =
-    bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
+    window.pageYOffset +
+    bodyRect.y -
+    height -
+    getYTransforms(placement) * height;
+
+  // In cases where the window has scrolled we want to make sure that the sum of maxOffsetY is more than 0
+  // If it's not we should fallback to the true offsetY to respect viewports that have scroll.
+  const trueMaxOffsetY = maxOffsetY > 0 ? maxOffsetY : offsetY;
 
   // Clamp values
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: Math.max(0, Math.min(offsetY, maxOffsetY)),
+    y: Math.max(0, Math.min(offsetY, trueMaxOffsetY)),
     width: anchorRect.width,
     height: anchorRect.height,
   };

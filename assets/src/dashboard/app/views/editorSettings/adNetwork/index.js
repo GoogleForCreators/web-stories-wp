@@ -34,8 +34,6 @@ import {
   TextInputHelperText,
 } from '../components';
 import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
-import { TranslateWithMarkup } from '../../../../../i18n';
-import { trackClick } from '../../../../../tracking';
 import {
   THEME_CONSTANTS,
   DropDown,
@@ -158,10 +156,8 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
           <DropDown
             ariaLabel={TEXT.SLOT_ID_LABEL}
             options={OPTIONS}
-            type={DROPDOWN_TYPES.MENU}
             selectedValue={adNetwork}
             onMenuItemClick={(_, newAdNetwork) => handleUpdate(newAdNetwork)}
-            placement={PLACEMENT.BOTTOM}
             fillWidth={true}
           />
         </InlineForm>

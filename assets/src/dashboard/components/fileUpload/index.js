@@ -41,12 +41,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const StyledButton = styled(Button)`
-  :focus-within {
-    ${({ theme }) => themeHelpers.focusCSS(theme.colors.border.focus)}
-  }
-`;
-
 const Input = styled.input(visuallyHiddenStyles);
 
 const UploadFormArea = styled.div`
