@@ -45,6 +45,10 @@ class TinyMCE {
 	 * @return void
 	 */
 	public function init() {
+		if ( $this->is_block_editor() ) {
+			return;
+		}
+
 		add_filter( 'mce_buttons', [ $this, 'tinymce_web_stories_button' ] );
 		add_filter( 'mce_external_plugins', [ $this, 'web_stories_mce_plugin' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'web_stories_tinymce_scripts' ] );
@@ -59,9 +63,8 @@ class TinyMCE {
 	 * @return array
 	 */
 	public function tinymce_web_stories_button( array $buttons ) {
-		if ( ! $this->is_block_editor() ) {
-			array_push( $buttons, 'web_stories' );
-		}
+
+		array_push( $buttons, 'web_stories' );
 
 		return $buttons;
 	}
@@ -74,9 +77,8 @@ class TinyMCE {
 	 * @return array
 	 */
 	public function web_stories_mce_plugin( array $plugins ) {
-		if ( ! $this->is_block_editor() ) {
-			$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/web-stories-button.js';
-		}
+
+		$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/web-stories-button.js';
 
 		return $plugins;
 	}
@@ -87,9 +89,7 @@ class TinyMCE {
 	 * @return void
 	 */
 	public function web_stories_tinymce_scripts() {
-		if ( ! $this->is_block_editor() ) {
-			$this->enqueue_style( 'wp-components' );
-		}
+		$this->enqueue_style( 'wp-components' );
 	}
 
 	/**
@@ -99,11 +99,9 @@ class TinyMCE {
 	 * @return void
 	 */
 	public function web_stories_tinymce_root_element() {
-		if ( ! $this->is_block_editor() ) {
-			?>
-			<div id="web-stories-tinymce"></div>
-			<?php
-		}
+		?>
+		<div id="web-stories-tinymce"></div>
+		<?php
 	}
 
 	/**

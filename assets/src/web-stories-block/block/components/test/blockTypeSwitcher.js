@@ -31,7 +31,7 @@ describe('Tests BlockTypeSwitcher', () => {
       <BlockTypeSwitcher selectedBlockType={''} setAttributes={setAttributes} />
     );
 
-    const switchButton = screen.getByLabelText('Change block type dropdown');
+    const switchButton = screen.getByLabelText('Block Sub Type');
     expect(switchButton).toBeInTheDocument();
   });
 
@@ -41,7 +41,7 @@ describe('Tests BlockTypeSwitcher', () => {
       <BlockTypeSwitcher selectedBlockType={''} setAttributes={setAttributes} />
     );
 
-    const switchButton = screen.getByLabelText('Change block type dropdown');
+    const switchButton = screen.getByLabelText('Block Sub Type');
 
     // Opens Switcher dropdown menu.
     fireEvent.click(switchButton);

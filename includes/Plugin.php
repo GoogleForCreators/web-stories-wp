@@ -319,7 +319,7 @@ class Plugin {
 		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
 
 		$tinymce = new TinyMCE();
-		$tinymce->init();
+		add_action( 'current_screen', [ $tinymce, 'init' ] );
 	}
 
 	/**
