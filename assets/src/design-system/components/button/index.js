@@ -24,7 +24,12 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { THEME_CONSTANTS, themeHelpers } from '../../theme';
-import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  BUTTON_TRANSITION_TIMING,
+} from './constants';
 
 const Base = styled.button(
   ({ size, theme }) => css`
@@ -61,7 +66,8 @@ const Base = styled.button(
       color: ${theme.colors.fg.disable};
     }
 
-    transition: background-color 0.6s ease 0s, color 0.6s ease 0s;
+    transition: background-color ${BUTTON_TRANSITION_TIMING},
+      color ${BUTTON_TRANSITION_TIMING};
   `
 );
 
