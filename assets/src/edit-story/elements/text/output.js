@@ -27,7 +27,11 @@ import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
-import { dataToEditorX, dataToEditorY } from '../../units';
+import {
+  dataToEditorX,
+  dataToEditorY,
+  dataToFontSizeY as dataToFontSize,
+} from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import {
   generateParagraphTextStyle,
@@ -235,7 +239,7 @@ function TextOutput({ element }) {
       className="fill"
       dataToStyleX={(x) => `${dataToEditorX(x, 100)}%`}
       dataToStyleY={(y) => `${dataToEditorY(y, 100)}%`}
-      dataToFontSizeY={(y) => `${(dataToEditorY(y, 100) / 10).toFixed(6)}em`}
+      dataToFontSizeY={(y) => `${dataToFontSize(y, 100)}em`}
       // Both vertical and horizontal paddings are calculated in % relative to
       // the box's width per CSS rules.
       dataToPaddingX={(x) => `${(x / width) * 100}%`}

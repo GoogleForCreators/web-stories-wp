@@ -24,8 +24,8 @@ export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;
 export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
 export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
-const COVER_DIMENSION_WIDTH_PX = 640;
-const COVER_DIMENSION_HEIGHT_PX = 853;
+const POSTER_DIMENSION_WIDTH_PX = 640;
+const POSTER_DIMENSION_HEIGHT_PX = 853;
 export const ASPECT_RATIO_LEFT = 3;
 export const ASPECT_RATIO_RIGHT = 4;
 const PUBLISHER_LOGO_DIMENSION = 96;
@@ -89,8 +89,8 @@ export const MESSAGES = {
         </DashedList>
       ),
     },
-    MISSING_COVER: {
-      MAIN_TEXT: __('Add story cover image', 'web-stories'),
+    MISSING_POSTER: {
+      MAIN_TEXT: __('Add poster image', 'web-stories'),
       HELPER_TEXT: (
         <DashedList>
           <li>{__('Use as a representation of the story', 'web-stories')}</li>
@@ -99,12 +99,12 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %s: image dimensions.  */
               __("Use an image that's at least %s", 'web-stories'),
-              `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`
+              `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
             )}
           </li>
           <li>
             {sprintf(
-              /* translators: %s: cover dimensions aspect ratio.  */
+              /* translators: %s: poster dimensions aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
             )}
@@ -112,9 +112,9 @@ export const MESSAGES = {
         </DashedList>
       ),
     },
-    COVER_TOO_SMALL: {
+    POSTER_TOO_SMALL: {
       MAIN_TEXT: __(
-        'Choose a bigger image for your story cover',
+        'Choose a bigger image for your poster image',
         'web-stories'
       ),
       HELPER_TEXT: (
@@ -123,12 +123,12 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %s: image dimensions.  */
               __("Use an image that's at least %s", 'web-stories'),
-              `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`
+              `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
             )}
           </li>
           <li>
             {sprintf(
-              /* translators: %s: cover dimensions aspect ratio.  */
+              /* translators: %s: poster dimensions aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
             )}
@@ -136,9 +136,9 @@ export const MESSAGES = {
         </DashedList>
       ),
     },
-    COVER_WRONG_ASPECT_RATIO: {
+    POSTER_WRONG_ASPECT_RATIO: {
       MAIN_TEXT: __(
-        'Choose an image with the correct aspect ratio',
+        'Choose a poster image with the correct aspect ratio',
         'web-stories'
       ),
       HELPER_TEXT: (
@@ -147,12 +147,12 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %s: image dimensions.  */
               __("Use an image that's at least %s", 'web-stories'),
-              `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`
+              `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
             )}
           </li>
           <li>
             {sprintf(
-              /* translators: %s: cover dimensions aspect ratio.  */
+              /* translators: %s: poster dimensions aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
             )}

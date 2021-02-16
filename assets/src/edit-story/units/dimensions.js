@@ -81,6 +81,10 @@ export function dataToEditorY(y, pageHeight) {
   return editorPixels((y * pageHeight) / PAGE_HEIGHT);
 }
 
+export function dataToFontSizeY(v, pageHeight) {
+  return (dataToEditorY(v, pageHeight) / 10).toFixed(6);
+}
+
 /**
  * Converts a "editor" pixel value to the value in the "data" space along
  * the horizontal (X) dimension.

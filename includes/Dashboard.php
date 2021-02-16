@@ -209,7 +209,7 @@ class Dashboard {
 		$preload_paths = [
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/users/me/',
-			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
+			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture%2Cprivate&_web_stories_envelope=true',
 		];
 
 		/**

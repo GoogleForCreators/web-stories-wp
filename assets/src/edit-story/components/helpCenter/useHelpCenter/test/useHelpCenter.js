@@ -22,138 +22,8 @@ import { renderHook, act } from '@testing-library/react-hooks';
  */
 import APIContext from '../../../../app/api/context';
 import { CurrentUserProvider } from '../../../../app/currentUser';
-import { DONE_TIP_ENTRY, TIPS } from '../../constants';
-import { useHelpCenter, deriveState } from '../';
-
-describe('deriveState', () => {
-  it('sets isPrevDisabled to true if navigationIndex becomes 0', () => {
-    const previousState = { navigationIndex: 5 };
-    const nextState = { navigationIndex: 0 };
-    const { isPrevDisabled } = deriveState(previousState, nextState);
-    expect(isPrevDisabled).toBe(true);
-  });
-
-  it('sets isPrevDisabled to false if navigationIndex is greater than 0', () => {
-    const previousState = { navigationIndex: 0 };
-    const nextState = { navigationIndex: 5 };
-    const { isPrevDisabled } = deriveState(previousState, nextState);
-    expect(isPrevDisabled).toBe(false);
-  });
-
-  it('sets isNextDisabled to true if navigationIndex is on last index in navigation flow', () => {
-    const previousState = {
-      navigationIndex: 0,
-      navigationFlow: ['tip_1', 'tip_2'],
-    };
-    const nextState = {
-      navigationIndex: 1,
-      navigationFlow: ['tip_1', 'tip_2'],
-    };
-    const { isNextDisabled } = deriveState(previousState, nextState);
-    expect(isNextDisabled).toBe(true);
-  });
-
-  it('sets isNextDisabled to false if navigationIndex is not on last index in navigation flow', () => {
-    const previousState = {
-      navigationIndex: 2,
-      navigationFlow: ['tip_1', 'tip_2', 'tip_3'],
-    };
-    const nextState = {
-      navigationIndex: 1,
-      navigationFlow: ['tip_1', 'tip_2', 'tip_3'],
-    };
-    const { isNextDisabled } = deriveState(previousState, nextState);
-    expect(isNextDisabled).toBe(false);
-  });
-
-  it('sets isLeftToRightTransition to true if navigationIndex is increasing', () => {
-    const previousState = {
-      navigationIndex: 0,
-      navigationFlow: ['tip_1', 'tip_2'],
-    };
-    const nextState = {
-      navigationIndex: 1,
-      navigationFlow: ['tip_1', 'tip_2'],
-    };
-    const { isLeftToRightTransition } = deriveState(previousState, nextState);
-    expect(isLeftToRightTransition).toBe(true);
-  });
-
-  it('sets isLeftToRightTransition to false if navigationIndex is decreasing', () => {
-    const previousState = {
-      navigationIndex: 2,
-      navigationFlow: ['tip_1', 'tip_2'],
-    };
-    const nextState = {
-      navigationIndex: 1,
-      navigationFlow: ['tip_1', 'tip_2'],
-    };
-    const { isLeftToRightTransition } = deriveState(previousState, nextState);
-    expect(isLeftToRightTransition).toBe(false);
-  });
-
-  it('sets hasBottomNavigation to true if navigationIndex is not on menu index', () => {
-    const previousState = {
-      navigationIndex: -1,
-    };
-    const nextState = {
-      navigationIndex: 0,
-    };
-    const { hasBottomNavigation } = deriveState(previousState, nextState);
-    expect(hasBottomNavigation).toBe(true);
-  });
-
-  it('sets hasBottomNavigation to false if navigationIndex is on menu index', () => {
-    const previousState = {
-      navigationIndex: 4,
-    };
-    const nextState = {
-      navigationIndex: -1,
-    };
-    const { hasBottomNavigation } = deriveState(previousState, nextState);
-    expect(hasBottomNavigation).toBe(false);
-  });
-
-  it('sets a tip to read if the navigation index is not on the menu or done index', () => {
-    const navigationFlow = Object.keys(TIPS);
-    const previousState = {
-      navigationIndex: -1,
-      navigationFlow: navigationFlow,
-    };
-    const nextState = {
-      navigationIndex: 0,
-      navigationFlow: navigationFlow,
-    };
-    const { readTips } = deriveState(previousState, nextState);
-    expect(readTips[navigationFlow[0]]).toBe(true);
-  });
-
-  it('resets the navigation index to the main menu when opening', () => {
-    const previousState = {
-      isOpen: false,
-      navigationIndex: 4,
-    };
-    const nextState = {
-      isOpen: true,
-      navigationIndex: 4,
-    };
-    const { navigationIndex } = deriveState(previousState, nextState);
-    expect(navigationIndex).toBe(-1);
-  });
-
-  it('retains navigation index when staying open between state transitions', () => {
-    const previousState = {
-      isOpen: true,
-      navigationIndex: 4,
-    };
-    const nextState = {
-      isOpen: true,
-      navigationIndex: 4,
-    };
-    const { navigationIndex } = deriveState(previousState, nextState);
-    expect(navigationIndex).toBe(4);
-  });
-});
+import { DONE_TIP_ENTRY } from '../../constants';
+import { useHelpCenter } from '../';
 
 function setup() {
   const currentUser = { meta: {} };
@@ -254,11 +124,9 @@ describe('useHelpCenter', () => {
     it('updates the read status of the tip', async () => {
       const { result } = setup();
 
-      // go to the last (not "done") tip
-      const lastTip =
-        result.current.state.navigationFlow[
-          result.current.state.navigationFlow.length - 2
-        ];
+      // go to the last tip
+      const lastTipIndex = result.current.state.navigationFlow.length - 1;
+      const lastTip = result.current.state.navigationFlow[lastTipIndex];
       await act(async () => {
         await result.current.actions.goToTip(lastTip);
       });
@@ -268,16 +136,9 @@ describe('useHelpCenter', () => {
       expect(result.current.state.readTips).toStrictEqual(expected);
 
       // go through the list backwards
-      for (
-        let i = result.current.state.navigationFlow.length - 2;
-        i >= 0;
-        i--
-      ) {
+      for (let i = lastTipIndex; i >= 0; i--) {
         const expectedKey = result.current.state.navigationFlow[i];
-
-        if (expectedKey !== DONE_TIP_ENTRY[0]) {
-          expected[expectedKey] = true;
-        }
+        expected[expectedKey] = true;
         expect(result.current.state.readTips).toStrictEqual(expected);
         // eslint-disable-next-line no-await-in-loop
         await act(async () => {
