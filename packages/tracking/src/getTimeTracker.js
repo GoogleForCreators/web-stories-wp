@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,26 +17,41 @@
 /**
  * Internal dependencies
  */
-import trackTimingComplete from './trackTimingComplete';
+import trackEvent from './trackEvent';
+import isTrackingEnabled from './isTrackingEnabled';
+import { config } from './shared';
 
 /**
- * Starts a timer and returns a callback to stop it and
- * send an Analytics timing_complete event.
+ * Starts a timer and returns a callback to stop it and send an analytics timing_complete event.
  *
- * @see trackTimingComplete
+ * Works for both Universal Analytics and Google Analytics 4.
+ *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings
  *
- * @param {string} name The variable being recorded (e.g. 'load').
- * @param {string} eventCategory A string for categorizing all user timing variables into logical groups (e.g. 'JS Dependencies').
- * @param {string} eventLabel A string that can be used to add flexibility in visualizing user timings in the reports (e.g. 'Google CDN').
+ * @param {string} eventName The event nae (e.g. 'load_items').
  * @return {Function} Callback to stop timer and send tracking event.
  */
-function getTimeTracker(name, eventCategory, eventLabel) {
+function getTimeTracker(eventName) {
   const before = window.performance.now();
   return () => {
+    if (!isTrackingEnabled()) {
+      return;
+    }
+
     const after = window.performance.now();
     const value = after - before;
-    return trackTimingComplete(name, value, eventCategory, eventLabel);
+
+    // Universal Analytics has a special `timing_complete` event which
+    // does not exist in GA4.
+    trackEvent('timing_complete', {
+      name: eventName,
+      value,
+      send_to: config.trackingId,
+    });
+    trackEvent(eventName, {
+      value,
+      send_to: config.trackingIdGA4,
+    });
   };
 }
 

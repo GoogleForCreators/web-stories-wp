@@ -21,7 +21,8 @@ import styled from 'styled-components';
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackClick, trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -139,12 +140,12 @@ export function LeftRail() {
     }
   }, [sideBarVisible]);
 
-  const onCreateNewStoryClick = useCallback(async () => {
-    await trackEvent('create_new_story', 'dashboard');
+  const onCreateNewStoryClick = useCallback(() => {
+    trackEvent('create_new_story');
   }, []);
 
-  const onExternalLinkClick = useCallback((path) => {
-    trackEvent(path.trackingEvent, 'dashboard');
+  const onExternalLinkClick = useCallback((evt, path) => {
+    trackClick(evt, path.trackingEvent);
   }, []);
 
   return (
@@ -191,7 +192,7 @@ export function LeftRail() {
                   {...(path.isExternal && {
                     rel: 'noreferrer',
                     target: '_blank',
-                    onClick: () => onExternalLinkClick(path),
+                    onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
                   {Icon && <Icon width="22px" />}
@@ -224,7 +225,7 @@ export function LeftRail() {
                 {...(path.isExternal && {
                   rel: 'noreferrer',
                   target: '_blank',
-                  onClick: () => onExternalLinkClick(path),
+                  onClick: (evt) => onExternalLinkClick(evt, path),
                 })}
               >
                 <Text

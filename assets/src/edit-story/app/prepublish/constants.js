@@ -19,6 +19,7 @@
  */
 import { __, sprintf, _n } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { trackClick } from '@web-stories-wp/tracking';
 
 export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;
@@ -55,6 +56,11 @@ export const PRE_PUBLISH_MESSAGE_TYPES = {
   ERROR: 'error',
   WARNING: 'warning',
 };
+
+const VIDEO_DOCUMENTATION_URL = __(
+  'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#visual-treat',
+  'web-stories'
+);
 
 export const MESSAGES = {
   CRITICAL_METADATA: {
@@ -470,9 +476,10 @@ export const MESSAGES = {
         <DashedList>
           <li>
             <a
-              href="https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#visual-treat"
+              href={VIDEO_DOCUMENTATION_URL}
               rel="noreferrer"
               target="_blank"
+              onClick={(evt) => trackClick(evt, 'click_pre_publish_video_docs')}
             >
               {__(
                 'Use full screen videos and images whenever possible to create a more immersive experience (more info)',

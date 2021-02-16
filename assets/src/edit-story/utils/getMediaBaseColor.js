@@ -70,7 +70,7 @@ function getDefaultOnloadCallback(nodeKey, resolve, reject) {
       const node = document.body[nodeKey];
       resolve(thief.getColor(node.firstElementChild));
     } catch (err) {
-      trackError('get image base color', err.message);
+      trackError('image_base_color', err.message);
       reject(err);
     }
   };

@@ -47,7 +47,8 @@ const initialize = (id, config, flags) => {
 
   updateSettings(config.locale);
 
-  initializeTracking('Dashboard');
+  // Already tracking screen views in AppContent, no need to send page views as well.
+  initializeTracking('Dashboard', false);
 
   render(
     <FlagsProvider features={flags}>
