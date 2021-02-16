@@ -100,10 +100,10 @@ export const _default = () => {
             name="twoLight"
             value={inputState.twoLight}
             onChange={handleChange}
-            label={text('Input 2 Label', 'Icon')}
+            label={text('Input 2 Label', 'Suffix')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
-            suffix={'s'}
+            suffix={text('Suffix', 's')}
           />
           <Input
             aria-label="input-three"
@@ -111,7 +111,7 @@ export const _default = () => {
             name="threeLight"
             value={inputState.threeLight}
             onChange={handleChange}
-            label={text('Input 2 Label', 'Error')}
+            label={text('Input 3 Label', 'Error')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
             hasError
@@ -122,7 +122,7 @@ export const _default = () => {
             name="fourLight"
             value={inputState.fourLight}
             onChange={handleChange}
-            label={text('Input 3 Label', 'Disabled')}
+            label={text('Input 4 Label', 'Disabled')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
             disabled
@@ -148,7 +148,7 @@ export const _default = () => {
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={text('Input 2 Label', 'Icon')}
+              label={text('Input 2 Label', 'Suffix')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
               suffix={<AlignCenter />}
@@ -159,7 +159,7 @@ export const _default = () => {
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={text('Input 2 Label', 'Error')}
+              label={text('Input 3 Label', 'Error')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
               hasError
@@ -170,7 +170,7 @@ export const _default = () => {
               name="fourDark"
               value={inputState.fourDark}
               onChange={handleChange}
-              label={text('Input 3 Label', 'Disabled')}
+              label={text('Input 4 Label', 'Disabled')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
               disabled

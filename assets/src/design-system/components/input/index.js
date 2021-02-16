@@ -53,6 +53,7 @@ const SuffixContainer = styled.div`
   background: ${({ theme }) => theme.colors.bg.primary};
   color: ${({ theme }) => theme.colors.fg.tertiary};
   pointer-events: none;
+  overflow: hidden;
 
   * {
     color: ${({ theme }) => theme.colors.fg.tertiary};
