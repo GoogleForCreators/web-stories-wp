@@ -18,79 +18,54 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
 import { StoriesPropType } from '../../../types';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
 import { NavMenuButton, StandardViewContentGutter } from '../../../components';
-import { Headline, THEME_CONSTANTS } from '../../../../design-system';
-import TypeaheadSearch from './typeaheadSearch';
+import { Headline, Search, THEME_CONSTANTS } from '../../../../design-system';
+
+const HeadingContainer = styled(StandardViewContentGutter)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-top: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
+`;
 
 const StyledHeadline = styled(Headline)`
   display: flex;
+  align-items: center;
+  margin-right: 8px;
   white-space: nowrap;
 `;
 
-const Content = styled.div`
+const HeadlineFilters = styled.div`
   display: flex;
-  align-items: ${({ centerContent }) =>
-    centerContent ? 'center' : 'flex-end'};
-  height: 100%;
-`;
-
-const SearchContainer = styled.div`
-  display: inline-block;
-  vertical-align: baseline;
-  position: relative;
-  width: 100%;
-  height: 29px;
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) =>
-      `${theme.DEPRECATED_THEME.standardViewContentGutter.min}px`};
-    max-width: 100%;
-    justify-content: flex-start;
-  }
-`;
-
-const SearchInner = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(${DASHBOARD_LEFT_NAV_WIDTH}px, 100%);
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const HeadingBodyWrapper = styled(StandardViewContentGutter)`
-  display: grid;
-  grid-template-columns: 25% 50% 1fr;
   align-items: center;
-  margin-top: 36px;
-  padding-bottom: 24px;
-  border-bottom: ${({ theme }) =>
-    theme.DEPRECATED_THEME.subNavigationBar.border};
+  margin: 0 auto;
 `;
 
-export const HeaderToggleButtonContainer = styled.div`
-  display: block;
-  flex: 1;
-  height: 65%;
+const HeaderSearch = styled.div`
+  width: 208px;
+  max-width: 208px;
+  margin: auto 0;
 `;
 
 const PageHeading = ({
   children,
   defaultTitle,
   searchPlaceholder,
-  centerContent = false,
-  stories = [],
+  searchOptions = [],
   showTypeahead = true,
   handleTypeaheadChange,
-  typeaheadValue = '',
+  searchValue = {},
 }) => {
   return (
-    <HeadingBodyWrapper>
+    <HeadingContainer>
       <StyledHeadline
         as="h2"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE}
@@ -98,20 +73,20 @@ const PageHeading = ({
         <NavMenuButton showOnlyOnSmallViewport />
         {defaultTitle}
       </StyledHeadline>
-      <Content centerContent={centerContent}>{children}</Content>
+      <HeadlineFilters>{children}</HeadlineFilters>
       {showTypeahead && (
-        <SearchContainer>
-          <SearchInner>
-            <TypeaheadSearch
-              placeholder={searchPlaceholder}
-              currentValue={typeaheadValue}
-              stories={stories}
-              handleChange={handleTypeaheadChange}
-            />
-          </SearchInner>
-        </SearchContainer>
+        <HeaderSearch>
+          <Search
+            placeholder={searchPlaceholder}
+            selectedValue={searchValue}
+            options={searchOptions}
+            onMenuItemClick={() => {}}
+            handleSearchValueChange={handleTypeaheadChange}
+            emptyText={__('No options available', 'web-stories')}
+          />
+        </HeaderSearch>
       )}
-    </HeadingBodyWrapper>
+    </HeadingContainer>
   );
 };
 
@@ -120,13 +95,12 @@ PageHeading.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  centerContent: PropTypes.bool,
   defaultTitle: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
-  stories: StoriesPropType,
+  searchOptions: StoriesPropType,
   showTypeahead: PropTypes.bool,
   handleTypeaheadChange: PropTypes.func,
-  typeaheadValue: PropTypes.string,
+  searchValue: PropTypes.string,
 };
 
 export default PageHeading;

@@ -21,17 +21,18 @@ import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ToggleButtonGroup, useLayoutContext } from '../../../../components';
+import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
   STORY_STATUS,
+  HIDE_ON_SMALL_SCREENS,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -44,13 +45,24 @@ import {
   ViewPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
-import {
-  BodyViewOptions,
-  HeaderToggleButtonContainer,
-  PageHeading,
-} from '../../shared';
+import { BodyViewOptions, PageHeading } from '../../shared';
 import { useConfig } from '../../../config';
+import { Pill } from '../../../../../design-system';
 
+const StyledPill = styled(Pill)`
+  margin: 0 2px;
+  white-space: nowrap;
+
+  & > span {
+    padding-left: 8px;
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+  }
+  @media screen and (max-width: 1226px) {
+    .${HIDE_ON_SMALL_SCREENS} {
+      display: none;
+    }
+  }
+`;
 function Header({
   filter,
   search,
@@ -65,6 +77,22 @@ function Header({
   } = useLayoutContext();
 
   const { capabilities: { canReadPrivatePosts } = {} } = useConfig();
+
+  const searchOptions = useMemo(() => {
+    // todo add different option sets, value and label won't always be the same
+    return stories.reduce((acc, story) => {
+      if (!story.title || story.title.trim().length <= 0) {
+        return acc;
+      }
+      return [
+        ...acc,
+        {
+          label: story.title,
+          value: story.title,
+        },
+      ];
+    }, []);
+  }, [stories]);
 
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
@@ -94,38 +122,44 @@ function Header({
     }
 
     return (
-      <HeaderToggleButtonContainer>
-        <ToggleButtonGroup
-          buttons={STORY_STATUSES.map((storyStatus) => {
-            if (
-              storyStatus.status === STORY_STATUS.PRIVATE &&
-              (!totalStoriesByStatus.private ||
-                totalStoriesByStatus.private < 1 ||
-                !canReadPrivatePosts)
-            ) {
-              return null;
-            }
-            return {
-              handleClick: () => {
+      <>
+        {STORY_STATUSES.map((storyStatus) => {
+          if (
+            storyStatus.status === STORY_STATUS.PRIVATE &&
+            (!totalStoriesByStatus.private ||
+              totalStoriesByStatus.private < 1 ||
+              !canReadPrivatePosts)
+          ) {
+            return null;
+          }
+          const label = storyStatus.label;
+          const labelCount = totalStoriesByStatus?.[storyStatus.status] ? (
+            <span className={HIDE_ON_SMALL_SCREENS}>
+              {totalStoriesByStatus?.[storyStatus.status]}
+            </span>
+          ) : null;
+
+          const ariaLabel = sprintf(
+            /* translators: %s is story status */
+            __('Filter stories by %s', 'web-stories'),
+            storyStatus.label
+          );
+          return (
+            <StyledPill
+              key={storyStatus.value}
+              onClick={() => {
                 handleClick(storyStatus.value);
-              },
-              key: storyStatus.value,
-              isActive: filter.value === storyStatus.value,
-              disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
-              ['aria-label']: sprintf(
-                /* translators: %s is story status */
-                __('Filter stories by %s', 'web-stories'),
-                storyStatus.label
-              ),
-              text: `${storyStatus.label} ${
-                totalStoriesByStatus?.[storyStatus.status]
-                  ? `(${totalStoriesByStatus?.[storyStatus.status]})`
-                  : ''
-              }`,
-            };
-          }).filter(Boolean)}
-        />
-      </HeaderToggleButtonContainer>
+              }}
+              isActive={filter.value === storyStatus.value}
+              disabled={totalStoriesByStatus?.[storyStatus.status] <= 0}
+              aria-label={ariaLabel}
+            >
+              {label}
+              {labelCount && labelCount}
+            </StyledPill>
+          );
+        }).filter(Boolean)}
+      </>
     );
   }, [totalStoriesByStatus, canReadPrivatePosts, filter.value, handleClick]);
 
@@ -146,12 +180,13 @@ function Header({
       <PageHeading
         defaultTitle={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
-        stories={stories}
+        searchOptions={searchOptions}
         handleTypeaheadChange={debouncedTypeaheadChange}
-        typeaheadValue={search.keyword}
+        searchValue={search.keyword}
       >
         {HeaderToggleButtons}
       </PageHeading>
+
       <BodyViewOptions
         showGridToggle
         showSortDropdown

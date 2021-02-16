@@ -100,7 +100,7 @@ export default function useStoryView({ filters, totalPages }) {
   const setSearchKeyword = useCallback(
     (newSearchKeyword) => {
       setPageClamped(1);
-      _setSearchKeyword(newSearchKeyword);
+      _setSearchKeyword({ value: newSearchKeyword, label: newSearchKeyword });
     },
     [setPageClamped]
   );

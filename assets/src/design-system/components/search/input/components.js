@@ -42,7 +42,7 @@ export const InputContainer = styled.div(
     color: ${theme.colors.fg.primary};
 
     input {
-      padding: 8px 20px 8px ${alignCenter ? 'calc(50% - 18px)' : '40px'};
+      padding: 8px 20px 8px ${alignCenter ? 'calc(22% + 32px)' : '40px'};
     }
   `
 );
@@ -138,7 +138,7 @@ export const ClearButton = styled.button`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
 
   ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-  height: 32px;
+  height: 30px;
   z-index: ${Z_INDEX.CLEAR_BUTTON};
 `;
 ClearButton.propTypes = {
@@ -188,7 +188,7 @@ export const SearchDecoration = styled.div(
     position: absolute;
     height: 100%;
     margin: 0;
-    left: ${alignCenter ? 'calc(50% - 48px)' : '8px'};
+    left: ${alignCenter ? '22%' : '8px'};
     color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
 
     ${disabled &&
