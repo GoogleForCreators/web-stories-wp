@@ -45,10 +45,6 @@ const Stop = styled.button.attrs(({ position }) => ({
     /* We auto-select stops on focus, so no extra focus display is necessary */
     outline: none;
   }
-
-  ${({ isSelected }) =>
-    isSelected &&
-    ``}
 `;
 
 const StopPointer = styled.div`

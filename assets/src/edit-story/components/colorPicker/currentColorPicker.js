@@ -29,8 +29,8 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Eyedropper } from '../button';
-import { Input } from '../../../design-system';
 import Pointer from './pointer';
+import EditablePreview from './editablePreview';
 
 const CONTAINER_PADDING = 12;
 const EYEDROPPER_ICON_SIZE = 15;
@@ -85,7 +85,7 @@ const Footer = styled.div`
   position: relative;
   margin-top: 7px;
   display: grid;
-  grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / ${EYEDROPPER_ICON_SIZE}px 1fr ${OPACITY_WIDTH}px;
+  grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / 64px 1fr ${OPACITY_WIDTH}px;
   grid-gap: 10px;
 `;
 
@@ -110,13 +110,12 @@ const Opacity = styled.div`
   width: ${OPACITY_WIDTH}px;
 `;
 
-const TransparentInput = styled(Input)`
-  background: transparent;
-`;
-
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
+
+  const handleFormatHex = useCallback((v) => `#${v}`, []);
+  const handleFormatPercentage = useCallback((v) => `${v}%`, []);
 
   const handleHexInputChange = useCallback(
     (value) => onChange({ hex: value }),
@@ -188,21 +187,23 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
           />
         )}
         <HexValue>
-          <TransparentInput
-            aria-label={__('Edit hex value', 'web-stories')}
+          <EditablePreview
+            label={__('Edit hex value', 'web-stories')}
             value={hexValue}
             onChange={handleHexInputChange}
-            placeholder={__('Enter hex', 'web-stories')}
+            width={80}
+            format={handleFormatHex}
           />
         </HexValue>
         {showOpacity && (
           <Opacity>
             {/* @todo This needs % as suffix */}
-            <TransparentInput
-              aria-label={__('Edit opacity', 'web-stories')}
+            <EditablePreview
+              label={__('Edit opacity', 'web-stories')}
               value={alphaPercentage}
+              width={OPACITY_WIDTH}
+              format={handleFormatPercentage}
               onChange={handleOpacityInputChange}
-              placeholder={__('Enter opacity', 'web-stories')}
             />
           </Opacity>
         )}
