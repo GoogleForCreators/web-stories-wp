@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { useRef, useState, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -36,16 +37,21 @@ import {
   Tooltip,
   TOOLTIP_PLACEMENT,
 } from '../../../design-system';
+import { useConfig } from '../../app';
 import { Popup } from './popup';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
 const Wrapper = styled.div``;
 
+const withRTLPlugins = [stylisRTLPlugin];
+const withoutRTLPlugins = [];
+
 function KeyboardShortcutsMenu() {
   const anchorRef = useRef();
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const { isRTL } = useConfig();
 
   const closeMenu = useCallback(() => setIsOpen(false), [setIsOpen]);
 
@@ -69,30 +75,34 @@ function KeyboardShortcutsMenu() {
   useFocusOut(wrapperRef, closeMenu, []);
 
   return (
-    <Wrapper ref={wrapperRef}>
-      <Tooltip
-        title={label}
-        placement={TOOLTIP_PLACEMENT.TOP}
-        shortcut="mod+/"
-        hasTail
-      >
-        <Button
-          ref={anchorRef}
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={label}
-          aria-haspopup={true}
-          aria-expanded={isOpen}
-          onClick={toggleMenu}
+    <StyleSheetManager
+      stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
+    >
+      <Wrapper ref={wrapperRef}>
+        <Tooltip
+          title={label}
+          placement={TOOLTIP_PLACEMENT.TOP}
+          shortcut="mod+/"
+          hasTail
         >
-          <Icons.Keyboard />
-        </Button>
-      </Tooltip>
-      <Popup isOpen={isOpen}>
-        <ShortcutMenu toggleMenu={toggleMenu} />
-      </Popup>
-    </Wrapper>
+          <Button
+            ref={anchorRef}
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={label}
+            aria-haspopup={true}
+            aria-expanded={isOpen}
+            onClick={toggleMenu}
+          >
+            <Icons.Keyboard />
+          </Button>
+        </Tooltip>
+        <Popup isOpen={isOpen}>
+          <ShortcutMenu toggleMenu={toggleMenu} />
+        </Popup>
+      </Wrapper>
+    </StyleSheetManager>
   );
 }
 
