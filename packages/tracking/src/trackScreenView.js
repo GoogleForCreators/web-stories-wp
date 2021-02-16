@@ -31,9 +31,8 @@ import isTrackingEnabled from './isTrackingEnabled';
  * @param {string} screenName Screen name. Example: 'Explore Templates'.
  * @return {Promise<void>} Promise that always resolves.
  */
-//eslint-disable-next-line require-await
 async function trackScreenView(screenName) {
-  if (!isTrackingEnabled()) {
+  if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }
 

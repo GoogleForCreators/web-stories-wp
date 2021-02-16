@@ -39,7 +39,7 @@ __webpack_public_path__ = global.webStoriesDashboardSettings.publicPath;
  * @param {Object} config   Story editor settings.
  * @param {Object} flags    The flags for the application.
  */
-const initialize = (id, config, flags) => {
+const initialize = async (id, config, flags) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -48,7 +48,7 @@ const initialize = (id, config, flags) => {
   updateSettings(config.locale);
 
   // Already tracking screen views in AppContent, no need to send page views as well.
-  initializeTracking('Dashboard', false);
+  await initializeTracking('Dashboard', false);
 
   render(
     <FlagsProvider features={flags}>
