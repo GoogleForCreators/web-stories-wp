@@ -82,6 +82,8 @@ const ScrollableContent = styled.div`
   flex-shrink: 1;
 `;
 
+const HEADER_ID = `kb-header-${uuidv4()}`;
+
 function ShortcutMenu({ toggleMenu }) {
   const containerRef = useRef();
   const closeRef = useRef();
@@ -128,7 +130,6 @@ function ShortcutMenu({ toggleMenu }) {
   useKeyDownEffect(containerRef, 'esc', toggleMenu);
   useFocusTrapping({ ref: containerRef });
 
-  const headerLabelId = `kb-header-${uuidv4()}`;
   const closeLabel = __('Close menu', 'web-stories');
 
   return (
@@ -136,7 +137,7 @@ function ShortcutMenu({ toggleMenu }) {
       ref={containerRef}
       tabIndex="-1"
       role="list"
-      aria-labelledby={headerLabelId}
+      aria-labelledby={HEADER_ID}
     >
       <CloseContainer>
         <Button
@@ -152,7 +153,7 @@ function ShortcutMenu({ toggleMenu }) {
         </Button>
       </CloseContainer>
       <FlexContent bottomOffset={bottomOffset}>
-        <HeaderShortcut id={headerLabelId} />
+        <HeaderShortcut id={HEADER_ID} />
         <ScrollableContent>
           <LandmarkShortcuts />
           <RegularShortcuts />
