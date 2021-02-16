@@ -17,25 +17,31 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+import { select, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import GoogleAdManager from '../';
+import { AD_NETWORK_TYPE } from '../../../../../constants';
+import AdManagement from '..';
 
 export default {
-  title: 'Dashboard/Views/EditorSettings/GoogleAdManager',
-  component: GoogleAdManager,
+  title: 'Dashboard/Views/EditorSettings/AdManagement',
+  component: AdManagement,
 };
 
 export const _default = () => {
   return (
-    <GoogleAdManager
-      slotId={text('slotId', '')}
-      handleUpdate={(newSlotId) =>
-        action('update google ad manager')(newSlotId)
-      }
+    <AdManagement
+      adNetwork={select(
+        'adNetwork',
+        Object.values(AD_NETWORK_TYPE),
+        AD_NETWORK_TYPE.NONE
+      )}
+      updateSettings={(adUpdate) => action('trigger ad update')(adUpdate)}
+      publisherId={text('publisher Id')}
+      adSenseSlotId={text('ad sense slot id')}
+      adManagerSlotId={text('ad manager slot id')}
     />
   );
 };

@@ -33,20 +33,14 @@ import {
 } from '../../../../design-system';
 import useApi from '../../api/useApi';
 import { Layout } from '../../../components';
-import {
-  MIN_IMG_WIDTH,
-  MIN_IMG_HEIGHT,
-  AD_NETWORK_TYPE,
-} from '../../../constants';
+import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import useTelemetryOptIn from '../shared/useTelemetryOptIn';
 import useMediaOptimization from '../shared/useMediaOptimization';
 import GoogleAnalyticsSettings from './googleAnalytics';
-import GoogleAdSenseSettings from './googleAdSense';
-import GoogleAdManagerSettings from './googleAdManager';
-import AdNetworkSettings from './adNetwork';
 import { Main, Wrapper } from './components';
+import AdManagement from './adManagement';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
@@ -169,33 +163,6 @@ function EditorSettings() {
   const handleUpdateGoogleAnalyticsId = useCallback(
     (newGoogleAnalyticsId) =>
       updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
-    [updateSettings]
-  );
-
-  const handleUpdateAdSensePublisherId = useCallback(
-    (newAdSensePublisherId) =>
-      updateSettings({ adSensePublisherId: newAdSensePublisherId }),
-    [updateSettings]
-  );
-
-  const handleUpdateAdSenseSlotId = useCallback(
-    (newAdSenseSlotId) => updateSettings({ adSenseSlotId: newAdSenseSlotId }),
-    [updateSettings]
-  );
-
-  const handleUpdateAdManagerSlotId = useCallback(
-    (newAdManagerSlotId) =>
-      updateSettings({ adManagerSlotId: newAdManagerSlotId }),
-    [updateSettings]
-  );
-
-  const handleUpdateAdNetwork = useCallback(
-    (newAdNetwork) => {
-      updateSettings({ adNetwork: newAdNetwork });
-      trackEvent('change_ad_network', {
-        name: newAdNetwork,
-      });
-    },
     [updateSettings]
   );
 
@@ -420,26 +387,13 @@ function EditorSettings() {
               />
             )}
             {canManageSettings && (
-              <>
-                <AdNetworkSettings
-                  handleUpdate={handleUpdateAdNetwork}
-                  adNetwork={adNetwork}
-                />
-                {AD_NETWORK_TYPE.ADSENSE === adNetwork && (
-                  <GoogleAdSenseSettings
-                    handleUpdatePublisherId={handleUpdateAdSensePublisherId}
-                    handleUpdateSlotId={handleUpdateAdSenseSlotId}
-                    publisherId={adSensePublisherId}
-                    slotId={adSenseSlotId}
-                  />
-                )}
-                {AD_NETWORK_TYPE.ADMANAGER === adNetwork && (
-                  <GoogleAdManagerSettings
-                    handleUpdate={handleUpdateAdManagerSlotId}
-                    slotId={adManagerSlotId}
-                  />
-                )}
-              </>
+              <AdManagement
+                updateSettings={updateSettings}
+                adNetwork={adNetwork}
+                publisherId={adSensePublisherId}
+                adSenseSlotId={adSenseSlotId}
+                adManagerSlotId={adManagerSlotId}
+              />
             )}
           </Main>
         </Layout.Scrollable>

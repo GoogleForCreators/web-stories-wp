@@ -210,3 +210,9 @@ export const SettingsTextInput = styled(Input)`
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);
+
+export const MultilineForm = styled(SettingForm)`
+  ${InlineForm} {
+    margin-top: 20px;
+  }
+`;

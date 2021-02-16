@@ -17,43 +17,53 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import AdNetworkSettings, { TEXT } from '../';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
+import AdManagement, { TEXT } from '../index';
 
-describe('Editor Settings: Ad network settings <AdNetworkSettings />', function () {
+describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;
   let mockUpdate;
 
   beforeEach(() => {
     adNetwork = AD_NETWORK_TYPE.NONE;
-    mockUpdate = jest.fn((id) => {
-      adNetwork = id;
-    });
+    mockUpdate = jest.fn();
   });
 
   afterEach(() => {
     adNetwork = AD_NETWORK_TYPE.NONE;
   });
 
-  it('should render ad network settings and helper text by default', function () {
-    const { getByText } = renderWithProviders(
-      <AdNetworkSettings adNetwork={adNetwork} handleUpdate={mockUpdate} />
+  it('should render ad management settings area with ad network dropdown button and helper text by default', function () {
+    const { getByText, getByRole } = renderWithProviders(
+      <AdManagement
+        adNetwork={adNetwork}
+        updateSettings={mockUpdate}
+        publisherId={''}
+        adSenseSlotId={''}
+        adManagerSlotId={''}
+      />
     );
 
-    const sectionHeader = getByText(TEXT.SECTION_HEADING);
+    const sectionHeader = getByText('Monetization');
     expect(sectionHeader).toBeInTheDocument();
 
     const helperLink = getByText('Learn more', {
       selector: 'a',
     });
     expect(helperLink).toBeInTheDocument();
+
+    const networkDropdown = getByRole('button');
+    expect(networkDropdown).toHaveTextContent('None');
   });
 
   it('should render ad network settings and link adsense', function () {
     const { getByText } = renderWithProviders(
-      <AdNetworkSettings
+      <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADSENSE}
-        handleUpdate={mockUpdate}
+        updateSettings={mockUpdate}
+        publisherId={''}
+        adSenseSlotId={''}
+        adManagerSlotId={''}
       />
     );
 
@@ -68,9 +78,12 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
 
   it('should render ad network settings and link Ad Manager', function () {
     const { getByText } = renderWithProviders(
-      <AdNetworkSettings
+      <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADMANAGER}
-        handleUpdate={mockUpdate}
+        updateSettings={mockUpdate}
+        publisherId={''}
+        adSenseSlotId={''}
+        adManagerSlotId={''}
       />
     );
 

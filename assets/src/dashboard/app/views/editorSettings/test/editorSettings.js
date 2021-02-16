@@ -27,9 +27,9 @@ import {
   rawPublisherLogos,
 } from '../../../../dataUtils/formattedPublisherLogos';
 import { renderWithProviders } from '../../../../testUtils';
+import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
-import { TEXT as AD_NETWORK_TEXT } from '../adNetwork';
 
 import EditorSettings from '../';
 import { AD_NETWORK_TYPE } from '../../../../constants';

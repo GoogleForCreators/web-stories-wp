@@ -25,32 +25,13 @@ import { trackClick } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import styled from 'styled-components';
-import {
-  InlineForm,
-  InlineLink,
-  SettingForm,
-  SettingHeading,
-  TextInputHelperText,
-} from '../components';
-import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
-import {
-  THEME_CONSTANTS,
-  DropDown,
-  PLACEMENT,
-} from '../../../../../design-system';
-
-const AdNetworkSettingForm = styled(SettingForm)`
-  padding-bottom: 0;
-`;
+import { InlineLink, TextInputHelperText } from '../../components';
+import { AD_NETWORK_TYPE } from '../../../../../constants';
+import { THEME_CONSTANTS, DropDown } from '../../../../../../design-system';
 
 export const TEXT = {
-  SECTION_HEADING: __('Monetization', 'web-stories'),
   SLOT_ID_LABEL: __('Monetization type', 'web-stories'),
-  HELPER_MESSAGE_NONE: __(
-    'Monetize your content by showing ads in your Web Stories. <a>Learn more</a>.',
-    'web-stories'
-  ),
+
   HELPER_MESSAGE_ADSENSE: __(
     'Learn more about <a>how to monetize your Web Stories</a> using AdSense.',
     'web-stories'
@@ -121,15 +102,18 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
     (evt) => trackClick(evt, 'click_monetization_docs'),
     []
   );
-  const handleAdNetworkClick = useCallback(
-    (evt) => trackClick(evt, 'click_ad_network_docs'),
-    []
-  );
 
   return (
-    <AdNetworkSettingForm onSubmit={(e) => e.preventDefault()}>
-      <div>
-        <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+    <>
+      <DropDown
+        ariaLabel={TEXT.SLOT_ID_LABEL}
+        options={OPTIONS}
+        selectedValue={adNetwork}
+        onMenuItemClick={(_, newAdNetwork) => handleUpdate(newAdNetwork)}
+        fillWidth={true}
+      />
+
+      {message && (
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         >
@@ -137,7 +121,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
             mapping={{
               a: (
                 <InlineLink
-                  href={TEXT.HELPER_LINK_NONE}
+                  href={link}
                   rel="noreferrer"
                   target="_blank"
                   onClick={handleMonetizationClick}
@@ -147,44 +131,11 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
               ),
             }}
           >
-            {TEXT.HELPER_MESSAGE_NONE}
+            {message}
           </TranslateWithMarkup>
         </TextInputHelperText>
-      </div>
-      <div>
-        <InlineForm>
-          <DropDown
-            ariaLabel={TEXT.SLOT_ID_LABEL}
-            options={OPTIONS}
-            selectedValue={adNetwork}
-            onMenuItemClick={(_, newAdNetwork) => handleUpdate(newAdNetwork)}
-            fillWidth={true}
-          />
-        </InlineForm>
-        {message && (
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
-            <TranslateWithMarkup
-              mapping={{
-                a: (
-                  <InlineLink
-                    href={link}
-                    rel="noreferrer"
-                    target="_blank"
-                    onClick={handleAdNetworkClick}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    as="a"
-                  />
-                ),
-              }}
-            >
-              {message}
-            </TranslateWithMarkup>
-          </TextInputHelperText>
-        )}
-      </div>
-    </AdNetworkSettingForm>
+      )}
+    </>
   );
 }
 AdNetworkSettings.propTypes = {

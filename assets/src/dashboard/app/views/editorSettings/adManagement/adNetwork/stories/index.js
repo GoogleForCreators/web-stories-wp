@@ -22,11 +22,11 @@ import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { AD_NETWORK_TYPE } from '../../../../../constants';
-import AdNetwork from '../';
+import { AD_NETWORK_TYPE } from '../../../../../../constants';
+import AdNetwork from '..';
 
 export default {
-  title: 'Dashboard/Views/EditorSettings/AdNetwork',
+  title: 'Dashboard/Views/EditorSettings/AdManagement/AdNetwork',
   component: AdNetwork,
 };
 
