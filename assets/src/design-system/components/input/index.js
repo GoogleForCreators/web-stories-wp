@@ -41,15 +41,20 @@ const Hint = styled(Text)`
   margin-top: 12px;
 `;
 
-const IconContainer = styled.div`
+const SuffixContainer = styled.div`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 4px;
+  top: 38px;
+  height: 32px;
+  width: 32px;
   background: ${({ theme }) => theme.colors.bg.primary};
-  right: 12px;
-  top: 46px;
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   pointer-events: none;
 
-  svg {
-    height: 16px;
+  * {
     color: ${({ theme }) => theme.colors.fg.tertiary};
   }
 `;
@@ -77,8 +82,10 @@ const StyledInput = styled.input(
 
     :active {
       border-color: ${theme.colors.border.defaultActive};
+      color: ${theme.colors.fg.primary};
 
-      & ~ div svg {
+      & ~ div,
+      & ~ div * {
         color: ${theme.colors.fg.primary};
       }
     }
@@ -87,12 +94,12 @@ const StyledInput = styled.input(
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
 
-      & ~ div svg {
+      & ~ ${SuffixContainer} * {
         color: ${theme.colors.fg.disable};
       }
     }
 
-    & ~ p {
+    & ~ ${Hint} {
       color: ${theme.colors.fg[hasError ? 'negative' : 'tertiary']};
     }
   `
@@ -103,9 +110,9 @@ export const Input = ({
   disabled,
   hasError,
   hint,
-  Icon,
   id,
   label,
+  suffix,
   ...props
 }) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
@@ -123,11 +130,7 @@ export const Input = ({
         hasError={hasError}
         {...props}
       />
-      {Icon && (
-        <IconContainer data-testid="input-icon">
-          <Icon aria-hidden />
-        </IconContainer>
-      )}
+      {suffix && <SuffixContainer>{suffix}</SuffixContainer>}
       {hint && <Hint hasError={hasError}>{hint}</Hint>}
     </Container>
   );
@@ -174,7 +177,7 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
-  Icon: PropTypes.elementType,
   id: PropTypes.string,
   label: labelAccessibilityValidator,
+  suffix: PropTypes.element,
 };

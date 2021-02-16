@@ -28,7 +28,7 @@ import { text } from '@storybook/addon-knobs';
 import { Input } from '..';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../..';
-import { Close, LetterSpacing } from '../../../icons';
+import { AlignCenter } from '../../../icons';
 
 export default {
   title: 'DesignSystem/Components/Input',
@@ -103,7 +103,7 @@ export const _default = () => {
             label={text('Input 2 Label', 'Icon')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
-            Icon={Close}
+            suffix={'s'}
           />
           <Input
             aria-label="input-three"
@@ -151,7 +151,7 @@ export const _default = () => {
               label={text('Input 2 Label', 'Icon')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
-              Icon={LetterSpacing}
+              suffix={<AlignCenter />}
             />
             <Input
               aria-label="input-six"

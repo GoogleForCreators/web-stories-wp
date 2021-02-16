@@ -15,14 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-
-/**
  * Internal dependencies
  */
 import { Input, labelAccessibilityValidator } from '../';
-import { LetterSpacing } from '../../../icons';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Input', () => {
@@ -50,12 +45,16 @@ describe('Input', () => {
     expect(getByText('This is my input hint')).toBeInTheDocument();
   });
 
-  it('should render an icon', () => {
+  it('should render a suffix', () => {
+    const suffix = <span data-testid="suffix">{'%C'}</span>;
     const { getByTestId } = renderWithProviders(
-      <Input aria-label="test" Icon={LetterSpacing} />
+      <Input aria-label="test" suffix={suffix} />
     );
 
-    expect(getByTestId('input-icon')).toBeInTheDocument();
+    const suffixElement = getByTestId('suffix');
+
+    expect(suffixElement).toBeInTheDocument();
+    expect(suffixElement).toHaveTextContent('%C');
   });
 });
 
