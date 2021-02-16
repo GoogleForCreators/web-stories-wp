@@ -18,8 +18,7 @@
  * External dependencies
  */
 import { useRef, useState, useCallback } from 'react';
-import styled, { StyleSheetManager } from 'styled-components';
-import stylisRTLPlugin from 'stylis-plugin-rtl';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -36,21 +35,17 @@ import {
   Tooltip,
   TOOLTIP_PLACEMENT,
 } from '../../../design-system';
-import { useConfig } from '../../app';
+import DirectionAware from '../directionAware';
 import { Popup } from './popup';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
 const Wrapper = styled.div``;
 
-const withRTLPlugins = [stylisRTLPlugin];
-const withoutRTLPlugins = [];
-
 function KeyboardShortcutsMenu() {
   const anchorRef = useRef();
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
-  const { isRTL } = useConfig();
 
   const toggleMenu = useCallback((e, showMenu) => {
     e.preventDefault();
@@ -69,9 +64,7 @@ function KeyboardShortcutsMenu() {
   useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggleMenu, [toggleMenu]);
 
   return (
-    <StyleSheetManager
-      stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
-    >
+    <DirectionAware>
       <Wrapper ref={wrapperRef}>
         <Tooltip
           title={__('Toggle Keyboard Shortcuts', 'web-stories')}
@@ -96,7 +89,7 @@ function KeyboardShortcutsMenu() {
           <ShortcutMenu toggleMenu={toggleMenu} />
         </Popup>
       </Wrapper>
-    </StyleSheetManager>
+    </DirectionAware>
   );
 }
 
