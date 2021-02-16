@@ -70,7 +70,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var int
 	 */
-	protected static $obj_id = 0;
+	protected static $instance_id = 0;
 
 	/**
 	 * Stories object
@@ -143,7 +143,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @param Stories $stories Stories instance.
 	 */
 	public function __construct( Stories $stories ) {
-		self::$obj_id          = ++self::$obj_id;
 		$this->stories         = $stories;
 		$this->attributes      = $this->stories->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
@@ -154,8 +153,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return int Object id.
 	 */
-	protected static function get_obj_id() {
-		return self::$obj_id;
+	protected static function get_instance_id() {
+		return self::$instance_id;
 	}
 
 	/**
@@ -168,6 +167,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	public function render( array $args = [] ) {
+		self::$instance_id = ++self::$instance_id;
+
 		foreach ( $args as $key => $val ) {
 			if ( property_exists( $this, $key ) ) {
 				$this->{$key} = $val;

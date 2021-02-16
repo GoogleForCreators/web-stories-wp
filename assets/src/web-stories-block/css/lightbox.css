@@ -26,9 +26,9 @@
 
 .story-lightbox__close-button {
   display: inline-block;
-  position: fixed;
+  position: absolute;
   left: 0;
-  top: 16px;
+  top: 8px;
   cursor: pointer;
   height: 40px;
   width: 40px;

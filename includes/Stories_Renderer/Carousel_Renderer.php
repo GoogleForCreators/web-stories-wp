@@ -116,14 +116,14 @@ class Carousel_Renderer extends Renderer {
 
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this::get_obj_id() ); ?>">
-			<div class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . $this::get_obj_id() ); ?>" style="<?php echo esc_attr( $container_styles ); ?>">
+		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) parent::get_instance_id() ); ?>">
+			<div class="web-stories-list__inner-wrapper <?php echo esc_attr( 'carousel-' . parent::get_instance_id() ); ?>" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
 				if ( ! $this->is_amp_request() ) {
 					wp_enqueue_script( self::SCRIPT_HANDLE );
 					wp_enqueue_style( self::SCRIPT_HANDLE );
 					?>
-					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this::get_obj_id() ); ?>">
+					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . parent::get_instance_id() ); ?>">
 						<?php
 						foreach ( $this->story_posts as $story ) {
 							$this->render_single_story_content();
