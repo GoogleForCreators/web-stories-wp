@@ -20,14 +20,17 @@
  * Displays the story that user interacted with in a lightbox.
  */
 class Lightbox {
-  constructor(wrapperDiv, lightboxElement) {
-    if (!wrapperDiv || !wrapperDiv.length) {
+  constructor(wrapperDiv) {
+    if (!wrapperDiv) {
       return;
     }
 
     this.lightboxInitialized = false;
     this.wrapperDiv = wrapperDiv;
-    this.lightboxElement = lightboxElement;
+    this.lightboxElement = this.wrapperDiv.querySelector(
+      '.web-stories-list__lightbox'
+    );
+
     this.player = this.lightboxElement.querySelector('amp-story-player');
 
     if ('undefined' === typeof this.player) {
@@ -53,6 +56,8 @@ class Lightbox {
 
   initializeLightbox() {
     this.stories = this.player.getStories();
+    this.player.show(this.stories[0].href);
+    this.player.pause();
     window.wsPlayer = this.player;
     this.lightboxInitialized = true;
   }
@@ -60,26 +65,31 @@ class Lightbox {
 
 export default function initializeWebStoryLightbox() {
   const webStoryBlocks = document.getElementsByClassName('web-stories-list');
-  const wrapperDiv = document.getElementsByClassName(
-    'web-stories-list__lightbox-wrapper'
+  const wrapperDiv = document.querySelector(
+    '.web-stories-list__lightbox-wrapper'
   );
-  const lightboxElement = document.querySelector('.web-stories-list__lightbox');
 
-  const lightBox = new Lightbox(wrapperDiv, lightboxElement);
+  let lightBox = null;
+
+  if (wrapperDiv) {
+    lightBox = new Lightbox(wrapperDiv);
+  }
 
   const bindStoryClickListeners = (webStoryBlock) => {
     const cards = webStoryBlock.querySelectorAll('.web-stories-list__story');
 
-    cards.forEach((card, index) => {
+    cards.forEach((card) => {
       card.addEventListener('click', (event) => {
         event.preventDefault();
-        lightBox.player.show(lightBox.stories[index].href);
+        const storyIdx = card.dataset.storyIdx;
+        lightBox.player.show(lightBox.stories[storyIdx].href);
+        lightBox.player.play();
         lightBox.lightboxElement.classList.toggle('show');
       });
     });
   };
 
-  if ('undefined' !== typeof webStoryBlocks && lightBox) {
+  if (webStoryBlocks.length && lightBox) {
     Array.from(webStoryBlocks).forEach((webStoryBlock) => {
       bindStoryClickListeners(webStoryBlock);
     });

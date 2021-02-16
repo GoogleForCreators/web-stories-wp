@@ -507,7 +507,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
 			wp_enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
-			<div class="<?php echo esc_attr( $single_story_classes ); ?>">
+			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-idx="<?php echo esc_attr( count( self::$stories_loaded ) ); ?>" data-story-url="<?php echo esc_url( $this->current()->get_url() ); ?>">
 				<?php
 					$this->render_story_with_poster();
 				?>

@@ -5,9 +5,9 @@
   position: fixed;
   background: black;
   left: -100%;
+  top: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
 }
 
 .admin-bar .web-stories-list__lightbox {
@@ -15,9 +15,7 @@
 }
 
 .web-stories-list__lightbox.show {
-  opacity: 1;
   left: 0;
-  visibility: visible;
   z-index: 999;
 }
 
