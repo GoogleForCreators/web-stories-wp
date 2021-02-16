@@ -64,7 +64,7 @@ const QuickAction = styled.button`
 const IconWrapper = styled.div`
   margin: 0;
   flex: 1;
-  width: 26px;
+  width: 24px;
 `;
 
 const TextIconContainer = styled.div`
@@ -72,7 +72,7 @@ const TextIconContainer = styled.div`
   cursor: pointer;
   border: 0;
   padding: 0;
-  margin: 0;
+  margin: 0 -4px;
 `;
 
 function TextIcon(props) {

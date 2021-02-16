@@ -62,21 +62,21 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
   padding: 12px 0px;
-  margin: 0 18px;
+  margin: 0 22px;
   margin-bottom: -1px;
   position: relative;
 
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.colors.accent.primary};
+    border-bottom: 2px solid ${theme.colors.fg.primary};
   `}
 
   svg {
     display: block;
     width: 32px;
     height: 32px;
-    margin: 0 auto;
+    margin: 0 -4px;
     transform-origin: center center;
     transition: transform 0.3s ease;
     color: ${({ theme }) => theme.colors.fg.tertiary};
