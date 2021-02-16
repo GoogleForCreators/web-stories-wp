@@ -1,4 +1,10 @@
 /* Web Stories: Common block styles */
+.web-stories-list__inner-wrapper {
+  max-width: max-content;
+  margin: 0 auto;
+  position: relative;
+}
+
 .web-stories-list.has-archive-link {
   margin-top: 38px;
 }
@@ -81,7 +87,6 @@ html[amp] .web-stories-list__story-content-overlay {
 .web-stories-list .story-content-overlay__title {
   font-size: var(--ws-font-size-title);
   font-weight: 700;
-  margin-bottom: 15px;
 }
 
 .web-stories-list .story-content-overlay__author,
@@ -95,6 +100,10 @@ html[amp] .web-stories-list__story-content-overlay {
   -webkit-line-clamp: 2; /* Browser support: https://caniuse.com/?search=line-clamp */
   -webkit-box-orient: vertical; /* stylelint-disable-line property-no-vendor-prefix */
   overflow: hidden;
+}
+
+.web-stories-list .story-content-overlay__title:not(:last-child) {
+  margin-bottom: 15px;
 }
 
 .web-stories-list .story-content-overlay__excerpt {
@@ -112,6 +121,7 @@ html[amp] .web-stories-list__story-content-overlay {
   display: block;
   text-align: center;
   margin: 32px auto 0 auto;
+  flex-basis: 100%;
 }
 
 .web-stories-list.is-view-type-grid .web-stories-list__archive-link a,

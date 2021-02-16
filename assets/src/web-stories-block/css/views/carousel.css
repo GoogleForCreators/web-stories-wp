@@ -65,3 +65,11 @@ html[dir='rtl'] .glider-prev.disabled:hover,
 .web-stories-list.is-carousel .amp-carousel-button:not(.amp-disabled):hover {
   filter: invert(1);
 }
+
+.web-stories-list.is-carousel .glider-track {
+  scrollbar-width: none;
+}
+
+.web-stories-list.is-carousel .glider-track::-webkit-scrollbar {
+  display: none;
+}

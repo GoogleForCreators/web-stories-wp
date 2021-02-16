@@ -45,7 +45,7 @@ trait ThemeSupport {
 
 		$default_theme_support = [
 			'view-type'                 => [
-				'circles' => __( 'Circles', 'web-stories' ),
+				'circles' => __( 'Circle Carousel', 'web-stories' ),
 			],
 			'view-type-default'         => 'circles',
 			'grid-columns-default'      => 2,

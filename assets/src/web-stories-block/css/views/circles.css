@@ -11,7 +11,7 @@
   overflow-y: hidden;
 }
 .web-stories-list.is-view-type-circles .glider-track {
-  align-items: flex-start;
+  justify-content: center;
   margin: 0 auto;
 }
 

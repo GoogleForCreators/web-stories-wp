@@ -85,11 +85,9 @@ class Generic_Renderer extends Renderer {
 					$this->render_single_story_content();
 					$this->next();
 				}
+				$this->maybe_render_archive_link();
 				?>
 			</div>
-			<?php
-			$this->maybe_render_archive_link();
-			?>
 		</div>
 		<?php
 		$view_type = $this->get_view_type();

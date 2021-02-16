@@ -153,9 +153,9 @@ class Carousel_Renderer extends Renderer {
 					</amp-carousel>
 					<?php
 				}
+				$this->maybe_render_archive_link();
 				?>
 			</div>
-			<?php $this->maybe_render_archive_link(); ?>
 		</div>
 		<?php
 		$content = (string) ob_get_clean();
