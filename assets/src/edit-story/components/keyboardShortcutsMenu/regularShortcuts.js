@@ -28,7 +28,7 @@ import ShortcutMenuSection from './shortcutMenuSection';
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 24px;
+  margin: 0 24px 24px;
 `;
 
 function RegularShortcuts() {
