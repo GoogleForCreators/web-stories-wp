@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
@@ -46,6 +46,7 @@ const Wrapper = styled.div`
 `;
 
 const MenuItems = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -92,7 +93,6 @@ function CarouselMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
   const openModal = useCallback(() => setIsGridViewOpen(true), []);
   const closeModal = useCallback(() => setIsGridViewOpen(false), []);
-  const menuRef = useRef();
 
   const { toggleMetaBoxesVisible, hasMetaBoxes } = useMetaBoxes(
     ({ state, actions }) => ({
@@ -104,7 +104,7 @@ function CarouselMenu() {
   return (
     <>
       <Wrapper>
-        <MenuItems ref={menuRef}>
+        <MenuItems>
           {hasMetaBoxes && (
             <Box>
               <WithTooltip
@@ -119,7 +119,7 @@ function CarouselMenu() {
             </Box>
           )}
           <Box>
-            <KeyboardShortcutsMenu menuRef={menuRef} />
+            <KeyboardShortcutsMenu />
           </Box>
           <Box>
             <WithTooltip

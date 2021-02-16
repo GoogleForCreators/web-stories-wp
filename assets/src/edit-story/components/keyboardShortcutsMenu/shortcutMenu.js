@@ -39,7 +39,6 @@ import {
   BUTTON_VARIANTS,
   Icons,
   useKeyDownEffect,
-  useFocusOut,
 } from '../../../design-system';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import useFocusTrapping from '../../utils/useFocusTrapping';
@@ -51,7 +50,9 @@ import { TOGGLE_SHORTCUTS_MENU, TOP_MARGIN } from './constants';
 
 const BORDER_WIDTH = 1;
 const Container = styled.div`
-  position: relative;
+  position: absolute;
+  right: 0;
+  bottom: 0;
   width: 352px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.bg.primary};
@@ -124,7 +125,6 @@ function ShortcutMenu({ toggleMenu }) {
     toggleMenu,
   ]);
 
-  useFocusOut(containerRef, toggleMenu);
   useKeyDownEffect(containerRef, 'esc', toggleMenu);
   useFocusTrapping({ ref: containerRef });
 

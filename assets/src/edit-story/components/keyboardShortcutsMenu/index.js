@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useRef, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -32,16 +32,22 @@ import {
   BUTTON_VARIANTS,
   Icons,
   useGlobalKeyDownEffect,
+  useFocusOut,
   Tooltip,
   TOOLTIP_PLACEMENT,
 } from '../../../design-system';
-import Popup, { Placement } from '../popup';
+import { Popup } from './popup';
 import ShortcutMenu from './shortcutMenu';
-import { TOGGLE_SHORTCUTS_MENU, BOTTOM_MARGIN } from './constants';
+import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
-function KeyboardShortcutsMenu({ menuRef }) {
+const Wrapper = styled.div``;
+
+function KeyboardShortcutsMenu() {
   const anchorRef = useRef();
+  const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setIsOpen(false), [setIsOpen]);
 
   const toggleMenu = useCallback((e, showMenu) => {
     e.preventDefault();
@@ -60,9 +66,10 @@ function KeyboardShortcutsMenu({ menuRef }) {
   const label = __('Open Keyboard Shortcuts', 'web-stories');
 
   useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggleMenu, [toggleMenu]);
+  useFocusOut(wrapperRef, closeMenu, []);
 
   return (
-    <>
+    <Wrapper ref={wrapperRef}>
       <Tooltip
         title={label}
         placement={TOOLTIP_PLACEMENT.TOP}
@@ -82,20 +89,11 @@ function KeyboardShortcutsMenu({ menuRef }) {
           <Icons.Keyboard />
         </Button>
       </Tooltip>
-      <Popup
-        anchor={menuRef}
-        isOpen={isOpen}
-        placement={Placement.TOP_END}
-        spacing={{ y: BOTTOM_MARGIN }}
-      >
+      <Popup isOpen={isOpen}>
         <ShortcutMenu toggleMenu={toggleMenu} />
       </Popup>
-    </>
+    </Wrapper>
   );
 }
-
-KeyboardShortcutsMenu.propTypes = {
-  menuRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-};
 
 export default KeyboardShortcutsMenu;
