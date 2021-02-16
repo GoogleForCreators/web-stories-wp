@@ -44,7 +44,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       />
     );
 
-    const sectionHeader = getByText('Monetization');
+    const sectionHeader = getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
     const helperLink = getByText('Learn more', {
