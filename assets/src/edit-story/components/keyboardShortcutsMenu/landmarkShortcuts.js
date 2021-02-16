@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Text, THEME_CONSTANTS } from '../../../design-system';
-import useKeyboardShortcuts from './getKeyboardShortcuts';
+import { landmarks } from './keyboardShortcutList';
 import ShortcutLabel from './shortcutLabel';
 
 const LandmarksWrapper = styled.dl`
@@ -49,8 +49,6 @@ const Label = styled(Text).attrs({
 `;
 
 function LandmarkShortcuts() {
-  const { landmarks } = useKeyboardShortcuts();
-
   return (
     <LandmarksWrapper role="group">
       {landmarks.map(({ label, shortcut }) => (

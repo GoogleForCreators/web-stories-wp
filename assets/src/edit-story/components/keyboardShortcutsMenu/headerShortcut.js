@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Headline, THEME_CONSTANTS } from '../../../design-system';
-import useKeyboardShortcuts from './getKeyboardShortcuts';
+import { header } from './keyboardShortcutList';
 import ShortcutLabel from './shortcutLabel';
 
 const List = styled.dl`
@@ -37,9 +37,7 @@ const Item = styled.dt`
 `;
 
 function HeaderShortcut(props) {
-  const {
-    header: { label, shortcut },
-  } = useKeyboardShortcuts();
+  const { label, shortcut } = header;
 
   return (
     <List role="group">

@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import useKeyboardShortcuts from './getKeyboardShortcuts';
+import { sections } from './keyboardShortcutList';
 import ShortcutMenuSection from './shortcutMenuSection';
 
 const ContentWrapper = styled.div`
@@ -32,8 +32,6 @@ const ContentWrapper = styled.div`
 `;
 
 function RegularShortcuts() {
-  const { sections } = useKeyboardShortcuts();
-
   return (
     <ContentWrapper>
       {sections.map(({ title, commands }) => (
