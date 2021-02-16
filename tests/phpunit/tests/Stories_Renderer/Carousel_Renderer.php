@@ -103,12 +103,19 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'                 => 'carousel',
+				'stories_archive_label'     => 'View all stories',
+				'class'                     => '',
+				'number_of_columns'         => 2,
 				'show_title'                => false,
 				'show_author'               => false,
 				'show_date'                 => false,
+				'show_excerpt'              => false,
 				'show_stories_archive_link' => false,
-				'stories_archive_label'     => 'View all stories',
+				'has_square_corners'        => false,
+				'stories_archive_label'     => __( 'View all stories', 'web-stories' ),
+				'list_view_image_alignment' => 'left',
 				'class'                     => '',
+				'circle_size'               => 150,
 			]
 		);
 

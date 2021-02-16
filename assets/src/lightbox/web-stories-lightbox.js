@@ -56,8 +56,6 @@ class Lightbox {
 
   initializeLightbox() {
     this.stories = this.player.getStories();
-    this.player.show(this.stories[0].href);
-    this.player.pause();
     window.wsPlayer = this.player;
     this.lightboxInitialized = true;
   }
@@ -81,7 +79,9 @@ export default function initializeWebStoryLightbox() {
     cards.forEach((card) => {
       card.addEventListener('click', (event) => {
         event.preventDefault();
-        const storyIdx = card.dataset.storyIdx;
+        const storyIdx = lightBox.stories.findIndex(
+          (story) => story.href === card.dataset.storyUrl
+        );
         lightBox.player.show(lightBox.stories[storyIdx].href);
         lightBox.player.play();
         lightBox.lightboxElement.classList.toggle('show');

@@ -101,13 +101,17 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 			[
 				'view_type'                 => 'grid',
 				'number_of_columns'         => 2,
+				'list_view_image_alignment' => 'left',
+				'class'                     => '',
 				'show_title'                => false,
 				'show_author'               => false,
 				'show_date'                 => false,
+				'show_excerpt'              => false,
 				'show_stories_archive_link' => false,
-				'stories_archive_label'     => 'View all stories',
-				'list_view_image_alignment' => 'left',
+				'has_square_corners'        => false,
+				'stories_archive_label'     => __( 'View all stories', 'web-stories' ),
 				'class'                     => '',
+				'circle_size'               => 150,
 			]
 		);
 
