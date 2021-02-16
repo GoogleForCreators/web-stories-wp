@@ -75,7 +75,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       callback
     ) => {
       fetchMediaStart({ pageToken: p });
-      const trackTiming = getTimeTracker('load', 'editor', 'Media');
+      const trackTiming = getTimeTracker('load_media');
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,

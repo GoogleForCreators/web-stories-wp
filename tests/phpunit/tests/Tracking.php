@@ -54,16 +54,39 @@ class Tracking extends \WP_UnitTestCase {
 	public function test_get_settings() {
 		wp_set_current_user( self::$user_id );
 
-		$settings = ( new \Google\Web_Stories\Tracking() )->get_settings();
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'get_enabled_experiments' )
+					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
-		$expected = [
-			'trackingAllowed' => false,
-			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
-			'trackingIdGA4'   => \Google\Web_Stories\Tracking::TRACKING_ID_GA4,
-			'appVersion'      => WEBSTORIES_VERSION,
-		];
+		$settings = ( new \Google\Web_Stories\Tracking( $experiments ) )->get_settings();
 
-		$this->assertEqualSetsWithIndex( $expected, $settings );
+		$this->assertArrayHasKey( 'trackingAllowed', $settings );
+		$this->assertArrayHasKey( 'trackingId', $settings );
+		$this->assertArrayHasKey( 'trackingIdGA4', $settings );
+		$this->assertArrayHasKey( 'appVersion', $settings );
+		$this->assertArrayHasKey( 'userProperties', $settings );
+		$this->assertFalse( $settings['trackingAllowed'] );
+		$this->assertSame( \Google\Web_Stories\Tracking::TRACKING_ID, $settings['trackingId'] );
+		$this->assertSame( \Google\Web_Stories\Tracking::TRACKING_ID_GA4, $settings['trackingIdGA4'] );
+		$this->assertSame( WEBSTORIES_VERSION, $settings['appVersion'] );
+		$this->assertArrayHasKey( 'siteLocale', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'userLocale', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'userRole', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'enabledExperiments', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'wpVersion', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'phpVersion', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'isMultisite', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'adNetwork', $settings['userProperties'] );
+		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
+		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
+		$this->assertSame( PHP_VERSION, $settings['userProperties']['phpVersion'] );
+		$this->assertSame( get_bloginfo( 'version' ), $settings['userProperties']['wpVersion'] );
+		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
+		$this->assertSame( 'enableFoo,enableBar', $settings['userProperties']['enabledExperiments'] );
+		$this->assertInternalType( 'string', $settings['userProperties']['wpVersion'] );
+		$this->assertInternalType( 'string', $settings['userProperties']['phpVersion'] );
+		$this->assertInternalType( 'int', $settings['userProperties']['isMultisite'] );
+		$this->assertInternalType( 'string', $settings['userProperties']['adNetwork'] );
 	}
 
 	/**
@@ -73,17 +96,15 @@ class Tracking extends \WP_UnitTestCase {
 		wp_set_current_user( self::$user_id );
 		add_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY, true );
 
-		$settings = ( new \Google\Web_Stories\Tracking() )->get_settings();
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'get_enabled_experiments' )
+					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
-		$expected = [
-			'trackingAllowed' => true,
-			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
-			'trackingIdGA4'   => \Google\Web_Stories\Tracking::TRACKING_ID_GA4,
-			'appVersion'      => WEBSTORIES_VERSION,
-		];
+		$settings         = ( new \Google\Web_Stories\Tracking( $experiments ) )->get_settings();
+		$tracking_allowed = $settings['trackingAllowed'];
 
 		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY );
 
-		$this->assertEqualSetsWithIndex( $expected, $settings );
+		$this->assertTrue( $tracking_allowed );
 	}
 }

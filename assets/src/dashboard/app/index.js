@@ -17,11 +17,13 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackScreenView } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -38,7 +40,6 @@ import {
   ROUTE_TITLES,
   ADMIN_TITLE,
 } from '../constants';
-
 import {
   AppFrame,
   LeftRail,
@@ -58,21 +59,62 @@ import {
   TemplateDetailsView,
   ToasterView,
 } from './views';
+import useApi from './api/useApi';
 
 const AppContent = () => {
   const {
-    state: { currentPath },
+    state: {
+      currentPath,
+      queryParams: { id: templateId },
+    },
   } = useRouteHistory();
+  const { currentTemplate } = useApi(
+    ({
+      state: {
+        templates: { templates },
+      },
+    }) => ({
+      currentTemplate:
+        templateId !== undefined ? templates[templateId]?.title : undefined,
+    })
+  );
+
+  const fullPath = useMemo(() => {
+    return currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) &&
+      templateId &&
+      currentTemplate
+      ? `${currentPath}/${templateId}`
+      : currentPath;
+    // Disable reason: avoid sending duplicate tracking events.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPath, currentTemplate]);
 
   useEffect(() => {
-    const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
-    window.document.title = sprintf(
+    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && !currentTemplate) {
+      return;
+    }
+
+    let dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
+    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL)) {
+      dynamicPageTitle = sprintf(
+        /* translators: %s: Template name. */
+        __('Template: %s', 'web-stories'),
+        currentTemplate
+      );
+    }
+
+    document.title = sprintf(
       /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
       __('%1$s \u2039 %2$s \u2212 WordPress', 'web-stories'),
       dynamicPageTitle,
       ADMIN_TITLE
     );
-  }, [currentPath]);
+
+    trackScreenView(dynamicPageTitle);
+
+    // Disable reason: avoid sending duplicate tracking events.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fullPath]);
 
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||

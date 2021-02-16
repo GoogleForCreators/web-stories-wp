@@ -54,6 +54,24 @@ class Tracking {
 	const TRACKING_ID_GA4 = 'G-T88C9951CM';
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Tracking constructor.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+
+	/**
 	 * Initializes tracking.
 	 *
 	 * Registers the setting in WordPress.
@@ -90,7 +108,34 @@ class Tracking {
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
 			'trackingIdGA4'   => self::TRACKING_ID_GA4,
+			// This doesn't seem to be fully working for web properties.
+			// So we send it as both app_version and a user property.
+			// See https://support.google.com/analytics/answer/9268042.
 			'appVersion'      => WEBSTORIES_VERSION,
+			'userProperties'  => $this->get_user_properties(),
+		];
+	}
+
+	/**
+	 * Returns a list of user properties.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return array User properties.
+	 */
+	private function get_user_properties() {
+		$role        = ! empty( wp_get_current_user()->roles ) ? wp_get_current_user()->roles[0] : '';
+		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
+
+		return [
+			'siteLocale'         => get_locale(),
+			'userLocale'         => get_user_locale(),
+			'userRole'           => $role,
+			'enabledExperiments' => $experiments,
+			'wpVersion'          => get_bloginfo( 'version' ),
+			'phpVersion'         => PHP_VERSION,
+			'isMultisite'        => (int) is_multisite(),
+			'adNetwork'          => (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ),
 		];
 	}
 

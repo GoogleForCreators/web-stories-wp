@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,27 +41,33 @@ describe('getTimeTracker', () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
     config.trackingId = 'UA-12345678-1';
+    config.trackingIdGA4 = 'G-ABC1234567';
 
-    gtag.mockImplementationOnce((type, eventName, eventData) => {
+    gtag.mockImplementation((type, eventName, eventData) => {
       eventData.event_callback();
     });
 
-    const trackTime = getTimeTracker('load', 'Dependencies', 'CDN');
+    const trackTime = getTimeTracker('load_dependencies');
     await trackTime();
 
-    expect(gtag).toHaveBeenCalledWith('event', 'timing_complete', {
+    expect(gtag).toHaveBeenCalledTimes(2);
+    expect(gtag).toHaveBeenNthCalledWith(1, 'event', 'timing_complete', {
       event_callback: expect.any(Function),
-      event_category: 'Dependencies',
-      event_label: 'CDN',
-      name: 'load',
+      name: 'load_dependencies',
       value: 50,
+      send_to: 'UA-12345678-1',
+    });
+    expect(gtag).toHaveBeenNthCalledWith(2, 'event', 'load_dependencies', {
+      event_callback: expect.any(Function),
+      value: 50,
+      send_to: 'G-ABC1234567',
     });
   });
 
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
 
-    const trackTime = getTimeTracker('load', 'Dependencies', 'CDN');
+    const trackTime = getTimeTracker('load_dependencies');
     await trackTime();
     expect(gtag).not.toHaveBeenCalled();
   });
