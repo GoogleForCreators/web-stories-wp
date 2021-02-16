@@ -37,14 +37,14 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 *
 	 * @var null
 	 */
-	protected $template = null;
+	protected $stylesheet = null;
 
 	/**
 	 * Runs prior to each test and sets up the testee object.
 	 */
 	public function setUp() {
-		$this->template = get_template();
-		$this->stub     = new \Google\Web_Stories\Integrations\Core_Themes_Support();
+		$this->stylesheet = get_stylesheet();
+		$this->stub       = new \Google\Web_Stories\Integrations\Core_Themes_Support();
 	}
 
 	/**
@@ -57,10 +57,10 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 			remove_theme_support( 'web-stories' );
 		}
 
-		update_option( 'template', $this->template );
+		update_option( 'stylesheet', $this->stylesheet );
 
 		unset( $this->stub );
-		unset( $this->template );
+		unset( $this->stylesheet );
 
 		parent::tearDown();
 	}
@@ -82,7 +82,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::init
 	 */
 	public function test_init_non_core_theme() {
-		update_option( 'template', '' );
+		update_option( 'stylesheet', '' );
 
 		$this->stub->init();
 
@@ -106,11 +106,10 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 			'twentytwelve',
 			'twentyeleven',
 			'twentyten',
-			'classic',
 			'default',
 		];
 
-		$actual = \Google\Web_Stories\Integrations\Core_Themes_Support::$supported_themes;
+		$actual = $this->get_static_private_property( $this->stub, 'supported_themes' );
 
 		$this->assertEquals( $actual, $expected );
 	}
@@ -132,7 +131,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::extend_theme_support
 	 */
 	public function test_extend_theme_support_non_core_themes() {
-		update_option( 'template', '' );
+		update_option( 'stylesheet', '' );
 		$this->stub->init();
 
 		$this->assertFalse( get_theme_support( 'web-stories' ) );

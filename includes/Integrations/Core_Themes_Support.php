@@ -38,7 +38,7 @@ class Core_Themes_Support {
 	 *
 	 * @var array
 	 */
-	public static $supported_themes = [
+	protected static $supported_themes = [
 		'twentytwentyone',
 		'twentytwenty',
 		'twentynineteen',
@@ -50,7 +50,6 @@ class Core_Themes_Support {
 		'twentytwelve',
 		'twentyeleven',
 		'twentyten',
-		'classic',
 		'default',
 	];
 
@@ -91,7 +90,7 @@ class Core_Themes_Support {
 	 */
 	public function init() {
 
-		if ( ! in_array( get_template(), self::$supported_themes, true ) ) {
+		if ( ! in_array( get_stylesheet(), self::$supported_themes, true ) ) {
 			return;
 		}
 
