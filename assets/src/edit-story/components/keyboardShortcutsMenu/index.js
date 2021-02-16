@@ -33,7 +33,6 @@ import {
   BUTTON_VARIANTS,
   Icons,
   useGlobalKeyDownEffect,
-  useFocusOut,
   Tooltip,
   TOOLTIP_PLACEMENT,
 } from '../../../design-system';
@@ -53,8 +52,6 @@ function KeyboardShortcutsMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { isRTL } = useConfig();
 
-  const closeMenu = useCallback(() => setIsOpen(false), [setIsOpen]);
-
   const toggleMenu = useCallback((e, showMenu) => {
     e.preventDefault();
     setIsOpen((prevIsOpen) => {
@@ -69,10 +66,7 @@ function KeyboardShortcutsMenu() {
     });
   }, []);
 
-  const label = __('Open Keyboard Shortcuts', 'web-stories');
-
   useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggleMenu, [toggleMenu]);
-  useFocusOut(wrapperRef, closeMenu, []);
 
   return (
     <StyleSheetManager
@@ -80,7 +74,7 @@ function KeyboardShortcutsMenu() {
     >
       <Wrapper ref={wrapperRef}>
         <Tooltip
-          title={label}
+          title={__('Toggle Keyboard Shortcuts', 'web-stories')}
           placement={TOOLTIP_PLACEMENT.TOP}
           shortcut="mod+/"
           hasTail
@@ -90,7 +84,7 @@ function KeyboardShortcutsMenu() {
             variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
-            aria-label={label}
+            aria-label={__('Keyboard Shortcuts', 'web-stories')}
             aria-haspopup={true}
             aria-expanded={isOpen}
             onClick={toggleMenu}
