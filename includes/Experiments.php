@@ -218,6 +218,7 @@ class Experiments {
 				'label'       => __( 'Quick Tips', 'web-stories' ),
 				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @carlos-kelly
