@@ -2,7 +2,7 @@
 #
 # Builds the plugin for release candidates and stable releases.
 #
-# Creates the release branch, the actual releas on GitHub, and the correct tag.
+# Creates the release branch, the actual release on GitHub, and the correct tag.
 #
 # For new major releases, the action should be run from the `main` branch.
 # For patch releases, the action should be run from the corresponding release branch (e.g. `release/1.2.0`)
