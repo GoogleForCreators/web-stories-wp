@@ -108,8 +108,7 @@ const WebStoriesModal = (props) => {
               step={5}
               onChange={(size) =>
                 updateViewSettings({
-                  // eslint-disable-next-line radix
-                  fieldObj: parseInt(size, 10),
+                  fieldObj: parseInt(size),
                   field: 'circle_size',
                 })
               }
