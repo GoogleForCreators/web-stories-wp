@@ -118,13 +118,6 @@ function InnerElement({
     }
   }, [resource.poster]);
 
-  useEffect(() => {
-    // assign poster for gifs
-    if (type === ContentType.GIF && resource.output.poster) {
-      newVideoPosterRef.current = resource.output.poster;
-    }
-  }, [type, resource.output]);
-
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
@@ -247,7 +240,7 @@ function InnerElement({
           },
         }}
         onClick={onClick(
-          type === ContentType.IMAGE ? thumbnailURL : poster,
+          type === ContentType.IMAGE ? thumbnailURL : posterSrc,
           mediaBaseColor.current
         )}
         cloneElement={CloneImg}
