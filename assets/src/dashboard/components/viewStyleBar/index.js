@@ -24,10 +24,8 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-
-import { Grid as GridSVG, List as ListSVG } from '../../icons';
+import { Icons } from '../../../design-system';
 import {
-  ICON_METRICS,
   KEYBOARD_USER_SELECTOR,
   VIEW_STYLE,
   VIEW_STYLE_LABELS,
@@ -61,20 +59,6 @@ const ToggleButton = styled.button`
   }
 `;
 
-const ListIcon = styled(ListSVG).attrs(ICON_METRICS.VIEW_STYLE)`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
 export default function ViewStyleBar({ onPress, layoutStyle }) {
   return (
     <Container>
@@ -84,10 +68,10 @@ export default function ViewStyleBar({ onPress, layoutStyle }) {
           onClick={onPress}
         >
           {layoutStyle === VIEW_STYLE.GRID && (
-            <ListIcon data-testid="list-icon" />
+            <Icons.Table height="32px" width="32px" data-testid="list-icon" />
           )}
           {layoutStyle === VIEW_STYLE.LIST && (
-            <GridIcon data-testid="grid-icon" />
+            <Icons.Box4 height="32px" width="32px" data-testid="grid-icon" />
           )}
         </ToggleButton>
       </Tooltip>

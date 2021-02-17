@@ -66,6 +66,8 @@ export const DropDown = ({
   popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   popupZIndex,
   selectedValue = '',
+  selectButtonStyles,
+  popupStyles,
   ...rest
 }) => {
   const selectRef = useRef();
@@ -118,6 +120,7 @@ export const DropDown = ({
         isOpen={isOpen.value}
         onSelectClick={handleSelectClick}
         ref={selectRef}
+        selectButtonStyles={selectButtonStyles}
         {...rest}
       />
       {!disabled && (
@@ -127,6 +130,7 @@ export const DropDown = ({
           placement={placement}
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
+          popupStyles={popupStyles}
         >
           <Menu
             activeValue={activeOption?.value}
@@ -177,4 +181,6 @@ DropDown.propTypes = {
     PropTypes.bool,
     PropTypes.number,
   ]),
+  selectButtonStyles: PropTypes.any,
+  popupStyles: PropTypes.any,
 };

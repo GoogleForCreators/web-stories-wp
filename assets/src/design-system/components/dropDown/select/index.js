@@ -41,6 +41,7 @@ const DropDownSelect = (
     isOpen,
     onSelectClick,
     placeholder = '',
+    selectButtonStyles,
     ...rest
   },
   ref
@@ -52,6 +53,7 @@ const DropDownSelect = (
     hasError={hasError}
     onClick={onSelectClick}
     ref={ref}
+    selectButtonStyles={selectButtonStyles}
     {...rest}
   >
     <Value as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
@@ -80,4 +82,5 @@ DropDownSelect.propTypes = {
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   isOpen: PropTypes.bool,
+  selectButtonStyles: PropTypes.any,
 };

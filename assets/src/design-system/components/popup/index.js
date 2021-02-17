@@ -30,7 +30,13 @@ import { PLACEMENT } from './constants';
 // TODO scrollbar update, commented out until design updates are done
 const DEFAULT_POPUP_Z_INDEX = 2;
 const Container = styled.div.attrs(
-  ({ x, y, width, height, fillWidth, fillHeight, placement, zIndex }) => ({
+  ({
+    offset: { x, y, width, height },
+    fillWidth,
+    fillHeight,
+    placement,
+    zIndex,
+  }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
@@ -68,6 +74,8 @@ const Container = styled.div.attrs(
     border-top-width: 3px;
     border-radius: 6px;
   }
+
+  ${({ popupStyles }) => popupStyles}
 `;
 
 function Popup({
@@ -82,6 +90,7 @@ function Popup({
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = () => {},
+  popupStyles,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -97,6 +106,7 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
+      // const { x, y } = getOffset(placement, spacing, anchor, dock, popup);
       setPopupState({
         offset: getOffset(placement, spacing, anchor, dock, popup),
       });
@@ -125,11 +135,12 @@ function Popup({
     ? createPortal(
         <Container
           ref={popup}
-          {...popupState.offset}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
           zIndex={zIndex}
+          popupStyles={popupStyles}
+          offset={popupState.offset}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
