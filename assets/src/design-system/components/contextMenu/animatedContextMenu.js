@@ -34,7 +34,7 @@ const PERCENTAGE_OFFSET = {
   [DIRECTIONS.LEFT]: -50,
 };
 
-const transition = `transform 0.175s ${BEZIER.outSine}`;
+const transition = `transform 0.175s ${BEZIER.default}`;
 const initialScale = 0.5;
 const fullSize = css`
   top: 0;
@@ -241,7 +241,7 @@ function AnimationContainer({ children, isOpen, ...props }) {
   /**
    * Seems funky, but we need 1 full render where the proper
    * alignment is set before we animate in. This prevents react
-   * from batching those renders and animating from wrong alignemnt.
+   * from batching those renders and animating from wrong alignment.
    */
   useEffect(() => {
     const frameId = requestAnimationFrame(() => setIsReady(Boolean(align)));

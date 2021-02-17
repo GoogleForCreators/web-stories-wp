@@ -74,6 +74,12 @@ export default {
   component: ContextMenu,
 };
 
+const ViewportContainer = styled.div`
+  position: relative;
+  height: 100vh;
+  width: 100%;
+`;
+
 const Container = styled.div`
   position: relative;
   height: 700px;
@@ -83,10 +89,9 @@ const Container = styled.div`
 `;
 
 const AnimatedContainerWrapper = styled.div`
-  width: 100px;
-  margin-left: 70px;
-  margin-top: 20px;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 export const _default = () => {
@@ -152,11 +157,13 @@ export const Animated = () => {
   }));
 
   return (
-    <AnimatedContainerWrapper>
-      <AnimatedContextMenu
-        items={itemsWithEventHandlers}
-        isOpen={boolean('isOpen', true)}
-      />
-    </AnimatedContainerWrapper>
+    <ViewportContainer>
+      <AnimatedContainerWrapper>
+        <AnimatedContextMenu
+          items={itemsWithEventHandlers}
+          isOpen={boolean('isOpen', true)}
+        />
+      </AnimatedContainerWrapper>
+    </ViewportContainer>
   );
 };
