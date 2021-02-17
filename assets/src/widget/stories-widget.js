@@ -44,25 +44,21 @@ const reactiveWidget = function (target, reset = false) {
     if (field && fieldWrapper) {
       const field_type = field.getAttribute('type');
 
-      switch (field_type) {
-        case 'checkbox':
-          if (reset) {
-            field.checked = false;
-          }
-          /**
-           * If this is readonly field.
-           * Assign the value automatically and hide it afterward.
-           */
-          if (value.readonly) {
-            field.checked = value.show;
-          }
+      if ('checkbox' === field_type) {
+        if (reset) {
+          field.checked = false;
+        }
+        /**
+         * If this is readonly field.
+         * Assign the value automatically and hide it afterward.
+         */
+        if (value.readonly) {
+          field.checked = value.show;
+        }
 
-          fieldWrapper.style.display = value.readonly ? 'none' : 'block';
-          break;
-
-        default:
-          fieldWrapper.style.display = value.show ? 'block' : 'none';
-          break;
+        fieldWrapper.style.display = value.readonly ? 'none' : 'block';
+      } else {
+        fieldWrapper.style.display = value.show ? 'block' : 'none';
       }
     }
   }
