@@ -29,7 +29,6 @@ import { THEME_CONSTANTS } from '../../theme';
 import { Menu, MENU_OPTIONS } from '../menu';
 import { Popup, PLACEMENT } from '../popup';
 import { DropDownContainer, Hint } from './components';
-import { DEFAULT_POPUP_FILL_WIDTH } from './constants';
 import DropDownSelect from './select';
 import useDropDown from './useDropDown';
 /**
@@ -63,7 +62,7 @@ export const DropDown = ({
   onMenuItemClick,
   options = [],
   placement = PLACEMENT.BOTTOM,
-  popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
+  popupFillWidth = true,
   popupZIndex,
   selectedValue = '',
   selectButtonStyles,
@@ -173,7 +172,7 @@ DropDown.propTypes = {
   onMenuItemClick: PropTypes.func,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
-  popupFillWidth: PropTypes.number,
+  popupFillWidth: PropTypes.bool,
   popupZIndex: PropTypes.number,
   renderItem: PropTypes.object,
   selectedValue: PropTypes.oneOfType([
