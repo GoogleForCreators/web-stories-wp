@@ -84,8 +84,8 @@ const Container = styled.div`
 
 const AnimatedContainerWrapper = styled.div`
   width: 100px;
-  margin-left: 75px;
-  margin-top: 25px;
+  margin-left: 70px;
+  margin-top: 20px;
   position: relative;
 `;
 
