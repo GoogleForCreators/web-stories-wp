@@ -98,6 +98,7 @@ class Stories extends \WP_UnitTestCase {
 			'circle_size'    => 150,
 			'archive_label'  => 'View Stories',
 			'number_columns' => 2,
+			'sharp_corners'  => 1,
 		];
 
 		$old_instance = [];
@@ -115,6 +116,7 @@ class Stories extends \WP_UnitTestCase {
 			'circle_size'       => 150,
 			'archive_label'     => 'View Stories',
 			'number_columns'    => 2,
+			'sharp_corners'     => 1,
 		];
 
 		$instance = self::$testee->update( $new_instance, $old_instance );
