@@ -31,9 +31,10 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-  useGlobalKeyDownEffect,
   Tooltip,
   TOOLTIP_PLACEMENT,
+  useGlobalKeyDownEffect,
+  useFocusOut,
 } from '../../../design-system';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import DirectionAware from '../directionAware';
@@ -47,6 +48,8 @@ function KeyboardShortcutsMenu() {
   const anchorRef = useRef();
   const wrapperRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setIsOpen(false), [setIsOpen]);
 
   const toggleMenu = useCallback((e, showMenu) => {
     e.preventDefault();
@@ -66,6 +69,7 @@ function KeyboardShortcutsMenu() {
   }, []);
 
   useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggleMenu, [toggleMenu]);
+  useFocusOut(wrapperRef, closeMenu, []);
 
   return (
     <DirectionAware>
