@@ -77,6 +77,7 @@ class Stories_Shortcode {
 				'circle_size'               => 150,
 				'number'                    => 10,
 				'order'                     => 'DESC',
+				'sharp_corners'             => 'false',
 			],
 			$attrs,
 			self::SHORTCODE_NAME
@@ -108,6 +109,7 @@ class Stories_Shortcode {
 			'list_view_image_alignment' => (string) $attributes['list_view_image_alignment'],
 			'class'                     => (string) $attributes['class'],
 			'circle_size'               => (int) $attributes['circle_size'],
+			'sharp_corners'             => ( 'true' === $attributes['sharp_corners'] ),
 		];
 	}
 

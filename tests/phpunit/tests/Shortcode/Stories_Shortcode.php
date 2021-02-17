@@ -135,6 +135,7 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 			'list_view_image_alignment' => 'left',
 			'class'                     => 'dummy',
 			'circle_size'               => 200,
+			'sharp_corners'             => false,
 		];
 
 		$attributes = [
@@ -149,6 +150,7 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 			'list_view_image_alignment' => 'left',
 			'class'                     => 'dummy',
 			'circle_size'               => '200',
+			'sharp_corners'             => 'false',
 		];
 
 		$actual = $this->call_private_method( $shortcode, 'prepare_story_attrs', [ $attributes ] );
