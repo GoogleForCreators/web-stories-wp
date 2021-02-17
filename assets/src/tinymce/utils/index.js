@@ -43,6 +43,16 @@ export const isCircleView = () => {
 };
 
 /**
+ * Check if current view is circle view.
+ *
+ * @param view View to check for.
+ * @return {boolean} Returns the result.
+ */
+export const isView = (view) => {
+  return view === currentView();
+};
+
+/**
  * Update the view wide settings.
  *
  * @param {Object} args Arguments.
@@ -88,9 +98,15 @@ export const setDefaultStateSetting = () => {
 
   views.forEach((value) => {
     const { value: viewValue } = value;
-    const { title, author, date, excerpt, image_align, archive_link } = fields[
-      viewValue
-    ];
+    const {
+      title,
+      author,
+      date,
+      excerpt,
+      image_align,
+      archive_link,
+      sharp_corners,
+    } = fields[viewValue];
 
     State[viewValue] = {
       title: title,
@@ -104,6 +120,8 @@ export const setDefaultStateSetting = () => {
       view: viewValue,
       order: orderlist ? 'latest' : orderlist[0].value,
       circle_size: 150,
+      sharp_corners: sharp_corners,
+      archive_label: '',
     };
   });
 

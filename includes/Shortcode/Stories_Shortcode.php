@@ -105,7 +105,7 @@ class Stories_Shortcode {
 			'show_date'                 => ( 'true' === $attributes['date'] ),
 			'show_excerpt'              => ( 'true' === $attributes['excerpt'] ),
 			'show_story_archive_link'   => ( 'true' === $attributes['archive_link'] ),
-			'show_story_archive_label'  => ( 'true' === $attributes['archive_label'] ),
+			'stories_archive_label'     => $attributes['archive_label'],
 			'list_view_image_alignment' => (string) $attributes['list_view_image_alignment'],
 			'class'                     => (string) $attributes['class'],
 			'circle_size'               => (int) $attributes['circle_size'],
