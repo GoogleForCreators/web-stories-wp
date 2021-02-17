@@ -47,6 +47,8 @@ const Hint = styled(Text)`
 const Suffix = styled(Text)`
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.tertiary};
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const InputContainer = styled.div(
