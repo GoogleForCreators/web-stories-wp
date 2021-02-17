@@ -141,7 +141,10 @@ export const PagePropTypes = PropTypes.shape({
 });
 
 export const SearchPropTypes = PropTypes.shape({
-  keyword: PropTypes.string,
+  keyword: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string,
+  }),
   setKeyword: PropTypes.func,
 });
 

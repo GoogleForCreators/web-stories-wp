@@ -144,14 +144,14 @@ function Content({
                 </>
               ) : (
                 <EmptyContentMessage>
-                  {search?.keyword
+                  {search.keyword?.label
                     ? sprintf(
                         /* translators: %s: search term. */
                         __(
                           'Sorry, we couldn\'t find any results matching "%s"',
                           'web-stories'
                         ),
-                        search.keyword
+                        search.keyword.label
                       )
                     : __(
                         'Bookmark a story or template to get started!',

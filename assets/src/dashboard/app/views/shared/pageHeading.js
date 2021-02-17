@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { StoriesPropType } from '../../../types';
 import { NavMenuButton, StandardViewContentGutter } from '../../../components';
-import { Headline, Search, THEME_CONSTANTS } from '../../../../design-system';
+import { Display, Search, THEME_CONSTANTS } from '../../../../design-system';
 
 const HeadingContainer = styled(StandardViewContentGutter)`
   display: flex;
@@ -36,7 +36,7 @@ const HeadingContainer = styled(StandardViewContentGutter)`
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
 `;
 
-const StyledHeadline = styled(Headline)`
+const StyledHeadline = styled(Display)`
   display: flex;
   align-items: center;
   margin-right: 8px;
@@ -57,10 +57,10 @@ const HeaderSearch = styled.div`
 
 const PageHeading = ({
   children,
-  defaultTitle,
+  heading,
   searchPlaceholder,
   searchOptions = [],
-  showTypeahead = true,
+  showTypeahead,
   handleTypeaheadChange,
   searchValue = {},
 }) => {
@@ -68,12 +68,12 @@ const PageHeading = ({
     <HeadingContainer>
       <StyledHeadline
         as="h2"
-        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_LARGE}
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
       >
         <NavMenuButton showOnlyOnSmallViewport />
-        {defaultTitle}
+        {heading}
       </StyledHeadline>
-      <HeadlineFilters>{children}</HeadlineFilters>
+      {children && <HeadlineFilters>{children}</HeadlineFilters>}
       {showTypeahead && (
         <HeaderSearch>
           <Search
@@ -95,7 +95,7 @@ PageHeading.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  defaultTitle: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
   searchOptions: StoriesPropType,
   showTypeahead: PropTypes.bool,

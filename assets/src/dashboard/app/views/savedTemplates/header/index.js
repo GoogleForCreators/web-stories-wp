@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
@@ -46,6 +46,22 @@ function Header({ filter, search, sort, templates, view }) {
     actions: { scrollToTop },
   } = useLayoutContext();
 
+  const searchOptions = useMemo(() => {
+    // todo add different option sets, value and label won't always be the same
+    return templates.reduce((acc, template) => {
+      if (!template.title || template.title.trim().length <= 0) {
+        return acc;
+      }
+      return [
+        ...acc,
+        {
+          label: template.title,
+          value: template.title,
+        },
+      ];
+    }, []);
+  }, [templates]);
+
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
     currentFilter: filter.value,
@@ -72,11 +88,12 @@ function Header({ filter, search, sort, templates, view }) {
   return (
     <>
       <PageHeading
-        defaultTitle={__('Saved Templates', 'web-stories')}
+        heading={__('Saved Templates', 'web-stories')}
         searchPlaceholder={__('Search Templates', 'web-stories')}
-        stories={templates}
+        searchOptions={searchOptions}
+        showTypeahead
         handleTypeaheadChange={debouncedTypeaheadChange}
-        typeaheadValue={search.keyword}
+        searchValue={search.keyword}
       />
       <BodyViewOptions
         showSortDropdown

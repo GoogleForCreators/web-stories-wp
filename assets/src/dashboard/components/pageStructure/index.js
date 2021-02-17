@@ -64,14 +64,13 @@ export const PageContent = styled.div`
   padding-top: 10px;
   width: ${({ fullWidth }) =>
     fullWidth ? '100%' : `calc(100% - ${DASHBOARD_LEFT_NAV_WIDTH}px)`};
-  min-width: ${MIN_DASHBOARD_WIDTH}px;
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
-  @media screen and (max-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET
-      .maxWidth}px) {
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     left: 0;
     width: 100%;
+    min-width: ${MIN_DASHBOARD_WIDTH}px;
   }
 `;
 
@@ -89,7 +88,7 @@ export const LeftRailContainer = styled.nav.attrs({
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     padding-left: 0;
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
