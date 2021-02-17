@@ -35,14 +35,14 @@ const getTailPosition = ({ placement, translateX }) => {
     case PLACEMENT.TOP_START:
     case PLACEMENT.TOP_END:
       return css`
-        bottom: -${TAIL_HEIGHT}px;
+        bottom: -${TAIL_HEIGHT - 1}px;
         transform: translateX(${translateX}px) rotate(180deg);
       `;
     case PLACEMENT.BOTTOM:
     case PLACEMENT.BOTTOM_START:
     case PLACEMENT.BOTTOM_END:
       return css`
-        top: -${TAIL_HEIGHT}px;
+        top: -${TAIL_HEIGHT - 1}px;
         transform: translateX(${translateX}px);
       `;
     case PLACEMENT.LEFT:
