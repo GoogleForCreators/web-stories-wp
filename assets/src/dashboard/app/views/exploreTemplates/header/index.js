@@ -34,20 +34,18 @@ import {
 } from '../../../../constants';
 import {
   FilterPropTypes,
-  SearchPropTypes,
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../utils/useTemplateView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { PageHeading, BodyViewOptions } from '../../shared';
 
-function Header({ filter, totalTemplates, search, sort, view }) {
+function Header({ filter, totalTemplates, sort, view }) {
   const enableInProgressTemplateActions = useFeature(
     'enableInProgressTemplateActions'
   );
 
   const resultsLabel = useDashboardResultsLabel({
-    isActiveSearch: Boolean(search.keyword),
     totalResults: totalTemplates,
     currentFilter: filter.value,
     view: DASHBOARD_VIEWS.TEMPLATES_GALLERY,
@@ -75,7 +73,6 @@ function Header({ filter, totalTemplates, search, sort, view }) {
 
 Header.propTypes = {
   filter: FilterPropTypes.isRequired,
-  search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   totalTemplates: PropTypes.number,
   view: ViewPropTypes.isRequired,

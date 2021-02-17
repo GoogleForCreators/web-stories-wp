@@ -100,7 +100,7 @@ export default function useStoryView({ filters, totalPages }) {
   const setSearchKeyword = useCallback(
     (newSearchKeyword) => {
       setPageClamped(1);
-      _setSearchKeyword({ value: newSearchKeyword, label: newSearchKeyword });
+      _setSearchKeyword(newSearchKeyword);
     },
     [setPageClamped]
   );
@@ -206,9 +206,6 @@ export const PagePropTypes = PropTypes.shape({
 });
 
 export const SearchPropTypes = PropTypes.shape({
-  keyword: PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  }),
+  keyword: PropTypes.string,
   setKeyword: PropTypes.func,
 });

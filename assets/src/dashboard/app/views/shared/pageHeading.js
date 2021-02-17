@@ -22,7 +22,6 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { StoriesPropType } from '../../../types';
 import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 import { Display, Search, THEME_CONSTANTS } from '../../../../design-system';
 
@@ -60,9 +59,9 @@ const PageHeading = ({
   heading,
   searchPlaceholder,
   searchOptions = [],
-  showTypeahead,
-  handleTypeaheadChange,
-  searchValue = {},
+  showSearch,
+  handleSearchChange,
+  searchValue = '',
 }) => {
   return (
     <HeadingContainer>
@@ -74,14 +73,14 @@ const PageHeading = ({
         {heading}
       </StyledHeadline>
       {children && <HeadlineFilters>{children}</HeadlineFilters>}
-      {showTypeahead && (
+      {showSearch && (
         <HeaderSearch>
           <Search
             placeholder={searchPlaceholder}
-            selectedValue={searchValue}
+            selectedValue={{ label: searchValue, value: searchValue }}
             options={searchOptions}
             onMenuItemClick={() => {}}
-            handleSearchValueChange={handleTypeaheadChange}
+            handleSearchValueChange={handleSearchChange}
             emptyText={__('No options available', 'web-stories')}
           />
         </HeaderSearch>
@@ -97,9 +96,11 @@ PageHeading.propTypes = {
   ]),
   heading: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
-  searchOptions: StoriesPropType,
-  showTypeahead: PropTypes.bool,
-  handleTypeaheadChange: PropTypes.func,
+  searchOptions: PropTypes.arrayOf(
+    PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })
+  ),
+  showSearch: PropTypes.bool,
+  handleSearchChange: PropTypes.func,
   searchValue: PropTypes.string,
 };
 

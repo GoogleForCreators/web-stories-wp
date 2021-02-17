@@ -77,8 +77,8 @@ function Header({ filter, search, sort, templates, view }) {
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
-    trackEvent('search', {
+  const [debouncedSearchChange] = useDebouncedCallback(async (value) => {
+    await trackEvent('search', {
       search_type: 'saved_templates',
       search_term: value,
     });
@@ -91,8 +91,8 @@ function Header({ filter, search, sort, templates, view }) {
         heading={__('Saved Templates', 'web-stories')}
         searchPlaceholder={__('Search Templates', 'web-stories')}
         searchOptions={searchOptions}
-        showTypeahead
-        handleTypeaheadChange={debouncedTypeaheadChange}
+        showSearch
+        handleSearchChange={debouncedSearchChange}
         searchValue={search.keyword}
       />
       <BodyViewOptions

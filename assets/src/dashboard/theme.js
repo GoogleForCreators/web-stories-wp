@@ -132,16 +132,8 @@ const theme = {
   chip: {
     shadow: '0px 1px 3px rgba(0, 0, 0, 0.2)',
   },
-  typeahead: {
-    borderRadius: 100,
-  },
   formatContainer: {
     height: 76,
-  },
-  expandedTypeahead: {
-    borderRadius: 8,
-    boxShadow:
-      '0px 0.181152px 2.29372px rgba(0, 0, 0, 0.031357), 0px 0.500862px 5.15978px rgba(0, 0, 0, 0.045),0px 1.20588px 8.99337px rgba(0, 0, 0, 0.058643), 0px 4px 17px rgba(0, 0, 0, 0.09)',
   },
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',

@@ -304,7 +304,7 @@ describe('Grid view', () => {
       // Wait for the debounce
       await fixture.events.sleep(300);
 
-      const searchOptions = fixture.screen.getByTestId('typeahead-options');
+      const searchOptions = fixture.screen.getByRole('listbox');
 
       expect(searchOptions).toBeTruthy();
 

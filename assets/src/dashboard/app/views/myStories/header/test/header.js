@@ -93,7 +93,10 @@ describe('My Stories <Header />', function () {
         <Header
           filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
+          search={{
+            keyword: 'Harry Potter',
+            setKeyword: jest.fn(),
+          }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
@@ -160,9 +163,12 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('All Stories (19)')).toBeInTheDocument();
-    expect(getByText('Drafts (9)')).toBeInTheDocument();
-    expect(getByText('Published (10)')).toBeInTheDocument();
+    expect(getByText('All Stories')).toBeInTheDocument();
+    expect(getByText('19')).toBeInTheDocument();
+    expect(getByText('Drafts')).toBeInTheDocument();
+    expect(getByText('9')).toBeInTheDocument();
+    expect(getByText('Published')).toBeInTheDocument();
+    expect(getByText('10')).toBeInTheDocument();
     expect(queryByText('Private')).not.toBeInTheDocument();
   });
 
@@ -188,10 +194,14 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('All Stories (19)')).toBeInTheDocument();
-    expect(getByText('Drafts (9)')).toBeInTheDocument();
-    expect(getByText('Published (10)')).toBeInTheDocument();
-    expect(getByText('Private (2)')).toBeInTheDocument();
+    expect(getByText('All Stories')).toBeInTheDocument();
+    expect(getByText('19')).toBeInTheDocument();
+    expect(getByText('Drafts')).toBeInTheDocument();
+    expect(getByText('9')).toBeInTheDocument();
+    expect(getByText('Published')).toBeInTheDocument();
+    expect(getByText('10')).toBeInTheDocument();
+    expect(getByText('Private')).toBeInTheDocument();
+    expect(getByText('2')).toBeInTheDocument();
   });
 
   it('should not show the private tab even if there are private stories when the user does not have permission.', function () {
@@ -221,9 +231,12 @@ describe('My Stories <Header />', function () {
         },
       }
     );
-    expect(getByText('All Stories (19)')).toBeInTheDocument();
-    expect(getByText('Drafts (9)')).toBeInTheDocument();
-    expect(getByText('Published (10)')).toBeInTheDocument();
+    expect(getByText('All Stories')).toBeInTheDocument();
+    expect(getByText('19')).toBeInTheDocument();
+    expect(getByText('Drafts')).toBeInTheDocument();
+    expect(getByText('9')).toBeInTheDocument();
+    expect(getByText('Published')).toBeInTheDocument();
+    expect(getByText('10')).toBeInTheDocument();
     expect(queryByText('Private')).not.toBeInTheDocument();
   });
 
@@ -234,7 +247,10 @@ describe('My Stories <Header />', function () {
         <Header
           filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
+          search={{
+            keyword: 'Harry Potter',
+            setKeyword: setKeywordFn,
+          }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
@@ -264,7 +280,10 @@ describe('My Stories <Header />', function () {
         <Header
           filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
+          search={{
+            keyword: 'Harry Potter',
+            setKeyword: jest.fn(),
+          }}
           sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
           totalStoriesByStatus={{
             all: 19,

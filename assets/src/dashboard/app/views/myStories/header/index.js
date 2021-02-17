@@ -21,6 +21,7 @@ import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -163,7 +164,11 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
+  const [debouncedSearchChange] = useDebouncedCallback(async (value) => {
+    await trackEvent('search', {
+      search_type: 'dashboard',
+      search_term: value,
+    });
     search.setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
 
@@ -173,8 +178,8 @@ function Header({
         heading={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
         searchOptions={searchOptions}
-        handleTypeaheadChange={debouncedTypeaheadChange}
-        showTypeahead
+        handleSearchChange={debouncedSearchChange}
+        showSearch
         searchValue={search.keyword}
       >
         {HeaderToggleButtons}
