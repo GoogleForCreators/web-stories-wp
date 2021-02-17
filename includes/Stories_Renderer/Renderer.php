@@ -150,15 +150,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	}
 
 	/**
-	 * Get current object id.
-	 *
-	 * @return int Object id.
-	 */
-	protected static function get_instance_id() {
-		return self::$instances;
-	}
-
-	/**
 	 * Output markup for amp stories.
 	 *
 	 * @since 1.3.0

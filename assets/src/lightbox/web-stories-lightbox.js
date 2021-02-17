@@ -69,10 +69,10 @@ class Lightbox {
     cards.forEach((card) => {
       card.addEventListener('click', (event) => {
         event.preventDefault();
-        const storyIdx = this.stories.findIndex(
+        const storyObject = this.stories.find(
           (story) => story.href === card.dataset.storyUrl
         );
-        this.player.show(this.stories[storyIdx].href);
+        this.player.show(storyObject.href);
         this.player.play();
         this.lightboxElement.classList.toggle('show');
       });
