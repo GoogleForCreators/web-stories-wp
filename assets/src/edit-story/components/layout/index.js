@@ -60,6 +60,20 @@ const Editor = withOverlay(styled.section.attrs({
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr)
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
+
+  ::before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    border-color: ${({ theme }) => theme.colors.divider.secondary};
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: ${({ zIndex }) => zIndex};
+  }
 `);
 
 const Area = styled.div`
