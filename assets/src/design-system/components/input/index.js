@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -51,7 +51,7 @@ const Suffix = styled(Text)`
 `;
 
 const InputContainer = styled.div(
-  ({ hasError, theme }) => css`
+  ({ focused, hasError, theme }) => css`
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -63,6 +63,19 @@ const InputContainer = styled.div(
       ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
     border-radius: ${theme.borders.radius.small};
     overflow: hidden;
+
+    ${focused &&
+    !hasError &&
+    css`
+      border-color: ${theme.colors.border.defaultActive};
+    `};
+
+    ${focused &&
+    css`
+      ${Suffix} {
+        color: ${theme.colors.fg.primary};
+      }
+    `};
 
     :focus-within {
       ${focusCSS(theme.colors.border.focus)};
@@ -89,10 +102,6 @@ const StyledInput = styled.input(
       theme,
     })};
 
-    & ~ ${Suffix} * {
-      color: inherit;
-    }
-
     :disabled {
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
@@ -103,12 +112,7 @@ const StyledInput = styled.input(
     }
 
     :active:enabled {
-      border-color: ${theme.colors.border.defaultActive};
       color: ${theme.colors.fg.primary};
-
-      & ~ ${Suffix} {
-        color: ${theme.colors.fg.primary};
-      }
     }
   `
 );
@@ -125,10 +129,16 @@ export const Input = ({
 }) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
   const inputRef = useRef(null);
+  const [focused, setFocused] = useState(false);
 
-  const handleFocusInput = () => {
-    inputRef.current?.focus();
-  };
+  useEffect(() => {
+    if (focused && inputRef.current) {
+      inputRef.current.select();
+    }
+  }, [focused]);
+
+  const handleFocus = useCallback(() => setFocused(true), []);
+  const handleBlur = useCallback(() => setFocused(false), []);
 
   return (
     <Container className={className}>
@@ -137,11 +147,13 @@ export const Input = ({
           {label}
         </Label>
       )}
-      <InputContainer hasError={hasError}>
+      <InputContainer focused={focused} hasError={hasError}>
         <StyledInput
           id={inputId}
           disabled={disabled}
           ref={inputRef}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           {...props}
         />
         {suffix && (
@@ -149,7 +161,7 @@ export const Input = ({
             hasLabel={Boolean(label)}
             forwardedAs="span"
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            onClick={handleFocusInput}
+            onClick={handleFocus}
           >
             {suffix}
           </Suffix>
