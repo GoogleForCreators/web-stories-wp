@@ -63,7 +63,7 @@ const IconContainer = styled.div`
 
 export const _default = () => {
   const [inputState, setInputState] = useState({
-    oneLight: 'Text',
+    oneLight: '600',
     twoLight: 'we have an error',
     threeLight: 'disabled',
     fourLight: 'disabled',
@@ -100,6 +100,7 @@ export const _default = () => {
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
             suffix={text('Suffix')}
+            unit="ms"
           />
           <Input
             aria-label="input-two"

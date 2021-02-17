@@ -125,6 +125,8 @@ export const Input = ({
   id,
   label,
   suffix,
+  unit = '',
+  value,
   ...props
 }) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
@@ -140,6 +142,11 @@ export const Input = ({
   const handleFocus = useCallback(() => setFocused(true), []);
   const handleBlur = useCallback(() => setFocused(false), []);
 
+  let displayedValue = value;
+  if (unit && value.length) {
+    displayedValue = `${value}${!focused ? `${unit}` : ''}`;
+  }
+
   return (
     <Container className={className}>
       {label && (
@@ -154,6 +161,7 @@ export const Input = ({
           ref={inputRef}
           onBlur={handleBlur}
           onFocus={handleFocus}
+          value={displayedValue}
           {...props}
         />
         {suffix && (
@@ -215,5 +223,8 @@ Input.propTypes = {
   hint: PropTypes.string,
   id: PropTypes.string,
   label: labelAccessibilityValidator,
+  onChange: PropTypes.func.isRequired,
   suffix: PropTypes.node,
+  unit: PropTypes.string,
+  value: PropTypes.string.isRequired,
 };
