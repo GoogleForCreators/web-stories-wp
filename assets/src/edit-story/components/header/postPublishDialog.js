@@ -39,19 +39,13 @@ const Paragraph = styled.p`
 `;
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
-  const onAddToPostClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'add_story_to_new_post', 'editor', confirmURL);
-    },
-    [confirmURL]
-  );
+  const onAddToPostClick = useCallback((evt) => {
+    trackClick(evt, 'add_story_to_new_post');
+  }, []);
 
-  const onViewStoryClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'view_story', 'editor', storyURL);
-    },
-    [storyURL]
-  );
+  const onViewStoryClick = useCallback((evt) => {
+    trackClick(evt, 'view_story');
+  }, []);
 
   return (
     <Dialog

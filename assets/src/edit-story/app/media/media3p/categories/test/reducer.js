@@ -55,7 +55,7 @@ describe('reducer', () => {
         categories: [
           {
             name: 'categories/unsplash:c7USHrQ0Ljw',
-            displayName: 'COVID-19',
+            label: 'COVID-19',
           },
         ],
       })
@@ -80,7 +80,7 @@ describe('reducer', () => {
         categories: [
           {
             name: 'categories/unsplash:c7USHrQ0Ljw',
-            displayName: 'COVID-19',
+            label: 'COVID-19',
           },
         ],
       })
@@ -91,7 +91,7 @@ describe('reducer', () => {
         categories: [
           {
             name: 'categories/unsplash:c7USHrQ0Ljw',
-            displayName: 'COVID-19',
+            label: 'COVID-19',
           },
         ],
       })

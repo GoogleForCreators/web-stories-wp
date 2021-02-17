@@ -113,10 +113,12 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   }
 `;
 
+const noop = () => {};
+
 function TabView({
   getTabId = (id) => id,
   getAriaControlsId,
-  onTabChange = () => {},
+  onTabChange = noop,
   tabs = [],
   label = '',
   shortcut = '',

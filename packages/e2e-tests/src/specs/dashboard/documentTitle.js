@@ -43,7 +43,7 @@ describe('Document Title', () => {
     );
     await expect(firstTemplate).toClick('a', { text: 'See details' });
     await page.waitForTimeout(100);
-    await expect(await page.title()).toStartWith('Template Details');
+    await expect(await page.title()).toStartWith('Template: Beauty');
 
     await expect(page).toClick('a', { text: 'Close' });
     await page.waitForTimeout(100);

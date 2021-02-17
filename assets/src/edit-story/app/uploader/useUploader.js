@@ -21,8 +21,8 @@ import { useCallback, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   trackError,
-  trackEvent,
   getTimeTracker,
+  trackEvent,
 } from '@web-stories-wp/tracking';
 
 /**
@@ -153,15 +153,12 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      trackEvent('video_transcoding', 'editor', '', '', {
+      trackEvent('video_transcoding', {
         file_size: file.size,
         file_type: file.type,
       });
-      const trackTiming = getTimeTracker(
-        'video transcoding',
-        'editor',
-        'Media'
-      );
+
+      const trackTiming = getTimeTracker('load_video_transcoding');
 
       // Transcoding is enabled, let's give it a try!
       try {
@@ -172,7 +169,7 @@ function useUploader() {
         return uploadMedia(newFile, additionalData);
       } catch (err) {
         trackTiming();
-        trackError('video transcoding', err.message);
+        trackError('video_transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
         throw createError('TranscodingError', file.name, message);
