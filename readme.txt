@@ -110,6 +110,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.4.0 =
+
+**Release Date:** February 17, 2021.
+
+* New feature: a new help center in the editor to get started.
+* New feature: support for custom meta boxes.
+* Improvements to the pre-publish checklist.
+* UI improvements in the editor and dashboard.
+* Bug fixes and performance improvements.
+
 = 1.3.0 =
 
 **Release Date:** January 19, 2021.
@@ -156,6 +166,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+
+New help center, custom meta boxes support, bug fixes and performance improvements.
 
 = 1.3.0 =
 
