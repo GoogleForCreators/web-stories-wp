@@ -17,34 +17,17 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Popover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
-
-export const Popover = styled.div(
-  ({ isOpen }) => css`
-    position: absolute;
-    display: none;
-
-    ${isOpen &&
-    css`
-      display: block;
-      z-index: 10;
-      opacity: 1;
-      pointer-events: auto;
-    `};
-  `
-);
-Popover.propTypes = {
-  isOpen: PropTypes.bool,
-};
 
 const ContextMenu = ({ isOpen, items, ...props }) => {
   return (
     <Popover role="dialog" isOpen={isOpen} {...props}>
       <Menu items={items} />
+      <Shadow />
     </Popover>
   );
 };

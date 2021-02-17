@@ -40,14 +40,12 @@ const MenuWrapper = styled.div(
     pointer-events: none;
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 200px;
   `
 );
 
 const MenuList = styled.ul(
   ({ theme }) => css`
-    width: 200px;
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     margin: 0;

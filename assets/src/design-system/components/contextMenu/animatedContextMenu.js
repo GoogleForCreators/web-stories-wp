@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
@@ -26,7 +25,7 @@ import styled, { css } from 'styled-components';
 import { BEZIER } from '../../../animation';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../utils/directions';
 import Menu, { MenuPropTypes } from './menu';
-import { Popover } from './contextMenu';
+import { Popover, Shadow } from './styled';
 
 const PERCENTAGE_OFFSET = {
   [DIRECTIONS.TOP]: 100,
@@ -177,6 +176,25 @@ const ButtonInner = styled(Popover)`
       }
     }}
   }
+
+  ${Shadow} {
+    transition: ${(props) => (props.isReady ? transition : 'none')};
+    transform: ${(props) =>
+      props.isReady ? 'none' : `scale(${initialScale})`};
+    transform-origin: ${(props) => {
+      switch (props.align) {
+        case CORNER_DIRECTIONS.top_right:
+          return 'right top';
+        case CORNER_DIRECTIONS.top_left:
+          return 'left top';
+        case CORNER_DIRECTIONS.bottom_right:
+          return 'right bottom';
+        case CORNER_DIRECTIONS.bottom_left:
+        default:
+          return 'left bottom';
+      }
+    }};
+  }
 `;
 ButtonInner.propTypes = {
   align: PropTypes.oneOf(Object.values(CORNER_DIRECTIONS)),
@@ -245,6 +263,7 @@ function AnimatedContextMenu({ isOpen, items, ...props }) {
             <Menu items={items} />
           </MenuCounterRevealer>
         </MenuRevealer>
+        <Shadow />
       </MenuWrapper>
     </ButtonInner>
   );
