@@ -19,11 +19,7 @@
  */
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -39,15 +35,18 @@ const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
     ref={ref}
     isSelected={isSelected}
     disabled={option.disabled}
+    aria-disabled={option.disabled}
   >
     {isSelected && (
       <Checkmark
         data-testid={'dropdownMenuItem_active_icon'}
         aria-label={__('Selected', 'web-stories')}
+        width={32}
+        height={32}
       />
     )}
     <ListItemDisplayText
-      as="span"
+      forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
     >
       {option.label}

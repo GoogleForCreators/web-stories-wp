@@ -19,18 +19,14 @@
  */
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
 import styled from 'styled-components';
 import {
-  FormContainer,
   InlineForm,
   InlineLink,
   SettingForm,
@@ -40,8 +36,7 @@ import {
 } from '../components';
 import { Dropdown } from '../../../../components';
 import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
-import { TranslateWithMarkup } from '../../../../../i18n';
-import { trackClick } from '../../../../../tracking';
+import { THEME_CONSTANTS } from '../../../../../design-system';
 
 const AdNetworkDropdown = styled(Dropdown)`
   & button {
@@ -136,20 +131,21 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   }, [adNetwork]);
 
   const handleMonetizationClick = useCallback(
-    (evt) =>
-      trackClick(evt, 'monetization', 'dashboard', TEXT.HELPER_LINK_NONE),
+    (evt) => trackClick(evt, 'click_monetization_docs'),
     []
   );
   const handleAdNetworkClick = useCallback(
-    (evt) => trackClick(evt, 'monetization', 'dashboard', link),
-    [link]
+    (evt) => trackClick(evt, 'click_ad_network_docs'),
+    []
   );
 
   return (
     <AdNetworkSettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
-        <TextInputHelperText>
+        <TextInputHelperText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
           <TranslateWithMarkup
             mapping={{
               a: (
@@ -158,6 +154,8 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
                   rel="noreferrer"
                   target="_blank"
                   onClick={handleMonetizationClick}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  as="a"
                 />
               ),
             }}
@@ -166,7 +164,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
           </TranslateWithMarkup>
         </TextInputHelperText>
       </div>
-      <FormContainer>
+      <div>
         <InlineForm>
           <VisuallyHiddenLabel>{TEXT.SLOT_ID_LABEL}</VisuallyHiddenLabel>
           <AdNetworkDropdown
@@ -178,7 +176,9 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
           />
         </InlineForm>
         {message && (
-          <TextInputHelperText>
+          <TextInputHelperText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
             <TranslateWithMarkup
               mapping={{
                 a: (
@@ -187,6 +187,8 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
                     rel="noreferrer"
                     target="_blank"
                     onClick={handleAdNetworkClick}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="a"
                   />
                 ),
               }}
@@ -195,7 +197,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
             </TranslateWithMarkup>
           </TextInputHelperText>
         )}
-      </FormContainer>
+      </div>
     </AdNetworkSettingForm>
   );
 }

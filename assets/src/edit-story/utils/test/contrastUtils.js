@@ -73,5 +73,22 @@ describe('contrastUtils', () => {
           .WCAG_AA
       ).toStrictEqual(false);
     });
+
+    it('calculate successful contrast check from large font size', () => {
+      const luminanceA = 1;
+      const luminanceB = 0.3;
+      expect(
+        contrastUtils.checkContrastFromLuminances(luminanceA, luminanceB, 24)
+          .WCAG_AA
+      ).toStrictEqual(true);
+    });
+    it('calculate failed contrast check from small font size', () => {
+      const luminanceA = 1;
+      const luminanceB = 0.3;
+      expect(
+        contrastUtils.checkContrastFromLuminances(luminanceA, luminanceB, 12)
+          .WCAG_AA
+      ).toStrictEqual(false);
+    });
   });
 });

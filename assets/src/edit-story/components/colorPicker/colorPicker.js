@@ -22,11 +22,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -45,10 +41,10 @@ import useColor from './useColor';
 
 const Container = styled.div`
   border-radius: 6px;
-  background: ${({ theme }) => theme.colors.bg.v8};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v8};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   width: 256px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -71,7 +67,7 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
+  border-top: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v6};
 `;
 
 function ColorPicker({

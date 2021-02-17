@@ -19,11 +19,8 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -113,6 +110,7 @@ function EditorSettings() {
     siteKitStatus = {},
     maxUpload,
     maxUploadFormatted,
+    allowedImageMimeTypes,
   } = useConfig();
 
   const {
@@ -192,19 +190,31 @@ function EditorSettings() {
   );
 
   const handleUpdateAdNetwork = useCallback(
-    (newAdNetwork) => updateSettings({ adNetwork: newAdNetwork }),
+    (newAdNetwork) => {
+      updateSettings({ adNetwork: newAdNetwork });
+      trackEvent('change_ad_network', {
+        name: newAdNetwork,
+      });
+    },
     [updateSettings]
   );
 
   const handleAddLogos = useCallback(
     async (files) => {
       let allFileSizesWithinMaxUpload = true;
+      let allFileTypeSupported = true;
       let errorProcessingImages = false;
       const imagePromises = [];
 
       files.forEach((file) => {
         allFileSizesWithinMaxUpload =
           allFileSizesWithinMaxUpload && file.size <= maxUpload;
+        const fileTypeSupported = allowedImageMimeTypes.includes(file.type);
+        allFileTypeSupported = allFileTypeSupported && fileTypeSupported;
+
+        if (fileTypeSupported) {
+          return;
+        }
 
         imagePromises.push(
           new Promise((resolve, reject) => {
@@ -236,6 +246,20 @@ function EditorSettings() {
                   'web-stories'
                 ),
                 maxUploadFormatted
+              );
+        return setMediaError(errorText);
+      }
+
+      if (!allFileTypeSupported) {
+        const errorText =
+          files.length === 1
+            ? __(
+                'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.',
+                'web-stories'
+              )
+            : __(
+                'Sorry, one or more of these files are of an unsupported file type. Only jpg, png, and static gifs are supported for publisher logos.',
+                'web-stories'
               );
         return setMediaError(errorText);
       }
@@ -288,7 +312,7 @@ function EditorSettings() {
       setMediaError('');
       return uploadMedia(files);
     },
-    [maxUpload, maxUploadFormatted, uploadMedia]
+    [maxUpload, maxUploadFormatted, uploadMedia, allowedImageMimeTypes]
   );
 
   const handleRemoveLogo = useCallback((media) => {

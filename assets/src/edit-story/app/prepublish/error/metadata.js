@@ -24,6 +24,7 @@ import {
   ASPECT_RATIO_LEFT,
   ASPECT_RATIO_RIGHT,
 } from '../constants';
+import { states } from '../../highlights';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
@@ -39,17 +40,18 @@ function hasNoFeaturedMedia(story) {
  *
  * @typedef {import('../types').Guidance} Guidance
  * @typedef {import('../../../types').Story} Story
+ * @typedef {import('../../../types').Page} Page
  */
 
 /**
- * Check the story for a cover.
- * If the story does not have a cover, return an error message.
+ * Check the story for a poster.
+ * If the story does not have a poster, return an error message.
  * Otherwise, return undefined.
  *
  * @param {Story} story The story being checked for critical metadata
  * @return {Guidance|undefined} Guidance object for consumption
  */
-export function storyCoverAttached(story) {
+export function storyPosterAttached(story) {
   if (
     typeof story.featuredMedia?.url !== 'string' ||
     hasNoFeaturedMedia(story)
@@ -57,8 +59,9 @@ export function storyCoverAttached(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.id,
-      message: MESSAGES.CRITICAL_METADATA.MISSING_COVER.MAIN_TEXT,
-      help: MESSAGES.CRITICAL_METADATA.MISSING_COVER.HELPER_TEXT,
+      message: MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.MISSING_POSTER.HELPER_TEXT,
+      highlight: states.POSTER,
     };
   }
   return undefined;
@@ -79,20 +82,21 @@ export function storyTitle(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.HELPER_TEXT,
+      highlight: states.STORY_TITLE,
     };
   }
   return undefined;
 }
 
 /**
- * Check that the story's cover resource has sufficient dimensions.
+ * Check that the story's poster resource has sufficient dimensions.
  * If the resource is too small in either dimension, return an error message.
  * Otherwise, return undefined.
  *
  * @param {Story} story The story being checked for critical metadata
  * @return {Guidance|undefined} Guidance object for consumption
  */
-export function storyCoverPortraitSize(story) {
+export function storyPosterPortraitSize(story) {
   if (hasNoFeaturedMedia(story)) {
     return undefined;
   }
@@ -103,22 +107,23 @@ export function storyCoverPortraitSize(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.id,
-      message: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.MAIN_TEXT,
-      help: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.HELPER_TEXT,
+      message: MESSAGES.CRITICAL_METADATA.POSTER_TOO_SMALL.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.POSTER_TOO_SMALL.HELPER_TEXT,
+      highlight: states.POSTER,
     };
   }
   return undefined;
 }
 
 /**
- * Check that the story's cover resource has the correct aspect ratio.
+ * Check that the story's poster resource has the correct aspect ratio.
  * If the resource is too small in either dimension, return an error message.
  * Otherwise, return undefined.
  *
  * @param {Story} story The story being checked for critical metadata
  * @return {Guidance|undefined} Guidance object for consumption
  */
-export function storyCoverAspectRatio(story) {
+export function storyPosterAspectRatio(story) {
   if (
     hasNoFeaturedMedia(story) ||
     !story.featuredMedia?.width ||
@@ -135,8 +140,9 @@ export function storyCoverAspectRatio(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.id,
-      message: MESSAGES.CRITICAL_METADATA.COVER_WRONG_ASPECT_RATIO.MAIN_TEXT,
-      help: MESSAGES.CRITICAL_METADATA.COVER_WRONG_ASPECT_RATIO.HELPER_TEXT,
+      message: MESSAGES.CRITICAL_METADATA.POSTER_WRONG_ASPECT_RATIO.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.POSTER_WRONG_ASPECT_RATIO.HELPER_TEXT,
+      highlight: states.POSTER,
     };
   }
   return undefined;
@@ -160,6 +166,7 @@ export function publisherLogoSize(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.HELPER_TEXT,
+      highlight: states.PUBLISHER_LOGO,
     };
   }
   return undefined;
@@ -170,33 +177,23 @@ export function publisherLogoSize(story) {
  * If there is an element with a link in the page attachment region, return an error message.
  * Otherwise, return undefined.
  *
- * @param {Story} story The story being checked for critical metadata
+ * @param {Page} page The story being checked for critical metadata
  * @return {Guidance|undefined} Guidance object for consumption
  */
-export function linkInPageAttachmentRegion(story) {
-  const { pages } = story;
-  const pagesWithLinksInAttachmentArea = pages
-    .filter((page) => {
-      const { elements } = page;
-      const hasPageAttachment = Boolean(page.pageAttachment?.url?.length);
-      return (
-        hasPageAttachment &&
-        elements
-          .filter(({ link }) => Boolean(link?.url?.length))
-          .some(isElementBelowLimit)
-      );
-    })
-    .map((page) => page.id);
+export function linkInPageAttachmentRegion(page) {
+  const { elements } = page;
+  const hasPageAttachment = Boolean(page.pageAttachment?.url?.length);
+  const linksInPageAttachmentArea =
+    hasPageAttachment &&
+    elements
+      .filter(({ link }) => Boolean(link?.url?.length))
+      .filter(isElementBelowLimit);
 
-  const isLinkInPageAttachmentArea = Boolean(
-    pagesWithLinksInAttachmentArea.length
-  );
-
-  if (isLinkInPageAttachmentArea) {
+  if (linksInPageAttachmentArea?.length) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      storyId: story.id,
-      pages: pagesWithLinksInAttachmentArea,
+      pageId: page.id,
+      elements: linksInPageAttachmentArea,
       message: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.HELPER_TEXT,
     };

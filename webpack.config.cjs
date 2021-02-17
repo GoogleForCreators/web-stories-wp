@@ -234,7 +234,8 @@ const storyEmbedBlock = {
 const activationNotice = {
   ...sharedConfig,
   entry: {
-    'web-stories-activation-notice': './assets/src/activation-notice/index.js',
+    'web-stories-activation-notice':
+      './packages/activation-notice/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,

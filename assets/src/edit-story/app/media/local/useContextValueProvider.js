@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useRef } from 'react';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -26,7 +27,6 @@ import { useAPI, useConfig } from '../..';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
-import { getTimeTracker } from '../../../../tracking';
 
 /**
  * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext
@@ -75,7 +75,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       callback
     ) => {
       fetchMediaStart({ pageToken: p });
-      const trackTiming = getTimeTracker('load', 'editor', 'Media');
+      const trackTiming = getTimeTracker('load_media');
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,

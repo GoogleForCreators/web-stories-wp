@@ -15,20 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { useCallback } from 'react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import {
   StoriesPropType,
   RenameStoryPropType,
@@ -69,7 +65,6 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import { getRelativeDisplayDate } from '../../../../date';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 import { titleFormatted } from '../../../utils';
 

@@ -19,23 +19,22 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { AddColor } from '../../../../../icons';
+import { Icons } from '../../../../../../design-system';
 
-const COLOR_SIZE = 30;
+const COLOR_SIZE = 32;
 const AddColorAction = styled.button`
   cursor: pointer;
   background-color: transparent;
-  border-color: transparent;
-  border-width: 0;
+  color: ${({ theme }) => theme.colors.fg.primary};
+  border-color: ${({ theme }) => theme.colors.border.defaultNormal};
+  border-width: 1px;
+  border-style: dashed;
+  border-radius: 50%;
   height: ${COLOR_SIZE}px;
   width: ${COLOR_SIZE}px;
   padding: 0;
@@ -43,12 +42,15 @@ const AddColorAction = styled.button`
     height: 100%;
     width: 100%;
   }
+  :hover {
+    border-color: ${({ theme }) => theme.colors.border.defaultHover};
+  }
 `;
 
 // @todo Use color from design system when theme reference changes.
 const Note = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   margin-bottom: 10px;
 `;
 
@@ -60,7 +62,7 @@ function ColorAdd({ handleAddPreset, helper, ...rest }) {
         aria-label={__('Add color', 'web-stories')}
         {...rest}
       >
-        <AddColor />
+        <Icons.Plus />
       </AddColorAction>
       {helper && <Note>{helper}</Note>}
     </>

@@ -20,11 +20,14 @@
 import { BREAKPOINTS } from './breakpoints';
 import * as TYPOGRAPHY from './typography';
 import * as WP_ADMIN from './wpAdmin';
-import { Z_INDEX } from './zIndex';
+
+const ICON_SIZE = 32;
+const LARGE_BUTTON_SIZE = 56;
 
 export const THEME_CONSTANTS = {
   BREAKPOINTS,
   TYPOGRAPHY,
-  Z_INDEX,
   WP_ADMIN,
+  ICON_SIZE,
+  LARGE_BUTTON_SIZE,
 };

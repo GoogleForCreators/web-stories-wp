@@ -20,11 +20,9 @@
 import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -41,7 +39,8 @@ const TextSetItem = styled.div`
   position: relative;
   width: ${TEXT_SET_SIZE}px;
   height: ${TEXT_SET_SIZE}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.07)};
   border-radius: 4px;
   cursor: pointer;
   ${KEYBOARD_USER_SELECTOR} &:focus {
@@ -54,7 +53,8 @@ const DragContainer = styled.div`
   opacity: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.2)};
 `;
 
 function TextSet({ elements }) {
@@ -65,6 +65,11 @@ function TextSet({ elements }) {
   const { canvasPageSize } = useLayout(({ state }) => ({
     canvasPageSize: state.canvasPageSize,
   }));
+
+  const onClick = useCallback(() => {
+    insertTextSet(elements);
+    trackEvent('insert_textset');
+  }, [elements, insertTextSet]);
 
   const { textSetHeight, textSetWidth } = elements[0];
   const { width: pageWidth, height: pageHeight } = canvasPageSize;
@@ -80,7 +85,7 @@ function TextSet({ elements }) {
         type={'textSet'}
         elements={elements}
         elementProps={{}}
-        onClick={() => insertTextSet(elements)}
+        onClick={onClick}
         previewSize={{
           width: TEXT_SET_SIZE,
           height: TEXT_SET_SIZE,

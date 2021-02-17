@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -34,7 +30,7 @@ import useCarousel from './useCarousel';
 import { THUMBNAIL_LINE_WIDTH } from './constants';
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.colors.accent.primary};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
   height: ${({ height }) => height}px;
   width: ${THUMBNAIL_LINE_WIDTH}px;
   margin: 0px;

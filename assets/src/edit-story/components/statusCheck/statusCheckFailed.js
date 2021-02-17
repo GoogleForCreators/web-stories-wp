@@ -19,37 +19,33 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useCallback } from 'react';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
-import { trackClick } from '../../../tracking';
-import { TranslateWithMarkup } from '../../../i18n';
 
 const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
 `;
 
 const SUPPORT_URL = __(
-  'https://wordpress.org/support/plugin/web-stories/#new-topic-0',
+  'https://wordpress.org/support/plugin/web-stories/',
   'web-stories'
 );
 
 function StatusCheckFailed({ open, onClose }) {
   const onSupportClick = useCallback((evt) => {
-    trackClick(evt, 'contact_support', 'editor', SUPPORT_URL);
+    trackClick(evt, 'click_support_page');
   }, []);
 
   return (

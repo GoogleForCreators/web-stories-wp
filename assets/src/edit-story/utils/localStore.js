@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { trackError } from '../../tracking';
+import { trackError } from '@web-stories-wp/tracking';
 
 export const LOCAL_STORAGE_PREFIX = {
   PANEL: 'web_stories_ui_panel_settings',
@@ -31,7 +31,7 @@ function getItemByKey(key) {
     const stored = localStorage.getItem(key);
     parsed = JSON.parse(stored);
   } catch (e) {
-    trackError('localStorage read', e.message);
+    trackError('local_storage_read', e.message);
   }
   return parsed;
 }
@@ -40,7 +40,7 @@ function setItemByKey(key, data) {
   try {
     localStorage.setItem(key, JSON.stringify(data));
   } catch (e) {
-    trackError('localStorage write', e.message);
+    trackError('local_storage_write', e.message);
   }
 }
 

@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
 import { useFeatures } from 'flagged';
-
+import { getTimeTracker } from '@web-stories-wp/tracking';
+import { loadTextSets } from '@web-stories-wp/text-sets';
 /**
  * Internal dependencies
  */
-import { getTimeTracker } from '../../../tracking';
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
 import { MediaPane, MediaIcon } from './panes/media/local';
@@ -33,7 +33,6 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageLayoutsPane, PageLayoutsIcon } from './panes/pageLayouts';
-import loadTextSets from './panes/text/textSets/loadTextSets';
 
 const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
 const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
@@ -98,7 +97,7 @@ function LibraryProvider({ children }) {
 
   useEffect(() => {
     async function getTextSets() {
-      const trackTiming = getTimeTracker('load', 'editor', 'Text Sets');
+      const trackTiming = getTimeTracker('load_text_sets');
       setTextSets(await loadTextSets());
       trackTiming();
     }

@@ -16,13 +16,10 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -32,14 +29,16 @@ import localStore, {
 } from '../../../../../utils/localStore';
 import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';
-import { TranslateWithMarkup } from '../../../../../../i18n';
 
 const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
 `;
+
+const TERMS_URL = 'https://wp.stories.google/docs#Terms';
 
 function TermsDialog() {
   const hasAcknowledgedTerms3p = localStore.getItemByKey(
@@ -48,14 +47,19 @@ function TermsDialog() {
 
   const [dialogOpen, setDialogOpen] = useState(!hasAcknowledgedTerms3p);
 
-  const acknowledgeTerms = () => {
+  const acknowledgeTerms = useCallback(() => {
     setDialogOpen(false);
     localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
-  };
+    trackEvent('media3p_terms_acknowledged');
+  }, []);
 
   useEffect(() => {
     setDialogOpen(!hasAcknowledgedTerms3p);
   }, [hasAcknowledgedTerms3p]);
+
+  const onTermsClick = useCallback((evt) => {
+    trackClick(evt, 'click_terms_of_service');
+  }, []);
 
   if (hasAcknowledgedTerms3p) {
     return null;
@@ -76,13 +80,14 @@ function TermsDialog() {
             a: (
               //eslint-disable-next-line jsx-a11y/anchor-has-content
               <a
-                href="https://wp.stories.google/docs#Terms"
+                href={TERMS_URL}
                 rel="noreferrer"
                 target="_blank"
                 aria-label={__(
                   'Learn more by visiting Web Stories for WordPress',
                   'web-stories'
                 )}
+                onClick={onTermsClick}
               />
             ),
           }}

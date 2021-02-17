@@ -20,12 +20,8 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -50,7 +46,6 @@ import {
   ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
-import { trackEvent } from '../../../../../../tracking';
 import { titleFormatted } from '../../../../../utils';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
@@ -112,34 +107,34 @@ function StoriesView({
   }, [activeDialog]);
 
   const handleOnRenameStory = useCallback(
-    async (story, newTitle) => {
+    (story, newTitle) => {
       setTitleRenameId(-1);
-      await trackEvent('rename_story', 'dashboard');
+      trackEvent('rename_story');
       storyActions.updateStory({ ...story, title: { raw: newTitle } });
     },
     [storyActions]
   );
 
-  const handleOnDeleteStory = useCallback(async () => {
-    await trackEvent('delete_story', 'dashboard');
+  const handleOnDeleteStory = useCallback(() => {
+    trackEvent('delete_story');
     storyActions.trashStory(activeStory);
     setFocusedStory({ id: activeStory.id, isDeleted: true });
     setActiveDialog('');
   }, [storyActions, activeStory]);
 
   const handleMenuItemSelected = useCallback(
-    async (sender, story) => {
+    (sender, story) => {
       setContextMenuId(-1);
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          await trackEvent('open_in_editor', 'dashboard');
+          trackEvent('open_in_editor');
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
           setTitleRenameId(story.id);
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
-          await trackEvent('duplicate_story', 'dashboard');
+          trackEvent('duplicate_story');
           storyActions.duplicateStory(story);
           break;
 

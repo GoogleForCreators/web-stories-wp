@@ -20,6 +20,7 @@
 import getTypeFromMime from './getTypeFromMime';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 import createResource from './createResource';
+import getFileName from './getFileName';
 
 /**
  * Create a local resource object.
@@ -118,14 +119,6 @@ const getVideoResource = async (file) => {
     title: fileName,
   });
 };
-
-/**
- * Get file name.
- *
- * @param {File} file File object.
- * @return {string} File name.
- */
-const getFileName = (file) => file.name.split('.').slice(0, -1).join('.');
 
 /**
  * Generates a resource object from a local File object.

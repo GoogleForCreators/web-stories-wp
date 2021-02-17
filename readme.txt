@@ -4,7 +4,7 @@ Contributors:      google
 Requires at least: 5.3
 Tested up to:      5.6
 Requires PHP:      5.6
-Stable tag:        1.3.0
+Stable tag:        V.V.V
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
 Tags:              web stories, stories, amp, storytelling, google
@@ -99,7 +99,7 @@ Web Stories created using Web Stories for WordPress use what’s provided in the
 
 There are two ways to include analytics in your Web Stories:
 
-* Add your Google Analytics ID in the “Editor Settings”.
+* Add your Google Analytics ID in the "Settings”.
 * If you use the [Site Kit by Google](https://wordpress.org/plugins/google-site-kit/) WordPress plugin, you can set up Google Analytics there.
 
 = What do I do about an AMP validation issue in Search Console? =
@@ -109,6 +109,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 == Changelog ==
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
+
+= 1.4.0 =
+
+**Release Date:** February 17, 2021.
+
+* New feature: a new help center in the editor to get started.
+* New feature: support for custom meta boxes.
+* Improvements to the pre-publish checklist.
+* UI improvements in the editor and dashboard.
+* Bug fixes and performance improvements.
 
 = 1.3.0 =
 
@@ -156,6 +166,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+
+New help center, custom meta boxes support, bug fixes and performance improvements.
 
 = 1.3.0 =
 

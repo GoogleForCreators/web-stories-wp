@@ -19,18 +19,19 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Add } from '../../../../../../design-system/icons/action';
-import { TranslateWithMarkup } from '../../../../../../i18n';
+import { Icons } from '../../../../../../design-system';
 import ColorAdd from './colorAdd';
+
+const InlineIcon = styled(Icons.Plus)`
+  display: inline-block;
+  width: 17px;
+  margin: -3px;
+`;
 
 const ActionWrapper = styled.div`
   width: 50%;
@@ -47,7 +48,7 @@ const Wrapper = styled.div`
 // @todo Use color from design system when theme reference changes.
 const Note = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   margin-bottom: 10px;
 `;
 
@@ -57,7 +58,7 @@ function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
       <Note>
         <TranslateWithMarkup
           mapping={{
-            i: <Add width={18} height={13} />,
+            i: <InlineIcon />,
           }}
         >
           {__(

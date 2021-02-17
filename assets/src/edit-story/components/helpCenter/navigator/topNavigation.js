@@ -18,10 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -31,6 +28,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '../../../../design-system';
+import { forceFocusCompanionToggle } from '../utils';
 import { NavBar, NavButton } from './components';
 
 const TopNavButtons = styled.div`
@@ -47,12 +45,16 @@ export function TopNavigation({ onClose }) {
       <Label>{__('Quick Tips', 'web-stories')}</Label>
       <TopNavButtons>
         <NavButton
-          onClick={onClose}
+          aria-label={__('Close', 'web-stories')}
+          onClick={() => {
+            forceFocusCompanionToggle();
+            onClose();
+          }}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
           variant={BUTTON_VARIANTS.CIRCLE}
         >
-          <Icons.Close />
+          <Icons.Cross />
         </NavButton>
       </TopNavButtons>
     </NavBar>
@@ -60,5 +62,5 @@ export function TopNavigation({ onClose }) {
 }
 
 TopNavigation.propTypes = {
-  onClose: PropTypes.func.required,
+  onClose: PropTypes.func.isRequired,
 };

@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -38,7 +34,7 @@ const Background = styled.header.attrs({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 const Head = styled.div`

@@ -21,11 +21,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -142,7 +139,26 @@ function Media3pPane(props) {
     }
   }, [isActive, selectedProvider, setSelectedProvider]);
 
-  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+  const selectedCategoryId =
+    media3p[selectedProvider]?.state?.categories?.selectedCategoryId;
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'media3p',
+      search_term: searchTerm,
+      search_filter: selectedProvider,
+      search_category: selectedCategoryId,
+    });
+  }, [selectedProvider, searchTerm, selectedCategoryId]);
+
+  const onSearch = useCallback(
+    (value) => {
+      const trimText = value.trim();
+      if (trimText !== searchTerm) {
+        setSearchTerm({ searchTerm: trimText });
+      }
+    },
+    [searchTerm, setSearchTerm]
+  );
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
@@ -165,7 +181,7 @@ function Media3pPane(props) {
     const displayName = state.categories.selectedCategoryId
       ? state.categories.categories.find(
           (e) => e.id === state.categories.selectedCategoryId
-        ).displayName
+        ).label
       : __('Trending', 'web-stories');
 
     // We display the media name if there's media to display or a category has

@@ -15,13 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { __, sprintf } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
@@ -51,18 +47,18 @@ const Box = styled.div`
 `;
 
 const Heading = styled.h4`
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   margin: 0;
 `;
 
 const Text = styled.p`
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 const Icon = styled(UploadIcon)`
   height: 54px;
   width: 54px;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {

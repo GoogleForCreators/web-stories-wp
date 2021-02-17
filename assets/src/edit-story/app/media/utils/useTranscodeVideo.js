@@ -25,10 +25,24 @@ import { useFeature } from 'flagged';
  */
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
+import {
+  MEDIA_TRANSCODING_MAX_FILE_SIZE,
+  MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES,
+} from '../../../constants';
+import getFileName from './getFileName';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
+/**
+ * Checks whether the file size is too large for transcoding.
+ *
+ * @see https://github.com/ffmpegwasm/ffmpeg.wasm/tree/9b56b7f05b552c404aa0f62f46bed2592d9daf06#what-is-the-maximum-size-of-input-file
+ *
+ * @param {File} file File object.
+ * @param {number} file.size File size.
+ * @return {boolean} Whether the file is too  large.
+ */
+const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 function useTranscodeVideo() {
   const { ffmpegCoreUrl } = useConfig();
@@ -47,6 +61,7 @@ function useTranscodeVideo() {
     const { createFFmpeg, fetchFile } = await import(
       /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
     );
+
     const ffmpeg = createFFmpeg({
       corePath: ffmpegCoreUrl,
       log: isDevelopment,
@@ -68,7 +83,7 @@ function useTranscodeVideo() {
       // Resize videos if larger than 1080x1920, preserving aspect ratio.
       // See https://trac.ffmpeg.org/wiki/Scaling
       '-vf',
-      "scale='min(1080,iw)':'min(1920,ih)'",
+      "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
       // As the name says...
       '-preset',
       'fast', // 'veryfast' seems to cause crashes.
@@ -86,17 +101,18 @@ function useTranscodeVideo() {
     );
   }
 
-  // TODO: Check for ffmpeg's list of supported file types instead.
-  // See `ffmpeg -demuxers`
-  // TODO: Add max size check.
-  // See https://github.com/ffmpegwasm/ffmpeg.wasm#what-is-the-maximum-size-of-input-file
   const canTranscodeFile = (file) =>
-    isFeatureEnabled &&
-    file.type.startsWith('video/') &&
-    currentUser.meta?.web_stories_media_optimization;
+    MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES.includes(file.type);
+
+  const isTranscodingEnabled = Boolean(
+    currentUser.meta?.web_stories_media_optimization
+  );
 
   return {
+    isFeatureEnabled,
+    isTranscodingEnabled,
     canTranscodeFile,
+    isFileTooLarge,
     transcodeVideo,
   };
 }

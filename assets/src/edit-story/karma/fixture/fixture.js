@@ -21,11 +21,11 @@ import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from '../../../migration';
 import FixtureEvents from '../../../karma-fixture/events';
 import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
@@ -298,11 +298,19 @@ export class Fixture {
 
     // Check to see if Roboto font is loaded.
     await waitFor(async () => {
+      const weights = ['400', '700'];
       const font = '12px Roboto';
-      await document.fonts.load(font, '');
-      if (!document.fonts.check(font, '')) {
-        throw new Error('Not ready: Roboto font could not be loaded');
-      }
+      const fonts = weights.map((weight) => `${weight} ${font}`);
+      await Promise.all(
+        fonts.map((thisFont) => {
+          document.fonts.load(thisFont, '');
+        })
+      );
+      fonts.forEach((thisFont) => {
+        if (!document.fonts.check(thisFont, '')) {
+          throw new Error('Not ready: Roboto font could not be loaded');
+        }
+      });
     });
 
     // @todo: find a stable way to wait for the story to fully render. Can be
@@ -759,6 +767,19 @@ class APIProviderFixture {
         []
       );
 
+      const updateCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
@@ -787,6 +808,7 @@ class APIProviderFixture {
           getStatusCheck,
           getPageLayouts,
           getCurrentUser,
+          updateCurrentUser,
         },
       };
       return (

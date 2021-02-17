@@ -18,15 +18,11 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * WordPress dependencies
- */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
 import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
@@ -35,46 +31,39 @@ import {
   NotificationBubble,
   Button as dsButton,
 } from '../../../../design-system';
+import { BEZIER } from '../../../../animation';
 
 const Button = styled(dsButton)`
-  border-color: ${({ theme }) => theme.colors.bg.tertiary};
-  padding: 1px 14px 1px 4.5px;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  padding: 8px;
+  color: ${({ theme }) => theme.colors.fg.primary};
 
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    padding: 1px 16px 1px 14.5;
-  }
-
-  ${({ hasNotifications, theme }) =>
-    hasNotifications &&
+  ${({ isOpen, theme }) =>
+    isOpen &&
     css`
-      background-color: ${theme.colors.bg.secondary};
       border-color: ${theme.colors.bg.secondary};
+      background-color: ${theme.colors.bg.secondary};
     `}
 `;
 
 const Label = styled.span`
-  display: none;
-
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    display: block;
-    min-width: 115px;
-    text-align: left;
-  }
-`;
-
-const HelpIcon = styled(Icons.Help)`
-  height: 32px;
-  width: auto;
-  margin-right: 4.5px;
-`;
-
-const ChevronIcon = styled(Icons.Chevron)`
   display: block;
-  height: auto;
-  width: 11px;
+  line-height: 20px;
+  text-align: left;
+`;
+
+const NotificationWrapper = styled.div`
+  margin: -2px 0 -2px 20px;
+`;
+
+const Chevron = styled(Icons.ChevronUpSmall)`
+  display: block;
+  margin: -6px 0 -6px 16px;
+  width: 32px;
+  height: 32px;
   transform-origin: 50% 50%;
-  transform: rotate(${({ isOpen }) => (isOpen ? 360 : 180)}deg);
-  transition: 0.2s transform ${BEZIER.outSine};
+  transform: rotate(${({ isOpen }) => (isOpen ? 0 : 180)}deg);
+  transition: transform 300ms ${BEZIER.default};
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
     ${({ hasNotifications }) =>
@@ -82,12 +71,6 @@ const ChevronIcon = styled(Icons.Chevron)`
       css`
         display: none;
       `}
-  }
-`;
-
-const NotificationWrapper = styled.div`
-  @media ${({ theme }) => theme.breakpoint.tablet} {
-    margin-right: 14.5px;
   }
 `;
 
@@ -120,18 +103,19 @@ function Toggle({
       }
       onClick={onClick}
       hasNotifications={hasNotifications}
-      type={hasNotifications ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.PLAIN}
+      isOpen={isOpen}
+      type={BUTTON_TYPES.PLAIN}
       variant={BUTTON_VARIANTS.RECTANGLE}
       size={BUTTON_SIZES.MEDIUM}
     >
-      <HelpIcon />
-      <Label>{__('Help Center', 'web-stories')}</Label>
-      {hasNotifications && (
+      <Label>{__('Help', 'web-stories')}</Label>
+      {hasNotifications ? (
         <NotificationWrapper>
           <NotificationBubble notificationCount={notificationCount} />
         </NotificationWrapper>
+      ) : (
+        <Chevron isOpen={isOpen} />
       )}
-      <ChevronIcon hasNotifications={hasNotifications} isOpen={isOpen} />
     </Button>
   );
 }

@@ -20,11 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -48,9 +44,11 @@ const Transparent = styled.div`
   height: 100%;
   position: absolute;
   background-image: conic-gradient(
-    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0.25turn,
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.24)}
+      0.25turn,
     transparent 0turn 0.5turn,
-    ${({ theme }) => rgba(theme.colors.bg.white, 0.24)} 0turn 0.75turn,
+    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.24)} 0turn
+      0.75turn,
     transparent 0turn 1turn
   );
   background-size: 35% 35%;
@@ -93,7 +91,7 @@ const ColorItem = styled.div`
   transform: rotate(-45deg);
 
   svg {
-    color: ${({ theme }) => theme.colors.fg.primary};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
   }
 `;
 

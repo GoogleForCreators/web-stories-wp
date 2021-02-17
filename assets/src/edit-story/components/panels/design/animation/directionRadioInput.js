@@ -19,11 +19,7 @@
 import { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -77,7 +73,7 @@ const Icon = styled.div`
     selected &&
     !disabled &&
     css`
-      background-color: ${theme.colors.accent.primary};
+      background-color: ${theme.DEPRECATED_THEME.colors.accent.primary};
     `}
 
   ${({ disabled }) =>
@@ -136,7 +132,7 @@ const Figure = styled.div`
   left: 50%;
   width: 8px;
   height: 8px;
-  background: ${({ theme }) => theme.colors.fg.v9};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v9};
   background: #e4e5e6;
   border-radius: 2px;
   transform: translate(-50%, -50%);
@@ -210,7 +206,8 @@ const Label = styled.label`
   }}
 
   input:focus ~ * > ${DirectionIndicator} {
-    outline: 2px auto ${({ theme }) => theme.colors.accent.primary};
+    outline: 2px auto
+      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
   }
 `;
 

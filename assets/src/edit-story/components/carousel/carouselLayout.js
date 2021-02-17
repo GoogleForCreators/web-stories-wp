@@ -18,34 +18,30 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app';
 import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselMenu from './carouselMenu';
 import CarouselList from './carouselList';
 import useCarousel from './useCarousel';
-import { MENU_GUTTER, BUTTON_GUTTER } from './constants';
+import { MENU_GUTTER, BUTTON_WIDTH, BUTTON_GAP } from './constants';
 
 const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
-    '. . prev-navigation carousel next-navigation . menu' auto /
+    '. . prev-navigation . carousel . next-navigation . menu' auto /
     ${MENU_GUTTER}px
     1fr
-    ${BUTTON_GUTTER}px
+    ${BUTTON_WIDTH}px
+    ${BUTTON_GAP}px
     auto
-    ${BUTTON_GUTTER}px
+    ${BUTTON_GAP}px
+    ${BUTTON_WIDTH}px
     1fr
     ${MENU_GUTTER}px;
   width: 100%;
@@ -60,53 +56,28 @@ const Area = styled.div`
   flex-direction: column;
 `;
 
-const EditorVersion = styled.div`
-  display: inline-block;
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-  margin-left: 14px;
-  margin-bottom: 10px;
-  pointer-events: none;
-  font-size: ${({ theme }) => theme.fonts.version.size};
-  font-family: ${({ theme }) => theme.fonts.version.family};
-  line-height: ${({ theme }) => theme.fonts.version.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-`;
-
 function CarouselLayout() {
   const { numPages } = useCarousel(({ state: { numPages } }) => ({ numPages }));
-  const { version } = useConfig();
 
   if (numPages <= 0) {
     return null;
   }
 
   return (
-    <>
-      <Wrapper aria-label={__('Page Carousel', 'web-stories')}>
-        <Area area="prev-navigation">
-          <CarouselScrollBack />
-        </Area>
-        <Area area="carousel">
-          <CarouselList />
-        </Area>
-        <Area area="next-navigation">
-          <CarouselScrollForward />
-        </Area>
-        <Area area="menu">
-          <CarouselMenu />
-        </Area>
-      </Wrapper>
-      <EditorVersion>
-        {sprintf(
-          /* translators: %s: editor version. */
-          __('Version %s', 'web-stories'),
-          version
-        )}
-      </EditorVersion>
-    </>
+    <Wrapper aria-label={__('Page Carousel', 'web-stories')}>
+      <Area area="prev-navigation">
+        <CarouselScrollBack />
+      </Area>
+      <Area area="carousel">
+        <CarouselList />
+      </Area>
+      <Area area="next-navigation">
+        <CarouselScrollForward />
+      </Area>
+      <Area area="menu">
+        <CarouselMenu />
+      </Area>
+    </Wrapper>
   );
 }
 

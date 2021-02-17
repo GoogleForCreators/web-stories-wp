@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Chevron } from '../../../icons';
+import { ChevronDownSmall } from '../../../icons';
 import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
@@ -38,16 +38,16 @@ export const SelectButton = styled.button(
 
     border-radius: ${theme.borders.radius.small};
     background-color: ${theme.colors.bg.primary};
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-    border-color: ${theme.colors.border[
-      isOpen ? 'defaultActive' : 'defaultNormal'
-    ]};
+    border: 1px solid
+      ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
 
-    padding: 8px 12px;
+    padding: 8px 0 8px 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+
+    ${themeHelpers.focusableOutlineCSS};
 
     &:hover {
       border-color: ${theme.colors.border[
@@ -91,11 +91,11 @@ SelectButton.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const StyledChevron = styled(Chevron)(
+export const StyledChevron = styled(ChevronDownSmall)(
   ({ theme, isOpen }) => css`
     color: ${theme.colors.fg.secondary};
-    width: 8px;
-    height: 8px;
+    width: 32px;
+    height: 32px;
 
     ${isOpen &&
     css`

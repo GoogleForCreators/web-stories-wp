@@ -43,7 +43,7 @@ const Border = styled.div(
 
 const StyledCheckmark = styled(Checkmark)`
   height: auto;
-  width: 16px;
+  width: 32px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
@@ -91,7 +91,13 @@ const CheckboxContainer = styled.div(
 
 const BaseCheckbox = ({ checked, disabled, ...props }, ref) => (
   <CheckboxContainer disabled={disabled}>
-    <input type="checkbox" ref={ref} disabled={disabled} {...props} />
+    <input
+      type="checkbox"
+      ref={ref}
+      checked={checked}
+      disabled={disabled}
+      {...props}
+    />
     {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
     <Border />
   </CheckboxContainer>

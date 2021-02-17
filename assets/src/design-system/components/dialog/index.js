@@ -23,8 +23,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../';
-import { Modal, Headline } from '../';
+import { THEME_CONSTANTS } from '../../theme';
+import { Modal } from '../modal';
+import { Headline } from '../typography';
 
 const DialogBox = styled.div`
   box-sizing: border-box;
