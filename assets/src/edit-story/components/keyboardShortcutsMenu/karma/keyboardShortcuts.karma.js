@@ -26,9 +26,11 @@ import { Fixture } from '../../../karma';
 
 describe('Keyboard Shortcuts Menu', () => {
   let fixture;
-  // Delay 100 ms before checking things - animations are actually disabled,
-  // so no need to wait for those
-  const delay = 100;
+  // Delay 100 ms when opening, but 300ms when closing. Even though animations
+  // are disabled, we apparently still need quite a bit of time to makes sure
+  // the dialog is actually gone.
+  const openDelay = 100;
+  const closeDelay = 300;
 
   const getKeyboardShortcutsMenu = () => {
     return fixture.screen.queryByRole('list', {
@@ -61,7 +63,7 @@ describe('Keyboard Shortcuts Menu', () => {
       const menuToggle = getKeyboardShortcutsToggle();
 
       await fixture.events.click(menuToggle);
-      await fixture.events.sleep(delay);
+      await fixture.events.sleep(openDelay);
 
       const openMenu = getKeyboardShortcutsMenu();
 
@@ -87,7 +89,7 @@ describe('Keyboard Shortcuts Menu', () => {
         });
         await fixture.events.click(closeButton);
         // Give time for menu to close
-        await fixture.events.sleep(delay);
+        await fixture.events.sleep(closeDelay);
 
         const closedMenu = getKeyboardShortcutsMenu();
 
@@ -101,7 +103,7 @@ describe('Keyboard Shortcuts Menu', () => {
         // Click outside menu
         await fixture.events.mouse.clickOn(openMenu, -10, -10);
         // Give time for menu to close
-        await fixture.events.sleep(delay);
+        await fixture.events.sleep(closeDelay);
 
         const closedMenu = getKeyboardShortcutsMenu();
 
@@ -120,7 +122,7 @@ describe('Keyboard Shortcuts Menu', () => {
         // Click on element inside menu
         await fixture.events.click(menuItem);
         // Give time for menu to process clicks
-        await fixture.events.sleep(delay);
+        await fixture.events.sleep(closeDelay);
 
         const stillOpenMenu = getKeyboardShortcutsMenu();
 
@@ -140,7 +142,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
       await fixture.events.focus(menuToggle);
       await fixture.events.keyboard.press('Enter');
-      await fixture.events.sleep(delay);
+      await fixture.events.sleep(openDelay);
 
       const openMenu = getKeyboardShortcutsMenu();
 
@@ -156,7 +158,7 @@ describe('Keyboard Shortcuts Menu', () => {
         await fixture.events.keyboard.press('tab');
         await fixture.events.keyboard.shortcut('shift+tab');
         await fixture.events.keyboard.press('Enter');
-        await fixture.events.sleep(delay);
+        await fixture.events.sleep(openDelay);
       });
 
       it('should be able to close open menu using Esc key', async () => {
@@ -165,7 +167,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
         await fixture.events.keyboard.press('Escape');
         // Give time for menu to close
-        await fixture.events.sleep(delay);
+        await fixture.events.sleep(closeDelay);
 
         const closedMenu = getKeyboardShortcutsMenu();
 
@@ -196,7 +198,7 @@ describe('Keyboard Shortcuts Menu', () => {
         await fixture.events.focus(closeButton);
         await fixture.events.keyboard.press('Enter');
         // Give time for menu to close
-        await fixture.events.sleep(delay);
+        await fixture.events.sleep(closeDelay);
 
         const closedMenu = getKeyboardShortcutsMenu();
 
