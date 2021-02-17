@@ -460,14 +460,16 @@ jobs:
 
       - name: Get previous stable tag
         id: get_previous_stable_tag
-        run: echo ::set-output name=stable_tag::$(grep "$STABLE_TAG_REGEX" ./trunk/readme.txt)
+        run: echo ::set-output name=stable_tag::$(grep "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt)
 
       - name: Delete everything in trunk
         run: find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf {} +
         working-directory: ./svn/trunk
 
       - name: Unzip release asset into trunk
-        run: unzip release-assets/web-stories.zip -d svn/trunk
+        run: |
+          unzip release-assets/web-stories.zip
+          mv web-stories/* svn/trunk
         env:
           PLUGIN_URL: ${{ github.event.release.assets[0].browser_download_url }}
 
