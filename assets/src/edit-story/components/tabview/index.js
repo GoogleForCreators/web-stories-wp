@@ -41,7 +41,7 @@ const Tabs = styled.ul.attrs({
   align-items: stretch;
   width: 100%;
   max-width: 100%;
-  justify-content: start;
+  justify-content: space-between;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -61,14 +61,15 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
-  padding: 12px 0px;
-  margin: 0 22px;
+  padding: 10px 0px;
+  margin: 0 20px;
   margin-bottom: -1px;
   position: relative;
 
   ${({ isActive, theme }) =>
     isActive &&
     `
+    padding-bottom: 8px;
     border-bottom: 2px solid ${theme.colors.fg.primary};
   `}
 
