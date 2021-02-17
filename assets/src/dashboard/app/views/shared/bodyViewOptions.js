@@ -20,7 +20,7 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 
 /**
@@ -92,7 +92,9 @@ export default function BodyViewOptions({
     <StandardViewContentGutter>
       <TelemetryBanner />
       <DisplayFormatContainer>
-        <Label>{resultsLabel}</Label>
+        <Label>
+          <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
+        </Label>
         <ControlsContainer>
           {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
             <StorySortDropdownContainer>

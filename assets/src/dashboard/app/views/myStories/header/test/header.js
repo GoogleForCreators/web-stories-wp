@@ -109,7 +109,9 @@ describe('My Stories <Header />', function () {
       </LayoutProvider>
     );
     expect(getByPlaceholderText('Search Stories')).toHaveValue('Harry Potter');
-    expect(getByText('19 results')).toBeInTheDocument();
+    expect(
+      getByText((_, node) => node.textContent === '19 results')
+    ).toBeInTheDocument();
   });
 
   it('should have results label that says "Viewing drafts" when filter is set to drafts', function () {

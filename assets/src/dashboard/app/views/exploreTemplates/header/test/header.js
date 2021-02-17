@@ -115,7 +115,9 @@ describe('Explore Templates <Header />', function () {
     expect(getByPlaceholderText('Search Templates')).toHaveValue(
       'Harry Potter'
     );
-    expect(getByText('8 results')).toBeInTheDocument();
+    expect(
+      getByText((_, node) => node.textContent === '8 results')
+    ).toBeInTheDocument();
   });
 
   it('should call the set keyword function when new text is searched', function () {

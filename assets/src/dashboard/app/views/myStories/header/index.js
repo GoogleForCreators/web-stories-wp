@@ -69,7 +69,8 @@ function Header({
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
     isActiveSearch: Boolean(search.keyword),
-    totalResults: totalStoriesByStatus?.all,
+    totalResults:
+      totalStoriesByStatus?.[filter.value] ?? totalStoriesByStatus?.all,
     view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
