@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Stories_Renderer;
 
+use Google\Web_Stories\Customizer;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
@@ -61,6 +62,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	const LIGHTBOX_SCRIPT_HANDLE = 'lightbox';
 
 	/**
+	 * Number of instances invoked. Kept it static to keep track.
+	 *
+	 * @var int
+	 */
+	protected static $instances = 0;
+
+	/**
 	 * Object ID for the Renderer class.
 	 * To enable support for multiple carousels and lightboxes
 	 * on the same page, we needed to identify each Renderer instance.
@@ -70,7 +78,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var int
 	 */
-	protected static $instance_id = 0;
+	protected $instance_id = 0;
 
 	/**
 	 * Stories object
@@ -94,18 +102,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected $story_posts = [];
 
 	/**
-	 * Story IDs of loaded stories.
-	 *
-	 * @var array An array of story IDs.
-	 */
-	protected static $stories_loaded = [];
-
-	/**
 	 * Holds required html for the lightbox.
 	 *
 	 * @var string A string of lightbox markup.
 	 */
-	protected static $lightbox_html = '';
+	protected $lightbox_html = '';
 
 	/**
 	 * Pointer to iterate over stories.
@@ -154,7 +155,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return int Object id.
 	 */
 	protected static function get_instance_id() {
-		return self::$instance_id;
+		return self::$instances;
 	}
 
 	/**
@@ -167,7 +168,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	public function render( array $args = [] ) {
-		self::$instance_id = ++self::$instance_id;
+		++self::$instances;
+		$this->instance_id = self::$instances;
 
 		foreach ( $args as $key => $val ) {
 			if ( property_exists( $this, $key ) ) {
@@ -242,6 +244,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function init() {
 		$this->story_posts = array_map( [ $this, 'prepare_story_modal' ], $this->stories->get_stories() );
+
+		add_action( 'wp_footer', [ $this, 'render_stories_lightbox' ] );
 	}
 
 	/**
@@ -484,7 +488,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function render_single_story_content() {
 		$single_story_classes = $this->get_single_story_classes();
-		$lightbox_state       = 'lightbox' . $this->current()->get_id();
+		$lightbox_state       = 'lightbox' . $this->current()->get_id() . $this->instance_id;
 
 		// No need to load these styles on admin as editor styles are being loaded by the block.
 		if ( ! is_admin() ) {
@@ -550,13 +554,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		<?php
 		$this->get_content_overlay();
 
-		if ( ! in_array( $story_data->get_id(), self::$stories_loaded, true ) ) {
-			if ( ! $this->is_amp_request() ) {
-				$this->generate_lightbox_html_noamp( $story_data );
-			} else {
-				$this->generate_amp_lightbox_html_amp( $story_data );
-			}
-			self::$stories_loaded[] = $story_data->get_id();
+		if ( ! $this->is_amp_request() ) {
+			$this->generate_lightbox_html_noamp( $story_data );
+		} else {
+			$this->generate_amp_lightbox_html_amp( $story_data );
 		}
 	}
 
@@ -633,7 +634,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<a href="<?php echo esc_url( $story_data->get_url() ); ?>"><?php echo esc_html( $story_data->get_title() ); ?></a>
 		<?php
 
-		self::$lightbox_html .= ob_get_clean();
+		$this->lightbox_html .= ob_get_clean();
 	}
 
 	/**
@@ -647,8 +648,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function generate_amp_lightbox_html_amp( $story_data ) {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
-		$lightbox_state = 'lightbox' . $story_data->get_id();
-		$lightbox_id    = 'lightbox-' . $story_data->get_id();
+		$lightbox_state = 'lightbox' . $story_data->get_id() . $this->instance_id;
+		$lightbox_id    = 'lightbox-' . $story_data->get_id() . $this->instance_id;
 		?>
 		<amp-lightbox
 			id="<?php echo esc_attr( $lightbox_id ); ?>"
@@ -674,7 +675,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 		</amp-lightbox>
 		<?php
-		self::$lightbox_html .= ob_get_clean();
+		$this->lightbox_html .= ob_get_clean();
 	}
 
 	/**
@@ -684,35 +685,33 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public static function render_stories_with_lightbox_noamp() {
+	public function render_stories_with_lightbox_noamp() {
 		?>
-		<div class="web-stories-list__lightbox-wrapper">
-			<div class="web-stories-list__lightbox">
-				<amp-story-player width="3.6" height="6" layout="responsive">
-					<script type="application/json">
-					<?php
-					$data = [
-						'controls'  => [
-							[
-								'name'     => 'close',
-								'position' => 'start',
-							],
-							[
-								'name' => 'skip-next',
-							],
+		<div class="web-stories-list__lightbox">
+			<amp-story-player width="3.6" height="6" layout="responsive">
+				<script type="application/json">
+				<?php
+				$data = [
+					'controls'  => [
+						[
+							'name'     => 'close',
+							'position' => 'start',
 						],
-						'behaviour' => [
-							'autoplay' => false,
-							'on'       => 'end',
-							'action'   => 'circular-wrapping',
+						[
+							'name' => 'skip-next',
 						],
-					];
-					echo wp_json_encode( $data );
-					?>
-					</script>
-					<?php echo wp_kses_post( self::$lightbox_html ); ?>
-				</amp-story-player>
-			</div>
+					],
+					'behaviour' => [
+						'autoplay' => false,
+						'on'       => 'end',
+						'action'   => 'circular-wrapping',
+					],
+				];
+				echo wp_json_encode( $data );
+				?>
+				</script>
+				<?php echo wp_kses_post( $this->lightbox_html ); ?>
+			</amp-story-player>
 		</div>
 		<?php
 	}
@@ -724,12 +723,31 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public static function render_stories_with_lightbox_amp() {
+	public function render_stories_with_lightbox_amp() {
+
+		// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
+		echo $this->lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
+
+	}
+
+	/**
+	 * Renders stories lightbox on 'wp_footer'.
+	 *
+	 * @return void
+	 */
+	public function render_stories_lightbox() {
+		// Return if we don't have anything to render.
+		if ( empty( $this->lightbox_html ) ) {
+			return;
+		}
 		?>
-		<div class="web-stories-list__lightbox-wrapper">
+		<div class="web-stories-list__lightbox-wrapper <?php echo esc_attr( 'ws-lightbox-' . $this->instance_id ); ?>">
 			<?php
-			// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
-			echo self::$lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
+			if ( $this->is_amp_request() ) {
+				$this->render_stories_with_lightbox_amp();
+			} else {
+				$this->render_stories_with_lightbox_noamp();
+			}
 			?>
 		</div>
 		<?php

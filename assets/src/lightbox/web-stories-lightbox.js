@@ -21,19 +21,22 @@
  */
 class Lightbox {
   constructor(wrapperDiv) {
-    if (!wrapperDiv) {
+    if ('undefined' === typeof wrapperDiv) {
       return;
     }
 
     this.lightboxInitialized = false;
     this.wrapperDiv = wrapperDiv;
-    this.lightboxElement = this.wrapperDiv.querySelector(
-      '.web-stories-list__lightbox'
+    this.instanceId = this.wrapperDiv.dataset.id;
+    this.lightboxElement = document.querySelector(
+      `.ws-lightbox-${this.instanceId} .web-stories-list__lightbox`
     );
-
     this.player = this.lightboxElement.querySelector('amp-story-player');
 
-    if ('undefined' === typeof this.player) {
+    if (
+      'undefined' === typeof this.player ||
+      'undefined' === typeof this.lightboxElement
+    ) {
       return;
     }
 
@@ -56,42 +59,33 @@ class Lightbox {
 
   initializeLightbox() {
     this.stories = this.player.getStories();
-    window.wsPlayer = this.player;
+    this.bindStoryClickListeners();
     this.lightboxInitialized = true;
+  }
+
+  bindStoryClickListeners() {
+    const cards = this.wrapperDiv.querySelectorAll('.web-stories-list__story');
+
+    cards.forEach((card) => {
+      card.addEventListener('click', (event) => {
+        event.preventDefault();
+        const storyIdx = this.stories.findIndex(
+          (story) => story.href === card.dataset.storyUrl
+        );
+        this.player.show(this.stories[storyIdx].href);
+        this.player.play();
+        this.lightboxElement.classList.toggle('show');
+      });
+    });
   }
 }
 
 export default function initializeWebStoryLightbox() {
   const webStoryBlocks = document.getElementsByClassName('web-stories-list');
-  const wrapperDiv = document.querySelector(
-    '.web-stories-list__lightbox-wrapper'
-  );
-
-  let lightBox = null;
-
-  if (wrapperDiv) {
-    lightBox = new Lightbox(wrapperDiv);
-  }
-
-  const bindStoryClickListeners = (webStoryBlock) => {
-    const cards = webStoryBlock.querySelectorAll('.web-stories-list__story');
-
-    cards.forEach((card) => {
-      card.addEventListener('click', (event) => {
-        event.preventDefault();
-        const storyIdx = lightBox.stories.findIndex(
-          (story) => story.href === card.dataset.storyUrl
-        );
-        lightBox.player.show(lightBox.stories[storyIdx].href);
-        lightBox.player.play();
-        lightBox.lightboxElement.classList.toggle('show');
-      });
-    });
-  };
-
-  if (webStoryBlocks.length && lightBox) {
+  if ('undefined' !== typeof webStoryBlocks) {
     Array.from(webStoryBlocks).forEach((webStoryBlock) => {
-      bindStoryClickListeners(webStoryBlock);
+      /* eslint-disable-next-line no-new -- we do not store the object as no further computation required. */
+      new Lightbox(webStoryBlock);
     });
   }
 }

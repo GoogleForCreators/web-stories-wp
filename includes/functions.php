@@ -168,19 +168,3 @@ function get_stories_order() {
 		]
 	);
 }
-
-/**
- * Renders lightbox markup.
- *
- * @return void
- */
-function render_stories_lightboxes() {
-
-	if ( is_amp() ) {
-		Renderer::render_stories_with_lightbox_amp();
-	} else {
-		Renderer::render_stories_with_lightbox_noamp();
-	}
-}
-
-add_action( 'wp_footer', 'Google\Web_Stories\render_stories_lightboxes' );
