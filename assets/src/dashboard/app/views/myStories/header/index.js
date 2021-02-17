@@ -32,7 +32,6 @@ import {
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
   STORY_STATUS,
-  HIDE_ON_SMALL_SCREENS,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -56,11 +55,6 @@ const StyledPill = styled(Pill)`
   & > span {
     padding-left: 8px;
     color: ${({ theme }) => theme.colors.fg.tertiary};
-  }
-  @media screen and (max-width: 1226px) {
-    .${HIDE_ON_SMALL_SCREENS} {
-      display: none;
-    }
   }
 `;
 function Header({
@@ -134,9 +128,7 @@ function Header({
           }
           const label = storyStatus.label;
           const labelCount = totalStoriesByStatus?.[storyStatus.status] ? (
-            <span className={HIDE_ON_SMALL_SCREENS}>
-              {totalStoriesByStatus?.[storyStatus.status]}
-            </span>
+            <span>{totalStoriesByStatus?.[storyStatus.status]}</span>
           ) : null;
 
           const ariaLabel = sprintf(
