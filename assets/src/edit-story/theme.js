@@ -31,11 +31,11 @@ import {
 import { SCROLLBAR_WIDTH } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
-	*,
-	*::after,
-	*::before {
-		box-sizing: border-box;
-	}
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
 
   /* WP admin menu arrow color */
   ul#adminmenu a.wp-has-current-submenu::after {

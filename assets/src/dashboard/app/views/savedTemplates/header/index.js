@@ -21,6 +21,7 @@ import { useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -60,8 +61,9 @@ function Header({ filter, search, sort, templates, view }) {
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_saved_templates', 'dashboard', '', '', {
+  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
+    trackEvent('search', {
+      search_type: 'saved_templates',
       search_term: value,
     });
     search.setKeyword(value);

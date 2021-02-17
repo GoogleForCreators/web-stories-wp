@@ -17,9 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-/**
- * WordPress dependencies
- */
 import { __ } from '@web-stories-wp/i18n';
 
 export const TIPS = {
