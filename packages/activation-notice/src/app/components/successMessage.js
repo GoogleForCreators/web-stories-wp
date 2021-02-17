@@ -80,18 +80,12 @@ const ParagraphWithSpace = styled(Paragraph)`
 function SuccessMessage() {
   const { dashboardURL, demoStoryURL } = useConfig();
 
-  const onClickPrimary = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_dashboard', 'activation-notice', dashboardURL);
-    },
-    [dashboardURL]
-  );
-  const onClickSecondary = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_demo_story', 'activation-notice', demoStoryURL);
-    },
-    [demoStoryURL]
-  );
+  const onClickPrimary = useCallback((evt) => {
+    trackClick(evt, 'open_dashboard');
+  }, []);
+  const onClickSecondary = useCallback((evt) => {
+    trackClick(evt, 'open_demo_story');
+  }, []);
 
   return (
     <Message>

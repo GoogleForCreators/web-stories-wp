@@ -166,7 +166,7 @@ function MediaEditDialog({ resource, onClose }) {
       updateMediaElement({ id, alt: altText });
       onClose();
     } catch (err) {
-      trackError('local media edit', err.message);
+      trackError('local_media_edit', err.message);
       showSnackbar({
         message: __('Failed to update, please try again.', 'web-stories'),
       });

@@ -36,7 +36,7 @@ import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
-const Element = styled.div`
+const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   ${elementFillContent}
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;

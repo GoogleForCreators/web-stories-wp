@@ -27,19 +27,21 @@ import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
 import CarouselMenu from './carouselMenu';
 import CarouselList from './carouselList';
 import useCarousel from './useCarousel';
-import { MENU_GUTTER, BUTTON_GUTTER } from './constants';
+import { MENU_GUTTER, BUTTON_WIDTH, BUTTON_GAP } from './constants';
 
 const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
-    '. . prev-navigation carousel next-navigation . menu' auto /
+    '. . prev-navigation . carousel . next-navigation . menu' auto /
     ${MENU_GUTTER}px
     1fr
-    ${BUTTON_GUTTER}px
+    ${BUTTON_WIDTH}px
+    ${BUTTON_GAP}px
     auto
-    ${BUTTON_GUTTER}px
+    ${BUTTON_GAP}px
+    ${BUTTON_WIDTH}px
     1fr
     ${MENU_GUTTER}px;
   width: 100%;

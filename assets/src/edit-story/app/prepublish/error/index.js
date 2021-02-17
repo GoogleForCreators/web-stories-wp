@@ -20,10 +20,10 @@ import * as metadataErrors from './metadata';
 
 export default {
   story: [
-    metadataErrors.storyCoverAttached,
+    metadataErrors.storyPosterAttached,
     metadataErrors.storyTitle,
-    metadataErrors.storyCoverPortraitSize,
-    metadataErrors.storyCoverAspectRatio,
+    metadataErrors.storyPosterPortraitSize,
+    metadataErrors.storyPosterAspectRatio,
     metadataErrors.publisherLogoSize,
   ],
   page: [metadataErrors.linkInPageAttachmentRegion],

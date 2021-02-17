@@ -182,8 +182,11 @@ function TemplateDetails() {
 
   const handleBookmarkClickSelected = useCallback(() => {}, []);
 
-  const onHandleCta = useCallback(async () => {
-    await trackEvent('use_template', 'dashboard', template.title, template.id);
+  const onHandleCta = useCallback(() => {
+    trackEvent('use_template', {
+      name: template.title,
+      template_id: template.id,
+    });
     createStoryFromTemplate(template);
   }, [createStoryFromTemplate, template]);
 

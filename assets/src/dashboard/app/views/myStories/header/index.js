@@ -21,7 +21,7 @@ import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -74,10 +74,7 @@ function Header({
   });
 
   const handleClick = useCallback(
-    async (filterValue) => {
-      await trackEvent('filter_stories', 'dashboard', '', '', {
-        status: filterValue,
-      });
+    (filterValue) => {
       filter.set(filterValue);
       scrollToTop();
     },
@@ -136,10 +133,7 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_stories', 'dashboard', '', '', {
-      search_term: value,
-    });
+  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
     search.setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
 

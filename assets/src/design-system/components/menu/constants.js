@@ -19,3 +19,10 @@ export const DEFAULT_DROPDOWN_HEIGHT = 208;
 export const KEYS_SHIFT_FOCUS = ['up', 'down', 'left', 'right'];
 export const KEYS_CLOSE_MENU = ['esc', 'tab'];
 export const KEYS_SELECT_ITEM = ['space', 'enter'];
+
+export const KEYS = {
+  ARROW_RIGHT: 'ArrowRight',
+  ARROW_LEFT: 'ArrowLeft',
+  ARROW_UP: 'ArrowUp',
+  ARROW_DOWN: 'ArrowDown',
+};

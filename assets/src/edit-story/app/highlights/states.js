@@ -29,7 +29,7 @@ import { DOCUMENT, DESIGN } from '../../components/inspector';
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
-  COVER: 'COVER',
+  POSTER: 'POSTER',
   PUBLISHER_LOGO: 'PUBLISHER_LOGO',
   EXCERPT: 'EXCERPT',
   CAPTIONS: 'CAPTIONS',
@@ -40,7 +40,7 @@ export const STATES = {
   [keys.STORY_TITLE]: {
     focus: true,
   },
-  [keys.COVER]: {
+  [keys.POSTER]: {
     focus: true,
     tab: DOCUMENT,
   },
