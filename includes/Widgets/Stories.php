@@ -166,7 +166,7 @@ class Stories extends WP_Widget {
 			[
 				'id'            => 'circle-size',
 				'name'          => 'circle_size',
-				'label'         => __( 'Circle size', 'web-stories' ),
+				'label'         => __( 'Circle Size', 'web-stories' ),
 				'type'          => 'number',
 				'classname'     => 'widefat circle_size stories-widget-field',
 				'wrapper_class' => 'circle_size_wrapper',
