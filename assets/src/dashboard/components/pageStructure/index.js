@@ -37,7 +37,10 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '../../../design-system';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import {
+  DASHBOARD_LEFT_NAV_WIDTH,
+  MIN_DASHBOARD_WIDTH,
+} from '../../constants/pageStructure';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -53,6 +56,7 @@ import {
 
 export const AppFrame = styled.div`
   overflow-x: scroll;
+  min-width: 100%;
 `;
 
 export const PageContent = styled.div`
@@ -60,6 +64,7 @@ export const PageContent = styled.div`
   padding-top: 10px;
   width: ${({ fullWidth }) =>
     fullWidth ? '100%' : `calc(100% - ${DASHBOARD_LEFT_NAV_WIDTH}px)`};
+  min-width: ${MIN_DASHBOARD_WIDTH}px;
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
@@ -67,7 +72,6 @@ export const PageContent = styled.div`
       .maxWidth}px) {
     left: 0;
     width: 100%;
-    min-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET.minWidth}px;
   }
 `;
 
