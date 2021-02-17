@@ -39,4 +39,8 @@ export class Layers extends AbstractPanel {
   get layers() {
     return getAllByTestId(this.layersList, 'layer-option');
   }
+
+  get resizeHandle() {
+    return getByLabelText(this.node, /Set panel height/i);
+  }
 }

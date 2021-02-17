@@ -33,6 +33,7 @@ export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as Bold } from './bold_icon.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './close_icon.svg';
+export { ReactComponent as Curve } from './curve.svg';
 export { ReactComponent as DefaultImage } from './default_image.svg';
 export { ReactComponent as Delete } from './delete_icon.svg';
 export { ReactComponent as DistributeHorizontal } from './horizontal_distribute.svg';
@@ -56,7 +57,6 @@ export { ReactComponent as KeyArrowUp } from './key_arrow_up.svg';
 export { ReactComponent as Keyboard } from './keyboard.svg';
 export { ReactComponent as LayoutHelper } from './layout_helper.svg';
 export { ReactComponent as Link } from './link.svg';
-export { ReactComponent as LinkAlt } from './links.svg'; // todo: remove?
 export { ReactComponent as Lock } from './lock.svg';
 export { ReactComponent as Media } from './media.svg';
 export { ReactComponent as More } from './more_horiz.svg';
@@ -79,7 +79,6 @@ export { ReactComponent as SafeZone } from './safe_zone.svg';
 export { ReactComponent as Shapes } from './shapes.svg';
 export { ReactComponent as StopCircular } from './stop_circular.svg';
 export { ReactComponent as Text } from './text.svg';
-export { ReactComponent as TextHelper } from './text_helper.svg'; // todo: remove?
 export { ReactComponent as Underline } from './underline_icon.svg';
 export { ReactComponent as Undo } from './undo.svg';
 export { ReactComponent as UndoAlt } from './undo_icon.svg';
@@ -87,3 +86,4 @@ export { ReactComponent as Union } from './union.svg';
 export { ReactComponent as Unlock } from './unlock.svg';
 export { ReactComponent as Upload } from './upload.svg';
 export { ReactComponent as Video } from './video.svg';
+export { ReactComponent as Widgets } from './widgets.svg';

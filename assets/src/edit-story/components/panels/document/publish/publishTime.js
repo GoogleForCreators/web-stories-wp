@@ -20,11 +20,8 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { format, formatTime, is12Hour } from '@web-stories-wp/date';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -35,17 +32,18 @@ import { useStory } from '../../../../app/story';
 import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../../../design-system';
 import useFocusOut from '../../../../utils/useFocusOut';
-import { format, formatTime, is12Hour } from '../../../../../date';
 
 const StyledButton = styled.button`
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   display: flex;
   flex-direction: row;
-  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
   flex: 1;
   padding: 2px;
   border-radius: 4px;
@@ -63,11 +61,11 @@ const FieldLabel = styled(Label)`
 `;
 
 const Date = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
 `;
 
 const Time = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.4)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.4)};
   display: inline-block;
 `;
 

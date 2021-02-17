@@ -18,15 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
 import { Row, usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import {
@@ -35,6 +32,7 @@ import {
   ExpandedTextInput,
   Note,
 } from '../../shared';
+import { styles, states, useFocusHighlight } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {
   alt: null,
@@ -64,19 +62,26 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     []
   );
 
+  const ref = useRef();
+  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
+
   return (
     <SimplePanel
+      css={highlight && styles.FLASH}
       name="videoAccessibility"
       title={__('Description', 'web-stories')}
+      isPersistable={!highlight}
     >
       <Row>
         <ExpandedTextInput
+          ref={ref}
           placeholder={__('Video description', 'web-stories')}
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
           aria-label={__('Video description', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
+          css={highlight?.showEffect && styles.OUTLINE}
         />
       </Row>
       <Row>

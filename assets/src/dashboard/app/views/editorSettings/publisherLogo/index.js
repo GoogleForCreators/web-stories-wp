@@ -19,37 +19,40 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import {
-  DefaultLogoText,
+  CenterMutedText,
   Error,
   GridItemButton,
   GridItemContainer,
   Logo,
   SettingForm,
-  HelperText,
-  FinePrintHelperText,
+  SettingSubheading,
   UploadedContainer,
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { useGridViewKeys, useFocusOut } from '../../../../../design-system';
+import {
+  useGridViewKeys,
+  useFocusOut,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 import { useConfig } from '../../../config';
 import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
 import PopoverLogoContextMenu from './popoverLogoContextMenu';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
-  CONTEXT: __(
+  UPLOAD_CONTEXT: __(
     'Upload your logos here and they will become available to any stories you create.',
+    'web-stories'
+  ),
+  CLICK_CONTEXT: __(
+    'Click on logo to set as default if you want that logo to be used on default logo for all your stories.',
     'web-stories'
   ),
   INSTRUCTIONS: __(
@@ -73,7 +76,7 @@ function PublisherLogoSettings({
   publisherLogos,
   uploadError,
 }) {
-  const { isRTL } = useConfig();
+  const { isRTL, allowedImageMimeTypes } = useConfig();
 
   const containerRef = useRef();
   const gridRef = useRef();
@@ -176,7 +179,12 @@ function PublisherLogoSettings({
     <SettingForm>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
-        <HelperText>{TEXT.CONTEXT}</HelperText>
+        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {TEXT.UPLOAD_CONTEXT}
+        </SettingSubheading>
+        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {TEXT.CLICK_CONTEXT}
+        </SettingSubheading>
       </div>
       <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
@@ -200,6 +208,7 @@ function PublisherLogoSettings({
                     itemRefs.current[publisherLogo.id] = el;
                   }}
                   role="listitem"
+                  active={publisherLogo.isDefault}
                 >
                   <GridItemButton
                     onFocus={() => {
@@ -221,9 +230,11 @@ function PublisherLogoSettings({
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   </GridItemButton>
                   {publisherLogo.isDefault && (
-                    <DefaultLogoText>
+                    <CenterMutedText
+                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                    >
                       {__('Default', 'web-stories')}
-                    </DefaultLogoText>
+                    </CenterMutedText>
                   )}
                   {showLogoContextMenu && (
                     <PopoverLogoContextMenu
@@ -255,8 +266,13 @@ function PublisherLogoSettings({
               isMultiple
               ariaLabel={TEXT.ARIA_LABEL}
               instructionalText={TEXT.HELPER_UPLOAD}
+              acceptableFormats={Object.values(allowedImageMimeTypes)}
             />
-            <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+            <SettingSubheading
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {TEXT.INSTRUCTIONS}
+            </SettingSubheading>
           </>
         )}
       </div>

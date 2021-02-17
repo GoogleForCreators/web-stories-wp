@@ -26,36 +26,47 @@ import PropTypes from 'prop-types';
 import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
-export const Text = styled.p`
-  ${defaultTypographyStyle}
-  ${({ as, isBold, size, theme }) => {
-    const asLink =
-      as === 'a' &&
-      css`
-        color: ${theme.colors.fg.linkNormal};
-        text-decoration: none;
-        cursor: pointer;
-        &:hover {
-          color: ${theme.colors.fg.linkHover};
-        }
-
-        ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
-      `;
-    return css`
-      ${themeHelpers.expandPresetStyles({
-        preset: theme.typography.presets.paragraph[size],
-        theme,
-      })};
-      font-weight: ${isBold
-        ? theme.typography.weight.bold
-        : theme.typography.presets.paragraph[size].weight};
-      ${asLink};
-    `;
-  }}
+const textCss = ({ isBold, size, theme }) => css`
+  ${defaultTypographyStyle};
+  ${themeHelpers.expandPresetStyles({
+    preset: theme.typography.presets.paragraph[size],
+    theme,
+  })};
+  font-weight: ${isBold
+    ? theme.typography.weight.bold
+    : theme.typography.presets.paragraph[size].weight};
 `;
 
+const Paragraph = styled.p`
+  ${textCss};
+`;
+
+const Span = styled.span`
+  ${textCss};
+`;
+
+const Label = styled.label`
+  ${textCss};
+
+  color: ${({ disabled, theme }) =>
+    disabled ? theme.colors.fg.disable : 'auto'};
+`;
+
+export const Text = ({ as, disabled, ...props }) => {
+  switch (as) {
+    case 'label':
+      return <Label disabled={disabled} {...props} />;
+    case 'span':
+      return <Span {...props} />;
+    default:
+      return <Paragraph {...props} />;
+  }
+};
+
 Text.propTypes = {
-  as: PropTypes.oneOf(['p', 'a', 'span']),
+  as: PropTypes.oneOf(['p', 'span', 'label']),
+  /** only applies to label styling */
+  disabled: PropTypes.bool,
   isBold: PropTypes.bool,
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
 };

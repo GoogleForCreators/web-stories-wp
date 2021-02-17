@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -56,7 +52,8 @@ const Bar = styled.div`
 
   &:focus {
     height: 3px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.whiteout};
+    border-bottom: 1px solid
+      ${({ theme }) => theme.DEPRECATED_THEME.colors.whiteout};
   }
 `;
 
@@ -75,7 +72,12 @@ function DragHandle({
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    <Handle ref={handle} onDoubleClick={handleDoubleClick} $position={position}>
+    <Handle
+      ref={handle}
+      onClick={(e) => e.stopPropagation()}
+      onDoubleClick={handleDoubleClick}
+      $position={position}
+    >
       <Bar
         role="slider"
         aria-orientation="vertical"

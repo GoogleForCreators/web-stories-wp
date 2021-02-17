@@ -18,10 +18,11 @@
  * External dependencies
  */
 import ColorThief from 'colorthief';
+import { trackError } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
-import { trackError } from '../../tracking';
 const thief = new ColorThief();
 
 const STYLES = {
@@ -69,7 +70,7 @@ function getDefaultOnloadCallback(nodeKey, resolve, reject) {
       const node = document.body[nodeKey];
       resolve(thief.getColor(node.firstElementChild));
     } catch (err) {
-      trackError('get image base color', err.message);
+      trackError('image_base_color', err.message);
       reject(err);
     }
   };

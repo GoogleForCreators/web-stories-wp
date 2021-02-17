@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   wordpress:
-    image: wordpress
+    image: wordpress:php${PHP_VERSION:-7.4}
     ports:
       - '127.0.0.1:8899:80'
     environment:
@@ -18,18 +18,18 @@ services:
       - wordpress_data:/var/www/html
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - ../../:/var/www/html/wp-content/plugins/web-stories
-      - ../../tests/e2e/plugins:/var/www/html/wp-content/plugins/web-stories-test-plugins
-      - ../../tests/e2e/assets:/var/www/html/wp-content/e2e-assets
+      - ../../packages/e2e-tests/src/plugins:/var/www/html/wp-content/plugins/web-stories-test-plugins
+      - ../../packages/e2e-tests/src/assets:/var/www/html/wp-content/e2e-assets
     depends_on:
       - mysql
 
   cli:
-    image: wordpress:cli
+    image: wordpress:cli-php${PHP_VERSION:-7.4}
     user: xfs
     volumes:
       - wordpress_data:/var/www/html
       - ../../:/var/www/html/wp-content/plugins/web-stories
-      - ../../tests/e2e/assets:/var/www/html/wp-content/e2e-assets
+      - ../../packages/e2e-tests/src/assets:/var/www/html/wp-content/e2e-assets
     depends_on:
       - mysql
       - wordpress

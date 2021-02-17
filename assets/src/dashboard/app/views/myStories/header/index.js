@@ -20,21 +20,12 @@
 import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../tracking';
-import {
-  Layout,
-  ToggleButtonGroup,
-  useLayoutContext,
-} from '../../../../components';
+import { ToggleButtonGroup, useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
@@ -83,10 +74,7 @@ function Header({
   });
 
   const handleClick = useCallback(
-    async (filterValue) => {
-      await trackEvent('filter_stories', 'dashboard', '', '', {
-        status: filterValue,
-      });
+    (filterValue) => {
       filter.set(filterValue);
       scrollToTop();
     },
@@ -145,15 +133,12 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_stories', 'dashboard', '', '', {
-      search_term: value,
-    });
+  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
     search.setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
 
   return (
-    <Layout.Squishable>
+    <>
       <PageHeading
         defaultTitle={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
@@ -178,7 +163,7 @@ function Header({
           'web-stories'
         )}
       />
-    </Layout.Squishable>
+    </>
   );
 }
 

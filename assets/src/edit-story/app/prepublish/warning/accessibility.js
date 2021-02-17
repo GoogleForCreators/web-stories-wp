@@ -25,12 +25,13 @@ import {
 import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
-import { getBox } from '../../../units/dimensions';
+import { dataToFontSizeY, dataFontEm, getBox } from '../../../units/dimensions';
 import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
 import {
   setOrCreateImage,
   getImgNodeId,
 } from '../../../utils/getMediaBaseColor';
+import { states } from '../../highlights';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -58,6 +59,12 @@ function getSpansFromContent(content) {
   );
 }
 
+function getPtFromEditorFontSize(fontSize) {
+  // get the true font size from the data
+  // 1 point = 1.333333 px
+  return dataFontEm(dataToFontSizeY(fontSize, 100)) * 1.333333;
+}
+
 function getOverlappingArea(a, b) {
   const dx = Math.min(a.endX, b.endX) - Math.max(a.startX, b.startX);
   const dy = Math.min(a.endY, b.endY) - Math.max(a.startY, b.startY);
@@ -75,8 +82,9 @@ function isOverlapSignificant(overlapArea, textBoxArea) {
 function getBackgroundsForElement(
   textElement,
   potentialBackgroundElements,
-  pageSize
+  page
 ) {
+  const { pageSize } = page;
   const textPos = getBox(textElement, pageSize?.width, pageSize?.height);
   const textBox = getBoundRect([textPos]);
   const textBoxArea = textBox.width * textBox.height;
@@ -86,7 +94,16 @@ function getBackgroundsForElement(
       const bgPos = getBox(element, pageSize?.width, pageSize?.height);
       const bgBox = getBoundRect([bgPos]);
       const overlappingArea = getOverlappingArea(textBox, bgBox);
-      return { element, area: overlappingArea, index };
+      return {
+        element:
+          // if the element is the background element use the page's background color
+          // image backgrounds will ignore this property
+          element.isBackground || element.isDefaultBackground
+            ? { ...element, backgroundColor: page?.backgroundColor }
+            : element,
+        area: overlappingArea,
+        index,
+      };
     })
     // elements are ordered from lowest to highest
     // so the first elements in the reversed array are occluding the text box area behind it;
@@ -232,14 +249,20 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
   });
 }
 
-function textBgColorsLowContrast({ backgroundColor, textColors, ...elements }) {
+function textBgColorsLowContrast({
+  backgroundColor,
+  textColors,
+  fontSize,
+  ...elements
+}) {
   const someTextHasLowContrast = textColors.some((styleColor) => {
     const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
     const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
-      backgroundLuminance
+      backgroundLuminance,
+      getPtFromEditorFontSize(fontSize)
     );
     return !contrastCheck.WCAG_AA;
   });
@@ -303,7 +326,7 @@ export function textElementFontLowContrast(element) {
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
       backgroundLuminance,
-      element.fontSize
+      getPtFromEditorFontSize(element.fontSize)
     );
     return !contrastCheck.WCAG_AA;
   });
@@ -334,14 +357,21 @@ export async function pageBackgroundTextLowContrast(page) {
 
   page.elements.forEach((element, index) => {
     if (element.type === 'text' && element.backgroundTextMode === 'NONE') {
-      const potentialBackgroundElements = page.elements.slice(0, index);
       const spans = getSpansFromContent(element.content);
       const textColors = spans.map((span) => span.style?.color).filter(Boolean);
+      // if no colors were retrieved but there are spans, there is a black default color
+      const noColorStyleOnSpans = textColors.length === 0 && spans.length !== 0;
+      // if no spans were retrieved but there is content, there is a black default color
+      const noSpans = element.content.length !== 0 && spans.length === 0;
+      if (noColorStyleOnSpans || noSpans) {
+        textColors.push('rgb(0, 0, 0)');
+      }
 
+      const potentialBackgroundElements = page.elements.slice(0, index);
       const textBackgrounds = getBackgroundsForElement(
         element,
         potentialBackgroundElements,
-        page.pageSize
+        page
       );
 
       for (const backgroundElement of textBackgrounds) {
@@ -357,7 +387,6 @@ export async function pageBackgroundTextLowContrast(page) {
         };
 
         const getBackgroundColor = getBackgroundColorByType(backgroundElement);
-
         const backgroundColor = getBackgroundColor(args);
 
         let backgroundColorResult;
@@ -368,6 +397,7 @@ export async function pageBackgroundTextLowContrast(page) {
             return {
               backgroundColor: resolvedBgColor,
               textColors,
+              fontSize: element.fontSize,
               pageId: page.id,
               elements: [backgroundElement, element],
             };
@@ -376,6 +406,7 @@ export async function pageBackgroundTextLowContrast(page) {
           backgroundColorResult = {
             backgroundColor,
             textColors,
+            fontSize: element.fontSize,
             pageId: page.id,
             elements: [backgroundElement, element],
           };
@@ -463,6 +494,7 @@ export function videoElementMissingDescription(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      highlight: states.ASSISTIVE_TEXT,
     };
   }
 
@@ -482,6 +514,7 @@ export function videoElementMissingCaptions(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      highlight: states.CAPTIONS,
     };
   }
 
@@ -551,6 +584,7 @@ export function imageElementMissingAlt(element) {
       help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      highlight: states.ASSISTIVE_TEXT,
     };
   }
 

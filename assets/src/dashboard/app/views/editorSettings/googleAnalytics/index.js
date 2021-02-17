@@ -19,34 +19,33 @@
  */
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
-import { TranslateWithMarkup } from '../../../../../i18n';
 import {
-  ErrorText,
-  FormContainer,
-  SettingsTextInput,
-  InlineLink,
   InlineForm,
+  InlineLink,
   SaveButton,
   SettingForm,
   SettingHeading,
+  SettingsTextInput,
+  SettingSubheading,
   TextInputHelperText,
   VisuallyHiddenLabel,
-  HelperText,
 } from '../components';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 
 export const TEXT = {
   CONTEXT: __(
-    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on<a>analytics for your Web Stories</a>.",
+    'The story editor will append a default, configurable AMP analytics configuration to your story. If you’re interested in going beyond what the default configuration, read this <a>article</a>.',
     'web-stories'
   ),
   CONTEXT_LINK:
@@ -63,7 +62,7 @@ export const TEXT = {
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
   SITE_KIT_NOT_INSTALLED: __(
-    'Install<a>Site Kit by Google</a> to easily enable Google Analytics for Web Stories.',
+    'Install <a>Site Kit by Google</a> to easily enable Google Analytics for Web Stories.',
     'web-stories'
   ),
   SITE_KIT_INSTALLED: __(
@@ -121,6 +120,15 @@ function GoogleAnalyticsSettings({
     [handleOnSave]
   );
 
+  const onSiteKitClick = useCallback(
+    (evt) => trackClick(evt, 'click_site_kit_link'),
+    []
+  );
+  const onContextClick = useCallback(
+    (evt) => trackClick(evt, 'click_analytics_docs'),
+    []
+  );
+
   const siteKitDisplayText = useMemo(() => {
     if (analyticsActive) {
       return TEXT.SITE_KIT_IN_USE;
@@ -129,43 +137,61 @@ function GoogleAnalyticsSettings({
     return (
       <TranslateWithMarkup
         mapping={{
-          a: <InlineLink href={link} rel="noreferrer" target="_blank" />,
+          a: (
+            <InlineLink
+              href={link}
+              rel="noreferrer"
+              target="_blank"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              as="a"
+              onClick={onSiteKitClick}
+            />
+          ),
         }}
       >
         {installed ? TEXT.SITE_KIT_INSTALLED : TEXT.SITE_KIT_NOT_INSTALLED}
       </TranslateWithMarkup>
     );
-  }, [analyticsActive, installed, link]);
+  }, [analyticsActive, installed, link, onSiteKitClick]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
-        <SettingHeading htmlFor="gaTrackingID">
+        <SettingHeading htmlFor="gaTrackingID" as="h3">
           {TEXT.SECTION_HEADING}
         </SettingHeading>
-        <HelperText>{siteKitDisplayText}</HelperText>
+        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {siteKitDisplayText}
+        </SettingSubheading>
       </div>
-      <FormContainer>
+      <div>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="gaTrackingId">
             {TEXT.ARIA_LABEL}
           </VisuallyHiddenLabel>
           <SettingsTextInput
-            label={TEXT.ARIA_LABEL}
+            aria-label={TEXT.ARIA_LABEL}
             id="gaTrackingId"
             value={analyticsId}
             onChange={handleUpdateId}
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
-            error={inputError}
+            hasError={Boolean(inputError)}
+            hint={inputError}
             disabled={analyticsActive}
           />
-          <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
+          <SaveButton
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            disabled={disableSaveButton}
+            onClick={handleOnSave}
+          >
             {TEXT.SUBMIT_BUTTON}
           </SaveButton>
         </InlineForm>
-        {inputError && <ErrorText>{inputError}</ErrorText>}
-        <TextInputHelperText>
+        <TextInputHelperText
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
           <TranslateWithMarkup
             mapping={{
               a: (
@@ -173,6 +199,9 @@ function GoogleAnalyticsSettings({
                   href={TEXT.CONTEXT_LINK}
                   rel="noreferrer"
                   target="_blank"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  as="a"
+                  onClick={onContextClick}
                 />
               ),
             }}
@@ -180,7 +209,7 @@ function GoogleAnalyticsSettings({
             {TEXT.CONTEXT}
           </TranslateWithMarkup>
         </TextInputHelperText>
-      </FormContainer>
+      </div>
     </SettingForm>
   );
 }

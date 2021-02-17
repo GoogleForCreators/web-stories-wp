@@ -37,6 +37,7 @@ import {
   Eyedropper as EyedropperIcon,
   More as MoreIcon,
   SafeZone as SafeZoneIcon,
+  Widgets as WidgetsIcon,
 } from '../../icons';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
@@ -52,8 +53,8 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   padding: 0 10px;
   cursor: pointer;
   text-decoration: none;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
   line-height: 28px;
 
   &:active {
@@ -79,7 +80,7 @@ const StyledButton = styled(Base)`
   height: ${({ height }) => height}px;
   min-width: initial;
   visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 
   svg {
     width: ${({ width }) => width}px;
@@ -99,39 +100,40 @@ const StyledButtonWithOpacity = styled(StyledButton)`
 `;
 
 const PrimaryButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.accent.primary};
-  background-color: ${({ theme }) => theme.colors.accent.primary};
-  color: ${({ theme }) => theme.colors.fg.white};
+  border-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
+  background-color: ${({ theme }) =>
+    theme.DEPRECATED_THEME.colors.accent.primary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 
 const SecondaryButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.fg.white};
-  background-color: ${({ theme }) => theme.colors.fg.v3};
-  color: ${({ theme }) => theme.colors.bg.v5};
+  border-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v5};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.v5};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v5};
   }
 `;
 
 const OutlineButton = styled(Base)`
-  border-color: ${({ theme }) => theme.colors.fg.v4};
-  color: ${({ theme }) => theme.colors.fg.white};
+  border-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v4};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 
 const PlainButton = styled(Base)`
-  color: ${({ theme }) => theme.colors.accent.primary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
   border: none;
   transition: background-color 0.6s ease;
   text-transform: uppercase;
@@ -139,12 +141,13 @@ const PlainButton = styled(Base)`
   padding: 4px 14px;
   height: auto;
   font-weight: 500;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.accent.primary, 0.15)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.accent.primary, 0.15)};
   }
 `;
 
@@ -175,6 +178,12 @@ export const Redo = (props) => (
 export const GridView = (props) => (
   <StyledButton {...props}>
     <GridViewIcon />
+  </StyledButton>
+);
+
+export const MetaBoxes = (props) => (
+  <StyledButton {...props}>
+    <WidgetsIcon />
   </StyledButton>
 );
 

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -35,6 +35,8 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
+import { getElementMask, MaskTypes } from '../../masks';
+import useDoubleClick from '../../utils/useDoubleClick';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -44,13 +46,13 @@ const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
 	${elementWithRotation}
-  pointer-events: initial;
+  pointer-events: ${({ maskDisabled }) => (maskDisabled ? 'initial' : 'none')};
 
   &:focus,
   &:active,
   &:hover {
     outline: ${({ theme, hasMask }) =>
-      hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
+      hasMask ? 'none' : `1px solid ${theme.colors.border.selection}`};
   }
 `;
 
@@ -60,7 +62,12 @@ const EmptyFrame = styled.div`
   pointer-events: none;
 `;
 
+const NOOP = () => {};
+
 function FrameElement({ element }) {
+  const { setEditingElement } = useCanvas((state) => ({
+    setEditingElement: state.actions.setEditingElement,
+  }));
   const { id, type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
@@ -107,6 +114,44 @@ function FrameElement({ element }) {
     setIsTransforming(transform !== null);
   });
 
+  // Media needs separate handler for double click.
+  const { isMedia } = getDefinitionForType(type);
+  const handleMediaDoubleClick = useCallback(
+    (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+      setEditingElement(id);
+    },
+    [id, setEditingElement, handleSelectElement, isSelected]
+  );
+  const handleMediaClick = useDoubleClick(NOOP, handleMediaDoubleClick);
+
+  // For elements with no mask, handle events by the wrapper.
+  const mask = getElementMask(element);
+  const maskDisabled =
+    !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
+  const eventHandlers = {
+    onMouseDown: (evt) => {
+      if (isSelected) {
+        elementRef.current.focus({ preventScroll: true });
+      } else {
+        handleSelectElement(id, evt);
+      }
+      if (!isBackground) {
+        evt.stopPropagation();
+      }
+    },
+    onFocus: (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+    },
+    onPointerEnter,
+    onPointerLeave,
+    onClick: isMedia ? handleMediaClick(id) : null,
+  };
+
   return (
     <WithLink
       element={element}
@@ -128,30 +173,20 @@ function FrameElement({ element }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
-        onMouseDown={(evt) => {
-          if (isSelected) {
-            elementRef.current.focus({ preventScroll: true });
-          } else {
-            handleSelectElement(id, evt);
-          }
-          if (!isBackground) {
-            evt.stopPropagation();
-          }
-        }}
-        onFocus={(evt) => {
-          if (!isSelected) {
-            handleSelectElement(id, evt);
-          }
-        }}
-        onPointerEnter={onPointerEnter}
-        onPointerLeave={onPointerLeave}
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
         isAnimating={isAnimating}
         data-testid="frameElement"
+        maskDisabled={maskDisabled}
+        {...(maskDisabled ? eventHandlers : null)}
       >
-        <WithMask element={element} fill={true} flip={flip}>
+        <WithMask
+          element={element}
+          fill={true}
+          flip={flip}
+          eventHandlers={!maskDisabled ? eventHandlers : null}
+        >
           {Frame ? (
             <Frame wrapperRef={elementRef} element={element} box={box} />
           ) : (

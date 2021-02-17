@@ -20,11 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -149,7 +145,9 @@ function ColorControls({ selectedElements, pushUpdate }) {
           data-testid="text.color"
           value={color}
           onChange={handleSetColor}
-          colorPickerActions={getColorPickerActions}
+          colorPickerActions={(selColor) =>
+            getColorPickerActions(selColor, pushUpdate)
+          }
           label={__('Text color', 'web-stories')}
           labelId="text-color-label"
           changedStyle="color"

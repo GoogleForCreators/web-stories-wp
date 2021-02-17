@@ -21,11 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -42,8 +38,8 @@ const MoreButton = styled(More)`
   width: 28px;
   height: 28px;
   padding: 0;
-  background: ${({ theme }) => theme.colors.bg.panel};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   border-radius: 100%;
   border: 0;
 `;

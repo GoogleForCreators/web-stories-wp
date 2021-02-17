@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -49,7 +45,7 @@ const BoxedTextInput = styled(TextInput)`
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
 `;
 
 function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {

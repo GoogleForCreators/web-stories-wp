@@ -23,15 +23,6 @@ import styled from 'styled-components';
  */
 import { Text } from '../../';
 import * as Icons from '../';
-import * as ActionIcons from '../action';
-import * as AlertIcons from '../alert';
-import * as AvIcons from '../av';
-import * as ContentIcons from '../content';
-import * as DashboardIcons from '../dashboard';
-import * as EditorIcons from '../editor';
-import * as FileIcons from '../file';
-import * as NavigationIcons from '../navigation';
-import * as SocialIcons from '../social';
 
 export default {
   title: 'DesignSystem/Icons',
@@ -51,8 +42,8 @@ const IconsList = styled.ul`
     align-items: center;
   }
   svg {
-    height: 40px;
-    width: 40px;
+    height: 32px;
+    width: 32px;
     margin-bottom: 10px;
   }
 `;
@@ -80,173 +71,26 @@ export const AllIcons = () => {
   );
 };
 
-export const Action = () => {
+export const ColorfulIcons = () => {
+  const colors = ['blue', 'hotpink', 'rebeccapurple', 'lightgreen', 'red'];
   return (
-    <IconsList>
-      {Object.keys(ActionIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = ActionIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
+    <>
+      <Text>{`Total Icons: ${Object.values(Icons).length}`}</Text>
 
-export const Alert = () => {
-  return (
-    <IconsList>
-      {Object.keys(AlertIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = AlertIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Av = () => {
-  return (
-    <IconsList>
-      {Object.keys(AvIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = AvIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Content = () => {
-  return (
-    <IconsList>
-      {Object.keys(ContentIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = ContentIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Dashboard = () => {
-  return (
-    <IconsList>
-      {Object.keys(DashboardIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = DashboardIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Editor = () => {
-  return (
-    <IconsList>
-      {Object.keys(EditorIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = EditorIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const File = () => {
-  return (
-    <IconsList>
-      {Object.keys(FileIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = FileIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Navigation = () => {
-  return (
-    <IconsList>
-      {Object.keys(NavigationIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = NavigationIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Social = () => {
-  return (
-    <IconsList>
-      {Object.keys(SocialIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = SocialIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            <Text as="span" isBold>
-              {iconName}
-            </Text>
-          </li>
-        );
-      })}
-    </IconsList>
+      <IconsList>
+        {Object.keys(Icons).map((iconName, index) => {
+          // eslint-disable-next-line import/namespace
+          const Icon = Icons[iconName];
+          return (
+            <li key={iconName}>
+              <Icon style={{ color: colors[index % colors.length] }} />
+              <Text as="span" isBold>
+                {iconName}
+              </Text>
+            </li>
+          );
+        })}
+      </IconsList>
+    </>
   );
 };

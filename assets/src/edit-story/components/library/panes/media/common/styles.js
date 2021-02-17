@@ -66,22 +66,25 @@ export const MediaGalleryLoadingPill = styled.div`
   width: 240px;
   text-align: center;
   padding: 8px 80px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.4)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.4)};
   border-radius: 100px;
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
   font-weight: 500;
 `;
 
 export const MediaGalleryMessage = styled.div`
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   padding: 1em;
-  font-family: ${({ theme }) => theme.fonts.mediaError.family};
-  font-style: ${({ theme }) => theme.fonts.mediaError.style};
-  line-height: ${({ theme }) => theme.fonts.mediaError.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.mediaError.weight};
-  font-size: ${({ theme }) => theme.fonts.mediaError.size};
-  text-align: ${({ theme }) => theme.fonts.mediaError.textAlign};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.family};
+  font-style: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.style};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.mediaError.lineHeight};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.weight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.size};
+  text-align: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.mediaError.textAlign};
   opacity: 0.54;
 `;
 

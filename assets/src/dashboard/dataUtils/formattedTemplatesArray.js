@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { toUTCDate } from '../../date';
+import { toUTCDate } from '@web-stories-wp/date';
 
 const formattedTemplatesArray = [
   {
@@ -201,10 +201,11 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
+        animations: [],
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID1',
+        pageLayoutType: 'cover',
       },
       {
         elements: [
@@ -377,10 +378,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '4e5d3a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'section',
       },
       {
         elements: [
@@ -553,10 +554,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID3',
+        pageLayoutType: 'quote',
       },
       {
         elements: [
@@ -729,10 +730,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID4',
+        pageLayoutType: 'editorial',
       },
       {
         elements: [
@@ -905,10 +906,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID5',
+        pageLayoutType: 'list',
       },
       {
         elements: [
@@ -1081,10 +1082,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID6',
+        pageLayoutType: 'table',
       },
       {
         elements: [
@@ -1257,10 +1258,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID7',
+        pageLayoutType: 'steps',
       },
     ],
     status: 'template',
@@ -1455,10 +1456,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'cover',
       },
     ],
     status: 'template',
@@ -1470,7 +1471,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    title: 'DIY',
   },
   {
     version: 2,
@@ -1653,10 +1654,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'section',
       },
     ],
     status: 'template',
@@ -1668,7 +1669,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    title: 'Entertainment',
   },
   {
     version: 2,
@@ -1851,10 +1852,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'editorial',
       },
     ],
     status: 'template',
@@ -1866,7 +1867,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    title: 'Fashion',
   },
   {
     version: 2,
@@ -2049,10 +2050,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'steps',
       },
     ],
     status: 'template',
@@ -2064,7 +2065,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    title: 'Fitness',
   },
   {
     version: 2,
@@ -2247,10 +2248,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'cover',
       },
     ],
     status: 'template',
@@ -2262,7 +2263,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    title: 'Travel',
   },
   {
     version: 2,
@@ -2445,10 +2446,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'section',
       },
     ],
     status: 'template',
@@ -2460,7 +2461,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    title: 'Wellbeing',
   },
   {
     version: 2,
@@ -2643,10 +2644,10 @@ const formattedTemplatesArray = [
               '<span style="color: rgba(40, 41, 43, 1)"><span style="font-weight: 900">Beyoncé</span></span>',
           },
         ],
-        backgroundElementId: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
+        pageLayoutType: 'editorial',
       },
     ],
     status: 'template',
@@ -2658,7 +2659,7 @@ const formattedTemplatesArray = [
       { label: 'White', color: '#fff' },
       { label: 'Brown', color: '#eadfd6' },
     ],
-    title: 'Cooking',
+    title: 'Beauty',
   },
 ];
 

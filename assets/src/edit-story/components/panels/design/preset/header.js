@@ -20,32 +20,28 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Add, Edit } from '../../../../../design-system/icons';
+import { Icons } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
 
 const buttonCSS = css`
   border: none;
   background: transparent;
-  width: 30px;
-  height: 28px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+  width: 32px;
+  height: 32px;
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   svg {
-    width: 15px;
-    height: 15px;
+    width: 32px;
+    height: 32px;
   }
 `;
 
@@ -59,7 +55,7 @@ const EditMode = styled.button`
   ${({ isEditMode }) =>
     isEditMode &&
     css`
-      color: ${({ theme }) => theme.colors.fg.white};
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
       font-size: 12px;
       line-height: 14px;
       padding: 7px;
@@ -72,16 +68,14 @@ function PresetsHeader({
   handleAddPreset,
   isEditMode,
   setIsEditMode,
-  presets,
+  hasPresets,
   canCollapse,
   presetType,
 }) {
-  const hasPresets = presets.length > 0;
-
   const isColor = 'color' === presetType;
   const editLabel = isColor
-    ? __('Edit color presets', 'web-stories')
-    : __('Edit style presets', 'web-stories');
+    ? __('Edit colors', 'web-stories')
+    : __('Edit styles', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -96,15 +90,15 @@ function PresetsHeader({
             }
             isEditMode={isEditMode}
           >
-            {isEditMode ? __('Done', 'web-stories') : <Edit />}
+            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
           </EditMode>
         )}
         {!isEditMode && !isColor && (
           <AddPresetButton
             onClick={handleAddPreset}
-            aria-label={__('Add style preset', 'web-stories')}
+            aria-label={__('Add style', 'web-stories')}
           >
-            <Add />
+            <Icons.Plus />
           </AddPresetButton>
         )}
       </>
@@ -119,7 +113,7 @@ function PresetsHeader({
 }
 
 PresetsHeader.propTypes = {
-  presets: PropTypes.array.isRequired,
+  hasPresets: PropTypes.bool.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,

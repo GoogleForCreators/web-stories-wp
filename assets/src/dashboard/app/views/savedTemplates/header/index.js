@@ -19,17 +19,13 @@
  */
 import { useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../tracking';
-import { Layout, useLayoutContext } from '../../../../components';
+import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_SORT_MENU_ITEMS,
@@ -65,15 +61,16 @@ function Header({ filter, search, sort, templates, view }) {
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_saved_templates', 'dashboard', '', '', {
+  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
+    trackEvent('search', {
+      search_type: 'saved_templates',
       search_term: value,
     });
     search.setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
 
   return (
-    <Layout.Squishable>
+    <>
       <PageHeading
         defaultTitle={__('Saved Templates', 'web-stories')}
         searchPlaceholder={__('Search Templates', 'web-stories')}
@@ -93,7 +90,7 @@ function Header({ filter, search, sort, templates, view }) {
           'web-stories'
         )}
       />
-    </Layout.Squishable>
+    </>
   );
 }
 

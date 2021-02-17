@@ -26,7 +26,7 @@ import { text } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import { Checkbox } from '..';
-import { Text } from '../..';
+import { Text } from '../../typography';
 import { DarkThemeProvider } from '../../../storybookUtils';
 
 export default {
@@ -47,6 +47,7 @@ const Row = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column: 1 / -1;
+  grid-row-gap: 16px;
 
   > div {
     display: grid;

@@ -15,21 +15,17 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { __ } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackClick } from '../../../../tracking';
 import {
   Dropdown,
   StandardViewContentGutter,
@@ -37,6 +33,7 @@ import {
   TypographyPresets,
 } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import TelemetryBanner from './telemetryBanner';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.DEPRECATED_THEME.formatContainer.height}px;
@@ -87,15 +84,13 @@ export default function BodyViewOptions({
   sortDropdownAriaLabel,
   wpListURL,
 }) {
-  const handleClassicListViewClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_classic_list_view', 'dashboard', wpListURL);
-    },
-    [wpListURL]
-  );
+  const handleClassicListViewClick = useCallback((evt) => {
+    trackClick(evt, 'open_classic_list_view');
+  }, []);
 
   return (
     <StandardViewContentGutter>
+      <TelemetryBanner />
       <DisplayFormatContainer>
         <Label>{resultsLabel}</Label>
         <ControlsContainer>

@@ -37,10 +37,19 @@ const Container = styled.div`
   width: 100%;
   min-width: 160px;
   z-index: 2;
-  background-color: ${({ theme }) => theme.colors.bg.black};
-  border-radius: ${({ theme }) => theme.border.radius.default};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.black};
+  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
   padding: 5px;
   margin-top: 16px;
+  ${({ isInline }) =>
+    isInline &&
+    `
+      position: absolute;
+      margin-top: 0;
+      padding: 0;
+      min-width initial;
+      width: initial;
+  `}
 `;
 
 function OptionsContainer({
@@ -49,6 +58,7 @@ function OptionsContainer({
   getOptionsByQuery,
   hasSearch,
   renderContents,
+  isInline,
 }) {
   const ref = useRef();
   const inputRef = useRef();
@@ -84,7 +94,7 @@ function OptionsContainer({
 
   const listId = `list-${uuidv4()}`;
   return (
-    <Container role="dialog" ref={ref}>
+    <Container role="dialog" ref={ref} isInline={isInline}>
       {hasSearch && (
         <SearchInput
           ref={inputRef}
@@ -113,6 +123,7 @@ OptionsContainer.propTypes = {
   getOptionsByQuery: PropTypes.func,
   hasSearch: PropTypes.bool,
   renderContents: PropTypes.func.isRequired,
+  isInline: PropTypes.bool,
 };
 
 export default OptionsContainer;

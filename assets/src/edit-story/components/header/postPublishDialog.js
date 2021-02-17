@@ -19,43 +19,33 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useCallback } from 'react';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
-import { trackClick } from '../../../tracking';
-import { TranslateWithMarkup } from '../../../i18n';
 
 const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
 `;
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
-  const onAddToPostClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'add_story_to_new_post', 'editor', confirmURL);
-    },
-    [confirmURL]
-  );
+  const onAddToPostClick = useCallback((evt) => {
+    trackClick(evt, 'add_story_to_new_post');
+  }, []);
 
-  const onViewStoryClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'view_story', 'editor', storyURL);
-    },
-    [storyURL]
-  );
+  const onViewStoryClick = useCallback((evt) => {
+    trackClick(evt, 'view_story');
+  }, []);
 
   return (
     <Dialog

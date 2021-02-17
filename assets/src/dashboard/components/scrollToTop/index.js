@@ -20,22 +20,18 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useDebouncedCallback } from 'use-debounce';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { ChevronLeft } from '../../icons';
-import cssLerp from '../../utils/cssLerp';
-import { useLayoutContext, SQUISH_CSS_VAR } from '../layout';
+import { useLayoutContext } from '../layout';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const ScrollButton = styled.button`
-  position: absolute;
+  position: fixed;
   right: 40px;
   bottom: 40px;
   height: 50px;
@@ -53,7 +49,8 @@ const ScrollButton = styled.button`
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  opacity: ${cssLerp(0, 1, SQUISH_CSS_VAR)};
+  opacity: ${({ isVisible }) => Number(isVisible)};
+  transition: opacity 300ms ease-in-out;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
@@ -75,19 +72,20 @@ const DropUpArrowIcon = styled(ChevronLeft)`
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
   const {
-    actions: { scrollToTop, addSquishListener, removeSquishListener },
+    actions: { scrollToTop },
   } = useLayoutContext();
 
-  useEffect(() => {
-    const isVisibleFromProgress = (event) => {
-      setIsVisible(event.data.progress > 0);
-    };
+  const [handleScroll] = useDebouncedCallback(
+    () => setIsVisible(window.scrollY > 0),
+    100
+  );
 
-    addSquishListener(isVisibleFromProgress);
-    return () => {
-      removeSquishListener(isVisibleFromProgress);
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return function () {
+      window.removeEventListener('scroll', handleScroll, { passive: true });
     };
-  }, [addSquishListener, removeSquishListener]);
+  }, [handleScroll]);
 
   return (
     <ScrollButton

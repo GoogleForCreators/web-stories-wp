@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
+export { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
 export { default } from './inspector';

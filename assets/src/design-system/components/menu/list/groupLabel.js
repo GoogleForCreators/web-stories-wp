@@ -31,7 +31,7 @@ const GroupLabel = ({ label }) => {
   return (
     <ListItemLabel id={`dropDownMenuLabel-${label}`} role="presentation">
       <ListItemLabelDisplayText
-        as="span"
+        forwardedAs="span"
         size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.EXTRA_SMALL}
       >
         {label}

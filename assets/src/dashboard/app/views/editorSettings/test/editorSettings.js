@@ -55,6 +55,7 @@ function createProviderValues({
 }) {
   return {
     config: {
+      allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
       capabilities: {
         canUploadFiles: canUploadFiles,
         canManageSettings: canManageSettings,
@@ -84,6 +85,7 @@ function createProviderValues({
             id: 1,
             meta: {
               web_stories_tracking_optin: true,
+              web_stories_media_optimization: true,
             },
           },
         },

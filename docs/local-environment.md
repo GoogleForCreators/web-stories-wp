@@ -30,6 +30,14 @@ Also, if you need to reset the local environment's database, you can run:
 npm run env:reset-site
 ```
 
+## Specifying PHP Version
+
+It is also possible to run the local environment in different PHP versions, like so: 
+
+```bash
+PHP_VERSION=8.0 npm run env:start
+```
+
 ## Custom Environment
 
 Alternatively, you can use your own local WordPress environment (e.g. using [Local by Flywheel](https://localbyflywheel.com/)) and clone this repository right into your `wp-content/plugins` directory.

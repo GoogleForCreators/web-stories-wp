@@ -23,4 +23,8 @@ export const defaultTypographyStyle = ({ theme }) => css`
   color: ${theme.colors.fg.primary};
   margin: 0;
   padding: 0;
+
+  &:focus {
+    box-shadow: none;
+  }
 `;

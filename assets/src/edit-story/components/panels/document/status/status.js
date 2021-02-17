@@ -19,11 +19,7 @@
  */
 import { useCallback } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -38,7 +34,7 @@ const BoxedTextInput = styled(TextInput)`
   border-radius: 4px;
   flex-grow: 1;
   &:focus {
-    background-color: ${({ theme }) => theme.colors.fg.white};
+    background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   }
 `;
 

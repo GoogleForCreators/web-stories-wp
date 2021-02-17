@@ -21,11 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -55,11 +51,12 @@ const Label = styled.label`
 `;
 
 const LabelText = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   text-align: center;
   width: 100%;
   display: inline-block;

@@ -20,11 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useRef, useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -102,7 +98,7 @@ const Rectangle = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 
   &:active {
     outline: none;
@@ -143,7 +139,7 @@ const PageSeparator = styled(ReorderableSeparator)`
 `;
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.colors.accent.primary};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
   height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
   width: 4px;
   margin: 0px;

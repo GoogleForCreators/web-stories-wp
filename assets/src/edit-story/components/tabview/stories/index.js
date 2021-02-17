@@ -23,11 +23,16 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Icons } from '../../../../design-system';
 import TabView from '../';
 
+const TabWrapper = styled.div`
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.workspace};
+`;
+
 const TabContent = styled.div`
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   padding: 16px;
 `;
 
@@ -39,18 +44,36 @@ export default {
 export const _default = () => {
   const [tab, setTab] = useState('design');
   const tabs = [
-    { id: 'design', title: 'Design' },
-    { id: 'document', title: 'Document' },
-    { id: 'pre-publish', title: 'Pre-publish' },
+    {
+      id: 'design',
+      title: 'Design',
+      icon: function Warning() {
+        return <Icons.Magnifier className="alert" />;
+      },
+    },
+    {
+      id: 'document',
+      title: 'Document',
+      icon: function Warning() {
+        return <Icons.ExclamationTriangle className="alert warning" />;
+      },
+    },
+    {
+      id: 'pre-publish',
+      title: 'Pre-publish',
+      icon: function Error() {
+        return <Icons.ExclamationOutline className="alert error" />;
+      },
+    },
   ];
 
   return (
-    <>
+    <TabWrapper>
       <TabView onTabChange={(id) => setTab(id)} tabs={tabs} />
       <TabContent>{`Tab content: ${
         tabs.find(({ id }) => id === tab).title
       }`}</TabContent>
-    </>
+    </TabWrapper>
   );
 };
 

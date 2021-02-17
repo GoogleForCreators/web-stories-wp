@@ -18,18 +18,14 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import Library from '../library';
 import Workspace from '../workspace';
-import MetaBoxes from '../../integrations/wordpress/components/metaBoxes';
+import MetaBoxes from '../../integrations/wordpress/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -40,16 +36,18 @@ import {
 import withOverlay from '../overlay/withOverlay';
 import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
+import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
 })`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 
   position: relative;
   height: 100%;
@@ -71,22 +69,29 @@ const Area = styled.div`
   z-index: 2;
 `;
 
-// TODO: Fix meta boxes layout.
+const MetaBoxesArea = styled(Area).attrs({
+  area: 'metaboxes',
+})`
+  overflow-y: auto;
+`;
+
 function Layout() {
   return (
     <LayoutProvider>
       <PrepublishChecklistProvider>
-        <Editor zIndex={3}>
-          <CanvasProvider>
-            <Area area="lib">
-              <Library />
-            </Area>
-            <Workspace />
-          </CanvasProvider>
-          <Area area="metaboxes">
-            <MetaBoxes />
-          </Area>
-        </Editor>
+        <HighlightsProvider>
+          <Editor zIndex={3}>
+            <CanvasProvider>
+              <Area area="lib">
+                <Library />
+              </Area>
+              <Workspace />
+            </CanvasProvider>
+            <MetaBoxesArea>
+              <MetaBoxes />
+            </MetaBoxesArea>
+          </Editor>
+        </HighlightsProvider>
       </PrepublishChecklistProvider>
     </LayoutProvider>
   );

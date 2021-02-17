@@ -1,0 +1,13 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7 11.5C7 10.6716 7.67157 10 8.5 10H23.4996C24.3281 10 24.9996 10.6716 24.9996 11.5V20.41C24.9996 21.2384 24.3281 21.91 23.4996 21.91H8.5C7.67157 21.91 7 21.2384 7 20.41V11.5ZM8.5 11C8.22386 11 8 11.2239 8 11.5V20.41C8 20.6861 8.22386 20.91 8.5 20.91H23.4996C23.7758 20.91 23.9996 20.6861 23.9996 20.41V11.5C23.9996 11.2239 23.7758 11 23.4996 11H8.5Z" fill="currentColor"/>
+<rect x="12" y="18.5" width="7.3" height="1" rx="0.5" fill="currentColor"/>
+<circle cx="10.25" cy="13.75" r="0.75" fill="currentColor"/>
+<circle cx="12.75" cy="13.75" r="0.75" fill="currentColor"/>
+<circle cx="15.75" cy="13.75" r="0.75" fill="currentColor"/>
+<circle cx="18.75" cy="13.75" r="0.75" fill="currentColor"/>
+<circle cx="21.75" cy="13.75" r="0.75" fill="currentColor"/>
+<circle cx="11.75" cy="15.8496" r="0.75" fill="currentColor"/>
+<circle cx="14.25" cy="15.8496" r="0.75" fill="currentColor"/>
+<circle cx="17.25" cy="15.8496" r="0.75" fill="currentColor"/>
+<circle cx="20.25" cy="15.8496" r="0.75" fill="currentColor"/>
+</svg>

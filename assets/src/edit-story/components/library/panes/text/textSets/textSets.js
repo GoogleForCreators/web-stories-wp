@@ -15,18 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import { useState, useMemo, useCallback } from 'react';
+import { __ } from '@web-stories-wp/i18n';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -148,14 +145,28 @@ function TextSets({ paneRef }) {
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
+  const onChangeShowInUse = useCallback(
+    (value) => {
+      requestAnimationFrame(() => setShowInUse(value));
+    },
+    [setShowInUse]
+  );
+
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'textsets',
+      search_term: '',
+      search_category: selectedCat,
+      search_filter: showInUse ? 'show_in_use' : undefined,
+    });
+  }, [selectedCat, showInUse]);
+
   return (
     <SectionContainer id={sectionId}>
       <TitleBar>
         <SectionTitle>{title}</SectionTitle>
         <Switch
-          onChange={(value) => {
-            requestAnimationFrame(() => setShowInUse(value));
-          }}
+          onChange={onChangeShowInUse}
           value={showInUse}
           label={__('Match fonts from story', 'web-stories')}
         />

@@ -20,12 +20,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
-/**
- * WordPress dependencies
- */
-
-import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
@@ -62,7 +59,7 @@ const QuickAction = styled.button`
   line-height: 1;
   overflow: hidden;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 const TextIconContainer = styled.div`
@@ -86,6 +83,7 @@ function TextIcon(props) {
   const handleAddText = (evt) => {
     evt.stopPropagation();
     insertElement('text', DEFAULT_PRESET);
+    trackEvent('library_text_quick_action');
   };
   const { isActive } = props;
   return (

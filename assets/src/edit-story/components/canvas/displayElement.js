@@ -144,7 +144,11 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   });
 
   const bgOverlayRef = useRef(null);
-  useColorTransformHandler({ id, targetRef: bgOverlayRef });
+  useColorTransformHandler({
+    id,
+    targetRef: bgOverlayRef,
+    resetOnNullTransform: false,
+  });
 
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
