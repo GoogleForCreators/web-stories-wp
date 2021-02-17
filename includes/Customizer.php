@@ -382,27 +382,6 @@ class Customizer {
 					},
 				]
 			);
-
-			$wp_customize->add_setting(
-				self::STORY_OPTION . '[show_story_poster]',
-				[
-					'default' => $theme_support['show-story-poster-default'],
-					'type'    => 'option',
-				]
-			);
-
-			$wp_customize->add_control(
-				self::STORY_OPTION . '[show_story_poster]',
-				[
-					'type'            => 'checkbox',
-					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Show story poster', 'web-stories' ),
-					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'grid' ) );
-					},
-				]
-			);
-
 		}
 
 	}
