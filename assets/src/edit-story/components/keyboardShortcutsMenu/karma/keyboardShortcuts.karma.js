@@ -35,7 +35,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
   const getKeyboardShortcutsToggle = () => {
     return fixture.editor.getByRole('button', {
-      name: /^Toggle Keyboard Shortcuts$/,
+      name: /^Keyboard Shortcuts$/,
     });
   };
 
