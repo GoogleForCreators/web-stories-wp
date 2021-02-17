@@ -44,7 +44,10 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 */
 	public function setUp() {
 		$this->stylesheet = get_stylesheet();
-		$this->stub       = new \Google\Web_Stories\Integrations\Core_Themes_Support();
+
+		// Set stylesheet from one of the supported themes.
+		update_option( 'stylesheet', 'twentytwentyone' );
+		$this->stub = new \Google\Web_Stories\Integrations\Core_Themes_Support();
 	}
 
 	/**
@@ -106,7 +109,6 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 			'twentytwelve',
 			'twentyeleven',
 			'twentyten',
-			'default',
 		];
 
 		$actual = $this->get_static_private_property( $this->stub, 'supported_themes' );

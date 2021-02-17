@@ -50,7 +50,6 @@ class Core_Themes_Support {
 		'twentytwelve',
 		'twentyeleven',
 		'twentyten',
-		'default',
 	];
 
 	/**
