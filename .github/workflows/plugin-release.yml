@@ -460,7 +460,8 @@ jobs:
 
       - name: Get previous stable tag
         id: get_previous_stable_tag
-        run: echo ::set-output name=stable_tag::$(grep "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt)
+        # Returns the whole matching line.
+        run: echo ::set-output name=stable_tag::$(grep -P "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt)
 
       - name: Delete everything in trunk
         run: find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf {} +
@@ -475,7 +476,7 @@ jobs:
 
       - name: Replace stable tag placeholder with pre-existing stable tag
         run: |
-          sed -i "s/${STABLE_TAG_REGEX}/Stable tag: ${STABLE_TAG}/g" ./readme.txt
+          sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${STABLE_TAG}/g" ./readme.txt
         working-directory: ./svn/trunk
         env:
           STABLE_TAG: ${{ steps.get_previous_stable_tag.outputs.stable_tag }}
@@ -498,6 +499,6 @@ jobs:
       - name: Update stable tag
         working-directory: ./trunk
         run: |
-          sed -i "s/${STABLE_TAG_REGEX}/Stable tag: ${PLUGIN_VERSION}/g" ./readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
+          sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./readme.txt
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
