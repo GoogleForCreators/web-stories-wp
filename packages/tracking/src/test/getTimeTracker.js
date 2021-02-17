@@ -18,9 +18,10 @@
  * Internal dependencies
  */
 import getTimeTracker from '../getTimeTracker';
-import { config, gtag } from '../shared';
+import { config } from '../shared';
+import trackEvent from '../trackEvent';
 
-jest.mock('../shared');
+jest.mock('../trackEvent');
 
 jest
   .spyOn(performance, 'now')
@@ -36,39 +37,25 @@ describe('getTimeTracker', () => {
     jest.clearAllMocks();
   });
 
-  it('adds a tracking event to the dataLayer', async () => {
+  it('sends two separate tracking events', async () => {
     config.appName = 'Foo App';
     config.trackingAllowed = true;
     config.trackingEnabled = true;
     config.trackingId = 'UA-12345678-1';
     config.trackingIdGA4 = 'G-ABC1234567';
 
-    gtag.mockImplementation((type, eventName, eventData) => {
-      eventData.event_callback();
-    });
-
     const trackTime = getTimeTracker('load_dependencies');
     await trackTime();
 
-    expect(gtag).toHaveBeenCalledTimes(2);
-    expect(gtag).toHaveBeenNthCalledWith(1, 'event', 'timing_complete', {
-      event_callback: expect.any(Function),
+    expect(trackEvent).toHaveBeenCalledTimes(2);
+    expect(trackEvent).toHaveBeenNthCalledWith(1, 'timing_complete', {
       name: 'load_dependencies',
       value: 50,
       send_to: 'UA-12345678-1',
     });
-    expect(gtag).toHaveBeenNthCalledWith(2, 'event', 'load_dependencies', {
-      event_callback: expect.any(Function),
+    expect(trackEvent).toHaveBeenNthCalledWith(2, 'load_dependencies', {
       value: 50,
       send_to: 'G-ABC1234567',
     });
-  });
-
-  it('does not push to dataLayer when tracking is disabled', async () => {
-    config.trackingEnabled = false;
-
-    const trackTime = getTimeTracker('load_dependencies');
-    await trackTime();
-    expect(gtag).not.toHaveBeenCalled();
   });
 });

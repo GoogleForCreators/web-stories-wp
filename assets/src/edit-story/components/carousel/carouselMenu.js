@@ -26,12 +26,15 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import {
-  GridView as GridViewButton,
-  MetaBoxes as MetaBoxesButton,
-  Plain,
-} from '../button';
+  Button,
+  Icons,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../design-system';
+import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
+import { Plain } from '../button';
 import Modal from '../modal';
 import WithTooltip from '../tooltip';
 import { Placement } from '../popup';
@@ -61,6 +64,10 @@ const Box = styled.div`
   align-items: center;
 `;
 
+const Space = styled.span`
+  width: 8px;
+`;
+
 const PlainStyled = styled(Plain)`
   background-color: ${({ theme }) =>
     rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
@@ -71,11 +78,6 @@ const PlainStyled = styled(Plain)`
   }
 `;
 
-const StyledGridViewButton = styled(GridViewButton).attrs({
-  height: '16',
-  width: '16',
-})``;
-
 const GridViewContainer = styled.section.attrs({
   'aria-label': __('Grid View', 'web-stories'),
 })`
@@ -83,11 +85,6 @@ const GridViewContainer = styled.section.attrs({
   margin: 70px 170px 70px 170px;
   pointer-events: all;
 `;
-
-const StyledMetaBoxesButton = styled(MetaBoxesButton).attrs({
-  height: '24',
-  width: '24',
-})``;
 
 function CarouselMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -126,30 +123,44 @@ function CarouselMenu() {
       <Wrapper>
         <MenuItems>
           {hasMetaBoxes && (
-            <Box>
-              <WithTooltip
-                title={__('Third-Party Meta Boxes', 'web-stories')}
-                placement={Placement.TOP}
-              >
-                <StyledMetaBoxesButton
-                  onClick={handleMetaBoxesClick}
-                  aria-label={__('Third-Party Meta Boxes', 'web-stories')}
-                />
-              </WithTooltip>
-            </Box>
+            <>
+              <Box>
+                <WithTooltip
+                  title={__('Third-Party Meta Boxes', 'web-stories')}
+                  placement={Placement.TOP}
+                >
+                  <Button
+                    variant={BUTTON_VARIANTS.SQUARE}
+                    type={BUTTON_TYPES.TERTIARY}
+                    size={BUTTON_SIZES.SMALL}
+                    onClick={handleMetaBoxesClick}
+                    aria-label={__('Third-Party Meta Boxes', 'web-stories')}
+                  >
+                    <Icons.LetterMOutline />
+                  </Button>
+                </WithTooltip>
+              </Box>
+              <Space />
+            </>
           )}
           <Box>
             <KeyboardShortcutsMenu />
           </Box>
+          <Space />
           <Box>
             <WithTooltip
               title={__('Grid View', 'web-stories')}
               placement={Placement.TOP}
             >
-              <StyledGridViewButton
+              <Button
+                variant={BUTTON_VARIANTS.SQUARE}
+                type={BUTTON_TYPES.PLAIN}
+                size={BUTTON_SIZES.SMALL}
                 onClick={toggleModal}
                 aria-label={__('Grid View', 'web-stories')}
-              />
+              >
+                <Icons.Box4 />
+              </Button>
             </WithTooltip>
           </Box>
         </MenuItems>

@@ -34,9 +34,8 @@ import track from './track';
  * @param {Object<*>} [eventParameters] Event parameters.
  * @return {Promise<void>} Promise that always resolves.
  */
-//eslint-disable-next-line require-await
 async function trackEvent(eventName, eventParameters = {}) {
-  if (!isTrackingEnabled()) {
+  if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }
 

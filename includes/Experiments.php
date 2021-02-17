@@ -288,17 +288,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2044
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextMagicAndHelperMode',
-				'label'       => __( 'Text Magic', 'web-stories' ),
-				'description' => __( 'Enable text magic and helper mode icons', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2098
 			 * Creation date: 2020-06-04
 			 */

@@ -32,9 +32,8 @@ import track from './track';
  * @param {boolean} [fatal=false] Report whether there is a fatal error.
  * @return {Promise<void>} Promise that always resolves.
  */
-//eslint-disable-next-line require-await
 async function trackError(description, fatal = false) {
-  if (!isTrackingEnabled()) {
+  if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }
 

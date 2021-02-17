@@ -31,9 +31,8 @@ import track from './track';
  * @param {string} eventName The event name (e.g. 'search').
  * @return {Promise<void>} Promise that always resolves.
  */
-//eslint-disable-next-line require-await
 async function trackClick(event, eventName) {
-  if (!isTrackingEnabled()) {
+  if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }
 

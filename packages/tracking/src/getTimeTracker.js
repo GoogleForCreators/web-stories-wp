@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import trackEvent from './trackEvent';
-import isTrackingEnabled from './isTrackingEnabled';
 import { config } from './shared';
 
 /**
@@ -34,10 +33,6 @@ import { config } from './shared';
 function getTimeTracker(eventName) {
   const before = window.performance.now();
   return () => {
-    if (!isTrackingEnabled()) {
-      return;
-    }
-
     const after = window.performance.now();
     const value = after - before;
 
