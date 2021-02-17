@@ -201,7 +201,7 @@ ButtonInner.propTypes = {
   isReady: PropTypes.bool,
 };
 
-function AnimatedContextMenu({ isOpen, items, ...props }) {
+function AnimationContainer({ children, isOpen, ...props }) {
   const [align, setAlign] = useState(null);
   const [isReady, setIsReady] = useState(false);
   const menuPositionRef = useRef(null);
@@ -260,7 +260,7 @@ function AnimatedContextMenu({ isOpen, items, ...props }) {
       <MenuWrapper>
         <MenuRevealer>
           <MenuCounterRevealer ref={menuPositionRef}>
-            <Menu items={items} />
+            {children}
           </MenuCounterRevealer>
         </MenuRevealer>
         <Shadow />
@@ -268,7 +268,18 @@ function AnimatedContextMenu({ isOpen, items, ...props }) {
     </ButtonInner>
   );
 }
+AnimationContainer.propTypes = {
+  isOpen: PropTypes.bool,
+  children: PropTypes.node,
+};
 
+const AnimatedContextMenu = ({ isOpen, items }) => {
+  return (
+    <AnimationContainer isOpen={isOpen}>
+      <Menu items={items} />
+    </AnimationContainer>
+  );
+};
 AnimatedContextMenu.propTypes = {
   ...MenuPropTypes,
 };
