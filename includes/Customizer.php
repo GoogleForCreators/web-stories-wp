@@ -207,7 +207,7 @@ class Customizer {
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[circle_size]',
 			[
-				'default' => $theme_support['default-circle-size'],
+				'default' => $theme_support['circle-size-default'],
 				'type'    => 'option',
 			]
 		);
@@ -218,7 +218,6 @@ class Customizer {
 				'section'         => self::SECTION_SLUG,
 				'label'           => __( 'Circle Size', 'web-stories' ),
 				'type'            => 'number',
-				'choices'         => $this->get_order_choices( $theme_support['order'] ),
 				'input_attrs'     => [
 					'min'  => 80,
 					'max'  => 200,
@@ -503,7 +502,7 @@ class Customizer {
 			'stories_archive_label' => $theme_support['stories-archive-label'],
 			'show_story_poster'     => $theme_support['show-story-poster-default'],
 			'number_of_columns'     => $theme_support['grid-columns-default'],
-			'circle_size'           => $theme_support['default-circle-size'],
+			'circle_size'           => $theme_support['circle-size-default'],
 		];
 
 		$query_arguments = [

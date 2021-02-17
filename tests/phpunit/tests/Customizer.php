@@ -297,7 +297,7 @@ class Customizer extends \WP_UnitTestCase {
 			'stories-archive-link'      => true,
 			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
 			'number-of-stories'         => 10,
-			'default-circle-size'       => 150,
+			'circle-size-default'       => 150,
 			'order'                     => [
 				'latest'               => __( 'Latest', 'web-stories' ),
 				'oldest'               => __( 'Oldest', 'web-stories' ),
