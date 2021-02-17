@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
@@ -49,23 +49,40 @@ function LibraryProvider({ children }) {
   const initialTab = MEDIA.id;
   const [tab, setTab] = useState(initialTab);
   const [textSets, setTextSets] = useState({});
+  const renderedTabs = useRef({});
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showElementsTab } = useFeatures();
 
   // Order here is important, as it denotes the actual visual order of elements.
-  const tabs = useMemo(
-    () => [
+  const tabs = useMemo(() => {
+    return [
       MEDIA,
       MEDIA3P,
-      ...(tab === TEXT.id ? [TEXT] : [{ icon: TextIcon, id: 'text' }]),
+      TEXT,
       SHAPES,
-      ...(showElementsTab ? [ELEMS] : []),
+      showElementsTab ? ELEMS : {},
       PAGE_LAYOUTS,
-    ],
-    [showElementsTab, tab]
-  );
+    ].reduce((accTabs, renderTab) => {
+      // for heavier tab content, avoid rendering the pane unless it is active
+      const isLazyTab = [MEDIA3P.id, TEXT.id, PAGE_LAYOUTS.id].includes(
+        renderTab.id
+      );
+      const isActiveTab = tab === renderTab.id;
+      const hasBeenRendered = renderedTabs.current[renderTab.id];
+
+      return renderTab.id
+        ? [
+            ...accTabs,
+            // remove the pane if it hasn't been rendered before or the tab is not active
+            isLazyTab && !isActiveTab && !hasBeenRendered
+              ? { id: renderTab.id, icon: renderTab.icon }
+              : renderTab,
+          ]
+        : accTabs;
+    }, []);
+  }, [showElementsTab, tab]);
 
   const state = useMemo(
     () => ({
@@ -94,16 +111,22 @@ function LibraryProvider({ children }) {
       textSets,
     ]
   );
+  const getTextSets = useCallback(async () => {
+    const trackTiming = getTimeTracker('load_text_sets');
+    setTextSets(await loadTextSets());
+    trackTiming();
+  }, []);
 
   useEffect(() => {
-    async function getTextSets() {
-      const trackTiming = getTimeTracker('load_text_sets');
-      setTextSets(await loadTextSets());
-      trackTiming();
-    }
+    // track the rendered tabs
+    const previouslyRenderedTabs = { ...renderedTabs.current };
+    renderedTabs.current = { ...previouslyRenderedTabs, [tab]: true };
 
-    getTextSets();
-  }, []);
+    // if text pane hasn't been rendered until now fetch dynamically imported text sets
+    if (tab === TEXT.id && !previouslyRenderedTabs[tab]) {
+      getTextSets();
+    }
+  }, [tab, getTextSets]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
