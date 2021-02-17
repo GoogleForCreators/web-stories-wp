@@ -48,7 +48,6 @@ const Suffix = styled(Text)`
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.tertiary};
   white-space: nowrap;
-  overflow: hidden;
 `;
 
 const InputContainer = styled.div(
@@ -63,6 +62,7 @@ const InputContainer = styled.div(
     border: 1px solid
       ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
     border-radius: ${theme.borders.radius.small};
+    overflow: hidden;
 
     :focus-within {
       ${focusCSS(theme.colors.border.focus)};
