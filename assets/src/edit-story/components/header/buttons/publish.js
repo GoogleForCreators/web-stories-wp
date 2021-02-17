@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -55,15 +56,22 @@ function Publish() {
     toDate(new Date(), getOptions())
   );
 
+  useEffect(() => {
+    if (showDialog) {
+      trackEvent('missing_title_dialog');
+    }
+  }, [showDialog]);
+
   const publish = useCallback(() => {
-    trackEvent('publish_story', 'editor', '', '', {
+    trackEvent('publish_story', {
       status: hasFutureDate ? 'future' : 'publish',
+      title_length: title.length,
     });
 
     setShowDialog(false);
     saveStory({ status: 'publish' });
     refreshPostEditURL();
-  }, [refreshPostEditURL, saveStory, hasFutureDate]);
+  }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
 
   const handlePublish = useCallback(() => {
     if (!title) {

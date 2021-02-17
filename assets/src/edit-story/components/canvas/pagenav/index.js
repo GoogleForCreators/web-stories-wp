@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
@@ -25,41 +25,30 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_NAV_BUTTON_SIZE } from '../../../constants';
+import {
+  Button,
+  Icons,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../../design-system';
 import { useConfig, useStory } from '../../../app';
-import { LeftArrow, RightArrow } from '../../button';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  width: ${PAGE_NAV_BUTTON_SIZE}px;
-  height: ${PAGE_NAV_BUTTON_SIZE}px;
+  color: ${({ theme }) => theme.colors.fg.white};
 
   & > * {
     pointer-events: initial;
   }
 `;
 
-const pageNavButtonsStyle = css`
-  &:focus {
-    opacity: 0.3;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
+const FlippableArrow = styled(Icons.ArrowLeftLarge)`
+  transform: rotate(${({ isLeft }) => (isLeft ? 0 : 0.5)}turn);
 `;
 
-const LeftNavButton = styled(LeftArrow)`
-  ${pageNavButtonsStyle}
-`;
-
-const RightNavButton = styled(RightArrow)`
-  ${pageNavButtonsStyle}
-`;
-
-function PageNav({ isNext }) {
+function PageNav({ isNext = true }) {
   const { pages, currentPageIndex, setCurrentPage } = useStory(
     ({ state: { pages, currentPageIndex }, actions: { setCurrentPage } }) => ({
       pages,
@@ -68,6 +57,9 @@ function PageNav({ isNext }) {
     })
   );
   const { isRTL } = useConfig();
+
+  // Cancel lasso on mouse down
+  const cancelMouseDown = useCallback((evt) => evt.stopPropagation(), []);
   const handleClick = useCallback(() => {
     const newPage = isNext
       ? pages[currentPageIndex + 1]
@@ -79,43 +71,37 @@ function PageNav({ isNext }) {
   const displayNav =
     (isNext && currentPageIndex < pages.length - 1) ||
     (!isNext && currentPageIndex > 0);
-  const buttonProps = {
-    isDisabled: !displayNav,
-    isHidden: !displayNav,
-    'aria-label': isNext
-      ? __('Next Page', 'web-stories')
-      : __('Previous Page', 'web-stories'),
-    onClick: handleClick,
-    // Cancel lasso.
-    onMouseDown: (evt) => evt.stopPropagation(),
-    width: PAGE_NAV_BUTTON_SIZE,
-    height: PAGE_NAV_BUTTON_SIZE,
-  };
 
-  const PrevButton = isRTL ? RightNavButton : LeftNavButton;
-  const NextButton = isRTL ? LeftNavButton : RightNavButton;
-
-  if (isNext) {
-    return (
-      <Wrapper>
-        <NextButton {...buttonProps} />
-      </Wrapper>
-    );
-  }
+  // If reading direction is RTL and this is next button, it's pointing left.
+  // If reading direction is !RTL and this is !next button, it's pointing left.
+  // Otherwise it's a right.
+  // Thus, if the two bools are equal, it's a left button.
+  const isLeft = isRTL === isNext;
 
   return (
     <Wrapper>
-      <PrevButton {...buttonProps} />
+      <Button
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.MEDIUM}
+        isDisabled={!displayNav}
+        isHidden={!displayNav}
+        aria-label={
+          isNext
+            ? __('Next Page', 'web-stories')
+            : __('Previous Page', 'web-stories')
+        }
+        onClick={handleClick}
+        onMouseDown={cancelMouseDown}
+      >
+        <FlippableArrow isLeft={isLeft} />
+      </Button>
     </Wrapper>
   );
 }
 
 PageNav.propTypes = {
   isNext: PropTypes.bool,
-};
-
-PageNav.defaultProps = {
-  isNext: true,
 };
 
 export default PageNav;

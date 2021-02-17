@@ -62,6 +62,7 @@ const HighlightRow = styled(Row)`
     left: -20px;
     right: -10px;
     ${({ isHighlighted }) => isHighlighted && styles.FLASH}
+    pointer-events: none;
   }
 `;
 
@@ -74,10 +75,10 @@ function PublishPanel() {
     actions: { loadUsers },
   } = useInspector();
 
-  const coverButtonRef = useRef();
+  const posterButtonRef = useRef();
   const publisherLogoRef = useRef();
 
-  const highlightCover = useFocusHighlight(states.COVER, coverButtonRef);
+  const highlightPoster = useFocusHighlight(states.POSTER, posterButtonRef);
   const highlightLogo = useFocusHighlight(
     states.PUBLISHER_LOGO,
     publisherLogoRef
@@ -122,7 +123,7 @@ function PublishPanel() {
 
   const { capabilities, allowedImageMimeTypes } = useConfig();
 
-  const handleChangeCover = useCallback(
+  const handleChangePoster = useCallback(
     (image) =>
       updateStory({
         properties: {
@@ -196,7 +197,7 @@ function PublishPanel() {
     <Panel
       name="publishing"
       collapsedByDefault={false}
-      isPersistable={!(highlightLogo || highlightCover)}
+      isPersistable={!(highlightLogo || highlightPoster)}
     >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent padding={'10px 10px 10px 20px'}>
@@ -227,7 +228,7 @@ function PublishPanel() {
         <Row>
           {/* @todo Replace this with selection to choose between publisher logos */}
           <LabelWrapper>
-            <FieldLabel>{__('Publisher Logo', 'web-stories')}</FieldLabel>
+            <FieldLabel>{__('Publisher logo', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
           <MediaWrapper isHighlighted={highlightLogo?.showEffect}>
@@ -243,20 +244,20 @@ function PublishPanel() {
             />
           </MediaWrapper>
         </Row>
-        <HighlightRow isHighlighted={highlightCover?.showEffect}>
+        <HighlightRow isHighlighted={highlightPoster?.showEffect}>
           <LabelWrapper>
-            <FieldLabel>{__('Cover Image', 'web-stories')}</FieldLabel>
+            <FieldLabel>{__('Poster image', 'web-stories')}</FieldLabel>
             <Required />
           </LabelWrapper>
-          <MediaWrapper isHighlighted={highlightCover?.showEffect}>
+          <MediaWrapper isHighlighted={highlightPoster?.showEffect}>
             <Media
-              ref={coverButtonRef}
+              ref={posterButtonRef}
               value={featuredMedia?.url}
-              onChange={handleChangeCover}
-              title={__('Select as cover image', 'web-stories')}
-              buttonInsertText={__('Select as cover image', 'web-stories')}
+              onChange={handleChangePoster}
+              title={__('Select as poster image', 'web-stories')}
+              buttonInsertText={__('Select as poster image', 'web-stories')}
               type={allowedImageMimeTypes}
-              ariaLabel={__('Cover image', 'web-stories')}
+              ariaLabel={__('Poster image', 'web-stories')}
             />
           </MediaWrapper>
         </HighlightRow>

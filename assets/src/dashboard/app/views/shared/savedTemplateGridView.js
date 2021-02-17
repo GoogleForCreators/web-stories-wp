@@ -22,6 +22,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -79,13 +80,11 @@ const SavedTemplateGridView = ({
   // eslint-disable-next-line no-unused-vars
   const bottomTargetAction = useCallback(
     (template) => {
-      return async () => {
-        await trackEvent(
-          'use_saved_template',
-          'dashboard',
-          template.title,
-          template.id
-        );
+      return () => {
+        trackEvent('use_saved_template', {
+          name: template.title,
+          template_id: template.id,
+        });
         actions.createStoryFromTemplate(template);
       };
     },

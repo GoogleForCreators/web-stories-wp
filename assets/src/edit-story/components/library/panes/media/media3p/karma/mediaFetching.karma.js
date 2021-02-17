@@ -112,83 +112,83 @@ const mediaPage = (page, provider) =>
 const categories = [
   {
     name: 'categories/unsplash:KHXRtL69hcY',
-    displayName: 'Sustainability',
+    label: 'Sustainability',
   },
   {
     name: 'categories/unsplash:bo8jQKTaE0Y',
-    displayName: 'Wallpapers',
+    label: 'Wallpapers',
   },
   {
     name: 'categories/unsplash:c7USHrQ0Ljw',
-    displayName: 'COVID-19',
+    label: 'COVID-19',
   },
   {
     name: 'categories/unsplash:Fzo3zuOHN6w',
-    displayName: 'Travel',
+    label: 'Travel',
   },
   {
     name: 'categories/unsplash:6sMVjTLSkeQ',
-    displayName: 'Nature',
+    label: 'Nature',
   },
   {
     name: 'categories/unsplash:iUIsnVtjB0Y',
-    displayName: 'Textures & Patterns',
+    label: 'Textures & Patterns',
   },
   {
     name: 'categories/unsplash:BJJMtteDJA4',
-    displayName: 'Current Events',
+    label: 'Current Events',
   },
   {
     name: 'categories/unsplash:towJZFskpGg',
-    displayName: 'People',
+    label: 'People',
   },
   {
     name: 'categories/unsplash:aeu6rL-j6ew',
-    displayName: 'Business & Work',
+    label: 'Business & Work',
   },
   {
     name: 'categories/unsplash:J9yrPaHXRQY',
-    displayName: 'Technology',
+    label: 'Technology',
   },
   {
     name: 'categories/unsplash:Jpg6Kidl-Hk',
-    displayName: 'Animals',
+    label: 'Animals',
   },
   {
     name: 'categories/unsplash:R_Fyn-Gwtlw',
-    displayName: 'Interiors',
+    label: 'Interiors',
   },
   {
     name: 'categories/unsplash:rnSKDHwwYUk',
-    displayName: 'Architecture',
+    label: 'Architecture',
   },
   {
     name: 'categories/unsplash:xjPR4hlkBGA',
-    displayName: 'Food & Drink',
+    label: 'Food & Drink',
   },
   {
     name: 'categories/unsplash:Bn-DjrcBrwo',
-    displayName: 'Athletics',
+    label: 'Athletics',
   },
   {
     name: 'categories/unsplash:_8zFHuhRhyo',
-    displayName: 'Spirituality',
+    label: 'Spirituality',
   },
   {
     name: 'categories/unsplash:_hb-dl4Q-4U',
-    displayName: 'Health & Wellness',
+    label: 'Health & Wellness',
   },
   {
     name: 'categories/unsplash:hmenvQhUmxM',
-    displayName: 'Film',
+    label: 'Film',
   },
   {
     name: 'categories/unsplash:S4MKLAsBB74',
-    displayName: 'Fashion',
+    label: 'Fashion',
   },
   {
     name: 'categories/unsplash:qPYsDzvJOYc',
-    displayName: 'Experimental',
+    label: 'Experimental',
   },
 ];
 

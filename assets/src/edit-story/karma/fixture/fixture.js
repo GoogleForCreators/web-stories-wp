@@ -298,11 +298,19 @@ export class Fixture {
 
     // Check to see if Roboto font is loaded.
     await waitFor(async () => {
+      const weights = ['400', '700'];
       const font = '12px Roboto';
-      await document.fonts.load(font, '');
-      if (!document.fonts.check(font, '')) {
-        throw new Error('Not ready: Roboto font could not be loaded');
-      }
+      const fonts = weights.map((weight) => `${weight} ${font}`);
+      await Promise.all(
+        fonts.map((thisFont) => {
+          document.fonts.load(thisFont, '');
+        })
+      );
+      fonts.forEach((thisFont) => {
+        if (!document.fonts.check(thisFont, '')) {
+          throw new Error('Not ready: Roboto font could not be loaded');
+        }
+      });
     });
 
     // @todo: find a stable way to wait for the story to fully render. Can be

@@ -54,7 +54,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
       await deleteMedia(mediaId);
       deleteMediaElement({ id: mediaId });
     } catch (err) {
-      trackError('local media deletion', err.message);
+      trackError('local_media_deletion', err.message);
       showSnackbar({
         message: __('Failed to delete media item.', 'web-stories'),
       });

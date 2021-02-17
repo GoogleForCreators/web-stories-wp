@@ -19,7 +19,11 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackError } from '@web-stories-wp/tracking';
+import {
+  trackError,
+  getTimeTracker,
+  trackEvent,
+} from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -149,14 +153,23 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
+      trackEvent('video_transcoding', {
+        file_size: file.size,
+        file_type: file.type,
+      });
+
+      const trackTiming = getTimeTracker('load_video_transcoding');
+
       // Transcoding is enabled, let's give it a try!
       try {
         // TODO: Only transcode & optimize video if needed (criteria TBD).
         const newFile = await transcodeVideo(file);
+        trackTiming();
         additionalData.media_source = 'video-optimization';
         return uploadMedia(newFile, additionalData);
       } catch (err) {
-        trackError('video transcoding', err.message);
+        trackTiming();
+        trackError('video_transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
         throw createError('TranscodingError', file.name, message);

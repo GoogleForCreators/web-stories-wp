@@ -20,10 +20,6 @@
 import propTypes from 'prop-types';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * WordPress dependencies
- */
 import { __ } from '@web-stories-wp/i18n';
 
 /**

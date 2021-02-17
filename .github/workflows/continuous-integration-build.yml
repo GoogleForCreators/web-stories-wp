@@ -143,53 +143,6 @@ jobs:
           GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_COMMITTER_NAME: ${{ github.actor }}
 
-  release-draft:
-    name: Update release changelog
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - name: Draft release notes
-        id: release
-        uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Download full bundle
-        uses: actions/download-artifact@v2
-        with:
-          name: web-stories
-          path: build
-
-      - name: Download composer bundle
-        uses: actions/download-artifact@v2
-        with:
-          name: web-stories-composer
-          path: build
-
-      - name: Upload full bundle
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: build/web-stories.zip
-          asset_name: web-stories
-          asset_content_type: application/zip
-        continue-on-error: true
-
-      - name: Upload composer bundle
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: build/web-stories-composer.zip
-          asset_name: web-stories-composer
-          asset_content_type: application/zip
-        continue-on-error: true
-
   deploy-to-staging:
     name: Deploy to staging environment
     needs: build

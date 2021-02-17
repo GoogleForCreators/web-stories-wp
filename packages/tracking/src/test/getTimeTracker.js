@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,10 @@
  * Internal dependencies
  */
 import getTimeTracker from '../getTimeTracker';
-import { config, gtag } from '../shared';
+import { config } from '../shared';
+import trackEvent from '../trackEvent';
 
-jest.mock('../shared');
+jest.mock('../trackEvent');
 
 jest
   .spyOn(performance, 'now')
@@ -36,33 +37,25 @@ describe('getTimeTracker', () => {
     jest.clearAllMocks();
   });
 
-  it('adds a tracking event to the dataLayer', async () => {
+  it('sends two separate tracking events', async () => {
     config.appName = 'Foo App';
     config.trackingAllowed = true;
     config.trackingEnabled = true;
     config.trackingId = 'UA-12345678-1';
+    config.trackingIdGA4 = 'G-ABC1234567';
 
-    gtag.mockImplementationOnce((type, eventName, eventData) => {
-      eventData.event_callback();
-    });
-
-    const trackTime = getTimeTracker('load', 'Dependencies', 'CDN');
+    const trackTime = getTimeTracker('load_dependencies');
     await trackTime();
 
-    expect(gtag).toHaveBeenCalledWith('event', 'timing_complete', {
-      event_callback: expect.any(Function),
-      event_category: 'Dependencies',
-      event_label: 'CDN',
-      name: 'load',
+    expect(trackEvent).toHaveBeenCalledTimes(2);
+    expect(trackEvent).toHaveBeenNthCalledWith(1, 'timing_complete', {
+      name: 'load_dependencies',
       value: 50,
+      send_to: 'UA-12345678-1',
     });
-  });
-
-  it('does not push to dataLayer when tracking is disabled', async () => {
-    config.trackingEnabled = false;
-
-    const trackTime = getTimeTracker('load', 'Dependencies', 'CDN');
-    await trackTime();
-    expect(gtag).not.toHaveBeenCalled();
+    expect(trackEvent).toHaveBeenNthCalledWith(2, 'load_dependencies', {
+      value: 50,
+      send_to: 'G-ABC1234567',
+    });
   });
 });

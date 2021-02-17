@@ -21,6 +21,7 @@ import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -67,6 +68,9 @@ function PageLayouts(props) {
     (page) => {
       const duplicatedPage = duplicatePage(page);
       replaceCurrentPage({ page: duplicatedPage });
+      trackEvent('insert_page_layout', {
+        name: page.title,
+      });
     },
     [replaceCurrentPage]
   );

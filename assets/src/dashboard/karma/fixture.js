@@ -198,11 +198,19 @@ export default class Fixture {
 
     // Check to see if Google Sans font is loaded.
     await waitFor(async () => {
+      const weights = ['400', '700'];
       const font = '12px "Google Sans"';
-      await document.fonts.load(font, '');
-      if (!document.fonts.check(font, '')) {
-        throw new Error('Not ready: Google Sans font could not be loaded');
-      }
+      const fonts = weights.map((weight) => `${weight} ${font}`);
+      await Promise.all(
+        fonts.map((thisFont) => {
+          document.fonts.load(thisFont, '');
+        })
+      );
+      fonts.forEach((thisFont) => {
+        if (!document.fonts.check(thisFont, '')) {
+          throw new Error('Not ready: Google Sans font could not be loaded');
+        }
+      });
     });
   }
 

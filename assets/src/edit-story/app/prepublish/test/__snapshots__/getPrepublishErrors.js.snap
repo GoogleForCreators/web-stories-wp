@@ -17,8 +17,8 @@ Array [
         Maintain a 3:4 aspect ratio
       </li>
     </constants__DashedList>,
-    "highlight": "COVER",
-    "message": "Add story cover image",
+    "highlight": "POSTER",
+    "message": "Add poster image",
     "storyId": 120,
     "type": "error",
   },
