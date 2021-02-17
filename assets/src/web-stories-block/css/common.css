@@ -5,10 +5,6 @@
   position: relative;
 }
 
-.web-stories-list.has-archive-link {
-  margin-top: 38px;
-}
-
 .web-stories-list__story {
   position: relative;
   cursor: pointer;
@@ -109,7 +105,7 @@ html[amp] .web-stories-list__story-content-overlay {
 .web-stories-list .story-content-overlay__excerpt {
   -webkit-line-clamp: 3;
   font-size: var(--ws-font-size-excerpt);
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .web-stories-list.alignfull .web-stories-list__archive-link {
@@ -129,17 +125,4 @@ html[amp] .web-stories-list__story-content-overlay {
   padding: 7px 53px;
   border: 1px solid;
   border-radius: 100px;
-}
-
-.web-stories-list.is-view-type-carousel,
-.web-stories-list.is-view-type-circles {
-  position: relative;
-  margin-top: 32px;
-}
-
-.web-stories-list.is-view-type-carousel .web-stories-list__archive-link,
-.web-stories-list.is-view-type-circles .web-stories-list__archive-link {
-  position: absolute;
-  right: 0;
-  top: -32px;
 }

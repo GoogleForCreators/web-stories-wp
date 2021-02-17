@@ -7,6 +7,17 @@
   }
 }
 
+.web-stories-list.is-carousel.has-archive-link {
+  position: relative;
+  margin-top: 32px;
+}
+
+.web-stories-list.is-carousel .web-stories-list__archive-link {
+  position: absolute;
+  right: 0;
+  top: -32px;
+}
+
 .web-stories-list.is-carousel .glider-next,
 .web-stories-list.is-carousel .amp-carousel-button-next {
   right: 0;
@@ -66,7 +77,7 @@ html[dir='rtl'] .glider-prev.disabled:hover,
   filter: invert(1);
 }
 
-.web-stories-list.is-carousel .glider-track {
+.web-stories-list.is-carousel .web-stories-list__carousel {
   scrollbar-width: none;
 }
 

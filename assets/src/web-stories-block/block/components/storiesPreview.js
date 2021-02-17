@@ -24,7 +24,11 @@ import classNames from 'classnames';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { GRID_VIEW_TYPE } from '../constants';
+import {
+  CAROUSEL_VIEW_TYPE,
+  CIRCLES_VIEW_TYPE,
+  GRID_VIEW_TYPE,
+} from '../constants';
 import StoryCard from './storyCard';
 
 function StoriesPreview(props) {
@@ -40,6 +44,8 @@ function StoriesPreview(props) {
     {
       'is-style-default': !fieldState['show_sharp_corners'],
       'is-style-squared': fieldState['show_sharp_corners'],
+      'is-carousel':
+        CIRCLES_VIEW_TYPE === viewType || CAROUSEL_VIEW_TYPE === viewType,
       [`is-view-type-${viewType}`]: viewType,
       [`columns-${numOfColumns}`]: GRID_VIEW_TYPE === viewType && numOfColumns,
       [`align${align}`]: align,
