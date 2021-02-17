@@ -401,7 +401,7 @@ class Stories extends WP_Widget {
 
 			if ( ! empty( $args['attributes'] ) && is_array( $args['attributes'] ) ) {
 				foreach ( $args['attributes'] as $attr_key => $attr_val ) {
-					$extra_attrs .= sprintf( ' %1s=%2s', $attr_key, $attr_val );
+					$extra_attrs .= sprintf( ' %1s=%2s', $attr_key, esc_attr( $attr_val ) );
 				}
 			}
 			?>
