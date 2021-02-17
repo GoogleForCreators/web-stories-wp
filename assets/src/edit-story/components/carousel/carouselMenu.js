@@ -128,6 +128,7 @@ function CarouselMenu() {
                 <Tooltip
                   title={__('Third-Party Meta Boxes', 'web-stories')}
                   placement={PLACEMENT.TOP}
+                  hasTail
                 >
                   <Button
                     variant={BUTTON_VARIANTS.SQUARE}
