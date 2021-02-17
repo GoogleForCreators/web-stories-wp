@@ -61,11 +61,7 @@ const reactiveWidget = function (target, reset = false) {
           break;
 
         default:
-          if (value.show) {
-            fieldWrapper.style.display = 'block';
-          } else {
-            fieldWrapper.style.display = 'none';
-          }
+          fieldWrapper.style.display = value.show ? 'block' : 'none';
           break;
       }
     }
