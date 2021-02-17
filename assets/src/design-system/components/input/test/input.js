@@ -46,15 +46,13 @@ describe('Input', () => {
   });
 
   it('should render a suffix', () => {
-    const suffix = <span data-testid="suffix">{'%C'}</span>;
-    const { getByTestId } = renderWithProviders(
-      <Input aria-label="test" suffix={suffix} />
+    const { getByText } = renderWithProviders(
+      <Input aria-label="test" suffix="suffix" />
     );
 
-    const suffixElement = getByTestId('suffix');
+    const suffixElement = getByText('suffix');
 
     expect(suffixElement).toBeInTheDocument();
-    expect(suffixElement).toHaveTextContent('%C');
   });
 });
 

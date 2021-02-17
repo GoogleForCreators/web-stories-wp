@@ -55,6 +55,12 @@ const Row = styled.div`
   }
 `;
 
+const IconContainer = styled.div`
+  height: 32px;
+  width: 32px;
+  margin-right: -8px;
+`;
+
 export const _default = () => {
   const [inputState, setInputState] = useState({
     oneLight: 'Text',
@@ -93,6 +99,7 @@ export const _default = () => {
             label={text('Input 1 Label', 'Normal')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
+            suffix={text('Suffix')}
           />
           <Input
             aria-label="input-two"
@@ -103,7 +110,7 @@ export const _default = () => {
             label={text('Input 2 Label', 'Suffix')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
-            suffix={text('Suffix', 's')}
+            suffix={text('Suffix', 'Duration')}
           />
           <Input
             aria-label="input-three"
@@ -114,6 +121,7 @@ export const _default = () => {
             label={text('Input 3 Label', 'Error')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
+            suffix={text('Suffix')}
             hasError
           />
           <Input
@@ -125,6 +133,7 @@ export const _default = () => {
             label={text('Input 4 Label', 'Disabled')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
+            suffix={text('Suffix')}
             disabled
           />
         </Row>
@@ -141,6 +150,7 @@ export const _default = () => {
               label={text('Input 1 Label', 'Normal')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
+              suffix={text('Suffix')}
             />
             <Input
               aria-label="input-five"
@@ -151,7 +161,11 @@ export const _default = () => {
               label={text('Input 2 Label', 'Suffix')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
-              suffix={<AlignCenter />}
+              suffix={
+                <IconContainer>
+                  <AlignCenter />
+                </IconContainer>
+              }
             />
             <Input
               aria-label="input-six"
@@ -162,6 +176,7 @@ export const _default = () => {
               label={text('Input 3 Label', 'Error')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
+              suffix={text('Suffix')}
               hasError
             />
             <Input
@@ -173,6 +188,7 @@ export const _default = () => {
               label={text('Input 4 Label', 'Disabled')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
+              suffix={text('Suffix')}
               disabled
             />
           </Row>

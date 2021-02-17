@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -26,6 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
+import { focusCSS } from '../../theme/helpers';
 
 const Container = styled.div`
   position: relative;
@@ -39,34 +40,44 @@ const Label = styled(Text)`
 
 const Hint = styled(Text)`
   margin-top: 12px;
+  color: ${({ hasError, theme }) =>
+    theme.colors.fg[hasError ? 'negative' : 'tertiary']};
 `;
 
 const Suffix = styled(Text)`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  right: 3px;
-  top: ${({ hasLabel }) => (hasLabel ? 38 : 2)}px;
-  height: 32px;
-  width: 32px;
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.tertiary};
-  pointer-events: none;
-  overflow: hidden;
 `;
 
-const StyledInput = styled.input(
-  ({ hasError, hasSuffix, theme }) => css`
+const InputContainer = styled.div(
+  ({ hasError, theme }) => css`
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     height: 36px;
+    padding: 4px 12px;
+    background-color: ${theme.colors.bg.primary};
+    border: 1px solid
+      ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
+    border-radius: ${theme.borders.radius.small};
+
+    :focus-within {
+      ${focusCSS(theme.colors.border.focus)};
+    }
+  `
+);
+
+const StyledInput = styled.input(
+  ({ theme }) => css`
+    height: 100%;
     width: 100%;
-    padding: 8px 12px;
-    ${hasSuffix &&
-    css`
-      padding-right: 32px;
-    `};
-    ${themeHelpers.focusableOutlineCSS};
+    padding: 0 8px 0 0;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    color: ${theme.colors.fg.primary};
+
     ${themeHelpers.expandPresetStyles({
       preset: {
         ...theme.typography.presets.paragraph[
@@ -75,11 +86,10 @@ const StyledInput = styled.input(
       },
       theme,
     })};
-    background-color: ${theme.colors.bg.primary};
-    border: 1px solid
-      ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
-    border-radius: ${theme.borders.radius.small};
-    color: ${theme.colors.fg.primary};
+
+    & ~ ${Suffix} * {
+      color: inherit;
+    }
 
     :disabled {
       color: ${theme.colors.fg.disable};
@@ -98,10 +108,6 @@ const StyledInput = styled.input(
         color: ${theme.colors.fg.primary};
       }
     }
-
-    & ~ ${Hint} {
-      color: ${theme.colors.fg[hasError ? 'negative' : 'tertiary']};
-    }
   `
 );
 
@@ -116,6 +122,11 @@ export const Input = ({
   ...props
 }) => {
   const inputId = useMemo(() => id || uuidv4(), [id]);
+  const inputRef = useRef(null);
+
+  const handleFocusInput = () => {
+    inputRef.current?.focus();
+  };
 
   return (
     <Container className={className}>
@@ -124,18 +135,24 @@ export const Input = ({
           {label}
         </Label>
       )}
-      <StyledInput
-        id={inputId}
-        disabled={disabled}
-        hasError={hasError}
-        hasSuffix={Boolean(suffix)}
-        {...props}
-      />
-      {suffix && (
-        <Suffix hasLabel={Boolean(label)} forwardedAs="span">
-          {suffix}
-        </Suffix>
-      )}
+      <InputContainer hasError={hasError} onFocus={handleFocusInput}>
+        <StyledInput
+          id={inputId}
+          disabled={disabled}
+          ref={inputRef}
+          {...props}
+        />
+        {suffix && (
+          <Suffix
+            hasLabel={Boolean(label)}
+            forwardedAs="span"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            onClick={handleFocusInput}
+          >
+            {suffix}
+          </Suffix>
+        )}
+      </InputContainer>
       {hint && <Hint hasError={hasError}>{hint}</Hint>}
     </Container>
   );
@@ -184,5 +201,5 @@ Input.propTypes = {
   hint: PropTypes.string,
   id: PropTypes.string,
   label: labelAccessibilityValidator,
-  suffix: PropTypes.element,
+  suffix: PropTypes.node,
 };
