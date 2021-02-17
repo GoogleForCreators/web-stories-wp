@@ -31,7 +31,7 @@ import { themeHelpers, THEME_CONSTANTS } from '../../../theme';
 import { Z_INDEX } from '../constants';
 
 export const InputContainer = styled.div(
-  ({ theme, alignCenter }) => css`
+  ({ theme }) => css`
     display: flex;
     position: relative;
     box-sizing: border-box;
@@ -40,14 +40,10 @@ export const InputContainer = styled.div(
     max-width: 276px;
     background-color: ${theme.colors.bg.primary};
     color: ${theme.colors.fg.primary};
-
-    input {
-      padding: 8px 20px 8px ${alignCenter ? 'calc(22% + 32px)' : '40px'};
-    }
   `
 );
 InputContainer.propTypes = {
-  alignCenter: PropTypes.bool,
+  activeSearch: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
@@ -68,7 +64,7 @@ export const Input = styled.input(
     })};
     color: ${theme.colors.fg.primary};
     border: 1px solid ${theme.colors.border.defaultNormal};
-
+    padding: 8px 20px 8px 40px;
     &::placeholder {
       color: ${theme.colors.fg.tertiary};
     }
@@ -127,7 +123,7 @@ const BaseDecorationContainer = css`
   background-color: transparent;
   color: ${({ theme }) => theme.colors.fg.secondary};
   border: 0;
-  margin: auto 0 auto auto;
+  margin: auto 1px auto auto;
   padding: 0;
   align-self: flex-end;
   cursor: pointer;
@@ -136,7 +132,7 @@ const BaseDecorationContainer = css`
 export const ClearButton = styled.button`
   ${BaseDecorationContainer};
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
-
+  outline: none;
   ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
   height: 30px;
   z-index: ${Z_INDEX.CLEAR_BUTTON};
@@ -183,13 +179,13 @@ ChevronIcon.propTypes = {
 };
 
 export const SearchDecoration = styled.div(
-  ({ theme, alignCenter, disabled }) => css`
+  ({ theme, activeSearch, disabled }) => css`
     ${BaseDecorationContainer};
     position: absolute;
     height: 100%;
     margin: 0;
-    left: ${alignCenter ? '22%' : '8px'};
-    color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
+    left: 8px;
+    color: ${activeSearch ? theme.colors.fg.tertiary : theme.colors.fg.primary};
 
     ${disabled &&
     css`
@@ -199,7 +195,7 @@ export const SearchDecoration = styled.div(
   `
 );
 SearchDecoration.propTypes = {
-  alignCenter: PropTypes.bool,
+  activeSearch: PropTypes.bool,
 };
 
 export const SearchIcon = styled(Search)`
