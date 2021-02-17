@@ -295,6 +295,7 @@ class Customizer extends \WP_UnitTestCase {
 			'date'                      => false,
 			'date-default'              => false,
 			'stories-archive-link'      => true,
+			'sharp-corners'             => false,
 			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
 			'number-of-stories'         => 10,
 			'circle-size-default'       => 150,

@@ -320,6 +320,28 @@ class Customizer {
 			);
 		}
 
+		if ( true === $theme_support['sharp-corners'] ) {
+			$wp_customize->add_setting(
+				self::STORY_OPTION . '[sharp_corners]',
+				[
+					'default' => $theme_support['sharp-corners'],
+					'type'    => 'option',
+				]
+			);
+
+			$wp_customize->add_control(
+				self::STORY_OPTION . '[sharp_corners]',
+				[
+					'type'            => 'checkbox',
+					'section'         => self::SECTION_SLUG,
+					'label'           => __( 'Sharp Corners', 'web-stories' ),
+					'active_callback' => function() {
+						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
+					},
+				]
+			);
+		}
+
 		if ( true === $theme_support['stories-archive-link'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_stories_archive_link]',
@@ -503,6 +525,7 @@ class Customizer {
 			'show_story_poster'     => $theme_support['show-story-poster-default'],
 			'number_of_columns'     => $theme_support['grid-columns-default'],
 			'circle_size'           => $theme_support['circle-size-default'],
+			'sharp_corners'         => $theme_support['sharp-corners'],
 		];
 
 		$query_arguments = [
