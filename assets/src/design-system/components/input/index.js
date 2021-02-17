@@ -137,7 +137,7 @@ export const Input = ({
           {label}
         </Label>
       )}
-      <InputContainer hasError={hasError} onFocus={handleFocusInput}>
+      <InputContainer hasError={hasError}>
         <StyledInput
           id={inputId}
           disabled={disabled}
