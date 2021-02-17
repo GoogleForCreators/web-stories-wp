@@ -19,6 +19,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
+import { trackClick } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -68,7 +71,31 @@ Link.propTypes = {
   children: PropTypes.node,
 };
 
+const SUPPORT_URL = __(
+  'https://wordpress.org/support/plugin/web-stories/',
+  'web-stories'
+);
+
+const YOUTUBE_URL = __(
+  'https://youtube.com/playlist?list=PLfVPq9A6B0RNoQ3HTE9LQzgAdVzcb7tmt',
+  'web-stories'
+);
+
+const DOCS_URL = 'https://wp.stories.google/docs/';
+
 export function Footer() {
+  const onSupportClick = useCallback((evt) => {
+    trackClick(evt, 'click_support_page');
+  }, []);
+
+  const onDocsClick = useCallback((evt) => {
+    trackClick(evt, 'click_website_docs');
+  }, []);
+
+  const onYouTubeClick = useCallback((evt) => {
+    trackClick(evt, 'click_storytime_channel');
+  }, []);
+
   return (
     <Panel>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
@@ -79,23 +106,26 @@ export function Footer() {
       </Text>
       <Links>
         <Link
-          href="https://wp.stories.google/docs/"
+          href={DOCS_URL}
           target="_blank"
           rel="noreferrer"
+          onClick={onDocsClick}
         >
           {__('Read start guide', 'web-stories')}
         </Link>
         <Link
-          href="https://wordpress.org/support/plugin/web-stories/"
+          href={SUPPORT_URL}
           target="_blank"
           rel="noreferrer"
+          onClick={onSupportClick}
         >
           {__('Visit support forum', 'web-stories')}
         </Link>
         <Link
-          href="https://youtube.com/playlist?list=PLfVPq9A6B0RNoQ3HTE9LQzgAdVzcb7tmt"
+          href={YOUTUBE_URL}
           target="_blank"
           rel="noreferrer"
+          onClick={onYouTubeClick}
         >
           {__('Storytime YouTube series', 'web-stories')}
         </Link>

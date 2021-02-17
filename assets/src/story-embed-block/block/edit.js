@@ -75,11 +75,11 @@ function StoryEmbedEdit({
 
   useEffect(() => {
     setLocalURL(outerURL);
-    trackEvent('story_embedded', 'block-editor', '', '', { url: outerURL });
+    trackEvent('story_embedded');
   }, [outerURL]);
 
   useEffect(() => {
-    trackEvent('story_poster_changed', 'block-editor');
+    trackEvent('story_poster_changed');
   }, [poster]);
 
   useEffect(() => {

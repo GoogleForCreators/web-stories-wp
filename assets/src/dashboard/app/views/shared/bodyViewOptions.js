@@ -84,12 +84,9 @@ export default function BodyViewOptions({
   sortDropdownAriaLabel,
   wpListURL,
 }) {
-  const handleClassicListViewClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_classic_list_view', 'dashboard', wpListURL);
-    },
-    [wpListURL]
-  );
+  const handleClassicListViewClick = useCallback((evt) => {
+    trackClick(evt, 'open_classic_list_view');
+  }, []);
 
   return (
     <StandardViewContentGutter>

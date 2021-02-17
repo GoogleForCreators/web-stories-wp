@@ -45,7 +45,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
   );
 
   const processData = async (id, src) => {
-    const trackTiming = getTimeTracker('poster generation', 'editor', 'Media');
+    const trackTiming = getTimeTracker('load_video_poster');
     try {
       const obj = await getFirstFrameOfVideo(src);
       obj.name = getFileName(src) + '-poster.jpeg';
@@ -94,7 +94,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       });
     } catch (err) {
       // TODO: Potentially display error message to user.
-      trackError('video poster generation', err.message);
+      trackError('video_poster_generation', err.message);
     } finally {
       trackTiming();
     }

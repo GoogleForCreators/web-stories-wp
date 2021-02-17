@@ -20,11 +20,11 @@
 import { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import {
   Button,
   BUTTON_SIZES,
@@ -35,6 +35,7 @@ import {
   Tooltip,
   TOOLTIP_PLACEMENT,
 } from '../../../design-system';
+import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import DirectionAware from '../directionAware';
 import { Popup } from './popup';
 import ShortcutMenu from './shortcutMenu';
@@ -57,6 +58,9 @@ function KeyboardShortcutsMenu() {
         anchorRef.current.focus?.();
       }
 
+      trackEvent('shortcuts_menu_toggled', {
+        status: menuOpen ? 'open' : 'closed',
+      });
       return menuOpen;
     });
   }, []);

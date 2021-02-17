@@ -66,7 +66,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         story.status
       );
 
-      const trackTiming = getTimeTracker('save story', 'editor', 'Publish');
+      const trackTiming = getTimeTracker('load_save_story');
 
       return saveStoryById({
         storyId,
