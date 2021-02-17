@@ -22,24 +22,26 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
+import {
+  getResourceFromLocalFile,
+  getResourceFromAttachment,
+} from '../../../app/media/utils';
 import useUploadMedia from '../useUploadMedia';
 
 const mockUploadFile = jest.fn();
-const mockIsValidType = jest.fn();
 
 jest.mock('../../uploader', () => ({
   useUploader: jest.fn(() => ({
     uploadFile: mockUploadFile,
-    isValidType: mockIsValidType,
   })),
 }));
 
+const mockShowSnackbar = jest.fn();
+
 jest.mock('../../snackbar', () => ({
-  useSnackbar: () => {
-    return {
-      showSnackbar: jest.fn(),
-    };
-  },
+  useSnackbar: jest.fn(() => ({
+    showSnackbar: mockShowSnackbar,
+  })),
 }));
 
 jest.mock('../../config', () => ({
@@ -52,10 +54,6 @@ jest.mock('../../config', () => ({
 }));
 
 jest.mock('../../../app/media/utils');
-import {
-  getResourceFromLocalFile,
-  getResourceFromAttachment,
-} from '../../../app/media/utils';
 
 function setup() {
   const media = [
@@ -91,8 +89,8 @@ function isLocalResourceSupported(resource) {
 
 describe('useUploadMedia', () => {
   beforeEach(() => {
+    mockShowSnackbar.mockReset();
     mockUploadFile.mockReset();
-    mockIsValidType.mockReset();
     getResourceFromLocalFile.mockReset();
     getResourceFromAttachment.mockReset();
 
@@ -102,15 +100,60 @@ describe('useUploadMedia', () => {
       isLocalResourceSupported(e) ? e : null
     );
 
-    mockIsValidType.mockImplementation(() => true);
     getResourceFromAttachment.mockImplementation((file) => file);
   });
 
-  it('should not execute file upload process without files', async () => {
+  it('should bail early if no files are passed', async () => {
     const { uploadMedia, setMedia } = setup();
     await act(() => uploadMedia([]));
 
     expect(setMedia).toHaveBeenCalledTimes(0);
+  });
+
+  it('should display an error message if local resource could not be created', async () => {
+    getResourceFromLocalFile.mockImplementation(() => {
+      throw new Error('Whoopsie');
+    });
+    const { uploadMedia, setMedia } = setup();
+
+    const newFiles = [{ type: 'video/mpeg', src: 'video.mpg' }];
+    await act(() => uploadMedia(newFiles));
+
+    expect(setMedia).toHaveBeenCalledTimes(0);
+    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledWith({
+      message: 'Whoopsie',
+    });
+  });
+
+  it('should display a fallback error message if local resource could not be created', async () => {
+    getResourceFromLocalFile.mockImplementation(() => {
+      throw new Error();
+    });
+    const { uploadMedia, setMedia } = setup();
+
+    const newFiles = [{ type: 'video/mpeg', src: 'video.mpg' }];
+    await act(() => uploadMedia(newFiles));
+
+    expect(setMedia).toHaveBeenCalledTimes(0);
+    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledWith({
+      message: 'File could not be uploaded. Please try a different file.',
+    });
+  });
+
+  it('should display an error message when uploading files with no type', async () => {
+    const { uploadMedia, setMedia } = setup();
+
+    const newFiles = [{ type: '', src: 'video1.mkv' }];
+    await act(() => uploadMedia(newFiles));
+
+    expect(setMedia).toHaveBeenCalledTimes(0);
+    expect(mockShowSnackbar).toHaveBeenCalledTimes(1);
+    expect(mockShowSnackbar).toHaveBeenCalledWith({
+      message:
+        'One or more files could not be uploaded. Please try a different file.',
+    });
   });
 
   it('should only setMedia for files supported by getResourceFromLocalFile', async () => {

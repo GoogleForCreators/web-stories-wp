@@ -333,7 +333,7 @@
     {
       "files": [
         "packages/e2e-test-utils/**/*.js",
-        "tests/e2e/**/*.js"
+        "packages/e2e-tests/src/**/*.js"
       ],
       "extends": [
         "plugin:jest/all"
@@ -356,7 +356,7 @@
       }
     },
     {
-      "files": ["tests/e2e/specs/**/*.js"],
+      "files": ["packages/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
       }
@@ -373,8 +373,8 @@
         ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
-        "tests/e2e/*.js",
-        "tests/e2e/config/*.js",
+        "packages/e2e-tests/src/*.js",
+        "packages/e2e-tests/src/config/*.js",
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs",
         "packages/migration/src/**/*.js",

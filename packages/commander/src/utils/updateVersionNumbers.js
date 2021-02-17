@@ -26,34 +26,22 @@ import appendRevisionToVersion from './appendRevisionToVersion.js';
 
 const VERSION_REGEX = /\* Version:(.+)/;
 const VERSION_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
-const STABLE_TAG_REGEX = /Stable tag:\s*(.+)/;
 
 /**
  * Updates version numbers in plugin files.
  *
- * Namely, this updates the 'Version' header in the main plugin file,
- * the `WEBSTORIES_VERSION` constant in the same file, as well as the
- * stable tag in the readme.txt.
+ * Namely, this updates the 'Version' header in the main plugin file
+ * and the `WEBSTORIES_VERSION` constant in the same file
  *
  * If a specific version is provided, uses that version to update the constant.
  *
- * The stable tag is only updated if it's not a pre-release.
- *
  * @param {string} pluginFile Path to the plugin file.
- * @param {string} readmeFile Path to the readme file.
  * @param {string} version Desired version number.
  * @param {boolean} [nightly=false] Whether this is a nightly build or not.
  * @return {void}
  */
-function updateVersionNumbers(
-  pluginFile,
-  readmeFile,
-  version,
-  nightly = false
-) {
+function updateVersionNumbers(pluginFile, version, nightly = false) {
   let pluginFileContent = readFileSync(pluginFile, 'utf8');
-
-  const isPrerelease = version.includes('-') || nightly;
 
   if (!nightly) {
     // 'Version' plugin header must not include anything else beyond the version number,
@@ -71,18 +59,6 @@ function updateVersionNumbers(
   });
 
   writeFileSync(pluginFile, pluginFileContent);
-
-  // Update Stable tag in readme.txt if it's not a pre-release.
-  if (!isPrerelease) {
-    const readmeContent = readFileSync(readmeFile, 'utf8');
-    writeFileSync(
-      readmeFile,
-      readmeContent.replace(
-        STABLE_TAG_REGEX,
-        `Stable tag:        ${newVersion}`
-      )
-    );
-  }
 }
 
 export default updateVersionNumbers;

@@ -23,10 +23,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Layout } from '../../../../../design-system/icons/editor';
+import { Icons } from '../../../../../design-system';
 
-const StyledLayoutIcon = styled(Layout)({
-  transform: 'scale(0.71)',
+const StyledLayoutIcon = styled(Icons.Box4Alternate)({
+  transform: 'scale(1.41)',
 });
 
 function PageLayoutsIcon() {

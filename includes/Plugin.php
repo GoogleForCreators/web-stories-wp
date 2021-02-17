@@ -232,9 +232,6 @@ class Plugin {
 		$this->kses = new KSES();
 		add_action( 'init', [ $this->kses, 'init' ], 11 );
 
-		$this->tracking = new Tracking();
-		add_action( 'init', [ $this->tracking, 'init' ] );
-
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
 
@@ -306,6 +303,9 @@ class Plugin {
 
 		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		$this->tracking = new Tracking( $this->experiments, $site_kit );
+		add_action( 'admin_init', [ $this->tracking, 'init' ] );
 	}
 
 	/**
