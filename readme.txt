@@ -116,6 +116,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 * New feature: a new help center in the editor to get started.
 * New feature: support for custom meta boxes.
+* Improvements to the pre-publish checklist.
 * UI improvements in the editor and dashboard.
 * Bug fixes and performance improvements.
 
