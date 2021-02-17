@@ -32,8 +32,8 @@ export const MENU_GUTTER = 167;
 // Thumbnail size varies with workspace size - over or under this limit
 export const WIDE_WORKSPACE_LIMIT = 700;
 export const WIDE_THUMBNAIL_WIDTH = 40;
-export const WIDE_THUMBNAIL_HEIGHT = 72;
+export const WIDE_THUMBNAIL_HEIGHT = 60;
 export const NARROW_THUMBNAIL_WIDTH = 36;
-export const NARROW_THUMBNAIL_HEIGHT = 64;
+export const NARROW_THUMBNAIL_HEIGHT = 54;
 export const THUMBNAIL_MARGIN = 16;
 export const THUMBNAIL_LINE_WIDTH = 4;

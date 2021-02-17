@@ -20,21 +20,21 @@
 import * as metadataGuidelines from '../metadata';
 
 describe('Pre-publish checklist - missing critical metadata (errors)', () => {
-  it('should return an error-type guidance message if the story is missing its portrait cover', () => {
+  it('should return an error-type guidance message if the story is missing its poster image', () => {
     const testStory = {
       id: 890,
       title: 'Work work work work work',
       featuredMedia: undefined,
     };
-    const testMissingCover = metadataGuidelines.storyCoverAttached(testStory);
-    expect(testMissingCover).not.toBeUndefined();
-    expect(testMissingCover.message).toMatchInlineSnapshot(
-      `"Add story cover image"`
+    const testMissingPoster = metadataGuidelines.storyPosterAttached(testStory);
+    expect(testMissingPoster).not.toBeUndefined();
+    expect(testMissingPoster.message).toMatchInlineSnapshot(
+      `"Add poster image"`
     );
-    expect(testMissingCover.storyId).toStrictEqual(testStory.id);
+    expect(testMissingPoster.storyId).toStrictEqual(testStory.id);
   });
 
-  it("should return an error-type guidance message if the story is missing it's title", () => {
+  it('should return an error-type guidance message if the story is missing its title', () => {
     const testEmptyStringStory = {
       id: 890,
       status: 'draft',
@@ -102,8 +102,8 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     );
   });
 
-  // todo: The story's cover and publisher url are not yet returned by the api. See #5105.
-  it("should return an error-type guidance message if the story's portrait cover is too small", () => {
+  // todo: The story's poster and publisher url are not yet returned by the api. See #5105.
+  it("should return an error-type guidance message if the story's publisher logo is too small", () => {
     const testHeightStory = {
       id: 123,
       publisherLogo: {
@@ -142,7 +142,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(test.storyId).toStrictEqual(testStory.id);
   });
 
-  it("should return an error-type guidance message if the story's publisher logo is too small", () => {
+  it("should return an error-type guidance message if the story's poster image is too small", () => {
     const testHeightStory = {
       id: 123,
       featuredMedia: {
@@ -163,7 +163,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
       id: 456,
       featuredMedia: { height: 1, width: 1, url: 'featured-media.com/img' },
     };
-    const testHappy = metadataGuidelines.storyCoverPortraitSize({
+    const testHappy = metadataGuidelines.storyPosterPortraitSize({
       id: 345,
       featuredMedia: {
         url: 'featured-media.com/img',
@@ -171,11 +171,13 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
         width: 640,
       },
     });
-    const testHeight = metadataGuidelines.storyCoverPortraitSize(
+    const testHeight = metadataGuidelines.storyPosterPortraitSize(
       testHeightStory
     );
-    const testWidth = metadataGuidelines.storyCoverPortraitSize(testWidthStory);
-    const test = metadataGuidelines.storyCoverPortraitSize(testStory);
+    const testWidth = metadataGuidelines.storyPosterPortraitSize(
+      testWidthStory
+    );
+    const test = metadataGuidelines.storyPosterPortraitSize(testStory);
     expect(testHappy).toBeUndefined();
     expect(testHeight).not.toBeUndefined();
     expect(testHeight.storyId).toStrictEqual(testHeightStory.id);
@@ -183,17 +185,17 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth.storyId).toStrictEqual(testWidthStory.id);
     expect(test).not.toBeUndefined();
     expect(test.message).toMatchInlineSnapshot(
-      `"Choose a bigger image for your story cover"`
+      `"Choose a bigger image for your poster image"`
     );
     expect(test.storyId).toStrictEqual(testStory.id);
   });
 
-  it("should return an error-type guidance message if the story's cover image has the wrong ratio", () => {
+  it("should return an error-type guidance message if the story's poster image has the wrong ratio", () => {
     const testStory = {
       id: 456,
       featuredMedia: { height: 960, width: 960, url: 'featured-media.com/img' },
     };
-    const testHappy = metadataGuidelines.storyCoverPortraitSize({
+    const testHappy = metadataGuidelines.storyPosterPortraitSize({
       id: 345,
       featuredMedia: {
         url: 'featured-media.com/img',
@@ -201,21 +203,21 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
         width: 720,
       },
     });
-    const test = metadataGuidelines.storyCoverAspectRatio(testStory);
+    const test = metadataGuidelines.storyPosterAspectRatio(testStory);
     expect(testHappy).toBeUndefined();
     expect(test).not.toBeUndefined();
     expect(test.message).toMatchInlineSnapshot(
-      `"Choose an image with the correct aspect ratio"`
+      `"Choose a poster image with the correct aspect ratio"`
     );
     expect(test.storyId).toStrictEqual(testStory.id);
   });
-  it('should not produce an error for a story with the correct cover image size.', () => {
+  it('should not produce an error for a story with the correct poster image size.', () => {
     const testStory = {
       id: 456,
       featuredMedia: { height: 853, width: 640, url: 'featured-media.com/img' },
     };
 
-    const test = metadataGuidelines.storyCoverAspectRatio(testStory);
+    const test = metadataGuidelines.storyPosterAspectRatio(testStory);
     expect(test).toBeUndefined();
   });
 });

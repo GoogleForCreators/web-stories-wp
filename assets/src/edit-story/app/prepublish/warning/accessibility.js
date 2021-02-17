@@ -25,7 +25,7 @@ import {
 import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
-import { getBox } from '../../../units/dimensions';
+import { dataToFontSizeY, dataFontEm, getBox } from '../../../units/dimensions';
 import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
 import {
   setOrCreateImage,
@@ -57,6 +57,12 @@ function getSpansFromContent(content) {
   return Array.prototype.slice.call(
     spansFromContentBuffer.getElementsByTagName('span')
   );
+}
+
+function getPtFromEditorFontSize(fontSize) {
+  // get the true font size from the data
+  // 1 point = 1.333333 px
+  return dataFontEm(dataToFontSizeY(fontSize, 100)) * 1.333333;
 }
 
 function getOverlappingArea(a, b) {
@@ -243,14 +249,20 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
   });
 }
 
-function textBgColorsLowContrast({ backgroundColor, textColors, ...elements }) {
+function textBgColorsLowContrast({
+  backgroundColor,
+  textColors,
+  fontSize,
+  ...elements
+}) {
   const someTextHasLowContrast = textColors.some((styleColor) => {
     const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
     const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
-      backgroundLuminance
+      backgroundLuminance,
+      getPtFromEditorFontSize(fontSize)
     );
     return !contrastCheck.WCAG_AA;
   });
@@ -314,7 +326,7 @@ export function textElementFontLowContrast(element) {
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
       backgroundLuminance,
-      element.fontSize
+      getPtFromEditorFontSize(element.fontSize)
     );
     return !contrastCheck.WCAG_AA;
   });
@@ -385,6 +397,7 @@ export async function pageBackgroundTextLowContrast(page) {
             return {
               backgroundColor: resolvedBgColor,
               textColors,
+              fontSize: element.fontSize,
               pageId: page.id,
               elements: [backgroundElement, element],
             };
@@ -393,6 +406,7 @@ export async function pageBackgroundTextLowContrast(page) {
           backgroundColorResult = {
             backgroundColor,
             textColors,
+            fontSize: element.fontSize,
             pageId: page.id,
             elements: [backgroundElement, element],
           };

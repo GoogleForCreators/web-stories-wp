@@ -31,6 +31,7 @@ import {
   NotificationBubble,
   Button as dsButton,
 } from '../../../../design-system';
+import { BEZIER } from '../../../../animation';
 
 const Button = styled(dsButton)`
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
@@ -46,31 +47,30 @@ const Button = styled(dsButton)`
 `;
 
 const Label = styled.span`
-  display: none;
-
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    display: block;
-    line-height: 20px;
-    text-align: left;
-
-    & ~ div {
-      margin-left: 20px;
-    }
-  }
+  display: block;
+  line-height: 20px;
+  text-align: left;
 `;
 
 const NotificationWrapper = styled.div`
-  margin: -2px 0 -2px 8px;
+  margin: -2px 0 -2px 20px;
 `;
 
-const HelpIcon = styled(Icons.QuestionMarkOutline)`
+const Chevron = styled(Icons.ChevronUpSmall)`
   display: block;
-  margin: -6px 0;
+  margin: -6px 0 -6px 16px;
   width: 32px;
   height: 32px;
+  transform-origin: 50% 50%;
+  transform: rotate(${({ isOpen }) => (isOpen ? 0 : 180)}deg);
+  transition: transform 300ms ${BEZIER.default};
 
-  @media ${({ theme }) => theme.breakpoint.desktop} {
-    display: none;
+  @media ${({ theme }) => theme.breakpoint.mobile} {
+    ${({ hasNotifications }) =>
+      hasNotifications &&
+      css`
+        display: none;
+      `}
   }
 `;
 
@@ -108,12 +108,13 @@ function Toggle({
       variant={BUTTON_VARIANTS.RECTANGLE}
       size={BUTTON_SIZES.MEDIUM}
     >
-      <HelpIcon />
-      <Label>{__('Help Center', 'web-stories')}</Label>
-      {hasNotifications && (
+      <Label>{__('Help', 'web-stories')}</Label>
+      {hasNotifications ? (
         <NotificationWrapper>
           <NotificationBubble notificationCount={notificationCount} />
         </NotificationWrapper>
+      ) : (
+        <Chevron isOpen={isOpen} />
       )}
     </Button>
   );

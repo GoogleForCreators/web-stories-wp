@@ -34,6 +34,7 @@ const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
   transition: transform ${TRANSITION_DURATION}ms ${BEZIER.default};
+  z-index: 2;
   ${({ isHidden }) =>
     isHidden &&
     css`

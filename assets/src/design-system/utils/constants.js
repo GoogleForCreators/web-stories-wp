@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * @typedef EventData
- * @property {string} send_to Tracking ID
- * @property {string} event_category The event category (e.g. 'editor'). GA defaults this to 'engagement'.
- * @property {string} event_label The event label (e.g. 'search_term').
- * @property {string} event_value The event value (e.g. the actual search term).
- */
-
-// This is required so that the IDE doesn't ignore this file.
-// Without it the types don't show up when you use {import('./typedefs)}.
-export default {};
+export const KEYS = {
+  DOWN: 'ArrowDown',
+  LEFT: 'ArrowLeft',
+  RIGHT: 'ArrowRight',
+  UP: 'ArrowUp',
+};

@@ -19,6 +19,7 @@
  */
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -50,18 +51,17 @@ function AnimationToggle() {
   const shortcut = isPlaying ? 'shift+mod+z' : 'mod+z';
   const Icon = isPlaying ? Icons.StopOutline : Icons.PlayOutline;
 
-  const toggleAnimationState = useCallback(
-    () =>
-      updateAnimationState({
-        animationState: [
-          STORY_ANIMATION_STATE.PLAYING,
-          STORY_ANIMATION_STATE.PLAYING_SELECTED,
-        ].includes(animationState)
-          ? STORY_ANIMATION_STATE.RESET
-          : STORY_ANIMATION_STATE.PLAYING,
-      }),
-    [animationState, updateAnimationState]
-  );
+  const toggleAnimationState = useCallback(() => {
+    updateAnimationState({
+      animationState: isPlaying
+        ? STORY_ANIMATION_STATE.RESET
+        : STORY_ANIMATION_STATE.PLAYING,
+    });
+
+    trackEvent('canvas_play_animations', {
+      status: isPlaying ? 'stop' : 'play',
+    });
+  }, [isPlaying, updateAnimationState]);
 
   return (
     <PageMenuButton

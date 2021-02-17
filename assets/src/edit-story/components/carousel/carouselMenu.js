@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useState, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -87,15 +88,35 @@ const GridViewContainer = styled.section.attrs({
 
 function CarouselMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
-  const openModal = useCallback(() => setIsGridViewOpen(true), []);
-  const closeModal = useCallback(() => setIsGridViewOpen(false), []);
 
-  const { toggleMetaBoxesVisible, hasMetaBoxes } = useMetaBoxes(
-    ({ state, actions }) => ({
-      hasMetaBoxes: state.hasMetaBoxes,
-      toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
-    })
-  );
+  const toggleModal = useCallback(() => {
+    setIsGridViewOpen((prevIsOpen) => {
+      const newIsOpen = !prevIsOpen;
+
+      trackEvent('grid_view_toggled', {
+        status: newIsOpen ? 'open' : 'closed',
+      });
+
+      return newIsOpen;
+    });
+  }, [setIsGridViewOpen]);
+
+  const {
+    metaBoxesVisible,
+    toggleMetaBoxesVisible,
+    hasMetaBoxes,
+  } = useMetaBoxes(({ state, actions }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+    metaBoxesVisible: state.metaBoxesVisible,
+    toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
+  }));
+
+  const handleMetaBoxesClick = useCallback(() => {
+    toggleMetaBoxesVisible();
+    trackEvent('meta_boxes_toggled', {
+      status: metaBoxesVisible ? 'visible' : 'hidden',
+    });
+  }, [metaBoxesVisible, toggleMetaBoxesVisible]);
 
   return (
     <>
@@ -112,7 +133,7 @@ function CarouselMenu() {
                     variant={BUTTON_VARIANTS.SQUARE}
                     type={BUTTON_TYPES.TERTIARY}
                     size={BUTTON_SIZES.SMALL}
-                    onClick={toggleMetaBoxesVisible}
+                    onClick={handleMetaBoxesClick}
                     aria-label={__('Third-Party Meta Boxes', 'web-stories')}
                   >
                     <Icons.LetterMOutline />
@@ -135,7 +156,7 @@ function CarouselMenu() {
                 variant={BUTTON_VARIANTS.SQUARE}
                 type={BUTTON_TYPES.PLAIN}
                 size={BUTTON_SIZES.SMALL}
-                onClick={openModal}
+                onClick={toggleModal}
                 aria-label={__('Grid View', 'web-stories')}
               >
                 <Icons.Box4 />
@@ -146,7 +167,7 @@ function CarouselMenu() {
       </Wrapper>
       <Modal
         open={isGridViewOpen}
-        onClose={closeModal}
+        onClose={toggleModal}
         contentLabel={__('Grid View', 'web-stories')}
         overlayStyles={{
           alignItems: 'flex-start',
@@ -157,7 +178,7 @@ function CarouselMenu() {
         }}
       >
         <GridViewContainer>
-          <PlainStyled onClick={closeModal}>
+          <PlainStyled onClick={toggleModal}>
             {__('Back', 'web-stories')}
           </PlainStyled>
           <GridView />

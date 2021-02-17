@@ -19,6 +19,8 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -57,6 +59,16 @@ function LibraryLayout() {
     tabs: state.data.tabs,
   }));
 
+  const onTabChange = useCallback(
+    (id) => {
+      setTab(id);
+      trackEvent('library_tab_change', {
+        name: id,
+      });
+    },
+    [setTab]
+  );
+
   return (
     <Layout>
       <TabsArea>
@@ -64,7 +76,7 @@ function LibraryLayout() {
           label={__('Element Library Selection', 'web-stories')}
           tabs={tabs}
           initialTab={initialTab}
-          onTabChange={(id) => setTab(id)}
+          onTabChange={onTabChange}
           getTabId={getTabId}
           shortcut="mod+option+1"
         />

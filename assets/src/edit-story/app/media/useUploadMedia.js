@@ -21,8 +21,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   trackError,
-  trackEvent,
   getTimeTracker,
+  trackEvent,
 } from '@web-stories-wp/tracking';
 
 /**
@@ -120,7 +120,7 @@ function useUploadMedia({ media, setMedia }) {
       } catch (e) {
         // Catching errors from getResourceFromLocalFile() above.
 
-        trackError('upload media', e.message);
+        trackError('upload_media', e.message);
 
         setIsUploading(false);
 
@@ -154,15 +154,11 @@ function useUploadMedia({ media, setMedia }) {
         // from the uploaded attachment returned by the server.
         const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => {
-            trackEvent('upload_media', 'editor', '', '', {
+            trackEvent('upload_media', {
               file_size: localFile.file.size,
               file_type: localFile.file.type,
             });
-            const trackTiming = getTimeTracker(
-              'upload_media',
-              'editor',
-              'Media'
-            );
+            const trackTiming = getTimeTracker('load_upload_media');
             const fileUploaded = getResourceFromAttachment(
               await uploadFile(localFile.file)
             );
@@ -199,7 +195,7 @@ function useUploadMedia({ media, setMedia }) {
           }),
         });
       } catch (e) {
-        trackError('upload media', e.message);
+        trackError('upload_media', e.message);
 
         showSnackbar({
           message: e.message,
