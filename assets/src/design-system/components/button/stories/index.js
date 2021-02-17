@@ -24,7 +24,7 @@ import { select } from '@storybook/addon-knobs';
  */
 import { theme, THEME_CONSTANTS } from '../../../theme';
 import { Headline, Text } from '../../typography';
-import { Close } from '../../../icons';
+import { Cross } from '../../../icons';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '..';
 
 export default {
@@ -60,7 +60,7 @@ const ButtonCombosToDisplay = () => (
         buttonVariant === BUTTON_VARIANTS.RECTANGLE ? (
           'Standard Button'
         ) : (
-          <Close />
+          <Cross />
         );
 
       return Object.values(BUTTON_SIZES).map((buttonSize) => (

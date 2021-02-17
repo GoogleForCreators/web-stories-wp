@@ -279,9 +279,6 @@ class HTML {
 	protected function print_bookend( $content ) {
 		$share_providers = [
 			[
-				'provider' => 'facebook',
-			],
-			[
 				'provider' => 'twitter',
 			],
 			[
@@ -313,6 +310,7 @@ class HTML {
 
 		$config  = [
 			'bookendVersion' => 'v1.0',
+			'components'     => [],
 			'shareProviders' => $share_providers,
 		];
 		$bookend = sprintf(

@@ -50,7 +50,7 @@ export function useFauxSelection(editorState, setEditorState) {
     }
     const content = editorState.getCurrentContent();
     const currentSelection = editorState.getSelection();
-    const isFocused = currentSelection.getHasFocus();
+    const isFocused = currentSelection?.getHasFocus();
     const hasSelectionChanged = !isEqualSelectionIgnoreFocus(
       fauxSelection,
       currentSelection

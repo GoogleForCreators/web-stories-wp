@@ -20,57 +20,47 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Add, EditPencil } from '../../../../icons';
+import { Icons } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
 
 const buttonCSS = css`
   border: none;
   background: transparent;
-  width: 30px;
-  height: 28px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+  width: 32px;
+  height: 32px;
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
   cursor: pointer;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  svg {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const AddPresetButton = styled.button`
   ${buttonCSS}
-  svg {
-    width: 26px;
-    height: 28px;
-  }
 `;
 
 const EditMode = styled.button`
   ${buttonCSS}
 
   ${({ isEditMode }) =>
-    isEditMode
-      ? css`
-          color: ${({ theme }) => theme.colors.fg.white};
-          font-size: 12px;
-          line-height: 14px;
-          padding: 7px;
-          height: initial;
-        `
-      : css`
-          svg {
-            width: 16px;
-            height: 20px;
-          }
-        `}
+    isEditMode &&
+    css`
+      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+      font-size: 12px;
+      line-height: 14px;
+      padding: 7px;
+      height: initial;
+    `}
 `;
 
 function PresetsHeader({
@@ -78,20 +68,14 @@ function PresetsHeader({
   handleAddPreset,
   isEditMode,
   setIsEditMode,
-  presets,
+  hasPresets,
   canCollapse,
   presetType,
 }) {
-  const hasPresets = presets.length > 0;
-
-  const addLabel =
-    'style' === presetType
-      ? __('Add style preset', 'web-stories')
-      : __('Add color preset', 'web-stories');
-  const editLabel =
-    'style' === presetType
-      ? __('Edit style presets', 'web-stories')
-      : __('Edit color presets', 'web-stories');
+  const isColor = 'color' === presetType;
+  const editLabel = isColor
+    ? __('Edit colors', 'web-stories')
+    : __('Edit styles', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -106,12 +90,15 @@ function PresetsHeader({
             }
             isEditMode={isEditMode}
           >
-            {isEditMode ? __('Exit', 'web-stories') : <EditPencil />}
+            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
           </EditMode>
         )}
-        {!isEditMode && (
-          <AddPresetButton onClick={handleAddPreset} aria-label={addLabel}>
-            <Add />
+        {!isEditMode && !isColor && (
+          <AddPresetButton
+            onClick={handleAddPreset}
+            aria-label={__('Add style', 'web-stories')}
+          >
+            <Icons.Plus />
           </AddPresetButton>
         )}
       </>
@@ -126,7 +113,7 @@ function PresetsHeader({
 }
 
 PresetsHeader.propTypes = {
-  presets: PropTypes.array.isRequired,
+  hasPresets: PropTypes.bool.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,

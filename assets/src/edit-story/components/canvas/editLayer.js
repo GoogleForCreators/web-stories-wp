@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import { memo, useEffect, useRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -39,7 +35,7 @@ import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
   background-color: ${({ grayout, theme }) =>
-    grayout ? theme.colors.grayout : 'transparent'};
+    grayout ? theme.DEPRECATED_THEME.colors.grayout : 'transparent'};
 `;
 
 const EditPageArea = withOverlay(PageArea);

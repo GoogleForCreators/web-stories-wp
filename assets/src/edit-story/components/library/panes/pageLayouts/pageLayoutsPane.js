@@ -19,11 +19,8 @@
  */
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { _x, sprintf } from '@wordpress/i18n';
+import { _x, sprintf } from '@web-stories-wp/i18n';
+import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -67,7 +64,13 @@ function PageLayoutsPane(props) {
 
   // load and process pageLayouts
   useEffect(() => {
-    getPageLayouts().then((result) => setPageLayouts(result));
+    async function loadPageLayouts() {
+      const trackTiming = getTimeTracker('load_page_layouts');
+      setPageLayouts(await getPageLayouts());
+      trackTiming();
+    }
+
+    loadPageLayouts();
   }, [getPageLayouts, setPageLayouts]);
 
   const pills = useMemo(
@@ -114,6 +117,11 @@ function PageLayoutsPane(props) {
 
   const handleSelectPageLayoutType = useCallback((key) => {
     setSelectedPageLayoutType(key);
+    trackEvent('search', {
+      search_type: 'page_layouts',
+      search_term: '',
+      search_category: key,
+    });
   }, []);
 
   return (

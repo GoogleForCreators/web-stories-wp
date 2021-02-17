@@ -25,7 +25,7 @@ import { fireEvent } from '@testing-library/react';
 import StylePresetPanel from '../stylePreset';
 import StoryContext from '../../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
-import { getTextPresets, areAllType } from '../utils';
+import { getTextPresets, areAllType, getPanelInitialHeight } from '../utils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
@@ -56,9 +56,12 @@ function setupPanel(extraStylePresets, extraStateProps) {
       selectedElements: [textElement],
       ...extraStateProps,
       story: {
-        stylePresets: {
+        globalStoryStyles: {
           ...{ colors: [], textStyles: [] },
           ...extraStylePresets,
+        },
+        currentStoryStyles: {
+          colors: [],
         },
       },
     },
@@ -93,8 +96,8 @@ function setupPanel(extraStylePresets, extraStateProps) {
 }
 
 describe('Panels/Preset', () => {
-  const EDIT_BUTTON_LABEL = 'Edit style presets';
-  const APPLY_PRESET = 'Apply style preset';
+  const EDIT_BUTTON_LABEL = 'Edit styles';
+  const APPLY_PRESET = 'Apply style';
   const PANEL_LABEL = 'Saved styles';
   const TEST_COLOR = {
     color: {
@@ -120,6 +123,8 @@ describe('Panels/Preset', () => {
   areAllType.mockImplementation((elType, els) => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
+
+  getPanelInitialHeight.mockReturnValue(150);
 
   beforeAll(() => {
     localStorage.setItem(
@@ -158,7 +163,7 @@ describe('Panels/Preset', () => {
   describe('Panels/Preset/Header', () => {
     it('should display only Add button if no presets exist', () => {
       const { queryByLabelText } = setupPanel();
-      const addButton = queryByLabelText('Add style preset');
+      const addButton = queryByLabelText('Add style');
       expect(addButton).toBeInTheDocument();
 
       const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
@@ -191,13 +196,13 @@ describe('Panels/Preset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add style preset');
+      const addButton = queryByLabelText('Add style');
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          stylePresets: {
+          globalStoryStyles: {
             colors: [],
             textStyles: [TEST_STYLE],
           },

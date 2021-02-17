@@ -19,13 +19,13 @@
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
-
+import { toUTCDate } from '@web-stories-wp/date';
+import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies
  */
-import { toUTCDate } from '../../../date';
 import base64Encode from '../../../edit-story/utils/base64Encode';
-import getAllTemplates from '../../templates';
+
 import { APP_ROUTES } from '../../constants';
 import templateReducer, {
   defaultTemplatesState,

@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * External dependencies
@@ -207,7 +207,7 @@ const PreviewStory = ({ story, handleClose }) => {
             onClick={handleClose}
             aria-label={__('close preview', 'web-stories')}
           >
-            <Icons.Close aria-hidden={true} />
+            <Icons.Cross aria-hidden={true} />
           </CloseButton>
         </CloseButtonContainer>
         {!previewError && (

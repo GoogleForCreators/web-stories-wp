@@ -85,6 +85,7 @@ export default function WithMask({
   return (
     <div
       style={{
+        pointerEvents: 'initial',
         ...(fill ? FILL_STYLE : {}),
         ...style,
         ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),

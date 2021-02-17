@@ -23,7 +23,14 @@ import generatePatternStyles from '../../../../utils/generatePatternStyles';
 import objectPick from '../../../../utils/objectPick';
 import createSolid from '../../../../utils/createSolid';
 import { generateFontFamily } from '../../../../elements/text/util';
-import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from '../../../../constants';
+import {
+  BACKGROUND_TEXT_MODE,
+  COLOR_PRESETS_PER_ROW,
+  MULTIPLE_VALUE,
+  SAVED_COLOR_SIZE,
+  SAVED_STYLE_HEIGHT,
+  STYLE_PRESETS_PER_ROW,
+} from '../../../../constants';
 import { getHTMLInfo } from '../../../richText/htmlManipulation';
 
 const TEXT_PRESET_STYLES = [
@@ -36,8 +43,8 @@ const TEXT_PRESET_STYLES = [
   'textAlign',
 ];
 
-export function findMatchingColor(color, stylePresets, isText) {
-  const colorsToMatch = stylePresets.colors;
+export function findMatchingColor(color, storyStyles, isText) {
+  const colorsToMatch = storyStyles.colors;
   const patternType = isText ? 'color' : 'background';
   return colorsToMatch.find((value) => {
     try {
@@ -49,8 +56,8 @@ export function findMatchingColor(color, stylePresets, isText) {
   });
 }
 
-export function findMatchingStylePreset(preset, stylePresets) {
-  const stylesToMatch = stylePresets.textStyles;
+export function findMatchingStylePreset(preset, storyStyles) {
+  const stylesToMatch = storyStyles.textStyles;
   const toAdd = convertToCSS(generatePresetStyle(preset));
   return stylesToMatch.find(
     (value) => toAdd === convertToCSS(generatePresetStyle(value))
@@ -133,7 +140,7 @@ function getUniquePresets(presets) {
   return Array.from(new Set(list)).map((preset) => JSON.parse(preset));
 }
 
-export function getTextPresets(elements, stylePresets, type) {
+export function getTextPresets(elements, storyStyles, type) {
   const allColors =
     'style' === type
       ? []
@@ -141,7 +148,7 @@ export function getTextPresets(elements, stylePresets, type) {
           .map(({ content }) => getHTMLInfo(content).color)
           .filter((color) => color !== MULTIPLE_VALUE)
           .filter(
-            (color) => color && !findMatchingColor(color, stylePresets, true)
+            (color) => color && !findMatchingColor(color, storyStyles, true)
           );
 
   const allStyles =
@@ -154,28 +161,28 @@ export function getTextPresets(elements, stylePresets, type) {
               ...getTextInlineStyles(text.content),
             };
           })
-          .filter((preset) => !findMatchingStylePreset(preset, stylePresets));
+          .filter((preset) => !findMatchingStylePreset(preset, storyStyles));
   return {
     colors: getUniquePresets(allColors),
     textStyles: getUniquePresets(allStyles),
   };
 }
 
-export function getShapePresets(elements, stylePresets) {
+export function getShapePresets(elements, storyStyles) {
   const colors = elements
     .map(({ backgroundColor }) => {
       return backgroundColor ? backgroundColor : null;
     })
-    .filter((color) => color && !findMatchingColor(color, stylePresets, false));
+    .filter((color) => color && !findMatchingColor(color, storyStyles, false));
   return {
     colors: getUniquePresets(colors),
   };
 }
 
-export function getPagePreset(page, stylePresets) {
+export function getPagePreset(page, storyStyles) {
   return {
     colors: [page.backgroundColor].filter(
-      (color) => color && !findMatchingColor(color, stylePresets, false)
+      (color) => color && !findMatchingColor(color, storyStyles, false)
     ),
   };
 }
@@ -208,4 +215,32 @@ export function areAllType(elType, selectedElements) {
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => elType === type)
   );
+}
+
+export function getOpaqueColor(preset) {
+  const { color } = preset;
+  return {
+    color: {
+      ...color,
+      a: 1,
+    },
+  };
+}
+
+export function getPanelInitialHeight(isColor, presets) {
+  const rowHeight = isColor ? SAVED_COLOR_SIZE : SAVED_STYLE_HEIGHT;
+  // Includes the helper text and button for saving a color.
+  const emptyColorsHeight = 140;
+  const presetsCount = presets.length;
+  let initialHeight = 0;
+  if (presetsCount > 0) {
+    const presetsPerRow = isColor
+      ? COLOR_PRESETS_PER_ROW
+      : STYLE_PRESETS_PER_ROW;
+    initialHeight =
+      Math.max(1.5, Math.ceil(presets.length / presetsPerRow)) * rowHeight;
+  } else if (isColor) {
+    initialHeight = emptyColorsHeight;
+  }
+  return Math.min(initialHeight, window.innerHeight / 3);
 }

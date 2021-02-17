@@ -241,5 +241,61 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         tooSmallLinkElement.id
       );
     });
+
+    it('should open the design inspector panel and focus the text input', async () => {
+      await fixture.act(() => {
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        });
+      });
+      await openPrepublishPanel();
+      await openRecommendedPanel();
+      const imageMissingAltTextRow = fixture.screen.getByText(
+        MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
+      );
+      await fixture.events.mouse.clickOn(imageMissingAltTextRow);
+
+      expect(
+        fixture.editor.inspector.designPanel.node.contains(
+          document.activeElement
+        )
+      ).toBeTrue();
+      await fixture.snapshot(
+        'design tab opened and focused by checklist panel'
+      );
+    });
+
+    it('should open the document inspector panel', async () => {
+      await fixture.events.click(fixture.editor.library.media.item(0));
+
+      let storyContext = await fixture.renderHook(() => useStory());
+      const [elementId] = storyContext.state.selectedElementIds;
+
+      await clickOnCanvas();
+      storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
+
+      const noPosterImage = fixture.screen.getByText(
+        MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
+      );
+      await openPrepublishPanel();
+      await fixture.events.mouse.clickOn(noPosterImage);
+      await waitFor(() => {
+        expect(
+          fixture.editor.inspector.documentPanel.node.querySelector(
+            `[id^="panel-publishing-"]`
+          )
+        ).not.toBeNull();
+      });
+      await fixture.snapshot('document tab opened by checklist panel');
+    });
   });
 });

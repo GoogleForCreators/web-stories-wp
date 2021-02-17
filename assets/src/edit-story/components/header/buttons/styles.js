@@ -22,13 +22,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Warning } from '../../../../design-system/icons';
+import { Icons } from '../../../../design-system';
 
-export const WarningIcon = styled(Warning)`
-  color: $(({theme}) => theme.colors.fg.white);
-  width: 14px;
-  height: 14px;
-  margin-left: 8px;
+export const WarningIcon = styled(Icons.ExclamationTriangle)`
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  width: 32px !important;
+  padding-left: 8px;
 `;
 
 export const ButtonContent = styled.div`

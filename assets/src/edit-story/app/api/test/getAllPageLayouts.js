@@ -15,12 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import getAllTemplates from '@web-stories-wp/templates';
+/**
  * Internal dependencies
  */
 import getAllPageLayouts from '../getAllPageLayouts';
 
-jest.mock('../../../../dashboard/templates');
-import getAllTemplates from '../../../../dashboard/templates';
+jest.mock('@web-stories-wp/templates');
 
 describe('getAllPageLayouts', () => {
   const cdnURL = 'https://test.url';

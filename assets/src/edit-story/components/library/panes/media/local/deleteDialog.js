@@ -19,12 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { __ } from '@web-stories-wp/i18n';
+import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -58,6 +54,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
       await deleteMedia(mediaId);
       deleteMediaElement({ id: mediaId });
     } catch (err) {
+      trackError('local_media_deletion', err.message);
       showSnackbar({
         message: __('Failed to delete media item.', 'web-stories'),
       });

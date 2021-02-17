@@ -103,6 +103,7 @@ const opacity = {
   white64: rgba(standard.white, 0.64),
   white24: rgba(standard.white, 0.24),
   white16: rgba(standard.white, 0.16),
+  white8: rgba(standard.white, 0.8),
   black64: rgba(standard.black, 0.64),
   black24: rgba(standard.black, 0.24),
   black10: rgba(standard.black, 0.1),
@@ -135,6 +136,7 @@ const darkTheme = {
     active: brand.gray[5],
     brandNormal: brand.gray[90],
     brandHover: brand.gray[90],
+    brandPress: brand.violet[40],
   },
   interactiveBg: {
     active: brand.violet[70],
@@ -173,13 +175,17 @@ const darkTheme = {
     negativeHover: brand.red[30],
     negativePress: brand.red[20],
     negativeActive: brand.red[10],
+    selection: brand.blue[30],
   },
   divider: {
     primary: opacity.white24,
-    secondary: opacity.white16,
+    secondary: opacity.white8,
   },
   form: {
     dropDownSubtitle: brand.gray[20], // equivalent to fg.secondary
+  },
+  shadow: {
+    active: opacity.white16,
   },
 };
 
@@ -207,6 +213,7 @@ const lightTheme = {
     active: brand.gray[90],
     brandNormal: brand.gray[90],
     brandHover: brand.gray[90],
+    brandPress: brand.violet[40],
   },
   interactiveBg: {
     active: brand.violet[10],
@@ -245,6 +252,7 @@ const lightTheme = {
     negativeHover: brand.red[30],
     negativePress: brand.red[40],
     negativeActive: brand.red[90],
+    selection: brand.blue[40],
   },
   divider: {
     primary: opacity.black24,
@@ -252,6 +260,9 @@ const lightTheme = {
   },
   form: {
     dropDownSubtitle: brand.gray[50], // equivalent to fg.tertiary
+  },
+  shadow: {
+    active: opacity.black10,
   },
 };
 

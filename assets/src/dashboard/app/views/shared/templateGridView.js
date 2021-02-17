@@ -19,16 +19,12 @@
  */
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
 import {
   CardGridItem,
@@ -64,13 +60,11 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const targetAction = useCallback(
     (template) => {
-      return async () => {
-        await trackEvent(
-          'use_template',
-          'dashboard',
-          template.title,
-          template.id
-        );
+      return () => {
+        trackEvent('use_template', {
+          name: template.title,
+          template_id: template.id,
+        });
         templateActions.createStoryFromTemplate(template);
       };
     },

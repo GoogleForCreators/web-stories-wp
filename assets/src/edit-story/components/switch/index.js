@@ -59,7 +59,7 @@ const Slider = styled.span`
   height: 14px;
   position: relative;
   border-radius: 6px;
-  border: 2px solid ${({ theme }) => theme.colors.fg.v3};
+  border: 2px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
   transition: border-color 0.2s ease;
 
   &::after {
@@ -71,16 +71,18 @@ const Slider = styled.span`
     width: 6px;
     height: 6px;
     border-radius: 3px;
-    background-color: ${({ theme }) => theme.colors.fg.v3};
+    background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
     transition: border-color 0.2s ease;
     transition-property: border-color, left, width;
   }
 
   ${Checkbox}:checked + & {
-    border-color: ${({ theme }) => theme.colors.accent.primary};
+    border-color: ${({ theme }) =>
+      theme.DEPRECATED_THEME.colors.accent.primary};
 
     &::after {
-      background-color: ${({ theme }) => theme.colors.accent.primary};
+      background-color: ${({ theme }) =>
+        theme.DEPRECATED_THEME.colors.accent.primary};
       left: 11px;
     }
   }

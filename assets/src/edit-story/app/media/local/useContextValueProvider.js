@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useRef } from 'react';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -74,6 +75,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       callback
     ) => {
       fetchMediaStart({ pageToken: p });
+      const trackTiming = getTimeTracker('load_media');
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
@@ -95,7 +97,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
             totalItems,
           });
         })
-        .catch(fetchMediaError);
+        .catch(fetchMediaError)
+        .finally(() => {
+          trackTiming();
+        });
     },
     [fetchMediaError, fetchMediaStart, getMedia]
   );

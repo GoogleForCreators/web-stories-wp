@@ -19,12 +19,11 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
-
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
 import { clamp } from '../../../../animation';
-import { trackEvent } from '../../../../tracking';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout, useToastContext } from '../../../components';
 import { ALERT_SEVERITY } from '../../../constants';
@@ -183,8 +182,11 @@ function TemplateDetails() {
 
   const handleBookmarkClickSelected = useCallback(() => {}, []);
 
-  const onHandleCta = useCallback(async () => {
-    await trackEvent('use_template', 'dashboard', template.title, template.id);
+  const onHandleCta = useCallback(() => {
+    trackEvent('use_template', {
+      name: template.title,
+      template_id: template.id,
+    });
     createStoryFromTemplate(template);
   }, [createStoryFromTemplate, template]);
 

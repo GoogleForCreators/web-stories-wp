@@ -1,0 +1,15 @@
+{
+  "name": "@web-stories-wp/commander",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "type": "module",
+  "bin": {
+    "commander": "./src/index.js"
+  },
+  "dependencies": {
+    "commander": "^7.1.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@web-stories-wp/i18n",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "dependencies": {
+    "@wordpress/i18n": "^3.17.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0"
+  },
+  "devDependencies": {
+    "react-dom": "^16.14.0"
+  }
+}

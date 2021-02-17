@@ -21,12 +21,12 @@ import Modal from 'react-modal';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
+import { updateSettings } from '@web-stories-wp/date';
+import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { updateSettings } from '../date';
 import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
@@ -39,7 +39,7 @@ __webpack_public_path__ = global.webStoriesDashboardSettings.publicPath;
  * @param {Object} config   Story editor settings.
  * @param {Object} flags    The flags for the application.
  */
-const initialize = (id, config, flags) => {
+const initialize = async (id, config, flags) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
@@ -47,7 +47,8 @@ const initialize = (id, config, flags) => {
 
   updateSettings(config.locale);
 
-  initializeTracking('Dashboard');
+  // Already tracking screen views in AppContent, no need to send page views as well.
+  await initializeTracking('Dashboard', false);
 
   render(
     <FlagsProvider features={flags}>

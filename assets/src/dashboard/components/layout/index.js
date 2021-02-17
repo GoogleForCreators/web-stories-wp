@@ -18,16 +18,13 @@
  */
 import Provider from './provider';
 import Scrollable from './scrollable';
-import Squishable from './squishable';
 import Fixed from './fixed';
 
 const Layout = {
   Provider,
   Scrollable,
-  Squishable,
   Fixed,
 };
 
 export default Layout;
 export { default as useLayoutContext } from './useLayoutContext';
-export { SQUISH_CSS_VAR } from './provider';

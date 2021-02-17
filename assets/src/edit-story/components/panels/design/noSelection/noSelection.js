@@ -18,11 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -31,12 +27,10 @@ import { Panel, PanelContent } from '../../panel';
 
 const Note = styled.p`
   font-style: italic;
-  color: ${({ theme }) => theme.colors.fg.white};
-  opacity: 0.86;
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
   margin: 50px 0;
   text-align: center;
 `;

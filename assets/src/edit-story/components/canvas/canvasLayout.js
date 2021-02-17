@@ -19,11 +19,7 @@
  */
 import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -41,7 +37,7 @@ import CanvasElementDropzone from './canvasElementDropzone';
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
 })`
-  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   width: 100%;
   height: 100%;
   position: relative;

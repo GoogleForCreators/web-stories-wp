@@ -182,9 +182,25 @@ class Plugin {
 	public $svg;
 
 	/**
+	 * User_Preferences.
+	 *
+	 * @var User_Preferences
+	 */
+	public $user_preferences;
+
+	/**
+	 * KSES.
+	 *
+	 * @var KSES
+	 */
+	public $kses;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @return void
 	 */
@@ -211,8 +227,10 @@ class Plugin {
 		$this->media = new Media();
 		add_action( 'init', [ $this->media, 'init' ] );
 
-		$this->tracking = new Tracking();
-		add_action( 'init', [ $this->tracking, 'init' ] );
+		// KSES
+		// High priority to load after Story_Post_Type.
+		$this->kses = new KSES();
+		add_action( 'init', [ $this->kses, 'init' ], 11 );
 
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
@@ -252,6 +270,9 @@ class Plugin {
 		$this->ad_manager = new Ad_Manager();
 		add_action( 'init', [ $this->ad_manager, 'init' ] );
 
+		$this->user_preferences = new User_Preferences();
+		add_action( 'init', [ $this->user_preferences, 'init' ] );
+
 		$this->svg = new SVG( $this->experiments );
 		add_action( 'init', [ $this->svg, 'init' ] );
 
@@ -282,6 +303,9 @@ class Plugin {
 
 		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		$this->tracking = new Tracking( $this->experiments, $site_kit );
+		add_action( 'admin_init', [ $this->tracking, 'init' ] );
 	}
 
 	/**

@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { useEffect } from 'react';
+import { migrate } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
-import { migrate } from '../../../migration';
 
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
@@ -43,7 +43,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           title: { raw: title },
           status,
           slug,
-          date_gmt,
+          date,
           modified,
           excerpt: { raw: excerpt },
           link,
@@ -51,11 +51,11 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           // todo: get publisher_logo_url image dimensions for prepublish checklist
           publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
-          style_presets: stylePresets,
+          style_presets: globalStoryStyles,
           password,
+          preview_link: previewLink,
           _embedded: embedded = {},
         } = post;
-        const date = `${date_gmt}Z`;
 
         let author = {
           id: 0,
@@ -108,11 +108,11 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
 
         // Initialize color/style presets, if missing.
-        if (!stylePresets.colors) {
-          stylePresets.colors = [];
+        if (!globalStoryStyles.colors) {
+          globalStoryStyles.colors = [];
         }
-        if (!stylePresets.textStyles) {
-          stylePresets.textStyles = [];
+        if (!globalStoryStyles.textStyles) {
+          globalStoryStyles.textStyles = [];
         }
 
         // Set story-global variables.
@@ -130,7 +130,9 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           permalinkConfig,
           publisherLogoUrl,
           password,
-          stylePresets,
+          previewLink,
+          currentStoryStyles: storyData?.currentStoryStyles || { colors: [] },
+          globalStoryStyles,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,
         };

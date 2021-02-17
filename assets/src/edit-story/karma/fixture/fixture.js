@@ -21,20 +21,21 @@ import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
  */
-import FixtureEvents from '../../../../../karma/fixture/events';
+import FixtureEvents from '../../../karma-fixture/events';
 import App from '../../editorApp';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import FileProvider from '../../app/file/provider';
 import FileContext from '../../app/file/context';
 import Layout from '../../components/layout';
-import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
@@ -132,7 +133,7 @@ export class Fixture {
       'borderRadius',
       'borderStyle',
       'captions',
-      'stylePresets',
+      'globalStoryStyles',
       'colorPresets',
       'imageAccessibility',
       'layerStyle',
@@ -283,22 +284,33 @@ export class Fixture {
     // wait for the media gallery items to load, as many tests assume they're
     // there
     let mediaElements;
-    await waitFor(() => {
-      mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
-      if (!mediaElements?.length) {
-        throw new Error(
-          `Not ready: only found ${mediaElements?.length} media elements`
-        );
-      }
-    });
+    await waitFor(
+      () => {
+        mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
+        if (!mediaElements?.length) {
+          throw new Error(
+            `Not ready: only found ${mediaElements?.length} media elements`
+          );
+        }
+      },
+      { timeout: 5000 }
+    );
 
     // Check to see if Roboto font is loaded.
     await waitFor(async () => {
+      const weights = ['400', '700'];
       const font = '12px Roboto';
-      await document.fonts.load(font, '');
-      if (!document.fonts.check(font, '')) {
-        throw new Error('Not ready: Roboto font could not be loaded');
-      }
+      const fonts = weights.map((weight) => `${weight} ${font}`);
+      await Promise.all(
+        fonts.map((thisFont) => {
+          document.fonts.load(thisFont, '');
+        })
+      );
+      fonts.forEach((thisFont) => {
+        if (!document.fonts.check(thisFont, '')) {
+          throw new Error('Not ready: Roboto font could not be loaded');
+        }
+      });
     });
 
     // @todo: find a stable way to wait for the story to fully render. Can be
@@ -742,11 +754,42 @@ class APIProviderFixture {
 
       const getAuthors = useCallback(() => asyncResponse(users), [users]);
 
+      const getCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
+      const updateCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
       const getStatusCheck = useCallback(
         () =>
           asyncResponse({
             success: true,
           }),
+        []
+      );
+
+      const getPageLayouts = useCallback(
+        () => asyncResponse(formattedTemplatesArray),
         []
       );
 
@@ -763,6 +806,9 @@ class APIProviderFixture {
           uploadMedia,
           updateMedia,
           getStatusCheck,
+          getPageLayouts,
+          getCurrentUser,
+          updateCurrentUser,
         },
       };
       return (

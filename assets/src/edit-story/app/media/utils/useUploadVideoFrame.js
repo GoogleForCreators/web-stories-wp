@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
@@ -44,6 +45,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
   );
 
   const processData = async (id, src) => {
+    const trackTiming = getTimeTracker('load_video_poster');
     try {
       const obj = await getFirstFrameOfVideo(src);
       obj.name = getFileName(src) + '-poster.jpeg';
@@ -91,7 +93,10 @@ function useUploadVideoFrame({ updateMediaElement }) {
         ...newSize,
       });
     } catch (err) {
-      // TODO Display error message to user as video poster upload has as failed.
+      // TODO: Potentially display error message to user.
+      trackError('video_poster_generation', err.message);
+    } finally {
+      trackTiming();
     }
   };
 

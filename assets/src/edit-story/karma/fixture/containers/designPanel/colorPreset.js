@@ -17,7 +17,25 @@
 /**
  * Internal dependencies
  */
+import { Container } from '../container';
 import { AbstractPanel } from './abstractPanel';
+
+class ColorPresetType extends Container {
+  constructor(node, path) {
+    super(node, path);
+    // Name is added as the last part of path after dot.
+    this._type = /[^.]*$/.exec(path)[0];
+  }
+  get add() {
+    return this.getByRole('button', { name: `Add ${this._type} color` });
+  }
+  get apply() {
+    return this.getByRole('button', { name: `Apply ${this._type} color` });
+  }
+  get delete() {
+    return this.getByRole('button', { name: `Delete ${this._type} color` });
+  }
+}
 
 /**
  * The text style panel containing inputs, toggles, dropdowns and other form elements
@@ -28,20 +46,15 @@ export class ColorPreset extends AbstractPanel {
     super(node, path);
   }
 
-  get add() {
-    return this.getByRole('button', { name: /Add color preset/ });
+  get local() {
+    return this._get(this.node, 'local', ColorPresetType);
   }
-
-  get apply() {
-    return this.getByRole('button', { name: /Apply color preset/ });
-  }
-
-  get delete() {
-    return this.getByRole('button', { name: /Delete color preset/ });
+  get global() {
+    return this._get(this.node, 'global', ColorPresetType);
   }
 
   get edit() {
-    return this.getByRole('button', { name: /Edit color presets/ });
+    return this.getByRole('button', { name: /Edit colors/ });
   }
 
   get exit() {

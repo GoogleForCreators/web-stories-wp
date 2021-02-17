@@ -21,11 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -68,7 +64,7 @@ const ExpandedNumeric = styled(BoxedNumeric)`
   flex-grow: 1;
 
   svg {
-    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
     width: 16px;
     height: 16px;
   }

@@ -19,21 +19,24 @@
  */
 import { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  Icons,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  useGlobalKeyDownEffect,
+} from '../../../design-system';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
-import { useGlobalKeyDownEffect } from '../../../design-system';
 import WithTooltip from '../tooltip';
 import { Placement } from '../popup';
 import Modal from '../modal';
-import { Keyboard as KeyboardShortcutsButton } from '../button';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
@@ -57,6 +60,10 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
           anchorRef.current.focus?.();
         }
 
+        trackEvent('shortcuts_menu_toggled', {
+          status: menuOpen ? 'open' : 'closed',
+        });
+
         return menuOpen;
       });
     },
@@ -69,18 +76,21 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
     <>
       <WithTooltip
         title={__('Open Keyboard Shortcuts', 'web-stories')}
-        placement={Placement.LEFT}
+        placement={Placement.TOP}
       >
-        <KeyboardShortcutsButton
+        <Button
           ref={anchorRef}
-          width="24"
-          height="24"
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.PLAIN}
+          size={BUTTON_SIZES.SMALL}
           aria-pressed={isOpen}
           aria-haspopup={true}
           aria-expanded={isOpen}
           aria-label={__('Open Keyboard Shortcuts', 'web-stories')}
           onClick={toggleMenu}
-        />
+        >
+          <Icons.Keyboard />
+        </Button>
       </WithTooltip>
       <Modal
         contentLabel={__('Keyboard Shortcuts Menu', 'web-stories')}

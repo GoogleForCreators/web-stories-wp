@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { trackError } from '@web-stories-wp/tracking';
+
 export const LOCAL_STORAGE_PREFIX = {
   PANEL: 'web_stories_ui_panel_settings',
   TEXT_SET_SETTINGS: 'web_stores_text_set_settings',
@@ -26,13 +31,17 @@ function getItemByKey(key) {
     const stored = localStorage.getItem(key);
     parsed = JSON.parse(stored);
   } catch (e) {
-    // @TODO Add some error handling.
+    trackError('local_storage_read', e.message);
   }
   return parsed;
 }
 
 function setItemByKey(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (e) {
+    trackError('local_storage_write', e.message);
+  }
 }
 
 export default {
