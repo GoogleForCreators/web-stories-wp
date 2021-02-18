@@ -79,7 +79,6 @@ const PageHeading = ({
             placeholder={searchPlaceholder}
             selectedValue={{ label: searchValue, value: searchValue }}
             options={searchOptions}
-            onMenuItemClick={() => {}}
             handleSearchValueChange={handleSearchChange}
             emptyText={__('No options available', 'web-stories')}
           />
