@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@11ty/eleventy-plugin-rss": "^1.0.9",
-    "@ampproject/eleventy-plugin-amp": "^0.5.3",
+    "@ampproject/eleventy-plugin-amp": "^0.5.5",
     "@saschazar/wasm-avif": "^1.0.0",
     "clean-css": "^4.2.3",
     "concurrently": "^5.2.0",
