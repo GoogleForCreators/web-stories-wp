@@ -42,10 +42,6 @@ const OPACITY_WIDTH = 64;
 const HEX_WIDTH = 80;
 
 const Container = styled.div`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
   user-select: none;
   padding: 0 ${CONTAINER_PADDING}px;
 `;

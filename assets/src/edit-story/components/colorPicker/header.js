@@ -32,7 +32,6 @@ import {
 } from '../../../design-system/components/button';
 import { Button, Icons } from '../../../design-system';
 
-const CONTAINER_PADDING = 14;
 const HEADER_FOOTER_HEIGHT = 52;
 
 const Wrapper = styled.div`
@@ -40,7 +39,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   height: ${HEADER_FOOTER_HEIGHT}px;
-  padding: ${CONTAINER_PADDING}px;
+  padding: 14px 20px;
   position: relative;
 `;
 
