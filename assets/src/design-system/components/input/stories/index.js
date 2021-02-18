@@ -239,6 +239,7 @@ export const Numeric = () => {
             min={number('min')}
             max={number('max')}
             allowEmpty={boolean('Allow Empty', false)}
+            isFloat={boolean('isFloat', false)}
           />
           <NumericInput
             aria-label="input-two"
@@ -254,6 +255,7 @@ export const Numeric = () => {
             max={number('max')}
             unit="ms"
             allowEmpty={boolean('Allow Empty', false)}
+            isFloat={boolean('isFloat', false)}
           />
           <NumericInput
             aria-label="disabled-input-one"
@@ -269,6 +271,7 @@ export const Numeric = () => {
             max={number('max')}
             disabled
             allowEmpty={boolean('Allow Empty', false)}
+            isFloat={boolean('isFloat', false)}
           />
         </Row>
       </Container>
@@ -288,6 +291,7 @@ export const Numeric = () => {
               max={number('max')}
               suffix={text('Suffix')}
               allowEmpty={boolean('Allow Empty', false)}
+              isFloat={boolean('isFloat', false)}
             />
             <NumericInput
               aria-label="input-four"
@@ -303,6 +307,7 @@ export const Numeric = () => {
               max={number('max')}
               unit="°"
               allowEmpty={boolean('Allow Empty', false)}
+              isFloat={boolean('isFloat', false)}
             />
             <NumericInput
               aria-label="disabled-input-two"
@@ -318,6 +323,7 @@ export const Numeric = () => {
               max={number('max')}
               disabled
               allowEmpty={boolean('Allow Empty', false)}
+              isFloat={boolean('isFloat', false)}
             />
           </Row>
         </Container>
