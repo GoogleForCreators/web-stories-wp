@@ -99,26 +99,26 @@ describe('deriveInitialOpen', () => {
   });
 
   it('doesnt update anything if there is no persisted isOpen', () => {
-    expect(deriveInitialOpen({ unreadTipCount: 0 })).toStrictEqual({});
-    expect(deriveInitialOpen({ unreadTipCount: 1 })).toStrictEqual({});
+    expect(deriveInitialOpen({ unreadTipsCount: 0 })).toStrictEqual({});
+    expect(deriveInitialOpen({ unreadTipsCount: 1 })).toStrictEqual({});
   });
 
   it('doesnt update anything if there are no unread tips', () => {
     expect(
-      deriveInitialOpen({ unreadTipCount: 0, isOpen: true })
+      deriveInitialOpen({ unreadTipsCount: 0, isOpen: true })
     ).toStrictEqual({});
     expect(
-      deriveInitialOpen({ unreadTipCount: 0, isOpen: false })
+      deriveInitialOpen({ unreadTipsCount: 0, isOpen: false })
     ).toStrictEqual({});
   });
 
   it('respects persisted isOpen if there are unread tips', () => {
     expect(
-      deriveInitialOpen({ unreadTipCount: 1, isOpen: true })
+      deriveInitialOpen({ unreadTipsCount: 1, isOpen: true })
     ).toStrictEqual({ isOpen: true });
 
     expect(
-      deriveInitialOpen({ unreadTipCount: 1, isOpen: false })
+      deriveInitialOpen({ unreadTipsCount: 1, isOpen: false })
     ).toStrictEqual({ isOpen: false });
   });
 });

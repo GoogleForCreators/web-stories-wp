@@ -108,7 +108,7 @@ export function deriveAutoOpen(previous, next) {
 // If all tips are read, we want the popup closed regardless of user setting.
 export function deriveInitialOpen(persisted) {
   const hasUnreadTips = Boolean(persisted?.unreadTipsCount);
-  return hasUnreadTips && persisted?.isOpen
+  return hasUnreadTips && persisted?.isOpen !== undefined
     ? {
         isOpen: persisted?.isOpen,
       }
