@@ -26,6 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Pill } from '../../../../../design-system';
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
@@ -47,7 +48,6 @@ import {
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
 import { useConfig } from '../../../config';
-import { Pill } from '../../../../../design-system';
 
 const StyledPill = styled(Pill)`
   margin: 0 2px;

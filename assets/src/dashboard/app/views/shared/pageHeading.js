@@ -22,8 +22,8 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 import { Display, Search, THEME_CONSTANTS } from '../../../../design-system';
+import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 
 const HeadingContainer = styled(StandardViewContentGutter)`
   display: flex;
