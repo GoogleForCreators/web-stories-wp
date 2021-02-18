@@ -71,9 +71,19 @@ const reducer = ({ state, actions }, action) => {
   };
 };
 
+const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
+
+// If there are any unread tips, we respect users last open setting.
+// If all tips are read, we want the popup closed regardless of user setting.
+const deriveInitialOpen = (local) => {
+  const hasUnreadTips = Boolean(local?.unreadTipsCount);
+  const lastIsOpen = local?.isOpen ?? false;
+  return hasUnreadTips ? lastIsOpen : false;
+};
+
 export const initial = {
   state: {
-    isOpen: false,
+    isOpen: deriveInitialOpen(persisted),
     navigationIndex: -1,
     navigationFlow: BASE_NAVIGATION_FLOW,
     isLeftToRightTransition: true,
@@ -82,7 +92,7 @@ export const initial = {
     isNextDisabled: false,
     readTips: {},
     readError: false,
-    unreadTipsCount: 0,
+    unreadTipsCount: persisted?.unreadTipsCount ?? 0,
     isHydrated: false,
   },
   // All actions are in the form: externalArgs -> state -> newStatePartial
@@ -183,11 +193,23 @@ export function useHelpCenter() {
   const { isHydrated, unreadTipsCount } = store.state;
   useEffect(() => {
     if (isHydrated) {
+      const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
       localStore.setItemByKey(LOCAL_STORAGE_PREFIX.FTUE, {
+        ...local,
         unreadTipsCount,
       });
     }
   }, [isHydrated, unreadTipsCount]);
+
+  // Persist user updates to isOpen
+  const { isOpen } = store.state;
+  useEffect(() => {
+    const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
+    localStore.setItemByKey(LOCAL_STORAGE_PREFIX.FTUE, {
+      ...local,
+      isOpen,
+    });
+  }, [isOpen]);
 
   // Hydrate unread tips once from current user endpoint.
   useEffect(() => {

@@ -16,7 +16,6 @@
 /**
  * Internal dependencies
  */
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 import {
   DONE_TIP_ENTRY,
   BASE_NAVIGATION_FLOW,
@@ -99,10 +98,7 @@ export function deriveUnreadTipsCount(previous, next) {
 
 export function deriveAutoOpen(previous, next) {
   if (isInitialHydrate(previous, next)) {
-    const ftueLocalStore = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
-    const maxUnreadTips = Object.keys(TIP_KEYS_MAP).length;
-    const hasNewTips =
-      (ftueLocalStore?.unreadTipsCount || maxUnreadTips) < next.unreadTipsCount;
+    const hasNewTips = previous.unreadTipsCount < next.unreadTipsCount;
     return hasNewTips ? { isOpen: true } : {};
   }
   return {};
