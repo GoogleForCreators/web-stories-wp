@@ -60,13 +60,11 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const targetAction = useCallback(
     (template) => {
-      return async () => {
-        await trackEvent(
-          'use_template',
-          'dashboard',
-          template.title,
-          template.id
-        );
+      return () => {
+        trackEvent('use_template', {
+          name: template.title,
+          template_id: template.id,
+        });
         templateActions.createStoryFromTemplate(template);
       };
     },

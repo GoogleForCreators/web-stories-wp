@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-
-/**
  * Internal dependencies
  */
 import { Input, labelAccessibilityValidator } from '../';
@@ -47,6 +43,16 @@ describe('Input', () => {
     );
 
     expect(getByText('This is my input hint')).toBeInTheDocument();
+  });
+
+  it('should render a suffix', () => {
+    const { getByText } = renderWithProviders(
+      <Input aria-label="test" suffix="suffix" />
+    );
+
+    const suffixElement = getByText('suffix');
+
+    expect(suffixElement).toBeInTheDocument();
   });
 });
 

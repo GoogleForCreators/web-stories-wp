@@ -18,13 +18,15 @@
  * Internal dependencies
  */
 import { config } from './shared';
+import enableTracking from './enableTracking';
 
 /**
  * Determines whether tracking is enabled or not.
  *
  * @return {boolean} Whether tracking is enabled
  */
-function isTrackingEnabled() {
+async function isTrackingEnabled() {
+  await enableTracking();
   return Boolean(config.trackingEnabled);
 }
 

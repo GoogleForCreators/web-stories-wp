@@ -20,6 +20,7 @@
 import { useCallback, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -78,7 +79,7 @@ export default function useMediaPicker({
 
   const openMediaPicker = useCallback(
     (evt) => {
-      trackEvent('open_media_modal', 'editor');
+      trackEvent('open_media_modal');
 
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {

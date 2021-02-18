@@ -55,6 +55,14 @@ export const NewStoryButton = styled(Button)(
       background-color: ${theme.colors.interactiveBg.brandPress};
       border-color: ${theme.colors.interactiveFg.brandPress};
     }
+
+    :focus {
+      color: ${theme.colors.fg.primary};
+    }
+
+    :active {
+      color: ${theme.colors.bg.primary};
+    }
   `
 );
 

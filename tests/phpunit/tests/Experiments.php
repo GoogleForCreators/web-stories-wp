@@ -274,4 +274,45 @@ class Experiments extends \WP_UnitTestCase {
 		$this->assertTrue( $experiments->is_experiment_enabled( 'bar' ) );
 		$this->assertFalse( $experiments->is_experiment_enabled( 'baz' ) );
 	}
+
+	/**
+	 * @cover ::get_enabled_experiments
+	 */
+	public function test_get_enabled_experiments() {
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'baz' => true ], false );
+
+		$experiments = $this->createPartialMock(
+			\Google\Web_Stories\Experiments::class,
+			[ 'get_experiments' ]
+		);
+		$experiments->method( 'get_experiments' )
+					->willReturn(
+						[
+							[
+								'name'        => 'foo',
+								'label'       => 'Foo Label',
+								'description' => 'Foo Desc',
+							],
+							[
+								'name'        => 'bar',
+								'label'       => 'Bar Label',
+								'description' => 'Bar Desc',
+								'default'     => true,
+							],
+							[
+								'name'        => 'baz',
+								'label'       => 'Baz Label',
+								'description' => 'Baz Desc',
+								'default'     => true,
+							],
+						]
+					);
+
+		$expected = [
+			'bar',
+			'baz',
+		];
+
+		$this->assertEqualSets( $expected, $experiments->get_enabled_experiments() );
+	}
 }

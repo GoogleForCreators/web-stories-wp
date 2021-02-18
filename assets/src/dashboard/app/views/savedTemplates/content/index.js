@@ -22,6 +22,7 @@ import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -58,17 +59,15 @@ function Content({
   );
 
   const handleMenuItemSelected = useCallback(
-    async (sender, template) => {
+    (sender, template) => {
       setContextMenuId(-1);
 
       switch (sender.value) {
         case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          await trackEvent(
-            'use_saved_template_from_menu',
-            'dashboard',
-            template.title,
-            template.id
-          );
+          trackEvent('use_saved_template', {
+            name: template.title,
+            template_id: template.id,
+          });
           actions.createStoryFromTemplate(template);
           break;
 
