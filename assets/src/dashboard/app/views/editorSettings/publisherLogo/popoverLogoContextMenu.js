@@ -24,11 +24,13 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { PopoverMenuCard } from '../../../../components/popoverMenu';
 import { EditPencil as EditPencilIcon } from '../../../../icons';
 import { MenuContainer, LogoMenuButton } from '../components';
-import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
 import { useFocusOut } from '../../../../utils';
+import {
+  AnimatedContextMenu,
+  MenuItemProps,
+} from '../../../../../design-system';
 
 function PopoverLogoContextMenu({
   isActive,
@@ -36,8 +38,8 @@ function PopoverLogoContextMenu({
   idx,
   publisherLogo,
   contextMenuId,
-  onMenuItemSelected,
   onMenuItemToggle,
+  items,
 }) {
   const popoverMenuContainerRef = useRef(null);
 
@@ -80,24 +82,10 @@ function PopoverLogoContextMenu({
       >
         <EditPencilIcon aria-hidden="true" />
       </LogoMenuButton>
-      <PopoverMenuCard
+      <AnimatedContextMenu
         isOpen={isPopoverMenuOpen}
-        onSelect={(menuItem) => {
-          onMenuItemSelected(menuItem, publisherLogo, idx);
-        }}
         data-testid={`publisher-logo-context-menu-${idx}`}
-        items={[
-          {
-            value: publisherLogo.isDefault
-              ? false
-              : PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT,
-            label: __('Set as Default', 'web-stories'),
-          },
-          {
-            value: PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO,
-            label: __('Delete', 'web-stories'),
-          },
-        ]}
+        items={items}
       />
     </MenuContainer>
   );
@@ -117,8 +105,8 @@ PopoverLogoContextMenu.propTypes = {
     value: PropTypes.number,
     set: PropTypes.func,
   }).isRequired,
-  onMenuItemSelected: PropTypes.func.isRequired,
   onMenuItemToggle: PropTypes.func.isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
 };
 
 export default PopoverLogoContextMenu;

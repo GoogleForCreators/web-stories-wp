@@ -42,7 +42,6 @@ import {
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { useConfig } from '../../../config';
-import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
 import PopoverLogoContextMenu from './popoverLogoContextMenu';
 
 export const TEXT = {
@@ -146,26 +145,6 @@ function PublisherLogoSettings({
     setActivePublisherLogoId(newMenuId);
   }, []);
 
-  const onMenuItemSelected = useCallback(
-    (sender, logo, index) => {
-      setContextMenuId(-1);
-
-      switch (sender.value) {
-        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO:
-          handleRemoveLogoClick(logo, index);
-          break;
-
-        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT:
-          handleUpdateDefaultLogo(logo);
-          break;
-
-        default:
-          break;
-      }
-    },
-    [handleUpdateDefaultLogo, handleRemoveLogoClick]
-  );
-
   useFocusOut(
     containerRef,
     () => {
@@ -198,6 +177,18 @@ function PublisherLogoSettings({
               if (!publisherLogo) {
                 return null;
               }
+
+              const items = [
+                {
+                  label: __('Set as Default', 'web-stories'),
+                  onClick: () => handleRemoveLogoClick(publisherLogo, idx),
+                  disabled: publisherLogo.isDefault,
+                },
+                {
+                  label: __('Delete', 'web-stories'),
+                  onClick: () => handleUpdateDefaultLogo(publisherLogo),
+                },
+              ];
 
               const isActive = activePublisherLogoId === publisherLogo.id;
 
@@ -241,8 +232,8 @@ function PublisherLogoSettings({
                       isActive={isActive}
                       activePublisherLogo={activePublisherLogoId}
                       idx={idx}
+                      items={items}
                       publisherLogo={publisherLogo}
-                      onMenuItemSelected={onMenuItemSelected}
                       onMenuItemToggle={onMenuItemToggle}
                       contextMenuId={{
                         set: setContextMenuId,
