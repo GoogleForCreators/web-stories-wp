@@ -18,7 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -117,68 +124,90 @@ const StyledInput = styled.input(
   `
 );
 
-export const Input = ({
-  className,
-  disabled,
-  hasError,
-  hint,
-  id,
-  label,
-  suffix,
-  unit = '',
-  value,
-  ...props
-}) => {
-  const inputId = useMemo(() => id || uuidv4(), [id]);
-  const inputRef = useRef(null);
-  const [focused, setFocused] = useState(false);
+export const Input = forwardRef(
+  (
+    {
+      className,
+      disabled,
+      hasError,
+      hint,
+      id,
+      label,
+      onBlur,
+      onFocus,
+      suffix,
+      unit = '',
+      value,
+      ...props
+    },
+    ref
+  ) => {
+    const inputId = useMemo(() => id || uuidv4(), [id]);
+    const inputRef = useRef(null);
+    const [focused, setFocused] = useState(false);
 
-  useEffect(() => {
-    if (focused && inputRef.current) {
-      inputRef.current.select();
+    useEffect(() => {
+      // focus input when focused state is set
+      if (focused && ref && ref.current) {
+        ref.current.select();
+      } else if (focused && inputRef.current) {
+        inputRef.current.select();
+      }
+    }, [focused, ref]);
+
+    const handleFocus = useCallback(
+      (ev) => {
+        onFocus?.(ev);
+        setFocused(true);
+      },
+      [onFocus]
+    );
+    const handleBlur = useCallback(
+      (ev) => {
+        onBlur?.(ev);
+        setFocused(false);
+      },
+      [onBlur]
+    );
+
+    let displayedValue = value;
+    if (unit && value.length) {
+      displayedValue = `${value}${!focused ? `${unit}` : ''}`;
     }
-  }, [focused]);
 
-  const handleFocus = useCallback(() => setFocused(true), []);
-  const handleBlur = useCallback(() => setFocused(false), []);
-
-  let displayedValue = value;
-  if (unit && value.length) {
-    displayedValue = `${value}${!focused ? `${unit}` : ''}`;
-  }
-
-  return (
-    <Container className={className}>
-      {label && (
-        <Label htmlFor={inputId} forwardedAs="label" disabled={disabled}>
-          {label}
-        </Label>
-      )}
-      <InputContainer focused={focused} hasError={hasError}>
-        <StyledInput
-          id={inputId}
-          disabled={disabled}
-          ref={inputRef}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          value={displayedValue}
-          {...props}
-        />
-        {suffix && (
-          <Suffix
-            hasLabel={Boolean(label)}
-            forwardedAs="span"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            onClick={handleFocus}
-          >
-            {suffix}
-          </Suffix>
+    return (
+      <Container className={className}>
+        {label && (
+          <Label htmlFor={inputId} forwardedAs="label" disabled={disabled}>
+            {label}
+          </Label>
         )}
-      </InputContainer>
-      {hint && <Hint hasError={hasError}>{hint}</Hint>}
-    </Container>
-  );
-};
+        <InputContainer focused={focused} hasError={hasError}>
+          <StyledInput
+            id={inputId}
+            disabled={disabled}
+            ref={ref || inputRef}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            value={displayedValue}
+            {...props}
+          />
+          {suffix && (
+            <Suffix
+              hasLabel={Boolean(label)}
+              forwardedAs="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              onClick={handleFocus}
+            >
+              {suffix}
+            </Suffix>
+          )}
+        </InputContainer>
+        {hint && <Hint hasError={hasError}>{hint}</Hint>}
+      </Container>
+    );
+  }
+);
 
 /**
  * Custom propTypes validator used to check if either `label`
@@ -215,7 +244,7 @@ export const labelAccessibilityValidator = function (props, _, componentName) {
   return null;
 };
 
-Input.propTypes = {
+export const InputPropTypes = {
   'aria-label': labelAccessibilityValidator,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -223,8 +252,13 @@ Input.propTypes = {
   hint: PropTypes.string,
   id: PropTypes.string,
   label: labelAccessibilityValidator,
+  onBlur: PropTypes.func,
   onChange: PropTypes.func.isRequired,
+  onFocus: PropTypes.func,
   suffix: PropTypes.node,
   unit: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
+
+Input.propTypes = InputPropTypes;
+Input.displayName = 'Input';

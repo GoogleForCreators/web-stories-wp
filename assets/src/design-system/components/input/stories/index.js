@@ -20,12 +20,13 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+import { number, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
 import { Input } from '..';
+import { NumericInput } from '../numericInput';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../..';
 import { AlignCenter } from '../../../icons';
@@ -190,6 +191,126 @@ export const _default = () => {
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
               suffix={text('Suffix')}
+              disabled
+            />
+          </Row>
+        </Container>
+      </DarkThemeProvider>
+    </>
+  );
+};
+
+export const Numeric = () => {
+  const [inputState, setInputState] = useState({
+    oneLight: 600,
+    twoLight: 0,
+    threeLight: 1234,
+    oneDark: 0,
+    twoDark: 7890,
+    threeDark: 0,
+  });
+
+  const handleChange = (ev, value) => {
+    const name = ev.target.name;
+
+    // action(event.target.name)(event);
+    setInputState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <>
+      <Headline as="h1">{'Numeric Input'}</Headline>
+      <br />
+      <Container>
+        <Row>
+          <NumericInput
+            aria-label="input-one"
+            id="one-light"
+            name="oneLight"
+            value={inputState.oneLight}
+            onChange={handleChange}
+            label={text('Input 1 Label', 'Normal')}
+            hint={text('Hint', 'Hint')}
+            placeholder="placeholder"
+            suffix={text('Suffix')}
+            min={number('min')}
+            max={number('max')}
+          />
+          <NumericInput
+            aria-label="input-two"
+            id="two-light"
+            name="twoLight"
+            value={inputState.twoLight}
+            onChange={handleChange}
+            label={text('Input 2 Label', 'Unit and Suffix')}
+            hint={text('Hint', 'Hint')}
+            placeholder="placeholder"
+            suffix="Duration"
+            min={number('min')}
+            max={number('max')}
+            unit="ms"
+          />
+          <NumericInput
+            aria-label="disabled-input-one"
+            id="three-light"
+            name="threeLight"
+            value={inputState.threeLight}
+            onChange={handleChange}
+            label={text('Input 4 Label', 'Disabled')}
+            hint={text('Hint', 'Hint')}
+            placeholder="placeholder"
+            suffix={text('Suffix')}
+            min={number('min')}
+            max={number('max')}
+            disabled
+          />
+        </Row>
+      </Container>
+      <DarkThemeProvider>
+        <Container darkMode>
+          <Row>
+            <NumericInput
+              aria-label="input-three"
+              id="one-dark"
+              name="oneDark"
+              value={inputState.oneDark}
+              onChange={handleChange}
+              label={text('Input 1 Label', 'Normal')}
+              hint={text('Hint', 'Hint')}
+              placeholder="placeholder"
+              min={number('min')}
+              max={number('max')}
+              suffix={text('Suffix')}
+            />
+            <NumericInput
+              aria-label="input-four"
+              id="two-dark"
+              name="twoDark"
+              value={inputState.twoDark}
+              onChange={handleChange}
+              label={text('Input 2 Label', 'Suffix')}
+              hint={text('Hint', 'Hint')}
+              placeholder="placeholder"
+              suffix="Temp"
+              min={number('min')}
+              max={number('max')}
+              unit="°"
+            />
+            <NumericInput
+              aria-label="disabled-input-two"
+              id="three-dark"
+              name="threeDark"
+              value={inputState.threeDark}
+              onChange={handleChange}
+              label={text('Input 4 Label', 'Disabled')}
+              hint={text('Hint', 'Hint')}
+              placeholder="placeholder"
+              suffix={text('Suffix')}
+              min={number('min')}
+              max={number('max')}
               disabled
             />
           </Row>
