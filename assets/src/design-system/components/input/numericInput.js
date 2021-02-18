@@ -219,5 +219,5 @@ NumericInput.propTypes = {
   isFloat: PropTypes.bool,
   max: PropTypes.number,
   min: PropTypes.number,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };

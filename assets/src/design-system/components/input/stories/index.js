@@ -20,7 +20,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { action } from '@storybook/addon-actions';
-import { number, text } from '@storybook/addon-knobs';
+import { boolean, number, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -238,6 +238,7 @@ export const Numeric = () => {
             suffix={text('Suffix')}
             min={number('min')}
             max={number('max')}
+            allowEmpty={boolean('Allow Empty', false)}
           />
           <NumericInput
             aria-label="input-two"
@@ -252,6 +253,7 @@ export const Numeric = () => {
             min={number('min')}
             max={number('max')}
             unit="ms"
+            allowEmpty={boolean('Allow Empty', false)}
           />
           <NumericInput
             aria-label="disabled-input-one"
@@ -266,6 +268,7 @@ export const Numeric = () => {
             min={number('min')}
             max={number('max')}
             disabled
+            allowEmpty={boolean('Allow Empty', false)}
           />
         </Row>
       </Container>
@@ -284,6 +287,7 @@ export const Numeric = () => {
               min={number('min')}
               max={number('max')}
               suffix={text('Suffix')}
+              allowEmpty={boolean('Allow Empty', false)}
             />
             <NumericInput
               aria-label="input-four"
@@ -298,6 +302,7 @@ export const Numeric = () => {
               min={number('min')}
               max={number('max')}
               unit="°"
+              allowEmpty={boolean('Allow Empty', false)}
             />
             <NumericInput
               aria-label="disabled-input-two"
@@ -312,6 +317,7 @@ export const Numeric = () => {
               min={number('min')}
               max={number('max')}
               disabled
+              allowEmpty={boolean('Allow Empty', false)}
             />
           </Row>
         </Container>
