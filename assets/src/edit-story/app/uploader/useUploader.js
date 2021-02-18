@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   trackError,
@@ -33,12 +33,12 @@ import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
+import { useSnackbar } from '../snackbar';
 
 function useUploader() {
   const {
     actions: { uploadMedia },
   } = useAPI();
-  const [isProcessing, setIsProcessing] = useState(false);
   const {
     storyId,
     maxUpload,
@@ -60,6 +60,8 @@ function useUploader() {
     transcodeVideo,
     isFileTooLarge,
   } = useTranscodeVideo();
+
+  const { showSnackbar } = useSnackbar();
 
   const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
@@ -163,16 +165,16 @@ function useUploader() {
 
       // Transcoding is enabled, let's give it a try!
       try {
-        setIsProcessing(true);
+        showSnackbar({
+          message: __('Video optimization in progress.', 'web-stories'),
+        });
         // TODO: Only transcode & optimize video if needed (criteria TBD).
         const newFile = await transcodeVideo(file);
         trackTiming();
-        setIsProcessing(false);
         additionalData.media_source = 'video-optimization';
         return uploadMedia(newFile, additionalData);
       } catch (err) {
         trackTiming();
-        setIsProcessing(false);
         trackError('video_transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
@@ -192,17 +194,13 @@ function useUploader() {
       canTranscodeFile,
       transcodeVideo,
       isFileTooLarge,
+      showSnackbar,
     ]
   );
 
   return {
-    actions: {
-      uploadFile,
-      isValidType,
-    },
-    state: {
-      isProcessing,
-    },
+    uploadFile,
+    isValidType,
   };
 }
 
