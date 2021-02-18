@@ -36,7 +36,7 @@ import GradientLine from './gradientLine';
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
-  padding: 0 12px;
+  padding: 0 14px;
   height: 58px;
 `;
 

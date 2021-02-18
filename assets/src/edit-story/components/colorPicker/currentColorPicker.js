@@ -32,7 +32,7 @@ import { Eyedropper } from '../button';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
-const CONTAINER_PADDING = 12;
+const CONTAINER_PADDING = 14;
 const EYEDROPPER_ICON_SIZE = 15;
 const HEADER_FOOTER_HEIGHT = 42;
 const BODY_HEIGHT = 140;

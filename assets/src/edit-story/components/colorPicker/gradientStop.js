@@ -31,10 +31,10 @@ import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const POINTER_SIZE = 14;
 const POINTER_MARGIN = 10;
-const OFFSET = 8;
+const OFFSET = 14;
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
-    left: `${position * LINE_LENGTH + LINE_WIDTH / 2}px`,
+    left: `${position * (LINE_LENGTH + POINTER_SIZE) + LINE_WIDTH / 2}px`,
   },
 }))`
   position: absolute;

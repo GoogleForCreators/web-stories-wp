@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export const LINE_LENGTH = 155;
+export const LINE_LENGTH = 156;
 export const LINE_WIDTH = 16;
 
 export const TYPE_SOLID = 'solid';
