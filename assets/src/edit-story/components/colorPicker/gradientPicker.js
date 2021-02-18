@@ -38,7 +38,7 @@ const Wrapper = styled.div`
   align-items: flex-end;
   padding: 16px 14px;
   height: 74px;
-  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary}
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
 
 const SmallButton = styled(Button)`

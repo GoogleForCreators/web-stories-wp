@@ -157,7 +157,7 @@ function ColorPreview({
   const previewText = getPreviewText(value);
 
   const [inputValue, setInputValue] = useState('');
-  const [pickerOpen, setPickerOpen] = useState(true);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const previewRef = useRef(null);
   const inputRef = useRef(null);

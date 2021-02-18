@@ -35,7 +35,7 @@ import useKeyDeleteStop from './useKeyDeleteStop';
 import useKeyFocus from './useKeyFocus';
 import usePointerAddStop from './usePointerAddStop';
 import usePointerMoveStop from './usePointerMoveStop';
-import {GRADIENT_STOP_SIZE, LINE_LENGTH, LINE_WIDTH} from './constants';
+import { GRADIENT_STOP_SIZE, LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
 
