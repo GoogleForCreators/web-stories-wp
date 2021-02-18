@@ -32,3 +32,6 @@ export const BUTTON_VARIANTS = {
   SQUARE: 'square',
   ICON: 'icon',
 };
+
+export const BUTTON_SIZE = 32;
+export const BUTTON_TRANSITION_TIMING = '0.6s ease 0s';

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,32 +17,24 @@
 /**
  * Internal dependencies
  */
-import { config } from './shared';
 import isTrackingEnabled from './isTrackingEnabled';
 import track from './track';
 
 /**
  * Send an Analytics tracking event for clicks.
  *
+ * Works for both Universal Analytics and Google Analytics 4.
+ *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
  *
  * @param {MouseEvent} event The actual click event.
  * @param {string} eventName The event name (e.g. 'search').
- * @param {string} eventCategory The event category (e.g. 'editor'). GA defaults this to 'engagement'.
- * @param {string} url The URL to track and navigate to.
  * @return {Promise<void>} Promise that always resolves.
  */
-//eslint-disable-next-line require-await
-async function trackClick(event, eventName, eventCategory, url) {
-  if (!isTrackingEnabled()) {
+async function trackClick(event, eventName) {
+  if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }
-
-  const eventData = {
-    send_to: config.trackingId,
-    event_category: eventCategory,
-    event_label: url,
-  };
 
   const openLinkInNewTab =
     event.currentTarget.target === '_blank' ||
@@ -52,13 +44,13 @@ async function trackClick(event, eventName, eventCategory, url) {
     event.which === 2;
 
   if (openLinkInNewTab) {
-    return track(eventName, eventData);
+    return track(eventName);
   }
 
   event.preventDefault();
 
-  return track(eventName, eventData).finally(() => {
-    document.location = url;
+  return track(eventName).finally(() => {
+    document.location = event.currentTarget.href;
   });
 }
 

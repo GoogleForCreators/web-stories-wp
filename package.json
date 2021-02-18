@@ -103,23 +103,23 @@
     "@prettier/plugin-xml": "^0.13.0",
     "@storybook/addon-a11y": "^6.1.14",
     "@storybook/addon-actions": "^6.1.14",
-    "@storybook/addon-backgrounds": "^6.1.14",
-    "@storybook/addon-docs": "^6.1.14",
+    "@storybook/addon-backgrounds": "^6.1.18",
+    "@storybook/addon-docs": "^6.1.18",
     "@storybook/addon-knobs": "^6.1.17",
-    "@storybook/addon-storysource": "^6.1.14",
+    "@storybook/addon-storysource": "^6.1.17",
     "@storybook/addon-viewport": "^6.1.14",
     "@storybook/client-api": "^6.1.14",
     "@storybook/client-logger": "^6.1.14",
-    "@storybook/react": "^6.1.14",
+    "@storybook/react": "^6.1.18",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
-    "@testing-library/react-hooks": "^3.7.0",
+    "@testing-library/react-hooks": "^5.0.3",
     "@testing-library/user-event": "^12.6.0",
     "@web-stories-wp/e2e-tests": "*",
     "@wordpress/babel-plugin-import-jsx-pragma": "^3.0.1",
-    "@wordpress/dependency-extraction-webpack-plugin": "^2.9.0",
+    "@wordpress/dependency-extraction-webpack-plugin": "^3.0.1",
     "@wordpress/eslint-plugin": "^7.4.0",
     "axe-core": "^4.1.1",
     "babel-jest": "^26.6.3",
@@ -128,7 +128,7 @@
     "babel-plugin-styled-components": "^1.12.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "browserslist": "^4.16.1",
-    "commander": "^6.2.1",
+    "commander": "^7.1.0",
     "core-js": "^3.8.2",
     "css-loader": "^5.0.2",
     "cssnano": "^4.1.10",
@@ -165,6 +165,7 @@
     "karma-sourcemap-loader": "^0.3.8",
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^4.0.2",
+    "lerna-changelog": "^1.0.1",
     "lint-staged": "^10.5.3",
     "markdown-table": "^2.0.0",
     "markdownlint-cli": "^0.26.0",
@@ -250,6 +251,7 @@
     "test:e2e:firefox:interactive": "PUPPETEER_PRODUCT=firefox npm run test:e2e:interactive",
     "test:e2e:firefox:debug": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true node --inspect-brk node_modules/.bin/jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
     "percy": "percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots/",
+    "workflow:changelog": "lerna-changelog",
     "workflow:assets-version": "commander assets-version",
     "workflow:version": "commander version",
     "workflow:build-plugin": "commander build-plugin",
@@ -284,5 +286,18 @@
     "*.php": "npm run lint:php:fix",
     "*.(xml|xml.dist)": "prettier --write",
     "*.yml": "prettier --write"
+  },
+  "changelog": {
+    "labels": {
+      "Type: Enhancement": "🚀 Features",
+      "Type: Bug": "🐛 Bug Fixes",
+      "Type: Infrastructure": "🧰 Maintenance",
+      "Type: Documentation": ":memo: Documentation"
+    },
+    "ignoreCommitters": [
+      "dependabot",
+      "github-actions",
+      "imgbot"
+    ]
   }
 }

@@ -83,7 +83,7 @@ function useTranscodeVideo() {
       // Resize videos if larger than 1080x1920, preserving aspect ratio.
       // See https://trac.ffmpeg.org/wiki/Scaling
       '-vf',
-      "scale='min(1080,iw)':'min(1920,ih)'",
+      "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
       // As the name says...
       '-preset',
       'fast', // 'veryfast' seems to cause crashes.

@@ -53,7 +53,7 @@ function Preview() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
-    trackEvent('preview_story', 'editor');
+    trackEvent('preview_story');
 
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.

@@ -22,11 +22,8 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 	.default-moveable .moveable-control,
 	.default-moveable .moveable-line.moveable-rotation-line .moveable-control {
-		background: ${({ theme }) =>
-      theme.DEPRECATED_THEME.colors.accent.primary} !important;
-		border: 2px solid #fff !important;
-		margin-left: -6px;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+		background: ${({ theme }) => theme.colors.bg.primary} !important;
+		border: 1px solid ${({ theme }) => theme.colors.border.selection} !important;
 	}
 
 	.default-moveable.type-text .moveable-direction.moveable-n, .default-moveable.type-text .moveable-direction.moveable-s {
@@ -44,38 +41,56 @@ export const GlobalStyle = createGlobalStyle`
 	.default-moveable .moveable-control.moveable-s,
 	.default-moveable .moveable-control.moveable-e,
 	.default-moveable .moveable-control.moveable-w {
-		border-radius: 8px;
+		border-radius: 4px;
+	}
+
+	.default-moveable .moveable-control.moveable-nw,
+	.default-moveable .moveable-control.moveable-ne,
+	.default-moveable .moveable-control.moveable-sw,
+	.default-moveable .moveable-control.moveable-se {
+	  border-radius: 2px;
+	  width: 8px;
+	  height: 8px;
+	  margin-left: -4px;
+    margin-top: -4px;
 	}
 
 	.default-moveable .moveable-control.moveable-s {
-		height: 8px !important;
+		height: 6px !important;
 		width: 16px !important;
-		margin-top: -2px !important;
+		margin-top: -3px !important;
 	}
 
 	.default-moveable .moveable-control.moveable-e {
 		height: 16px !important;
-		width: 8px !important;
-		margin-left: -4px !important;
+		width: 6px !important;
+		margin-left: -3px !important;
 	}
 
 	.default-moveable .moveable-control.moveable-w {
 		height: 16px !important;
-		width: 8px !important;
-		margin-left: -4px !important;
+		width: 6px !important;
+		margin-left: -3px !important;
 	}
 
 	.default-moveable.moveable-control-box .moveable-line.moveable-direction {
-		background: #4285f4 !important;
-		width: 2px;
-		height: 2px;
+		background: ${({ theme }) => theme.colors.border.selection} !important;
+		width: 1px;
+		height: 1px;
 	}
 
 	.default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
-		background: #4285f4 !important;
+		background: ${({ theme }) => theme.colors.border.selection} !important;
 		width: 1px;
-		top: -16px;
-		height: 16px;
+		top: -12px;
+		height: 12px;
+	}
+
+	.default-moveable.moveable-control-box .moveable-control.moveable-rotation {
+    border-radius: 50px;
+    width: 10px;
+    height: 10px;
+    margin-left: -5.5px;
 	}
 
 	.default-moveable.hide-handles .moveable-line.moveable-rotation-line,

@@ -27,7 +27,7 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
  */
 
 import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
-import { Add } from '../../../../../../design-system/icons';
+import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
@@ -51,24 +51,25 @@ const AddColorPreset = styled.button`
   border: none;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   cursor: pointer;
-  padding: 8px 0px;
+  padding: 0;
   line-height: 20px;
   svg {
-    width: 16px;
-    height: 16px;
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    width: 32px;
+    height: 32px;
   }
 `;
 
 const CtaWrapper = styled.div`
   font-size: 14px;
-  line-height: 30px;
-  margin-right: 5px;
+  line-height: 32px;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
 
   svg {
     color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-    width: 20px;
-    height: 14px;
+    width: 32px;
+    height: 32px;
+    vertical-align: bottom;
   }
 `;
 
@@ -92,6 +93,11 @@ const HeaderRow = styled.div`
 const ButtonWrapper = styled.div`
   text-align: end;
   flex-grow: 1;
+`;
+
+const Strong = styled.span`
+  font-size: 24px;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 function ColorPresetActions({ color, pushUpdate }) {
@@ -195,7 +201,7 @@ function ColorPresetActions({ color, pushUpdate }) {
             aria-label={__('Add color', 'web-stories')}
             onClick={() => handleAddColorPreset(color)}
           >
-            <Add />
+            <Icons.Plus />
           </AddColorPreset>
         </ButtonWrapper>
       </HeaderRow>
@@ -214,10 +220,10 @@ function ColorPresetActions({ color, pushUpdate }) {
           <CtaWrapper>
             <TranslateWithMarkup
               mapping={{
-                i: <Add />,
+                b: <Strong />,
               }}
             >
-              {__('Click <i></i> to save a color', 'web-stories')}
+              {__('Click <b>+</b> to save a color', 'web-stories')}
             </TranslateWithMarkup>
           </CtaWrapper>
         )}

@@ -25,14 +25,14 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Add, Edit } from '../../../../../design-system/icons';
+import { Icons } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
 
 const buttonCSS = css`
   border: none;
   background: transparent;
-  width: 30px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
   cursor: pointer;
   padding: 0;
@@ -40,8 +40,8 @@ const buttonCSS = css`
   align-items: center;
   justify-content: center;
   svg {
-    width: 15px;
-    height: 15px;
+    width: 32px;
+    height: 32px;
   }
 `;
 
@@ -90,7 +90,7 @@ function PresetsHeader({
             }
             isEditMode={isEditMode}
           >
-            {isEditMode ? __('Done', 'web-stories') : <Edit />}
+            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
           </EditMode>
         )}
         {!isEditMode && !isColor && (
@@ -98,7 +98,7 @@ function PresetsHeader({
             onClick={handleAddPreset}
             aria-label={__('Add style', 'web-stories')}
           >
-            <Add />
+            <Icons.Plus />
           </AddPresetButton>
         )}
       </>

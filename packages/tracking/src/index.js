@@ -21,22 +21,20 @@ import initializeTracking from './initializeTracking';
 import enableTracking from './enableTracking';
 import disableTracking from './disableTracking';
 import isTrackingEnabled from './isTrackingEnabled';
-import trackEvent from './trackEvent';
-import trackError from './trackError';
 import trackClick from './trackClick';
+import trackError from './trackError';
+import trackEvent from './trackEvent';
 import trackScreenView from './trackScreenView';
-import trackTimingComplete from './trackTimingComplete';
 import getTimeTracker from './getTimeTracker';
 
 export {
   initializeTracking,
-  isTrackingEnabled,
   enableTracking,
   disableTracking,
-  trackEvent,
-  trackError,
-  trackClick,
+  isTrackingEnabled,
   trackScreenView,
-  trackTimingComplete,
+  trackClick,
+  trackError,
+  trackEvent,
   getTimeTracker,
 };

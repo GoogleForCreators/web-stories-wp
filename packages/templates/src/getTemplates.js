@@ -62,7 +62,7 @@ async function getTemplates(imageBaseUrl) {
     'wellbeing',
   ];
 
-  const trackTiming = getTimeTracker('load', 'dashboard', 'Templates');
+  const trackTiming = getTimeTracker('load_templates');
 
   const templates = await Promise.all(
     templateNames.map(async (title) => {

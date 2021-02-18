@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -205,9 +206,6 @@ function MediaPane(props) {
   const onFilter = useCallback(
     (filter) => {
       setMediaType({ mediaType: filter });
-      trackEvent('filter_media', 'editor', '', '', {
-        type: filter,
-      });
     },
     [setMediaType]
   );
@@ -248,11 +246,16 @@ function MediaPane(props) {
     const trimText = value.trim();
     if (trimText !== searchTerm) {
       setSearchTerm({ searchTerm: trimText });
-      trackEvent('search_media', 'editor', '', '', {
-        search_term: trimText,
-      });
     }
   };
+
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'media',
+      search_term: searchTerm,
+      search_filter: mediaType,
+    });
+  }, [searchTerm, mediaType]);
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA

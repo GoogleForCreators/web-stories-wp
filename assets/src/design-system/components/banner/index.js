@@ -24,7 +24,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Close } from '../../icons';
+import { Cross } from '../../icons';
 import { THEME_CONSTANTS } from '../../theme';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
 import { Headline } from '../typography';
@@ -122,7 +122,7 @@ export const Banner = forwardRef(
           aria-label={closeButtonLabel}
           onClick={onClose}
         >
-          <Close aria-hidden={true} />
+          <Cross aria-hidden={true} />
         </CloseButton>
         <Content>{children}</Content>
       </Container>

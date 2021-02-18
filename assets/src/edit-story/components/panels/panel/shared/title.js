@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
-import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -127,7 +127,6 @@ function Title({
       resizeable,
       panelContentId,
       panelTitleId,
-      panelTitleReadable,
       ariaHidden,
     },
     actions: {
@@ -165,13 +164,6 @@ function Title({
   }, [setExpandToHeight, height, resizeable]);
 
   const toggle = isCollapsed ? expand : collapse;
-  const onToggle = useCallback(() => {
-    toggle();
-    trackEvent('panel_toggled', 'editor', '', '', {
-      panel_id: panelTitleReadable,
-      status: isCollapsed ? 'collapsed' : 'expanded',
-    });
-  }, [panelTitleReadable, isCollapsed, toggle]);
 
   return (
     <Header
@@ -181,7 +173,7 @@ function Title({
       aria-label={ariaLabel}
       aria-expanded={!isCollapsed}
       aria-controls={panelContentId}
-      onClick={onToggle}
+      onClick={toggle}
     >
       {isResizable && (
         <DragHandle
@@ -200,7 +192,7 @@ function Title({
         {canCollapse && (
           <Toggle
             isCollapsed={isCollapsed}
-            toggle={onToggle}
+            toggle={toggle}
             tabIndex={ariaHidden ? -1 : 0}
           >
             <Arrow />

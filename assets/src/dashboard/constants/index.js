@@ -21,11 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Compass,
-  FloppyDisk,
-  HomeWithHeart,
-} from '../../design-system/icons/dashboard';
+import { Compass, FloppyDisk, HomeWithHeart } from '../icons';
 import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
@@ -50,7 +46,10 @@ export const APP_ROUTES = {
   TEMPLATE_DETAIL: 'template-detail',
 
   EDITOR_SETTINGS: '/editor-settings',
-  SUPPORT: 'https://wordpress.org/support/plugin/web-stories/',
+  SUPPORT: __(
+    'https://wordpress.org/support/plugin/web-stories/',
+    'web-stories'
+  ),
   STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
@@ -102,7 +101,7 @@ export const SECONDARY_PATHS = [
     value: APP_ROUTES.SUPPORT,
     label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
     isExternal: true,
-    trackingEvent: 'open_support_page',
+    trackingEvent: 'click_support_page',
   },
 ];
 

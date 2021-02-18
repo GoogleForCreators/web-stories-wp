@@ -37,7 +37,6 @@ import {
 
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
-const README_FILE = 'readme.txt';
 const BUILD_DIR = 'build/web-stories';
 
 program
@@ -61,12 +60,11 @@ program
   })
   .action((version, { nightly }) => {
     const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
-    const readmeFilePath = `${PLUGIN_DIR}/${README_FILE}`;
 
     const currentVersion = getCurrentVersionNumber(pluginFilePath);
     const newVersion = version || currentVersion;
 
-    updateVersionNumbers(pluginFilePath, readmeFilePath, newVersion, nightly);
+    updateVersionNumbers(pluginFilePath, newVersion, nightly);
     const constantVersion = getCurrentVersionNumber(pluginFilePath, true);
 
     console.log(

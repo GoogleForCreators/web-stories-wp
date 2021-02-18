@@ -24,20 +24,26 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { AddColor } from '../../../../../icons';
+import { Icons } from '../../../../../../design-system';
 
-const COLOR_SIZE = 30;
+const COLOR_SIZE = 32;
 const AddColorAction = styled.button`
   cursor: pointer;
   background-color: transparent;
-  border-color: transparent;
-  border-width: 0;
+  color: ${({ theme }) => theme.colors.fg.primary};
+  border-color: ${({ theme }) => theme.colors.border.defaultNormal};
+  border-width: 1px;
+  border-style: dashed;
+  border-radius: 50%;
   height: ${COLOR_SIZE}px;
   width: ${COLOR_SIZE}px;
   padding: 0;
   svg {
     height: 100%;
     width: 100%;
+  }
+  :hover {
+    border-color: ${({ theme }) => theme.colors.border.defaultHover};
   }
 `;
 
@@ -56,7 +62,7 @@ function ColorAdd({ handleAddPreset, helper, ...rest }) {
         aria-label={__('Add color', 'web-stories')}
         {...rest}
       >
-        <AddColor />
+        <Icons.Plus />
       </AddColorAction>
       {helper && <Note>{helper}</Note>}
     </>

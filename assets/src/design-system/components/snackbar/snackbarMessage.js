@@ -27,7 +27,7 @@ import styled, { keyframes } from 'styled-components';
  */
 import { THEME_CONSTANTS } from '../../theme';
 import { Button } from '../button';
-import { Close } from '../../icons/navigation';
+import { Cross } from '../../icons';
 import { Text } from '../typography';
 import { focusableOutlineCSS } from '../../theme/helpers';
 import {
@@ -95,7 +95,7 @@ const ActionButton = styled(Button)`
 
 const CloseButton = styled(Button)`
   height: 2em;
-  padding: 12px 6px;
+  padding: 0;
   margin-left: 16px;
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
 
@@ -106,7 +106,7 @@ const CloseButton = styled(Button)`
     )}
 
   svg {
-    height: 16px;
+    height: 32px;
   }
 `;
 
@@ -156,7 +156,7 @@ const SnackbarMessage = ({
           )}
           {showCloseButton && (
             <CloseButton onClick={handleDismiss}>
-              <Close aria-hidden />
+              <Cross aria-hidden />
             </CloseButton>
           )}
         </ActionContainer>

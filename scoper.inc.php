@@ -155,7 +155,7 @@ return [
 			->files()
 			->ignoreVCS( true )
 			->ignoreDotFiles( true )
-			->name( '*.php' )
+			->name( '/\.*.php8?/' )
 			->in( 'vendor/symfony/polyfill-mbstring/Resources' )
 			->append(
 				[

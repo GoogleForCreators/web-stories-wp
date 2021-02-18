@@ -21,6 +21,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -81,6 +83,7 @@ function TextIcon(props) {
   const handleAddText = (evt) => {
     evt.stopPropagation();
     insertElement('text', DEFAULT_PRESET);
+    trackEvent('library_text_quick_action');
   };
   const { isActive } = props;
   return (
