@@ -104,6 +104,25 @@ export function deriveAutoOpen(previous, next) {
   return {};
 }
 
+// If there are any unread tips, we respect users last open setting.
+// If all tips are read, we want the popup closed regardless of user setting.
+export function deriveInitialOpen(persisted) {
+  const hasUnreadTips = Boolean(persisted?.unreadTipsCount);
+  return hasUnreadTips && persisted?.isOpen
+    ? {
+        isOpen: persisted?.isOpen,
+      }
+    : {};
+}
+
+export function deriveInitialUnreadTipsCount(persisted) {
+  return persisted?.unreadTipsCount
+    ? {
+        unreadTipsCount: persisted?.unreadTipsCount,
+      }
+    : {};
+}
+
 /**
  * Takes an array of effects and returns a composed function
  * that given next and previous state runs through each effect

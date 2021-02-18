@@ -37,6 +37,8 @@ import {
   deriveUnreadTipsCount,
   resetNavigationIndexOnOpen,
   deriveAutoOpen,
+  deriveInitialOpen,
+  deriveInitialUnreadTipsCount,
 } from './effects';
 
 /**
@@ -71,30 +73,29 @@ const reducer = ({ state, actions }, action) => {
   };
 };
 
+const deriveInitialState = composeEffects([
+  deriveInitialOpen,
+  deriveInitialUnreadTipsCount,
+]);
+
 const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
 
-// If there are any unread tips, we respect users last open setting.
-// If all tips are read, we want the popup closed regardless of user setting.
-const deriveInitialOpen = (local) => {
-  const hasUnreadTips = Boolean(local?.unreadTipsCount);
-  const lastIsOpen = local?.isOpen ?? false;
-  return hasUnreadTips ? lastIsOpen : false;
+export const initialState = {
+  isOpen: false,
+  navigationIndex: -1,
+  navigationFlow: BASE_NAVIGATION_FLOW,
+  isLeftToRightTransition: true,
+  hasBottomNavigation: false,
+  isPrevDisabled: true,
+  isNextDisabled: false,
+  readTips: {},
+  readError: false,
+  unreadTipsCount: persisted?.unreadTipsCount ?? 0,
+  isHydrated: false,
 };
 
 export const initial = {
-  state: {
-    isOpen: deriveInitialOpen(persisted),
-    navigationIndex: -1,
-    navigationFlow: BASE_NAVIGATION_FLOW,
-    isLeftToRightTransition: true,
-    hasBottomNavigation: false,
-    isPrevDisabled: true,
-    isNextDisabled: false,
-    readTips: {},
-    readError: false,
-    unreadTipsCount: persisted?.unreadTipsCount ?? 0,
-    isHydrated: false,
-  },
+  state: deriveInitialState(persisted, initialState),
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //
   // Actions should only update the part of state they directly effect.
