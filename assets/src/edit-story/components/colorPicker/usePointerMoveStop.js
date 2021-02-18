@@ -32,7 +32,7 @@ function usePointerMoveStop(ref, onMove) {
     const onPointerMove = (evt) => {
       const relativeDeltaX = getPageX(evt) - lastPageX.current;
       lastPageX.current = getPageX(evt);
-      onMove(relativeDeltaX / LINE_LENGTH);
+      onMove(-relativeDeltaX / LINE_LENGTH);
     };
 
     const onPointerUp = (evt) => {

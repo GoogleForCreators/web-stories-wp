@@ -49,8 +49,8 @@ const Line = styled.div.attrs(({ stops }) => ({
       color,
       position: (position * LINE_LENGTH + LINE_WIDTH / 2) / LINE_FULL_LENGTH,
     })),
-    // And fix rotation to .75 to make it go left-to-right
-    rotation: 0.75,
+    // And fix rotation to .25 to make it go right-to-left
+    rotation: 0.25,
   }),
 }))`
   width: ${LINE_FULL_LENGTH}px;

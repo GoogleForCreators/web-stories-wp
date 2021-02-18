@@ -31,10 +31,10 @@ import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const POINTER_SIZE = 14;
 const POINTER_MARGIN = 10;
-const OFFSET = 14;
+const OFFSET = 3;
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
-    left: `${position * (LINE_LENGTH + POINTER_SIZE) + LINE_WIDTH / 2}px`,
+    right: `${position * (LINE_LENGTH + POINTER_SIZE) - LINE_WIDTH / 2}px`,
   },
 }))`
   position: absolute;
@@ -85,7 +85,7 @@ function GradientStopWithRef(
       aria-label={sprintf(
         /* translators: %d: stop percentage */
         __('Gradient stop at %1$d%%', 'web-stories'),
-        Math.round(position * 100)
+        Math.round(100 - position * 100)
       )}
     >
       <IconWrapper isSelected={isSelected}>
