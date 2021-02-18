@@ -27,12 +27,12 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
+  Tooltip,
 } from '../../../../design-system';
-import WithTooltip from '../../tooltip';
 
 function PageMenuButton({ children, title, shortcut, ...rest }) {
   return (
-    <WithTooltip title={title} shortcut={shortcut}>
+    <Tooltip title={title} shortcut={shortcut} hasTail>
       <Button
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.TERTIARY}
@@ -41,7 +41,7 @@ function PageMenuButton({ children, title, shortcut, ...rest }) {
       >
         {children}
       </Button>
-    </WithTooltip>
+    </Tooltip>
   );
 }
 

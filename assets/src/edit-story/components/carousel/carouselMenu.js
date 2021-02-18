@@ -32,12 +32,12 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
+  Tooltip,
+  PLACEMENT,
 } from '../../../design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import { Plain } from '../button';
 import Modal from '../modal';
-import WithTooltip from '../tooltip';
-import { Placement } from '../popup';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import GridView from './gridview';
 
@@ -125,9 +125,10 @@ function CarouselMenu() {
           {hasMetaBoxes && (
             <>
               <Box>
-                <WithTooltip
+                <Tooltip
                   title={__('Third-Party Meta Boxes', 'web-stories')}
-                  placement={Placement.TOP}
+                  placement={PLACEMENT.TOP}
+                  hasTail
                 >
                   <Button
                     variant={BUTTON_VARIANTS.SQUARE}
@@ -138,7 +139,7 @@ function CarouselMenu() {
                   >
                     <Icons.LetterMOutline />
                   </Button>
-                </WithTooltip>
+                </Tooltip>
               </Box>
               <Space />
             </>
@@ -148,9 +149,10 @@ function CarouselMenu() {
           </Box>
           <Space />
           <Box>
-            <WithTooltip
+            <Tooltip
               title={__('Grid View', 'web-stories')}
-              placement={Placement.TOP}
+              placement={PLACEMENT.TOP}
+              hasTail
             >
               <Button
                 variant={BUTTON_VARIANTS.SQUARE}
@@ -161,7 +163,7 @@ function CarouselMenu() {
               >
                 <Icons.Box4 />
               </Button>
-            </WithTooltip>
+            </Tooltip>
           </Box>
         </MenuItems>
       </Wrapper>
