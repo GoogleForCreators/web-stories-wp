@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export const DIRECTIONS = {
+  TOP: 'top',
+  RIGHT: 'right',
+  BOTTOM: 'bottom',
+  LEFT: 'left',
+};
 
-export { default as useToastContext } from './useToastContext';
-export { default as ToastProvider } from './provider';
-export { default as Toaster } from './toaster';
+export const CORNER_DIRECTIONS = {
+  [`${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`,
+  [`${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`,
+  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`,
+  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`,
+};

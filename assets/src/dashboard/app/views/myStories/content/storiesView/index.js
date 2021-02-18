@@ -33,11 +33,11 @@ import {
 } from '../../../../../../design-system';
 
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
+import { titleFormatted } from '../../../../../utils';
 import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
-import { useToastContext } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
@@ -45,8 +45,8 @@ import {
   STORY_CONTEXT_MENU_ITEMS,
   ALERT_SEVERITY,
 } from '../../../../../constants';
+import { useSnackbarContext } from '../../../../snackbar';
 import { StoryGridView, StoryListView } from '../../../shared';
-import { titleFormatted } from '../../../../../utils';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -70,8 +70,8 @@ function StoriesView({
   const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
 
   const {
-    actions: { addToast },
-  } = useToastContext();
+    actions: { addSnackbarMessage },
+  } = useSnackbarContext();
 
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
@@ -150,24 +150,18 @@ function StoriesView({
         case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
           global.navigator.clipboard.writeText(story.link);
 
-          addToast({
-            message: {
-              title: __('URL copied', 'web-stories'),
-              body:
-                story.title.length > 0
-                  ? sprintf(
-                      /* translators: %s: story title. */
-                      __(
-                        '%s has been copied to your clipboard.',
-                        'web-stories'
-                      ),
-                      story.title
-                    )
-                  : __(
-                      '(no title) has been copied to your clipboard.',
-                      'web-stories'
-                    ),
-            },
+          addSnackbarMessage({
+            message:
+              story.title.length > 0
+                ? sprintf(
+                    /* translators: %s: story title. */
+                    __('%s has been copied to your clipboard.', 'web-stories'),
+                    story.title
+                  )
+                : __(
+                    '(no title) has been copied to your clipboard.',
+                    'web-stories'
+                  ),
             severity: ALERT_SEVERITY.SUCCESS,
             id: Date.now(),
           });
@@ -177,7 +171,7 @@ function StoriesView({
           break;
       }
     },
-    [addToast, storyActions]
+    [addSnackbarMessage, storyActions]
   );
 
   const enabledMenuItems = useMemo(() => {

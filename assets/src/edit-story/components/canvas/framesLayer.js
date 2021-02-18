@@ -66,7 +66,7 @@ const Hint = styled.div`
 
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 const DesignSpaceGuideline = styled.div`
-  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.callout};
+  border: 1px solid ${({ theme }) => theme.colors.border.negativePress};
   left: ${marginRatio}%;
   right: ${marginRatio}%;
   top: 0;

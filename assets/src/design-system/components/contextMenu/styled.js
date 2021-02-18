@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { useContextSelector, identity } from '../../../design-system';
-import { ToasterContext } from './provider';
+import styled, { css } from 'styled-components';
 
-const useToasterContext = (selector = identity) => {
-  const context = useContextSelector(ToasterContext, selector);
-  if (!context) {
-    throw new Error(
-      'useToasterContext() must be used within a <Toast.Provider />'
-    );
-  }
-  return context;
-};
+export const Popover = styled.div(
+  ({ isOpen }) => css`
+    position: absolute;
+    display: none;
 
-export default useToasterContext;
+    ${isOpen &&
+    css`
+      display: block;
+      z-index: 10;
+      opacity: 1;
+      pointer-events: auto;
+    `};
+  `
+);
+
+export const Shadow = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+`;

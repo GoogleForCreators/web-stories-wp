@@ -28,6 +28,7 @@ import { text } from '@storybook/addon-knobs';
 import { Input } from '..';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../..';
+import { AlignCenter } from '../../../icons';
 
 export default {
   title: 'DesignSystem/Components/Input',
@@ -44,7 +45,7 @@ const Container = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-column: 1 / -1;
   grid-column-gap: 60px;
 
@@ -54,14 +55,22 @@ const Row = styled.div`
   }
 `;
 
+const IconContainer = styled.div`
+  height: 32px;
+  width: 32px;
+  margin-right: -8px;
+`;
+
 export const _default = () => {
   const [inputState, setInputState] = useState({
     oneLight: 'Text',
     twoLight: 'we have an error',
     threeLight: 'disabled',
+    fourLight: 'disabled',
     oneDark: 'Dark mode text',
     twoDark: '',
     threeDark: '',
+    fourDark: '',
   });
 
   const handleChange = (event) => {
@@ -90,6 +99,7 @@ export const _default = () => {
             label={text('Input 1 Label', 'Normal')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
+            suffix={text('Suffix')}
           />
           <Input
             aria-label="input-two"
@@ -97,20 +107,33 @@ export const _default = () => {
             name="twoLight"
             value={inputState.twoLight}
             onChange={handleChange}
-            label={text('Input 2 Label', 'Error')}
+            label={text('Input 2 Label', 'Suffix')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
-            hasError
+            suffix={text('Suffix', 'Duration')}
           />
           <Input
-            aria-label="disabled-input-one"
+            aria-label="input-three"
             id="three-light"
             name="threeLight"
             value={inputState.threeLight}
             onChange={handleChange}
-            label={text('Input 3 Label', 'Disabled')}
+            label={text('Input 3 Label', 'Error')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
+            suffix={text('Suffix')}
+            hasError
+          />
+          <Input
+            aria-label="disabled-input-one"
+            id="four-light"
+            name="fourLight"
+            value={inputState.fourLight}
+            onChange={handleChange}
+            label={text('Input 4 Label', 'Disabled')}
+            hint={text('Hint', 'Hint')}
+            placeholder="placeholder"
+            suffix={text('Suffix')}
             disabled
           />
         </Row>
@@ -119,7 +142,7 @@ export const _default = () => {
         <Container darkMode>
           <Row>
             <Input
-              aria-label="input-three"
+              aria-label="input-four"
               id="one-dark"
               name="oneDark"
               value={inputState.oneDark}
@@ -127,27 +150,45 @@ export const _default = () => {
               label={text('Input 1 Label', 'Normal')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
+              suffix={text('Suffix')}
             />
             <Input
-              aria-label="input-four"
+              aria-label="input-five"
               id="two-dark"
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={text('Input 2 Label', 'Error')}
+              label={text('Input 2 Label', 'Suffix')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
-              hasError
+              suffix={
+                <IconContainer>
+                  <AlignCenter />
+                </IconContainer>
+              }
             />
             <Input
-              aria-label="disabled-input-two"
+              aria-label="input-six"
               id="three-dark"
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={text('Input 3 Label', 'Disabled')}
+              label={text('Input 3 Label', 'Error')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
+              suffix={text('Suffix')}
+              hasError
+            />
+            <Input
+              aria-label="disabled-input-two"
+              id="four-dark"
+              name="fourDark"
+              value={inputState.fourDark}
+              onChange={handleChange}
+              label={text('Input 4 Label', 'Disabled')}
+              hint={text('Hint', 'Hint')}
+              placeholder="placeholder"
+              suffix={text('Suffix')}
               disabled
             />
           </Row>
