@@ -13,5 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as AnimatedContextMenu } from './animatedContextMenu';
-export { default as ContextMenu } from './contextMenu';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { Popover, Shadow } from './styled';
+import Menu, { MenuPropTypes } from './menu';
+
+const ContextMenu = ({ isOpen, items, ...props }) => {
+  return (
+    <Popover role="dialog" isOpen={isOpen} {...props}>
+      <Menu items={items} />
+      <Shadow />
+    </Popover>
+  );
+};
+ContextMenu.propTypes = {
+  ...MenuPropTypes,
+  isOpen: PropTypes.bool,
+};
+
+export default ContextMenu;

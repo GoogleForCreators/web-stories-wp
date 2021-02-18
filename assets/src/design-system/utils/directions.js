@@ -13,5 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as AnimatedContextMenu } from './animatedContextMenu';
-export { default as ContextMenu } from './contextMenu';
+export const DIRECTIONS = {
+  TOP: 'top',
+  RIGHT: 'right',
+  BOTTOM: 'bottom',
+  LEFT: 'left',
+};
+
+export const CORNER_DIRECTIONS = {
+  [`${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.LEFT}`,
+  [`${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.TOP}_${DIRECTIONS.RIGHT}`,
+  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.RIGHT}`,
+  [`${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`]: `${DIRECTIONS.BOTTOM}_${DIRECTIONS.LEFT}`,
+};
