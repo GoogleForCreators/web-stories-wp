@@ -61,9 +61,7 @@ const Container = styled.div`
   }
 `;
 
-const Body = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
-`;
+const Body = styled.div``;
 
 function ColorPicker({
   color,

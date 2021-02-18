@@ -32,10 +32,10 @@ import { Eyedropper } from '../button';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
-const CONTAINER_PADDING = 14;
+const CONTAINER_PADDING = 16;
 const EYEDROPPER_ICON_SIZE = 15;
-const HEADER_FOOTER_HEIGHT = 42;
-const BODY_HEIGHT = 140;
+const HEADER_FOOTER_HEIGHT = 36;
+const BODY_HEIGHT = 156;
 const CONTROLS_HEIGHT = 28;
 const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 64;
@@ -47,8 +47,7 @@ const Container = styled.div`
   font-weight: normal;
   font-size: 12px;
   user-select: none;
-  padding: ${CONTAINER_PADDING}px;
-  padding-bottom: 0px;
+  padding: 0 ${CONTAINER_PADDING}px;
 `;
 
 const Body = styled.div`
@@ -87,6 +86,7 @@ const Footer = styled.div`
   display: grid;
   grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / 64px 1fr ${OPACITY_WIDTH}px;
   grid-gap: 10px;
+  margin-bottom: 16px;
 `;
 
 const HexValue = styled.div`

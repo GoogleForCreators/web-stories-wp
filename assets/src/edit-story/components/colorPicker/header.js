@@ -32,7 +32,7 @@ import {
 } from '../../../design-system/components/button';
 import { Button, Icons } from '../../../design-system';
 
-const CONTAINER_PADDING = 12;
+const CONTAINER_PADDING = 14;
 const HEADER_FOOTER_HEIGHT = 52;
 
 const Wrapper = styled.div`
