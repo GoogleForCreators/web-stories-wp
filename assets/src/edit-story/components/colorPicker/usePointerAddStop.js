@@ -42,7 +42,9 @@ function usePointerAddStop(ref, onAdd) {
       const relativePosition =
         (getPageX(evt) - nodeLeftEdge + GRADIENT_STOP_SIZE / 2) /
         (LINE_LENGTH + GRADIENT_STOP_SIZE);
-      onAdd((LINE_LENGTH + GRADIENT_STOP_SIZE / 2) / LINE_LENGTH - relativePosition);
+      onAdd(
+        (LINE_LENGTH + GRADIENT_STOP_SIZE / 2) / LINE_LENGTH - relativePosition
+      );
       setTempPointerPosition(null);
     };
 
