@@ -25,6 +25,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { LINE_LENGTH } from '../../constants';
 import { arrange, firePointerEvent } from './_utils';
 
+const TOTAL_LINE_LENGTH = LINE_LENGTH + 14;
 describe('<ColorPicker /> when moving a stop with a pointer device', () => {
   it('should move stop when dragging a stop', async () => {
     const { getGradientStopAt, onChange } = arrange({
