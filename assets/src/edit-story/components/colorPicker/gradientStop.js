@@ -26,10 +26,12 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
+import { Icons } from '../../../design-system';
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const POINTER_SIZE = 14;
 const POINTER_MARGIN = 10;
+const OFFSET = 8;
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
     left: `${position * LINE_LENGTH + LINE_WIDTH / 2}px`,
@@ -55,6 +57,18 @@ const StopPointer = styled.div`
   ${({ color }) => generatePatternStyles(color)}
 `;
 
+const IconWrapper = styled.div`
+  position: absolute;
+  left: -${3 + OFFSET}px;
+  top: -3px;
+  color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.fg.primary : theme.colors.fg.tertiary};
+  svg {
+    width: 20px;
+    height: 23px;
+  }
+`;
+
 function GradientStopWithRef(
   { position, index, isSelected, color, onSelect },
   ref
@@ -74,7 +88,10 @@ function GradientStopWithRef(
         Math.round(position * 100)
       )}
     >
-      <StopPointer color={color} offset={-8} />
+      <IconWrapper isSelected={isSelected}>
+        <Icons.TailedRectangle />
+      </IconWrapper>
+      <StopPointer color={color} offset={-OFFSET} />
     </Stop>
   );
 }
