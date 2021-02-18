@@ -34,7 +34,7 @@ import { Input, InputPropTypes } from '.';
  * @param {number|undefined} options.max Maximum allowed value
  * @return {string|number|null} The formatted value or `null` if the value cannot be parsed
  */
-function parseInput(value, { allowEmpty, isFloat, min, max }) {
+export function parseInput(value, { allowEmpty, isFloat, min, max }) {
   if (`${value}`.length > 0) {
     const valueAsNumber = isFloat ? parseFloat(value) : parseInt(value);
 
@@ -63,22 +63,21 @@ function parseInput(value, { allowEmpty, isFloat, min, max }) {
  * @param {number|undefined} options.max Maximum allowed value
  * @return {boolean} the value's validity when tested against the options
  */
-function isInputValid(value, { allowEmpty, isFloat, max, min }) {
-  if (!allowEmpty && `${value}`.length === 0) {
+export function isInputValid(value, { allowEmpty, isFloat, max, min }) {
+  if (allowEmpty && `${value}`.length === 0) {
+    return true;
+  }
+
+  const valueAsANumber = isFloat ? parseFloat(value) : parseInt(value);
+
+  if (min !== undefined && valueAsANumber < min) {
+    return false;
+  }
+  if (max !== undefined && valueAsANumber > max) {
     return false;
   }
 
-  const valueAsNumber = isFloat ? parseFloat(value) : parseInt(value);
-
-  let boundedValue = valueAsNumber;
-  if (min !== undefined) {
-    boundedValue = Math.max(min, valueAsNumber);
-  }
-  if (max !== undefined) {
-    boundedValue = Math.min(max, valueAsNumber);
-  }
-
-  return !isNaN(boundedValue);
+  return !isNaN(valueAsANumber);
 }
 
 export const NumericInput = ({
