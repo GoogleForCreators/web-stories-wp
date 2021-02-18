@@ -45,7 +45,10 @@ import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
  * @return {{uploadMedia: Function, isUploading: boolean}} Upload status, and function to upload media.
  */
 function useUploadMedia({ media, setMedia }) {
-  const { uploadFile } = useUploader();
+  const {
+    actions: { uploadFile },
+    state: { isProcessing },
+  } = useUploader();
   const { showSnackbar } = useSnackbar();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
@@ -60,6 +63,14 @@ function useUploadMedia({ media, setMedia }) {
   useEffect(() => {
     setPreventUnload('upload', isUploading);
   }, [isUploading, setPreventUnload]);
+
+  useEffect(() => {
+    if (isProcessing) {
+      showSnackbar({
+        message: __('Video optimization in progress.', 'web-stories'),
+      });
+    }
+  }, [isProcessing, showSnackbar]);
 
   const uploadMedia = useCallback(
     /**

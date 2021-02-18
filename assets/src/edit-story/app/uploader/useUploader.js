@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   trackError,
@@ -38,6 +38,7 @@ function useUploader() {
   const {
     actions: { uploadMedia },
   } = useAPI();
+  const [isProcessing, setIsProcessing] = useState(false);
   const {
     storyId,
     maxUpload,
@@ -162,13 +163,16 @@ function useUploader() {
 
       // Transcoding is enabled, let's give it a try!
       try {
+        setIsProcessing(true);
         // TODO: Only transcode & optimize video if needed (criteria TBD).
         const newFile = await transcodeVideo(file);
         trackTiming();
+        setIsProcessing(false);
         additionalData.media_source = 'video-optimization';
         return uploadMedia(newFile, additionalData);
       } catch (err) {
         trackTiming();
+        setIsProcessing(false);
         trackError('video_transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
@@ -192,8 +196,13 @@ function useUploader() {
   );
 
   return {
-    uploadFile,
-    isValidType,
+    actions: {
+      uploadFile,
+      isValidType,
+    },
+    state: {
+      isProcessing,
+    },
   };
 }
 
