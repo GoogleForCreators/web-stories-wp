@@ -37,6 +37,14 @@ jest.mock('../../media/utils/useTranscodeVideo', () => ({
   })),
 }));
 
+const mockShowSnackbar = jest.fn();
+
+jest.mock('../../snackbar/useSnackbar', () => ({
+  useSnackbar: jest.fn(() => ({
+    showSnackbar: mockShowSnackbar,
+  })),
+}));
+
 function setup(args) {
   const configValue = {
     api: {},
@@ -72,6 +80,9 @@ function setup(args) {
 }
 
 describe('useUploader', () => {
+  beforeEach(() => {
+    mockShowSnackbar.mockReset();
+  });
   afterEach(() => {
     useTranscodeVideo.mockClear();
   });
