@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { isInputValid, parseInput } from '../numericInput';
+import { isInputValid, parseInput } from '../validation';
 
 describe('isInputValid - should validate input', () => {
   it.each`
