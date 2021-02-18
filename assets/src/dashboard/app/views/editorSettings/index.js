@@ -20,7 +20,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
