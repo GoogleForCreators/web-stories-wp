@@ -80,7 +80,9 @@ describe('useNumericInput', () => {
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 1);
 
       // change internal value
-      result.current.handleChange({ target: { value: '1234' } });
+      act(() => {
+        result.current.handleChange({ target: { value: '1234' } });
+      });
 
       // fire with internal value changed
       act(() => {
@@ -88,6 +90,44 @@ describe('useNumericInput', () => {
       });
       expect(mockOnChange).toHaveBeenCalledTimes(2);
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 1234);
+    });
+
+    it('should call onChange with a valid value when the current value is over max', () => {
+      const { result } = renderHook(() =>
+        useNumericInput({
+          allowEmpty: false,
+          isFloat: false,
+          onChange: mockOnChange,
+          max: 10,
+          value: 15,
+        })
+      );
+
+      // fire with internal value unchanged
+      act(() => {
+        result.current.handleBlur('dummy data');
+      });
+      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledWith('dummy data', 10);
+    });
+
+    it('should call onChange with a valid value when the current value is under min', () => {
+      const { result } = renderHook(() =>
+        useNumericInput({
+          allowEmpty: false,
+          isFloat: false,
+          onChange: mockOnChange,
+          min: 20,
+          value: 15,
+        })
+      );
+
+      // fire with internal value unchanged
+      act(() => {
+        result.current.handleBlur('dummy data');
+      });
+      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledWith('dummy data', 20);
     });
   });
 
