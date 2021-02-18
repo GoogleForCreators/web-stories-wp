@@ -234,6 +234,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Download assets version
         uses: actions/download-artifact@v2
@@ -306,7 +308,7 @@ jobs:
           if [[ -z $(git ls-remote origin $BRANCH) ]]; then
             git checkout -b $BRANCH
           else
-            git checkout -b $BRANCH --track origin/$BRANCH
+            git checkout --track origin/$BRANCH
           fi
 
       - name: Update plugin version
