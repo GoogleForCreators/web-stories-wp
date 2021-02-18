@@ -54,20 +54,14 @@ describe('mediaReducer', () => {
     const result = mediaReducer(initialState, {
       type: ACTION_TYPES.FETCH_MEDIA_FAILURE,
       payload: {
-        message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.LOAD_MEDIA.TITLE,
-        },
+        message: ERRORS.LOAD_MEDIA.MESSAGE,
         code: 'my_error_code',
       },
     });
 
     expect(result).toMatchObject({
       error: {
-        message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.LOAD_MEDIA.TITLE,
-        },
+        message: ERRORS.LOAD_MEDIA.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
@@ -81,20 +75,14 @@ describe('mediaReducer', () => {
     const result = mediaReducer(initialState, {
       type: ACTION_TYPES.ADD_MEDIA_FAILURE,
       payload: {
-        message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.UPLOAD_PUBLISHER_LOGO.TITLE,
-        },
+        message: ERRORS.UPLOAD_PUBLISHER_LOGO.MESSAGE,
         code: 'my_error_code',
       },
     });
 
     expect(result).toMatchObject({
       error: {
-        message: {
-          body: 'The response is not a valid JSON response.',
-          title: ERRORS.UPLOAD_PUBLISHER_LOGO.TITLE,
-        },
+        message: ERRORS.UPLOAD_PUBLISHER_LOGO.MESSAGE,
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as Alert } from './alert';
 export { default as BookmarkChip } from './bookmark-chip';
 export { default as Button, PaginationButton } from './button';
 export { default as CardGallery } from './cardGallery';
@@ -69,7 +68,6 @@ export {
   TableStatusHeaderCell,
   TableStatusCell,
 } from './table';
-export { Toaster, ToastProvider, useToastContext } from './toaster';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';
 export { default as Typeahead } from './typeahead';
 export {

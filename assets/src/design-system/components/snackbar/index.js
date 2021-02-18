@@ -17,5 +17,9 @@
 /**
  * Internal dependencies
  */
-export { SnackbarContainer as Container } from './snackbarContainer';
-export { SnackbarMessage as Message } from './snackbarMessage';
+import { SnackbarContainer as Container } from './snackbarContainer';
+import { SnackbarMessage as Message } from './snackbarMessage';
+
+const Snackbar = { Container, Message };
+
+export { Snackbar };

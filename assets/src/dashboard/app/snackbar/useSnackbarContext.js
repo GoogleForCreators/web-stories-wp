@@ -18,16 +18,16 @@
  * Internal dependencies
  */
 import { useContextSelector, identity } from '../../../design-system';
-import { ToasterContext } from './provider';
+import { SnackbarContext } from './snackbarProvider';
 
-const useToasterContext = (selector = identity) => {
-  const context = useContextSelector(ToasterContext, selector);
+const useSnackbarContext = (selector = identity) => {
+  const context = useContextSelector(SnackbarContext, selector);
   if (!context) {
     throw new Error(
-      'useToasterContext() must be used within a <Toast.Provider />'
+      'useSnackbarContext() must be used within a <SnackbarProvider />'
     );
   }
   return context;
 };
 
-export default useToasterContext;
+export default useSnackbarContext;

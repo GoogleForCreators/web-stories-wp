@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export { default as useToastContext } from './useToastContext';
-export { default as ToastProvider } from './provider';
-export { default as Toaster } from './toaster';
+export { default as useSnackbarContext } from './useSnackbarContext';
+export { default as SnackbarProvider } from './snackbarProvider';
+export { default as SnackbarContainer } from './snackbarContainer';
