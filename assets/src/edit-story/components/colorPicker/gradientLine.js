@@ -68,10 +68,12 @@ const TempPointer = styled(Pointer).attrs(({ x }) => ({
   style: {
     left: `${x}px`,
   },
-  offset: -LINE_WIDTH / 2,
+  offsetX: -LINE_WIDTH / 2,
 }))`
+  height: ${LINE_WIDTH - 2}px;
+  width: ${LINE_WIDTH - 2}px;
   opacity: 0.6;
-  top: ${LINE_WIDTH / 2}px;
+  top: 1px;
   pointer-events: none;
 `;
 
