@@ -40,10 +40,6 @@ export const TEXT = {
     'Learn how to <a>enable programmatic demand in Web Stories</a> through Ad Manager.',
     'web-stories'
   ),
-  HELPER_LINK_NONE: __(
-    'https://amp.dev/documentation/guides-and-tutorials/develop/advertise_amp_stories/',
-    'web-stories'
-  ),
   HELPER_LINK_ADSENSE: __(
     'https://support.google.com/adsense/answer/10175505',
     'web-stories'
@@ -126,7 +122,6 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
                   target="_blank"
                   onClick={handleMonetizationClick}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  as="a"
                 />
               ),
             }}

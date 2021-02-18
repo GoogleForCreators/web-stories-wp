@@ -196,7 +196,6 @@ function GoogleAdSenseSettings({
                 target="_blank"
                 onClick={handleClick}
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                as="a"
               />
             ),
           }}

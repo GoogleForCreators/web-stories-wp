@@ -38,9 +38,9 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       <AdManagement
         adNetwork={adNetwork}
         updateSettings={mockUpdate}
-        publisherId={''}
-        adSenseSlotId={''}
-        adManagerSlotId={''}
+        publisherId=""
+        adSenseSlotId=""
+        adManagerSlotId=""
       />
     );
 
@@ -61,9 +61,9 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADSENSE}
         updateSettings={mockUpdate}
-        publisherId={''}
-        adSenseSlotId={''}
-        adManagerSlotId={''}
+        publisherId=""
+        adSenseSlotId=""
+        adManagerSlotId=""
       />
     );
 
@@ -81,9 +81,9 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADMANAGER}
         updateSettings={mockUpdate}
-        publisherId={''}
-        adSenseSlotId={''}
-        adManagerSlotId={''}
+        publisherId=""
+        adSenseSlotId=""
+        adManagerSlotId=""
       />
     );
 

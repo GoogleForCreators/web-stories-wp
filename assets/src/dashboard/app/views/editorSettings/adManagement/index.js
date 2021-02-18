@@ -41,6 +41,10 @@ export const TEXT = {
     'Monetize your content by showing ads in your Web Stories. <a>Learn more</a>.',
     'web-stories'
   ),
+  HELPER_LINK_NONE: __(
+    'https://amp.dev/documentation/guides-and-tutorials/develop/advertise_amp_stories/',
+    'web-stories'
+  ),
 };
 
 function AdManagement({
@@ -99,7 +103,6 @@ function AdManagement({
                   target="_blank"
                   onClick={handleMonetizationClick}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  as="a"
                 />
               ),
             }}
