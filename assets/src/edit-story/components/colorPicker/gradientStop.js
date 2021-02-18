@@ -27,18 +27,19 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { Icons } from '../../../design-system';
-import { LINE_LENGTH, LINE_WIDTH } from './constants';
+import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
-const POINTER_SIZE = 14;
 const POINTER_MARGIN = 10;
 const OFFSET = 3;
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
-    right: `${position * (LINE_LENGTH + POINTER_SIZE) - LINE_WIDTH / 2}px`,
+    right: `${
+      position * (LINE_LENGTH + GRADIENT_STOP_SIZE) - LINE_WIDTH / 2
+    }px`,
   },
 }))`
   position: absolute;
-  top: -${POINTER_MARGIN + POINTER_SIZE}px;
+  top: -${POINTER_MARGIN + GRADIENT_STOP_SIZE}px;
   background: transparent;
   border: 0;
   padding: 0;
@@ -51,8 +52,8 @@ const Stop = styled.button.attrs(({ position }) => ({
 
 const StopPointer = styled.div`
   transform: translate(${({ offset }) => `${offset}px`}, 0);
-  width: ${POINTER_SIZE}px;
-  height: ${POINTER_SIZE}px;
+  width: ${GRADIENT_STOP_SIZE}px;
+  height: ${GRADIENT_STOP_SIZE}px;
   border-radius: 2px;
   ${({ color }) => generatePatternStyles(color)}
 `;

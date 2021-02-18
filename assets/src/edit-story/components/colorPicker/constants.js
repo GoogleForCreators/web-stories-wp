@@ -17,6 +17,8 @@
 export const LINE_LENGTH = 156;
 export const LINE_WIDTH = 16;
 
+export const GRADIENT_STOP_SIZE = 14;
+
 export const TYPE_SOLID = 'solid';
 export const TYPE_LINEAR = 'linear';
 export const TYPE_RADIAL = 'radial';

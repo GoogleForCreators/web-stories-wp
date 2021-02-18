@@ -35,7 +35,7 @@ import useKeyDeleteStop from './useKeyDeleteStop';
 import useKeyFocus from './useKeyFocus';
 import usePointerAddStop from './usePointerAddStop';
 import usePointerMoveStop from './usePointerMoveStop';
-import { LINE_LENGTH, LINE_WIDTH } from './constants';
+import {GRADIENT_STOP_SIZE, LINE_LENGTH, LINE_WIDTH} from './constants';
 
 const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
 
@@ -124,7 +124,8 @@ function GradientLine({
             /* translators: %d: stop percentage */
             __('Temporary gradient stop at %1$d%%', 'web-stories'),
             Math.round(
-              (100 * (tempPointerPosition - LINE_WIDTH / 2)) / LINE_LENGTH
+              (100 * (tempPointerPosition - LINE_WIDTH / 2)) /
+                (LINE_LENGTH + GRADIENT_STOP_SIZE)
             )
           )}
           x={tempPointerPosition}
