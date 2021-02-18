@@ -22,9 +22,10 @@ import { useLayoutEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { LINE_LENGTH, LINE_WIDTH } from './constants';
+import { LINE_LENGTH } from './constants';
 import { getPageX } from './utils';
 
+const POINTER_SIZE = 14;
 function usePointerAddStop(ref, onAdd) {
   const [tempPointerPosition, setTempPointerPosition] = useState(null);
   useLayoutEffect(() => {
@@ -37,9 +38,12 @@ function usePointerAddStop(ref, onAdd) {
         return;
       }
 
+      // We're considering the pointer size as extra to the normal line length
+      // in calculations since the pointers can be 7px "over the edge" from both sides.
       const relativePosition =
-        (getPageX(evt) - nodeLeftEdge - LINE_WIDTH / 2) / LINE_LENGTH;
-      onAdd(relativePosition);
+        (getPageX(evt) - nodeLeftEdge + POINTER_SIZE / 2) /
+        (LINE_LENGTH + POINTER_SIZE);
+      onAdd((LINE_LENGTH + POINTER_SIZE / 2) / LINE_LENGTH - relativePosition);
       setTempPointerPosition(null);
     };
 
