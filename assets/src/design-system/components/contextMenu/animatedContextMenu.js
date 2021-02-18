@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
+import { BEZIER } from '../../../animation/constants';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../utils/directions';
 import Menu, { MenuPropTypes } from './menu';
 import { Popover, Shadow } from './styled';
@@ -273,15 +273,11 @@ AnimationContainer.propTypes = {
   children: PropTypes.node,
 };
 
-const AnimatedContextMenu = ({ isOpen, items }) => {
-  return (
-    <AnimationContainer isOpen={isOpen}>
-      <Menu items={items} />
-    </AnimationContainer>
-  );
-};
-AnimatedContextMenu.propTypes = {
-  ...MenuPropTypes,
-};
+const AnimatedContextMenu = ({ isOpen, items }) => (
+  <AnimationContainer isOpen={isOpen}>
+    <Menu items={items} />
+  </AnimationContainer>
+);
+AnimatedContextMenu.propTypes = MenuPropTypes;
 
 export default AnimatedContextMenu;

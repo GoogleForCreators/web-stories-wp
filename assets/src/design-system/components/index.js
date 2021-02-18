@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 export { Banner } from './banner';
 export * from './button';
 export * from './checkbox';
+export * from './contextMenu';
 export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
 export { Input } from './input';

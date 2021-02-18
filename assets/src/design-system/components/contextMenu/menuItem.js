@@ -153,13 +153,15 @@ export const linkOrButtonValidator = function (props, _, componentName) {
 
 export const MenuItemProps = {
   disabled: PropTypes.bool,
-  focusedIndex: PropTypes.number,
   href: linkOrButtonValidator,
-  index: PropTypes.number,
   label: PropTypes.string.isRequired,
   onClick: linkOrButtonValidator,
-  setFocusedIndex: PropTypes.func,
   shortcut: PropTypes.string,
 };
 
-MenuItem.propTypes = MenuItemProps;
+MenuItem.propTypes = {
+  ...MenuItemProps,
+  index: PropTypes.number,
+  focusedIndex: PropTypes.number,
+  setFocusedIndex: PropTypes.func,
+};
