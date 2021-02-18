@@ -80,14 +80,13 @@ export function isInputValid(value, { allowEmpty, isFloat, max, min }) {
   return !isNaN(valueAsANumber);
 }
 
-export const NumericInput = ({
+export const useNumericInput = ({
   allowEmpty,
   isFloat,
-  onChange,
   max,
   min,
+  onChange,
   value,
-  ...props
 }) => {
   const inputRef = useRef(null);
   const oldValue = useRef(value);
@@ -103,7 +102,7 @@ export const NumericInput = ({
   /**
    * Call external `onChange`
    */
-  const handleSubmit = useCallback(
+  const handleBlur = useCallback(
     (ev) => {
       let newValue = oldValue.current;
 
@@ -164,7 +163,7 @@ export const NumericInput = ({
   const handleEsc = useCallback(() => {
     setCurrentValue(oldValue.current);
     revertToOriginal.current = true;
-    inputRef.current?.blur();
+    inputRef && inputRef.current?.blur();
   }, []);
 
   useEffect(() => {
@@ -172,6 +171,43 @@ export const NumericInput = ({
     oldValue.current = value;
     setCurrentValue(value);
   }, [value]);
+
+  return {
+    // state
+    currentValue,
+    inputRef,
+    // event handlers
+    handleBlur,
+    handleChange,
+    handleEsc,
+    handleKeyUpAndDown,
+  };
+};
+
+export const NumericInput = ({
+  allowEmpty,
+  isFloat,
+  onChange,
+  max,
+  min,
+  value,
+  ...props
+}) => {
+  const {
+    currentValue,
+    handleBlur,
+    handleChange,
+    handleEsc,
+    handleKeyUpAndDown,
+    inputRef,
+  } = useNumericInput({
+    allowEmpty,
+    isFloat,
+    onChange,
+    max,
+    min,
+    value,
+  });
 
   useKeyDownEffect(
     inputRef,
@@ -199,14 +235,14 @@ export const NumericInput = ({
       key: ['enter'],
       editable: true,
     },
-    handleSubmit,
-    [handleSubmit]
+    handleBlur,
+    [handleBlur]
   );
 
   return (
     <Input
       ref={inputRef}
-      onBlur={handleSubmit}
+      onBlur={handleBlur}
       onChange={handleChange}
       value={String(currentValue)}
       {...props}
