@@ -33,6 +33,7 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageLayoutsPane, PageLayoutsIcon } from './panes/pageLayouts';
+import { getPaneId, Pane as SharedPane } from './panes/shared';
 
 const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
 const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
@@ -45,6 +46,8 @@ const PAGE_LAYOUTS = {
   id: 'pageLayouts',
 };
 
+const LAZY_TABS = [MEDIA3P.id, TEXT.id, PAGE_LAYOUTS.id];
+
 function LibraryProvider({ children }) {
   const initialTab = MEDIA.id;
   const [tab, setTab] = useState(initialTab);
@@ -55,34 +58,26 @@ function LibraryProvider({ children }) {
 
   const { showElementsTab } = useFeatures();
 
-  // Order here is important, as it denotes the actual visual order of elements.
-  const tabs = useMemo(() => {
-    return [
-      MEDIA,
-      MEDIA3P,
-      TEXT,
-      SHAPES,
-      showElementsTab ? ELEMS : {},
-      PAGE_LAYOUTS,
-    ].reduce((accTabs, renderTab) => {
-      // for heavier tab content, avoid rendering the pane unless it is active
-      const isLazyTab = [MEDIA3P.id, TEXT.id, PAGE_LAYOUTS.id].includes(
-        renderTab.id
-      );
-      const isActiveTab = tab === renderTab.id;
-      const hasBeenRendered = renderedTabs.current[renderTab.id];
+  const renderEmptyPane = useCallback((id) => {
+    const EmptyPane = (props) => <SharedPane id={getPaneId(id)} {...props} />;
+    return EmptyPane;
+  }, []);
 
-      return renderTab.id
-        ? [
-            ...accTabs,
-            // remove the pane if it hasn't been rendered before or the tab is not active
-            isLazyTab && !isActiveTab && !hasBeenRendered
-              ? { id: renderTab.id, icon: renderTab.icon }
-              : renderTab,
-          ]
-        : accTabs;
-    }, []);
-  }, [showElementsTab, tab]);
+  const tabs = useMemo(
+    // Order here is important, as it denotes the actual visual order of elements.
+    () =>
+      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_LAYOUTS]
+        .filter(Boolean)
+        .map(({ icon, Pane, id }) => {
+          const isLazyTab = LAZY_TABS.includes(id);
+          const isActiveTab = tab === id;
+          const hasBeenRendered = renderedTabs.current[id];
+          return isLazyTab && !isActiveTab && !hasBeenRendered
+            ? { id, icon, Pane: renderEmptyPane(id) }
+            : { id, icon, Pane };
+        }),
+    [tab, showElementsTab, renderEmptyPane]
+  );
 
   const state = useMemo(
     () => ({
