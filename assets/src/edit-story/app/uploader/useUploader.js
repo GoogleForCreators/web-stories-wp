@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   trackError,
@@ -33,7 +33,8 @@ import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
-import { useSnackbar } from '../snackbar';
+
+const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2));
 
 function useUploader() {
   const {
@@ -60,10 +61,7 @@ function useUploader() {
     transcodeVideo,
     isFileTooLarge,
   } = useTranscodeVideo();
-
-  const { showSnackbar } = useSnackbar();
-
-  const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
+  const [isTranscoding, setIsTranscoding] = useState(false);
 
   const isValidType = useCallback(
     ({ type }) => {
@@ -161,24 +159,28 @@ function useUploader() {
         file_type: file.type,
       });
 
+      // False positive due to the `finally` block.
+      // eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_video_transcoding');
 
       // Transcoding is enabled, let's give it a try!
+
+      setIsTranscoding(true);
+
       try {
-        showSnackbar({
-          message: __('Video optimization in progress.', 'web-stories'),
-        });
         // TODO: Only transcode & optimize video if needed (criteria TBD).
         const newFile = await transcodeVideo(file);
-        trackTiming();
+
         additionalData.media_source = 'video-optimization';
         return uploadMedia(newFile, additionalData);
       } catch (err) {
-        trackTiming();
         trackError('video_transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
         throw createError('TranscodingError', file.name, message);
+      } finally {
+        trackTiming();
+        setIsTranscoding(false);
       }
     },
     [
@@ -194,14 +196,20 @@ function useUploader() {
       canTranscodeFile,
       transcodeVideo,
       isFileTooLarge,
-      showSnackbar,
     ]
   );
 
-  return {
-    uploadFile,
-    isValidType,
-  };
+  return useMemo(() => {
+    return {
+      actions: {
+        uploadFile,
+        isValidType,
+      },
+      state: {
+        isTranscoding,
+      },
+    };
+  }, [isValidType, uploadFile, isTranscoding]);
 }
 
 export default useUploader;
