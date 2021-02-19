@@ -20,6 +20,16 @@
 import { noop } from '../../../design-system';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 
+/**
+ * @param {Object} arguments The arguments
+ * @param {Object} arguments.menuItemActions An object of actions that could be added as event handlers
+ * * @param {Function} arguments.menuItemActions.default A function to be used as a fallback `onClick` event handler for the menu item
+ * * @param {Function} arguments.menuItemActions[key] The function to be used as the `onClick` event handler for the menu item.
+ * * * The `key` is any property in `STORY_CONTEXT_MENU_ACTIONS` found in {@module assets/src/dashboard/types.js}
+ * @param {Array} arguments.menuItems The menu items to build out
+ * @param {Object} arguments.story The story used to generate the menu items
+ * @return {Array} Array of menu items
+ */
 export const generateStoryMenu = ({
   menuItemActions = {},
   menuItems,
