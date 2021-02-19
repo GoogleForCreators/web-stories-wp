@@ -148,10 +148,10 @@ export const Input = forwardRef(
 
     useEffect(() => {
       // focus input when focused state is set
-      if (focused && ref && ref.current) {
-        ref.current.select();
-      } else if (focused && inputRef.current) {
-        inputRef.current.select();
+      if (focused && ref?.current) {
+        ref.current?.select();
+      } else if (focused) {
+        inputRef.current?.select();
       }
     }, [focused, ref]);
 
