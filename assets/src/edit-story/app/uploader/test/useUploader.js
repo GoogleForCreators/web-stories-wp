@@ -72,8 +72,13 @@ function setup(args) {
   const { result } = renderHook(() => useUploader(), { wrapper });
 
   return {
-    uploadFile: result.current.uploadFile,
-    isValidType: result.current.isValidType,
+    actions: {
+      uploadFile: result.current.actions.uploadFile,
+      isValidType: result.current.actions.isValidType,
+    },
+    state: {
+      isTranscoding: result.current.actions.isTranscoding,
+    },
   };
 }
 
@@ -87,19 +92,25 @@ describe('useUploader', () => {
 
   describe('isValidType', () => {
     it('returns false if file type is not in list', () => {
-      const { isValidType } = setup({});
+      const {
+        actions: { isValidType },
+      } = setup({});
       expect(isValidType({ type: 'application/pdf' })).toBeFalse();
     });
 
     it('returns true if file type is in list', () => {
-      const { isValidType } = setup({});
+      const {
+        actions: { isValidType },
+      } = setup({});
       expect(isValidType({ type: 'video/mp4' })).toBeTrue();
     });
   });
 
   describe('uploadFile', () => {
     it('throws an error if user does not have upload capabilities', async () => {
-      const { uploadFile } = setup({
+      const {
+        actions: { uploadFile },
+      } = setup({
         capabilities: {
           hasUploadMediaAction: false,
         },
@@ -111,7 +122,9 @@ describe('useUploader', () => {
     });
 
     it('throws an error if file is too large', async () => {
-      const { uploadFile } = setup({
+      const {
+        actions: { uploadFile },
+      } = setup({
         maxUpload: 2000000,
       });
 
@@ -121,7 +134,9 @@ describe('useUploader', () => {
     });
 
     it('throws an error if file type is not supported and cannot be transcoded', async () => {
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+      } = setup({});
 
       await expect(
         uploadFile({ size: 20000, type: 'video/quicktime' })
@@ -141,7 +156,9 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({
+      const {
+        actions: { uploadFile },
+      } = setup({
         maxUpload: 1024 * 1024 * 1024 * 10,
       });
 
@@ -172,7 +189,9 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+      } = setup({});
 
       const file = {
         size: 20000,
@@ -194,7 +213,9 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+      } = setup({});
 
       const file = {
         size: 20000,
@@ -220,7 +241,9 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+      } = setup({});
 
       const file = {
         size: 20000,
