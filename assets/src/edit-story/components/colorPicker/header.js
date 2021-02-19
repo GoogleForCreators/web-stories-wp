@@ -122,7 +122,7 @@ function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
         onClick={onClose}
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.RECTANGLE}
+        variant={BUTTON_VARIANTS.SQUARE}
       >
         <Icons.Cross />
       </CloseButton>

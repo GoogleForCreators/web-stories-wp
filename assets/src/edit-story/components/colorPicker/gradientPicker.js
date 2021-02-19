@@ -87,7 +87,7 @@ function GradientPicker({
           onClick={onReverse}
           type={BUTTON_TYPES.TERTIARY}
           size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.RECTANGLE}
+          variant={BUTTON_VARIANTS.SQUARE}
         >
           <Icons.ArrowsLeftright />
         </SmallButton>
@@ -98,7 +98,7 @@ function GradientPicker({
           aria-label={rotateLabel}
           type={BUTTON_TYPES.TERTIARY}
           size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.RECTANGLE}
+          variant={BUTTON_VARIANTS.SQUARE}
         >
           <Icons.ArrowRightCurved id="gradient-rotator" />
         </SmallButton>
