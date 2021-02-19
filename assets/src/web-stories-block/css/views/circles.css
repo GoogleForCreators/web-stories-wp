@@ -42,11 +42,6 @@ body > .web-stories-list.is-view-type-circles {
   display: none;
 }
 
-.web-stories-list.is-view-type-circles
-  .web-stories-list__story-content-overlay {
-  padding-bottom: 0;
-}
-
 .web-stories-list.is-view-type-circles .story-content-overlay__title {
   font-size: var(--ws-font-size-circle-title);
 }

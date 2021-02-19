@@ -266,6 +266,8 @@ const webStoriesBlock = {
       './assets/src/web-stories-block/block/edit.css',
     ],
     'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
+    'web-stories-core-themes-styles':
+      './assets/src/web-stories-block/css/core-themes.css',
   },
   plugins: [
     ...sharedConfig.plugins,

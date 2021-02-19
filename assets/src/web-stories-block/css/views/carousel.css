@@ -9,12 +9,12 @@
 
 .web-stories-list.is-carousel.has-archive-link {
   position: relative;
-  margin-top: 32px;
+  padding-top: 42px;
 }
 
 .web-stories-list.is-carousel .web-stories-list__archive-link {
   position: absolute;
-  right: 0;
+  right: 10px;
   top: -32px;
 }
 

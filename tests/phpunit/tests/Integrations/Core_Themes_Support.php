@@ -76,6 +76,8 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	public function test_init() {
 		$this->stub->init();
 
+		$this->assertEquals( 10, has_action( 'wp_enqueue_scripts', [ $this->stub, 'assets' ] ) );
+		$this->assertEquals( 10, has_action( 'body_class', [ $this->stub, 'add_core_theme_classes' ] ) );
 		$this->assertEquals( 10, has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
 	}
 

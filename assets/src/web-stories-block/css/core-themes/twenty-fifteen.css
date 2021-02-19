@@ -1,0 +1,25 @@
+.has-web-stories-support.twenty-fifteen
+  > .web-stories-list
+  .web-stories-list__archive-link
+  a {
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 59.6875em) {
+  .has-web-stories-support.twenty-fifteen
+    > .web-stories-list
+    .web-stories-list__inner-wrapper {
+    margin: 0 8.3333%;
+  }
+
+  .has-web-stories-support.twenty-fifteen .site-main {
+    padding-top: 0;
+  }
+
+  .has-web-stories-support.twenty-fifteen > .web-stories-list {
+    display: block;
+    margin-left: 29.9118%;
+    width: 68.5882%;
+    border-bottom: none;
+  }
+}
