@@ -77,7 +77,7 @@ function setup(args) {
       isValidType: result.current.actions.isValidType,
     },
     state: {
-      isTranscoding: result.current.actions.isTranscoding,
+      isTranscoding: result.current.state.isTranscoding,
     },
   };
 }
@@ -191,6 +191,7 @@ describe('useUploader', () => {
 
       const {
         actions: { uploadFile },
+        state: { isTranscoding },
       } = setup({});
 
       const file = {
@@ -202,6 +203,7 @@ describe('useUploader', () => {
       expect(result).toStrictEqual('Upload successful!');
       expect(transcodeVideo).toHaveBeenCalledTimes(1);
       expect(transcodeVideo).toHaveBeenCalledWith(file);
+      expect(isTranscoding).toBeFalse();
     });
 
     it('uploads image without transcoding', async () => {
@@ -215,6 +217,7 @@ describe('useUploader', () => {
 
       const {
         actions: { uploadFile },
+        state: { isTranscoding },
       } = setup({});
 
       const file = {
@@ -225,6 +228,7 @@ describe('useUploader', () => {
       const result = await uploadFile(file);
       expect(result).toStrictEqual('Upload successful!');
       expect(transcodeVideo).not.toHaveBeenCalled();
+      expect(isTranscoding).toBeFalse();
     });
 
     it('throws an error if video transcoding failed', async () => {
@@ -243,6 +247,7 @@ describe('useUploader', () => {
 
       const {
         actions: { uploadFile },
+        state: { isTranscoding },
       } = setup({});
 
       const file = {
@@ -255,6 +260,7 @@ describe('useUploader', () => {
       );
       expect(transcodeVideo).toHaveBeenCalledTimes(1);
       expect(transcodeVideo).toHaveBeenCalledWith(file);
+      expect(isTranscoding).toBeFalse();
     });
   });
 });
