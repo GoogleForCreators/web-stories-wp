@@ -68,8 +68,8 @@ const Input = styled.input.attrs({
     height: 6px;
     top: calc(50% - 3px);
     left: -calc(
-      ${({ percentage = 0, thumbSize, width = 1 }) =>
-          ((width - thumbSize) / width) * percentage}% - 4px
+      ${({ percentage, thumbSize, width }) =>
+          getAdjustedWidthPercentage(percentage, thumbSize, width)}% - 4px
     );
     width: ${({ percentage = 0 }) => percentage}%;
     background-color: ${({ theme }) => theme.colors.interactiveBg.primaryHover};
@@ -85,13 +85,25 @@ const Input = styled.input.attrs({
       border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
       top: -14px;
       left: calc(
-        ${({ percentage = 0, thumbSize, width = 1 }) =>
-            ((width - thumbSize) / width) * percentage}% - 4px
+        ${({ percentage, thumbSize, width }) =>
+            getAdjustedWidthPercentage(percentage, thumbSize, width)}% - 4px
       );
       border-radius: 100%;
     }
   }
 `;
+
+function getAdjustedWidthPercentage(
+  percentage = 0,
+  thumbSize = DEFAULT_SIZE,
+  width
+) {
+  if (!width) {
+    // Avoid dividing by 0 issues.
+    width = 1;
+  }
+  return ((width - thumbSize) / width) * percentage;
+}
 
 const Wrapper = styled.div`
   position: relative;
@@ -127,7 +139,7 @@ function Slider({
   ...rest
 }) {
   const ref = useRef();
-  const widthTracker = useRef(0);
+  const widthTracker = useRef(null);
   const update = useCallback(
     (direction, isMajor) => {
       const diff = direction * (isMajor ? majorStep : minorStep);
