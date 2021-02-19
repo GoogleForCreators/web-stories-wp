@@ -33,11 +33,11 @@ import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
+  LogoWithTypeCircleColor,
   Text,
   THEME_CONSTANTS,
 } from '../../../design-system';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
-import { WebStoriesLogo } from '../../images';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -159,7 +159,7 @@ export function LeftRail() {
     >
       <div ref={upperContentRef}>
         <Header as="h1">
-          <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
+          <LogoWithTypeCircleColor title={__('Web Stories', 'web-stories')} />
         </Header>
         <Content>
           <NewStoryButton
