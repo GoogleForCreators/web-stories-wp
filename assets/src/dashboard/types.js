@@ -23,7 +23,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../edit-story/types';
-import { STORY_STATUS, TEMPLATES_GALLERY_STATUS } from './constants';
+import {
+  STORY_CONTEXT_MENU_ACTIONS,
+  STORY_STATUS,
+  TEMPLATES_GALLERY_STATUS,
+} from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
   ...Object.values(STORY_STATUS),
@@ -112,7 +116,18 @@ export const PageSizePropType = PropTypes.shape({
 export const StoryMenuPropType = PropTypes.shape({
   handleMenuToggle: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
-  handleMenuItemSelected: PropTypes.func.isRequired,
+  menuItemActions: PropTypes.shape({
+    handleCloseMenu: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.PREVIEW]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.RENAME]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.DELETE]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: PropTypes.func,
+    [STORY_CONTEXT_MENU_ACTIONS.CLOSE]: PropTypes.func,
+  }),
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,

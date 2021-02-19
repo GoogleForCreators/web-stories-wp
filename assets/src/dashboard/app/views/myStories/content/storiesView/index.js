@@ -122,56 +122,56 @@ function StoriesView({
     setActiveDialog('');
   }, [storyActions, activeStory]);
 
-  const handleMenuItemSelected = useCallback(
-    (sender, story) => {
-      setContextMenuId(-1);
-      switch (sender.value) {
-        case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          trackEvent('open_in_editor');
-          break;
-        case STORY_CONTEXT_MENU_ACTIONS.RENAME:
-          setTitleRenameId(story.id);
-          break;
+  // menu item actions
+  const handleOpenStoryInEditor = useCallback(() => {
+    trackEvent('open_in_editor');
+  }, []);
 
-        case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
-          trackEvent('duplicate_story');
-          storyActions.duplicateStory(story);
-          break;
+  const handleRenameStory = useCallback((story) => {
+    setTitleRenameId(story.id);
+  }, []);
 
-        case STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE:
-          storyActions.createTemplateFromStory(story);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.DELETE:
-          setActiveStory(story);
-          setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
-          break;
-
-        case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
-          global.navigator.clipboard.writeText(story.link);
-
-          addSnackbarMessage({
-            message:
-              story.title.length > 0
-                ? sprintf(
-                    /* translators: %s: story title. */
-                    __('%s has been copied to your clipboard.', 'web-stories'),
-                    story.title
-                  )
-                : __(
-                    '(no title) has been copied to your clipboard.',
-                    'web-stories'
-                  ),
-            severity: ALERT_SEVERITY.SUCCESS,
-            id: Date.now(),
-          });
-          break;
-
-        default:
-          break;
-      }
+  const handleDuplicateStory = useCallback(
+    (story) => {
+      trackEvent('duplicate_story');
+      storyActions.duplicateStory(story);
     },
-    [addSnackbarMessage, storyActions]
+    [storyActions]
+  );
+
+  const handleCreateTemplateFromStory = useCallback(
+    (story) => {
+      storyActions.createTemplateFromStory(story);
+    },
+    [storyActions]
+  );
+
+  const handleDeleteStory = useCallback((story) => {
+    setActiveStory(story);
+    setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
+  }, []);
+
+  const handleCopyStoryLink = useCallback(
+    (story) => {
+      global.navigator.clipboard.writeText(story.link);
+
+      addSnackbarMessage({
+        message:
+          story.title.length > 0
+            ? sprintf(
+                /* translators: %s: story title. */
+                __('%s has been copied to your clipboard.', 'web-stories'),
+                story.title
+              )
+            : __(
+                '(no title) has been copied to your clipboard.',
+                'web-stories'
+              ),
+        severity: ALERT_SEVERITY.SUCCESS,
+        id: Date.now(),
+      });
+    },
+    [addSnackbarMessage]
   );
 
   const enabledMenuItems = useMemo(() => {
@@ -185,14 +185,27 @@ function StoriesView({
     return {
       handleMenuToggle: setContextMenuId,
       contextMenuId,
-      handleMenuItemSelected,
+      menuItemActions: {
+        handleCloseMenu: () => setContextMenuId(-1),
+        [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
+        [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]: handleCreateTemplateFromStory,
+        [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
+        [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleDuplicateStory,
+        [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
+        [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
+      },
       menuItems: enabledMenuItems,
     };
   }, [
-    setContextMenuId,
     contextMenuId,
-    handleMenuItemSelected,
     enabledMenuItems,
+    handleCopyStoryLink,
+    handleCreateTemplateFromStory,
+    handleDeleteStory,
+    handleDuplicateStory,
+    handleOpenStoryInEditor,
+    handleRenameStory,
+    setContextMenuId,
   ]);
 
   const renameStory = useMemo(() => {

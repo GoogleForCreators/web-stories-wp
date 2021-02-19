@@ -19,12 +19,40 @@
  */
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 
-export const generateStoryMenu = ({ menuItems, story }) =>
-  menuItems.map((menuItem) => {
-    if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR) {
-      return { ...menuItem, url: story.bottomTargetAction, newTab: false };
-    } else if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
-      return { ...menuItem, url: story.previewLink, newTab: true };
+const generateClickEventHandler = ({
+  action,
+  menuItemActions,
+  story,
+}) => () => {
+  menuItemActions?.handleCloseMenu();
+  menuItemActions[action]?.(story);
+};
+
+export const generateStoryMenu = ({ menuItemActions = {}, menuItems, story }) =>
+  menuItems.map(({ value, ...menuItem }) => {
+    const extraProperties = {
+      onClick: generateClickEventHandler({
+        action: value,
+        menuItemActions,
+        story,
+      }),
+    };
+
+    switch (value) {
+      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+        extraProperties.href = story.bottomTargetAction;
+        extraProperties.newTab = false;
+        break;
+      case STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK:
+        extraProperties.href = story.previewLink;
+        extraProperties.newTab = true;
+        break;
+      default:
+        break;
     }
-    return menuItem;
+
+    return {
+      ...menuItem,
+      ...extraProperties,
+    };
   });
