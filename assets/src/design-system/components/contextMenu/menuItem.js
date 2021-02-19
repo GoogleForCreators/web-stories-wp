@@ -85,6 +85,20 @@ export const MenuItem = ({
     [label, shortcut]
   );
 
+  if (href) {
+    return (
+      <Link
+        ref={itemRef}
+        aria-label={label}
+        href={href}
+        onClick={onClick}
+        onFocus={handleFocus}
+      >
+        {textContent}
+      </Link>
+    );
+  }
+
   if (onClick) {
     return (
       <Button
@@ -96,12 +110,6 @@ export const MenuItem = ({
       >
         {textContent}
       </Button>
-    );
-  } else if (href) {
-    return (
-      <Link ref={itemRef} aria-label={label} href={href} onFocus={handleFocus}>
-        {textContent}
-      </Link>
     );
   }
 
@@ -122,12 +130,6 @@ export const MenuItem = ({
  * Otherwise, returns null.
  */
 export const linkOrButtonValidator = function (props, _, componentName) {
-  if (props.onClick && props.href !== undefined) {
-    return new Error(
-      `Expected one of [\`onClick\`, \`href\`] but both were passed to \`${componentName}\`. \`href\` will be ignored. Validation failed. `
-    );
-  }
-
   if (props.href && props.disabled !== undefined) {
     return new Error(
       `A link cannot be disabled. \`disabled\` will be ignored. Validation failed.`
@@ -140,7 +142,6 @@ export const linkOrButtonValidator = function (props, _, componentName) {
    */
   PropTypes.checkPropTypes(
     {
-      onClick: PropTypes.func,
       href: PropTypes.string,
     },
     props,
@@ -155,7 +156,7 @@ export const MenuItemProps = {
   disabled: PropTypes.bool,
   href: linkOrButtonValidator,
   label: PropTypes.string.isRequired,
-  onClick: linkOrButtonValidator,
+  onClick: PropTypes.func,
   shortcut: PropTypes.string,
 };
 
