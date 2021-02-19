@@ -22,10 +22,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Text } from '../../components';
-import * as Logos from '../';
+import * as Logos from '..';
 
 export default {
-  title: 'DesignSystem/Logos',
+  title: 'DesignSystem/Images',
 };
 
 const LogoList = styled.ul`
@@ -33,6 +33,7 @@ const LogoList = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 24px;
+  width: 300px;
 
   li {
     margin: 20px 0;
