@@ -72,7 +72,7 @@ function VideoOptimizationDialog() {
 
   const dialogTitle = __('Video optimization in progress', 'web-stories');
   const dialogDescription = __(
-    'This process can’t be stopped once it begins. Optimization is automatically enabled for all videos to ensure smooth playback. You can disable optimization any time in Settings. ',
+    'This process can’t be stopped once it begins. Optimization is automatically enabled for all videos to ensure smooth playback. You can disable optimization any time in Settings.',
     'web-stories'
   );
 
