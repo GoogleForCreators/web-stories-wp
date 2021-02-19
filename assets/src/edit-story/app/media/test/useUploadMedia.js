@@ -37,7 +37,7 @@ jest.mock('../../uploader', () => ({
     },
     state: {
       isTranscoding: false,
-    }
+    },
   })),
 }));
 
