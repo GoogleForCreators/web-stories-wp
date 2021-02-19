@@ -31,6 +31,7 @@ import {
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
 import { useSnackbar } from '../snackbar';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
 
 /**
@@ -65,7 +66,13 @@ function useUploadMedia({ media, setMedia }) {
   }, [isUploading, setPreventUnload]);
 
   useEffect(() => {
-    if (isTranscoding) {
+    const hasOptedIn = Boolean(
+      localStore.getItemByKey(
+        `${LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_OPTIN}`
+      )
+    );
+
+    if (isTranscoding && hasOptedIn) {
       showSnackbar({
         message: __('Video optimization in progress.', 'web-stories'),
       });
@@ -232,6 +239,7 @@ function useUploadMedia({ media, setMedia }) {
   return {
     uploadMedia,
     isUploading,
+    isTranscoding,
   };
 }
 
