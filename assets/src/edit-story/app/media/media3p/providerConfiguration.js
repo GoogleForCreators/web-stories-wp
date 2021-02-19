@@ -34,7 +34,7 @@ const ContentType = {
   GIF: 'gif',
 };
 
-export const ProviderType = {
+const ProviderType = {
   UNSPLASH: 'unsplash',
   COVERR: 'coverr',
   TENOR: 'tenor',
