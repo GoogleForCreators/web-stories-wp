@@ -124,15 +124,18 @@ function StoriesView({
 
   // menu item actions
   const handleOpenStoryInEditor = useCallback(() => {
+    setContextMenuId(-1);
     trackEvent('open_in_editor');
   }, []);
 
   const handleRenameStory = useCallback((story) => {
+    setContextMenuId(-1);
     setTitleRenameId(story.id);
   }, []);
 
   const handleDuplicateStory = useCallback(
     (story) => {
+      setContextMenuId(-1);
       trackEvent('duplicate_story');
       storyActions.duplicateStory(story);
     },
@@ -141,18 +144,21 @@ function StoriesView({
 
   const handleCreateTemplateFromStory = useCallback(
     (story) => {
+      setContextMenuId(-1);
       storyActions.createTemplateFromStory(story);
     },
     [storyActions]
   );
 
   const handleDeleteStory = useCallback((story) => {
+    setContextMenuId(-1);
     setActiveStory(story);
     setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
   }, []);
 
   const handleCopyStoryLink = useCallback(
     (story) => {
+      setContextMenuId(-1);
       global.navigator.clipboard.writeText(story.link);
 
       addSnackbarMessage({
@@ -186,7 +192,7 @@ function StoriesView({
       handleMenuToggle: setContextMenuId,
       contextMenuId,
       menuItemActions: {
-        handleCloseMenu: () => setContextMenuId(-1),
+        default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
         [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]: handleCreateTemplateFromStory,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,

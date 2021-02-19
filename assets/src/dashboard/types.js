@@ -117,7 +117,7 @@ export const StoryMenuPropType = PropTypes.shape({
   handleMenuToggle: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   menuItemActions: PropTypes.shape({
-    handleCloseMenu: PropTypes.func,
+    default: PropTypes.func.isRequired,
     [STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR]: PropTypes.func,
     [STORY_CONTEXT_MENU_ACTIONS.PREVIEW]: PropTypes.func,
     [STORY_CONTEXT_MENU_ACTIONS.RENAME]: PropTypes.func,

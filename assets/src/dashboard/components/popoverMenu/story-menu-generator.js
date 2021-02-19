@@ -17,25 +17,16 @@
 /**
  * Internal dependencies
  */
+import { noop } from '../../../design-system';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
-
-const generateClickEventHandler = ({
-  action,
-  menuItemActions,
-  story,
-}) => () => {
-  menuItemActions?.handleCloseMenu();
-  menuItemActions[action]?.(story);
-};
 
 export const generateStoryMenu = ({ menuItemActions = {}, menuItems, story }) =>
   menuItems.map(({ value, ...menuItem }) => {
     const extraProperties = {
-      onClick: generateClickEventHandler({
-        action: value,
-        menuItemActions,
-        story,
-      }),
+      onClick:
+        menuItemActions[value]?.(story) ||
+        menuItemActions.default(story) ||
+        noop,
     };
 
     switch (value) {
