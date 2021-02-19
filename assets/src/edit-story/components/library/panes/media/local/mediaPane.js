@@ -53,6 +53,7 @@ import { PANE_PADDING } from '../../shared';
 import { useSnackbar } from '../../../../../app';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
+import VideoOptimizationDialog from './videoOptimizationDialog';
 
 export const ROOT_MARGIN = 300;
 
@@ -326,6 +327,7 @@ function MediaPane(props) {
           open={isPermissionDialogOpen}
           onClose={() => setIsPermissionDialogOpen(false)}
         />
+        <VideoOptimizationDialog />
       </PaneInner>
     </StyledPane>
   );
