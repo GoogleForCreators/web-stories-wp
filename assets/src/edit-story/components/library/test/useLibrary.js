@@ -17,54 +17,136 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
+import { render } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+
+import { ThemeProvider } from 'styled-components';
 import LibraryProvider from '../libraryProvider';
 import useLibrary from '../useLibrary';
+import useMedia from '../../../app/media/useMedia';
+import theme from '../../../theme';
+
+jest.mock('../../../app/media/useMedia');
+jest.mock('../../../app/media/media3p/providerConfiguration', () => ({
+  PROVIDERS: {
+    PROVIDER_1: {
+      displayName: 'Provider 1',
+      supportsCategories: true,
+      requiresAuthorAttribution: true,
+      fetchMediaErrorMessage: 'Error loading media from Provider 1',
+      fetchCategoriesErrorMessage: 'Error loading categories from Provider 1',
+    },
+  },
+}));
+
+const PROVIDER_STATE = {
+  state: {
+    isMediaLoaded: false,
+    isMediaLoading: false,
+    hasMore: false,
+    media: [],
+    categories: {
+      categories: [],
+    },
+  },
+  actions: {
+    selectCategory: jest.fn(),
+    deselectCategory: jest.fn(),
+    setNextPage: jest.fn(),
+  },
+};
+
+const USE_MEDIA_RESULT = {
+  searchTerm: '',
+  selectedProvider: undefined,
+  setSelectedProvider: jest.fn(),
+  setSearchTerm: jest.fn(),
+  media3p: {
+    PROVIDER_1: PROVIDER_STATE,
+  },
+};
 
 describe('useLibrary()', () => {
-  it('should not return the panes for lazy tabs unless active', async () => {
+  const wrapper = ({ children }) => (
+    <ThemeProvider theme={theme}>
+      <LibraryProvider>{children}</LibraryProvider>
+    </ThemeProvider>
+  );
+  beforeAll(() => {
+    useMedia.mockImplementation(() => USE_MEDIA_RESULT);
+  });
+
+  it('should return an empty pane for lazy tabs unless active', async () => {
     const { result } = renderHook(() => useLibrary((state) => state), {
       wrapper: LibraryProvider,
     });
-
-    // order matters
     const [media3p, text, pageLayouts] = [1, 2, 4];
 
-    expect(result.current.data.tabs[media3p].Pane).toBeUndefined();
-    expect(result.current.data.tabs[media3p].id).not.toBeUndefined();
-    expect(result.current.data.tabs[media3p].icon).not.toBeUndefined();
+    const { Pane: ShouldBeEmptyMedia3pPane } = result.current.data.tabs[
+      media3p
+    ];
+    const { Pane: ShouldBeEmptyTextPane } = result.current.data.tabs[text];
+    const { Pane: ShouldBeEmptyPageLayoutsPane } = result.current.data.tabs[
+      pageLayouts
+    ];
 
-    expect(result.current.data.tabs[text].Pane).toBeUndefined();
-    expect(result.current.data.tabs[text].id).not.toBeUndefined();
-    expect(result.current.data.tabs[text].icon).not.toBeUndefined();
+    expect(<ShouldBeEmptyMedia3pPane />).toMatchInlineSnapshot('<EmptyPane />');
+    const emptyMedia3pPane = render(<ShouldBeEmptyMedia3pPane />);
+    expect(emptyMedia3pPane.container.firstChild).toBeEmptyDOMElement();
 
-    expect(result.current.data.tabs[pageLayouts].Pane).toBeUndefined();
-    expect(result.current.data.tabs[pageLayouts].id).not.toBeUndefined();
-    expect(result.current.data.tabs[pageLayouts].icon).not.toBeUndefined();
+    expect(<ShouldBeEmptyTextPane />).toMatchInlineSnapshot('<EmptyPane />');
+    const emptyTextPane = render(<ShouldBeEmptyTextPane />);
+    expect(emptyTextPane.container.firstChild).toBeEmptyDOMElement();
 
-    await act(async () => {
-      await result.current.actions.setTab(result.current.data.tabs[text].id);
-    });
-    expect(result.current.data.tabs[text].Pane).not.toBeUndefined();
-    expect(result.current.data.tabs[media3p].Pane).toBeUndefined();
-    expect(result.current.data.tabs[pageLayouts].Pane).toBeUndefined();
+    expect(<ShouldBeEmptyPageLayoutsPane />).toMatchInlineSnapshot(
+      '<EmptyPane />'
+    );
+    const emptyPageLayoutsPane = render(<ShouldBeEmptyPageLayoutsPane />);
+    expect(emptyPageLayoutsPane.container.firstChild).toBeEmptyDOMElement();
 
+    // render the lazy media pane
     await act(async () => {
       await result.current.actions.setTab(result.current.data.tabs[media3p].id);
     });
-    expect(result.current.data.tabs[text].Pane).not.toBeUndefined();
-    expect(result.current.data.tabs[media3p].Pane).not.toBeUndefined();
-    expect(result.current.data.tabs[pageLayouts].Pane).toBeUndefined();
+    const { Pane: ShouldBeRenderedMedia3pPane } = result.current.data.tabs[
+      media3p
+    ];
+    const renderedMedia3pPane = render(<ShouldBeRenderedMedia3pPane />, {
+      wrapper,
+    });
+    expect(renderedMedia3pPane.container.firstChild).not.toBeEmptyDOMElement();
 
+    // render the lazy text pane
+    await act(async () => {
+      await result.current.actions.setTab(result.current.data.tabs[text].id);
+    });
+    const { Pane: ShouldBeRenderedTextPane } = result.current.data.tabs[
+      media3p
+    ];
+    const renderedTextPane = render(<ShouldBeRenderedTextPane />, {
+      wrapper,
+    });
+    expect(renderedTextPane.container.firstChild).not.toBeEmptyDOMElement();
+
+    // render the lazy page layouts pane
     await act(async () => {
       await result.current.actions.setTab(
         result.current.data.tabs[pageLayouts].id
       );
     });
-    expect(result.current.data.tabs[text].Pane).not.toBeUndefined();
-    expect(result.current.data.tabs[media3p].Pane).not.toBeUndefined();
-    expect(result.current.data.tabs[pageLayouts].Pane).not.toBeUndefined();
+    const { Pane: ShouldBeRenderedPageLayoutsPane } = result.current.data.tabs[
+      media3p
+    ];
+    const renderedPageLayoutsPane = render(
+      <ShouldBeRenderedPageLayoutsPane />,
+      {
+        wrapper,
+      }
+    );
+    expect(
+      renderedPageLayoutsPane.container.firstChild
+    ).not.toBeEmptyDOMElement();
   });
 });
