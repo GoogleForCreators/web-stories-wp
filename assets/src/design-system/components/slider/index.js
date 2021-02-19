@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -36,22 +36,15 @@ const rangeThumb = css`
   border-radius: 50px;
 `;
 
-const focusedRangeThumb = css`
-  border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
-  padding: 2px;
-  background-clip: content-box;
-  width: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize + 8}px;
-  height: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize + 8}px;
-  margin-left: -1px;
-`;
-
 const Input = styled.input.attrs({
   type: 'range',
 })`
+  position: relative;
   min-width: 100px;
   cursor: pointer;
   outline: none;
-  background: ${({ theme }) => theme.colors.bg.quaternary};
+  background: ${({ theme, percentage }) =>
+    `linear-gradient(to right, ${theme.colors.interactiveBg.primaryHover} 0%, ${theme.colors.interactiveBg.primaryHover} ${percentage}%, ${theme.colors.bg.quaternary} ${percentage}%, ${theme.colors.bg.quaternary} 100%)`};
   border-radius: 100px;
   height: 4px;
   appearance: none;
@@ -70,16 +63,18 @@ const Input = styled.input.attrs({
   }
 
   &:focus {
-    &::-webkit-slider-thumb {
-      ${focusedRangeThumb}
-    }
-
-    &::-moz-range-thumb {
-      ${focusedRangeThumb}
-    }
-
-    &::-ms-thumb {
-      ${focusedRangeThumb}
+    &:after {
+      position: absolute;
+      content: ' ';
+      width: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize + 4}px;
+      height: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize + 4}px;
+      border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
+      top: -14px;
+      left: calc(
+        ${({ percentage = 0, thumbSize, width = 1 }) =>
+            ((width - thumbSize) / width) * percentage}% - 4px
+      );
+      border-radius: 100%;
     }
   }
 `;
@@ -113,11 +108,12 @@ function Slider({
   majorStep,
   handleChange,
   value,
-  min,
-  max,
+  min = 0,
+  max = 500,
   ...rest
 }) {
   const ref = useRef();
+  const widthTracker = useRef(0);
   const update = useCallback(
     (direction, isMajor) => {
       const diff = direction * (isMajor ? majorStep : minorStep);
@@ -129,6 +125,15 @@ function Slider({
     [minorStep, majorStep, handleChange, min, max, value]
   );
 
+  const percentageVal = ((value - min) / (max - min)) * 100;
+
+  useEffect(() => {
+    if (ref.current && !widthTracker.current) {
+      const { width } = ref.current.getBoundingClientRect();
+      widthTracker.current = width;
+    }
+  }, [ref]);
+
   useKeyDownEffect(ref, ['left'], () => update(-1, true), [update]);
   useKeyDownEffect(ref, ['right'], () => update(1, true), [update]);
   useKeyDownEffect(ref, ['shift+left'], () => update(-1, false), [update]);
@@ -136,13 +141,15 @@ function Slider({
   return (
     <Wrapper>
       <Input
+        percentage={percentageVal}
         ref={ref}
-        onChange={() => {}}
+        onChange={(evt) => handleChange(evt.target.valueAsNumber)}
         step={minorStep}
         value={value}
         min={min}
         max={max}
         {...rest}
+        width={widthTracker.current}
       />
     </Wrapper>
   );

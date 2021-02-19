@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { number } from '@storybook/addon-knobs';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
@@ -32,6 +33,7 @@ export default {
 };
 
 export const _default = () => {
+  const [value, setValue] = useState(0);
   const thumbSize = number('Thumb size', 24);
   const min = number('Min value', 0);
   const max = number('Max value', 100);
@@ -46,7 +48,8 @@ export const _default = () => {
         max={max}
         majorStep={majorStep}
         minorStep={minorStep}
-        value={30}
+        handleChange={(val) => setValue(val)}
+        value={value}
       />
     </ThemeProvider>
   );
