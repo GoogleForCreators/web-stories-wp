@@ -39,7 +39,8 @@ const KeyboardKey = styled(Text).attrs({
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${({ keySize }) => keySize}px;
+  width: ${({ keySize }) => keySize};
+  padding: 0 5px;
   height: 24px;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
