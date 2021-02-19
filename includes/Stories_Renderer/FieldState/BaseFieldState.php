@@ -54,7 +54,7 @@ class BaseFieldState implements FieldState {
 	public function excerpt() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show Excerpt', 'web-stories' ),
+				'label'    => __( 'Show excerpt', 'web-stories' ),
 				'show'     => false,
 				'readonly' => true,
 			]
@@ -69,7 +69,7 @@ class BaseFieldState implements FieldState {
 	public function author() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show Author', 'web-stories' ),
+				'label'    => __( 'Show author', 'web-stories' ),
 				'show'     => true,
 				'readonly' => false,
 			]
@@ -84,7 +84,7 @@ class BaseFieldState implements FieldState {
 	public function date() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show Date', 'web-stories' ),
+				'label'    => __( 'Show date', 'web-stories' ),
 				'show'     => false,
 				'readonly' => false,
 			]
@@ -114,7 +114,7 @@ class BaseFieldState implements FieldState {
 	public function title() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show Title', 'web-stories' ),
+				'label'    => __( 'Show title', 'web-stories' ),
 				'show'     => true,
 				'readonly' => true,
 			]
@@ -144,7 +144,7 @@ class BaseFieldState implements FieldState {
 	public function circle_size() {
 		return new BaseField(
 			[
-				'label'    => __( 'Circle Size', 'web-stories' ),
+				'label'    => __( 'Circle size', 'web-stories' ),
 				'show'     => false,
 				'readonly' => true,
 			]

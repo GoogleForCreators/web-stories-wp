@@ -33,7 +33,7 @@ import transforms from './transforms';
 const { name, category, attributes } = metadata;
 
 const settings = {
-  title: __('Web Stories List', 'web-stories'),
+  title: __('Web Stories', 'web-stories'),
   description: __('Embed Web Stories.', 'web-stories'),
   category,
   icon,

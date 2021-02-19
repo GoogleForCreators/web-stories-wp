@@ -170,7 +170,7 @@ const StoriesInspectorControls = (props) => {
   const previewLink = select('core/editor').getEditedPostPreviewLink();
   const carouselMessage = createInterpolateElement(
     __(
-      `<b>Note:</b> Carousel view's functionality will not work in Editor. <a>Preview</a> post to see it in action.`,
+      `<b>Note:</b> Carousel functionality will not work in Editor. <a>Preview</a> post to see it in action.`,
       'web-stories'
     ),
     {
@@ -194,7 +194,8 @@ const StoriesInspectorControls = (props) => {
         className="web-stories-settings"
         title={__('Story settings', 'web-stories')}
       >
-        {CAROUSEL_VIEW_TYPE === viewType && (
+        {(CAROUSEL_VIEW_TYPE === viewType ||
+          CIRCLES_VIEW_TYPE === viewType) && (
           <StyledNotice
             className="web-stories-carousel-message"
             isDismissible={false}
@@ -208,7 +209,8 @@ const StoriesInspectorControls = (props) => {
           Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
             const { label, readonly } = fieldObj;
 
-            if (!readonly) {
+            // @todo This shouldn't have dependency on field name, update field object appropriately.
+            if (!readonly && 'circle_size' !== field) {
               return (
                 <StyledToggle
                   key={`${field}__control`}
@@ -239,7 +241,7 @@ const StoriesInspectorControls = (props) => {
       {(CIRCLES_VIEW_TYPE === viewType || GRID_VIEW_TYPE === viewType) && (
         <PanelBody
           className="web-stories-settings"
-          title={__('Layout & Style Options', 'web-stories')}
+          title={__('Layout and style options', 'web-stories')}
         >
           {GRID_VIEW_TYPE === viewType && (
             <RangeControl
@@ -268,7 +270,14 @@ const StoriesInspectorControls = (props) => {
         </PanelBody>
       )}
       {showFilters && (
-        <PanelBody title={__('Sorting & Filtering', 'web-stories')}>
+        <PanelBody title={__('Sorting and filtering', 'web-stories')}>
+          <SelectControl
+            label={__('Order by', 'web-stories')}
+            options={orderByOptions}
+            value={orderByValue}
+            onChange={(selection) => setAttributes({ orderByValue: selection })}
+          />
+          <AuthorSelection authors={authors} setAttributes={setAttributes} />
           <RangeControl
             label={__('Number of stories', 'web-stories')}
             value={numOfStories}
@@ -279,13 +288,6 @@ const StoriesInspectorControls = (props) => {
             max={20}
             step={1}
           />
-          <SelectControl
-            label={__('Order by', 'web-stories')}
-            options={orderByOptions}
-            value={orderByValue}
-            onChange={(selection) => setAttributes({ orderByValue: selection })}
-          />
-          <AuthorSelection authors={authors} setAttributes={setAttributes} />
         </PanelBody>
       )}
     </InspectorControls>
