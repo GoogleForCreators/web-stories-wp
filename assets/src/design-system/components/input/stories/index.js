@@ -213,7 +213,6 @@ export const Numeric = () => {
   const handleChange = (ev, value) => {
     const name = ev.target.name;
 
-    // action(event.target.name)(event);
     setInputState((prevState) => ({
       ...prevState,
       [name]: value,
