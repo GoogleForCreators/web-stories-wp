@@ -129,6 +129,29 @@ describe('useNumericInput', () => {
       expect(mockOnChange).toHaveBeenCalledTimes(1);
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 20);
     });
+
+    it('should call onChange with the previous value when the new value is invalid', () => {
+      const { result } = renderHook(() =>
+        useNumericInput({
+          allowEmpty: false,
+          isFloat: false,
+          onChange: mockOnChange,
+          value: 1,
+        })
+      );
+
+      // change internal value
+      act(() => {
+        result.current.handleChange({ target: { value: 'abvde' } });
+      });
+
+      // blur field now that value is changed
+      act(() => {
+        result.current.handleBlur('dummy data');
+      });
+      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledWith('dummy data', 1);
+    });
   });
 
   describe('handleKeyUpDown', () => {

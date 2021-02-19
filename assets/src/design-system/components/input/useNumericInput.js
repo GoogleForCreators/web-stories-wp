@@ -50,7 +50,11 @@ export const useNumericInput = ({
       let newValue = parseInput(oldValue.current, options);
 
       if (!revertToOriginal.current) {
-        newValue = parseInput(currentValue, options);
+        const parsedValue = parseInput(currentValue, options);
+
+        if (parsedValue !== null) {
+          newValue = parsedValue;
+        }
       }
 
       revertToOriginal.current = false;
