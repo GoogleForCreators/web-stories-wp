@@ -20,13 +20,20 @@
 import { noop } from '../../../design-system';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 
-export const generateStoryMenu = ({ menuItemActions = {}, menuItems, story }) =>
-  menuItems.map(({ value, ...menuItem }) => {
+export const generateStoryMenu = ({
+  menuItemActions = {},
+  menuItems,
+  story,
+}) => {
+  const defaultFn = menuItemActions.default
+    ? () => menuItemActions.default(story)
+    : noop;
+
+  return menuItems.map(({ value, ...menuItem }) => {
     const extraProperties = {
-      onClick:
-        menuItemActions[value]?.(story) ||
-        menuItemActions.default(story) ||
-        noop,
+      onClick: menuItemActions[value]
+        ? () => menuItemActions[value](story)
+        : defaultFn,
     };
 
     switch (value) {
@@ -47,3 +54,4 @@ export const generateStoryMenu = ({ menuItemActions = {}, menuItems, story }) =>
       ...extraProperties,
     };
   });
+};
