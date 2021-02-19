@@ -43,12 +43,7 @@ const Line = styled.div.attrs(({ stops }) => ({
   tabIndex: -1,
   style: generatePatternStyles({
     type: 'linear',
-    // "Push" the ends of the gradient in, so it starts and
-    // ends at (LINE_WIDTH / 2) px
-    stops: stops.map(({ color, position }) => ({
-      color,
-      position: (position * LINE_LENGTH + LINE_WIDTH / 2) / LINE_FULL_LENGTH,
-    })),
+    stops,
     // And fix rotation to .25 to make it go right-to-left
     rotation: 0.25,
   }),
