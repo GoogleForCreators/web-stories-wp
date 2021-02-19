@@ -62,6 +62,20 @@ const Input = styled.input.attrs({
     ${rangeThumb}
   }
 
+  &:before {
+    position: absolute;
+    content: ' ';
+    height: 6px;
+    top: calc(50% - 3px);
+    left: -calc(
+      ${({ percentage = 0, thumbSize, width = 1 }) =>
+          ((width - thumbSize) / width) * percentage}% - 4px
+    );
+    width: ${({ percentage = 0 }) => percentage}%;
+    background-color: ${({ theme }) => theme.colors.interactiveBg.primaryHover};
+    border-radius: 50px;
+  }
+
   &:focus {
     &:after {
       position: absolute;
