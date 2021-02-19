@@ -45,6 +45,7 @@ export const MenuItem = ({
   href,
   index,
   label,
+  newTab,
   onClick,
   setFocusedIndex,
   shortcut,
@@ -86,6 +87,13 @@ export const MenuItem = ({
   );
 
   if (href) {
+    const newTabProps = newTab
+      ? {
+          target: '_blank',
+          rel: 'noreferrer',
+        }
+      : {};
+
     return (
       <Link
         ref={itemRef}
@@ -93,6 +101,7 @@ export const MenuItem = ({
         href={href}
         onClick={onClick}
         onFocus={handleFocus}
+        {...newTabProps}
       >
         {textContent}
       </Link>
@@ -136,6 +145,12 @@ export const linkOrButtonValidator = function (props, _, componentName) {
     );
   }
 
+  if (typeof props.href !== 'string' && props.newTab) {
+    return new Error(
+      `Cannot open a new tab without specifying an \`href\`. \`newTab\` will be ignored. Validation failed.`
+    );
+  }
+
   /**
    * Leverage PropTypes typechecking instead of
    * writing our own validators for `string` and `function`
@@ -156,6 +171,7 @@ export const MenuItemProps = {
   disabled: PropTypes.bool,
   href: linkOrButtonValidator,
   label: PropTypes.string.isRequired,
+  newTab: PropTypes.bool,
   onClick: PropTypes.func,
   shortcut: PropTypes.string,
 };

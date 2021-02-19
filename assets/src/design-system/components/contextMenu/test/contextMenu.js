@@ -87,4 +87,10 @@ describe('linkOrButtonValidator', () => {
       linkOrButtonValidator({ disabled: true, href: 'test' }, '', 'Test')
     ).toStrictEqual(expect.any(Error));
   });
+
+  it('should throw an error if `newTab=true` but `href` is not specified', () => {
+    expect(linkOrButtonValidator({ newTab: true }, '', 'Test')).toStrictEqual(
+      expect.any(Error)
+    );
+  });
 });
