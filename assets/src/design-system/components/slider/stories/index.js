@@ -19,13 +19,20 @@
  */
 import { number } from '@storybook/addon-knobs';
 import { useState } from 'react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { ThemeProvider } from 'styled-components';
+import { DarkThemeProvider } from '../../../storybookUtils';
+import { Text } from '../../..';
 import { Slider } from '../';
-import { theme } from '../../../theme';
+
+const Container = styled.div`
+  padding: 50px;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  border: 1px solid ${({ theme }) => theme.colors.standard.black};
+`;
 
 export default {
   title: 'DesignSystem/Components/Slider',
@@ -33,7 +40,8 @@ export default {
 };
 
 export const _default = () => {
-  const [value, setValue] = useState(0);
+  const [lightValue, setLightValue] = useState(0);
+  const [darkValue, setDarkValue] = useState(0);
   const thumbSize = number('Thumb size', 24);
   const min = number('Min value', 0);
   const max = number('Max value', 100);
@@ -41,16 +49,35 @@ export const _default = () => {
   const minorStep = number('Minor step', 1);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Slider
-        thumbSize={thumbSize}
-        min={min}
-        max={max}
-        majorStep={majorStep}
-        minorStep={minorStep}
-        handleChange={(val) => setValue(val)}
-        value={value}
-      />
-    </ThemeProvider>
+    <>
+      <Container>
+        <Text>{'Percentage:'}</Text>
+        <Slider
+          thumbSize={thumbSize}
+          min={min}
+          max={max}
+          majorStep={majorStep}
+          minorStep={minorStep}
+          handleChange={setLightValue}
+          value={lightValue}
+          suffix="%"
+        />
+      </Container>
+      <DarkThemeProvider>
+        <Container>
+          <Text>{'Milliseconds:'}</Text>
+          <Slider
+            thumbSize={thumbSize}
+            min={min}
+            max={max}
+            majorStep={majorStep}
+            minorStep={minorStep}
+            handleChange={setDarkValue}
+            value={darkValue}
+            suffix="ms"
+          />
+        </Container>
+      </DarkThemeProvider>
+    </>
   );
 };

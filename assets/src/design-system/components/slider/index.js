@@ -25,15 +25,20 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../keyboard';
+import { Tooltip } from '../tooltip';
+import { PLACEMENT } from '../popup';
 
 const DEFAULT_SIZE = 24;
 const rangeThumb = css`
   appearance: none;
-  width: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize}px;
-  height: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize}px;
-  background-color: ${({ theme }) => theme.colors.interactiveBg.primaryHover};
+  width: ${({ thumbSize }) => thumbSize}px;
+  height: ${({ thumbSize }) => thumbSize}px;
+  background-color: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
   cursor: pointer;
   border-radius: 50px;
+`;
+const rangeThumbHover = css`
+  background-color: ${({ theme }) => theme.colors.interactiveBg.primaryHover};
 `;
 
 const Input = styled.input.attrs({
@@ -43,26 +48,25 @@ const Input = styled.input.attrs({
   min-width: 100px;
   cursor: pointer;
   outline: none;
-  background: ${({ theme, percentage }) =>
-    `linear-gradient(to right, ${theme.colors.interactiveBg.primaryHover} 0%, ${theme.colors.interactiveBg.primaryHover} ${percentage}%, ${theme.colors.bg.quaternary} ${percentage}%, ${theme.colors.bg.quaternary} 100%)`};
+  background: ${({ theme }) => theme.colors.bg.quaternary};
   border-radius: 100px;
   height: 4px;
   appearance: none;
   flex: 1;
 
-  &::-webkit-slider-thumb {
+  ::-webkit-slider-thumb {
     ${rangeThumb}
   }
 
-  &::-moz-range-thumb {
+  ::-moz-range-thumb {
     ${rangeThumb}
   }
 
-  &::-ms-thumb {
+  ::-ms-thumb {
     ${rangeThumb}
   }
 
-  &:before {
+  ::before {
     position: absolute;
     content: ' ';
     height: 6px;
@@ -72,32 +76,45 @@ const Input = styled.input.attrs({
           getAdjustedWidthPercentage(percentage, thumbSize, width)}% - 4px
     );
     width: ${({ percentage = 0 }) => percentage}%;
-    background-color: ${({ theme }) => theme.colors.interactiveBg.primaryHover};
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.primaryNormal};
     border-radius: 50px;
   }
 
-  &:focus {
-    &:after {
-      position: absolute;
-      content: ' ';
-      width: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize + 4}px;
-      height: ${({ thumbSize = DEFAULT_SIZE }) => thumbSize + 4}px;
-      border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
-      top: -14px;
-      left: calc(
-        ${({ percentage, thumbSize, width }) =>
-            getAdjustedWidthPercentage(percentage, thumbSize, width)}% - 4px
-      );
-      border-radius: 100%;
+  :hover {
+    ::before {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.primaryHover};
     }
+    ::-webkit-slider-thumb {
+      ${rangeThumbHover}
+    }
+
+    ::-moz-range-thumb {
+      ${rangeThumbHover}
+    }
+
+    ::-ms-thumb {
+      ${rangeThumbHover}
+    }
+  }
+
+  :focus::after {
+    position: absolute;
+    content: ' ';
+    width: ${({ thumbSize }) => thumbSize + 4}px;
+    height: ${({ thumbSize }) => thumbSize + 4}px;
+    border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
+    top: -${({ thumbSize }) => thumbSize / 2 + 2}px;
+    left: calc(
+      ${({ percentage, thumbSize, width }) =>
+          getAdjustedWidthPercentage(percentage, thumbSize, width)}% - 4px
+    );
+    border-radius: 100%;
   }
 `;
 
-function getAdjustedWidthPercentage(
-  percentage = 0,
-  thumbSize = DEFAULT_SIZE,
-  width
-) {
+function getAdjustedWidthPercentage(percentage = 0, thumbSize, width) {
   if (!width) {
     // Avoid dividing by 0 issues.
     width = 1;
@@ -107,6 +124,16 @@ function getAdjustedWidthPercentage(
 
 const Wrapper = styled.div`
   position: relative;
+`;
+
+// This is static div position 12px below the top center of the thumb.
+// This is used to align the tooltip by, as this is the base position at the 0 mark.
+const FakeThumb = styled.div`
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: ${({ thumbSize }) => thumbSize / 2}px;
+  top: ${({ thumbSize }) => -thumbSize / 2 + 12}px;
 `;
 
 /**
@@ -127,6 +154,8 @@ const Wrapper = styled.div`
  * @param {number} props.minorStep Minor step as described
  * @param {number} props.min Minimum value
  * @param {number} props.max Maximum value
+ * @param {number} props.thumbSize Thumb diameter in pixels if different from standard
+ * @param {string} props.suffix Optional value suffix to be displayed in tooltip
  * @return {Node} Range input component
  */
 function Slider({
@@ -136,9 +165,12 @@ function Slider({
   value,
   min = 0,
   max = 500,
+  thumbSize = DEFAULT_SIZE,
+  suffix = '',
   ...rest
 }) {
   const ref = useRef();
+  const fakeThumbRef = useRef();
   const widthTracker = useRef(null);
   const update = useCallback(
     (direction, isMajor) => {
@@ -160,24 +192,52 @@ function Slider({
     }
   }, [ref]);
 
-  useKeyDownEffect(ref, ['left'], () => update(-1, true), [update]);
-  useKeyDownEffect(ref, ['right'], () => update(1, true), [update]);
-  useKeyDownEffect(ref, ['shift+left'], () => update(-1, false), [update]);
-  useKeyDownEffect(ref, ['shift+right'], () => update(1, false), [update]);
+  useKeyDownEffect(ref, ['left', 'down'], () => update(-1, true), [update]);
+  useKeyDownEffect(ref, ['right', 'up'], () => update(1, true), [update]);
+  useKeyDownEffect(ref, ['shift+left', 'shift+down'], () => update(-1, false), [
+    update,
+  ]);
+  useKeyDownEffect(ref, ['shift+right', 'shift+up'], () => update(1, false), [
+    update,
+  ]);
+
+  const printValue = `${value}${suffix}`;
+
   return (
-    <Wrapper>
-      <Input
-        percentage={percentageVal}
-        ref={ref}
-        onChange={(evt) => handleChange(evt.target.valueAsNumber)}
-        step={minorStep}
-        value={value}
-        min={min}
-        max={max}
-        {...rest}
-        width={widthTracker.current}
-      />
-    </Wrapper>
+    <Tooltip
+      title={printValue}
+      placement={PLACEMENT.TOP}
+      forceAnchorRef={fakeThumbRef}
+      tooltipProps={{
+        style: {
+          transform: `translate(${
+            ((widthTracker.current - thumbSize) * percentageVal) / 100
+          }px, 0)`,
+        },
+      }}
+    >
+      <Wrapper>
+        <Input
+          percentage={percentageVal}
+          ref={ref}
+          onChange={(evt) => handleChange(evt.target.valueAsNumber)}
+          step={minorStep}
+          value={value}
+          min={min}
+          max={max}
+          thumbSize={thumbSize}
+          width={widthTracker.current}
+          aria-valuenow={printValue}
+          {...rest}
+        />
+        <FakeThumb
+          ref={fakeThumbRef}
+          percentage={percentageVal}
+          width={widthTracker.current}
+          thumbSize={thumbSize}
+        />
+      </Wrapper>
+    </Tooltip>
   );
 }
 
@@ -188,6 +248,8 @@ Slider.propTypes = {
   value: PropTypes.number.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
+  thumbSize: PropTypes.number,
+  suffix: PropTypes.string,
 };
 
 export { Slider };
