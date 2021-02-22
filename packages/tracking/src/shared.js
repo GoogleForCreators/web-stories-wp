@@ -26,9 +26,9 @@ import { DATA_LAYER } from './constants';
  * Using an ES6 spread operator (i.e. `...args`) will cause tracking events to _silently_ fail.
  */
 export function gtag() {
-  global[DATA_LAYER] = global[DATA_LAYER] || [];
+  window[DATA_LAYER] = window[DATA_LAYER] || [];
   //eslint-disable-next-line prefer-rest-params
-  global[DATA_LAYER].push(arguments);
+  window[DATA_LAYER].push(arguments);
 }
 
 const DEFAULT_CONFIG = {
