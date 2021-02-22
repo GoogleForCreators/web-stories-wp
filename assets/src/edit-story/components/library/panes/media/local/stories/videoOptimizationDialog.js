@@ -31,7 +31,6 @@ export default {
 };
 
 export const _default = () => {
-
   const mediaValue = {
     local: {
       state: { isTranscoding: true },
