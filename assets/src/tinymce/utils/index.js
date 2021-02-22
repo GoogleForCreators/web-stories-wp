@@ -45,7 +45,7 @@ export const isCircleView = () => {
 /**
  * Check if current view is circle view.
  *
- * @param view View to check for.
+ * @param {Object} view View to check for.
  * @return {boolean} Returns the result.
  */
 export const isView = (view) => {
