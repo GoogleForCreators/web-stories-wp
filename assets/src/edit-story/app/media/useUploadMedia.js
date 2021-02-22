@@ -68,7 +68,7 @@ function useUploadMedia({ media, setMedia }) {
   useEffect(() => {
     const hasOptedIn = Boolean(
       localStore.getItemByKey(
-        `${LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_OPTIN}`
+        `${LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED}`
       )
     );
 

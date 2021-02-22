@@ -35,25 +35,23 @@ function VideoOptimizationDialog() {
     isTranscoding: state.state.isTranscoding,
   }));
 
-  const [hasOptedIn, setHasOptedIn] = useState(
-    Boolean(
-      localStore.getItemByKey(
-        `${LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_OPTIN}`
-      )
-    )
+  const KEY = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
+
+  const [dialogDismissed, setDialogDismissed] = useState(
+    Boolean(localStore.getItemByKey(`${KEY}`))
   );
 
   const { updateCurrentUser } = useCurrentUser(({ actions }) => ({
     updateCurrentUser: actions.updateCurrentUser,
   }));
 
-  const setHasOptedInValue = useCallback((value) => {
-    setHasOptedIn(value);
-    localStore.setItemByKey(
-      `${LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_OPTIN}`,
-      value
-    );
-  }, []);
+  const setDialogDismissedValue = useCallback(
+    (value) => {
+      setDialogDismissed(value);
+      localStore.setItemByKey(`${KEY}`, value);
+    },
+    [KEY]
+  );
 
   const onDisable = useCallback(() => {
     updateCurrentUser({
@@ -61,12 +59,12 @@ function VideoOptimizationDialog() {
         web_stories_media_optimization: false,
       },
     });
-    setHasOptedInValue(true);
-  }, [updateCurrentUser, setHasOptedInValue]);
+    setDialogDismissedValue(true);
+  }, [updateCurrentUser, setDialogDismissedValue]);
 
   const onClose = useCallback(() => {
-    setHasOptedInValue(true);
-  }, [setHasOptedInValue]);
+    setDialogDismissedValue(true);
+  }, [setDialogDismissedValue]);
 
   const dialogTitle = __('Video optimization in progress', 'web-stories');
   const dialogDescription = __(
@@ -76,7 +74,7 @@ function VideoOptimizationDialog() {
 
   return (
     <Dialog
-      open={isTranscoding && !hasOptedIn}
+      open={isTranscoding && !dialogDismissed}
       onClose={onClose}
       title={dialogTitle}
       actions={
