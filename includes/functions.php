@@ -31,67 +31,31 @@ use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
 use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
 
 /**
- * Get stories object based on passed arguments.
- *
- * @param array $args Arguments to pass to Story_Query object.
- *
- * @return Story_Query
- */
-function get_stories_object( $args = [] ) {
-	$attrs = [];
-
-	$default_attributes = [
-		'view_type'                 => 'circles',
-		'number-of-stories'         => get_option( 'posts_per_page' ),
-		'number_of_columns'         => 2,
-		'show_title'                => true,
-		'show_excerpt'              => false,
-		'show_author'               => false,
-		'show_date'                 => false,
-		'show_stories_archive_link' => false,
-		'stories_archive_label'     => '',
-		'list_view_image_alignment' => 'left',
-		'class'                     => '',
-		'circle_size'               => 100,
-	];
-
-	$intersection = array_intersect_key( $args, array_flip( $default_attributes ) );
-
-	/**
-	 * Create a new array of attributes.
-	 */
-	if ( $intersection ) {
-		foreach ( $intersection as $key => $val ) {
-			$attrs[ $key ] = $val;
-			unset( $args[ $key ] );
-		}
-	}
-
-	return new Story_Query( $attrs, $args );
-}
-
-/**
  * Render stories based on the passed arguments.
  *
- * @param array $args Arguments for rendering stories.
+ * @param array $attrs Arguments for fetching stories.
+ * @param array $query_args Query arguments for stories.
  *
  * @return void
  */
-function render_stories( $args = [] ) {
+function render_stories( $attrs = [], $query_args = [] ) {
+	$stories_obj = new Story_Query( $attrs, $query_args );
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo get_stories_object( $args )->render();
+	echo $stories_obj->render();
 }
 
 /**
  * Returns list of stories based on the arguments passed to it.
  *
- * @param array $args Arguments for fetching stories.
+ * @param array $attrs Arguments for fetching stories.
+ * @param array $query_args Query arguments for stories.
  *
  * @return array
  */
-function get_stories( $args = [] ) {
+function get_stories( $attrs = [], $query_args = [] ) {
+	$stories_obj = new Story_Query( $attrs, $query_args );
 
-	return get_stories_object( $args )->get_stories();
+	return $stories_obj->get_stories();
 }
 
 /**

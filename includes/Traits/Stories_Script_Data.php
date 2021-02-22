@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories\Traits;
 
+use Google\Web_Stories\Shortcode\Stories_Shortcode;
 use function Google\Web_Stories\fields_states;
 use function Google\Web_Stories\get_layouts;
 use function Google\Web_Stories\get_stories_order;
@@ -91,7 +92,7 @@ trait Stories_Script_Data {
 		$data = [
 			'orderlist' => $order_list,
 			'icon'      => trailingslashit( WEBSTORIES_ASSETS_URL ) . 'images/widget/carousel-icon.png',
-			'tag'       => 'stories',
+			'tag'       => Stories_Shortcode::SHORTCODE_NAME,
 			'views'     => $view_types,
 			'fields'    => $field_states,
 		];

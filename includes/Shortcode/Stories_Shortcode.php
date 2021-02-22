@@ -40,7 +40,7 @@ class Stories_Shortcode {
 	 *
 	 * @var string
 	 */
-	const SHORTCODE_NAME = 'stories';
+	const SHORTCODE_NAME = 'web_stories';
 
 	/**
 	 * Initializes the Stories shortcode.
