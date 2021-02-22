@@ -158,9 +158,9 @@ const sharedConfig = {
       filename: '../css/[name].css',
     }),
     new webpack.DefinePlugin({
-      WEB_STORIES_ENV: process.env.NODE_ENV,
-      WEB_STORIES_DISABLE_PREVENT: false,
-      WEB_STORIES_DISABLE_ERROR_BOUNDARIES: false,
+      WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
+      WEB_STORIES_DISABLE_PREVENT: JSON.stringify(false),
+      WEB_STORIES_DISABLE_ERROR_BOUNDARIES: JSON.stringify(false),
     }),
   ].filter(Boolean),
   optimization: {
