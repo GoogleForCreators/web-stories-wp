@@ -249,6 +249,13 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
   });
 }
 
+/**
+ * @param {Object} arguments The arguments
+ * @param {Array} arguments.backgroundColor The r, g, b tuple representing a background color to compare to the text colors
+ * @param {Array} arguments.textColors The array of style colors of the text being checked
+ * @param {number} arguments.fontSize The font size (in editor pixels) of the text being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
 function textBgColorsLowContrast({
   backgroundColor,
   textColors,
@@ -256,6 +263,9 @@ function textBgColorsLowContrast({
   ...elements
 }) {
   const someTextHasLowContrast = textColors.some((styleColor) => {
+    if (!backgroundColor || !styleColor) {
+      return false;
+    }
     const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
     const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
