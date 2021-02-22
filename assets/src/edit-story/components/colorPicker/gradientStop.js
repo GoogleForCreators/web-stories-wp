@@ -84,13 +84,13 @@ const StopPointer = styled.div`
 
 const IconWrapper = styled.div`
   position: absolute;
-  left: -${3 + OFFSET}px;
-  top: -3px;
+  left: -${9 + OFFSET}px;
+  top: -8px;
   color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.fg.primary : theme.colors.fg.tertiary};
   svg {
-    width: 20px;
-    height: 23px;
+    width: 32px;
+    height: 32px;
   }
 `;
 
