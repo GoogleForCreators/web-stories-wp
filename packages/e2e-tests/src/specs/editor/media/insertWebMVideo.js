@@ -36,10 +36,8 @@ describe('Inserting WebM Video', () => {
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
     // Wait for poster image to appear.
-    await page.setDefaultTimeout(10000);
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-    await page.setDefaultTimeout(3000);
 
     await deleteMedia(filename);
   });
@@ -58,10 +56,8 @@ describe('Inserting WebM Video', () => {
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
     // Wait for poster image to appear.
-    await page.setDefaultTimeout(10000);
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-    await page.setDefaultTimeout(3000);
 
     await deleteMedia(filename);
   });
@@ -82,10 +78,8 @@ describe('Inserting WebM Video', () => {
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
     // Wait for poster image to be generated.
-    await page.setDefaultTimeout(10000);
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-    await page.setDefaultTimeout(3000);
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
