@@ -41,6 +41,17 @@ module.exports = {
   },
   //eslint-disable-next-line require-await
   webpackFinal: async (config) => {
+    // Avoid having to provide full file extension for imports.
+    // See https://webpack.js.org/configuration/module/#resolvefullyspecified
+
+    config.module.rules = config.module.rules.map((rule) => ({
+      ...rule,
+      resolve: {
+        ...rule.resolve,
+        fullySpecified: false,
+      },
+    }));
+
     // Modifies storybook's webpack config to use svgr instead of file-loader.
     // see https://github.com/storybookjs/storybook/issues/5613
 
@@ -50,7 +61,7 @@ module.exports = {
       options: assetRule.options || assetRule.query,
     };
 
-    // These should be sync'd with the config in `webpack.config.cjs`.
+    // These should be sync'd with the config in `webpack.config.js`.
     config.module.rules.unshift(
       {
         test: /\.svg$/,
