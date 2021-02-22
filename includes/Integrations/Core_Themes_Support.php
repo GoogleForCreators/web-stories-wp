@@ -63,17 +63,6 @@ class Core_Themes_Support {
 	];
 
 	/**
-	 * Register Core theme styles.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @return void
-	 */
-	public function assets() {
-		$this->register_style( $this->style_handle, [ Renderer::STYLE_HANDLE ] );
-	}
-
-	/**
 	 * Adds theme support for Web Stories.
 	 *
 	 * This will enable add_theme_support with predefined
@@ -98,7 +87,7 @@ class Core_Themes_Support {
 	 */
 	public function embed_web_stories() {
 		$customizer = new Customizer();
-		$this->enqueue_style( $this->style_handle );
+		$this->enqueue_style( $this->style_handle, [ Renderer::STYLE_HANDLE ] );
 		?>
 		<div class="web-stories-theme-header-section">
 			<?php echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML. ?>
@@ -144,7 +133,6 @@ class Core_Themes_Support {
 			return;
 		}
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'assets' ] );
 		add_filter( 'body_class', [ $this, 'add_core_theme_classes' ] );
 		add_action( 'wp_body_open', [ $this, 'embed_web_stories' ] );
 	}

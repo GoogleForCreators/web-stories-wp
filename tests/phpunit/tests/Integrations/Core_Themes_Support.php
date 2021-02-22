@@ -78,7 +78,6 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	public function test_init() {
 		$this->stub->init();
 
-		$this->assertEquals( 10, has_action( 'wp_enqueue_scripts', [ $this->stub, 'assets' ] ) );
 		$this->assertEquals( 10, has_filter( 'body_class', [ $this->stub, 'add_core_theme_classes' ] ) );
 		$this->assertEquals( 10, has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
 	}
@@ -141,5 +140,19 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 		$this->stub->init();
 
 		$this->assertFalse( get_theme_support( 'web-stories' ) );
+	}
+
+	/**
+	 *
+	 * @covers ::embed_web_stories
+	 */
+	public function embed_web_stories() {
+		ob_start();
+		$this->stub->embed_web_stories();
+
+		$actual = ob_get_clean();
+
+		$this->assertTrue( wp_script_is( 'web-stories-theme-style-twentytwentyone' ) );
+		$this->assertContains( 'web-stories-theme-header-section', $actual );
 	}
 }
