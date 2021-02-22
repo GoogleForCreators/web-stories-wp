@@ -31,6 +31,7 @@ import localStore, {
 } from '../../../../../../utils/localStore';
 
 const updateCurrentUser = jest.fn();
+const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
 function setup() {
   updateCurrentUser.mockReset();
@@ -44,8 +45,7 @@ function setup() {
     actions: { updateCurrentUser },
   };
 
-  const KEY = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
-  localStore.setItemByKey(`${KEY}`, false);
+  localStore.setItemByKey(storageKey, false);
 
   const { queryByText, getByRole } = renderWithTheme(
     <CurrentUserContext.Provider value={userValue}>

@@ -30,28 +30,25 @@ import localStore, {
 import { useCurrentUser } from '../../../../../app/currentUser';
 import { useLocalMedia } from '../../../../../app/media';
 
+const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
+
 function VideoOptimizationDialog() {
   const { isTranscoding } = useLocalMedia((state) => ({
     isTranscoding: state.state.isTranscoding,
   }));
 
-  const KEY = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
-
-  const [dialogDismissed, setDialogDismissed] = useState(
-    Boolean(localStore.getItemByKey(`${KEY}`))
+  const [isDialogDismissed, setIsDialogDismissed] = useState(
+    Boolean(localStore.getItemByKey(storageKey))
   );
 
   const { updateCurrentUser } = useCurrentUser(({ actions }) => ({
     updateCurrentUser: actions.updateCurrentUser,
   }));
 
-  const setDialogDismissedValue = useCallback(
-    (value) => {
-      setDialogDismissed(value);
-      localStore.setItemByKey(`${KEY}`, value);
-    },
-    [KEY]
-  );
+  const setIsDialogDismissedValue = useCallback((value) => {
+    setIsDialogDismissed(value);
+    localStore.setItemByKey(storageKey, value);
+  }, []);
 
   const onDisable = useCallback(() => {
     updateCurrentUser({
@@ -59,12 +56,12 @@ function VideoOptimizationDialog() {
         web_stories_media_optimization: false,
       },
     });
-    setDialogDismissedValue(true);
-  }, [updateCurrentUser, setDialogDismissedValue]);
+    setIsDialogDismissedValue(true);
+  }, [updateCurrentUser, setIsDialogDismissedValue]);
 
   const onClose = useCallback(() => {
-    setDialogDismissedValue(true);
-  }, [setDialogDismissedValue]);
+    setIsDialogDismissedValue(true);
+  }, [setIsDialogDismissedValue]);
 
   const dialogTitle = __('Video optimization in progress', 'web-stories');
   const dialogDescription = __(
@@ -74,7 +71,7 @@ function VideoOptimizationDialog() {
 
   return (
     <Dialog
-      open={isTranscoding && !dialogDismissed}
+      open={isTranscoding && !isDialogDismissed}
       onClose={onClose}
       title={dialogTitle}
       actions={

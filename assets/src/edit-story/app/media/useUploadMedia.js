@@ -34,6 +34,8 @@ import { useSnackbar } from '../snackbar';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
 
+const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
+
 /**
  * Upload media items to the app while displaying the local files in the library.
  *
@@ -66,13 +68,9 @@ function useUploadMedia({ media, setMedia }) {
   }, [isUploading, setPreventUnload]);
 
   useEffect(() => {
-    const dialogDismissed = Boolean(
-      localStore.getItemByKey(
-        `${LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED}`
-      )
-    );
+    const isDialogDismissed = Boolean(localStore.getItemByKey(storageKey));
 
-    if (isTranscoding && dialogDismissed) {
+    if (isTranscoding && isDialogDismissed) {
       showSnackbar({
         message: __('Video optimization in progress.', 'web-stories'),
       });
