@@ -399,7 +399,7 @@ class Customizer {
 				[
 					'type'            => 'text',
 					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Stories archive label', 'web-stories' ),
+					'label'           => __( 'Archive Link Label', 'web-stories' ),
 					'active_callback' => function() {
 						return ( $this->is_option_enabled( 'show_stories' ) && $this->is_option_enabled( 'show_stories_archive_link' ) );
 					},
