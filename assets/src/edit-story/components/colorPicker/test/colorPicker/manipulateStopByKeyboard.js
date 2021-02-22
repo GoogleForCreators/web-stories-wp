@@ -146,7 +146,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     fireEvent.keyDown(firstStop, {
       key: 'ArrowRight',
       which: 39,
-    })
+    });
 
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
