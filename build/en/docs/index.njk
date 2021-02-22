@@ -299,20 +299,21 @@ rootClass: docs
       <b>Note</b>: Site Kit and Tag Manager do not yet work together. <a href="https://github.com/google/site-kit-wp/issues/2070">Follow progress here</a>.
     </p>
     <p>
-      Web Stories for WordPress includes the following default analytics events:
+      Web Stories for WordPress includes the following default analytics event actions:
     </p>
     <ul class="real-ul">
-      <li><strong>Story Progress:</strong> Fired when a story page becomes visible.</li>
-      <li><strong>Story End:</strong> Fired when the last story page displays to the user. This can be used to measure completion rate.</li>
-      <li><strong>Track Focus State:</strong> Fired when clicking an element that opens a tooltip such as an `<a>` link or twitter embed.</li> 
-      <li><strong>Story Open:</strong> Fired when opening a drawer or dialog inside a story, such as a page attachment.</li>
-      <li><strong>Story Close:</strong> Fired when closing a drawer or dialog inside a story, such as a page attachment.</li>
-      <li><strong>Audio Muted:</strong> Fired when the user initiates an interaction to mute the audio for the current story.</li>
-      <li><strong>Audio Unmuted:</strong> Fired when the user initiates an interaction to unmute the audio for the current story.</li>
-      <li><strong>Page Attachment Enter:</strong> Fired when a user opens a page attachment.</li>
-      <li><strong>Page Attachment Exit:</strong> Fired when a user closes a page attachment.</li>
-      <li><strong>Story Bookend Enter:</strong> Fired when the the story displays the bookend to the user, after the last page of the current story.</li>
-      <li><strong>Story Bookend Exit:</strong> Fired when the user dismisses the bookend.</li>
+      <li><code>story_progress</code>: Fired when a story page becomes visible.</li>
+      <li><code>story_complete</code>: Fired when the last story page displays to the user. This can be used to measure completion rate.</li>
+      <li><code>story_focus</code>: Fired when clicking an element that opens a tooltip such as an `<a>` link or twitter embed.</li>
+      <li><code>story_click_through</code>: Fired when clicking on a tooltip.</li> 
+      <li><code>story_open</code>: Fired when opening a drawer or dialog inside a story, such as a page attachment.</li>
+      <li><code>story_close</code>: Fired when closing a drawer or dialog inside a story, such as a page attachment.</li>
+      <li><code>story_audio_muted</code>: Fired when the user initiates an interaction to mute the audio for the current story.</li>
+      <li><code>story_audio_unmuted</code>: Fired when the user initiates an interaction to unmute the audio for the current story.</li>
+      <li><code>story_page_attachment_enter</code>: Fired when a user opens a page attachment.</li>
+      <li><code>story_page_attachment_exit</code>: Fired when a user closes a page attachment.</li>
+      <li><code>story_bookend_enter</code>: Fired when the the story displays the bookend to the user, after the last page of the current story.</li>
+      <li><code>story_bookend_exit</code>: Fired when the user dismisses the bookend.</li>
     </ul>
     <h2 id="Additional-SEO-advice">Additional SEO advice</h2>
     <p>
