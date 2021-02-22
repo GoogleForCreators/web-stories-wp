@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState, useMemo } from 'react';
+import { useReducer, useEffect, useState, useMemo, useRef } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -222,8 +222,16 @@ export function useHelpCenter() {
   }, [actions, currentUser, isHydrated]);
 
   const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
+  const isInitialHydrationUpdate = useRef(false);
   useEffect(() => {
-    if (!persistenceKey) {
+    if (!persistenceKey && !isHydrated) {
+      return () => {};
+    }
+
+    // We don't want to persist when the update is from
+    // the initial hydrate call
+    if (!isInitialHydrationUpdate.current) {
+      isInitialHydrationUpdate.current = true;
       return () => {};
     }
     // The call to `updateCurrentUser` causes the entire app to rerender
@@ -241,7 +249,7 @@ export function useHelpCenter() {
       TRANSITION_DURATION * 1.2
     );
     return () => clearTimeout(id);
-  }, [actions, updateCurrentUser, persistenceKey]);
+  }, [actions, updateCurrentUser, persistenceKey, isHydrated]);
 
   // Components wrapped in a Transition no longer receive
   // prop updates once they start exiting. To work around
