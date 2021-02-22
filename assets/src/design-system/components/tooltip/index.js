@@ -137,7 +137,7 @@ function Tooltip({
       >
         <TooltipContainer ref={tooltipRef} placement={placement} shown={shown}>
           <TooltipText
-            as="span"
+            forwardedAs="span"
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           >
             {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}

@@ -26,7 +26,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
-import { PreviewStoryView } from '..';
+import { DashboardSnackbar, PreviewStoryView } from '..';
 import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
@@ -161,6 +161,7 @@ function MyStories() {
       />
 
       <Layout.Fixed>
+        <DashboardSnackbar />
         <ScrollToTop />
       </Layout.Fixed>
     </Layout.Provider>

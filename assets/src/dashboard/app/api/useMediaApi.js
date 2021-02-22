@@ -59,10 +59,7 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
         dispatch({
           type: MEDIA_ACTION_TYPES.FETCH_MEDIA_FAILURE,
           payload: {
-            message: {
-              body: err.message,
-              title: ERRORS.LOAD_MEDIA.TITLE,
-            },
+            message: ERRORS.LOAD_MEDIA.MESSAGE,
           },
         });
       }
@@ -99,10 +96,10 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
         dispatch({
           type: MEDIA_ACTION_TYPES.ADD_MEDIA_FAILURE,
           payload: {
-            message: {
-              body: err.message,
-              title: ERRORS.UPLOAD_PUBLISHER_LOGO.TITLE,
-            },
+            message:
+              ERRORS.UPLOAD_PUBLISHER_LOGO[
+                files.length > 1 ? 'MESSAGE_PLURAL' : 'MESSAGE'
+              ],
           },
         });
       }

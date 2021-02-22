@@ -117,7 +117,6 @@ export const UploadedContainer = styled.div`
   padding-bottom: 20px;
   margin-bottom: 4px;
   border: 1px solid transparent;
-  border-width: 2px;
 
   ${themeHelpers.focusableOutlineCSS};
 `;
@@ -211,3 +210,11 @@ export const SettingsTextInput = styled(Input)`
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);
+
+export const MultilineForm = styled(SettingForm)`
+  margin-bottom: 28px;
+
+  ${InlineForm} {
+    margin-top: 20px;
+  }
+`;
