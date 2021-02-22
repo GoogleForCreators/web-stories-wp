@@ -53,6 +53,7 @@ const Input = styled.input.attrs({
   height: 4px;
   appearance: none;
   flex: 1;
+  margin: 0;
 
   ::-webkit-slider-thumb {
     ${rangeThumb}
@@ -101,9 +102,10 @@ const Input = styled.input.attrs({
 
   :focus::after {
     position: absolute;
+    box-sizing: border-box;
     content: ' ';
-    width: ${({ thumbSize }) => thumbSize + 4}px;
-    height: ${({ thumbSize }) => thumbSize + 4}px;
+    width: ${({ thumbSize }) => thumbSize + 8}px;
+    height: ${({ thumbSize }) => thumbSize + 8}px;
     border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
     top: -${({ thumbSize }) => thumbSize / 2 + 2}px;
     left: calc(
@@ -124,9 +126,11 @@ function getAdjustedWidthPercentage(percentage = 0, thumbSize, width) {
 
 const Wrapper = styled.div`
   position: relative;
+  left: 0;
+  top: 0;
 `;
 
-// This is static div position 12px below the top center of the thumb.
+// This is static div positioned 12px below the top center of the thumb.
 // This is used to align the tooltip by, as this is the base position at the 0 mark.
 const FakeThumb = styled.div`
   width: 0;
