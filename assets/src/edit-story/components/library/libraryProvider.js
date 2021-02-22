@@ -72,9 +72,12 @@ function LibraryProvider({ children }) {
           const isLazyTab = LAZY_TABS.includes(id);
           const isActiveTab = tab === id;
           const hasBeenRendered = renderedTabs.current[id];
-          return isLazyTab && !isActiveTab && !hasBeenRendered
-            ? { id, icon, Pane: renderEmptyPane(id) }
-            : { id, icon, Pane };
+          const shouldRenderPane = !isLazyTab || isActiveTab || hasBeenRendered;
+          return {
+            id,
+            icon,
+            Pane: shouldRenderPane ? Pane : renderEmptyPane(id),
+          };
         }),
     [tab, showElementsTab, renderEmptyPane]
   );
