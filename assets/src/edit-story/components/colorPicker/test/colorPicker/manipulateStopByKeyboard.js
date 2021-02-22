@@ -97,11 +97,11 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
       hasGradient: true,
     });
 
-    const firstStop = getGradientStopAt(0);
+    const firstStop = getGradientStopAt(100);
     fireEvent.click(firstStop);
 
     // Move first stop left (does nothing)
-    fireEvent.keyDown(firstStop, { key: 'ArrowRight', which: 37 });
+    fireEvent.keyDown(firstStop, { key: 'ArrowLeft', which: 37 });
 
     expect(onChange).not.toHaveBeenCalled();
 
@@ -121,9 +121,9 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0.1 },
+        { color: { r: 255, g: 0, b: 0 }, position: 0 },
         { color: { r: 0, g: 255, b: 0 }, position: 0.5 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        { color: { r: 0, g: 0, b: 255 }, position: 0.9 },
       ],
     });
   });
@@ -134,30 +134,26 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
         type: 'linear',
         stops: [
           { color: { r: 255, g: 0, b: 0 }, position: 0 },
-          { color: { r: 0, g: 255, b: 0 }, position: 0.01 },
+          { color: { r: 0, g: 255, b: 0 }, position: 0.995 },
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
       hasGradient: true,
     });
 
-    const firstStop = getGradientStopAt(0);
+    const firstStop = getGradientStopAt(100);
     fireEvent.click(firstStop);
     fireEvent.keyDown(firstStop, {
-      key: 'ArrowLeft',
+      key: 'ArrowRight',
       which: 39,
-    });
-    fireEvent.keyDown(firstStop, {
-      key: 'ArrowLeft',
-      which: 39,
-    });
+    })
 
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
-        { color: { r: 0, g: 255, b: 0 }, position: 0.01 },
-        { color: { r: 255, g: 0, b: 0 }, position: 0.02 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        { color: { r: 255, g: 0, b: 0 }, position: 0 },
+        { color: { r: 0, g: 0, b: 255 }, position: 0.99 },
+        { color: { r: 0, g: 255, b: 0 }, position: 0.995 },
       ],
     });
   });

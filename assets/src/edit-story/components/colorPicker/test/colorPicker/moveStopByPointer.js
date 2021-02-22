@@ -39,7 +39,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     });
 
     // Get first gradient stop
-    const stop = getGradientStopAt(0);
+    const stop = getGradientStopAt(100);
 
     // Click it to make sure it's selected
     fireEvent.click(stop);
@@ -57,8 +57,8 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
-        { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0.2 },
-        { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
+        { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
+        { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.8 },
       ],
     });
     onChange.mockReset();
@@ -74,8 +74,8 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
-        { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0.4 },
-        { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
+        { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
+        { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.6 },
       ],
     });
     onChange.mockReset();
@@ -107,7 +107,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     });
 
     // Get first gradient stop
-    const stop = getGradientStopAt(0);
+    const stop = getGradientStopAt(100);
 
     // Click it to make sure it's selected
     fireEvent.click(stop);
@@ -119,15 +119,15 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
 
     // Move to the 60% mark past the stop at 40%
     firePointerEvent.pointerMove(stop, {
-      clientX: 0.6 * LINE_LENGTH,
+      clientX: 0.4 * LINE_LENGTH,
     });
 
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
+        { color: { r: 255, g: 0, b: 0 }, position: 0 },
         { color: { r: 0, g: 255, b: 0 }, position: 0.4 },
-        { color: { r: 255, g: 0, b: 0 }, position: 0.6 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        { color: { r: 0, g: 0, b: 255 }, position: 0.6 },
       ],
     });
     onChange.mockReset();
