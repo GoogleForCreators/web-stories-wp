@@ -21,8 +21,8 @@
 /**
  * Internal dependencies
  */
-import ContextMenu from '..';
-import { MenuItem, linkOrButtonValidator } from '../menu-item';
+import { ContextMenu } from '..';
+import { MenuItem, linkOrButtonValidator } from '../menuItem';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';
 

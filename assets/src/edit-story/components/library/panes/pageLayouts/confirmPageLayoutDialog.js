@@ -31,9 +31,7 @@ const DialogBody = styled.p`
   margin: 0;
 `;
 
-function ConfirmPageLayoutDialog(props) {
-  const { onClose, onConfirm } = props;
-
+function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
   return (
     <Dialog
       open

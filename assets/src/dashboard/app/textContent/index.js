@@ -21,47 +21,48 @@ import { __ } from '@web-stories-wp/i18n';
 
 export const ERRORS = {
   LOAD_STORIES: {
-    TITLE: __('Unable to Load Stories', 'web-stories'),
     DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
     INCOMPLETE_DATA_MESSAGE: __(
-      'There are stories with incomplete data.',
+      'Unable to load all stories because of incomplete data',
       'web-stories'
     ),
+    MESSAGE: __('Unable to load stories', 'web-stories'),
   },
   UPDATE_STORY: {
-    TITLE: __('Unable to Update Story', 'web-stories'),
+    MESSAGE: __('Unable to update story', 'web-stories'),
   },
   DELETE_STORY: {
-    TITLE: __('Unable to Delete Story', 'web-stories'),
+    MESSAGE: __('Unable to delete story', 'web-stories'),
   },
   CREATE_STORY_FROM_TEMPLATE: {
-    TITLE: __('Unable to Create Story From Template', 'web-stories'),
+    MESSAGE: __('Unable to create story from template', 'web-stories'),
   },
   DUPLICATE_STORY: {
-    TITLE: __('Unable to Duplicate Story', 'web-stories'),
+    MESSAGE: __('Unable to duplicate story', 'web-stories'),
   },
   LOAD_TEMPLATES: {
-    TITLE: __('Unable to Load Templates', 'web-stories'),
     DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
+    MESSAGE: __('Unable to load templates', 'web-stories'),
   },
   CREATE_TEMPLATE_FROM_STORY: {
-    TITLE: __('Unable to Create Template from Story', 'web-stories'),
+    MESSAGE: __('Unable to create template from story', 'web-stories'),
   },
   UPLOAD_PUBLISHER_LOGO: {
-    TITLE: __('Unable to Add Media', 'web-stories'),
+    MESSAGE: __('Unable to add publisher logo', 'web-stories'),
+    MESSAGE_PLURAL: __('Unable to add publisher logos', 'web-stories'),
   },
   LOAD_MEDIA: {
-    TITLE: __('Unable to Load Media', 'web-stories'),
+    MESSAGE: __('Unable to load publisher logo(s)', 'web-stories'),
   },
   LOAD_SETTINGS: {
-    TITLE: __('Unable to Load Settings', 'web-stories'),
     DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
+    MESSAGE: __('Unable to load settings', 'web-stories'),
   },
   UPDATE_EDITOR_SETTINGS: {
-    TITLE: __('Unable to Update Settings Data', 'web-stories'),
+    MESSAGE: __('Unable to update settings data', 'web-stories'),
   },
   RENDER_PREVIEW: {
-    TITLE: __('Unable to Render Preview', 'web-stories'),
+    MESSAGE: __('Unable to render preview', 'web-stories'),
   },
   LOAD_TEMPLATE: {
     DEFAULT_MESSAGE: __('Could not load the template', 'web-stories'),

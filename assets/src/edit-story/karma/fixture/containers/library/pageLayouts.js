@@ -25,7 +25,7 @@ export default class PageLayouts extends Container {
   }
 
   get pageLayouts() {
-    return this.getAllByRole('listitem');
+    return this.getAllByRole('button');
   }
 
   pageLayout(name) {

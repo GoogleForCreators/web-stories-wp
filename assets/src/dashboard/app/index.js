@@ -40,16 +40,12 @@ import {
   ROUTE_TITLES,
   ADMIN_TITLE,
 } from '../constants';
-import {
-  AppFrame,
-  LeftRail,
-  NavProvider,
-  PageContent,
-  ToastProvider,
-} from '../components';
+
+import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
 import ApiProvider from './api/apiProvider';
-import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
 import { ConfigProvider } from './config';
+import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
+import { SnackbarProvider } from './snackbar';
 import {
   EditorSettingsView,
   ExploreTemplatesView,
@@ -57,7 +53,6 @@ import {
   SavedTemplatesView,
   StoryAnimTool,
   TemplateDetailsView,
-  ToasterView,
 } from './views';
 import useApi from './api/useApi';
 
@@ -156,7 +151,6 @@ const AppContent = () => {
           component={<StoryAnimTool />}
         />
       </PageContent>
-      <ToasterView />
     </AppFrame>
   );
 };
@@ -174,17 +168,17 @@ function App({ config }) {
       <ThemeProvider theme={activeTheme}>
         <ThemeGlobals.OverrideFocusOutline />
         <ConfigProvider config={config}>
-          <ToastProvider>
-            <ApiProvider>
-              <NavProvider>
-                <RouterProvider>
+          <ApiProvider>
+            <NavProvider>
+              <RouterProvider>
+                <SnackbarProvider>
                   <GlobalStyle />
                   <KeyboardOnlyOutline />
                   <AppContent />
-                </RouterProvider>
-              </NavProvider>
-            </ApiProvider>
-          </ToastProvider>
+                </SnackbarProvider>
+              </RouterProvider>
+            </NavProvider>
+          </ApiProvider>
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>
