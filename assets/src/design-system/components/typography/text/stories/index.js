@@ -77,7 +77,7 @@ export const Label = () => (
           <Text
             key={`${presetSize}_text_link`}
             size={presetSize}
-            as={'label'}
+            as="label"
             isBold={select('isBold', booleanOptions, false)}
           >
             {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
@@ -94,7 +94,7 @@ export const Label = () => (
           <Text
             key={`${presetSize}_text_link_disabled`}
             size={presetSize}
-            as={'label'}
+            as="label"
             isBold={select('isBold', booleanOptions, false)}
             disabled
           >
