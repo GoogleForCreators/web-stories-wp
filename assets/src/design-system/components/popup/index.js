@@ -103,7 +103,6 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
-      // const { x, y } = getOffset(placement, spacing, anchor, dock, popup);
       setPopupState({
         offset: getOffset(placement, spacing, anchor, dock, popup),
       });
