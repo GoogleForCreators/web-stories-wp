@@ -66,7 +66,7 @@ describe('videoOptimizationDialog', () => {
     expect(getByRole('button', { name: /Disable/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /Sounds/i })).toBeInTheDocument();
   });
-  it('should clicking disable will trigger api request to update user meta', async () => {
+  it('should trigger API request to update user when disabling', async () => {
     const { getByRole } = setup();
 
     fireEvent.click(getByRole('button', { name: /Disable/i }));
