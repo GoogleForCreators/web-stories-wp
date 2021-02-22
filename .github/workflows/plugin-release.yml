@@ -234,6 +234,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Download assets version
         uses: actions/download-artifact@v2
@@ -306,7 +308,7 @@ jobs:
           if [[ -z $(git ls-remote origin $BRANCH) ]]; then
             git checkout -b $BRANCH
           else
-            git checkout -b $BRANCH --track origin/$BRANCH
+            git checkout --track origin/$BRANCH
           fi
 
       - name: Update plugin version
@@ -389,7 +391,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload regular bundle
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/web-stories.zip
@@ -399,7 +401,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload development bundle
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/web-stories-dev.zip
@@ -409,7 +411,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload composer bundle
-        uses: actions/upload-release-asset@v1.0.1
+        uses: actions/upload-release-asset@v1.0.2
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/web-stories-composer.zip

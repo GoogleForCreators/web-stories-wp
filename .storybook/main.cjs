@@ -50,10 +50,61 @@ module.exports = {
       options: assetRule.options || assetRule.query,
     };
 
-    config.module.rules.unshift({
-      test: /\.svg$/,
-      use: ['@svgr/webpack', 'url-loader', assetLoader],
-    });
+    // These should be sync'd with the config in `webpack.config.cjs`.
+    config.module.rules.unshift(
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              titleProp: true,
+              svgo: true,
+              svgoConfig: {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                    removeDimensions: true,
+                    convertColors: {
+                      currentColor: /^(?!url|none)/i,
+                    },
+                  },
+                ],
+              },
+            },
+          },
+          'url-loader',
+          assetLoader,
+        ],
+        exclude: [/images\/.*\.svg$/],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              titleProp: true,
+              svgo: true,
+              svgoConfig: {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                    removeDimensions: true,
+                    convertColors: {
+                      // See https://github.com/google/web-stories-wp/pull/6361
+                      currentColor: false,
+                    },
+                  },
+                ],
+              },
+            },
+          },
+          'url-loader',
+        ],
+        include: [/images\/.*\.svg$/],
+      }
+    );
 
     // only the first matching rule is used when there is a match.
     config.module.rules = [{ oneOf: config.module.rules }];

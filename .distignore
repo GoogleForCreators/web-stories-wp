@@ -39,7 +39,6 @@ web-stories-scraper
 .prettierrc
 .stylelintignore
 .stylelintrc
-.svgo.yml
 .test_artifacts
 babel.config.cjs
 codecov.yml

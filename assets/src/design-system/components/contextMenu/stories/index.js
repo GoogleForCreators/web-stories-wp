@@ -24,7 +24,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import ContextMenu from '..';
+import ContextMenu from '../contextMenu';
+import AnimatedContextMenu from '../animatedContextMenu';
 import { DarkThemeProvider } from '../../../storybookUtils';
 
 const items = [
@@ -73,12 +74,24 @@ export default {
   component: ContextMenu,
 };
 
+const ViewportContainer = styled.div`
+  position: relative;
+  height: 100vh;
+  width: 100%;
+`;
+
 const Container = styled.div`
   position: relative;
   height: 700px;
   width: 500px;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
+`;
+
+const AnimatedContainerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 export const _default = () => {
@@ -134,5 +147,23 @@ export const RandomItemsInMenu = () => {
         isOpen={boolean('isOpen', true)}
       />
     </Container>
+  );
+};
+
+export const Animated = () => {
+  const itemsWithEventHandlers = items.map((item) => ({
+    ...item,
+    onClick: action(`Clicked on \`${item.label}\``),
+  }));
+
+  return (
+    <ViewportContainer>
+      <AnimatedContainerWrapper>
+        <AnimatedContextMenu
+          items={itemsWithEventHandlers}
+          isOpen={boolean('isOpen', true)}
+        />
+      </AnimatedContainerWrapper>
+    </ViewportContainer>
   );
 };

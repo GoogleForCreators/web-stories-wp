@@ -27,18 +27,7 @@ import {
   TenorAttribution,
   UnsplashAttribution,
 } from './attribution';
-
-const ContentType = {
-  IMAGE: 'image',
-  VIDEO: 'video',
-  GIF: 'gif',
-};
-
-const ProviderType = {
-  UNSPLASH: 'unsplash',
-  COVERR: 'coverr',
-  TENOR: 'tenor',
-};
+import { ContentType, ProviderType } from './constants';
 
 /** @typedef {import('react').React.Component} ReactComponent */
 

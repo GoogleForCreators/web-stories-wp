@@ -42,7 +42,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer:v1
+          tools: composer
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -160,7 +160,7 @@ jobs:
           path: build
 
       - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@v0.4.1
+        uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
 
