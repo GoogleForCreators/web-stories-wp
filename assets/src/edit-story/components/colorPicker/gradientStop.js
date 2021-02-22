@@ -19,7 +19,7 @@
  */
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
@@ -50,12 +50,36 @@ const Stop = styled.button.attrs(({ position }) => ({
   }
 `;
 
+const fillCss = css`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const Background = styled.div`
+  ${fillCss}
+  ${({ color }) => generatePatternStyles(color)}
+`;
+
+const Transparent = styled.div`
+  ${fillCss}
+  background: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 10px 10px;
+`;
+
 const StopPointer = styled.div`
   transform: translate(${({ offset }) => `${offset}px`}, 0);
   width: ${GRADIENT_STOP_SIZE}px;
   height: ${GRADIENT_STOP_SIZE}px;
   border-radius: 2px;
-  ${({ color }) => generatePatternStyles(color)}
+  overflow: hidden;
 `;
 
 const IconWrapper = styled.div`
@@ -92,7 +116,10 @@ function GradientStopWithRef(
       <IconWrapper isSelected={isSelected}>
         <Icons.TailedRectangle />
       </IconWrapper>
-      <StopPointer color={color} offset={-OFFSET} />
+      <StopPointer offset={-OFFSET}>
+        <Transparent />
+        <Background color={color} />
+      </StopPointer>
     </Stop>
   );
 }

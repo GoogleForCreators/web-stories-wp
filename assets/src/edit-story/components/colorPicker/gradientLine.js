@@ -39,8 +39,27 @@ import { GRADIENT_STOP_SIZE, LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
 
-const Line = styled.div.attrs(({ stops }) => ({
-  tabIndex: -1,
+const Line = styled.div`
+  width: ${LINE_FULL_LENGTH}px;
+  height: ${LINE_WIDTH}px;
+  border-radius: 2px;
+  position: relative;
+
+  background: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 14px 14px;
+
+  &:focus {
+    /* The line will only have temporary focus while deleting stops */
+    outline: none;
+  }
+`;
+
+const Background = styled.div.attrs(({ stops }) => ({
   style: generatePatternStyles({
     type: 'linear',
     stops,
@@ -48,15 +67,12 @@ const Line = styled.div.attrs(({ stops }) => ({
     rotation: 0.25,
   }),
 }))`
-  width: ${LINE_FULL_LENGTH}px;
-  height: ${LINE_WIDTH}px;
-  border-radius: 2px;
-  position: relative;
-
-  &:focus {
-    /* The line will only have temporary focus while deleting stops */
-    outline: none;
-  }
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 `;
 
 const TempPointer = styled(Pointer).attrs(({ x }) => ({
@@ -93,10 +109,11 @@ function GradientLine({
 
   return (
     <Line
-      stops={stops}
       ref={line}
       aria-label={__('Gradient line', 'web-stories')}
+      tabIndex="-1"
     >
+      <Background stops={stops} />
       {stops.map(({ position, color }, index) => (
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}
