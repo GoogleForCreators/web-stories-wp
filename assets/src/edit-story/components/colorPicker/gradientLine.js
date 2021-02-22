@@ -35,12 +35,10 @@ import useKeyDeleteStop from './useKeyDeleteStop';
 import useKeyFocus from './useKeyFocus';
 import usePointerAddStop from './usePointerAddStop';
 import usePointerMoveStop from './usePointerMoveStop';
-import { GRADIENT_STOP_SIZE, LINE_LENGTH, LINE_WIDTH } from './constants';
-
-const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
+import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const Line = styled.div`
-  width: ${LINE_FULL_LENGTH}px;
+  width: ${LINE_LENGTH}px;
   height: ${LINE_WIDTH}px;
   border-radius: 2px;
   position: relative;
@@ -106,7 +104,6 @@ function GradientLine({
 
   usePointerMoveStop(line, onMove);
   const tempPointerPosition = usePointerAddStop(line, onAdd);
-
   return (
     <Line
       ref={line}
@@ -135,10 +132,7 @@ function GradientLine({
           aria-label={sprintf(
             /* translators: %d: stop percentage */
             __('Temporary gradient stop at %1$d%%', 'web-stories'),
-            Math.round(
-              (100 * (tempPointerPosition - LINE_WIDTH / 2)) /
-                (LINE_LENGTH + GRADIENT_STOP_SIZE)
-            )
+            Math.round(100 * (tempPointerPosition / LINE_LENGTH))
           )}
           x={tempPointerPosition}
         />

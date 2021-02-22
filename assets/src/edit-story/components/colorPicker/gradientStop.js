@@ -30,12 +30,10 @@ import { Icons } from '../../../design-system';
 import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
 const POINTER_MARGIN = 10;
-const OFFSET = 3;
+const OFFSET = 1;
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
-    right: `${
-      position * (LINE_LENGTH + GRADIENT_STOP_SIZE) - LINE_WIDTH / 2
-    }px`,
+    right: `${position * LINE_LENGTH - LINE_WIDTH / 2}px`,
   },
 }))`
   position: absolute;
