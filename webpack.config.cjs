@@ -266,7 +266,7 @@ const coreThemesBlockStylesPaths = glob.sync(
 
 // Build entry object for the Core Themes Styles.
 const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
-  const fileName = path.parse(curr).name.replace('-', '');
+  const fileName = path.parse(curr).name.replace(/-/g, '');
 
   return {
     ...acc,

@@ -37,13 +37,6 @@ class Core_Themes_Support {
 	use Assets;
 
 	/**
-	 * Style handle for current theme.
-	 *
-	 * @var string
-	 */
-	protected $style_handle = '';
-
-	/**
 	 * Default array of core themes to add support to.
 	 *
 	 * @var array
@@ -87,7 +80,7 @@ class Core_Themes_Support {
 	 */
 	public function embed_web_stories() {
 		$customizer = new Customizer();
-		$this->enqueue_style( $this->style_handle, [ Renderer::STYLE_HANDLE ] );
+		$this->enqueue_style( 'web-stories-theme-style-' . get_stylesheet(), [ Renderer::STYLE_HANDLE ] );
 		?>
 		<div class="web-stories-theme-header-section">
 			<?php echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML. ?>
@@ -123,7 +116,6 @@ class Core_Themes_Support {
 			return;
 		}
 
-		$this->style_handle = 'web-stories-theme-style-' . get_stylesheet();
 		$this->extend_theme_support();
 
 		$options = get_option( Customizer::STORY_OPTION );
