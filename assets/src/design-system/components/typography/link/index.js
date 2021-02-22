@@ -27,15 +27,12 @@ import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
 export const Link = styled.a`
-  ${({ isBold, size, theme }) => css`
+  ${({ size, theme }) => css`
     ${defaultTypographyStyle};
     ${themeHelpers.expandPresetStyles({
-      preset: theme.typography.presets.paragraph[size],
+      preset: theme.typography.presets.link[size],
       theme,
     })};
-    font-weight: ${isBold
-      ? theme.typography.weight.bold
-      : theme.typography.presets.paragraph[size].weight};
 
     color: ${theme.colors.fg.linkNormal};
     text-decoration: none;
@@ -50,11 +47,8 @@ export const Link = styled.a`
 `;
 
 Link.propTypes = {
-  isBold: PropTypes.bool,
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
 };
 Link.defaultProps = {
-  as: 'a',
-  isBold: false,
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };

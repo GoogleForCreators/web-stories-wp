@@ -127,6 +127,38 @@ export const typography = {
         letterSpacing: 0.16,
       },
     },
+    link: {
+      [PRESET_SIZES.X_LARGE]: {
+        weight: 500,
+        size: 24,
+        lineHeight: 32,
+        letterSpacing: -0.02,
+      },
+      [PRESET_SIZES.LARGE]: {
+        weight: 700,
+        size: 18,
+        lineHeight: 24,
+        letterSpacing: 0,
+      },
+      [PRESET_SIZES.MEDIUM]: {
+        weight: 700,
+        size: 16,
+        lineHeight: 24,
+        letterSpacing: 0,
+      },
+      [PRESET_SIZES.SMALL]: {
+        weight: 700,
+        size: 14,
+        lineHeight: 20,
+        letterSpacing: 0,
+      },
+      [PRESET_SIZES.X_SMALL]: {
+        weight: 700,
+        size: 12,
+        lineHeight: 20,
+        letterSpacing: 0.16,
+      },
+    },
     label: {
       [PRESET_SIZES.LARGE]: {
         weight: 500,
