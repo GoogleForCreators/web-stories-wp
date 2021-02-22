@@ -61,5 +61,5 @@ phpunit-multisite.xml.dist
 README.md
 scoper.inc.php
 SECURITY.md
-webpack.config.cjs
-webpack.config.test.cjs
+webpack.config.js
+webpack.config.test.js
