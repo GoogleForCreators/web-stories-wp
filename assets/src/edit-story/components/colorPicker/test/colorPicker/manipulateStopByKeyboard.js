@@ -101,7 +101,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     fireEvent.click(firstStop);
 
     // Move first stop left (does nothing)
-    fireEvent.keyDown(firstStop, { key: 'ArrowLeft', which: 37 });
+    fireEvent.keyDown(firstStop, { key: 'ArrowRight', which: 37 });
 
     expect(onChange).not.toHaveBeenCalled();
 
@@ -134,7 +134,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
         type: 'linear',
         stops: [
           { color: { r: 255, g: 0, b: 0 }, position: 0 },
-          { color: { r: 0, g: 255, b: 0 }, position: 0.005 },
+          { color: { r: 0, g: 255, b: 0 }, position: 0.01 },
           { color: { r: 0, g: 0, b: 255 }, position: 1 },
         ],
       },
@@ -144,15 +144,19 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     const firstStop = getGradientStopAt(0);
     fireEvent.click(firstStop);
     fireEvent.keyDown(firstStop, {
-      key: 'ArrowRight',
+      key: 'ArrowLeft',
+      which: 39,
+    });
+    fireEvent.keyDown(firstStop, {
+      key: 'ArrowLeft',
       which: 39,
     });
 
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
-        { color: { r: 0, g: 255, b: 0 }, position: 0.005 },
-        { color: { r: 255, g: 0, b: 0 }, position: 0.01 },
+        { color: { r: 0, g: 255, b: 0 }, position: 0.01 },
+        { color: { r: 255, g: 0, b: 0 }, position: 0.02 },
         { color: { r: 0, g: 0, b: 255 }, position: 1 },
       ],
     });
