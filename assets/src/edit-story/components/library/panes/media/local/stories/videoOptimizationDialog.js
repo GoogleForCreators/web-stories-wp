@@ -24,6 +24,9 @@ import { action } from '@storybook/addon-actions';
 import VideoOptimizationDialog from '../videoOptimizationDialog';
 import MediaContext from '../../../../../../app/media/context';
 import CurrentUserContext from '../../../../../../app/currentUser/context';
+import localStore, {
+  LOCAL_STORAGE_PREFIX,
+} from '../../../../../../utils/localStore';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Video Optimization',
@@ -31,6 +34,10 @@ export default {
 };
 
 export const _default = () => {
+  // Reset local storage for improved testablity.
+  const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
+  localStore.setItemByKey(storageKey, false);
+
   const mediaValue = {
     local: {
       state: { isTranscoding: true },
