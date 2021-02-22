@@ -21,7 +21,7 @@ import renderer from 'react-test-renderer';
 /**
  * Internal dependencies
  */
-import { isCircleView } from '../../utils';
+import { isView } from '../../utils';
 import WebStoriesModal from '../../components/Modal';
 
 jest.mock('@wordpress/data', () => ({
@@ -40,6 +40,7 @@ jest.mock('@wordpress/components', () => ({
   RangeControl: 'Range',
   SelectControl: 'Select',
   Button: 'Button',
+  TextControl: 'TextControl',
 }));
 
 jest.mock('../../utils/globals', () => ({
@@ -52,6 +53,7 @@ jest.mock('../../utils/globals', () => ({
 jest.mock('../../components/controls/Toggle', () => 'TinyMCEToggle');
 
 jest.mock('../../utils', () => ({
+  isView: jest.fn((view) => view === 'grid'),
   isCircleView: jest.fn(() => false),
   updateViewSettings: jest.fn((settings) => settings),
 }));
@@ -60,7 +62,11 @@ describe('TinyMCE Controls Modal', () => {
   it('modal is opened and view is non-circle', () => {
     const props = {
       modalOpen: true,
-      settings: {},
+      settings: {
+        archive_link: {
+          show: true,
+        },
+      },
       prepareShortCode: jest.fn(),
     };
 
@@ -69,11 +75,15 @@ describe('TinyMCE Controls Modal', () => {
   });
 
   it('modal is opened and view is circle', () => {
-    isCircleView.mockImplementationOnce(() => true);
+    isView.mockImplementationOnce((view) => view === 'circles');
 
     const props = {
       modalOpen: true,
-      settings: {},
+      settings: {
+        archive_link: {
+          show: true,
+        },
+      },
       prepareShortCode: jest.fn(),
     };
 

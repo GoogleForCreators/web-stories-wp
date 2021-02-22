@@ -29,7 +29,19 @@ exports[`TinyMCE Controls Modal modal is opened and view is circle 1`] = `
     field="image_align"
   />
   <TinyMCEToggle
+    field="sharp_corners"
+  />
+  <TinyMCEToggle
     field="archive_link"
+    fieldObj={
+      Object {
+        "show": true,
+      }
+    }
+  />
+  <TextControl
+    label="Archive Link Label"
+    onChange={[Function]}
   />
   <Range
     label="Number of Stories"
@@ -107,7 +119,19 @@ exports[`TinyMCE Controls Modal modal is opened and view is non-circle 1`] = `
     field="image_align"
   />
   <TinyMCEToggle
+    field="sharp_corners"
+  />
+  <TinyMCEToggle
     field="archive_link"
+    fieldObj={
+      Object {
+        "show": true,
+      }
+    }
+  />
+  <TextControl
+    label="Archive Link Label"
+    onChange={[Function]}
   />
   <Range
     label="Number of Stories"
