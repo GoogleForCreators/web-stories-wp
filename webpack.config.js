@@ -17,18 +17,18 @@
 /**
  * External dependencies
  */
-const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const WebpackBar = require('webpackbar');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+import path from 'path';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import WebpackBar from 'webpackbar';
+import TerserPlugin from 'terser-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import webpack from 'webpack';
 
 /**
  * WordPress dependencies
  */
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+import DependencyExtractionWebpackPlugin from '@wordpress/dependency-extraction-webpack-plugin';
 
 /**
  * Prevents externalizing certain packages.
@@ -78,9 +78,9 @@ const sharedConfig = {
         use: [
           // Currently does not work with source-map-loader (which runs for dev builds).
           // See https://github.com/webpack/webpack/issues/1554
-          isProduction && require.resolve('thread-loader'),
+          isProduction && 'thread-loader',
           {
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: {
               // Babel uses a directory within local node_modules
               // by default. Use the environment variable option
@@ -299,4 +299,4 @@ const activationNotice = {
   },
 };
 
-module.exports = [storiesEditor, dashboard, storyEmbedBlock, activationNotice];
+export default [storiesEditor, dashboard, storyEmbedBlock, activationNotice];

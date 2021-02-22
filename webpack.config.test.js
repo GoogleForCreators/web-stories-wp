@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-const webpack = require('webpack');
+import webpack from 'webpack';
 
 /**
  * WordPress dependencies
  */
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+import DependencyExtractionWebpackPlugin from '@wordpress/dependency-extraction-webpack-plugin';
 
 /**
  * Internal dependencies
  */
-const webpackConfigArray = require('./webpack.config.cjs');
+import webpackConfigArray from './webpack.config';
 
 function getConfig(group, { coverage = false } = {}) {
   const config = webpackConfigArray
@@ -63,4 +63,4 @@ function getConfig(group, { coverage = false } = {}) {
   return config;
 }
 
-module.exports = getConfig;
+export default getConfig;

@@ -191,15 +191,15 @@
     "thread-loader": "^3.0.1",
     "webpack": "^5.23.0",
     "webpack-bundle-analyzer": "^4.3.0",
-    "webpack-cli": "^4.3.1",
+    "webpack-cli": "^4.5.0",
     "webpackbar": "^5.0.0-3"
   },
   "scripts": {
     "build": "npm-run-all build:*",
     "prebuild:js": "rm -rf assets/css/* assets/js/*",
-    "build:js": "NODE_ENV=production node --no-deprecation node_modules/webpack/bin/webpack.js --config webpack.config.cjs",
+    "build:js": "node --no-deprecation node_modules/webpack/bin/webpack.js --node-env=production",
     "predev": "rm -rf assets/css/* assets/js/*",
-    "dev": "node --no-deprecation node_modules/webpack/bin/webpack.js --config webpack.config.cjs --watch",
+    "dev": "node --no-deprecation node_modules/webpack/bin/webpack.js --watch",
     "env:start": "./bin/local-env/start.sh",
     "env:stop": "./bin/local-env/stop.sh",
     "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",
