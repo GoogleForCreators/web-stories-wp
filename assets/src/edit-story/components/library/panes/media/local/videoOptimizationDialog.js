@@ -43,16 +43,9 @@ function VideoOptimizationDialog() {
     )
   );
 
-  const { currentUser, updateCurrentUser } = useCurrentUser(
-    ({ state, actions }) => ({
-      currentUser: state.currentUser,
-      updateCurrentUser: actions.updateCurrentUser,
-    })
-  );
-
-  const isTranscodingEnabled = Boolean(
-    currentUser.meta?.web_stories_media_optimization
-  );
+  const { updateCurrentUser } = useCurrentUser(({ actions }) => ({
+    updateCurrentUser: actions.updateCurrentUser,
+  }));
 
   const setHasOptedInValue = useCallback((value) => {
     setHasOptedIn(value);
@@ -83,7 +76,7 @@ function VideoOptimizationDialog() {
 
   return (
     <Dialog
-      open={isTranscodingEnabled && isTranscoding && !hasOptedIn}
+      open={isTranscoding && !hasOptedIn}
       onClose={onClose}
       title={dialogTitle}
       actions={
