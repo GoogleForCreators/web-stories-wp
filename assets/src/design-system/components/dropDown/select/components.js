@@ -28,7 +28,7 @@ import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
 export const SelectButton = styled.button(
-  ({ theme, hasError, isOpen, selectButtonStyles }) => css`
+  ({ theme, hasError, isOpen }) => css`
     width: 100%;
     height: 36px;
     box-sizing: border-box;
@@ -83,8 +83,6 @@ export const SelectButton = styled.button(
         color: ${theme.colors.fg.disable};
       }
     }
-
-    ${selectButtonStyles}
   `
 );
 

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
@@ -30,7 +30,6 @@ import {
   Text,
   THEME_CONSTANTS,
   DropDown,
-  themeHelpers,
   Link,
 } from '../../../../design-system';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
@@ -61,6 +60,10 @@ const StyledLink = styled(Link)`
   margin-right: 24px;
 `;
 
+const StyledDropDown = styled(DropDown)`
+  width: 210px;
+`;
+
 export default function BodyViewOptions({
   currentSort,
   handleLayoutSelect,
@@ -87,29 +90,12 @@ export default function BodyViewOptions({
         <ControlsContainer>
           {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
             <StorySortDropdownContainer>
-              <DropDown
+              <StyledDropDown
                 ariaLabel={sortDropdownAriaLabel}
                 options={pageSortOptions}
                 type={DROPDOWN_TYPES.MENU}
                 selectedValue={currentSort}
                 onMenuItemClick={(_, newSort) => handleSortChange(newSort)}
-                popupFillWidth={false}
-                selectButtonStyles={css`
-                  ${themeHelpers.expandTextPreset(
-                    ({ paragraph }, sizes) => paragraph[sizes.SMALL]
-                  )}
-                  border: none;
-                  text-align: right;
-                  justify-content: flex-end;
-
-                  &,
-                  & > span {
-                    color: ${({ theme }) => theme.colors.fg.secondary};
-                  }
-                `}
-                popupStyles={css`
-                  width: 210px;
-                `}
               />
             </StorySortDropdownContainer>
           )}

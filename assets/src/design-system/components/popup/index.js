@@ -74,8 +74,6 @@ const Container = styled.div.attrs(
     border-top-width: 3px;
     border-radius: 6px;
   }
-
-  ${({ popupStyles }) => popupStyles}
 `;
 
 function Popup({
@@ -90,7 +88,6 @@ function Popup({
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = () => {},
-  popupStyles,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -139,7 +136,6 @@ function Popup({
           fillHeight={fillHeight}
           placement={placement}
           zIndex={zIndex}
-          popupStyles={popupStyles}
           offset={popupState.offset}
         >
           {renderContents

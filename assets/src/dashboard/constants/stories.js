@@ -147,16 +147,6 @@ export const STORY_STATUSES = [
     status: STORY_STATUS.PRIVATE,
   },
 ];
-// {sprintf(
-//   /* translators: %d: minimum number of story characters. */
-//   _n(
-//     'Limit story title to %d character or less',
-//     'Limit story title to %d characters or less',
-//     MAX_STORY_TITLE_LENGTH_CHARS,
-//     'web-stories'
-//   ),
-//   MAX_STORY_TITLE_LENGTH_CHARS
-// )}
 
 export const STORY_VIEWING_LABELS = {
   [STORY_STATUS.ALL]: (n) =>
