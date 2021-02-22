@@ -104,6 +104,7 @@ const reducer = {
     };
   },
   addStopAt: (state, { payload: newPosition }) => {
+    newPosition = Number(newPosition.toFixed(2));
     // If there's already a stop at this position, do nothing:
     if (state.stops.some(({ position }) => position === newPosition)) {
       return state;
@@ -130,7 +131,7 @@ const reducer = {
     // Clamp by 0 and 1, round to 4 decimals
     const desiredPosition = Math.max(
       0,
-      Math.min(1, Number((currentPosition + deltaPosition).toFixed(4)))
+      Math.min(1, Number((currentPosition + deltaPosition).toFixed(2)))
     );
     if (desiredPosition === currentPosition) {
       return state;
