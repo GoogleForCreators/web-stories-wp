@@ -66,13 +66,13 @@ function useUploadMedia({ media, setMedia }) {
   }, [isUploading, setPreventUnload]);
 
   useEffect(() => {
-    const hasOptedIn = Boolean(
+    const dialogDismissed = Boolean(
       localStore.getItemByKey(
         `${LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED}`
       )
     );
 
-    if (isTranscoding && hasOptedIn) {
+    if (isTranscoding && dialogDismissed) {
       showSnackbar({
         message: __('Video optimization in progress.', 'web-stories'),
       });
