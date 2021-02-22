@@ -32,6 +32,9 @@ module.exports = {
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',
   ],
+  core: {
+    builder: 'webpack5',
+  },
   reactOptions: {
     fastRefresh: true,
     strictMode: true,
