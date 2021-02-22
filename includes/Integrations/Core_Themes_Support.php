@@ -44,13 +44,6 @@ class Core_Themes_Support {
 	protected $style_handle = '';
 
 	/**
-	 * Is customizer stories showing.
-	 *
-	 * @var boolean
-	 */
-	protected $showing_customizer_stories = null;
-
-	/**
 	 * Default array of core themes to add support to.
 	 *
 	 * @var array
@@ -123,9 +116,7 @@ class Core_Themes_Support {
 	 */
 	public function add_core_theme_classes( $classes ) {
 
-		if ( $this->showing_customizer_stories ) {
-			$classes[] = 'is-showing-header-stories';
-		}
+		$classes[] = 'has-web-stories';
 
 		return $classes;
 	}
@@ -146,11 +137,10 @@ class Core_Themes_Support {
 		$this->style_handle = 'web-stories-theme-style-' . get_stylesheet();
 		$this->extend_theme_support();
 
-		$options                          = get_option( Customizer::STORY_OPTION );
-		$this->showing_customizer_stories = ! empty( $options['show_stories'] );
+		$options = get_option( Customizer::STORY_OPTION );
 
 		// Load theme specific styles and render function only if selected to show stories.
-		if ( ! $this->showing_customizer_stories ) {
+		if ( empty( $options['show_stories'] ) ) {
 			return;
 		}
 

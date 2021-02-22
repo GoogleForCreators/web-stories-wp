@@ -10,7 +10,7 @@
 }
 
 @media screen and (min-width: 783px) {
-  .is-showing-header-stories .site-main {
+  .has-web-stories .site-main {
     margin-top: 0;
   }
 }
