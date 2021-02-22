@@ -25,6 +25,13 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
+  beforeAll(async () => {
+    await page.setDefaultTimeout(10000);
+  });
+  afterAll(async () => {
+    await page.setDefaultTimeout(3000);
+  });
+
   it('should insert an video by clicking on media dialog it', async () => {
     await createNewStory();
 
