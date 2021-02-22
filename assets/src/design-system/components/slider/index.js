@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -39,6 +39,16 @@ const rangeThumb = css`
 `;
 const rangeThumbHover = css`
   background-color: ${({ theme }) => theme.colors.interactiveBg.primaryHover};
+`;
+
+const rangeThumbFocus = css`
+  border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
+  padding: 2px;
+  background-clip: content-box;
+  width: ${({ thumbSize }) => thumbSize + 8}px;
+  height: ${({ thumbSize }) => thumbSize + 8}px;
+  margin-left: ${({ thumbSize, width, percentage }) =>
+    getFocusedThumbMargin(percentage, thumbSize, width)}px;
 `;
 
 const Input = styled.input.attrs({
@@ -74,7 +84,7 @@ const Input = styled.input.attrs({
     top: calc(50% - 3px);
     left: -calc(
       ${({ percentage, thumbSize, width }) =>
-          getAdjustedWidthPercentage(percentage, thumbSize, width)}% - 4px
+          getAdjustedWidthValue(percentage, thumbSize, width)}% - 4px
     );
     width: ${({ percentage = 0 }) => percentage}%;
     background-color: ${({ theme }) =>
@@ -100,28 +110,51 @@ const Input = styled.input.attrs({
     }
   }
 
-  :focus::after {
-    position: absolute;
-    box-sizing: border-box;
-    content: ' ';
-    width: ${({ thumbSize }) => thumbSize + 8}px;
-    height: ${({ thumbSize }) => thumbSize + 8}px;
-    border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
-    top: -${({ thumbSize }) => thumbSize / 2 + 2}px;
-    left: calc(
-      ${({ percentage, thumbSize, width }) =>
-          getAdjustedWidthPercentage(percentage, thumbSize, width)}% - 4px
-    );
-    border-radius: 100%;
+  &:focus {
+    &::-webkit-slider-thumb {
+      ${rangeThumbFocus}
+    }
+
+    &::-moz-range-thumb {
+      ${rangeThumbFocus}
+    }
+
+    &::-ms-thumb {
+      ${rangeThumbFocus}
+    }
   }
 `;
 
-function getAdjustedWidthPercentage(percentage = 0, thumbSize, width) {
+/**
+ * Gets a value adjusted by the "real" absolute available width on the slider.
+ * The available width for the slider is the total width - the thumb size
+ * since otherwise values like left: 100% etc. would already go out of the slider.
+ *
+ * @param {number} value Value to adjust.
+ * @param {number} thumbSize Thumb size.
+ * @param {number} width Width in px in DOM.
+ * @return {number} The adjusted value.
+ */
+function getAdjustedWidthValue(value = 0, thumbSize, width) {
   if (!width) {
     // Avoid dividing by 0 issues.
     width = 1;
   }
-  return ((width - thumbSize) / width) * percentage;
+  return ((width - thumbSize) / width) * value;
+}
+
+/**
+ *
+ * @param {number} percentage Current value percentage of the slider.
+ * @param {number} thumbSize Thumb size.
+ * @param {number} width Width in px in DOM.
+ * @return {number} The margin to be applied to a focused thumb.
+ */
+function getFocusedThumbMargin(percentage, thumbSize, width) {
+  // 4 comes from 2px borer + 2px gap between the border and thumb
+  const leftMargin = Math.ceil(getAdjustedWidthValue(4, thumbSize, width));
+  // After 50% the left margin becomes positive so we take 50% as the 100%, thus multiplying by 2.
+  return -leftMargin + percentage * 2 * 0.01 * leftMargin;
 }
 
 const Wrapper = styled.div`
@@ -175,7 +208,7 @@ function Slider({
 }) {
   const ref = useRef();
   const fakeThumbRef = useRef();
-  const widthTracker = useRef(null);
+  const [widthTracker, setWidthTracker] = useState(null);
   const update = useCallback(
     (direction, isMajor) => {
       const diff = direction * (isMajor ? majorStep : minorStep);
@@ -190,11 +223,11 @@ function Slider({
   const percentageVal = ((value - min) / (max - min)) * 100;
 
   useEffect(() => {
-    if (ref.current && !widthTracker.current) {
+    if (ref.current && !widthTracker) {
       const { width } = ref.current.getBoundingClientRect();
-      widthTracker.current = width;
+      setWidthTracker(width);
     }
-  }, [ref]);
+  }, [ref, widthTracker]);
 
   useKeyDownEffect(ref, ['left', 'down'], () => update(-1, true), [update]);
   useKeyDownEffect(ref, ['right', 'up'], () => update(1, true), [update]);
@@ -215,7 +248,7 @@ function Slider({
       tooltipProps={{
         style: {
           transform: `translate(${
-            ((widthTracker.current - thumbSize) * percentageVal) / 100
+            ((widthTracker - thumbSize) * percentageVal) / 100
           }px, 0)`,
         },
       }}
@@ -230,14 +263,14 @@ function Slider({
           min={min}
           max={max}
           thumbSize={thumbSize}
-          width={widthTracker.current}
+          width={widthTracker}
           aria-valuenow={printValue}
           {...rest}
         />
         <FakeThumb
           ref={fakeThumbRef}
           percentage={percentageVal}
-          width={widthTracker.current}
+          width={widthTracker}
           thumbSize={thumbSize}
         />
       </Wrapper>
