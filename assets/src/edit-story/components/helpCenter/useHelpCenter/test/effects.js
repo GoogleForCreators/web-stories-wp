@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { initial } from '../';
+import { initialState } from '../';
 import {
   BASE_NAVIGATION_FLOW,
   DONE_TIP_ENTRY,
@@ -26,17 +26,15 @@ import {
 import {
   composeEffects,
   createDynamicNavigationFlow,
-  deriveInitialOpen,
-  deriveInitialUnreadTipsCount,
   deriveBottomNavigation,
   deriveDisabledButtons,
+  deriveInitialOpen,
+  deriveInitialUnreadTipsCount,
   deriveReadTip,
   deriveTransitionDirection,
   deriveUnreadTipsCount,
   resetNavigationIndexOnOpen,
 } from '../effects';
-import { TIPS, BASE_NAVIGATION_FLOW, DONE_TIP_ENTRY } from '../../constants';
-import { initialState} from '../';
 
 const mockState = (overrides = {}) => ({
   ...initialState,

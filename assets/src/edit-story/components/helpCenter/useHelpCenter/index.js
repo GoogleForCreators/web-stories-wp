@@ -78,7 +78,7 @@ const deriveInitialState = composeEffects([
   deriveInitialUnreadTipsCount,
 ]);
 
-const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
+const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
 
 export const initialState = {
   isOpen: false,
@@ -194,8 +194,8 @@ export function useHelpCenter() {
   const { isHydrated, unreadTipsCount } = store.state;
   useEffect(() => {
     if (isHydrated) {
-      const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
-      localStore.setItemByKey(LOCAL_STORAGE_PREFIX.FTUE, {
+      const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
+      localStore.setItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER, {
         ...local,
         unreadTipsCount,
       });
@@ -205,8 +205,8 @@ export function useHelpCenter() {
   // Persist user updates to isOpen
   const { isOpen } = store.state;
   useEffect(() => {
-    const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.FTUE);
-    localStore.setItemByKey(LOCAL_STORAGE_PREFIX.FTUE, {
+    const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
+    localStore.setItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER, {
       ...local,
       isOpen,
     });
