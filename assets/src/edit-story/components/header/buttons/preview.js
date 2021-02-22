@@ -50,6 +50,19 @@ function Preview() {
   const isDraft = 'draft' === status;
 
   /**
+   * Applies any local transforms (e.g. AMP development mode) to the stored preview link.
+   *
+   * @param {string} urlString The original preview link.
+   * @return {string} The decorated preview link.
+   */
+  const decoratePreviewLink = (urlString) => {
+    const url = new URL(urlString);
+    // #development=1 triggers amp-story's multi-aspect preview mode.
+    url.hash = '#development=1';
+    return url.toString();
+  };
+
+  /**
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
@@ -72,12 +85,13 @@ function Preview() {
         popup.document.write(
           escapeHTML(__('Please wait. Generating the preview…', 'web-stories'))
         );
+        const decoratedPreviewLink = decoratePreviewLink(previewLink);
         // Force redirect to the preview URL after 5 seconds. The saving tab
         // might get frozen by the browser.
         popup.document.write(
           `<script>
             setTimeout(function() {
-              location.replace(${JSON.stringify(previewLink)});
+              location.replace(${JSON.stringify(decoratedPreviewLink)});
             }, 5000);
           </script>`
         );
@@ -94,7 +108,9 @@ function Preview() {
         if (popup && !popup.closed) {
           if (popup.location.href) {
             // Auto-save sends an updated preview link, use that instead if available.
-            const updatedPreviewLink = update?.preview_link ?? previewLink;
+            const updatedPreviewLink = decoratePreviewLink(
+              update?.preview_link ?? previewLink
+            );
             popup.location.replace(updatedPreviewLink);
           }
         }
@@ -107,7 +123,10 @@ function Preview() {
       setPreviewLinkToOpenViaDialog(null);
       // Ensure that this method is as safe as possible and pass the random
       // target in case the normal target is not openable.
-      window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET + Math.random());
+      const decoratedPreviewLink = decoratedPreviewLink(
+        previewLinkToOpenViaDialog
+      );
+      window.open(decoratedPreviewLink, PREVIEW_TARGET + Math.random());
       evt.preventDefault();
     },
     [previewLinkToOpenViaDialog]
