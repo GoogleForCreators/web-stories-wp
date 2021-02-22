@@ -1,13 +1,13 @@
-.is-showing-header-stories
-  > .web-stories-list
+.web-stories-theme-header-section
+  .web-stories-list
   .web-stories-list__archive-link
   a {
   text-decoration: underline;
 }
 
 @media screen and (min-width: 59.6875em) {
-  .is-showing-header-stories
-    > .web-stories-list
+  .web-stories-theme-header-section
+    .web-stories-list
     .web-stories-list__inner-wrapper {
     margin: 0 8.3333%;
   }
@@ -16,7 +16,7 @@
     padding-top: 0;
   }
 
-  .is-showing-header-stories > .web-stories-list {
+  .web-stories-theme-header-section .web-stories-list {
     display: block;
     margin-left: 29.9118%;
     width: 68.5882%;

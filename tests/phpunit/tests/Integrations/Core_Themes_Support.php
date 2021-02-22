@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integrations;
 
+use Google\Web_Stories\Customizer;
 use Google\Web_Stories\Tests\Private_Access;
 
 /**
@@ -47,6 +48,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 
 		// Set stylesheet from one of the supported themes.
 		update_option( 'stylesheet', 'twentytwentyone' );
+		update_option( Customizer::STORY_OPTION, [ 'show_stories' => true ] );
 		$this->stub = new \Google\Web_Stories\Integrations\Core_Themes_Support();
 	}
 
@@ -77,7 +79,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 		$this->stub->init();
 
 		$this->assertEquals( 10, has_action( 'wp_enqueue_scripts', [ $this->stub, 'assets' ] ) );
-		$this->assertEquals( 10, has_action( 'body_class', [ $this->stub, 'add_core_theme_classes' ] ) );
+		$this->assertEquals( 10, has_filter( 'body_class', [ $this->stub, 'add_core_theme_classes' ] ) );
 		$this->assertEquals( 10, has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
 	}
 

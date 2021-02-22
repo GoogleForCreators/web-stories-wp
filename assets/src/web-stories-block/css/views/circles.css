@@ -4,7 +4,7 @@
   overflow-y: hidden;
 }
 
-body > .web-stories-list {
+.web-stories-theme-header-section .web-stories-list {
   border-bottom: 1px solid #ccc;
   padding: 12px 0;
 }
@@ -40,6 +40,11 @@ body > .web-stories-list {
 .web-stories-list.is-view-type-circles .web-stories-list__story-poster::after,
 .web-stories-list.is-view-type-circles .web-stories-list__story-poster::before {
   display: none;
+}
+
+.web-stories-list.is-view-type-circles
+  .web-stories-list__story-content-overlay {
+  padding-bottom: 0;
 }
 
 .web-stories-list.is-view-type-circles .story-content-overlay__title {

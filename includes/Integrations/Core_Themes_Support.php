@@ -106,7 +106,11 @@ class Core_Themes_Support {
 	public function embed_web_stories() {
 		$customizer = new Customizer();
 		$this->enqueue_style( $this->style_handle );
-		echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML.
+		?>
+		<div class="web-stories-theme-header-section">
+			<?php echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML. ?>
+		</div>
+		<?php
 	}
 
 	/**
@@ -118,8 +122,6 @@ class Core_Themes_Support {
 	 * @return array Updated array of classes.
 	 */
 	public function add_core_theme_classes( $classes ) {
-
-		$classes[] = 'has-web-stories-support';
 
 		if ( $this->showing_customizer_stories ) {
 			$classes[] = 'is-showing-header-stories';
@@ -141,18 +143,19 @@ class Core_Themes_Support {
 			return;
 		}
 
-		$this->style_handle = 'core-themes/' . sanitize_title( wp_get_theme() );
+		$this->style_handle = 'web-stories-theme-style-' . get_stylesheet();
 		$this->extend_theme_support();
 
 		$options                          = get_option( Customizer::STORY_OPTION );
 		$this->showing_customizer_stories = ! empty( $options['show_stories'] );
 
-		add_filter( 'body_class', [ $this, 'add_core_theme_classes' ] );
-
 		// Load theme specific styles and render function only if selected to show stories.
-		if ( $this->showing_customizer_stories ) {
-			add_action( 'wp_enqueue_scripts', [ $this, 'assets' ] );
-			add_action( 'wp_body_open', [ $this, 'embed_web_stories' ] );
+		if ( ! $this->showing_customizer_stories ) {
+			return;
 		}
+
+		add_action( 'wp_enqueue_scripts', [ $this, 'assets' ] );
+		add_filter( 'body_class', [ $this, 'add_core_theme_classes' ] );
+		add_action( 'wp_body_open', [ $this, 'embed_web_stories' ] );
 	}
 }

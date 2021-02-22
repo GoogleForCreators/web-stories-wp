@@ -266,12 +266,11 @@ const coreThemesBlockStylesPaths = glob.sync(
 
 // Build entry object for the Core Themes Styles.
 const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
-  const length = curr.indexOf('.css') - curr.indexOf('core-themes/');
-  const fileName = curr.substr(curr.indexOf('core-themes/'), length);
+  const fileName = path.parse(curr).name.replace('-', '');
 
   return {
     ...acc,
-    [fileName]: curr,
+    [`web-stories-theme-style-${fileName}`]: curr,
   };
 }, {});
 

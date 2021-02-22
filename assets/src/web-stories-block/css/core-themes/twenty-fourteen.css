@@ -1,10 +1,10 @@
-.is-showing-header-stories > .web-stories-list {
+.web-stories-theme-header-section .web-stories-list {
   background: #000;
   border-bottom: none;
 }
 
-.is-showing-header-stories
-  > .web-stories-list
+.web-stories-theme-header-section
+  .web-stories-list
   .web-stories-list__story-content-overlay {
   color: #fff;
 }
@@ -16,7 +16,7 @@
 }
 
 @media screen and (min-width: 1008px) {
-  .is-showing-header-stories > .web-stories-list {
+  .web-stories-theme-header-section .web-stories-list {
     z-index: 1;
     width: 100%;
     max-width: 1260px;
@@ -24,7 +24,7 @@
     padding-top: 64px;
   }
 
-  .is-showing-header-stories > .web-stories-list.has-archive-link {
+  .web-stories-theme-header-section .web-stories-list.has-archive-link {
     padding-top: 92px;
   }
 }
