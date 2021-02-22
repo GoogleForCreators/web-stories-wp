@@ -1,4 +1,4 @@
-.has-web-stories-support.twenty-twenty-one
+.is-showing-header-stories
   .web-stories-list.is-carousel
   .web-stories-list__archive-link {
   font-size: var(--primary-nav--font-size-button);
@@ -7,20 +7,19 @@
 
 @media only screen and (max-width: 481px) {
   /* To ensure that the 'view-all' link has some space from the frame. */
-  .has-web-stories-support.twenty-twenty-one .web-stories-list__inner-wrapper {
+  .is-showing-header-stories .web-stories-list__inner-wrapper {
     max-width: var(--responsive--aligndefault-width);
     margin-left: auto;
     margin-right: auto;
   }
 
   /* Fix for menu toggle overlap. */
-  .has-web-stories-support.twenty-twenty-one > .web-stories-list--customizer {
+  .is-showing-header-stories > .web-stories-list--customizer {
     margin-top: 72px;
   }
 
   /* Carousel arrows were visible over primary navigation menu on mobile. */
-  .has-web-stories-support.twenty-twenty-one.primary-navigation-open
-    > .web-stories-list {
+  .is-showing-header-stories.primary-navigation-open > .web-stories-list {
     z-index: 0;
   }
 }

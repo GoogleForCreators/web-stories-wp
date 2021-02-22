@@ -1,29 +1,29 @@
-.has-web-stories-support.twenty-twelve > .web-stories-list {
+.is-showing-header-stories > .web-stories-list {
   max-width: 68.571428571rem;
   margin: 0 auto;
   padding-right: 1.714285714rem;
   padding-left: 1.714285714rem;
 }
 
-.has-web-stories-support.twenty-twelve > .web-stories-list.has-archive-link {
+.is-showing-header-stories > .web-stories-list.has-archive-link {
   padding-top: 52px;
   background: white;
 }
 
 @media screen and (min-width: 600px) {
-  .has-web-stories-support.twenty-twelve > .web-stories-list {
+  .is-showing-header-stories > .web-stories-list {
     max-width: 68.571428571rem;
     box-shadow: 0 -10px 6px rgb(100 100 100 / 30%);
   }
 }
 
 @media screen and (min-width: 960px) {
-  .has-web-stories-support.twenty-twelve > .web-stories-list {
+  .is-showing-header-stories > .web-stories-list {
     padding-right: 2.857142857rem;
     padding-left: 2.857142857rem;
   }
 
-  .has-web-stories-support.twenty-twelve .site {
+  .is-showing-header-stories .site {
     margin-top: 0;
   }
 }

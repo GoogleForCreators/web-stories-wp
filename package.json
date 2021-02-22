@@ -155,6 +155,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-testing-library": "^3.10.1",
+    "glob": "^7.1.6",
     "husky": "^4.3.7",
     "jasmine-core": "^3.6.0",
     "jest": "^26.6.3",

@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Customizer;
+use Google\Web_Stories\Stories_Renderer\Renderer;
 use Google\Web_Stories\Traits\Assets;
 
 /**
@@ -36,11 +37,18 @@ class Core_Themes_Support {
 	use Assets;
 
 	/**
-	 * Style handle for the core themes styles.
+	 * Style handle for current theme.
 	 *
 	 * @var string
 	 */
-	const STYLE_HANDLE = 'web-stories-core-themes-styles';
+	protected $style_handle = '';
+
+	/**
+	 * Is customizer stories showing.
+	 *
+	 * @var boolean
+	 */
+	protected $showing_customizer_stories = null;
 
 	/**
 	 * Default array of core themes to add support to.
@@ -69,7 +77,7 @@ class Core_Themes_Support {
 	 * @return void
 	 */
 	public function assets() {
-		$this->register_style( self::STYLE_HANDLE );
+		$this->register_style( $this->style_handle, [ Renderer::STYLE_HANDLE ] );
 	}
 
 	/**
@@ -97,13 +105,12 @@ class Core_Themes_Support {
 	 */
 	public function embed_web_stories() {
 		$customizer = new Customizer();
-		$this->enqueue_style( self::STYLE_HANDLE );
+		$this->enqueue_style( $this->style_handle );
 		echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML.
 	}
 
 	/**
-	 * Adds current theme class on 'body' tag, if it is one of
-	 * supported core themes.
+	 * Add a class if it is one of supported core themes.
 	 *
 	 * @since 1.3.0
 	 * @param array $classes Array of body classes.
@@ -113,7 +120,10 @@ class Core_Themes_Support {
 	public function add_core_theme_classes( $classes ) {
 
 		$classes[] = 'has-web-stories-support';
-		$classes[] = sanitize_title( wp_get_theme() );
+
+		if ( $this->showing_customizer_stories ) {
+			$classes[] = 'is-showing-header-stories';
+		}
 
 		return $classes;
 	}
@@ -131,11 +141,18 @@ class Core_Themes_Support {
 			return;
 		}
 
+		$this->style_handle = 'core-themes/' . sanitize_title( wp_get_theme() );
 		$this->extend_theme_support();
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'assets' ] );
-		add_action( 'wp_body_open', [ $this, 'embed_web_stories' ] );
+		$options                          = get_option( Customizer::STORY_OPTION );
+		$this->showing_customizer_stories = ! empty( $options['show_stories'] );
 
 		add_filter( 'body_class', [ $this, 'add_core_theme_classes' ] );
+
+		// Load theme specific styles and render function only if selected to show stories.
+		if ( $this->showing_customizer_stories ) {
+			add_action( 'wp_enqueue_scripts', [ $this, 'assets' ] );
+			add_action( 'wp_body_open', [ $this, 'embed_web_stories' ] );
+		}
 	}
 }

@@ -1,4 +1,4 @@
-.has-web-stories-support.twenty-eleven > .web-stories-list {
+.is-showing-header-stories > .web-stories-list {
   max-width: 1000px;
   margin: 0 auto;
   border-bottom: none;

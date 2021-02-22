@@ -4,7 +4,7 @@
   overflow-y: hidden;
 }
 
-body > .web-stories-list.is-view-type-circles {
+body > .web-stories-list {
   border-bottom: 1px solid #ccc;
   padding: 12px 0;
 }
