@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 
-export { default as MediaProvider } from './mediaProvider';
-export { default as useLocalMedia } from './local/useLocalMedia';
-export { default as useMedia } from './useMedia';
-export * from './media3p/constants';
+export const ContentType = {
+  IMAGE: 'image',
+  VIDEO: 'video',
+  GIF: 'gif',
+};
+
+export const ProviderType = {
+  UNSPLASH: 'unsplash',
+  COVERR: 'coverr',
+  TENOR: 'tenor',
+};
