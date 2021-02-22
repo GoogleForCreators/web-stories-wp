@@ -7,7 +7,12 @@
     "npm": "~7"
   },
   "exports": {
-    "default": "./src/index.js"
+    "./raw": {
+      "default" : "./src/fonts.json"
+    },
+    ".": {
+      "default": "./src/index.js"
+    }
   },
   "main": "./src/index.js",
   "bin": {

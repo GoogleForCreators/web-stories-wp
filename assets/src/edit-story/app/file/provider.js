@@ -29,7 +29,7 @@ function FileProvider({ children }) {
   const getFonts = useCallback(
     () =>
       import(
-        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/src/fonts.json'
+        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/raw'
       ).then((res) => res.default),
     []
   );
