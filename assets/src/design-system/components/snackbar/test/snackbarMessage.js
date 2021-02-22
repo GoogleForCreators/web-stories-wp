@@ -47,6 +47,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
   });
 
   it(`should trigger mockHandleDismiss after ${AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX}ms`, async () => {
+    jest.useFakeTimers();
     jest.setTimeout(AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX + 500);
 
     renderWithProviders(
@@ -56,10 +57,8 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
         handleDismiss={mockHandleDismiss}
       />
     );
-
-    await waitFor(() => expect(mockHandleDismiss).toHaveBeenCalledTimes(1), {
-      timeout: AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX + 500,
-    });
+    jest.runAllTimers();
+    await waitFor(() => expect(mockHandleDismiss).toHaveBeenCalledTimes(1));
   });
 
   it('should call mockHandleDismiss when the close button is clicked', () => {

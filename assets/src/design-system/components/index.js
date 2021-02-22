@@ -25,7 +25,7 @@ export * from './menu';
 export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
 export { Search } from './search';
-export * as Snackbar from './snackbar';
+export { Snackbar } from './snackbar';
 export * from './tooltip';
 export * from './keyboard';
 export * from './keyboard/gridview';

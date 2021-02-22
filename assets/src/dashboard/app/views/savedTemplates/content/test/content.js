@@ -21,7 +21,7 @@ import { renderWithProviders } from '../../../../../testUtils';
 import { formattedTemplatesArray } from '../../../../../storybookUtils';
 import { VIEW_STYLE, SAVED_TEMPLATES_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
-import { ToastProvider } from '../../../../../components';
+import { SnackbarProvider } from '../../../../snackbar';
 import Content from '../';
 
 jest.mock(
@@ -39,7 +39,7 @@ describe('Saved Templates <Content />', function () {
 
   it('should render the content grid with the correct saved template count.', function () {
     const { getAllByTestId } = renderWithProviders(
-      <ToastProvider>
+      <SnackbarProvider>
         <LayoutProvider>
           <Content
             filter={SAVED_TEMPLATES_STATUSES[0]}
@@ -58,7 +58,7 @@ describe('Saved Templates <Content />', function () {
             }}
           />
         </LayoutProvider>
-      </ToastProvider>,
+      </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
 
@@ -69,7 +69,7 @@ describe('Saved Templates <Content />', function () {
 
   it('should show "Bookmark a story or template to get started!" if no saved templates are present.', function () {
     const { getByText } = renderWithProviders(
-      <ToastProvider>
+      <SnackbarProvider>
         <LayoutProvider>
           <Content
             filter={SAVED_TEMPLATES_STATUSES[0]}
@@ -88,7 +88,7 @@ describe('Saved Templates <Content />', function () {
             }}
           />
         </LayoutProvider>
-      </ToastProvider>,
+      </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
 
@@ -99,7 +99,7 @@ describe('Saved Templates <Content />', function () {
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no saved templates are found for a search query are present.', function () {
     const { getByText } = renderWithProviders(
-      <ToastProvider>
+      <SnackbarProvider>
         <LayoutProvider>
           <Content
             filter={SAVED_TEMPLATES_STATUSES[0]}
@@ -118,7 +118,7 @@ describe('Saved Templates <Content />', function () {
             }}
           />
         </LayoutProvider>
-      </ToastProvider>,
+      </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
 

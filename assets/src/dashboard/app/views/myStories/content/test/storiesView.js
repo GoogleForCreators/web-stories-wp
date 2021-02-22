@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import { ToastProvider } from '../../../../../components';
+import { SnackbarProvider } from '../../../../snackbar';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
@@ -59,7 +59,7 @@ const fakeStories = [
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
     const { getAllByTestId } = renderWithProviders(
-      <ToastProvider>
+      <SnackbarProvider>
         <StoriesView
           filterValue="all"
           sort={{
@@ -78,7 +78,7 @@ describe('My Stories <StoriesView />', function () {
             pageSize: { width: 210, height: 316 },
           }}
         />
-      </ToastProvider>,
+      </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
 

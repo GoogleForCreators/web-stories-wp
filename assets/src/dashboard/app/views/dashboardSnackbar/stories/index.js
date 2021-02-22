@@ -21,32 +21,32 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
-import { Button } from '../../../../components';
-import { ToastProvider } from '../../../../components/toaster';
+import { Button, BUTTON_TYPES } from '../../../../../design-system';
+import { SnackbarProvider } from '../../../snackbar';
 import { ApiContext } from '../../../api/apiProvider';
-import ToasterView from '../';
+import SnackbarView from '../';
 
 export default {
-  title: 'Dashboard/Views/Toaster',
-  component: ToasterView,
+  title: 'Dashboard/Views/DashboardSnackbar',
+  component: SnackbarView,
 };
 
 const storyErrors = [
   {
     message: {
-      body: 'I am an error.',
+      body: 'I am an error about loading stories.',
       title: 'Unable to Load Stories',
     },
   },
   {
     message: {
-      body: 'I am another error.',
+      body: 'I am another error about loading stories.',
       title: 'Unable to Load Stories',
     },
   },
   {
     message: {
-      body: 'I am the third error.',
+      body: 'Error updating story.',
       title: 'Unable to Update Story',
     },
   },
@@ -67,25 +67,25 @@ const storyErrors = [
 const templateErrors = [
   {
     message: {
-      body: 'I am an error.',
+      body: 'I am a template error.',
       title: 'Unable to Load Templates',
     },
   },
   {
     message: {
-      body: 'I am another error.',
+      body: 'I am another template error.',
       title: 'Unable to Load Templates',
     },
   },
   {
     message: {
-      body: 'I am the third error.',
+      body: 'I am the third template error.',
       title: 'Unable to Create Story From Template',
     },
   },
   {
     message: {
-      body: 'Something is really not working!',
+      body: 'Something is really not working (still)!',
       title: 'Oh No!',
     },
   },
@@ -109,10 +109,13 @@ export const _default = () => {
         state: {
           stories: { error: storyError },
           templates: { error: templateError },
+          settings: { error: {} },
+          media: { error: {} },
         },
       }}
     >
       <Button
+        type={BUTTON_TYPES.PRIMARY}
         onClick={() => {
           setStoryErrorIndexToAdd(storyErrorIndexToAdd + 1);
           setStoryError({
@@ -128,6 +131,7 @@ export const _default = () => {
       </Button>
       <br />
       <Button
+        type={BUTTON_TYPES.PRIMARY}
         onClick={() => {
           setTemplateErrorIndexToAdd(templateErrorIndexToAdd + 1);
           setTemplateError({
@@ -141,9 +145,9 @@ export const _default = () => {
           ? 'No more practice template alerts'
           : 'Add practice template alert'}
       </Button>
-      <ToastProvider>
-        <ToasterView />
-      </ToastProvider>
+      <SnackbarProvider>
+        <SnackbarView />
+      </SnackbarProvider>
     </ApiContext.Provider>
   );
 };
