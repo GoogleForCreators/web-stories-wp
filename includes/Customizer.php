@@ -224,7 +224,7 @@ class Customizer {
 					'step' => 5,
 				],
 				'active_callback' => function() {
-					return $this->is_view_type( 'circles' );
+					return $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'circles' );
 				},
 			]
 		);
@@ -271,6 +271,29 @@ class Customizer {
 					'label'           => __( 'Show story title', 'web-stories' ),
 					'active_callback' => function() {
 						return $this->is_option_enabled( 'show_stories' );
+					},
+				]
+			);
+		}
+
+		if ( true === $theme_support['excerpt'] ) {
+
+			$wp_customize->add_setting(
+				self::STORY_OPTION . '[show_excerpt]',
+				[
+					'default' => $theme_support['excerpt-default'],
+					'type'    => 'option',
+				]
+			);
+
+			$wp_customize->add_control(
+				self::STORY_OPTION . '[show_excerpt]',
+				[
+					'type'            => 'checkbox',
+					'section'         => self::SECTION_SLUG,
+					'label'           => __( 'Show story excerpt', 'web-stories' ),
+					'active_callback' => function() {
+						return $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' );
 					},
 				]
 			);
@@ -498,6 +521,7 @@ class Customizer {
 		$default_array = [
 			'view_type'             => $theme_support['view-type-default'],
 			'show_title'            => $theme_support['title-default'],
+			'show_excerpt'          => $theme_support['excerpt-default'],
 			'show_author'           => $theme_support['author-default'],
 			'show_date'             => $theme_support['date-default'],
 			'stories_archive_label' => $theme_support['stories-archive-label'],

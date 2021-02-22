@@ -125,7 +125,7 @@ class Customizer extends \WP_UnitTestCase {
 	 */
 	public function test_customizer_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->customizer_mock->expects( $this->exactly( 12 ) )->method( 'add_setting' );
+		$this->customizer_mock->expects( $this->exactly( 13 ) )->method( 'add_setting' );
 		$this->customizer->register_customizer_settings( $this->customizer_mock );
 	}
 
@@ -134,7 +134,7 @@ class Customizer extends \WP_UnitTestCase {
 	 */
 	public function test_customizer_show_stories_settings_added() {
 		$this->add_web_stories_theme_support();
-		$this->customizer_mock->expects( $this->exactly( 12 ) )->
+		$this->customizer_mock->expects( $this->exactly( 13 ) )->
 		method( 'add_setting' )->
 		withConsecutive(
 			[
@@ -192,6 +192,13 @@ class Customizer extends \WP_UnitTestCase {
 				'story-options[show_title]',
 				[
 					'default' => false,
+					'type'    => 'option',
+				],
+			],
+			[
+				'story-options[show_excerpt]',
+				[
+					'default' => true,
 					'type'    => 'option',
 				],
 			],
@@ -290,6 +297,8 @@ class Customizer extends \WP_UnitTestCase {
 			'grid-columns-default'      => 2,
 			'title'                     => true,
 			'title-default'             => true,
+			'excerpt'                   => true,
+			'excerpt-default'           => true,
 			'author'                    => true,
 			'author-default'            => false,
 			'date'                      => false,

@@ -51,6 +51,8 @@ trait ThemeSupport {
 			'grid-columns-default'      => 2,
 			'title'                     => true,
 			'title-default'             => true,
+			'excerpt'                   => true,
+			'excerpt-default'           => true,
 			'author'                    => true,
 			'author-default'            => false,
 			'date'                      => false,
