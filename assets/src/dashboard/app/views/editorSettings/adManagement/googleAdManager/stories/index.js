@@ -22,22 +22,20 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import GoogleAdSense from '../';
+import GoogleAdManager from '..';
 
 export default {
-  title: 'Dashboard/Views/EditorSettings/GoogleAdSense',
-  component: GoogleAdSense,
+  title: 'Dashboard/Views/EditorSettings/AdManagement/GoogleAdManager',
+  component: GoogleAdManager,
 };
 
 export const _default = () => {
   return (
-    <GoogleAdSense
-      publisherId={text('publisherId', '')}
+    <GoogleAdManager
       slotId={text('slotId', '')}
-      handleUpdatePublisherId={(newPublisherId) =>
-        action('update publisher id')(newPublisherId)
+      handleUpdate={(newSlotId) =>
+        action('update google ad manager')(newSlotId)
       }
-      handleUpdateSlotId={(newSlotId) => action('update slot id')(newSlotId)}
     />
   );
 };

@@ -28,22 +28,20 @@ import { trackClick } from '@web-stories-wp/tracking';
 import {
   validateAdSensePublisherIdFormat,
   validateAdSenseSlotIdFormat,
-} from '../../../../utils';
+} from '../../../../../utils';
 import {
   InlineForm,
   InlineLink,
   SaveButton,
-  SettingForm,
-  SettingHeading,
   SettingsTextInput,
   TextInputHelperText,
   VisuallyHiddenLabel,
-} from '../components';
+} from '../../components';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '../../../../../../design-system';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(
@@ -162,93 +160,79 @@ function GoogleAdSenseSettings({
 
   return (
     <>
-      <SettingForm onSubmit={(e) => e.preventDefault()}>
-        <SettingHeading />
-        <div>
-          <InlineForm>
-            <VisuallyHiddenLabel htmlFor="adSensePublisherId">
-              {TEXT.PUBLISHER_ID_LABEL}
-            </VisuallyHiddenLabel>
-            <SettingsTextInput
-              aria-label={TEXT.PUBLISHER_ID_LABEL}
-              id="adSensePublisherId"
-              name="adSensePublisherId"
-              data-testid="adSensePublisherId"
-              value={publisherId}
-              onChange={onUpdatePublisherId}
-              onKeyDown={onKeyDownPublisherId}
-              placeholder={TEXT.PUBLISHER_ID_PLACEHOLDER}
-              hasError={Boolean(publisherIdInputError)}
-              hint={publisherIdInputError}
-            />
-            <SaveButton
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              disabled={disablePublisherIdSaveButton}
-              onClick={onSavePublisherId}
-              data-testid="adSensePublisherIdButton"
-            >
-              {TEXT.SUBMIT_BUTTON}
-            </SaveButton>
-          </InlineForm>
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
-            <TranslateWithMarkup
-              mapping={{
-                a: (
-                  <InlineLink
-                    href={TEXT.PUBLISHER_ID_CONTEXT_LINK}
-                    rel="noreferrer"
-                    target="_blank"
-                    onClick={handleClick}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    as="a"
-                  />
-                ),
-              }}
-            >
-              {TEXT.PUBLISHER_ID_CONTEXT}
-            </TranslateWithMarkup>
-          </TextInputHelperText>
-        </div>
-      </SettingForm>
-      <SettingForm onSubmit={(e) => e.preventDefault()}>
-        <SettingHeading />
-        <div>
-          <InlineForm>
-            <VisuallyHiddenLabel htmlFor="adSenseSlotId">
-              {TEXT.SLOT_ID_LABEL}
-            </VisuallyHiddenLabel>
-            <SettingsTextInput
-              id="adSenseSlotId"
-              aria-label={TEXT.SLOT_ID_LABEL}
-              name="adSenseSlotId"
-              data-testid="adSenseSlotId"
-              value={slotId}
-              onChange={onUpdateSlotId}
-              onKeyDown={onKeyDownSlotId}
-              placeholder={TEXT.SLOT_ID_PLACEHOLDER}
-              hasError={Boolean(slotIdInputError)}
-              hint={slotIdInputError}
-            />
-            <SaveButton
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              disabled={disableSlotIdSaveButton}
-              onClick={onSaveSlotId}
-              data-testid="adSenseSlotIdButton"
-            >
-              {TEXT.SUBMIT_BUTTON}
-            </SaveButton>
-          </InlineForm>
-          <TextInputHelperText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
-            {TEXT.SLOT_ID_CONTEXT}
-          </TextInputHelperText>
-        </div>
-      </SettingForm>
+      <InlineForm>
+        <VisuallyHiddenLabel htmlFor="adSensePublisherId">
+          {TEXT.PUBLISHER_ID_LABEL}
+        </VisuallyHiddenLabel>
+        <SettingsTextInput
+          aria-label={TEXT.PUBLISHER_ID_LABEL}
+          id="adSensePublisherId"
+          name="adSensePublisherId"
+          data-testid="adSensePublisherId"
+          value={publisherId}
+          onChange={onUpdatePublisherId}
+          onKeyDown={onKeyDownPublisherId}
+          placeholder={TEXT.PUBLISHER_ID_PLACEHOLDER}
+          hasError={Boolean(publisherIdInputError)}
+          hint={publisherIdInputError}
+        />
+        <SaveButton
+          type={BUTTON_TYPES.SECONDARY}
+          size={BUTTON_SIZES.SMALL}
+          disabled={disablePublisherIdSaveButton}
+          onClick={onSavePublisherId}
+          data-testid="adSensePublisherIdButton"
+        >
+          {TEXT.SUBMIT_BUTTON}
+        </SaveButton>
+      </InlineForm>
+      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        <TranslateWithMarkup
+          mapping={{
+            a: (
+              <InlineLink
+                href={TEXT.PUBLISHER_ID_CONTEXT_LINK}
+                rel="noreferrer"
+                target="_blank"
+                onClick={handleClick}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              />
+            ),
+          }}
+        >
+          {TEXT.PUBLISHER_ID_CONTEXT}
+        </TranslateWithMarkup>
+      </TextInputHelperText>
+
+      <InlineForm>
+        <VisuallyHiddenLabel htmlFor="adSenseSlotId">
+          {TEXT.SLOT_ID_LABEL}
+        </VisuallyHiddenLabel>
+        <SettingsTextInput
+          id="adSenseSlotId"
+          aria-label={TEXT.SLOT_ID_LABEL}
+          name="adSenseSlotId"
+          data-testid="adSenseSlotId"
+          value={slotId}
+          onChange={onUpdateSlotId}
+          onKeyDown={onKeyDownSlotId}
+          placeholder={TEXT.SLOT_ID_PLACEHOLDER}
+          hasError={Boolean(slotIdInputError)}
+          hint={slotIdInputError}
+        />
+        <SaveButton
+          type={BUTTON_TYPES.SECONDARY}
+          size={BUTTON_SIZES.SMALL}
+          disabled={disableSlotIdSaveButton}
+          onClick={onSaveSlotId}
+          data-testid="adSenseSlotIdButton"
+        >
+          {TEXT.SUBMIT_BUTTON}
+        </SaveButton>
+      </InlineForm>
+      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {TEXT.SLOT_ID_CONTEXT}
+      </TextInputHelperText>
     </>
   );
 }

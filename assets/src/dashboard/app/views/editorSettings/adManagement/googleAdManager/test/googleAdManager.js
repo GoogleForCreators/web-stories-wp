@@ -21,7 +21,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../../testUtils';
 import GoogleAdManagerSettings, { TEXT } from '../';
 
 describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
