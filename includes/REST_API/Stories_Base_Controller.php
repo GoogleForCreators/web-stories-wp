@@ -67,6 +67,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * Registers the routes for the objects of the controller.
 	 *
 	 * @see register_rest_route()
+	 *
+	 * @return void
 	 */
 	public function register_routes() {
 		parent::register_routes();
