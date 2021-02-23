@@ -496,6 +496,7 @@ class Story_Post_Type {
 	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
+		$user_id                  = get_current_user_id();
 		$rest_base                = self::POST_TYPE_SLUG;
 		$has_publish_action       = false;
 		$has_assign_author_action = false;
@@ -520,6 +521,23 @@ class Story_Post_Type {
 
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+
+		$allStoriesLink = add_query_arg(
+			[
+				'post_type' => self::POST_TYPE_SLUG,
+			],
+			admin_url( 'edit.php' )
+		);
+
+		$preview_query_args = [
+			'preview_id'    => $story_id,
+			// Leveraging the default WP post preview logic.
+			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
+		];
+
+		/** This filter is documented in wp-admin/includes/ajax-actions.php */
+		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -530,7 +548,11 @@ class Story_Post_Type {
 				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'allowedMimeTypes'      => $this->get_allowed_mime_types(),
 				'postType'              => self::POST_TYPE_SLUG,
+				'userId'                => $user_id,
 				'storyId'               => $story_id,
+				'previewLink'           => get_preview_post_link( $story_id, $preview_query_args ),
+				'allStoriesLink'        => $allStoriesLink,
+				'postLockInterval'      => $time_window,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,
