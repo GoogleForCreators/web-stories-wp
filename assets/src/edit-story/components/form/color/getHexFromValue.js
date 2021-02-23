@@ -27,9 +27,26 @@ function getHexFromValue(value) {
     return val;
   }
 
+  // Shorthand rules.
+  // 2 => 222222
+  if (val.length === 1) {
+    return `${val}${val}${val}${val}${val}${val}`;
+  }
+
+  // 21 => 212121
+  if (val.length === 2) {
+    return `${val}${val}${val}`;
+  }
+
+  // 221 => 22221
   if (val.length === 3) {
-    // Shorthand hex
     return val.replace(/./g, '$&$&');
+  }
+
+  // 2211 => 222211
+  if (val.length === 4) {
+    const first = val.substring(0, 2);
+    return `${first}${first}${val.substring(2)}`;
   }
 
   return null;
