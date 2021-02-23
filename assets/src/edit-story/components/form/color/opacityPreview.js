@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useState, useCallback, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
 
@@ -28,17 +27,9 @@ import { _x, __ } from '@web-stories-wp/i18n';
 import { PatternPropType } from '../../../types';
 import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { MULTIPLE_VALUE } from '../../../constants';
+import { NumericInput } from '../../../../design-system';
 import getPreviewText from './getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
-import { ColorInput } from './colorBox';
-
-const Input = styled(ColorInput)`
-  margin-left: 6px;
-  width: 54px;
-  line-height: 32px;
-  text-align: center;
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-`;
 
 function OpacityPreview({ value, onChange }) {
   const hasPreviewText =
@@ -69,11 +60,9 @@ function OpacityPreview({ value, onChange }) {
   useEffect(() => updateFromValue(), [updateFromValue, value]);
 
   return (
-    <Input
+    <NumericInput
       ref={ref}
-      type="text"
       aria-label={__('Opacity', 'web-stories')}
-      isVisible={hasPreviewText}
       onBlur={() => {
         handleBlur();
         updateFromValue();
@@ -81,6 +70,12 @@ function OpacityPreview({ value, onChange }) {
       onFocus={handleFocus}
       onChange={handleChange}
       value={`${inputValue}${focused ? '' : postfix}`}
+      suffix={__('Opacity', 'web-stories')}
+      min={0}
+      max={100}
+      disabled={!hasPreviewText}
+      allowEmpty={false}
+      isFloat={false}
     />
   );
 }

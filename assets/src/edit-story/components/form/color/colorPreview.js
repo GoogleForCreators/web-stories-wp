@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
-import { parseToRgb, getLuminance } from 'polished';
+import { parseToRgb } from 'polished';
 
 /**
  * Internal dependencies
@@ -31,22 +31,35 @@ import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { PatternPropType } from '../../../types';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
-import { useKeyDownEffect } from '../../../../design-system';
+import {
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  useKeyDownEffect,
+} from '../../../../design-system';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 import getHexFromValue from './getHexFromValue';
-import { ColorBox } from './colorBox';
 
 const SELECT_CONTENTS_DELAY = 10;
 
-const Preview = styled(ColorBox)`
-  display: flex;
-  width: 122px;
-  padding: 0;
-  border: 0;
+const Preview = styled.div`
+  height: 36px;
+  color: ${({ theme }) => theme.colors.fg.primary};
   cursor: pointer;
+  position: relative;
+  max-width: 40%;
+`;
+
+const ColorInput = styled(Input)`
+  div {
+    background-color: transparent;
+  }
+  input {
+    padding-left: 26px;
+  }
 `;
 
 const buttonAttrs = {
@@ -56,14 +69,14 @@ const buttonAttrs = {
 
 const buttonStyle = css`
   overflow: hidden;
-  border: 0 solid;
-  border-color: ${({ theme }) =>
-    theme.DEPRECATED_THEME.colors.whiteout} !important;
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.colors.border.defaultNormal};
   outline: none;
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-width: 1px;
+    border-color: ${({ theme }) => theme.colors.border.defaultHover};
     box-shadow: none !important;
   }
+  background: transparent;
 `;
 
 const PreviewButton = styled(Preview).attrs(buttonAttrs)`
@@ -71,39 +84,34 @@ const PreviewButton = styled(Preview).attrs(buttonAttrs)`
   ${buttonStyle}
 `;
 
+const colorStyles = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50px;
+  width: 24px;
+  height: 24px;
+`;
+
 const VisualPreview = styled.div`
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border: 0;
+  ${colorStyles}
+  top: 6px;
+  left: 6px;
   padding: 0;
   background: transparent;
   cursor: pointer;
-  position: relative;
 `;
 
 const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
   ${buttonStyle}
-  border-radius: 4px 0 0 4px;
-  border-color: ${({ color, theme }) =>
-    color && getLuminance(color) > 0.2
-      ? theme.DEPRECATED_THEME.colors.bg.v1
-      : theme.DEPRECATED_THEME.colors.whiteout} !important;
+  border: none;
 `;
 
 const VisualPreviewInsideButton = styled(VisualPreview)`
+  border: none;
   ${KEYBOARD_USER_SELECTOR} ${PreviewButton}:focus & {
     margin-left: -1px;
   }
-`;
-
-const colorStyles = css`
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 4px 0 0 4px;
-  width: 100%;
-  height: 100%;
 `;
 
 const CurrentColor = styled.div`
@@ -123,22 +131,10 @@ const Transparent = styled.div`
 `;
 
 const TextualPreview = styled.div`
-  padding: 0 0 0 10px;
+  padding: 6px 12px 6px 32px;
   text-align: left;
   flex-grow: 1;
-  font-size: 15px;
-  line-height: 32px;
   height: 32px;
-`;
-
-const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
-  background: transparent;
-  color: inherit;
-  margin: 0;
-  cursor: text;
-  overflow: auto;
-  border-radius: 0 4px 4px 0;
-  text-transform: ${({ value }) => (value ? 'uppercase' : 'initial')};
 `;
 
 function ColorPreview({
@@ -282,16 +278,8 @@ function ColorPreview({
         // If editable, only the visual preview component is a button
         // And the text is an input field
         <Preview ref={previewRef}>
-          <VisualPreviewButton
-            {...buttonProps}
-            color={previewStyle?.backgroundColor}
-          >
-            {(value?.a < 1 || isMixed) && <Transparent />}
-            <CurrentColor role="status" style={previewStyle} />
-          </VisualPreviewButton>
-          <TextualInput
+          <ColorInput
             ref={inputRef}
-            type="text"
             aria-label={label}
             value={inputValue ?? ''}
             onChange={handleInputChange}
@@ -299,6 +287,13 @@ function ColorPreview({
             onFocus={handleFocus}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
+          <VisualPreviewButton
+            {...buttonProps}
+            color={previewStyle?.backgroundColor}
+          >
+            {(value?.a < 1 || isMixed) && <Transparent />}
+            <CurrentColor role="status" style={previewStyle} />
+          </VisualPreviewButton>
         </Preview>
       ) : (
         // If not editable, the whole component is a button
@@ -307,7 +302,11 @@ function ColorPreview({
             <Transparent />
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewInsideButton>
-          <TextualPreview>{previewText}</TextualPreview>
+          <TextualPreview>
+            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {previewText}
+            </Text>
+          </TextualPreview>
         </PreviewButton>
       )}
       <Popup
