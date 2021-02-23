@@ -24,13 +24,12 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
+import { Icons, Tooltip, TOOLTIP_PLACEMENT } from '../../../design-system';
 import {
   KEYBOARD_USER_SELECTOR,
   VIEW_STYLE,
   VIEW_STYLE_LABELS,
 } from '../../constants';
-import Tooltip from '../tooltip';
 
 const Container = styled.div`
   display: flex;
@@ -62,7 +61,11 @@ const ToggleButton = styled.button`
 export default function ViewStyleBar({ onPress, layoutStyle }) {
   return (
     <Container>
-      <Tooltip content={VIEW_STYLE_LABELS[layoutStyle]} position="right">
+      <Tooltip
+        title={VIEW_STYLE_LABELS[layoutStyle]}
+        placement={TOOLTIP_PLACEMENT.BOTTOM_END}
+        hasTail
+      >
         <ToggleButton
           aria-label={VIEW_STYLE_LABELS[layoutStyle]}
           onClick={onPress}

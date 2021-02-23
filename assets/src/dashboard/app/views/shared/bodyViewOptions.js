@@ -56,7 +56,6 @@ const ControlsContainer = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  font-weight: 700;
   margin-right: 24px;
 `;
 
