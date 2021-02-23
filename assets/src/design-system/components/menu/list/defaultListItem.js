@@ -25,12 +25,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Checkmark } from '../../../icons';
+import { CheckmarkSmall } from '../../../icons';
 import { THEME_CONSTANTS } from '../../../theme';
 import { DROP_DOWN_ITEM } from '../types';
 import { ListItem, ListItemDisplayText } from './components';
 
-const ActiveIcon = styled(Checkmark)`
+const ActiveIcon = styled(CheckmarkSmall)`
   position: absolute;
   left: 4px;
   top: 50%;
@@ -55,7 +55,7 @@ const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
     )}
     <ListItemDisplayText
       forwardedAs="span"
-      size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
     >
       {option.label}
     </ListItemDisplayText>
