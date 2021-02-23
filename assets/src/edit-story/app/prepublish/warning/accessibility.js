@@ -325,11 +325,7 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
     return setOrCreateImage({
       src: cropImage.src,
       id: elementId,
-    }).then((colorData) => ({
-      r: colorData[0],
-      g: colorData[1],
-      b: colorData[2],
-    }));
+    }).then(([r, g, b]) => ({ r, g, b }));
   });
 }
 
