@@ -52,7 +52,7 @@ trait ThemeSupport {
 			'title'                     => true,
 			'title-default'             => true,
 			'excerpt'                   => true,
-			'excerpt-default'           => true,
+			'excerpt-default'           => false,
 			'author'                    => true,
 			'author-default'            => false,
 			'date'                      => false,

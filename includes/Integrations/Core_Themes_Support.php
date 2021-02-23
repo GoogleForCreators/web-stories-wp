@@ -80,7 +80,9 @@ class Core_Themes_Support {
 	 */
 	public function embed_web_stories() {
 		$customizer = new Customizer();
-		$this->enqueue_style( 'web-stories-theme-style-' . get_stylesheet(), [ Renderer::STYLE_HANDLE ] );
+		if ( is_readable( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/css/web-stories-theme-style-' . get_stylesheet() . '.css' ) ) {
+			$this->enqueue_style( 'web-stories-theme-style-' . get_stylesheet(), [ Renderer::STYLE_HANDLE ] );
+		}
 		?>
 		<div class="web-stories-theme-header-section">
 			<?php echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML. ?>
