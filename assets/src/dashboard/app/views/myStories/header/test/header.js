@@ -258,7 +258,7 @@ describe('My Stories <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', async function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithProviders(
+    const { getByLabelText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -278,7 +278,7 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.click(getAllByText('Created by')[0].parentElement);
+    fireEvent.click(getByLabelText('Choose sort option for display'));
     fireEvent.click(getByText('Last modified'));
 
     await waitFor(() => {

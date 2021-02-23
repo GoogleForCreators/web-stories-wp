@@ -149,7 +149,7 @@ describe('Explore Templates <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithProviders(
+    const { getByLabelText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -168,7 +168,7 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { features: { enableInProgressTemplateActions: true } }
     );
-    fireEvent.click(getAllByText('Popular')[0].parentElement);
+    fireEvent.click(getByLabelText('Choose sort option for display'));
     fireEvent.click(getByText('Recent'));
 
     expect(setSortFn).toHaveBeenCalledWith('recent');
