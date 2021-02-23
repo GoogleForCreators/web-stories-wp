@@ -17,6 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
  * WordPress dependencies
@@ -31,7 +32,6 @@ import {
   CardTitle,
 } from '../../../../dashboard/components';
 import { StoryPropType, PageSizePropType } from '../../../../dashboard/types';
-import { getRelativeDisplayDate } from '../../../../date';
 
 const StoryPreviewCover = styled.div(
   ({ coverImage, pageSize, theme }) => `
