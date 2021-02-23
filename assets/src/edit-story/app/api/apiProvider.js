@@ -56,6 +56,26 @@ function APIProvider({ children }) {
     [stories]
   );
 
+  const getStoryLockById = useCallback(
+    (storyId) => {
+      const path = addQueryArgs(`${stories}${storyId}/lock`, {
+        _embed: 'author',
+      });
+
+      return apiFetch({ path });
+    },
+    [stories]
+  );
+
+  const setStoryLockById = useCallback(
+    (storyId) => {
+      const path = `${stories}${storyId}/lock`;
+
+      return apiFetch({ path, method: 'POST' });
+    },
+    [stories]
+  );
+
   const getDemoStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -332,6 +352,8 @@ function APIProvider({ children }) {
       autoSaveById,
       getStoryById,
       getDemoStoryById,
+      getStoryLockById,
+      setStoryLockById,
       getMedia,
       getLinkMetadata,
       saveStoryById,
