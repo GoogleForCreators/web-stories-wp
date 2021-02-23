@@ -22,6 +22,7 @@ import qs from 'query-string';
 /**
  * Internal dependencies
  */
+import stripHTML from '../../../../../edit-story/utils/stripHTML';
 import Fixture from '../../../../karma/fixture';
 import {
   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
@@ -115,8 +116,21 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       await fixture.events.click(closeLink);
 
-      const viewTemplates = fixture.screen.queryByText(
-        TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
+      const TemplatesGridEl = fixture.screen.getByLabelText(
+        'Available templates'
+      );
+      const labelTextContent = stripHTML(
+        TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL](
+          TemplatesGridEl.children.length
+        )
+      );
+      const hasDirectTextChild = (node) =>
+        (Array.from(node?.childNodes) || []).some(
+          (n) => n?.nodeName === '#text'
+        );
+      const viewTemplates = fixture.screen.getByText(
+        (_, node) =>
+          node.textContent === labelTextContent && hasDirectTextChild(node)
       );
 
       expect(viewTemplates).toBeTruthy();
