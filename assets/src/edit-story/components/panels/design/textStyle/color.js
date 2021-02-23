@@ -140,7 +140,6 @@ function ColorControls({ selectedElements, pushUpdate }) {
   return (
     <>
       <Row>
-        <Label id="text-color-label">{__('Text', 'web-stories')}</Label>
         <Color
           data-testid="text.color"
           value={color}
@@ -173,9 +172,6 @@ function ColorControls({ selectedElements, pushUpdate }) {
       </FillRow>
       {backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE && (
         <Row>
-          <Label id="background-color-label">
-            {__('Textbox', 'web-stories')}
-          </Label>
           <Color
             data-testid="text.backgroundColor"
             hasGradient

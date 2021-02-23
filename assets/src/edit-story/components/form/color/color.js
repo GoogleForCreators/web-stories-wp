@@ -28,6 +28,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import { PatternPropType } from '../../../types';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
+import ColorInput from './colorInput';
 
 const Container = styled.section`
   display: flex;
@@ -47,7 +48,7 @@ const InputWrapper = styled.div`
   width: calc(50% - 10px);
 `;
 
-function ColorInput({
+function Color({
   onChange,
   hasGradient,
   hasOpacity,
@@ -92,7 +93,7 @@ function ColorInput({
   );
 }
 
-ColorInput.propTypes = {
+Color.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
@@ -102,11 +103,11 @@ ColorInput.propTypes = {
   changedStyle: PropTypes.string,
 };
 
-ColorInput.defaultProps = {
+Color.defaultProps = {
   value: null,
   hasGradient: false,
   hasOpacity: true,
   opacity: null,
 };
 
-export default ColorInput;
+export default Color;

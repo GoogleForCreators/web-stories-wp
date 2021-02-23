@@ -23,7 +23,7 @@ import { waitFor, act, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import createSolid from '../../../../utils/createSolid';
-import OpacityPreview from '../opacityPreview';
+import OpacityInput from '../opacityInput';
 import getPreviewOpacityMock from '../getPreviewOpacity';
 import getPreviewTextMock from '../getPreviewText';
 import { renderWithTheme } from '../../../../testUtils';
@@ -39,15 +39,15 @@ function arrange(customProps = {}) {
     ...customProps,
   };
   const { queryByLabelText, rerender } = renderWithTheme(
-    <OpacityPreview {...props} />
+    <OpacityInput {...props} />
   );
   const element = queryByLabelText('Opacity');
   const wrappedRerender = (extraProps) =>
-    rerender(<OpacityPreview {...props} {...extraProps} />);
+    rerender(<OpacityInput {...props} {...extraProps} />);
   return { element, onChange, rerender: wrappedRerender };
 }
 
-describe('<OpacityPreview />', () => {
+describe('<OpacityInput />', () => {
   beforeEach(() => {
     getPreviewOpacityMock.mockReset();
     getPreviewTextMock.mockReset();

@@ -139,14 +139,14 @@ const TextualPreview = styled.div`
 `;
 
 function ColorInput({
-                      onChange,
-                      hasGradient,
-                      hasOpacity,
-                      value,
-                      label,
-                      colorPickerActions,
-                      changedStyle,
-                    }) {
+  onChange,
+  hasGradient,
+  hasOpacity,
+  value,
+  label,
+  colorPickerActions,
+  changedStyle,
+}) {
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 

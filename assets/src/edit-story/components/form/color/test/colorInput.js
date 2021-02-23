@@ -25,7 +25,7 @@ import { fireEvent } from '@testing-library/react';
 import createSolid from '../../../../utils/createSolid';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
-import ColorPreview from '../colorPreview';
+import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
 
@@ -45,7 +45,7 @@ function arrange(children = null) {
   };
 }
 
-describe('<ColorPreview />', () => {
+describe('<ColorInput />', () => {
   beforeEach(() => {
     getPreviewStyleMock.mockReset();
     getPreviewTextMock.mockReset();
@@ -60,7 +60,7 @@ describe('<ColorPreview />', () => {
       return 'FF0000';
     });
     const { button, swatch, input } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={() => {}}
         value={createSolid(255, 0, 0)}
         label="Color"
@@ -82,7 +82,7 @@ describe('<ColorPreview />', () => {
     });
 
     const { button, swatch, input } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={() => {}}
         value={{ type: 'radial' }}
         label="Color"
@@ -105,7 +105,7 @@ describe('<ColorPreview />', () => {
     });
 
     const { input } = arrange(
-      <ColorPreview onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
+      <ColorInput onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
     expect(input.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
     expect(input).toHaveValue('');
@@ -116,7 +116,7 @@ describe('<ColorPreview />', () => {
     const onClose = jest.fn();
     const value = { a: 1 };
     const { button, queryByLabelText } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={onChange}
         value={value}
         hasGradient
@@ -136,7 +136,7 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const { button, queryByLabelText } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={onChange}
         value={MULTIPLE_VALUE}
         hasGradient
@@ -158,7 +158,7 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const value = createSolid(255, 0, 0);
     const { input } = arrange(
-      <ColorPreview onChange={onChange} value={value} label="Color" />
+      <ColorInput onChange={onChange} value={value} label="Color" />
     );
 
     // Only 2 digits can't be valid
@@ -212,7 +212,7 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const value = createSolid(255, 0, 0);
     const { input } = arrange(
-      <ColorPreview onChange={onChange} value={value} label="Color" />
+      <ColorInput onChange={onChange} value={value} label="Color" />
     );
 
     // Only 5 digits can't be valid
