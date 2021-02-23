@@ -19,31 +19,21 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
-import { parseToRgb } from 'polished';
+import { useCallback, useState, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useUnmount from '../../../utils/useUnmount';
-import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { PatternPropType } from '../../../types';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
-import {
-  Input,
-  Text,
-  THEME_CONSTANTS,
-  useKeyDownEffect,
-} from '../../../../design-system';
+import { HexInput, Text, THEME_CONSTANTS } from '../../../../design-system';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
-import getHexFromValue from './getHexFromValue';
-
-const SELECT_CONTENTS_DELAY = 10;
 
 const Preview = styled.div`
   height: 36px;
@@ -54,7 +44,7 @@ const Preview = styled.div`
   padding: 0;
 `;
 
-const HexInput = styled(Input)`
+const Input = styled(HexInput)`
   min-width: 100px;
   div {
     background-color: transparent;
@@ -153,20 +143,12 @@ function ColorInput({
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
 
-  const [inputValue, setInputValue] = useState('');
   const [pickerOpen, setPickerOpen] = useState(false);
-
   const previewRef = useRef(null);
-  const inputRef = useRef(null);
-  const skipValidationRef = useRef(false);
-  const selectInputContents = useRef(false);
 
   const {
     refs: { inspector },
   } = useInspector();
-
-  const { handleFocus, handleBlur } = useFocusAndSelect(inputRef);
-  useEffect(() => setInputValue(previewText), [previewText]);
 
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
@@ -177,101 +159,11 @@ function ColorInput({
     'aria-label': label,
   };
 
-  const validateAndSubmitInput = useCallback(
-    ({ selectContentOnUpdate } = {}) => {
-      const hex = getHexFromValue(inputValue) ?? previewText;
-      setInputValue(hex);
-
-      // Only trigger onChange when hex has been changed
-      if (hex !== previewText) {
-        // Update actual color, which will in turn update hex input from value
-        const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
-
-        // Keep same opacity as before though. In case of mixed values, set to default (1).
-        const a = isMixed ? 1 : value.color.a;
-        onChange({ color: { r, g, b, a } });
-      }
-
-      selectInputContents.current = selectContentOnUpdate;
-    },
-    [inputValue, previewText, onChange, value, isMixed]
-  );
-
-  const handleInputChange = useCallback((evt) => {
-    // Trim and strip initial '#' (might very well be pasted in)
-    const val = evt.target.value.trim().replace(/^#/, '');
-    setInputValue(val);
-  }, []);
-
-  const handleInputBlur = useCallback(() => {
-    if (!skipValidationRef.current) {
-      validateAndSubmitInput();
-    }
-
-    // Reset flag after use
-    skipValidationRef.current = false;
-
-    handleBlur();
-  }, [handleBlur, validateAndSubmitInput]);
-
-  const handleEsc = useCallback(() => {
-    // Revert input value and exit input focus without
-    // triggering blur validation
-    setInputValue(previewText);
-    skipValidationRef.current = true;
-    inputRef.current.blur();
-  }, [previewText]);
-
-  const handleEnter = useCallback(() => {
-    validateAndSubmitInput({ selectContentOnUpdate: true });
-  }, [validateAndSubmitInput]);
-
   // Always hide color picker on unmount - note the double arrows
   useUnmount(() => () => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
   const spacing = useMemo(() => ({ x: 20 }), []);
-
-  useKeyDownEffect(
-    inputRef,
-    {
-      key: ['escape'],
-      editable: true,
-    },
-    handleEsc,
-    [handleEsc]
-  );
-
-  useKeyDownEffect(
-    inputRef,
-    {
-      key: ['enter'],
-      editable: true,
-    },
-    handleEnter,
-    [handleEnter]
-  );
-
-  useEffect(() => {
-    let selectContentsTimeout = -1;
-
-    if (selectInputContents.current) {
-      if (inputRef.current) {
-        inputRef.current.select();
-      }
-
-      // When we want to select the content of the input
-      // we hold open the door for a slight moment to allow
-      // all the data to flush down the pipeline.
-      selectContentsTimeout = window.setTimeout(() => {
-        selectInputContents.current = false;
-      }, SELECT_CONTENTS_DELAY);
-    }
-
-    return () => {
-      window.clearTimeout(selectContentsTimeout);
-    };
-  }, [inputValue]);
 
   return (
     <>
@@ -279,13 +171,10 @@ function ColorInput({
         // If editable, only the visual preview component is a button
         // And the text is an input field
         <Preview ref={previewRef}>
-          <HexInput
-            ref={inputRef}
+          <Input
             aria-label={label}
-            value={inputValue ?? ''}
-            onChange={handleInputChange}
-            onBlur={handleInputBlur}
-            onFocus={handleFocus}
+            value={value}
+            onChange={onChange}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
           <ColorPreviewButton
