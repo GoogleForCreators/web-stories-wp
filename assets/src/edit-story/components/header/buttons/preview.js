@@ -123,7 +123,7 @@ function Preview() {
       setPreviewLinkToOpenViaDialog(null);
       // Ensure that this method is as safe as possible and pass the random
       // target in case the normal target is not openable.
-      const decoratedPreviewLink = decoratedPreviewLink(
+      const decoratedPreviewLink = decoratePreviewLink(
         previewLinkToOpenViaDialog
       );
       window.open(decoratedPreviewLink, PREVIEW_TARGET + Math.random());
