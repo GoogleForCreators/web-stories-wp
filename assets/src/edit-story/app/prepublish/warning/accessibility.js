@@ -42,9 +42,20 @@ const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
  * @typedef {import('../../../types').Element} Element
  * @typedef {import('../types').Guidance} Guidance
  * @typedef {import('../types').Page} Page
+ *
+ * @typedef RGB The shape of color objects used for calculating color use against accessibility standards
+ * @property {number} r red value
+ * @property {number} g green value
+ * @property {number} b blue value
+ *
  */
 
 let spansFromContentBuffer;
+/**
+ *
+ * @param {string} content the buffer containing text element content
+ * @return {Array} list of individual span elements from the content
+ */
 function getSpansFromContent(content) {
   // memoize buffer
   if (!spansFromContentBuffer) {
@@ -59,12 +70,43 @@ function getSpansFromContent(content) {
   );
 }
 
+/**
+ *
+ * @param {Element} element The text element to get font colors from
+ * @return {Array} the style colors from the span tags in text element content
+ */
+function getTextStyleColors(element) {
+  const spans = getSpansFromContent(element.content);
+  const textStyleColors = spans
+    .map((span) => span.style?.color)
+    .filter(Boolean);
+  // if no colors were retrieved but there are spans, there is a black default color
+  const noColorStyleOnSpans =
+    textStyleColors.length === 0 && spans.length !== 0;
+  // if no spans were retrieved but there is content, there is a black default color
+  const noSpans = element.content.length !== 0 && spans.length === 0;
+  if (noColorStyleOnSpans || noSpans) {
+    textStyleColors.push('rgb(0, 0, 0)');
+  }
+  return textStyleColors;
+}
+
+/**
+ *
+ * @param {number} fontSize The text element's font size in editor pixels
+ * @return {number} the true font size for measuring against accessibility standards
+ */
 function getPtFromEditorFontSize(fontSize) {
-  // get the true font size from the data
   // 1 point = 1.333333 px
   return dataFontEm(dataToFontSizeY(fontSize, 100)) * 1.333333;
 }
 
+/**
+ *
+ * @param {Element} a An element with a position and size
+ * @param {Element} b An element with a position and size
+ * @return {number} The total area of the elements' overlapping rectangles
+ */
 function getOverlappingArea(a, b) {
   const dx = Math.min(a.endX, b.endX) - Math.max(a.startX, b.startX);
   const dy = Math.min(a.endY, b.endY) - Math.max(a.startY, b.startY);
@@ -75,10 +117,25 @@ function getOverlappingArea(a, b) {
 }
 
 const OVERLAP_RATIO = 1 / 3;
+/**
+ *
+ * @param {number} overlapArea The amount of area that the text element overlaps with the element
+ * @param {number} textBoxArea The amount of area of the text element
+ * @return {boolean} True if the amount of overlap is visually significant
+ */
 function isOverlapSignificant(overlapArea, textBoxArea) {
   return overlapArea >= OVERLAP_RATIO * textBoxArea;
 }
 
+/**
+ * Returns the provided background elements filtered for elements which overlap significantly
+ * with the text element and are not occluded by the other elements
+ *
+ * @param {Element} textElement The text element which is in front of the potential background elements
+ * @param {Element[]} potentialBackgroundElements All the elements behind the text element
+ * @param {Page} page The page with all the elements
+ * @return {Element[]} The visually significant background elements
+ */
 function getBackgroundsForElement(
   textElement,
   potentialBackgroundElements,
@@ -123,6 +180,13 @@ function getBackgroundsForElement(
   return significantElements;
 }
 
+/**
+ * @param {Object} arguments The arguments
+ * @param {Element} arguments.background The image-type background element
+ * @param {Element} arguments.text The text-type element
+ * @param {Page} arguments.page The page with both elements
+ * @return {Promise<RGB>} Resolves to the dominant color of the section of the image behind the text element
+ */
 function getTextImageBackgroundColor({ background, text, page }) {
   const { pageSize, id: pageId } = page;
   const { id: elementId } = text;
@@ -176,12 +240,25 @@ function getTextImageBackgroundColor({ background, text, page }) {
     bgImage,
     bgBox,
     overlapBox,
-  }).catch(() => {
-    // ignore errors
-  });
+  })
+    .catch(() => {
+      // ignore errors
+    })
+    .finally(() => {
+      cleanupDOM({ pageId, elementId });
+    });
 }
 
 const TO_RADIANS = Math.PI / 180;
+/**
+ * @param {Object} arguments The arguments
+ * @param {string} arguments.elementId The unique ID of the element being checked for contrast
+ * @param {string} arguments.pageId The unique ID of the page with elements being checked for contrast
+ * @param {Element} arguments.bgImage The background element
+ * @param {{ width: number, height: number }} arguments.bgBox The containing box of the background image - needed for calculating canvas translations for rotated elements
+ * @param {{ x: number, y: number, width: number, height: number }} arguments.overlapBox The position and size of the text element relative to the scaled and roated background image
+ * @return {Promise<RGB>} Resolves to the dominant color of the background image in the overlap box area
+ */
 function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
   function getOnloadCallback(nodeKey, resolve, reject) {
     return () => {
@@ -245,34 +322,47 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
     cropImage.crossOrigin = 'anonymous';
     cropCtx.putImageData(imgData, 0, 0);
     cropImage.src = cropCanvas.toDataURL();
-    return setOrCreateImage({ src: cropImage.src, id: elementId });
+    return setOrCreateImage({
+      src: cropImage.src,
+      id: elementId,
+    }).then((colorData) => ({
+      r: colorData[0],
+      g: colorData[1],
+      b: colorData[2],
+    }));
   });
 }
 
 /**
+ * Returns guidance if the contrast between any of the text style colors and the background color is too low
+ *
  * @param {Object} arguments The arguments
- * @param {Array} arguments.backgroundColor The r, g, b tuple representing a background color to compare to the text colors
- * @param {Array} arguments.textColors The array of style colors of the text being checked
+ * @param {RGB} arguments.backgroundColor The r, g, b object representing a background color to compare to the text colors
+ * @param {Array} arguments.textStyleColors The array of style colors of the text being checked
  * @param {number} arguments.fontSize The font size (in editor pixels) of the text being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */
-function textBgColorsLowContrast({
+function textBackgroundLowContrast({
   backgroundColor,
-  textColors,
+  textStyleColors,
   fontSize,
   ...elements
 }) {
-  const someTextHasLowContrast = textColors.some((styleColor) => {
-    if (!backgroundColor || !styleColor) {
+  const noColorsToCompare = !textStyleColors || !backgroundColor;
+  if (noColorsToCompare) {
+    return undefined;
+  }
+
+  const someTextHasLowContrast = textStyleColors.some((styleColor) => {
+    if (!styleColor) {
       return false;
     }
-    const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
-    const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
+    const backgroundLuminance = calculateLuminanceFromRGB(backgroundColor);
     const contrastCheck = checkContrastFromLuminances(
       textLuminance,
       backgroundLuminance,
-      getPtFromEditorFontSize(fontSize)
+      fontSize && getPtFromEditorFontSize(fontSize)
     );
     return !contrastCheck.WCAG_AA;
   });
@@ -290,11 +380,7 @@ function textBgColorsLowContrast({
 
 function getTextShapeBackgroundColor({ background }) {
   const { color } = background.backgroundColor;
-  if (color) {
-    const { r, g, b } = color;
-    return [r, g, b];
-  }
-  return undefined;
+  return color;
 }
 
 function getBackgroundColorByType(element) {
@@ -360,23 +446,14 @@ export function textElementFontLowContrast(element) {
  * If the contrast is too low, return guidance. Otherwise return undefined.
  *
  * @param {Page} page The page object being checked for warnings
- * @return {Guidance|undefined} The guidance object for consumption
+ * @return {Guidance[]|undefined} The guidance array object for consumption
  */
 export async function pageBackgroundTextLowContrast(page) {
   const backgroundColorPromises = [];
 
   page.elements.forEach((element, index) => {
     if (element.type === 'text' && element.backgroundTextMode === 'NONE') {
-      const spans = getSpansFromContent(element.content);
-      const textColors = spans.map((span) => span.style?.color).filter(Boolean);
-      // if no colors were retrieved but there are spans, there is a black default color
-      const noColorStyleOnSpans = textColors.length === 0 && spans.length !== 0;
-      // if no spans were retrieved but there is content, there is a black default color
-      const noSpans = element.content.length !== 0 && spans.length === 0;
-      if (noColorStyleOnSpans || noSpans) {
-        textColors.push('rgb(0, 0, 0)');
-      }
-
+      const textStyleColors = getTextStyleColors(element);
       const potentialBackgroundElements = page.elements.slice(0, index);
       const textBackgrounds = getBackgroundsForElement(
         element,
@@ -385,56 +462,44 @@ export async function pageBackgroundTextLowContrast(page) {
       );
 
       for (const backgroundElement of textBackgrounds) {
-        const args = {
+        const getBackgroundColor = getBackgroundColorByType(backgroundElement)({
           background: backgroundElement,
           text: element,
           page,
-        };
+        });
 
-        const ids = {
-          elementId: element.id,
-          pageId: page.id,
-        };
-
-        const getBackgroundColor = getBackgroundColorByType(backgroundElement);
-        const backgroundColor = getBackgroundColor(args);
-
-        let backgroundColorResult;
-
-        if (backgroundColor instanceof Promise) {
-          backgroundColorResult = backgroundColor.then((resolvedBgColor) => {
-            cleanupDOM(ids);
-            return {
-              backgroundColor: resolvedBgColor,
-              textColors,
+        const prepare = (getBackgroundColorResult) => {
+          return (
+            getBackgroundColorResult && {
+              backgroundColor: getBackgroundColorResult,
+              textStyleColors,
               fontSize: element.fontSize,
               pageId: page.id,
               elements: [backgroundElement, element],
-            };
-          });
-        } else if (backgroundColor !== undefined) {
-          backgroundColorResult = {
-            backgroundColor,
-            textColors,
-            fontSize: element.fontSize,
-            pageId: page.id,
-            elements: [backgroundElement, element],
-          };
-        }
+            }
+          );
+        };
 
-        if (backgroundColorResult !== undefined) {
-          backgroundColorPromises.push(backgroundColorResult);
-        }
+        const bgColorCompare =
+          getBackgroundColor instanceof Promise
+            ? getBackgroundColor.then(prepare)
+            : prepare(getBackgroundColor);
+
+        bgColorCompare && backgroundColorPromises.push(bgColorCompare);
       }
     }
   });
 
   if (backgroundColorPromises.length > 0) {
-    const results = await Promise.all(backgroundColorPromises).catch(() => {
-      // ignore errors with finding colors
-    });
+    const bgColorComparisons = await Promise.all(backgroundColorPromises).catch(
+      () => {
+        // ignore errors with finding colors
+      }
+    );
 
-    return results.map(textBgColorsLowContrast).filter(Boolean);
+    return bgColorComparisons
+      .map((compareObj) => compareObj && textBackgroundLowContrast(compareObj))
+      .filter(Boolean);
   }
 
   return undefined;
