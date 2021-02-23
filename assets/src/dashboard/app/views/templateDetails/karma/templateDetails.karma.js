@@ -116,12 +116,12 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       await fixture.events.click(closeLink);
 
-      const TemplatesGridEl = fixture.screen.getByLabelText(
+      const templatesGridEl = fixture.screen.getByLabelText(
         'Available templates'
       );
       const labelTextContent = stripHTML(
         TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL](
-          TemplatesGridEl.children.length
+          templatesGridEl.children.length
         )
       );
       const hasDirectTextChild = (node) =>
