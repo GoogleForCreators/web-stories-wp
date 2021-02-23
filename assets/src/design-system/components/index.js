@@ -19,6 +19,7 @@ export * from './button';
 export * from './checkbox';
 export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
+export { HexInput } from './hex';
 export { Input } from './input';
 export { Modal } from './modal';
 export { NumericInput } from './input/numericInput';
