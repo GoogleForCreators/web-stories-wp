@@ -30,9 +30,9 @@ import { PatternPropType } from '../../../types';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
 import { HexInput, Text, THEME_CONSTANTS } from '../../../../design-system';
+import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
-import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
 
 const Preview = styled.div`

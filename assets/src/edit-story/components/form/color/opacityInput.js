@@ -28,7 +28,7 @@ import { _x, __ } from '@web-stories-wp/i18n';
 import { PatternPropType } from '../../../types';
 import { MULTIPLE_VALUE } from '../../../constants';
 import { NumericInput } from '../../../../design-system';
-import getPreviewText from './getPreviewText';
+import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
 
 const Input = styled(NumericInput)`
