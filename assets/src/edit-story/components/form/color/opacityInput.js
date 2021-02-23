@@ -39,7 +39,7 @@ const Input = styled(NumericInput)`
   }
 `;
 
-function OpacityPreview({ value, onChange }) {
+function OpacityInput({ value, onChange }) {
   const hasPreviewText =
     value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
   const postfix = _x('%', 'Percentage', 'web-stories');
@@ -88,9 +88,9 @@ function OpacityPreview({ value, onChange }) {
   );
 }
 
-OpacityPreview.propTypes = {
+OpacityInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
 };
 
-export default OpacityPreview;
+export default OpacityInput;

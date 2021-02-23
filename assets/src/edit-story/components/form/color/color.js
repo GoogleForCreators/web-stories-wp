@@ -27,8 +27,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import { PatternPropType } from '../../../types';
 import applyOpacityChange from './applyOpacityChange';
-import ColorPreview from './colorPreview';
-import OpacityPreview from './opacityPreview';
+import OpacityInput from './opacityInput';
 
 const Container = styled.section`
   display: flex;
@@ -71,7 +70,7 @@ function ColorInput({
   return (
     <Container aria-label={containerLabel}>
       <InputWrapper>
-        <ColorPreview
+        <ColorInput
           onChange={onChange}
           hasGradient={hasGradient}
           hasOpacity={hasOpacity}
@@ -85,7 +84,7 @@ function ColorInput({
         <>
           <Space />
           <InputWrapper>
-            <OpacityPreview value={value} onChange={handleOpacityChange} />
+            <OpacityInput value={value} onChange={handleOpacityChange} />
           </InputWrapper>
         </>
       )}

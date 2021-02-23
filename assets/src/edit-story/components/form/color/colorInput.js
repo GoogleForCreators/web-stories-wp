@@ -54,7 +54,7 @@ const Preview = styled.div`
   padding: 0;
 `;
 
-const ColorInput = styled(Input)`
+const HexInput = styled(Input)`
   min-width: 100px;
   div {
     background-color: transparent;
@@ -69,6 +69,15 @@ const buttonAttrs = {
   type: 'button', // avoid submitting forms
 };
 
+const colorStyles = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50px;
+  width: 24px;
+  height: 24px;
+`;
+
 const buttonStyle = css`
   overflow: hidden;
   border: 1px solid;
@@ -81,21 +90,12 @@ const buttonStyle = css`
   background: transparent;
 `;
 
-const PreviewButton = styled(Preview).attrs(buttonAttrs)`
+const ColorButton = styled(Preview).attrs(buttonAttrs)`
   border-radius: 4px;
   ${buttonStyle}
 `;
 
-const colorStyles = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 50px;
-  width: 24px;
-  height: 24px;
-`;
-
-const VisualPreview = styled.div`
+const ColorPreview = styled.div`
   ${colorStyles}
   top: 6px;
   left: 6px;
@@ -104,13 +104,13 @@ const VisualPreview = styled.div`
   cursor: pointer;
 `;
 
-const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
+const ColorPreviewButton = styled(ColorPreview).attrs(buttonAttrs)`
   ${buttonStyle}
   padding: 0;
   border: none;
 `;
 
-const VisualPreviewInsideButton = styled(VisualPreview)`
+const ColorPreviewInsideButton = styled(ColorPreview)`
   border: none;
   transform: translate(-1px, -1px);
 `;
@@ -138,15 +138,15 @@ const TextualPreview = styled.div`
   height: 32px;
 `;
 
-function ColorPreview({
-  onChange,
-  hasGradient,
-  hasOpacity,
-  value,
-  label,
-  colorPickerActions,
-  changedStyle,
-}) {
+function ColorInput({
+                      onChange,
+                      hasGradient,
+                      hasOpacity,
+                      value,
+                      label,
+                      colorPickerActions,
+                      changedStyle,
+                    }) {
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
@@ -279,7 +279,7 @@ function ColorPreview({
         // If editable, only the visual preview component is a button
         // And the text is an input field
         <Preview ref={previewRef}>
-          <ColorInput
+          <HexInput
             ref={inputRef}
             aria-label={label}
             value={inputValue ?? ''}
@@ -288,27 +288,27 @@ function ColorPreview({
             onFocus={handleFocus}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
-          <VisualPreviewButton
+          <ColorPreviewButton
             {...buttonProps}
             color={previewStyle?.backgroundColor}
           >
             {(value?.a < 1 || isMixed) && <Transparent />}
             <CurrentColor role="status" style={previewStyle} />
-          </VisualPreviewButton>
+          </ColorPreviewButton>
         </Preview>
       ) : (
         // If not editable, the whole component is a button
-        <PreviewButton ref={previewRef} {...buttonProps}>
-          <VisualPreviewInsideButton>
+        <ColorButton ref={previewRef} {...buttonProps}>
+          <ColorPreviewInsideButton>
             <Transparent />
             <CurrentColor role="status" style={previewStyle} />
-          </VisualPreviewInsideButton>
+          </ColorPreviewInsideButton>
           <TextualPreview>
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
               {previewText}
             </Text>
           </TextualPreview>
-        </PreviewButton>
+        </ColorButton>
       )}
       <Popup
         anchor={previewRef}
@@ -331,7 +331,7 @@ function ColorPreview({
   );
 }
 
-ColorPreview.propTypes = {
+ColorInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
@@ -341,11 +341,11 @@ ColorPreview.propTypes = {
   changedStyle: PropTypes.string,
 };
 
-ColorPreview.defaultProps = {
+ColorInput.defaultProps = {
   hasGradient: false,
   hasOpacity: true,
   label: null,
   value: null,
 };
 
-export default ColorPreview;
+export default ColorInput;
