@@ -33,6 +33,7 @@ import OpacityPreview from './opacityPreview';
 const Container = styled.section`
   display: flex;
   align-items: center;
+  width: 100%;
 `;
 
 const Space = styled.div`
