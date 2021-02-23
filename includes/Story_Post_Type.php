@@ -522,7 +522,7 @@ class Story_Post_Type {
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 
-		$allStoriesLink = add_query_arg(
+		$all_stories_link = add_query_arg(
 			[
 				'post_type' => self::POST_TYPE_SLUG,
 			],
@@ -551,7 +551,7 @@ class Story_Post_Type {
 				'userId'                => $user_id,
 				'storyId'               => $story_id,
 				'previewLink'           => get_preview_post_link( $story_id, $preview_query_args ),
-				'allStoriesLink'        => $allStoriesLink,
+				'allStoriesLink'        => $all_stories_link,
 				'postLockInterval'      => $time_window,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
