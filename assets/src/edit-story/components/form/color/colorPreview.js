@@ -50,10 +50,12 @@ const Preview = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
   cursor: pointer;
   position: relative;
-  max-width: 40%;
+  width: 100%;
+  padding: 0;
 `;
 
 const ColorInput = styled(Input)`
+  min-width: 100px;
   div {
     background-color: transparent;
   }
@@ -104,14 +106,13 @@ const VisualPreview = styled.div`
 
 const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
   ${buttonStyle}
+  padding: 0;
   border: none;
 `;
 
 const VisualPreviewInsideButton = styled(VisualPreview)`
   border: none;
-  ${KEYBOARD_USER_SELECTOR} ${PreviewButton}:focus & {
-    margin-left: -1px;
-  }
+  transform: translate(-1px, -1px);
 `;
 
 const CurrentColor = styled.div`
@@ -131,7 +132,7 @@ const Transparent = styled.div`
 `;
 
 const TextualPreview = styled.div`
-  padding: 6px 12px 6px 32px;
+  padding: 6px 12px 6px 38px;
   text-align: left;
   flex-grow: 1;
   height: 32px;

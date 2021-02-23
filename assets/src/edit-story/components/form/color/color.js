@@ -35,6 +35,18 @@ const Container = styled.section`
   align-items: center;
 `;
 
+const Space = styled.div`
+  width: 8px;
+  height: 1px;
+  margin: 6px;
+  background-color: ${({ theme }) => theme.colors.divider.primary};
+`;
+
+// 10px comes from divider
+const InputWrapper = styled.div`
+  width: calc(50% - 10px);
+`;
+
 function ColorInput({
   onChange,
   hasGradient,
@@ -57,17 +69,24 @@ function ColorInput({
 
   return (
     <Container aria-label={containerLabel}>
-      <ColorPreview
-        onChange={onChange}
-        hasGradient={hasGradient}
-        hasOpacity={hasOpacity}
-        value={value}
-        label={label}
-        colorPickerActions={colorPickerActions}
-        changedStyle={changedStyle}
-      />
+      <InputWrapper>
+        <ColorPreview
+          onChange={onChange}
+          hasGradient={hasGradient}
+          hasOpacity={hasOpacity}
+          value={value}
+          label={label}
+          colorPickerActions={colorPickerActions}
+          changedStyle={changedStyle}
+        />
+      </InputWrapper>
       {hasOpacity && (
-        <OpacityPreview value={value} onChange={handleOpacityChange} />
+        <>
+          <Space />
+          <InputWrapper>
+            <OpacityPreview value={value} onChange={handleOpacityChange} />
+          </InputWrapper>
+        </>
       )}
     </Container>
   );

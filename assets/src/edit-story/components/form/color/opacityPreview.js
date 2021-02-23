@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
 
@@ -30,6 +31,13 @@ import { MULTIPLE_VALUE } from '../../../constants';
 import { NumericInput } from '../../../../design-system';
 import getPreviewText from './getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
+
+const Input = styled(NumericInput)`
+  min-width: 100px;
+  div {
+    background-color: transparent;
+  }
+`;
 
 function OpacityPreview({ value, onChange }) {
   const hasPreviewText =
@@ -60,7 +68,7 @@ function OpacityPreview({ value, onChange }) {
   useEffect(() => updateFromValue(), [updateFromValue, value]);
 
   return (
-    <NumericInput
+    <Input
       ref={ref}
       aria-label={__('Opacity', 'web-stories')}
       onBlur={() => {
