@@ -34,6 +34,7 @@ use WP_Post;
 use WP_REST_Posts_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
+use WP_REST_Server;
 
 /**
  * Stories_Base_Controller class.
@@ -60,6 +61,109 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		parent::__construct( $post_type );
 		$this->namespace = 'web-stories/v1';
 		$this->decoder   = new Decoder();
+	}
+
+	/**
+	 * Registers the routes for the objects of the controller.
+	 *
+	 * @see register_rest_route()
+	 */
+	public function register_routes() {
+		parent::register_routes();
+		$lock_args = [];
+
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/(?P<id>[\d]+)/lock',
+			[
+				'args' => [
+					'id' => [
+						'description' => __( 'Unique identifier for the object.', 'web-stories' ),
+						'type'        => 'integer',
+					],
+				],
+				[
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => [ $this, 'get_lock' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+					'args'                => $lock_args,
+				],
+				[
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => [ $this, 'update_lock' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+					'args'                => $lock_args,
+				],
+			]
+		);
+	}
+
+	/**
+	 * Get post lock
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response Response object on success.
+	 */
+	public function get_lock( $request ) {
+		return $this->prepare_lock_for_response( $request );
+	}
+
+	/**
+	 * Update post lock
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response Response object on success.
+	 */
+	public function update_lock( $request ) {
+		if ( ! function_exists( 'wp_set_post_lock' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/post.php';
+		}
+
+		wp_set_post_lock( $request['id'] );
+
+		return $this->prepare_lock_for_response( $request );
+	}
+
+	/**
+	 * Prepares a single lock output for response.
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 *
+	 * @return WP_REST_Response Response object.
+	 */
+	public function prepare_lock_for_response( $request ) {
+		$lock = get_post_meta( $request['id'], '_edit_lock', true );
+
+		$data  = [
+			'locked' => false,
+		];
+		$links = [];
+
+		if ( $lock ) {
+			$lock                 = explode( ':', $lock );
+			list ( $time, $user ) = $lock;
+
+			/** This filter is documented in wp-admin/includes/ajax-actions.php */
+			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+			if ( $time && $time > time() - $time_window ) {
+				$data = [
+					'locked' => true,
+					'time'   => $time,
+					'user'   => (int) $user,
+				];
+
+				$links['author'] = [
+					'href'       => rest_url( 'wp/v2/users/' . $user ),
+					'embeddable' => true,
+				];
+			}
+		}
+		// Wrap the data in a response object.
+		$response = rest_ensure_response( $data );
+		$response->add_links( $links );
+
+		return $response;
 	}
 
 	/**
