@@ -222,7 +222,7 @@ describe('Grid view', () => {
       await fixture.events.click(draftsTabButton);
 
       const labelTextContent = stripHTML(
-        STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE](numDrafts)
+        STORY_VIEWING_LABELS[STORY_STATUS.DRAFT](numDrafts)
       );
       const viewDraftsText = fixture.screen.getByText(
         (_, node) => node.textContent === labelTextContent
