@@ -14,5 +14,29 @@
  * limitations under the License.
  */
 
-export * from './button';
-export * from './toggleButton';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { BUTTON_TYPES } from './constants';
+import { Button } from './button';
+
+function ToggleButton({ isToggled = false, ...rest }) {
+  return (
+    <Button
+      {...rest}
+      type={isToggled ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.TERTIARY}
+      aria-pressed={isToggled}
+    />
+  );
+}
+
+ToggleButton.propTypes = {
+  isToggled: PropTypes.bool,
+};
+
+export { ToggleButton };
