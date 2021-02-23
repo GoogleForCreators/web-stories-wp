@@ -98,7 +98,8 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            future: 5,
+            publish: 5,
           }}
           view={{
             style: VIEW_STYLE.GRID,
