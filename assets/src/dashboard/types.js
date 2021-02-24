@@ -23,11 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../edit-story/types';
-import {
-  STORY_CONTEXT_MENU_ACTIONS,
-  STORY_STATUS,
-  TEMPLATES_GALLERY_STATUS,
-} from './constants';
+import { STORY_STATUS, TEMPLATES_GALLERY_STATUS } from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
   ...Object.values(STORY_STATUS),
@@ -116,16 +112,7 @@ export const PageSizePropType = PropTypes.shape({
 export const StoryMenuPropType = PropTypes.shape({
   handleMenuToggle: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
-  menuItemActions: PropTypes.shape({
-    default: PropTypes.func.isRequired,
-    ...Object.keys(STORY_CONTEXT_MENU_ACTIONS).reduce(
-      (menuItemActionsShape, menuActionKey) => ({
-        ...menuItemActionsShape,
-        [menuActionKey]: PropTypes.func,
-      }),
-      {}
-    ),
-  }),
+  handleMenuItemSelected: PropTypes.func.isRequired,
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
