@@ -76,6 +76,20 @@ function APIProvider({ children }) {
     [stories]
   );
 
+  const deleteStoryLockById = useCallback(
+    (storyId) => {
+      // `apiFetch` by default turns `DELETE` requests into `POST` requests
+      // with `X-HTTP-Method-Override: DELETE` headers.
+      // However, some Web Application Firewall (WAF) solutions prevent this.
+      // `?_method=DELETE` is an alternative solution to override the request method.
+      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
+      const path = addQueryArgs(`${stories}${storyId}/lock`, { _method: 'DELETE' });
+
+      return apiFetch({ path, method: 'POST' });
+    },
+    [stories]
+  );
+
   const getDemoStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -354,6 +368,7 @@ function APIProvider({ children }) {
       getDemoStoryById,
       getStoryLockById,
       setStoryLockById,
+      deleteStoryLockById,
       getMedia,
       getLinkMetadata,
       saveStoryById,
