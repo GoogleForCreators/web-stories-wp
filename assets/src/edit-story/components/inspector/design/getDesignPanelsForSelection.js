@@ -32,6 +32,7 @@ import {
   PageStylePanel,
   ShapeStylePanel,
   SizePositionPanel,
+  TextBoxPanel,
   TextStylePanel,
   VideoAccessibilityPanel,
   NoSelectionPanel,
@@ -131,6 +132,8 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: LinkPanel };
         case PanelTypes.TEXT_STYLE:
           return { type, Panel: TextStylePanel };
+        case PanelTypes.TEXT_BOX:
+          return { type, Panel: TextBoxPanel };
         case PanelTypes.SHAPE_STYLE:
           return { type, Panel: ShapeStylePanel };
         case PanelTypes.BORDER_RADIUS:
