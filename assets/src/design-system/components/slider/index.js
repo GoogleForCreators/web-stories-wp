@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef, useCallback, useEffect, useState } from 'react';
+import { useRef, useCallback, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -42,6 +42,7 @@ const rangeThumbHover = css`
 `;
 
 const rangeThumbFocus = css`
+  z-index: 2;
   border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
   padding: 2px;
   background-clip: content-box;
@@ -54,6 +55,7 @@ const rangeThumbFocus = css`
 const Input = styled.input.attrs({
   type: 'range',
 })`
+  z-index: 1;
   position: relative;
   min-width: 100px;
   cursor: pointer;
@@ -78,6 +80,7 @@ const Input = styled.input.attrs({
   }
 
   ::before {
+    z-index: -1;
     position: absolute;
     content: ' ';
     height: 6px;
@@ -222,7 +225,7 @@ function Slider({
 
   const percentageVal = ((value - min) / (max - min)) * 100;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref.current && !widthTracker) {
       const { width } = ref.current.getBoundingClientRect();
       setWidthTracker(width);
