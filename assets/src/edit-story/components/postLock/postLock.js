@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useFeatures } from 'flagged';
 import { trackError } from '@web-stories-wp/tracking';
 
 /**
@@ -40,6 +41,7 @@ function PostLock() {
   } = useConfig();
   const [showDialog, setShowDialog] = useState(false);
   const [author, setAuthor] = useState({});
+  const { enablePostLocking } = useFeatures();
 
   const closeDialog = useCallback(() => {
     setShowDialog(false);
@@ -47,19 +49,28 @@ function PostLock() {
   }, [setStoryLockById, storyId]);
 
   const doGetStoryLock = useCallback(() => {
-    getStoryLockById(storyId)
-      .then((result) => {
-        if (result.locked && result.user !== userId) {
-          setShowDialog(true);
-          setAuthor(result['_embedded'].author[0]);
-        } else {
-          setStoryLockById(storyId);
-        }
-      })
-      .catch((err) => {
-        trackError('post_lock', err.message);
-      });
-  }, [getStoryLockById, setStoryLockById, setShowDialog, storyId, userId]);
+    if (enablePostLocking) {
+      getStoryLockById(storyId)
+        .then((result) => {
+          if (result.locked && result.user !== userId) {
+            setShowDialog(true);
+            setAuthor(result['_embedded'].author[0]);
+          } else {
+            setStoryLockById(storyId);
+          }
+        })
+        .catch((err) => {
+          trackError('post_lock', err.message);
+        });
+    }
+  }, [
+    getStoryLockById,
+    setStoryLockById,
+    setShowDialog,
+    storyId,
+    userId,
+    enablePostLocking,
+  ]);
 
   // Cache it to make it stable in terms of the below timeout
   const cachedDoGetStoryLock = useRef(doGetStoryLock);

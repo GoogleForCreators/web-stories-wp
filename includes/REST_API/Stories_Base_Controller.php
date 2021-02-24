@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Media;
 use stdClass;
 use WP_Error;
@@ -48,6 +49,14 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @var Decoder Decoder instance.
 	 */
 	private $decoder;
+
+	/**
+	 * Experiments.
+	 *
+	 * @var Experiments
+	 */
+	private $experiments;
+
 	/**
 	 * Constructor.
 	 *
@@ -59,8 +68,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$this->namespace = 'web-stories/v1';
-		$this->decoder   = new Decoder();
+		$this->namespace   = 'web-stories/v1';
+		$this->decoder     = new Decoder();
+		$this->experiments = new Experiments();
 	}
 
 	/**
@@ -72,6 +82,11 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function register_routes() {
 		parent::register_routes();
+
+		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
+			return;
+		}
+
 		$lock_args = [];
 
 		register_rest_route(
