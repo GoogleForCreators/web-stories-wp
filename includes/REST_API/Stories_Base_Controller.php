@@ -263,6 +263,26 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
 
+	/**
+	 * Prepares links for the request.
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return array Links for the given post.
+	 */
+	protected function prepare_links( $post ) {
+		$links = parent::prepare_links( $post );
+
+		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
+
+		$links['https://api.w.org/lock'] = [
+			'href'       => $lock_url,
+			'embeddable' => true,
+		];
+
+		return $links;
+	}
+
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.

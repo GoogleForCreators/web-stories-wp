@@ -20,17 +20,19 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { STORY_STATUS } from '../../constants';
+import { ICON_METRICS, STORY_STATUS } from '../../constants';
 import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
 import { Link } from '../link';
+import { Lock as LockSVG } from '../../icons';
 
 const StyledCardTitle = styled.div`
   padding-top: 12px;
@@ -67,6 +69,13 @@ const DateHelperText = styled.span`
   }
 `;
 
+const ListIcon = styled(LockSVG).attrs(ICON_METRICS.LOCK)`
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  display: inline-block;
+  vertical-align: super;
+  margin-right: 5px;
+`;
+
 const CardTitle = ({
   id,
   secondaryTitle,
@@ -78,7 +87,10 @@ const CardTitle = ({
   onEditComplete,
   onEditCancel,
   tabIndex,
+  locked = false,
 }) => {
+  const { enablePostLocking } = useFeatures();
+
   const displayDateText = useMemo(() => {
     if (!displayDate) {
       return null;
@@ -109,6 +121,7 @@ const CardTitle = ({
 
   return (
     <StyledCardTitle>
+      {enablePostLocking && locked && <ListIcon />}
       {editMode ? (
         <InlineInputForm
           onEditComplete={onEditComplete}
@@ -148,6 +161,7 @@ CardTitle.propTypes = {
   secondaryTitle: PropTypes.string,
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
+  locked: PropTypes.bool,
   displayDate: PropTypes.string,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
