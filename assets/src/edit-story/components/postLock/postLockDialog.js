@@ -40,13 +40,7 @@ const Img = styled.img`
   margin: 0px 10px 10px 0px;
 `;
 
-function PostLockDialog({
-  open,
-  user,
-  dashboardLink,
-  previewLink,
-  onClose,
-}) {
+function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
   return (
     <Dialog
       open={open}
