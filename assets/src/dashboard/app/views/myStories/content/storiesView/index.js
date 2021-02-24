@@ -43,7 +43,6 @@ import {
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
-  ALERT_SEVERITY,
 } from '../../../../../constants';
 import { useSnackbarContext } from '../../../../snackbar';
 import { StoryGridView, StoryListView } from '../../../shared';
@@ -173,7 +172,6 @@ function StoriesView({
                 '(no title) has been copied to your clipboard.',
                 'web-stories'
               ),
-        severity: ALERT_SEVERITY.SUCCESS,
         id: Date.now(),
       });
     },
