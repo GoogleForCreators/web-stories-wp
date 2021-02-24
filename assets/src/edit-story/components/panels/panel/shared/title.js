@@ -28,7 +28,12 @@ import { rgba } from 'polished';
 import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
-import { useContext, Icons } from '../../../../../design-system';
+import {
+  useContext,
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
 
@@ -51,14 +56,13 @@ const Header = styled.h2.attrs({ role: 'button' })`
   cursor: pointer;
 `;
 
-const Heading = styled.span`
-  color: inherit;
-  margin: 0;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 19px;
-  width: 100%;
+// @todo Why is this not considering the size attribute and needs assigning all separately?
+const Heading = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
   line-height: 32px;
+  font-size: 16px;
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-family: ${({ theme }) => theme.typography.family.primary};
 `;
 
 const HeaderActions = styled.div`
@@ -191,7 +195,14 @@ function Title({
         tabIndex={ariaHidden ? -1 : 0}
       >
         {canCollapse && toggleIcon}
-        <Heading id={panelTitleId}>{children}</Heading>
+        <Heading
+          id={panelTitleId}
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+          isBold
+        >
+          {children}
+        </Heading>
       </Toggle>
       {secondaryAction && <HeaderActions>{secondaryAction}</HeaderActions>}
     </Header>
