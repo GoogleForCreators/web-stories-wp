@@ -27,7 +27,7 @@ import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
-import getPreviewTextMock from '../getPreviewText';
+import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());

@@ -25,11 +25,13 @@ import { waitFor, act, fireEvent } from '@testing-library/react';
 import createSolid from '../../../../utils/createSolid';
 import OpacityInput from '../opacityInput';
 import getPreviewOpacityMock from '../getPreviewOpacity';
-import getPreviewTextMock from '../getPreviewText';
+import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
-jest.mock('../getPreviewText', () => jest.fn());
+jest.mock('../../../../../design-system/components/hex/getPreviewText', () =>
+  jest.fn()
+);
 
 function arrange(customProps = {}) {
   const onChange = jest.fn();
