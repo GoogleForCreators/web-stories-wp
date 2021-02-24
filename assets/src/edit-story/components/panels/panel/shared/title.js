@@ -78,7 +78,7 @@ const Collapse = styled.button`
   color: inherit;
   height: 32px;
   display: flex; /* removes implicit line-height padding from child element */
-  padding: 0;
+  padding: 0 4px 0 0;
   cursor: pointer;
   svg {
     width: 32px;
