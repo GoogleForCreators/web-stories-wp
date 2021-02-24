@@ -164,7 +164,7 @@ const Menu = ({ isOpen, items, ...props }) => {
   ]);
 
   useEffect(() => {
-    // focus first 'focusable' element if menu is rendered and no element is focused
+    // focus first 'focusable' element if menu is opened and no element is focused
     if (
       isOpen &&
       !menuWasAlreadyOpen.current &&
