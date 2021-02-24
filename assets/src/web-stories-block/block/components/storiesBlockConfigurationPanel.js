@@ -52,8 +52,9 @@ const TypeCard = styled(Card)`
 const TypeMedia = styled(CardMedia)`
   display: flex;
   align-items: center;
+  color: #347bb5;
   justify-content: center;
-  border: 1px solid #347bb5;
+  border: 1px solid currentColor;
   border-radius: 2px;
   padding-top: 14px;
   padding-bottom: 14px;

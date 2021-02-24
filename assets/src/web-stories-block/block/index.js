@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 import deprecated from './deprecated';
 import save from './save';
-import { ReactComponent as icon } from './icon.svg';
+import { ReactComponent as icon } from './../images/icon.svg';
 import edit from './edit';
 import metadata from './block';
 import { BLOCK_TYPE_LATEST_STORIES, GRID_VIEW_TYPE } from './constants';

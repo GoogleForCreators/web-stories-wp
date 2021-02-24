@@ -1,4 +1,14 @@
 /* Web Stories: Common block styles */
+.web-stories-list {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.web-stories-theme-header-section .web-stories-list {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .web-stories-list.is-carousel .web-stories-list__inner-wrapper {
   max-width: max-content;
   margin: 0 auto;

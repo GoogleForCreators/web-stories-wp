@@ -24,12 +24,12 @@ import { ReactComponent as EmbedStoriesBlockIcon } from './icons/block-type/embe
 import { ReactComponent as GridViewIcon } from './icons/view-type/grid-view.svg';
 import { ReactComponent as ListViewIcon } from './icons/view-type/list-view.svg';
 import { ReactComponent as BoxCarouselViewIcon } from './icons/view-type/box-carousel-view.svg';
-import { ReactComponent as CirclesCarouselViewIcon } from './icons/view-type/circles-carousel-view.svg';
+import { ReactComponent as CirclesCarouselViewIcon } from './../images/view-type/circles-carousel-view.svg';
 
 import { ReactComponent as GridViewConfigIcon } from './icons/config-panel/grid-view-panel-icon.svg';
 import { ReactComponent as ListViewConfigIcon } from './icons/config-panel/list-view-panel-icon.svg';
 import { ReactComponent as BoxCarouselConfigIcon } from './icons/config-panel/box-carousel-view-panel-icon.svg';
-import { ReactComponent as CirclesCarouselConfigIcon } from './icons/config-panel/circles-carousel-view-panel-icon.svg';
+import { ReactComponent as CirclesCarouselConfigIcon } from './../images/config-panel/circles-carousel-view-panel-icon.svg';
 
 // Icons for block types.
 export const LATESTS_STORIES_BLOCK_ICON = (
