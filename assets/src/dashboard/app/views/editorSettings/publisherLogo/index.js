@@ -19,17 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import {
-  CenterMutedText,
   Error,
-  GridItemButton,
-  GridItemContainer,
-  Logo,
   SettingForm,
   SettingSubheading,
   UploadedContainer,
@@ -42,7 +38,7 @@ import {
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { useConfig } from '../../../config';
-import PopoverLogoContextMenu from './popoverLogoContextMenu';
+import { GridItem, GridItemPropTypes } from './gridItem';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
@@ -139,8 +135,6 @@ function PublisherLogoSettings({
     items: publisherLogos,
   });
 
-  const showLogoContextMenu = !hasOnlyOneLogo;
-
   const onMenuItemToggle = useCallback((newMenuId) => {
     setActivePublisherLogoId(newMenuId);
   }, []);
@@ -173,77 +167,26 @@ function PublisherLogoSettings({
             role="list"
             aria-label={__('Viewing existing publisher logos', 'web-stories')}
           >
-            {publisherLogos.map((publisherLogo, idx) => {
-              if (!publisherLogo) {
-                return null;
-              }
-
-              const items = [
-                {
-                  label: __('Set as Default', 'web-stories'),
-                  onClick: () => handleUpdateDefaultLogo(publisherLogo),
-                  disabled: publisherLogo.isDefault,
-                },
-                {
-                  label: __('Delete', 'web-stories'),
-                  onClick: () => handleRemoveLogoClick(publisherLogo, idx),
-                },
-              ];
-
-              const isActive = activePublisherLogoId === publisherLogo.id;
-
-              return (
-                <GridItemContainer
-                  key={publisherLogo.id}
-                  ref={(el) => {
-                    itemRefs.current[publisherLogo.id] = el;
-                  }}
-                  role="listitem"
-                  active={publisherLogo.isDefault}
-                  data-testid={`publisher-logo-${idx}`}
-                >
-                  <GridItemButton
-                    onFocus={() => {
-                      setActivePublisherLogoId(publisherLogo.id);
-                    }}
-                    data-testid={`uploaded-publisher-logo-${idx}`}
-                    isSelected={isActive}
-                    tabIndex={isActive ? 0 : -1}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActivePublisherLogoId(publisherLogo.id);
-                    }}
-                    aria-label={sprintf(
-                      /* translators: %s: logo title.*/
-                      __('Publisher Logo %s', 'web-stories'),
-                      publisherLogo.title
-                    )}
-                  >
-                    <Logo src={publisherLogo.src} alt={publisherLogo.title} />
-                  </GridItemButton>
-                  {publisherLogo.isDefault && (
-                    <CenterMutedText
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                    >
-                      {__('Default', 'web-stories')}
-                    </CenterMutedText>
-                  )}
-                  {showLogoContextMenu && (
-                    <PopoverLogoContextMenu
-                      isActive={isActive}
-                      idx={idx}
-                      items={items}
-                      publisherLogo={publisherLogo}
-                      onMenuItemToggle={onMenuItemToggle}
-                      contextMenuId={{
-                        set: setContextMenuId,
-                        value: contextMenuId,
-                      }}
-                    />
-                  )}
-                </GridItemContainer>
-              );
-            })}
+            {publisherLogos.map((publisherLogo, idx) => (
+              <GridItem
+                key={publisherLogo.id}
+                ref={(el) => {
+                  itemRefs.current[publisherLogo.id] = el;
+                }}
+                contextMenuId={{
+                  set: setContextMenuId,
+                  value: contextMenuId,
+                }}
+                index={idx}
+                isActive={activePublisherLogoId === publisherLogo.id}
+                onMenuItemToggle={onMenuItemToggle}
+                onRemoveLogo={handleRemoveLogoClick}
+                onUpdateDefaultLogo={handleUpdateDefaultLogo}
+                publisherLogo={publisherLogo}
+                setActivePublisherLogoId={setActivePublisherLogoId}
+                showLogoContextMenu={!hasOnlyOneLogo}
+              />
+            ))}
           </UploadedContainer>
         )}
         {uploadError && <Error>{uploadError}</Error>}
@@ -278,12 +221,7 @@ PublisherLogoSettings.propTypes = {
   handleUpdateDefaultLogo: PropTypes.func,
   isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.string,
-      title: PropTypes.string,
-      id: PropTypes.number,
-      isDefault: PropTypes.bool,
-    })
+    PropTypes.shape(GridItemPropTypes.publisherLogos)
   ),
   uploadError: PropTypes.string,
 };

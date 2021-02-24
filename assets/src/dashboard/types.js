@@ -118,15 +118,13 @@ export const StoryMenuPropType = PropTypes.shape({
   contextMenuId: PropTypes.number.isRequired,
   menuItemActions: PropTypes.shape({
     default: PropTypes.func.isRequired,
-    [STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.PREVIEW]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.RENAME]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.DELETE]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: PropTypes.func,
-    [STORY_CONTEXT_MENU_ACTIONS.CLOSE]: PropTypes.func,
+    ...Object.keys(STORY_CONTEXT_MENU_ACTIONS).reduce(
+      (menuItemActionsShape, menuActionKey) => ({
+        ...menuItemActionsShape,
+        [menuActionKey]: PropTypes.func,
+      }),
+      {}
+    ),
   }),
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
