@@ -120,6 +120,7 @@ describe('ApiProvider', () => {
         created_gmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
+        locked: false,
         originalStoryData: {
           id: 123,
           modified: '1970-01-01T00:00:00.000',
@@ -210,6 +211,7 @@ describe('ApiProvider', () => {
         created_gmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
+        locked: false,
         originalStoryData: {
           id: 123,
           modified: '1970-01-01T00:00:00.000',
@@ -312,6 +314,7 @@ describe('ApiProvider', () => {
         created_gmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
+        locked: false,
         originalStoryData: {
           id: 123,
           modified: '1970-01-01T00:00:00.000',
@@ -361,6 +364,7 @@ describe('ApiProvider', () => {
         created_gmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
         link: 'https://www.story-link.com',
+        locked: false,
         originalStoryData: {
           id: 456,
           modified: '1970-01-01T00:00:00.000',
