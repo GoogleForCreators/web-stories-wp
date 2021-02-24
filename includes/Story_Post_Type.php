@@ -522,10 +522,11 @@ class Story_Post_Type {
 			$max_upload_size = 0;
 		}
 
-		$is_demo          = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$all_stories_link = add_query_arg(
+		$is_demo       = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$dashboard_url = add_query_arg(
 			[
-				'post_type' => self::POST_TYPE_SLUG,
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard',
 			],
 			admin_url( 'edit.php' )
 		);
@@ -548,7 +549,7 @@ class Story_Post_Type {
 				'postType'              => self::POST_TYPE_SLUG,
 				'userId'                => $user_id,
 				'storyId'               => $story_id,
-				'allStoriesLink'        => $all_stories_link,
+				'dashboardLink'         => $dashboard_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,

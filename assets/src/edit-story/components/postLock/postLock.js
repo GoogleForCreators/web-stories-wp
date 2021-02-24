@@ -36,7 +36,7 @@ function PostLock() {
   const {
     storyId,
     userId,
-    allStoriesLink,
+    dashboardLink,
     postLock: { interval: postLockInterval, showLockedDialog },
   } = useConfig();
 
@@ -99,7 +99,7 @@ function PostLock() {
       user={user}
       onClose={closeDialog}
       previewLink={previewLink}
-      allStoriesLink={allStoriesLink}
+      dashboardLink={dashboardLink}
     />
   );
 }

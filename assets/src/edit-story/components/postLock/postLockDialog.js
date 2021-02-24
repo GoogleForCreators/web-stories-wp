@@ -43,7 +43,7 @@ const Img = styled.img`
 function PostLockDialog({
   open,
   user,
-  allStoriesLink,
+  dashboardLink,
   previewLink,
   onClose,
 }) {
@@ -55,9 +55,7 @@ function PostLockDialog({
       contentLabel={__('Story is locked', 'web-stories')}
       actions={
         <>
-          <Plain href={allStoriesLink}>
-            {__('All Stories', 'web-stories')}
-          </Plain>
+          <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
           <Plain href={previewLink}>{__('Preview', 'web-stories')}</Plain>
           <Plain onClick={onClose}>{__('Take over', 'web-stories')}</Plain>
         </>
@@ -83,7 +81,7 @@ function PostLockDialog({
 PostLockDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   user: PropTypes.object,
-  allStoriesLink: PropTypes.string.isRequired,
+  dashboardLink: PropTypes.string.isRequired,
   previewLink: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
