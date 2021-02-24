@@ -26,6 +26,7 @@ import { renderWithProviders } from '../../../../../testUtils';
 
 import PublisherLogoSettings, { TEXT } from '..';
 import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
+import { noop } from '../../../../../../design-system';
 
 describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();
@@ -33,9 +34,9 @@ describe('PublisherLogo', () => {
   it('should render a fileUpload container and helper text by default when canUploadFiles is true', () => {
     const { getByTestId, getByText } = renderWithProviders(
       <PublisherLogoSettings
-        handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={jest.fn}
-        handleUpdateDefaultLogo={jest.fn}
+        onAddLogos={mockHandleAddLogos}
+        onRemoveLogo={noop}
+        onUpdateDefaultLogo={noop}
         isLoading={false}
         publisherLogos={[]}
         canUploadFiles
@@ -49,9 +50,9 @@ describe('PublisherLogo', () => {
   it('should not render fileUpload container when canUploadFiles is false', () => {
     const { queryByTestId } = renderWithProviders(
       <PublisherLogoSettings
-        handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={jest.fn}
-        handleUpdateDefaultLogo={jest.fn}
+        onAddLogos={mockHandleAddLogos}
+        onRemoveLogo={noop}
+        onUpdateDefaultLogo={noop}
         isLoading={false}
         publisherLogos={[]}
       />
@@ -63,9 +64,9 @@ describe('PublisherLogo', () => {
   it('should render an image for each publisherLogo in the array', () => {
     const { queryAllByRole } = renderWithProviders(
       <PublisherLogoSettings
-        handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={jest.fn}
-        handleUpdateDefaultLogo={jest.fn}
+        onAddLogos={mockHandleAddLogos}
+        onRemoveLogo={noop}
+        onUpdateDefaultLogo={noop}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
       />
@@ -77,9 +78,9 @@ describe('PublisherLogo', () => {
   it('should specify the first logo displayed as default', () => {
     const { getAllByRole } = renderWithProviders(
       <PublisherLogoSettings
-        handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={jest.fn}
-        handleUpdateDefaultLogo={jest.fn}
+        onAddLogos={mockHandleAddLogos}
+        onRemoveLogo={noop}
+        onUpdateDefaultLogo={noop}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
       />
@@ -93,9 +94,9 @@ describe('PublisherLogo', () => {
   it('should render a context menu button for each uploaded logo', () => {
     const { queryAllByTestId } = renderWithProviders(
       <PublisherLogoSettings
-        handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={jest.fn}
-        handleUpdateDefaultLogo={jest.fn}
+        onAddLogos={mockHandleAddLogos}
+        onRemoveLogo={noop}
+        onUpdateDefaultLogo={noop}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
       />
@@ -109,9 +110,9 @@ describe('PublisherLogo', () => {
   it('should render an error message if uploadError is present', () => {
     const { getByText } = renderWithProviders(
       <PublisherLogoSettings
-        handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={jest.fn}
-        handleUpdateDefaultLogo={jest.fn}
+        onAddLogos={mockHandleAddLogos}
+        onRemoveLogo={noop}
+        onUpdateDefaultLogo={noop}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
         uploadError={'Something went wrong.'}

@@ -64,9 +64,9 @@ export const TEXT = {
 
 function PublisherLogoSettings({
   canUploadFiles,
-  handleAddLogos,
-  handleRemoveLogo,
-  handleUpdateDefaultLogo,
+  onAddLogos,
+  onRemoveLogo,
+  onUpdateDefaultLogo,
   isLoading,
   publisherLogos,
   uploadError,
@@ -92,11 +92,20 @@ function PublisherLogoSettings({
 
   const handleRemoveLogoClick = useCallback(
     (publisherLogo, idx) => {
-      handleRemoveLogo(publisherLogo);
+      setContextMenuId(-1);
+      onRemoveLogo?.(publisherLogo);
       setIndexRemoved(idx);
       publisherLogoCount.current = publisherLogosById.length;
     },
-    [handleRemoveLogo, publisherLogosById.length]
+    [onRemoveLogo, publisherLogosById.length]
+  );
+
+  const handleUpdateDefaultLogo = useCallback(
+    (publisherLogo) => {
+      setContextMenuId(-1);
+      onUpdateDefaultLogo?.(publisherLogo);
+    },
+    [onUpdateDefaultLogo]
   );
 
   // Update publisher logo focus when logo is removed
@@ -193,7 +202,7 @@ function PublisherLogoSettings({
         {canUploadFiles && (
           <>
             <FileUpload
-              onSubmit={handleAddLogos}
+              onSubmit={onAddLogos}
               id="settings_publisher_logos"
               isLoading={isLoading}
               label={TEXT.SUBMIT}
@@ -216,9 +225,9 @@ function PublisherLogoSettings({
 
 PublisherLogoSettings.propTypes = {
   canUploadFiles: PropTypes.bool,
-  handleAddLogos: PropTypes.func,
-  handleRemoveLogo: PropTypes.func,
-  handleUpdateDefaultLogo: PropTypes.func,
+  onAddLogos: PropTypes.func,
+  onRemoveLogo: PropTypes.func,
+  onUpdateDefaultLogo: PropTypes.func,
   isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
     PropTypes.shape(GridItemPropTypes.publisherLogos)
