@@ -496,7 +496,8 @@ class Story_Post_Type {
 	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
-		$user_id                  = get_current_user_id();
+		$user                     = wp_get_current_user();
+		$user_id                  = ( isset( $user->ID ) ? (int) $user->ID : 0 );
 		$rest_base                = self::POST_TYPE_SLUG;
 		$has_publish_action       = false;
 		$has_assign_author_action = false;
@@ -532,6 +533,9 @@ class Story_Post_Type {
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
+		/** This filter is documented in wp-admin/includes/post.php */
+		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -545,7 +549,6 @@ class Story_Post_Type {
 				'userId'                => $user_id,
 				'storyId'               => $story_id,
 				'allStoriesLink'        => $all_stories_link,
-				'postLockInterval'      => $time_window,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,
@@ -566,6 +569,10 @@ class Story_Post_Type {
 				],
 				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
+				],
+				'postLock'              => [
+					'interval' => $time_window,
+					'enabled'  => $show_locked_dialog,
 				],
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
