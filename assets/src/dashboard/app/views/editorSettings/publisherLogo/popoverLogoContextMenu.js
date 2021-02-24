@@ -96,20 +96,20 @@ function PopoverLogoContextMenu({
 }
 
 export const PopoverLogoContextMenuPropTypes = {
-  isActive: PropTypes.bool,
+  contextMenuId: PropTypes.shape({
+    value: PropTypes.number,
+    set: PropTypes.func,
+  }).isRequired,
   idx: PropTypes.number,
+  isActive: PropTypes.bool,
+  items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  onMenuItemToggle: PropTypes.func.isRequired,
   publisherLogo: PropTypes.shape({
     src: PropTypes.string,
     title: PropTypes.string,
     id: PropTypes.number,
     isDefault: PropTypes.bool,
   }).isRequired,
-  contextMenuId: PropTypes.shape({
-    value: PropTypes.number,
-    set: PropTypes.func,
-  }).isRequired,
-  onMenuItemToggle: PropTypes.func.isRequired,
-  items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
 };
 
 PopoverLogoContextMenu.propTypes = PopoverLogoContextMenuPropTypes;
