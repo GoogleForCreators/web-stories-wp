@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef, useEffect, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
@@ -26,42 +26,28 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useFocusOut, useKeyDownEffect } from '../../../../../design-system';
 import { useStory } from '../../../../app';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { duplicatePage } from '../../../../elements';
-import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 
 import { UnitsProvider } from '../../../../units';
 import isDefaultPage from '../../../../utils/isDefaultPage';
-import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { PANE_PADDING } from '../shared';
+import {
+  getVirtualizedPageIndex,
+  useVirtualizedGridNavigation,
+  VirtualizedContainer,
+} from '../shared/virtualizedPanelGrid';
 import PageLayout from './pageLayout';
 import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 
 const PAGE_LAYOUT_PANE_WIDTH = 158;
-const PAGE_LAYOUT_ROW_GAP = 12;
+export const PAGE_LAYOUT_ROW_GAP = 12;
 
 const PageLayoutsContainer = styled.div`
   height: ${({ height }) => `${height}px`};
   width: 100%;
   position: relative;
-`;
-
-const PageLayoutsVirtualizedContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: ${PANE_PADDING};
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-columns: ${({ pageSize }) => `
-    repeat(auto-fill, ${pageSize.width}px)`};
-  grid-template-rows: ${({ pageSize }) =>
-    `minmax(${pageSize.containerHeight}px, auto)`};
-  gap: ${PAGE_LAYOUT_ROW_GAP}px;
-  width: 100%;
-  height: 100%;
-  margin-top: 4px;
 `;
 
 function PageLayouts({ pages, parentRef }) {
@@ -76,9 +62,7 @@ function PageLayouts({ pages, parentRef }) {
   const pageRefs = useRef({});
 
   const [selectedPage, setSelectedPage] = useState();
-  const [activePageId, setActivePageId] = useState();
   const [isConfirming, setIsConfirming] = useState();
-  const [isPageLayoutsFocused, setIsPageLayoutsFocused] = useState(false);
 
   const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
 
@@ -120,17 +104,6 @@ function PageLayouts({ pages, parentRef }) {
     [requiresConfirmation, handleApplyPageLayout]
   );
 
-  const handleKeyboardPageClick = useCallback(
-    ({ key }, page) => {
-      if (key === 'Enter') {
-        if (isPageLayoutsFocused) {
-          handlePageClick(page);
-        }
-      }
-    },
-    [isPageLayoutsFocused, handlePageClick]
-  );
-
   const handleCloseDialog = useCallback(() => {
     setSelectedPage(null);
     setIsConfirming(false);
@@ -140,15 +113,6 @@ function PageLayouts({ pages, parentRef }) {
     handleApplyPageLayout(selectedPage);
     setIsConfirming(false);
   }, [selectedPage, handleApplyPageLayout]);
-
-  const handlePageFocus = useCallback(
-    (pageId) => {
-      if (activePageId !== pageId) {
-        setActivePageId(pageId);
-      }
-    },
-    [activePageId]
-  );
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil((pages || []).length / 2),
@@ -170,62 +134,27 @@ function PageLayouts({ pages, parentRef }) {
     overscan: 0,
   });
 
-  /**
-   * useVirtual and useRovingTabIndex do not play well together but we need both!
-   * The Below useEffect is key to maintaining the proper focus for keyboard users.
-   * What happens is on "scroll" of the virtualized container useVirtual is grabbing more rows
-   * and these rows are fed through the rendered map to create page layouts that are visible to users.
-   * While it doesn't look like the DOM is updating, it is in fact updating.
-   * So the old refs get lost and the list gets new ones! By manually forcing focus and maintaining an object
-   * of pageRefs that are organized by page id (those don't update) we can make sure the focus stays where it's supposed to be.
-   * Checking for a difference in currentAvailableRows and assigning the matching ref to any change is just so that the effect hook will run when the virtualized list
-   * updates and reattach focus to the new instance of an already selected layout.
-   */
-  const currentAvailableRows = useMemo(() => rowVirtualizer.virtualItems, [
+  const {
+    activePageId,
+    handlePageLayoutFocus,
+    handlePageFocus,
+    isPageLayoutsFocused,
+  } = useVirtualizedGridNavigation({
     rowVirtualizer,
-  ]);
-  const currentAvailableRowsRef = useRef();
-
-  useEffect(() => {
-    if (currentAvailableRows !== currentAvailableRowsRef?.current) {
-      currentAvailableRowsRef.current = currentAvailableRows;
-    }
-
-    if (activePageId && isPageLayoutsFocused) {
-      pageRefs.current?.[activePageId]?.focus();
-    }
-  }, [activePageId, currentAvailableRows, isPageLayoutsFocused]);
-
-  const handlePageLayoutFocus = useCallback(() => {
-    if (!isPageLayoutsFocused) {
-      const newPageId = pageRefs.current?.[activePageId]
-        ? activePageId
-        : pageIds[0];
-
-      setActivePageId(newPageId);
-      setIsPageLayoutsFocused(true);
-      pageRefs.current?.[newPageId]?.focus();
-    }
-  }, [activePageId, isPageLayoutsFocused, pageIds]);
-
-  useRovingTabIndex({ ref: containerRef });
-
-  // Exit page layouts
-  const focusCanvas = useFocusCanvas();
-
-  const onTabKeyDown = useCallback(() => {
-    focusCanvas();
-    setIsPageLayoutsFocused(false);
-  }, [focusCanvas]);
-
-  useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
-
-  useFocusOut(
     containerRef,
-    () => {
-      setIsPageLayoutsFocused(false);
+    pageRefs,
+    pageIds,
+  });
+
+  const handleKeyboardPageClick = useCallback(
+    ({ key }, page) => {
+      if (key === 'Enter') {
+        if (isPageLayoutsFocused) {
+          handlePageClick(page);
+        }
+      }
     },
-    [isConfirming]
+    [isPageLayoutsFocused, handlePageClick]
   );
 
   return (
@@ -236,19 +165,22 @@ function PageLayouts({ pages, parentRef }) {
       }}
     >
       <PageLayoutsContainer height={rowVirtualizer.totalSize}>
-        <PageLayoutsVirtualizedContainer
+        <VirtualizedContainer
           height={rowVirtualizer.totalSize}
           ref={containerRef}
-          pageSize={pageSize}
+          columnWidth={pageSize.width}
+          rowHeight={pageSize.containerHeight}
           tab={0}
+          paneLeft={PANE_PADDING}
           onFocus={handlePageLayoutFocus}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {
-              const pageIndex =
-                virtualColumn.index === 0
-                  ? virtualRow.index * 2
-                  : virtualRow.index * 2 + 1;
+              const pageIndex = getVirtualizedPageIndex({
+                virtualColumn,
+                virtualRow,
+              });
+
               const page = pages[pageIndex];
 
               if (!page) {
@@ -272,7 +204,7 @@ function PageLayouts({ pages, parentRef }) {
               );
             })
           )}
-        </PageLayoutsVirtualizedContainer>
+        </VirtualizedContainer>
         {isConfirming && (
           <ConfirmPageLayoutDialog
             onConfirm={handleConfirmDialog}
