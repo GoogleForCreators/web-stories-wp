@@ -181,12 +181,12 @@ function PublisherLogoSettings({
               const items = [
                 {
                   label: __('Set as Default', 'web-stories'),
-                  onClick: () => handleRemoveLogoClick(publisherLogo, idx),
+                  onClick: () => handleUpdateDefaultLogo(publisherLogo),
                   disabled: publisherLogo.isDefault,
                 },
                 {
                   label: __('Delete', 'web-stories'),
-                  onClick: () => handleUpdateDefaultLogo(publisherLogo),
+                  onClick: () => handleRemoveLogoClick(publisherLogo, idx),
                 },
               ];
 
@@ -200,6 +200,7 @@ function PublisherLogoSettings({
                   }}
                   role="listitem"
                   active={publisherLogo.isDefault}
+                  data-testid={`publisher-logo-${idx}`}
                 >
                   <GridItemButton
                     onFocus={() => {
@@ -230,7 +231,6 @@ function PublisherLogoSettings({
                   {showLogoContextMenu && (
                     <PopoverLogoContextMenu
                       isActive={isActive}
-                      activePublisherLogo={activePublisherLogoId}
                       idx={idx}
                       items={items}
                       publisherLogo={publisherLogo}

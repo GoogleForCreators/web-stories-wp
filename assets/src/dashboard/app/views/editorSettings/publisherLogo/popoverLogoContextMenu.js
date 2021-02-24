@@ -26,15 +26,15 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import { EditPencil as EditPencilIcon } from '../../../../icons';
 import { MenuContainer, LogoMenuButton } from '../components';
-import { useFocusOut } from '../../../../utils';
 import {
   AnimatedContextMenu,
   MenuItemProps,
+  noop,
+  useFocusOut,
 } from '../../../../../design-system';
 
 function PopoverLogoContextMenu({
   isActive,
-  activePublisherLogo,
   idx,
   publisherLogo,
   contextMenuId,
@@ -52,12 +52,16 @@ function PopoverLogoContextMenu({
   );
 
   const handleFocusOut = useCallback(() => {
-    if (contextMenuId.value === activePublisherLogo) {
+    if (contextMenuId.value === publisherLogo.id) {
       onMoreButtonSelected(-1);
     }
-  }, [activePublisherLogo, contextMenuId.value, onMoreButtonSelected]);
+  }, [publisherLogo.id, contextMenuId.value, onMoreButtonSelected]);
 
-  useFocusOut(popoverMenuContainerRef, handleFocusOut, [contextMenuId]);
+  useFocusOut(
+    popoverMenuContainerRef,
+    contextMenuId.value === publisherLogo.id ? handleFocusOut : noop,
+    [contextMenuId, publisherLogo.id]
+  );
 
   return (
     <MenuContainer ref={popoverMenuContainerRef}>
@@ -92,7 +96,6 @@ function PopoverLogoContextMenu({
 }
 
 PopoverLogoContextMenu.propTypes = {
-  activePublisherLogo: PropTypes.number,
   isActive: PropTypes.bool,
   idx: PropTypes.number,
   publisherLogo: PropTypes.shape({
