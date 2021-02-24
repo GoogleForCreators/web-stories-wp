@@ -111,6 +111,12 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 					'args'                => $lock_args,
 				],
+				[
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => [ $this, 'delete_lock' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+					'args'                => $lock_args,
+				],
 			]
 		);
 	}
@@ -139,6 +145,26 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		wp_set_post_lock( $request['id'] );
 
 		return $this->prepare_lock_for_response( $request );
+	}
+
+	/**
+	 * Delete post lock
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response Response object on success.
+	 */
+	public function delete_lock( $request ) {
+		$previous = $this->prepare_lock_for_response( $request );
+		$result   = delete_post_meta( $request['id'], '_edit_lock' );
+		$response = new WP_REST_Response();
+		$response->set_data(
+			array(
+				'deleted'  => $result,
+				'previous' => $previous->get_data(),
+			)
+		);
+
+		return $response;
 	}
 
 	/**

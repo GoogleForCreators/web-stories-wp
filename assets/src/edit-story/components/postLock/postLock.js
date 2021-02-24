@@ -31,7 +31,7 @@ import PostLockDialog from './postLockDialog';
 
 function PostLock() {
   const {
-    actions: { getStoryLockById, setStoryLockById },
+    actions: { getStoryLockById, setStoryLockById, deleteStoryLockById },
   } = useAPI();
   const {
     storyId,
@@ -82,6 +82,27 @@ function PostLock() {
   useEffect(() => {
     cachedDoGetStoryLock.current = doGetStoryLock;
   }, [doGetStoryLock]);
+
+
+  useEffect(() => {
+    async function releasePostLock() {
+      if (enablePostLocking && postLockEnabled && !showDialog) {
+        await deleteStoryLockById(storyId);
+      }
+    }
+
+    window.addEventListener('beforeunload', releasePostLock);
+
+    return () => {
+      window.removeEventListener('beforeunload', releasePostLock);
+    };
+  }, [
+    deleteStoryLockById,
+    storyId,
+    enablePostLocking,
+    postLockEnabled,
+    showDialog,
+  ]);
 
   useEffect(() => {
     cachedDoGetStoryLock.current();
