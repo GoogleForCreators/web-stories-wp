@@ -34,6 +34,7 @@ export { ReactComponent as Grid } from './grid.svg';
 export { ReactComponent as HomeWithHeart } from './homeWithHeart.svg';
 export { ReactComponent as LeftArrow } from './leftArrow.svg';
 export { ReactComponent as List } from './list.svg';
+export { ReactComponent as Lock } from './lock.svg';
 export { ReactComponent as Menu } from './menu.svg';
 export { ReactComponent as MoreVertical } from './moreVertical.svg';
 export { ReactComponent as ChevronLeft } from './chevronLeft.svg';
