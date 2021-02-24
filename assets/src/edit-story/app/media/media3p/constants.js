@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,5 +14,14 @@
  * limitations under the License.
  */
 
-export * from './button';
-export * from './toggleButton';
+export const ContentType = {
+  IMAGE: 'image',
+  VIDEO: 'video',
+  GIF: 'gif',
+};
+
+export const ProviderType = {
+  UNSPLASH: 'unsplash',
+  COVERR: 'coverr',
+  TENOR: 'tenor',
+};

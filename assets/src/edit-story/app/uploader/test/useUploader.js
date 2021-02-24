@@ -37,6 +37,12 @@ jest.mock('../../media/utils/useTranscodeVideo', () => ({
   })),
 }));
 
+const mockShowSnackbar = jest.fn();
+
+jest.mock('../../snackbar', () => ({
+  useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
+}));
+
 function setup(args) {
   const configValue = {
     api: {},
@@ -66,31 +72,45 @@ function setup(args) {
   const { result } = renderHook(() => useUploader(), { wrapper });
 
   return {
-    uploadFile: result.current.uploadFile,
-    isValidType: result.current.isValidType,
+    actions: {
+      uploadFile: result.current.actions.uploadFile,
+      isValidType: result.current.actions.isValidType,
+    },
+    state: {
+      isTranscoding: result.current.state.isTranscoding,
+    },
   };
 }
 
 describe('useUploader', () => {
+  beforeEach(() => {
+    mockShowSnackbar.mockReset();
+  });
   afterEach(() => {
     useTranscodeVideo.mockClear();
   });
 
   describe('isValidType', () => {
     it('returns false if file type is not in list', () => {
-      const { isValidType } = setup({});
+      const {
+        actions: { isValidType },
+      } = setup({});
       expect(isValidType({ type: 'application/pdf' })).toBeFalse();
     });
 
     it('returns true if file type is in list', () => {
-      const { isValidType } = setup({});
+      const {
+        actions: { isValidType },
+      } = setup({});
       expect(isValidType({ type: 'video/mp4' })).toBeTrue();
     });
   });
 
   describe('uploadFile', () => {
     it('throws an error if user does not have upload capabilities', async () => {
-      const { uploadFile } = setup({
+      const {
+        actions: { uploadFile },
+      } = setup({
         capabilities: {
           hasUploadMediaAction: false,
         },
@@ -102,7 +122,9 @@ describe('useUploader', () => {
     });
 
     it('throws an error if file is too large', async () => {
-      const { uploadFile } = setup({
+      const {
+        actions: { uploadFile },
+      } = setup({
         maxUpload: 2000000,
       });
 
@@ -112,7 +134,9 @@ describe('useUploader', () => {
     });
 
     it('throws an error if file type is not supported and cannot be transcoded', async () => {
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+      } = setup({});
 
       await expect(
         uploadFile({ size: 20000, type: 'video/quicktime' })
@@ -132,7 +156,9 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({
+      const {
+        actions: { uploadFile },
+      } = setup({
         maxUpload: 1024 * 1024 * 1024 * 10,
       });
 
@@ -163,7 +189,10 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+        state: { isTranscoding },
+      } = setup({});
 
       const file = {
         size: 20000,
@@ -174,6 +203,7 @@ describe('useUploader', () => {
       expect(result).toStrictEqual('Upload successful!');
       expect(transcodeVideo).toHaveBeenCalledTimes(1);
       expect(transcodeVideo).toHaveBeenCalledWith(file);
+      expect(isTranscoding).toBeFalse();
     });
 
     it('uploads image without transcoding', async () => {
@@ -185,7 +215,10 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+        state: { isTranscoding },
+      } = setup({});
 
       const file = {
         size: 20000,
@@ -195,6 +228,7 @@ describe('useUploader', () => {
       const result = await uploadFile(file);
       expect(result).toStrictEqual('Upload successful!');
       expect(transcodeVideo).not.toHaveBeenCalled();
+      expect(isTranscoding).toBeFalse();
     });
 
     it('throws an error if video transcoding failed', async () => {
@@ -211,7 +245,10 @@ describe('useUploader', () => {
         }))
       );
 
-      const { uploadFile } = setup({});
+      const {
+        actions: { uploadFile },
+        state: { isTranscoding },
+      } = setup({});
 
       const file = {
         size: 20000,
@@ -223,6 +260,7 @@ describe('useUploader', () => {
       );
       expect(transcodeVideo).toHaveBeenCalledTimes(1);
       expect(transcodeVideo).toHaveBeenCalledWith(file);
+      expect(isTranscoding).toBeFalse();
     });
   });
 });

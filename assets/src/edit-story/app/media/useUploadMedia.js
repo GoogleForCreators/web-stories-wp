@@ -31,7 +31,10 @@ import {
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
 import { useSnackbar } from '../snackbar';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
+
+const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
 /**
  * Upload media items to the app while displaying the local files in the library.
@@ -45,7 +48,10 @@ import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
  * @return {{uploadMedia: Function, isUploading: boolean}} Upload status, and function to upload media.
  */
 function useUploadMedia({ media, setMedia }) {
-  const { uploadFile } = useUploader();
+  const {
+    actions: { uploadFile },
+    state: { isTranscoding },
+  } = useUploader();
   const { showSnackbar } = useSnackbar();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
@@ -60,6 +66,16 @@ function useUploadMedia({ media, setMedia }) {
   useEffect(() => {
     setPreventUnload('upload', isUploading);
   }, [isUploading, setPreventUnload]);
+
+  useEffect(() => {
+    const isDialogDismissed = Boolean(localStore.getItemByKey(storageKey));
+
+    if (isTranscoding && isDialogDismissed) {
+      showSnackbar({
+        message: __('Video optimization in progress.', 'web-stories'),
+      });
+    }
+  }, [isTranscoding, showSnackbar]);
 
   const uploadMedia = useCallback(
     /**
@@ -221,6 +237,7 @@ function useUploadMedia({ media, setMedia }) {
   return {
     uploadMedia,
     isUploading,
+    isTranscoding,
   };
 }
 

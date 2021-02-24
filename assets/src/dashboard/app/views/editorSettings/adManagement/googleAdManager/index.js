@@ -24,21 +24,19 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { validateAdManagerSlotIdFormat } from '../../../../utils';
+import { validateAdManagerSlotIdFormat } from '../../../../../utils';
 import {
   InlineForm,
   SaveButton,
-  SettingForm,
-  SettingHeading,
   SettingsTextInput,
   TextInputHelperText,
   VisuallyHiddenLabel,
-} from '../components';
+} from '../../components';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '../../../../../../design-system';
 
 export const TEXT = {
   SLOT_ID_CONTEXT: sprintf(
@@ -92,39 +90,34 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
   );
 
   return (
-    <SettingForm onSubmit={(e) => e.preventDefault()}>
-      <SettingHeading />
-      <div>
-        <InlineForm>
-          <VisuallyHiddenLabel htmlFor="adManagerSlotId">
-            {TEXT.SLOT_ID_LABEL}
-          </VisuallyHiddenLabel>
-          <SettingsTextInput
-            id="adManagerSlotId"
-            aria-label={TEXT.SLOT_ID_LABEL}
-            value={slotId}
-            onChange={onUpdateSlotId}
-            onKeyDown={onKeyDownSlotId}
-            placeholder={TEXT.SLOT_ID_PLACEHOLDER}
-            hasError={Boolean(slotIdInputError)}
-            hint={slotIdInputError}
-          />
-          <SaveButton
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            disabled={disableSlotIdSaveButton}
-            onClick={onSaveSlotId}
-          >
-            {TEXT.SUBMIT_BUTTON}
-          </SaveButton>
-        </InlineForm>
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+    <>
+      <InlineForm>
+        <VisuallyHiddenLabel htmlFor="adManagerSlotId">
+          {TEXT.SLOT_ID_LABEL}
+        </VisuallyHiddenLabel>
+        <SettingsTextInput
+          id="adManagerSlotId"
+          aria-label={TEXT.SLOT_ID_LABEL}
+          value={slotId}
+          onChange={onUpdateSlotId}
+          onKeyDown={onKeyDownSlotId}
+          placeholder={TEXT.SLOT_ID_PLACEHOLDER}
+          hasError={Boolean(slotIdInputError)}
+          hint={slotIdInputError}
+        />
+        <SaveButton
+          type={BUTTON_TYPES.SECONDARY}
+          size={BUTTON_SIZES.SMALL}
+          disabled={disableSlotIdSaveButton}
+          onClick={onSaveSlotId}
         >
-          {TEXT.SLOT_ID_CONTEXT}
-        </TextInputHelperText>
-      </div>
-    </SettingForm>
+          {TEXT.SUBMIT_BUTTON}
+        </SaveButton>
+      </InlineForm>
+      <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {TEXT.SLOT_ID_CONTEXT}
+      </TextInputHelperText>
+    </>
   );
 }
 GoogleAdManagerSettings.propTypes = {

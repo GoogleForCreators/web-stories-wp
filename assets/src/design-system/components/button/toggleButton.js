@@ -13,32 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { select } from '@storybook/addon-knobs';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { AD_NETWORK_TYPE } from '../../../../../constants';
-import AdNetwork from '../';
+import { BUTTON_TYPES } from './constants';
+import { Button } from './button';
 
-export default {
-  title: 'Dashboard/Views/EditorSettings/AdNetwork',
-  component: AdNetwork,
-};
-
-export const _default = () => {
+function ToggleButton({ isToggled = false, ...rest }) {
   return (
-    <AdNetwork
-      adNetwork={select(
-        'adNetwork',
-        Object.values(AD_NETWORK_TYPE),
-        AD_NETWORK_TYPE.NONE
-      )}
-      handleUpdate={(newAdNetwork) => action('update ad network')(newAdNetwork)}
+    <Button
+      {...rest}
+      type={isToggled ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.TERTIARY}
+      aria-pressed={isToggled}
     />
   );
+}
+
+ToggleButton.propTypes = {
+  isToggled: PropTypes.bool,
 };
+
+export { ToggleButton };

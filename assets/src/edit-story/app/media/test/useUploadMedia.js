@@ -32,7 +32,12 @@ const mockUploadFile = jest.fn();
 
 jest.mock('../../uploader', () => ({
   useUploader: jest.fn(() => ({
-    uploadFile: mockUploadFile,
+    actions: {
+      uploadFile: mockUploadFile,
+    },
+    state: {
+      isTranscoding: false,
+    },
   })),
 }));
 

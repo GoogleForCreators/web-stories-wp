@@ -17,27 +17,28 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import GoogleAdSense from '../';
+import { AD_NETWORK_TYPE } from '../../../../../../constants';
+import AdNetwork from '..';
 
 export default {
-  title: 'Dashboard/Views/EditorSettings/GoogleAdSense',
-  component: GoogleAdSense,
+  title: 'Dashboard/Views/EditorSettings/AdManagement/AdNetwork',
+  component: AdNetwork,
 };
 
 export const _default = () => {
   return (
-    <GoogleAdSense
-      publisherId={text('publisherId', '')}
-      slotId={text('slotId', '')}
-      handleUpdatePublisherId={(newPublisherId) =>
-        action('update publisher id')(newPublisherId)
-      }
-      handleUpdateSlotId={(newSlotId) => action('update slot id')(newSlotId)}
+    <AdNetwork
+      adNetwork={select(
+        'adNetwork',
+        Object.values(AD_NETWORK_TYPE),
+        AD_NETWORK_TYPE.NONE
+      )}
+      handleUpdate={(newAdNetwork) => action('update ad network')(newAdNetwork)}
     />
   );
 };

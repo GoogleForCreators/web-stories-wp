@@ -22,10 +22,10 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import GoogleAdManager from '../';
+import GoogleAdManager from '..';
 
 export default {
-  title: 'Dashboard/Views/EditorSettings/GoogleAdManager',
+  title: 'Dashboard/Views/EditorSettings/AdManagement/GoogleAdManager',
   component: GoogleAdManager,
 };
 
