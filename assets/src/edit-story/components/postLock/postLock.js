@@ -37,7 +37,7 @@ function PostLock() {
     storyId,
     userId,
     allStoriesLink,
-    postLock: { interval: postLockInterval, enabled: postLockEnabled },
+    postLock: { interval: postLockInterval, showLockedDialog },
   } = useConfig();
 
   const { previewLink } = useStory(({ state: { story: { previewLink } } }) => ({
@@ -53,7 +53,7 @@ function PostLock() {
   }, [setStoryLockById, storyId]);
 
   const doGetStoryLock = useCallback(() => {
-    if (enablePostLocking && postLockEnabled) {
+    if (enablePostLocking && showLockedDialog) {
       getStoryLockById(storyId)
         .then((result) => {
           if (result.locked && result.user !== userId) {
@@ -74,7 +74,7 @@ function PostLock() {
     storyId,
     userId,
     enablePostLocking,
-    postLockEnabled,
+    showLockedDialog,
   ]);
 
   // Cache it to make it stable in terms of the below timeout

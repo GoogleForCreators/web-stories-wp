@@ -571,8 +571,8 @@ class Story_Post_Type {
 					'publisher' => $this->get_publisher_data(),
 				],
 				'postLock'              => [
-					'interval' => $time_window,
-					'enabled'  => $show_locked_dialog,
+					'interval'         => $time_window,
+					'showLockedDialog' => $show_locked_dialog,
 				],
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
