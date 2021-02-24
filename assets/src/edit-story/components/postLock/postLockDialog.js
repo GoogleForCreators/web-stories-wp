@@ -42,7 +42,7 @@ const Img = styled.img`
 
 function PostLockDialog({
   open,
-  author,
+  user,
   allStoriesLink,
   previewLink,
   onClose,
@@ -63,16 +63,16 @@ function PostLockDialog({
         </>
       }
     >
-      {author && author.name && (
+      {user && user.name && (
         <Paragraph>
-          <Img src={author['avatar_urls']['48']} alt={author.name} />
+          <Img src={user['avatar_urls']['48']} alt={user.name} />
           {sprintf(
             /* translators: %s: user's name */
             __(
               '%s is already editing this story. Do you want to take over? ',
               'web-stories'
             ),
-            author.name
+            user.name
           )}
         </Paragraph>
       )}
@@ -82,7 +82,7 @@ function PostLockDialog({
 
 PostLockDialog.propTypes = {
   open: PropTypes.bool.isRequired,
-  author: PropTypes.object,
+  user: PropTypes.object,
   allStoriesLink: PropTypes.string.isRequired,
   previewLink: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,

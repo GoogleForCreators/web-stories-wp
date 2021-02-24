@@ -44,7 +44,7 @@ function PostLock() {
     previewLink,
   }));
   const [showDialog, setShowDialog] = useState(false);
-  const [author, setAuthor] = useState({});
+  const [user, setUser] = useState({});
   const { enablePostLocking } = useFeatures();
 
   const closeDialog = useCallback(() => {
@@ -58,7 +58,7 @@ function PostLock() {
         .then((result) => {
           if (result.locked && result.user !== userId) {
             setShowDialog(true);
-            setAuthor(result['_embedded'].author[0]);
+            setUser(result['_embedded'].author[0]);
           } else {
             setStoryLockById(storyId);
           }
@@ -96,7 +96,7 @@ function PostLock() {
   return (
     <PostLockDialog
       open={showDialog}
-      author={author}
+      user={user}
       onClose={closeDialog}
       previewLink={previewLink}
       allStoriesLink={allStoriesLink}
