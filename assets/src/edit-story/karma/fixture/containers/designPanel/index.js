@@ -35,6 +35,7 @@ import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { TextStylePreset } from './textStylePreset';
 import { VideoPoster } from './videoPoster';
+import { TextBox } from './textBox';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -46,9 +47,17 @@ export class DesignPanel extends Container {
 
   get textStyle() {
     return this._get(
-      this.getByRole('region', { name: /Style/ }),
+      this.getByRole('region', { name: /Text/ }),
       'textStyle',
       TextStyle
+    );
+  }
+
+  get textBox() {
+    return this._get(
+      this.getByRole('region', { name: /Text box/ }),
+      'textBox',
+      TextBox
     );
   }
 

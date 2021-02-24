@@ -184,12 +184,6 @@ describe('Panels/TextStyle', () => {
       fontSize: 70,
       height: 171,
       lineHeight: 1,
-      padding: {
-        hasHiddenPadding: false,
-        horizontal: 0,
-        locked: true,
-        vertical: 0,
-      },
       x: dx,
       y: dy,
     });
