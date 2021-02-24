@@ -275,7 +275,7 @@ AnimationContainer.propTypes = {
 
 const AnimatedContextMenu = ({ isOpen, items, ...props }) => (
   <AnimationContainer isOpen={isOpen}>
-    <Menu items={items} {...props} />
+    <Menu items={items} isOpen={isOpen} {...props} />
   </AnimationContainer>
 );
 AnimatedContextMenu.propTypes = MenuPropTypes;

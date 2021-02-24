@@ -26,7 +26,7 @@ import Menu, { MenuPropTypes } from './menu';
 const ContextMenu = ({ isOpen, items, ...props }) => {
   return (
     <Popover role="dialog" isOpen={isOpen} {...props}>
-      <Menu items={items} />
+      <Menu items={items} isOpen={isOpen} />
       <Shadow />
     </Popover>
   );
