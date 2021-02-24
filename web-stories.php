@@ -12,7 +12,7 @@
  * Plugin URI: https://wp.stories.google/
  * Author: Google
  * Author URI: https://opensource.google.com/
- * Version: 1.3.0
+ * Version: 1.5.0-alpha
  * Requires at least: 5.3
  * Requires PHP: 5.6
  * Text Domain: web-stories
