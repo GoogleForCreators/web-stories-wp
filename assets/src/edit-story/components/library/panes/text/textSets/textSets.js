@@ -17,209 +17,124 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
-import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { FullWidthWrapper } from '../../common/styles';
-import PillGroup from '../../shared/pillGroup';
-import localStore, {
-  LOCAL_STORAGE_PREFIX,
-} from '../../../../../utils/localStore';
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
-import useLibrary from '../../../useLibrary';
-import useStory from '../../../../../app/story/useStory';
 import {
-  getInUseFontsForPages,
-  getTextSetsForFonts,
-} from '../../../../../utils/getInUseFonts';
-import Switch from '../../../../switch';
-import {
-  Container as SectionContainer,
-  Title as SectionTitle,
-} from '../../../common/section';
+  getVirtualizedPageIndex,
+  useVirtualizedGridNavigation,
+  VirtualizedContainer,
+} from '../../shared/virtualizedPanelGrid';
 import TextSet from './textSet';
-
-const TEXT_SET_ROW_GAP = 12;
+import { TEXT_SET_ROW_GAP } from './constants';
 
 const TextSetContainer = styled.div`
   height: ${({ height }) => `${height}px`};
   width: 100%;
   position: relative;
-  margin-top: 28px;
-  overflow-x: hidden;
 `;
 
-const TextSetRow = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: ${({ height }) => `${height}px`};
-  transform: ${({ translateY }) => `translateY(${translateY}px)`};
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 12px;
-`;
+function TextSets({ paneRef, filteredTextSets }) {
+  const containerRef = useRef();
+  const pageRefs = useRef({});
 
-const TitleBar = styled.div`
-  display: flex;
-
-  label {
-    margin-top: 14px;
-    margin-bottom: 28px;
-  }
-`;
-
-const CATEGORIES = {
-  contact: __('Contact', 'web-stories'),
-  editorial: __('Editorial', 'web-stories'),
-  list: __('List', 'web-stories'),
-  cover: __('Cover', 'web-stories'),
-  section_header: __('Header', 'web-stories'),
-  step: __('Steps', 'web-stories'),
-  table: __('Table', 'web-stories'),
-  quote: __('Quote', 'web-stories'),
-};
-
-function TextSets({ paneRef }) {
-  const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
-  const [showInUse, setShowInUse] = useState(false);
-
-  const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
-  const storyPages = useStory(({ state: { pages } }) => pages);
-
-  const [selectedCat, setSelectedCat] = useState(
-    localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
-      ?.selectedCategory
-  );
-
-  const getTextSetsForInUseFonts = useCallback(
-    () =>
-      getTextSetsForFonts({
-        fonts: getInUseFontsForPages(storyPages),
-        textSets: selectedCat ? textSets[selectedCat] : allTextSets,
-      }),
-    [allTextSets, storyPages, selectedCat, textSets]
-  );
-
-  const filteredTextSets = useMemo(() => {
-    if (showInUse) {
-      return getTextSetsForInUseFonts();
-    }
-    return selectedCat ? textSets[selectedCat] : allTextSets;
-  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts, showInUse]);
-
-  const categories = useMemo(
-    () => [
-      ...Object.keys(textSets).map((cat) => ({
-        id: cat,
-        label: CATEGORIES[cat] ?? cat,
-      })),
-    ],
-    [textSets]
-  );
+  const pageIds = useMemo(() => filteredTextSets.map((textSet) => textSet.id), [
+    filteredTextSets,
+  ]);
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil((filteredTextSets || []).length / 2),
     parentRef: paneRef,
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
-    overscan: 5,
+    overscan: 4,
   });
 
-  const handleSelectedCategory = useCallback((selectedCategory) => {
-    setSelectedCat(selectedCategory);
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
-      selectedCategory,
-    });
-  }, []);
+  const columnVirtualizer = useVirtual({
+    horizontal: true,
+    size: 2,
+    parentRef: paneRef,
+    estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
+    overscan: 0,
+  });
 
-  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
-  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
-
-  const onChangeShowInUse = useCallback(
-    (value) => {
-      requestAnimationFrame(() => setShowInUse(value));
-    },
-    [setShowInUse]
-  );
-
-  useEffect(() => {
-    trackEvent('search', {
-      search_type: 'textsets',
-      search_term: '',
-      search_category: selectedCat,
-      search_filter: showInUse ? 'show_in_use' : undefined,
-    });
-  }, [selectedCat, showInUse]);
+  const {
+    activePageId,
+    handlePageLayoutFocus,
+    handlePageFocus,
+    isPageLayoutsFocused,
+  } = useVirtualizedGridNavigation({
+    rowVirtualizer,
+    containerRef,
+    pageRefs,
+    pageIds,
+  });
 
   return (
-    <SectionContainer id={sectionId}>
-      <TitleBar>
-        <SectionTitle>{title}</SectionTitle>
-        <Switch
-          onChange={onChangeShowInUse}
-          value={showInUse}
-          label={__('Match fonts from story', 'web-stories')}
-        />
-      </TitleBar>
-      <FullWidthWrapper>
-        <PillGroup
-          items={categories}
-          selectedItemId={selectedCat}
-          selectItem={handleSelectedCategory}
-          deselectItem={() => handleSelectedCategory(null)}
-        />
-      </FullWidthWrapper>
-      <UnitsProvider
-        pageSize={{
-          width: TEXT_SET_SIZE,
-          height: TEXT_SET_SIZE / PAGE_RATIO,
-        }}
-      >
-        <TextSetContainer height={rowVirtualizer.totalSize}>
-          {rowVirtualizer.virtualItems.map((virtualRow) => {
-            const firstColumnIndex = virtualRow.index * 2;
-            const secondColumnIndex = firstColumnIndex + 1;
+    <UnitsProvider
+      pageSize={{
+        width: TEXT_SET_SIZE,
+        height: TEXT_SET_SIZE / PAGE_RATIO,
+      }}
+    >
+      <TextSetContainer height={rowVirtualizer.totalSize}>
+        <VirtualizedContainer
+          height={rowVirtualizer.totalSize}
+          ref={containerRef}
+          columnWidth={TEXT_SET_SIZE}
+          rowHeight={TEXT_SET_SIZE}
+          tab={0}
+          onFocus={handlePageLayoutFocus}
+        >
+          {rowVirtualizer.virtualItems.map((virtualRow) =>
+            columnVirtualizer.virtualItems.map((virtualColumn) => {
+              const gridIndex = getVirtualizedPageIndex({
+                virtualColumn,
+                virtualRow,
+              });
 
-            return (
-              <TextSetRow
-                key={virtualRow.index}
-                height={virtualRow.size}
-                translateY={virtualRow.start}
-              >
-                {(filteredTextSets[firstColumnIndex] || []).length > 0 && (
-                  <TextSet
-                    key={firstColumnIndex}
-                    elements={filteredTextSets[firstColumnIndex]}
-                  />
-                )}
-                {filteredTextSets[secondColumnIndex] &&
-                  (filteredTextSets[secondColumnIndex] || []).length > 0 && (
-                    <TextSet
-                      key={secondColumnIndex}
-                      elements={filteredTextSets[secondColumnIndex]}
-                    />
-                  )}
-              </TextSetRow>
-            );
-          })}
-        </TextSetContainer>
-      </UnitsProvider>
-    </SectionContainer>
+              const textSet = filteredTextSets[gridIndex];
+
+              if (!textSet?.elements) {
+                return null;
+              }
+
+              const isActive =
+                activePageId === textSet.id && isPageLayoutsFocused;
+
+              return (
+                <TextSet
+                  key={gridIndex}
+                  ref={(el) => (pageRefs.current[textSet.id] = el)}
+                  translateY={virtualRow.start}
+                  translateX={virtualColumn.start}
+                  isActive={isActive}
+                  onFocus={() => handlePageFocus(textSet.id)}
+                  elements={textSet.elements}
+                />
+              );
+            })
+          )}
+        </VirtualizedContainer>
+      </TextSetContainer>
+    </UnitsProvider>
   );
 }
 
 TextSets.propTypes = {
   paneRef: PropTypes.object,
+  filteredTextSets: PropTypes.shape([
+    {
+      id: PropTypes.string,
+      elements: PropTypes.array,
+    },
+  ]),
 };
 
 export default TextSets;

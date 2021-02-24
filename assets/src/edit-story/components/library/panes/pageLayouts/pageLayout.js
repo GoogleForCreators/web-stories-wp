@@ -52,8 +52,7 @@ const PreviewPageWrapper = styled.div`
   height: ${({ pageSize }) => pageSize.containerHeight}px;
   width: ${({ pageSize }) => pageSize.width}px;
   z-index: -1;
-  background-color: ${({ theme }) =>
-    theme.DEPRECATED_THEME.colors.loading.primary};
+  background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
 `;
