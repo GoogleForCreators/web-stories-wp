@@ -121,9 +121,10 @@ const MenuList = styled.ul(
   `
 );
 
-const Menu = ({ items, ...props }) => {
+const Menu = ({ isOpen, items, ...props }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
+  const menuWasAlreadyOpen = useRef(isOpen);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   const totalIndex = useMemo(() => items.length - 1, [items]);
@@ -163,8 +164,13 @@ const Menu = ({ items, ...props }) => {
   ]);
 
   useEffect(() => {
-    // focus first 'focusable' element if menu is rendered and no element is focused
-    if (listRef?.current && focusedIndex === -1) {
+    // focus first 'focusable' element if menu is opened and no element is focused
+    if (
+      isOpen &&
+      !menuWasAlreadyOpen.current &&
+      listRef?.current &&
+      focusedIndex === -1
+    ) {
       let index = 0;
 
       while (index <= totalIndex) {
@@ -180,8 +186,10 @@ const Menu = ({ items, ...props }) => {
 
         index++;
       }
+
+      menuWasAlreadyOpen.current = true;
     }
-  }, [focusedIndex, totalIndex]);
+  }, [focusedIndex, isOpen, totalIndex]);
 
   return (
     <MenuWrapper>
@@ -209,6 +217,7 @@ const Menu = ({ items, ...props }) => {
 };
 
 export const MenuPropTypes = {
+  isOpen: PropTypes.bool.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       ...MenuItemProps,
