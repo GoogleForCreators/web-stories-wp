@@ -30,22 +30,15 @@ import {
   RangeControl,
   SelectControl,
   ToggleControl,
-  Notice,
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
-import {
-  createInterpolateElement,
-  useEffect,
-  useRef,
-} from '@wordpress/element';
-import { select } from '@wordpress/data';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
 import {
-  CAROUSEL_VIEW_TYPE,
   CIRCLES_VIEW_TYPE,
   GRID_VIEW_TYPE,
   ORDER_BY_OPTIONS,
@@ -55,10 +48,6 @@ import AuthorSelection from './authorSelection';
 const StyledTextArea = styled(TextControl)`
   width: 80%;
   margin-left: auto;
-`;
-
-const StyledNotice = styled(Notice)`
-  margin: 0 0 20px 0;
 `;
 
 const StyledToggle = styled(ToggleControl)`
@@ -167,18 +156,6 @@ const StoriesInspectorControls = (props) => {
     </a>
   );
 
-  const previewLink = select('core/editor').getEditedPostPreviewLink();
-  const carouselMessage = createInterpolateElement(
-    __(
-      `<b>Note:</b> Carousel functionality will not work in Editor. <a>Preview</a> post to see it in action.`,
-      'web-stories'
-    ),
-    {
-      b: <b />,
-      a: <a href={previewLink} target="__blank" rel="noreferrer" />, // eslint-disable-line jsx-a11y/anchor-has-content
-    }
-  );
-
   const handleToggleControl = (field) => {
     setAttributes({
       fieldState: {
@@ -194,17 +171,6 @@ const StoriesInspectorControls = (props) => {
         className="web-stories-settings"
         title={__('Story settings', 'web-stories')}
       >
-        {(CAROUSEL_VIEW_TYPE === viewType ||
-          CIRCLES_VIEW_TYPE === viewType) && (
-          <StyledNotice
-            className="web-stories-carousel-message"
-            isDismissible={false}
-            status="warning"
-          >
-            {carouselMessage}
-          </StyledNotice>
-        )}
-
         {fieldStates[viewType] &&
           Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
             const { label, readonly } = fieldObj;
