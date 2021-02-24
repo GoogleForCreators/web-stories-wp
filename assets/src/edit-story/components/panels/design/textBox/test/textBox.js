@@ -31,7 +31,6 @@ import {
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../../../../utils/textMeasurements');
 jest.mock('../../../../form/color/color');
 
 const DEFAULT_PADDING = {
