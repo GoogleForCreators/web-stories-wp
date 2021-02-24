@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -161,6 +161,27 @@ const Menu = ({ items, ...props }) => {
   useKeyDownEffect(listRef, { key: ['down', 'up'] }, handleKeyboardNav, [
     handleKeyboardNav,
   ]);
+
+  useEffect(() => {
+    // focus first 'focusable' element if menu is rendered and no element is focused
+    if (listRef?.current && focusedIndex === -1) {
+      let index = 0;
+
+      while (index <= totalIndex) {
+        const element = listRef.current?.children?.[index]?.children?.[0];
+
+        if (
+          FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+          !element?.disabled
+        ) {
+          setFocusedIndex(index);
+          return;
+        }
+
+        index++;
+      }
+    }
+  }, [focusedIndex, totalIndex]);
 
   return (
     <MenuWrapper>
