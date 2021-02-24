@@ -24,8 +24,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import TextBox from '../textBox';
-import RichTextContext from '../../../../richText/context';
-import CanvasContext from '../../../../../app/canvas/context';
+import ColorInput from '../../../../form/color/color';
 import {
   HIDDEN_PADDING,
   MULTIPLE_DISPLAY_VALUE,
@@ -40,32 +39,6 @@ const DEFAULT_PADDING = {
   vertical: 0,
   locked: true,
   hasHiddenPadding: false,
-};
-
-function Wrapper({ children }) {
-  return (
-    <CanvasContext.Provider
-      value={{
-        state: {},
-        actions: {
-          clearEditing: jest.fn(),
-        },
-      }}
-    >
-      <RichTextContext.Provider
-        value={{ state: {}, actions: { selectionActions: {} } }}
-      >
-        {children}
-      </RichTextContext.Provider>
-    </CanvasContext.Provider>
-  );
-}
-
-Wrapper.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
 };
 
 describe('Panels/TextBox', () => {
@@ -96,10 +69,21 @@ describe('Panels/TextBox', () => {
       ...unlockPaddingTextElement,
       padding: DEFAULT_PADDING,
     };
+    controls = {};
+    ColorInput.mockImplementation(FakeControl);
   });
 
+  function FakeControl(props) {
+    controls[props['data-testid']] = props;
+    return <div />;
+  }
+
+  FakeControl.propTypes = {
+    'data-testid': PropTypes.string,
+  };
+
   function renderTextBox(selectedElements, ...args) {
-    return renderPanel(TextBox, selectedElements, Wrapper, ...args);
+    return renderPanel(TextBox, selectedElements, ...args);
   }
 
   it('should render <TextBox /> panel', () => {
@@ -584,11 +568,6 @@ describe('Panels/TextBox', () => {
 
       const paddingV = getByRole('textbox', { name: 'Vertical padding' });
       expect(paddingV.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-
-      expect(controls.font.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-      expect(controls['font.weight'].placeholder).toStrictEqual(
-        MULTIPLE_DISPLAY_VALUE
-      );
     });
   });
 });
