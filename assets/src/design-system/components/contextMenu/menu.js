@@ -217,7 +217,7 @@ const Menu = ({ isOpen, items, ...props }) => {
 };
 
 export const MenuPropTypes = {
-  isOpen: PropTypes.bool,
+  isOpen: PropTypes.bool.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       ...MenuItemProps,
