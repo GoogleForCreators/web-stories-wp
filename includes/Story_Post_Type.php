@@ -529,12 +529,6 @@ class Story_Post_Type {
 			admin_url( 'edit.php' )
 		);
 
-		$preview_query_args = [
-			'preview_id'    => $story_id,
-			// Leveraging the default WP post preview logic.
-			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
-		];
-
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
@@ -550,7 +544,6 @@ class Story_Post_Type {
 				'postType'              => self::POST_TYPE_SLUG,
 				'userId'                => $user_id,
 				'storyId'               => $story_id,
-				'previewLink'           => get_preview_post_link( $story_id, $preview_query_args ),
 				'allStoriesLink'        => $all_stories_link,
 				'postLockInterval'      => $time_window,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),

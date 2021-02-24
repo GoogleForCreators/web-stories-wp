@@ -59,13 +59,13 @@ function App({ config }) {
           <ConfigProvider config={config}>
             <APIProvider>
               <StatusCheck />
-              <PostLock />
               <FileProvider>
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
                       <MetaBoxesProvider>
                         <StoryProvider storyId={storyId}>
+                          <PostLock />
                           <FontProvider>
                             <CurrentUserProvider>
                               <MediaProvider>

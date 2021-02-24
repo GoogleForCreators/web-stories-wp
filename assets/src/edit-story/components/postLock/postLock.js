@@ -25,6 +25,7 @@ import { trackError } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { useAPI } from '../../app/api';
+import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import PostLockDialog from './postLockDialog';
 
@@ -32,13 +33,11 @@ function PostLock() {
   const {
     actions: { getStoryLockById, setStoryLockById },
   } = useAPI();
-  const {
-    storyId,
-    userId,
+  const { storyId, userId, allStoriesLink, postLockInterval } = useConfig();
+
+  const { previewLink } = useStory(({ state: { story: { previewLink } } }) => ({
     previewLink,
-    allStoriesLink,
-    postLockInterval,
-  } = useConfig();
+  }));
   const [showDialog, setShowDialog] = useState(false);
   const [author, setAuthor] = useState({});
   const { enablePostLocking } = useFeatures();
