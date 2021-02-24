@@ -83,9 +83,11 @@ function APIProvider({ children }) {
       // However, some Web Application Firewall (WAF) solutions prevent this.
       // `?_method=DELETE` is an alternative solution to override the request method.
       // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
-      const path = addQueryArgs(`${stories}${storyId}/lock`, { _method: 'DELETE' });
+      const path = addQueryArgs(`${stories}${storyId}/lock`, {
+        _method: 'DELETE',
+      });
 
-      return apiFetch({ path, method: 'POST' });
+      return apiFetch({ path, method: 'POST', keepalive: true });
     },
     [stories]
   );

@@ -86,7 +86,7 @@ function PostLock() {
 
   useEffect(() => {
     async function releasePostLock() {
-      if (enablePostLocking && postLockEnabled) {
+      if (enablePostLocking && postLockEnabled && !showDialog) {
         await deleteStoryLockById(storyId);
       }
     }
@@ -96,7 +96,13 @@ function PostLock() {
     return () => {
       window.removeEventListener('beforeunload', releasePostLock);
     };
-  }, [deleteStoryLockById, storyId, enablePostLocking, postLockEnabled]);
+  }, [
+    deleteStoryLockById,
+    storyId,
+    enablePostLocking,
+    postLockEnabled,
+    showDialog,
+  ]);
 
   useEffect(() => {
     cachedDoGetStoryLock.current();
