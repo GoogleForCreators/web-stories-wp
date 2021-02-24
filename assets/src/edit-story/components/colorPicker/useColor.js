@@ -128,7 +128,7 @@ const reducer = {
   moveCurrentStopBy: (state, { payload: deltaPosition }) => {
     const index = state.currentStopIndex;
     const currentPosition = state.stops[index].position;
-    // Clamp by 0 and 1, round to 4 decimals
+    // Clamp by 0 and 1, round to 2 decimals
     const desiredPosition = Math.max(
       0,
       Math.min(1, Number((currentPosition + deltaPosition).toFixed(2)))
