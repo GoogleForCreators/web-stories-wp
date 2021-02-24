@@ -17,51 +17,14 @@
 /**
  * Internal dependencies
  */
-import { noop } from '../../../design-system';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 
-/**
- * @param {Object} arguments The arguments
- * @param {Object} arguments.menuItemActions An object of actions that could be added as event handlers
- * * @param {Function} arguments.menuItemActions.default A function to be used as a fallback `onClick` event handler for the menu item
- * * @param {Function} arguments.menuItemActions[key] The function to be used as the `onClick` event handler for the menu item.
- * * * The `key` is any property in `STORY_CONTEXT_MENU_ACTIONS` found in {@module assets/src/dashboard/types.js}
- * @param {Array} arguments.menuItems The menu items to build out
- * @param {Object} arguments.story The story used to generate the menu items
- * @return {Array} Array of menu items
- */
-export const generateStoryMenu = ({
-  menuItemActions = {},
-  menuItems,
-  story,
-}) => {
-  const defaultFn = menuItemActions.default
-    ? () => menuItemActions.default(story)
-    : noop;
-
-  return menuItems.map(({ value, ...menuItem }) => {
-    const extraProperties = {
-      onClick: menuItemActions[value]
-        ? () => menuItemActions[value](story)
-        : defaultFn,
-    };
-
-    switch (value) {
-      case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-        extraProperties.href = story.bottomTargetAction;
-        extraProperties.newTab = false;
-        break;
-      case STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK:
-        extraProperties.href = story.previewLink;
-        extraProperties.newTab = true;
-        break;
-      default:
-        break;
+export const generateStoryMenu = ({ menuItems, story }) =>
+  menuItems.map((menuItem) => {
+    if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR) {
+      return { ...menuItem, url: story.bottomTargetAction, newTab: false };
+    } else if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
+      return { ...menuItem, url: story.previewLink, newTab: true };
     }
-
-    return {
-      ...menuItem,
-      ...extraProperties,
-    };
+    return menuItem;
   });
-};

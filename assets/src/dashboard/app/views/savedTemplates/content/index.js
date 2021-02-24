@@ -58,25 +58,27 @@ function Content({
     'enableInProgressStoryActions'
   );
 
-  // TODO add context menu actions
-  const handleCreateStoryFromTemplate = useCallback(
-    (template) => {
-      trackEvent('use_saved_template', {
-        name: template.title,
-        template_id: template.id,
-      });
-      actions.createStoryFromTemplate(template);
-    },
-    [actions]
-  );
+  const handleMenuItemSelected = useCallback(
+    (sender, template) => {
+      setContextMenuId(-1);
 
-  const handlePreviewTemplate = useCallback(
-    (template) => {
-      trackEvent('use_saved_template', {
-        name: template.title,
-        template_id: template.id,
-      });
-      actions.createStoryFromTemplate(template);
+      switch (sender.value) {
+        case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          trackEvent('use_saved_template', {
+            name: template.title,
+            template_id: template.id,
+          });
+          actions.createStoryFromTemplate(template);
+          break;
+
+        case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.PREVIEW:
+          actions.previewTemplate(null, template);
+          break;
+
+        default:
+          break;
+      }
+      // TODO add context menu actions
     },
     [actions]
   );
@@ -92,18 +94,13 @@ function Content({
     return {
       handleMenuToggle: setContextMenuId,
       contextMenuId,
-      menuItemActions: {
-        default: () => setContextMenuId(-1),
-        [SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR]: handleCreateStoryFromTemplate,
-        [SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.PREVIEW]: handlePreviewTemplate,
-      },
+      handleMenuItemSelected,
       menuItems: enabledMenuItems,
     };
   }, [
     setContextMenuId,
     contextMenuId,
-    handleCreateStoryFromTemplate,
-    handlePreviewTemplate,
+    handleMenuItemSelected,
     enabledMenuItems,
   ]);
 

@@ -184,7 +184,6 @@ const SavedTemplateGridView = ({
                   onMenuItemSelected={templateMenu.handleMenuItemSelected}
                   story={template}
                   menuItems={generateStoryMenu({
-                    menuItemActions: templateMenu.menuItemActions,
                     menuItems: templateMenu.menuItems,
                     template,
                   })}

@@ -28,8 +28,9 @@ import { rgba } from 'polished';
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
+import { PopoverMenuCard } from '../popoverMenu';
+import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
-import { AnimatedContextMenu, MenuItemProps } from '../../../design-system';
 
 export const MoreVerticalButton = styled.button`
   display: flex;
@@ -74,6 +75,7 @@ MenuContainer.propTypes = {
 export default function StoryMenu({
   contextMenuId,
   onMoreButtonSelected,
+  onMenuItemSelected,
   story,
   verticalAlign,
   menuItems,
@@ -102,7 +104,11 @@ export default function StoryMenu({
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
-      <AnimatedContextMenu isOpen={isPopoverMenuOpen} items={menuItems} />
+      <PopoverMenuCard
+        isOpen={isPopoverMenuOpen}
+        onSelect={(menuItem) => onMenuItemSelected(menuItem, story)}
+        items={menuItems}
+      />
     </MenuContainer>
   );
 }
@@ -112,8 +118,8 @@ StoryMenu.propTypes = {
   tabIndex: PropTypes.number,
   story: StoryPropType,
   onMoreButtonSelected: PropTypes.func.isRequired,
-  // onMenuItemSelected: PropTypes.func.isRequired,
+  onMenuItemSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
-  menuItems: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  menuItems: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
 };
