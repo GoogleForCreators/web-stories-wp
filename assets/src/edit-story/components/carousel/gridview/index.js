@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useRef, useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -25,11 +25,16 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useGridViewKeys } from '../../../../design-system';
+import {
+  useGridViewKeys,
+  Slider,
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  Icons,
+} from '../../../../design-system';
 import { useConfig, useStory } from '../../../app';
-import RangeInput from '../../rangeInput';
-import { Rectangle as RectangleIcon } from '../../../icons';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 import PagePreview, {
   THUMB_FRAME_HEIGHT,
   THUMB_FRAME_WIDTH,
@@ -40,14 +45,21 @@ import {
   ReorderableItem,
 } from '../../reorderable';
 
-const PREVIEW_WIDTH = 90;
-const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
 const GRID_GAP = 20;
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  padding: 32px;
+`;
+
+const TopRow = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 112px;
 `;
 
 const Wrapper = styled(Reorderable)`
@@ -58,68 +70,31 @@ const Wrapper = styled(Reorderable)`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  pointer-events: all;
 `;
 
 const Grid = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: ${({ scale }) =>
-    `repeat(auto-fit, minmax(${
-      scale * PREVIEW_WIDTH + THUMB_FRAME_WIDTH
-    }px, max-content))`};
+  grid-template-columns: ${({ pageWidth }) =>
+    `repeat(auto-fit, minmax(${pageWidth}px, max-content))`};
   grid-gap: ${GRID_GAP}px;
   justify-content: center;
-  justify-items: center;
-  align-items: center;
+  align-items: flex-start;
   flex-grow: 1;
 `;
 
-const RangeInputWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 430px;
-  margin: 0 auto 75px auto;
-  width: 100%;
+const NoButton = styled.div`
+  flex: 0 0 56px;
 `;
 
-const FlexGrowRangeInput = styled(RangeInput)`
-  flex-grow: 1;
+const ClickableButton = styled(Button)`
+  pointer-events: all;
 `;
 
-const Rectangle = styled.button`
-  border: 0;
-  padding: 0;
-  margin: 0;
-  min-width: unset;
-  background: transparent;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-
-  &:active {
-    outline: none;
-  }
-
-  ${({ disable }) =>
-    disable &&
-    css`
-      pointer-events: none;
-      opacity: 0.3;
-    `}
-
-  svg {
-    width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
-    height: auto;
-    shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
-  }
-`;
-
-const Space = styled.div`
-  flex: 0 0 20px;
+const ClickableSlider = styled(Slider)`
+  pointer-events: all;
+  width: 366px;
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
@@ -151,71 +126,7 @@ const ItemContainer = styled.div`
   position: relative;
 `;
 
-function ThumbnailSizeControl({ value, onChange }) {
-  const max = 3;
-  const min = 1;
-  const step = 1;
-
-  const updateRangeValue = (addition) => {
-    onChange(Math.min(max, Math.max(min, value + addition)));
-  };
-
-  let valueText;
-  switch (value) {
-    case max:
-      valueText = __('Large', 'web-stories');
-      break;
-    case min:
-      valueText = __('Small', 'web-stories');
-      break;
-    default:
-      valueText = __('Medium', 'web-stories');
-      break;
-  }
-
-  const decreaseBtnDisabled = value === min;
-  const increaseBtnDisabled = value === max;
-
-  return (
-    <RangeInputWrapper>
-      <Rectangle
-        onClick={() => !decreaseBtnDisabled && updateRangeValue(-step)}
-        disable={decreaseBtnDisabled}
-        aria-label={__('Decrease thumbnail size', 'web-stories')}
-      >
-        <RectangleIcon />
-      </Rectangle>
-      <Space />
-      <FlexGrowRangeInput
-        min={min}
-        max={max}
-        majorStep={step}
-        minorStep={step}
-        value={value}
-        handleChange={onChange}
-        thumbSize={24}
-        aria-label={__('Thumbnail size', 'web-stories')}
-        aria-valuetext={valueText}
-      />
-      <Space />
-      <Rectangle
-        isLarge
-        onClick={() => !increaseBtnDisabled && updateRangeValue(step)}
-        disable={increaseBtnDisabled}
-        aria-label={__('Increase thumbnail size', 'web-stories')}
-      >
-        <RectangleIcon />
-      </Rectangle>
-    </RangeInputWrapper>
-  );
-}
-
-ThumbnailSizeControl.propTypes = {
-  value: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-function GridView() {
+function GridView({ onClose }) {
   const {
     pages,
     currentPageId,
@@ -236,10 +147,10 @@ function GridView() {
   );
 
   const { isRTL } = useConfig();
-  const [zoomLevel, setZoomLevel] = useState(2);
+  const [pagesPerRow, setPagesPerRow] = useState(4);
 
-  const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;
-  const height = zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT;
+  const width = 1000 / pagesPerRow + THUMB_FRAME_WIDTH;
+  const height = 1000 / pagesPerRow + THUMB_FRAME_HEIGHT;
 
   const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 
@@ -266,7 +177,26 @@ function GridView() {
 
   return (
     <Container>
-      <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
+      <TopRow>
+        <ClickableButton
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.MEDIUM}
+          onClick={onClose}
+          aria-label={__('Close', 'web-stories')}
+        >
+          <Icons.Cross />
+        </ClickableButton>
+        <ClickableSlider
+          min={4}
+          max={12}
+          majorStep={1}
+          minorStep={1}
+          value={pagesPerRow}
+          onChange={(evt) => setPagesPerRow(evt.target.valueAsNumber)}
+        />
+        <NoButton />
+      </TopRow>
       <Wrapper
         aria-label={__('Grid View Pages List', 'web-stories')}
         ref={wrapperRef}
@@ -278,7 +208,7 @@ function GridView() {
         mode={'grid'}
         getItemSize={() => height}
       >
-        <Grid scale={zoomLevel} ref={gridRef}>
+        <Grid pageWidth={width} ref={gridRef}>
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
             const isInteractive = pages.length > 1;
@@ -341,5 +271,9 @@ function GridView() {
     </Container>
   );
 }
+
+GridView.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
 
 export default GridView;
