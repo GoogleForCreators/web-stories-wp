@@ -69,6 +69,8 @@ function Tooltip({
   onPointerLeave = () => {},
   onFocus = () => {},
   onBlur = () => {},
+  forceAnchorRef = null,
+  tooltipProps = null,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -129,13 +131,18 @@ function Tooltip({
       </Wrapper>
 
       <Popup
-        anchor={anchorRef}
+        anchor={forceAnchorRef || anchorRef}
         placement={placement}
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
       >
-        <TooltipContainer ref={tooltipRef} placement={placement} shown={shown}>
+        <TooltipContainer
+          ref={tooltipRef}
+          placement={placement}
+          shown={shown}
+          {...tooltipProps}
+        >
           <TooltipText
             forwardedAs="span"
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
@@ -171,6 +178,8 @@ Tooltip.propTypes = {
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
   title: PropTypes.string,
+  forceAnchorRef: PropTypes.object,
+  tooltipProps: PropTypes.object,
 };
 
 export { Tooltip, PLACEMENT as TOOLTIP_PLACEMENT };
