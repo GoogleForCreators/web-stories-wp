@@ -81,7 +81,7 @@ describe('<OpacityInput />', () => {
     getPreviewTextMock.mockImplementation(() => null);
 
     const { element } = arrange();
-    expect(element).toHaveStyle('visibility: hidden');
+    expect(element).toHaveAttribute('disabled');
   });
 
   it('should remove postfix when there is focus but add again when blurred', async () => {
@@ -103,10 +103,12 @@ describe('<OpacityInput />', () => {
     const { element, onChange } = arrange();
 
     fireEvent.change(element, { target: { value: '50' } });
+    fireEvent.blur(element);
     expect(onChange).toHaveBeenCalledWith(0.5);
 
     onChange.mockReset();
     fireEvent.change(element, { target: { value: 'ten' } });
+    fireEvent.blur(element);
     expect(onChange).not.toHaveBeenCalled();
   });
 });

@@ -61,6 +61,7 @@ describe('<Color />', () => {
     );
 
     fireEvent.change(opacityInput, { target: { value: '30' } });
+    fireEvent.blur(opacityInput);
 
     expect(applyOpacityChange).toHaveBeenCalledWith(
       createSolid(255, 0, 0),

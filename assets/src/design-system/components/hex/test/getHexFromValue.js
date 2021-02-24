@@ -21,15 +21,26 @@ import getHexFromValue from '../getHexFromValue';
 
 describe('getHexFromValue', () => {
   describe('when value is valid', () => {
-    it('should accept valid 6 character hex values', () => {
+    it('should accept valid 1 character hex values', () => {
       // Include # at start of string
-      expect(getHexFromValue('#45FFAA')).toBe('45FFAA');
+      expect(getHexFromValue('#A')).toBe('AAAAAA');
 
       // Missing # at start of string
-      expect(getHexFromValue('BB88AA')).toBe('BB88AA');
+      expect(getHexFromValue('B')).toBe('BBBBBB');
 
       // Has extra space in string
-      expect(getHexFromValue('  22FFAA ')).toBe('22FFAA');
+      expect(getHexFromValue('  F ')).toBe('FFFFFF');
+    });
+
+    it('should accept valid 2 character hex values', () => {
+      // Include # at start of string
+      expect(getHexFromValue('#EF')).toBe('EFEFEF');
+
+      // Missing # at start of string
+      expect(getHexFromValue('EF')).toBe('EFEFEF');
+
+      // Has extra space in string
+      expect(getHexFromValue('  EF ')).toBe('EFEFEF');
     });
 
     it('should accept valid 3 character shorthand hex values', () => {
@@ -41,6 +52,28 @@ describe('getHexFromValue', () => {
 
       // Has extra space in string
       expect(getHexFromValue('  AF1  ')).toBe('AAFF11');
+    });
+
+    it('should accept valid 4 character hex values', () => {
+      // Include # at start of string
+      expect(getHexFromValue('#1122')).toBe('111122');
+
+      // Missing # at start of string
+      expect(getHexFromValue('1122')).toBe('111122');
+
+      // Has extra space in string
+      expect(getHexFromValue('  1122 ')).toBe('111122');
+    });
+
+    it('should accept valid 6 character hex values', () => {
+      // Include # at start of string
+      expect(getHexFromValue('#45FFAA')).toBe('45FFAA');
+
+      // Missing # at start of string
+      expect(getHexFromValue('BB88AA')).toBe('BB88AA');
+
+      // Has extra space in string
+      expect(getHexFromValue('  22FFAA ')).toBe('22FFAA');
     });
 
     it('should accept uppercase or lowercase strings', () => {
@@ -66,9 +99,6 @@ describe('getHexFromValue', () => {
 
     it('should return null if value length is too short or too long', () => {
       expect(getHexFromValue('#')).toBeNull();
-      expect(getHexFromValue('1')).toBeNull();
-      expect(getHexFromValue('f2')).toBeNull();
-      expect(getHexFromValue('f2a4')).toBeNull();
       expect(getHexFromValue('f2a4A')).toBeNull();
       expect(getHexFromValue('f2a4Af3214')).toBeNull();
       expect(getHexFromValue('jsdhf78384')).toBeNull();

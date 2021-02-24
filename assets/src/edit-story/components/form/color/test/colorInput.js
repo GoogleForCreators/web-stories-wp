@@ -30,7 +30,9 @@ import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('../getPreviewText', () => jest.fn());
+jest.mock('../../../../../design-system/components/hex/getPreviewText', () =>
+  jest.fn()
+);
 
 function arrange(children = null) {
   const { getByRole, queryByLabelText } = renderWithTheme(children);
@@ -161,18 +163,10 @@ describe('<ColorInput />', () => {
       <ColorInput onChange={onChange} value={value} label="Color" />
     );
 
-    // Only 2 digits can't be valid
-    fireEvent.change(input, { target: { value: 'AF' } });
-    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // Since saved value didn't change shouldn't trigger onChagne
-    expect(onChange).not.toHaveBeenCalled();
-    // Input should revert to saved value
-    expect(input).toHaveValue('FF0000');
-
     // Only 5 digits can't be valid
     fireEvent.change(input, { target: { value: '0FF00' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // Since saved value didn't change shouldn't trigger onChagne
+    // Since saved value didn't change shouldn't trigger onChange
     expect(onChange).not.toHaveBeenCalled();
     // Input should revert to saved value
     expect(input).toHaveValue('FF0000');
@@ -180,7 +174,7 @@ describe('<ColorInput />', () => {
     // Non-hex can't be valid
     fireEvent.change(input, { target: { value: 'COFFEE' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // Since saved value didn't change shouldn't trigger onChagne
+    // Since saved value didn't change shouldn't trigger onChange
     expect(onChange).not.toHaveBeenCalled();
     // Input should revert to saved value
     expect(input).toHaveValue('FF0000');
@@ -191,16 +185,34 @@ describe('<ColorInput />', () => {
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 255, 0));
     expect(input).toHaveValue('00FF00');
 
+    // Allow shorthand 1 digits
+    fireEvent.change(input, { target: { value: '0' } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+    expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 0));
+    expect(input).toHaveValue('000000');
+
+    // Allow shorthand 2 digits
+    fireEvent.change(input, { target: { value: 'AF' } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+    expect(onChange).toHaveBeenCalledWith(createSolid(175, 175, 175));
+    expect(input).toHaveValue('AFAFAF');
+
     // Allow shorthand 3 digit hex
     fireEvent.change(input, { target: { value: 'F60' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     expect(onChange).toHaveBeenCalledWith(createSolid(255, 102, 0));
     expect(input).toHaveValue('FF6600');
 
+    // Allow shorthand 4 digits
+    fireEvent.change(input, { target: { value: 'AAFF' } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+    expect(onChange).toHaveBeenCalledWith(createSolid(255, 102, 0));
+    expect(input).toHaveValue('AAAAFF');
+
     // Also validate that it'll ignore the first #
     fireEvent.change(input, { target: { value: '#0000FF' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    expect(onChange).toHaveBeenCalledTimes(3);
+    expect(onChange).toHaveBeenCalledTimes(6);
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 255));
     expect(input).toHaveValue('0000FF');
   });
