@@ -119,7 +119,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * Get post lock
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response Response object on success.
+	 * @return WP_REST_Response|WP_Error Response object on success.
 	 */
 	public function get_lock( $request ) {
 		return $this->prepare_lock_for_response( $request );
@@ -129,7 +129,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * Update post lock
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response Response object on success.
+	 * @return WP_REST_Response|WP_Error Response object on success.
 	 */
 	public function update_lock( $request ) {
 		if ( ! function_exists( 'wp_set_post_lock' ) ) {
@@ -146,7 +146,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 *
-	 * @return WP_REST_Response Response object.
+	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_lock_for_response( $request ) {
 		$lock = get_post_meta( $request['id'], '_edit_lock', true );
@@ -178,7 +178,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
-		$response->add_links( $links );
+		if ( ! is_wp_error( $response ) ) {
+			$response->add_links( $links );
+		}
 
 		return $response;
 	}
