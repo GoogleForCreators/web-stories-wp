@@ -30,12 +30,12 @@ function getHexFromValue(value) {
   // Shorthand rules.
   // 2 => 222222
   if (val.length === 1) {
-    return `${val}${val}${val}${val}${val}${val}`;
+    return val.repeat(6);
   }
 
   // 21 => 212121
   if (val.length === 2) {
-    return `${val}${val}${val}`;
+    return val.repeat(3);
   }
 
   // 221 => 22221
@@ -45,8 +45,7 @@ function getHexFromValue(value) {
 
   // 2211 => 222211
   if (val.length === 4) {
-    const first = val.substring(0, 2);
-    return `${first}${first}${val.substring(2)}`;
+    return `${val.substring(0, 2).repeat(2)}${val.substring(2)}`;
   }
 
   return null;
