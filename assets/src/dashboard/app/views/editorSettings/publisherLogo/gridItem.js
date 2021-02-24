@@ -30,7 +30,9 @@ import {
   Logo,
 } from '../components';
 import { THEME_CONSTANTS } from '../../../../../design-system';
-import PopoverLogoContextMenu from './popoverLogoContextMenu';
+import PopoverLogoContextMenu, {
+  PopoverLogoContextMenuPropTypes,
+} from './popoverLogoContextMenu';
 
 export const GridItem = forwardRef(
   (
@@ -119,24 +121,15 @@ export const GridItem = forwardRef(
     );
   }
 );
-export const GridItemPropTypes = {
-  contextMenuId: PropTypes.shape({
-    set: PropTypes.func.isRequired,
-    value: PropTypes.number,
-  }),
-  index: PropTypes.number.isRequired,
-  isActive: PropTypes.bool,
-  onMenuItemToggle: PropTypes.func.isRequired,
+GridItem.propTypes = {
+  contextMenuId: PopoverLogoContextMenuPropTypes.contextMenuId,
+  index: PopoverLogoContextMenuPropTypes.idx,
+  isActive: PopoverLogoContextMenuPropTypes.isActive,
+  onMenuItemToggle: PopoverLogoContextMenuPropTypes.onMenuItemToggle,
   onRemoveLogo: PropTypes.func.isRequired,
   onUpdateDefaultLogo: PropTypes.func.isRequired,
-  publisherLogo: PropTypes.shape({
-    src: PropTypes.string,
-    title: PropTypes.string,
-    id: PropTypes.number,
-    isDefault: PropTypes.bool,
-  }).isRequired,
+  publisherLogo: PopoverLogoContextMenuPropTypes.publisherLogo,
   setActivePublisherLogoId: PropTypes.func.isRequired,
   showLogoContextMenu: PropTypes.bool,
 };
-GridItem.propTypes = GridItemPropTypes;
 GridItem.displayName = 'GridItem';

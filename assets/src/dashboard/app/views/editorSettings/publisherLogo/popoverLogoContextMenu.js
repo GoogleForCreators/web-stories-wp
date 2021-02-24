@@ -95,7 +95,7 @@ function PopoverLogoContextMenu({
   );
 }
 
-PopoverLogoContextMenu.propTypes = {
+export const PopoverLogoContextMenuPropTypes = {
   isActive: PropTypes.bool,
   idx: PropTypes.number,
   publisherLogo: PropTypes.shape({
@@ -111,5 +111,7 @@ PopoverLogoContextMenu.propTypes = {
   onMenuItemToggle: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
 };
+
+PopoverLogoContextMenu.propTypes = PopoverLogoContextMenuPropTypes;
 
 export default PopoverLogoContextMenu;

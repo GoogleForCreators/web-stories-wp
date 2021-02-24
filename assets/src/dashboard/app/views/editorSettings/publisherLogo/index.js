@@ -38,7 +38,8 @@ import {
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { useConfig } from '../../../config';
-import { GridItem, GridItemPropTypes } from './gridItem';
+import { GridItem } from './gridItem';
+import { PopoverLogoContextMenuPropTypes } from './popoverLogoContextMenu';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
@@ -230,7 +231,7 @@ PublisherLogoSettings.propTypes = {
   onUpdateDefaultLogo: PropTypes.func,
   isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
-    PropTypes.shape(GridItemPropTypes.publisherLogos)
+    PropTypes.shape(PopoverLogoContextMenuPropTypes.publisherLogos)
   ),
   uploadError: PropTypes.string,
 };
