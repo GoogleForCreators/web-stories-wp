@@ -26,26 +26,26 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import {
-  useGridViewKeys,
   Slider,
   Button,
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   Icons,
+  useResizeEffect,
+  useGridViewKeys,
 } from '../../../../design-system';
 import { useConfig, useStory } from '../../../app';
-import PagePreview, {
-  THUMB_FRAME_HEIGHT,
-  THUMB_FRAME_WIDTH,
-} from '../pagepreview';
+import { PAGE_RATIO } from '../../../constants';
 import {
   Reorderable,
   ReorderableSeparator,
   ReorderableItem,
 } from '../../reorderable';
+import PagePreview from '../carouselPagePreview';
 
-const GRID_GAP = 20;
+const MIN_GRID_GAP = 20;
+const LINE_HEIGHT = 64;
 
 const Container = styled.section`
   display: flex;
@@ -71,6 +71,7 @@ const Wrapper = styled(Reorderable)`
   display: flex;
   flex-direction: column;
   pointer-events: all;
+  padding: 4px;
 `;
 
 const Grid = styled.div`
@@ -78,7 +79,8 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: ${({ pageWidth }) =>
     `repeat(auto-fit, minmax(${pageWidth}px, max-content))`};
-  grid-gap: ${GRID_GAP}px;
+  grid-template-rows: repeat(auto-fill, ${({ pageHeight }) => pageHeight}px);
+  grid-gap: ${({ gapWidth }) => gapWidth}px;
   justify-content: center;
   align-items: flex-start;
   flex-grow: 1;
@@ -102,9 +104,10 @@ const PageSeparator = styled(ReorderableSeparator)`
   bottom: 0;
   left: ${({ width }) => width / 2}px;
   width: ${({ width, margin }) => width + margin}px;
-  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  height: ${({ height }) => height}px;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   ${({ before, width, margin }) =>
     before &&
@@ -114,9 +117,9 @@ const PageSeparator = styled(ReorderableSeparator)`
 `;
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
-  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
-  width: 4px;
+  background: ${({ theme }) => theme.colors.border.selection};
+  height: ${({ height }) => height}px;
+  width: 2px;
   margin: 0px;
 `;
 
@@ -148,13 +151,25 @@ function GridView({ onClose }) {
 
   const { isRTL } = useConfig();
   const [pagesPerRow, setPagesPerRow] = useState(4);
+  const [availableWidth, setAvailableWidth] = useState(null);
+  const wrapperRef = useRef();
 
-  const width = 1000 / pagesPerRow + THUMB_FRAME_WIDTH;
-  const height = 1000 / pagesPerRow + THUMB_FRAME_HEIGHT;
+  // Get updated size of wrapper
+  useResizeEffect(wrapperRef, ({ width }) => setAvailableWidth(width), []);
+
+  // Calculate max page width that can fit on the page
+  const minGaps = MIN_GRID_GAP * (pagesPerRow - 1);
+  const rawPageWidth = (availableWidth - minGaps) / pagesPerRow;
+
+  const pageWidth = Math.floor(rawPageWidth / 12) * 12;
+  const actualPageWidths = pageWidth * pagesPerRow;
+  const pageGridGap = Math.floor(
+    (availableWidth - actualPageWidths) / (pagesPerRow - 1)
+  );
+  const pageHeight = pageWidth / PAGE_RATIO;
 
   const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 
-  const wrapperRef = useRef();
   const gridRef = useRef();
   const pageRefs = useRef({});
 
@@ -174,6 +189,9 @@ function GridView({ onClose }) {
     items: pages,
     arrangeItem,
   });
+
+  // actual divider height should be smaller than page height, but no more than LINE_HEIGHT
+  const dividerLineHeight = Math.min(pageHeight - 24, LINE_HEIGHT);
 
   return (
     <Container>
@@ -206,9 +224,15 @@ function GridView({ onClose }) {
           setCurrentPage({ pageId });
         }}
         mode={'grid'}
-        getItemSize={() => height}
+        getItemSize={() => pageHeight}
+        scrollSize={64}
       >
-        <Grid pageWidth={width} ref={gridRef}>
+        <Grid
+          pageWidth={pageWidth}
+          pageHeight={pageHeight}
+          gapWidth={pageGridGap}
+          ref={gridRef}
+        >
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
             const isInteractive = pages.length > 1;
@@ -222,12 +246,12 @@ function GridView({ onClose }) {
               >
                 <PageSeparator
                   position={index}
-                  width={width}
-                  height={height}
-                  margin={GRID_GAP}
+                  width={pageWidth}
+                  height={pageHeight}
+                  margin={pageGridGap}
                   before
                 >
-                  <Line height={height} />
+                  <Line height={dividerLineHeight} />
                 </PageSeparator>
                 <ReorderableItem position={index}>
                   <PagePreview
@@ -248,8 +272,8 @@ function GridView({ onClose }) {
                     tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     isActive={isCurrentPage && isInteractive}
                     page={page}
-                    width={width}
-                    height={height}
+                    width={pageWidth}
+                    height={pageHeight}
                     onClick={handleClickPage(page)}
                     isInteractive={isInteractive}
                     gridRef={gridRef}
@@ -257,11 +281,11 @@ function GridView({ onClose }) {
                 </ReorderableItem>
                 <PageSeparator
                   position={index + 1}
-                  width={width}
-                  height={height}
-                  margin={GRID_GAP}
+                  width={pageWidth}
+                  height={pageHeight}
+                  margin={pageGridGap}
                 >
-                  <Line height={height} />
+                  <Line height={dividerLineHeight} />
                 </PageSeparator>
               </ItemContainer>
             );
