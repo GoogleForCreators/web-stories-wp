@@ -26,7 +26,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { ICON_METRICS, STORY_STATUS } from '../../constants';
+import { STORY_STATUS } from '../../constants';
 import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
