@@ -58,6 +58,7 @@ export default function reshapeStoryObject(editStoryURL) {
       pages: updatedStoryData.pages,
       author: author[0]?.name || '',
       locked: lock[0]?.locked || false,
+      lockUser: lock[0]?.user || 0,
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
       editStoryLink: `${editStoryURL}&post=${id}`,

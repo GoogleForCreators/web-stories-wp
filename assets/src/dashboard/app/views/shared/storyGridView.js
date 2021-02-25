@@ -172,6 +172,7 @@ const StoryGridView = ({
                   titleLink={story.editStoryLink}
                   status={story?.status}
                   locked={story?.locked}
+                  lockUser={story?.lockUser}
                   id={story.id}
                   secondaryTitle={
                     isSavedTemplate ? __('Google', 'web-stories') : story.author

@@ -350,6 +350,7 @@ class Dashboard {
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
 				'isRTL'                 => is_rtl(),
+				'userId'                => get_current_user_id(),
 				'locale'                => ( new Locale() )->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'editStoryURL'          => $edit_story_url,

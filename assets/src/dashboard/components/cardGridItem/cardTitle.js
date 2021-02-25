@@ -33,6 +33,7 @@ import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
 import { Link } from '../link';
 import { Lock as LockSVG } from '../../icons';
+import { useConfig } from '../../app/config';
 
 const StyledCardTitle = styled.div`
   padding-top: 12px;
@@ -88,8 +89,10 @@ const CardTitle = ({
   onEditCancel,
   tabIndex,
   locked = false,
+  lockUser = 0,
 }) => {
   const { enablePostLocking } = useFeatures();
+  const { userId } = useConfig();
 
   const displayDateText = useMemo(() => {
     if (!displayDate) {
@@ -119,9 +122,13 @@ const CardTitle = ({
     }
   }, [status, displayDate]);
 
+  const showLockIcon = useMemo(() => {
+    return enablePostLocking && locked && userId !== lockUser;
+  }, [enablePostLocking, lockUser, locked, userId]);
+
   return (
     <StyledCardTitle>
-      {enablePostLocking && locked && <ListIcon />}
+      {showLockIcon && <ListIcon />}
       {editMode ? (
         <InlineInputForm
           onEditComplete={onEditComplete}
@@ -162,6 +169,7 @@ CardTitle.propTypes = {
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
   locked: PropTypes.bool,
+  lockUser: PropTypes.number,
   displayDate: PropTypes.string,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
