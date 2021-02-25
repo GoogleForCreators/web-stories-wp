@@ -369,6 +369,11 @@ beforeEach(async () => {
     margin: 0;
   `;
   document.body.appendChild(rootEl);
+  document.body.cssText = `
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+  `;
 
   // Each test should start with the pointer in the same location ([-1,-1]) to
   // avoid pointerover/mouseover/hover flakes.
