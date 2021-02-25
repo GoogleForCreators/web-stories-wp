@@ -156,12 +156,16 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function delete_lock( $request ) {
 		$previous = $this->prepare_lock_for_response( $request );
 		$result   = delete_post_meta( $request['id'], '_edit_lock' );
+		$data     = [];
+		if ( ! is_wp_error( $previous ) ) {
+			$data = $previous->get_data();
+		}
 		$response = new WP_REST_Response();
 		$response->set_data(
-			array(
+			[
 				'deleted'  => $result,
-				'previous' => $previous->get_data(),
-			)
+				'previous' => $data,
+			]
 		);
 
 		return $response;

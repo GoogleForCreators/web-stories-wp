@@ -83,10 +83,9 @@ function PostLock() {
     cachedDoGetStoryLock.current = doGetStoryLock;
   }, [doGetStoryLock]);
 
-
   useEffect(() => {
     async function releasePostLock() {
-      if (enablePostLocking && postLockEnabled && !showDialog) {
+      if (enablePostLocking && showLockedDialog && !showDialog) {
         await deleteStoryLockById(storyId);
       }
     }
@@ -100,7 +99,7 @@ function PostLock() {
     deleteStoryLockById,
     storyId,
     enablePostLocking,
-    postLockEnabled,
+    showLockedDialog,
     showDialog,
   ]);
 
