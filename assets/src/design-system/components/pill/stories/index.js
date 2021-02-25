@@ -18,12 +18,15 @@
  * External dependencies
  */
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { action } from '@storybook/addon-actions';
+import { boolean, text } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
 import { theme } from '../../../theme';
-import { Pill } from '..';
+import { Pill, PillGroup } from '..';
 
 export default {
   title: 'DesignSystem/Components/Pill',
@@ -36,25 +39,58 @@ const Container = styled.div`
   gap: 12px;
 `;
 
-function Pills() {
-  const [active, setActive] = useState(1);
+function PillContainer({ prefix }) {
   return (
     <Container>
       {[1, 2, 3].map((i) => (
-        <Pill key={i} isActive={active === i} onClick={() => setActive(i)}>
-          {`Pill ${i}`}
+        <Pill
+          key={i}
+          isActive={boolean(`${prefix}: isActive ${i}`, false)}
+          onClick={(e) => action(`${prefix}: click on pill ${i}`)(e)}
+        >
+          {text(`${prefix}: pill text ${i}`, `${prefix} pill ${i}`)}
         </Pill>
       ))}
     </Container>
   );
 }
 
+PillContainer.propTypes = {
+  prefix: PropTypes.string.isRequired,
+};
+
 // Override light theme because this component is only set up for dark theme right now given fg and bg coloring
 export const _default = () => (
   <>
-    <Pills />
+    <PillContainer prefix="Light" />
     <ThemeProvider theme={theme}>
-      <Pills />
+      <PillContainer prefix="Dark" />
+    </ThemeProvider>
+  </>
+);
+
+const PILL_OPTIONS = [
+  { id: 1, label: 'George' },
+  { id: 2, label: 'Ringo' },
+  { id: 3, label: 'Paul' },
+  { id: 4, label: 'John' },
+];
+
+function PillGroupContainer() {
+  const [active, setActive] = useState(1);
+  return (
+    <Container>
+      <PillGroup options={PILL_OPTIONS} value={active} onSelect={setActive} />
+    </Container>
+  );
+}
+
+// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
+export const PillGroups = () => (
+  <>
+    <PillGroupContainer />
+    <ThemeProvider theme={theme}>
+      <PillGroupContainer />
     </ThemeProvider>
   </>
 );
