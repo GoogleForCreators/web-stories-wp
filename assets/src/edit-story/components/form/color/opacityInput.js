@@ -26,9 +26,7 @@ import { _x, __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
-import { MULTIPLE_VALUE } from '../../../constants';
 import { NumericInput } from '../../../../design-system';
-import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import getPreviewOpacity from './getPreviewOpacity';
 
 const Input = styled(NumericInput)`
@@ -39,8 +37,6 @@ const Input = styled(NumericInput)`
 `;
 
 function OpacityInput({ value, onChange }) {
-  const hasPreviewText =
-    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
   const [inputValue, setInputValue] = useState('');
 
   // Allow any input, but only persist non-NaN values up-chain
@@ -71,7 +67,6 @@ function OpacityInput({ value, onChange }) {
       suffix={__('Opacity', 'web-stories')}
       min={0}
       max={100}
-      disabled={!hasPreviewText}
       allowEmpty={false}
       isFloat={false}
     />

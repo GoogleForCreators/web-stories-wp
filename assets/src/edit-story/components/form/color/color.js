@@ -26,6 +26,8 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
+import { MULTIPLE_VALUE } from '../../../constants';
+import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
@@ -68,6 +70,9 @@ function Color({
     label
   );
 
+  const displayOpacity =
+    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
+
   return (
     <Container aria-label={containerLabel}>
       <InputWrapper>
@@ -81,7 +86,7 @@ function Color({
           changedStyle={changedStyle}
         />
       </InputWrapper>
-      {hasOpacity && (
+      {hasOpacity && displayOpacity && (
         <>
           <Space />
           <InputWrapper>

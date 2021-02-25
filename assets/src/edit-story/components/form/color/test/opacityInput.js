@@ -77,13 +77,6 @@ describe('<OpacityInput />', () => {
     expect(element).toHaveValue('20%');
   });
 
-  it('should be hidden when no text', () => {
-    getPreviewTextMock.mockImplementation(() => null);
-
-    const { element } = arrange();
-    expect(element).toHaveAttribute('disabled');
-  });
-
   it('should remove postfix when there is focus but add again when blurred', async () => {
     const { element } = arrange();
 
