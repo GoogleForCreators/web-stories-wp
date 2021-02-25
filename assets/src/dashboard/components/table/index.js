@@ -71,18 +71,10 @@ export const TableHeaderCell = styled.th`
 
 export const TablePreviewHeaderCell = styled(TableHeaderCell)`
   padding-right: 0;
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    display: none;
-  }
 `;
 
 export const TableDateHeaderCell = styled(TableHeaderCell)`
   min-width: 160px;
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    min-width: 150px;
-  }
 `;
 
 export const TableStatusHeaderCell = styled(TableHeaderCell)`
@@ -106,14 +98,6 @@ export const TableTitleHeaderCell = styled(TableHeaderCell)`
   span {
     display: none;
     margin-right: 5px;
-  }
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    padding-left: 16px;
-
-    span {
-      display: inline;
-    }
   }
 `;
 
@@ -168,8 +152,4 @@ export const TableContentCell = styled(TableCell)`
 
 export const TablePreviewCell = styled(TableCell)`
   width: 33px;
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    display: none;
-  }
 `;

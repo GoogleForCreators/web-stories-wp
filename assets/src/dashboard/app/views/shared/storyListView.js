@@ -211,7 +211,7 @@ export default function StoryListView({
               onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle
-                aria-hidden="true"
+                aria-hidden
                 active={storySort === STORY_SORT_OPTIONS.NAME}
                 as="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
