@@ -92,7 +92,6 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
 
   const { height = 0, width = 0 } = popupRect || {};
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
-
   // Horizontal
   const offsetX = getXOffset(
     placement,
@@ -106,12 +105,8 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
 
-  // use window.pageYOffset instead of bodyRect.height to account for scroll
   const maxOffsetY =
-    window.pageYOffset +
-    bodyRect.y -
-    height -
-    getYTransforms(placement) * height;
+    bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
 
   // In cases where the window has scrolled we want to make sure that the sum of maxOffsetY is more than 0
   // If it's not we should fallback to the true offsetY to respect viewports that have scroll.
