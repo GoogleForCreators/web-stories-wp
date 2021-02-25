@@ -39,10 +39,6 @@ import DragHandle from './handle';
 
 const Header = styled.h2.attrs({ role: 'button' })`
   background-color: ${({ theme }) => theme.colors.bg.secondary};
-  border: 0 solid
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.gray16, 0.6)};
-  border-top-width: ${({ isPrimary, isSecondary }) =>
-    isPrimary || isSecondary ? 0 : '1px'};
   color: ${({ theme }) => theme.colors.fg.secondary};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
@@ -61,7 +57,7 @@ const Heading = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   line-height: 32px;
   font-size: 16px;
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: 700;
   font-family: ${({ theme }) => theme.typography.family.primary};
 `;
 
