@@ -18,40 +18,25 @@
  * Internal dependencies
  */
 import { PLACEMENT } from '../constants';
-import { getXTransforms, getYTransforms } from './getTransforms';
+import { getXTransforms } from './getTransforms';
 
-export function getXOffset(
-  placement,
-  spacing = 0,
-  anchorRect,
-  dockRect,
-  bodyRect
-) {
+export function getXOffset(placement, spacing = 0, anchorRect, dockRect) {
   switch (placement) {
     case PLACEMENT.BOTTOM_START:
     case PLACEMENT.TOP_START:
     case PLACEMENT.LEFT:
     case PLACEMENT.LEFT_END:
     case PLACEMENT.LEFT_START:
-      return bodyRect.left + (dockRect?.left || anchorRect.left) - spacing;
+      return (dockRect?.left || anchorRect.left) - spacing;
     case PLACEMENT.BOTTOM_END:
     case PLACEMENT.TOP_END:
     case PLACEMENT.RIGHT:
     case PLACEMENT.RIGHT_END:
     case PLACEMENT.RIGHT_START:
-      return (
-        bodyRect.left +
-        (dockRect?.left || anchorRect.left) +
-        anchorRect.width +
-        spacing
-      );
+      return (dockRect?.left || anchorRect.left) + anchorRect.width + spacing;
     case PLACEMENT.BOTTOM:
     case PLACEMENT.TOP:
-      return (
-        bodyRect.left +
-        (dockRect?.left || anchorRect.left) +
-        anchorRect.width / 2
-      );
+      return (dockRect?.left || anchorRect.left) + anchorRect.width / 2;
     default:
       return 0;
   }
@@ -90,33 +75,22 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
     popupRect.width = Math.max(popupRect.width, popup.current?.scrollWidth);
   }
 
-  const { height = 0, width = 0 } = popupRect || {};
+  const { width = 0 } = popupRect || {};
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
 
   // Horizontal
-  const offsetX = getXOffset(
-    placement,
-    spacingH,
-    anchorRect,
-    dockRect,
-    bodyRect
-  );
+  const offsetX = getXOffset(placement, spacingH, anchorRect, dockRect);
   const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
 
   // Vertical
+  // We always want just the pure offset of Y because if anything scrolls (panels or the window) we want that position to stay true to the anchor.
+  // This prevents any overlap of labels on scroll with an open popup.
   const offsetY = getYOffset(placement, spacingV, anchorRect);
 
-  const maxOffsetY =
-    bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
-
-  // In cases where the window has scrolled we want to make sure that the sum of maxOffsetY is more than 0
-  // If it's not we should fallback to the true offsetY to respect viewports that have scroll.
-  const trueMaxOffsetY = maxOffsetY > 0 ? maxOffsetY : offsetY;
-
-  // Clamp values
+  // Clamp X value
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: Math.max(0, Math.min(offsetY, trueMaxOffsetY)),
+    y: offsetY,
     width: anchorRect.width,
     height: anchorRect.height,
   };
