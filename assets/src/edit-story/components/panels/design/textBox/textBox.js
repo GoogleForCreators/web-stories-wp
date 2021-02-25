@@ -25,9 +25,8 @@ import { __ } from '@web-stories-wp/i18n';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { SimplePanel } from '../../panel';
 import { usePresubmitHandler } from '../../../form';
-import StyleControls from './style';
 import ColorControls from './color';
-import FontControls from './font';
+import PaddingControls from './padding';
 
 function StylePanel(props) {
   // Update size and position if relevant values have changed.
@@ -35,13 +34,12 @@ function StylePanel(props) {
 
   return (
     <SimplePanel
-      name="textStyle"
-      title={__('Text', 'web-stories')}
+      name="textBox"
+      title={__('Text box', 'web-stories')}
       isPersistable={false}
     >
-      <FontControls {...props} />
-      <StyleControls {...props} />
       <ColorControls {...props} />
+      <PaddingControls {...props} />
     </SimplePanel>
   );
 }

@@ -42,7 +42,7 @@ describe('Border Radius Panel', () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       // Choose Fill as background for visibility.
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.fill.button
+        fixture.editor.inspector.designPanel.textBox.fill.button
       );
 
       const panel = fixture.editor.inspector.designPanel.borderRadius;

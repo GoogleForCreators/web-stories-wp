@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export * from './button';
-export * from './toggleButton';
+export { default } from './textBox';
