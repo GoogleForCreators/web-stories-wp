@@ -201,7 +201,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 				];
 
 				$links['author'] = [
-					'href'       => rest_url( 'wp/v2/users/' . $user ),
+					'href'       => rest_url( 'web-stories/v1/users/' . $user ),
 					'embeddable' => true,
 				];
 			}
@@ -316,6 +316,23 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			'href'       => $lock_url,
 			'embeddable' => true,
 		];
+
+		$lock = get_post_meta( $post->ID, '_edit_lock', true );
+
+		if ( $lock ) {
+			$lock                 = explode( ':', $lock );
+			list ( $time, $user ) = $lock;
+
+			/** This filter is documented in wp-admin/includes/ajax-actions.php */
+			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+			if ( $time && $time > time() - $time_window ) {
+				$links['https://api.w.org/lockuser'] = [
+					'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'users/' ) . $user ),
+					'embeddable' => true,
+				];
+			}
+		}
 
 		return $links;
 	}

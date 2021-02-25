@@ -41,6 +41,15 @@ const StyledCardTitle = styled.div`
   overflow: hidden;
 `;
 
+const LockRow = styled.div`
+  margin-bottom: 5px;
+`;
+const LockAvatar = styled.img`
+  height: 16px;
+  width: 16px;
+  margin-right: 5px;
+`;
+
 const TitleStoryLink = styled(Link)`
   display: inline-block;
   max-width: 100%;
@@ -73,7 +82,6 @@ const DateHelperText = styled.span`
 const ListIcon = styled(LockSVG).attrs(ICON_METRICS.LOCK)`
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   display: inline-block;
-  vertical-align: super;
   margin-right: 5px;
 `;
 
@@ -123,12 +131,22 @@ const CardTitle = ({
   }, [status, displayDate]);
 
   const showLockIcon = useMemo(() => {
-    return enablePostLocking && locked && userId !== lockUser;
+    return enablePostLocking && locked && userId !== lockUser.id;
   }, [enablePostLocking, lockUser, locked, userId]);
 
   return (
     <StyledCardTitle>
-      {showLockIcon && <ListIcon />}
+      {showLockIcon && (
+        <LockRow>
+          <ListIcon />
+          <LockAvatar src={lockUser.avatar['24']} alt={lockUser.name} />
+          {sprintf(
+            /* translators: %s: user name */
+            __('%s is currently editing', 'web-stories'),
+            lockUser.name
+          )}
+        </LockRow>
+      )}
       {editMode ? (
         <InlineInputForm
           onEditComplete={onEditComplete}
@@ -169,7 +187,7 @@ CardTitle.propTypes = {
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
   locked: PropTypes.bool,
-  lockUser: PropTypes.number,
+  lockUser: PropTypes.object,
   displayDate: PropTypes.string,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
