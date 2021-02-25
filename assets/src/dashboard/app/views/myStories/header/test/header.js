@@ -216,7 +216,7 @@ describe('My Stories <Header />', function () {
       name: /Filter stories by Published/,
     });
     const privateButton = getByRole('button', {
-      name: /Filter stories by private/,
+      name: /Filter stories by Private/,
     });
 
     expect(allStoriesButton).toHaveTextContent('All Stories19');

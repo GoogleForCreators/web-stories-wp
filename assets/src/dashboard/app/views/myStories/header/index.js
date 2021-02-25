@@ -48,6 +48,7 @@ import {
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
 import { useConfig } from '../../../config';
+import { getSearchOptions } from '../../utils';
 
 const StyledPill = styled(Pill)`
   margin: 0 2px;
@@ -73,21 +74,7 @@ function Header({
 
   const { capabilities: { canReadPrivatePosts } = {} } = useConfig();
 
-  const searchOptions = useMemo(() => {
-    // todo add different option sets, value and label won't always be the same
-    return stories.reduce((acc, story) => {
-      if (!story.title || story.title.trim().length <= 0) {
-        return acc;
-      }
-      return [
-        ...acc,
-        {
-          label: story.title,
-          value: story.title,
-        },
-      ];
-    }, []);
-  }, [stories]);
+  const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
@@ -119,12 +106,13 @@ function Header({
     return (
       <>
         {STORY_STATUSES.map((storyStatus) => {
-          if (
-            storyStatus.status === STORY_STATUS.PRIVATE &&
-            (!totalStoriesByStatus.private ||
-              totalStoriesByStatus.private < 1 ||
-              !canReadPrivatePosts)
-          ) {
+          const isStoryPrivate = storyStatus.status === STORY_STATUS.PRIVATE;
+          const cantReadPrivate =
+            !canReadPrivatePosts ||
+            !totalStoriesByStatus.private ||
+            totalStoriesByStatus.private < 1;
+
+          if (isStoryPrivate && cantReadPrivate) {
             return null;
           }
           const label = storyStatus.label;

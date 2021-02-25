@@ -40,27 +40,14 @@ import {
 } from '../../../../utils/useStoryView';
 import { TemplatesPropType } from '../../../../types';
 import { BodyViewOptions, PageHeading } from '../../shared';
+import { getSearchOptions } from '../../utils';
 
 function Header({ filter, search, sort, templates, view }) {
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
 
-  const searchOptions = useMemo(() => {
-    // todo add different option sets, value and label won't always be the same
-    return templates.reduce((acc, template) => {
-      if (!template.title || template.title.trim().length <= 0) {
-        return acc;
-      }
-      return [
-        ...acc,
-        {
-          label: template.title,
-          value: template.title,
-        },
-      ];
-    }, []);
-  }, [templates]);
+  const searchOptions = useMemo(() => getSearchOptions(templates), [templates]);
 
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
