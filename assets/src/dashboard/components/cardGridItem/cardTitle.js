@@ -32,7 +32,7 @@ import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
 import { Link } from '../link';
-import { Lock as LockSVG } from '../../icons';
+import { LockClosed as LockSVG } from '../../../design-system/icons';
 import { useConfig } from '../../app/config';
 
 const StyledCardTitle = styled.div`
@@ -78,11 +78,13 @@ const DateHelperText = styled.span`
     padding: 0 0.25em;
   }
 `;
-
-const ListIcon = styled(LockSVG).attrs(ICON_METRICS.LOCK)`
+// TODO: Fix dirty workaround.
+const ListIcon = styled(LockSVG)`
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   display: inline-block;
-  margin-right: 5px;
+  height: 36px;
+  width: 36px;
+  margin: -9px -3px -10px -8px;
 `;
 
 const CardTitle = ({
