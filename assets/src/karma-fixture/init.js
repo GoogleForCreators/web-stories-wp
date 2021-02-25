@@ -369,6 +369,9 @@ beforeEach(async () => {
     margin: 0;
   `;
   document.body.appendChild(rootEl);
+  // The below is added to make the body element cover the entire window, as
+  // the app above is fixed-positioned. This ensures proper placement of
+  // popups in karma test runs.
   document.body.cssText = `
     height: 100vh;
     width: 100vw;
