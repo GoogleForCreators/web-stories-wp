@@ -116,6 +116,10 @@ const SelectableTitle = styled(Text).attrs({ tabIndex: 0 })`
   cursor: pointer;
 `;
 
+const HeavyTitle = styled(Text)`
+  font-weight: 700;
+`;
+
 const StyledTableRow = styled(TableRow)`
   &:hover ${MoreVerticalButton}, &:focus-within ${MoreVerticalButton} {
     opacity: 1;
@@ -309,13 +313,12 @@ export default function StoryListView({
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && (
               <TableStatusHeaderCell>
-                <Text
-                  as="span"
+                <HeavyTitle
+                  forwardedAs="span"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  isBold
                 >
                   {__('Publish State', 'web-stories')}
-                </Text>
+                </HeavyTitle>
               </TableStatusHeaderCell>
             )}
           </TableRow>
