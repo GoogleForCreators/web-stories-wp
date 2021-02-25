@@ -92,6 +92,7 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
 
   const { height = 0, width = 0 } = popupRect || {};
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
+
   // Horizontal
   const offsetX = getXOffset(
     placement,
