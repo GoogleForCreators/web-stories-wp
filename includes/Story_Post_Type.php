@@ -574,6 +574,7 @@ class Story_Post_Type {
 				'postLock'              => [
 					'interval'         => $time_window,
 					'showLockedDialog' => $show_locked_dialog,
+					'api'              => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),

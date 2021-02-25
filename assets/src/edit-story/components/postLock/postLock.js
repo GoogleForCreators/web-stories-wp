@@ -45,6 +45,7 @@ function PostLock() {
   }));
   const [showDialog, setShowDialog] = useState(false);
   const [user, setUser] = useState({});
+  const [nonce, setNonce] = useState('');
   const { enablePostLocking } = useFeatures();
 
   const closeDialog = useCallback(() => {
@@ -62,6 +63,7 @@ function PostLock() {
           } else {
             setStoryLockById(storyId);
           }
+          setNonce(result.nonce);
         })
         .catch((err) => {
           trackError('post_lock', err.message);
@@ -84,9 +86,9 @@ function PostLock() {
   }, [doGetStoryLock]);
 
   useEffect(() => {
-    async function releasePostLock() {
-      if (enablePostLocking && showLockedDialog && !showDialog) {
-        await deleteStoryLockById(storyId);
+    function releasePostLock() {
+      if (enablePostLocking && showLockedDialog && !showDialog && nonce) {
+        deleteStoryLockById(storyId, nonce);
       }
     }
 
@@ -101,6 +103,7 @@ function PostLock() {
     enablePostLocking,
     showLockedDialog,
     showDialog,
+    nonce,
   ]);
 
   useEffect(() => {

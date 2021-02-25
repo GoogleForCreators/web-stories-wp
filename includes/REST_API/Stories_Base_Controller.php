@@ -167,6 +167,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 				'previous' => $data,
 			]
 		);
+		update_option( 'wibble', time() );
 
 		return $response;
 	}
@@ -181,8 +182,10 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function prepare_lock_for_response( $request ) {
 		$lock = get_post_meta( $request['id'], '_edit_lock', true );
 
+		$nonce = wp_create_nonce( 'wp_rest' );
 		$data  = [
 			'locked' => false,
+			'nonce'  => $nonce,
 		];
 		$links = [];
 
@@ -198,6 +201,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 					'locked' => true,
 					'time'   => $time,
 					'user'   => (int) $user,
+					'nonce'  => $nonce,
 				];
 
 				$links['author'] = [
