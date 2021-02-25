@@ -26,6 +26,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
@@ -60,15 +61,16 @@ export const ROOT_MARGIN = 300;
 const FilterArea = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 24px;
   padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
 `;
 
-const SearchCount = styled.span`
+const SearchCount = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+})`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-style: italic;
 `;
 
 const FILTERS = [

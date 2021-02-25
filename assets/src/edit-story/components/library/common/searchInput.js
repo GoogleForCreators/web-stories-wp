@@ -18,41 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as Close } from '../../../icons/close.svg';
-import { TextInput } from '../../form';
-
-const SearchField = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-`;
-
-const Search = styled(TextInput)`
-  width: 100%;
-  flex-grow: 1;
-  border-radius: 4px;
-  padding: 8px 16px 8px 16px;
-  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.outline};
-  background-color: transparent;
-
-  input {
-    text-align: center;
-  }
-`;
-
-const CloseIcon = styled(Close)`
-  width: 14px;
-  height: 14px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-`;
+import { SearchInput } from '../../../../design-system';
 
 /**
  * A Search Input component.
@@ -70,67 +43,58 @@ const CloseIcon = styled(Close)`
  * @return {SearchInput} The component.
  * @class
  */
-export default function SearchInput({
+function WrappedSearchInput({
   initialValue,
   placeholder,
   onSearch,
-  disabled,
-  incremental,
-  delayMs,
+  disabled = false,
+  incremental = false,
+  delayMs = 500,
 }) {
   // Local state so that we can debounce triggering searches.
   const [localValue, setLocalValue] = useState(initialValue);
 
-  /**
-   * Effectively performs a search, triggered at most every `delayMs`.
-   */
+  // Effectively performs a search, triggered at most every `delayMs`.
   const [changeSearchTermDebounced] = useDebouncedCallback(() => {
     onSearch(localValue);
   }, delayMs);
 
-  /**
-   * Handle search input changes. Triggers with every keystroke.
-   *
-   * @param {string} v the new search term.
-   */
-  const onChange = (v) => {
-    setLocalValue(v);
-    // When in non-incremental mode, we still trigger onSearch when the search
-    // term is empty, so that the user doesn't need to press enter in that case.
-    if (!incremental && v !== '') {
-      return;
-    }
-    if (incremental && delayMs) {
-      changeSearchTermDebounced();
-    } else {
-      onSearch(v);
-    }
-  };
+  const onNewValue = useCallback(
+    (newValue) => {
+      // Handle search input changes. Triggers with every keystroke.
+      setLocalValue(newValue);
+      if (incremental && delayMs) {
+        changeSearchTermDebounced();
+      } else {
+        onSearch(newValue);
+      }
+    },
+    [changeSearchTermDebounced, onSearch, delayMs, incremental]
+  );
 
-  const onKeyDown = (e) => {
-    if (!incremental && e.key === 'Enter') {
-      onSearch(localValue);
-    }
-  };
+  const onChange = useCallback((evt) => onNewValue(evt.target.value), [
+    onNewValue,
+  ]);
+
+  const onClear = useCallback(() => onNewValue(''), [onNewValue]);
+
+  const hasContent = localValue.length > 0;
 
   return (
-    <SearchField>
-      <Search
-        value={localValue}
-        placeholder={placeholder}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        disabled={disabled}
-        aria-label={__('Search from library', 'web-stories')}
-        clear
-        clearIcon={<CloseIcon />}
-        showClearIconBackground={false}
-      />
-    </SearchField>
+    <SearchInput
+      inputValue={localValue}
+      placeholder={placeholder}
+      onChange={onChange}
+      handleClearInput={onClear}
+      disabled={disabled}
+      ariaInputLabel={__('Search', 'web-stories')}
+      ariaClearLabel={__('Clear search input', 'web-stories')}
+      isOpen={hasContent}
+    />
   );
 }
 
-SearchInput.propTypes = {
+WrappedSearchInput.propTypes = {
   initialValue: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onSearch: PropTypes.func.isRequired,
@@ -139,8 +103,4 @@ SearchInput.propTypes = {
   delayMs: PropTypes.number,
 };
 
-SearchInput.defaultProps = {
-  disabled: false,
-  incremental: false,
-  delayMs: 500,
-};
+export default WrappedSearchInput;

@@ -37,8 +37,8 @@ export const InputContainer = styled.div(
     box-sizing: border-box;
     height: 36px;
     width: 100%;
-    max-width: 276px;
-    background-color: ${theme.colors.bg.primary};
+    max-width: 400px;
+    background-color: transparent;
     color: ${theme.colors.fg.primary};
 
     input {
