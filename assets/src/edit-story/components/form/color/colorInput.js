@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useMemo } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -29,7 +30,12 @@ import useUnmount from '../../../utils/useUnmount';
 import { PatternPropType } from '../../../types';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
-import { HexInput, Text, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  HexInput,
+  Text,
+  THEME_CONSTANTS,
+  Tooltip as DefaultTooltip,
+} from '../../../../design-system';
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
@@ -54,6 +60,11 @@ const Input = styled(HexInput)`
   }
 `;
 
+const Tooltip = styled(DefaultTooltip)`
+  width: 100%;
+  height: 100%;
+`;
+
 const buttonAttrs = {
   as: 'button',
   type: 'button', // avoid submitting forms
@@ -70,19 +81,19 @@ const colorStyles = css`
 
 const buttonStyle = css`
   overflow: hidden;
-  border: 1px solid;
-  border-color: ${({ theme }) => theme.colors.border.defaultNormal};
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   outline: none;
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) => theme.colors.border.defaultHover};
-    box-shadow: none !important;
-  }
   background: transparent;
 `;
 
 const ColorButton = styled(Preview).attrs(buttonAttrs)`
   border-radius: 4px;
   ${buttonStyle}
+  &:focus {
+    box-shadow: 0px 0px 0 2px ${({ theme }) => theme.colors.bg.primary},
+      0px 0px 0 4px ${({ theme }) => theme.colors.border.focus};
+    border-color: ${({ theme }) => theme.colors.border.defaultHover};
+  }
 `;
 
 const ColorPreview = styled.div`
@@ -98,10 +109,12 @@ const ColorPreviewButton = styled(ColorPreview).attrs(buttonAttrs)`
   ${buttonStyle}
   padding: 0;
   border: none;
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.border.focus};
+  }
 `;
 
 const ColorPreviewInsideButton = styled(ColorPreview)`
-  border: none;
   transform: translate(-1px, -1px);
 `;
 
@@ -165,6 +178,7 @@ function ColorInput({
   const onClose = useCallback(() => setPickerOpen(false), []);
   const spacing = useMemo(() => ({ x: 20 }), []);
 
+  const tooltip = __('Open color picker', 'web-stories');
   return (
     <>
       {isEditable ? (
@@ -182,22 +196,26 @@ function ColorInput({
             color={previewStyle?.backgroundColor}
           >
             {(value?.a < 1 || isMixed) && <Transparent />}
-            <CurrentColor role="status" style={previewStyle} />
+            <Tooltip title={tooltip} hasTail>
+              <CurrentColor role="status" style={previewStyle} />
+            </Tooltip>
           </ColorPreviewButton>
         </Preview>
       ) : (
         // If not editable, the whole component is a button
-        <ColorButton ref={previewRef} {...buttonProps}>
-          <ColorPreviewInsideButton>
-            <Transparent />
-            <CurrentColor role="status" style={previewStyle} />
-          </ColorPreviewInsideButton>
-          <TextualPreview>
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {previewText}
-            </Text>
-          </TextualPreview>
-        </ColorButton>
+        <Tooltip title={tooltip} hasTail>
+          <ColorButton ref={previewRef} {...buttonProps}>
+            <ColorPreviewInsideButton>
+              <Transparent />
+              <CurrentColor role="status" style={previewStyle} />
+            </ColorPreviewInsideButton>
+            <TextualPreview>
+              <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                {previewText}
+              </Text>
+            </TextualPreview>
+          </ColorButton>
+        </Tooltip>
       )}
       <Popup
         anchor={previewRef}
