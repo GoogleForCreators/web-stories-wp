@@ -23,7 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Color, Label, Row } from '../../../form';
+import { Color, Row } from '../../../form';
 import { getColorPickerActions } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 

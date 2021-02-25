@@ -45,7 +45,9 @@ function arrange(props = {}) {
 
 describe('<Color />', () => {
   it('should render both color preview and opacity input', () => {
-    const { colorPreview, opacityInput } = arrange();
+    const { colorPreview, opacityInput } = arrange({
+      value: createSolid(255, 0, 0),
+    });
 
     expect(colorPreview).toBeInTheDocument();
     expect(opacityInput).toBeInTheDocument();
