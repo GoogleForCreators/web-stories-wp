@@ -99,7 +99,7 @@ const CardTitle = ({
   onEditCancel,
   tabIndex,
   locked = false,
-  lockUser = 0,
+  lockUser = {},
 }) => {
   const { enablePostLocking } = useFeatures();
   const { userId } = useConfig();
