@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -31,8 +30,8 @@ import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import {
   useContext,
   Icons,
-  Text,
   THEME_CONSTANTS,
+  Headline,
 } from '../../../../../design-system';
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
@@ -52,13 +51,11 @@ const Header = styled.h2.attrs({ role: 'button' })`
   cursor: pointer;
 `;
 
-// @todo Why is this not considering the size attribute and needs assigning all separately?
-const Heading = styled(Text)`
+const Heading = styled(Headline)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   line-height: 32px;
-  font-size: 16px;
   font-weight: 700;
-  font-family: ${({ theme }) => theme.typography.family.primary};
+  font-size: 16px;
 `;
 
 const HeaderActions = styled.div`
@@ -194,8 +191,7 @@ function Title({
         <Heading
           id={panelTitleId}
           as="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-          isBold
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
         >
           {children}
         </Heading>
