@@ -114,7 +114,7 @@ const formatMap = {
   a: 'aaaa',
 
   // Uppercase Ante meridiem and Post meridiem. AM or PM
-  A: 'aaa',
+  A: 'aa',
 
   //  Swatch Internet time. 000 through 999.
   B(date) {
