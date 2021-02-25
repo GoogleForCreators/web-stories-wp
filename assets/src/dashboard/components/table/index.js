@@ -126,7 +126,7 @@ export const TableRow = styled.tr`
   min-width: 1250px;
 
   @media ${({ theme }) => theme.breakpoint.tabletMax} {
-    min-width: none;
+    min-width: 0;
   }
 `;
 

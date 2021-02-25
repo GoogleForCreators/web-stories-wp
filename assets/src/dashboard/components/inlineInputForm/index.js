@@ -25,16 +25,14 @@ import styled from 'styled-components';
  */
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { useFocusOut } from '../../utils/';
-import { TextInput } from '../input';
-import { TypographyPresets } from '../typography';
+import { Input } from '../../../design-system';
 
 const Label = styled.label(visuallyHiddenStyles);
 
-const ErrorText = styled.p`
-  ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.danger};
-  margin-left: 1em;
-  padding-top: 0.25em;
+const StyledInput = styled(Input)`
+  div {
+    height: auto;
+  }
 `;
 
 const InlineInputForm = ({
@@ -51,12 +49,14 @@ const InlineInputForm = ({
   const [newValue, setNewValue] = useState(value);
 
   useEffect(() => {
+    // update internal value when `value` prop updates
     setNewValue(value);
   }, [value]);
 
   useFocusOut(
     inputContainerRef,
     () => {
+      // cancel changes when user focuses away from input
       onEditCancel();
     },
     [onEditCancel]
@@ -87,18 +87,17 @@ const InlineInputForm = ({
   );
   return (
     <div ref={inputContainerRef}>
-      <Label htmlFor={id}>{label}</Label>
-      <TextInput
-        type="text"
-        id={id}
+      <Label htmlFor={`${id}`}>{label}</Label>
+      <StyledInput
+        id={`${id}`}
         data-testid="inline-input-form"
         value={newValue}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
         placeholder={placeholder}
-        error={error}
+        hasError={Boolean(error)}
+        hint={error}
       />
-      {error && <ErrorText>{error}</ErrorText>}
     </div>
   );
 };
