@@ -111,7 +111,7 @@ const formatMap = {
   y: 'yy',
 
   // Lowercase Ante meridiem and Post meridiem. am or pm.
-  a: 'aaaa',
+  a: 'aaa',
 
   // Uppercase Ante meridiem and Post meridiem. AM or PM
   A: 'aa',
