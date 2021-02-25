@@ -47,7 +47,7 @@ export class DesignPanel extends Container {
 
   get textStyle() {
     return this._get(
-      this.getByRole('region', { name: /Text/ }),
+      this.getByRole('region', { name: 'Text' }),
       'textStyle',
       TextStyle
     );
