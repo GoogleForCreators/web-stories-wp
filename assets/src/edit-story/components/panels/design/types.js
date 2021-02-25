@@ -30,6 +30,7 @@ const PAGE_STYLE = 'pageStyle';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
 const TEXT = 'text';
+const TEXT_BOX = 'textBox';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_POSTER = 'videoPoster';
@@ -50,6 +51,7 @@ const PanelTypes = {
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
+  TEXT_BOX,
   BORDER_RADIUS,
   BORDER,
   LINK,

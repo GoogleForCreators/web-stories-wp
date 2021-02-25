@@ -17,10 +17,31 @@
 /**
  * Internal dependencies
  */
-import * as Icons from './icons';
+import { Toggle } from '../common';
+import { AbstractPanel } from './abstractPanel';
 
-export { Icons };
-export * from './components';
-export * from './images';
-export * from './theme';
-export * from './utils';
+/**
+ * The text box panel.
+ */
+export class TextBox extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get collapse() {
+    return this.getByRole('button', { name: 'Text box' });
+  }
+
+  get fill() {
+    return this._get(
+      this.getByRole('checkbox', { name: /Set text background mode: Fill/i }),
+      'fill',
+      Toggle
+    );
+  }
+
+  // @todo: add remaining input options:
+  // * fill style
+  // * background color
+  // * padding (lock ratio, combined padding and individual paddings)
+}

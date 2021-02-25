@@ -14,13 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import * as Icons from './icons';
-
-export { Icons };
-export * from './components';
-export * from './images';
-export * from './theme';
-export * from './utils';
+export { default } from './textBox';
