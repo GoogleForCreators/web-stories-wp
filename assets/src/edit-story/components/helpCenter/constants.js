@@ -79,7 +79,7 @@ export const TIPS = {
     figureSrc: 'images/help-center/add_link_module_6',
     description: [
       __(
-        'Go to the Design tab. Scroll down to <strong>Links</strong> and enter a URL. To remove a link, select the "X" (clear) button next to the URL box.',
+        'Go to the Design tab. Scroll down to <strong>Links</strong> and enter a URL. To remove a link, select the "X" <screenreader> (clear)</screenreader> button next to the URL box.',
         'web-stories'
       ),
     ],
