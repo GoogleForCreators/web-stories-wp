@@ -32,6 +32,7 @@ export { default as PageStylePanel } from './pageStyle';
 export { default as ShapeStylePanel } from './shapeStyle';
 export { default as SizePositionPanel } from './sizePosition';
 export { default as StylePresetPanel } from './preset/stylePreset';
+export { default as TextBoxPanel } from './textBox';
 export { default as TextStylePanel } from './textStyle';
 export { default as VideoAccessibilityPanel } from './videoAccessibility';
 export { default as VideoOptionsPanel } from './videoOptions';

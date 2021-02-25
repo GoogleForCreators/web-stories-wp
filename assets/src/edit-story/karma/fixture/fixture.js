@@ -144,6 +144,7 @@ export class Fixture {
       'size',
       'shapeStyle',
       'text',
+      'textBox',
       'textStyle',
       'videoOptions',
       'videoAccessibility',
