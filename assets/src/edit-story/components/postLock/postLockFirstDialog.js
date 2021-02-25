@@ -27,14 +27,14 @@ import Dialog from '../dialog';
 import { Plain } from '../button';
 import { Img, Paragraph } from './shared';
 
-function PostLockDialog({ open, user, dashboardLink }) {
-  const dialogTile = __(
-    'Someone else has taken over this post.',
-    'web-stories'
-  );
+function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
+  const dialogTile = __('Story is locked', 'web-stories');
   const dialogContent = sprintf(
     /* translators: %s: user's name */
-    __('%s is now has editing control of this post. ', 'web-stories'),
+    __(
+      '%s is already editing this story. Do you want to take over? ',
+      'web-stories'
+    ),
     user?.name
   );
 
@@ -44,7 +44,11 @@ function PostLockDialog({ open, user, dashboardLink }) {
       title={dialogTile}
       contentLabel={dialogTile}
       actions={
-        <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
+        <>
+          <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
+          <Plain href={previewLink}>{__('Preview', 'web-stories')}</Plain>
+          <Plain onClick={onClose}>{__('Take over', 'web-stories')}</Plain>
+        </>
       }
     >
       <Paragraph>
@@ -61,6 +65,8 @@ PostLockDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
+  previewLink: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default PostLockDialog;

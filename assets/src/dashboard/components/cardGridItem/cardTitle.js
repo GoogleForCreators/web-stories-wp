@@ -141,7 +141,9 @@ const CardTitle = ({
       {showLockIcon && (
         <LockRow>
           <ListIcon />
-          <LockAvatar src={lockUser.avatar['24']} alt={lockUser.name} />
+          {lockUser.avatar && (
+            <LockAvatar src={lockUser.avatar['24']} alt={lockUser.name} />
+          )}
           {sprintf(
             /* translators: %s: user name */
             __('%s is currently editing', 'web-stories'),

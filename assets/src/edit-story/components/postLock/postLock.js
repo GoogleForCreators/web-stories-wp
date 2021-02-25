@@ -27,6 +27,7 @@ import { trackError } from '@web-stories-wp/tracking';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
+import PostLockFirstDialog from './postLockFirstDialog';
 import PostLockDialog from './postLockDialog';
 
 function PostLock() {
@@ -44,6 +45,7 @@ function PostLock() {
     previewLink,
   }));
   const [showDialog, setShowDialog] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState({});
   const [nonce, setNonce] = useState('');
   const { enablePostLocking } = useFeatures();
@@ -108,20 +110,30 @@ function PostLock() {
 
   useEffect(() => {
     cachedDoGetStoryLock.current();
-    const timeout = setInterval(
-      () => cachedDoGetStoryLock.current(),
-      postLockInterval * 1000
-    );
+    const timeout = setInterval(() => {
+      cachedDoGetStoryLock.current();
+      setIsFirstTime(false);
+    }, postLockInterval * 1000);
 
     return () => clearInterval(timeout);
   }, [postLockInterval]);
+
+  if (isFirstTime) {
+    return (
+      <PostLockFirstDialog
+        open={showDialog}
+        user={user}
+        onClose={closeDialog}
+        previewLink={previewLink}
+        dashboardLink={dashboardLink}
+      />
+    );
+  }
 
   return (
     <PostLockDialog
       open={showDialog}
       user={user}
-      onClose={closeDialog}
-      previewLink={previewLink}
       dashboardLink={dashboardLink}
     />
   );
