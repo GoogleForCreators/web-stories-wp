@@ -34,7 +34,12 @@ function PillGroup({ options, value, onSelect }) {
   return (
     <Container>
       {options.map(({ id, label }) => (
-        <Pill key={id} isActive={id === value} onClick={() => onSelect(id)}>
+        <Pill
+          key={id}
+          isActive={id === value}
+          onClick={() => onSelect(id)}
+          role="option"
+        >
           {label}
         </Pill>
       ))}
