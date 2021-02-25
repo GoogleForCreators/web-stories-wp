@@ -24,6 +24,7 @@ export const raw = {
 export const breakpoint = {
   desktop: `screen and (min-width: ${raw.desktop}px)`,
   tablet: `screen and (min-width: ${raw.tablet}px)`,
+  tabletMax: `screen and (max-width: ${raw.desktop}px)`,
   mobile: `screen and (max-width: ${raw.mobile}px)`,
   mobileSmall: `screen and (max-width: ${raw.mobileSmall}px)`,
   min: `screen and (max-width: ${raw.min}px)`,

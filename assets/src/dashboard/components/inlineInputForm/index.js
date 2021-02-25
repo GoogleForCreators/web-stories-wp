@@ -91,7 +91,7 @@ const InlineInputForm = ({
       <TextInput
         type="text"
         id={id}
-        data-testid={'inline-input-form'}
+        data-testid="inline-input-form"
         value={newValue}
         onKeyDown={handleKeyPress}
         onChange={handleChange}
