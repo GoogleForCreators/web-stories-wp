@@ -36,7 +36,7 @@ import {
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
 
-const Header = styled.h2.attrs({ role: 'button' })`
+const Header = styled.h2`
   background-color: ${({ theme }) => theme.colors.bg.secondary};
   color: ${({ theme }) => theme.colors.fg.secondary};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
