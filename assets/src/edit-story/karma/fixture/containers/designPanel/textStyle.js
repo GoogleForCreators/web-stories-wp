@@ -82,21 +82,10 @@ export class TextStyle extends AbstractPanel {
   }
 
   get collapse() {
-    return this.getByRole('button', { name: 'Style' });
-  }
-
-  get fill() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Set text background mode: Fill/i }),
-      'fill',
-      Toggle
-    );
+    return this.getByRole('button', { name: 'Text' });
   }
 
   // @todo: add remaining input options:
   // * font family and size
   // * justify toggles
-  // * fill style
-  // * background color
-  // * padding (lock ratio, combined padding and individual paddings)
 }
