@@ -17,4 +17,8 @@
 /**
  * Internal dependencies
  */
-export { ReactComponent as WebStoriesLogo } from './webStoriesFullLogo.svg';
+export { ReactComponent as Logo } from './logo_bw.svg';
+export { ReactComponent as LogoColor } from './logo_color.svg';
+export { ReactComponent as LogoWithTypeCircle } from './logo_with_type_circle_bw.svg';
+export { ReactComponent as LogoWithTypeCircleColor } from './logo_with_type_circle_color.svg';
+export { ReactComponent as LogoWithType } from './logo_with_type_bw.svg';
