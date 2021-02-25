@@ -211,11 +211,27 @@ StoryPropTypes.gifResource = PropTypes.shape({
   }),
 });
 
+StoryPropTypes.stickerResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  tag: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  alt: PropTypes.string,
+  local: PropTypes.bool,
+  output: PropTypes.shape({
+    mimeType: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+  }),
+});
+
 StoryPropTypes.resource = PropTypes.oneOfType([
   StoryPropTypes.imageResource,
   StoryPropTypes.videoResource,
   StoryPropTypes.trackResource,
   StoryPropTypes.gifResource,
+  StoryPropTypes.stickerResource,
 ]);
 
 const StoryLayerPropTypes = {
@@ -276,10 +292,17 @@ StoryPropTypes.elements.gif = PropTypes.shape({
   resource: StoryPropTypes.gifResource,
 });
 
+StoryPropTypes.elements.sticker = PropTypes.shape({
+  ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
+  resource: StoryPropTypes.stickerResource,
+});
+
 StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.image,
   StoryPropTypes.elements.video,
   StoryPropTypes.elements.gif,
+  StoryPropTypes.elements.sticker,
 ]);
 
 export const AnimationPropType = PropTypes.shape(AnimationProps);
