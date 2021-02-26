@@ -22,7 +22,12 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { Button, ToolbarGroup, ToolbarButton } from '@wordpress/components';
+import {
+  Button,
+  ToolbarGroup,
+  Toolbar,
+  ToolbarButton,
+} from '@wordpress/components';
 import { BlockControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
@@ -49,9 +54,13 @@ import BlockTypeSwitcher from './blockTypeSwitcher';
  * @return {*} JSX markup.
  */
 const StoriesBlockControls = ({ blockType, viewType, setAttributes }) => {
+  // Note: ToolbarGroup and ToolbarButton are only available in Gutenberg 7.0 or later,
+  // so they do not exist in WP 5.3.
+  const ToolbarComponent = ToolbarGroup ? ToolbarGroup : Toolbar;
+
   return (
     <BlockControls>
-      <ToolbarGroup>
+      <ToolbarComponent>
         {blockType && BLOCK_TYPE_URL !== blockType && (
           <Fragment>
             {VIEW_TYPES.map((view) => {
@@ -79,11 +88,11 @@ const StoriesBlockControls = ({ blockType, viewType, setAttributes }) => {
             })}
           </Fragment>
         )}
-        <BlockTypeSwitcher
-          selectedBlockType={blockType}
-          setAttributes={setAttributes}
-        />
-      </ToolbarGroup>
+      </ToolbarComponent>
+      <BlockTypeSwitcher
+        selectedBlockType={blockType}
+        setAttributes={setAttributes}
+      />
     </BlockControls>
   );
 };

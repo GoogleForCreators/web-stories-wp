@@ -23,8 +23,12 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { DropdownMenu, Toolbar, ToolbarItem } from '@wordpress/components';
-import { update } from '@wordpress/icons';
+import {
+  DropdownMenu,
+  ToolbarGroup,
+  Toolbar,
+  ToolbarItem,
+} from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -32,26 +36,44 @@ import { update } from '@wordpress/icons';
 import { BLOCK_TYPES } from '../constants';
 
 function BlockTypeSwitcher({ selectedBlockType, setAttributes }) {
+  // Note: ToolbarGroup and ToolbarButton are only available in Gutenberg 7.0 or later,
+  // so they do not exist in WP 5.3.
+  const ToolbarComponent = ToolbarGroup ? ToolbarGroup : Toolbar;
   return (
-    <Toolbar label={__('Options', 'web-stories')}>
-      <ToolbarItem>
-        {(toolbarItemHTMLProps) => (
-          <DropdownMenu
-            icon={update}
-            toggleProps={toolbarItemHTMLProps}
-            label={__('Block Sub Type', 'web-stories')}
-            controls={BLOCK_TYPES.filter(
-              (blockType) => blockType.id !== selectedBlockType
-            ).map((blockType) => {
-              return {
-                title: blockType.label,
-                onClick: () => setAttributes({ blockType: blockType.id }),
-              };
-            })}
-          />
-        )}
-      </ToolbarItem>
-    </Toolbar>
+    <ToolbarComponent>
+      {ToolbarItem ? (
+        <ToolbarItem>
+          {(toolbarItemHTMLProps) => (
+            <DropdownMenu
+              icon="update"
+              toggleProps={toolbarItemHTMLProps}
+              label={__('Block Sub Type', 'web-stories')}
+              controls={BLOCK_TYPES.filter(
+                (blockType) => blockType.id !== selectedBlockType
+              ).map((blockType) => {
+                return {
+                  title: blockType.label,
+                  onClick: () => setAttributes({ blockType: blockType.id }),
+                };
+              })}
+            />
+          )}
+        </ToolbarItem>
+      ) : (
+        <DropdownMenu
+          icon="update"
+          label={__('Block Sub Type', 'web-stories')}
+          controls={BLOCK_TYPES.filter(
+            (blockType) => blockType.id !== selectedBlockType
+          ).map((blockType) => {
+            return {
+              title: blockType.label,
+              onClick: () => setAttributes({ blockType: blockType.id }),
+            };
+          })}
+        />
+      )}
+    </ToolbarComponent>
   );
 }
 
