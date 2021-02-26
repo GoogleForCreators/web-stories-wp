@@ -28,7 +28,7 @@ import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
 // TODO scrollbar update, commented out until design updates are done
-const DEFAULT_POPUP_Z_INDEX = 2;
+const DEFAULT_POPUP_Z_INDEX = 11;
 const Container = styled.div.attrs(
   ({ x, y, width, height, fillWidth, fillHeight, placement, zIndex }) => ({
     style: {
