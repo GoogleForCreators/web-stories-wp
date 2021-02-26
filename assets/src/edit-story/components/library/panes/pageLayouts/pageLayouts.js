@@ -19,7 +19,6 @@
  */
 import { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
 import { trackEvent } from '@web-stories-wp/tracking';
 
@@ -34,21 +33,16 @@ import { UnitsProvider } from '../../../../units';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import { PANE_PADDING } from '../shared';
 import {
-  getVirtualizedPageIndex,
+  getVirtualizedItemIndex,
   useVirtualizedGridNavigation,
   VirtualizedContainer,
+  PANEL_GRID_ROW_GAP,
+  VirtualizedWrapper,
 } from '../shared/virtualizedPanelGrid';
 import PageLayout from './pageLayout';
 import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 
 const PAGE_LAYOUT_PANE_WIDTH = 158;
-export const PAGE_LAYOUT_ROW_GAP = 12;
-
-const PageLayoutsContainer = styled.div`
-  height: ${({ height }) => `${height}px`};
-  width: 100%;
-  position: relative;
-`;
 
 function PageLayouts({ pages, parentRef }) {
   const { replaceCurrentPage, currentPage } = useStory(
@@ -118,7 +112,7 @@ function PageLayouts({ pages, parentRef }) {
     size: Math.ceil((pages || []).length / 2),
     parentRef,
     estimateSize: useCallback(
-      () => pageSize.containerHeight + PAGE_LAYOUT_ROW_GAP,
+      () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
       [pageSize.containerHeight]
     ),
     overscan: 4,
@@ -128,33 +122,33 @@ function PageLayouts({ pages, parentRef }) {
     horizontal: true,
     size: 2,
     parentRef,
-    estimateSize: useCallback(() => pageSize.width + PAGE_LAYOUT_ROW_GAP, [
+    estimateSize: useCallback(() => pageSize.width + PANEL_GRID_ROW_GAP, [
       pageSize.width,
     ]),
     overscan: 0,
   });
 
   const {
-    activePageId,
-    handlePageLayoutFocus,
-    handlePageFocus,
-    isPageLayoutsFocused,
+    activeGridItemId,
+    handleGridFocus,
+    handleGridItemFocus,
+    isGridFocused,
   } = useVirtualizedGridNavigation({
     rowVirtualizer,
     containerRef,
-    pageRefs,
-    pageIds,
+    gridItemRefs: pageRefs,
+    gridItemIds: pageIds,
   });
 
   const handleKeyboardPageClick = useCallback(
     ({ key }, page) => {
       if (key === 'Enter') {
-        if (isPageLayoutsFocused) {
+        if (isGridFocused) {
           handlePageClick(page);
         }
       }
     },
-    [isPageLayoutsFocused, handlePageClick]
+    [isGridFocused, handlePageClick]
   );
 
   return (
@@ -164,21 +158,20 @@ function PageLayouts({ pages, parentRef }) {
         height: pageSize.height,
       }}
     >
-      <PageLayoutsContainer height={rowVirtualizer.totalSize}>
+      <VirtualizedWrapper height={rowVirtualizer.totalSize}>
         <VirtualizedContainer
           height={rowVirtualizer.totalSize}
           ref={containerRef}
           columnWidth={pageSize.width}
           rowHeight={pageSize.containerHeight}
-          tab={0}
           paneLeft={PANE_PADDING}
-          onFocus={handlePageLayoutFocus}
+          onFocus={handleGridFocus}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {
-              const pageIndex = getVirtualizedPageIndex({
-                virtualColumn,
-                virtualRow,
+              const pageIndex = getVirtualizedItemIndex({
+                columnIndex: virtualColumn.index,
+                rowIndex: virtualRow.index,
               });
 
               const page = pages[pageIndex];
@@ -186,18 +179,19 @@ function PageLayouts({ pages, parentRef }) {
               if (!page) {
                 return null;
               }
-              const isActive = activePageId === page.id && isPageLayoutsFocused;
+              const isActive = activeGridItemId === page.id && isGridFocused;
 
               return (
                 <PageLayout
                   key={pageIndex}
+                  data-testid={`page_layout_${page.id}`}
                   ref={(el) => (pageRefs.current[page.id] = el)}
                   translateY={virtualRow.start}
                   translateX={virtualColumn.start}
                   page={page}
                   pageSize={pageSize}
                   isActive={isActive}
-                  onFocus={() => handlePageFocus(page.id)}
+                  onFocus={() => handleGridItemFocus(page.id)}
                   onClick={() => handlePageClick(page)}
                   onKeyUp={(event) => handleKeyboardPageClick(event, page)}
                 />
@@ -211,7 +205,7 @@ function PageLayouts({ pages, parentRef }) {
             onClose={handleCloseDialog}
           />
         )}
-      </PageLayoutsContainer>
+      </VirtualizedWrapper>
     </UnitsProvider>
   );
 }

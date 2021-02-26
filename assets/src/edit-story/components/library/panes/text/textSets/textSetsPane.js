@@ -44,6 +44,7 @@ import {
   getTextSetsForFonts,
 } from '../../../../../utils/getInUseFonts';
 import { Container as SectionContainer } from '../../../common/section';
+import { virtualPaneContainer } from '../../shared/virtualizedPanelGrid';
 import TextSets from './textSets';
 import { CATEGORIES, PANE_TEXT } from './constants';
 
@@ -61,10 +62,7 @@ const TextSetsToggle = styled.div`
 `;
 
 const TextSetsWrapper = styled.div`
-  margin-top: 26px;
-  padding-top: 2px;
-  width: 100%;
-  height: 100%;
+  ${virtualPaneContainer};
 `;
 
 function TextSetsPane({ paneRef }) {

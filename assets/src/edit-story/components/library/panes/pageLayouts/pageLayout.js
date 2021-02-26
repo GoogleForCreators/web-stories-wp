@@ -98,7 +98,7 @@ function PageLayout(
   return (
     <PageLayoutWrapper
       pageSize={pageSize}
-      role="button"
+      role="listitem"
       ref={ref}
       tabIndex={0}
       onMouseEnter={handleSetHoverActive}

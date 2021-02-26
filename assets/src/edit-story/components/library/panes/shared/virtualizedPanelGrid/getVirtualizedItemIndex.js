@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
-// TODO NOTES & TESTS
-export const getVirtualizedPageIndex = ({ virtualColumn, virtualRow }) =>
-  virtualColumn.index === 0 ? virtualRow.index * 2 : virtualRow.index * 2 + 1;
+/**
+ * @param {Object} props       All props.
+ * @param {number} props.rowIndex    Identifies the virtualized row index.
+ * @param {number} props.columnIndex Identifies the virtualized column index.
+ * @return {number} itemIndex  Returns the true index of an item in a virtualized grid
+ */
+export const getVirtualizedItemIndex = ({ columnIndex, rowIndex }) =>
+  columnIndex === 0 ? rowIndex * 2 : rowIndex * 2 + 1;

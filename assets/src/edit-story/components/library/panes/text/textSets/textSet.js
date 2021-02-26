@@ -98,7 +98,7 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
     <TextSetItem
-      role="button"
+      role="listitem"
       tabIndex={0}
       aria-label={__('Insert Text Set', 'web-stories')}
       translateX={translateX}

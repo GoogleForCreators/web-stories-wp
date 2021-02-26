@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export { VirtualizedContainer } from './virtualizedContainer';
 export { default as useVirtualizedGridNavigation } from './useVirtualizedGridNavigation';
-export { getVirtualizedPageIndex } from './getVirtualizedPageIndex';
+export { getVirtualizedItemIndex } from './getVirtualizedItemIndex';
+export * from './components';

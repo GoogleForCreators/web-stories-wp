@@ -84,6 +84,45 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
     await fixture.snapshot('applied page layout');
   });
 
+  it('should apply page layout to an empty page using keyboard', async () => {
+    await fixture.editor.library.pageLayoutsTab.click();
+
+    await waitFor(() =>
+      expect(
+        fixture.editor.library.pageLayoutsPane.pageLayouts.length
+      ).toBeTruthy()
+    );
+
+    const { pageLayouts } = fixture.editor.library.pageLayoutsPane;
+    await fixture.events.focus(
+      fixture.editor.library.pageLayoutsPane.pageLayouts[0]
+    );
+
+    await fixture.events.keyboard.press('right');
+
+    await fixture.events.keyboard.press('down');
+
+    const activeTextSetId = pageLayouts[3].getAttribute('data-testid');
+    const documentTestId = document.activeElement.getAttribute('data-testid');
+
+    expect(activeTextSetId).toBe(documentTestId);
+    await fixture.events.keyboard.press('Enter');
+
+    // check that all elements have been applied
+    const currentPage = await fixture.renderHook(() =>
+      useStory(({ state }) => state.currentPage)
+    );
+    const cookingTemplate = formattedTemplatesArray.find(
+      (t) => t.title === 'Cooking'
+    );
+    const coverPage = cookingTemplate.pages.find(
+      (p) => p.pageLayoutType === 'cover'
+    );
+    expectPageLayoutEqual(currentPage, coverPage);
+
+    await fixture.snapshot('applied page layout');
+  });
+
   it('should confirm and apply layout to a page with changes', async () => {
     // Insert element to make the page have changes
     const insertElement = await fixture.renderHook(() => useInsertElement());

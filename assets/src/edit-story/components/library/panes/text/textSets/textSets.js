@@ -19,7 +19,6 @@
  */
 import { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
 
 /**
@@ -28,31 +27,27 @@ import { useVirtual } from 'react-virtual';
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import {
-  getVirtualizedPageIndex,
+  getVirtualizedItemIndex,
   useVirtualizedGridNavigation,
   VirtualizedContainer,
+  PANEL_GRID_ROW_GAP,
+  VirtualizedWrapper,
 } from '../../shared/virtualizedPanelGrid';
 import TextSet from './textSet';
-import { TEXT_SET_ROW_GAP } from './constants';
-
-const TextSetContainer = styled.div`
-  height: ${({ height }) => `${height}px`};
-  width: 100%;
-  position: relative;
-`;
 
 function TextSets({ paneRef, filteredTextSets }) {
   const containerRef = useRef();
-  const pageRefs = useRef({});
+  const textSetRefs = useRef({});
 
-  const pageIds = useMemo(() => filteredTextSets.map((textSet) => textSet.id), [
-    filteredTextSets,
-  ]);
+  const textSetIds = useMemo(
+    () => filteredTextSets.map((textSet) => textSet.id),
+    [filteredTextSets]
+  );
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil((filteredTextSets || []).length / 2),
     parentRef: paneRef,
-    estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
+    estimateSize: useCallback(() => TEXT_SET_SIZE + PANEL_GRID_ROW_GAP, []),
     overscan: 4,
   });
 
@@ -60,20 +55,20 @@ function TextSets({ paneRef, filteredTextSets }) {
     horizontal: true,
     size: 2,
     parentRef: paneRef,
-    estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
+    estimateSize: useCallback(() => TEXT_SET_SIZE + PANEL_GRID_ROW_GAP, []),
     overscan: 0,
   });
 
   const {
-    activePageId,
-    handlePageLayoutFocus,
-    handlePageFocus,
-    isPageLayoutsFocused,
+    activeGridItemId,
+    handleGridFocus,
+    handleGridItemFocus,
+    isGridFocused,
   } = useVirtualizedGridNavigation({
     rowVirtualizer,
     containerRef,
-    pageRefs,
-    pageIds,
+    gridItemRefs: textSetRefs,
+    gridItemIds: textSetIds,
   });
 
   return (
@@ -83,20 +78,19 @@ function TextSets({ paneRef, filteredTextSets }) {
         height: TEXT_SET_SIZE / PAGE_RATIO,
       }}
     >
-      <TextSetContainer height={rowVirtualizer.totalSize}>
+      <VirtualizedWrapper height={rowVirtualizer.totalSize}>
         <VirtualizedContainer
           height={rowVirtualizer.totalSize}
           ref={containerRef}
           columnWidth={TEXT_SET_SIZE}
           rowHeight={TEXT_SET_SIZE}
-          tab={0}
-          onFocus={handlePageLayoutFocus}
+          onFocus={handleGridFocus}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {
-              const gridIndex = getVirtualizedPageIndex({
-                virtualColumn,
-                virtualRow,
+              const gridIndex = getVirtualizedItemIndex({
+                columnIndex: virtualColumn.index,
+                rowIndex: virtualRow.index,
               });
 
               const textSet = filteredTextSets[gridIndex];
@@ -105,24 +99,24 @@ function TextSets({ paneRef, filteredTextSets }) {
                 return null;
               }
 
-              const isActive =
-                activePageId === textSet.id && isPageLayoutsFocused;
+              const isActive = activeGridItemId === textSet.id && isGridFocused;
 
               return (
                 <TextSet
                   key={gridIndex}
-                  ref={(el) => (pageRefs.current[textSet.id] = el)}
+                  data-testid={`${textSet.id}`}
+                  ref={(el) => (textSetRefs.current[textSet.id] = el)}
                   translateY={virtualRow.start}
                   translateX={virtualColumn.start}
                   isActive={isActive}
-                  onFocus={() => handlePageFocus(textSet.id)}
+                  onFocus={() => handleGridItemFocus(textSet.id)}
                   elements={textSet.elements}
                 />
               );
             })
           )}
         </VirtualizedContainer>
-      </TextSetContainer>
+      </VirtualizedWrapper>
     </UnitsProvider>
   );
 }

@@ -17,19 +17,30 @@
 /**
  * External dependencies
  */
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-// TODO params
-/**
- * VirtualizedContainer is the last accessible parent before virtualizedRows and columns are in play.
- *
- * @param root0
- * @param root0.paneLeft
- * @param root0.columnWidth
- * @param root0.rowHeight
- * @param root0.rowGap
- */
+export const PANEL_GRID_ROW_GAP = 12;
+
+// padding-top is to help outlines on text sets
+export const virtualPaneContainer = css`
+  margin-top: 38px;
+  padding-top: 2px;
+  width: 100%;
+  height: 100%;
+`;
+
+// Contains mapped over useVirtual rows
+export const VirtualizedWrapper = styled.div`
+  height: ${({ height }) => `${height}px`};
+  width: 100%;
+  position: relative;
+`;
+VirtualizedWrapper.propTypes = {
+  height: PropTypes.number.isRequired,
+};
+
+// VirtualizedContainer is the last accessible parent before virtualizedRows and columns are in play.
 export const VirtualizedContainer = styled.div`
   position: absolute;
   top: 0;

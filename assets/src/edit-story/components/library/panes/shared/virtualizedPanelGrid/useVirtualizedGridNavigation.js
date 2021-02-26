@@ -25,64 +25,79 @@ import { useFocusOut, useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
 
-// todo add notes
 /**
- * useVirtual and useRovingTabIndex do not play well together but we need both!
- * The below useEffect is key to maintaining the proper focus for keyboard users.
- * What happens is on "scroll" of the virtualized container useVirtual is grabbing more rows
- * and these rows are fed through the rendered map to create page layouts that are visible to users.
- * While it doesn't look like the DOM is updating, it is in fact updating.
- * So the old refs get lost and the list gets new ones! By manually forcing focus and maintaining an object
- * of pageRefs that are organized by page id (those don't update) we can make sure the focus stays where it's supposed to be.
- * Checking for a difference in currentAvailableRows and assigning the matching ref to any change is just so that the effect hook will run when the virtualized list
- * updates and reattach focus to the new instance of an already selected layout.
+ * This is a shared custom hook to enable keyboard arrow navigation on panels
+ * that use `useVirtual` to virtualize the contents. It takes over control of
+ * focus when keyboard is in play.
+ * Use the returned `handleGridFocus` as `onFocus` of the element that `containerRef` belongs.
+ * Use the returned `activeGridItemId` as a check in your map of gridItems against the id of
+ * each grid item to identify which grid item should get focus styles/behavior.
+ * Use the returned `handleGridItemFocus` as the gridItem `onFocus`, pass it the grid item's id as a param.
+ * Use the returned `isGridFocused` as a boolean to show focus styles or not.
+ *
+ * @param {Object} props                All props.
+ * @param {Object} props.containerRef   ref of virtualized grid's container (nearest parent in DOM).
+ * @param {Object} props.gridItemRefs   ref containing array as .current holding each virtualized item DOM.
+ * @param {Array} props.gridItemIds     array of available grid item ids. it's important that ids don't update when the DOM does.
+ * @param {Object} props.rowVirtualizer instance of outermost `useVirtual` for this grid.
+ * @return {Object}                     memoized keys { handleGridFocus, handleGridItemFocus, activeGridItemId, isGridFocused }
  */
-
 export default function useVirtualizedGridNavigation({
   containerRef,
-  pageRefs,
-  pageIds,
+  gridItemRefs,
+  gridItemIds,
   rowVirtualizer,
 }) {
-  const [activePageId, setActivePageId] = useState();
+  const [activeGridItemId, setActiveGridItemId] = useState();
 
-  const [isPageLayoutsFocused, setIsPageLayoutsFocused] = useState(false);
+  const [isGridFocused, setIsGridFocused] = useState(false);
   const currentAvailableRows = useMemo(() => rowVirtualizer.virtualItems, [
     rowVirtualizer,
   ]);
   const currentAvailableRowsRef = useRef();
 
+  /**
+   * useVirtual and useRovingTabIndex do not play well together but we need both!
+   * The below useEffect is key to maintaining the proper focus for keyboard users.
+   * What happens is on "scroll" of the virtualized container useVirtual is grabbing more rows
+   * and these rows are fed through the rendered map to create page layouts that are visible to users.
+   * While it doesn't look like the DOM is updating, it is in fact updating.
+   * So the old refs get lost and the list gets new ones! By manually forcing focus and maintaining an object
+   * of gridItemRefs that are organized by page id (those don't update) we can make sure the focus stays where it's supposed to be.
+   * Checking for a difference in currentAvailableRows and assigning the matching ref to any change is just so that the effect hook will run when the virtualized list
+   * updates and reattach focus to the new instance of an already selected layout.
+   */
   useEffect(() => {
     if (currentAvailableRows !== currentAvailableRowsRef?.current) {
       currentAvailableRowsRef.current = currentAvailableRows;
     }
 
-    if (activePageId && isPageLayoutsFocused) {
-      pageRefs.current?.[activePageId]?.focus();
+    if (activeGridItemId && isGridFocused) {
+      gridItemRefs.current?.[activeGridItemId]?.focus();
     }
-  }, [activePageId, currentAvailableRows, isPageLayoutsFocused, pageRefs]);
+  }, [activeGridItemId, currentAvailableRows, isGridFocused, gridItemRefs]);
 
   useRovingTabIndex({ ref: containerRef });
 
-  const handlePageLayoutFocus = useCallback(() => {
-    if (!isPageLayoutsFocused) {
-      const newPageId = pageRefs.current?.[activePageId]
-        ? activePageId
-        : pageIds[0];
+  const handleGridFocus = useCallback(() => {
+    if (!isGridFocused) {
+      const newPageId = gridItemRefs.current?.[activeGridItemId]
+        ? activeGridItemId
+        : gridItemIds[0];
 
-      setActivePageId(newPageId);
-      setIsPageLayoutsFocused(true);
-      pageRefs.current?.[newPageId]?.focus();
+      setActiveGridItemId(newPageId);
+      setIsGridFocused(true);
+      gridItemRefs.current?.[newPageId]?.focus();
     }
-  }, [activePageId, isPageLayoutsFocused, pageIds, pageRefs]);
+  }, [activeGridItemId, isGridFocused, gridItemIds, gridItemRefs]);
 
-  const handlePageFocus = useCallback(
+  const handleGridItemFocus = useCallback(
     (pageId) => {
-      if (activePageId !== pageId) {
-        setActivePageId(pageId);
+      if (activeGridItemId !== pageId) {
+        setActiveGridItemId(pageId);
       }
     },
-    [activePageId]
+    [activeGridItemId]
   );
 
   // Exit page layouts
@@ -90,7 +105,7 @@ export default function useVirtualizedGridNavigation({
 
   const onTabKeyDown = useCallback(() => {
     focusCanvas();
-    setIsPageLayoutsFocused(false);
+    setIsGridFocused(false);
   }, [focusCanvas]);
 
   useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
@@ -98,18 +113,18 @@ export default function useVirtualizedGridNavigation({
   useFocusOut(
     containerRef,
     () => {
-      setIsPageLayoutsFocused(false);
+      setIsGridFocused(false);
     },
     []
   );
 
   return useMemo(
     () => ({
-      handlePageLayoutFocus,
-      handlePageFocus,
-      activePageId,
-      isPageLayoutsFocused,
+      handleGridFocus,
+      handleGridItemFocus,
+      activeGridItemId,
+      isGridFocused,
     }),
-    [activePageId, isPageLayoutsFocused, handlePageLayoutFocus, handlePageFocus]
+    [activeGridItemId, isGridFocused, handleGridFocus, handleGridItemFocus]
   );
 }

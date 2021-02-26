@@ -28,6 +28,7 @@ import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import { useAPI } from '../../../../app/api';
 import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
+import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
 import { PAGE_LAYOUT_TYPES } from './constants';
@@ -44,13 +45,11 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
-// padding-top is to help outlines on page layouts render
+// padding-top is to help outlines on page layouts
 export const PageLayoutsParentContainer = styled.div`
+  ${virtualPaneContainer}
   overflow-x: hidden;
   overflow-y: scroll;
-  margin-top: 26px;
-  padding-top: 2px;
-  width: 100%;
 `;
 
 function PageLayoutsPane(props) {
