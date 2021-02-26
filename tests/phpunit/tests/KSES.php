@@ -53,6 +53,29 @@ class KSES extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests if two arrays are recursively merged, the latter overwriting the first.
+	 *
+	 * @covers ::array_merge_recursive_distinct
+	 */
+	public function test_array_merge_recursive_distinct() {
+		$kses         = new \Google\Web_Stories\KSES();
+		$input_array1 = [
+			'one' => [
+				'one-one' => [],
+			],
+		];
+
+		$input_array2 = [
+			'one' => [
+				'one-one' => 'string',
+			],
+		];
+
+		$output = $kses->array_merge_recursive_distinct( $input_array1, $input_array2 );
+		$this->assertEquals( $output['one']['one-one'], 'string' );
+	}
+
+	/**
 	 * Data Provider for test_safecss_filter_attr().
 	 *
 	 * @return array {
@@ -296,6 +319,7 @@ class KSES extends \WP_UnitTestCase {
 	 * @dataProvider data_test_filter_kses_allowed_html
 	 * @covers ::filter_kses_allowed_html
 	 * @covers ::add_global_attributes
+	 * @covers ::array_merge_recursive_distinct
 	 *
 	 * @param string $html     HTML string.
 	 * @param string $expected Expected output.
@@ -306,6 +330,25 @@ class KSES extends \WP_UnitTestCase {
 
 		$this->assertSame( $expected, wp_unslash( wp_filter_post_kses( $html ) ) );
 		remove_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ] );
+	}
+
+	/**
+	 * Testing the filter_kses_allowed_html() method.
+	 *
+	 * @covers ::filter_kses_allowed_html
+	 * @covers ::array_merge_recursive_distinct
+	 */
+	public function test_filter_kses_allowed_html_filter() {
+		$kses         = new \Google\Web_Stories\KSES();
+		$allowed_tags = [
+			'img' => [
+				'width' => true,
+			],
+		];
+
+		$result = $kses->filter_kses_allowed_html( $allowed_tags );
+		$this->assertArrayHasKey( 'img', $result );
+		$this->assertArrayHasKey( 'width', $result['img'] );
 	}
 
 	public function data_test_filter_kses_allowed_html() {

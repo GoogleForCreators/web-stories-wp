@@ -564,11 +564,56 @@ class KSES {
 			],
 		];
 
-		$allowed_tags = array_merge( $allowed_tags, $story_components );
+		$allowed_tags = $this->array_merge_recursive_distinct( $allowed_tags, $story_components );
 
 		$allowed_tags = array_map( [ $this, 'add_global_attributes' ], $allowed_tags );
 
 		return $allowed_tags;
+	}
+
+	/**
+	 * Recursively merge a variable number of arrays, using the left array as base,
+	 * giving priority to the right array.
+	 *
+	 * Difference with native array_merge_recursive():
+	 * array_merge_recursive converts values with duplicate keys to arrays rather than
+	 * overwriting the value in the first array with the duplicate value in the second array.
+	 *
+	 * array_merge_recursive_distinct does not change the data types of the values in the arrays.
+	 * Matching keys' values in the second array overwrite those in the first array, as is the
+	 * case with array_merge.
+	 *
+	 * Freely based on information found on http://www.php.net/manual/en/function.array-merge-recursive.php
+	 *
+	 * @link https://github.com/Yoast/wordpress-seo/blob/219014897b95465fa1cd4d23a72b0c74864f6dba/inc/class-wpseo-meta.php#L938-L983
+	 *
+	 * @return array
+	 */
+	public function array_merge_recursive_distinct() {
+
+		$arrays = func_get_args();
+		if ( count( $arrays ) < 2 ) {
+			if ( [] === $arrays ) {
+				return [];
+			} else {
+				return $arrays[0];
+			}
+		}
+
+		$merged = array_shift( $arrays );
+
+		foreach ( $arrays as $array ) {
+			foreach ( $array as $key => $value ) {
+				if ( is_array( $value ) && ( isset( $merged[ $key ] ) && is_array( $merged[ $key ] ) ) ) {
+					$merged[ $key ] = $this->array_merge_recursive_distinct( $merged[ $key ], $value );
+				} else {
+					$merged[ $key ] = $value;
+				}
+			}
+			unset( $key, $value );
+		}
+
+		return $merged;
 	}
 
 	/**
