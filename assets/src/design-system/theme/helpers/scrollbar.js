@@ -31,7 +31,6 @@ export const scrollbarCSS = () => css`
 
   ::-webkit-scrollbar {
     width: 11px;
-    height: 11px;
   }
 
   ::-webkit-scrollbar-track {
