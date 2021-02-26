@@ -24,7 +24,7 @@ import { useLayoutEffect, useCallback, useState, useRef } from 'react';
  * Internal dependencies
  */
 import { useResizeEffect } from '../../../design-system';
-import { SCROLLBAR_WIDTH } from '../../constants';
+import { scrollBarStyles } from '../../theme';
 import { getTransforms, getOffset } from './utils';
 
 /**
@@ -65,31 +65,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
 
-  /*
-   * Custom gray scrollbars for Chromium & Firefox.
-   */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) =>
-      `${theme.DEPRECATED_THEME.colors.bg.v10} ${theme.DEPRECATED_THEME.colors.bg.v12}`};
-  }
-
-  *::-webkit-scrollbar {
-    width: ${SCROLLBAR_WIDTH}px;
-    height: ${SCROLLBAR_WIDTH}px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v12};
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v5};
-    border: 2px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v12};
-    border-left-width: 3px;
-    border-top-width: 3px;
-    border-radius: 6px;
-  }
+  ${scrollBarStyles}
 `;
 
 function Popup({
@@ -128,14 +104,13 @@ function Popup({
   useLayoutEffect(() => {
     setMounted(true);
     if (!isOpen) {
-      return () => {};
+      return undefined;
     }
     positionPopup();
+
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
-    return () => {
-      document.removeEventListener('scroll', positionPopup, true);
-    };
+    return () => document.removeEventListener('scroll', positionPopup, true);
   }, [isOpen, positionPopup]);
 
   useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);

@@ -22,10 +22,30 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
+import { MULTIPLE_VALUE } from '../../utils';
 
-function ShapesIcon() {
-  return <Icons.Shapes aria-label={__('Shapes library', 'web-stories')} />;
+function printRGB(r, g, b) {
+  const hex = (v) => v.toString(16).padStart(2, '0');
+  return `${hex(r)}${hex(g)}${hex(b)}`.toUpperCase();
 }
 
-export default ShapesIcon;
+function getPreviewText(pattern) {
+  if (!pattern || pattern === MULTIPLE_VALUE) {
+    return null;
+  }
+  switch (pattern.type) {
+    case 'radial':
+      return __('Radial', 'web-stories');
+    case 'linear':
+      return __('Linear', 'web-stories');
+    case 'solid':
+    default: {
+      const {
+        color: { r, g, b },
+      } = pattern;
+      return printRGB(r, g, b);
+    }
+  }
+}
+
+export default getPreviewText;

@@ -15,17 +15,28 @@
  */
 
 /**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
+import { Fixture } from '../../../karma';
 
-function ShapesIcon() {
-  return <Icons.Shapes aria-label={__('Shapes library', 'web-stories')} />;
-}
+describe('Carousel menu', () => {
+  let fixture;
 
-export default ShapesIcon;
+  beforeEach(async () => {
+    fixture = new Fixture();
+    await fixture.render();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  it('should show correct tooltip on hover', async () => {
+    const { gridViewToggle } = fixture.editor.carousel;
+    await fixture.events.mouse.moveRel(gridViewToggle, '50%', '50%', {
+      steps: 2,
+    });
+
+    await fixture.snapshot('Grid view tooltip visible');
+  });
+});

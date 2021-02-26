@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { Icons } from '../../../../../design-system';
-
-function ShapesIcon() {
-  return <Icons.Shapes aria-label={__('Shapes library', 'web-stories')} />;
-}
-
-export default ShapesIcon;
+export * from './scheduledTransition';

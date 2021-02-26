@@ -28,7 +28,7 @@ const rgba = ({ r, g, b, a }) => {
   return `rgb(${al(r)}, ${al(g)}, ${al(b)})`;
 };
 
-const POINTER_SIZE = 12;
+const POINTER_SIZE = 24;
 const BORDER_WIDTH = 2;
 
 // The attrs method is more performant for frequently changed styles.
@@ -42,13 +42,11 @@ const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => {
   width: ${POINTER_SIZE}px;
   height: ${POINTER_SIZE}px;
   transform: translate(
-    ${({ offset }) => `${offset}px`},
-    -${POINTER_SIZE / 2}px
+    ${({ offsetX = 0, offsetY = 0 }) => `${offsetX}px, ${offsetY}px`}
   );
   background: transparent;
-  border: ${BORDER_WIDTH}px solid #fff;
+  border: ${BORDER_WIDTH}px solid ${({ theme }) => theme.colors.fg.primary};
   border-radius: 100%;
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.38));
   position: relative;
 
   &:before {

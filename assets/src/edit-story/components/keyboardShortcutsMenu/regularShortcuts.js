@@ -17,15 +17,28 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
+import { sections } from './keyboardShortcutList';
+import ShortcutMenuSection from './shortcutMenuSection';
 
-function ShapesIcon() {
-  return <Icons.Shapes aria-label={__('Shapes library', 'web-stories')} />;
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 24px 24px;
+`;
+
+function RegularShortcuts() {
+  return (
+    <ContentWrapper>
+      {sections.map(({ title, commands }) => (
+        <ShortcutMenuSection key={title} title={title} commands={commands} />
+      ))}
+    </ContentWrapper>
+  );
 }
 
-export default ShapesIcon;
+export default RegularShortcuts;
