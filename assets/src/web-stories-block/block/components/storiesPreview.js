@@ -19,6 +19,15 @@
  */
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Glider from 'glider-js';
+import 'glider-js/glider.css';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { withInstanceId } from '@wordpress/compose';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -36,9 +45,15 @@ function StoriesPreview(props) {
     attributes: { align, viewType, sizeOfCircles, fieldState, numOfColumns },
     viewAllLabel,
     stories,
+    instanceId,
   } = props;
 
   const { archiveURL } = useConfig();
+
+  const carouselContainer = useRef(null);
+  const carouselNext = useRef(null);
+  const carouselPrev = useRef(null);
+  const carouselItem = useRef(null);
 
   const blockClasses = classNames(
     {
@@ -53,6 +68,58 @@ function StoriesPreview(props) {
     'web-stories-list'
   );
 
+  const wrapperClasses = classNames(
+    {
+      [`carousel-${instanceId}`]:
+        CIRCLES_VIEW_TYPE === viewType || CAROUSEL_VIEW_TYPE === viewType,
+    },
+    'web-stories-list__inner-wrapper'
+  );
+
+  const storiesLoop = () =>
+    stories.map((story) => {
+      return (
+        <StoryCard
+          key={story.id}
+          url={story.link}
+          title={story.title.rendered}
+          excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
+          date={story.date_gmt}
+          author={story._embedded.author[0].name}
+          poster={story.featured_media_url}
+          imageOnRight={fieldState['show_image_align']}
+          isShowingAuthor={fieldState['show_author']}
+          isShowingDate={fieldState['show_date']}
+          isShowingTitle={fieldState['show_title']}
+          isShowingExcerpt={fieldState['show_excerpt']}
+          sizeOfCircles={sizeOfCircles}
+          itemRef={carouselItem}
+        />
+      );
+    });
+
+  useEffect(() => {
+    if (carouselContainer.current && carouselItem.current) {
+      const itemStyle = window.getComputedStyle(carouselItem.current);
+      const itemWidth =
+        parseFloat(itemStyle.width) +
+        (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
+
+      /* eslint-disable-next-line no-new */
+      new Glider(carouselContainer.current, {
+        slidesToShow: 'auto',
+        slidesToScroll: 'auto',
+        itemWidth,
+        duration: 0.25,
+        scrollLock: true,
+        arrows: {
+          prev: carouselPrev.current,
+          next: carouselNext.current,
+        },
+      });
+    }
+  });
+
   return (
     <div
       className={blockClasses}
@@ -63,26 +130,30 @@ function StoriesPreview(props) {
             : undefined,
       }}
     >
-      <div className="web-stories-list__inner-wrapper">
-        {stories.map((story) => {
-          return (
-            <StoryCard
-              key={story.id}
-              url={story.link}
-              title={story.title.rendered}
-              excerpt={story.excerpt.rendered ? story.excerpt.rendered : ''}
-              date={story.date_gmt}
-              author={story._embedded.author[0].name}
-              poster={story.featured_media_url}
-              imageOnRight={fieldState['show_image_align']}
-              isShowingAuthor={fieldState['show_author']}
-              isShowingDate={fieldState['show_date']}
-              isShowingTitle={fieldState['show_title']}
-              isShowingExcerpt={fieldState['show_excerpt']}
-              sizeOfCircles={sizeOfCircles}
+      <div className={wrapperClasses}>
+        {CIRCLES_VIEW_TYPE === viewType || CAROUSEL_VIEW_TYPE === viewType ? (
+          <>
+            <div
+              className="web-stories-list__carousel"
+              data-id={`carousel-${instanceId}`}
+              ref={carouselContainer}
+            >
+              {storiesLoop()}
+            </div>
+            <div
+              aria-label={__('Previous', 'web-stories')}
+              className="glider-prev"
+              ref={carouselPrev}
             />
-          );
-        })}
+            <div
+              aria-label={__('Next', 'web-stories')}
+              className="glider-next"
+              ref={carouselNext}
+            />
+          </>
+        ) : (
+          <>{storiesLoop()}</>
+        )}
       </div>
       {fieldState['show_archive_link'] && (
         <div className="web-stories-list__archive-link">
@@ -105,6 +176,7 @@ StoriesPreview.propTypes = {
   }),
   stories: PropTypes.array,
   viewAllLabel: PropTypes.string,
+  instanceId: PropTypes.number,
 };
 
-export default StoriesPreview;
+export default withInstanceId(StoriesPreview);

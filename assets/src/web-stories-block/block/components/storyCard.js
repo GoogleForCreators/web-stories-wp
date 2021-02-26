@@ -38,6 +38,7 @@ function StoryCard({
   isShowingTitle,
   isShowingExcerpt,
   imageOnRight,
+  itemRef,
 }) {
   const singleStoryClasses = classNames('web-stories-list__story', {
     [`image-align-right`]: imageOnRight,
@@ -48,7 +49,7 @@ function StoryCard({
   const dateFormat = __experimentalGetSettings().formats.date;
 
   return (
-    <div className={singleStoryClasses}>
+    <div className={singleStoryClasses} ref={itemRef}>
       <div className="web-stories-list__story-poster">
         <img src={poster} alt={title} />
       </div>
@@ -100,6 +101,7 @@ StoryCard.propTypes = {
   isShowingTitle: PropTypes.bool,
   isShowingExcerpt: PropTypes.bool,
   imageOnRight: PropTypes.bool,
+  itemRef: PropTypes.object,
 };
 
 export default StoryCard;
