@@ -61,7 +61,13 @@ import {
 } from '../../../../edit-story/components/previewPage';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 import { titleFormatted } from '../../../utils';
-import { Icons, Text, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  Headline,
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../design-system';
+import { focusableOutlineCSS } from '../../../../design-system/theme/helpers';
 
 const ListView = styled.div`
   width: 100%;
@@ -114,6 +120,9 @@ const ArrowIconWithTitle = styled(ArrowIcon)`
 const SelectableTitle = styled(Text).attrs({ tabIndex: 0 })`
   color: ${({ theme }) => theme.colors.fg.linkNormal};
   cursor: pointer;
+
+  ${({ theme }) =>
+    focusableOutlineCSS(theme.colors.border.focus, theme.colors.bg.secondary)};
 `;
 
 const HeavyTitle = styled(Text)`
@@ -347,14 +356,15 @@ export default function StoryListView({
                     />
                   ) : (
                     <>
-                      <Text
+                      <Headline
                         tabIndex={0}
                         onFocus={onFocusSelectAll}
                         onBlur={onBlurDeselectAll}
-                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+                        as="h4"
                       >
                         {titleFormatted(story.title)}
-                      </Text>
+                      </Headline>
                       <StoryMenu
                         onMoreButtonSelected={storyMenu.handleMenuToggle}
                         contextMenuId={storyMenu.contextMenuId}
@@ -383,7 +393,7 @@ export default function StoryListView({
                   as="span"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 >
-                  {getRelativeDisplayDate(story.created)}
+                  {getRelativeDisplayDate(story.created_gmt)}
                 </Text>
               </TableCell>
               <TableCell>
@@ -391,7 +401,7 @@ export default function StoryListView({
                   as="span"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 >
-                  {getRelativeDisplayDate(story.modified)}
+                  {getRelativeDisplayDate(story.modified_gmt)}
                 </Text>
               </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
