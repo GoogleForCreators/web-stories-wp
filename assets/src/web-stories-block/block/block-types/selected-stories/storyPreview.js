@@ -22,6 +22,7 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
+import { dateI18n, __experimentalGetSettings } from '@wordpress/date';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import {
   CardTitle,
 } from '../../../../dashboard/components';
 import { StoryPropType, PageSizePropType } from '../../../../dashboard/types';
-import { getRelativeDisplayDate } from '../../../../date';
 
 const StoryPreviewCover = styled.div(
   ({ coverImage, pageSize, theme }) => `
@@ -55,6 +55,9 @@ const DetailRow = styled.div`
 `;
 
 function StoryPreview({ story, pageSize }) {
+  // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
+  const dateFormat = __experimentalGetSettings().formats.date;
+
   return story.originalStoryData.featured_media_url ? (
     <>
       <StoryPreviewCover
@@ -74,7 +77,7 @@ function StoryPreview({ story, pageSize }) {
           status={story?.status}
           id={story.id}
           secondaryTitle={story.author}
-          displayDate={getRelativeDisplayDate(story.created)}
+          displayDate={dateI18n(dateFormat, story.created)}
         />
       </DetailRow>
     </>

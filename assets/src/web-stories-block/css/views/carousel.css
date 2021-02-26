@@ -7,15 +7,22 @@
   }
 }
 
-.web-stories-list.is-carousel.has-archive-link {
+.web-stories-theme-header-section
+  .web-stories-list.is-carousel.has-archive-link {
   position: relative;
   padding-top: 42px;
 }
 
 .web-stories-list.is-carousel .web-stories-list__archive-link {
   position: absolute;
+  right: 0;
+  top: -35px;
+}
+
+.web-stories-theme-header-section
+  .web-stories-list.is-carousel
+  .web-stories-list__archive-link {
   right: 10px;
-  top: -32px;
 }
 
 .web-stories-list.is-carousel .glider-next,

@@ -198,7 +198,7 @@ class Customizer extends \WP_UnitTestCase {
 			[
 				'story-options[show_excerpt]',
 				[
-					'default' => true,
+					'default' => false,
 					'type'    => 'option',
 				],
 			],
@@ -298,7 +298,7 @@ class Customizer extends \WP_UnitTestCase {
 			'title'                     => true,
 			'title-default'             => true,
 			'excerpt'                   => true,
-			'excerpt-default'           => true,
+			'excerpt-default'           => false,
 			'author'                    => true,
 			'author-default'            => false,
 			'date'                      => false,

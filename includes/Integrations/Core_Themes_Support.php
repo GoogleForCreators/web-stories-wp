@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\Customizer;
 use Google\Web_Stories\Stories_Renderer\Renderer;
 use Google\Web_Stories\Traits\Assets;
+use function Google\Web_Stories\render_theme_stories;
 
 /**
  * Class Core_Themes_Support.
@@ -79,11 +80,12 @@ class Core_Themes_Support {
 	 * @return void
 	 */
 	public function embed_web_stories() {
-		$customizer = new Customizer();
-		$this->enqueue_style( 'web-stories-theme-style-' . get_stylesheet(), [ Renderer::STYLE_HANDLE ] );
+		if ( is_readable( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/css/web-stories-theme-style-' . get_stylesheet() . '.css' ) ) {
+			$this->enqueue_style( 'web-stories-theme-style-' . get_stylesheet(), [ Renderer::STYLE_HANDLE ] );
+		}
 		?>
 		<div class="web-stories-theme-header-section">
-			<?php echo $customizer->render_stories(); // phpcs:ignore -- WordPress.Security.EscapeOutput.OutputNotEscaped - Escaped web stories HTML. ?>
+			<?php render_theme_stories(); ?>
 		</div>
 		<?php
 	}

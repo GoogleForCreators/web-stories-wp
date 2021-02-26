@@ -428,12 +428,8 @@
         "assets/src/dashboard/**/*.js",
         "assets/src/design-system/**/*.js",
         "assets/src/edit-story/**/*.js",
-        "packages/**/*.js",
-        "assets/src/tinymce/**/*.js"
+        "packages/**/*.js"
       ],
-      "globals": {
-        "tinymce": "readonly"
-      },
       "excludedFiles": [
         "packages/activation-notice/**/*.js",
         "packages/i18n/**/*.js",
@@ -450,6 +446,14 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "assets/src/tinymce/**/*.js"
+      ],
+      "globals": {
+        "tinymce": "readonly"
       }
     }
   ]
