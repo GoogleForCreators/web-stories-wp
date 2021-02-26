@@ -42,7 +42,7 @@ import {
   ReorderableSeparator,
   ReorderableItem,
 } from '../../reorderable';
-import PagePreview from '../pagePreview';
+import PagePreview from '../pagepreview';
 
 const MIN_GRID_GAP = 20;
 const LINE_HEIGHT = 64;

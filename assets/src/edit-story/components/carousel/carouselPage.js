@@ -25,7 +25,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { ReorderableSeparator, ReorderableItem } from '../reorderable';
-import PagePreview from './pagePreview';
+import PagePreview from './pagepreview';
 import useCarousel from './useCarousel';
 import { THUMBNAIL_LINE_WIDTH } from './constants';
 
