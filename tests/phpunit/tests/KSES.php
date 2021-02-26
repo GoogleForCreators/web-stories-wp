@@ -21,6 +21,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
 class KSES extends \WP_UnitTestCase {
+	use Private_Access;
 	/**
 	 * Testing the safecss_filter_attr() function.
 	 *
@@ -71,7 +72,14 @@ class KSES extends \WP_UnitTestCase {
 			],
 		];
 
-		$output = $kses->array_merge_recursive_distinct( $input_array1, $input_array2 );
+		$output = $this->call_private_method(
+			$kses,
+			'array_merge_recursive_distinct',
+			[
+				$input_array1,
+				$input_array2,
+			] 
+		);
 		$this->assertEquals( $output['one']['one-one'], 'string' );
 	}
 
@@ -341,7 +349,7 @@ class KSES extends \WP_UnitTestCase {
 	public function test_filter_kses_allowed_html_uses_deep_merge() {
 		$kses         = new \Google\Web_Stories\KSES();
 		$allowed_tags = [
-			'img' => [
+			'img'     => [
 				'width' => true,
 			],
 			'testing' => [

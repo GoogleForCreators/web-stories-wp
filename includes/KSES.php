@@ -583,7 +583,7 @@ class KSES {
 	 *
 	 * @return array An array of values resulted from merging the arguments together.
 	 */
-	public function array_merge_recursive_distinct( array ...$arrays ) {
+	protected function array_merge_recursive_distinct( array ...$arrays ) {
 		if ( count( $arrays ) < 2 ) {
 			if ( [] === $arrays ) {
 				return $arrays;
