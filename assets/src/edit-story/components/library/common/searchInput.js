@@ -87,10 +87,9 @@ function WrappedSearchInput({
       onChange={onChange}
       handleClearInput={onClear}
       disabled={disabled}
-      ariaInputLabel={__('Search', 'web-stories')}
       ariaClearLabel={__('Clear search input', 'web-stories')}
       isOpen={hasContent}
-      role="textbox"
+      aria-label={__('Search', 'web-stories')}
     />
   );
 }

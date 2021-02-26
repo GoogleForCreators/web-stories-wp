@@ -71,17 +71,19 @@ const SearchInput = (
   return (
     <InputContainer alignCenter={alignInputCenter}>
       <Input
-        aria-autocomplete="list"
-        aria-controls={listId}
         aria-disabled={disabled}
-        aria-expanded={isOpen}
-        aria-owns={listId}
         autocomplete="off"
         disabled={disabled}
         ref={ref}
-        role="combobox"
         type="search"
         value={inputValue}
+        {...(listId && {
+          role: 'combobox',
+          ['aria-expanded']: isOpen,
+          ['aria-controls']: listId,
+          ['aria-owns']: listId,
+          ['aria-autocomplete']: 'list',
+        })}
         {...rest}
       />
       <SearchDecoration
