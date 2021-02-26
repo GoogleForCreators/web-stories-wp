@@ -18,14 +18,12 @@
  */
 import { css } from 'styled-components';
 
-/**
+/*
  * CSS for custom gray scrollbars for Chromium, Safari, Edge, & Opera.
  *
  * NOTE: Firefox does not yet support webkit scrollbar styling
- *
- * @return {css} Styling
  */
-export const scrollbarCss = () => css`
+export const scrollbarCSS = () => css`
   /* Firefox compatible css */
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }) => theme.colors.interactiveBg.secondaryNormal};

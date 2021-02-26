@@ -26,7 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { Headline } from '../../components/typography';
 import { DarkThemeProvider } from '../../storybookUtils';
-import { scrollbarCss } from '../helpers/scrollbar';
+import { scrollbarCSS } from '../helpers/scrollbar';
 
 export default {
   title: 'DesignSystem/Theme/Scrollbar',
@@ -45,7 +45,7 @@ const ScrollContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.secondary};
   overflow-y: scroll;
 
-  ${scrollbarCss};
+  ${scrollbarCSS};
 `;
 
 const Content = styled.div`

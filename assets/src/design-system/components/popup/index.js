@@ -24,10 +24,10 @@ import { useLayoutEffect, useCallback, useState, useRef } from 'react';
  * Internal dependencies
  */
 import useResizeEffect from '../../utils/useResizeEffect';
+import { themeHelpers } from '../../theme';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
-// TODO scrollbar update, commented out until design updates are done
 const DEFAULT_POPUP_Z_INDEX = 2;
 const Container = styled.div.attrs(
   ({
@@ -50,30 +50,7 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
 
-  /*
-   * Custom gray scrollbars for Chromium & Firefox.
-   */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.primary};
-  }
-
-  *::-webkit-scrollbar {
-    width: 11px;
-    height: 11px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.primary};
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.fg.secondary};
-    border: 2px solid ${({ theme }) => theme.colors.bg.primary};
-    border-left-width: 3px;
-    border-top-width: 3px;
-    border-radius: 6px;
-  }
+  ${themeHelpers.scrollbarCSS};
 `;
 
 function Popup({
