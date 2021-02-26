@@ -127,7 +127,7 @@ function web_stories_get_compat_instance() {
 
 		$required_files[] = $script_file;
 		foreach ( $js_chunks as $filename ) {
-			$required_files[] = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js' . $filename . '.js';
+			$required_files[] = $js_assets_dir . $filename . '.js';
 		}
 	}
 
