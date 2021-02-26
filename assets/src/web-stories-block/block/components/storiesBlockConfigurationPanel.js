@@ -19,7 +19,16 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const FallbackComponent = ({ children }) => children;
+const FallbackComponent = ({ children, ...additionalProps }) => (
+  <div {...additionalProps}>{children}</div>
+);
+
+FallbackComponent.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
 
 /**
  * WordPress dependencies
@@ -65,6 +74,7 @@ const TypeMedia = styled(CardMedia)`
   padding-top: 14px;
   padding-bottom: 14px;
   height: 80px;
+  background-color: white;
 `;
 
 const TypeCardBody = styled(CardBody)`
@@ -72,6 +82,7 @@ const TypeCardBody = styled(CardBody)`
   font-weight: 500;
   font-size: 13px;
   line-height: 140%;
+  padding: 16px 12px;
 `;
 
 function BlockConfigurationPanel({
@@ -94,17 +105,19 @@ function BlockConfigurationPanel({
       <TypeGrid $columnCount={columnCount}>
         {selectionOptions.map((option) => (
           <TypeCard
+            className="components-card"
             key={option.id}
-            size="extraSmall"
             onClick={() => {
               setAttributes({ [selectionType]: option.id });
             }}
           >
-            <TypeMedia>
+            <TypeMedia className="components-card__media">
               {'viewType' === selectionType && <Icon icon={option.panelIcon} />}
               {'blockType' === selectionType && <Icon icon={option.icon} />}
             </TypeMedia>
-            <TypeCardBody>{option.label}</TypeCardBody>
+            <TypeCardBody className="components-card__body">
+              {option.label}
+            </TypeCardBody>
           </TypeCard>
         ))}
       </TypeGrid>
