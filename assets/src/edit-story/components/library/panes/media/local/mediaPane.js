@@ -180,7 +180,7 @@ function MediaPane(props) {
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
 
-      if (!resource.posterId) {
+      if (!resource.posterId && !resource.local) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
         uploadVideoPoster(resource.id, mediaPickerEl.url);

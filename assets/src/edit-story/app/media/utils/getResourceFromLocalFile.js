@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import getTypeFromMime from './getTypeFromMime';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 import createResource from './createResource';
@@ -76,11 +77,15 @@ const getImageDimensions = (src) => {
 const getImageResource = async (file) => {
   const fileName = getFileName(file);
   const mimeType = file.type;
+
   const reader = await createFileReader(file);
-  const src = window.URL.createObjectURL(
+
+  const src = URL.createObjectURL(
     new window.Blob([reader.result], { type: mimeType })
   );
   const { width, height } = await getImageDimensions(src);
+  URL.revokeObjectURL(src);
+
   return createLocalResource({
     type: 'image',
     mimeType,
@@ -101,13 +106,19 @@ const getImageResource = async (file) => {
 const getVideoResource = async (file) => {
   const fileName = getFileName(file);
   const mimeType = file.type;
+
   const reader = await createFileReader(file);
-  const src = window.URL.createObjectURL(
-    new window.Blob([reader.result], { type: mimeType })
+
+  const src = URL.createObjectURL(
+    new Blob([reader.result], { type: mimeType })
   );
   const frame = await getFirstFrameOfVideo(src);
-  const poster = window.URL.createObjectURL(frame);
+  URL.revokeObjectURL(src);
+
+  const poster = URL.createObjectURL(frame);
   const { width, height } = await getImageDimensions(poster);
+  URL.revokeObjectURL(poster);
+
   return createLocalResource({
     type: 'video',
     mimeType,
@@ -120,21 +131,48 @@ const getVideoResource = async (file) => {
   });
 };
 
+const createPlaceholderResource = (properties) => {
+  return createLocalResource({ ...properties, isPlaceholder: true });
+};
+
+const getPlaceholderResource = (file) => {
+  const type = getTypeFromMime(file.type);
+  const mimeType = type === 'image' ? 'image/png' : 'video/mp4';
+
+  // The media library requires resources with valid mimeType and dimensions.
+  return createPlaceholderResource({
+    type: type || 'image',
+    mimeType: mimeType,
+    src: '',
+    width: PAGE_WIDTH,
+    height: PAGE_HEIGHT,
+  });
+};
+
 /**
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('./createResource').Resource>|null} Resource object.
+ * @return {Promise<import('./createResource').Resource>} Resource object.
  */
-const getResourceFromLocalFile = (file) => {
+const getResourceFromLocalFile = async (file) => {
   const type = getTypeFromMime(file.type);
-  if (type === 'image') {
-    return getImageResource(file);
+
+  let resource = getPlaceholderResource(file);
+
+  try {
+    if ('image' === type) {
+      resource = await getImageResource(file);
+    }
+
+    if ('video' === type) {
+      resource = await getVideoResource(file);
+    }
+  } catch {
+    // Not interested in the error here.
   }
-  if (type === 'video') {
-    return getVideoResource(file);
-  }
-  return null;
+
+  return resource;
 };
 
 export default getResourceFromLocalFile;

@@ -23,7 +23,6 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import React from 'react';
 import CurrentUserContext from '../../../currentUser/context';
 import useTranscodeVideo from '../useTranscodeVideo';
 

@@ -116,7 +116,7 @@ describe('MediaEditDialog', () => {
     // Mock out `updateMediaElement`.
     let stateAltText = resource.alt;
     updateMediaElement.mockImplementation((update) => {
-      stateAltText = update.alt;
+      stateAltText = update.data.alt;
     });
 
     const input = getByLabelText('Assistive text');
