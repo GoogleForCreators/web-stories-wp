@@ -548,6 +548,7 @@ class KSES {
 				'src'           => true,
 				'srcset'        => true,
 				'srcwidth'      => true,
+				'width'         => true,
 			],
 			'svg'                       => [
 				'width'  => true,

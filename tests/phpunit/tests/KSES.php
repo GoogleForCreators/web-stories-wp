@@ -344,11 +344,18 @@ class KSES extends \WP_UnitTestCase {
 			'img' => [
 				'width' => true,
 			],
+			'testing' => [
+				'width' => true,
+			],
 		];
 
 		$result = $kses->filter_kses_allowed_html( $allowed_tags );
+
 		$this->assertArrayHasKey( 'img', $result );
 		$this->assertArrayHasKey( 'width', $result['img'] );
+		$this->assertArrayHasKey( 'intrinsicsize', $result['img'] );
+		$this->assertArrayHasKey( 'testing', $result );
+		$this->assertArrayHasKey( 'width', $result['testing'] );
 	}
 
 	public function data_test_filter_kses_allowed_html() {
