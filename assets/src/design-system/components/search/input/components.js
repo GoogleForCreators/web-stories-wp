@@ -190,10 +190,10 @@ export const SearchDecoration = styled.div(
     margin: 0;
     left: ${alignCenter ? 'calc(50% - 48px)' : '8px'};
     color: ${alignCenter ? theme.colors.fg.tertiary : theme.colors.fg.primary};
+    pointer-events: none;
 
     ${disabled &&
     css`
-      pointer-events: none;
       color: ${theme.colors.fg.disable};
     `}
   `
