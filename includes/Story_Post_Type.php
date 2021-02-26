@@ -473,14 +473,16 @@ class Story_Post_Type {
 			$script_dependencies[] = 'postbox';
 		}
 
-		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
+		$all_scripts = $this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
 		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
 
-		wp_localize_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			$this->get_editor_settings()
-		);
+		foreach ( $all_scripts as $script ) {
+			wp_localize_script(
+				$script,
+				'webStoriesEditorSettings',
+				$this->get_editor_settings()
+			);
+		}
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
 		$this->remove_admin_style( [ 'forms' ] );
