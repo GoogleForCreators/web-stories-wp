@@ -23,13 +23,15 @@ import { waitFor, act, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import createSolid from '../../../../utils/createSolid';
-import OpacityPreview from '../opacityPreview';
+import OpacityInput from '../opacityInput';
 import getPreviewOpacityMock from '../getPreviewOpacity';
-import getPreviewTextMock from '../getPreviewText';
+import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
-jest.mock('../getPreviewText', () => jest.fn());
+jest.mock('../../../../../design-system/components/hex/getPreviewText', () =>
+  jest.fn()
+);
 
 function arrange(customProps = {}) {
   const onChange = jest.fn();
@@ -39,15 +41,15 @@ function arrange(customProps = {}) {
     ...customProps,
   };
   const { queryByLabelText, rerender } = renderWithTheme(
-    <OpacityPreview {...props} />
+    <OpacityInput {...props} />
   );
   const element = queryByLabelText('Opacity');
   const wrappedRerender = (extraProps) =>
-    rerender(<OpacityPreview {...props} {...extraProps} />);
+    rerender(<OpacityInput {...props} {...extraProps} />);
   return { element, onChange, rerender: wrappedRerender };
 }
 
-describe('<OpacityPreview />', () => {
+describe('<OpacityInput />', () => {
   beforeEach(() => {
     getPreviewOpacityMock.mockReset();
     getPreviewTextMock.mockReset();
@@ -75,13 +77,6 @@ describe('<OpacityPreview />', () => {
     expect(element).toHaveValue('20%');
   });
 
-  it('should be hidden when no text', () => {
-    getPreviewTextMock.mockImplementation(() => null);
-
-    const { element } = arrange();
-    expect(element).toHaveStyle('visibility: hidden');
-  });
-
   it('should remove postfix when there is focus but add again when blurred', async () => {
     const { element } = arrange();
 
@@ -101,10 +96,12 @@ describe('<OpacityPreview />', () => {
     const { element, onChange } = arrange();
 
     fireEvent.change(element, { target: { value: '50' } });
+    fireEvent.blur(element);
     expect(onChange).toHaveBeenCalledWith(0.5);
 
     onChange.mockReset();
     fireEvent.change(element, { target: { value: 'ten' } });
+    fireEvent.blur(element);
     expect(onChange).not.toHaveBeenCalled();
   });
 });

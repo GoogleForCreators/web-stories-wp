@@ -22,10 +22,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Shapes } from '../../../../icons';
+import { Icons } from '../../../../../design-system';
 
 function ShapesIcon() {
-  return <Shapes aria-label={__('Shapes library', 'web-stories')} />;
+  return <Icons.Shapes aria-label={__('Shapes library', 'web-stories')} />;
 }
 
 export default ShapesIcon;

@@ -26,16 +26,31 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
+import { MULTIPLE_VALUE } from '../../../constants';
+import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import applyOpacityChange from './applyOpacityChange';
-import ColorPreview from './colorPreview';
-import OpacityPreview from './opacityPreview';
+import OpacityInput from './opacityInput';
+import ColorInput from './colorInput';
 
 const Container = styled.section`
   display: flex;
   align-items: center;
+  width: 100%;
 `;
 
-function ColorInput({
+const Space = styled.div`
+  width: 8px;
+  height: 1px;
+  margin: 6px;
+  background-color: ${({ theme }) => theme.colors.divider.primary};
+`;
+
+// 10px comes from divider
+const InputWrapper = styled.div`
+  width: calc(50% - 10px);
+`;
+
+function Color({
   onChange,
   hasGradient,
   hasOpacity,
@@ -55,25 +70,35 @@ function ColorInput({
     label
   );
 
+  const displayOpacity =
+    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
+
   return (
     <Container aria-label={containerLabel}>
-      <ColorPreview
-        onChange={onChange}
-        hasGradient={hasGradient}
-        hasOpacity={hasOpacity}
-        value={value}
-        label={label}
-        colorPickerActions={colorPickerActions}
-        changedStyle={changedStyle}
-      />
-      {hasOpacity && (
-        <OpacityPreview value={value} onChange={handleOpacityChange} />
+      <InputWrapper>
+        <ColorInput
+          onChange={onChange}
+          hasGradient={hasGradient}
+          hasOpacity={hasOpacity}
+          value={value}
+          label={label}
+          colorPickerActions={colorPickerActions}
+          changedStyle={changedStyle}
+        />
+      </InputWrapper>
+      {hasOpacity && displayOpacity && (
+        <>
+          <Space />
+          <InputWrapper>
+            <OpacityInput value={value} onChange={handleOpacityChange} />
+          </InputWrapper>
+        </>
       )}
     </Container>
   );
 }
 
-ColorInput.propTypes = {
+Color.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
@@ -83,11 +108,11 @@ ColorInput.propTypes = {
   changedStyle: PropTypes.string,
 };
 
-ColorInput.defaultProps = {
+Color.defaultProps = {
   value: null,
   hasGradient: false,
   hasOpacity: true,
   opacity: null,
 };
 
-export default ColorInput;
+export default Color;
