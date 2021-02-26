@@ -149,9 +149,9 @@ trait Assets {
 		$style_dependencies = array_merge( $style_dependencies, $asset['css'] );
 
 		wp_register_style(
-			$style_handle, 
-			$base_style_path . $style_handle . '.css', 
-			$style_dependencies, 
+			$style_handle,
+			$base_style_path . $style_handle . '.css',
+			$style_dependencies,
 			$version
 		);
 
