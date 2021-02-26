@@ -58,7 +58,6 @@ function Content({
     'enableInProgressStoryActions'
   );
 
-  // TODO add context menu actions
   const handleCreateStoryFromTemplate = useCallback(
     (template) => {
       trackEvent('use_saved_template', {
