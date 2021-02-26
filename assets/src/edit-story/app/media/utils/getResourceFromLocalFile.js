@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import { createBlob } from '../../../utils/blobs';
 import getTypeFromMime from './getTypeFromMime';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 import createResource from './createResource';
@@ -80,11 +81,8 @@ const getImageResource = async (file) => {
 
   const reader = await createFileReader(file);
 
-  const src = URL.createObjectURL(
-    new window.Blob([reader.result], { type: mimeType })
-  );
+  const src = createBlob(new window.Blob([reader.result], { type: mimeType }));
   const { width, height } = await getImageDimensions(src);
-  URL.revokeObjectURL(src);
 
   return createLocalResource({
     type: 'image',
@@ -109,15 +107,11 @@ const getVideoResource = async (file) => {
 
   const reader = await createFileReader(file);
 
-  const src = URL.createObjectURL(
-    new Blob([reader.result], { type: mimeType })
-  );
+  const src = createBlob(new Blob([reader.result], { type: mimeType }));
   const frame = await getFirstFrameOfVideo(src);
-  URL.revokeObjectURL(src);
 
-  const poster = URL.createObjectURL(frame);
+  const poster = createBlob(frame);
   const { width, height } = await getImageDimensions(poster);
-  URL.revokeObjectURL(poster);
 
   return createLocalResource({
     type: 'video',

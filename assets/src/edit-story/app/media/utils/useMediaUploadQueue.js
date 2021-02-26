@@ -30,6 +30,7 @@ import {
  */
 import { useUploader } from '../../uploader';
 import useReduction from '../../../utils/useReduction';
+import { revokeBlob } from '../../../utils/blobs';
 import useTranscodeVideo from './useTranscodeVideo';
 import getResourceFromAttachment from './getResourceFromAttachment';
 import getResourceFromLocalFile from './getResourceFromLocalFile';
@@ -86,6 +87,16 @@ const reducer = {
     };
   },
   finishUploading: (state, { payload: { id, resource } }) => {
+    const queueItem = state.queue.find((item) => item.id === id);
+    if (!queueItem) {
+      return state;
+    }
+
+    if (queueItem.resource.src !== resource.src) {
+      revokeBlob(queueItem.resource.src);
+      revokeBlob(queueItem.resource.poster);
+    }
+
     return {
       ...state,
       queue: state.queue.map((item) =>
@@ -151,6 +162,11 @@ const reducer = {
     const queueItem = state.queue.find((item) => item.id === id);
     if (!queueItem || !queueItem.resource.isPlaceholder) {
       return state;
+    }
+
+    if (queueItem.resource.src !== resource.src) {
+      revokeBlob(queueItem.resource.src);
+      revokeBlob(queueItem.resource.poster);
     }
 
     return {
@@ -272,6 +288,7 @@ function useMediaUploadQueue() {
           }
 
           // TODO: Only transcode & optimize video if needed (criteria TBD).
+          // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           startTranscoding({ id });
 
           try {
