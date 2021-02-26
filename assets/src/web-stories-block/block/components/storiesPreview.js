@@ -19,6 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Glider from 'glider-js';
+import 'glider-js/glider.css';
 
 /**
  * WordPress dependencies
@@ -97,13 +99,13 @@ function StoriesPreview(props) {
     });
 
   useEffect(() => {
-    if (carouselContainer.current) {
+    if (carouselContainer.current && carouselItem.current) {
       const itemStyle = window.getComputedStyle(carouselItem.current);
       const itemWidth =
         parseFloat(itemStyle.width) +
         (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
 
-      /* eslint-disable-next-line no-new, no-undef */
+      /* eslint-disable-next-line no-new */
       new Glider(carouselContainer.current, {
         slidesToShow: 'auto',
         slidesToScroll: 'auto',
