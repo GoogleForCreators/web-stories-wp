@@ -59,38 +59,56 @@ function WrappedSearchInput({
     onSearch(localValue);
   }, delayMs);
 
-  const onNewValue = useCallback(
-    (newValue) => {
-      // Handle search input changes. Triggers with every keystroke.
-      setLocalValue(newValue);
+  const submitValue = useCallback(
+    (value) => {
       if (incremental && delayMs) {
         changeSearchTermDebounced();
       } else {
-        onSearch(newValue);
+        onSearch(value);
       }
     },
     [changeSearchTermDebounced, onSearch, delayMs, incremental]
   );
 
-  const onChange = useCallback((evt) => onNewValue(evt.target.value), [
-    onNewValue,
-  ]);
+  const onChange = useCallback(
+    (evt) => {
+      const newValue = evt.target.value;
+      setLocalValue(newValue);
+      if (incremental || newValue === '') {
+        submitValue(newValue);
+      }
+    },
+    [submitValue, incremental]
+  );
 
-  const onClear = useCallback(() => onNewValue(''), [onNewValue]);
+  const onClear = useCallback(() => {
+    setLocalValue('');
+    submitValue('');
+  }, [submitValue]);
+
+  const onSubmit = useCallback(
+    (evt) => {
+      evt.preventDefault();
+      submitValue(localValue);
+    },
+    [submitValue, localValue]
+  );
 
   const hasContent = localValue.length > 0;
 
   return (
-    <SearchInput
-      inputValue={localValue}
-      placeholder={placeholder}
-      onChange={onChange}
-      handleClearInput={onClear}
-      disabled={disabled}
-      ariaClearLabel={__('Clear search input', 'web-stories')}
-      isOpen={hasContent}
-      aria-label={__('Search', 'web-stories')}
-    />
+    <form onSubmit={onSubmit}>
+      <SearchInput
+        inputValue={localValue}
+        placeholder={placeholder}
+        onChange={onChange}
+        handleClearInput={onClear}
+        disabled={disabled}
+        ariaClearLabel={__('Clear search input', 'web-stories')}
+        isOpen={hasContent}
+        aria-label={__('Search', 'web-stories')}
+      />
+    </form>
   );
 }
 

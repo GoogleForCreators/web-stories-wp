@@ -95,6 +95,7 @@ const SearchInput = (
       </SearchDecoration>
 
       <ClearButton
+        type="button"
         isVisible={activeInput}
         tabIndex={0}
         aria-label={activeInput && ariaClearLabel}
