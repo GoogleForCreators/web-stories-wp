@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
@@ -26,28 +26,18 @@ import { _x, __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { PatternPropType } from '../../../types';
-import useFocusAndSelect from '../../../utils/useFocusAndSelect';
-import { MULTIPLE_VALUE } from '../../../constants';
-import getPreviewText from './getPreviewText';
+import { NumericInput } from '../../../../design-system';
 import getPreviewOpacity from './getPreviewOpacity';
-import { ColorInput } from './colorBox';
 
-const Input = styled(ColorInput)`
-  margin-left: 6px;
-  width: 54px;
-  line-height: 32px;
-  text-align: center;
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+const Input = styled(NumericInput)`
+  min-width: 100px;
+  div {
+    background-color: transparent;
+  }
 `;
 
-function OpacityPreview({ value, onChange }) {
-  const hasPreviewText =
-    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
-  const postfix = _x('%', 'Percentage', 'web-stories');
+function OpacityInput({ value, onChange }) {
   const [inputValue, setInputValue] = useState('');
-  const ref = useRef();
-
-  const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
 
   // Allow any input, but only persist non-NaN values up-chain
   const handleChange = useCallback(
@@ -70,24 +60,22 @@ function OpacityPreview({ value, onChange }) {
 
   return (
     <Input
-      ref={ref}
-      type="text"
       aria-label={__('Opacity', 'web-stories')}
-      isVisible={hasPreviewText}
-      onBlur={() => {
-        handleBlur();
-        updateFromValue();
-      }}
-      onFocus={handleFocus}
       onChange={handleChange}
-      value={`${inputValue}${focused ? '' : postfix}`}
+      value={inputValue}
+      unit={_x('%', 'Percentage', 'web-stories')}
+      suffix={__('Opacity', 'web-stories')}
+      min={0}
+      max={100}
+      allowEmpty={false}
+      isFloat={false}
     />
   );
 }
 
-OpacityPreview.propTypes = {
+OpacityInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
 };
 
-export default OpacityPreview;
+export default OpacityInput;

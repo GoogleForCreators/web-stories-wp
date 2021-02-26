@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../constants';
+import { MULTIPLE_VALUE } from '../../utils';
 
 function printRGB(r, g, b) {
   const hex = (v) => v.toString(16).padStart(2, '0');

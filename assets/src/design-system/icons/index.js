@@ -120,6 +120,7 @@ export { ReactComponent as StepsDown } from './steps_down.svg';
 export { ReactComponent as StepsUp } from './steps_up.svg';
 export { ReactComponent as StopOutline } from './stop_outline.svg';
 export { ReactComponent as Table } from './table.svg';
+export { ReactComponent as TailedRectangle } from './tailed_rectangle.svg';
 export { ReactComponent as Timeline } from './timeline.svg';
 export { ReactComponent as Trash } from './trash.svg';
 export { ReactComponent as Video } from './video.svg';
