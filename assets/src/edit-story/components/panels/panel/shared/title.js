@@ -37,7 +37,6 @@ import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
 
 const Header = styled.h2`
-  background-color: ${({ theme }) => theme.colors.bg.secondary};
   color: ${({ theme }) => theme.colors.fg.secondary};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
@@ -54,8 +53,6 @@ const Header = styled.h2`
 const Heading = styled(Headline)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   line-height: 32px;
-  font-weight: 700;
-  font-size: 16px;
 `;
 
 const HeaderActions = styled.div`
