@@ -25,49 +25,61 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Close } from '../button';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../design-system/components/button';
+import { Button, Icons } from '../../../design-system';
 
-const CONTAINER_PADDING = 12;
-const HEADER_FOOTER_HEIGHT = 50;
+const HEADER_FOOTER_HEIGHT = 52;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   height: ${HEADER_FOOTER_HEIGHT}px;
-  padding: ${CONTAINER_PADDING}px;
+  padding: 14px 20px;
   position: relative;
 `;
 
-const CloseButton = styled(Close)`
-  opacity: 1;
-  font-size: 15px;
-  line-height: 20px;
+const CloseButton = styled(Button)`
   margin-left: auto;
 `;
 
 const TypeSelector = styled.button`
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.shadow.active};
   border: 0;
+  border-radius: 100px;
   opacity: 1;
-  margin-right: 22px;
+  margin-right: 16px;
 `;
 
 const Solid = styled(TypeSelector)`
-  background-color: ${({ isActive }) => (isActive ? '#448FFF' : '#808080')};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.accent.secondary : theme.colors.fg.tertiary};
 `;
 
-const insertActiveColor = ({ isActive }) => (isActive ? '#2F7BF6' : '#3A3A3A');
-
 const Linear = styled(TypeSelector)`
-  /* Looks better with color stops 10% in */
-  background-image: linear-gradient(white 10%, ${insertActiveColor} 90%);
+  background: linear-gradient(
+    180deg,
+    ${({ isActive, theme }) =>
+      isActive
+        ? '#A4CBFF 0%, #255CA4 100%'
+        : `rgba(255, 255, 255, 0.52) 0%, ${theme.colors.opacity.footprint} 106.28%`}
+  );
 `;
 
 const Radial = styled(TypeSelector)`
-  background-image: radial-gradient(white, ${insertActiveColor});
+  background: radial-gradient(
+    97.5% 97.5% at 50% 50%,
+    ${({ isActive, theme }) =>
+      isActive
+        ? `${theme.colors.accent.secondary} 0%, rgba(121, 179, 255, 0.13) 57.29%`
+        : `${theme.colors.opacity.white64} 0%, rgba(255, 255, 255, 0) 57.29%`}
+  );
 `;
 
 function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
@@ -106,11 +118,14 @@ function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
         </>
       )}
       <CloseButton
-        width={10}
-        height={10}
         aria-label={__('Close', 'web-stories')}
         onClick={onClose}
-      />
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.SQUARE}
+      >
+        <Icons.Cross />
+      </CloseButton>
     </Wrapper>
   );
 }

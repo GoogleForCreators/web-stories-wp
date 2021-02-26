@@ -37,26 +37,19 @@ import usePointerAddStop from './usePointerAddStop';
 import usePointerMoveStop from './usePointerMoveStop';
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
-const LINE_FULL_LENGTH = LINE_LENGTH + LINE_WIDTH;
-
-const Line = styled.div.attrs(({ stops }) => ({
-  tabIndex: -1,
-  style: generatePatternStyles({
-    type: 'linear',
-    // "Push" the ends of the gradient in, so it starts and
-    // ends at (LINE_WIDTH / 2) px
-    stops: stops.map(({ color, position }) => ({
-      color,
-      position: (position * LINE_LENGTH + LINE_WIDTH / 2) / LINE_FULL_LENGTH,
-    })),
-    // And fix rotation to .75 to make it go left-to-right
-    rotation: 0.75,
-  }),
-}))`
-  width: ${LINE_FULL_LENGTH}px;
+const Line = styled.div`
+  width: ${LINE_LENGTH}px;
   height: ${LINE_WIDTH}px;
-  border-radius: ${LINE_WIDTH / 2}px;
+  border-radius: 2px;
   position: relative;
+
+  background: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 14px 14px;
 
   &:focus {
     /* The line will only have temporary focus while deleting stops */
@@ -64,14 +57,32 @@ const Line = styled.div.attrs(({ stops }) => ({
   }
 `;
 
+const Background = styled.div.attrs(({ stops }) => ({
+  style: generatePatternStyles({
+    type: 'linear',
+    stops,
+    // And fix rotation to .25 to make it go right-to-left
+    rotation: 0.25,
+  }),
+}))`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+`;
+
 const TempPointer = styled(Pointer).attrs(({ x }) => ({
   style: {
     left: `${x}px`,
   },
-  offset: -LINE_WIDTH / 2,
+  offsetX: -LINE_WIDTH / 2,
 }))`
+  height: ${LINE_WIDTH - 2}px;
+  width: ${LINE_WIDTH - 2}px;
   opacity: 0.6;
-  top: ${LINE_WIDTH / 2}px;
+  top: 1px;
   pointer-events: none;
 `;
 
@@ -91,16 +102,16 @@ function GradientLine({
   useKeyDeleteStop(line, onDelete);
   const stopRefs = useKeyFocus(line, stops, currentStopIndex);
 
-  usePointerMoveStop(line, onMove, onDelete);
+  usePointerMoveStop(line, onMove);
   const tempPointerPosition = usePointerAddStop(line, onAdd);
-
   return (
     <Line
-      stops={stops}
       ref={line}
       aria-label={__('Gradient line', 'web-stories')}
+      tabIndex="-1"
     >
-      {stops.map(({ position }, index) => (
+      <Background stops={stops} />
+      {stops.map(({ position, color }, index) => (
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}
           key={
@@ -111,8 +122,9 @@ function GradientLine({
           isSelected={index === currentStopIndex}
           position={position}
           onSelect={onSelect}
+          color={{ color }}
         >
-          <Pointer offset={-LINE_WIDTH / 2} />
+          <Pointer offsetX={-LINE_WIDTH / 2} />
         </GradientStop>
       ))}
       {tempPointerPosition && (
@@ -120,9 +132,7 @@ function GradientLine({
           aria-label={sprintf(
             /* translators: %d: stop percentage */
             __('Temporary gradient stop at %1$d%%', 'web-stories'),
-            Math.round(
-              (100 * (tempPointerPosition - LINE_WIDTH / 2)) / LINE_LENGTH
-            )
+            Math.round(100 * (tempPointerPosition / LINE_LENGTH))
           )}
           x={tempPointerPosition}
         />
