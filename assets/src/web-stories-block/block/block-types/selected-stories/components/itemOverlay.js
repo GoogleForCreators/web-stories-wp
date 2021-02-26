@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { Icon, check, minus } from '@wordpress/icons';
+import { Icon } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -49,13 +49,23 @@ const StyledOverlay = styled.a(
       right: -7px;
       z-index: 1;
 
-      svg {
+      span, svg {
         background-color: #ccc;
         box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(0, 0, 0, 0.15);
         cursor: pointer;
+        color: #000;
+        padding: 3px;
+      }
+
+      span::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      svg {
         stroke: #000;
         stroke-width: 2px;
-        padding: 3px;
       }
 
       .item-selected-icon-minus {
@@ -76,6 +86,10 @@ const StyledOverlay = styled.a(
     &:focus {
 
       .item-selected-icon {
+
+        span {
+          color: #fff;
+        }
 
         svg {
           background-color: #0073aa;
@@ -106,10 +120,10 @@ function ItemOverlay({
     >
       {isSelected && (
         <div className="item-selected-icon">
-          <Icon className="item-selected-icon-check" icon={check} />
+          <Icon className="item-selected-icon-check" icon="saved" />
           <Icon
             className="item-selected-icon-minus"
-            icon={minus}
+            icon="minus"
             onClick={(event) => {
               event.preventDefault();
               removeItemFromSelectedStories(storyId);
