@@ -227,12 +227,14 @@ const editorAndDashboard = {
     new HtmlWebpackPlugin({
       filename: 'edit-story.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
+      minify: false, // PHP not HTML so don't attempt to minify.
       templateContent,
       chunks: ['edit-story'],
     }),
     new HtmlWebpackPlugin({
       filename: 'stories-dashboard.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
+      minify: false, // PHP not HTML so don't attempt to minify.
       templateContent,
       chunks: ['stories-dashboard'],
     }),
