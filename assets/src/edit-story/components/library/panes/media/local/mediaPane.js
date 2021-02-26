@@ -33,10 +33,7 @@ import { SearchInput } from '../../../common';
 import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
 import createError from '../../../../../utils/createError';
-import {
-  getResourceFromMediaPicker,
-  getTypeFromMime,
-} from '../../../../../app/media/utils';
+import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
   PaneHeader,
@@ -228,21 +225,6 @@ function MediaPane(props) {
     [insertElement]
   );
 
-  const filterResource = useCallback(
-    ({ mimeType, width, height }) => {
-      const filterByMimeTypeAllowed = allowedMimeTypes.includes(mimeType);
-      const filterByMediaType = mediaType
-        ? mediaType === getTypeFromMime(mimeType)
-        : true;
-      const filterByValidMedia = width && height;
-
-      return filterByMimeTypeAllowed && filterByMediaType && filterByValidMedia;
-    },
-    [allowedMimeTypes, mediaType]
-  );
-
-  const resources = media.filter(filterResource);
-
   const onSearch = (value) => {
     const trimText = value.trim();
     if (trimText !== searchTerm) {
@@ -312,8 +294,8 @@ function MediaPane(props) {
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery
-            providerType={'local'}
-            resources={resources}
+            providerType="local"
+            resources={media}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}
             hasMore={hasMore}
