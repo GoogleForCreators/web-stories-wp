@@ -51,13 +51,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	private $decoder;
 
 	/**
-	 * Experiments.
-	 *
-	 * @var Experiments
-	 */
-	private $experiments;
-
-	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
@@ -68,155 +61,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$this->namespace   = 'web-stories/v1';
-		$this->decoder     = new Decoder();
-		$this->experiments = new Experiments();
-	}
-
-	/**
-	 * Registers the routes for the objects of the controller.
-	 *
-	 * @see register_rest_route()
-	 *
-	 * @return void
-	 */
-	public function register_routes() {
-		parent::register_routes();
-
-		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
-			return;
-		}
-
-		$lock_args = [];
-
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base . '/(?P<id>[\d]+)/lock',
-			[
-				'args' => [
-					'id' => [
-						'description' => __( 'Unique identifier for the object.', 'web-stories' ),
-						'type'        => 'integer',
-					],
-				],
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_lock' ],
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-					'args'                => $lock_args,
-				],
-				[
-					'methods'             => WP_REST_Server::EDITABLE,
-					'callback'            => [ $this, 'update_lock' ],
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-					'args'                => $lock_args,
-				],
-				[
-					'methods'             => WP_REST_Server::DELETABLE,
-					'callback'            => [ $this, 'delete_lock' ],
-					'permission_callback' => [ $this, 'update_item_permissions_check' ],
-					'args'                => $lock_args,
-				],
-			]
-		);
-	}
-
-	/**
-	 * Get post lock
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success.
-	 */
-	public function get_lock( $request ) {
-		return $this->prepare_lock_for_response( $request );
-	}
-
-	/**
-	 * Update post lock
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success.
-	 */
-	public function update_lock( $request ) {
-		if ( ! function_exists( 'wp_set_post_lock' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/post.php';
-		}
-
-		wp_set_post_lock( $request['id'] );
-
-		return $this->prepare_lock_for_response( $request );
-	}
-
-	/**
-	 * Delete post lock
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response Response object on success.
-	 */
-	public function delete_lock( $request ) {
-		$previous = $this->prepare_lock_for_response( $request );
-		$result   = delete_post_meta( $request['id'], '_edit_lock' );
-		$data     = [];
-		if ( ! is_wp_error( $previous ) ) {
-			$data = $previous->get_data();
-		}
-		$response = new WP_REST_Response();
-		$response->set_data(
-			[
-				'deleted'  => $result,
-				'previous' => $data,
-			]
-		);
-		update_option( 'wibble', time() );
-
-		return $response;
-	}
-
-	/**
-	 * Prepares a single lock output for response.
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object.
-	 */
-	public function prepare_lock_for_response( $request ) {
-		$lock = get_post_meta( $request['id'], '_edit_lock', true );
-
-		$nonce = wp_create_nonce( 'wp_rest' );
-		$data  = [
-			'locked' => false,
-			'nonce'  => $nonce,
-		];
-		$links = [];
-
-		if ( $lock ) {
-			$lock                 = explode( ':', $lock );
-			list ( $time, $user ) = $lock;
-
-			/** This filter is documented in wp-admin/includes/ajax-actions.php */
-			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
-
-			if ( $time && $time > time() - $time_window ) {
-				$data = [
-					'locked' => true,
-					'time'   => $time,
-					'user'   => (int) $user,
-					'nonce'  => $nonce,
-				];
-
-				$links['author'] = [
-					'href'       => rest_url( 'web-stories/v1/users/' . $user ),
-					'embeddable' => true,
-				];
-			}
-		}
-		// Wrap the data in a response object.
-		$response = rest_ensure_response( $data );
-		if ( ! is_wp_error( $response ) ) {
-			$response->add_links( $links );
-		}
-
-		return $response;
+		$this->namespace = 'web-stories/v1';
+		$this->decoder   = new Decoder();
 	}
 
 	/**
@@ -308,10 +154,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	protected function prepare_links( $post ) {
 		$links = parent::prepare_links( $post );
-
-		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
-			return $links;
-		}
 
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
 		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
