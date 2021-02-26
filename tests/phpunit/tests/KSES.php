@@ -338,7 +338,7 @@ class KSES extends \WP_UnitTestCase {
 	 * @covers ::filter_kses_allowed_html
 	 * @covers ::array_merge_recursive_distinct
 	 */
-	public function test_filter_kses_allowed_html_filter() {
+	public function test_filter_kses_allowed_html_uses_deep_merge() {
 		$kses         = new \Google\Web_Stories\KSES();
 		$allowed_tags = [
 			'img' => [
