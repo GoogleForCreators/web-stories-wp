@@ -20,6 +20,7 @@
 import { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -85,6 +86,8 @@ function TextSets({ paneRef, filteredTextSets }) {
           columnWidth={TEXT_SET_SIZE}
           rowHeight={TEXT_SET_SIZE}
           onFocus={handleGridFocus}
+          role="list"
+          aria-label={__('Text Set Options', 'web-stories')}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {
@@ -123,12 +126,12 @@ function TextSets({ paneRef, filteredTextSets }) {
 
 TextSets.propTypes = {
   paneRef: PropTypes.object,
-  filteredTextSets: PropTypes.shape([
-    {
+  filteredTextSets: PropTypes.arrayOf(
+    PropTypes.shape({
       id: PropTypes.string,
       elements: PropTypes.array,
-    },
-  ]),
+    })
+  ),
 };
 
 export default TextSets;

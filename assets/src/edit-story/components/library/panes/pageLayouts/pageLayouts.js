@@ -21,6 +21,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -166,6 +167,8 @@ function PageLayouts({ pages, parentRef }) {
           rowHeight={pageSize.containerHeight}
           paneLeft={PANE_PADDING}
           onFocus={handleGridFocus}
+          role="list"
+          aria-label={__('Page Layout Options', 'web-stories')}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {

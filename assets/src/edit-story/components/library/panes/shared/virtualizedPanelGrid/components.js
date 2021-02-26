@@ -60,7 +60,7 @@ VirtualizedContainer.propTypes = {
   columnWidth: PropTypes.number.isRequired,
   rowHeight: PropTypes.number.isRequired,
   rowGap: PropTypes.number,
-  paneLeft: PropTypes.number,
+  paneLeft: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 VirtualizedContainer.defaultProps = {
   rowGap: 12,

@@ -34,5 +34,3 @@ export const PANE_TEXT = {
   TITLE: __('Text Sets', 'web-stories'),
   SWITCH_LABEL: __('Match fonts from story', 'web-stories'),
 };
-
-export const TEXT_SET_ROW_GAP = 12;
