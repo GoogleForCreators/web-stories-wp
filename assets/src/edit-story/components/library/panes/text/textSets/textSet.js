@@ -41,7 +41,6 @@ const TextSetItem = styled.div`
   width: ${TEXT_SET_SIZE}px;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
@@ -50,6 +49,7 @@ const TextSetItem = styled.div`
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
   border-radius: ${({ theme }) => theme.borders.radius.small};
+  cursor: default;
 
   &:hover {
     background-color: ${({ theme }) =>
