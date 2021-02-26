@@ -369,6 +369,10 @@ class KSES extends \WP_UnitTestCase {
 				'<div class="foo" id="bar" style="color: pink" role="main" title="Test"></div>',
 				'<div class="foo" id="bar" style="color: pink" role="main" title="Test"></div>',
 			],
+			'Img Attributes'       => [
+				'<img src="http://www.example.com/test.jpg" alt="Example" height="200" width="500" />',
+				'<img src="http://www.example.com/test.jpg" alt="Example" height="200" width="500" />',
+			],
 			'Data Attributes'      => [
 				'<a href="https://example.com" data-vars-tooltip-click-id="link1" data-vars-tooltip-href="example.com"></a>',
 				'<a href="https://example.com" data-vars-tooltip-click-id="link1" data-vars-tooltip-href="example.com"></a>',
