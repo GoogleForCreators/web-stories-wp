@@ -108,6 +108,10 @@ const getVideoResource = async (file) => {
   const reader = await createFileReader(file);
 
   const src = createBlob(new Blob([reader.result], { type: mimeType }));
+
+  const videoEl = document.createElement('video');
+  const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
+
   const frame = await getFirstFrameOfVideo(src);
 
   const poster = createBlob(frame);
@@ -116,7 +120,7 @@ const getVideoResource = async (file) => {
   return createLocalResource({
     type: 'video',
     mimeType,
-    src,
+    src: canPlayVideo ? src : '',
     width,
     height,
     poster,
