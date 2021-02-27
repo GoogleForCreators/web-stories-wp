@@ -26,7 +26,6 @@ import 'glider-js/glider.css';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { withInstanceId } from '@wordpress/compose';
 import { useEffect, useRef } from '@wordpress/element';
 
 /**
@@ -45,7 +44,6 @@ function StoriesPreview(props) {
     attributes: { align, viewType, sizeOfCircles, fieldState, numOfColumns },
     viewAllLabel,
     stories,
-    instanceId,
   } = props;
 
   const { archiveURL } = useConfig();
@@ -53,7 +51,6 @@ function StoriesPreview(props) {
   const carouselContainer = useRef(null);
   const carouselNext = useRef(null);
   const carouselPrev = useRef(null);
-  const carouselItem = useRef(null);
 
   const blockClasses = classNames(
     {
@@ -66,14 +63,6 @@ function StoriesPreview(props) {
       [`align${align}`]: align,
     },
     'web-stories-list'
-  );
-
-  const wrapperClasses = classNames(
-    {
-      [`carousel-${instanceId}`]:
-        CIRCLES_VIEW_TYPE === viewType || CAROUSEL_VIEW_TYPE === viewType,
-    },
-    'web-stories-list__inner-wrapper'
   );
 
   const storiesLoop = () =>
@@ -93,14 +82,21 @@ function StoriesPreview(props) {
           isShowingTitle={fieldState['show_title']}
           isShowingExcerpt={fieldState['show_excerpt']}
           sizeOfCircles={sizeOfCircles}
-          itemRef={carouselItem}
         />
       );
     });
 
   useEffect(() => {
-    if (carouselContainer.current && carouselItem.current) {
-      const itemStyle = window.getComputedStyle(carouselItem.current);
+    if (carouselContainer.current) {
+      const storyItem = carouselContainer.current.querySelector(
+        '.web-stories-list__story'
+      );
+
+      if (!storyItem) {
+        return;
+      }
+
+      const itemStyle = window.getComputedStyle(storyItem);
       const itemWidth =
         parseFloat(itemStyle.width) +
         (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
@@ -111,6 +107,7 @@ function StoriesPreview(props) {
         slidesToScroll: 'auto',
         itemWidth,
         duration: 0.25,
+        skipTrack: true,
         scrollLock: true,
         arrows: {
           prev: carouselPrev.current,
@@ -130,15 +127,11 @@ function StoriesPreview(props) {
             : undefined,
       }}
     >
-      <div className={wrapperClasses}>
+      <div className="web-stories-list__inner-wrapper">
         {CIRCLES_VIEW_TYPE === viewType || CAROUSEL_VIEW_TYPE === viewType ? (
           <>
-            <div
-              className="web-stories-list__carousel"
-              data-id={`carousel-${instanceId}`}
-              ref={carouselContainer}
-            >
-              {storiesLoop()}
+            <div className="web-stories-list__carousel" ref={carouselContainer}>
+              <div className="glider-track">{storiesLoop()}</div>
             </div>
             <div
               aria-label={__('Previous', 'web-stories')}
@@ -176,7 +169,6 @@ StoriesPreview.propTypes = {
   }),
   stories: PropTypes.array,
   viewAllLabel: PropTypes.string,
-  instanceId: PropTypes.number,
 };
 
-export default withInstanceId(StoriesPreview);
+export default StoriesPreview;
