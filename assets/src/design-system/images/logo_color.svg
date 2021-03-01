@@ -1,0 +1,21 @@
+<svg viewBox="0 0 208 208" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="a" x1="43.0782" y1="21.4462" x2="114.688" y2="204.07" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#79B3FF"/>
+      <stop offset="1" stop-color="#CBACFF"/>
+    </linearGradient>
+    <filter id="b" x="29.6003" y="33.6001" width="148.8" height="148.8" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="6"/>
+      <feColorMatrix values="0 0 0 0 0.423529 0 0 0 0 0.490196 0 0 0 0 0.733333 0 0 0 0.3 0"/>
+      <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
+  <circle cx="104" cy="104" r="104" transform="rotate(-180 104 104)" fill="url(#a)"/>
+  <g filter="url(#b)" fill="#fff">
+    <path d="M135.2 62.401c5.744 0 10.4 4.6562 10.4 10.4v62.4c0 5.744-4.656 10.4-10.4 10.4v-83.2zM57.2003 62.401c0-5.7438 4.6563-10.4 10.4-10.4H114.4c5.744 0 10.4 4.6562 10.4 10.4v83.2c0 5.744-4.656 10.4-10.4 10.4H67.6003c-5.7437 0-10.4-4.656-10.4-10.4v-83.2zM156 72.801c4.308 0 7.8 3.4922 7.8 7.8v46.8c0 4.308-3.492 7.8-7.8 7.8v-62.4z"/>
+  </g>
+</svg>

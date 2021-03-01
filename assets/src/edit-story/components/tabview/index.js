@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
@@ -39,12 +38,14 @@ const Tabs = styled.ul.attrs({
 })`
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  justify-content: space-between;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-bottom: 1px solid
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.04)};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
 `;
 
 const Tab = styled.li.attrs(({ isActive }) => ({
@@ -56,27 +57,30 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
-  padding: 12px 0px;
-  margin: 0px 16px;
+  padding: 10px 0px;
+  margin: 0 20px;
   margin-bottom: -1px;
   position: relative;
 
   ${({ isActive, theme }) =>
     isActive &&
     `
-    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.accent.primary};
+    padding-bottom: 8px;
+    border-bottom: 2px solid ${theme.colors.fg.primary};
   `}
 
   svg {
     display: block;
     width: 32px;
     height: 32px;
+    margin: 0 -4px;
     transform-origin: center center;
     transition: transform 0.3s ease;
+    color: ${({ theme }) => theme.colors.fg.tertiary};
   }
 
   svg.alert {
@@ -99,14 +103,14 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 
   span,
   svg:not(.alert) {
-    opacity: ${({ isActive }) => (isActive ? '0.84' : '0.34')};
+    ${({ isActive, theme }) => isActive && `color: ${theme.colors.fg.primary}`};
   }
 
   &:hover span,
   &:hover svg:not(.alert),
   &:active span,
   &:active svg:not(.alert) {
-    opacity: 0.84;
+    color: ${({ theme }) => theme.colors.fg.primary};
   }
 `;
 

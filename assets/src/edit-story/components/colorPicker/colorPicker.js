@@ -40,14 +40,9 @@ import Header from './header';
 import useColor from './useColor';
 
 const Container = styled.div`
-  border-radius: 6px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v8};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  border-radius: 8px;
+  background: ${({ theme }) => theme.colors.bg.secondary};
   width: 256px;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
   user-select: none;
   display: flex;
   flex-direction: column;
@@ -66,9 +61,7 @@ const Container = styled.div`
   }
 `;
 
-const Body = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v6};
-`;
+const Body = styled.div``;
 
 function ColorPicker({
   color,
@@ -175,8 +168,8 @@ function ColorPicker({
           setToSolid={setToSolid}
           onClose={handleCloseAndRefocus}
         />
-        {type !== 'solid' && (
-          <Body>
+        <Body>
+          {type !== 'solid' && (
             <GradientPicker
               stops={stops}
               currentStopIndex={currentStopIndex}
@@ -187,9 +180,7 @@ function ColorPicker({
               onRotate={rotateClockwise}
               onMove={moveCurrentStopBy}
             />
-          </Body>
-        )}
-        <Body>
+          )}
           <CurrentColorPicker
             color={currentColor}
             onChange={updateCurrentColor}

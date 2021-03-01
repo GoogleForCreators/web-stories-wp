@@ -22,7 +22,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { BUTTON_TYPES } from './constants';
+import { LockOpen, LockClosed } from '../../icons';
+import { BUTTON_TYPES, BUTTON_SIZES, BUTTON_VARIANTS } from './constants';
 import { Button } from './button';
 
 function ToggleButton({ isToggled = false, ...rest }) {
@@ -39,4 +40,21 @@ ToggleButton.propTypes = {
   isToggled: PropTypes.bool,
 };
 
-export { ToggleButton };
+function LockToggle({ isLocked = false, ...rest }) {
+  return (
+    <Button
+      {...rest}
+      aria-pressed={isLocked}
+      type={BUTTON_TYPES.TERTIARY}
+      size={BUTTON_SIZES.SMALL}
+      variant={BUTTON_VARIANTS.SQUARE}
+    >
+      {isLocked ? <LockClosed /> : <LockOpen />}
+    </Button>
+  );
+}
+
+LockToggle.propTypes = {
+  isLocked: PropTypes.bool,
+};
+export { ToggleButton, LockToggle };

@@ -18,15 +18,14 @@
  */
 import { useRef, useEffect } from 'react';
 import { useFeatures } from 'flagged';
-import styled, { StyleSheetManager } from 'styled-components';
-import stylisRTLPlugin from 'stylis-plugin-rtl';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { ThemeGlobals, useFocusOut } from '../../../design-system';
-import { useConfig } from '../../app/config';
 import { Z_INDEX } from '../canvas/layout';
+import DirectionAware from '../directionAware';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
 import { POPUP_ID } from './constants';
@@ -47,11 +46,7 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
-const withRTLPlugins = [stylisRTLPlugin];
-const withoutRTLPlugins = [];
-
 export const HelpCenter = () => {
-  const { isRTL } = useConfig();
   const ref = useRef(null);
   const { enableQuickTips } = useFeatures();
   const { state, actions } = useHelpCenter();
@@ -67,9 +62,7 @@ export const HelpCenter = () => {
   }, [state.isOpen]);
 
   return enableQuickTips ? (
-    <StyleSheetManager
-      stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
-    >
+    <DirectionAware>
       <>
         <ThemeGlobals.OverrideFocusOutline />
         <Wrapper ref={ref}>
@@ -99,6 +92,6 @@ export const HelpCenter = () => {
           />
         </Wrapper>
       </>
-    </StyleSheetManager>
+    </DirectionAware>
   ) : null;
 };

@@ -29,7 +29,7 @@ import { theme, THEME_CONSTANTS } from '../../../theme';
 import { Headline, Text } from '../../typography';
 import { Cross } from '../../../icons';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
-import { ToggleButton } from '../toggleButton';
+import { ToggleButton, LockToggle } from '../toggleButton';
 
 export default {
   title: 'DesignSystem/Components/Button',
@@ -210,6 +210,27 @@ export const ToggleButtons = () => {
           isToggled={isToggled}
           swapToggled={swapToggled}
         />
+      </ThemeProvider>
+    </>
+  );
+};
+
+export const PrebakedButtons = () => {
+  const [isLocked, setLocked] = useState(false);
+  const swapLocked = useCallback(() => setLocked((b) => !b), []);
+  return (
+    <>
+      <Container>
+        <Row>
+          <LockToggle isLocked={isLocked} onClick={swapLocked} />
+        </Row>
+      </Container>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Row>
+            <LockToggle isLocked={isLocked} onClick={swapLocked} />
+          </Row>
+        </Container>
       </ThemeProvider>
     </>
   );
