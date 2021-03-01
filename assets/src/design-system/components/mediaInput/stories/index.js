@@ -39,25 +39,37 @@ const Container = styled.div`
   height: 400px;
   padding: 30px;
 `;
+
+const Row = styled.div`
+  width: 100%;
+  margin: 20px 0;
+`;
 const _shortDropDownOptions = getOptions(shortDropDownOptions);
+const mediaProps = {
+  value: image,
+  onChange: () => {},
+  openMediaPicker: () => {},
+  onMenuOption: () => {},
+};
 
 // Override light theme because this component is only set up for dark theme right now
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
-      <MediaInput
-        value={image}
-        onChange={() => {}}
-        menuOptions={_shortDropDownOptions}
-        onMenuOption={() => {}}
-      />
-      <MediaInput
-        value={image}
-        onChange={() => {}}
-        variant={MEDIA_VARIANTS.CIRCLE}
-        menuOptions={_shortDropDownOptions}
-        onMenuOption={() => {}}
-      />
+      <Row>
+        <MediaInput
+          variant={MEDIA_VARIANTS.RECTANGLE}
+          menuOptions={_shortDropDownOptions}
+          {...mediaProps}
+        />
+      </Row>
+      <Row>
+        <MediaInput
+          variant={MEDIA_VARIANTS.CIRCLE}
+          menuOptions={_shortDropDownOptions}
+          {...mediaProps}
+        />
+      </Row>
     </Container>
   </ThemeProvider>
 );

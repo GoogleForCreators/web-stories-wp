@@ -76,6 +76,7 @@ const Img = styled.img`
 
 const menuStyleOverride = css`
   min-width: 100px;
+  margin-left: -50%;
   li {
     display: block;
   }
@@ -170,7 +171,6 @@ const MediaInput = forwardRef(function Media(
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
   const StyledMedia = MediaOptions[variant];
-  console.log(variant);
   return (
     <StyledMedia ref={ref} className={className} {...rest}>
       <ImageWrapper variant={variant}>
@@ -201,12 +201,13 @@ const MediaInput = forwardRef(function Media(
           listId={listId}
           hasMenuRole
           options={menuOptions}
-          onMenuItemClick={(val) => {
-            onMenuOption(val);
+          onMenuItemClick={(evt, val) => {
+            onMenuOption(evt, val);
             setIsMenuOpen(false);
           }}
           onDismissMenu={() => setIsMenuOpen(false)}
           menuStylesOverride={menuStyleOverride}
+          {...menuProps}
         />
       )}
     </StyledMedia>
@@ -221,6 +222,11 @@ MediaInput.propTypes = {
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,
   isLoading: PropTypes.bool,
+  variant: PropTypes.string,
+  menuOptions: PropTypes.array,
+  onMenuOption: PropTypes.func,
+  openMediaPicker: PropTypes.func.isRequired,
+  menuProps: PropTypes.object,
 };
 
 export default MediaInput;
