@@ -66,9 +66,17 @@ trait Assets {
 		$version      = $asset['version'];
 
 		wp_register_script(
+			$script_handle . '-vendor',
+			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . $script_handle . '-vendor.js',
+			$dependencies,
+			$version,
+			false
+		);
+
+		wp_register_script(
 			$script_handle,
 			WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/' . $script_handle . '.js',
-			$dependencies,
+			[ $script_handle . '-vendor' ],
 			$version,
 			false
 		);

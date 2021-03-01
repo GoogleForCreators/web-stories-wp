@@ -161,6 +161,16 @@ const sharedConfig = {
     }),
   ].filter(Boolean),
   optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: '[name]-vendor',
+          enforce: true,
+        },
+      },
+    },
     sideEffects: true,
     minimizer: [
       new TerserPlugin({
@@ -204,7 +214,7 @@ const storiesEditor = {
           test: /\.css$/,
           chunks: 'all',
           enforce: true,
-        },
+        }
       },
     },
   },
@@ -230,6 +240,13 @@ const dashboard = {
           name: 'stories-dashboard',
           test: /\.css$/,
           chunks: 'all',
+          enforce: true,
+        },
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'stories-dashboard-vendor',
+          filename: '[name].js',
           enforce: true,
         },
       },
@@ -265,6 +282,13 @@ const storyEmbedBlock = {
           chunks: 'all',
           enforce: true,
         },
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'web-stories-embed-block-vendor',
+          filename: '[name].js',
+          enforce: true,
+        },
       },
     },
   },
@@ -291,6 +315,13 @@ const activationNotice = {
           name: 'activation-notice',
           test: /\.css$/,
           chunks: 'all',
+          enforce: true,
+        },
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'web-stories-activation-notice-vendor',
+          filename: '[name].js',
           enforce: true,
         },
       },
