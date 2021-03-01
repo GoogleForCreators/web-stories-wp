@@ -17,27 +17,24 @@
 /**
  * External dependencies
  */
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import {useCallback, useState, useRef, forwardRef, useMemo} from 'react';
+import { useState, forwardRef, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { DropDown } from '../dropDown';
 import { MULTIPLE_VALUE } from '../../../edit-story/constants';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons, Menu, PLACEMENT,
+  Icons,
+  Menu,
 } from '../../';
-import {boolean, number, select, text} from "@storybook/addon-knobs";
-import {action} from "@storybook/addon-actions";
-import DropDownSelect from "../dropDown/select";
 
 const Container = styled.section`
   width: 64px;
@@ -51,8 +48,9 @@ const Container = styled.section`
 `;
 
 const ImageWrapper = styled.div`
-  padding: 4px;
-  height: calc(100% - 8px);
+  border-radius: 4px;
+  overflow: hidden;
+  height: 100%;
 `;
 
 const DefaultImage = styled(Icons.Landscape)`
@@ -133,89 +131,78 @@ const LoadingDots = styled.div`
   }
 `;
 
-const MediaInput = forwardRef(
-  (
-    {
-      className,
-      onBlur,
-      onChange,
-      alt = __('Preview image', 'web-stories'),
-      value,
-      ariaLabel = __('Choose an image', 'web-stories'),
-      disabled,
-      size,
-      isLoading,
-      menuOptions = [],
-      onMenuOption,
-      openMediaPicker,
-      menuProps = {},
-      ...rest
-    },
-    ref
-  ) => {
-    const hasMenu = menuOptions?.length > 0;
-    const isMultiple = value === MULTIPLE_VALUE;
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+const MediaInput = forwardRef(function Media(
+  {
+    className,
+    onBlur,
+    onChange,
+    alt = __('Preview image', 'web-stories'),
+    value,
+    ariaLabel = __('Choose an image', 'web-stories'),
+    size,
+    isLoading,
+    menuOptions = [],
+    onMenuOption,
+    openMediaPicker,
+    menuProps = {},
+    ...rest
+  },
+  ref
+) {
+  const hasMenu = menuOptions?.length > 0;
+  const isMultiple = value === MULTIPLE_VALUE;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const listId = useMemo(() => `list-${uuidv4()}`, []);
-    const buttonId = useMemo(() => `button-${uuidv4()}`, []);
-    return (
-      <Container
-        ref={ref}
-        className={className}
-        disabled={disabled}
-        size={size}
+  const listId = useMemo(() => `list-${uuidv4()}`, []);
+  const buttonId = useMemo(() => `button-${uuidv4()}`, []);
+  return (
+    <Container ref={ref} className={className} size={size} {...rest}>
+      <ImageWrapper>
+        {value && !isMultiple ? (
+          <Img src={value} alt={alt} />
+        ) : (
+          <DefaultImage size={size} />
+        )}
+        {isLoading && <LoadingDots />}
+      </ImageWrapper>
+      <Button
+        id={buttonId}
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        aria-label={ariaLabel}
+        onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
+        aria-owns={hasMenu ? listId : null}
+        aria-pressed={isMenuOpen}
+        aria-expanded={isMenuOpen}
         {...rest}
       >
-        <ImageWrapper>
-          {value && !isMultiple ? (
-            <Img src={value} alt={alt} />
-          ) : (
-            <DefaultImage size={size} />
-          )}
-          {isLoading && <LoadingDots />}
-        </ImageWrapper>
-        <Button
-          id={buttonId}
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={ariaLabel}
-          onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
-          aria-owns={hasMenu ? listId : null}
-          aria-pressed={isMenuOpen}
-          aria-expanded={isMenuOpen}
-          {...rest}
-        >
-          <Icons.Pencil />
-        </Button>
-        {isMenuOpen && (
-          <Menu
-            parentId={buttonId}
-            listId={listId}
-            hasMenuRole
-            options={menuOptions}
-            onMenuItemClick={onMenuOption}
-            onDismissMenu={() => setIsMenuOpen(false)}
-            menuStylesOverride={menuStyleOverride}
-          />
-        )}
-      </Container>
-    );
-  }
-);
+        <Icons.Pencil />
+      </Button>
+      {isMenuOpen && (
+        <Menu
+          parentId={buttonId}
+          listId={listId}
+          hasMenuRole
+          options={menuOptions}
+          onMenuItemClick={onMenuOption}
+          onDismissMenu={() => setIsMenuOpen(false)}
+          menuStylesOverride={menuStyleOverride}
+        />
+      )}
+    </Container>
+  );
+});
 
 MediaInput.propTypes = {
   className: PropTypes.string,
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
-  disabled: PropTypes.bool,
   size: PropTypes.number,
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,
   isLoading: PropTypes.bool,
-  hasMenu: PropTypes.bool,
 };
 
 export default MediaInput;

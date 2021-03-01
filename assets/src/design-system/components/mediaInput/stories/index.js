@@ -20,6 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
+
 /**
  * Internal dependencies
  */
@@ -27,6 +28,7 @@ import { theme } from '../../../theme';
 import MediaInput from '..';
 import { getOptions } from '../../menu/utils';
 import {basicDropDownOptions, shortDropDownOptions} from '../../../storybookUtils/sampleData';
+import image from './image.jpg';
 
 export default {
   title: 'DesignSystem/Components/MediaInput',
@@ -46,6 +48,7 @@ export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
       <MediaInput
+        value={image}
         onChange={() => {}}
         menuOptions={_shortDropDownOptions}
         onMenuOption={() => {}}
