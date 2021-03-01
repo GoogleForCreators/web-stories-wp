@@ -108,34 +108,19 @@ function web_stories_get_compat_instance() {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/Web_Stories_Compatibility.php';
 	}
 
-	$js_assets_dir = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/';
-
-	$required_files = array(
-		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
-		WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
-		WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
-	);
-
-	// Some scripts are chunked -- add all chunks to $required_files.
-	$chunked_scripts = array( 'edit-story', 'stories-dashboard' );
-	foreach ( $chunked_scripts as $script ) {
-		$script_file = $js_assets_dir . $script . '.js';
-		$chunks_file = $js_assets_dir . $script . '.chunks.php';
-
-		$chunks    = is_readable( $chunks_file ) ? require $chunks_file : [];
-		$js_chunks = isset( $chunks['js'] ) ? $chunks['js'] : [];
-
-		$required_files[] = $script_file;
-		foreach ( $js_chunks as $filename ) {
-			$required_files[] = $js_assets_dir . $filename . '.js';
-		}
-	}
-
 	$compatibility = new Web_Stories_Compatibility( $error );
 	$compatibility->set_extensions( $extensions );
 	$compatibility->set_php_version( WEBSTORIES_MINIMUM_PHP_VERSION );
 	$compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
-	$compatibility->set_required_files( $required_files );
+	$compatibility->set_required_files(
+		array(
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
+		)
+	);
 
 	return $compatibility;
 }
