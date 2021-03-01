@@ -79,7 +79,8 @@ trait Assets {
 				$script_chunk,
 				$base_script_path . $script_chunk . '.js',
 				[],
-				$version
+				$version,
+				true
 			);
 		}
 		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
