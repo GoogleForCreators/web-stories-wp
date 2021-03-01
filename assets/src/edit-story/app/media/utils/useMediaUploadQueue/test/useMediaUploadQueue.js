@@ -22,10 +22,10 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import useMediaUploadQueue from '../useMediaUploadQueue';
-import useTranscodeVideo from '../useTranscodeVideo';
+import useMediaUploadQueue from '../';
+import useTranscodeVideo from '../../useTranscodeVideo';
 
-jest.mock('../useTranscodeVideo', () => ({
+jest.mock('../../useTranscodeVideo', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isFeatureEnabled: true,
@@ -58,7 +58,7 @@ const mockUploadFile = jest
   .fn()
   .mockImplementation(() => Promise.resolve(mockAttachment));
 
-jest.mock('../../../uploader', () => ({
+jest.mock('../../../../uploader', () => ({
   useUploader: jest.fn(() => ({
     actions: {
       uploadFile: mockUploadFile,

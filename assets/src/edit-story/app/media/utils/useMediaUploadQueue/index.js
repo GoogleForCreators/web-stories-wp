@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useEffect, useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   trackError,
   trackEvent,
@@ -28,170 +27,15 @@ import {
 /**
  * Internal dependencies
  */
-import { useUploader } from '../../uploader';
-import useReduction from '../../../utils/useReduction';
-import { revokeBlob } from '../../../utils/blobs';
-import useTranscodeVideo from './useTranscodeVideo';
-import getResourceFromAttachment from './getResourceFromAttachment';
-import getResourceFromLocalFile from './getResourceFromLocalFile';
+import { useUploader } from '../../../uploader';
+import useReduction from '../../../../utils/useReduction';
+import useTranscodeVideo from '../useTranscodeVideo';
+import getResourceFromAttachment from '../getResourceFromAttachment';
+import getResourceFromLocalFile from '../getResourceFromLocalFile';
+import * as reducer from './reducer';
 
 const initialState = {
   queue: [],
-};
-
-const reducer = {
-  addItem: (
-    state,
-    {
-      payload: {
-        file,
-        resource,
-        onUploadStart,
-        onUploadProgress,
-        onUploadError,
-        onUploadSuccess,
-      },
-    }
-  ) => {
-    const id = uuidv4();
-    const newItem = {
-      id,
-      file,
-      state: 'PENDING',
-      resource: {
-        ...resource,
-        id,
-      },
-      onUploadStart,
-      onUploadProgress,
-      onUploadError,
-      onUploadSuccess,
-    };
-
-    return {
-      ...state,
-      queue: [...state.queue, newItem],
-    };
-  },
-  startUploading: (state, { payload: { id } }) => {
-    return {
-      ...state,
-      queue: state.queue.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              state: 'UPLOADING',
-            }
-          : item
-      ),
-    };
-  },
-  finishUploading: (state, { payload: { id, resource } }) => {
-    const queueItem = state.queue.find((item) => item.id === id);
-    if (!queueItem) {
-      return state;
-    }
-
-    if (queueItem.resource.src !== resource.src) {
-      revokeBlob(queueItem.resource.src);
-      revokeBlob(queueItem.resource.poster);
-    }
-
-    return {
-      ...state,
-      queue: state.queue.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              resource,
-              state: 'UPLOADED',
-            }
-          : item
-      ),
-    };
-  },
-  cancelUploading: (state, { payload: { id } }) => {
-    return {
-      ...state,
-      queue: state.queue.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              state: 'CANCELLED',
-            }
-          : item
-      ),
-    };
-  },
-  startTranscoding: (state, { payload: { id } }) => {
-    return {
-      ...state,
-      queue: state.queue.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              state: 'TRANSCODING',
-              resource: {
-                ...item.resource,
-                isTranscoding: true,
-              },
-            }
-          : item
-      ),
-    };
-  },
-  finishTranscoding: (state, { payload: { id, file } }) => {
-    return {
-      ...state,
-      queue: state.queue.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              file,
-              state: 'TRANSCODED',
-              resource: {
-                ...item.resource,
-                isTranscoding: false,
-              },
-            }
-          : item
-      ),
-    };
-  },
-  replacePlaceholderResource: (state, { payload: { id, resource } }) => {
-    const queueItem = state.queue.find((item) => item.id === id);
-    if (!queueItem || !queueItem.resource.isPlaceholder) {
-      return state;
-    }
-
-    if (queueItem.resource.src !== resource.src) {
-      revokeBlob(queueItem.resource.src);
-      revokeBlob(queueItem.resource.poster);
-    }
-
-    return {
-      ...state,
-      queue: state.queue.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              resource: {
-                ...resource,
-                id,
-                isPlaceholder: false,
-              },
-            }
-          : item
-      ),
-    };
-  },
-  removeItem: (state, { payload: { id } }) => {
-    const newQueue = state.queue.filter((item) => item.id !== id);
-    return {
-      ...state,
-      queue: newQueue,
-    };
-  },
 };
 
 function useMediaUploadQueue() {
