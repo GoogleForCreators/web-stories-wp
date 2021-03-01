@@ -423,7 +423,7 @@ class Customizer {
 			return $view_type_choices;
 		}
 
-		return array_intersect_key( $view_type, $view_type_choices );
+		return array_intersect_key( $view_type_choices, array_fill_keys( $view_type, true ) );
 	}
 
 	/**
