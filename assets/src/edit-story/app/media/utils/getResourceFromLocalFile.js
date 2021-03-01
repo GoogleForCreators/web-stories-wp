@@ -134,6 +134,7 @@ const createPlaceholderResource = (properties) => {
 };
 
 const getPlaceholderResource = (file) => {
+  const fileName = getFileName(file);
   const type = getTypeFromMime(file.type);
   const mimeType = type === 'image' ? 'image/png' : 'video/mp4';
 
@@ -144,6 +145,8 @@ const getPlaceholderResource = (file) => {
     src: '',
     width: PAGE_WIDTH,
     height: PAGE_HEIGHT,
+    alt: fileName,
+    title: fileName,
   });
 };
 
