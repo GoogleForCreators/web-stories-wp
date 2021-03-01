@@ -185,7 +185,10 @@ const MediaInput = forwardRef(function Media(
           listId={listId}
           hasMenuRole
           options={menuOptions}
-          onMenuItemClick={onMenuOption}
+          onMenuItemClick={(val) => {
+            onMenuOption(val);
+            setIsMenuOpen(false);
+          }}
           onDismissMenu={() => setIsMenuOpen(false)}
           menuStylesOverride={menuStyleOverride}
         />
