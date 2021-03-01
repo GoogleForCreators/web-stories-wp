@@ -42,10 +42,10 @@ trait Assets {
 	 * @return array Array containing combined contents of "<$handle>.asset.php" and "<$handle>.chunks.php".
 	 */
 	protected function get_asset_metadata( $handle ) {
-		$base_path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/' . $handle;
+		$base_path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/js/';
 
-		$asset_file  = $base_path . '.asset.php';
-		$chunks_file = $base_path . '.chunks.php';
+		$asset_file  = $base_path . $handle . '.asset.php';
+		$chunks_file = $base_path . $handle . '.chunks.php';
 		$asset       = is_readable( $asset_file ) ? require $asset_file : [];
 		$chunks      = is_readable( $chunks_file ) ? require $chunks_file : [];
 
