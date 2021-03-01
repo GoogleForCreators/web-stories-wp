@@ -44,12 +44,10 @@ const LabelText = styled(Text)`
   margin-bottom: 16px;
   margin-left: 8px;
   color: ${({ theme }) => theme.colors.fg.secondary};
-  letter-spacing: 0.0133em;
 `;
 
 const VisitSettingsText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
-  letter-spacing: 0.0133em;
 `;
 
 const NavLink = styled(Link)`
