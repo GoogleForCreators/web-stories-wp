@@ -17,18 +17,17 @@
 /**
  * External dependencies
  */
-import { within, waitForElementToBeRemoved } from '@testing-library/react';
+import { waitForElementToBeRemoved } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../karma';
-import createSolid from '../../../utils/createSolid';
-import { useStory } from '../../../app';
+import { Fixture } from '../../../../karma';
+import createSolid from '../../../../utils/createSolid';
+import { useStory } from '../../../../app';
 
 describe('GridView integration', () => {
   let fixture;
-  let gridView;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -41,43 +40,12 @@ describe('GridView integration', () => {
 
     await fixture.render();
 
-    await openGridView();
-
-    const gridViewRegion = fixture.screen.getByRole('region', {
-      name: /^Grid View$/,
-    });
-
-    gridView = within(gridViewRegion);
+    await fixture.events.click(fixture.editor.carousel.gridViewToggle);
   });
 
   afterEach(() => {
     fixture.restore();
   });
-
-  async function openGridView() {
-    const gridViewButton = fixture.editor.carousel.getByRole('button', {
-      name: /^Grid View$/,
-    });
-
-    await fixture.events.click(gridViewButton);
-
-    return Promise.resolve();
-  }
-
-  async function focusOnPageList() {
-    let limit = 0;
-    const pagesList = gridView.getByLabelText(/Grid View Pages List/);
-
-    while (!pagesList.contains(document.activeElement) && limit < 5) {
-      // eslint-disable-next-line no-await-in-loop
-      await fixture.events.keyboard.press('tab');
-      limit++;
-    }
-
-    return pagesList.contains(document.activeElement)
-      ? Promise.resolve()
-      : Promise.reject(new Error('could not focus on page list'));
-  }
 
   async function getPageIds() {
     const {
@@ -95,78 +63,61 @@ describe('GridView integration', () => {
   }
 
   it('should open grid view', () => {
-    const gridViewRegion = fixture.screen.getByRole('region', {
-      name: /^Grid View$/,
-    });
-    expect(gridViewRegion).toBeTruthy();
+    expect(fixture.editor.gridView.node).toBeTruthy();
   });
 
   it('should use tab to jump between the "Back" button, Preview Size control, and page list', async () => {
-    // Tab cycle: Back -> Preview Size Control x3 stops -> Active/previously focused Page in Page List
+    // Tab cycle: Back -> Page Size range -> Active/previously focused Page in Page List
 
     // Back Button
     await fixture.events.keyboard.press('tab');
-    const backButton = gridView.getByRole('button', { name: /^Back$/ });
-    expect(document.activeElement).toEqual(backButton);
+    expect(fixture.editor.gridView.close).toHaveFocus();
 
-    // Decrease Preview Size Button
+    // Page Size range
     await fixture.events.keyboard.press('tab');
-    const decreaseButton = gridView.getByRole('button', {
-      name: /^Decrease thumbnail size$/,
-    });
-    expect(document.activeElement).toEqual(decreaseButton);
-
-    // Preview Range Control
-    await fixture.events.keyboard.press('tab');
-    const sizeRangeControl = gridView.getByLabelText(/^Thumbnail size$/);
-    expect(document.activeElement).toEqual(sizeRangeControl);
-
-    // Increase Preview Size Button
-    await fixture.events.keyboard.press('tab');
-    const increaseButton = gridView.getByRole('button', {
-      name: /^Increase thumbnail size$/,
-    });
-    expect(document.activeElement).toEqual(increaseButton);
+    expect(fixture.editor.gridView.size).toHaveFocus();
 
     // Active/previously fcoused page in Page List
     await fixture.events.keyboard.press('tab');
-    const page = gridView.getByRole('button', { name: /(current page)/ });
-    expect(document.activeElement).toEqual(page);
+    expect(fixture.editor.gridView.currentPage).toHaveFocus();
   });
 
   // @todo test wrapping + up down
   it('should use the up, down, left, right keys to navigate focus with wrapping', async () => {
-    await focusOnPageList();
+    // Tab thrice to focus the current page in the page list
+    await fixture.events.keyboard.seq(({ press }) => [
+      press('tab'),
+      press('tab'),
+      press('tab'),
+    ]);
 
     // The initial focus should be on the first (and active) page.
-    const page1 = gridView.getByRole('button', { name: /Page 1/ });
-    expect(page1).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 1')).toHaveFocus();
+    expect(fixture.editor.gridView.currentPage).toHaveFocus();
 
     // go right by 1
     await fixture.events.keyboard.press('right');
-    const page2 = gridView.getByRole('button', { name: /Page 2/ });
-    expect(page2).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 2')).toHaveFocus();
 
     // go left 1
     await fixture.events.keyboard.press('left');
-    expect(page1).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 1')).toHaveFocus();
 
     // go left 1 (focus should remain on page 1)
     await fixture.events.keyboard.press('left');
-    expect(page1).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 1')).toHaveFocus();
 
     // go right 3 (the end of the list)
-    const page4 = gridView.getByRole('button', { name: /Page 4/ });
     await fixture.events.keyboard.seq(({ press }) => [
       press('right'),
       press('right'),
       press('right'),
     ]);
-    expect(page4).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 4')).toHaveFocus();
 
     // go right 1 (focus should remain on page 4)
     await fixture.events.keyboard.press('right');
-    expect(page4).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 4')).toHaveFocus();
   });
 
   // @todo test wrapping + up down
@@ -174,11 +125,15 @@ describe('GridView integration', () => {
     const initialPageIds = await getPageIds();
     let pageIds = [...initialPageIds];
 
-    await focusOnPageList();
+    // Tab thrice to focus the current page in the page list
+    await fixture.events.keyboard.seq(({ press }) => [
+      press('tab'),
+      press('tab'),
+      press('tab'),
+    ]);
 
     // The initial focus should be on the first (and active) page.
-    const page1 = gridView.getByRole('button', { name: /Page 1/ });
-    expect(page1).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 1')).toHaveFocus();
 
     // move the first page to the right
     await fixture.events.keyboard.shortcut('mod+right');
@@ -197,8 +152,7 @@ describe('GridView integration', () => {
 
     // focus on the penultimate page
     await fixture.events.keyboard.press('left');
-    const page3 = gridView.getByRole('button', { name: /Page 3/ });
-    expect(page3).toEqual(document.activeElement);
+    expect(fixture.editor.gridView.page('Page 3')).toHaveFocus();
 
     // move page 4 to the start
     await fixture.events.keyboard.shortcut('shift+mod+left');
@@ -207,10 +161,14 @@ describe('GridView integration', () => {
   });
 
   it('should select the focused page when "Enter" is pressed', async () => {
-    await focusOnPageList();
+    // Tab thrice to focus the current page in the page list
+    await fixture.events.keyboard.seq(({ press }) => [
+      press('tab'),
+      press('tab'),
+      press('tab'),
+    ]);
 
     const initialPageIds = await getPageIds();
-
     const page2Id = initialPageIds[1];
 
     // Focus on page 2
@@ -225,7 +183,7 @@ describe('GridView integration', () => {
   });
 
   it('should trap focus', async () => {
-    // Tab cycle: Back -> Preview Size Control x3 stops -> Active/previously focused Page in Page List
+    // Tab cycle: Back -> Page Size range -> Active/previously focused Page in Page List
 
     // Full cycle forwards
     await fixture.events.keyboard.seq(({ press }) => [
@@ -233,22 +191,15 @@ describe('GridView integration', () => {
       press('tab'),
       press('tab'),
       press('tab'),
-      press('tab'),
-      press('tab'),
     ]);
 
-    const backButton = gridView.getByRole('button', { name: /^Back$/ });
-    expect(document.activeElement).toEqual(backButton);
+    expect(fixture.editor.gridView.close).toHaveFocus();
   });
 
   it('should use "Esc" to exit the dialog', async () => {
-    const gridViewRegion = fixture.screen.getByRole('region', {
-      name: /^Grid View$/,
-    });
-    expect(gridViewRegion).toBeTruthy();
-
+    const { gridView } = fixture.editor;
+    expect(gridView.node).toBeTruthy();
     await fixture.events.keyboard.press('Esc');
-
-    await waitForElementToBeRemoved(gridViewRegion);
+    await waitForElementToBeRemoved(gridView.node);
   });
 });

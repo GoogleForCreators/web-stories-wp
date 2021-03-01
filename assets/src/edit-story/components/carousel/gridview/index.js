@@ -194,7 +194,7 @@ function GridView({ onClose }) {
   const dividerLineHeight = Math.min(pageHeight - 24, LINE_HEIGHT);
 
   return (
-    <Container>
+    <Container aria-label={__('Grid View', 'web-stories')}>
       <TopRow>
         <ClickableButton
           variant={BUTTON_VARIANTS.SQUARE}
@@ -212,6 +212,7 @@ function GridView({ onClose }) {
           minorStep={1}
           value={pagesPerRow}
           onChange={(evt) => setPagesPerRow(evt.target.valueAsNumber)}
+          aria-label={__('Pages per row', 'web-stories')}
         />
         <NoButton />
       </TopRow>
@@ -277,6 +278,7 @@ function GridView({ onClose }) {
                     onClick={handleClickPage(page)}
                     isInteractive={isInteractive}
                     gridRef={gridRef}
+                    role="option"
                   />
                 </ReorderableItem>
                 <PageSeparator
