@@ -30,7 +30,13 @@ import { PLACEMENT } from './constants';
 // TODO scrollbar update, commented out until design updates are done
 const DEFAULT_POPUP_Z_INDEX = 2;
 const Container = styled.div.attrs(
-  ({ x, y, width, height, fillWidth, fillHeight, placement, zIndex }) => ({
+  ({
+    offset: { x, y, width, height },
+    fillWidth,
+    fillHeight,
+    placement,
+    zIndex,
+  }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
@@ -105,10 +111,10 @@ function Popup({
   );
 
   useLayoutEffect(() => {
-    setMounted(true);
     if (!isOpen) {
       return () => {};
     }
+    setMounted(true);
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
@@ -125,11 +131,11 @@ function Popup({
     ? createPortal(
         <Container
           ref={popup}
-          {...popupState.offset}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
           zIndex={zIndex}
+          offset={popupState.offset}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

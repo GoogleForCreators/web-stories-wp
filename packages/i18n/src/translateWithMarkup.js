@@ -78,7 +78,6 @@ function transform(node, mapping = {}) {
 
   do {
     result.push(transformNode(node, mapping));
-
     node = node.nextSibling;
   } while (node !== null);
 
@@ -118,11 +117,15 @@ function TranslateWithMarkup({ mapping = {}, children }) {
     );
   }
 
-  return transform(
-    new DOMParser().parseFromString(children, 'text/html').body.firstChild,
-    mapping
-    //eslint-disable-next-line react/no-array-index-key
-  ).map((element, index) => <Fragment key={index}>{element}</Fragment>);
+  const node = new DOMParser().parseFromString(children, 'text/html').body
+    .firstChild;
+  return node
+    ? transform(
+        node,
+        mapping
+        //eslint-disable-next-line react/no-array-index-key
+      ).map((element, index) => <Fragment key={index}>{element}</Fragment>)
+    : [];
 }
 
 TranslateWithMarkup.propTypes = {
