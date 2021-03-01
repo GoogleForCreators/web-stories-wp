@@ -163,11 +163,11 @@ export default function WithMask({
   style,
   children,
   eventHandlers = null,
+  flip,
   ...rest
 }) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
-  const { flip } = rest;
 
   const mask = getElementMask(element);
   const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
