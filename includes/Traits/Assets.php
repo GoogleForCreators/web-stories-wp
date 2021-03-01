@@ -65,7 +65,7 @@ trait Assets {
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
 	 *
-	 * @return array Asset metadata of the script.
+	 * @return void
 	 */
 	public function register_script( $script_handle, array $script_dependencies = [] ) {
 		$base_script_path = WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/';
@@ -93,8 +93,6 @@ trait Assets {
 		);
 
 		wp_set_script_translations( $script_handle, 'web-stories' );
-
-		return $asset;
 	}
 
 	/**
@@ -105,20 +103,11 @@ trait Assets {
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
 	 *
-	 * @return array Array containing $script_handle and all dependent script chunk handles.
+	 * @return void
 	 */
 	public function enqueue_script( $script_handle, array $script_dependencies = [] ) {
-		$asset = $this->register_script( $script_handle, $script_dependencies );
-
-		// Enqueue chunks of $script_handle.
-		$script_chunks = $asset['js'];
-		foreach ( $script_chunks as $chunk ) {
-			wp_enqueue_script( $chunk );
-		}
-
+		$this->register_script( $script_handle, $script_dependencies );
 		wp_enqueue_script( $script_handle );
-
-		return array_merge( [ $script_handle ], $script_chunks );
 	}
 
 	/**
@@ -129,7 +118,7 @@ trait Assets {
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
 	 *
-	 * @return array Asset metadata of the style.
+	 * @return void
 	 */
 	public function register_style( $style_handle, array $style_dependencies = [] ) {
 		$base_style_path = WEBSTORIES_PLUGIN_DIR_URL . 'assets/css/';
@@ -154,8 +143,6 @@ trait Assets {
 			$style_dependencies,
 			$version
 		);
-
-		return $asset;
 	}
 
 	/**
@@ -169,14 +156,7 @@ trait Assets {
 	 * @return void
 	 */
 	public function enqueue_style( $style_handle, array $style_dependencies = [] ) {
-		$asset = $this->register_style( $style_handle, $style_dependencies );
-
-		// Enqueue chunks of $style_handle.
-		$style_chunks = $asset['css'];
-		foreach ( $style_chunks as $chunk ) {
-			wp_enqueue_style( $chunk );
-		}
-
+		$this->register_style( $style_handle, $style_dependencies );
 		wp_enqueue_style( $style_handle );
 	}
 

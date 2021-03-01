@@ -281,16 +281,14 @@ class Dashboard {
 			WEBSTORIES_VERSION
 		);
 
-		$all_scripts = $this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 		$this->enqueue_style( self::SCRIPT_HANDLE, [ 'google-fonts' ] );
 
-		foreach ( $all_scripts as $script ) {
-			wp_localize_script(
-				$script,
-				'webStoriesDashboardSettings',
-				$this->get_dashboard_settings()
-			);
-		}
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesDashboardSettings',
+			$this->get_dashboard_settings()
+		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
 		$this->remove_admin_style( [ 'forms' ] );
