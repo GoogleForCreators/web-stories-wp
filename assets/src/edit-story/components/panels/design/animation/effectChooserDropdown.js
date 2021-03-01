@@ -30,6 +30,7 @@ import { Dropdown as DropdownIcon } from '../../../../icons';
 import { isKeyboardUser } from '../../../../utils/keyboardOnlyOutline';
 import { DropDownSelect, DropDownTitle } from '../../../form/dropDown';
 import Popup, { Placement } from '../../../popup';
+import { themeHelpers } from '../../../../../design-system';
 import EffectChooser from './effectChooser';
 
 const Container = styled.div`
@@ -38,6 +39,8 @@ const Container = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.standard.black};
+
+  ${themeHelpers.scrollbarCSS};
 `;
 
 export default function EffectChooserDropdown({

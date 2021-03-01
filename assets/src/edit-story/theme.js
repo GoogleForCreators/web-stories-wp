@@ -26,8 +26,8 @@ import {
   identity,
   useContextSelector,
   theme as designSystemTheme,
+  themeHelpers,
 } from '../design-system';
-import { scrollbarCSS } from '../design-system/theme/helpers/scrollbar';
 
 export const GlobalStyle = createGlobalStyle`
   *,
@@ -53,7 +53,9 @@ export const GlobalStyle = createGlobalStyle`
    * Scrollbars are scoped to <Editor> to make sure we don't mess with
    * WP dialogs like the Backbone Media Gallery dialog.
    */
-  ${scrollbarCSS}
+  body.edit-story #wpbody * {
+    ${themeHelpers.scrollbarCSS};
+  }
 `;
 
 export function useTheme(selector) {

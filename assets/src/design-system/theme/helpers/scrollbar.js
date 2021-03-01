@@ -26,7 +26,8 @@ import { css } from 'styled-components';
 export const scrollbarCSS = () => css`
   /* Firefox compatible css */
   scrollbar-width: thin;
-  scrollbar-color: ${({ theme }) => theme.colors.interactiveBg.secondaryNormal};
+  scrollbar-color: ${({ theme }) => theme.colors.interactiveBg.secondaryNormal}
+    ${({ theme }) => theme.colors.inverted.divider.secondary};
   /* end Firefox compatible css */
 
   ::-webkit-scrollbar {

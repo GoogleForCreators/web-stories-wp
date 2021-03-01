@@ -50,6 +50,10 @@ const PageList = styled(Reorderable).attrs({
       overflow-x: overlay;
       justify-content: flex-start;
     `};
+
+  ::-webkit-scrollbar-thumb {
+    border: 6px solid transparent !important;
+  }
 `;
 
 function CarouselList() {
