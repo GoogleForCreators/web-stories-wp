@@ -117,16 +117,16 @@ const ArrowIconWithTitle = styled(ArrowIcon)`
   }
 `;
 
-const SelectableTitle = styled(Text).attrs({ tabIndex: 0 })`
+const HeavyTitle = styled(Text)`
+  font-weight: 700;
+`;
+
+const SelectableTitle = styled(HeavyTitle).attrs({ tabIndex: 0 })`
   color: ${({ theme }) => theme.colors.fg.linkNormal};
   cursor: pointer;
 
   ${({ theme }) =>
     focusableOutlineCSS(theme.colors.border.focus, theme.colors.bg.secondary)};
-`;
-
-const HeavyTitle = styled(Text)`
-  font-weight: 700;
 `;
 
 const StyledTableRow = styled(TableRow)`
@@ -208,7 +208,7 @@ export default function StoryListView({
                   'Title, select to sort table by story title',
                   'web-stories'
                 )}
-                as="span"
+                forwardedAs="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 isBold
               >
@@ -222,7 +222,7 @@ export default function StoryListView({
               <SelectableTitle
                 aria-hidden
                 active={storySort === STORY_SORT_OPTIONS.NAME}
-                as="span"
+                forwardedAs="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 isBold
               >
@@ -248,7 +248,7 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.CREATED_BY)
                 }
                 active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
-                as="span"
+                forwardedAs="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 isBold
               >
@@ -279,7 +279,7 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.DATE_CREATED)
                 }
                 active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                as="span"
+                forwardedAs="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 isBold
               >
@@ -306,7 +306,7 @@ export default function StoryListView({
                   onKeyDownSort(e, STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
                 active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                as="span"
+                forwardedAs="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 isBold
               >
