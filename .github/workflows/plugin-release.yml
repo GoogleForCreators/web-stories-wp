@@ -61,6 +61,16 @@ jobs:
             exit 1
           fi
 
+      - name: Ensure readme.txt contains changelog
+        run: |
+          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
+          CHANGELOG_REGEX="= $VERSION_WITHOUT_SUFFIX ="
+
+          if ! grep -q -P "$CHANGELOG_REGEX" readme.txt; then
+            echo "No changelog found in readme.txt"
+            exit 1
+          fi
+
   # Get the current CDN assets version.
   # If the static assets on the CDN have changed since the last release,
   # bump the assets version accordingly in the `static-site` branch.
