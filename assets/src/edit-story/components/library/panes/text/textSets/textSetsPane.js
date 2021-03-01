@@ -87,8 +87,8 @@ function TextSetsPane({ paneRef }) {
   );
 
   const addIdToTextSets = useCallback(
-    (sets) =>
-      sets.map((elements) => {
+    (textSetsArray) =>
+      textSetsArray.map((elements) => {
         return {
           id: `text_set_${uuidv4()}`,
           elements,
@@ -112,9 +112,9 @@ function TextSetsPane({ paneRef }) {
 
   const categories = useMemo(
     () => [
-      ...Object.keys(textSets).map((cat) => ({
-        id: cat,
-        label: CATEGORIES[cat] ?? cat,
+      ...Object.keys(textSets).map((category) => ({
+        id: category,
+        label: CATEGORIES[category] ?? category,
       })),
     ],
     [textSets]
@@ -146,7 +146,10 @@ function TextSetsPane({ paneRef }) {
   return (
     <SectionContainer id={sectionId}>
       <TitleBar>
-        <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}>
+        <Headline
+          as="h3"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+        >
           {PANE_TEXT.TITLE}
         </Headline>
         <TextSetsToggle>

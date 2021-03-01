@@ -83,7 +83,7 @@ export default function useVirtualizedGridNavigation({
     if (!isGridFocused) {
       const newGridItemId = gridItemRefs.current?.[activeGridItemId]
         ? activeGridItemId
-        : gridItemIds[0];
+        : gridItemIds?.[0];
 
       setActiveGridItemId(newGridItemId);
       setIsGridFocused(true);
