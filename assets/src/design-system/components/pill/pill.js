@@ -52,6 +52,7 @@ const StyledPill = styled.button(
 
     &:disabled {
       pointer-events: none;
+      color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.disable};
     }
 
     transition: color 0.6s ease 0s;
