@@ -26,7 +26,6 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../edit-story/constants';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -34,6 +33,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Menu,
+  MULTIPLE_VALUE,
   Tooltip,
 } from '../../';
 import { MEDIA_VARIANTS } from './constants';
