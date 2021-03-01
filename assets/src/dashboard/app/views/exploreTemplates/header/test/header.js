@@ -115,7 +115,9 @@ describe('Explore Templates <Header />', function () {
     expect(getByPlaceholderText('Search Templates')).toHaveValue(
       'Harry Potter'
     );
-    expect(getByText('8 results')).toBeInTheDocument();
+    expect(
+      getByText((_, node) => node.textContent === '8 results')
+    ).toBeInTheDocument();
   });
 
   it('should call the set keyword function when new text is searched', function () {
@@ -147,7 +149,7 @@ describe('Explore Templates <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithProviders(
+    const { getByLabelText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -166,7 +168,7 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { features: { enableInProgressTemplateActions: true } }
     );
-    fireEvent.click(getAllByText('Popular')[0].parentElement);
+    fireEvent.click(getByLabelText('Choose sort option for display'));
     fireEvent.click(getByText('Recent'));
 
     expect(setSortFn).toHaveBeenCalledWith('recent');

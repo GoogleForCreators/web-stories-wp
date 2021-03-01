@@ -20,14 +20,22 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Checkmark } from '../../../icons';
+import { CheckmarkSmall } from '../../../icons';
 import { THEME_CONSTANTS } from '../../../theme';
 import { DROP_DOWN_ITEM } from '../types';
 import { ListItem, ListItemDisplayText } from './components';
+
+const ActiveIcon = styled(CheckmarkSmall)`
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+`;
 
 const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
   <ListItem
@@ -38,7 +46,7 @@ const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
     aria-disabled={option.disabled}
   >
     {isSelected && (
-      <Checkmark
+      <ActiveIcon
         data-testid={'dropdownMenuItem_active_icon'}
         aria-label={__('Selected', 'web-stories')}
         width={32}
@@ -47,7 +55,7 @@ const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
     )}
     <ListItemDisplayText
       forwardedAs="span"
-      size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
     >
       {option.label}
     </ListItemDisplayText>

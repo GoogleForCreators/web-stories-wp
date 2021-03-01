@@ -98,7 +98,8 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            future: 5,
+            publish: 5,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -109,7 +110,9 @@ describe('My Stories <Header />', function () {
       </LayoutProvider>
     );
     expect(getByPlaceholderText('Search Stories')).toHaveValue('Harry Potter');
-    expect(getByText('19 results')).toBeInTheDocument();
+    expect(
+      getByText((_, node) => node.textContent === '19 results')
+    ).toBeInTheDocument();
   });
 
   it('should have results label that says "Viewing drafts" when filter is set to drafts', function () {
@@ -256,7 +259,7 @@ describe('My Stories <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', async function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithProviders(
+    const { getByLabelText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -276,7 +279,7 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.click(getAllByText('Created by')[0].parentElement);
+    fireEvent.click(getByLabelText('Choose sort option for display'));
     fireEvent.click(getByText('Last modified'));
 
     await waitFor(() => {

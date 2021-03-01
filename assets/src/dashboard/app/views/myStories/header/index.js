@@ -69,7 +69,11 @@ function Header({
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
     isActiveSearch: Boolean(search.keyword),
-    totalResults: totalStoriesByStatus?.all,
+    totalResults: (filter.value.split(',') || []).reduce(
+      (totalResults, filterKey) =>
+        (totalResults += totalStoriesByStatus[filterKey] || 0),
+      0
+    ),
     view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
