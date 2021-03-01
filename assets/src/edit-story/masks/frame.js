@@ -234,6 +234,10 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
+  flip: PropTypes.shape({
+    vertical: PropTypes.bool,
+    horizontal: PropTypes.bool,
+  }),
   eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
 };
