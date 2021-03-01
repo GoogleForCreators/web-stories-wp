@@ -59,7 +59,13 @@ const TopRow = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 112px;
+  margin-bottom: 36px;
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    margin-bottom: 72px;
+  }
+  @media ${({ theme }) => theme.breakpoint.wide} {
+    margin-bottom: 112px;
+  }
 `;
 
 const Wrapper = styled(Reorderable)`
