@@ -25,12 +25,14 @@ import { fireEvent } from '@testing-library/react';
 import createSolid from '../../../../utils/createSolid';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
-import ColorPreview from '../colorPreview';
+import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
-import getPreviewTextMock from '../getPreviewText';
+import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('../getPreviewText', () => jest.fn());
+jest.mock('../../../../../design-system/components/hex/getPreviewText', () =>
+  jest.fn()
+);
 
 function arrange(children = null) {
   const { getByRole, queryByLabelText } = renderWithTheme(children);
@@ -45,7 +47,7 @@ function arrange(children = null) {
   };
 }
 
-describe('<ColorPreview />', () => {
+describe('<ColorInput />', () => {
   beforeEach(() => {
     getPreviewStyleMock.mockReset();
     getPreviewTextMock.mockReset();
@@ -60,7 +62,7 @@ describe('<ColorPreview />', () => {
       return 'FF0000';
     });
     const { button, swatch, input } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={() => {}}
         value={createSolid(255, 0, 0)}
         label="Color"
@@ -82,7 +84,7 @@ describe('<ColorPreview />', () => {
     });
 
     const { button, swatch, input } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={() => {}}
         value={{ type: 'radial' }}
         label="Color"
@@ -105,7 +107,7 @@ describe('<ColorPreview />', () => {
     });
 
     const { input } = arrange(
-      <ColorPreview onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
+      <ColorInput onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
     expect(input.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
     expect(input).toHaveValue('');
@@ -116,7 +118,7 @@ describe('<ColorPreview />', () => {
     const onClose = jest.fn();
     const value = { a: 1 };
     const { button, queryByLabelText } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={onChange}
         value={value}
         hasGradient
@@ -136,7 +138,7 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const { button, queryByLabelText } = arrange(
-      <ColorPreview
+      <ColorInput
         onChange={onChange}
         value={MULTIPLE_VALUE}
         hasGradient
@@ -158,21 +160,13 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const value = createSolid(255, 0, 0);
     const { input } = arrange(
-      <ColorPreview onChange={onChange} value={value} label="Color" />
+      <ColorInput onChange={onChange} value={value} label="Color" />
     );
-
-    // Only 2 digits can't be valid
-    fireEvent.change(input, { target: { value: 'AF' } });
-    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // Since saved value didn't change shouldn't trigger onChagne
-    expect(onChange).not.toHaveBeenCalled();
-    // Input should revert to saved value
-    expect(input).toHaveValue('FF0000');
 
     // Only 5 digits can't be valid
     fireEvent.change(input, { target: { value: '0FF00' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // Since saved value didn't change shouldn't trigger onChagne
+    // Since saved value didn't change shouldn't trigger onChange
     expect(onChange).not.toHaveBeenCalled();
     // Input should revert to saved value
     expect(input).toHaveValue('FF0000');
@@ -180,7 +174,7 @@ describe('<ColorPreview />', () => {
     // Non-hex can't be valid
     fireEvent.change(input, { target: { value: 'COFFEE' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // Since saved value didn't change shouldn't trigger onChagne
+    // Since saved value didn't change shouldn't trigger onChange
     expect(onChange).not.toHaveBeenCalled();
     // Input should revert to saved value
     expect(input).toHaveValue('FF0000');
@@ -191,16 +185,34 @@ describe('<ColorPreview />', () => {
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 255, 0));
     expect(input).toHaveValue('00FF00');
 
+    // Allow shorthand 1 digits
+    fireEvent.change(input, { target: { value: '0' } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+    expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 0));
+    expect(input).toHaveValue('000000');
+
+    // Allow shorthand 2 digits
+    fireEvent.change(input, { target: { value: 'AF' } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+    expect(onChange).toHaveBeenCalledWith(createSolid(175, 175, 175));
+    expect(input).toHaveValue('AFAFAF');
+
     // Allow shorthand 3 digit hex
     fireEvent.change(input, { target: { value: 'F60' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     expect(onChange).toHaveBeenCalledWith(createSolid(255, 102, 0));
     expect(input).toHaveValue('FF6600');
 
+    // Allow shorthand 4 digits
+    fireEvent.change(input, { target: { value: 'AAFF' } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+    expect(onChange).toHaveBeenCalledWith(createSolid(255, 102, 0));
+    expect(input).toHaveValue('AAAAFF');
+
     // Also validate that it'll ignore the first #
     fireEvent.change(input, { target: { value: '#0000FF' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    expect(onChange).toHaveBeenCalledTimes(3);
+    expect(onChange).toHaveBeenCalledTimes(6);
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 255));
     expect(input).toHaveValue('0000FF');
   });
@@ -212,7 +224,7 @@ describe('<ColorPreview />', () => {
     const onChange = jest.fn();
     const value = createSolid(255, 0, 0);
     const { input } = arrange(
-      <ColorPreview onChange={onChange} value={value} label="Color" />
+      <ColorInput onChange={onChange} value={value} label="Color" />
     );
 
     // Only 5 digits can't be valid

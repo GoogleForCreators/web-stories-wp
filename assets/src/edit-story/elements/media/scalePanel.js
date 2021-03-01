@@ -19,18 +19,20 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { _x } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import { Slider } from '../../../design-system';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import InOverlay from '../../components/overlay';
-import RangeInput from '../../components/rangeInput';
 import { Z_INDEX_CANVAS } from '../../constants';
 
 const MIN_WIDTH = 165;
-const HEIGHT = 28;
+const HEIGHT = 36;
 const OFFSET_Y = 8;
+const HORIZONTAL_PADDING = 8;
 
 const Container = styled.div`
   position: absolute;
@@ -39,15 +41,15 @@ const Container = styled.div`
   top: ${({ y, height }) => `${y + height + OFFSET_Y}px`};
   width: ${({ width }) => `${Math.max(width, MIN_WIDTH)}px`};
   height: ${HEIGHT}px;
-
   background: ${({ theme }) => theme.DEPRECATED_THEME.colors.t.bg};
-  border-radius: 100px;
+  border-radius: 8px;
+  padding: 3px ${HORIZONTAL_PADDING}px;
+  margin-top: 8px;
+`;
 
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  padding: 0 4px;
+const ScaleSlider = styled(Slider)`
+  width: ${({ width }) =>
+    Math.max(width, MIN_WIDTH) - 2 * HORIZONTAL_PADDING}px;
 `;
 
 function ScalePanel({ setProperties, width, height, x, y, scale }) {
@@ -59,13 +61,16 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
           be left up to the helper errors? Both? In either case there'd be maximum
           bounding scale.
         */}
-        <RangeInput
+        <ScaleSlider
+          width={width}
           min={BG_MIN_SCALE}
           max={BG_MAX_SCALE}
           majorStep={10}
           minorStep={1}
           value={scale}
           handleChange={(value) => setProperties({ scale: value })}
+          thumbSize={24}
+          suffix={_x('%', 'Percentage', 'web-stories')}
         />
       </Container>
     </InOverlay>
