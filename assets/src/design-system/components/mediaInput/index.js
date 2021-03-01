@@ -34,6 +34,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Menu,
+  Tooltip,
 } from '../../';
 import { MEDIA_VARIANTS } from './constants';
 
@@ -188,20 +189,22 @@ const MediaInput = forwardRef(function Media(
         )}
         {isLoading && <LoadingDots />}
       </ImageWrapper>
-      <Button
-        id={buttonId}
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.SMALL}
-        aria-label={ariaLabel}
-        onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
-        aria-owns={hasMenu ? listId : null}
-        aria-pressed={isMenuOpen}
-        aria-expanded={isMenuOpen}
-        {...rest}
-      >
-        <Icons.Pencil />
-      </Button>
+      <Tooltip title={hasMenu ? null : __('Open media picker', 'web-stories')}>
+        <Button
+          id={buttonId}
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          aria-label={ariaLabel}
+          onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
+          aria-owns={hasMenu ? listId : null}
+          aria-pressed={isMenuOpen}
+          aria-expanded={isMenuOpen}
+          {...rest}
+        >
+          <Icons.Pencil />
+        </Button>
+      </Tooltip>
       {isMenuOpen && (
         <Menu
           parentId={buttonId}
