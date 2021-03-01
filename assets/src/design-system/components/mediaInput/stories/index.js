@@ -22,11 +22,13 @@ import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme } from '../../../theme';
+import { theme, THEME_CONSTANTS } from '../../../theme';
 import MediaInput from '..';
 import { getOptions } from '../../menu/utils';
 import { shortDropDownOptions } from '../../../storybookUtils/sampleData';
 import { MEDIA_VARIANTS } from '../constants';
+import { Headline } from '../../typography/headline';
+import { Text } from '../../typography/text';
 import image from './image.jpg';
 
 export default {
@@ -36,7 +38,6 @@ export default {
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.bg.secondary};
   width: 600px;
-  height: 400px;
   padding: 30px;
 `;
 
@@ -46,7 +47,6 @@ const Row = styled.div`
 `;
 const _shortDropDownOptions = getOptions(shortDropDownOptions);
 const mediaProps = {
-  value: image,
   onChange: () => {},
   openMediaPicker: () => {},
   onMenuOption: () => {},
@@ -56,17 +56,65 @@ const mediaProps = {
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
+      <Headline as="h3" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {'Media Input demos'}
+      </Headline>
       <Row>
+        <Text>
+          {'variant: rectangle'} <br />
+          {'with image'}
+        </Text>
         <MediaInput
+          value={image}
           variant={MEDIA_VARIANTS.RECTANGLE}
           menuOptions={_shortDropDownOptions}
           {...mediaProps}
         />
       </Row>
       <Row>
+        <Text>
+          {'variant: circle'} <br />
+          {'with image'}
+        </Text>
         <MediaInput
+          value={image}
           variant={MEDIA_VARIANTS.CIRCLE}
           menuOptions={_shortDropDownOptions}
+          {...mediaProps}
+        />
+      </Row>
+      <Row>
+        <Text>
+          {'variant: rectangle'} <br />
+          {'without image'}
+        </Text>
+        <MediaInput
+          value={null}
+          variant={MEDIA_VARIANTS.RECTANGLE}
+          menuOptions={_shortDropDownOptions}
+          {...mediaProps}
+        />
+      </Row>
+      <Row>
+        <Text>
+          {'variant: circle'} <br />
+          {'without image'}
+        </Text>
+        <MediaInput
+          value={null}
+          variant={MEDIA_VARIANTS.CIRCLE}
+          menuOptions={_shortDropDownOptions}
+          {...mediaProps}
+        />
+      </Row>
+      <Row>
+        <Text>
+          {'variant: rectangle'} <br />
+          {'with image, without menu'}
+        </Text>
+        <MediaInput
+          value={image}
+          variant={MEDIA_VARIANTS.RECTANGLE}
           {...mediaProps}
         />
       </Row>

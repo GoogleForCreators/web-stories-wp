@@ -59,6 +59,11 @@ const ImageWrapper = styled.div`
     variant === MEDIA_VARIANTS.CIRCLE ? 100 : 4}px;
   overflow: hidden;
   height: 100%;
+  display: flex;
+`;
+
+const DefaultImageWrapper = styled.div`
+  padding: 8px;
 `;
 
 const DefaultImage = styled(Icons.Landscape)`
@@ -177,7 +182,9 @@ const MediaInput = forwardRef(function Media(
         {value && !isMultiple ? (
           <Img src={value} alt={alt} />
         ) : (
-          <DefaultImage />
+          <DefaultImageWrapper>
+            <DefaultImage />
+          </DefaultImageWrapper>
         )}
         {isLoading && <LoadingDots />}
       </ImageWrapper>
