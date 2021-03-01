@@ -35,8 +35,9 @@ import {
   Icons,
   Menu,
 } from '../../';
+import { MEDIA_VARIANTS } from './constants';
 
-const Container = styled.section`
+const MediaRectangle = styled.section`
   width: 64px;
   height: 114px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
@@ -47,8 +48,15 @@ const Container = styled.section`
   position: relative;
 `;
 
+const MediaCircle = styled(MediaRectangle)`
+  border-radius: 100px;
+  height: 54px;
+  width: 54px;
+`;
+
 const ImageWrapper = styled.div`
-  border-radius: 4px;
+  border-radius: ${({ variant }) =>
+    variant === MEDIA_VARIANTS.CIRCLE ? 100 : 4}px;
   overflow: hidden;
   height: 100%;
 `;
@@ -84,6 +92,11 @@ const Button = styled(DefaultButton)`
       theme.colors.interactiveBg.secondaryHover};
   }
 `;
+
+const MediaOptions = {
+  [MEDIA_VARIANTS.RECTANGLE]: MediaRectangle,
+  [MEDIA_VARIANTS.CIRCLE]: MediaCircle,
+};
 
 const LoadingDots = styled.div`
   position: absolute;
@@ -139,7 +152,7 @@ const MediaInput = forwardRef(function Media(
     alt = __('Preview image', 'web-stories'),
     value,
     ariaLabel = __('Choose an image', 'web-stories'),
-    size,
+    variant = MEDIA_VARIANTS.RECTANGLE,
     isLoading,
     menuOptions = [],
     onMenuOption,
@@ -155,13 +168,16 @@ const MediaInput = forwardRef(function Media(
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
+
+  const StyledMedia = MediaOptions[variant];
+  console.log(variant);
   return (
-    <Container ref={ref} className={className} size={size} {...rest}>
-      <ImageWrapper>
+    <StyledMedia ref={ref} className={className} {...rest}>
+      <ImageWrapper variant={variant}>
         {value && !isMultiple ? (
           <Img src={value} alt={alt} />
         ) : (
-          <DefaultImage size={size} />
+          <DefaultImage />
         )}
         {isLoading && <LoadingDots />}
       </ImageWrapper>
@@ -193,7 +209,7 @@ const MediaInput = forwardRef(function Media(
           menuStylesOverride={menuStyleOverride}
         />
       )}
-    </Container>
+    </StyledMedia>
   );
 });
 
@@ -202,7 +218,6 @@ MediaInput.propTypes = {
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
-  size: PropTypes.number,
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,
   isLoading: PropTypes.bool,

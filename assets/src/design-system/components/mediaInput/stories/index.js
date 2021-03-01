@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
 
 /**
@@ -27,7 +25,8 @@ import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../../../theme';
 import MediaInput from '..';
 import { getOptions } from '../../menu/utils';
-import {basicDropDownOptions, shortDropDownOptions} from '../../../storybookUtils/sampleData';
+import { shortDropDownOptions } from '../../../storybookUtils/sampleData';
+import { MEDIA_VARIANTS } from '../constants';
 import image from './image.jpg';
 
 export default {
@@ -40,7 +39,6 @@ const Container = styled.div`
   height: 400px;
   padding: 30px;
 `;
-const _basicDropDownOptions = getOptions(basicDropDownOptions);
 const _shortDropDownOptions = getOptions(shortDropDownOptions);
 
 // Override light theme because this component is only set up for dark theme right now
@@ -50,6 +48,13 @@ export const _default = () => (
       <MediaInput
         value={image}
         onChange={() => {}}
+        menuOptions={_shortDropDownOptions}
+        onMenuOption={() => {}}
+      />
+      <MediaInput
+        value={image}
+        onChange={() => {}}
+        variant={MEDIA_VARIANTS.CIRCLE}
         menuOptions={_shortDropDownOptions}
         onMenuOption={() => {}}
       />
