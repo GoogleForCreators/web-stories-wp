@@ -70,8 +70,9 @@ trait Assets {
 	public function register_script( $script_handle, array $script_dependencies = [] ) {
 		$base_script_path = WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/';
 
-		$asset   = $this->get_asset_metadata( $script_handle );
-		$version = $asset['version'];
+		$asset     = $this->get_asset_metadata( $script_handle );
+		$version   = $asset['version'];
+		$in_footer = true;
 
 		// Register any chunks of $script_handle first.
 		foreach ( $asset['js'] as $script_chunk ) {
@@ -80,7 +81,7 @@ trait Assets {
 				$base_script_path . $script_chunk . '.js',
 				[],
 				$version,
-				true
+				$in_footer
 			);
 		}
 		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
@@ -90,7 +91,7 @@ trait Assets {
 			$base_script_path . $script_handle . '.js',
 			$dependencies,
 			$version,
-			false
+			$in_footer
 		);
 
 		wp_set_script_translations( $script_handle, 'web-stories' );
