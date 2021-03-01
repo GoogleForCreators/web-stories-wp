@@ -31,11 +31,11 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons,
-  Menu,
-  MULTIPLE_VALUE,
-  Tooltip,
-} from '../../';
+} from '../button';
+import { Landscape, Pencil } from '../../icons';
+import { Menu } from '../menu';
+import { Tooltip } from '../tooltip';
+import { MULTIPLE_VALUE } from '../../utils';
 import { MEDIA_VARIANTS } from './constants';
 
 const MediaRectangle = styled.section`
@@ -67,7 +67,7 @@ const DefaultImageWrapper = styled.div`
   padding: 8px;
 `;
 
-const DefaultImage = styled(Icons.Landscape)`
+const DefaultImage = styled(Landscape)`
   width: 100%;
   height: 100%;
   display: block;
@@ -151,7 +151,7 @@ const LoadingDots = styled.div`
   }
 `;
 
-const MediaInput = forwardRef(function Media(
+export const MediaInput = forwardRef(function Media(
   {
     className,
     onBlur,
@@ -202,7 +202,7 @@ const MediaInput = forwardRef(function Media(
           aria-expanded={isMenuOpen}
           {...rest}
         >
-          <Icons.Pencil />
+          <Pencil />
         </Button>
       </Tooltip>
       {isMenuOpen && (
@@ -238,5 +238,3 @@ MediaInput.propTypes = {
   openMediaPicker: PropTypes.func.isRequired,
   menuProps: PropTypes.object,
 };
-
-export default MediaInput;
