@@ -16,8 +16,7 @@
 /**
  * Internal dependencies
  */
-import { default as Test } from './test';
-const stickers = {
-  Test,
+import { default as SampleSticker } from './sampleSticker';
+export default {
+  SampleSticker,
 };
-export default stickers;

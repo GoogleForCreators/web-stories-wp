@@ -16,5 +16,27 @@
 /**
  * Internal dependencies
  */
-import MediaEdit from '../media/edit';
-export default MediaEdit;
+import StoryPropTypes from '../../types';
+import stickers from './stickers';
+
+const style = {
+  display: 'block',
+  position: 'absolute',
+  top: 0,
+  height: '100%',
+  width: 'auto',
+};
+
+const Noop = () => null;
+
+function StickerDisplay({ element }) {
+  const { sticker } = element;
+  const Sticker = stickers[sticker?.type] || Noop;
+  return <Sticker style={style} />;
+}
+
+StickerDisplay.propTypes = {
+  element: StoryPropTypes.elements.sticker.isRequired,
+};
+
+export default StickerDisplay;
