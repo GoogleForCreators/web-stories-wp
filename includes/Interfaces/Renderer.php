@@ -41,12 +41,16 @@ interface Renderer {
 	 * Initial actions to setup the renderer like,
 	 * adding hooks and setting up states.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return void
 	 */
 	public function init();
 
 	/**
 	 * Render the markup for story.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $args Array of rendering related arguments.
 	 *
@@ -56,6 +60,8 @@ interface Renderer {
 
 	/**
 	 * Render a single story markup.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return mixed
 	 */

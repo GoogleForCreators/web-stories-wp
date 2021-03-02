@@ -34,6 +34,8 @@ class BaseFieldState implements FieldState {
 	/**
 	 * Image align FieldState.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function image_align() {
@@ -48,6 +50,8 @@ class BaseFieldState implements FieldState {
 
 	/**
 	 * Excerpt FieldState.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return Field
 	 */
@@ -64,6 +68,8 @@ class BaseFieldState implements FieldState {
 	/**
 	 * Author Field State.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function author() {
@@ -78,6 +84,8 @@ class BaseFieldState implements FieldState {
 
 	/**
 	 * Date field state.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return Field
 	 */
@@ -94,6 +102,8 @@ class BaseFieldState implements FieldState {
 	/**
 	 * Archive link field state.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function archive_link() {
@@ -108,6 +118,8 @@ class BaseFieldState implements FieldState {
 
 	/**
 	 * Title field state.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return Field
 	 */
@@ -124,6 +136,8 @@ class BaseFieldState implements FieldState {
 	/**
 	 * Sharp corners field state.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function sharp_corners() {
@@ -139,6 +153,8 @@ class BaseFieldState implements FieldState {
 	/**
 	 * Circle size field.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return BaseField
 	 */
 	public function circle_size() {
@@ -153,6 +169,8 @@ class BaseFieldState implements FieldState {
 
 	/**
 	 * Prepare a field object.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $args Arguments to build field.
 	 *

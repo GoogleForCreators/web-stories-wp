@@ -44,7 +44,7 @@ class Generic_Renderer extends Renderer {
 	/**
 	 * Perform initial setup for object.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -58,7 +58,7 @@ class Generic_Renderer extends Renderer {
 	/**
 	 * Renders the stories output for given attributes.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
 	 *
@@ -98,7 +98,7 @@ class Generic_Renderer extends Renderer {
 		 *
 		 * The dynamic portion of the hook `$this->get_view_type()` refers to the story view type.
 		 *
-		 * @since 1.3.0
+		 * @since 1.5.0
 		 *
 		 * @param string $content Stories content.
 		 */

@@ -43,12 +43,16 @@ trait Stories_Script_Data {
 	/**
 	 * Script handle.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @var string
 	 */
 	private $script_handle;
 
 	/**
 	 * Add the data via wp_localize_script.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -64,6 +68,8 @@ trait Stories_Script_Data {
 
 	/**
 	 * Put some tinymce related data on the page.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return array
 	 */

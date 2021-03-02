@@ -39,12 +39,16 @@ class Story_Query {
 	/**
 	 * Story attributes
 	 *
+	 * @since 1.5.0
+	 *
 	 * @var array An array of story attributes.
 	 */
 	protected $story_attributes = [];
 
 	/**
 	 * Story query arguments.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @var array An array of query arguments.
 	 */
@@ -53,12 +57,16 @@ class Story_Query {
 	/**
 	 * Renderer object.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @var Renderer
 	 */
 	public $renderer;
 
 	/**
 	 * Class constructor
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $story_attributes          {
 	 *                                         An array of story attributes.
@@ -85,6 +93,8 @@ class Story_Query {
 	/**
 	 * Retrieves an array of the latest stories, or Stories matching the given criteria.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return array An array of Story posts.
 	 */
 	public function get_stories() {
@@ -98,6 +108,8 @@ class Story_Query {
 
 	/**
 	 * Instantiates the renderer classes based on the view type.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return Renderer Renderer Instance.
 	 */
@@ -125,6 +137,8 @@ class Story_Query {
 	/**
 	 * Renders the stories output.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return string
 	 */
 	public function render() {
@@ -136,6 +150,8 @@ class Story_Query {
 
 	/**
 	 * Gets an array of story attributes.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return array An array of story attributes.
 	 */
@@ -161,6 +177,8 @@ class Story_Query {
 
 	/**
 	 * Returns arguments to be passed to the WP_Query object initialization.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return array An array of query arguments.
 	 */

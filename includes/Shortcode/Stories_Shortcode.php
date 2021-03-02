@@ -45,6 +45,8 @@ class Stories_Shortcode {
 	/**
 	 * Initializes the Stories shortcode.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -56,6 +58,8 @@ class Stories_Shortcode {
 	 *
 	 * This will render the stories according to given
 	 * shortcode attributes.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $attrs Shortcode attributes.
 	 *
@@ -91,6 +95,8 @@ class Stories_Shortcode {
 	/**
 	 * Prepare story attributes.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param array $attributes Shortcode attributes.
 	 *
 	 * @return array Attributes to pass to Story_Query class.
@@ -115,6 +121,8 @@ class Stories_Shortcode {
 
 	/**
 	 * Prepare story arguments.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $attributes Array of arguments for Story Query.
 	 *

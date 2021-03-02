@@ -33,6 +33,8 @@ final class CircleView extends BaseFieldState {
 	/**
 	 * Title field.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
 	public function title() {

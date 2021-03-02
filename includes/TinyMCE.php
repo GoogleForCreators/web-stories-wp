@@ -42,6 +42,8 @@ class TinyMCE {
 	/**
 	 * Initialization actions.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -58,6 +60,8 @@ class TinyMCE {
 	/**
 	 * Add web stories button in TinyMCE editor.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param array $buttons Array of TinyMCE buttons.
 	 *
 	 * @return array
@@ -71,6 +75,8 @@ class TinyMCE {
 
 	/**
 	 * Register web stories plugin for tinycemce editor.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $plugins Array of TinyMCE plugin scripts.
 	 *
@@ -86,6 +92,8 @@ class TinyMCE {
 	/**
 	 * Enqueue scripts related to tinymce button for web stories.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return void
 	 */
 	public function web_stories_tinymce_scripts() {
@@ -95,6 +103,8 @@ class TinyMCE {
 	/**
 	 * Root element for tinymce editor.
 	 * This is useful for performing some react operations.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -106,6 +116,8 @@ class TinyMCE {
 
 	/**
 	 * Check if current screen is block editor.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return bool
 	 */

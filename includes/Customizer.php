@@ -42,12 +42,16 @@ class Customizer {
 	/**
 	 * Customizer section slug.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @var string
 	 */
 	const SECTION_SLUG = 'web_story_options';
 
 	/**
 	 * Customizer web stories options key.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -56,12 +60,16 @@ class Customizer {
 	/**
 	 * WP_Customize_Manager instance.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @var \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
 	private $wp_customize;
 
 	/**
 	 * Initializes the customizer logic.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -71,6 +79,8 @@ class Customizer {
 
 	/**
 	 * Registers web stories customizer settings.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 *
@@ -412,6 +422,8 @@ class Customizer {
 	/**
 	 * Gets the view type choices.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param array $view_type View type to check.
 	 *
 	 * @return array An array of view type choices.
@@ -428,6 +440,8 @@ class Customizer {
 
 	/**
 	 * Gets the order choices.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $order An array of order support.
 	 *
@@ -446,6 +460,8 @@ class Customizer {
 	/**
 	 * Checks whether the given option is enabled or not.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param string $option_name The name of the option to check.
 	 *
 	 * @return boolean Returns true if the given option is enabled otherwise false.
@@ -458,6 +474,8 @@ class Customizer {
 	/**
 	 * Verifies the current view type.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param string $view_type View type to check.
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
@@ -469,6 +487,8 @@ class Customizer {
 
 	/**
 	 * Validates the number of story setting value.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param \WP_Error $validity WP_Error object.
 	 * @param int       $value    Value to be validated.
@@ -487,6 +507,8 @@ class Customizer {
 	/**
 	 * Validates the number of columns setting value.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @param \WP_Error $validity WP_Error object.
 	 * @param int       $value Value to be validated.
 	 *
@@ -503,6 +525,8 @@ class Customizer {
 
 	/**
 	 * Renders web stories based on the customizer selected options.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)

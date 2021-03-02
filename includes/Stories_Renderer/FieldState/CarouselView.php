@@ -33,6 +33,8 @@ final class CarouselView extends BaseFieldState {
 	/**
 	 * Author field.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
 	public function author() {
