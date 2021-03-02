@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Cross } from '../../icons';
+import { themeHelpers } from '../../theme';
 import {
   getOpaqueColor,
   presetHasGradient,
@@ -67,6 +68,7 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
       opacity: 0.4;
       cursor: default;
     `}
+  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
   ::after {
     content: '';
