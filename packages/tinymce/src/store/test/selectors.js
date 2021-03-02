@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import * as selector from '../../store/selectors';
+import * as selector from '../selectors';
 
 jest.mock('@wordpress/data', () => ({
   select: jest.fn(() => ({

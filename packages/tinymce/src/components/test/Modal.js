@@ -22,7 +22,7 @@ import renderer from 'react-test-renderer';
  * Internal dependencies
  */
 import { isView } from '../../utils';
-import WebStoriesModal from '../../components/Modal';
+import WebStoriesModal from '../Modal';
 
 jest.mock('@wordpress/data', () => ({
   select: jest.fn(() => ({

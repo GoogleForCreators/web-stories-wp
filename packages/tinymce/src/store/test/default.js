@@ -51,7 +51,7 @@ jest.mock('../../utils/globals', () => ({
 /**
  * Internal dependencies
  */
-import DEFAULT_STATE from '../../store/default';
+import DEFAULT_STATE from '../default';
 
 describe('Test default state for store', () => {
   it('compare default state', () => {
