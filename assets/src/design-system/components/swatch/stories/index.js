@@ -35,7 +35,7 @@ const Container = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 30% repeat(6, 10%);
+  grid-template-columns: 30% repeat(4, 15%);
   margin-bottom: 16px;
   text-align: right;
 `;
@@ -131,28 +131,19 @@ const DEMO_COLORS = [
 
 const VARIANTS = [
   {
-    variant: 'Large, regular',
+    variant: 'Regular',
   },
   {
-    variant: 'Large, disabled',
+    variant: 'Disabled',
     isDisabled: true,
   },
   {
-    variant: 'Large, cross',
+    variant: 'With cross',
     Icon: Cross,
   },
   {
-    variant: 'Large, pipette',
+    variant: 'With pipette',
     Icon: Pipette,
-  },
-  {
-    variant: 'Small, regular',
-    isSmall: true,
-  },
-  {
-    variant: 'Small, disabled',
-    isSmall: true,
-    isDisabled: true,
   },
 ];
 
