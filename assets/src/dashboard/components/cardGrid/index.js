@@ -28,15 +28,15 @@ import { PageSizePropType } from '../../types';
 import { ThemeGlobals, themeHelpers } from '../../../design-system';
 import { GRID_SPACING } from '../../constants';
 
-const DashboardGrid = styled.div(
-  ({ columnHeight, columnWidth }) => `
+const DashboardGrid = styled.div`
   display: grid;
   width: 100%;
   grid-column-gap: ${GRID_SPACING.COLUMN_GAP}px;
-  grid-row-gap: ${GRID_SPACING.ROW_GAP}px;;
-  grid-template-columns:
-    repeat(auto-fill, ${columnWidth}px);
-  grid-template-rows: minmax(${columnHeight}px, auto);
+  grid-row-gap: ${GRID_SPACING.ROW_GAP}px;
+  grid-template-columns: ${({ columnWidth }) => `
+    repeat(auto-fill, ${columnWidth}px)`};
+  grid-template-rows: ${({ columnHeight }) =>
+    `minmax(${columnHeight}px, auto)`};
   scroll-margin-top: 30vh;
 
   ${({ theme }) => css`
@@ -44,8 +44,7 @@ const DashboardGrid = styled.div(
       ${themeHelpers.focusCSS(theme.colors.border.focus)};
     }
   `};
-`
-);
+`;
 DashboardGrid.propTypes = {
   columnHeight: PropTypes.number.isRequired,
   columnWidth: PropTypes.number.isRequired,

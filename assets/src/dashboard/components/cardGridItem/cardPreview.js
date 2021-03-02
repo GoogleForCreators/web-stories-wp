@@ -69,8 +69,7 @@ const EditControls = styled.div`
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 
   ${({ theme }) => css`
-    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
-      opacity: 1;
+    &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
       ${themeHelpers.focusCSS(theme.colors.border.focus)};
     }
   `};

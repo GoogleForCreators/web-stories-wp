@@ -34,17 +34,17 @@ import InlineInputForm from '../inlineInputForm';
 const StyledCardTitle = styled.div`
   padding: 12px 4px 0 4px;
   display: inline-block;
-  overflow: hidden;
+  max-width: calc(100% - 20px);
 `;
 
 const TitleStoryLink = styled(Headline).attrs(() => ({
   as: 'a',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
 }))`
+  width: 100%;
   display: inline-block;
-  max-width: 100%;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 `;
 
