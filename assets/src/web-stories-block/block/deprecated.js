@@ -130,6 +130,9 @@ const v2 = {
   },
 };
 
-const deprecated = [v1, v2];
+// The deprecations in the array should be in reverse chronological order.
+// This allows the block editor to attempt to apply the most recent and likely deprecations first,
+// avoiding unnecessary and expensive processing.
+const deprecated = [v2, v1];
 
 export default deprecated;
