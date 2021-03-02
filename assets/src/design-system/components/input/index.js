@@ -264,6 +264,7 @@ export const InputPropTypes = {
   suffix: PropTypes.node,
   unit: PropTypes.string,
   value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
 };
 
 Input.propTypes = InputPropTypes;
