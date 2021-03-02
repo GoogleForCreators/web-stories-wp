@@ -85,6 +85,11 @@ const AlignmentButton = styled(Button).attrs({
   }
 `;
 
+const SpecialPanel = styled(Panel)`
+  background-color: ${({ theme }) => theme.colors.opacity.black24};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
+`;
+
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
   // Set boundRect with pageSize when there is only element selected
@@ -188,7 +193,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <Panel
+    <SpecialPanel
       name="alignment"
       canCollapse={false}
       ariaLabel={__('Alignment', 'web-stories')}
@@ -280,7 +285,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
           </AlignmentButton>
         </Tooltip>
       </ElementRow>
-    </Panel>
+    </SpecialPanel>
   );
 }
 
