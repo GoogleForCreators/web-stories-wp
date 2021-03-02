@@ -37,6 +37,7 @@ import {
   Icons,
   Modal,
   Text,
+  THEME_CONSTANTS,
   useResizeEffect,
 } from '../../../../design-system';
 import { WPBODY_ID } from '../../../constants';
@@ -59,9 +60,8 @@ const CloseButton = styled(Button)`
 // 54 getting subtracted from height is the size of the close button + margin. The Iframe wants specifics in safari, this is important to make sure the close button is visible.
 const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
-
-  height: ${({ dimensions }) => `${dimensions.height - 54}px`};
-  max-height: calc(100vh - 54px);
+  min-height: 90vh;
+  height: calc(100% - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
 
   &:focus {
     border: ${({ theme }) => theme.DEPRECATED_THEME.borders.bluePrimary};
@@ -187,7 +187,7 @@ const PreviewStory = ({ story, handleClose }) => {
       isOpen
       onClose={handleClose}
       contentStyles={{
-        height: `${modalDimensions.height}px`,
+        height: `calc(100% - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px)`,
         width: `${modalDimensions.width}px`,
         display: 'flex',
         flexDirection: 'column',

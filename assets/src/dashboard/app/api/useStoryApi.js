@@ -41,6 +41,7 @@ import storyReducer, {
 import { addQueryArgs } from '../../../design-system';
 import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
 import { ERRORS } from '../textContent';
+import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -251,12 +252,15 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           story: {
             status: status || 'auto-draft',
             title: title,
-            author: author || 1,
+            author: { id: author || 1, name: '' },
             slug: title,
             date: created || Date.now().toString(),
             modified: modified || Date.now().toString(),
             featuredMedia: {
               id: 0,
+              url: '',
+              width: 1,
+              height: 1,
             },
             password: password || '',
             excerpt: excerpt || '',
@@ -271,10 +275,6 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         });
 
         const preppedStoryProps = reshapeStoryPreview(storyProps);
-
-        const getStoryMarkup = await import(
-          /* webpackChunkName: "chunk-getStoryMarkup" */ '../../../edit-story/output/utils/getStoryMarkup'
-        );
 
         const markup = await getStoryMarkup(
           preppedStoryProps.story,
