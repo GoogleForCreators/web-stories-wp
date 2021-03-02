@@ -28,6 +28,7 @@ export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
 export { Search } from './search';
 export * from './slider';
+export * from './swatch';
 export { Snackbar } from './snackbar';
 export * from './tooltip';
 export * from './keyboard';

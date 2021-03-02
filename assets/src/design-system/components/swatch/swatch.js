@@ -25,11 +25,11 @@ import PropTypes from 'prop-types';
  */
 import { themeHelpers } from '../../theme';
 import {
+  generatePatternStyles,
   getOpaqueColor,
-  presetHasGradient,
-  presetHasOpacity,
-} from '../../../edit-story/components/panels/design/preset/utils';
-import generatePatternStyles from '../../../edit-story/utils/generatePatternStyles';
+  hasGradient,
+  hasOpacity,
+} from '../../utils/patterns';
 
 const RADIUS_LARGE = 32;
 const RADIUS_SMALL = 24;
@@ -137,14 +137,16 @@ function Swatch({
   if (!pattern) {
     return null;
   }
-  const hasTransparency = presetHasOpacity(pattern);
-  const hasGradient = presetHasGradient(pattern);
-  const opaquePattern = hasTransparency ? getOpaqueColor(pattern) : pattern;
+  const swatchHasTransparency = hasOpacity(pattern);
+  const swatchIsGradient = hasGradient(pattern);
+  const opaquePattern = swatchHasTransparency
+    ? getOpaqueColor(pattern)
+    : pattern;
   // Small swatches and gradient swatches are never split.
-  const displaySplit = !isSmall && !hasGradient && hasTransparency;
+  const displaySplit = !isSmall && !swatchIsGradient && swatchHasTransparency;
   return (
     <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
-      {hasTransparency && <Transparent />}
+      {swatchHasTransparency && <Transparent />}
       <SwatchItem
         pattern={pattern}
         disabled={isDisabled}
