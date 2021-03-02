@@ -44,7 +44,7 @@ jest.mock('../../utils/globals', () => ({
   },
 }));
 
-import * as Utils from '../index';
+import * as Utils from '../';
 
 /**
  * Test that the current view is grid view.
