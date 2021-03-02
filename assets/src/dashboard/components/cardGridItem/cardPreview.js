@@ -94,6 +94,7 @@ const getActionAttributes = (targetAction) =>
     ? {
         href: resolveRoute(targetAction),
         isLink: true,
+        as: 'a',
       }
     : { onClick: targetAction };
 
@@ -213,7 +214,6 @@ const CardPreviewContainer = ({
               size={BUTTON_SIZES.SMALL}
               {...getActionAttributes(centerAction.targetAction)}
               aria-label={centerAction.ariaLabel}
-              as="a"
             >
               {centerAction.label}
             </Button>
@@ -228,7 +228,6 @@ const CardPreviewContainer = ({
               isDisabled={!bottomAction.targetAction}
               type={BUTTON_TYPES.PRIMARY}
               size={BUTTON_SIZES.SMALL}
-              as="a"
             >
               {bottomAction.label}
             </Button>
