@@ -528,7 +528,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				>
 				</amp-img>
 			<?php } else { ?>
-				<img src="<?php echo esc_url( $poster_url ); ?>" alt="<?php echo esc_attr( $story_data->get_title() ); ?>">
+				<img
+					src="<?php echo esc_url( $poster_url ); ?>"
+					alt="<?php echo esc_attr( $story_data->get_title() ); ?>"
+					width="<?php echo esc_attr( $this->width ); ?>"
+					height="<?php echo esc_attr( $this->height ); ?>"
+				>
 			<?php } ?>
 		</div>
 		<?php
