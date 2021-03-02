@@ -29,7 +29,7 @@ import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 const Note = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   text-align: center;
-  margin-top: 150px;
+  margin: 150px 0;
 `;
 
 function NoSelectionPanel() {
