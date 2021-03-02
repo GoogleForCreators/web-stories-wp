@@ -43,7 +43,7 @@ trait Amp {
 	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
-	function is_amp() {
+	public function is_amp() {
 		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			return true;
 		}
