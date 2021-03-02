@@ -77,7 +77,13 @@ const AlignmentButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.SQUARE,
   type: BUTTON_TYPES.TERTIARY,
   size: BUTTON_SIZES.SMALL,
-})``;
+})`
+  position: relative;
+
+  :focus {
+    z-index: 1;
+  }
+`;
 
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
