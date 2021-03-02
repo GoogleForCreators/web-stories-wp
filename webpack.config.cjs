@@ -20,6 +20,7 @@
 const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -149,7 +150,7 @@ const sharedConfig = {
     ].filter(Boolean),
   },
   plugins: [
-    process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
+    process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
     new DependencyExtractionWebpackPlugin({
       requestToExternal,
     }),
@@ -184,56 +185,65 @@ const sharedConfig = {
   },
 };
 
-const storiesEditor = {
+// Template for html-webpack-plugin to generate JS/CSS chunk manifests in PHP.
+const templateContent = ({ htmlWebpackPlugin }) => {
+  // Extract filename without extension from arrays of JS and CSS chunks.
+  // E.g. "../css/some-chunk.css" -> "some-chunk"
+  const filenameOf = (pathname) =>
+    pathname.substr(pathname.lastIndexOf('/') + 1);
+
+  const chunkName = htmlWebpackPlugin.options.chunks[0];
+  const omitPrimaryChunk = (f) => f != chunkName;
+
+  const js = htmlWebpackPlugin.files.js
+    .map((pathname) => {
+      const f = filenameOf(pathname);
+      return f.substring(0, f.length - '.js'.length);
+    })
+    .filter(omitPrimaryChunk);
+
+  const css = htmlWebpackPlugin.files.css
+    .map((pathname) => {
+      const f = filenameOf(pathname);
+      return f.substring(0, f.length - '.css'.length);
+    })
+    .filter(omitPrimaryChunk);
+
+  return `<?php return array(
+    'css' => ${JSON.stringify(css)},
+    'js' => ${JSON.stringify(js)});`;
+};
+
+const editorAndDashboard = {
   ...sharedConfig,
   entry: {
     'edit-story': './assets/src/edit-story/index.js',
-  },
-  plugins: [
-    ...sharedConfig.plugins,
-    new WebpackBar({
-      name: 'Stories Editor',
-      color: '#fddb33',
-    }),
-  ],
-  optimization: {
-    ...sharedConfig.optimization,
-    splitChunks: {
-      cacheGroups: {
-        stories: {
-          name: 'edit-story',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
-  },
-};
-
-const dashboard = {
-  ...sharedConfig,
-  entry: {
     'stories-dashboard': './assets/src/dashboard/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
     new WebpackBar({
-      name: 'Dashboard',
-      color: '#ade2cd',
+      name: 'Editor & Dashboard',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'edit-story.chunks.php',
+      inject: false, // Don't inject default <script> tags, etc.
+      minify: false, // PHP not HTML so don't attempt to minify.
+      templateContent,
+      chunks: ['edit-story'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'stories-dashboard.chunks.php',
+      inject: false, // Don't inject default <script> tags, etc.
+      minify: false, // PHP not HTML so don't attempt to minify.
+      templateContent,
+      chunks: ['stories-dashboard'],
     }),
   ],
   optimization: {
     ...sharedConfig.optimization,
     splitChunks: {
-      cacheGroups: {
-        stories: {
-          name: 'stories-dashboard',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
+      chunks: 'all',
     },
   },
 };
@@ -245,7 +255,7 @@ const webStoriesScripts = {
     'carousel-view': './packages/stories-carousel/src/index.js',
   },
   plugins: [
-    process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
+    process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
     new DependencyExtractionWebpackPlugin({
       injectPolyfill: true,
     }),
@@ -358,8 +368,7 @@ const storiesMCEButton = {
 };
 
 module.exports = [
-  storiesEditor,
-  dashboard,
+  editorAndDashboard,
   activationNotice,
   webStoriesBlock,
   webStoriesScripts,
