@@ -26,6 +26,8 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// TODO: Use https://github.com/webdiscus/webpack-remove-empty-scripts for webpacck 5
+const RemoveEmptyScriptsPlugin = require('webpack-fix-style-only-entries');
 
 /**
  * WordPress dependencies
@@ -303,6 +305,7 @@ const webStoriesBlock = {
       name: 'Web Stories Block',
       color: '#357BB5',
     }),
+    new RemoveEmptyScriptsPlugin(),
   ].filter(Boolean),
   optimization: {
     ...sharedConfig.optimization,
