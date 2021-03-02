@@ -15,9 +15,14 @@
   top: 46px;
 }
 
+/* amp-lightbox needs to have z-index to render on top of other elements in the page. */
+.web-stories-list__lightbox-wrapper amp-lightbox,
+.web-stories-list__lightbox.show {
+  z-index: 9999;
+}
+
 .web-stories-list__lightbox.show {
   left: 0;
-  z-index: 9999;
   opacity: 1;
 }
 

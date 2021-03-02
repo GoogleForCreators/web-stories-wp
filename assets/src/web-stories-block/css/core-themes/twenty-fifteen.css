@@ -6,6 +6,11 @@
 }
 
 @media screen and (min-width: 59.6875em) {
+  .web-stories-theme-header-section {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
   .web-stories-theme-header-section
     .web-stories-list
     .web-stories-list__inner-wrapper {

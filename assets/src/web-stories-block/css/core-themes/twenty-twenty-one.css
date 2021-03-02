@@ -19,7 +19,7 @@
   }
 
   /* Carousel arrows were visible over primary navigation menu on mobile. */
-  .has-web-stories.primary-navigation-open .web-stories-theme-header-section {
-    z-index: 0;
+  .lock-scrolling .site {
+    z-index: 10;
   }
 }
