@@ -202,15 +202,16 @@
     "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^4.3.0",
     "webpack-cli": "^4.5.0",
-    "webpack-fix-style-only-entries": "^0.6.1",
     "webpackbar": "^4.0.0"
   },
   "scripts": {
     "build": "npm-run-all build:*",
     "prebuild:js": "rm -rf assets/css/* assets/js/*",
     "build:js": "NODE_ENV=production webpack --config webpack.config.cjs",
+    "postbuild:js": "rm -rf assets/js/web-stories-list-styles* assets/js/web-stories-theme-style*",
     "predev": "rm -rf assets/css/* assets/js/*",
     "dev": "webpack --config webpack.config.cjs --watch",
+    "postdev": "rm -rf assets/js/web-stories-list-styles* assets/js/web-stories-theme-style*",
     "env:start": "./bin/local-env/start.sh",
     "env:stop": "./bin/local-env/stop.sh",
     "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",
