@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-
 export const KEYS = {
   DOWN: 'ArrowDown',
   LEFT: 'ArrowLeft',
