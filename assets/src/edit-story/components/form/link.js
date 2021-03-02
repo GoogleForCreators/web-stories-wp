@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -36,21 +35,16 @@ const MIN_MAX = {
   },
 };
 
-const Error = styled.span`
-  font-size: 12px;
-  line-height: 16px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
-`;
-
 function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
   const isValid = isValidUrl(withProtocol(value || ''));
+  const hasError = value.length > 0 && !isValid;
   return (
     <>
       {description && <HelperText>{description}</HelperText>}
       <Row>
         <Input
           placeholder={__('Web address', 'web-stories')}
-          onChange={onChange}
+          onChange={(evt) => onChange(evt.target.value)}
           onBlur={() => {
             const urlWithProtocol = withProtocol(value);
             if (urlWithProtocol !== value) {
@@ -64,14 +58,11 @@ function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
           value={value || ''}
           minLength={MIN_MAX.URL.MIN}
           maxLength={MIN_MAX.URL.MAX}
+          hasError={hasError}
+          hint={hasError ? __('Invalid web address.', 'web-stories') : null}
           {...rest}
         />
       </Row>
-      {value.length > 0 && !isValid && (
-        <Row>
-          <Error>{__('Invalid web address.', 'web-stories')}</Error>
-        </Row>
-      )}
     </>
   );
 }
