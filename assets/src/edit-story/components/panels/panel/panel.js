@@ -36,6 +36,7 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   position: relative;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
 `;
 
 function Panel({
