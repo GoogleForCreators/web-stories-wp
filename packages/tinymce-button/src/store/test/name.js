@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import name from '../../store/name';
+import name from '../name';
 
 /**
  * Test the store name is string and its value.

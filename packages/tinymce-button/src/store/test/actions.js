@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import * as actions from '../../store/actions';
+import * as actions from '../actions';
 
 describe("Test actions' returned object", () => {
   describe('Test set settings actions', () => {

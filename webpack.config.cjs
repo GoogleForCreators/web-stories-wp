@@ -343,7 +343,7 @@ const widgetScript = {
 const storiesMCEButton = {
   ...sharedConfig,
   entry: {
-    'web-stories-button': './assets/src/tinymce/web-stories.js',
+    'web-stories-button': './packages/tinymce-button/src/index.js',
   },
   plugins: [
     new MiniCssExtractPlugin({

@@ -16,13 +16,12 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import renderer from 'react-test-renderer';
 
 /**
  * Internal dependencies
  */
-import TinyMCEToggle from '../../../components/controls/Toggle';
+import TinyMCEToggle from '../../controls/Toggle';
 
 describe('compare TinyMCEToggle snapshots', () => {
   it('tinyMCEToggle control with readonly attrs true', () => {
