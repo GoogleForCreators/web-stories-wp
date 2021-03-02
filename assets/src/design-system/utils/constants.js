@@ -27,4 +27,3 @@ export const KEYS = {
 };
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';
-export const MULTIPLE_DISPLAY_VALUE = __('Mixed', 'web-stories');

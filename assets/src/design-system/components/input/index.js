@@ -34,7 +34,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../utils';
 
 const Container = styled.div`
   position: relative;
@@ -138,7 +137,7 @@ export const Input = forwardRef(
       suffix,
       unit = '',
       value,
-      placeholder,
+      isIndeterminate = false,
       ...props
     },
     ref
@@ -146,10 +145,6 @@ export const Input = forwardRef(
     const inputId = useMemo(() => id || uuidv4(), [id]);
     const inputRef = useRef(null);
     const [focused, setFocused] = useState(false);
-
-    const isMultiple = value === MULTIPLE_VALUE;
-    value = isMultiple ? '' : value;
-    placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : placeholder;
 
     useEffect(() => {
       // focus input when focused state is set
@@ -195,7 +190,6 @@ export const Input = forwardRef(
             onBlur={handleBlur}
             onFocus={handleFocus}
             value={displayedValue}
-            placeholder={placeholder}
             {...props}
           />
           {suffix && (
@@ -264,7 +258,6 @@ export const InputPropTypes = {
   suffix: PropTypes.node,
   unit: PropTypes.string,
   value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
 };
 
 Input.propTypes = InputPropTypes;

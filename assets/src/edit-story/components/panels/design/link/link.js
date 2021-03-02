@@ -35,7 +35,7 @@ import {
 import { useStory, useAPI, useCanvas } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { MULTIPLE_VALUE } from '../../../../constants';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { Media, Row, LinkInput } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
@@ -186,6 +186,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     link.url,
   ]);
 
+  const isMultipleUrl = MULTIPLE_VALUE === link.url;
+  const isMultipleDesc = MULTIPLE_VALUE === link.desc;
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <LinkInput
@@ -201,7 +203,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           setIsLinkFocused(true);
         }}
         value={link.url || ''}
-        placeholder={__('Enter an address to apply a link', 'web-stories')}
+        placeholder={
+          isMultipleUrl
+            ? MULTIPLE_DISPLAY_VALUE
+            : __('Enter an address to apply a link', 'web-stories')
+        }
+        isIndeterminate={isMultipleUrl}
         aria-label={__('Element link', 'web-stories')}
       />
       {displayLinkGuidelines && (
@@ -219,12 +226,17 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         <>
           <Row>
             <Input
-              placeholder={__('Optional description', 'web-stories')}
+              placeholder={
+                isMultipleDesc
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : __('Optional description', 'web-stories')
+              }
               onChange={({ target }) =>
                 handleChange({ desc: target.value }, !target.value /* submit */)
               }
               value={link.desc || ''}
               aria-label={__('Link description', 'web-stories')}
+              isIndeterminate={isMultipleDesc}
             />
           </Row>
           <Row spaceBetween={false}>
