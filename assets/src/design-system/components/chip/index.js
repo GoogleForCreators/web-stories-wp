@@ -25,6 +25,7 @@ import styled, { css } from 'styled-components';
  */
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
+import { focusableOutlineCSS } from '../../theme/helpers';
 
 const getChipBackgroundColor = ({ theme, active, disabled }) =>
   active && !disabled
@@ -38,7 +39,7 @@ const Infix = styled.div`
   height: 28px;
 `;
 
-const StyledChip = styled.button`
+const StyledChip = styled.span`
   padding: 0 12px;
   background: transparent;
   border: none;
@@ -47,13 +48,14 @@ const StyledChip = styled.button`
   }
 `;
 
-const ChipContainer = styled.div(
+const ChipContainer = styled.button(
   ({ theme, disabled }) => css`
     box-sizing: border-box;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     height: 36px;
+    padding: 0;
     background-color: ${getChipBackgroundColor};
     border: 1px solid
       ${disabled
@@ -64,16 +66,13 @@ const ChipContainer = styled.div(
     transition-property: background-color, border-color, height, width,
       transform;
     cursor: ${disabled ? 'default' : 'pointer'};
-
+    ${focusableOutlineCSS}
     :active {
       background-color: ${getChipBackgroundColor({
         theme,
         active: true,
         disabled,
       })};
-    }
-    :focus-within {
-      ${themeHelpers.focusCSS(theme.colors.border.focus)};
     }
     :hover:not(:active) {
       border-color: ${disabled
@@ -107,15 +106,15 @@ export const Chip = forwardRef(
       ...props
     },
     ref
-  ) => (
-    <ChipContainer disabled={disabled} {...props}>
-      {prefix && <Infix before>{prefix}</Infix>}
-      <StyledChip ref={ref} onClick={onClick} disabled={disabled}>
-        {children}
-      </StyledChip>
-      {suffix && <Infix after>{suffix}</Infix>}
-    </ChipContainer>
-  )
+  ) => {
+    return (
+      <ChipContainer ref={ref} disabled={disabled} onClick={onClick} {...props}>
+        {prefix && <Infix before>{prefix}</Infix>}
+        <StyledChip>{children}</StyledChip>
+        {suffix && <Infix after>{suffix}</Infix>}
+      </ChipContainer>
+    );
+  }
 );
 
 Chip.displayName = 'Chip';
