@@ -72,7 +72,7 @@ const transforms = {
     },
     {
       type: 'shortcode',
-      tag: 'stories',
+      tag: 'web_stories',
       attributes: {
         ...attributes,
         blockType: {
