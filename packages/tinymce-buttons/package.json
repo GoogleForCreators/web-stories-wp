@@ -19,7 +19,6 @@
     "@wordpress/i18n": "^3.17.0"
   },
   "devDependencies": {
-    "react": "^16.14.0",
     "react-test-renderer": "^16.14.0"
   }
 }
