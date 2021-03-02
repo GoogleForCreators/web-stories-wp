@@ -68,7 +68,6 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   justify-content: center;
   position: relative;
   transition: color 0.2s ease;
-  overflow: hidden;
   color: ${({ theme, isActive }) =>
     isActive ? theme.colors.fg.primary : theme.colors.fg.tertiary};
 
@@ -106,6 +105,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     transform-origin: center center;
     transition: transform 0.3s ease, color 0.2s ease;
     color: ${({ theme }) => theme.colors.fg.tertiary};
+    border-radius: ${({ theme }) => theme.borders.radius.small};
   }
 
   svg.alert {
