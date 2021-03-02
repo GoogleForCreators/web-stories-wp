@@ -67,8 +67,7 @@ class TinyMCE {
 	 * @return array
 	 */
 	public function tinymce_web_stories_button( array $buttons ) {
-
-		array_push( $buttons, 'web_stories' );
+		$buttons[] = 'web_stories';
 
 		return $buttons;
 	}
