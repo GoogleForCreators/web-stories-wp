@@ -330,7 +330,7 @@ const activationNotice = {
 const widgetScript = {
   ...sharedConfig,
   entry: {
-    'stories-widget': './assets/src/widget/stories-widget.js',
+    'stories-widget': './packages/widget/src/stories-widget.js',
   },
   plugins: [
     new WebpackBar({
