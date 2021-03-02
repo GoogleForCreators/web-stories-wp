@@ -29,6 +29,8 @@ import {
   useGlobalKeyDownEffect,
   Headline,
   THEME_CONSTANTS,
+  themeHelpers,
+  ThemeGlobals,
 } from '../../../design-system';
 import { useConfig } from '../../app';
 
@@ -65,9 +67,17 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: color 0.2s ease;
+  overflow: hidden;
   color: ${({ theme, isActive }) =>
     isActive ? theme.colors.fg.primary : theme.colors.fg.tertiary};
-  transition: color 0.2s ease;
+
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 
   :hover {
     color: ${({ theme }) => theme.colors.fg.primary};
@@ -94,7 +104,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     height: 32px;
     margin: 0 -4px;
     transform-origin: center center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, color 0.2s ease;
     color: ${({ theme }) => theme.colors.fg.tertiary};
   }
 
@@ -120,6 +130,13 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   &:active span,
   &:active svg:not(.alert) {
     color: ${({ theme }) => theme.colors.fg.primary};
+  }
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
+    svg:not(.alert) {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.tertiaryHover};
+    }
   }
 `;
 
