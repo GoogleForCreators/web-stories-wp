@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -27,10 +27,12 @@ import PropTypes from 'prop-types';
 import {
   useKeyDownEffect,
   useGlobalKeyDownEffect,
+  Headline,
+  THEME_CONSTANTS,
 } from '../../../design-system';
 import { useConfig } from '../../app';
 
-const ALERT_ICON_SIZE = 32;
+const ALERT_ICON_SIZE = 28;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -57,21 +59,28 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
   padding: 10px 0px;
-  margin: 0 20px;
+  margin: 0 16px;
   margin-bottom: -1px;
   position: relative;
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.fg.primary : theme.colors.fg.tertiary};
 
   ${({ isActive, theme }) =>
     isActive &&
-    `
-    padding-bottom: 8px;
-    border-bottom: 2px solid ${theme.colors.fg.primary};
-  `}
+    css`
+      ::after {
+        content: '';
+        position: absolute;
+        background-color: ${theme.colors.border.selection};
+        height: 2px;
+        border-radius: 1px;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+    `}
 
   svg {
     display: block;
@@ -87,17 +96,18 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     width: ${ALERT_ICON_SIZE}px;
     height: auto;
     position: absolute;
-    left: 100%;
+    right: -${ALERT_ICON_SIZE + 4}px;
     top: calc(
-      50% - ${({ isActive }) => ALERT_ICON_SIZE / 2 + 2 - (isActive ? 1 : 0)}px
+      50% - ${({ isActive }) => ALERT_ICON_SIZE / 2 + 1 - (isActive ? 1 : 0)}px
     );
     overflow: visible;
     opacity: 1;
+
     &.warning {
-      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.warning};
+      color: ${({ theme }) => theme.colors.fg.linkNormal};
     }
     &.error {
-      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.negative};
+      color: ${({ theme }) => theme.colors.fg.negative};
     }
   }
 
@@ -114,6 +124,13 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   }
 `;
 
+const TabText = styled(Headline).attrs({
+  as: 'h3',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+})`
+  color: inherit;
+`;
+
 const noop = () => {};
 
 function TabView({
@@ -124,6 +141,7 @@ function TabView({
   label = '',
   shortcut = '',
   initialTab,
+  ...rest
 }) {
   const [tab, setTab] = useState(initialTab || tabs[0]?.id);
   const { isRTL } = useConfig();
@@ -187,7 +205,7 @@ function TabView({
   useKeyDownEffect(ref, 'end', () => selectTabByIndex(-1), [selectTabByIndex]);
 
   return (
-    <Tabs aria-label={label} ref={ref}>
+    <Tabs aria-label={label} ref={ref} {...rest}>
       {tabs.map(({ id, title, icon: Icon }) => (
         <Tab
           key={id}
@@ -200,7 +218,7 @@ function TabView({
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
         >
-          {Boolean(title) && <span>{title}</span>}
+          {Boolean(title) && <TabText>{title}</TabText>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}
         </Tab>
       ))}
