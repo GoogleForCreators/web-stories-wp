@@ -294,7 +294,8 @@ const webStoriesBlock = {
     'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
     ...coreThemeBlockStyles,
   },
-  plugins: [...sharedConfig.plugins,
+  plugins: [
+    ...sharedConfig.plugins,
     new DependencyExtractionWebpackPlugin({
       injectPolyfill: true,
     }),
@@ -339,9 +340,10 @@ const activationNotice = {
 const widgetScript = {
   ...sharedConfig,
   entry: {
-    'stories-widget': './packages/widget/src/stories-widget.js',
+    'web-stories-widget': './packages/widget/src/index.js',
   },
   plugins: [
+    new DependencyExtractionWebpackPlugin({}),
     new WebpackBar({
       name: 'WP Widget Script',
       color: '#F757A5',

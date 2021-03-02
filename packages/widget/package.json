@@ -6,9 +6,9 @@
     "npm": "~7"
   },
   "exports": {
-    "default": "./src/stories-widget.js"
+    "default": "./src/index.js"
   },
-  "main": "./src/stories-widget.js",
+  "main": "./src/index.js",
   "type": "module",
   "dependencies": {
     "@wordpress/dom-ready": "^2.12.0"

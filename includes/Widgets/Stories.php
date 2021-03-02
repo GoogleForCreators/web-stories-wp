@@ -23,10 +23,11 @@
 
 namespace Google\Web_Stories\Widgets;
 
-use Google\Web_Stories\Story_Query;
 use WP_Widget;
-use function Google\Web_Stories\get_layouts;
+use Google\Web_Stories\Story_Query;
+use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Stories_Script_Data;
+use function Google\Web_Stories\get_layouts;
 
 /**
  * Class Stories
@@ -34,8 +35,8 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @package Google\Web_Stories\Widgets
  */
 class Stories extends WP_Widget {
-
 	use Stories_Script_Data;
+	use Assets;
 
 	/**
 	 * Widget args.
@@ -355,13 +356,8 @@ class Stories extends WP_Widget {
 	public function stories_widget_scripts() {
 		$this->script_handle = 'web-stories-widget';
 
-		wp_enqueue_script(
-			$this->script_handle,
-			trailingslashit( WEBSTORIES_ASSETS_URL ) . 'js/stories-widget.js',
-			[ 'jquery' ],
-			WEBSTORIES_VERSION,
-			true
-		);
+		$this->enqueue_script( $this->script_handle, [ 'jquery' ] );
+
 		$this->enqueue();
 	}
 
