@@ -241,8 +241,8 @@ const dashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    lightbox: './assets/src/lightbox/index.js',
-    'carousel-view': './assets/src/carousel/index.js',
+    lightbox: './packages/stories-lightbox/src/index.js',
+    'carousel-view': './packages/stories-carousel/src/index.js',
   },
   plugins: [
     process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
@@ -330,7 +330,7 @@ const activationNotice = {
 const widgetScript = {
   ...sharedConfig,
   entry: {
-    'stories-widget': './assets/src/widget/stories-widget.js',
+    'stories-widget': './packages/widget/src/stories-widget.js',
   },
   plugins: [
     new WebpackBar({
