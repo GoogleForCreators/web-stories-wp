@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, forwardRef, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
@@ -32,10 +32,11 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../button';
-import { Landscape, Pencil } from '../../icons';
+import { Pencil } from '../../icons';
 import { Menu } from '../menu';
 import { Tooltip } from '../tooltip';
 import { MULTIPLE_VALUE } from '../../utils';
+import { ReactComponent as Landscape } from './landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
 
 const MediaRectangle = styled.section`
@@ -105,6 +106,29 @@ const MediaOptions = {
   [MEDIA_VARIANTS.CIRCLE]: MediaCircle,
 };
 
+const dots = keyframes`
+  0%,
+  20% {
+    color: transparent;
+    text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
+  }
+  40% {
+    color: white;
+    text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
+  }
+  60% {
+    text-shadow: 6px 0 0
+        ${({ theme }) => theme.colors.standard.white},
+      12px 0 0 transparent;
+  }
+  80%,
+  100% {
+    text-shadow: 6px 0 0
+        ${({ theme }) => theme.colors.standard.white};
+      12px 0 0 ${({ theme }) => theme.colors.standard.white};
+  }
+`;
+
 const LoadingDots = styled.div`
   position: absolute;
   top: 0px;
@@ -123,31 +147,8 @@ const LoadingDots = styled.div`
     color: ${({ theme }) => theme.colors.standard.white};
     content: '.';
     font-weight: bold;
-    animation: dots 1s steps(5, end) infinite;
+    animation: ${dots} 1s steps(5, end) infinite;
     margin-left: -12px;
-  }
-
-  @keyframes dots {
-    0%,
-    20% {
-      color: transparent;
-      text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
-    }
-    40% {
-      color: white;
-      text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
-    }
-    60% {
-      text-shadow: 6px 0 0
-          ${({ theme }) => theme.colors.standard.white},
-        12px 0 0 transparent;
-    }
-    80%,
-    100% {
-      text-shadow: 6px 0 0
-          ${({ theme }) => theme.colors.standard.white};
-        12px 0 0 ${({ theme }) => theme.colors.standard.white};
-    }
   }
 `;
 

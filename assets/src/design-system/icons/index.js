@@ -81,7 +81,6 @@ export { ReactComponent as Eye } from './eye.svg';
 export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
 export { ReactComponent as Gear } from './gear.svg';
 export { ReactComponent as Keyboard } from './keyboard.svg';
-export { ReactComponent as Landscape } from './landscape.svg';
 export { ReactComponent as LetterAHeight } from './letter_a_height.svg';
 export { ReactComponent as LetterAWidth } from './letter_a_width.svg';
 export { ReactComponent as LetterBBold } from './letter_b_bold.svg';
