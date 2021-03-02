@@ -65,7 +65,6 @@ const InputContainer = styled.div(
     justify-content: space-between;
     height: 36px;
     padding: 4px 12px;
-    background-color: ${theme.colors.bg.primary};
     border: 1px solid
       ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
     border-radius: ${theme.borders.radius.small};

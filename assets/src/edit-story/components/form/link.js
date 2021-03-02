@@ -25,8 +25,8 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { isValidUrl, withProtocol } from '../../utils/url';
+import { Input } from '../../../design-system';
 import Row from './row';
-import TextInput from './text';
 import HelperText from './helperText';
 
 const MIN_MAX = {
@@ -35,12 +35,6 @@ const MIN_MAX = {
     MAX: 2048, // Based on sitemaps url limits (safe side)
   },
 };
-
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px 6px;
-  border-radius: 4px;
-  flex-grow: 1;
-`;
 
 const Error = styled.span`
   font-size: 12px;
@@ -54,17 +48,13 @@ function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
     <>
       {description && <HelperText>{description}</HelperText>}
       <Row>
-        <BoxedTextInput
+        <Input
           placeholder={__('Web address', 'web-stories')}
           onChange={onChange}
-          onBlur={(atts = {}) => {
-            const { onClear } = atts;
-            // If the onBlur is not clearing the field, add protocol.
-            if (value.length > 0 && !onClear) {
-              const urlWithProtocol = withProtocol(value);
-              if (urlWithProtocol !== value) {
-                onChange(urlWithProtocol);
-              }
+          onBlur={() => {
+            const urlWithProtocol = withProtocol(value);
+            if (urlWithProtocol !== value) {
+              onChange(urlWithProtocol);
             }
             if (onBlur) {
               onBlur();

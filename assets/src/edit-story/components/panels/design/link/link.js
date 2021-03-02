@@ -26,42 +26,30 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../../../design-system';
+import {
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  useBatchingCallback,
+} from '../../../../../design-system';
 import { useStory, useAPI, useCanvas } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
-import { Close } from '../../../../icons';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_VALUE } from '../../../../constants';
-import { Media, Row, Button, LinkInput } from '../../../form';
+import { Media, Row, LinkInput } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
-import { ExpandedTextInput, useCommonObjectValue } from '../../shared';
-import {MEDIA_VARIANTS} from "../../../../../design-system/components/mediaInput/constants";
-
-const IconText = styled.span`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
-`;
+import { useCommonObjectValue } from '../../shared';
+import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
 
 const IconInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
+  margin-left: 20px;
 `;
 
-const IconRemoveButton = styled(Button)`
-  margin-top: 6px;
-  justify-content: flex-start;
-  align-self: flex-start;
-  padding: 4px 6px;
-`;
-
-const CloseIcon = styled(Close)`
-  margin-right: 4px;
+const IconText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const Error = styled.span`
@@ -201,7 +189,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <LinkInput
-        description={__('Type an address to apply a link', 'web-stories')}
         onChange={(value) =>
           !displayLinkGuidelines &&
           handleChange({ url: value }, !value /* submit */)
@@ -214,7 +201,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           setIsLinkFocused(true);
         }}
         value={link.url || ''}
-        clear
+        placeholder={__('Enter an address to apply a link', 'web-stories')}
         aria-label={__('Element link', 'web-stories')}
       />
       {displayLinkGuidelines && (
@@ -231,7 +218,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       {displayMetaFields && (
         <>
           <Row>
-            <ExpandedTextInput
+            <Input
               placeholder={__('Optional description', 'web-stories')}
               onChange={(value) =>
                 handleChange({ desc: value }, !value /* submit */)
@@ -253,7 +240,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               menuOptions={link.icon ? ['edit', 'remove'] : []}
             />
             <IconInfo>
-              <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
+              <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                {__('Optional brand icon', 'web-stories')}
+              </IconText>
             </IconInfo>
           </Row>
         </>
