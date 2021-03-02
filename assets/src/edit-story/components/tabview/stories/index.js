@@ -41,7 +41,7 @@ const TabContent = styled.section`
   padding: 16px;
 `;
 const UnjustifiedTabView = styled(TabView)`
-  justify-content: flex-start;
+  justify-content: center;
 `;
 
 export default {

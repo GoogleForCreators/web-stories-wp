@@ -58,8 +58,8 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   cursor: pointer;
   border: none;
   background: none;
-  padding: 0;
-  margin: 10px 16px 9px;
+  padding: 0 4px;
+  margin: 10px 12px 9px;
   height: 32px;
   display: flex;
   align-items: center;
@@ -82,10 +82,9 @@ const Tab = styled.li.attrs(({ isActive }) => ({
         background-color: ${theme.colors.border.selection};
         height: 2px;
         border-radius: 1px;
-        width: 100%;
         bottom: -9px;
-        left: 0;
-        right: 0;
+        left: 4px;
+        right: 4px;
       }
     `}
 
