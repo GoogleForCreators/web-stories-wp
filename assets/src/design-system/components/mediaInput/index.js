@@ -19,7 +19,7 @@
  */
 import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState, forwardRef, useMemo } from 'react';
+import {useState, forwardRef, useMemo, useRef} from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -36,6 +36,7 @@ import { Pencil } from '../../icons';
 import { Menu } from '../menu';
 import { Tooltip } from '../tooltip';
 import { MULTIPLE_VALUE } from '../../utils';
+import { PLACEMENT, Popup } from '../popup';
 import { ReactComponent as Landscape } from './landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
 
@@ -83,7 +84,7 @@ const Img = styled.img`
 
 const menuStyleOverride = css`
   min-width: 100px;
-  margin-left: -50%;
+  margin-top: 0;
   li {
     display: block;
   }
@@ -174,6 +175,8 @@ export const MediaInput = forwardRef(function Media(
   const isMultiple = value === MULTIPLE_VALUE;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const buttonRef = useRef(null);
+
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
@@ -194,6 +197,7 @@ export const MediaInput = forwardRef(function Media(
       </ImageWrapper>
       <Tooltip title={hasMenu ? null : __('Open media picker', 'web-stories')}>
         <Button
+          ref={buttonRef}
           id={buttonId}
           variant={BUTTON_VARIANTS.SQUARE}
           type={BUTTON_TYPES.TERTIARY}
@@ -208,7 +212,11 @@ export const MediaInput = forwardRef(function Media(
           <Pencil />
         </Button>
       </Tooltip>
-      {isMenuOpen && (
+      <Popup
+        placement={PLACEMENT.BOTTOM_END}
+        anchor={buttonRef}
+        isOpen={isMenuOpen}
+      >
         <Menu
           parentId={buttonId}
           listId={listId}
@@ -222,7 +230,7 @@ export const MediaInput = forwardRef(function Media(
           menuStylesOverride={menuStyleOverride}
           {...menuProps}
         />
-      )}
+      </Popup>
     </StyledMedia>
   );
 });
