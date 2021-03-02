@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import StoryEmbedEdit from './block-types/story-embed-block/edit';
 import { ConfigProvider } from './config';
+import StoriesBlockControls from './components/storiesBlockControls';
 import BlockConfigurationPanel from './components/storiesBlockConfigurationPanel';
 import LatestStoriesEdit from './block-types/latest-stories/edit';
 import SelectedStoriesEdit from './block-types/selected-stories/edit';
@@ -78,6 +79,12 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
 
   return (
     <ConfigProvider config={config}>
+      <StoriesBlockControls
+        blockType={blockType}
+        viewType={viewType}
+        setAttributes={setAttributes}
+      />
+
       {blockType === BLOCK_TYPE_LATEST_STORIES && (
         <LatestStoriesEdit
           attributes={attributes}

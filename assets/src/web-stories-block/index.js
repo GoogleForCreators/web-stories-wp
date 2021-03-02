@@ -29,7 +29,6 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import { name, settings } from './block';
 import { webStoriesBlockSettings } from './block/globals';
-import './block/storiesFilters';
 
 __webpack_public_path__ = webStoriesBlockSettings.publicPath;
 
