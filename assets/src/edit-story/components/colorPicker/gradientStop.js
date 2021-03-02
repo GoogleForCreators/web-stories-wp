@@ -19,47 +19,81 @@
  */
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import Pointer from './pointer';
-import { LINE_LENGTH, LINE_WIDTH } from './constants';
+import generatePatternStyles from '../../utils/generatePatternStyles';
+import { Icons } from '../../../design-system';
+import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
+const POINTER_MARGIN = 10;
+const OFFSET = 1;
 const Stop = styled.button.attrs(({ position }) => ({
   style: {
-    left: `${position * LINE_LENGTH + LINE_WIDTH / 2}px`,
+    right: `${position * LINE_LENGTH - LINE_WIDTH / 2}px`,
   },
 }))`
   position: absolute;
+  top: -${POINTER_MARGIN + GRADIENT_STOP_SIZE}px;
   background: transparent;
   border: 0;
   padding: 0;
-  top: ${LINE_WIDTH / 2}px;
 
   &:focus {
     /* We auto-select stops on focus, so no extra focus display is necessary */
     outline: none;
   }
+`;
 
-  ${({ isSelected }) =>
-    isSelected &&
-    `
-      transform-origin: 0 0;
-      transform: scale(1.333);
-    `}
+const fillCss = css`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const Background = styled.div`
+  ${fillCss}
+  ${({ color }) => generatePatternStyles(color)}
+`;
+
+const Transparent = styled.div`
+  ${fillCss}
+  background: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 10px 10px;
+`;
+
+const StopPointer = styled.div`
+  transform: translate(${({ offset }) => `${offset}px`}, 0);
+  width: ${GRADIENT_STOP_SIZE}px;
+  height: ${GRADIENT_STOP_SIZE}px;
+  border-radius: 2px;
+  overflow: hidden;
+`;
+
+const IconWrapper = styled.div`
+  position: absolute;
+  left: -${9 + OFFSET}px;
+  top: -8px;
+  color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.fg.primary : theme.colors.fg.tertiary};
+  svg {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 function GradientStopWithRef(
-  {
-    position,
-    index,
-    isSelected,
-
-    onSelect,
-  },
+  { position, index, isSelected, color, onSelect },
   ref
 ) {
   return (
@@ -74,10 +108,16 @@ function GradientStopWithRef(
       aria-label={sprintf(
         /* translators: %d: stop percentage */
         __('Gradient stop at %1$d%%', 'web-stories'),
-        Math.round(position * 100)
+        Math.round(100 - position * 100)
       )}
     >
-      <Pointer offset={-6} />
+      <IconWrapper isSelected={isSelected}>
+        <Icons.TailedRectangle />
+      </IconWrapper>
+      <StopPointer offset={-OFFSET}>
+        <Transparent />
+        <Background color={color} />
+      </StopPointer>
     </Stop>
   );
 }
@@ -88,7 +128,7 @@ GradientStop.propTypes = {
   position: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   isSelected: PropTypes.bool.isRequired,
-
+  color: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

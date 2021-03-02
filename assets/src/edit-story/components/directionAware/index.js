@@ -17,35 +17,31 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
+import { StyleSheetManager } from 'styled-components';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../constants';
+import { useConfig } from '../../app';
 
-function printRGB(r, g, b) {
-  const hex = (v) => v.toString(16).padStart(2, '0');
-  return `${hex(r)}${hex(g)}${hex(b)}`.toUpperCase();
+const withRTLPlugins = [stylisRTLPlugin];
+const withoutRTLPlugins = [];
+
+function DirectionAware({ children }) {
+  const { isRTL } = useConfig();
+  return (
+    <StyleSheetManager
+      stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
+    >
+      {children}
+    </StyleSheetManager>
+  );
 }
 
-function getPreviewText(pattern) {
-  if (!pattern || pattern === MULTIPLE_VALUE) {
-    return null;
-  }
-  switch (pattern.type) {
-    case 'radial':
-      return __('Radial', 'web-stories');
-    case 'linear':
-      return __('Linear', 'web-stories');
-    case 'solid':
-    default: {
-      const {
-        color: { r, g, b },
-      } = pattern;
-      return printRGB(r, g, b);
-    }
-  }
-}
+DirectionAware.propTypes = {
+  children: PropTypes.node,
+};
 
-export default getPreviewText;
+export default DirectionAware;

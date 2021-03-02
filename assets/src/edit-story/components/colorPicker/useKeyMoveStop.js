@@ -20,8 +20,9 @@
 import { useKeyDownEffect } from '../../../design-system';
 
 function useKeyMoveStop(ref, onMove) {
-  useKeyDownEffect(ref, 'left', () => onMove(-0.01), [onMove]);
-  useKeyDownEffect(ref, 'right', () => onMove(0.01), [onMove]);
+  // Reversed since the gradient line is reversed in terms of colors.
+  useKeyDownEffect(ref, 'left', () => onMove(0.01), [onMove]);
+  useKeyDownEffect(ref, 'right', () => onMove(-0.01), [onMove]);
 }
 
 export default useKeyMoveStop;

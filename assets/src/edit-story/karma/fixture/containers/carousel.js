@@ -45,6 +45,10 @@ export class Carousel extends Container {
       (page) => page.node.getAttribute('data-page-id') === pageId
     );
   }
+
+  get gridViewToggle() {
+    return this.getByRole('button', { name: 'Grid View' });
+  }
 }
 
 /**

@@ -42,8 +42,8 @@ const COLOR_GAP = 6;
 
 const ActionsWrapper = styled.div`
   text-align: center;
-  border-top: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v6};
-  padding: 12px 12px 20px 12px;
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
+  padding: 16px 16px 20px 16px;
 `;
 
 const AddColorPreset = styled.button`
