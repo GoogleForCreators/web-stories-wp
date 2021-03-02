@@ -97,9 +97,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     height: auto;
     position: absolute;
     right: -${ALERT_ICON_SIZE + 4}px;
-    top: calc(
-      50% - ${({ isActive }) => ALERT_ICON_SIZE / 2 + 1 - (isActive ? 1 : 0)}px
-    );
+    top: calc(50% - ${ALERT_ICON_SIZE / 2 + 1}px);
     overflow: visible;
     opacity: 1;
 
