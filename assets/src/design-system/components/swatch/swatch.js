@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Cross } from '../../icons';
 import { themeHelpers } from '../../theme';
 import {
   getOpaqueColor,
@@ -34,7 +33,7 @@ import generatePatternStyles from '../../../edit-story/utils/generatePatternStyl
 
 const RADIUS_LARGE = 32;
 const RADIUS_SMALL = 24;
-const REMOVE_ICON_SIZE = 32;
+const ICON_SIZE = 32;
 
 const Transparent = styled.div`
   width: 100%;
@@ -89,12 +88,13 @@ const presetCSS = css`
   height: 100%;
   font-size: 13px;
   position: relative;
+
   svg {
-    width: ${REMOVE_ICON_SIZE}px;
-    height: ${REMOVE_ICON_SIZE}px;
+    width: ${ICON_SIZE}px;
+    height: ${ICON_SIZE}px;
     position: absolute;
-    top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-    left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    top: calc(50% - ${ICON_SIZE / 2}px);
+    left: calc(50% - ${ICON_SIZE / 2}px);
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
   }
 `;
@@ -129,9 +129,9 @@ const OpaqueColor = styled.div`
 
 function Swatch({
   pattern,
-  isEditable = false,
   isDisabled = false,
   isSmall = false,
+  children,
   ...props
 }) {
   if (!pattern) {
@@ -155,15 +155,15 @@ function Swatch({
             <OpaqueColor isSmall={isSmall} pattern={opaquePattern} />
           </OpaqueColorWrapper>
         )}
-        {isEditable && <Cross />}
+        {children}
       </SwatchItem>
     </SwatchButton>
   );
 }
 
 Swatch.propTypes = {
+  children: PropTypes.node,
   pattern: PropTypes.object,
-  isEditable: PropTypes.bool,
   isDisabled: PropTypes.bool,
   isSmall: PropTypes.bool,
 };

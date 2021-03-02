@@ -23,7 +23,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { Text, Headline } from '../../..';
+import { Text } from '../../typography';
+import { Cross, Pipette } from '../../../icons';
 import { Swatch } from '../swatch';
 
 const Container = styled.div`
@@ -44,15 +45,6 @@ const Cell = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-`;
-
-const Size = styled(Headline)`
-  grid-column: span 3;
-  text-align: center;
-`;
-
-const Variant = styled(Text)`
-  font-family: monospace;
 `;
 
 export default {
@@ -138,39 +130,53 @@ const DEMO_COLORS = [
 ];
 
 const VARIANTS = [
-  { size: 'Large', variant: 'null' },
-  { size: 'Large', variant: 'isDisabled', isDisabled: true },
-  { size: 'Large', variant: 'isEditable', isEditable: true },
-  { size: 'Small', variant: 'null', isSmall: true },
-  { size: 'Small', variant: 'isDisabled', isSmall: true, isDisabled: true },
-  { size: 'Small', variant: 'isEditable', isSmall: true, isEditable: true },
+  {
+    variant: 'Large, regular',
+  },
+  {
+    variant: 'Large, disabled',
+    isDisabled: true,
+  },
+  {
+    variant: 'Large, cross',
+    Icon: Cross,
+  },
+  {
+    variant: 'Large, pipette',
+    Icon: Pipette,
+  },
+  {
+    variant: 'Small, regular',
+    isSmall: true,
+  },
+  {
+    variant: 'Small, disabled',
+    isSmall: true,
+    isDisabled: true,
+  },
 ];
 
-export const _default = () => {
+function _default() {
   return (
     <DarkThemeProvider>
       <Container>
         <Row>
           {/*We need an empty cell in the corner */}
           <Cell />
-          {VARIANTS.slice(2, 4).map(({ size }) => (
-            <Size as="h2" key={size}>
-              {size}
-            </Size>
-          ))}
-          <Cell />
-          {VARIANTS.map(({ size, variant }) => (
-            <Cell key={`${size}-${variant}`}>
-              <Variant size="xsmall">{variant}</Variant>
+          {VARIANTS.map(({ variant }) => (
+            <Cell key={variant}>
+              <Text>{variant}</Text>
             </Cell>
           ))}
         </Row>
         {DEMO_COLORS.map(({ label, pattern }) => (
           <Row key={label}>
             <Text>{label}</Text>
-            {VARIANTS.map(({ size, variant, ...props }) => (
-              <Cell key={`${size}-${variant}`}>
-                <Swatch pattern={pattern} {...props} />
+            {VARIANTS.map(({ variant, Icon, ...props }) => (
+              <Cell key={variant}>
+                <Swatch pattern={pattern} {...props}>
+                  {Icon && <Icon />}
+                </Swatch>
               </Cell>
             ))}
           </Row>
@@ -178,4 +184,6 @@ export const _default = () => {
       </Container>
     </DarkThemeProvider>
   );
-};
+}
+
+export { _default };
