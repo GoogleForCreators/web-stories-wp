@@ -24,22 +24,21 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Panel, PanelContent } from '../../panel';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 
-const Note = styled.p`
-  font-style: italic;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
-  margin: 50px 0;
+const Note = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
   text-align: center;
+  margin-top: 150px;
 `;
 
 function NoSelectionPanel() {
   return (
-    <Panel name="noselection" isPersistable={false}>
-      <PanelContent hasBorder>
-        <Note>{__('Nothing selected', 'web-stories')}</Note>
+    <Panel name="noselection" isPersistable={false} noBorder>
+      <PanelContent>
+        <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+          {__('Nothing selected', 'web-stories')}
+        </Note>
       </PanelContent>
     </Panel>
   );
