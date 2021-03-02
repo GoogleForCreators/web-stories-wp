@@ -164,8 +164,6 @@ function SelectStories({
   }, TEXT_INPUT_DEBOUNCE);
 
   const [debouncedTypeaheadAuthorChange] = useDebouncedCallback((value) => {
-    console.log('debouncedTypeaheadAuthorChange', value);
-
     // Set the user input as the current search keyword.
     setAuthorKeyword(value);
 
