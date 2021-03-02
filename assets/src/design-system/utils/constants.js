@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+
 export const KEYS = {
   DOWN: 'ArrowDown',
   LEFT: 'ArrowLeft',
@@ -22,3 +27,4 @@ export const KEYS = {
 };
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';
+export const MULTIPLE_DISPLAY_VALUE = __('Mixed', 'web-stories');
