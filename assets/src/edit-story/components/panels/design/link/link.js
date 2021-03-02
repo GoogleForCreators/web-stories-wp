@@ -36,6 +36,7 @@ import { Media, Row, Button, LinkInput } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import { ExpandedTextInput, useCommonObjectValue } from '../../shared';
+import {MEDIA_VARIANTS} from "../../../../../design-system/components/mediaInput/constants";
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
@@ -247,9 +248,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               ariaLabel={__('Edit link icon', 'web-stories')}
               buttonInsertText={__('Select as link icon', 'web-stories')}
               type={'image'}
-              size={64}
-              loading={fetchingMetadata}
-              circle
+              isLoading={fetchingMetadata}
+              variant={MEDIA_VARIANTS.CIRCLE}
             />
             <IconInfo>
               <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
