@@ -57,7 +57,6 @@
     "@wordpress/data": "^4.26.0",
     "@wordpress/date": "^3.12.0",
     "@wordpress/element": "^2.19.0",
-    "@wordpress/hooks": "^2.11.0",
     "@wordpress/i18n": "^3.17.0",
     "@wordpress/url": "^2.19.0",
     "@wordpress/viewport": "^2.25.6",
