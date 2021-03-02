@@ -266,7 +266,7 @@ const webStoriesScripts = {
     }),
     new WebpackBar({
       name: 'WP Frontend Scripts',
-      color: '#357BB5',
+      color: '#EEE070',
     }),
   ].filter(Boolean),
 };
