@@ -352,13 +352,13 @@ const widgetScript = {
 const storiesMCEButton = {
   ...sharedConfig,
   entry: {
-    'web-stories-button': './packages/tinymce-button/src/index.js',
+    'tinymce-button': './packages/tinymce-button/src/index.js',
   },
   plugins: [
+    new DependencyExtractionWebpackPlugin({}),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
-
     new WebpackBar({
       name: 'WP TinyMCE Button',
       color: '#4deaa2',
