@@ -25,8 +25,6 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-
-import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
 import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
@@ -78,8 +76,6 @@ const ColorsWrapper = styled.div`
   max-height: ${SAVED_COLOR_SIZE * 3 + 2 * COLOR_GAP}px;
   overflow-x: hidden;
   overflow-y: auto;
-
-  ${ScrollBarStyles}
 `;
 
 const DropDownWrapper = styled.div`

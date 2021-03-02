@@ -24,7 +24,6 @@ import { useLayoutEffect, useCallback, useState, useRef } from 'react';
  * Internal dependencies
  */
 import { useResizeEffect } from '../../../design-system';
-import { scrollBarStyles } from '../../theme';
 import { getTransforms, getOffset } from './utils';
 
 /**
@@ -64,8 +63,6 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
-
-  ${scrollBarStyles}
 `;
 
 function Popup({
