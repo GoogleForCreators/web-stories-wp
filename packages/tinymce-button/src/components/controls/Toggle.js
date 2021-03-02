@@ -38,24 +38,23 @@ const TinyMCEToggle = (props) => {
   const { fieldObj, field } = props;
   const { show, readonly: isReadonly, label } = fieldObj;
 
+  if (isReadonly) {
+    return null;
+  }
+
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
-      {!isReadonly && (
-        <ToggleControl
-          label={label}
-          checked={show}
-          onChange={() => {
-            updateViewSettings({
-              fieldObj: fieldObj,
-              field: field,
-              isReadonly: isReadonly,
-            });
-          }}
-          readonly={isReadonly}
-        />
-      )}
-    </>
+    <ToggleControl
+      label={label}
+      checked={show}
+      onChange={() => {
+        updateViewSettings({
+          fieldObj: fieldObj,
+          field: field,
+          isReadonly: isReadonly,
+        });
+      }}
+      readonly={isReadonly}
+    />
   );
 };
 

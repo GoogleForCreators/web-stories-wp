@@ -58,128 +58,127 @@ const WebStoriesModal = (props) => {
   } = settings;
   const { views, orderlist } = webStoriesData;
 
+  if (!modalOpen) {
+    return null;
+  }
+
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
-      {modalOpen && (
-        <Modal
-          onRequestClose={() => {
+    <Modal
+      onRequestClose={() => {
+        dispatch(name).toggleModal(false);
+      }}
+      closeButtonLabel={__('Close', 'web-stories')}
+      title={__('Web Stories', 'web-stories')}
+      className={'component_web_stories_mce_model'}
+      shouldCloseOnClickOutside={false}
+    >
+      <SelectControl
+        label={__('Select View Type', 'web-stories')}
+        value={view}
+        options={views}
+        onChange={(view_type) => {
+          dispatch(name).setCurrentView(view_type);
+        }}
+      />
+
+      <TinyMCEToggle field={'title'} fieldObj={title} />
+
+      <TinyMCEToggle field={'excerpt'} fieldObj={excerpt} />
+
+      <TinyMCEToggle field={'author'} fieldObj={author} />
+
+      <TinyMCEToggle field={'date'} fieldObj={date} />
+
+      <TinyMCEToggle field={'image_align'} fieldObj={image_align} />
+
+      <TinyMCEToggle field={'sharp_corners'} fieldObj={sharp_corners} />
+
+      <TinyMCEToggle field={'archive_link'} fieldObj={archive_link} />
+
+      {archive_link.show && (
+        <TextControl
+          label={__('Archive Link Label', 'web-stories')}
+          value={archive_label}
+          onChange={(value) => {
+            updateViewSettings({
+              fieldObj: value,
+              field: 'archive_label',
+            });
+          }}
+        />
+      )}
+
+      <RangeControl
+        label={__('Number of Stories', 'web-stories')}
+        value={number}
+        min={1}
+        max={20}
+        onChange={(items) => {
+          updateViewSettings({ fieldObj: items, field: 'number' });
+        }}
+      />
+
+      {isView('circles') && (
+        <RangeControl
+          label={__('Circle Size', 'web-stories')}
+          value={circle_size}
+          min={80}
+          max={200}
+          step={5}
+          onChange={(size) =>
+            updateViewSettings({
+              fieldObj: parseInt(size),
+              field: 'circle_size',
+            })
+          }
+        />
+      )}
+
+      {isView('grid') && (
+        <RangeControl
+          label={__('Number of Columns', 'web-stories')}
+          value={columns}
+          min={1}
+          max={4}
+          onChange={(cols) =>
+            updateViewSettings({
+              // eslint-disable-next-line radix
+              fieldObj: parseInt(cols, 10),
+              field: 'columns',
+            })
+          }
+        />
+      )}
+
+      <SelectControl
+        label={__('Select Order', 'web-stories')}
+        value={order}
+        options={orderlist}
+        onChange={(o) => {
+          updateViewSettings({ fieldObj: o, field: 'order' });
+        }}
+      />
+
+      <div style={{ padding: '20px 0' }} className={'alignright'}>
+        <Button
+          isPrimary
+          onClick={() => {
+            const editorInstance = select(name).getEditor();
+            if (editorInstance) {
+              const shortcode = prepareShortCode();
+              editorInstance.insertContent(shortcode);
+            }
+
             dispatch(name).toggleModal(false);
           }}
-          closeButtonLabel={__('Close', 'web-stories')}
-          title={__('Web Stories', 'web-stories')}
-          className={'component_web_stories_mce_model'}
-          shouldCloseOnClickOutside={false}
         >
-          <SelectControl
-            label={__('Select View Type', 'web-stories')}
-            value={view}
-            options={views}
-            onChange={(view_type) => {
-              dispatch(name).setCurrentView(view_type);
-            }}
-          />
-
-          <TinyMCEToggle field={'title'} fieldObj={title} />
-
-          <TinyMCEToggle field={'excerpt'} fieldObj={excerpt} />
-
-          <TinyMCEToggle field={'author'} fieldObj={author} />
-
-          <TinyMCEToggle field={'date'} fieldObj={date} />
-
-          <TinyMCEToggle field={'image_align'} fieldObj={image_align} />
-
-          <TinyMCEToggle field={'sharp_corners'} fieldObj={sharp_corners} />
-
-          <TinyMCEToggle field={'archive_link'} fieldObj={archive_link} />
-
-          {archive_link.show && (
-            <TextControl
-              label={__('Archive Link Label', 'web-stories')}
-              value={archive_label}
-              onChange={(value) => {
-                updateViewSettings({
-                  fieldObj: value,
-                  field: 'archive_label',
-                });
-              }}
-            />
-          )}
-
-          <RangeControl
-            label={__('Number of Stories', 'web-stories')}
-            value={number}
-            min={1}
-            max={20}
-            onChange={(items) => {
-              updateViewSettings({ fieldObj: items, field: 'number' });
-            }}
-          />
-
-          {isView('circles') && (
-            <RangeControl
-              label={__('Circle Size', 'web-stories')}
-              value={circle_size}
-              min={80}
-              max={200}
-              step={5}
-              onChange={(size) =>
-                updateViewSettings({
-                  fieldObj: parseInt(size),
-                  field: 'circle_size',
-                })
-              }
-            />
-          )}
-
-          {isView('grid') && (
-            <RangeControl
-              label={__('Number of Columns', 'web-stories')}
-              value={columns}
-              min={1}
-              max={4}
-              onChange={(cols) =>
-                updateViewSettings({
-                  // eslint-disable-next-line radix
-                  fieldObj: parseInt(cols, 10),
-                  field: 'columns',
-                })
-              }
-            />
-          )}
-
-          <SelectControl
-            label={__('Select Order', 'web-stories')}
-            value={order}
-            options={orderlist}
-            onChange={(o) => {
-              updateViewSettings({ fieldObj: o, field: 'order' });
-            }}
-          />
-
-          <div style={{ padding: '20px 0' }} className={'alignright'}>
-            <Button
-              isPrimary
-              onClick={() => {
-                const editorInstance = select(name).getEditor();
-                if (editorInstance) {
-                  const shortcode = prepareShortCode();
-                  editorInstance.insertContent(shortcode);
-                }
-
-                dispatch(name).toggleModal(false);
-              }}
-            >
-              {__('Okay', 'web-stories')}
-            </Button>
-            <Button onClick={() => dispatch(name).toggleModal(false)}>
-              {__('Cancel', 'web-stories')}
-            </Button>
-          </div>
-        </Modal>
-      )}
-    </>
+          {__('Okay', 'web-stories')}
+        </Button>
+        <Button onClick={() => dispatch(name).toggleModal(false)}>
+          {__('Cancel', 'web-stories')}
+        </Button>
+      </div>
+    </Modal>
   );
 };
 
