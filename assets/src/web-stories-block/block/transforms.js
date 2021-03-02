@@ -122,12 +122,12 @@ const transforms = {
           }) => {
             // Need this type conversion as the block is expecting following to be boolean.
             return {
-              show_archive_link: 'true' === archive_link ? true : false,
-              show_author: 'true' === author ? true : false,
-              show_date: 'true' === date ? true : false,
-              show_excerpt: 'true' === excerpt ? true : false,
-              show_image_align: 'true' === image_align ? true : false,
-              show_title: 'true' === title ? true : false,
+              show_archive_link: 'true' === archive_link,
+              show_author: 'true' === author,
+              show_date: 'true' === date,
+              show_excerpt: 'true' === excerpt,
+              show_image_align: 'true' === image_align,
+              show_title: 'true' === title,
             };
           },
         },
