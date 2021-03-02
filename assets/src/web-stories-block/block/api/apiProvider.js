@@ -18,7 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
