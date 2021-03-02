@@ -31,6 +31,8 @@ import {
   hasOpacity,
 } from '../../utils/patterns';
 
+const RADIUS_LARGE = 32;
+const RADIUS_SMALL = 24;
 const ICON_SIZE = 32;
 
 const Transparent = styled.div`
@@ -54,8 +56,8 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
   padding: 0;
   border-width: 0;
   display: block;
-  width: 32px;
-  height: 32px;
+  width: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
+  height: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
   border-radius: 100%;
   overflow: hidden;
   position: relative;
@@ -108,7 +110,7 @@ const SwatchItem = styled.div`
 `;
 
 const OpaqueColorWrapper = styled.div`
-  height: 32px;
+  height: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
   width: 50%;
   overflow: hidden;
   position: absolute;
@@ -117,15 +119,21 @@ const OpaqueColorWrapper = styled.div`
 `;
 
 const OpaqueColor = styled.div`
-  height: 32px;
-  width: 32px;
+  height: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
+  width: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
   position: absolute;
   top: 0;
   left: 0;
   ${({ pattern }) => generatePatternStyles(pattern)}
 `;
 
-function Swatch({ pattern, isDisabled = false, children, ...props }) {
+function Swatch({
+  pattern,
+  isDisabled = false,
+  isSmall = false,
+  children,
+  ...props
+}) {
   if (!pattern) {
     return null;
   }
@@ -134,10 +142,10 @@ function Swatch({ pattern, isDisabled = false, children, ...props }) {
   const opaquePattern = swatchHasTransparency
     ? getOpaqueColor(pattern)
     : pattern;
-  // Gradient swatches are never split.
-  const displaySplit = !swatchIsGradient && swatchHasTransparency;
+  // Small swatches and gradient swatches are never split.
+  const displaySplit = !isSmall && !swatchIsGradient && swatchHasTransparency;
   return (
-    <SwatchButton disabled={isDisabled} {...props}>
+    <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
         pattern={pattern}
@@ -145,8 +153,8 @@ function Swatch({ pattern, isDisabled = false, children, ...props }) {
         displaySplit={displaySplit}
       >
         {displaySplit && (
-          <OpaqueColorWrapper>
-            <OpaqueColor pattern={opaquePattern} />
+          <OpaqueColorWrapper isSmall={isSmall}>
+            <OpaqueColor isSmall={isSmall} pattern={opaquePattern} />
           </OpaqueColorWrapper>
         )}
         {children}
@@ -159,6 +167,7 @@ Swatch.propTypes = {
   children: PropTypes.node,
   pattern: PropTypes.object,
   isDisabled: PropTypes.bool,
+  isSmall: PropTypes.bool,
 };
 
 export { Swatch };
