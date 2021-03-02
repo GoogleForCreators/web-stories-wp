@@ -174,6 +174,10 @@ export const Input = forwardRef(
     if (unit && value.length) {
       displayedValue = `${value}${!focused ? `${unit}` : ''}`;
     }
+    if (isIndeterminate) {
+      // Display placeholder if value couldn't be determined.
+      displayedValue = null;
+    }
 
     return (
       <Container className={className}>
@@ -258,6 +262,7 @@ export const InputPropTypes = {
   suffix: PropTypes.node,
   unit: PropTypes.string,
   value: PropTypes.string.isRequired,
+  isIndeterminate: PropTypes.bool,
 };
 
 Input.propTypes = InputPropTypes;
