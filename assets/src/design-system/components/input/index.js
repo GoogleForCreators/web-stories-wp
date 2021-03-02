@@ -176,7 +176,7 @@ export const Input = forwardRef(
     }
     if (isIndeterminate) {
       // Display placeholder if value couldn't be determined.
-      displayedValue = null;
+      displayedValue = '';
     }
 
     return (
