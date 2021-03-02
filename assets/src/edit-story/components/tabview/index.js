@@ -174,10 +174,7 @@ function TabView({
   const selectTabByIndex = useCallback(
     (index) => {
       // Index wraps, so -1 is last element
-      const nextTab = tabs[index < 0 ? tabs.length + index : index];
-      if (!nextTab) {
-        return;
-      }
+      const nextTab = tabs[(index + tabs.length) % tabs.length];
       tabChanged(nextTab.id);
     },
     [tabs, tabChanged]
