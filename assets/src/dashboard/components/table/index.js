@@ -23,6 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../design-system';
+import { STORY_PREVIEW_WIDTH, VIEWPORT_BREAKPOINT } from '../../constants';
 import { TypographyPresets } from '../typography';
 
 const CELL_PADDING = 16;
@@ -151,5 +152,5 @@ export const TableContentCell = styled(TableCell)`
 `;
 
 export const TablePreviewCell = styled(TableCell)`
-  width: 33px;
+  width: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL]}px;
 `;
