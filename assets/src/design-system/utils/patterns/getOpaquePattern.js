@@ -14,14 +14,23 @@
  * limitations under the License.
  */
 
-function getOpaqueColor(preset) {
-  const { color } = preset;
-  return {
-    color: {
-      ...color,
-      a: 1,
-    },
-  };
+function getOpaquePattern(pattern) {
+  if (!pattern.type || pattern.type === 'solid') {
+    const { color } = pattern;
+    return {
+      color: {
+        ...color,
+        a: 1,
+      },
+    };
+  }
+  return objectWithout(pattern, ['alpha']);
 }
 
-export default getOpaqueColor;
+export default getOpaquePattern;
+
+function objectWithout(obj, propertiesToRemove) {
+  return Object.keys(obj)
+    .filter((key) => !propertiesToRemove.includes(key))
+    .reduce((newObj, key) => ({ ...newObj, [key]: obj[key] }), {});
+}

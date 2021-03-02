@@ -16,5 +16,5 @@
 
 export { default as hasOpacity } from './hasOpacity';
 export { default as hasGradient } from './hasGradient';
-export { default as getOpaqueColor } from './getOpaqueColor';
+export { default as getOpaquePattern } from './getOpaquePattern';
 export { default as generatePatternStyles } from './generatePatternStyles';

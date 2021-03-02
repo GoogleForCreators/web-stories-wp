@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 import { themeHelpers } from '../../theme';
 import {
   generatePatternStyles,
-  getOpaqueColor,
+  getOpaquePattern,
   hasGradient,
   hasOpacity,
 } from '../../utils/patterns';
@@ -140,7 +140,7 @@ function Swatch({
   const swatchHasTransparency = hasOpacity(pattern);
   const swatchIsGradient = hasGradient(pattern);
   const opaquePattern = swatchHasTransparency
-    ? getOpaqueColor(pattern)
+    ? getOpaquePattern(pattern)
     : pattern;
   // Small swatches and gradient swatches are never split.
   const displaySplit = !isSmall && !swatchIsGradient && swatchHasTransparency;
@@ -148,7 +148,7 @@ function Swatch({
     <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
-        pattern={pattern}
+        pattern={isSmall ? opaquePattern : pattern}
         disabled={isDisabled}
         displaySplit={displaySplit}
       >
