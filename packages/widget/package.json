@@ -1,0 +1,17 @@
+{
+  "name": "@web-stories-wp/widget",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/stories-widget.js"
+  },
+  "main": "./src/stories-widget.js",
+  "type": "module",
+  "dependencies": {
+    "@wordpress/dom-ready": "^2.12.0"
+  },
+  "devDependencies": {}
+}
