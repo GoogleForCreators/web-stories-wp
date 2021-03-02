@@ -263,7 +263,7 @@ const webStoriesScripts = {
       filename: '../css/[name].css',
     }),
     new WebpackBar({
-      name: 'Web Stories Scripts',
+      name: 'WP Frontend Scripts',
       color: '#357BB5',
     }),
   ].filter(Boolean),
@@ -300,7 +300,7 @@ const webStoriesBlock = {
       injectPolyfill: true,
     }),
     new WebpackBar({
-      name: 'Web Stories List',
+      name: 'Web Stories Block',
       color: '#357BB5',
     }),
   ].filter(Boolean),
@@ -344,8 +344,8 @@ const widgetScript = {
   },
   plugins: [
     new WebpackBar({
-      name: 'Stories Widget Script',
-      color: '#adf3a8',
+      name: 'WP Widget Script',
+      color: '#F757A5',
     }),
   ],
 };
@@ -361,7 +361,7 @@ const storiesMCEButton = {
     }),
 
     new WebpackBar({
-      name: 'TinyMCE Button',
+      name: 'WP TinyMCE Button',
       color: '#4deaa2',
     }),
   ],
