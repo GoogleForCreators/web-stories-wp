@@ -55,16 +55,23 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   role: 'tab',
   'aria-selected': isActive,
 }))`
-  text-align: center;
   cursor: pointer;
   border: none;
   background: none;
-  padding: 10px 0px;
-  margin: 0 16px;
-  margin-bottom: -1px;
+  padding: 0;
+  margin: 10px 16px 9px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   color: ${({ theme, isActive }) =>
     isActive ? theme.colors.fg.primary : theme.colors.fg.tertiary};
+  transition: color 0.2s ease;
+
+  :hover {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
 
   ${({ isActive, theme }) =>
     isActive &&
@@ -76,7 +83,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
         height: 2px;
         border-radius: 1px;
         width: 100%;
-        bottom: 0;
+        bottom: -9px;
         left: 0;
         right: 0;
       }
@@ -94,12 +101,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 
   svg.alert {
     width: ${ALERT_ICON_SIZE}px;
-    height: auto;
-    position: absolute;
-    right: -${ALERT_ICON_SIZE + 4}px;
-    top: calc(50% - ${ALERT_ICON_SIZE / 2 + 1}px);
-    overflow: visible;
-    opacity: 1;
+    margin-left: 4px;
 
     &.warning {
       color: ${({ theme }) => theme.colors.fg.linkNormal};
@@ -124,7 +126,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 
 const TabText = styled(Headline).attrs({
   as: 'h3',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   color: inherit;
 `;

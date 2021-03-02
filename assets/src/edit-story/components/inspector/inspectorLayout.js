@@ -48,7 +48,7 @@ const InspectorContainer = styled.div`
 `;
 
 const UnjustifiedTabView = styled(TabView)`
-  justify-content: flex-start;
+  justify-content: center;
 `;
 
 function InspectorLayout() {
