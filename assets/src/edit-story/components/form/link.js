@@ -46,9 +46,11 @@ function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
           placeholder={__('Web address', 'web-stories')}
           onChange={(evt) => onChange(evt.target.value)}
           onBlur={() => {
-            const urlWithProtocol = withProtocol(value);
-            if (urlWithProtocol !== value) {
-              onChange(urlWithProtocol);
+            if (value?.length) {
+              const urlWithProtocol = withProtocol(value);
+              if (urlWithProtocol !== value) {
+                onChange(urlWithProtocol);
+              }
             }
             if (onBlur) {
               onBlur();
