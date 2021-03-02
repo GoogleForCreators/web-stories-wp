@@ -41,6 +41,7 @@
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/jest-amp": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
+    "@web-stories-wp/lightbox": "*",
     "@web-stories-wp/migration": "*",
     "@web-stories-wp/templates": "*",
     "@web-stories-wp/text-sets": "*",

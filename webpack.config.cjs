@@ -241,7 +241,7 @@ const dashboard = {
 const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    lightbox: './assets/src/lightbox/index.js',
+    lightbox: './packages/lightbox/src/index.js',
     'carousel-view': './assets/src/carousel/index.js',
   },
   plugins: [
