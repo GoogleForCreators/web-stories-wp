@@ -30,10 +30,10 @@ import { MediaInput as Input } from '../../../design-system/components/mediaInpu
 const MediaInput = forwardRef(
   (
     {
-      hasMenu = false,
+      buttonInsertText = __('Choose an image', 'web-stories'),
+      menuOptions = [],
       onChange,
       title = __('Choose an image', 'web-stories'),
-      buttonInsertText = __('Choose an image', 'web-stories'),
       type = 'image',
       ...rest
     },
@@ -46,19 +46,25 @@ const MediaInput = forwardRef(
       type,
     });
 
-    const dropdownOptions = hasMenu
-      ? [
-          { name: __('Edit', 'web-stories'), value: 'edit' },
-          { name: __('Reset', 'web-stories'), value: 'reset' },
-        ]
-      : null;
+    // Options available for the media input menu.
+    const availableMenuOptions = [
+      { label: __('Edit', 'web-stories'), value: 'edit' },
+      { label: __('Remove', 'web-stories'), value: 'remove' },
+      { label: __('Reset', 'web-stories'), value: 'reset' },
+    ];
+
+    // Match the options from props, if none are matched, menu is not displayed.
+    const dropdownOptions = availableMenuOptions.filter(({ value }) =>
+      menuOptions.includes(value)
+    );
 
     const onOption = useCallback(
-      (opt, evt) => {
+      (evt, opt) => {
         switch (opt) {
           case 'edit':
             openMediaPicker(evt);
             break;
+          case 'remove':
           case 'reset':
             onChange(null);
             break;
@@ -72,7 +78,9 @@ const MediaInput = forwardRef(
     return (
       <Input
         onMenuOption={onOption}
-        menuOptions={dropdownOptions}
+        menuOptions={
+          dropdownOptions.length > 0 ? [{ group: dropdownOptions }] : null
+        }
         openMediaPicker={openMediaPicker}
         ref={forwardedRef}
         {...rest}
@@ -82,10 +90,10 @@ const MediaInput = forwardRef(
 );
 
 MediaInput.propTypes = {
-  canReset: PropTypes.bool,
+  buttonInsertText: PropTypes.string,
+  menuOptions: PropTypes.array,
   onChange: PropTypes.func.isRequired,
   type: PropTypes.string,
-  buttonInsertText: PropTypes.string,
   title: PropTypes.string,
 };
 

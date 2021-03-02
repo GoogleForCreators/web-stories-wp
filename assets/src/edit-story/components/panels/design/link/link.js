@@ -173,7 +173,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChangeIcon = useCallback(
     (image) => {
-      handleChange({ icon: image.sizes?.medium?.url || image.url }, true);
+      handleChange({ icon: image?.sizes?.medium?.url || image?.url }, true);
     },
     [handleChange]
   );
@@ -250,19 +250,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               type={'image'}
               isLoading={fetchingMetadata}
               variant={MEDIA_VARIANTS.CIRCLE}
+              menuOptions={link.icon ? ['edit', 'remove'] : []}
             />
             <IconInfo>
               <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
-              {link.icon && (
-                <IconRemoveButton
-                  onClick={() =>
-                    handleChange({ icon: null }, true /* submit */)
-                  }
-                >
-                  <CloseIcon width={14} height={14} />
-                  {__('Remove', 'web-stories')}
-                </IconRemoveButton>
-              )}
             </IconInfo>
           </Row>
         </>
