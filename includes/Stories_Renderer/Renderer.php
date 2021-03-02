@@ -32,9 +32,9 @@ use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Amp;
 use Google\Web_Stories\Traits\Assets;
 use Iterator;
-use function Google\Web_Stories\is_amp;
 
 /**
  * Renderer class.
@@ -46,6 +46,7 @@ use function Google\Web_Stories\is_amp;
 abstract class Renderer implements RenderingInterface, Iterator {
 
 	use Assets;
+	use Amp;
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -254,18 +255,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories Lightbox script.
 		$this->register_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
 
-	}
-
-	/**
-	 * Determine whether the current request is for an AMP page.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return boolean
-	 */
-	public function is_amp_request() {
-
-		return is_amp();
 	}
 
 	/**
@@ -487,7 +476,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			wp_enqueue_style( self::STYLE_HANDLE );
 		}
 
-		if ( $this->is_amp_request() ) {
+		if ( $this->is_amp() ) {
 			?>
 			<div
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
@@ -527,7 +516,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		?>
 		<div class="web-stories-list__story-poster">
 			<?php
-			if ( $this->is_amp_request() ) {
+			if ( $this->is_amp() ) {
 				// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
 				?>
 				<amp-img
@@ -545,7 +534,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		<?php
 		$this->get_content_overlay();
 
-		if ( ! $this->is_amp_request() ) {
+		if ( ! $this->is_amp() ) {
 			$this->generate_lightbox_html_noamp( $story_data );
 		} else {
 			$this->generate_amp_lightbox_html_amp( $story_data );
@@ -734,7 +723,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		?>
 		<div class="web-stories-list__lightbox-wrapper <?php echo esc_attr( 'ws-lightbox-' . $this->instance_id ); ?>">
 			<?php
-			if ( $this->is_amp_request() ) {
+			if ( $this->is_amp() ) {
 				$this->render_stories_with_lightbox_amp();
 			} else {
 				$this->render_stories_with_lightbox_noamp();
