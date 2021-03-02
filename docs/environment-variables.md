@@ -12,7 +12,7 @@ Set this environment variable to disable unwanted `beforeunload` dialogs when re
 **NODE_ENV** (`production`|`development`|`test`):
 Defines the mode webpack and other tools operate in. Automatically set by tests / build tools, usually no need to override manually.
 
-**BUNDLE_ANALZYER** (bool):
+**BUNDLE_ANALYZER** (bool):
 Enables the `webpack-bundle-analyzer` plugin to analyze the final bundle composition. Default: `false`
 
 **BABEL_CACHE_DIRECTORY** (string):

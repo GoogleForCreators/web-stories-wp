@@ -29,17 +29,18 @@ import { __ } from '@web-stories-wp/i18n';
 import { Dropdown as DropdownIcon } from '../../../../icons';
 import { isKeyboardUser } from '../../../../utils/keyboardOnlyOutline';
 import { DropDownSelect, DropDownTitle } from '../../../form/dropDown';
-import { ScrollBarStyles } from '../../../library/common/scrollbarStyles';
 import Popup, { Placement } from '../../../popup';
+import { themeHelpers } from '../../../../../design-system';
 import EffectChooser from './effectChooser';
 
 const Container = styled.div`
   overflow-y: scroll;
   max-height: 240px;
   border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
+  background: ${({ theme }) => theme.colors.standard.black};
 
-  ${ScrollBarStyles}
+  ${themeHelpers.scrollbarCSS};
 `;
 
 export default function EffectChooserDropdown({

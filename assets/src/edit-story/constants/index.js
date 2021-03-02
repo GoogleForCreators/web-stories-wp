@@ -16,7 +16,6 @@
 
 export { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 
-export const SCROLLBAR_WIDTH = 11;
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 48;
 export const CANVAS_MIN_WIDTH = 570;
