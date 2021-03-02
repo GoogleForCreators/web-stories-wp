@@ -46,6 +46,7 @@
     "@web-stories-wp/stories-lightbox": "*",
     "@web-stories-wp/templates": "*",
     "@web-stories-wp/text-sets": "*",
+    "@web-stories-wp/tinymce-button": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/widget": "*",
     "@wordpress/api-fetch": "^3.21.3",

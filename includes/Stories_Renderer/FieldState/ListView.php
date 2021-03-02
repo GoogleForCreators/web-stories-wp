@@ -33,6 +33,8 @@ final class ListView extends BaseFieldState {
 	/**
 	 * Excerpt field.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
 	public function excerpt() {
@@ -50,6 +52,8 @@ final class ListView extends BaseFieldState {
 	/**
 	 * Author field.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
 	public function date() {
@@ -66,6 +70,8 @@ final class ListView extends BaseFieldState {
 
 	/**
 	 * Image align field.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */

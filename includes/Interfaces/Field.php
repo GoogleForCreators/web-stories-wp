@@ -20,6 +20,8 @@ interface Field {
 	/**
 	 * Whether to show the field.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return bool
 	 */
 	public function show();
@@ -27,12 +29,16 @@ interface Field {
 	/**
 	 * Label for current field.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return string
 	 */
 	public function label();
 
 	/**
 	 * Whether the field is readonly.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return bool
 	 */

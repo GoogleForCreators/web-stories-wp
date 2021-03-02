@@ -62,7 +62,7 @@ class Core_Themes_Support {
 	 * This will enable add_theme_support with predefined
 	 * options supported themes.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -75,7 +75,7 @@ class Core_Themes_Support {
 	 *
 	 * Embeds web stories with default customizer settings.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -93,7 +93,8 @@ class Core_Themes_Support {
 	/**
 	 * Add a class if it is one of supported core themes.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
+	 *
 	 * @param array $classes Array of body classes.
 	 *
 	 * @return array Updated array of classes.
@@ -108,7 +109,7 @@ class Core_Themes_Support {
 	/**
 	 * Adds theme support and hook to embed the web stories.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */

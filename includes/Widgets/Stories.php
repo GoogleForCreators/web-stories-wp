@@ -52,6 +52,8 @@ class Stories extends WP_Widget {
 	/**
 	 * Stories constructor.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return void
 	 */
 	public function __construct() {
@@ -69,6 +71,8 @@ class Stories extends WP_Widget {
 	 * Output widget.
 	 *
 	 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $args Widget args.
 	 * @param array $instance Widget instance.
@@ -106,6 +110,8 @@ class Stories extends WP_Widget {
 
 	/**
 	 * Display widget form.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -299,6 +305,8 @@ class Stories extends WP_Widget {
 	/**
 	 * Update widget settings.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @param array $new_instance New instance.
@@ -328,17 +336,19 @@ class Stories extends WP_Widget {
 	/**
 	 * Called when the widget is registered.
 	 *
-	 * phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
-	public function _register() {
+	public function _register() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
 		parent::_register();
 		add_action( 'admin_enqueue_scripts', [ $this, 'stories_widget_scripts' ] );
 	}
 
 	/**
 	 * Enqueue widget script.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -357,6 +367,8 @@ class Stories extends WP_Widget {
 
 	/**
 	 * Display dropdown.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $args Available view types.
 	 *
@@ -406,6 +418,8 @@ class Stories extends WP_Widget {
 
 	/**
 	 * Generate an input field.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $args Array of arguments.
 	 *

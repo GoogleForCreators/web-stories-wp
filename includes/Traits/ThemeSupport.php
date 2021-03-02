@@ -37,6 +37,8 @@ trait ThemeSupport {
 	/**
 	 * Get theme support.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return array
 	 */
 	public function get_stories_theme_support() {

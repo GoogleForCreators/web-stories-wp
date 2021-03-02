@@ -21,6 +21,8 @@ interface FieldState {
 	 * Get title field along with its state for
 	 * current view type.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function title();
@@ -28,6 +30,8 @@ interface FieldState {
 	/**
 	 * Get excerpt field along with its state for
 	 * current view type.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return Field
 	 */
@@ -37,6 +41,8 @@ interface FieldState {
 	 * Get image alignment field along with its state for
 	 * current view type.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function image_align();
@@ -44,6 +50,8 @@ interface FieldState {
 	/**
 	 * Get author field along with its state for
 	 * current view type.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return Field
 	 */
@@ -53,6 +61,8 @@ interface FieldState {
 	 * Get date field along with its state for
 	 * current view type.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function date();
@@ -61,6 +71,8 @@ interface FieldState {
 	 * Get archive link field along with its state for
 	 * current view type.
 	 *
+	 * @since 1.5.0
+	 *
 	 * @return Field
 	 */
 	public function archive_link();
@@ -68,6 +80,8 @@ interface FieldState {
 	/**
 	 * Get sharp corner field along with its state for
 	 * current view type.
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return Field
 	 */
