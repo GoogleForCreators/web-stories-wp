@@ -163,11 +163,11 @@ export default function WithMask({
   style,
   children,
   eventHandlers = null,
+  flip,
   ...rest
 }) {
   const [hover, setHover] = useState(false);
   const { isBackground } = element;
-  const { flip } = rest;
 
   const mask = getElementMask(element);
   const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
@@ -234,6 +234,10 @@ WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
   style: PropTypes.object,
   fill: PropTypes.bool,
+  flip: PropTypes.shape({
+    vertical: PropTypes.bool,
+    horizontal: PropTypes.bool,
+  }),
   eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
 };

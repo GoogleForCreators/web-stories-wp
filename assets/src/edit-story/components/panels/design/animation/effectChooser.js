@@ -71,7 +71,6 @@ import {
 } from './effectChooserElements';
 
 const Container = styled.div`
-  background: black;
   width: ${PANEL_WIDTH}px;
 `;
 

@@ -23,10 +23,9 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
+import stripHTML from '../../../../../edit-story/utils/stripHTML';
 import Fixture from '../../../../karma/fixture';
 import {
-  TEMPLATES_GALLERY_VIEWING_LABELS,
-  TEMPLATES_GALLERY_STATUS,
   PRIMARY_PATHS,
   STORY_STATUS,
   STORY_STATUSES,
@@ -76,11 +75,11 @@ describe('Grid view', () => {
 
     await fixture.events.click(exploreTemplatesMenuItem);
 
-    const viewTemplates = fixture.screen.queryByText(
-      TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
+    const templatesGridEl = fixture.screen.getByLabelText(
+      'Available templates'
     );
 
-    expect(viewTemplates).toBeTruthy();
+    expect(templatesGridEl).toBeTruthy();
   });
 
   it('should Rename a story', async () => {
@@ -220,8 +219,11 @@ describe('Grid view', () => {
 
       await fixture.events.click(draftsTabButton);
 
+      const labelTextContent = stripHTML(
+        STORY_VIEWING_LABELS[STORY_STATUS.DRAFT](numDrafts)
+      );
       const viewDraftsText = fixture.screen.getByText(
-        new RegExp('^' + STORY_VIEWING_LABELS[STORY_STATUS.DRAFT] + '$')
+        (_, node) => node.textContent === labelTextContent
       );
 
       expect(viewDraftsText).toBeTruthy();
@@ -247,12 +249,12 @@ describe('Grid view', () => {
 
       await fixture.events.click(publishedTabButton);
 
-      const viewPublishedText = fixture.screen.getByText(
-        new RegExp(
-          '^' + STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE] + '$'
-        )
+      const labelTextContent = stripHTML(
+        STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE](numPublished)
       );
-
+      const viewPublishedText = fixture.screen.getByText(
+        (_, node) => node.textContent === labelTextContent
+      );
       expect(viewPublishedText).toBeTruthy();
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
@@ -302,13 +304,12 @@ describe('Grid view', () => {
       // Wait for the debounce
       await fixture.events.sleep(300);
 
-      const searchOptions = fixture.screen.getByTestId('typeahead-options');
-
+      const searchOptions = await fixture.screen.getByRole('listbox');
       expect(searchOptions).toBeTruthy();
 
-      await fixture.events.keyboard.press('down');
+      const activeListItems = within(searchOptions).queryAllByRole('option');
 
-      const activeListItems = within(searchOptions).queryAllByRole('listitem');
+      await fixture.events.keyboard.press('down');
 
       expect(activeListItems[0]).toBe(document.activeElement);
 
@@ -316,7 +317,7 @@ describe('Grid view', () => {
       await fixture.events.keyboard.press('up');
 
       expect(searchInput).toBe(document.activeElement);
-
+      await fixture.events.sleep(300);
       // key down to the bottom of the available search options
       // plus once more beyond available search options to make sure focus stays intact
       for (let iter = 0; iter < activeListItems.length + 1; iter++) {
@@ -324,7 +325,6 @@ describe('Grid view', () => {
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('down');
       }
-
       expect(activeListItems[activeListItems.length - 1]).toBe(
         document.activeElement
       );

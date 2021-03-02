@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-export { default as BodyViewOptions } from './bodyViewOptions';
-export { default as EmptyContentMessage } from './emptyContentMessage';
-export { default as PageHeading } from './pageHeading';
-export { default as SavedTemplateGridView } from './savedTemplateGridView';
-export { default as StoryGridView } from './storyGridView';
-export { default as StoryListView } from './storyListView';
-export { default as TemplateGridView } from './templateGridView';
+function getSearchOptions(options) {
+  return options.reduce((acc, option) => {
+    if (!option.title || option?.title.trim().length <= 0) {
+      return acc;
+    }
+    return [
+      ...acc,
+      {
+        label: option.title,
+        value: option.title,
+      },
+    ];
+  }, []);
+}
+
+export default getSearchOptions;

@@ -75,7 +75,8 @@ describe('Admin Menu', () => {
     });
     await page.waitForNavigation();
 
-    await expect(page).toMatch('Viewing all templates');
+    await expect(page).toMatch('Viewing all');
+    await expect(page).toMatch('templates');
   });
 
   it('should link to "Settings"', async () => {

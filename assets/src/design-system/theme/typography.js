@@ -29,7 +29,6 @@ export const typography = {
   weight: {
     bold: 500,
     regular: 400,
-    light: 300,
   },
   presets: {
     display: {
@@ -54,31 +53,31 @@ export const typography = {
     },
     headline: {
       [PRESET_SIZES.XX_LARGE]: {
-        weight: 500,
+        weight: 400,
         size: 42,
         lineHeight: 56,
         letterSpacing: 0,
       },
       [PRESET_SIZES.X_LARGE]: {
-        weight: 500,
+        weight: 400,
         size: 36,
         lineHeight: 44,
         letterSpacing: 0,
       },
       [PRESET_SIZES.LARGE]: {
-        weight: 500,
+        weight: 400,
         size: 32,
         lineHeight: 40,
         letterSpacing: 0,
       },
       [PRESET_SIZES.MEDIUM]: {
-        weight: 500,
+        weight: 400,
         size: 28,
         lineHeight: 36,
         letterSpacing: 0,
       },
       [PRESET_SIZES.SMALL]: {
-        weight: 500,
+        weight: 400,
         size: 24,
         lineHeight: 32,
         letterSpacing: 0,
@@ -90,7 +89,7 @@ export const typography = {
         letterSpacing: 0,
       },
       [PRESET_SIZES.XX_SMALL]: {
-        weight: 500,
+        weight: 700,
         size: 14,
         lineHeight: 20,
         letterSpacing: 0,
@@ -128,27 +127,59 @@ export const typography = {
         letterSpacing: 0.16,
       },
     },
-    label: {
+    link: {
+      [PRESET_SIZES.X_LARGE]: {
+        weight: 400,
+        size: 24,
+        lineHeight: 32,
+        letterSpacing: -0.02,
+      },
       [PRESET_SIZES.LARGE]: {
-        weight: 500,
+        weight: 700,
         size: 18,
         lineHeight: 24,
         letterSpacing: 0,
       },
       [PRESET_SIZES.MEDIUM]: {
-        weight: 500,
+        weight: 700,
         size: 16,
         lineHeight: 24,
         letterSpacing: 0,
       },
       [PRESET_SIZES.SMALL]: {
-        weight: 500,
+        weight: 700,
         size: 14,
         lineHeight: 20,
         letterSpacing: 0,
       },
       [PRESET_SIZES.X_SMALL]: {
-        weight: 500,
+        weight: 700,
+        size: 12,
+        lineHeight: 20,
+        letterSpacing: 0.16,
+      },
+    },
+    label: {
+      [PRESET_SIZES.LARGE]: {
+        weight: 400,
+        size: 18,
+        lineHeight: 24,
+        letterSpacing: 0,
+      },
+      [PRESET_SIZES.MEDIUM]: {
+        weight: 400,
+        size: 16,
+        lineHeight: 20,
+        letterSpacing: 0,
+      },
+      [PRESET_SIZES.SMALL]: {
+        weight: 400,
+        size: 14,
+        lineHeight: 12,
+        letterSpacing: 0,
+      },
+      [PRESET_SIZES.X_SMALL]: {
+        weight: 400,
         size: 12,
         lineHeight: 20,
         letterSpacing: 0,
