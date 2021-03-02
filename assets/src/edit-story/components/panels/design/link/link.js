@@ -220,8 +220,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row>
             <Input
               placeholder={__('Optional description', 'web-stories')}
-              onChange={(value) =>
-                handleChange({ desc: value }, !value /* submit */)
+              onChange={({ target }) =>
+                handleChange({ desc: target.value }, !target.value /* submit */)
               }
               value={link.desc || ''}
               aria-label={__('Link description', 'web-stories')}
