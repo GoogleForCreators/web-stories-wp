@@ -67,6 +67,18 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
       opacity: 0.4;
       cursor: default;
     `}
+
+  ::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid ${({ theme }) => theme.colors.divider.primary};
+    box-sizing: border-box;
+  }
 `;
 
 const presetCSS = css`
