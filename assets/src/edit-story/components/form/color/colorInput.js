@@ -34,11 +34,11 @@ import {
   Text,
   THEME_CONSTANTS,
   Tooltip as DefaultTooltip,
+  Swatch,
 } from '../../../../design-system';
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
-import getPreviewStyle from './getPreviewStyle';
 
 const Preview = styled.div`
   height: 36px;
@@ -104,35 +104,6 @@ const ColorPreview = styled.div`
   cursor: pointer;
 `;
 
-const ColorPreviewButton = styled(ColorPreview).attrs(buttonAttrs)`
-  ${buttonStyle}
-  padding: 0;
-  border: none;
-  &:focus {
-    outline: 2px solid ${({ theme }) => theme.colors.border.focus};
-  }
-`;
-
-const ColorPreviewInsideButton = styled(ColorPreview)`
-  transform: translate(-1px, -1px);
-`;
-
-const CurrentColor = styled.div`
-  ${colorStyles}
-`;
-
-const Transparent = styled.div`
-  ${colorStyles}
-
-  background-image: conic-gradient(
-    #fff 0.25turn,
-    #d3d4d4 0turn 0.5turn,
-    #fff 0turn 0.75turn,
-    #d3d4d4 0turn 1turn
-  );
-  background-size: 66.67% 66.67%;
-`;
-
 const TextualPreview = styled.div`
   padding: 6px 12px 6px 38px;
   text-align: left;
@@ -152,7 +123,7 @@ function ColorInput({
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
-  const previewStyle = getPreviewStyle(value);
+  const previewPattern = isMixed ? { color: { a: 0 } } : value;
   const previewText = getPreviewText(value);
 
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -190,24 +161,24 @@ function ColorInput({
             onChange={onChange}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
-          <ColorPreviewButton
-            {...buttonProps}
-            color={previewStyle?.backgroundColor}
-          >
-            {(value?.a < 1 || isMixed) && <Transparent />}
+          <ColorPreview>
             <Tooltip title={tooltip} hasTail>
-              <CurrentColor role="status" style={previewStyle} />
+              <Swatch isSmall pattern={previewPattern} {...buttonProps} />
             </Tooltip>
-          </ColorPreviewButton>
+          </ColorPreview>
         </Preview>
       ) : (
         // If not editable, the whole component is a button
         <Tooltip title={tooltip} hasTail>
           <ColorButton ref={previewRef} {...buttonProps}>
-            <ColorPreviewInsideButton>
-              <Transparent />
-              <CurrentColor role="status" style={previewStyle} />
-            </ColorPreviewInsideButton>
+            <ColorPreview>
+              <Swatch
+                isSmall
+                role="status"
+                tabIndex="-1"
+                pattern={previewPattern}
+              />
+            </ColorPreview>
             <TextualPreview>
               <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
                 {previewText}
