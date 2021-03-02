@@ -1,14 +1,14 @@
 {
-  "name": "@web-stories-wp/tinymce",
+  "name": "@web-stories-wp/tinymce-buttons",
   "private": true,
   "engines": {
     "node": ">= 15",
     "npm": "~7"
   },
   "exports": {
-    "default": "./src/web-stories.js"
+    "default": "./src/index.js"
   },
-  "main": "./src/web-stories.js",
+  "main": "./src/index.js",
   "type": "module",
   "dependencies": {
     "prop-types": "^15.7.2",
