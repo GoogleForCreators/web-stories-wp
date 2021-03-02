@@ -17,14 +17,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { useCallback } from '@wordpress/element';
+import { useCallback, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -41,11 +41,10 @@ import {
   STORY_SORT_MENU_ITEMS,
 } from '../../../../dashboard/constants';
 import { Dropdown, InfiniteScroller } from '../../../../dashboard/components';
-import TypeaheadSearch from '../../../../dashboard/app/views/shared/typeaheadSearch';
+import FontProvider from '../../../../dashboard/app/font/fontProvider';
+import { Search } from '../../../../design-system';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../../../dashboard/app/font/fontProvider';
-import TypeaheadAuthorSearch from '../../components/typeaheadAuthorSearch';
 import { StoryGridItem } from './components/cardGridItem';
 import ItemOverlay from './components/itemOverlay';
 import StoryPreview from './storyPreview';
@@ -131,6 +130,19 @@ const DropdownContainer = styled.div`
   margin: auto 8px;
 `;
 
+// Overrides WP input styles with some increased specificity.
+const StyledSearch = styled(Search)(
+  ({ theme }) => css`
+    &&& {
+      box-shadow: none;
+      border: 1px solid ${theme.colors.border.defaultNormal};
+      padding: 8px 20px 8px 40px;
+      border-radius: ${theme.borders.radius.small};
+      color: ${theme.colors.fg.primary};
+    }
+  `
+);
+
 function SelectStories({
   selectedStories,
   orderedStories,
@@ -152,10 +164,12 @@ function SelectStories({
   }, TEXT_INPUT_DEBOUNCE);
 
   const [debouncedTypeaheadAuthorChange] = useDebouncedCallback((value) => {
+    console.log('debouncedTypeaheadAuthorChange', value);
+
     // Set the user input as the current search keyword.
     setAuthorKeyword(value);
 
-    // On selecting author from the dropdown, '<Typeahead />' component sets the value from the
+    // On selecting author from the dropdown, '<Search />' component sets the value from the
     // suggestions array, which in our case is author ID. Check the value is a number.
     if (value.length > 0 && !isNaN(value)) {
       setCurrentAuthor(
@@ -178,23 +192,39 @@ function SelectStories({
     [sort]
   );
 
+  const authorSearchOptions = useMemo(() => {
+    return authors
+      .filter(({ name }) => Boolean(name?.trim().length))
+      .map(({ id, name }) => ({
+        label: name,
+        value: id.toString(),
+      }));
+  }, [authors]);
+
   return (
     <>
       <StoryFilter data-testid="story-filter">
         <SearchContainer>
           <SearchStoryInner>
-            <TypeaheadSearch
+            <StyledSearch
+              ariaInputLabel={__('Search Stories', 'web-stories')}
               placeholder={__('Search Stories', 'web-stories')}
-              currentValue={search.keyword}
-              stories={orderedStories}
-              handleChange={debouncedTypeaheadChange}
+              emptyText={__('No stories available', 'web-stories')}
+              selectedValue={{ label: search.keyword, value: search.keyword }}
+              options={orderedStories}
+              handleSearchValueChange={debouncedTypeaheadChange}
             />
           </SearchStoryInner>
-          <TypeaheadAuthorSearch
-            placeholder={__('Search by author', 'web-stories')}
-            currentValue={currentAuthor.name}
-            authors={authors}
-            handleChange={debouncedTypeaheadAuthorChange}
+          <StyledSearch
+            ariaInputLabel={__('Search by Author', 'web-stories')}
+            placeholder={__('Search by Author', 'web-stories')}
+            emptyText={__('No authors available', 'web-stories')}
+            selectedValue={{
+              label: currentAuthor.name,
+              value: currentAuthor.name,
+            }}
+            options={authorSearchOptions}
+            handleSearchValueChange={debouncedTypeaheadAuthorChange}
           />
         </SearchContainer>
         <DropdownContainer>
