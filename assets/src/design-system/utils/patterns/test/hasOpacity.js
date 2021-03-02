@@ -43,7 +43,7 @@ describe('hasOpacity', () => {
     const pattern = {
       type: 'linear',
       stops: [{ color: { r: 1, g: 1, b: 1 } }, { color: { r: 1, g: 1, b: 1 } }],
-      opacity: 0.5,
+      alpha: 0.5,
     };
     expect(hasOpacity(pattern)).toBeTrue();
   });

@@ -19,18 +19,19 @@ function colorHasTransparency(color) {
 }
 
 function hasOpacity(preset) {
-  const { color, stops } = preset;
+  const { color, alpha, stops } = preset;
   if (color) {
     return Boolean(colorHasTransparency(color));
   }
-  let opacityFound = false;
+  if (typeof alpha === 'number' && alpha < 1) {
+    return true;
+  }
   for (const colorStop of stops) {
     if (colorHasTransparency(colorStop.color)) {
-      opacityFound = true;
-      break;
+      return true;
     }
   }
-  return opacityFound;
+  return false;
 }
 
 export default hasOpacity;
