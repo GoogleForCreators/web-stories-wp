@@ -36,7 +36,7 @@
     "@ap.cx/hues": "^2.4.0",
     "@ffmpeg/ffmpeg": "^0.9.6",
     "@web-stories-wp/activation-notice": "*",
-    "@web-stories-wp/carousel": "*",
+    "@web-stories-wp/stories-carousel": "*",
     "@web-stories-wp/date": "*",
     "@web-stories-wp/fonts": "*",
     "@web-stories-wp/i18n": "*",

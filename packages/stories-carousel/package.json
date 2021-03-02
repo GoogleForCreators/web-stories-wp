@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/carousel",
+  "name": "@web-stories-wp/stories-carousel",
   "private": true,
   "engines": {
     "node": ">= 15",
