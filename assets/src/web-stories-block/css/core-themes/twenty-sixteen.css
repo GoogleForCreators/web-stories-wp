@@ -31,7 +31,8 @@
     padding-top: 33px;
   }
 
-  .web-stories-theme-header-section .web-stories-list.has-archive-link {
+  .web-stories-theme-header-section
+    .web-stories-list.is-carousel.has-archive-link {
     padding-top: 52px;
     margin-top: 0;
   }
