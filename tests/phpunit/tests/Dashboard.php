@@ -129,9 +129,9 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$args      = [ $experiments, $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ) ];
 		$dashboard = $this->getMockBuilder( \Google\Web_Stories\Dashboard::class )
-						  ->setConstructorArgs( $args )
-						  ->setMethods( [ 'get_asset_metadata' ] )
-						  ->getMock();
+						->setConstructorArgs( $args )
+						->setMethods( [ 'get_asset_metadata' ] )
+						->getMock();
 		$dashboard->method( 'get_asset_metadata' )
 				->willReturn(
 					[
