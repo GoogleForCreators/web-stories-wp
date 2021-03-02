@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/lightbox",
+  "name": "@web-stories-wp/stories-lightbox",
   "private": true,
   "engines": {
     "node": ">= 15",
