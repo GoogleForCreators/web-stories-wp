@@ -31,8 +31,10 @@ describe('Template', () => {
     await expect(dashboardNavigation).toClick('a', {
       text: 'Explore Templates',
     });
+    await page.waitForTimeout(100);
 
-    await expect(page).toMatch('Viewing all templates');
+    await expect(page).toMatch('Viewing all');
+    await expect(page).toMatch('templates');
 
     const firstTemplate = await expect(page).toMatchElement(
       '[data-testid="template-grid-item-1"]'

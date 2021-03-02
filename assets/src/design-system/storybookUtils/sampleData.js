@@ -14,6 +14,21 @@
  * limitations under the License.
  */
 
+export const shortDropDownOptions = [
+  {
+    label: 'drafts',
+    value: 'drafts',
+  },
+  {
+    label: 'cats',
+    value: 'cats',
+  },
+  {
+    label: 'dogs',
+    value: 'dogs',
+  },
+];
+
 export const basicDropDownOptions = [
   {
     label: 'label item one',

@@ -18,18 +18,31 @@
  * External dependencies
  */
 import { __, _x } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Up, Down } from './styled';
+import { KeyArrowUp } from '../../icons';
+
+export const TOP_MARGIN = 16;
+export const BOTTOM_MARGIN = 8;
 
 export const TOGGLE_SHORTCUTS_MENU = 'mod+/';
 
 export const KEY_SIZE = {
-  NORMAL: 24,
-  LARGE: 56,
+  NORMAL: '24px',
+  LARGE: 'auto',
 };
+
+const Up = styled(KeyArrowUp)`
+  width: 12px;
+  transform-origin: 50% 50%;
+`;
+
+const Down = styled(Up)`
+  transform: rotate(0.5turn);
+`;
 
 export const SPECIAL_KEYS = {
   COMMAND: {
@@ -37,7 +50,7 @@ export const SPECIAL_KEYS = {
     title: _x('Command', 'The keyboard key "Command"', 'web-stories'),
   },
   CONTROL: {
-    symbol: 'Ctrl',
+    symbol: 'ctrl',
     title: _x('Control', 'The keyboard key "Control"', 'web-stories'),
   },
   ENTER: {
@@ -52,7 +65,7 @@ export const SPECIAL_KEYS = {
     symbol: '⌥',
     title: _x('Option', 'The keyboard key "Option"', 'web-stories'),
   },
-  ALT: _x('Alt', 'The keyboard key "Alt"', 'web-stories'),
+  ALT: _x('alt', 'The keyboard key "Alt"', 'web-stories'),
   DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
   UP: <Up aria-label={__('Up arrow', 'web-stories')} />,
   DOWN: <Down aria-label={__('Down arrow', 'web-stories')} />,

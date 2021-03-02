@@ -88,7 +88,7 @@ const presetCSS = css`
 const ColorItem = styled.div`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
-  transform: rotate(-45deg);
+  transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
 
   svg {
     color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
@@ -146,6 +146,7 @@ function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
       ? __('Page background colors cannot have an opacity.', 'web-stories')
       : __('Gradient not allowed for Text', 'web-stories');
   }
+  const displaySplit = hasTransparency && !hasGradient;
   return (
     <WithTooltip title={tooltip}>
       <ColorButton
@@ -155,8 +156,12 @@ function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
         onClick={() => handleOnClick(color)}
       >
         {hasTransparency && <Transparent />}
-        <ColorItem color={color} disabled={disabled}>
-          {hasTransparency && !hasGradient && (
+        <ColorItem
+          color={color}
+          disabled={disabled}
+          displaySplit={displaySplit}
+        >
+          {displaySplit && (
             <OpaqueColorWrapper>
               <OpaqueColor color={opaqueColor} />
             </OpaqueColorWrapper>

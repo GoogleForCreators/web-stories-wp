@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { useState, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 
@@ -50,6 +50,7 @@ const Wrapper = styled.div`
 `;
 
 const MenuItems = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
