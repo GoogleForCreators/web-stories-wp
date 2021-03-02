@@ -178,6 +178,8 @@ export const MediaInput = forwardRef(function Media(
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
   const StyledMedia = MediaOptions[variant];
+  // Media input only allows simplified dropdown with one group.
+  const options = [{ group: menuOptions }];
   return (
     <StyledMedia ref={ref} className={className} {...rest}>
       <ImageWrapper variant={variant}>
@@ -211,7 +213,7 @@ export const MediaInput = forwardRef(function Media(
           parentId={buttonId}
           listId={listId}
           hasMenuRole
-          options={menuOptions}
+          options={options}
           onMenuItemClick={(evt, val) => {
             onMenuOption(evt, val);
             setIsMenuOpen(false);

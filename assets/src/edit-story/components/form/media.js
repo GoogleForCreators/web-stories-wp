@@ -78,9 +78,7 @@ const MediaInput = forwardRef(
     return (
       <Input
         onMenuOption={onOption}
-        menuOptions={
-          dropdownOptions.length > 0 ? [{ group: dropdownOptions }] : null
-        }
+        menuOptions={dropdownOptions}
         openMediaPicker={openMediaPicker}
         ref={forwardedRef}
         {...rest}
