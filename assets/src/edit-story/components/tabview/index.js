@@ -208,9 +208,7 @@ function TabView({
           ref={(tabRef) => (tabRefs.current[id] = tabRef)}
           id={getTabId(id)}
           isActive={tab === id}
-          aria-controls={
-            getAriaControlsId ? getAriaControlsId(id) : getTabId(id)
-          }
+          aria-controls={getAriaControlsId ? getAriaControlsId(id) : null}
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
         >
