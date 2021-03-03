@@ -100,8 +100,8 @@ class Story_Query {
 	public function get_stories() {
 
 		$query_args    = $this->get_query_args();
-		$stories_query = new WP_Query( $query_args );
-		$posts         = ( ! empty( $stories_query->posts ) && is_array( $stories_query->posts ) ) ? $stories_query->posts : [];
+		$stories_query = new WP_Query();
+		$posts         = $storires_query->query( $query_args );
 
 		return $posts;
 	}
