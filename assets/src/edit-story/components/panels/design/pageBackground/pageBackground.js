@@ -20,24 +20,69 @@
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Button, Color, Row } from '../../../form';
+import { Color, Row as DefaultRow } from '../../../form';
 import { useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
 import { FlipControls, getColorPickerActions } from '../../shared';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Text as DefaultText,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
+import { getDefinitionForType } from '../../../../elements';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
+
+const Row = styled(DefaultRow)`
+  justify-content: flex-start;
+`;
+
+const SelectedMedia = styled.div`
+  width: 128px;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+`;
+
+const MediaWrapper = styled.div`
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 6px;
+  img {
+    object-fit: cover;
+    min-height: 24px;
+  }
+`;
+
+const RemoveButton = styled(Button)`
+  margin: 1px;
+  align-self: center;
+`;
+
+const Text = styled(DefaultText)`
+  align-self: center;
+  width: 55px;
+`;
+
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   const {
     state: { currentPage },
     actions: { updateCurrentPageProperties },
   } = useStory();
-  const isBackground = selectedElements[0].isBackground;
-  const isDefaultBackground = selectedElements[0].isDefaultBackground;
-  const { backgroundColor } = currentPage;
 
   const updateBackgroundColor = useCallback(
     (value) => {
@@ -45,9 +90,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     },
     [updateCurrentPageProperties]
   );
-
-  // Background can only have one selected element.
-  const flip = selectedElements[0]?.flip || DEFAULT_FLIP;
 
   const { setBackgroundElement } = useStory((state) => ({
     setBackgroundElement: state.actions.setBackgroundElement,
@@ -64,6 +106,19 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     );
     setBackgroundElement({ elementId: null });
   }, [pushUpdate, setBackgroundElement]);
+
+  const backgroundEl = selectedElements[0];
+  if (!backgroundEl || !backgroundEl.isBackground) {
+    return null;
+  }
+  const isDefaultBackground = backgroundEl.isDefaultBackground;
+  const isMedia = backgroundEl.isBackground && !isDefaultBackground;
+
+  const { backgroundColor } = currentPage;
+  const { LayerContent } = getDefinitionForType(backgroundEl.type);
+
+  // Background can only have one selected element.
+  const flip = selectedElements[0]?.flip || DEFAULT_FLIP;
 
   return (
     <SimplePanel
@@ -83,15 +138,27 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
           />
         </Row>
       )}
-      {isBackground && !isDefaultBackground && (
+      {isMedia && (
         <Row expand={false}>
-          <Button onClick={removeAsBackground} fullWidth>
-            {__('Detach from background', 'web-stories')}
-          </Button>
+          <SelectedMedia>
+            <MediaWrapper>
+              <LayerContent element={backgroundEl} height={'100%'} />
+            </MediaWrapper>
+            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {__('Media', 'web-stories')}
+            </Text>
+            <RemoveButton
+              onClick={removeAsBackground}
+              size={BUTTON_SIZES.SMALL}
+              variant={BUTTON_VARIANTS.SQUARE}
+              type={BUTTON_TYPES.TERTIARY}
+            >
+              <Icons.Cross />
+            </RemoveButton>
+          </SelectedMedia>
           <FlipControls
             onChange={(value) => pushUpdate({ flip: value }, true)}
             value={flip}
-            elementSpacing={36}
           />
         </Row>
       )}

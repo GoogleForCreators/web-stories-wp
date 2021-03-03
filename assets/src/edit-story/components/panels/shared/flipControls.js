@@ -80,8 +80,4 @@ FlipControls.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-FlipControls.defaultProps = {
-  elementSpacing: 8,
-};
-
 export default FlipControls;
