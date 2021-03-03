@@ -80,8 +80,9 @@ class Core_Themes_Support {
 	 * @return void
 	 */
 	public function embed_web_stories() {
-		if ( is_readable( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/css/web-stories-theme-style-' . get_stylesheet() . '.css' ) ) {
-			$this->enqueue_style( 'web-stories-theme-style-' . get_stylesheet(), [ Renderer::STYLE_HANDLE ] );
+		$stylesheet = get_stylesheet();
+		if ( is_readable( sprintf( '%sassets/css/web-stories-theme-style-%s.css', WEBSTORIES_PLUGIN_DIR_PATH, $stylesheet ) ) ) {
+			$this->enqueue_style( 'web-stories-theme-style-' . $stylesheet, [ Renderer::STYLE_HANDLE ] );
 		}
 		?>
 		<div class="web-stories-theme-header-section">

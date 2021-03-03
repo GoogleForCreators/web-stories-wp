@@ -105,10 +105,8 @@ class Story_Query {
 	 * @return array An array of Story posts.
 	 */
 	public function get_stories() {
-		$stories_query = new WP_Query( $this->query_args );
-		$posts         = ( ! empty( $stories_query->posts ) && is_array( $stories_query->posts ) ) ? $stories_query->posts : [];
-
-		return $posts;
+		$stories_query = new WP_Query();
+		return $stories_query->query( $this->query_args );
 	}
 
 	/**
