@@ -24,22 +24,21 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { FlipHorizontal, FlipVertical } from '../../../icons';
-import { ToggleButton } from '../../../../design-system';
-
-const ToggleContainer = styled.div`
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: ${({ margin }) => (margin ? margin : 0)}px;
-`;
+import {
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  ToggleButton,
+  Icons,
+} from '../../../../design-system';
 
 const ControlsContainer = styled.div`
   display: flex;
   justify-content: left;
   align-items: flex-start;
+`;
+
+const Space = styled.div`
+  width: 8px;
 `;
 
 /**
@@ -48,38 +47,30 @@ const ControlsContainer = styled.div`
  * @param {Object} props Component props.
  * @param {Object} props.value Element's flip object.
  * @param {function(boolean)} props.onChange Callback to flip element.
- * @param {number} props.elementSpacing Space between the two flip toggles (defaults to 8).
  * @return {*} Rendered component.
  */
-function FlipControls({ value, onChange, elementSpacing }) {
+function FlipControls({ value, onChange }) {
   return (
     <ControlsContainer>
-      <ToggleContainer margin={elementSpacing}>
-        <ToggleButton
-          variant={buttonVariant}
-          size={buttonSize}
-          isToggled={isToggled}
-          onClick={swapToggled}
-        >
-          <ButtonContent variant={buttonVariant} />
-        </ToggleButton>
-        <Toggle
-          title={__('Flip horizontally', 'web-stories')}
-          aria-label={__('Flip horizontally', 'web-stories')}
-          icon={<FlipHorizontal />}
-          value={value.horizontal === true}
-          onChange={(horizontal) => onChange({ ...value, horizontal })}
-        />
-      </ToggleContainer>
-      <ToggleContainer>
-        <Toggle
-          title={__('Flip vertically', 'web-stories')}
-          aria-label={__('Flip vertically', 'web-stories')}
-          icon={<FlipVertical />}
-          value={value.vertical === true}
-          onChange={(vertical) => onChange({ ...value, vertical })}
-        />
-      </ToggleContainer>
+      <ToggleButton
+        variant={BUTTON_VARIANTS.SQUARE}
+        size={BUTTON_SIZES.SMALL}
+        isToggled={value.horizontal === true}
+        onClick={() => onChange({ ...value, horizontal: !value.horizontal })}
+        aria-label={__('Flip horizontally', 'web-stories')}
+      >
+        <Icons.MirrorLeftright />
+      </ToggleButton>
+      <Space />
+      <ToggleButton
+        variant={BUTTON_VARIANTS.SQUARE}
+        size={BUTTON_SIZES.SMALL}
+        isToggled={value.vertical === true}
+        onClick={() => onChange({ ...value, vertical: !value.vertical })}
+        aria-label={__('Flip vertically', 'web-stories')}
+      >
+        <Icons.MirrorUpdown />
+      </ToggleButton>
     </ControlsContainer>
   );
 }
@@ -87,7 +78,6 @@ function FlipControls({ value, onChange, elementSpacing }) {
 FlipControls.propTypes = {
   value: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  elementSpacing: PropTypes.number,
 };
 
 FlipControls.defaultProps = {
