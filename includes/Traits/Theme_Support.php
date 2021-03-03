@@ -1,6 +1,6 @@
 <?php
 /**
- * Trait ThemeSupport
+ * Trait Theme_Support
  *
  * @package   Google\Web_Stories\Traits
  * @copyright 2020 Google LLC
@@ -29,11 +29,11 @@ namespace Google\Web_Stories\Traits;
 use function Google\Web_Stories\get_stories_order;
 
 /**
- * Trait ThemeSupport
+ * Trait Theme_Support
  *
  * @package Google\Web_Stories\Traits
  */
-trait ThemeSupport {
+trait Theme_Support {
 	/**
 	 * Get theme support.
 	 *

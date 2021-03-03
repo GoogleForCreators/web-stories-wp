@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Traits\ThemeSupport;
+use Google\Web_Stories\Traits\Theme_Support;
 
 /**
  * Class customizer settings.
@@ -36,8 +36,7 @@ use Google\Web_Stories\Traits\ThemeSupport;
  * @package Google\Web_Stories
  */
 class Customizer {
-
-	use ThemeSupport;
+	use Theme_Support;
 
 	/**
 	 * Customizer section slug.
