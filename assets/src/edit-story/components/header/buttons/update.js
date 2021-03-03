@@ -34,7 +34,6 @@ import {
   TOOLTIP_PLACEMENT,
   useGlobalKeyDownEffect,
 } from '../../../../design-system';
-import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -101,11 +100,15 @@ function Update() {
   }
 
   return (
-    <ButtonWithChecklistWarning
+    <Button
+      variant={BUTTON_VARIANTS.RECTANGLE}
+      type={BUTTON_TYPES.PRIMARY}
+      size={BUTTON_SIZES.SMALL}
       onClick={() => saveStory()}
       disabled={isSaving || isUploading}
-      text={text}
-    />
+    >
+      {text}
+    </Button>
   );
 }
 
