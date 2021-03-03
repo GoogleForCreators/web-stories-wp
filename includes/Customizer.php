@@ -54,7 +54,7 @@ class Customizer {
 	 *
 	 * @var string
 	 */
-	const STORY_OPTION = 'story-options';
+	const STORY_OPTION = 'web_stories_customizer_settings';
 
 	/**
 	 * WP_Customize_Manager instance.
