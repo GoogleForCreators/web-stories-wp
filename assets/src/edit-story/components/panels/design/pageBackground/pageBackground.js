@@ -148,6 +148,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
               {__('Media', 'web-stories')}
             </Text>
             <RemoveButton
+              aria-label={__('Detach background', 'web-stories')}
               onClick={removeAsBackground}
               size={BUTTON_SIZES.SMALL}
               variant={BUTTON_VARIANTS.SQUARE}
