@@ -91,7 +91,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
         background-color: ${theme.colors.border.selection};
         height: 2px;
         border-radius: 1px;
-        bottom: -9px;
+        bottom: -10px;
         left: 4px;
         right: 4px;
       }
