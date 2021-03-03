@@ -149,6 +149,7 @@ function DetailsGallery({
           <Display
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
             as="h3"
+            data-testid="template-details-title"
           >
             {template.title}
           </Display>
