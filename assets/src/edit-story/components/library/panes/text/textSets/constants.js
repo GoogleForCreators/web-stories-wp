@@ -18,6 +18,10 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+/**
+ * Internal dependencies
+ */
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 
 export const CATEGORIES = {
   contact: __('Contact', 'web-stories'),
@@ -34,3 +38,10 @@ export const PANE_TEXT = {
   TITLE: __('Text Sets', 'web-stories'),
   SWITCH_LABEL: __('Match fonts from story', 'web-stories'),
 };
+
+export const TEXT_SET_PAGE_SIZE = {
+  width: TEXT_SET_SIZE,
+  height: TEXT_SET_SIZE / PAGE_RATIO,
+};
+
+export { TEXT_SET_SIZE };

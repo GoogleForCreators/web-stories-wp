@@ -45,7 +45,6 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
-// padding-top is to help outlines on page layouts
 export const PageLayoutsParentContainer = styled.div`
   ${virtualPaneContainer}
   overflow-x: hidden;

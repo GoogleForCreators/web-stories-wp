@@ -26,7 +26,6 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { UnitsProvider } from '../../../../../units';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import {
   getVirtualizedItemIndex,
   useVirtualizedGridNavigation,
@@ -35,6 +34,7 @@ import {
   VirtualizedWrapper,
 } from '../../shared/virtualizedPanelGrid';
 import TextSet from './textSet';
+import { TEXT_SET_PAGE_SIZE, TEXT_SET_SIZE } from './constants';
 
 function TextSets({ paneRef, filteredTextSets }) {
   const containerRef = useRef();
@@ -73,12 +73,7 @@ function TextSets({ paneRef, filteredTextSets }) {
   });
 
   return (
-    <UnitsProvider
-      pageSize={{
-        width: TEXT_SET_SIZE,
-        height: TEXT_SET_SIZE / PAGE_RATIO,
-      }}
-    >
+    <UnitsProvider pageSize={TEXT_SET_PAGE_SIZE}>
       <VirtualizedWrapper height={rowVirtualizer.totalSize}>
         <VirtualizedContainer
           height={rowVirtualizer.totalSize}
