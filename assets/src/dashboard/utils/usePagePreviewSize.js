@@ -101,7 +101,7 @@ const sizeFromWidth = (
 };
 
 const getContainerWidth = (windowWidth) => {
-  return windowWidth >= MIN_DASHBOARD_WIDTH ? windowWidth : MIN_DASHBOARD_WIDTH;
+  return windowWidth > MIN_DASHBOARD_WIDTH ? windowWidth : MIN_DASHBOARD_WIDTH;
 };
 
 export default function usePagePreviewSize(options = {}) {

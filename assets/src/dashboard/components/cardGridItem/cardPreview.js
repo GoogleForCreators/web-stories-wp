@@ -64,7 +64,7 @@ const EditControls = styled.div`
   justify-content: space-between;
   padding: 0;
   transition: opacity ease-in-out 300ms;
-  background: ${({ theme }) => theme.colors.opacity.white16};
+  background: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 
