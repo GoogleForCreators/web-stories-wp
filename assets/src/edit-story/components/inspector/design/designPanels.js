@@ -15,10 +15,25 @@
  */
 
 /**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../../../design-system/theme/constants';
+import { Text } from '../../../../design-system/components/typography/text';
 import useDesignPanels from './useDesignPanels';
 import DesignPanel from './designPanel';
+
+const LINE_HEIGHT = 24;
+const Note = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  text-align: center;
+  margin-top: calc(50% - ${LINE_HEIGHT / 2}px);
+`;
 
 function DesignPanels() {
   const {
@@ -26,6 +41,13 @@ function DesignPanels() {
     createSubmitHandlerForPanel,
     panelProperties,
   } = useDesignPanels();
+  if (!panels?.length) {
+    return (
+      <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+        {__('Nothing selected', 'web-stories')}
+      </Note>
+    );
+  }
   return panels.map(({ Panel, type }) => (
     <DesignPanel
       key={type}

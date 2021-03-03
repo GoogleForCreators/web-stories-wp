@@ -52,7 +52,7 @@ function intersect(a, b) {
 
 function getDesignPanelsForSelection(elements) {
   if (elements.length === 0) {
-    return [{ type: PanelTypes.NO_SELECTION, Panel: NoSelectionPanel }];
+    return [];
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;

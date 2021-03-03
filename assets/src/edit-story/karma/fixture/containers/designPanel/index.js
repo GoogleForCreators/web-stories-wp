@@ -128,11 +128,6 @@ export class DesignPanel extends Container {
     return null;
   }
 
-  get noSelection() {
-    // @todo: implement
-    return null;
-  }
-
   get pageStyle() {
     // @todo: implement
     return null;
