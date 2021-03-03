@@ -100,11 +100,11 @@ function Buttons() {
       <ButtonList>
         <List>
           <IconWithSpinner>
-            {isDraft ? <Update /> : <SwitchToDraft />}
+            <Preview />
             <Loading />
           </IconWithSpinner>
           <Space />
-          <Preview />
+          {isDraft ? <Update /> : <SwitchToDraft />}
           <Space />
           {isDraft && <Publish />}
           {!isDraft && <Update />}

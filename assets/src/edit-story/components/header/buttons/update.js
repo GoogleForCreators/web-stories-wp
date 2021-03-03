@@ -29,9 +29,6 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons,
-  Tooltip,
-  TOOLTIP_PLACEMENT,
   useGlobalKeyDownEffect,
 } from '../../../../design-system';
 
@@ -84,18 +81,15 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Tooltip title={text} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
-          <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={() => saveStory({ status: 'draft' })}
-            disabled={!isEnabled}
-            aria-label={text}
-          >
-            <Icons.FloppyDisk />
-          </Button>
-        </Tooltip>
+        <Button
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={() => saveStory({ status: 'draft' })}
+          disabled={!isEnabled}
+        >
+          {text}
+        </Button>
       );
   }
 
