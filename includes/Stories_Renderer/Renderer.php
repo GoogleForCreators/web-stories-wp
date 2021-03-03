@@ -82,9 +82,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected $instance_id = 0;
 
 	/**
-	 * Stories object
+	 * Story_Query instance.
 	 *
-	 * @var Stories Stories object
+	 * @var Story_Query Story_Query instance.
 	 */
 	protected $stories;
 
@@ -466,8 +466,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function render_single_story_content() {
+		/**
+		 * Story object.
+		 *
+		 * @var Story $story
+		 */
+		$story = $this->current();
+
 		$single_story_classes = $this->get_single_story_classes();
-		$lightbox_state       = 'lightbox' . $this->current()->get_id() . $this->instance_id;
+		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
 
 		// No need to load these styles on admin as editor styles are being loaded by the block.
 		if ( ! is_admin() ) {
@@ -491,7 +498,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
 			wp_enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
-			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $this->current()->get_url() ); ?>">
+			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">
 				<?php
 					$this->render_story_with_poster();
 				?>
@@ -557,7 +564,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	protected function get_content_overlay() {
-		$story_data = $this->current();
+		/**
+		 * Story object.
+		 *
+		 * @var Story $story
+		 */
+		$story = $this->current();
 
 		if ( empty( $this->content_overlay ) ) {
 			return;
@@ -568,7 +580,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<?php if ( $this->attributes['show_title'] ) { ?>
 				<div class="story-content-overlay__title">
 					<?php
-					echo esc_html( $story_data->get_title() );
+					echo esc_html( $story->get_title() );
 					?>
 				</div>
 			<?php } ?>
@@ -576,27 +588,27 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<?php if ( $this->attributes['show_excerpt'] ) { ?>
 				<div class="story-content-overlay__excerpt">
 					<?php
-					echo esc_html( $story_data->get_excerpt() );
+					echo esc_html( $story->get_excerpt() );
 					?>
 				</div>
 			<?php } ?>
 
-			<?php if ( ! empty( $story_data->get_author() ) ) { ?>
+			<?php if ( ! empty( $story->get_author() ) ) { ?>
 				<div class="story-content-overlay__author">
 					<?php
 
 					/* translators: %s: author name. */
-					echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story_data->get_author() ) );
+					echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story->get_author() ) );
 					?>
 				</div>
 			<?php } ?>
 
-			<?php if ( ! empty( $story_data->get_date() ) ) { ?>
+			<?php if ( ! empty( $story->get_date() ) ) { ?>
 				<time class="story-content-overlay__date">
 					<?php
 
 					/* translators: %s: publish date. */
-					echo esc_html( sprintf( __( 'On %s', 'web-stories' ), $story_data->get_date() ) );
+					echo esc_html( sprintf( __( 'On %s', 'web-stories' ), $story->get_date() ) );
 					?>
 				</time>
 			<?php } ?>
