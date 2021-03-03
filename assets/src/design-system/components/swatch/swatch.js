@@ -148,7 +148,7 @@ function Swatch({
     <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
-        pattern={isSmall ? opaquePattern : pattern}
+        pattern={pattern}
         disabled={isDisabled}
         displaySplit={displaySplit}
       >

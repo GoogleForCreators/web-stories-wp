@@ -26,7 +26,7 @@ function hasOpacity(preset) {
   if (typeof alpha === 'number' && alpha < 1) {
     return true;
   }
-  for (const colorStop of stops) {
+  for (const colorStop of stops || []) {
     if (colorHasTransparency(colorStop.color)) {
       return true;
     }

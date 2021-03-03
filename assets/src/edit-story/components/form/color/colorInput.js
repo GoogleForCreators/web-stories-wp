@@ -35,6 +35,7 @@ import {
   THEME_CONSTANTS,
   Tooltip as DefaultTooltip,
   Swatch,
+  getOpaquePattern,
 } from '../../../../design-system';
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
@@ -123,7 +124,9 @@ function ColorInput({
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
-  const previewPattern = isMixed ? { color: { a: 0 } } : value;
+  const previewPattern = isMixed
+    ? { color: { r: 0, g: 0, b: 0, a: 0 } }
+    : getOpaquePattern(value);
   const previewText = getPreviewText(value);
 
   const [pickerOpen, setPickerOpen] = useState(false);
