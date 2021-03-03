@@ -42,15 +42,19 @@
       "type": "number",
       "default": 2
     },
-    "sizeOfCircles": {
+    "circleSize": {
       "type": "number",
       "default": 96
+    },
+    "imageAlignment": {
+      "type": "string",
+      "default": "left"
     },
     "orderByValue": {
       "type": "string",
       "default": ""
     },
-    "viewAllLinkLabel": {
+    "archiveLinkLabel": {
       "type": "string",
       "default": ""
     },

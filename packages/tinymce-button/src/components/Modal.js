@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+
 /**
  * WordPress dependencies
  */
@@ -27,13 +28,15 @@ import {
   SelectControl,
   Button,
   TextControl,
+  RadioControl,
 } from '@wordpress/components';
 import { dispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
-import { updateViewSettings, isView } from '../utils';
+import { updateViewSettings } from '../utils';
 import { webStoriesData } from '../utils/globals';
 import name from '../store/name';
 
@@ -45,18 +48,22 @@ const WebStoriesModal = (props) => {
     author,
     date,
     title,
-    number,
-    columns,
+    number_of_stories,
     order,
+    orderby,
     view,
     excerpt,
-    image_align,
+    image_alignment,
     archive_link,
     circle_size,
+    number_of_columns,
     sharp_corners,
-    archive_label,
+    archive_link_label,
   } = settings;
-  const { views, orderlist } = webStoriesData;
+  const { views = {}, fields } = webStoriesData;
+
+  const displayField = (fieldName) =>
+    fields?.[view][fieldName].show && !fields?.[view][fieldName].hidden;
 
   if (!modalOpen) {
     return null;
@@ -73,7 +80,7 @@ const WebStoriesModal = (props) => {
       shouldCloseOnClickOutside={false}
     >
       <SelectControl
-        label={__('Select View Type', 'web-stories')}
+        label={__('Select Layout', 'web-stories')}
         value={view}
         options={views}
         onChange={(view_type) => {
@@ -81,44 +88,106 @@ const WebStoriesModal = (props) => {
         }}
       />
 
-      <TinyMCEToggle field={'title'} fieldObj={title} />
+      <RangeControl
+        label={__('Number of Stories', 'web-stories')}
+        value={number_of_stories}
+        min={1}
+        max={20}
+        onChange={(value) => {
+          updateViewSettings({
+            fieldObj: Number(value),
+            field: 'number_of_stories',
+          });
+        }}
+      />
 
-      <TinyMCEToggle field={'excerpt'} fieldObj={excerpt} />
+      <SelectControl
+        label={__('Order By', 'web-stories')}
+        value={orderby}
+        options={[
+          {
+            value: 'post_date',
+            label: __('Date', 'web-stories'),
+          },
+          {
+            value: 'post_title',
+            label: __('Title', 'web-stories'),
+          },
+        ]}
+        onChange={(value) => {
+          updateViewSettings({ fieldObj: value, field: 'orderby' });
+        }}
+      />
 
-      <TinyMCEToggle field={'author'} fieldObj={author} />
+      <SelectControl
+        label={__('Order', 'web-stories')}
+        value={order}
+        options={[
+          {
+            value: 'ASC',
+            label: __('Ascending', 'web-stories'),
+          },
+          {
+            value: 'DESC',
+            label: __('Descending', 'web-stories'),
+          },
+        ]}
+        onChange={(value) => {
+          updateViewSettings({ fieldObj: value, field: 'order' });
+        }}
+      />
 
-      <TinyMCEToggle field={'date'} fieldObj={date} />
+      <TinyMCEToggle field="title" fieldObj={title} />
 
-      <TinyMCEToggle field={'image_align'} fieldObj={image_align} />
+      <TinyMCEToggle field="excerpt" fieldObj={excerpt} />
 
-      <TinyMCEToggle field={'sharp_corners'} fieldObj={sharp_corners} />
+      <TinyMCEToggle field="author" fieldObj={author} />
 
-      <TinyMCEToggle field={'archive_link'} fieldObj={archive_link} />
+      <TinyMCEToggle field="date" fieldObj={date} />
 
-      {archive_link.show && (
+      {displayField('image_alignment') && (
+        <div style={{ margin: '0 0 10px 0' }}>
+          <RadioControl
+            label={__('Image Alignment', 'web-stories')}
+            selected={image_alignment}
+            options={[
+              {
+                value: 'left',
+                label: __('Left', 'web-stories'),
+              },
+              {
+                value: 'right',
+                label: __('Right', 'web-stories'),
+              },
+            ]}
+            onChange={(value) => {
+              updateViewSettings({
+                fieldObj: value,
+                field: 'image_alignment',
+              });
+            }}
+          />
+        </div>
+      )}
+
+      <TinyMCEToggle field="sharp_corners" fieldObj={sharp_corners} />
+
+      <TinyMCEToggle field="archive_link" fieldObj={archive_link} />
+
+      {archive_link?.show && (
         <TextControl
           label={__('Archive Link Label', 'web-stories')}
-          value={archive_label}
+          value={archive_link_label}
           onChange={(value) => {
             updateViewSettings({
               fieldObj: value,
-              field: 'archive_label',
+              field: 'archive_link_label',
             });
           }}
         />
       )}
 
-      <RangeControl
-        label={__('Number of Stories', 'web-stories')}
-        value={number}
-        min={1}
-        max={20}
-        onChange={(items) => {
-          updateViewSettings({ fieldObj: items, field: 'number' });
-        }}
-      />
-
-      {isView('circles') && (
+      {circle_size?.show && (
         <RangeControl
           label={__('Circle Size', 'web-stories')}
           value={circle_size}
@@ -127,39 +196,29 @@ const WebStoriesModal = (props) => {
           step={5}
           onChange={(size) =>
             updateViewSettings({
-              fieldObj: parseInt(size),
+              fieldObj: Number(size),
               field: 'circle_size',
             })
           }
         />
       )}
 
-      {isView('grid') && (
+      {displayField('number_of_columns') && (
         <RangeControl
           label={__('Number of Columns', 'web-stories')}
-          value={columns}
+          value={number_of_columns}
           min={1}
           max={4}
-          onChange={(cols) =>
+          onChange={(value) =>
             updateViewSettings({
-              // eslint-disable-next-line radix
-              fieldObj: parseInt(cols, 10),
-              field: 'columns',
+              fieldObj: Number(value),
+              field: 'number_of_columns',
             })
           }
         />
       )}
 
-      <SelectControl
-        label={__('Select Order', 'web-stories')}
-        value={order}
-        options={orderlist}
-        onChange={(o) => {
-          updateViewSettings({ fieldObj: o, field: 'order' });
-        }}
-      />
-
-      <div style={{ padding: '20px 0' }} className={'alignright'}>
+      <div style={{ padding: '20px 0' }} className="alignright">
         <Button
           isPrimary
           onClick={() => {
@@ -172,7 +231,7 @@ const WebStoriesModal = (props) => {
             dispatch(name).toggleModal(false);
           }}
         >
-          {__('Okay', 'web-stories')}
+          {__('Insert', 'web-stories')}
         </Button>
         <Button onClick={() => dispatch(name).toggleModal(false)}>
           {__('Cancel', 'web-stories')}
@@ -185,7 +244,7 @@ const WebStoriesModal = (props) => {
 const StateFulFieldShape = PropTypes.shape({
   show: PropTypes.bool,
   label: PropTypes.string,
-  readonly: PropTypes.bool,
+  hidden: PropTypes.bool,
 });
 
 WebStoriesModal.propTypes = {
@@ -194,16 +253,17 @@ WebStoriesModal.propTypes = {
     author: StateFulFieldShape,
     title: StateFulFieldShape,
     excerpt: StateFulFieldShape,
-    image_align: StateFulFieldShape,
+    image_alignment: StateFulFieldShape,
     archive_link: StateFulFieldShape,
+    archive_link_label: PropTypes.string,
     sharp_corners: StateFulFieldShape,
     date: StateFulFieldShape,
-    number: PropTypes.number,
-    columns: PropTypes.number,
+    number_of_columns: PropTypes.number,
+    number_of_stories: PropTypes.number,
+    orderby: PropTypes.string,
     order: PropTypes.string,
     view: PropTypes.string,
     circle_size: PropTypes.number,
-    archive_label: PropTypes.string,
   }),
   prepareShortCode: PropTypes.func,
 };

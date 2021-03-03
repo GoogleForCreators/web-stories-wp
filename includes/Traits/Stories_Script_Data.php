@@ -28,10 +28,8 @@
 
 namespace Google\Web_Stories\Traits;
 
-use Google\Web_Stories\Shortcode\Stories_Shortcode;
 use function Google\Web_Stories\fields_states;
 use function Google\Web_Stories\get_layouts;
-use function Google\Web_Stories\get_stories_order;
 
 /**
  * Trait Stories_Script_Data.
@@ -39,52 +37,16 @@ use function Google\Web_Stories\get_stories_order;
  * @package Google\Web_Stories
  */
 trait Stories_Script_Data {
-
 	/**
-	 * Script handle.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @var string
-	 */
-	private $script_handle;
-
-	/**
-	 * Add the data via wp_localize_script.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function enqueue() {
-		if ( $this->script_handle && wp_script_is( $this->script_handle ) ) {
-			wp_localize_script(
-				$this->script_handle,
-				'webStoriesData',
-				$this->data()
-			);
-		}
-	}
-
-	/**
-	 * Put some tinymce related data on the page.
+	 * Returns data array for use in inline script.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return array
 	 */
-	private function data() {
-		$order      = get_stories_order();
+	private function get_script_data() {
 		$views      = get_layouts();
-		$order_list = [];
 		$view_types = [];
-
-		foreach ( $order as $order_key => $an_order ) {
-			$order_list[] = [
-				'label' => $an_order,
-				'value' => $order_key,
-			];
-		}
 
 		foreach ( $views as $view_key => $view_label ) {
 			$view_types[] = [
@@ -95,19 +57,10 @@ trait Stories_Script_Data {
 
 		$field_states = fields_states();
 
-		$data = [
-			'orderlist' => $order_list,
-			'tag'       => Stories_Shortcode::SHORTCODE_NAME,
-			'views'     => $view_types,
-			'fields'    => $field_states,
+		return [
+			'views'  => $view_types,
+			'fields' => $field_states,
 		];
-
-		/**
-		 * Filter the script data.
-		 *
-		 * @param array $data Script data.
-		 */
-		return apply_filters( 'web_stories_script_data', $data );
 	}
 
 }

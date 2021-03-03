@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories\Traits;
 
-use function Google\Web_Stories\get_stories_order;
-
 /**
  * Trait Theme_Support
  *
@@ -35,44 +33,102 @@ use function Google\Web_Stories\get_stories_order;
  */
 trait Theme_Support {
 	/**
-	 * Get theme support.
+	 * Merges user defined arguments into defaults array.
+	 *
+	 * Like wp_parse_args(), but recursive.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @see wp_parse_args()
+	 *
+	 * @param array $args      Value to merge with $defaults.
+	 * @param array $defaults Optional. Array that serves as the defaults. Default empty array.
+	 * @return array Merged user defined values with defaults.
+	 */
+	private function parse_args( array $args, array $defaults = [] ) {
+		$parsed_args = $defaults;
+
+		foreach ( $args as $key => $value ) {
+			if ( is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
+				$parsed_args[ $key ] = $this->parse_args( $value, $parsed_args[ $key ] );
+			} else {
+				if ( is_int( $parsed_args[ $key ] ) ) {
+					$parsed_args[ $key ] = (int) $value;
+				} elseif ( is_bool( $parsed_args[ $key ] ) ) {
+					$parsed_args[ $key ] = (bool) $value;
+				}
+
+				$parsed_args[ $key ] = (string) $value;
+			}
+		}
+
+		return $parsed_args;
+	}
+
+	/**
+	 * Get theme support configuration.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return array
 	 */
 	public function get_stories_theme_support() {
-		$theme_support = get_theme_support( 'web-stories' );
-		$theme_support = ! empty( $theme_support[0] ) && is_array( $theme_support[0] ) ? $theme_support[0] : [];
+		$support = get_theme_support( 'web-stories' );
+		$support = isset( $support[0] ) && is_array( $support[0] ) ? $support[0] : [];
 
-		$default_theme_support = [
-			'view-type'                 => [
-				'circles' => __( 'Circle Carousel', 'web-stories' ),
+		$default_support = [
+			'customizer' => [
+				'view_type'         => [
+					'enabled' => [ 'circles', 'list', 'grid', 'carousel' ],
+					'default' => 'circles',
+				],
+				'title'             => [
+					'enabled' => true,
+					'default' => true,
+				],
+				'excerpt'           => [
+					'enabled' => true,
+					'default' => false,
+				],
+				'author'            => [
+					'enabled' => true,
+					'default' => true,
+				],
+				'date'              => [
+					'enabled' => false,
+				],
+				'archive_link'      => [
+					'enabled' => true,
+					'default' => true,
+					'label'   => __( 'View all stories', 'web-stories' ),
+				],
+				'sharp_corners'     => [
+					'enabled' => false,
+					'default' => false,
+				],
+				'order'             => [
+					'default' => 'DESC',
+				],
+				'orderby'           => [
+					'default' => 'post_date',
+				],
+				'circle_size'       => [
+					'default' => 150,
+				],
+				'number_of_stories' => [
+					'default' => 10,
+				],
+				'number_of_columns' => [
+					'default' => 2,
+				],
+				'image_alignment'   => [
+					'default' => is_rtl() ? 'right' : 'left',
+				],
 			],
-			'view-type-default'         => 'circles',
-			'grid-columns-default'      => 2,
-			'title'                     => true,
-			'title-default'             => true,
-			'excerpt'                   => true,
-			'excerpt-default'           => false,
-			'author'                    => true,
-			'author-default'            => false,
-			'date'                      => false,
-			'date-default'              => false,
-			'stories-archive-link'      => true,
-			'sharp-corners'             => false,
-			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
-			'number-of-stories'         => 10,
-			'circle-size-default'       => 150,
-			'order'                     => get_stories_order(),
-			'order-default'             => 'latest',
-			'show-story-poster-default' => true,
 		];
 
-		$theme_support                         = wp_parse_args( $theme_support, $default_theme_support );
-		$theme_support['number-of-stories']    = (int) $theme_support['number-of-stories'];
-		$theme_support['grid-columns-default'] = (int) $theme_support['grid-columns-default'];
+		$support = $this->parse_args( $support, $default_support );
 
-		return $theme_support;
+		return $support;
 	}
 }

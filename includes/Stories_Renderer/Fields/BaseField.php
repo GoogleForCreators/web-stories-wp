@@ -32,21 +32,21 @@ use Google\Web_Stories\Interfaces\Field;
  */
 class BaseField implements Field {
 	/**
-	 * Label for the field.
+	 * Field label.
 	 *
 	 * @var string
 	 */
 	private $label;
 
 	/**
-	 * Flag for readonly field.
+	 * Whether the field is enabled.
 	 *
 	 * @var bool
 	 */
-	private $readonly;
+	private $hidden;
 
 	/**
-	 * Whether to show the field.
+	 * Whether to display the field.
 	 *
 	 * @var bool
 	 */
@@ -58,9 +58,9 @@ class BaseField implements Field {
 	 * @param array $args Arguments.
 	 */
 	public function __construct( array $args ) {
-		$this->label    = isset( $args['label'] ) ? $args['label'] : '';
-		$this->readonly = isset( $args['readonly'] ) ? (bool) $args['readonly'] : true;
-		$this->show     = isset( $args['show'] ) ? (bool) $args['show'] : true;
+		$this->label  = isset( $args['label'] ) ? $args['label'] : '';
+		$this->hidden = isset( $args['hidden'] ) ? (bool) $args['hidden'] : true;
+		$this->show   = isset( $args['show'] ) ? (bool) $args['show'] : true;
 	}
 
 	/**
@@ -82,11 +82,11 @@ class BaseField implements Field {
 	}
 
 	/**
-	 * Whether the field is readonly.
+	 * Whether the field is hidden.
 	 *
 	 * @return bool
 	 */
-	public function readonly() {
-		return $this->readonly;
+	public function hidden() {
+		return $this->hidden;
 	}
 }

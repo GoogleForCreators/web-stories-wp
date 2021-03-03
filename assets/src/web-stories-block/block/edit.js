@@ -128,7 +128,7 @@ WebStoriesEdit.propTypes = {
     numOfStories: PropTypes.number,
     numOfColumns: PropTypes.number,
     orderByValue: PropTypes.string,
-    viewAllLinkLabel: PropTypes.string,
+    archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
   }),
   setAttributes: PropTypes.func.isRequired,

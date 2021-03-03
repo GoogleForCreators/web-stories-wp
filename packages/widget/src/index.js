@@ -37,7 +37,7 @@ const reactiveWidget = function (target, reset = false) {
   const widget = target.closest('.widget');
   const state = fieldState.fields[currentView];
 
-  for (const [key, value] of Object.entries(state)) {
+  for (const [key, fieldObj] of Object.entries(state)) {
     const field = widget.querySelector(`.${key}.stories-widget-field`);
     const fieldWrapper = widget.querySelector(`.${key}_wrapper`);
 
@@ -52,13 +52,13 @@ const reactiveWidget = function (target, reset = false) {
          * If this is readonly field.
          * Assign the value automatically and hide it afterward.
          */
-        if (value.readonly) {
-          field.checked = value.show;
+        if (fieldObj.hidden) {
+          field.checked = fieldObj.show;
         }
 
-        fieldWrapper.style.display = value.readonly ? 'none' : 'block';
+        fieldWrapper.style.display = fieldObj.hidden ? 'none' : 'block';
       } else {
-        fieldWrapper.style.display = value.show ? 'block' : 'none';
+        fieldWrapper.style.display = fieldObj.show ? 'block' : 'none';
       }
     }
   }
@@ -70,7 +70,7 @@ const reactiveWidget = function (target, reset = false) {
  * @return {HTMLCollection} Array of elements.
  */
 const viewSelectors = () =>
-  document.getElementsByClassName('view-type stories-widget-field');
+  document.getElementsByClassName('view_type stories-widget-field');
 
 /**
  * Bind event on view type selection change.
@@ -118,7 +118,7 @@ const widgetChange = (event, widget) => {
     return;
   }
 
-  const target = widget[0].querySelectorAll('.view-type.stories-widget-field');
+  const target = widget[0].querySelectorAll('.stories-widget-field.view_type');
 
   if (target.length) {
     reactiveWidget(target[0], false);

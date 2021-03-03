@@ -26,7 +26,7 @@ namespace Google\Web_Stories\Stories_Renderer\FieldState;
 use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
 
 /**
- * Class Grid.
+ * Class CircleView.
  */
 final class CircleView extends BaseFieldState {
 
@@ -42,9 +42,9 @@ final class CircleView extends BaseFieldState {
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => false,
-				'readonly' => false,
+				'label'  => $label,
+				'show'   => false,
+				'hidden' => false,
 			]
 		);
 	}
@@ -59,9 +59,9 @@ final class CircleView extends BaseFieldState {
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => false,
-				'readonly' => true,
+				'label'  => $label,
+				'show'   => false,
+				'hidden' => true,
 			]
 		);
 	}
@@ -76,9 +76,9 @@ final class CircleView extends BaseFieldState {
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => false,
-				'readonly' => true,
+				'label'  => $label,
+				'show'   => false,
+				'hidden' => true,
 			]
 		);
 	}
@@ -93,9 +93,9 @@ final class CircleView extends BaseFieldState {
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => false,
-				'readonly' => true,
+				'label'  => $label,
+				'show'   => false,
+				'hidden' => true,
 			]
 		);
 	}
@@ -110,9 +110,9 @@ final class CircleView extends BaseFieldState {
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
+				'label'  => $label,
+				'show'   => true,
+				'hidden' => false,
 			]
 		);
 	}

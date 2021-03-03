@@ -81,8 +81,8 @@ class Story_Query extends \WP_UnitTestCase {
 			'show_excerpt'              => false,
 			'show_stories_archive_link' => false,
 			'has_square_corners'        => false,
-			'stories_archive_label'     => 'View all stories',
-			'list_view_image_alignment' => 'left',
+			'archive_link_label'        => 'View all stories',
+			'image_alignment'           => 'left',
 			'class'                     => '',
 			'circle_size'               => 150,
 		];

@@ -41,7 +41,14 @@ import StoryCard from './storyCard';
 
 function StoriesPreview(props) {
   const {
-    attributes: { align, viewType, sizeOfCircles, fieldState, numOfColumns },
+    attributes: {
+      align,
+      viewType,
+      circleSize,
+      imageAlignment,
+      fieldState,
+      numOfColumns,
+    },
     viewAllLabel,
     stories,
   } = props;
@@ -76,12 +83,12 @@ function StoriesPreview(props) {
           date={story.date_gmt}
           author={story._embedded.author[0].name}
           poster={story.featured_media_url}
-          imageOnRight={fieldState['show_image_align']}
+          imageAlignment={imageAlignment}
           isShowingAuthor={fieldState['show_author']}
           isShowingDate={fieldState['show_date']}
           isShowingTitle={fieldState['show_title']}
           isShowingExcerpt={fieldState['show_excerpt']}
-          sizeOfCircles={sizeOfCircles}
+          circleSize={circleSize}
         />
       );
     });
@@ -122,9 +129,7 @@ function StoriesPreview(props) {
       className={blockClasses}
       style={{
         '--ws-circle-size':
-          'circles' === viewType && sizeOfCircles
-            ? `${sizeOfCircles}px`
-            : undefined,
+          'circles' === viewType && circleSize ? `${circleSize}px` : undefined,
       }}
     >
       <div className="web-stories-list__inner-wrapper">
@@ -164,8 +169,9 @@ StoriesPreview.propTypes = {
     align: PropTypes.string,
     viewType: PropTypes.string,
     numOfColumns: PropTypes.number,
-    sizeOfCircles: PropTypes.number,
+    circleSize: PropTypes.number,
     fieldState: PropTypes.object,
+    imageAlignment: PropTypes.string,
   }),
   stories: PropTypes.array,
   viewAllLabel: PropTypes.string,

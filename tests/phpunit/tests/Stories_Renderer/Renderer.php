@@ -151,9 +151,9 @@ class Renderer extends \WP_UnitTestCase_Base {
 
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'view_type'                 => 'list',
-				'class'                     => '',
-				'list_view_image_alignment' => 'left',
+				'view_type'       => 'list',
+				'class'           => '',
+				'image_alignment' => 'left',
 			]
 		);
 
@@ -246,7 +246,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 			[
 				'show_title'                => true,
 				'show_stories_archive_link' => true,
-				'stories_archive_label'     => 'View All Stories',
+				'archive_link_label'        => 'View All Stories',
 			]
 		);
 

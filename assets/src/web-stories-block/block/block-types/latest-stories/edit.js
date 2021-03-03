@@ -55,7 +55,7 @@ const LATEST_STORIES_QUERY = {
  * @return {*} JSX markup for the editor.
  */
 const LatestStoriesEdit = ({ attributes, setAttributes }) => {
-  const { numOfStories, orderByValue, viewAllLinkLabel, authors } = attributes;
+  const { numOfStories, orderByValue, archiveLinkLabel, authors } = attributes;
 
   const { api } = useConfig();
 
@@ -103,8 +103,8 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
     debouncedFetchStories();
   }, [authors, numOfStories, orderByValue, debouncedFetchStories]);
 
-  const viewAllLabel = viewAllLinkLabel
-    ? viewAllLinkLabel
+  const viewAllLabel = archiveLinkLabel
+    ? archiveLinkLabel
     : __('View All Stories', 'web-stories');
 
   const storiesToDisplay =
@@ -140,9 +140,9 @@ LatestStoriesEdit.propTypes = {
     numOfStories: PropTypes.number,
     numOfColumns: PropTypes.number,
     orderByValue: PropTypes.string,
-    viewAllLinkLabel: PropTypes.string,
+    archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
-    sizeOfCircles: PropTypes.number,
+    circleSize: PropTypes.number,
     fieldState: PropTypes.object,
   }),
   setAttributes: PropTypes.func.isRequired,

@@ -32,18 +32,18 @@ use Google\Web_Stories\Interfaces\FieldState;
  */
 class BaseFieldState implements FieldState {
 	/**
-	 * Image align FieldState.
+	 * Image alignment FieldState.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return Field
 	 */
-	public function image_align() {
+	public function image_alignment() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show images on right', 'web-stories' ),
-				'show'     => false,
-				'readonly' => true,
+				'label'  => __( 'Image Alignment', 'web-stories' ),
+				'show'   => false,
+				'hidden' => true,
 			]
 		);
 	}
@@ -58,9 +58,9 @@ class BaseFieldState implements FieldState {
 	public function excerpt() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show excerpt', 'web-stories' ),
-				'show'     => false,
-				'readonly' => true,
+				'label'  => __( 'Display Excerpt', 'web-stories' ),
+				'show'   => false,
+				'hidden' => true,
 			]
 		);
 	}
@@ -75,9 +75,9 @@ class BaseFieldState implements FieldState {
 	public function author() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show author', 'web-stories' ),
-				'show'     => true,
-				'readonly' => false,
+				'label'  => __( 'Display Author', 'web-stories' ),
+				'show'   => true,
+				'hidden' => false,
 			]
 		);
 	}
@@ -92,9 +92,9 @@ class BaseFieldState implements FieldState {
 	public function date() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show date', 'web-stories' ),
-				'show'     => false,
-				'readonly' => false,
+				'label'  => __( 'Display Date', 'web-stories' ),
+				'show'   => false,
+				'hidden' => false,
 			]
 		);
 	}
@@ -109,9 +109,9 @@ class BaseFieldState implements FieldState {
 	public function archive_link() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show "View All Stories" link', 'web-stories' ),
-				'show'     => true,
-				'readonly' => false,
+				'label'  => __( 'Display Archive Link', 'web-stories' ),
+				'show'   => true,
+				'hidden' => false,
 			]
 		);
 	}
@@ -126,9 +126,9 @@ class BaseFieldState implements FieldState {
 	public function title() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show title', 'web-stories' ),
-				'show'     => true,
-				'readonly' => true,
+				'label'  => __( 'Display Title', 'web-stories' ),
+				'show'   => true,
+				'hidden' => true,
 			]
 		);
 	}
@@ -143,9 +143,9 @@ class BaseFieldState implements FieldState {
 	public function sharp_corners() {
 		return new BaseField(
 			[
-				'label'    => __( 'Show sharp corners', 'web-stories' ),
-				'show'     => false,
-				'readonly' => false,
+				'label'  => __( 'Use Sharp Corners', 'web-stories' ),
+				'show'   => false,
+				'hidden' => false,
 			]
 		);
 	}
@@ -160,9 +160,24 @@ class BaseFieldState implements FieldState {
 	public function circle_size() {
 		return new BaseField(
 			[
-				'label'    => __( 'Circle size', 'web-stories' ),
-				'show'     => false,
-				'readonly' => true,
+				'label' => __( 'Circle Size', 'web-stories' ),
+				'show'  => false,
+			]
+		);
+	}
+
+	/**
+	 * Number of columns field.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return BaseField
+	 */
+	public function number_of_columns() {
+		return new BaseField(
+			[
+				'label' => __( 'Number of Columns', 'web-stories' ),
+				'show'  => false,
 			]
 		);
 	}

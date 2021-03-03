@@ -29,7 +29,7 @@ jest.mock('@wordpress/data', () => ({
       dummy: {
         show: true,
         label: 'Dummy Text',
-        readonly: true,
+        hidden: true,
       },
     }),
     getEditor: () => 'testEditor',
@@ -38,9 +38,7 @@ jest.mock('@wordpress/data', () => ({
 
 jest.mock('../../utils/globals', () => ({
   webStoriesData: {
-    tag: 'testStories',
     views: [],
-    orderlist: [],
   },
 }));
 
@@ -57,29 +55,6 @@ describe('Test the current view', () => {
 });
 
 /**
- * Fail circle view.
- */
-describe('Test view is not circle', () => {
-  it('view should not be circles', () => {
-    const circleView = Utils.isCircleView();
-    expect(circleView).toBeFalsy();
-  });
-});
-
-/**
- * Pass circle view.
- */
-describe('Test view is circle', () => {
-  it('view should be circles', () => {
-    select.mockImplementationOnce(() => ({
-      getCurrentView: () => 'circles',
-    }));
-    const circleView = Utils.isCircleView();
-    expect(circleView).toBeTruthy();
-  });
-});
-
-/**
  * Test shortcode build function.
  */
 describe('Test shortcode is preparation', () => {
@@ -90,11 +65,11 @@ describe('Test shortcode is preparation', () => {
     }));
 
     const shortCode = Utils.prepareShortCode();
-    expect(shortCode).toBe('[testStories /]');
+    expect(shortCode).toBe('[web_stories /]');
   });
 
   it('editor instance set', () => {
     const shortCode = Utils.prepareShortCode();
-    expect(shortCode).toBe('[testStories order="latest" dummy="true" /]');
+    expect(shortCode).toBe('[web_stories order="latest" dummy="true" /]');
   });
 });

@@ -78,7 +78,7 @@ class Customizer extends \WP_UnitTestCase {
 				'date'                      => true,
 				'date-default'              => false,
 				'stories-archive-link'      => true,
-				'stories-archive-label'     => 'View all stories',
+				'archive_link_label'        => 'View all stories',
 				'number-of-stories'         => 5,
 				'default-circle-size'       => 150,
 				'order'                     => [ 'alphabetical', 'reverse-alphabetical', 'latest', 'oldest' ],
@@ -182,7 +182,7 @@ class Customizer extends \WP_UnitTestCase {
 				],
 			],
 			[
-				'story-options[list_view_image_alignment]',
+				'story-options[image_alignment]',
 				[
 					'type'    => 'option',
 					'default' => 'left',
@@ -224,7 +224,7 @@ class Customizer extends \WP_UnitTestCase {
 				],
 			],
 			[
-				'story-options[stories_archive_label]',
+				'story-options[archive_link_label]',
 				[
 					'type'    => 'option',
 					'default' => 'View all stories',
@@ -305,7 +305,7 @@ class Customizer extends \WP_UnitTestCase {
 			'date-default'              => false,
 			'stories-archive-link'      => true,
 			'sharp-corners'             => false,
-			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
+			'archive_link_label'        => __( 'View all stories', 'web-stories' ),
 			'number-of-stories'         => 10,
 			'circle-size-default'       => 150,
 			'order'                     => [
@@ -341,7 +341,7 @@ class Customizer extends \WP_UnitTestCase {
 				'date'                      => true,
 				'date-default'              => false,
 				'stories-archive-link'      => true,
-				'stories-archive-label'     => 'View all stories',
+				'archive_link_label'        => 'View all stories',
 				'number-of-stories'         => 5,
 				'default-circle-size'       => 150,
 				'order'                     => [ 'alphabetical', 'reverse-alphabetical', 'latest', 'oldest' ],

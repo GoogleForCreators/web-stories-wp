@@ -18,6 +18,7 @@
  * WordPress dependencies
  */
 import { dispatch, select } from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
@@ -34,40 +35,21 @@ export const currentView = () => {
 };
 
 /**
- * Check if current view is circle view.
- *
- * @return {boolean} Flag.
- */
-export const isCircleView = () => {
-  return 'circles' === currentView();
-};
-
-/**
- * Check if current view is circle view.
- *
- * @param {Object} view View to check for.
- * @return {boolean} Returns the result.
- */
-export const isView = (view) => {
-  return view === currentView();
-};
-
-/**
  * Update the view wide settings.
  *
  * @param {Object} args Arguments.
  * @param {Object} args.fieldObj Field object.
  * @param {Object} args.field Field.
- * @param {boolean} [args.isReadonly=false] Whether the field is readonly.
+ * @param {boolean} [args.hidden=false] Whether the field is hidden.
  * @return {void}
  */
-export const updateViewSettings = ({ fieldObj, field, isReadonly = false }) => {
+export const updateViewSettings = ({ fieldObj, field, hidden = false }) => {
   const currentViewSettings = select(name).getCurrentViewSettings();
   let updatedSettings = currentViewSettings;
 
   switch (typeof fieldObj) {
     case 'object':
-      if (!isReadonly) {
+      if (!hidden) {
         const { show } = fieldObj;
         updatedSettings = {
           ...currentViewSettings,
@@ -93,39 +75,39 @@ export const updateViewSettings = ({ fieldObj, field, isReadonly = false }) => {
  * @return {Object} Settings.
  */
 export const setDefaultStateSetting = () => {
-  const State = [];
-  const { orderlist, views, fields } = webStoriesData;
+  const state = [];
+  const { views, fields } = webStoriesData;
 
   views.forEach((value) => {
-    const { value: viewValue } = value;
+    const { value: viewType } = value;
     const {
       title,
       author,
       date,
       excerpt,
-      image_align,
       archive_link,
       sharp_corners,
-    } = fields[viewValue];
+    } = fields[viewType];
 
-    State[viewValue] = {
+    state[viewType] = {
       title: title,
+      excerpt: excerpt,
       author: author,
       date: date,
-      image_align: image_align,
-      excerpt: excerpt,
       archive_link: archive_link,
-      number: 5,
-      columns: 1,
-      view: viewValue,
-      order: orderlist ? 'latest' : orderlist[0].value,
+      archive_link_label: '',
       circle_size: 150,
       sharp_corners: sharp_corners,
-      archive_label: '',
+      image_alignment: 'left',
+      number_of_columns: 1,
+      number_of_stories: 5,
+      order: 'DESC',
+      orderby: 'post_title',
+      view: viewType,
     };
   });
 
-  return State;
+  return state;
 };
 
 /**
@@ -134,7 +116,7 @@ export const setDefaultStateSetting = () => {
  * @return {string} Shortcode.
  */
 export const prepareShortCode = () => {
-  let shortCode = `[${webStoriesData.tag}`;
+  let shortCode = `[web_stories`;
   const editorInstance = select(name).getEditor();
   const settings = select(name).getCurrentViewSettings();
 

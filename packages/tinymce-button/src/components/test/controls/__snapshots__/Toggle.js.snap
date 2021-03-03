@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with readonly attr false 1`] = `
+exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with hidden attr false 1`] = `
 <div
   className="components-base-control components-toggle-control css-wdf2ti-Wrapper e1puf3u0"
 >
@@ -34,4 +34,4 @@ exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with readonly att
 </div>
 `;
 
-exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with readonly attrs true 1`] = `null`;
+exports[`compare TinyMCEToggle snapshots tinyMCEToggle control with hidden attrs true 1`] = `null`;

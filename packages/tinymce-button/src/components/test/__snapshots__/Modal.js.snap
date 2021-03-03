@@ -9,9 +9,47 @@ exports[`TinyMCE Controls Modal modal is opened and view is circle 1`] = `
   title="Web Stories"
 >
   <Select
-    label="Select View Type"
+    label="Select Layout"
     onChange={[Function]}
     options={Array []}
+  />
+  <Range
+    label="Number of Stories"
+    max={20}
+    min={1}
+    onChange={[Function]}
+  />
+  <Select
+    label="Order By"
+    onChange={[Function]}
+    options={
+      Array [
+        Object {
+          "label": "Date",
+          "value": "post_date",
+        },
+        Object {
+          "label": "Title",
+          "value": "post_title",
+        },
+      ]
+    }
+  />
+  <Select
+    label="Order"
+    onChange={[Function]}
+    options={
+      Array [
+        Object {
+          "label": "Ascending",
+          "value": "ASC",
+        },
+        Object {
+          "label": "Descending",
+          "value": "DESC",
+        },
+      ]
+    }
   />
   <TinyMCEToggle
     field="title"
@@ -24,9 +62,6 @@ exports[`TinyMCE Controls Modal modal is opened and view is circle 1`] = `
   />
   <TinyMCEToggle
     field="date"
-  />
-  <TinyMCEToggle
-    field="image_align"
   />
   <TinyMCEToggle
     field="sharp_corners"
@@ -43,30 +78,6 @@ exports[`TinyMCE Controls Modal modal is opened and view is circle 1`] = `
     label="Archive Link Label"
     onChange={[Function]}
   />
-  <Range
-    label="Number of Stories"
-    max={20}
-    min={1}
-    onChange={[Function]}
-  />
-  <Range
-    label="Circle Size"
-    max={200}
-    min={80}
-    onChange={[Function]}
-    step={5}
-  />
-  <Range
-    label="Number of Columns"
-    max={4}
-    min={1}
-    onChange={[Function]}
-  />
-  <Select
-    label="Select Order"
-    onChange={[Function]}
-    options={Array []}
-  />
   <div
     className="alignright"
     style={
@@ -79,7 +90,7 @@ exports[`TinyMCE Controls Modal modal is opened and view is circle 1`] = `
       isPrimary={true}
       onClick={[Function]}
     >
-      Okay
+      Insert
     </Button>
     <Button
       onClick={[Function]}
@@ -99,9 +110,47 @@ exports[`TinyMCE Controls Modal modal is opened and view is non-circle 1`] = `
   title="Web Stories"
 >
   <Select
-    label="Select View Type"
+    label="Select Layout"
     onChange={[Function]}
     options={Array []}
+  />
+  <Range
+    label="Number of Stories"
+    max={20}
+    min={1}
+    onChange={[Function]}
+  />
+  <Select
+    label="Order By"
+    onChange={[Function]}
+    options={
+      Array [
+        Object {
+          "label": "Date",
+          "value": "post_date",
+        },
+        Object {
+          "label": "Title",
+          "value": "post_title",
+        },
+      ]
+    }
+  />
+  <Select
+    label="Order"
+    onChange={[Function]}
+    options={
+      Array [
+        Object {
+          "label": "Ascending",
+          "value": "ASC",
+        },
+        Object {
+          "label": "Descending",
+          "value": "DESC",
+        },
+      ]
+    }
   />
   <TinyMCEToggle
     field="title"
@@ -114,9 +163,6 @@ exports[`TinyMCE Controls Modal modal is opened and view is non-circle 1`] = `
   />
   <TinyMCEToggle
     field="date"
-  />
-  <TinyMCEToggle
-    field="image_align"
   />
   <TinyMCEToggle
     field="sharp_corners"
@@ -133,23 +179,6 @@ exports[`TinyMCE Controls Modal modal is opened and view is non-circle 1`] = `
     label="Archive Link Label"
     onChange={[Function]}
   />
-  <Range
-    label="Number of Stories"
-    max={20}
-    min={1}
-    onChange={[Function]}
-  />
-  <Range
-    label="Number of Columns"
-    max={4}
-    min={1}
-    onChange={[Function]}
-  />
-  <Select
-    label="Select Order"
-    onChange={[Function]}
-    options={Array []}
-  />
   <div
     className="alignright"
     style={
@@ -162,7 +191,7 @@ exports[`TinyMCE Controls Modal modal is opened and view is non-circle 1`] = `
       isPrimary={true}
       onClick={[Function]}
     >
-      Okay
+      Insert
     </Button>
     <Button
       onClick={[Function]}

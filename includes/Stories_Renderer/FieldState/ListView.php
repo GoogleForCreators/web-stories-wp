@@ -26,7 +26,7 @@ namespace Google\Web_Stories\Stories_Renderer\FieldState;
 use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
 
 /**
- * Class Grid.
+ * Class ListView.
  */
 final class ListView extends BaseFieldState {
 
@@ -42,9 +42,9 @@ final class ListView extends BaseFieldState {
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
+				'label'  => $label,
+				'show'   => true,
+				'hidden' => false,
 			]
 		);
 	}
@@ -61,28 +61,28 @@ final class ListView extends BaseFieldState {
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
+				'label'  => $label,
+				'show'   => true,
+				'hidden' => false,
 			]
 		);
 	}
 
 	/**
-	 * Image align field.
+	 * Image alignment field.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
-	public function image_align() {
-		$label = parent::image_align()->label();
+	public function image_alignment() {
+		$label = parent::image_alignment()->label();
 
 		return $this->prepare_field(
 			[
-				'label'    => $label,
-				'show'     => false,
-				'readonly' => false,
+				'label'  => $label,
+				'show'   => true,
+				'hidden' => false,
 			]
 		);
 	}

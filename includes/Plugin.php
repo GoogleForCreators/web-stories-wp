@@ -327,7 +327,7 @@ class Plugin {
 		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
 
 		$tinymce = new TinyMCE();
-		add_action( 'admin_init', [ $tinymce, 'init' ] );
+		add_action( 'admin_enqueue_scripts', [ $tinymce, 'init' ] );
 
 		// Embed Webstories using customizer settings for core themes.
 		$webstories_core_themes_support = new Core_Themes_Support();

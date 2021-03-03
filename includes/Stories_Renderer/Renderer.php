@@ -35,6 +35,7 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Amp;
 use Google\Web_Stories\Traits\Assets;
 use Iterator;
+use WP_Post;
 
 /**
  * Renderer class.
@@ -269,7 +270,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return object Returns single story item data.
 	 */
 	public function prepare_story_modal( $post ) {
-		if ( ! ( $post instanceof \WP_Post ) ) {
+		if ( ! ( $post instanceof WP_Post ) ) {
 			return $post;
 		}
 
@@ -323,7 +324,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	}
 
 	/**
-	 * Renders stories archive link if the 'show_stories_archive_link' attribute is set to true.
+	 * Renders stories archive link if the 'show_archive_link' attribute is set to true.
 	 *
 	 * @since 1.5.0
 	 *
@@ -331,7 +332,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function maybe_render_archive_link() {
 
-		if ( empty( $this->attributes['show_stories_archive_link'] ) || true !== $this->attributes['show_stories_archive_link'] ) {
+		if ( empty( $this->attributes['show_archive_link'] ) || true !== $this->attributes['show_archive_link'] ) {
 			return;
 		}
 
@@ -344,7 +345,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		?>
 		<div class="web-stories-list__archive-link">
 			<a href="<?php echo esc_url( $web_stories_archive ); ?>">
-				<?php echo esc_html( $this->attributes['stories_archive_label'] ); ?>
+				<?php echo esc_html( $this->attributes['archive_link_label'] ); ?>
 			</a>
 		</div>
 		<?php
@@ -397,7 +398,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$container_classes[] = ( ! empty( $this->attributes['align'] ) ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
 		$container_classes[] = ( ! empty( $this->attributes['class'] ) ) ? $this->attributes['class'] : '';
 
-		if ( ! empty( $this->attributes['show_stories_archive_link'] ) ) {
+		if ( ! empty( $this->attributes['show_archive_link'] ) ) {
 			$container_classes[] = 'has-archive-link';
 		}
 
@@ -420,8 +421,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes   = [];
 		$single_story_classes[] = 'web-stories-list__story';
 
-		if ( ! empty( $this->attributes['list_view_image_alignment'] ) &&
-			( 'right' === $this->attributes['list_view_image_alignment'] || true === $this->attributes['list_view_image_alignment'] ) ) {
+		if ( ! empty( $this->attributes['image_alignment'] ) && ( 'right' === $this->attributes['image_alignment'] ) ) {
 			$single_story_classes[] = sprintf( 'image-align-right' );
 		}
 
@@ -671,29 +671,27 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function render_stories_with_lightbox_noamp() {
+		$data = [
+			'controls'  => [
+				[
+					'name'     => 'close',
+					'position' => 'start',
+				],
+				[
+					'name' => 'skip-next',
+				],
+			],
+			'behaviour' => [
+				'autoplay' => false,
+				'on'       => 'end',
+				'action'   => 'circular-wrapping',
+			],
+		];
 		?>
 		<div class="web-stories-list__lightbox">
 			<amp-story-player width="3.6" height="6" layout="responsive">
 				<script type="application/json">
-				<?php
-				$data = [
-					'controls'  => [
-						[
-							'name'     => 'close',
-							'position' => 'start',
-						],
-						[
-							'name' => 'skip-next',
-						],
-					],
-					'behaviour' => [
-						'autoplay' => false,
-						'on'       => 'end',
-						'action'   => 'circular-wrapping',
-					],
-				];
-				echo wp_json_encode( $data );
-				?>
+					<?php echo wp_json_encode( $data ); ?>
 				</script>
 				<?php echo wp_kses_post( $this->lightbox_html ); ?>
 			</amp-story-player>

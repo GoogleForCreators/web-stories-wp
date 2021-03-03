@@ -18,10 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+
 /**
  * WordPress dependencies
  */
 import { ToggleControl } from '@wordpress/components';
+
 /**
  * Internal dependencies
  */
@@ -36,9 +38,9 @@ import { updateViewSettings } from '../../utils';
  */
 const TinyMCEToggle = (props) => {
   const { fieldObj, field } = props;
-  const { show, readonly: isReadonly, label } = fieldObj;
+  const { show, hidden, label } = fieldObj;
 
-  if (isReadonly) {
+  if (hidden) {
     return null;
   }
 
@@ -50,10 +52,9 @@ const TinyMCEToggle = (props) => {
         updateViewSettings({
           fieldObj: fieldObj,
           field: field,
-          isReadonly: isReadonly,
+          hidden,
         });
       }}
-      readonly={isReadonly}
     />
   );
 };
@@ -62,7 +63,7 @@ TinyMCEToggle.propTypes = {
   fieldObj: PropTypes.shape({
     show: PropTypes.bool,
     label: PropTypes.string,
-    readonly: PropTypes.bool,
+    hidden: PropTypes.bool,
   }),
   field: PropTypes.string,
 };

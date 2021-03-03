@@ -240,11 +240,11 @@ class Web_Stories_Block extends Embed_Base {
 			&& ( 'latest-stories' === $attributes['blockType'] || 'selected-stories' === $attributes['blockType'] ) ) {
 
 			$story_attributes = [
-				'align'                 => $attributes['align'],
-				'view_type'             => ! empty( $attributes['viewType'] ) ? $attributes['viewType'] : 'grid',
-				'number_of_columns'     => $attributes['numOfColumns'],
-				'stories_archive_label' => $attributes['viewAllLinkLabel'],
-				'circle_size'           => $attributes['sizeOfCircles'],
+				'align'              => $attributes['align'],
+				'view_type'          => ! empty( $attributes['viewType'] ) ? $attributes['viewType'] : 'grid',
+				'number_of_columns'  => $attributes['numOfColumns'],
+				'archive_link_label' => $attributes['viewAllLinkLabel'],
+				'circle_size'        => $attributes['sizeOfCircles'],
 			];
 
 			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states() );
@@ -270,13 +270,13 @@ class Web_Stories_Block extends Embed_Base {
 	 */
 	public function get_mapped_field_states() {
 		$controls = [
-			'show_title'                => 'title',
-			'show_excerpt'              => 'excerpt',
-			'show_date'                 => 'date',
-			'show_author'               => 'author',
-			'show_stories_archive_link' => 'archive_link',
-			'list_view_image_alignment' => 'image_align',
-			'has_square_corners'        => 'sharp_corners',
+			'show_title'         => 'title',
+			'show_excerpt'       => 'excerpt',
+			'show_date'          => 'date',
+			'show_author'        => 'author',
+			'show_archive_link'  => 'archive_link',
+			'image_alignment'    => 'image_alignment',
+			'has_square_corners' => 'sharp_corners',
 		];
 
 		$controls_state = [];
