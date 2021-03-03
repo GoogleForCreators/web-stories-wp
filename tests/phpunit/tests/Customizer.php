@@ -19,15 +19,14 @@
 namespace Google\Web_Stories\Tests;
 
 use Google\Web_Stories\Customizer as TheCustomizer;
-use Google\Web_Stories\Traits\ThemeSupport;
+use Google\Web_Stories\Traits\Theme_Support;
 use WP_Error;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Customizer
  */
 class Customizer extends \WP_UnitTestCase {
-
-	use ThemeSupport;
+	use Theme_Support;
 
 	/**
 	 * Instance of WP_Customize_Manager which is reset for each test.
