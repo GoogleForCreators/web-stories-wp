@@ -65,7 +65,6 @@ const InputContainer = styled.div(
     justify-content: space-between;
     height: 36px;
     padding: 4px 12px;
-    background-color: ${theme.colors.bg.primary};
     border: 1px solid
       ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
     border-radius: ${theme.borders.radius.small};
@@ -138,6 +137,7 @@ export const Input = forwardRef(
       suffix,
       unit = '',
       value,
+      isIndeterminate = false,
       ...props
     },
     ref
@@ -173,6 +173,10 @@ export const Input = forwardRef(
     let displayedValue = value;
     if (unit && value.length) {
       displayedValue = `${value}${!focused ? `${unit}` : ''}`;
+    }
+    if (isIndeterminate) {
+      // Display placeholder if value couldn't be determined.
+      displayedValue = '';
     }
 
     return (
@@ -258,6 +262,7 @@ export const InputPropTypes = {
   suffix: PropTypes.node,
   unit: PropTypes.string,
   value: PropTypes.string.isRequired,
+  isIndeterminate: PropTypes.bool,
 };
 
 Input.propTypes = InputPropTypes;
