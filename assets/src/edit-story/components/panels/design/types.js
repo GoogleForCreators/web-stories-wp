@@ -15,7 +15,6 @@
  */
 
 const ANIMATION = 'animation';
-const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const BORDER_RADIUS = 'borderRadius';
 const BORDER = 'borderStyle';
@@ -26,7 +25,7 @@ const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const PAGE_ATTACHMENT = 'pageAttachment';
-const PAGE_STYLE = 'pageStyle';
+const PAGE_BACKGROUND = 'pageBackground';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
 const TEXT = 'text';
@@ -42,9 +41,8 @@ const PanelTypes = {
   ELEMENT_ALIGNMENT,
   COLOR_PRESETS,
   STYLE_PRESETS,
-  PAGE_STYLE,
+  PAGE_BACKGROUND,
   PAGE_ATTACHMENT,
-  BACKGROUND_SIZE_POSITION,
   BACKGROUND_OVERLAY,
   SIZE_POSITION,
   SHAPE_STYLE,

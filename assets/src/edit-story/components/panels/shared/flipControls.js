@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { FlipHorizontal, FlipVertical } from '../../../icons';
-import Toggle from '../../form/toggle';
+import { ToggleButton } from '../../../../design-system';
 
 const ToggleContainer = styled.div`
   width: 36px;
@@ -55,6 +55,14 @@ function FlipControls({ value, onChange, elementSpacing }) {
   return (
     <ControlsContainer>
       <ToggleContainer margin={elementSpacing}>
+        <ToggleButton
+          variant={buttonVariant}
+          size={buttonSize}
+          isToggled={isToggled}
+          onClick={swapToggled}
+        >
+          <ButtonContent variant={buttonVariant} />
+        </ToggleButton>
         <Toggle
           title={__('Flip horizontally', 'web-stories')}
           aria-label={__('Flip horizontally', 'web-stories')}

@@ -128,7 +128,6 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'backgroundSizePosition',
       'backgroundOverlay',
       'borderRadius',
       'borderStyle',
@@ -139,7 +138,7 @@ export class Fixture {
       'layerStyle',
       'link',
       'pageAttachment',
-      'pageStyle',
+      'pageBackground',
       'videoPoster',
       'size',
       'shapeStyle',
