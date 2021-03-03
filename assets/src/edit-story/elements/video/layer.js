@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
+import { LayerText, LayerTextPropTypes } from '../shared/layerText';
 
-function VideoLayerContent({
-  element: {
-    resource: { poster, alt },
-  },
-}) {
-  return <VisibleImage src={poster} alt={alt} height="20" />;
+function VideoLayerContent({ isBackground, element }) {
+  const { alt } = element?.resource || {};
+
+  return (
+    <LayerText isBackground={isBackground}>
+      {alt || __('Video Content', 'web-stories')}
+    </LayerText>
+  );
 }
-
 VideoLayerContent.propTypes = {
+  ...LayerTextPropTypes,
   element: StoryPropTypes.element.isRequired,
 };
 

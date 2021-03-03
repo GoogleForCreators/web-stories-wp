@@ -18,15 +18,25 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from './icon.svg';
+import { Icons } from '../../../design-system';
+
+const IconContainer = styled.div`
+  height: auto;
+  width: 30px;
+`;
 
 function TextIcon() {
   const alt = __('Text element', 'web-stories');
-  return <Icon aria-label={alt} />;
+
+  return (
+    <IconContainer>
+      <Icons.LetterT aria-label={alt} />
+    </IconContainer>
+  );
 }
 
 export default TextIcon;

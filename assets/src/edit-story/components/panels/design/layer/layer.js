@@ -65,16 +65,11 @@ const LayerIconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 8px;
-
-  svg {
-    height: 28px;
-    width: 28px;
-    opacity: 0.5;
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  }
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const LayerDescription = styled.div`
+  position: relative;
   width: calc(100% - 60px);
   display: flex;
   align-items: center;
@@ -86,13 +81,15 @@ const LayerDescription = styled.div`
   font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
 `;
 
-const LockedIcon = styled(Locked)`
-  height: 18px !important;
-  width: 18px !important;
+const IconWrapper = styled.div`
+  position: absolute;
+  right: 18px;
 `;
 
-const BackgroundDescription = styled.div`
-  opacity: 0.5;
+const LockedIcon = styled(Locked)`
+  height: 18px;
+  width: 18px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const LayerContentContainer = styled.div`
@@ -109,7 +106,6 @@ function Layer({ layer }) {
     currentPage: state.state.currentPage,
   }));
   const isBackground = currentPage.elements[0].id === layer.id;
-  const showPreview = !isBackground || layer.type !== 'shape';
 
   return (
     <LayerButton
@@ -118,22 +114,16 @@ function Layer({ layer }) {
       onClick={handleClick}
     >
       <LayerIconWrapper>
-        {isBackground ? (
-          <LockedIcon aria-label={__('Background element', 'web-stories')} />
-        ) : (
-          <LayerIcon />
-        )}
+        <LayerIcon element={layer} />
       </LayerIconWrapper>
       <LayerDescription>
-        {showPreview && (
-          <LayerContentContainer>
-            <LayerContent element={layer} />
-          </LayerContentContainer>
-        )}
+        <LayerContentContainer>
+          <LayerContent element={layer} isBackground={isBackground} />
+        </LayerContentContainer>
         {isBackground && (
-          <BackgroundDescription>
-            {__('Background (locked)', 'web-stories')}
-          </BackgroundDescription>
+          <IconWrapper>
+            <LockedIcon aria-label={__('Background element', 'web-stories')} />
+          </IconWrapper>
         )}
       </LayerDescription>
     </LayerButton>

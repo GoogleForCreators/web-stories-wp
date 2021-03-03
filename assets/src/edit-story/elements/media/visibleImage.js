@@ -18,39 +18,16 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef, useCallback, useState } from 'react';
-
-/**
- * Internal dependencies
- */
-import useAverageColor from './useAverageColor';
 
 const Image = styled.img`
   display: block;
-  ${({ isTooBright }) =>
-    isTooBright &&
-    `
-    /* Using filter rather than box-shadow to correctly follow
-     * outlines in semi-transparent images like gif and png.
-     */
-    filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
-  `}
+  height: 28px;
+  width: 28px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
-const TOO_BRIGHT = 230;
-
 function VisibleImage({ ...attrs }) {
-  const ref = useRef();
-  const [isTooBright, setIsTooBright] = useState(false);
-
-  const handleBrightness = useCallback((averageColor) => {
-    const darkestDimension = Math.min.apply(null, averageColor);
-    setIsTooBright(darkestDimension >= TOO_BRIGHT);
-  }, []);
-
-  useAverageColor(ref, handleBrightness);
-
-  return <Image ref={ref} {...attrs} isTooBright={isTooBright} />;
+  return <Image {...attrs} />;
 }
 
 export default VisibleImage;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,87 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { useMemo } from 'react';
-
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
 import { getMaskByType } from '../../masks';
-import { elementWithBackgroundColor } from '../shared';
+
+/**
+ * Internal dependencies
+ */
 import StoryPropTypes from '../../types';
-import getBrightnessFromPattern from '../../utils/getBrightnessFromPattern';
+import { LayerText, LayerTextPropTypes } from '../shared/layerText';
 
-const TOO_BRIGHT = 0.5;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ShapePreview = styled.div`
-  ${elementWithBackgroundColor}
-  width: ${({ width = 20 }) => width}px;
-  height: ${({ height = 20 }) => height}px;
-  margin-right: 8px;
-`;
-
-const ShapePreviewContainer = styled.div`
-  ${({ isTooBright }) =>
-    isTooBright &&
-    `
-      /* Using filter rather than box-shadow to correctly follow
-      * outlines of shapes.
-      */
-      filter: drop-shadow( 0 0 5px rgba(0, 0, 0, 0.5) );
-    `}
-`;
-
-function ShapeLayerContent({ element: { id, mask, backgroundColor } }) {
-  const maskDef = getMaskByType(mask.type);
-
-  const isTooBright = useMemo(() => {
-    return getBrightnessFromPattern(backgroundColor) >= TOO_BRIGHT;
-  }, [backgroundColor]);
-
-  const maskId = `mask-${maskDef.type}-${id}-layer-preview`;
+function ShapeLayerContent({ isBackground, element }) {
+  const maskDef = getMaskByType(element.mask.type);
 
   return (
-    <Container>
-      <ShapePreviewContainer isTooBright={isTooBright}>
-        <ShapePreview
-          style={{
-            clipPath: `url(#${maskId})`,
-          }}
-          width={20 * maskDef.ratio}
-          backgroundColor={backgroundColor}
-        >
-          <svg width={0} height={0}>
-            <defs>
-              <clipPath
-                id={maskId}
-                transform={`scale(1 ${maskDef.ratio})`}
-                clipPathUnits="objectBoundingBox"
-              >
-                <path d={maskDef.path} />
-              </clipPath>
-            </defs>
-          </svg>
-        </ShapePreview>
-      </ShapePreviewContainer>
-
-      {maskDef.name}
-    </Container>
+    <LayerText isBackground={isBackground}>
+      {maskDef.name || __('Shape', 'web-stories')}
+    </LayerText>
   );
 }
-
 ShapeLayerContent.propTypes = {
+  ...LayerTextPropTypes,
   element: StoryPropTypes.element.isRequired,
 };
 
