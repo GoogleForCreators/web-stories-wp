@@ -163,10 +163,6 @@ function Title({
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
-      aria-label={ariaLabel}
-      aria-expanded={!isCollapsed}
-      aria-controls={panelContentId}
-      onClick={toggle}
     >
       {isResizable && (
         <DragHandle
@@ -183,6 +179,9 @@ function Title({
         toggle={toggle}
         disabled={!canCollapse}
         tabIndex={ariaHidden ? -1 : 0}
+        aria-label={ariaLabel}
+        aria-expanded={!isCollapsed}
+        aria-controls={panelContentId}
       >
         {canCollapse && toggleIcon}
         <Heading

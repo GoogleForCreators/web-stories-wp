@@ -23,6 +23,7 @@ const path = require('path');
  * WordPress dependencies
  */
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
  * Internal dependencies
@@ -43,10 +44,12 @@ function getConfig(group, { coverage = false } = {}) {
         ...webpackConfig.output,
         path: path.resolve(process.cwd(), 'assets', 'testjs'),
       },
-      // WP's DependencyExtractionWebpackPlugin is not needed for tests and
+      // DependencyExtractionWebpackPlugin and HtmlWebpackPlugin are not needed for tests and
       // otherwise has some failures.
       plugins: webpackConfig.plugins.filter(
-        (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+        (plugin) =>
+          !(plugin instanceof DependencyExtractionWebpackPlugin) &&
+          !(plugin instanceof HtmlWebpackPlugin)
       ),
     }))[0];
   if (coverage) {
