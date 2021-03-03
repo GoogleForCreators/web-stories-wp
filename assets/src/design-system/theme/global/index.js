@@ -18,3 +18,4 @@ export {
   OverrideFocusOutline,
   FOCUS_VISIBLE_SELECTOR,
 } from './overrideFocusOutline';
+export { OverrideScrollbarCSS } from './overrideScrollbarCSS';

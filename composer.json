@@ -11,7 +11,8 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "^2.0.10",
+    "ampproject/amp-toolbox": "^0.1",
+    "ampproject/amp-wp": "dev-develop",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.14.0",
@@ -44,19 +45,19 @@
   "extra": {
     "downloads": {
       "composer-normalize": {
-        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.9.0/composer-normalize.phar",
         "path": "vendor/bin/composer-normalize",
-        "type": "phar"
-      },
-      "phpstan": {
-        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.52/phpstan.phar",
-        "path": "vendor/bin/phpstan",
-        "type": "phar"
+        "type": "phar",
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.13.2/composer-normalize.phar"
       },
       "php-scoper": {
-        "url": "https://github.com/humbug/php-scoper/releases/download/0.13.5/php-scoper.phar",
         "path": "vendor/bin/php-scoper",
-        "type": "phar"
+        "type": "phar",
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.14.0/php-scoper.phar"
+      },
+      "phpstan": {
+        "path": "vendor/bin/phpstan",
+        "type": "phar",
+        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.77/phpstan.phar"
       }
     },
     "enable-patching": true,

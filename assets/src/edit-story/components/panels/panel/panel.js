@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useCallback, useEffect, useMemo } from 'react';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -35,6 +36,7 @@ const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   position: relative;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
 `;
 
 function Panel({
@@ -90,7 +92,12 @@ function Panel({
     if (resizeable) {
       setHeight(0);
     }
-  }, [resizeable, canCollapse]);
+
+    trackEvent('panel_toggled', {
+      name: name,
+      status: 'collapsed',
+    });
+  }, [resizeable, canCollapse, name]);
 
   const expand = useCallback(
     (restoreHeight = true) => {
@@ -99,8 +106,13 @@ function Panel({
       if (restoreHeight && resizeable) {
         setHeight(expandToHeight);
       }
+
+      trackEvent('panel_toggled', {
+        name: name,
+        status: 'expanded',
+      });
     },
-    [resizeable, expandToHeight]
+    [resizeable, expandToHeight, name]
   );
 
   // Expand panel on first mount/on selection change if it can't be persisted.

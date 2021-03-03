@@ -19,7 +19,7 @@
  */
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { useFeatures } from 'flagged';
@@ -32,66 +32,57 @@ import { Eyedropper } from '../button';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
-const CONTAINER_PADDING = 12;
+const CONTAINER_PADDING = 16;
 const EYEDROPPER_ICON_SIZE = 15;
-const HEADER_FOOTER_HEIGHT = 42;
-const BODY_HEIGHT = 140;
-const CONTROLS_WIDTH = 12;
-const CONTROLS_BORDER_RADIUS = 6;
-const OPACITY_WIDTH = 32;
+const HEADER_FOOTER_HEIGHT = 36;
+const BODY_HEIGHT = 156;
+const CONTROLS_HEIGHT = 28;
+const CONTROLS_BORDER_RADIUS = 50;
+const OPACITY_WIDTH = 64;
+const HEX_WIDTH = 80;
 
 const Container = styled.div`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
   user-select: none;
-  padding: ${CONTAINER_PADDING}px;
-  padding-bottom: 0px;
+  padding: 0 ${CONTAINER_PADDING}px;
 `;
 
 const Body = styled.div`
   padding-bottom: 0;
-  display: grid;
-  grid: ${({ showOpacity }) =>
-    showOpacity
-      ? `'saturation hue alpha' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px ${CONTROLS_WIDTH}px`
-      : `'saturation hue' ${BODY_HEIGHT}px / 1fr ${CONTROLS_WIDTH}px`};
-  grid-gap: 10px;
 `;
 
 const SaturationWrapper = styled.div`
   position: relative;
-  width: 100%;
   height: ${BODY_HEIGHT}px;
-  grid-area: saturation;
+  margin-bottom: 16px;
+`;
+
+const wrapperCSS = css`
+  margin-bottom: 16px;
+  border: 1px solid ${({ theme }) => theme.colors.shadow.active};
+  height: ${CONTROLS_HEIGHT}px;
+  position: relative;
+  border-radius: ${CONTROLS_BORDER_RADIUS}px;
+  background-clip: padding-box;
 `;
 
 const HueWrapper = styled.div`
-  position: relative;
-  height: ${BODY_HEIGHT}px;
-  width: ${CONTROLS_WIDTH}px;
-  grid-area: hue;
+  ${wrapperCSS}
 `;
 
 const AlphaWrapper = styled.div`
-  position: relative;
-  height: ${BODY_HEIGHT}px;
-  width: ${CONTROLS_WIDTH}px;
   background: #fff;
-  border-radius: ${CONTROLS_BORDER_RADIUS}px;
-  grid-area: alpha;
+  ${wrapperCSS}
 `;
 
 const Footer = styled.div`
   height: ${HEADER_FOOTER_HEIGHT}px;
-  font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
   position: relative;
   margin-top: 7px;
   display: grid;
-  grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / ${EYEDROPPER_ICON_SIZE}px 1fr ${OPACITY_WIDTH}px;
+  grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / 64px 1fr ${OPACITY_WIDTH}px;
   grid-gap: 10px;
+  margin-bottom: 16px;
 `;
 
 const HexValue = styled.div`
@@ -99,6 +90,7 @@ const HexValue = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: ${HEX_WIDTH}px;
 `;
 
 const EyedropperButton = styled(Eyedropper)`
@@ -111,6 +103,7 @@ const Opacity = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: ${OPACITY_WIDTH}px;
 `;
 
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
@@ -118,13 +111,12 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
   const handleFormatHex = useCallback((v) => `#${v}`, []);
+  const handleFormatPercentage = useCallback((v) => `${v}%`, []);
 
   const handleHexInputChange = useCallback(
     (value) => onChange({ hex: value }),
     [onChange]
   );
-
-  const handleFormatPercentage = useCallback((v) => `${v}%`, []);
 
   const handleOpacityInputChange = useCallback(
     (value) =>
@@ -139,8 +131,10 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       <Body showOpacity={showOpacity}>
         <SaturationWrapper>
           <Saturation
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={-6} currentColor={rgb} />}
+            radius="8px"
+            pointer={() => (
+              <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
+            )}
             hsl={hsl}
             hsv={hsv}
             onChange={onChange}
@@ -148,11 +142,12 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         </SaturationWrapper>
         <HueWrapper>
           <Hue
-            direction="vertical"
-            width={`${CONTROLS_WIDTH}px`}
-            height={`${BODY_HEIGHT}px`}
+            direction="horizontal"
+            height={`${CONTROLS_HEIGHT}px`}
             radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={0} currentColor={rgb} />}
+            pointer={() => (
+              <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
+            )}
             hsl={hsl}
             onChange={onChange}
           />
@@ -160,12 +155,16 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         {showOpacity && (
           <AlphaWrapper>
             <Alpha
-              direction="vertical"
-              width={`${CONTROLS_WIDTH}px`}
-              height={`${BODY_HEIGHT}px`}
+              direction="horizontal"
+              height={`${CONTROLS_HEIGHT}px`}
               radius={`${CONTROLS_BORDER_RADIUS}px`}
               pointer={() => (
-                <Pointer offset={-3} currentColor={rgb} withAlpha />
+                <Pointer
+                  offsetX={-12}
+                  offsetY={1}
+                  currentColor={rgb}
+                  withAlpha
+                />
               )}
               rgb={rgb}
               hsl={hsl}
@@ -188,12 +187,13 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
             label={__('Edit hex value', 'web-stories')}
             value={hexValue}
             onChange={handleHexInputChange}
-            width={56}
+            width={80}
             format={handleFormatHex}
           />
         </HexValue>
         {showOpacity && (
           <Opacity>
+            {/* @todo This needs % as suffix */}
             <EditablePreview
               label={__('Edit opacity', 'web-stories')}
               value={alphaPercentage}

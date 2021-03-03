@@ -15,7 +15,7 @@
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/tracking": "*",
     "flagged": "^2.0.1",
-    "polished": "^4.0.5",
+    "polished": "^4.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

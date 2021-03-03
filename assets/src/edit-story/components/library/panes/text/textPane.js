@@ -17,11 +17,12 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import ResizeObserver from 'resize-observer-polyfill';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -48,6 +49,14 @@ function TextPane(props) {
   const { showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
+
+  const onClick = useCallback(
+    (title, element) => {
+      insertPreset(element);
+      trackEvent('insert_text_preset', { name: title });
+    },
+    [insertPreset]
+  );
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
@@ -83,7 +92,7 @@ function TextPane(props) {
             }
             title={title}
             element={element}
-            onClick={() => insertPreset(element)}
+            onClick={() => onClick(title, element)}
           />
         ))}
       </Section>

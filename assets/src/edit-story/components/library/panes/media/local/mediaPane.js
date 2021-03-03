@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -29,7 +30,6 @@ import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
-import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
 import createError from '../../../../../utils/createError';
 import {
@@ -50,8 +50,15 @@ import { DropDown } from '../../../../form';
 import { Placement } from '../../../../popup';
 import { PANE_PADDING } from '../../shared';
 import { useSnackbar } from '../../../../../app';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../../../../design-system';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
+import VideoOptimizationDialog from './videoOptimizationDialog';
 
 export const ROOT_MARGIN = 300;
 
@@ -205,9 +212,6 @@ function MediaPane(props) {
   const onFilter = useCallback(
     (filter) => {
       setMediaType({ mediaType: filter });
-      trackEvent('filter_media', 'editor', '', '', {
-        type: filter,
-      });
     },
     [setMediaType]
   );
@@ -248,11 +252,16 @@ function MediaPane(props) {
     const trimText = value.trim();
     if (trimText !== searchTerm) {
       setSearchTerm({ searchTerm: trimText });
-      trackEvent('search_media', 'editor', '', '', {
-        search_term: trimText,
-      });
     }
   };
+
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'media',
+      search_term: searchTerm,
+      search_filter: mediaType,
+    });
+  }, [searchTerm, mediaType]);
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
@@ -293,9 +302,14 @@ function MediaPane(props) {
               </SearchCount>
             )}
             {!isSearching && (
-              <Primary onClick={openMediaPicker}>
+              <Button
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={openMediaPicker}
+              >
                 {__('Upload', 'web-stories')}
-              </Primary>
+              </Button>
             )}
           </FilterArea>
         </PaneHeader>
@@ -323,6 +337,7 @@ function MediaPane(props) {
           open={isPermissionDialogOpen}
           onClose={() => setIsPermissionDialogOpen(false)}
         />
+        <VideoOptimizationDialog />
       </PaneInner>
     </StyledPane>
   );

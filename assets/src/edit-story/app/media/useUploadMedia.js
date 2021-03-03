@@ -21,8 +21,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   trackError,
-  trackEvent,
   getTimeTracker,
+  trackEvent,
 } from '@web-stories-wp/tracking';
 
 /**
@@ -31,7 +31,10 @@ import {
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
 import { useSnackbar } from '../snackbar';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
+
+const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
 /**
  * Upload media items to the app while displaying the local files in the library.
@@ -45,7 +48,10 @@ import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
  * @return {{uploadMedia: Function, isUploading: boolean}} Upload status, and function to upload media.
  */
 function useUploadMedia({ media, setMedia }) {
-  const { uploadFile } = useUploader();
+  const {
+    actions: { uploadFile },
+    state: { isTranscoding },
+  } = useUploader();
   const { showSnackbar } = useSnackbar();
   const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
@@ -60,6 +66,16 @@ function useUploadMedia({ media, setMedia }) {
   useEffect(() => {
     setPreventUnload('upload', isUploading);
   }, [isUploading, setPreventUnload]);
+
+  useEffect(() => {
+    const isDialogDismissed = Boolean(localStore.getItemByKey(storageKey));
+
+    if (isTranscoding && isDialogDismissed) {
+      showSnackbar({
+        message: __('Video optimization in progress.', 'web-stories'),
+      });
+    }
+  }, [isTranscoding, showSnackbar]);
 
   const uploadMedia = useCallback(
     /**
@@ -120,7 +136,7 @@ function useUploadMedia({ media, setMedia }) {
       } catch (e) {
         // Catching errors from getResourceFromLocalFile() above.
 
-        trackError('upload media', e.message);
+        trackError('upload_media', e.message);
 
         setIsUploading(false);
 
@@ -154,15 +170,11 @@ function useUploadMedia({ media, setMedia }) {
         // from the uploaded attachment returned by the server.
         const uploadedFiles = await Promise.all(
           localFiles.map(async (localFile) => {
-            trackEvent('upload_media', 'editor', '', '', {
+            trackEvent('upload_media', {
               file_size: localFile.file.size,
               file_type: localFile.file.type,
             });
-            const trackTiming = getTimeTracker(
-              'upload_media',
-              'editor',
-              'Media'
-            );
+            const trackTiming = getTimeTracker('load_upload_media');
             const fileUploaded = getResourceFromAttachment(
               await uploadFile(localFile.file)
             );
@@ -199,7 +211,7 @@ function useUploadMedia({ media, setMedia }) {
           }),
         });
       } catch (e) {
-        trackError('upload media', e.message);
+        trackError('upload_media', e.message);
 
         showSnackbar({
           message: e.message,
@@ -225,6 +237,7 @@ function useUploadMedia({ media, setMedia }) {
   return {
     uploadMedia,
     isUploading,
+    isTranscoding,
   };
 }
 

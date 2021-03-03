@@ -28,12 +28,10 @@ export const SnackbarContainer = styled.div`
   flex-direction: column;
   align-items: ${({ alignItems }) => alignItems};
   width: 100%;
-  z-index: ${({ customZIndex }) => customZIndex || 15};
 `;
 
 SnackbarContainer.propTypes = {
   alignItems: PropTypes.string,
-  customZIndex: PropTypes.number,
 };
 SnackbarContainer.defaultProps = {
   alignItems: 'center',

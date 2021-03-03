@@ -17,9 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-/**
- * WordPress dependencies
- */
 import { __ } from '@web-stories-wp/i18n';
 
 export const TIPS = {
@@ -78,11 +75,11 @@ export const TIPS = {
     ],
   },
   addLinks: {
-    title: __('Add links to design elements', 'web-stories'),
+    title: __('Add links to Story elements', 'web-stories'),
     figureSrc: 'images/help-center/add_link_module_6',
     description: [
       __(
-        'Go to the <strong>Links</strong> section under the Design tab and enter a URL. To remove a link, select the "X"<screenreader> (Clear)</screenreader> button.',
+        'Go to the Design tab. Scroll down to <strong>Links</strong> and enter a URL. To remove a link, select the "X" <screenreader> (clear)</screenreader> button next to the URL box.',
         'web-stories'
       ),
     ],

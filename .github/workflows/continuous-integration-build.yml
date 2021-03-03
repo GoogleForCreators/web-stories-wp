@@ -20,7 +20,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.4
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
@@ -42,7 +42,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer:v1
+          tools: composer
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -143,53 +143,6 @@ jobs:
           GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_COMMITTER_NAME: ${{ github.actor }}
 
-  release-draft:
-    name: Update release changelog
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - name: Draft release notes
-        id: release
-        uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Download full bundle
-        uses: actions/download-artifact@v2
-        with:
-          name: web-stories
-          path: build
-
-      - name: Download composer bundle
-        uses: actions/download-artifact@v2
-        with:
-          name: web-stories-composer
-          path: build
-
-      - name: Upload full bundle
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: build/web-stories.zip
-          asset_name: web-stories
-          asset_content_type: application/zip
-        continue-on-error: true
-
-      - name: Upload composer bundle
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: build/web-stories-composer.zip
-          asset_name: web-stories-composer
-          asset_content_type: application/zip
-        continue-on-error: true
-
   deploy-to-staging:
     name: Deploy to staging environment
     needs: build
@@ -207,7 +160,7 @@ jobs:
           path: build
 
       - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@v0.4.1
+        uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
 

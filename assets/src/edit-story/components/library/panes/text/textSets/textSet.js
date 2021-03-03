@@ -21,6 +21,8 @@ import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -64,6 +66,11 @@ function TextSet({ elements }) {
     canvasPageSize: state.canvasPageSize,
   }));
 
+  const onClick = useCallback(() => {
+    insertTextSet(elements);
+    trackEvent('insert_textset');
+  }, [elements, insertTextSet]);
+
   const { textSetHeight, textSetWidth } = elements[0];
   const { width: pageWidth, height: pageHeight } = canvasPageSize;
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
@@ -78,7 +85,7 @@ function TextSet({ elements }) {
         type={'textSet'}
         elements={elements}
         elementProps={{}}
-        onClick={() => insertTextSet(elements)}
+        onClick={onClick}
         previewSize={{
           width: TEXT_SET_SIZE,
           height: TEXT_SET_SIZE,

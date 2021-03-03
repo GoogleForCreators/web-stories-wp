@@ -21,7 +21,8 @@ import styled from 'styled-components';
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackClick, trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -32,11 +33,14 @@ import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
+  LogoWithTypeCircleColor,
   Text,
   THEME_CONSTANTS,
 } from '../../../design-system';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
-import { WebStoriesLogo } from '../../images';
+import {
+  DASHBOARD_LEFT_NAV_WIDTH,
+  MIN_DASHBOARD_WIDTH,
+} from '../../constants/pageStructure';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -52,6 +56,7 @@ import {
 
 export const AppFrame = styled.div`
   overflow-x: scroll;
+  min-width: 100%;
 `;
 
 export const PageContent = styled.div`
@@ -62,11 +67,10 @@ export const PageContent = styled.div`
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
-  @media screen and (max-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET
-      .maxWidth}px) {
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     left: 0;
     width: 100%;
-    min-width: ${THEME_CONSTANTS.BREAKPOINTS.TABLET.minWidth}px;
+    min-width: ${MIN_DASHBOARD_WIDTH}px;
   }
 `;
 
@@ -84,7 +88,7 @@ export const LeftRailContainer = styled.nav.attrs({
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     padding-left: 0;
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
@@ -139,12 +143,12 @@ export function LeftRail() {
     }
   }, [sideBarVisible]);
 
-  const onCreateNewStoryClick = useCallback(async () => {
-    await trackEvent('create_new_story', 'dashboard');
+  const onCreateNewStoryClick = useCallback(() => {
+    trackEvent('create_new_story');
   }, []);
 
-  const onExternalLinkClick = useCallback((path) => {
-    trackEvent(path.trackingEvent, 'dashboard');
+  const onExternalLinkClick = useCallback((evt, path) => {
+    trackClick(evt, path.trackingEvent);
   }, []);
 
   return (
@@ -158,7 +162,7 @@ export function LeftRail() {
     >
       <div ref={upperContentRef}>
         <Header as="h1">
-          <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
+          <LogoWithTypeCircleColor title={__('Web Stories', 'web-stories')} />
         </Header>
         <Content>
           <NewStoryButton
@@ -191,7 +195,7 @@ export function LeftRail() {
                   {...(path.isExternal && {
                     rel: 'noreferrer',
                     target: '_blank',
-                    onClick: () => onExternalLinkClick(path),
+                    onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
                   {Icon && <Icon width="22px" />}
@@ -224,7 +228,7 @@ export function LeftRail() {
                 {...(path.isExternal && {
                   rel: 'noreferrer',
                   target: '_blank',
-                  onClick: () => onExternalLinkClick(path),
+                  onClick: (evt) => onExternalLinkClick(evt, path),
                 })}
               >
                 <Text

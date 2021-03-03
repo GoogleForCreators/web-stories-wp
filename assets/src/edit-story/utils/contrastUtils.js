@@ -49,13 +49,18 @@ export function calculateLuminanceFromStyleColor(styleColor) {
 }
 
 /**
+ * 18 point text or 14 point bold text is judged to be large enough to require a lower contrast ratio.
+ * https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html
+ */
+/**
  * Check contrast ratios from luminances for WCAG guidelines
  *
  * @param  {number} luminanceA Luminance A
  * @param  {number} luminanceB Luminance B
+ * @param  {number} fontSize Font size
  * @return {Object} WCAG contrast ratio checks
  */
-export function checkContrastFromLuminances(luminanceA, luminanceB) {
+export function checkContrastFromLuminances(luminanceA, luminanceB, fontSize) {
   const ratio = hues.contrast(luminanceA, luminanceB);
-  return { ratio, WCAG_AA: hues.aa(ratio) };
+  return { ratio, WCAG_AA: hues.aa(ratio, fontSize) };
 }

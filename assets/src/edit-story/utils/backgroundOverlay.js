@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -27,7 +28,7 @@ import {
   OverlaySolid,
   OverlayLinear,
   OverlayRadial,
-} from '../icons/';
+} from '../icons';
 
 export const OverlayType = {
   NONE: 'none',
@@ -36,6 +37,12 @@ export const OverlayType = {
   RADIAL: 'radial',
 };
 
+// Uses !important because the color is otherwise
+// overridden by the ToggleButton's icon styles.
+const StylledOverlaySolid = styled(OverlaySolid)`
+  color: #000 !important;
+`;
+
 export const OverlayPreset = {
   [OverlayType.NONE]: {
     label: __('None', 'web-stories'),
@@ -43,7 +50,7 @@ export const OverlayPreset = {
   },
   [OverlayType.SOLID]: {
     label: __('Solid', 'web-stories'),
-    icon: <OverlaySolid />,
+    icon: <StylledOverlaySolid />,
   },
   [OverlayType.LINEAR]: {
     label: __('Linear', 'web-stories'),

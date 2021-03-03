@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   trackError,
-  trackEvent,
   getTimeTracker,
+  trackEvent,
 } from '@web-stories-wp/tracking';
 
 /**
@@ -33,6 +33,8 @@ import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import useTranscodeVideo from '../media/utils/useTranscodeVideo';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
+
+const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2));
 
 function useUploader() {
   const {
@@ -59,8 +61,7 @@ function useUploader() {
     transcodeVideo,
     isFileTooLarge,
   } = useTranscodeVideo();
-
-  const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
+  const [isTranscoding, setIsTranscoding] = useState(false);
 
   const isValidType = useCallback(
     ({ type }) => {
@@ -153,29 +154,33 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      trackEvent('video_transcoding', 'editor', '', '', {
+      trackEvent('video_transcoding', {
         file_size: file.size,
         file_type: file.type,
       });
-      const trackTiming = getTimeTracker(
-        'video transcoding',
-        'editor',
-        'Media'
-      );
+
+      // False positive due to the `finally` block.
+      // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_video_transcoding');
 
       // Transcoding is enabled, let's give it a try!
+
+      setIsTranscoding(true);
+
       try {
         // TODO: Only transcode & optimize video if needed (criteria TBD).
         const newFile = await transcodeVideo(file);
-        trackTiming();
+
         additionalData.media_source = 'video-optimization';
         return uploadMedia(newFile, additionalData);
       } catch (err) {
-        trackTiming();
-        trackError('video transcoding', err.message);
+        trackError('video_transcoding', err.message);
 
         const message = __('Video could not be processed', 'web-stories');
         throw createError('TranscodingError', file.name, message);
+      } finally {
+        trackTiming();
+        setIsTranscoding(false);
       }
     },
     [
@@ -194,10 +199,17 @@ function useUploader() {
     ]
   );
 
-  return {
-    uploadFile,
-    isValidType,
-  };
+  return useMemo(() => {
+    return {
+      actions: {
+        uploadFile,
+        isValidType,
+      },
+      state: {
+        isTranscoding,
+      },
+    };
+  }, [isValidType, uploadFile, isTranscoding]);
 }
 
 export default useUploader;

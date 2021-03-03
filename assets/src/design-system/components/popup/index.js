@@ -24,13 +24,19 @@ import { useLayoutEffect, useCallback, useState, useRef } from 'react';
  * Internal dependencies
  */
 import useResizeEffect from '../../utils/useResizeEffect';
+import { themeHelpers } from '../../theme';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
-// TODO scrollbar update, commented out until design updates are done
 const DEFAULT_POPUP_Z_INDEX = 2;
 const Container = styled.div.attrs(
-  ({ x, y, width, height, fillWidth, fillHeight, placement, zIndex }) => ({
+  ({
+    offset: { x, y, width, height },
+    fillWidth,
+    fillHeight,
+    placement,
+    zIndex,
+  }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
@@ -44,30 +50,7 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
 
-  /*
-   * Custom gray scrollbars for Chromium & Firefox.
-   */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.primary};
-  }
-
-  *::-webkit-scrollbar {
-    width: 11px;
-    height: 11px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.primary};
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.fg.secondary};
-    border: 2px solid ${({ theme }) => theme.colors.bg.primary};
-    border-left-width: 3px;
-    border-top-width: 3px;
-    border-radius: 6px;
-  }
+  ${themeHelpers.scrollbarCSS};
 `;
 
 function Popup({
@@ -105,10 +88,10 @@ function Popup({
   );
 
   useLayoutEffect(() => {
-    setMounted(true);
     if (!isOpen) {
       return () => {};
     }
+    setMounted(true);
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
@@ -125,11 +108,11 @@ function Popup({
     ? createPortal(
         <Container
           ref={popup}
-          {...popupState.offset}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
           zIndex={zIndex}
+          offset={popupState.offset}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

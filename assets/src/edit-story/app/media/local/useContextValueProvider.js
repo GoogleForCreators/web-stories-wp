@@ -75,7 +75,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       callback
     ) => {
       fetchMediaStart({ pageToken: p });
-      const trackTiming = getTimeTracker('load', 'editor', 'Media');
+      const trackTiming = getTimeTracker('load_media');
       getMedia({
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
@@ -105,7 +105,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [fetchMediaError, fetchMediaStart, getMedia]
   );
 
-  const { uploadMedia, isUploading } = useUploadMedia({ media, setMedia });
+  const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
+    media,
+    setMedia,
+  });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
   });
@@ -171,7 +174,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   }, [media, mediaType, searchTerm, generateMissingPosters]);
 
   return {
-    state: { ...reducerState, isUploading },
+    state: {
+      ...reducerState,
+      isUploading,
+      isTranscoding,
+    },
     actions: {
       setNextPage,
       setMediaType,

@@ -34,9 +34,7 @@ export const Z_INDEX = {
   LAYOUT_FIXED: 5,
   STICKY_TABLE: 2,
   POPOVER_MENU: 10,
-  TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
-  TOASTER: 15,
 };
 
 export const APP_ROUTES = {
@@ -46,7 +44,10 @@ export const APP_ROUTES = {
   TEMPLATE_DETAIL: 'template-detail',
 
   EDITOR_SETTINGS: '/editor-settings',
-  SUPPORT: 'https://wordpress.org/support/plugin/web-stories/',
+  SUPPORT: __(
+    'https://wordpress.org/support/plugin/web-stories/',
+    'web-stories'
+  ),
   STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
@@ -98,7 +99,7 @@ export const SECONDARY_PATHS = [
     value: APP_ROUTES.SUPPORT,
     label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
     isExternal: true,
-    trackingEvent: 'open_support_page',
+    trackingEvent: 'click_support_page',
   },
 ];
 
