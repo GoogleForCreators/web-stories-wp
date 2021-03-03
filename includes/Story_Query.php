@@ -101,9 +101,8 @@ class Story_Query {
 
 		$query_args    = $this->get_query_args();
 		$stories_query = new WP_Query();
-		$posts         = $storires_query->query( $query_args );
 
-		return $posts;
+		return $stories_query->query( $query_args );
 	}
 
 	/**
