@@ -23,7 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
+import { Button, BUTTON_TYPES, Icons } from '../../../../../design-system';
 import StoryPropTypes from '../../../../types';
 import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';
@@ -31,8 +31,8 @@ import { LayerText } from '../../../../elements/shared/layerText';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-const LayerButton = styled.button.attrs({
-  type: 'button',
+const LayerButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PLAIN,
   tabIndex: -1,
   role: 'option',
   // Because the layer panel is aria-hidden, we need something else to select by
@@ -47,16 +47,13 @@ const LayerButton = styled.button.attrs({
   overflow: hidden;
   align-items: center;
   user-select: none;
+  border-radius: 0;
 
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
       background: ${theme.colors.interactiveBg.secondaryPress};
     `}
-
-  &:active {
-    outline: none;
-  }
 `;
 
 const LayerIconWrapper = styled.div`
