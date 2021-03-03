@@ -24,7 +24,7 @@ import { AbstractPanel } from './abstractPanel';
  * The background overlay panel containing buttons for toggling which overlay
  * is shown for a given background plus options for manipulating said overlay.
  */
-export class BackgroundOverlay extends AbstractPanel {
+export class Filter extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
   }

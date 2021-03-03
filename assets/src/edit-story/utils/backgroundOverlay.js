@@ -49,7 +49,7 @@ export const OverlayPreset = {
     icon: <OverlayNone />,
   },
   [OverlayType.SOLID]: {
-    label: __('Solid', 'web-stories'),
+    label: __('Tint', 'web-stories'),
     icon: <StylledOverlaySolid />,
   },
   [OverlayType.LINEAR]: {
@@ -57,7 +57,7 @@ export const OverlayPreset = {
     icon: <OverlayLinear />,
   },
   [OverlayType.RADIAL]: {
-    label: __('Radial', 'web-stories'),
+    label: __('Vignette', 'web-stories'),
     icon: <OverlayRadial />,
   },
 };

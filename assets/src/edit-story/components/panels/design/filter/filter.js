@@ -36,7 +36,7 @@ import { Row, ToggleButton, Color, Label } from '../../../form';
 import { SimplePanel } from '../../panel';
 import convertOverlay from './convertOverlay';
 
-function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
+function FilterPanel({ selectedElements, pushUpdate }) {
   const overlay = selectedElements[0].backgroundOverlay || null;
 
   const overlayType =
@@ -48,7 +48,7 @@ function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SimplePanel name="backgroundOverlay" title={__('Overlay', 'web-stories')}>
+    <SimplePanel name="filter" title={__('Filters', 'web-stories')}>
       <Row>
         {Object.keys(OverlayPreset).map((type) => {
           const { label, icon } = OverlayPreset[type];
@@ -87,9 +87,9 @@ function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
   );
 }
 
-BackgroundOverlayPanel.propTypes = {
+FilterPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };
 
-export default BackgroundOverlayPanel;
+export default FilterPanel;
