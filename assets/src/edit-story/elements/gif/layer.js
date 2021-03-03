@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { LayerText, LayerTextPropTypes } from '../shared/layerText';
+import { LayerText } from '../shared/layerText';
 
 function GifLayerContent({ element, ...props }) {
   const { alt } = element?.resource || {};
@@ -30,7 +30,6 @@ function GifLayerContent({ element, ...props }) {
   return <LayerText {...props}>{alt || __('GIF', 'web-stories')}</LayerText>;
 }
 GifLayerContent.propTypes = {
-  ...LayerTextPropTypes,
   element: StoryPropTypes.element.isRequired,
 };
 

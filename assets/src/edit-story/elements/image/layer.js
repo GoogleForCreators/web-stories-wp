@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { LayerText, LayerTextPropTypes } from '../shared/layerText';
+import { LayerText } from '../shared/layerText';
 
 function ImageLayerContent({ element, ...props }) {
   const { alt } = element?.resource || {};
@@ -30,7 +30,6 @@ function ImageLayerContent({ element, ...props }) {
   return <LayerText {...props}>{alt || __('Image', 'web-stories')}</LayerText>;
 }
 ImageLayerContent.propTypes = {
-  ...LayerTextPropTypes,
   element: StoryPropTypes.element.isRequired,
 };
 

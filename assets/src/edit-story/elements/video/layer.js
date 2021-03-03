@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { LayerText, LayerTextPropTypes } from '../shared/layerText';
+import { LayerText } from '../shared/layerText';
 
 function VideoLayerContent({ element, ...props }) {
   const { alt } = element?.resource || {};
@@ -34,7 +34,6 @@ function VideoLayerContent({ element, ...props }) {
   );
 }
 VideoLayerContent.propTypes = {
-  ...LayerTextPropTypes,
   element: StoryPropTypes.element.isRequired,
 };
 

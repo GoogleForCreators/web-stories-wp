@@ -26,7 +26,7 @@ import { getMaskByType } from '../../masks';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { LayerText, LayerTextPropTypes } from '../shared/layerText';
+import { LayerText } from '../shared/layerText';
 
 function ShapeLayerContent({ element, ...props }) {
   const maskDef = getMaskByType(element.mask.type);
@@ -38,7 +38,6 @@ function ShapeLayerContent({ element, ...props }) {
   );
 }
 ShapeLayerContent.propTypes = {
-  ...LayerTextPropTypes,
   element: StoryPropTypes.element.isRequired,
 };
 

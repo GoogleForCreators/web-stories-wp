@@ -43,7 +43,4 @@ export function LayerText({ children, ...props }) {
     </StyledText>
   );
 }
-export const LayerTextPropTypes = {
-  children: PropTypes.node,
-};
-LayerText.propTypes = LayerTextPropTypes;
+LayerText.propTypes = { children: PropTypes.node };
