@@ -148,12 +148,7 @@ function DetailsGallery({
         <DetailContainer>
           <Display
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-            as="h1"
-            aria-label={sprintf(
-              /* translators: %s: template name  */
-              __('Template details for %s', 'web-stories'),
-              template.title
-            )}
+            as="h3"
           >
             {template.title}
           </Display>

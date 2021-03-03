@@ -20,12 +20,21 @@
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { MIN_DASHBOARD_WIDTH } from '../../../constants';
+
 export const ColumnContainer = styled.section`
   display: grid;
   column-gap: 24px;
   grid-template-columns: minmax(50%, auto) 1fr;
   width: calc(100% - 300px);
   margin: 124px auto 154px;
+
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
+    margin-left: 88px;
+  }
 `;
 
 export const DetailContainer = styled.section.attrs({

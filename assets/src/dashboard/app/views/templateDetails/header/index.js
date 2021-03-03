@@ -28,6 +28,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   Icons,
+  themeHelpers,
 } from '../../../../../design-system';
 import { Layout } from '../../../../components';
 import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
@@ -41,10 +42,20 @@ const Nav = styled.nav`
   padding: 0 88px;
 `;
 
-function Header({ onHandleCtaClick }) {
+const HiddenHeading = styled.h2`
+  ${themeHelpers.visuallyHidden};
+`;
+function Header({ onHandleCtaClick, templateTitle }) {
   return (
     <Layout.Fixed>
       <Nav>
+        <HiddenHeading>
+          {sprintf(
+            /* translators: %s: template title */
+            __('Template Details for %s', 'web-stories'),
+            templateTitle
+          )}
+        </HiddenHeading>
         <Button
           type={BUTTON_TYPES.TERTIARY}
           variant={BUTTON_VARIANTS.CIRCLE}
@@ -57,12 +68,17 @@ function Header({ onHandleCtaClick }) {
           )}
           href={parentRoute()}
         >
-          <Icons.Cross height={32} width={32} />
+          <Icons.Cross />
         </Button>
         <Button
           onClick={onHandleCtaClick}
           type={BUTTON_TYPES.PRIMARY}
           size={BUTTON_SIZES.SMALL}
+          aria-label={sprintf(
+            /* translators: %s: template title */
+            __('Use %s template to create new story', 'web-stories'),
+            templateTitle
+          )}
         >
           {__('Use template', 'web-stories')}
         </Button>
@@ -73,6 +89,7 @@ function Header({ onHandleCtaClick }) {
 
 Header.propTypes = {
   onHandleCtaClick: PropTypes.func,
+  templateTitle: PropTypes.string,
 };
 
 export default Header;

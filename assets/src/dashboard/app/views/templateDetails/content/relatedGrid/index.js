@@ -39,7 +39,7 @@ function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {
 
   return (
     <RowContainer>
-      <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h2">
+      <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
         {__('Related Templates', 'web-stories')}
       </Headline>
 
