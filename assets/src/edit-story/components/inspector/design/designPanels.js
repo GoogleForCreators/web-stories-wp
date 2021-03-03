@@ -28,11 +28,15 @@ import { Text } from '../../../../design-system/components/typography/text';
 import useDesignPanels from './useDesignPanels';
 import DesignPanel from './designPanel';
 
-const LINE_HEIGHT = 24;
+const NoSelection = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Note = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  text-align: center;
-  margin-top: calc(50% - ${LINE_HEIGHT / 2}px);
 `;
 
 function DesignPanels() {
@@ -43,9 +47,11 @@ function DesignPanels() {
   } = useDesignPanels();
   if (!panels?.length) {
     return (
-      <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
-        {__('Nothing selected', 'web-stories')}
-      </Note>
+      <NoSelection>
+        <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+          {__('Nothing selected', 'web-stories')}
+        </Note>
+      </NoSelection>
     );
   }
   return panels.map(({ Panel, type }) => (
