@@ -39,13 +39,9 @@ const settings = {
   icon,
   keywords: [
     /* translators: block keyword. */
-    __('latest', 'web-stories'),
-    /* translators: block keyword. */
-    __('selected', 'web-stories'),
-    /* translators: block keyword. */
-    __('web', 'web-stories'),
-    /* translators: block keyword. */
     __('embed', 'web-stories'),
+    /* translators: block keyword. */
+    __('web stories', 'web-stories'),
     /* translators: block keyword. */
     __('story', 'web-stories'),
     /* translators: block keyword. */

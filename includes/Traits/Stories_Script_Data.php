@@ -97,7 +97,6 @@ trait Stories_Script_Data {
 
 		$data = [
 			'orderlist' => $order_list,
-			'icon'      => trailingslashit( WEBSTORIES_ASSETS_URL ) . 'images/widget/carousel-icon.png',
 			'tag'       => Stories_Shortcode::SHORTCODE_NAME,
 			'views'     => $view_types,
 			'fields'    => $field_states,

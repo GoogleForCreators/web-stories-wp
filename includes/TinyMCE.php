@@ -67,8 +67,7 @@ class TinyMCE {
 	 * @return array
 	 */
 	public function tinymce_web_stories_button( array $buttons ) {
-
-		array_push( $buttons, 'web_stories' );
+		$buttons[] = 'web_stories';
 
 		return $buttons;
 	}
@@ -84,7 +83,7 @@ class TinyMCE {
 	 */
 	public function web_stories_mce_plugin( array $plugins ) {
 
-		$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/web-stories-button.js';
+		$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/tinymce-button.js';
 
 		return $plugins;
 	}
@@ -98,6 +97,12 @@ class TinyMCE {
 	 */
 	public function web_stories_tinymce_scripts() {
 		$this->enqueue_style( 'wp-components' );
+
+		// Can't use enqueue_script() because the script needs to be loaded via the mce_external_plugins filter.
+		$asset = $this->get_asset_metadata( 'tinymce-button' );
+		foreach ( $asset['dependencies'] as $script ) {
+			wp_enqueue_script( $script );
+		}
 	}
 
 	/**

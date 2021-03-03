@@ -32,7 +32,6 @@ import { addQueryArgs } from '@wordpress/url';
  * Internal dependencies
  */
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
-import StoriesBlockControls from '../../components/storiesBlockControls';
 import StoriesLoading from '../../components/storiesLoading';
 import { FETCH_STORIES_DEBOUNCE, ORDER_BY_OPTIONS } from '../../constants';
 import StoriesPreview from '../../components/storiesPreview';
@@ -56,14 +55,7 @@ const LATEST_STORIES_QUERY = {
  * @return {*} JSX markup for the editor.
  */
 const LatestStoriesEdit = ({ attributes, setAttributes }) => {
-  const {
-    blockType,
-    viewType,
-    numOfStories,
-    orderByValue,
-    viewAllLinkLabel,
-    authors,
-  } = attributes;
+  const { numOfStories, orderByValue, viewAllLinkLabel, authors } = attributes;
 
   const { api } = useConfig();
 
@@ -122,11 +114,6 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
 
   return (
     <>
-      <StoriesBlockControls
-        blockType={blockType}
-        viewType={viewType}
-        setAttributes={setAttributes}
-      />
       <StoriesInspectorControls
         attributes={attributes}
         setAttributes={setAttributes}
@@ -134,15 +121,13 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
 
       {isFetchingStories && <StoriesLoading />}
 
-      {!isFetchingStories &&
-        storiesToDisplay &&
-        0 < storiesToDisplay.length && (
-          <StoriesPreview
-            attributes={attributes}
-            stories={storiesToDisplay}
-            viewAllLabel={viewAllLabel}
-          />
-        )}
+      {!isFetchingStories && Boolean(storiesToDisplay?.length) && (
+        <StoriesPreview
+          attributes={attributes}
+          stories={storiesToDisplay}
+          viewAllLabel={viewAllLabel}
+        />
+      )}
     </>
   );
 };

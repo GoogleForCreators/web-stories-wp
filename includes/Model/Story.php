@@ -133,7 +133,7 @@ class Story {
 			return false;
 		}
 
-		$this->title   = $post->post_title;
+		$this->title   = get_the_title( $post );
 		$this->excerpt = $post->post_excerpt;
 		$this->markup  = $post->post_content;
 		$this->url     = (string) get_permalink( $post );

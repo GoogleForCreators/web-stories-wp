@@ -15,13 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-import { useCallback, useMemo, useReducer } from 'react';
-
-/**
  * WordPress dependencies
  */
+import { useCallback, useMemo, useReducer } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 

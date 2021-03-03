@@ -263,8 +263,8 @@ const webStoriesScripts = {
       filename: '../css/[name].css',
     }),
     new WebpackBar({
-      name: 'Web Stories Scripts',
-      color: '#357BB5',
+      name: 'WP Frontend Scripts',
+      color: '#EEE070',
     }),
   ].filter(Boolean),
 };
@@ -276,7 +276,7 @@ const coreThemesBlockStylesPaths = glob.sync(
 
 // Build entry object for the Core Themes Styles.
 const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
-  const fileName = path.parse(curr).name.replace(/-/g, '');
+  const fileName = path.parse(curr).name;
 
   return {
     ...acc,
@@ -300,7 +300,7 @@ const webStoriesBlock = {
       injectPolyfill: true,
     }),
     new WebpackBar({
-      name: 'Web Stories List',
+      name: 'Web Stories Block',
       color: '#357BB5',
     }),
   ].filter(Boolean),
@@ -340,12 +340,13 @@ const activationNotice = {
 const widgetScript = {
   ...sharedConfig,
   entry: {
-    'stories-widget': './packages/widget/src/stories-widget.js',
+    'web-stories-widget': './packages/widget/src/index.js',
   },
   plugins: [
+    new DependencyExtractionWebpackPlugin({}),
     new WebpackBar({
-      name: 'Stories Widget Script',
-      color: '#adf3a8',
+      name: 'WP Widget Script',
+      color: '#F757A5',
     }),
   ],
 };
@@ -353,15 +354,15 @@ const widgetScript = {
 const storiesMCEButton = {
   ...sharedConfig,
   entry: {
-    'web-stories-button': './packages/tinymce-button/src/index.js',
+    'tinymce-button': './packages/tinymce-button/src/index.js',
   },
   plugins: [
+    new DependencyExtractionWebpackPlugin({}),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
-
     new WebpackBar({
-      name: 'TinyMCE Button',
+      name: 'WP TinyMCE Button',
       color: '#4deaa2',
     }),
   ],

@@ -35,7 +35,6 @@ import {
   lightMode,
 } from '../../../../design-system';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
-import StoriesBlockControls from '../../components/storiesBlockControls';
 import StoriesBlockApiProvider from '../../api/apiProvider';
 import StoriesPreview from '../../components/storiesPreview';
 import EmbedPlaceholder from './embedPlaceholder';
@@ -47,7 +46,7 @@ const SelectedStoriesEdit = ({
   setAttributes,
   isSelected: isEditing,
 }) => {
-  const { blockType, stories, viewType, viewAllLinkLabel } = attributes;
+  const { stories, viewAllLinkLabel } = attributes;
 
   const [selectedStories, setSelectedStories] = useState(stories);
   const [selectedStoriesObject, setSelectedStoriesObject] = useState([]);
@@ -96,17 +95,12 @@ const SelectedStoriesEdit = ({
 
   return (
     <>
-      <StoriesBlockControls
-        blockType={blockType}
-        viewType={viewType}
-        setAttributes={setAttributes}
-      />
       <StoriesInspectorControls
         attributes={attributes}
         setAttributes={setAttributes}
         showFilters={false}
       />
-      {selectedStoriesObject && 0 < selectedStoriesObject.length && (
+      {Boolean(selectedStoriesObject?.length) && (
         <StoriesPreview
           attributes={attributes}
           stories={selectedStoriesObject}

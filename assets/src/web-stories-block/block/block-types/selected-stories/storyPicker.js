@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { Button, Modal } from '@wordpress/components';
 import { useState, useEffect, useMemo, useCallback } from '@wordpress/element';
 
@@ -295,7 +295,12 @@ function StoryPicker({
             >
               {sprintf(
                 /* translators: %1$d: Number of selected stories, %2$d: Maximum allowed stories */
-                __('%1$d of %2$d stories selected', 'web-stories'),
+                _n(
+                  '%1$d of %2$d story selected',
+                  '%1$d of %2$d stories selected',
+                  maxNumOfStories,
+                  'web-stories'
+                ),
                 selectedStories.length,
                 maxNumOfStories
               )}

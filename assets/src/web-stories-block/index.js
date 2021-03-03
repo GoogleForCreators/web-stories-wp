@@ -29,10 +29,9 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import { name, settings } from './block';
 import { webStoriesBlockSettings } from './block/globals';
-import './block/storiesFilters';
 
 __webpack_public_path__ = webStoriesBlockSettings.publicPath;
 
 registerBlockType(name, settings);
 
-initializeTracking('Web Stories List Block', false);
+initializeTracking('Embed Block', false);
