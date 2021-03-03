@@ -25,13 +25,19 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Union, Lock, Unlock } from '../../../../icons';
+import { Union } from '../../../../icons';
 import { canMaskHaveBorder } from '../../../../masks';
-import { Row, Toggle, Numeric } from '../../../form';
+import { Row } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
+import {
+  Icons,
+  NumericInput,
+  themeHelpers,
+} from '../../../../../design-system';
+import { FOCUS_VISIBLE_SELECTOR } from '../../../../../design-system/theme/global';
 
-const TOGGLE_WIDTH = 30;
+const TOGGLE_WIDTH = 32;
 const ROW_HEIGHT = 32;
 const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,
@@ -41,28 +47,55 @@ const DEFAULT_BORDER_RADIUS = {
   locked: true,
 };
 
-const LockToggle = styled(Toggle)`
+const FlexContainer = styled.div`
+  display: flex;
+`;
+
+const InputContainer = styled.div``;
+
+const LockContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  margin-bottom: 16px;
+`;
+
+const IconContainer = styled.div`
+  width: ${TOGGLE_WIDTH}px;
+  cursor: pointer;
+`;
+
+const HiddenCheckbox = styled.input.attrs({
+  type: 'checkbox',
+})`
   position: absolute;
+  height: ${TOGGLE_WIDTH}px;
+  width: ${TOGGLE_WIDTH}px;
   top: 50%;
-  left: ${({ value: locked }) =>
-    locked ? 'calc(50% + 5px)' : `calc(100% - ${TOGGLE_WIDTH * 1.5}px)`};
-`;
-
-const LockToggleRow = styled(Row)`
+  left: 50%;
+  transform: translate(-50%, -50%);
   margin: 0;
+  opacity: 0;
+  cursor: pointer;
+
+  :focus + svg,
+  &.${FOCUS_VISIBLE_SELECTOR} + svg {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
+const BoxedNumericInput = styled(NumericInput)`
+  width: 100px;
+  max-width: 128px;
 `;
 
 const Space = styled.div`
   flex: 0 0 ${({ space }) => (space ? space : TOGGLE_WIDTH)}px;
-`;
-
-const BorderRow = styled(Row)`
-  margin-bottom: 18px;
 `;
 
 const Icon = styled.div`
@@ -143,51 +176,55 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     : __('Top left corner radius', 'web-stories');
   return (
     <SimplePanel name="borderRadius" title={__('Corner radius', 'web-stories')}>
-      <BorderRow>
-        <BoxedNumeric
-          value={borderRadius.topLeft}
-          aria-label={firstInputLabel}
-          onChange={(value) => handleChange('topLeft', value)}
-        />
-        {!lockRadius && (
-          <>
-            <Icon>
-              <Union />
-            </Icon>
-            <BoxedNumeric
-              value={borderRadius.topRight}
-              aria-label={__('Top right corner radius', 'web-stories')}
-              onChange={(value) => handleChange('topRight', value)}
+      <FlexContainer>
+        <InputContainer>
+          <Row>
+            <BoxedNumericInput
+              value={borderRadius.topLeft}
+              aria-label={firstInputLabel}
+              onChange={(_, value) => handleChange('topLeft', value)}
             />
-            <Space />
-          </>
-        )}
-      </BorderRow>
-      {!lockRadius && (
-        <BorderRow>
-          <BoxedNumeric
-            value={borderRadius.bottomLeft}
-            aria-label={__('Bottom left corner radius', 'web-stories')}
-            onChange={(value) => handleChange('bottomLeft', value)}
-          />
-          <Space space={32} />
-          <BoxedNumeric
-            value={borderRadius.bottomRight}
-            aria-label={__('Bottom right corner radius', 'web-stories')}
-            onChange={(value) => handleChange('bottomRight', value)}
-          />
-          <Space />
-        </BorderRow>
-      )}
-      <LockToggleRow>
-        <LockToggle
-          icon={<Lock />}
-          uncheckedIcon={<Unlock />}
-          value={borderRadius.locked}
-          onChange={() => handleLockChange(!borderRadius.locked)}
-          aria-label={__('Toggle corner radius lock', 'web-stories')}
-        />
-      </LockToggleRow>
+            {!lockRadius && (
+              <>
+                <Icon>
+                  <Union />
+                </Icon>
+                <BoxedNumericInput
+                  value={borderRadius.topRight}
+                  aria-label={__('Top right corner radius', 'web-stories')}
+                  onChange={(_, value) => handleChange('topRight', value)}
+                />
+              </>
+            )}
+          </Row>
+          {!lockRadius && (
+            <Row>
+              <BoxedNumericInput
+                value={borderRadius.bottomLeft}
+                aria-label={__('Bottom left corner radius', 'web-stories')}
+                onChange={(_, value) => handleChange('bottomLeft', value)}
+              />
+              <Space space={32} />
+              <BoxedNumericInput
+                value={borderRadius.bottomRight}
+                aria-label={__('Bottom right corner radius', 'web-stories')}
+                onChange={(_, value) => handleChange('bottomRight', value)}
+              />
+            </Row>
+          )}
+        </InputContainer>
+
+        <LockContainer>
+          <IconContainer>
+            <HiddenCheckbox
+              value={borderRadius.locked}
+              onChange={() => handleLockChange(!borderRadius.locked)}
+              aria-label={__('Toggle corner radius lock', 'web-stories')}
+            />
+            {borderRadius.locked ? <Icons.LockClosed /> : <Icons.LockOpen />}
+          </IconContainer>
+        </LockContainer>
+      </FlexContainer>
     </SimplePanel>
   );
 }
