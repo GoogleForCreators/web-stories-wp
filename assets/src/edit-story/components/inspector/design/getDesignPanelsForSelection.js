@@ -35,7 +35,6 @@ import {
   TextBoxPanel,
   TextStylePanel,
   VideoAccessibilityPanel,
-  NoSelectionPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
   VideoPosterPanel,
