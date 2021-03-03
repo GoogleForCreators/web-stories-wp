@@ -26,7 +26,7 @@ import { rgba } from 'polished';
 const brand = {
   gray: {
     90: '#131516',
-    80: '#2F3131',
+    80: '#26292A',
     70: '#393D3F',
     60: '#4B5253',
     50: '#5E6668',
@@ -103,7 +103,7 @@ const opacity = {
   white64: rgba(standard.white, 0.64),
   white24: rgba(standard.white, 0.24),
   white16: rgba(standard.white, 0.16),
-  white8: rgba(standard.white, 0.8),
+  white8: rgba(standard.white, 0.08),
   black64: rgba(standard.black, 0.64),
   black24: rgba(standard.black, 0.24),
   black10: rgba(standard.black, 0.1),
@@ -180,6 +180,7 @@ const darkTheme = {
   divider: {
     primary: opacity.white24,
     secondary: opacity.white8,
+    tertiary: opacity.black24,
   },
   form: {
     dropDownSubtitle: brand.gray[20], // equivalent to fg.secondary
@@ -257,6 +258,7 @@ const lightTheme = {
   divider: {
     primary: opacity.black24,
     secondary: opacity.black10,
+    tertiary: opacity.white24,
   },
   form: {
     dropDownSubtitle: brand.gray[50], // equivalent to fg.tertiary

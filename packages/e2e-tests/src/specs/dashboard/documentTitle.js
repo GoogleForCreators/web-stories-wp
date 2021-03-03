@@ -35,7 +35,8 @@ describe('Document Title', () => {
     });
     await page.waitForTimeout(100);
 
-    await expect(page).toMatch('Viewing all templates');
+    await expect(page).toMatch('Viewing all');
+    await expect(page).toMatch('templates');
     await expect(await page.title()).toStartWith('Explore Templates');
 
     const firstTemplate = await expect(page).toMatchElement(
@@ -47,7 +48,8 @@ describe('Document Title', () => {
 
     await expect(page).toClick('a', { text: 'Close' });
     await page.waitForTimeout(100);
-    await expect(page).toMatch('Viewing all templates');
+    await expect(page).toMatch('Viewing all');
+    await expect(page).toMatch('templates');
     await expect(await page.title()).toStartWith('Explore Templates');
   });
 });

@@ -68,8 +68,6 @@ export {
   TableStatusHeaderCell,
   TableStatusCell,
 } from './table';
-export { default as ToggleButtonGroup } from './toggleButtonGroup';
-export { default as Typeahead } from './typeahead';
 export {
   DefaultParagraph1,
   Heading1,

@@ -22,6 +22,7 @@ export const PRESET_SIZES = {
   SMALL: 'small',
   X_SMALL: 'xsmall',
   XX_SMALL: 'xxsmall',
+  XXX_SMALL: 'xxxsmall',
 };
 
 export const TEXT_SIZES = [
@@ -46,4 +47,5 @@ export const HEADLINE_SIZES = [
   PRESET_SIZES.SMALL,
   PRESET_SIZES.X_SMALL,
   PRESET_SIZES.XX_SMALL,
+  PRESET_SIZES.XXX_SMALL,
 ];

@@ -17,6 +17,8 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
@@ -24,7 +26,7 @@ import styled, { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import { theme } from '../../../theme';
-import { Pill } from '..';
+import { Pill, PillGroup } from '..';
 
 export default {
   title: 'DesignSystem/Components/Pill',
@@ -32,33 +34,63 @@ export default {
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.bg.primary};
-  width: 600px;
-  height: 400px;
   padding: 30px;
+  display: flex;
+  gap: 12px;
 `;
-// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
-export const _default = () => (
-  <ThemeProvider theme={theme}>
-    <Container>
-      <Pill
-        isActive={boolean('isActive', false)}
-        onClick={(e) => action('click on pill')(e)}
-      >
-        {text('children', 'I am pill text')}
-      </Pill>
-    </Container>
-  </ThemeProvider>
-);
 
-export const LightTheme = () => {
+function PillContainer({ prefix }) {
   return (
     <Container>
-      <Pill
-        isActive={boolean('isActive', false)}
-        onClick={(e) => action('click on pill')(e)}
-      >
-        {text('children', 'I am pill text')}
-      </Pill>
+      {[1, 2, 3].map((i) => (
+        <Pill
+          key={i}
+          isActive={boolean(`${prefix}: isActive ${i}`, false)}
+          onClick={(e) => action(`${prefix}: click on pill ${i}`)(e)}
+        >
+          {text(`${prefix}: pill text ${i}`, `${prefix} pill ${i}`)}
+        </Pill>
+      ))}
     </Container>
   );
+}
+
+PillContainer.propTypes = {
+  prefix: PropTypes.string.isRequired,
 };
+
+// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
+export const _default = () => (
+  <>
+    <PillContainer prefix="Light" />
+    <ThemeProvider theme={theme}>
+      <PillContainer prefix="Dark" />
+    </ThemeProvider>
+  </>
+);
+
+const PILL_OPTIONS = [
+  { id: 1, label: 'George' },
+  { id: 2, label: 'Ringo' },
+  { id: 3, label: 'Paul' },
+  { id: 4, label: 'John' },
+];
+
+function PillGroupContainer() {
+  const [active, setActive] = useState(1);
+  return (
+    <Container>
+      <PillGroup options={PILL_OPTIONS} value={active} onSelect={setActive} />
+    </Container>
+  );
+}
+
+// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
+export const PillGroups = () => (
+  <>
+    <PillGroupContainer />
+    <ThemeProvider theme={theme}>
+      <PillGroupContainer />
+    </ThemeProvider>
+  </>
+);
