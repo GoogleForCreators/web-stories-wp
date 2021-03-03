@@ -115,8 +115,8 @@ describe('Panels/SizePosition', () => {
 
     it('should render default flip controls', () => {
       const { getByRole } = renderSizePosition([defaultImage]);
-      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
-      const vert = getByRole('checkbox', { name: 'Flip vertically' });
+      const horiz = getByRole('button', { name: 'Flip horizontally' });
+      const vert = getByRole('button', { name: 'Flip vertically' });
       expect(horiz).not.toBeChecked();
       expect(vert).not.toBeChecked();
     });
@@ -128,17 +128,17 @@ describe('Panels/SizePosition', () => {
           flip: { horizontal: true, vertical: true },
         },
       ]);
-      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
-      const vert = getByRole('checkbox', { name: 'Flip vertically' });
-      expect(horiz).toBeChecked();
-      expect(vert).toBeChecked();
+      const horiz = getByRole('button', { name: 'Flip horizontally' });
+      const vert = getByRole('button', { name: 'Flip vertically' });
+      expect(horiz).toHaveAttribute('aria-pressed', 'true');
+      expect(vert).toHaveAttribute('aria-pressed', 'true');
     });
 
     it('should update flip horizontal controls', () => {
       const { getByRole, pushUpdateForObject } = renderSizePosition([
         defaultImage,
       ]);
-      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
+      const horiz = getByRole('button', { name: 'Flip horizontally' });
       fireEvent.click(horiz);
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'flip',
@@ -152,7 +152,7 @@ describe('Panels/SizePosition', () => {
       const { getByRole, pushUpdateForObject } = renderSizePosition([
         defaultImage,
       ]);
-      const vert = getByRole('checkbox', { name: 'Flip vertically' });
+      const vert = getByRole('button', { name: 'Flip vertically' });
       fireEvent.click(vert);
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'flip',
@@ -307,7 +307,7 @@ describe('Panels/SizePosition', () => {
           flip: { horizontal: false, vertical: true },
         },
       ]);
-      const horiz = getByRole('checkbox', { name: 'Flip horizontally' });
+      const horiz = getByRole('button', { name: 'Flip horizontally' });
       fireEvent.click(horiz);
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'flip',

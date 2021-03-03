@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -30,6 +31,7 @@ import {
   ToggleButton,
   Icons,
 } from '../../../../design-system';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 const ControlsContainer = styled.div`
   display: flex;
@@ -50,13 +52,24 @@ const Space = styled.div`
  * @return {*} Rendered component.
  */
 function FlipControls({ value, onChange }) {
+  const getCurrentFlipValue = useCallback(
+    (prop) => {
+      if (value[prop] === MULTIPLE_VALUE) {
+        return false;
+      }
+      return value[prop];
+    },
+    [value]
+  );
   return (
     <ControlsContainer>
       <ToggleButton
         variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
         isToggled={value.horizontal === true}
-        onClick={() => onChange({ ...value, horizontal: !value.horizontal })}
+        onClick={() =>
+          onChange({ ...value, horizontal: !getCurrentFlipValue('horizontal') })
+        }
         aria-label={__('Flip horizontally', 'web-stories')}
       >
         <Icons.MirrorLeftright />
@@ -66,7 +79,9 @@ function FlipControls({ value, onChange }) {
         variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
         isToggled={value.vertical === true}
-        onClick={() => onChange({ ...value, vertical: !value.vertical })}
+        onClick={() =>
+          onChange({ ...value, vertical: !getCurrentFlipValue('vertical') })
+        }
         aria-label={__('Flip vertically', 'web-stories')}
       >
         <Icons.MirrorUpdown />
