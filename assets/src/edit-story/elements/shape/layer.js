@@ -28,11 +28,11 @@ import { getMaskByType } from '../../masks';
 import StoryPropTypes from '../../types';
 import { LayerText, LayerTextPropTypes } from '../shared/layerText';
 
-function ShapeLayerContent({ isBackground, element }) {
+function ShapeLayerContent({ element, ...props }) {
   const maskDef = getMaskByType(element.mask.type);
 
   return (
-    <LayerText isBackground={isBackground}>
+    <LayerText {...props}>
       {maskDef.name || __('Shape', 'web-stories')}
     </LayerText>
   );

@@ -24,11 +24,11 @@ import { __ } from '@web-stories-wp/i18n';
 import StoryPropTypes from '../../types';
 import { LayerText, LayerTextPropTypes } from '../shared/layerText';
 
-function VideoLayerContent({ isBackground, element }) {
+function VideoLayerContent({ element, ...props }) {
   const { alt } = element?.resource || {};
 
   return (
-    <LayerText isBackground={isBackground}>
+    <LayerText {...props}>
       {alt || __('Video Content', 'web-stories')}
     </LayerText>
   );

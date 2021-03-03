@@ -24,6 +24,7 @@ const Image = styled.img`
   height: 28px;
   width: 28px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
+  object-fit: cover;
 `;
 
 function VisibleImage({ ...attrs }) {

@@ -23,10 +23,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Lock as Locked } from '../../../../icons';
+import { Icons } from '../../../../../design-system';
 import StoryPropTypes from '../../../../types';
 import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';
+import { LayerText } from '../../../../elements/shared/layerText';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -50,7 +51,7 @@ const LayerButton = styled.button.attrs({
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      background: ${theme.DEPRECATED_THEME.colors.fg.gray24};
+      background: ${theme.colors.interactiveBg.secondaryPress};
     `}
 
   &:active {
@@ -59,12 +60,12 @@ const LayerButton = styled.button.attrs({
 `;
 
 const LayerIconWrapper = styled.div`
-  width: 52px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 8px;
+  margin-right: 12px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
@@ -75,21 +76,17 @@ const LayerDescription = styled.div`
   align-items: center;
   margin-left: 0;
   text-align: left;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.description.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const IconWrapper = styled.div`
   position: absolute;
-  right: 18px;
-`;
+  right: -2px;
+  width: 32px;
 
-const LockedIcon = styled(Locked)`
-  height: 18px;
-  width: 18px;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  svg {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
 `;
 
 const LayerContentContainer = styled.div`
@@ -118,11 +115,15 @@ function Layer({ layer }) {
       </LayerIconWrapper>
       <LayerDescription>
         <LayerContentContainer>
-          <LayerContent element={layer} isBackground={isBackground} />
+          {isBackground ? (
+            <LayerText>{__('Background', 'web-stories')}</LayerText>
+          ) : (
+            <LayerContent element={layer} />
+          )}
         </LayerContentContainer>
         {isBackground && (
           <IconWrapper>
-            <LockedIcon aria-label={__('Background element', 'web-stories')} />
+            <Icons.LockClosed />
           </IconWrapper>
         )}
       </LayerDescription>

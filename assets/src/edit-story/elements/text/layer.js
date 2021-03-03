@@ -15,29 +15,16 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
 import stripHTML from '../../utils/stripHTML';
 import StoryPropTypes from '../../types';
+import { LayerText } from '../shared/layerText';
 
-const TextLayer = styled.span`
-  color: inherit;
-  white-space: nowrap;
-  font-size: 13px;
-  text-overflow: ' ';
-  overflow: hidden;
-  max-width: 100%;
-`;
-
-function TextLayerContent({ element: { content } }) {
+function TextLayerContent({ element: { content }, ...props }) {
   // Remove all tags
   const rawContent = stripHTML(content);
-  return <TextLayer>{rawContent}</TextLayer>;
+  return <LayerText {...props}>{rawContent}</LayerText>;
 }
 
 TextLayerContent.propTypes = {

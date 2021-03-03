@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -26,15 +25,13 @@ import { Icons } from '../../../design-system';
 
 const IconContainer = styled.div`
   height: auto;
-  width: 30px;
+  width: 32px;
 `;
 
 function TextIcon() {
-  const alt = __('Text element', 'web-stories');
-
   return (
     <IconContainer>
-      <Icons.LetterT aria-label={alt} />
+      <Icons.LetterT />
     </IconContainer>
   );
 }

@@ -24,14 +24,10 @@ import { __ } from '@web-stories-wp/i18n';
 import StoryPropTypes from '../../types';
 import { LayerText, LayerTextPropTypes } from '../shared/layerText';
 
-function GifLayerContent({ isBackground, element }) {
+function GifLayerContent({ element, ...props }) {
   const { alt } = element?.resource || {};
 
-  return (
-    <LayerText isBackground={isBackground}>
-      {alt || __('GIF', 'web-stories')}
-    </LayerText>
-  );
+  return <LayerText {...props}>{alt || __('GIF', 'web-stories')}</LayerText>;
 }
 GifLayerContent.propTypes = {
   ...LayerTextPropTypes,

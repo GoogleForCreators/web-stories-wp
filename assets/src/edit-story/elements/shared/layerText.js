@@ -17,23 +17,33 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
 import { Text, THEME_CONSTANTS } from '../../../design-system';
 
-export const LayerText = ({ isBackground, children, ...props }) => (
-  <Text
-    as="span"
-    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-    {...props}
-  >
-    {isBackground ? __('Background', 'web-stories') : children}
-  </Text>
-);
+const StyledText = styled(Text)`
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
+`;
+
+export function LayerText({ children, ...props }) {
+  return (
+    <StyledText
+      forwardedAs="span"
+      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      {...props}
+    >
+      {children}
+    </StyledText>
+  );
+}
 export const LayerTextPropTypes = {
-  isBackground: PropTypes.bool,
   children: PropTypes.node,
 };
 LayerText.propTypes = LayerTextPropTypes;

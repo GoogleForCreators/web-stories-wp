@@ -24,14 +24,10 @@ import { __ } from '@web-stories-wp/i18n';
 import StoryPropTypes from '../../types';
 import { LayerText, LayerTextPropTypes } from '../shared/layerText';
 
-function ImageLayerContent({ isBackground, element }) {
+function ImageLayerContent({ element, ...props }) {
   const { alt } = element?.resource || {};
 
-  return (
-    <LayerText isBackground={isBackground}>
-      {alt || __('Image', 'web-stories')}
-    </LayerText>
-  );
+  return <LayerText {...props}>{alt || __('Image', 'web-stories')}</LayerText>;
 }
 ImageLayerContent.propTypes = {
   ...LayerTextPropTypes,
