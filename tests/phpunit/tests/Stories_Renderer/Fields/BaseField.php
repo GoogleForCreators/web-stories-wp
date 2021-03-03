@@ -33,7 +33,7 @@ class BaseField extends \WP_UnitTestCase_Base {
 		self::$testee = new Testee(
 			[
 				'label'    => 'Test Label',
-				'readonly' => true,
+				'hidden' => true,
 			]
 		);
 	}
@@ -46,10 +46,10 @@ class BaseField extends \WP_UnitTestCase_Base {
 	}
 
 	/**
-	 * @covers ::readonly
+	 * @covers ::hidden
 	 */
-	public function test_readonly() {
-		$this->assertTrue( self::$testee->readonly() );
+	public function test_hidden() {
+		$this->assertTrue( self::$testee->hidden() );
 	}
 
 	/**

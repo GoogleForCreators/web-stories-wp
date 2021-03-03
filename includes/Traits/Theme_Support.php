@@ -52,13 +52,7 @@ trait Theme_Support {
 			if ( is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
 				$parsed_args[ $key ] = $this->parse_args( $value, $parsed_args[ $key ] );
 			} else {
-				if ( is_int( $parsed_args[ $key ] ) ) {
-					$parsed_args[ $key ] = (int) $value;
-				} elseif ( is_bool( $parsed_args[ $key ] ) ) {
-					$parsed_args[ $key ] = (bool) $value;
-				}
-
-				$parsed_args[ $key ] = (string) $value;
+				$parsed_args[ $key ] = $value;
 			}
 		}
 
@@ -79,7 +73,7 @@ trait Theme_Support {
 		$default_support = [
 			'customizer' => [
 				'view_type'         => [
-					'enabled' => [ 'circles', 'list', 'grid', 'carousel' ],
+					'enabled' => [ 'circles' ],
 					'default' => 'circles',
 				],
 				'title'             => [

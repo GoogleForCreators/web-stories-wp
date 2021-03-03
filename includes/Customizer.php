@@ -551,7 +551,7 @@ class Customizer {
 			'archive_link_label' => isset( $options['archive_link_label'] ) ? (string) $options['archive_link_label'] : $theme_support['archive_link']['label'],
 			'circle_size'        => isset( $options['circle_size'] ) ? (int) $options['circle_size'] : $theme_support['circle_size']['default'],
 			'sharp_corners'      => isset( $options['sharp_corners'] ) ? (bool) $options['sharp_corners'] : $theme_support['sharp_corners']['default'],
-			'image_alignment'    => isset( $options['image_alignment'] ) ? (string) $options['image_alignment'] : $theme_support['image_alignment']['label'],
+			'image_alignment'    => isset( $options['image_alignment'] ) ? (string) $options['image_alignment'] : $theme_support['image_alignment']['default'],
 			'number_of_columns'  => isset( $options['number_of_columns'] ) ? (int) $options['number_of_columns'] : $theme_support['number_of_columns']['default'],
 			'class'              => 'web-stories-list--customizer',
 		];

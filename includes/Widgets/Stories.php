@@ -85,7 +85,11 @@ class Stories extends WP_Widget {
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
 
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		$title = $instance['widget_title'];
+
+		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
+		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+
 		if ( ! empty( $title ) ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
@@ -132,7 +136,7 @@ class Stories extends WP_Widget {
 	public function form( $instance ) {
 		$this->enqueue_scripts();
 
-		$title              = ! empty( $instance['widget_title'] ) ? $instance['widget_title'] : esc_html__( 'Web Stories', 'web-stories' );
+		$title              = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Web Stories', 'web-stories' );
 		$view_types         = get_layouts();
 		$current_view_type  = ! empty( $instance['view_type'] ) ? (string) $instance['view_type'] : 'circles';
 		$show_title         = ! empty( $instance['show_title'] ) ? (int) $instance['show_title'] : '';
@@ -362,7 +366,7 @@ class Stories extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance                       = [];
-		$instance['widget_title']       = ( ! empty( $new_instance['widget_title'] ) ) ? wp_strip_all_tags( $new_instance['widget_title'] ) : '';
+		$instance['title']              = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
 		$instance['view_type']          = ( ! empty( $new_instance['view_type'] ) ) ? $new_instance['view_type'] : '';
 		$instance['show_title']         = ( isset( $new_instance['show_title'] ) ) ? 1 : '';
 		$instance['show_excerpt']       = ( isset( $new_instance['show_excerpt'] ) ) ? 1 : '';

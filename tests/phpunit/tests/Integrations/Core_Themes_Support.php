@@ -21,7 +21,7 @@ use Google\Web_Stories\Customizer;
 use Google\Web_Stories\Tests\Private_Access;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Integrations\Site_Kit
+ * @coversDefaultClass \Google\Web_Stories\Integrations\Core_Themes_Support
  */
 class Core_Themes_Support extends \WP_UnitTestCase {
 	use Private_Access;

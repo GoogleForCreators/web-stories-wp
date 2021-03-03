@@ -68,6 +68,8 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 	 * Runs once before any test in the class run.
 	 */
 	public function setUp() {
+		parent::setUp();
+
 		$this->story_model = $this->createMock( Story::class );
 		$this->stories     = $this->createMock( Stories::class );
 		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
@@ -99,19 +101,18 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'view_type'                 => 'grid',
-				'number_of_columns'         => 2,
-				'image_alignment'           => 'left',
-				'class'                     => '',
-				'show_title'                => false,
-				'show_author'               => false,
-				'show_date'                 => false,
-				'show_excerpt'              => false,
-				'show_stories_archive_link' => false,
-				'has_square_corners'        => false,
-				'archive_link_label'        => __( 'View all stories', 'web-stories' ),
-				'class'                     => '',
-				'circle_size'               => 150,
+				'view_type'          => 'grid',
+				'number_of_columns'  => 2,
+				'image_alignment'    => 'left',
+				'show_title'         => false,
+				'show_author'        => false,
+				'show_date'          => false,
+				'show_excerpt'       => false,
+				'show_archive_link'  => false,
+				'has_square_corners' => false,
+				'archive_link_label' => 'View all stories',
+				'class'              => '',
+				'circle_size'        => 150,
 			]
 		);
 

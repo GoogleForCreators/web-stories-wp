@@ -82,6 +82,8 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * Runs once before any test in the class run.
 	 */
 	public function setUp() {
+		parent::setUp();
+
 		$this->story_model = $this->createMock( Story::class );
 		$this->story_model->load_from_post( self::$story_id );
 
@@ -244,9 +246,9 @@ class Renderer extends \WP_UnitTestCase_Base {
 		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 		$stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'show_title'                => true,
-				'show_stories_archive_link' => true,
-				'archive_link_label'        => 'View All Stories',
+				'show_title'         => true,
+				'show_archive_link'  => true,
+				'archive_link_label' => 'View all stories',
 			]
 		);
 
@@ -259,7 +261,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 
 		$this->assertContains( 'web-stories-list__archive-link', $expected );
 		$this->assertContains( $archive_link, $expected );
-		$this->assertContains( 'View All Stories', $expected );
+		$this->assertContains( 'View all stories', $expected );
 
 	}
 
