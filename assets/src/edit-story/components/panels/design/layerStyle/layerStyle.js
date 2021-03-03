@@ -48,7 +48,7 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
   const opacity = getCommonValue(selectedElements, defaultOpacity);
 
   const handleChange = useCallback(
-    (evt, value) => pushUpdate({ opacity: value ?? 100 }),
+    (evt, value) => pushUpdate({ opacity: value ?? 100 }, true),
     [pushUpdate]
   );
 
