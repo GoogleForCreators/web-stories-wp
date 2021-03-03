@@ -26,6 +26,7 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { NumericInput } from '../../../../../design-system';
+import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 
@@ -36,7 +37,7 @@ const MIN_MAX = {
   },
 };
 
-const Wrapper = styled.div`
+const ShortRow = styled(Row)`
   width: 128px;
 `;
 
@@ -54,7 +55,7 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel name="layerStyle" title={__('Layer', 'web-stories')}>
-      <Wrapper>
+      <ShortRow>
         <NumericInput
           suffix={__('Opacity', 'web-stories')}
           unit={_x('%', 'Percentage', 'web-stories')}
@@ -64,7 +65,7 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
           max={MIN_MAX.OPACITY.MAX}
           aria-label={__('Opacity in percent', 'web-stories')}
         />
-      </Wrapper>
+      </ShortRow>
     </SimplePanel>
   );
 }
