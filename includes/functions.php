@@ -33,6 +33,8 @@ use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
 /**
  * Render stories based on the passed arguments.
  *
+ * @since 1.5.0
+ *
  * @param array $attrs Arguments for fetching stories.
  * @param array $query_args Query arguments for stories.
  *
@@ -47,6 +49,8 @@ function render_stories( $attrs = [], $query_args = [] ) {
 /**
  * Returns list of stories based on the arguments passed to it.
  *
+ * @since 1.5.0
+ *
  * @param array $attrs Arguments for fetching stories.
  * @param array $query_args Query arguments for stories.
  *
@@ -60,6 +64,8 @@ function get_stories( $attrs = [], $query_args = [] ) {
 
 /**
  * Render stories based on customizer settings.
+ *
+ * @since 1.5.0
  *
  * @return void
  */
