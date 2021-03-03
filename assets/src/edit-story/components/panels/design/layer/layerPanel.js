@@ -44,7 +44,7 @@ const DividerContainer = styled.div`
 
 const Divider = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
-  margin: 0 8.5px;
+  margin: 0 16.5px;
 `;
 
 function LayerPanel() {
