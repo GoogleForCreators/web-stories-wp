@@ -84,13 +84,7 @@ function APIProvider({ children }) {
 
       const url = addQueryArgs(api, { _method: 'DELETE' });
 
-      if (window.navigator.sendBeacon) {
-        window.navigator.sendBeacon(url, data);
-      } else {
-        const xhr = new window.XMLHttpRequest();
-        xhr.open('POST', url, false);
-        xhr.send(data);
-      }
+      window.navigator.sendBeacon?.(url, data);
     },
     [api]
   );
