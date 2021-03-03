@@ -85,7 +85,7 @@ const AlignmentButton = styled(Button).attrs({
   }
 `;
 
-const SpecialPanel = styled(Panel)`
+const StyledPanel = styled(Panel)`
   background-color: ${({ theme }) => theme.colors.opacity.black24};
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
 `;
@@ -193,7 +193,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SpecialPanel
+    <StyledPanel
       name="alignment"
       canCollapse={false}
       ariaLabel={__('Alignment', 'web-stories')}
@@ -285,7 +285,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
           </AlignmentButton>
         </Tooltip>
       </ElementRow>
-    </SpecialPanel>
+    </StyledPanel>
   );
 }
 
