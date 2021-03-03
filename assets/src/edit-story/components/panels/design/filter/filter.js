@@ -32,7 +32,7 @@ import {
   OverlayPreset,
   OverlayType,
 } from '../../../../utils/backgroundOverlay';
-import { Row, ToggleButton, Color, Label } from '../../../form';
+import { Row, ToggleButton, Color } from '../../../form';
 import { SimplePanel } from '../../panel';
 import convertOverlay from './convertOverlay';
 
@@ -74,7 +74,6 @@ function FilterPanel({ selectedElements, pushUpdate }) {
       </Row>
       {overlayType !== OverlayType.NONE && (
         <Row>
-          <Label>{__('Color', 'web-stories')}</Label>
           <Color
             label={__('Color', 'web-stories')}
             value={overlay}
