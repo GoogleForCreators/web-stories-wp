@@ -46,7 +46,7 @@ const Header = styled.h2`
   user-select: none;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 14px 20px;
   cursor: pointer;
 `;
 

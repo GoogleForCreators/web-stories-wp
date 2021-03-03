@@ -31,7 +31,7 @@ import { useContext } from 'use-context-selector';
 import panelContext from '../context';
 
 const Container = styled.div`
-  padding: ${({ padding }) => padding || '4px 16px 10px'};
+  padding: ${({ padding }) => padding || '0px 16px 24px'};
   overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? theme.colors.interactiveBg.secondaryNormal : 'transparent'};
