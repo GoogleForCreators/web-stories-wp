@@ -141,7 +141,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 `;
 
 const TabText = styled(Headline).attrs({
-  as: 'h3',
+  as: 'p',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   color: inherit;
