@@ -64,8 +64,8 @@ function FilterPanel({ selectedElements, pushUpdate }) {
               iconWidth={22}
               iconHeight={16}
               aria-label={sprintf(
-                /* translators: %s: Overlay type */
-                __('Set overlay: %s', 'web-stories'),
+                /* translators: %s: Filter type */
+                __('Set filter: %s', 'web-stories'),
                 label
               )}
             />
