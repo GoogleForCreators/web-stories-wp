@@ -514,7 +514,7 @@ class Customizer {
 	 * @return \WP_Error
 	 */
 	public function validate_number_of_columns( $validity, $value ) {
-		$value = intval( $value );
+		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 5 ) {
 			$validity->add( 'invalid_number', __( 'The number of stories must be between 1 and 4.', 'web-stories' ) );
