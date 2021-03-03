@@ -29,19 +29,15 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  Chip,
   Display,
   Icons,
   Text,
   THEME_CONSTANTS,
 } from '../../../../../../design-system';
-import { CardGallery, ColorList, Pill } from '../../../../../components';
+import { CardGallery, ColorList } from '../../../../../components';
 import { TemplatePropType } from '../../../../../types';
-import {
-  Column,
-  ColumnContainer,
-  DetailContainer,
-  MetadataContainer,
-} from './../../components';
+import { Column, ColumnContainer, DetailContainer } from './../../components';
 
 const ByLineText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
@@ -52,6 +48,21 @@ const DescriptionText = styled(Text)`
 `;
 
 const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  ${({ rightPadding }) =>
+    rightPadding ? 'padding-right: 52px;' : 'padding-left: 52px;'}
+`;
+
+const TemplateTag = styled(Chip)`
+  margin-right: 12px;
+  > span {
+    color: ${({ theme }) => theme.colors.fg.primary} !important;
+  }
+`;
+
+const MetadataContainer = styled.div`
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
 `;
@@ -120,7 +131,7 @@ function DetailsGallery({
   return (
     <ColumnContainer>
       <Column>
-        <PaginationContainer>{PrevButton}</PaginationContainer>
+        <PaginationContainer rightPadding>{PrevButton}</PaginationContainer>
         <CardGallery
           story={template}
           isRTL={isRTL}
@@ -132,6 +143,11 @@ function DetailsGallery({
           <Display
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
             as="h1"
+            aria-label={sprintf(
+              /* translators: %s: template name  */
+              __('Template details for %s', 'web-stories'),
+              template.title
+            )}
           >
             {template.title}
           </Display>
@@ -146,15 +162,9 @@ function DetailsGallery({
 
           <MetadataContainer>
             {template.tags.map((tag) => (
-              <Pill
-                name={tag}
-                key={tag}
-                disabled
-                onClick={() => {}}
-                value={tag}
-              >
+              <TemplateTag key={tag} disabled>
                 {tag}
-              </Pill>
+              </TemplateTag>
             ))}
           </MetadataContainer>
           <MetadataContainer>

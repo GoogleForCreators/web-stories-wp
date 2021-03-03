@@ -18,12 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
-import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 export const GalleryContainer = styled.div`
   ${({ maxWidth }) => `
@@ -56,6 +55,7 @@ export const ItemContainer = styled.div`
     display: flex;
     justify-content: space-around;
     width: ${width ? `${width}px` : '100%'};
+
   `}
 `;
 ItemContainer.propTypes = {
@@ -63,27 +63,18 @@ ItemContainer.propTypes = {
 };
 
 export const MiniCardButton = styled.button(
-  ({ width, height, theme, isSelected }) => `
+  ({ width, height, theme }) => `
     display: flex;
     align-items: center;
     justify-content: center;
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
+    
     padding: 0;
+    border: 0;
     background-color: transparent;
-    border: ${
-      isSelected
-        ? theme.DEPRECATED_THEME.borders.bluePrimary
-        : theme.DEPRECATED_THEME.borders.transparent
-    };
-    border-width: 2px; 
-
-    ${KEYBOARD_USER_SELECTOR} &:focus {
-      border-radius: 0;
-      border-color: ${rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
-      outline: none;
-    }
+    border-radius: ${theme.borders.radius.small};
   `
 );
 MiniCardButton.propTypes = {
@@ -97,7 +88,9 @@ export const MiniCard = styled.div(
     position: relative;
     width: ${width}px;
     cursor: pointer;
-    border: ${theme.DEPRECATED_THEME.borders.gray75};
+    border: 1px solid ${theme.colors.border.defaultNormal};
+    border-radius: ${theme.borders.radius.small};
+ 
   `
 );
 MiniCard.propTypes = {
@@ -111,7 +104,8 @@ export const ActiveCard = styled.div(
     width: ${width}px;
     overflow: hidden;
     height: ${containerHeight}px;
-    border: ${theme.DEPRECATED_THEME.borders.gray75};
+    border: 1px solid ${theme.colors.border.defaultNormal};
+    border-radius: ${theme.borders.radius.small};
   `
 );
 ActiveCard.propTypes = {
