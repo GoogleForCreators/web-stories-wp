@@ -17,12 +17,13 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../../design-system';
 
 export const GalleryContainer = styled.div`
   ${({ maxWidth }) => `
@@ -63,18 +64,19 @@ ItemContainer.propTypes = {
 };
 
 export const MiniCardButton = styled.button(
-  ({ width, height, theme }) => `
+  ({ width, height, theme }) => css`
     display: flex;
     align-items: center;
     justify-content: center;
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
-    
+    cursor: pointer;
     padding: 0;
     border: 0;
     background-color: transparent;
     border-radius: ${theme.borders.radius.small};
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
   `
 );
 MiniCardButton.propTypes = {
