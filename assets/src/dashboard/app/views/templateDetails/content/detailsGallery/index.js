@@ -81,7 +81,10 @@ function DetailsGallery({
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View previous template', 'web-stories')}
-        onClick={() => switchToTemplateByOffset(-1)}
+        onClick={({ currentTarget }) => {
+          currentTarget.blur();
+          switchToTemplateByOffset(-1);
+        }}
         disabled={!orderedTemplatesLength || activeTemplateIndex === 0}
       >
         <Icons.ArrowLeftLarge height={32} width={32} />
@@ -94,7 +97,10 @@ function DetailsGallery({
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View next template', 'web-stories')}
-        onClick={() => switchToTemplateByOffset(1)}
+        onClick={({ currentTarget }) => {
+          currentTarget.blur();
+          switchToTemplateByOffset(1);
+        }}
         disabled={
           !orderedTemplatesLength ||
           activeTemplateIndex === orderedTemplatesLength - 1
