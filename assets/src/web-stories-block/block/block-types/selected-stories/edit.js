@@ -46,7 +46,7 @@ const SelectedStoriesEdit = ({
   setAttributes,
   isSelected: isEditing,
 }) => {
-  const { blockType, stories, viewType, viewAllLinkLabel } = attributes;
+  const { stories, viewAllLinkLabel } = attributes;
 
   const [selectedStories, setSelectedStories] = useState(stories);
   const [selectedStoriesObject, setSelectedStoriesObject] = useState([]);
