@@ -26,11 +26,10 @@
 
 namespace Google\Web_Stories\Stories_Renderer;
 
-use Google\Web_Stories\Customizer;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Story_Query as Stories;
+use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Amp;
 use Google\Web_Stories\Traits\Assets;
@@ -143,9 +142,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param Stories $stories Stories instance.
+	 * @param Story_Query $stories Story_Query instance.
 	 */
-	public function __construct( Stories $stories ) {
+	public function __construct( Story_Query $stories ) {
 		$this->stories         = $stories;
 		$this->attributes      = $this->stories->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
@@ -509,9 +508,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	protected function render_story_with_poster() {
-
-		$story_data = $this->current();
-		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
+		/**
+		 * Story object.
+		 *
+		 * @var Story $story
+		 */
+		$story      = $this->current();
+		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story->get_poster_square() : $story->get_poster_portrait();
 
 		?>
 		<div class="web-stories-list__story-poster">
@@ -524,13 +527,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					layout="responsive"
 					width="0"
 					height="0"
-					alt="<?php echo esc_attr( $story_data->get_title() ); ?>"
+					alt="<?php echo esc_attr( $story->get_title() ); ?>"
 				>
 				</amp-img>
 			<?php } else { ?>
 				<img
 					src="<?php echo esc_url( $poster_url ); ?>"
-					alt="<?php echo esc_attr( $story_data->get_title() ); ?>"
+					alt="<?php echo esc_attr( $story->get_title() ); ?>"
 					width="<?php echo absint( $this->width ); ?>"
 					height="<?php echo absint( $this->height ); ?>"
 				>
@@ -540,9 +543,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$this->get_content_overlay();
 
 		if ( ! $this->is_amp() ) {
-			$this->generate_lightbox_html_noamp( $story_data );
+			$this->generate_lightbox_html_noamp( $story );
 		} else {
-			$this->generate_amp_lightbox_html_amp( $story_data );
+			$this->generate_amp_lightbox_html_amp( $story );
 		}
 	}
 

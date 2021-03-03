@@ -94,7 +94,7 @@ class Story_Query {
 			'no_found_rows'    => true,
 		];
 
-		$this->query_args = wp_parse_args( $this->query_args, $query_args );
+		$this->query_args = wp_parse_args( $query_args, $default_query_args );
 	}
 
 	/**
