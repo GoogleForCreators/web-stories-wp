@@ -72,12 +72,6 @@ describe('useNumericInput', () => {
         })
       );
 
-      // fire with internal value unchanged
-      act(() => {
-        result.current.handleBlur('dummy data');
-      });
-      expect(mockOnChange).toHaveBeenCalledTimes(0);
-
       // change internal value
       act(() => {
         result.current.handleChange({ target: { value: '1234' } });
@@ -102,10 +96,14 @@ describe('useNumericInput', () => {
         })
       );
 
-      // fire with internal value unchanged
+      act(() => {
+        result.current.handleChange({ target: { value: '16' } });
+      });
+
       act(() => {
         result.current.handleBlur('dummy data');
       });
+
       expect(mockOnChange).toHaveBeenCalledTimes(1);
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 10);
     });
@@ -121,10 +119,14 @@ describe('useNumericInput', () => {
         })
       );
 
-      // fire with internal value unchanged
+      act(() => {
+        result.current.handleChange({ target: { value: '14' } });
+      });
+
       act(() => {
         result.current.handleBlur('dummy data');
       });
+
       expect(mockOnChange).toHaveBeenCalledTimes(1);
       expect(mockOnChange).toHaveBeenCalledWith('dummy data', 20);
     });
@@ -148,6 +150,26 @@ describe('useNumericInput', () => {
       act(() => {
         result.current.handleBlur('dummy data');
       });
+
+      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledWith('dummy data', 1);
+    });
+
+    it("should not call onChange if the value hasn't been changed", () => {
+      const { result } = renderHook(() =>
+        useNumericInput({
+          allowEmpty: false,
+          isFloat: false,
+          onChange: mockOnChange,
+          value: 1,
+        })
+      );
+
+      // blur without changing value
+      act(() => {
+        result.current.handleBlur('dummy data');
+      });
+
       expect(mockOnChange).toHaveBeenCalledTimes(0);
     });
   });
@@ -243,6 +265,64 @@ describe('useNumericInput', () => {
         expect(mockOnChange).toHaveBeenCalledWith({ altKey, key }, finalValue);
       }
     );
+
+    it('should not call onChange if the value is changed and then ArrowUp is pressed', () => {
+      const { result } = renderHook(() =>
+        useNumericInput({
+          allowEmpty: false,
+          isFloat: false,
+          onChange: mockOnChange,
+          value: 1,
+        })
+      );
+
+      // change internal value
+      act(() => {
+        result.current.handleChange({ target: { value: '2' } });
+      });
+
+      // Hit ArrowUp
+      act(() => {
+        result.current.handleKeyUpAndDown({ key: 'ArrowUp' });
+      });
+
+      // blur
+      act(() => {
+        result.current.handleBlur('dummy data');
+      });
+
+      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledWith(expect.any(Object), 3);
+    });
+
+    it('should not call onChange if the value is changed and then ArrowDown is pressed', () => {
+      const { result } = renderHook(() =>
+        useNumericInput({
+          allowEmpty: false,
+          isFloat: false,
+          onChange: mockOnChange,
+          value: 1,
+        })
+      );
+
+      // change internal value
+      act(() => {
+        result.current.handleChange({ target: { value: '5' } });
+      });
+
+      // Hit ArrowDown
+      act(() => {
+        result.current.handleKeyUpAndDown({ key: 'ArrowDown' });
+      });
+
+      // blur
+      act(() => {
+        result.current.handleBlur('dummy data');
+      });
+
+      expect(mockOnChange).toHaveBeenCalledTimes(1);
+      expect(mockOnChange).toHaveBeenCalledWith(expect.any(Object), 4);
+    });
   });
 
   describe('handleEsc', () => {
@@ -263,7 +343,7 @@ describe('useNumericInput', () => {
       expect(mockOnBlur).not.toHaveBeenCalled();
     });
 
-    it('should call refs `onBlur` when `handleEsc` is called', () => {
+    it("should call the ref's `onBlur` when `handleEsc` is called", () => {
       const mockOnBlur = jest.fn();
       const { result } = renderHook(() =>
         useNumericInput({
