@@ -66,7 +66,7 @@ class Factory implements FieldStateFactory {
 				 *
 				 * This depicts
 				 *
-				 * @since 1.3.0
+				 * @since 1.5.0
 				 *
 				 * @param FieldState $default_field_state Field state object.
 				 */
