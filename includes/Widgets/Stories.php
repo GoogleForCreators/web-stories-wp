@@ -27,7 +27,6 @@ use WP_Widget;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Stories_Script_Data;
-use function Google\Web_Stories\get_layouts;
 
 /**
  * Class Stories
@@ -137,7 +136,7 @@ class Stories extends WP_Widget {
 		$this->enqueue_scripts();
 
 		$title              = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Web Stories', 'web-stories' );
-		$view_types         = get_layouts();
+		$view_types         = $this->get_layouts();
 		$current_view_type  = ! empty( $instance['view_type'] ) ? (string) $instance['view_type'] : 'circles';
 		$show_title         = ! empty( $instance['show_title'] ) ? (int) $instance['show_title'] : '';
 		$show_author        = ! empty( $instance['show_author'] ) ? (int) $instance['show_author'] : '';

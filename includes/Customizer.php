@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Layout;
 use Google\Web_Stories\Traits\Theme_Support;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
@@ -40,6 +41,7 @@ use WP_Error;
  */
 class Customizer {
 	use Theme_Support;
+	use Layout;
 
 	/**
 	 * Customizer section slug.
@@ -447,7 +449,7 @@ class Customizer {
 	 * @return array An array of view type choices.
 	 */
 	private function get_view_type_choices( array $view_type ) {
-		$view_type_choices = get_layouts();
+		$view_type_choices = $this->get_layouts();
 
 		if ( empty( $view_type ) ) {
 			return $view_type_choices;

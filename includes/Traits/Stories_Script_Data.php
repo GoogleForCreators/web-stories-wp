@@ -28,8 +28,7 @@
 
 namespace Google\Web_Stories\Traits;
 
-use function Google\Web_Stories\fields_states;
-use function Google\Web_Stories\get_layouts;
+use Google\Web_Stories\Stories_Renderer\FieldStateFactory\Factory;
 
 /**
  * Trait Stories_Script_Data.
@@ -37,6 +36,7 @@ use function Google\Web_Stories\get_layouts;
  * @package Google\Web_Stories
  */
 trait Stories_Script_Data {
+	use Layout;
 	/**
 	 * Returns data array for use in inline script.
 	 *
@@ -45,7 +45,7 @@ trait Stories_Script_Data {
 	 * @return array
 	 */
 	private function get_script_data() {
-		$views      = get_layouts();
+		$views      = $this->get_layouts();
 		$view_types = [];
 
 		foreach ( $views as $view_key => $view_label ) {
@@ -55,7 +55,7 @@ trait Stories_Script_Data {
 			];
 		}
 
-		$field_states = fields_states();
+		$field_states = $this->fields_states();
 
 		return [
 			'views'  => $view_types,
@@ -63,4 +63,45 @@ trait Stories_Script_Data {
 		];
 	}
 
+	/**
+	 * Wrapper function for fetching field states
+	 * based on the view types.
+	 *
+	 * Mainly uses FieldState and Fields classes.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
+	 */
+	protected function fields_states() {
+		$views = $this->get_layouts();
+
+		$fields = [
+			'title',
+			'author',
+			'date',
+			'image_alignment',
+			'excerpt',
+			'sharp_corners',
+			'archive_link',
+			'circle_size',
+			'number_of_columns',
+		];
+
+		$field_states = [];
+		$factory      = new Factory();
+
+		foreach ( array_keys( $views ) as $view_type ) {
+			$field_state = $factory->get_field( (string) $view_type );
+			foreach ( $fields as $field ) {
+				$field_states[ $view_type ][ $field ] = [
+					'show'   => $field_state->$field()->show(),
+					'label'  => $field_state->$field()->label(),
+					'hidden' => $field_state->$field()->hidden(),
+				];
+			}
+		}
+
+		return $field_states;
+	}
 }
