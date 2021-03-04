@@ -29,7 +29,7 @@ export { NumericInput } from './input/numericInput';
 export * from './menu';
 export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
-export { Search } from './search';
+export * from './search';
 export * from './slider';
 export { Snackbar } from './snackbar';
 export * from './tooltip';

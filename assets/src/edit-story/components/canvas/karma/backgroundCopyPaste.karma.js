@@ -161,11 +161,11 @@ describe('Background Copy Paste integration', () => {
     await gotoPage(1);
     await setBackgroundColor('FF0000');
     await addBackgroundImage('blue-marble');
-    await setOverlay('linear');
+    await setFilter('linear');
     await gotoPage(2);
     await setBackgroundColor('00FF00');
     await addBackgroundImage('saturn');
-    await setOverlay('radial');
+    await setFilter('vignette');
 
     // Verify setup - 1 image on each page with correct overlay
     await gotoPage(1);
@@ -242,12 +242,12 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.keyboard.type(hex);
     await fixture.events.keyboard.press('tab');
   }
-  function setOverlay(overlayName) {
-    const overlayCheckbox = getInputByAriaLabel(
-      new RegExp(`set overlay: ${overlayName}`, 'i')
+  function setFilter(filterName) {
+    const filterCheckbox = getInputByAriaLabel(
+      new RegExp(`set filter: ${filterName}`, 'i')
     );
-    const overlayLabel = overlayCheckbox.parentNode;
-    overlayLabel.click();
+    const filterLabel = filterCheckbox.parentNode;
+    filterLabel.click();
   }
   async function addBackgroundImage(imageAlt) {
     // Click img in library to add it to page
