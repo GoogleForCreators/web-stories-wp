@@ -29,7 +29,7 @@ const Message = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 600px;
+  max-width: 400px;
   margin: 20vh auto;
 
   & > * {
