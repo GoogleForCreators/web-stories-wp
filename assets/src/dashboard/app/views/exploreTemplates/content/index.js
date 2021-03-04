@@ -27,6 +27,14 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Headline,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
+import { useConfig } from '../../../../../edit-story/app';
 import { UnitsProvider } from '../../../../../edit-story/units';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
@@ -42,14 +50,6 @@ import {
 import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
 import FontProvider from '../../../font/fontProvider';
 import { TemplateGridView, EmptyContentMessage } from '../../shared';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Headline,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
-import { useConfig } from '../../../../../edit-story/app';
 
 function Content({
   allPagesFetched,
@@ -113,7 +113,7 @@ function Content({
                           ),
                           search.keyword
                         )
-                      : __('No templates currently available', 'web-stories')}
+                      : __('No templates currently available.', 'web-stories')}
                   </Headline>
                   {!search?.keyword && (
                     <Button
@@ -122,7 +122,7 @@ function Content({
                       as="a"
                       href={newStoryURL}
                     >
-                      {__('Create a new Story.', 'web-stories')}
+                      {__('Create a new Story', 'web-stories')}
                     </Button>
                   )}
                 </EmptyContentMessage>

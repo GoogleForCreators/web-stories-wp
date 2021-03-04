@@ -32,6 +32,11 @@ const Message = styled.div`
   max-width: 600px;
   margin: 20vh auto;
 
+  & > * {
+    text-align: center;
+    margin: 0 auto;
+  }
+
   /* Sometimes children will contain button or anchor as cta. */
   button,
   a {
