@@ -55,7 +55,7 @@ export const RowContainer = styled.section.attrs({
   flex-wrap: wrap;
   padding-bottom: 40px;
   margin: 0 80px 0;
-  & > h2 {
+  & > h3 {
     padding-bottom: 32px;
   }
   & > div {

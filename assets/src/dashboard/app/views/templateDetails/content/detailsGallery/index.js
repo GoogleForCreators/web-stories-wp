@@ -170,7 +170,7 @@ function DetailsGallery({
             ))}
           </MetadataContainer>
           <MetadataContainer>
-            <ColorList colors={template.colors} size={30} />
+            <ColorList colors={template.colors} size={32} />
           </MetadataContainer>
         </DetailContainer>
         <PaginationContainer>{NextButton}</PaginationContainer>

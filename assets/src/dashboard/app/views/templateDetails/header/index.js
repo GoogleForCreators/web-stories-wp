@@ -68,7 +68,7 @@ function Header({ onHandleCtaClick, templateTitle }) {
           )}
           href={parentRoute()}
         >
-          <Icons.Cross />
+          <Icons.CrossLarge />
         </Button>
         <Button
           onClick={onHandleCtaClick}
