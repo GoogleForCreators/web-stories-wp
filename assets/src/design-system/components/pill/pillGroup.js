@@ -28,6 +28,7 @@ const Container = styled.div.attrs({
   role: 'listbox',
 })`
   display: flex;
+  flex: 1;
 `;
 
 function PillGroup({ options, value, onSelect }) {

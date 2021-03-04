@@ -20,56 +20,29 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { FillNone, FillFilled, FillHighlighted } from '../../../../icons/';
-import { Color, Label, Row, ToggleButton } from '../../../form';
-import { useKeyDownEffect } from '../../../../../design-system';
+import { Color, Row } from '../../../form';
 import { useCommonColorValue, getCommonValue } from '../../shared';
+import { PillGroup } from '../../../../../design-system/components/pill';
 import { applyHiddenPadding, removeHiddenPadding } from './utils';
 
 const FillRow = styled(Row)`
   align-items: flex-start;
-  justify-content: flex-start;
-`;
-
-const FillLabel = styled(Label)`
-  flex-basis: 45px;
-  line-height: 32px;
-`;
-
-const FillToggleButton = styled(ToggleButton)`
-  flex: 1 1 32px;
-  svg {
-    width: 16px;
-    height: 16px;
+  justify-content: space-between;
+  button {
+    flex: 1;
   }
 `;
 
-const Space = styled.div`
-  flex: ${({ flex }) => flex};
-`;
-
-const BUTTONS = [
-  {
-    mode: BACKGROUND_TEXT_MODE.NONE,
-    label: __('None', 'web-stories'),
-    Icon: FillNone,
-  },
-  {
-    mode: BACKGROUND_TEXT_MODE.FILL,
-    label: __('Fill', 'web-stories'),
-    Icon: FillFilled,
-  },
-  {
-    mode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
-    label: __('Highlight', 'web-stories'),
-    Icon: FillHighlighted,
-  },
+const FILL_OPTIONS = [
+  { id: BACKGROUND_TEXT_MODE.NONE, label: __('None', 'web-stories') },
+  { id: BACKGROUND_TEXT_MODE.FILL, label: __('Fill', 'web-stories') },
+  { id: BACKGROUND_TEXT_MODE.HIGHLIGHT, label: __('Highlight', 'web-stories') },
 ];
 
 function ColorControls({ selectedElements, pushUpdate }) {
@@ -82,7 +55,6 @@ function ColorControls({ selectedElements, pushUpdate }) {
     'backgroundTextMode'
   );
   const fillRow = useRef();
-
   const pushBackgroundTextMode = useCallback(
     (mode) => {
       pushUpdate(
@@ -101,27 +73,8 @@ function ColorControls({ selectedElements, pushUpdate }) {
     [pushUpdate]
   );
 
-  useKeyDownEffect(
-    fillRow,
-    ['left', 'right'],
-    ({ key }) => {
-      const current = BUTTONS.findIndex(
-        ({ mode }) => mode === backgroundTextMode
-      );
-      const next = current + (key === 'ArrowRight' ? 1 : -1);
-      if (next < 0 || next > BUTTONS.length - 1) {
-        return;
-      }
-      pushBackgroundTextMode(BUTTONS[next].mode);
-    },
-    [backgroundTextMode, pushBackgroundTextMode]
-  );
-
-  const handleBackgroundModeButton = useCallback(
-    (value, mode) => {
-      if (!value) {
-        return;
-      }
+  const onSelect = useCallback(
+    (mode) => {
       pushBackgroundTextMode(mode);
     },
     [pushBackgroundTextMode]
@@ -130,28 +83,14 @@ function ColorControls({ selectedElements, pushUpdate }) {
   return (
     <>
       <FillRow ref={fillRow}>
-        <FillLabel>{__('Fill', 'web-stories')}</FillLabel>
-        {BUTTONS.map(({ mode, label, Icon }) => (
-          <FillToggleButton
-            key={mode}
-            icon={<Icon />}
-            value={backgroundTextMode === mode}
-            label={label}
-            aria-label={sprintf(
-              /* translators: %s: Text background mode. */
-              __('Set text background mode: %s', 'web-stories'),
-              label
-            )}
-            onChange={(value) => handleBackgroundModeButton(value, mode)}
-          />
-        ))}
-        <Space flex="2" />
+        <PillGroup
+          value={backgroundTextMode}
+          onSelect={onSelect}
+          options={FILL_OPTIONS}
+        />
       </FillRow>
       {backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE && (
         <Row>
-          <Label id="background-color-label">
-            {__('Textbox', 'web-stories')}
-          </Label>
           <Color
             data-testid="text.backgroundColor"
             hasGradient
