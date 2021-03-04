@@ -101,6 +101,7 @@ export const useNumericInput = ({
       }
 
       onChange(ev, Number(newValue));
+      revertToOriginal.current = true;
     },
     [currentValue, max, min, onChange, options]
   );
