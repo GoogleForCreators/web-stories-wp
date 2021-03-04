@@ -42,6 +42,14 @@ import {
 import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
 import FontProvider from '../../../font/fontProvider';
 import { TemplateGridView, EmptyContentMessage } from '../../shared';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Headline,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
+import { useConfig } from '../../../../../edit-story/app';
 
 function Content({
   allPagesFetched,
@@ -53,6 +61,7 @@ function Content({
   search,
   templateActions,
 }) {
+  const { newStoryURL } = useConfig();
   return (
     <Layout.Scrollable>
       <FontProvider>
@@ -91,16 +100,31 @@ function Content({
                 </>
               ) : (
                 <EmptyContentMessage>
-                  {search?.keyword
-                    ? sprintf(
-                        /* translators: %s: search term. */
-                        __(
-                          'Sorry, we couldn\'t find any results matching "%s"',
-                          'web-stories'
-                        ),
-                        search.keyword
-                      )
-                    : __('No templates currently available', 'web-stories')}
+                  <Headline
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="h3"
+                  >
+                    {search?.keyword
+                      ? sprintf(
+                          /* translators: %s: search term. */
+                          __(
+                            'Sorry, we couldn\'t find any results matching "%s"',
+                            'web-stories'
+                          ),
+                          search.keyword
+                        )
+                      : __('No templates currently available', 'web-stories')}
+                  </Headline>
+                  {!search?.keyword && (
+                    <Button
+                      type={BUTTON_TYPES.PRIMARY}
+                      size={BUTTON_SIZES.MEDIUM}
+                      as="a"
+                      href={newStoryURL}
+                    >
+                      {__('Create a new Story.', 'web-stories')}
+                    </Button>
+                  )}
                 </EmptyContentMessage>
               )}
             </StandardViewContentGutter>

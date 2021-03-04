@@ -28,6 +28,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../../edit-story/units';
+import { Headline, THEME_CONSTANTS } from '../../../../../design-system';
 import {
   Layout,
   StandardViewContentGutter,
@@ -144,19 +145,24 @@ function Content({
                 </>
               ) : (
                 <EmptyContentMessage>
-                  {search?.keyword
-                    ? sprintf(
-                        /* translators: %s: search term. */
-                        __(
-                          'Sorry, we couldn\'t find any results matching "%s"',
+                  <Headline
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="h3"
+                  >
+                    {search?.keyword
+                      ? sprintf(
+                          /* translators: %s: search term. */
+                          __(
+                            'Sorry, we couldn\'t find any results matching "%s"',
+                            'web-stories'
+                          ),
+                          search.keyword
+                        )
+                      : __(
+                          'Bookmark a story or template to get started!',
                           'web-stories'
-                        ),
-                        search.keyword
-                      )
-                    : __(
-                        'Bookmark a story or template to get started!',
-                        'web-stories'
-                      )}
+                        )}
+                  </Headline>
                 </EmptyContentMessage>
               )}
             </StandardViewContentGutter>
