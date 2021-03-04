@@ -15,7 +15,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.4
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
@@ -39,4 +39,5 @@ jobs:
           pattern: '{assets/js/*.js,assets/css/*.css}'
           build-script: 'build:js'
           minimum-change-threshold: 100
-          strip-hash: 'chunk-.*-(\w{20})\.js$'
+          # Ignore webpack content hash in bundle filenames.
+          strip-hash: '.*-(\w{20})\.js$'

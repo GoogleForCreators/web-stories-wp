@@ -15,13 +15,13 @@
  */
 
 export { default as AnimationPanel } from './animation';
-export { default as BackgroundOverlayPanel } from './backgroundOverlay';
 export { default as BackgroundSizePositionPanel } from './backgroundSizePosition';
 export { default as BorderRadiusPanel } from './borderRadius';
 export { default as BorderStylePanel } from './border';
 export { default as CaptionsPanel } from './captions';
 export { default as ColorPresetPanel } from './preset/colorPreset';
 export { default as ElementAlignmentPanel } from './alignment';
+export { default as FilterPanel } from './filter';
 export { default as ImageAccessibilityPanel } from './imageAccessibility';
 export { default as LayerPanel } from './layer';
 export { default as LayerStylePanel } from './layerStyle';
@@ -32,6 +32,7 @@ export { default as PageStylePanel } from './pageStyle';
 export { default as ShapeStylePanel } from './shapeStyle';
 export { default as SizePositionPanel } from './sizePosition';
 export { default as StylePresetPanel } from './preset/stylePreset';
+export { default as TextBoxPanel } from './textBox';
 export { default as TextStylePanel } from './textStyle';
 export { default as VideoAccessibilityPanel } from './videoAccessibility';
 export { default as VideoOptionsPanel } from './videoOptions';

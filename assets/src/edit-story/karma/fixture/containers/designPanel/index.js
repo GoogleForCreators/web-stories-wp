@@ -25,7 +25,7 @@ import { getByLabelText } from '@testing-library/react';
 import { Container } from '../container';
 import { Alignment } from './alignment';
 import { Animation } from './animationPanel';
-import { BackgroundOverlay } from './backgroundOverlay';
+import { Filter } from './filter';
 import { Border } from './border';
 import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
@@ -35,6 +35,7 @@ import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { TextStylePreset } from './textStylePreset';
 import { VideoPoster } from './videoPoster';
+import { TextBox } from './textBox';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -46,9 +47,17 @@ export class DesignPanel extends Container {
 
   get textStyle() {
     return this._get(
-      this.getByRole('region', { name: /Style/ }),
+      this.getByRole('region', { name: 'Text' }),
       'textStyle',
       TextStyle
+    );
+  }
+
+  get textBox() {
+    return this._get(
+      this.getByRole('region', { name: /Text box/ }),
+      'textBox',
+      TextBox
     );
   }
 
@@ -60,11 +69,11 @@ export class DesignPanel extends Container {
     );
   }
 
-  get backgroundOverlay() {
+  get filters() {
     return this._get(
-      this.getByRole('region', { name: /Overlay/ }),
-      'backgroundOverlay',
-      BackgroundOverlay
+      this.getByRole('region', { name: /Filters/ }),
+      'filters',
+      Filter
     );
   }
 

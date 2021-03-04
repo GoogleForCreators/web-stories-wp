@@ -16,12 +16,12 @@
 
 const ANIMATION = 'animation';
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
-const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const BORDER_RADIUS = 'borderRadius';
 const BORDER = 'borderStyle';
 const CAPTIONS = 'captions';
 const STYLE_PRESETS = 'stylePresets';
 const COLOR_PRESETS = 'colorPresets';
+const FILTER = 'filter';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
@@ -30,6 +30,7 @@ const PAGE_STYLE = 'pageStyle';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
 const TEXT = 'text';
+const TEXT_BOX = 'textBox';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_POSTER = 'videoPoster';
@@ -44,12 +45,13 @@ const PanelTypes = {
   PAGE_STYLE,
   PAGE_ATTACHMENT,
   BACKGROUND_SIZE_POSITION,
-  BACKGROUND_OVERLAY,
+  FILTER,
   SIZE_POSITION,
   SHAPE_STYLE,
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
+  TEXT_BOX,
   BORDER_RADIUS,
   BORDER,
   LINK,

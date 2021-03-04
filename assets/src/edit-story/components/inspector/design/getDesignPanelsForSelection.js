@@ -21,10 +21,10 @@ import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
   BackgroundSizePositionPanel,
-  BackgroundOverlayPanel,
   BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
+  FilterPanel,
   ImageAccessibilityPanel,
   LinkPanel,
   LayerStylePanel,
@@ -32,6 +32,7 @@ import {
   PageStylePanel,
   ShapeStylePanel,
   SizePositionPanel,
+  TextBoxPanel,
   TextStylePanel,
   VideoAccessibilityPanel,
   NoSelectionPanel,
@@ -69,8 +70,8 @@ function getDesignPanelsForSelection(elements) {
         Panel: BackgroundSizePositionPanel,
       });
       panels.push({
-        type: PanelTypes.BACKGROUND_OVERLAY,
-        Panel: BackgroundOverlayPanel,
+        type: PanelTypes.FILTER,
+        Panel: FilterPanel,
       });
       panels.push({ type: PanelTypes.ANIMATION, Panel: AnimationPanel });
     }
@@ -131,6 +132,8 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: LinkPanel };
         case PanelTypes.TEXT_STYLE:
           return { type, Panel: TextStylePanel };
+        case PanelTypes.TEXT_BOX:
+          return { type, Panel: TextBoxPanel };
         case PanelTypes.SHAPE_STYLE:
           return { type, Panel: ShapeStylePanel };
         case PanelTypes.BORDER_RADIUS:

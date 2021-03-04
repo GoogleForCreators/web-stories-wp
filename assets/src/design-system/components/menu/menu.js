@@ -102,7 +102,10 @@ const Menu = ({
     }
 
     highlighedOptionEl.focus();
-    listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
+    listEl.scrollTo?.(
+      0,
+      highlighedOptionEl.offsetTop - listEl.clientHeight / 2
+    );
   }, [focusedIndex, isMenuFocused]);
 
   return (

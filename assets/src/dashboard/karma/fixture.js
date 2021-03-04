@@ -193,6 +193,7 @@ export default class Fixture {
     // renders an extra container so it should be given the same size.
     container.style.width = '100%';
     container.style.height = '100%';
+    container.style.overflow = 'scroll';
     this._container = container;
     this._screen = screen;
 

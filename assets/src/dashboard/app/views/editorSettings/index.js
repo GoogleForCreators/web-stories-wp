@@ -350,10 +350,7 @@ function EditorSettings() {
   return (
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
-        <PageHeading
-          defaultTitle={__('Settings', 'web-stories')}
-          showTypeahead={false}
-        />
+        <PageHeading heading={__('Settings', 'web-stories')} />
         <Layout.Scrollable>
           <Main>
             {canManageSettings && (

@@ -84,6 +84,12 @@ function useTranscodeVideo() {
       // See https://trac.ffmpeg.org/wiki/Scaling
       '-vf',
       "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
+      // move some information to the beginning of your file.
+      '-movflags',
+      '+faststart',
+      // Simpler color profile
+      '-pix_fmt',
+      'yuv420p',
       // As the name says...
       '-preset',
       'fast', // 'veryfast' seems to cause crashes.

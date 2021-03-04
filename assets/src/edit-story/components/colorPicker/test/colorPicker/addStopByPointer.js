@@ -19,7 +19,7 @@
  */
 import { arrange, firePointerEvent } from './_utils';
 
-const OFFSET20 = 37;
+const OFFSET20 = 34.5;
 
 describe('<ColorPicker /> when adding a stop with a pointer device', () => {
   it('should show temp stop when hovering and add a stop when clicking', () => {
@@ -81,7 +81,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
             b: expect.any(Number),
             a: expect.any(Number),
           },
-          position: 0.2,
+          position: 0.8,
         },
         { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
       ],

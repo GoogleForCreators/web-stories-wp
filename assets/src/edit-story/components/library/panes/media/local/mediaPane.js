@@ -26,11 +26,18 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
-import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
 import createError from '../../../../../utils/createError';
 import {
@@ -60,15 +67,16 @@ export const ROOT_MARGIN = 300;
 const FilterArea = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 24px;
   padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
 `;
 
-const SearchCount = styled.span`
+const SearchCount = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+})`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-style: italic;
 `;
 
 const FILTERS = [
@@ -297,9 +305,14 @@ function MediaPane(props) {
               </SearchCount>
             )}
             {!isSearching && (
-              <Primary onClick={openMediaPicker}>
+              <Button
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={openMediaPicker}
+              >
                 {__('Upload', 'web-stories')}
-              </Primary>
+              </Button>
             )}
           </FilterArea>
         </PaneHeader>

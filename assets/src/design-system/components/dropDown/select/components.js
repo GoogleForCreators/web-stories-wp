@@ -91,7 +91,7 @@ SelectButton.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export const StyledChevron = styled(ChevronDownSmall)(
+export const ChevronWrap = styled.div(
   ({ theme, isOpen }) => css`
     color: ${theme.colors.fg.secondary};
     width: 32px;
@@ -103,9 +103,14 @@ export const StyledChevron = styled(ChevronDownSmall)(
     `}
   `
 );
-StyledChevron.propTypes = {
+ChevronWrap.propTypes = {
   isOpen: PropTypes.bool,
 };
+
+export const StyledChevron = styled(ChevronDownSmall)`
+  width: 32px;
+  height: auto;
+`;
 
 export const Value = styled(Text)`
   max-width: 100%;

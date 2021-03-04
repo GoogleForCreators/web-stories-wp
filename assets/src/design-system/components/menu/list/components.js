@@ -44,6 +44,7 @@ export const ListItemLabel = styled.li`
 
 export const ListItem = styled.li(
   ({ disabled, theme }) => css`
+    position: relative;
     display: grid;
     grid-template-columns: 32px 1fr;
     padding: 6px 2px 6px 8px;

@@ -69,23 +69,25 @@ const SearchInput = (
   );
 
   return (
-    <InputContainer alignCenter={alignInputCenter}>
+    <InputContainer>
       <Input
-        aria-autocomplete="list"
-        aria-controls={listId}
         aria-disabled={disabled}
-        aria-expanded={isOpen}
-        aria-owns={listId}
         autocomplete="off"
         disabled={disabled}
         ref={ref}
-        role="combobox"
         type="search"
         value={inputValue}
+        {...(listId && {
+          role: 'combobox',
+          ['aria-expanded']: isOpen,
+          ['aria-controls']: listId,
+          ['aria-owns']: listId,
+          ['aria-autocomplete']: 'list',
+        })}
         {...rest}
       />
       <SearchDecoration
-        alignCenter={alignInputCenter}
+        activeSearch={alignInputCenter}
         aria-hidden
         disabled={disabled}
       >
@@ -93,6 +95,7 @@ const SearchInput = (
       </SearchDecoration>
 
       <ClearButton
+        type="button"
         isVisible={activeInput}
         tabIndex={0}
         aria-label={activeInput && ariaClearLabel}
