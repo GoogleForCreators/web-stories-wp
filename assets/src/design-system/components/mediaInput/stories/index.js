@@ -24,7 +24,6 @@ import styled, { ThemeProvider } from 'styled-components';
  */
 import { theme, THEME_CONSTANTS } from '../../../theme';
 import { MediaInput } from '../index';
-import { getOptions } from '../../menu/utils';
 import { shortDropDownOptions } from '../../../storybookUtils/sampleData';
 import { MEDIA_VARIANTS } from '../constants';
 import { Headline } from '../../typography/headline';
@@ -47,7 +46,7 @@ const Row = styled.div`
   display: flex;
   justify-content: space-evenly;
 `;
-const _shortDropDownOptions = getOptions(shortDropDownOptions);
+
 const mediaProps = {
   onChange: () => {},
   openMediaPicker: () => {},
@@ -70,7 +69,7 @@ export const _default = () => (
           <MediaInput
             value={image}
             variant={MEDIA_VARIANTS.RECTANGLE}
-            menuOptions={_shortDropDownOptions}
+            menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
         </div>
@@ -82,7 +81,7 @@ export const _default = () => (
           <MediaInput
             value={image}
             variant={MEDIA_VARIANTS.CIRCLE}
-            menuOptions={_shortDropDownOptions}
+            menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
         </div>
@@ -96,7 +95,7 @@ export const _default = () => (
           <MediaInput
             value={null}
             variant={MEDIA_VARIANTS.RECTANGLE}
-            menuOptions={_shortDropDownOptions}
+            menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
         </div>
@@ -108,7 +107,7 @@ export const _default = () => (
           <MediaInput
             value={null}
             variant={MEDIA_VARIANTS.CIRCLE}
-            menuOptions={_shortDropDownOptions}
+            menuOptions={shortDropDownOptions}
             {...mediaProps}
           />
         </div>

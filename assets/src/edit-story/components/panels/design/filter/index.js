@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { default } from './backgroundOverlay';
+export { default } from './filter';

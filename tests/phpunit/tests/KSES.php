@@ -21,6 +21,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
 class KSES extends \WP_UnitTestCase {
+	use Private_Access;
 	/**
 	 * Testing the safecss_filter_attr() function.
 	 *
@@ -50,6 +51,36 @@ class KSES extends \WP_UnitTestCase {
 		add_filter( 'safe_style_css', [ $kses, 'filter_safe_style_css' ] );
 		$this->assertSame( $expected, $kses->safecss_filter_attr( $css ) );
 		remove_filter( 'safe_style_css', [ $kses, 'filter_safe_style_css' ] );
+	}
+
+	/**
+	 * Tests if two arrays are recursively merged, the latter overwriting the first.
+	 *
+	 * @covers ::array_merge_recursive_distinct
+	 */
+	public function test_array_merge_recursive_distinct() {
+		$kses         = new \Google\Web_Stories\KSES();
+		$input_array1 = [
+			'one' => [
+				'one-one' => [],
+			],
+		];
+
+		$input_array2 = [
+			'one' => [
+				'one-one' => 'string',
+			],
+		];
+
+		$output = $this->call_private_method(
+			$kses,
+			'array_merge_recursive_distinct',
+			[
+				$input_array1,
+				$input_array2,
+			] 
+		);
+		$this->assertEquals( $output['one']['one-one'], 'string' );
 	}
 
 	/**
@@ -296,6 +327,7 @@ class KSES extends \WP_UnitTestCase {
 	 * @dataProvider data_test_filter_kses_allowed_html
 	 * @covers ::filter_kses_allowed_html
 	 * @covers ::add_global_attributes
+	 * @covers ::array_merge_recursive_distinct
 	 *
 	 * @param string $html     HTML string.
 	 * @param string $expected Expected output.
@@ -306,6 +338,32 @@ class KSES extends \WP_UnitTestCase {
 
 		$this->assertSame( $expected, wp_unslash( wp_filter_post_kses( $html ) ) );
 		remove_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ] );
+	}
+
+	/**
+	 * Testing the filter_kses_allowed_html() method.
+	 *
+	 * @covers ::filter_kses_allowed_html
+	 * @covers ::array_merge_recursive_distinct
+	 */
+	public function test_filter_kses_allowed_html_uses_deep_merge() {
+		$kses         = new \Google\Web_Stories\KSES();
+		$allowed_tags = [
+			'img'     => [
+				'width' => true,
+			],
+			'testing' => [
+				'width' => true,
+			],
+		];
+
+		$result = $kses->filter_kses_allowed_html( $allowed_tags );
+
+		$this->assertArrayHasKey( 'img', $result );
+		$this->assertArrayHasKey( 'width', $result['img'] );
+		$this->assertArrayHasKey( 'intrinsicsize', $result['img'] );
+		$this->assertArrayHasKey( 'testing', $result );
+		$this->assertArrayHasKey( 'width', $result['testing'] );
 	}
 
 	public function data_test_filter_kses_allowed_html() {
@@ -325,6 +383,10 @@ class KSES extends \WP_UnitTestCase {
 			'Global Attributes'    => [
 				'<div class="foo" id="bar" style="color: pink" role="main" title="Test"></div>',
 				'<div class="foo" id="bar" style="color: pink" role="main" title="Test"></div>',
+			],
+			'Img Attributes'       => [
+				'<img src="http://www.example.com/test.jpg" alt="Example" height="200" width="500" />',
+				'<img src="http://www.example.com/test.jpg" alt="Example" height="200" width="500" />',
 			],
 			'Data Attributes'      => [
 				'<a href="https://example.com" data-vars-tooltip-click-id="link1" data-vars-tooltip-href="example.com"></a>',

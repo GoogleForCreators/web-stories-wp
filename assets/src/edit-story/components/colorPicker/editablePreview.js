@@ -32,7 +32,6 @@ import {
 } from '../../../design-system';
 
 const Preview = styled.button`
-  padding: 0;
   margin: 0;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   padding: 8px 12px;
