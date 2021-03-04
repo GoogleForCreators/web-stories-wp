@@ -79,7 +79,6 @@ const HiddenCheckbox = styled.input.attrs({
   opacity: 0;
   cursor: pointer;
 
-  :focus + svg,
   &.${FOCUS_VISIBLE_SELECTOR} + svg {
     ${({ theme }) =>
       themeHelpers.focusCSS(
