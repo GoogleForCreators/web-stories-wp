@@ -30,12 +30,7 @@ import { canMaskHaveBorder } from '../../../../masks';
 import { Row } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
-import {
-  Icons,
-  NumericInput,
-  themeHelpers,
-} from '../../../../../design-system';
-import { FOCUS_VISIBLE_SELECTOR } from '../../../../../design-system/theme/global';
+import { LockToggle, NumericInput } from '../../../../../design-system';
 
 const TOGGLE_WIDTH = 32;
 const ROW_HEIGHT = 32;
@@ -59,33 +54,6 @@ const LockContainer = styled.div`
   align-items: center;
   margin-left: 8px;
   margin-bottom: 16px;
-`;
-
-const IconContainer = styled.div`
-  width: ${TOGGLE_WIDTH}px;
-  cursor: pointer;
-`;
-
-const HiddenCheckbox = styled.input.attrs({
-  type: 'checkbox',
-})`
-  position: absolute;
-  height: ${TOGGLE_WIDTH}px;
-  width: ${TOGGLE_WIDTH}px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-
-  &.${FOCUS_VISIBLE_SELECTOR} + svg {
-    ${({ theme }) =>
-      themeHelpers.focusCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
-  }
 `;
 
 const BoxedNumericInput = styled(NumericInput)`
@@ -214,14 +182,11 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         </InputContainer>
 
         <LockContainer>
-          <IconContainer>
-            <HiddenCheckbox
-              value={borderRadius.locked}
-              onChange={() => handleLockChange(!borderRadius.locked)}
-              aria-label={__('Toggle corner radius lock', 'web-stories')}
-            />
-            {borderRadius.locked ? <Icons.LockClosed /> : <Icons.LockOpen />}
-          </IconContainer>
+          <LockToggle
+            isLocked={borderRadius.locked}
+            onClick={() => handleLockChange(!borderRadius.locked)}
+            aria-label={__('Toggle corner radius lock', 'web-stories')}
+          />
         </LockContainer>
       </FlexContainer>
     </SimplePanel>
