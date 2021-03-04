@@ -50,7 +50,11 @@
       "type": "string",
       "default": "left"
     },
-    "orderByValue": {
+    "order": {
+      "type": "string",
+      "default": ""
+    },
+    "orderby": {
       "type": "string",
       "default": ""
     },

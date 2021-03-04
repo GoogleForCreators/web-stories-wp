@@ -43,7 +43,6 @@ import {
   CIRCLES_VIEW_TYPE,
   GRID_VIEW_TYPE,
   LIST_VIEW_TYPE,
-  ORDER_BY_OPTIONS,
 } from '../constants';
 import AuthorSelection from './authorSelection';
 
@@ -67,7 +66,8 @@ const StyledToggle = styled(ToggleControl)`
  * @property {string} viewType String indicator of active view type.
  * @property {number} numOfStories Number indicator of maximum number of stories to show.
  * @property {number} numOfColumns Number indicator of number of columns in grid view type.
- * @property {string} orderByValue String indicator of stories sorting.
+ * @property {string} orderby Attribute to order stories by.
+ * @property {string} order Sorting order (ASC or DESC)
  * @property {boolean} isShowingTitle Whether or not to display story's title.
  * @property {boolean} isShowingDate Whether or not to display story's date.
  * @property {boolean} isShowingAuthor Whether or not to display story's author.
@@ -91,7 +91,8 @@ const StoriesInspectorControls = (props) => {
       viewType,
       numOfStories,
       numOfColumns,
-      orderByValue,
+      order,
+      orderby,
       archiveLinkLabel,
       authors,
       circleSize,
@@ -142,16 +143,6 @@ const StoriesInspectorControls = (props) => {
       fieldState: defaultViewState,
     });
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps -- We only want to set the values on viewType change.
-
-  // Set up sort options.
-  const orderByOptions = Object.entries(ORDER_BY_OPTIONS).map(
-    ([key, option]) => {
-      return {
-        label: option.label,
-        value: key,
-      };
-    }
-  );
 
   const ArchiveLink = () => (
     <a target="__blank" href={archiveURL}>
@@ -266,10 +257,34 @@ const StoriesInspectorControls = (props) => {
       {showFilters && (
         <PanelBody title={__('Sorting and Filtering', 'web-stories')}>
           <SelectControl
-            label={__('Order by', 'web-stories')}
-            options={orderByOptions}
-            value={orderByValue}
-            onChange={(selection) => setAttributes({ orderByValue: selection })}
+            label={__('Order By', 'web-stories')}
+            options={[
+              {
+                value: 'date',
+                label: __('Date', 'web-stories'),
+              },
+              {
+                value: 'title',
+                label: __('Title', 'web-stories'),
+              },
+            ]}
+            value={orderby || 'date'}
+            onChange={(selection) => setAttributes({ orderby: selection })}
+          />
+          <SelectControl
+            label={__('Order', 'web-stories')}
+            options={[
+              {
+                value: 'asc',
+                label: __('Ascending', 'web-stories'),
+              },
+              {
+                value: 'desc',
+                label: __('Descending', 'web-stories'),
+              },
+            ]}
+            value={order || 'desc'}
+            onChange={(selection) => setAttributes({ order: selection })}
           />
           <AuthorSelection authors={authors} setAttributes={setAttributes} />
           <RangeControl
@@ -293,7 +308,8 @@ StoriesInspectorControls.propTypes = {
     viewType: PropTypes.string,
     numOfStories: PropTypes.number,
     numOfColumns: PropTypes.number,
-    orderByValue: PropTypes.string,
+    orderby: PropTypes.string,
+    order: PropTypes.string,
     archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
     circleSize: PropTypes.number,

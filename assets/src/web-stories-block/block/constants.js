@@ -99,32 +99,6 @@ export const VIEW_TYPES = [
 ];
 
 /**
- * Stories 'order-by' values.
- */
-export const ORDER_BY_OPTIONS = {
-  'new-to-old': {
-    label: __('Newest to oldest', 'web-stories'),
-    order: 'desc',
-    orderBy: 'date',
-  },
-  'old-to-new': {
-    label: __('Oldest to newest', 'web-stories'),
-    order: 'asc',
-    orderBy: 'date',
-  },
-  alphabetical: {
-    label: __('A -> Z', 'web-stories'),
-    order: 'asc',
-    orderBy: 'title',
-  },
-  'reverse-alphabetical': {
-    label: __('Z -> A', 'web-stories'),
-    order: 'desc',
-    orderBy: 'title',
-  },
-};
-
-/**
  * Debounce duration constants.
  */
 export const FETCH_AUTHORS_DEBOUNCE = 500;
