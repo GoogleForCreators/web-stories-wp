@@ -30,12 +30,11 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Input } from '../../../../../design-system';
+import { Input, Text } from '../../../../../design-system';
+import { PRESET_SIZES } from '../../../../../design-system/theme/constants/typography';
 
-const Error = styled.span`
-  font-size: 12px;
-  line-height: 16px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
+const Error = styled(Text)`
+  color: ${({ theme }) => theme.colors.status.negative};
 `;
 
 function PageAttachmentPanel() {
@@ -109,6 +108,32 @@ function PageAttachmentPanel() {
 
   const isDefault = _ctaText === defaultCTA;
   const showTextInput = Boolean(url) && !isInvalidUrl;
+
+  const handleChange = useCallback(
+    ({ target }) => {
+      const { value } = target;
+      // This allows smooth input value change without any lag.
+      _setCtaText(value);
+      debouncedCTAUpdate(value);
+    },
+    [debouncedCTAUpdate]
+  );
+
+  const handleBlur = useCallback(
+    ({ target }) => {
+      if (!target.value) {
+        updatePageAttachment({ ctaText: defaultCTA });
+        _setCtaText(defaultCTA);
+      } else {
+        cancelCTAUpdate();
+        updatePageAttachment({
+          ctaText: _ctaText ? _ctaText : defaultCTA,
+        });
+      }
+    },
+    [_ctaText, cancelCTAUpdate, defaultCTA, updatePageAttachment]
+  );
+
   return (
     <SimplePanel
       name="pageAttachment"
@@ -124,7 +149,7 @@ function PageAttachmentPanel() {
 
       {displayWarning && (
         <Row>
-          <Error>
+          <Error forwardedAs="span" size={PRESET_SIZES.X_SMALL}>
             {__(
               'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
               'web-stories'
@@ -136,23 +161,8 @@ function PageAttachmentPanel() {
       {showTextInput && (
         <Row>
           <Input
-            onChange={({ target }) => {
-              const { value } = target;
-              // This allows smooth input value change without any lag.
-              _setCtaText(value);
-              debouncedCTAUpdate(value);
-            }}
-            onBlur={({ target }) => {
-              if (!target.value) {
-                updatePageAttachment({ ctaText: defaultCTA });
-                _setCtaText(defaultCTA);
-              } else {
-                cancelCTAUpdate();
-                updatePageAttachment({
-                  ctaText: _ctaText ? _ctaText : defaultCTA,
-                });
-              }
-            }}
+            onChange={handleChange}
+            onBlur={handleBlur}
             value={_ctaText}
             aria-label={__('Page Attachment CTA text', 'web-stories')}
             suffix={isDefault ? __('default', 'web-stories') : null}
