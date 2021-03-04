@@ -28,8 +28,11 @@
 
 namespace Google\Web_Stories\Traits;
 
-use function Google\Web_Stories\fields_states;
-use function Google\Web_Stories\get_layouts;
+use Google\Web_Stories\Interfaces\FieldState;
+use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
+use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
+use Google\Web_Stories\Stories_Renderer\FieldState\GridView;
+use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
 
 /**
  * Trait Stories_Script_Data.
@@ -45,7 +48,7 @@ trait Stories_Script_Data {
 	 * @return array
 	 */
 	private function get_script_data() {
-		$views      = get_layouts();
+		$views      = $this->get_layouts();
 		$view_types = [];
 
 		foreach ( $views as $view_key => $view_label ) {
@@ -55,7 +58,7 @@ trait Stories_Script_Data {
 			];
 		}
 
-		$field_states = fields_states();
+		$field_states = $this->fields_states();
 
 		return [
 			'views'  => $view_types,
@@ -63,4 +66,111 @@ trait Stories_Script_Data {
 		];
 	}
 
+	/**
+	 * Wrapper function for fetching field states
+	 * based on the view types.
+	 *
+	 * Mainly uses FieldState and Fields classes.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
+	 */
+	protected function fields_states() {
+		$views = $this->get_layouts();
+
+		$fields = [
+			'title',
+			'author',
+			'date',
+			'image_alignment',
+			'excerpt',
+			'sharp_corners',
+			'archive_link',
+			'circle_size',
+			'number_of_columns',
+		];
+
+		$field_states = [];
+
+		foreach ( array_keys( $views ) as $view_type ) {
+			$field_state = $this->get_field( (string) $view_type );
+			foreach ( $fields as $field ) {
+				$field_states[ $view_type ][ $field ] = [
+					'show'   => $field_state->$field()->show(),
+					'label'  => $field_state->$field()->label(),
+					'hidden' => $field_state->$field()->hidden(),
+				];
+			}
+		}
+
+		return $field_states;
+	}
+
+	/**
+	 * Get supported layouts for web stories.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return mixed|void
+	 */
+	protected function get_layouts() {
+		/**
+		 * Filter supported layouts.
+		 *
+		 * @since 1.5.0
+		 *
+		 * @param array $layouts Default supported layouts.
+		 */
+		return apply_filters(
+			'web_stories_layouts',
+			[
+				'carousel' => __( 'Box Carousel', 'web-stories' ),
+				'circles'  => __( 'Circle Carousel', 'web-stories' ),
+				'grid'     => __( 'Grid', 'web-stories' ),
+				'list'     => __( 'List', 'web-stories' ),
+			]
+		);
+	}
+
+	/**
+	 * Returns field state for the provided view type.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $view View Type.
+	 *
+	 * @return GridView|ListView|CircleView|CarouselView
+	 */
+	protected function get_field( $view = 'grid' ) {
+
+		switch ( $view ) {
+			case 'grid':
+				$field_state = new GridView();
+				break;
+			case 'list':
+				$field_state = new ListView();
+				break;
+			case 'circles':
+				$field_state = new CircleView();
+				break;
+			case 'carousel':
+				$field_state = new CarouselView();
+				break;
+			default:
+				$default_field_state = new CircleView();
+				/**
+				 * Filters the fieldstate object.
+				 *
+				 * This depicts
+				 *
+				 * @since 1.3.0
+				 *
+				 * @param FieldState $default_field_state Field states for circle view.
+				 */
+				$field_state = apply_filters( 'web_stories_default_fieldstate', $default_field_state );
+		}
+
+		return $field_state;
+	}
 }
