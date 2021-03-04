@@ -33,7 +33,7 @@ export const useNumericInput = ({
 }) => {
   const inputRef = useRef(null);
   const oldValue = useRef(value);
-  const revertToOriginal = useRef(false);
+  const revertToOriginal = useRef(true);
   const [currentValue, setCurrentValue] = useState(value);
   const options = useMemo(() => ({ allowEmpty, isFloat, max, min }), [
     allowEmpty,
@@ -47,22 +47,19 @@ export const useNumericInput = ({
    */
   const handleBlur = useCallback(
     (ev) => {
-      let newValue = parseInput(oldValue.current, options);
-
       if (!revertToOriginal.current) {
+        let newValue = parseInput(oldValue.current, options);
+
         const parsedValue = parseInput(currentValue, options);
 
         if (parsedValue !== null) {
           newValue = parsedValue;
         }
-      }
 
-      revertToOriginal.current = false;
-      if (newValue !== null) {
         setCurrentValue(newValue);
-        if (newValue !== oldValue.current) {
-          onChange(ev, newValue);
-        }
+        onChange(ev, newValue);
+
+        revertToOriginal.current = true;
       }
     },
     [currentValue, onChange, options]
@@ -72,6 +69,7 @@ export const useNumericInput = ({
    * Set internal state
    */
   const handleChange = useCallback((ev) => {
+    revertToOriginal.current = false;
     setCurrentValue(ev.target.value);
   }, []);
 
@@ -120,6 +118,7 @@ export const useNumericInput = ({
     // update internal value when `value` prop changes
     oldValue.current = value;
     setCurrentValue(value);
+    revertToOriginal.current = true;
   }, [value]);
 
   return {

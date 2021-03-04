@@ -31,6 +31,7 @@ import { Row } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { LockToggle, NumericInput } from '../../../../../design-system';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const TOGGLE_WIDTH = 32;
 const ROW_HEIGHT = 32;
@@ -147,9 +148,18 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         <InputContainer>
           <Row>
             <BoxedNumericInput
-              value={borderRadius.topLeft}
+              value={
+                borderRadius.topLeft === MULTIPLE_VALUE
+                  ? ''
+                  : borderRadius.topLeft
+              }
               aria-label={firstInputLabel}
               onChange={(_, value) => handleChange('topLeft', value)}
+              placeholder={
+                borderRadius.topLeft === MULTIPLE_VALUE
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : ''
+              }
             />
             {!lockRadius && (
               <>
@@ -157,9 +167,18 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                   <Union />
                 </Icon>
                 <BoxedNumericInput
-                  value={borderRadius.topRight}
+                  value={
+                    borderRadius.topRight === MULTIPLE_VALUE
+                      ? ''
+                      : borderRadius.topRight
+                  }
                   aria-label={__('Top right corner radius', 'web-stories')}
                   onChange={(_, value) => handleChange('topRight', value)}
+                  placeholder={
+                    borderRadius.topRight === MULTIPLE_VALUE
+                      ? MULTIPLE_DISPLAY_VALUE
+                      : ''
+                  }
                 />
               </>
             )}
@@ -167,15 +186,33 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
           {!lockRadius && (
             <Row>
               <BoxedNumericInput
-                value={borderRadius.bottomLeft}
+                value={
+                  borderRadius.bottomLeft === MULTIPLE_VALUE
+                    ? ''
+                    : borderRadius.bottomLeft
+                }
                 aria-label={__('Bottom left corner radius', 'web-stories')}
                 onChange={(_, value) => handleChange('bottomLeft', value)}
+                placeholder={
+                  borderRadius.bottomLeft === MULTIPLE_VALUE
+                    ? MULTIPLE_DISPLAY_VALUE
+                    : ''
+                }
               />
               <Space space={32} />
               <BoxedNumericInput
-                value={borderRadius.bottomRight}
+                value={
+                  borderRadius.bottomRight === MULTIPLE_VALUE
+                    ? ''
+                    : borderRadius.bottomRight
+                }
                 aria-label={__('Bottom right corner radius', 'web-stories')}
                 onChange={(_, value) => handleChange('bottomRight', value)}
+                placeholder={
+                  borderRadius.bottomRight === MULTIPLE_VALUE
+                    ? MULTIPLE_DISPLAY_VALUE
+                    : ''
+                }
               />
             </Row>
           )}
