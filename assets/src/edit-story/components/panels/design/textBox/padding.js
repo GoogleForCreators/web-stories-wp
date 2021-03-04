@@ -139,15 +139,15 @@ function PaddingControls({
     ? {
         suffix: __('Padding', 'web-stories'),
         'aria-label': __('Padding', 'web-stories'),
-        onChange: (evt) =>
+        onChange: (evt) => {
+          const value = Number(evt?.target?.value);
           handleChange((el) => {
-            const value = Number(evt.target.value);
             return {
               horizontal: value + getHiddenPadding(el, 'horizontal'),
               vertical: value + getHiddenPadding(el, 'vertical'),
             };
-          }),
-
+          });
+        },
         stretch: true,
       }
     : {

@@ -59,9 +59,12 @@ export const useNumericInput = ({
       }
 
       revertToOriginal.current = false;
-
       setCurrentValue(newValue);
-      onChange(ev, newValue);
+
+      if (newValue !== oldValue.current) {
+        onChange(ev, newValue);
+      }
+      ev.preventDefault();
     },
     [currentValue, onChange, options]
   );
