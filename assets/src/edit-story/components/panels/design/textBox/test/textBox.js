@@ -193,7 +193,7 @@ describe('Panels/TextBox', () => {
       });
       const lock = getByRole('button', { name: paddingRatioLockLabel });
       expect(multi).toHaveValue('0');
-      expect(lock).toBeChecked();
+      expect(lock).toHaveAttribute('aria-pressed', 'true');
     });
 
     it('should render specified padding controls', () => {

@@ -32,6 +32,7 @@ export const useNumericInput = ({
   value,
 }) => {
   const inputRef = useRef(null);
+  const changeTracker = useRef(false);
   const oldValue = useRef(value);
   const revertToOriginal = useRef(false);
   const [currentValue, setCurrentValue] = useState(value);
@@ -70,6 +71,8 @@ export const useNumericInput = ({
    */
   const handleChange = useCallback((ev) => {
     setCurrentValue(ev.target.value);
+    // Track value change.
+    changeTracker.current = true;
   }, []);
 
   /**
@@ -128,5 +131,6 @@ export const useNumericInput = ({
     handleChange,
     handleEsc,
     handleKeyUpAndDown,
+    isIndeterminate: !changeTracker.current,
   };
 };
