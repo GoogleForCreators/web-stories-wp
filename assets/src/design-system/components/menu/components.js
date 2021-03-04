@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../theme';
 import { DEFAULT_DROPDOWN_HEIGHT } from './constants';
 
 export const MenuContainer = styled.div(
@@ -45,7 +46,9 @@ export const MenuContainer = styled.div(
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.divider.primary};
-    ${styleOverride}
+    ${styleOverride};
+
+    ${themeHelpers.scrollbarCSS};
   `
 );
 MenuContainer.propTypes = {

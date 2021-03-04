@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
@@ -33,6 +33,7 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageLayoutsPane, PageLayoutsIcon } from './panes/pageLayouts';
+import { getPaneId, Pane as SharedPane } from './panes/shared';
 
 const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
 const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
@@ -45,26 +46,40 @@ const PAGE_LAYOUTS = {
   id: 'pageLayouts',
 };
 
+const LAZY_TABS = [MEDIA3P.id, TEXT.id, PAGE_LAYOUTS.id];
+
 function LibraryProvider({ children }) {
   const initialTab = MEDIA.id;
   const [tab, setTab] = useState(initialTab);
   const [textSets, setTextSets] = useState({});
+  const renderedTabs = useRef({});
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showElementsTab } = useFeatures();
 
-  // Order here is important, as it denotes the actual visual order of elements.
+  const renderEmptyPane = useCallback((id) => {
+    const EmptyPane = (props) => <SharedPane id={getPaneId(id)} {...props} />;
+    return EmptyPane;
+  }, []);
+
   const tabs = useMemo(
-    () => [
-      MEDIA,
-      MEDIA3P,
-      ...(tab === TEXT.id ? [TEXT] : [{ icon: TextIcon, id: 'text' }]),
-      SHAPES,
-      ...(showElementsTab ? [ELEMS] : []),
-      PAGE_LAYOUTS,
-    ],
-    [showElementsTab, tab]
+    // Order here is important, as it denotes the actual visual order of elements.
+    () =>
+      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_LAYOUTS]
+        .filter(Boolean)
+        .map(({ icon, Pane, id }) => {
+          const isLazyTab = LAZY_TABS.includes(id);
+          const isActiveTab = tab === id;
+          const hasBeenRendered = renderedTabs.current[id];
+          const shouldRenderPane = !isLazyTab || isActiveTab || hasBeenRendered;
+          return {
+            id,
+            icon,
+            Pane: shouldRenderPane ? Pane : renderEmptyPane(id),
+          };
+        }),
+    [tab, showElementsTab, renderEmptyPane]
   );
 
   const state = useMemo(
@@ -94,16 +109,22 @@ function LibraryProvider({ children }) {
       textSets,
     ]
   );
+  const getTextSets = useCallback(async () => {
+    const trackTiming = getTimeTracker('load_text_sets');
+    setTextSets(await loadTextSets());
+    trackTiming();
+  }, []);
 
   useEffect(() => {
-    async function getTextSets() {
-      const trackTiming = getTimeTracker('load_text_sets');
-      setTextSets(await loadTextSets());
-      trackTiming();
-    }
+    // track the rendered tabs
+    const previouslyRenderedTabs = { ...renderedTabs.current };
+    renderedTabs.current = { ...previouslyRenderedTabs, [tab]: true };
 
-    getTextSets();
-  }, []);
+    // if text pane hasn't been rendered until now fetch dynamically imported text sets
+    if (tab === TEXT.id && !previouslyRenderedTabs[tab]) {
+      getTextSets();
+    }
+  }, [tab, getTextSets]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

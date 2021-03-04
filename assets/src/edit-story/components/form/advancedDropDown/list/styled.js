@@ -23,7 +23,6 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
-import { ScrollBarStyles } from '../../../library/common/scrollbarStyles';
 
 export const List = styled.div`
   width: 100%;
@@ -36,11 +35,6 @@ export const List = styled.div`
   font-size: 14px;
   text-align: left;
   list-style: none;
-  scrollbar-width: thin;
-  scrollbar-color: transparent
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.38)};
-
-  ${ScrollBarStyles}
 `;
 
 export const Group = styled.ul`

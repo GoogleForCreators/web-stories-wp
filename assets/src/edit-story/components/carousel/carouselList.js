@@ -49,23 +49,11 @@ const PageList = styled(Reorderable).attrs({
       overflow-x: visible;
       overflow-x: overlay;
       justify-content: flex-start;
-      /*
-       * These overrides are an exception - generally scrollbars should all
-       * look the same. We do this only here because this scrollbar is always visible
-       * if scroll is possible.
-       */
-      scrollbar-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v10}
-        ${({ theme }) => theme.colors.bg.primary} !important;
-
-      &::-webkit-scrollbar-track {
-        background: ${({ theme }) => theme.colors.bg.primary} !important;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        border: 2px solid ${({ theme }) => theme.colors.bg.primary} !important;
-        border-top-width: 3px !important;
-      }
     `};
+
+  ::-webkit-scrollbar-thumb {
+    border: 6px solid transparent !important;
+  }
 `;
 
 function CarouselList() {

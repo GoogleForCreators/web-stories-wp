@@ -14,29 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
-import { rgba } from 'polished';
-
-export const ScrollBarStyles = css`
-  ::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border: none;
-    background-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.38)};
-  }
-
-  :focus {
-    outline: 2px solid
-      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
-  }
-`;
+export { default } from './filter';

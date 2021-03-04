@@ -30,6 +30,10 @@ import { TRANSITION_DURATION } from '../constants';
 import { forceFocusCompanion } from '../utils';
 import { NavBar, NavButton } from './components';
 
+const secondaryTextStyle = css`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
 const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
@@ -49,13 +53,13 @@ const BottomNavButtons = styled.div`
 `;
 
 const ArrowWrap = styled.div`
+  ${secondaryTextStyle}
   margin: -5px -16px;
   ${({ isRTL }) =>
     isRTL &&
     css`
       transform: rotate(180deg);
     `}
-
   svg {
     display: block;
   }
@@ -113,7 +117,7 @@ export function BottomNavigation({
           <ArrowWrap isRTL={isRTL}>
             <Icons.ArrowLeft />
           </ArrowWrap>
-          <span>{__('All Tips', 'web-stories')}</span>
+          <span css={secondaryTextStyle}>{__('All Tips', 'web-stories')}</span>
         </NavButton>
       </BottomNavButtons>
       <BottomNavButtons>

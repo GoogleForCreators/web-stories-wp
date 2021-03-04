@@ -32,11 +32,11 @@ import {
   OverlayPreset,
   OverlayType,
 } from '../../../../utils/backgroundOverlay';
-import { Row, ToggleButton, Color, Label } from '../../../form';
+import { Row, ToggleButton, Color } from '../../../form';
 import { SimplePanel } from '../../panel';
 import convertOverlay from './convertOverlay';
 
-function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
+function FilterPanel({ selectedElements, pushUpdate }) {
   const overlay = selectedElements[0].backgroundOverlay || null;
 
   const overlayType =
@@ -48,7 +48,7 @@ function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SimplePanel name="backgroundOverlay" title={__('Overlay', 'web-stories')}>
+    <SimplePanel name="filter" title={__('Filters', 'web-stories')}>
       <Row>
         {Object.keys(OverlayPreset).map((type) => {
           const { label, icon } = OverlayPreset[type];
@@ -64,8 +64,8 @@ function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
               iconWidth={22}
               iconHeight={16}
               aria-label={sprintf(
-                /* translators: %s: Overlay type */
-                __('Set overlay: %s', 'web-stories'),
+                /* translators: %s: Filter type */
+                __('Set filter: %s', 'web-stories'),
                 label
               )}
             />
@@ -74,7 +74,6 @@ function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
       </Row>
       {overlayType !== OverlayType.NONE && (
         <Row>
-          <Label>{__('Color', 'web-stories')}</Label>
           <Color
             label={__('Color', 'web-stories')}
             value={overlay}
@@ -87,9 +86,9 @@ function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
   );
 }
 
-BackgroundOverlayPanel.propTypes = {
+FilterPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };
 
-export default BackgroundOverlayPanel;
+export default FilterPanel;
