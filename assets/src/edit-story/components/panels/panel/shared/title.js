@@ -60,6 +60,11 @@ const HeaderActions = styled.div`
   align-items: center;
 `;
 
+// Keeps the space for the icon even if it's not displayed.
+const IconWrapper = styled.div`
+  width: 32px;
+`;
+
 // -12px margin-left comes from 16px panel padding - 4px that it actually should be.
 // Since the svg-s are 32px and have extra room around, this needs to be removed
 const Collapse = styled.button`
@@ -183,7 +188,7 @@ function Title({
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}
       >
-        {canCollapse && toggleIcon}
+        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
           id={panelTitleId}
           as="span"
