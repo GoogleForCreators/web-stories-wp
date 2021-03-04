@@ -47,7 +47,7 @@ describe('<SavedTemplates />', function () {
 
   it('should call the set sort function when a new sort is selected', async function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithProviders(
+    const { getByLabelText, getByText } = renderWithProviders(
       <LayoutProvider>
         <SavedTemplatesHeader
           filter={{ value: SAVED_TEMPLATES_STATUSES.ALL }}
@@ -62,11 +62,11 @@ describe('<SavedTemplates />', function () {
       </LayoutProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
-    fireEvent.click(getAllByText('Last modified')[0].parentElement);
+    fireEvent.click(getByLabelText('Choose sort option for display'));
     fireEvent.click(getByText('Date created'));
 
     await waitFor(() => {
-      expect(setSortFn).toHaveBeenCalledWith('modified');
+      expect(setSortFn).toHaveBeenCalledWith('date');
     });
   });
 

@@ -69,7 +69,7 @@ const SearchInput = (
   );
 
   return (
-    <InputContainer alignCenter={alignInputCenter}>
+    <InputContainer>
       <Input
         aria-disabled={disabled}
         autocomplete="off"
@@ -87,7 +87,7 @@ const SearchInput = (
         {...rest}
       />
       <SearchDecoration
-        alignCenter={alignInputCenter}
+        activeSearch={alignInputCenter}
         aria-hidden
         disabled={disabled}
       >

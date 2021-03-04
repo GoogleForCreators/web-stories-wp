@@ -31,9 +31,7 @@ const TOGGLE_WIDTH = 44;
 const CIRCLE_DIAMETER = 28;
 const CIRCLE_INITIAL_POSITION = (TOGGLE_HEIGHT - CIRCLE_DIAMETER) / 2;
 const CIRCLE_FINAL_POSITION =
-  TOGGLE_WIDTH +
-  CIRCLE_INITIAL_POSITION -
-  (CIRCLE_DIAMETER / 2 - CIRCLE_INITIAL_POSITION / 2);
+  TOGGLE_WIDTH - CIRCLE_INITIAL_POSITION - CIRCLE_DIAMETER;
 
 const ICON_WIDTH = 18;
 const ICON_TOP_POSITION = 1;
@@ -68,7 +66,7 @@ const Circle = styled.span(
       background-color: ${theme.colors.fg.secondary};
       border-radius: ${theme.borders.radius.round};
       cursor: pointer;
-      transition: background-color 0.3s, border-color 0.3s, transform 0.15s;
+      transition: background-color 0.3s, border-color 0.3s, left 0.15s;
     }
   `
 );
@@ -143,7 +141,7 @@ const ToggleContainer = styled.div(
         }
 
         ~ ${Circle}:after {
-          transform: translate3d(${CIRCLE_FINAL_POSITION}px, 0, 0);
+          left: ${CIRCLE_FINAL_POSITION}px;
           background-color: ${theme.colors.interactiveBg.positiveNormal};
         }
 
@@ -172,16 +170,14 @@ const ToggleContainer = styled.div(
   `
 );
 
-export const Toggle = (props) => {
-  return (
-    <ToggleContainer>
-      <input type="checkbox" {...props} />
-      <Background />
-      <StyledCheckmark />
-      <Circle />
-    </ToggleContainer>
-  );
-};
+export const Toggle = (props) => (
+  <ToggleContainer>
+    <input type="checkbox" {...props} />
+    <Background />
+    <StyledCheckmark />
+    <Circle />
+  </ToggleContainer>
+);
 
 Toggle.propTypes = {
   checked: propTypes.bool,

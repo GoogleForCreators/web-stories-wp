@@ -43,10 +43,11 @@ export const _default = () => {
     <NavProvider>
       <LeftRail />
       <PageHeading
-        centerContent={boolean('Center Inner Content', false)}
-        stories={[]}
-        handleTypeaheadChange={(value) => action('Search with value: ', value)}
-        defaultTitle={text('Page Heading', 'My Stories')}
+        showSearch={boolean('Show Search', false)}
+        searchOptions={[]}
+        searchValue={text('Search Value', '')}
+        handleSearchChange={(value) => action('Search with value: ', value)}
+        heading={text('Heading', 'My Stories')}
         searchPlaceholder={text('Search Placeholder', 'Find Stories')}
       >
         <InnerContent />

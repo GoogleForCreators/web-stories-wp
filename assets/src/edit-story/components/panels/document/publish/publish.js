@@ -32,6 +32,7 @@ import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 import { Row, AdvancedDropDown, Label, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
+import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
@@ -239,8 +240,8 @@ function PublishPanel() {
               title={__('Select as publisher logo', 'web-stories')}
               buttonInsertText={__('Select as publisher logo', 'web-stories')}
               type={allowedImageMimeTypes}
-              size={80}
               ariaLabel={__('Publisher logo', 'web-stories')}
+              variant={MEDIA_VARIANTS.CIRCLE}
             />
           </MediaWrapper>
         </Row>

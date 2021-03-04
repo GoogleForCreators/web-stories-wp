@@ -28,7 +28,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import TabView from '../tabview';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
-import { getTabId } from './panes/shared';
+import { getTabId, getPaneId } from './panes/shared';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
@@ -78,6 +78,7 @@ function LibraryLayout() {
           initialTab={initialTab}
           onTabChange={onTabChange}
           getTabId={getTabId}
+          getAriaControlsId={getPaneId}
           shortcut="mod+option+1"
         />
       </TabsArea>

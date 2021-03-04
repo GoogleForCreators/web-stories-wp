@@ -127,14 +127,30 @@ class Dashboard extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 
-		$dashboard = new \Google\Web_Stories\Dashboard(
-			$experiments,
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class )
-		);
+		$args      = [ $experiments, $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ) ];
+		$dashboard = $this->getMockBuilder( \Google\Web_Stories\Dashboard::class )
+						  ->setConstructorArgs( $args )
+						  ->setMethods( [ 'get_asset_metadata' ] )
+						  ->getMock();
+		$dashboard->method( 'get_asset_metadata' )
+				->willReturn(
+					[
+						'dependencies' => [],
+						'version'      => '9.9.9',
+						'js'           => [ 'fake_js_chunk' ],
+						'css'          => [ 'fake_css_chunk' ],
+					]
+				);
+
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+
 		$this->assertTrue( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
+
 		$this->assertTrue( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
+
 		$this->assertSame( 'web-stories', wp_scripts()->registered[ $dashboard::SCRIPT_HANDLE ]->textdomain );
 	}
 }

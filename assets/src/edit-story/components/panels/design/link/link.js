@@ -26,41 +26,30 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../../../design-system';
+import {
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  useBatchingCallback,
+} from '../../../../../design-system';
 import { useStory, useAPI, useCanvas } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
-import { Close } from '../../../../icons';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { MULTIPLE_VALUE } from '../../../../constants';
-import { Media, Row, Button, LinkInput } from '../../../form';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { Media, Row, LinkInput } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
-import { ExpandedTextInput, useCommonObjectValue } from '../../shared';
-
-const IconText = styled.span`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
-`;
+import { useCommonObjectValue } from '../../shared';
+import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
 
 const IconInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
+  margin-left: 20px;
 `;
 
-const IconRemoveButton = styled(Button)`
-  margin-top: 6px;
-  justify-content: flex-start;
-  align-self: flex-start;
-  padding: 4px 6px;
-`;
-
-const CloseIcon = styled(Close)`
-  margin-right: 4px;
+const IconText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const Error = styled.span`
@@ -172,7 +161,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChangeIcon = useCallback(
     (image) => {
-      handleChange({ icon: image.sizes?.medium?.url || image.url }, true);
+      handleChange({ icon: image?.sizes?.medium?.url || image?.url }, true);
     },
     [handleChange]
   );
@@ -197,10 +186,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     link.url,
   ]);
 
+  const isMultipleUrl = MULTIPLE_VALUE === link.url;
+  const isMultipleDesc = MULTIPLE_VALUE === link.desc;
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <LinkInput
-        description={__('Type an address to apply a link', 'web-stories')}
         onChange={(value) =>
           !displayLinkGuidelines &&
           handleChange({ url: value }, !value /* submit */)
@@ -213,7 +203,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           setIsLinkFocused(true);
         }}
         value={link.url || ''}
-        clear
+        placeholder={
+          isMultipleUrl
+            ? MULTIPLE_DISPLAY_VALUE
+            : __('Enter an address to apply a link', 'web-stories')
+        }
+        isIndeterminate={isMultipleUrl}
         aria-label={__('Element link', 'web-stories')}
       />
       {displayLinkGuidelines && (
@@ -230,13 +225,18 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       {displayMetaFields && (
         <>
           <Row>
-            <ExpandedTextInput
-              placeholder={__('Optional description', 'web-stories')}
-              onChange={(value) =>
-                handleChange({ desc: value }, !value /* submit */)
+            <Input
+              placeholder={
+                isMultipleDesc
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : __('Optional description', 'web-stories')
+              }
+              onChange={({ target }) =>
+                handleChange({ desc: target.value }, !target.value /* submit */)
               }
               value={link.desc || ''}
               aria-label={__('Link description', 'web-stories')}
+              isIndeterminate={isMultipleDesc}
             />
           </Row>
           <Row spaceBetween={false}>
@@ -247,22 +247,14 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               ariaLabel={__('Edit link icon', 'web-stories')}
               buttonInsertText={__('Select as link icon', 'web-stories')}
               type={'image'}
-              size={64}
-              loading={fetchingMetadata}
-              circle
+              isLoading={fetchingMetadata}
+              variant={MEDIA_VARIANTS.CIRCLE}
+              menuOptions={link.icon ? ['edit', 'remove'] : []}
             />
             <IconInfo>
-              <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
-              {link.icon && (
-                <IconRemoveButton
-                  onClick={() =>
-                    handleChange({ icon: null }, true /* submit */)
-                  }
-                >
-                  <CloseIcon width={14} height={14} />
-                  {__('Remove', 'web-stories')}
-                </IconRemoveButton>
-              )}
+              <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                {__('Optional brand icon', 'web-stories')}
+              </IconText>
             </IconInfo>
           </Row>
         </>
