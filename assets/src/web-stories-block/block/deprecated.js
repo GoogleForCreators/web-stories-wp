@@ -117,9 +117,10 @@ const v2 = {
       viewType: '',
       numOfStories: 5,
       numOfColumns: 2,
-      sizeOfCircles: 96,
-      orderByValue: '',
-      viewAllLinkLabel: '',
+      circleSize: 96,
+      orderby: '',
+      order: '',
+      archiveLinkLabel: '',
       authors: [],
       fieldState: {},
     };

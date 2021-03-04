@@ -31,7 +31,6 @@ jest.mock('../../utils', () => ({
 
 jest.mock('../../utils/globals', () => ({
   webStoriesData: {
-    orderlist: [],
     views: {
       grid: {
         label: 'Test Circle',

@@ -30,6 +30,7 @@ import {
   RangeControl,
   SelectControl,
   ToggleControl,
+  RadioControl,
 } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
 import { useEffect, useRef } from '@wordpress/element';
@@ -41,7 +42,7 @@ import { useConfig } from '../config';
 import {
   CIRCLES_VIEW_TYPE,
   GRID_VIEW_TYPE,
-  ORDER_BY_OPTIONS,
+  LIST_VIEW_TYPE,
 } from '../constants';
 import AuthorSelection from './authorSelection';
 
@@ -65,12 +66,13 @@ const StyledToggle = styled(ToggleControl)`
  * @property {string} viewType String indicator of active view type.
  * @property {number} numOfStories Number indicator of maximum number of stories to show.
  * @property {number} numOfColumns Number indicator of number of columns in grid view type.
- * @property {string} orderByValue String indicator of stories sorting.
+ * @property {string} orderby Attribute to order stories by.
+ * @property {string} order Sorting order (ASC or DESC)
  * @property {boolean} isShowingTitle Whether or not to display story's title.
  * @property {boolean} isShowingDate Whether or not to display story's date.
  * @property {boolean} isShowingAuthor Whether or not to display story's author.
  * @property {boolean} isShowingViewAll Whether or not to display stories archive link.
- * @property {string} viewAllLinkLabel Archive link's label.
+ * @property {string} archiveLinkLabel Archive link's label.
  * @property {boolean} imageOnRight Whether or not to display images on right side in list view type.
  * @property {Array} authors An array of authors objects which are currently selected.
  * @property {Function} setAttributes Callable function for saving attribute values.
@@ -89,10 +91,12 @@ const StoriesInspectorControls = (props) => {
       viewType,
       numOfStories,
       numOfColumns,
-      orderByValue,
-      viewAllLinkLabel,
+      order,
+      orderby,
+      archiveLinkLabel,
       authors,
-      sizeOfCircles,
+      circleSize,
+      imageAlignment,
       fieldState,
     },
     setAttributes,
@@ -140,16 +144,6 @@ const StoriesInspectorControls = (props) => {
     });
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps -- We only want to set the values on viewType change.
 
-  // Set up sort options.
-  const orderByOptions = Object.entries(ORDER_BY_OPTIONS).map(
-    ([key, option]) => {
-      return {
-        label: option.label,
-        value: key,
-      };
-    }
-  );
-
   const ArchiveLink = () => (
     <a target="__blank" href={archiveURL}>
       {__('View archive page', 'web-stories')}
@@ -169,14 +163,18 @@ const StoriesInspectorControls = (props) => {
     <InspectorControls>
       <PanelBody
         className="web-stories-settings"
-        title={__('Story settings', 'web-stories')}
+        title={__('Layout Options', 'web-stories')}
       >
         {fieldStates[viewType] &&
           Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
-            const { label, readonly } = fieldObj;
+            const { label, hidden } = fieldObj;
 
             // @todo This shouldn't have dependency on field name, update field object appropriately.
-            if (!readonly && 'circle_size' !== field) {
+            if (
+              !hidden &&
+              'circle_size' !== field &&
+              'image_alignment' !== field
+            ) {
               return (
                 <StyledToggle
                   key={`${field}__control`}
@@ -195,23 +193,44 @@ const StoriesInspectorControls = (props) => {
           })}
         {fieldState['show_archive_link'] && (
           <StyledTextArea
-            label={__("'View All Stories' Link label", 'web-stories')}
-            value={viewAllLinkLabel}
+            label={__('Archive Link Label', 'web-stories')}
+            value={archiveLinkLabel}
             placeholder={__('View All Stories', 'web-stories')}
             onChange={(newLabel) =>
-              setAttributes({ viewAllLinkLabel: newLabel })
+              setAttributes({ archiveLinkLabel: newLabel })
             }
           />
         )}
       </PanelBody>
-      {(CIRCLES_VIEW_TYPE === viewType || GRID_VIEW_TYPE === viewType) && (
+      {[CIRCLES_VIEW_TYPE, GRID_VIEW_TYPE, LIST_VIEW_TYPE].includes(
+        viewType
+      ) && (
         <PanelBody
           className="web-stories-settings"
-          title={__('Layout and style options', 'web-stories')}
+          title={__('Layout and Style Options', 'web-stories')}
         >
+          {LIST_VIEW_TYPE === viewType && (
+            <RadioControl
+              label={__('Image Alignment', 'web-stories')}
+              selected={imageAlignment}
+              options={[
+                {
+                  value: 'left',
+                  label: __('Left', 'web-stories'),
+                },
+                {
+                  value: 'right',
+                  label: __('Right', 'web-stories'),
+                },
+              ]}
+              onChange={(value) => {
+                setAttributes({ imageAlignment: value });
+              }}
+            />
+          )}
           {GRID_VIEW_TYPE === viewType && (
             <RangeControl
-              label={__('Number of columns', 'web-stories')}
+              label={__('Number of Columns', 'web-stories')}
               value={numOfColumns}
               onChange={(updatedNumOfColumns) =>
                 setAttributes({ numOfColumns: updatedNumOfColumns })
@@ -223,10 +242,10 @@ const StoriesInspectorControls = (props) => {
           )}
           {CIRCLES_VIEW_TYPE === viewType && (
             <RangeControl
-              label={__('Size of the circles', 'web-stories')}
-              value={sizeOfCircles}
-              onChange={(updatedSizeOfCircles) =>
-                setAttributes({ sizeOfCircles: updatedSizeOfCircles })
+              label={__('Circle Size', 'web-stories')}
+              value={circleSize}
+              onChange={(updatedcircleSize) =>
+                setAttributes({ circleSize: updatedcircleSize })
               }
               min={80}
               max={200}
@@ -236,16 +255,40 @@ const StoriesInspectorControls = (props) => {
         </PanelBody>
       )}
       {showFilters && (
-        <PanelBody title={__('Sorting and filtering', 'web-stories')}>
+        <PanelBody title={__('Sorting and Filtering', 'web-stories')}>
           <SelectControl
-            label={__('Order by', 'web-stories')}
-            options={orderByOptions}
-            value={orderByValue}
-            onChange={(selection) => setAttributes({ orderByValue: selection })}
+            label={__('Order By', 'web-stories')}
+            options={[
+              {
+                value: 'date',
+                label: __('Date', 'web-stories'),
+              },
+              {
+                value: 'title',
+                label: __('Title', 'web-stories'),
+              },
+            ]}
+            value={orderby || 'date'}
+            onChange={(selection) => setAttributes({ orderby: selection })}
+          />
+          <SelectControl
+            label={__('Order', 'web-stories')}
+            options={[
+              {
+                value: 'asc',
+                label: __('Ascending', 'web-stories'),
+              },
+              {
+                value: 'desc',
+                label: __('Descending', 'web-stories'),
+              },
+            ]}
+            value={order || 'desc'}
+            onChange={(selection) => setAttributes({ order: selection })}
           />
           <AuthorSelection authors={authors} setAttributes={setAttributes} />
           <RangeControl
-            label={__('Number of stories', 'web-stories')}
+            label={__('Number of Stories', 'web-stories')}
             value={numOfStories}
             onChange={(updatedNumOfStories) =>
               setAttributes({ numOfStories: updatedNumOfStories })
@@ -265,11 +308,13 @@ StoriesInspectorControls.propTypes = {
     viewType: PropTypes.string,
     numOfStories: PropTypes.number,
     numOfColumns: PropTypes.number,
-    orderByValue: PropTypes.string,
-    viewAllLinkLabel: PropTypes.string,
+    orderby: PropTypes.string,
+    order: PropTypes.string,
+    archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
-    sizeOfCircles: PropTypes.number,
+    circleSize: PropTypes.number,
     fieldState: PropTypes.object,
+    imageAlignment: PropTypes.string,
   }),
   setAttributes: PropTypes.func.isRequired,
   showFilters: PropTypes.bool,

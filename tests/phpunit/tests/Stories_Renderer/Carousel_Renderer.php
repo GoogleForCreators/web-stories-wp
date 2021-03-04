@@ -68,6 +68,7 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	 * Runs once before any test in the class run.
 	 */
 	public function setUp() {
+		parent::setUp();
 
 		$this->story_model = $this->createMock( Story::class );
 		$this->stories     = $this->createMock( Stories::class );
@@ -102,20 +103,18 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'view_type'                 => 'carousel',
-				'stories_archive_label'     => 'View all stories',
-				'class'                     => '',
-				'number_of_columns'         => 2,
-				'show_title'                => false,
-				'show_author'               => false,
-				'show_date'                 => false,
-				'show_excerpt'              => false,
-				'show_stories_archive_link' => false,
-				'has_square_corners'        => false,
-				'stories_archive_label'     => __( 'View all stories', 'web-stories' ),
-				'list_view_image_alignment' => 'left',
-				'class'                     => '',
-				'circle_size'               => 150,
+				'view_type'          => 'carousel',
+				'archive_link_label' => 'View all stories',
+				'class'              => '',
+				'number_of_columns'  => 2,
+				'show_title'         => false,
+				'show_author'        => false,
+				'show_date'          => false,
+				'show_excerpt'       => false,
+				'show_archive_link'  => false,
+				'has_square_corners' => false,
+				'image_alignment'    => 'left',
+				'circle_size'        => 150,
 			]
 		);
 

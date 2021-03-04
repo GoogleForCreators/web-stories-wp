@@ -24,11 +24,11 @@ import renderer from 'react-test-renderer';
 import TinyMCEToggle from '../../controls/Toggle';
 
 describe('compare TinyMCEToggle snapshots', () => {
-  it('tinyMCEToggle control with readonly attrs true', () => {
+  it('tinyMCEToggle control with hidden attrs true', () => {
     const props = {
       fieldObj: {
         show: true,
-        readonly: true,
+        hidden: true,
         label: 'Test Control',
       },
       field: '',
@@ -38,11 +38,11 @@ describe('compare TinyMCEToggle snapshots', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('tinyMCEToggle control with readonly attr false', () => {
+  it('tinyMCEToggle control with hidden attr false', () => {
     const props = {
       fieldObj: {
         show: true,
-        readonly: false,
+        hidden: false,
         label: 'Test Control',
       },
       field: '',

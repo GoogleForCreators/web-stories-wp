@@ -18,7 +18,7 @@ namespace Google\Web_Stories\Interfaces;
 interface Field {
 
 	/**
-	 * Whether to show the field.
+	 * Whether to display the field.
 	 *
 	 * @since 1.5.0
 	 *
@@ -36,11 +36,11 @@ interface Field {
 	public function label();
 
 	/**
-	 * Whether the field is readonly.
+	 * Whether the field is hidden.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return bool
 	 */
-	public function readonly();
+	public function hidden();
 }

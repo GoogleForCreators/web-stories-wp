@@ -46,7 +46,7 @@ const SelectedStoriesEdit = ({
   setAttributes,
   isSelected: isEditing,
 }) => {
-  const { stories, viewAllLinkLabel } = attributes;
+  const { stories, archiveLinkLabel } = attributes;
 
   const [selectedStories, setSelectedStories] = useState(stories);
   const [selectedStoriesObject, setSelectedStoriesObject] = useState([]);
@@ -56,8 +56,8 @@ const SelectedStoriesEdit = ({
 
   const label = __('Web Stories', 'web-stories');
 
-  const viewAllLabel = viewAllLinkLabel
-    ? viewAllLinkLabel
+  const viewAllLabel = archiveLinkLabel
+    ? archiveLinkLabel
     : __('View All Stories', 'web-stories');
 
   const activeTheme = {
@@ -132,8 +132,8 @@ SelectedStoriesEdit.propTypes = {
     align: PropTypes.string,
     viewType: PropTypes.string,
     numOfColumns: PropTypes.number,
-    viewAllLinkLabel: PropTypes.string,
-    sizeOfCircles: PropTypes.number,
+    archiveLinkLabel: PropTypes.string,
+    circleSize: PropTypes.number,
   }),
   setAttributes: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,

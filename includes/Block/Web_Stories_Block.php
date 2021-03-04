@@ -30,13 +30,14 @@ use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Stories_Script_Data;
 use WP_Post_Type;
-use function Google\Web_Stories\fields_states;
 
 /**
  * Latest Stories block class.
  */
 class Web_Stories_Block extends Embed_Base {
+	use Stories_Script_Data;
 
 	/**
 	 * Script handle.
@@ -130,15 +131,23 @@ class Web_Stories_Block extends Embed_Base {
 						'type'    => 'number',
 						'default' => 2,
 					],
-					'sizeOfCircles'    => [
+					'circleSize'       => [
 						'type'    => 'number',
 						'default' => 96,
 					],
-					'orderByValue'     => [
+					'imageAlignment'   => [
+						'type'    => 'number',
+						'default' => 96,
+					],
+					'orderby'          => [
 						'type'    => 'string',
 						'default' => '',
 					],
-					'viewAllLinkLabel' => [
+					'order'            => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'archiveLinkLabel' => [
 						'type'    => 'string',
 						'default' => __( 'View all stories', 'web-stories' ),
 					],
@@ -192,7 +201,7 @@ class Web_Stories_Block extends Embed_Base {
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'users'   => '/web-stories/v1/users/',
 				],
-				'fieldStates'     => fields_states(),
+				'fieldStates'     => $this->fields_states(),
 			],
 		];
 
@@ -240,11 +249,13 @@ class Web_Stories_Block extends Embed_Base {
 			&& ( 'latest-stories' === $attributes['blockType'] || 'selected-stories' === $attributes['blockType'] ) ) {
 
 			$story_attributes = [
-				'align'                 => $attributes['align'],
-				'view_type'             => ! empty( $attributes['viewType'] ) ? $attributes['viewType'] : 'grid',
-				'number_of_columns'     => $attributes['numOfColumns'],
-				'stories_archive_label' => $attributes['viewAllLinkLabel'],
-				'circle_size'           => $attributes['sizeOfCircles'],
+				'align'              => $attributes['align'],
+				'view_type'          => $attributes['viewType'],
+				'archive_link_label' => $attributes['archiveLinkLabel'],
+				'circle_size'        => $attributes['circleSize'],
+				'sharp_corners'      => $attributes['sharp_corners'],
+				'image_alignment'    => $attributes['image_alignment'],
+				'number_of_columns'  => $attributes['numOfColumns'],
 			];
 
 			$story_attributes = array_merge( $story_attributes, $this->get_mapped_field_states() );
@@ -254,6 +265,7 @@ class Web_Stories_Block extends Embed_Base {
 			return $stories->render();
 		}
 
+		// Embedding a single story by URL.
 		$attributes = wp_parse_args( $attributes, $this->default_attrs() );
 
 		$attributes['class'] = 'wp-block-web-stories-embed';
@@ -270,19 +282,19 @@ class Web_Stories_Block extends Embed_Base {
 	 */
 	public function get_mapped_field_states() {
 		$controls = [
-			'show_title'                => 'title',
-			'show_excerpt'              => 'excerpt',
-			'show_date'                 => 'date',
-			'show_author'               => 'author',
-			'show_stories_archive_link' => 'archive_link',
-			'list_view_image_alignment' => 'image_align',
-			'has_square_corners'        => 'sharp_corners',
+			'show_title'        => 'title',
+			'show_author'       => 'author',
+			'show_excerpt'      => 'excerpt',
+			'show_date'         => 'date',
+			'show_archive_link' => 'archive_link',
 		];
 
 		$controls_state = [];
 
 		foreach ( $controls as $control => $field ) {
-			$controls_state[ $control ] = isset( $this->block_attributes['fieldState'][ 'show_' . $field ] ) ? $this->block_attributes['fieldState'][ 'show_' . $field ] : false;
+			$key = 'show_' . $field;
+
+			$controls_state[ $control ] = isset( $this->block_attributes['fieldState'][ $key ] ) ? $this->block_attributes['fieldState'][ $key ] : false;
 		}
 
 		return $controls_state;
@@ -306,7 +318,7 @@ class Web_Stories_Block extends Embed_Base {
 			'no_found_rows'    => true,
 		];
 
-		// if block type is 'selected-webstories'.
+		// if block type is 'selected-tories'.
 		if ( ! empty( $attributes['blockType'] )
 			&& 'selected-stories' === $attributes['blockType']
 			&& ! empty( $attributes['stories'] )
@@ -321,21 +333,8 @@ class Web_Stories_Block extends Embed_Base {
 			$query_args['posts_per_page'] = $attributes['numOfStories'];
 		}
 
-		if ( ! empty( $attributes['orderByValue'] ) ) {
-			switch ( $attributes['orderByValue'] ) {
-				case 'old-to-new':
-					$query_args['order'] = 'ASC';
-					break;
-				case 'alphabetical':
-					$query_args['orderby'] = 'title';
-					$query_args['order']   = 'ASC';
-					break;
-				case 'reverse-alphabetical':
-					$query_args['orderby'] = 'title';
-					$query_args['order']   = 'DESC';
-					break;
-			}
-		}
+		$query_args['order']   = strtoupper( $attributes['order'] );
+		$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
 
 		if ( ! empty( $attributes['authors'] ) && is_array( $attributes['authors'] ) ) {
 			$author_ids = wp_list_pluck( $attributes['authors'], 'id' );

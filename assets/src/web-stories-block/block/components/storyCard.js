@@ -37,10 +37,10 @@ function StoryCard({
   isShowingDate,
   isShowingTitle,
   isShowingExcerpt,
-  imageOnRight,
+  imageAlignment,
 }) {
   const singleStoryClasses = classNames('web-stories-list__story', {
-    [`image-align-right`]: imageOnRight,
+    [`image-align-right`]: imageAlignment === 'right',
   });
   const hasContentOverlay = isShowingTitle || isShowingAuthor || isShowingDate;
 
@@ -99,7 +99,7 @@ StoryCard.propTypes = {
   isShowingDate: PropTypes.bool,
   isShowingTitle: PropTypes.bool,
   isShowingExcerpt: PropTypes.bool,
-  imageOnRight: PropTypes.bool,
+  imageAlignment: PropTypes.string,
 };
 
 export default StoryCard;

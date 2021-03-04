@@ -26,7 +26,11 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Traits\ThemeSupport;
+use Google\Web_Stories\Traits\Layout;
+use Google\Web_Stories\Traits\Theme_Support;
+use WP_Customize_Manager;
+use WP_Customize_Setting;
+use WP_Error;
 
 /**
  * Class customizer settings.
@@ -36,8 +40,8 @@ use Google\Web_Stories\Traits\ThemeSupport;
  * @package Google\Web_Stories
  */
 class Customizer {
-
-	use ThemeSupport;
+	use Theme_Support;
+	use Layout;
 
 	/**
 	 * Customizer section slug.
@@ -55,14 +59,14 @@ class Customizer {
 	 *
 	 * @var string
 	 */
-	const STORY_OPTION = 'story-options';
+	const STORY_OPTION = 'web_stories_customizer_settings';
 
 	/**
 	 * WP_Customize_Manager instance.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @var \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 * @var WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
 	private $wp_customize;
 
@@ -82,7 +86,7 @@ class Customizer {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -90,17 +94,19 @@ class Customizer {
 	 *
 	 * @return void
 	 */
-	public function register_customizer_settings( \WP_Customize_Manager $wp_customize ) {
-
+	public function register_customizer_settings( WP_Customize_Manager $wp_customize ) {
 		$this->wp_customize = $wp_customize;
 
-		$theme_support = $this->get_stories_theme_support();
+		$theme_support = $this->get_stories_theme_support()['customizer'];
 
-		// Add Content section.
+		$active_callback = function() {
+			return $this->is_option_enabled( 'show_stories' );
+		};
+
 		$wp_customize->add_section(
 			self::SECTION_SLUG,
 			[
-				'title'          => esc_html__( 'Web Story Options', 'web-stories' ),
+				'title'          => esc_html__( 'Web Stories', 'web-stories' ),
 				'theme_supports' => 'web-stories',
 			]
 		);
@@ -118,14 +124,14 @@ class Customizer {
 			[
 				'type'    => 'checkbox',
 				'section' => self::SECTION_SLUG,
-				'label'   => __( 'Show stories', 'web-stories' ),
+				'label'   => __( 'Display stories', 'web-stories' ),
 			]
 		);
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[view_type]',
 			[
-				'default' => $theme_support['view-type-default'],
+				'default' => $theme_support['view_type']['default'],
 				'type'    => 'option',
 			]
 		);
@@ -134,19 +140,17 @@ class Customizer {
 			self::STORY_OPTION . '[view_type]',
 			[
 				'section'         => self::SECTION_SLUG,
-				'label'           => __( 'Story view type', 'web-stories' ),
+				'label'           => __( 'View Type', 'web-stories' ),
 				'type'            => 'select',
-				'choices'         => $this->get_view_type_choices( $theme_support['view-type'] ),
-				'active_callback' => function() {
-					return $this->is_option_enabled( 'show_stories' );
-				},
+				'choices'         => $this->get_view_type_choices( $theme_support['view_type']['enabled'] ),
+				'active_callback' => $active_callback,
 			]
 		);
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[number_of_stories]',
 			[
-				'default'           => $theme_support['number-of-stories'],
+				'default'           => $theme_support['number_of_stories']['default'],
 				'type'              => 'option',
 				'validate_callback' => [ $this, 'validate_number_of_stories' ],
 			]
@@ -157,21 +161,19 @@ class Customizer {
 			[
 				'type'            => 'number',
 				'section'         => self::SECTION_SLUG,
-				'label'           => __( 'Number of stories', 'web-stories' ),
+				'label'           => __( 'Number of Stories', 'web-stories' ),
 				'input_attrs'     => [
 					'min' => 1,
 					'max' => 20,
 				],
-				'active_callback' => function() {
-					return $this->is_option_enabled( 'show_stories' );
-				},
+				'active_callback' => $active_callback,
 			]
 		);
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[number_of_columns]',
 			[
-				'default'           => $theme_support['grid-columns-default'],
+				'default'           => $theme_support['number_of_columns']['default'],
 				'type'              => 'option',
 				'validate_callback' => [ $this, 'validate_number_of_columns' ],
 			]
@@ -182,7 +184,7 @@ class Customizer {
 			[
 				'type'            => 'number',
 				'section'         => self::SECTION_SLUG,
-				'label'           => __( 'Number of columns', 'web-stories' ),
+				'label'           => __( 'Number of Columns', 'web-stories' ),
 				'input_attrs'     => [
 					'min' => 1,
 					'max' => 4,
@@ -194,9 +196,31 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
+			self::STORY_OPTION . '[orderby]',
+			[
+				'default' => $theme_support['orderby']['default'],
+				'type'    => 'option',
+			]
+		);
+
+		$wp_customize->add_control(
+			self::STORY_OPTION . '[orderby]',
+			[
+				'section'         => self::SECTION_SLUG,
+				'label'           => __( 'Order By', 'web-stories' ),
+				'type'            => 'select',
+				'choices'         => [
+					'post_title' => __( 'Title', 'web-stories' ),
+					'post_date'  => __( 'Date', 'web-stories' ),
+				],
+				'active_callback' => $active_callback,
+			]
+		);
+
+		$wp_customize->add_setting(
 			self::STORY_OPTION . '[order]',
 			[
-				'default' => $theme_support['order-default'],
+				'default' => $theme_support['order']['default'],
 				'type'    => 'option',
 			]
 		);
@@ -205,19 +229,20 @@ class Customizer {
 			self::STORY_OPTION . '[order]',
 			[
 				'section'         => self::SECTION_SLUG,
-				'label'           => __( 'Order by', 'web-stories' ),
+				'label'           => __( 'Order', 'web-stories' ),
 				'type'            => 'select',
-				'choices'         => $this->get_order_choices( $theme_support['order'] ),
-				'active_callback' => function() {
-					return $this->is_option_enabled( 'show_stories' );
-				},
+				'choices'         => [
+					'ASC'  => __( 'Ascending', 'web-stories' ),
+					'DESC' => __( 'Descending', 'web-stories' ),
+				],
+				'active_callback' => $active_callback,
 			]
 		);
 
 		$wp_customize->add_setting(
 			self::STORY_OPTION . '[circle_size]',
 			[
-				'default' => $theme_support['circle-size-default'],
+				'default' => $theme_support['circle_size']['default'],
 				'type'    => 'option',
 			]
 		);
@@ -240,19 +265,19 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			self::STORY_OPTION . '[list_view_image_alignment]',
+			self::STORY_OPTION . '[image_alignment]',
 			[
 				'type'    => 'option',
-				'default' => 'left',
+				'default' => $theme_support['image_alignment']['default'],
 			]
 		);
 
 		$wp_customize->add_control(
-			self::STORY_OPTION . '[list_view_image_alignment]',
+			self::STORY_OPTION . '[image_alignment]',
 			[
 				'type'            => 'radio',
 				'section'         => self::SECTION_SLUG,
-				'label'           => __( 'Image alignment', 'web-stories' ),
+				'label'           => __( 'Image Alignment', 'web-stories' ),
 				'choices'         => [
 					'left'  => __( 'Left', 'web-stories' ),
 					'right' => __( 'Right', 'web-stories' ),
@@ -263,12 +288,12 @@ class Customizer {
 			]
 		);
 
-		if ( true === $theme_support['title'] ) {
+		if ( $theme_support['title']['enabled'] ) {
 
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_title]',
 				[
-					'default' => $theme_support['title-default'],
+					'default' => $theme_support['title']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -278,20 +303,18 @@ class Customizer {
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Show story title', 'web-stories' ),
-					'active_callback' => function() {
-						return $this->is_option_enabled( 'show_stories' );
-					},
+					'label'           => __( 'Display Title', 'web-stories' ),
+					'active_callback' => $active_callback,
 				]
 			);
 		}
 
-		if ( true === $theme_support['excerpt'] ) {
+		if ( $theme_support['excerpt']['enabled'] ) {
 
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_excerpt]',
 				[
-					'default' => $theme_support['excerpt-default'],
+					'default' => $theme_support['excerpt']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -301,7 +324,7 @@ class Customizer {
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Show story excerpt', 'web-stories' ),
+					'label'           => __( 'Display Excerpt', 'web-stories' ),
 					'active_callback' => function() {
 						return $this->is_option_enabled( 'show_stories' ) && $this->is_view_type( 'list' );
 					},
@@ -309,11 +332,11 @@ class Customizer {
 			);
 		}
 
-		if ( true === $theme_support['author'] ) {
+		if ( $theme_support['author']['enabled'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_author]',
 				[
-					'default' => $theme_support['author-default'],
+					'default' => $theme_support['author']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -323,7 +346,7 @@ class Customizer {
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Show author', 'web-stories' ),
+					'label'           => __( 'Display Author', 'web-stories' ),
 					'active_callback' => function() {
 						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
 					},
@@ -331,11 +354,11 @@ class Customizer {
 			);
 		}
 
-		if ( true === $theme_support['date'] ) {
+		if ( $theme_support['date']['enabled'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[show_date]',
 				[
-					'default' => $theme_support['date-default'],
+					'default' => $theme_support['date']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -345,7 +368,7 @@ class Customizer {
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Show date', 'web-stories' ),
+					'label'           => __( 'Display Date', 'web-stories' ),
 					'active_callback' => function() {
 						return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
 					},
@@ -353,11 +376,11 @@ class Customizer {
 			);
 		}
 
-		if ( true === $theme_support['sharp-corners'] ) {
+		if ( $theme_support['sharp_corners']['enabled'] ) {
 			$wp_customize->add_setting(
 				self::STORY_OPTION . '[sharp_corners]',
 				[
-					'default' => $theme_support['sharp-corners'],
+					'default' => $theme_support['sharp_corners']['default'],
 					'type'    => 'option',
 				]
 			);
@@ -375,48 +398,45 @@ class Customizer {
 			);
 		}
 
-		if ( true === $theme_support['stories-archive-link'] ) {
+		if ( $theme_support['archive_link']['enabled'] ) {
 			$wp_customize->add_setting(
-				self::STORY_OPTION . '[show_stories_archive_link]',
+				self::STORY_OPTION . '[show_archive_link]',
 				[
-					'default' => false,
+					'default' => $theme_support['archive_link']['default'],
 					'type'    => 'option',
 				]
 			);
 
 			$wp_customize->add_control(
-				self::STORY_OPTION . '[show_stories_archive_link]',
+				self::STORY_OPTION . '[show_archive_link]',
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Show stories archive link', 'web-stories' ),
-					'active_callback' => function() {
-						return $this->is_option_enabled( 'show_stories' );
-					},
+					'label'           => __( 'Display Archives Link', 'web-stories' ),
+					'active_callback' => $active_callback,
 				]
 			);
 
 			$wp_customize->add_setting(
-				self::STORY_OPTION . '[stories_archive_label]',
+				self::STORY_OPTION . '[archive_link_label]',
 				[
 					'type'    => 'option',
-					'default' => $theme_support['stories-archive-label'],
+					'default' => $theme_support['archive_link']['label'],
 				]
 			);
 
 			$wp_customize->add_control(
-				self::STORY_OPTION . '[stories_archive_label]',
+				self::STORY_OPTION . '[archive_link_label]',
 				[
 					'type'            => 'text',
 					'section'         => self::SECTION_SLUG,
 					'label'           => __( 'Archive Link Label', 'web-stories' ),
 					'active_callback' => function() {
-						return ( $this->is_option_enabled( 'show_stories' ) && $this->is_option_enabled( 'show_stories_archive_link' ) );
+						return ( $this->is_option_enabled( 'show_stories' ) && $this->is_option_enabled( 'show_archive_link' ) );
 					},
 				]
 			);
 		}
-
 	}
 
 	/**
@@ -429,32 +449,13 @@ class Customizer {
 	 * @return array An array of view type choices.
 	 */
 	private function get_view_type_choices( array $view_type ) {
-		$view_type_choices = get_layouts();
+		$view_type_choices = $this->get_layouts();
 
 		if ( empty( $view_type ) ) {
 			return $view_type_choices;
 		}
 
 		return array_intersect_key( $view_type_choices, array_fill_keys( $view_type, true ) );
-	}
-
-	/**
-	 * Gets the order choices.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param array $order An array of order support.
-	 *
-	 * @return array An array of order choices.
-	 */
-	private function get_order_choices( array $order ) {
-		$order_choices = get_stories_order();
-
-		if ( empty( $order ) ) {
-			return $order_choices;
-		}
-
-		return array_intersect_key( $order_choices, $order );
 	}
 
 	/**
@@ -468,7 +469,7 @@ class Customizer {
 	 */
 	private function is_option_enabled( $option_name ) {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
-		return ( $setting instanceof \WP_Customize_Setting && true === $setting->value() );
+		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
 	}
 
 	/**
@@ -482,7 +483,7 @@ class Customizer {
 	 */
 	private function is_view_type( $view_type ) {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
-		return ( $setting instanceof \WP_Customize_Setting && $view_type === $setting->value() );
+		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
 	}
 
 	/**
@@ -490,10 +491,10 @@ class Customizer {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_Error $validity WP_Error object.
-	 * @param int       $value    Value to be validated.
+	 * @param WP_Error $validity WP_Error object.
+	 * @param int      $value    Value to be validated.
 	 *
-	 * @return \WP_Error
+	 * @return WP_Error
 	 */
 	public function validate_number_of_stories( $validity, $value ) {
 		$value = (int) $value;
@@ -509,16 +510,16 @@ class Customizer {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param \WP_Error $validity WP_Error object.
-	 * @param int       $value Value to be validated.
+	 * @param WP_Error $validity WP_Error object.
+	 * @param int      $value Value to be validated.
 	 *
-	 * @return \WP_Error
+	 * @return WP_Error
 	 */
 	public function validate_number_of_columns( $validity, $value ) {
-		$value = intval( $value );
+		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 5 ) {
-			$validity->add( 'invalid_number', __( 'The number of stories must be between 1 and 4.', 'web-stories' ) );
+			$validity->add( 'invalid_number', __( 'The number of columns must be between 1 and 4.', 'web-stories' ) );
 		}
 		return $validity;
 	}
@@ -540,53 +541,31 @@ class Customizer {
 			return '';
 		}
 
-		$theme_support = $this->get_stories_theme_support();
+		$theme_support = $this->get_stories_theme_support()['customizer'];
 
-		$default_array = [
-			'view_type'             => $theme_support['view-type-default'],
-			'show_title'            => $theme_support['title-default'],
-			'show_excerpt'          => $theme_support['excerpt-default'],
-			'show_author'           => $theme_support['author-default'],
-			'show_date'             => $theme_support['date-default'],
-			'stories_archive_label' => $theme_support['stories-archive-label'],
-			'show_story_poster'     => $theme_support['show-story-poster-default'],
-			'number_of_columns'     => $theme_support['grid-columns-default'],
-			'circle_size'           => $theme_support['circle-size-default'],
-			'sharp_corners'         => $theme_support['sharp-corners'],
+		$story_attributes = [
+			'view_type'          => isset( $options['view_type'] ) ? $options['view_type'] : $theme_support['view_type']['default'],
+			'show_title'         => isset( $options['show_title'] ) ? (bool) $options['show_title'] : $theme_support['title']['default'],
+			'show_excerpt'       => isset( $options['show_excerpt'] ) ? (bool) $options['show_excerpt'] : $theme_support['excerpt']['default'],
+			'show_author'        => isset( $options['show_author'] ) ? (bool) $options['show_author'] : $theme_support['author']['default'],
+			'show_date'          => isset( $options['show_date'] ) ? (bool) $options['show_date'] : $theme_support['date']['default'],
+			'show_archive_link'  => isset( $options['show_archive_link'] ) ? (bool) $options['show_archive_link'] : $theme_support['archive_link']['default'],
+			'archive_link_label' => isset( $options['archive_link_label'] ) ? (string) $options['archive_link_label'] : $theme_support['archive_link']['label'],
+			'circle_size'        => isset( $options['circle_size'] ) ? (int) $options['circle_size'] : $theme_support['circle_size']['default'],
+			'sharp_corners'      => isset( $options['sharp_corners'] ) ? (bool) $options['sharp_corners'] : $theme_support['sharp_corners']['default'],
+			'image_alignment'    => isset( $options['image_alignment'] ) ? (string) $options['image_alignment'] : $theme_support['image_alignment']['default'],
+			'number_of_columns'  => isset( $options['number_of_columns'] ) ? (int) $options['number_of_columns'] : $theme_support['number_of_columns']['default'],
+			'class'              => 'web-stories-list--customizer',
 		];
 
 		$query_arguments = [
-			'posts_per_page' => ! empty( $options['number_of_stories'] ) ? $options['number_of_stories'] : $theme_support['number-of-stories'],
+			'posts_per_page' => isset( $options['number_of_stories'] ) ? (int) $options['number_of_stories'] : $theme_support['number_of_stories']['default'],
+			'orderby'        => isset( $options['orderby'] ) ? (string) $options['orderby'] : $theme_support['orderby']['default'],
+			'order'          => isset( $options['order'] ) ? (string) $options['order'] : $theme_support['order']['default'],
 		];
 
-		$order_by = ! empty( $options['order'] ) ? $options['order'] : $theme_support['order-default'];
-
-		switch ( $order_by ) {
-			case 'oldest':
-				$query_arguments['order'] = 'ASC';
-				break;
-			case 'alphabetical':
-				$query_arguments['orderby'] = 'title';
-				$query_arguments['order']   = 'ASC';
-				break;
-			case 'reverse-alphabetical':
-				$query_arguments['orderby'] = 'title';
-				$query_arguments['order']   = 'DESC';
-				break;
-			case 'random':
-				$query_arguments['orderby'] = 'rand'; //phpcs:ignore WordPressVIPMinimum.Performance.OrderByRand.orderby_orderby
-				$query_arguments['order']   = 'DESC';
-				break;
-		}
-
-		$story_arguments = wp_parse_args( $options, $default_array );
-
-		$story_arguments['class'] = 'web-stories-list--customizer';
-
-		$stories = new Story_Query( $story_arguments, $query_arguments );
+		$stories = new Story_Query( $story_attributes, $query_arguments );
 
 		return $stories->render();
-
 	}
-
 }

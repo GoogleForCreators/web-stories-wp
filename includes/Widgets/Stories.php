@@ -27,7 +27,6 @@ use WP_Widget;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Stories_Script_Data;
-use function Google\Web_Stories\get_layouts;
 
 /**
  * Class Stories
@@ -37,6 +36,8 @@ use function Google\Web_Stories\get_layouts;
 class Stories extends WP_Widget {
 	use Stories_Script_Data;
 	use Assets;
+
+	const SCRIPT_HANDLE = 'web-stories-widget';
 
 	/**
 	 * Widget args.
@@ -83,24 +84,34 @@ class Stories extends WP_Widget {
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
 
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		$title = $instance['widget_title'];
+
+		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
+		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+
 		if ( ! empty( $title ) ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
 		$story_attrs = [
-			'view_type'                 => $instance['view-type'],
-			'show_title'                => (bool) $instance['show_title'],
-			'show_author'               => (bool) $instance['show_author'],
-			'show_date'                 => (bool) $instance['show_date'],
-			'show_excerpt'              => (bool) $instance['show_excerpt'],
-			'list_view_image_alignment' => ( (bool) $instance['image_align_right'] ) ? 'right' : 'left',
-			'show_stories_archive_link' => (bool) $instance['archive_link'],
-			'circle_size'               => $instance['circle_size'],
+			'view_type'          => $instance['view_type'],
+			'show_title'         => (bool) $instance['show_title'],
+			'show_excerpt'       => (bool) $instance['show_excerpt'],
+			'show_author'        => (bool) $instance['show_author'],
+			'show_date'          => (bool) $instance['show_date'],
+			'show_archive_link'  => (bool) $instance['archive_link'],
+			'archive_link_label' => (bool) $instance['archive_link_label'],
+			'circle_size'        => (int) $instance['circle_size'],
+			'sharp_corners'      => (bool) $instance['sharp_corners'],
+			'image_alignment'    => (string) $instance['image_alignment'],
+			'number_of_columns'  => ( (int) $instance['number_of_columns'] ),
+			'class'              => 'web-stories-list--widget',
 		];
 
 		$story_args = [
-			'posts_per_page' => $instance['number'],
+			'posts_per_page' => $instance['number_of_stories'],
+			'orderby'        => $instance['orderby'],
+			'order'          => $instance['order'],
 		];
 
 		$story_query = new Story_Query( $story_attrs, $story_args );
@@ -122,20 +133,24 @@ class Stories extends WP_Widget {
 	 * @return string
 	 */
 	public function form( $instance ) {
-		$title             = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Stories', 'web-stories' );
-		$view_types        = get_layouts();
-		$current_view_type = empty( $instance['view-type'] ) ? 'circles' : $instance['view-type'];
-		$show_title        = ! empty( $instance['show_title'] ) ? (int) $instance['show_title'] : '';
-		$show_author       = ! empty( $instance['show_author'] ) ? (int) $instance['show_author'] : '';
-		$show_date         = ! empty( $instance['show_date'] ) ? (int) $instance['show_date'] : '';
-		$show_excerpt      = ! empty( $instance['show_excerpt'] ) ? (int) $instance['show_excerpt'] : '';
-		$archive_link      = ! empty( $instance['archive_link'] ) ? (int) $instance['archive_link'] : '';
-		$image_align       = ! empty( $instance['image_align_right'] ) ? (int) $instance['image_align_right'] : '';
-		$number            = ! empty( $instance['number'] ) ? (int) $instance['number'] : 5;
-		$circle_size       = ! empty( $instance['circle_size'] ) ? (int) $instance['circle_size'] : 100;
-		$archive_label     = isset( $instance['archive_label'] ) ? $instance['archive_label'] : __( 'View all stories', 'web-stories' );
-		$number_columns    = isset( $instance['number_columns'] ) ? (int) $instance['number_columns'] : 1;
-		$sharp_corners     = ! empty( $instance['sharp_corners'] ) ? (int) $instance['sharp_corners'] : '';
+		$this->enqueue_scripts();
+
+		$title              = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Web Stories', 'web-stories' );
+		$view_types         = $this->get_layouts();
+		$current_view_type  = ! empty( $instance['view_type'] ) ? (string) $instance['view_type'] : 'circles';
+		$show_title         = ! empty( $instance['show_title'] ) ? (int) $instance['show_title'] : '';
+		$show_author        = ! empty( $instance['show_author'] ) ? (int) $instance['show_author'] : '';
+		$show_date          = ! empty( $instance['show_date'] ) ? (int) $instance['show_date'] : '';
+		$show_excerpt       = ! empty( $instance['show_excerpt'] ) ? (int) $instance['show_excerpt'] : '';
+		$show_archive_link  = ! empty( $instance['show_archive_link'] ) ? (int) $instance['show_archive_link'] : '';
+		$archive_link_label = ! empty( $instance['archive_link_label'] ) ? $instance['archive_link_label'] : __( 'View all stories', 'web-stories' );
+		$circle_size        = ! empty( $instance['circle_size'] ) ? (int) $instance['circle_size'] : 100;
+		$sharp_corners      = ! empty( $instance['sharp_corners'] ) ? (int) $instance['sharp_corners'] : '';
+		$image_alignment    = ! empty( $instance['image_alignment'] ) ? (string) $instance['image_alignment'] : 'left';
+		$number_of_columns  = ! empty( $instance['number_of_columns'] ) ? (int) $instance['number_of_columns'] : 1;
+		$number_of_stories  = ! empty( $instance['number_of_stories'] ) ? (int) $instance['number_of_stories'] : 5;
+		$orderby            = ! empty( $instance['orderby'] ) ? (string) $instance['orderby'] : 'post_date';
+		$order              = ! empty( $instance['order'] ) ? (string) $instance['order'] : 'DESC';
 
 		$this->input(
 			[
@@ -152,25 +167,54 @@ class Stories extends WP_Widget {
 			[
 				'options'   => $view_types,
 				'selected'  => $current_view_type,
-				'name'      => 'view-type',
-				'id'        => 'view-type',
+				'name'      => 'view_type',
+				'id'        => 'view_type',
 				'label'     => __( 'Select Layout', 'web-stories' ),
-				'classname' => 'widefat view-type stories-widget-field',
+				'classname' => 'widefat view_type stories-widget-field',
 			]
 		);
 
 		$this->input(
 			[
-				'id'            => 'number',
-				'name'          => 'number',
-				'label'         => __( 'Number of stories (Maximum 20)', 'web-stories' ),
+				'id'            => 'number_of_stories',
+				'name'          => 'number_of_stories',
+				'label'         => __( 'Number of Stories', 'web-stories' ),
 				'type'          => 'number',
-				'classname'     => 'widefat number-stories stories-widget-field',
-				'wrapper_class' => 'number-stories_wrapper',
-				'value'         => $number,
+				'classname'     => 'widefat number_of_stories stories-widget-field',
+				'wrapper_class' => 'number_of_stories_wrapper',
+				'value'         => $number_of_stories,
 				'label_before'  => true,
 			]
 		);
+
+		$this->dropdown(
+			[
+				'options'   => [
+					'post_title' => __( 'Title', 'web-stories' ),
+					'post_date'  => __( 'Date', 'web-stories' ),
+				],
+				'selected'  => $orderby,
+				'name'      => 'orderby',
+				'id'        => 'orderby',
+				'label'     => __( 'Order By', 'web-stories' ),
+				'classname' => 'widefat orderby stories-widget-field',
+			]
+		);
+
+		$this->dropdown(
+			[
+				'options'   => [
+					'ASC'  => __( 'Ascending', 'web-stories' ),
+					'DESC' => __( 'Descending', 'web-stories' ),
+				],
+				'selected'  => $order,
+				'name'      => 'order',
+				'id'        => 'order',
+				'label'     => __( 'Order', 'web-stories' ),
+				'classname' => 'widefat order stories-widget-field',
+			]
+		);
+
 
 		$this->input(
 			[
@@ -192,26 +236,13 @@ class Stories extends WP_Widget {
 
 		$this->input(
 			[
-				'id'            => 'archive_label',
-				'name'          => 'archive_label',
-				'label'         => __( 'Archive Label', 'web-stories' ),
-				'type'          => 'text',
-				'classname'     => 'widefat archive_label stories-widget-field',
-				'wrapper_class' => 'archive_label_wrapper',
-				'value'         => $archive_label,
-				'label_before'  => true,
-			]
-		);
-
-		$this->input(
-			[
-				'id'            => 'number_columns',
-				'name'          => 'number_columns',
-				'label'         => __( 'Number of columns (For Grid View)', 'web-stories' ),
+				'id'            => 'number_of_columns',
+				'name'          => 'number_of_columns',
+				'label'         => __( 'Number of Columns', 'web-stories' ),
 				'type'          => 'number',
-				'classname'     => 'widefat archive_label stories-widget-field',
-				'wrapper_class' => 'archive_label_wrapper',
-				'value'         => $number_columns,
+				'classname'     => 'widefat number_of_columns stories-widget-field',
+				'wrapper_class' => 'number_of_columns_wrapper',
+				'value'         => $number_of_columns,
 				'label_before'  => true,
 			]
 		);
@@ -220,7 +251,7 @@ class Stories extends WP_Widget {
 			[
 				'id'            => 'show_title',
 				'name'          => 'show_title',
-				'label'         => __( 'Show Title', 'web-stories' ),
+				'label'         => __( 'Display Title', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat title stories-widget-field',
 				'wrapper_class' => 'title_wrapper',
@@ -232,7 +263,7 @@ class Stories extends WP_Widget {
 			[
 				'id'            => 'show_excerpt',
 				'name'          => 'show_excerpt',
-				'label'         => __( 'Show Excerpt', 'web-stories' ),
+				'label'         => __( 'Display Excerpt', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat excerpt stories-widget-field',
 				'wrapper_class' => 'excerpt_wrapper',
@@ -244,7 +275,7 @@ class Stories extends WP_Widget {
 			[
 				'id'            => 'show_author',
 				'name'          => 'show_author',
-				'label'         => __( 'Show Author', 'web-stories' ),
+				'label'         => __( 'Display Author', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat author stories-widget-field',
 				'wrapper_class' => 'author_wrapper',
@@ -256,7 +287,7 @@ class Stories extends WP_Widget {
 			[
 				'id'            => 'show_date',
 				'name'          => 'show_date',
-				'label'         => __( 'Show Date', 'web-stories' ),
+				'label'         => __( 'Display Date', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat date stories-widget-field',
 				'wrapper_class' => 'date_wrapper',
@@ -264,27 +295,19 @@ class Stories extends WP_Widget {
 			]
 		);
 
-		$this->input(
+		$this->radio(
 			[
-				'id'            => 'image_align_right',
-				'name'          => 'image_align_right',
-				'label'         => __( 'Show Images On Right (default is left)', 'web-stories' ),
+				'options'       => [
+					'left'  => __( 'Left', 'web-stories' ),
+					'right' => __( 'Right', 'web-stories' ),
+				],
+				'selected'      => $image_alignment,
+				'id'            => 'image_alignment',
+				'name'          => 'image_alignment',
+				'label'         => __( 'Image Alignment', 'web-stories' ),
 				'type'          => 'checkbox',
-				'classname'     => 'widefat image_align stories-widget-field',
-				'wrapper_class' => 'image_align_wrapper',
-				'value'         => $image_align,
-			]
-		);
-
-		$this->input(
-			[
-				'id'            => 'archive_link',
-				'name'          => 'archive_link',
-				'label'         => __( 'Show "View All Stories" link', 'web-stories' ),
-				'type'          => 'checkbox',
-				'classname'     => 'widefat archive_link stories-widget-field',
-				'wrapper_class' => 'archive_link_wrapper',
-				'value'         => $archive_link,
+				'classname'     => 'widefat image_alignment stories-widget-field',
+				'wrapper_class' => 'image_alignment_wrapper',
 			]
 		);
 
@@ -292,11 +315,36 @@ class Stories extends WP_Widget {
 			[
 				'id'            => 'sharp_corners',
 				'name'          => 'sharp_corners',
-				'label'         => __( 'Show sharp corners', 'web-stories' ),
+				'label'         => __( 'Use Sharp Corners', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat sharp_corners stories-widget-field',
 				'wrapper_class' => 'sharp_corners_wrapper',
 				'value'         => $sharp_corners,
+			]
+		);
+
+		$this->input(
+			[
+				'id'            => 'archive_link',
+				'name'          => 'archive_link',
+				'label'         => __( 'Display Archives Link', 'web-stories' ),
+				'type'          => 'checkbox',
+				'classname'     => 'widefat archive_link stories-widget-field',
+				'wrapper_class' => 'archive_link_wrapper',
+				'value'         => $show_archive_link,
+			]
+		);
+
+		$this->input(
+			[
+				'id'            => 'archive_link_label',
+				'name'          => 'archive_link_label',
+				'label'         => __( 'Archive Link Label', 'web-stories' ),
+				'type'          => 'text',
+				'classname'     => 'widefat archive_link_label stories-widget-field',
+				'wrapper_class' => 'archive_link_label_wrapper',
+				'value'         => $archive_link_label,
+				'label_before'  => true,
 			]
 		);
 
@@ -316,34 +364,22 @@ class Stories extends WP_Widget {
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                      = [];
-		$instance['title']             = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
-		$instance['view-type']         = ( ! empty( $new_instance['view-type'] ) ) ? $new_instance['view-type'] : '';
-		$instance['show_title']        = ( isset( $new_instance['show_title'] ) ) ? 1 : '';
-		$instance['show_author']       = ( isset( $new_instance['show_author'] ) ) ? 1 : '';
-		$instance['show_excerpt']      = ( isset( $new_instance['show_excerpt'] ) ) ? 1 : '';
-		$instance['show_date']         = ( isset( $new_instance['show_date'] ) ) ? 1 : '';
-		$instance['archive_link']      = ( isset( $new_instance['archive_link'] ) ) ? 1 : '';
-		$instance['image_align_right'] = ( isset( $new_instance['image_align_right'] ) ) ? 1 : '';
-		$instance['number']            = min( absint( $new_instance['number'] ), 20 );
-		$instance['circle_size']       = min( absint( $new_instance['circle_size'] ), 200 );
-		$instance['archive_label']     = isset( $new_instance['archive_label'] ) ? $new_instance['archive_label'] : '';
-		$instance['number_columns']    = isset( $new_instance['number_columns'] ) ? $new_instance['number_columns'] : 1;
-		$instance['sharp_corners']     = ( isset( $new_instance['sharp_corners'] ) ) ? 1 : '';
+		$instance                       = [];
+		$instance['title']              = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
+		$instance['view_type']          = ( ! empty( $new_instance['view_type'] ) ) ? $new_instance['view_type'] : '';
+		$instance['show_title']         = ( isset( $new_instance['show_title'] ) ) ? 1 : '';
+		$instance['show_excerpt']       = ( isset( $new_instance['show_excerpt'] ) ) ? 1 : '';
+		$instance['show_author']        = ( isset( $new_instance['show_author'] ) ) ? 1 : '';
+		$instance['show_date']          = ( isset( $new_instance['show_date'] ) ) ? 1 : '';
+		$instance['show_archive_link']  = ( isset( $new_instance['show_archive_link'] ) ) ? 1 : '';
+		$instance['image_alignment']    = ( isset( $new_instance['image_alignment'] ) ) ? $new_instance['image_alignment'] : '';
+		$instance['number_of_stories']  = min( absint( $new_instance['number_of_stories'] ), 20 );
+		$instance['circle_size']        = min( absint( $new_instance['circle_size'] ), 150 );
+		$instance['archive_link_label'] = isset( $new_instance['archive_link_label'] ) ? (string) $new_instance['archive_link_label'] : '';
+		$instance['number_of_columns']  = isset( $new_instance['number_of_columns'] ) ? (int) $new_instance['number_of_columns'] : 1;
+		$instance['sharp_corners']      = ( isset( $new_instance['sharp_corners'] ) ) ? 1 : '';
 
 		return $instance;
-	}
-
-	/**
-	 * Called when the widget is registered.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function _register() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-		parent::_register();
-		add_action( 'admin_enqueue_scripts', [ $this, 'stories_widget_scripts' ] );
 	}
 
 	/**
@@ -353,12 +389,18 @@ class Stories extends WP_Widget {
 	 *
 	 * @return void
 	 */
-	public function stories_widget_scripts() {
-		$this->script_handle = 'web-stories-widget';
+	public function enqueue_scripts() {
+		if ( wp_script_is( self::SCRIPT_HANDLE ) ) {
+			return;
+		}
 
-		$this->enqueue_script( $this->script_handle, [ 'jquery' ] );
+		$this->enqueue_script( self::SCRIPT_HANDLE, [ 'jquery' ] );
 
-		$this->enqueue();
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesData',
+			$this->get_script_data()
+		);
 	}
 
 	/**
@@ -366,7 +408,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Available view types.
+	 * @param array $args Field args.
 	 *
 	 * @return void
 	 */
@@ -413,11 +455,62 @@ class Stories extends WP_Widget {
 	}
 
 	/**
-	 * Generate an input field.
+	 * Display radio buttons.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $args Array of arguments.
+	 * @param array $args Field args.
+	 *
+	 * @return void
+	 */
+	private function radio( array $args ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'options'       => [],
+				'selected'      => '',
+				'id'            => wp_generate_uuid4(),
+				'name'          => wp_generate_uuid4(),
+				'label'         => '',
+				'classname'     => 'widefat',
+				'wrapper_class' => 'stories-field-wrapper',
+			]
+		);
+		?>
+		<div class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
+			<label>
+				<?php echo esc_attr( $args['label'] ); ?>
+			</label>
+			<p>
+				<?php
+				foreach ( $args['options'] as $key => $type ) {
+					?>
+					<label>
+						<input
+							type="radio"
+							class="<?php echo esc_attr( (string) $args['classname'] ); ?>"
+							id="<?php echo $this->get_field_id( $args['id'] . '-' . $key ); ?>"
+							name="<?php echo $this->get_field_name( $args['name'] ); ?>"
+							value="<?php echo esc_attr( $key ); ?>"
+							<?php checked( $key, $args['selected'], true ); ?>
+						/>
+						<?php echo esc_attr( $type ); ?>
+					</label>
+					<br>
+					<?php
+				}
+				?>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Display an input field.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $args Field args.
 	 *
 	 * @return void
 	 */

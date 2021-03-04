@@ -35,7 +35,6 @@ use WP_Query;
  * Stories class.
  */
 class Story_Query {
-
 	/**
 	 * Story attributes
 	 *
@@ -52,7 +51,7 @@ class Story_Query {
 	 *
 	 * @var array An array of query arguments.
 	 */
-	protected $query_arguments = [];
+	protected $query_args = [];
 
 	/**
 	 * Renderer object.
@@ -76,18 +75,26 @@ class Story_Query {
 	 *     @type bool   $show_title                Whether to show story title or not. Default false.
 	 *     @type bool   $show_author               Whether to show story author or not. Default false.
 	 *     @type bool   $show_date                 Whether to show story date or not. Default false.
-	 *     @type bool   $show_stories_archive_link Whether to show view all link or not. Default false.
-	 *     @type string $stories_archive_label     The label for view all link. Default 'View all stories'.
-	 *     @type string $list_view_image_alignment The list mode image alignment. Default 'left'.
+	 *     @type bool   $show_archive_link Whether to show view all link or not. Default false.
+	 *     @type string $archive_link_label     The label for view all link. Default 'View all stories'.
+	 *     @type string $image_alignment The list mode image alignment. Default 'left'.
 	 *     @type string $class                     Additional CSS classes for the container. Default empty string.
 	 * }
-	 * @param array $query_arguments           An array of query arguments for story. @see WP_Query::parse_query() for
+	 * @param array $query_args           An array of query arguments for story. @see WP_Query::parse_query() for
 	 *                                         all available arguments.
 	 */
-	public function __construct( array $story_attributes = [], array $query_arguments = [] ) {
-
+	public function __construct( array $story_attributes = [], array $query_args = [] ) {
 		$this->story_attributes = $story_attributes;
-		$this->query_arguments  = $query_arguments;
+
+		$default_query_args = [
+			'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
+			'posts_per_page'   => 10,
+			'post_status'      => 'publish',
+			'suppress_filters' => false,
+			'no_found_rows'    => true,
+		];
+
+		$this->query_args = wp_parse_args( $query_args, $default_query_args );
 	}
 
 	/**
@@ -98,11 +105,8 @@ class Story_Query {
 	 * @return array An array of Story posts.
 	 */
 	public function get_stories() {
-
-		$query_args    = $this->get_query_args();
 		$stories_query = new WP_Query();
-
-		return $stories_query->query( $query_args );
+		return $stories_query->query( $this->query_args );
 	}
 
 	/**
@@ -113,7 +117,6 @@ class Story_Query {
 	 * @return Renderer Renderer Instance.
 	 */
 	public function get_renderer() {
-
 		$story_attributes = $this->get_story_attributes();
 		$view_type        = ( ! empty( $story_attributes['view_type'] ) ) ? $story_attributes['view_type'] : '';
 
@@ -141,7 +144,6 @@ class Story_Query {
 	 * @return string
 	 */
 	public function render() {
-
 		$this->renderer = $this->get_renderer();
 
 		return $this->renderer->render();
@@ -155,43 +157,21 @@ class Story_Query {
 	 * @return array An array of story attributes.
 	 */
 	public function get_story_attributes() {
-
 		$default_attributes = [
-			'view_type'                 => 'circles',
-			'number_of_columns'         => 2,
-			'show_title'                => false,
-			'show_author'               => false,
-			'show_date'                 => false,
-			'show_excerpt'              => false,
-			'show_stories_archive_link' => false,
-			'has_square_corners'        => false,
-			'stories_archive_label'     => __( 'View all stories', 'web-stories' ),
-			'list_view_image_alignment' => 'left',
-			'class'                     => '',
-			'circle_size'               => 150,
+			'view_type'          => 'circles',
+			'number_of_columns'  => 2,
+			'show_title'         => false,
+			'show_author'        => false,
+			'show_date'          => false,
+			'show_excerpt'       => false,
+			'show_archive_link'  => false,
+			'sharp_corners'      => false,
+			'archive_link_label' => __( 'View all stories', 'web-stories' ),
+			'image_alignment'    => 'left',
+			'class'              => '',
+			'circle_size'        => 150,
 		];
 
 		return wp_parse_args( $this->story_attributes, $default_attributes );
 	}
-
-	/**
-	 * Returns arguments to be passed to the WP_Query object initialization.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return array An array of query arguments.
-	 */
-	protected function get_query_args() {
-
-		$default_query_args = [
-			'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
-			'posts_per_page'   => 10,
-			'post_status'      => 'publish',
-			'suppress_filters' => false,
-			'no_found_rows'    => true,
-		];
-
-		return wp_parse_args( $this->query_arguments, $default_query_args );
-	}
-
 }

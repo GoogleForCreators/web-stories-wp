@@ -84,7 +84,7 @@ function SortStories({
           <StoryGrid
             pageSize={pageSize}
             role="list"
-            ariaLabel={__('Sorting stories', 'web-stories')}
+            ariaLabel={__('Sorting Stories', 'web-stories')}
           >
             {selectedStoryList.map((story, index) => {
               return (

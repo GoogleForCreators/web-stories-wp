@@ -85,10 +85,10 @@ const transforms = {
             return align;
           },
         },
-        viewAllLinkLabel: {
+        archiveLinkLabel: {
           type: 'string',
-          shortcode: ({ named: { archive_label } }) => {
-            return archive_label;
+          shortcode: ({ named: { archive_link_label } }) => {
+            return archive_link_label;
           },
         },
         viewType: {
@@ -109,7 +109,7 @@ const transforms = {
             return columns;
           },
         },
-        sizeOfCircles: {
+        circleSize: {
           type: 'number',
           shortcode: ({ named: { circle_size } }) => {
             return circle_size;

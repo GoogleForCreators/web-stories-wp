@@ -73,18 +73,18 @@ class Story_Query extends \WP_UnitTestCase {
 		);
 
 		self::$default_story_args = [
-			'view_type'                 => 'circles',
-			'number_of_columns'         => 2,
-			'show_title'                => false,
-			'show_author'               => false,
-			'show_date'                 => false,
-			'show_excerpt'              => false,
-			'show_stories_archive_link' => false,
-			'has_square_corners'        => false,
-			'stories_archive_label'     => 'View all stories',
-			'list_view_image_alignment' => 'left',
-			'class'                     => '',
-			'circle_size'               => 150,
+			'view_type'          => 'circles',
+			'number_of_columns'  => 2,
+			'show_title'         => false,
+			'show_author'        => false,
+			'show_date'          => false,
+			'show_excerpt'       => false,
+			'show_archive_link'  => false,
+			'sharp_corners'      => false,
+			'archive_link_label' => 'View all stories',
+			'image_alignment'    => 'left',
+			'class'              => '',
+			'circle_size'        => 150,
 		];
 
 		self::$default_query_args = [
@@ -145,7 +145,7 @@ class Story_Query extends \WP_UnitTestCase {
 	public function test_default_story_args_equality() {
 
 		$story_args = self::$testee->get_story_attributes();
-		$this->assertSame( self::$default_story_args, $story_args );
+		$this->assertEqualSetsWithIndex( self::$default_story_args, $story_args );
 	}
 
 }

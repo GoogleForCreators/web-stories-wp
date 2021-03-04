@@ -33,7 +33,7 @@ import { addQueryArgs } from '@wordpress/url';
  */
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesLoading from '../../components/storiesLoading';
-import { FETCH_STORIES_DEBOUNCE, ORDER_BY_OPTIONS } from '../../constants';
+import { FETCH_STORIES_DEBOUNCE } from '../../constants';
 import StoriesPreview from '../../components/storiesPreview';
 import { useConfig } from '../../config';
 
@@ -55,7 +55,13 @@ const LATEST_STORIES_QUERY = {
  * @return {*} JSX markup for the editor.
  */
 const LatestStoriesEdit = ({ attributes, setAttributes }) => {
-  const { numOfStories, orderByValue, viewAllLinkLabel, authors } = attributes;
+  const {
+    numOfStories,
+    order,
+    orderby,
+    archiveLinkLabel,
+    authors,
+  } = attributes;
 
   const { api } = useConfig();
 
@@ -90,21 +96,15 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
   );
 
   useEffect(() => {
-    if (orderByValue) {
-      const order = ORDER_BY_OPTIONS[orderByValue].order || 'desc';
-      const orderBy = ORDER_BY_OPTIONS[orderByValue].orderBy || 'date';
-
-      LATEST_STORIES_QUERY.order = order;
-      LATEST_STORIES_QUERY.orderby = orderBy;
-    }
-
-    LATEST_STORIES_QUERY.author = authors.map((author) => author.id);
+    LATEST_STORIES_QUERY.order = order || 'desc';
+    LATEST_STORIES_QUERY.orderby = orderby || 'date';
+    LATEST_STORIES_QUERY.author = authors.map(({ id }) => id);
 
     debouncedFetchStories();
-  }, [authors, numOfStories, orderByValue, debouncedFetchStories]);
+  }, [authors, numOfStories, order, orderby, debouncedFetchStories]);
 
-  const viewAllLabel = viewAllLinkLabel
-    ? viewAllLinkLabel
+  const viewAllLabel = archiveLinkLabel
+    ? archiveLinkLabel
     : __('View All Stories', 'web-stories');
 
   const storiesToDisplay =
@@ -139,10 +139,11 @@ LatestStoriesEdit.propTypes = {
     viewType: PropTypes.string,
     numOfStories: PropTypes.number,
     numOfColumns: PropTypes.number,
-    orderByValue: PropTypes.string,
-    viewAllLinkLabel: PropTypes.string,
+    orderby: PropTypes.string,
+    order: PropTypes.string,
+    archiveLinkLabel: PropTypes.string,
     authors: PropTypes.array,
-    sizeOfCircles: PropTypes.number,
+    circleSize: PropTypes.number,
     fieldState: PropTypes.object,
   }),
   setAttributes: PropTypes.func.isRequired,

@@ -45,7 +45,7 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function image_align();
+	public function image_alignment();
 
 	/**
 	 * Get author field along with its state for

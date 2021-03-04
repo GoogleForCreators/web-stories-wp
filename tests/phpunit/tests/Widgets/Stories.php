@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests;
 
 use Google\Web_Stories\Widgets\Stories as Testee;
+use WP_Widget;
 
 /**
  * Class Stories
@@ -27,7 +28,6 @@ use Google\Web_Stories\Widgets\Stories as Testee;
  * @package Google\Web_Stories\Tests
  */
 class Stories extends \WP_UnitTestCase {
-
 	/**
 	 * Object in test.
 	 *
@@ -48,7 +48,7 @@ class Stories extends \WP_UnitTestCase {
 	 * Test that object is instance of WP_Widget.
 	 */
 	public function test_instance() {
-		$this->assertInstanceOf( \WP_Widget::class, self::$testee );
+		$this->assertInstanceOf( WP_Widget::class, self::$testee );
 	}
 
 	/**
@@ -68,22 +68,11 @@ class Stories extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::_register
-	 */
-	public function test_register() {
-		self::$testee->_register();
-		$action = has_action( 'admin_enqueue_scripts', [ self::$testee, 'stories_widget_scripts' ] );
-		$this->assertSame( 10, $action );
-	}
-
-	/**
 	 * @covers ::stories_widget_scripts
 	 */
-	public function test_stories_widget_scripts() {
-		self::$testee->stories_widget_scripts();
-		$enqueued = wp_script_is( 'web-stories-widget' );
-
-		$this->assertTrue( $enqueued );
+	public function test_enqueue_scripts() {
+		self::$testee->enqueue_scripts();
+		$this->assertTrue( wp_script_is( 'web-stories-widget' ) );
 	}
 
 	/**
@@ -91,37 +80,36 @@ class Stories extends \WP_UnitTestCase {
 	 */
 	public function test_update() {
 		$new_instance = [
-			'title'          => '<p>Test Stories</p>',
-			'view-type'      => 'list',
-			'show_title'     => '',
-			'number'         => 100,
-			'circle_size'    => 150,
-			'archive_label'  => 'View Stories',
-			'number_columns' => 2,
-			'sharp_corners'  => 1,
+			'title'              => '<p>Test Stories</p>',
+			'view_type'          => 'list',
+			'show_title'         => '',
+			'number_of_stories'  => 100,
+			'circle_size'        => 150,
+			'archive_link_label' => 'View Stories',
+			'number_of_columns'  => 2,
+			'sharp_corners'      => 1,
 		];
 
 		$old_instance = [];
 
 		$expected = [
-			'title'             => 'Test Stories',
-			'view-type'         => 'list',
-			'show_title'        => 1,
-			'show_author'       => '',
-			'show_excerpt'      => '',
-			'show_date'         => '',
-			'archive_link'      => '',
-			'image_align_right' => '',
-			'number'            => 20,
-			'circle_size'       => 150,
-			'archive_label'     => 'View Stories',
-			'number_columns'    => 2,
-			'sharp_corners'     => 1,
+			'title'              => 'Test Stories',
+			'view_type'          => 'list',
+			'show_title'         => 1,
+			'show_author'        => '',
+			'show_excerpt'       => '',
+			'show_date'          => '',
+			'show_archive_link'  => '',
+			'image_alignment'    => '',
+			'number_of_stories'  => 20,
+			'circle_size'        => 150,
+			'archive_link_label' => 'View Stories',
+			'number_of_columns'  => 2,
+			'sharp_corners'      => 1,
 		];
 
 		$instance = self::$testee->update( $new_instance, $old_instance );
 
-		$this->assertEqualSets( $expected, $instance );
+		$this->assertEqualSetsWithIndex( $expected, $instance );
 	}
-
 }
