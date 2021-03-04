@@ -53,9 +53,9 @@ trait Assets {
 
 		$asset['dependencies'] = isset( $asset['dependencies'] ) ? $asset['dependencies'] : [];
 		// A hash calculated based on the file content of the entry point bundle at <$handle>.js.
-		$asset['entry_version'] = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
-		$asset['js']            = isset( $chunks['js'] ) ? $chunks['js'] : [];
-		$asset['css']           = isset( $chunks['css'] ) ? $chunks['css'] : [];
+		$asset['version'] = isset( $asset['version'] ) ? $asset['version'] : WEBSTORIES_VERSION;
+		$asset['js']      = isset( $chunks['js'] ) ? $chunks['js'] : [];
+		$asset['css']     = isset( $chunks['css'] ) ? $chunks['css'] : [];
 
 		return $asset;
 	}
@@ -89,7 +89,7 @@ trait Assets {
 		}
 		$dependencies = array_merge( $asset['dependencies'], $script_dependencies, $asset['js'] );
 
-		$entry_version = $asset['entry_version'];
+		$entry_version = $asset['version'];
 		wp_register_script(
 			$script_handle,
 			$base_script_path . $script_handle . '.js',
@@ -143,7 +143,7 @@ trait Assets {
 		}
 		$style_dependencies = array_merge( $style_dependencies, $asset['css'] );
 
-		$entry_version = $asset['entry_version'];
+		$entry_version = $asset['version'];
 		wp_register_style(
 			$style_handle,
 			$base_style_path . $style_handle . '.css',
