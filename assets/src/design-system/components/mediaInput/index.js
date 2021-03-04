@@ -125,7 +125,7 @@ const dots = keyframes`
   80%,
   100% {
     text-shadow: 6px 0 0
-        ${({ theme }) => theme.colors.standard.white};
+        ${({ theme }) => theme.colors.standard.white},
       12px 0 0 ${({ theme }) => theme.colors.standard.white};
   }
 `;

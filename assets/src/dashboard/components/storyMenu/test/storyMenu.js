@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  getByRole as getByRoleFromNode,
+} from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -24,55 +27,65 @@ import { renderWithProviders } from '../../../testUtils';
 import StoryMenu from '../';
 import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
 
+const mockMenuItemSelected = jest.fn();
+
+const menuItems = STORY_CONTEXT_MENU_ITEMS.map((menuItem) => ({
+  ...menuItem,
+  onClick: () => mockMenuItemSelected(`called: ${menuItem.value}`),
+}));
+
 describe('StoryMenu', () => {
+  beforeEach(jest.clearAllMocks);
+
   it('should render a button by default', () => {
-    const { getByRole } = renderWithProviders(
+    const { getAllByRole } = renderWithProviders(
       <StoryMenu
         onMoreButtonSelected={jest.fn}
         contextMenuId={1}
-        onMenuItemSelected={jest.fn}
-        menuItems={STORY_CONTEXT_MENU_ITEMS}
+        menuItems={menuItems}
         story={{ id: 1, status: 'publish', title: 'Sample Story' }}
       />
     );
 
-    const menuButton = getByRole('button');
+    const menuButton = getAllByRole('button')[0];
     expect(menuButton).toBeInTheDocument();
   });
 
   it('should get access to menu on button click', () => {
     const mockOnMoreButtonSelected = jest.fn();
 
-    const { getByRole } = renderWithProviders(
+    const { getAllByRole } = renderWithProviders(
       <StoryMenu
         onMoreButtonSelected={mockOnMoreButtonSelected}
         contextMenuId={1}
-        onMenuItemSelected={jest.fn}
-        menuItems={STORY_CONTEXT_MENU_ITEMS}
+        menuItems={menuItems}
         story={{ id: 1, status: 'publish', title: 'Sample Story' }}
       />
     );
 
-    const menuButton = getByRole('button');
+    const menuButton = getAllByRole('button')[0];
     fireEvent.click(menuButton);
     expect(mockOnMoreButtonSelected).toHaveBeenCalledTimes(1);
   });
 
   it('should call onMenuItemSelected when menu item is clicked', () => {
-    const mockMenuItemSelected = jest.fn();
-
     const { getAllByRole } = renderWithProviders(
       <StoryMenu
         onMoreButtonSelected={jest.fn}
         contextMenuId={1}
-        onMenuItemSelected={mockMenuItemSelected}
-        menuItems={STORY_CONTEXT_MENU_ITEMS}
+        menuItems={menuItems}
         story={{ id: 1, status: 'publish', title: 'Sample Story' }}
       />
     );
 
     const menuItem = getAllByRole('listitem')[0];
-    fireEvent.click(menuItem);
+    const menuItemButton = getByRoleFromNode(menuItem, 'button');
+
+    fireEvent.click(menuItemButton);
+
     expect(mockMenuItemSelected).toHaveBeenCalledTimes(1);
+    expect(mockMenuItemSelected).toHaveBeenCalledWith(
+      `called: ${STORY_CONTEXT_MENU_ITEMS[0].value}`
+    );
   });
 });
