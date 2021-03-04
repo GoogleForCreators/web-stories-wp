@@ -47,10 +47,14 @@ function StoryCard({
   // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
   const dateFormat = __experimentalGetSettings().formats.date;
 
+  const posterUrl = poster
+    ? poster
+    : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+
   return (
     <div className={singleStoryClasses}>
       <div className="web-stories-list__story-poster">
-        <img src={poster} alt={title} />
+        <img src={posterUrl} alt={title} />
       </div>
       {hasContentOverlay && (
         <div className="story-content-overlay web-stories-list__story-content-overlay">
