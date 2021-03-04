@@ -57,7 +57,6 @@ class TinyMCE {
 		add_filter( 'mce_buttons', [ $this, 'tinymce_web_stories_button' ] );
 		add_filter( 'mce_external_plugins', [ $this, 'web_stories_mce_plugin' ] );
 		add_action( 'admin_footer', [ $this, 'web_stories_tinymce_root_element' ] );
-		add_action( 'admin_print_footer_scripts', [ $this, 'print_footer_scripts' ] );
 	}
 
 	/**
@@ -101,24 +100,17 @@ class TinyMCE {
 	public function enqueue_assets() {
 		$this->enqueue_style( 'wp-components' );
 
-		// Can't use enqueue_script() because the script needs to be loaded via the mce_external_plugins filter.
+		// Can't use Assets::enqueue_script() because the script needs to be loaded via the mce_external_plugins filter.
 		$asset = $this->get_asset_metadata( 'tinymce-button' );
+
 		foreach ( $asset['dependencies'] as $script ) {
 			wp_enqueue_script( $script );
 		}
-	}
 
-
-	/**
-	 * Print required inline script in the footer.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return void
-	 */
-	public function print_footer_scripts() {
-		// Can't use wp_localize_script() because there's no script handle.
-		printf( "<script id='web-stories-tinymce-button-js'>\n%s\n</script>\n", 'var webStoriesData = ' . wp_json_encode( $this->get_script_data() ) . ';' );
+		// Only works when wp_register_script and wp_enqueue_script are called separately.
+		wp_register_script( 'web-stories-tinymce-button', false, $asset['dependencies'], $asset['version'], true );
+		wp_enqueue_script( 'web-stories-tinymce-button' );
+		wp_add_inline_script( 'web-stories-tinymce-button', 'var webStoriesData = ' . wp_json_encode( $this->get_script_data() ) . ';' );
 	}
 
 	/**
