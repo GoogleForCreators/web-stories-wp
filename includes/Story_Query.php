@@ -165,7 +165,7 @@ class Story_Query {
 			'show_date'          => false,
 			'show_excerpt'       => false,
 			'show_archive_link'  => false,
-			'sharp_corner'       => false,
+			'sharp_corners'      => false,
 			'archive_link_label' => __( 'View all stories', 'web-stories' ),
 			'image_alignment'    => 'left',
 			'class'              => '',

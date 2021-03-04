@@ -80,7 +80,7 @@ class Story_Query extends \WP_UnitTestCase {
 			'show_date'          => false,
 			'show_excerpt'       => false,
 			'show_archive_link'  => false,
-			'has_square_corners' => false,
+			'sharp_corners'      => false,
 			'archive_link_label' => 'View all stories',
 			'image_alignment'    => 'left',
 			'class'              => '',
