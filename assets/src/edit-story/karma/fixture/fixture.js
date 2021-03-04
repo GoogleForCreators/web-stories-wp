@@ -129,12 +129,12 @@ export class Fixture {
     const panels = [
       'animation',
       'backgroundSizePosition',
-      'backgroundOverlay',
       'borderRadius',
       'borderStyle',
       'captions',
       'globalStoryStyles',
       'colorPresets',
+      'filter',
       'imageAccessibility',
       'layerStyle',
       'link',
