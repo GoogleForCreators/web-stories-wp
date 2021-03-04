@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -170,8 +170,8 @@ const ToggleContainer = styled.div(
   `
 );
 
-export const Toggle = ({ className, ...props }) => (
-  <ToggleContainer className={className}>
+export const Toggle = (props) => (
+  <ToggleContainer>
     <input type="checkbox" {...props} />
     <Background />
     <StyledCheckmark />
@@ -180,7 +180,6 @@ export const Toggle = ({ className, ...props }) => (
 );
 
 Toggle.propTypes = {
-  checked: PropTypes.bool,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
+  checked: propTypes.bool,
+  disabled: propTypes.bool,
 };

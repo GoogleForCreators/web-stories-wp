@@ -32,7 +32,6 @@ export * from './search';
 export * from './slider';
 export * from './swatch';
 export { Snackbar } from './snackbar';
-export * from './toggle';
 export * from './tooltip';
 export * from './keyboard';
 export * from './keyboard/gridview';
