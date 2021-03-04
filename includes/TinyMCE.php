@@ -103,10 +103,6 @@ class TinyMCE {
 		// Can't use Assets::enqueue_script() because the script needs to be loaded via the mce_external_plugins filter.
 		$asset = $this->get_asset_metadata( 'tinymce-button' );
 
-		foreach ( $asset['dependencies'] as $script ) {
-			wp_enqueue_script( $script );
-		}
-
 		// Only works when wp_register_script and wp_enqueue_script are called separately.
 		wp_register_script( 'web-stories-tinymce-button', false, $asset['dependencies'], $asset['version'], true );
 		wp_enqueue_script( 'web-stories-tinymce-button' );

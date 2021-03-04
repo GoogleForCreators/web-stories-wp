@@ -49,34 +49,30 @@ class Factory implements FieldStateFactory {
 	 * @return FieldState
 	 */
 	public function get_field( $view = 'grid' ) {
-
 		switch ( $view ) {
 			case 'grid':
-				$field_state = new GridView();
-				break;
+				return new GridView();
 			case 'list':
-				$field_state = new ListView();
-				break;
+				return new ListView();
 			case 'circles':
-				$field_state = new CircleView();
-				break;
+				return new CircleView();
 			case 'carousel':
-				$field_state = new CarouselView();
-				break;
+				return new CarouselView();
 			default:
 				$default_field_state = new CircleView();
+
 				/**
-				 * Filters the fieldstate object.
+				 * Filters the field state object.
 				 *
 				 * This depicts
 				 *
 				 * @since 1.3.0
 				 *
-				 * @param FieldState $default_field_state Field states for circle view.
+				 * @param FieldState $default_field_state Field state object.
 				 */
-				$field_state = apply_filters( 'web_stories_default_fieldstate', $default_field_state );
-		}
+				$field_state = apply_filters( 'web_stories_default_field_state', $default_field_state );
 
-		return $field_state;
+				return $field_state instanceof FieldState ? $field_state : $default_field_state;
+		}
 	}
 }

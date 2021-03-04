@@ -40,21 +40,11 @@ trait Layout {
 	 * @return mixed|void
 	 */
 	protected function get_layouts() {
-		/**
-		 * Filter supported layouts.
-		 *
-		 * @since 1.5.0
-		 *
-		 * @param array $layouts Default supported layouts.
-		 */
-		return apply_filters(
-			'web_stories_layouts',
-			[
-				'carousel' => __( 'Box Carousel', 'web-stories' ),
-				'circles'  => __( 'Circle Carousel', 'web-stories' ),
-				'grid'     => __( 'Grid', 'web-stories' ),
-				'list'     => __( 'List', 'web-stories' ),
-			]
-		);
+		return [
+			'carousel' => __( 'Box Carousel', 'web-stories' ),
+			'circles'  => __( 'Circle Carousel', 'web-stories' ),
+			'grid'     => __( 'Grid', 'web-stories' ),
+			'list'     => __( 'List', 'web-stories' ),
+		];
 	}
 }
