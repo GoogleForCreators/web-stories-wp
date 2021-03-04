@@ -27,7 +27,6 @@ use WP_Widget;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Stories_Script_Data;
-use function Google\Web_Stories\get_layouts;
 
 /**
  * Class Stories
