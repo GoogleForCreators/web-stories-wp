@@ -48,7 +48,7 @@ export const useNumericInput = ({
    */
   const handleBlur = useCallback(
     (ev) => {
-      let newValue = parseInput(oldValue.current, options);
+      let newValue = oldValue.current;
 
       if (!revertToOriginal.current) {
         const parsedValue = parseInput(currentValue, options);
@@ -116,6 +116,7 @@ export const useNumericInput = ({
   const handleEsc = useCallback(() => {
     setCurrentValue(oldValue.current);
     revertToOriginal.current = true;
+    changeTracker.current = false;
     inputRef && inputRef.current?.blur();
   }, []);
 
