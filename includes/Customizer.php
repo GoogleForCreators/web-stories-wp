@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Traits\Stories_Script_Data;
+use Google\Web_Stories\Traits\Layout;
 use Google\Web_Stories\Traits\Theme_Support;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
@@ -41,7 +41,7 @@ use WP_Error;
  */
 class Customizer {
 	use Theme_Support;
-	use Stories_Script_Data;
+	use Layout;
 
 	/**
 	 * Customizer section slug.

@@ -28,11 +28,7 @@
 
 namespace Google\Web_Stories\Traits;
 
-use Google\Web_Stories\Interfaces\FieldState;
-use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
-use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
-use Google\Web_Stories\Stories_Renderer\FieldState\GridView;
-use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
+use Google\Web_Stories\Stories_Renderer\FieldStateFactory\Factory;
 
 /**
  * Trait Stories_Script_Data.
@@ -40,6 +36,7 @@ use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
  * @package Google\Web_Stories
  */
 trait Stories_Script_Data {
+	use Layout;
 	/**
 	 * Returns data array for use in inline script.
 	 *
@@ -92,9 +89,10 @@ trait Stories_Script_Data {
 		];
 
 		$field_states = [];
+		$factory      = new Factory();
 
 		foreach ( array_keys( $views ) as $view_type ) {
-			$field_state = $this->get_field( (string) $view_type );
+			$field_state = $factory->get_field( (string) $view_type );
 			foreach ( $fields as $field ) {
 				$field_states[ $view_type ][ $field ] = [
 					'show'   => $field_state->$field()->show(),
@@ -105,72 +103,5 @@ trait Stories_Script_Data {
 		}
 
 		return $field_states;
-	}
-
-	/**
-	 * Get supported layouts for web stories.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return mixed|void
-	 */
-	protected function get_layouts() {
-		/**
-		 * Filter supported layouts.
-		 *
-		 * @since 1.5.0
-		 *
-		 * @param array $layouts Default supported layouts.
-		 */
-		return apply_filters(
-			'web_stories_layouts',
-			[
-				'carousel' => __( 'Box Carousel', 'web-stories' ),
-				'circles'  => __( 'Circle Carousel', 'web-stories' ),
-				'grid'     => __( 'Grid', 'web-stories' ),
-				'list'     => __( 'List', 'web-stories' ),
-			]
-		);
-	}
-
-	/**
-	 * Returns field state for the provided view type.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $view View Type.
-	 *
-	 * @return GridView|ListView|CircleView|CarouselView
-	 */
-	protected function get_field( $view = 'grid' ) {
-
-		switch ( $view ) {
-			case 'grid':
-				$field_state = new GridView();
-				break;
-			case 'list':
-				$field_state = new ListView();
-				break;
-			case 'circles':
-				$field_state = new CircleView();
-				break;
-			case 'carousel':
-				$field_state = new CarouselView();
-				break;
-			default:
-				$default_field_state = new CircleView();
-				/**
-				 * Filters the fieldstate object.
-				 *
-				 * This depicts
-				 *
-				 * @since 1.3.0
-				 *
-				 * @param FieldState $default_field_state Field states for circle view.
-				 */
-				$field_state = apply_filters( 'web_stories_default_fieldstate', $default_field_state );
-		}
-
-		return $field_state;
 	}
 }
