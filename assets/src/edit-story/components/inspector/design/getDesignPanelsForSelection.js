@@ -59,9 +59,7 @@ function getDesignPanelsForSelection(elements) {
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [
-      { type: PanelTypes.PAGE_ATTACHMENT, Panel: PageAttachmentPanel },
-    ];
+    const panels = [];
 
     const isBackgroundMedia = !elements[0].isDefaultBackground;
     if (isBackgroundMedia) {
@@ -101,6 +99,12 @@ function getDesignPanelsForSelection(elements) {
         Panel: ColorPresetPanel,
       });
     }
+
+    panels.push({
+      type: PanelTypes.PAGE_ATTACHMENT,
+      Panel: PageAttachmentPanel,
+    });
+
     return panels;
   }
 
