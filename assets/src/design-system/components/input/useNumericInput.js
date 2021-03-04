@@ -59,6 +59,7 @@ export const useNumericInput = ({
       }
 
       revertToOriginal.current = false;
+      changeTracker.current = false;
       setCurrentValue(newValue);
 
       if (newValue !== oldValue.current) {
