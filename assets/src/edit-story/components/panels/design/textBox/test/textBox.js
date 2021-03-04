@@ -189,9 +189,9 @@ describe('Panels/TextBox', () => {
     it('should render default padding controls', () => {
       const { getByRole } = renderTextBox([textElement]);
       const multi = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
+        name: 'Padding',
       });
-      const lock = getByRole('checkbox', { name: paddingRatioLockLabel });
+      const lock = getByRole('button', { name: paddingRatioLockLabel });
       expect(multi).toHaveValue('0');
       expect(lock).toBeChecked();
     });
@@ -218,7 +218,7 @@ describe('Panels/TextBox', () => {
         textElement,
       ]);
       const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
+        name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '20' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
@@ -229,7 +229,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -254,7 +254,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -279,7 +279,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -295,7 +295,7 @@ describe('Panels/TextBox', () => {
         textElement,
       ]);
       const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
+        name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
@@ -306,7 +306,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -326,7 +326,7 @@ describe('Panels/TextBox', () => {
         textSamePadding,
       ]);
       const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
+        name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
@@ -337,7 +337,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -354,10 +354,11 @@ describe('Panels/TextBox', () => {
         textDifferentPadding,
       ]);
       const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
+        name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+      fireEvent.blur(input);
 
       // See that updates were pushed
       expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
@@ -365,7 +366,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -391,7 +392,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -417,7 +418,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -443,7 +444,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -469,7 +470,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
 
       // See that updates are propper for element variations
@@ -492,7 +493,7 @@ describe('Panels/TextBox', () => {
         'padding',
         expect.any(Function),
         DEFAULT_PADDING,
-        false
+        true
       );
       expect(updatedProperties).toStrictEqual({
         locked: false,
