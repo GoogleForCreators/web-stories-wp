@@ -34,6 +34,7 @@ import {
   LockToggle as DefaultLockToggle,
   NumericInput,
 } from '../../../../../design-system';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { getHiddenPadding, removeHiddenPadding } from './utils';
 
 const DEFAULT_PADDING = {
@@ -165,6 +166,12 @@ function PaddingControls({
       <Row>
         <NumericInput
           value={displayedPadding.horizontal}
+          isIndeterminate={displayedPadding.horizontal === MULTIPLE_VALUE}
+          placeholder={
+            displayedPadding.horizontal === MULTIPLE_VALUE
+              ? MULTIPLE_DISPLAY_VALUE
+              : null
+          }
           {...firstInputProperties}
         />
         {lockPadding && <Space />}
@@ -198,6 +205,12 @@ function PaddingControls({
       {!lockPadding && (
         <Row>
           <NumericInput
+            isIndeterminate={displayedPadding.vertical === MULTIPLE_VALUE}
+            placeholder={
+              displayedPadding.vertical === MULTIPLE_VALUE
+                ? MULTIPLE_DISPLAY_VALUE
+                : null
+            }
             suffix={__('Vertical padding', 'web-stories')}
             value={displayedPadding.vertical}
             onChange={(evt) => {
