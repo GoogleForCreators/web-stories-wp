@@ -32,7 +32,7 @@ class BaseField extends \WP_UnitTestCase_Base {
 	public static function wpSetUpBeforeClass() {
 		self::$testee = new Testee(
 			[
-				'label'    => 'Test Label',
+				'label'  => 'Test Label',
 				'hidden' => true,
 			]
 		);
