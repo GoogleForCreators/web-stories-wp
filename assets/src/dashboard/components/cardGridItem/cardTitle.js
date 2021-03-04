@@ -33,7 +33,7 @@ import InlineInputForm from '../inlineInputForm';
 import { Link } from '../link';
 
 const StyledCardTitle = styled.div`
-  padding-top: 12px;
+  padding: 12px 4px 0 4px;
   display: inline-block;
   overflow: hidden;
 `;

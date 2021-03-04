@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
@@ -47,7 +47,6 @@ import {
   StoryMenu,
   MoreVerticalButton,
   InlineInputForm,
-  Paragraph2,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -60,13 +59,15 @@ import {
   PreviewPage,
   PreviewErrorBoundary,
 } from '../../../../edit-story/components/previewPage';
-import {
-  ArrowAlphaAscending as ArrowAlphaAscendingSvg,
-  ArrowAlphaDescending as ArrowAlphaDescendingSvg,
-  ArrowDownward as ArrowIconSvg,
-} from '../../../icons';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 import { titleFormatted } from '../../../utils';
+import {
+  Headline,
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../design-system';
+import { focusableOutlineCSS } from '../../../../design-system/theme/helpers';
 
 const ListView = styled.div`
   width: 100%;
@@ -76,49 +77,57 @@ const PreviewContainer = styled.div`
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: ${({ theme }) => theme.DEPRECATED_THEME.previewWidth.thumbnail}px;
-  height: ${({ theme }) =>
-    theme.DEPRECATED_THEME.previewWidth.thumbnail / FULLBLEED_RATIO}px;
+  width: 33px;
+  height: ${33 / FULLBLEED_RATIO}px;
   vertical-align: middle;
-  border-radius: ${({ theme }) =>
-    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray75};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
 const ArrowIcon = styled.div`
-  width: ${({ theme }) => theme.DEPRECATED_THEME.table.headerContentSize}px;
+  width: 32px;
   height: 100%;
   display: inline-grid;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  color: ${({ theme }) => theme.colors.fg.primary};
   vertical-align: middle;
 
   svg {
     visibility: ${({ active }) => (active ? 'visible' : 'hidden')};
-    ${({ asc }) => asc && { transform: 'rotate(180deg)' }};
+    transition: transform 0.15s;
+
+    ${({ asc }) =>
+      asc &&
+      css`
+        transform: rotate(180deg);
+      `};
   }
 `;
 
-const ArrowIconWithTitle = styled(ArrowIcon)`
-  display: ${({ active }) => (active ? 'inline-grid' : 'none')};
-  margin-left: 6px;
-  margin-top: -2px;
+const EmptyIconSpace = styled.div`
+  height: 32px;
+  width: 32px;
+`;
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+const ArrowIconWithTitle = styled(ArrowIcon)`
+  display: ${({ active }) => !active && 'none'};
+  position: absolute;
+  top: 16px;
+
+  @media ${({ theme }) => theme.breakpoint.mobile} {
     margin-left: 4px;
   }
 `;
 
-const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
-  font-weight: 500;
-  cursor: pointer;
+const HeavyTitle = styled(Text)`
+  font-weight: 700;
 `;
 
-const SelectableParagraph = styled(Paragraph2).attrs({
-  tabIndex: 0,
-  onFocus: onFocusSelectAll,
-  onBlur: onBlurDeselectAll,
-})``;
+const SelectableTitle = styled(HeavyTitle).attrs({ tabIndex: 0 })`
+  color: ${({ theme }) => theme.colors.fg.linkNormal};
+  cursor: pointer;
+
+  ${({ theme }) =>
+    focusableOutlineCSS(theme.colors.border.focus, theme.colors.bg.secondary)};
+`;
 
 const StyledTableRow = styled(TableRow)`
   &:hover ${MoreVerticalButton}, &:focus-within ${MoreVerticalButton} {
@@ -199,6 +208,9 @@ export default function StoryListView({
                   'Title, select to sort table by story title',
                   'web-stories'
                 )}
+                forwardedAs="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                isBold
               >
                 {__('Title', 'web-stories')}
               </SelectableTitle>
@@ -207,15 +219,20 @@ export default function StoryListView({
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
               onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
-              <SelectableTitle aria-hidden="true">
+              <SelectableTitle
+                aria-hidden
+                active={storySort === STORY_SORT_OPTIONS.NAME}
+                forwardedAs="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                isBold
+              >
                 {__('Title', 'web-stories')}
               </SelectableTitle>
-              <ArrowIcon active={storySort === STORY_SORT_OPTIONS.NAME}>
-                {sortDirection === SORT_DIRECTION.DESC ? (
-                  <ArrowAlphaDescendingSvg />
-                ) : (
-                  <ArrowAlphaAscendingSvg />
-                )}
+              <ArrowIcon
+                active={storySort === STORY_SORT_OPTIONS.NAME}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                {<Icons.ArrowDown />}
               </ArrowIcon>
             </TableTitleHeaderCell>
             <TableAuthorHeaderCell>
@@ -230,16 +247,22 @@ export default function StoryListView({
                 onKeyDown={(e) =>
                   onKeyDownSort(e, STORY_SORT_OPTIONS.CREATED_BY)
                 }
+                active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
+                forwardedAs="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                isBold
               >
                 {__('Author', 'web-stories')}
               </SelectableTitle>
               <ArrowIconWithTitle
+                aria-hidden
                 active={storySort === STORY_SORT_OPTIONS.CREATED_BY}
+                asc={sortDirection === SORT_DIRECTION.ASC}
               >
-                {sortDirection === SORT_DIRECTION.DESC ? (
-                  <ArrowAlphaDescendingSvg />
+                {storySort === STORY_SORT_OPTIONS.CREATED_BY ? (
+                  <Icons.ArrowDown />
                 ) : (
-                  <ArrowAlphaAscendingSvg />
+                  <EmptyIconSpace />
                 )}
               </ArrowIconWithTitle>
             </TableAuthorHeaderCell>
@@ -255,15 +278,19 @@ export default function StoryListView({
                 onKeyDown={(e) =>
                   onKeyDownSort(e, STORY_SORT_OPTIONS.DATE_CREATED)
                 }
+                active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
+                forwardedAs="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                isBold
               >
                 {__('Date Created', 'web-stories')}
               </SelectableTitle>
               <ArrowIconWithTitle
-                aria-hidden={true}
+                aria-hidden
                 active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
-                <ArrowIconSvg />
+                <Icons.ArrowDown />
               </ArrowIconWithTitle>
             </TableDateHeaderCell>
             <TableDateHeaderCell>
@@ -278,18 +305,31 @@ export default function StoryListView({
                 onKeyDown={(e) =>
                   onKeyDownSort(e, STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
+                active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
+                forwardedAs="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                isBold
               >
                 {__('Last Modified', 'web-stories')}
               </SelectableTitle>
               <ArrowIconWithTitle
-                aria-hidden={true}
+                aria-hidden
                 active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
-                <ArrowIconSvg />
+                <Icons.ArrowDown />
               </ArrowIconWithTitle>
             </TableDateHeaderCell>
-            {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
+            {storyStatus !== STORY_STATUS.DRAFT && (
+              <TableStatusHeaderCell>
+                <HeavyTitle
+                  forwardedAs="span"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                >
+                  {__('Publish State', 'web-stories')}
+                </HeavyTitle>
+              </TableStatusHeaderCell>
+            )}
           </TableRow>
         </StickyTableHeader>
         <TableBody>
@@ -316,9 +356,15 @@ export default function StoryListView({
                     />
                   ) : (
                     <>
-                      <SelectableParagraph>
+                      <Headline
+                        tabIndex={0}
+                        onFocus={onFocusSelectAll}
+                        onBlur={onBlurDeselectAll}
+                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+                        as="h4"
+                      >
                         {titleFormatted(story.title)}
-                      </SelectableParagraph>
+                      </Headline>
                       <StoryMenu
                         onMoreButtonSelected={storyMenu.handleMenuToggle}
                         contextMenuId={storyMenu.contextMenuId}
@@ -334,15 +380,45 @@ export default function StoryListView({
                   )}
                 </TitleTableCellContainer>
               </TableCell>
-              <TableCell>{story.author || '—'}</TableCell>
-              <TableCell>{getRelativeDisplayDate(story.created)}</TableCell>
-              <TableCell>{getRelativeDisplayDate(story.modified)}</TableCell>
+              <TableCell>
+                <Text
+                  as="span"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                >
+                  {story.author || '—'}
+                </Text>
+              </TableCell>
+              <TableCell>
+                <Text
+                  as="span"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                >
+                  {getRelativeDisplayDate(story.created_gmt)}
+                </Text>
+              </TableCell>
+              <TableCell>
+                <Text
+                  as="span"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                >
+                  {getRelativeDisplayDate(story.modified_gmt)}
+                </Text>
+              </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
-                  {story.status === STORY_STATUS.PUBLISH &&
-                    __('Published', 'web-stories')}
-                  {story.status === STORY_STATUS.FUTURE &&
-                    __('Scheduled', 'web-stories')}
+                  <Text
+                    as="span"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  >
+                    {story.status === STORY_STATUS.PUBLISH &&
+                      __('Published', 'web-stories')}
+                    {story.status === STORY_STATUS.FUTURE &&
+                      __('Scheduled', 'web-stories')}
+                    {story.status === STORY_STATUS.DRAFT &&
+                      __('Draft', 'web-stories')}
+                    {story.status === STORY_STATUS.PRIVATE &&
+                      __('Private', 'web-stories')}
+                  </Text>
                 </TableStatusCell>
               )}
             </StyledTableRow>
