@@ -512,7 +512,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		$story_data = $this->current();
 		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
-
+		$poster_url = esc_url( $poster_url );
+		if ( ! $poster_url ) {
+			$poster_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+		}
 		?>
 		<div class="web-stories-list__story-poster">
 			<?php
@@ -520,7 +523,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
 				?>
 				<amp-img
-					src="<?php echo esc_url( $poster_url ); ?>"
+					src="<?php echo esc_attr( $poster_url ); ?>"
 					layout="responsive"
 					width="0"
 					height="0"
@@ -529,7 +532,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				</amp-img>
 			<?php } else { ?>
 				<img
-					src="<?php echo esc_url( $poster_url ); ?>"
+					src="<?php echo esc_attr( $poster_url ); ?>"
 					alt="<?php echo esc_attr( $story_data->get_title() ); ?>"
 					width="<?php echo absint( $this->width ); ?>"
 					height="<?php echo absint( $this->height ); ?>"
