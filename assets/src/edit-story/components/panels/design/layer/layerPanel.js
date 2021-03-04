@@ -34,6 +34,7 @@ const Container = styled.div`
 `;
 
 const StyledPanelTitle = styled(PanelTitle)`
+  height: 48px;
   border-top-left-radius: ${({ theme }) => theme.borders.radius.small};
   border-top-right-radius: ${({ theme }) => theme.borders.radius.small};
 `;

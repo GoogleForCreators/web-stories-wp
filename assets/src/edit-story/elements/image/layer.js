@@ -25,9 +25,14 @@ import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 
 function ImageLayerContent({ element, ...props }) {
-  const { alt } = element?.resource || {};
+  const { alt, attribution } = element?.resource || {};
+  const displayName = attribution?.author?.displayName;
 
-  return <LayerText {...props}>{alt || __('Image', 'web-stories')}</LayerText>;
+  return (
+    <LayerText {...props}>
+      {displayName || alt || __('Image', 'web-stories')}
+    </LayerText>
+  );
 }
 ImageLayerContent.propTypes = {
   element: StoryPropTypes.element.isRequired,

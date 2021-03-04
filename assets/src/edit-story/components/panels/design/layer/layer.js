@@ -49,6 +49,10 @@ const LayerButton = styled(Button).attrs({
   user-select: none;
   border-radius: 0;
 
+  :active {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+  }
+
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
