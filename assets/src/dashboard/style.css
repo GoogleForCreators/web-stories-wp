@@ -25,6 +25,7 @@ body.js {
   color: #1a1d1f; /* theme.colors.gray900 */
 }
 
+.notice,
 #screen-meta,
 #screen-meta-links ~ :not(.web-stories-wp):not(.clear) {
   display: none;
