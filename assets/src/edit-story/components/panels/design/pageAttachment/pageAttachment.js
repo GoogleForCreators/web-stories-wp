@@ -30,7 +30,7 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { ExpandedTextInput } from '../../shared';
+import { Input } from '../../../../../design-system';
 
 const Error = styled.span`
   font-size: 12px;
@@ -108,16 +108,13 @@ function PageAttachmentPanel() {
   );
 
   const isDefault = _ctaText === defaultCTA;
+  const showTextInput = Boolean(url) && !isInvalidUrl;
   return (
     <SimplePanel
       name="pageAttachment"
       title={__('Page Attachment', 'web-stories')}
     >
       <LinkInput
-        description={__(
-          'Type an address to add a page attachment',
-          'web-stories'
-        )}
         onChange={(value) => updatePageAttachment({ url: value })}
         onFocus={onFocus}
         value={url || ''}
@@ -136,18 +133,19 @@ function PageAttachmentPanel() {
         </Row>
       )}
 
-      {Boolean(url) && !isInvalidUrl && (
+      {showTextInput && (
         <Row>
-          <ExpandedTextInput
-            onChange={(value) => {
+          <Input
+            onChange={({ target }) => {
+              const { value } = target;
               // This allows smooth input value change without any lag.
               _setCtaText(value);
               debouncedCTAUpdate(value);
             }}
-            onBlur={(atts = {}) => {
-              const { onClear } = atts;
-              if (onClear) {
+            onBlur={({ target }) => {
+              if (!target.value) {
                 updatePageAttachment({ ctaText: defaultCTA });
+                _setCtaText(defaultCTA);
               } else {
                 cancelCTAUpdate();
                 updatePageAttachment({
@@ -157,9 +155,7 @@ function PageAttachmentPanel() {
             }}
             value={_ctaText}
             aria-label={__('Page Attachment CTA text', 'web-stories')}
-            clear={Boolean(_ctaText) && !isDefault}
             suffix={isDefault ? __('default', 'web-stories') : null}
-            width={isDefault ? 85 : null}
           />
         </Row>
       )}
