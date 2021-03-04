@@ -362,9 +362,9 @@ function EditorSettings() {
             )}
             {canManageSettings && (
               <PublisherLogoSettings
-                handleAddLogos={handleAddLogos}
-                handleRemoveLogo={handleRemoveLogo}
-                handleUpdateDefaultLogo={handleUpdateDefaultLogo}
+                onAddLogos={handleAddLogos}
+                onRemoveLogo={handleRemoveLogo}
+                onUpdateDefaultLogo={handleUpdateDefaultLogo}
                 publisherLogos={orderedPublisherLogos}
                 canUploadFiles={canUploadFiles}
                 isLoading={isMediaLoading}

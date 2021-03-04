@@ -273,13 +273,14 @@ AnimationContainer.propTypes = {
   children: PropTypes.node,
 };
 
-const AnimatedContextMenu = ({ items, ...props }) => (
-  <AnimationContainer isOpen={props.isOpen}>
-    <Menu items={items} {...props} />
+const AnimatedContextMenu = ({ isOpen, items, ...props }) => (
+  <AnimationContainer isOpen={isOpen}>
+    <Menu items={items} isOpen={isOpen} {...props} />
   </AnimationContainer>
 );
 AnimatedContextMenu.propTypes = {
   ...MenuPropTypes,
+  isOpen: PropTypes.bool,
 };
 
 export default AnimatedContextMenu;
