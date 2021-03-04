@@ -68,6 +68,7 @@ import {
   PanRightAnimation,
   PanBottomAnimation,
   PanLeftAnimation,
+  PanAndZoomAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -200,6 +201,7 @@ const BACKGROUND_EFFECTS_LIST = [
   PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
+  `${BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.name}`,
 ];
 
 export default function EffectChooser({
@@ -565,6 +567,45 @@ export default function EffectChooser({
                 </ZoomOutAnimation>
               </WithTooltip>
             </GridItemHalfRow>
+            <GridItemFullRow
+              aria-label={__('Pan and Zoom Effect', 'web-stories')}
+              onClick={(event) =>
+                handleOnSelect(
+                  event,
+                  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                  {
+                    animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                  }
+                )
+              }
+              aria-disabled={disabledBackgroundEffects.includes(
+                BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
+              )}
+              active={activeEffectListIndex === 7}
+            >
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    getDirectionalEffect(
+                      BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                      SCALE_DIRECTION.SCALE_OUT
+                    )
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
+                      ]?.tooltip
+                    : ''
+                }
+                placement="left"
+              >
+                <ContentWrapper>
+                  {__('Pan and Zoom', 'web-stories')}
+                </ContentWrapper>
+                <PanAndZoomAnimation>
+                  {__('Pan and Zoom', 'web-stories')}
+                </PanAndZoomAnimation>
+              </WithTooltip>
+            </GridItemFullRow>
           </>
         ) : (
           <>
