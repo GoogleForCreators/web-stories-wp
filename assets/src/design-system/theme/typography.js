@@ -90,6 +90,12 @@ export const typography = {
       },
       [PRESET_SIZES.XX_SMALL]: {
         weight: 700,
+        size: 16,
+        lineHeight: 24,
+        letterSpacing: 0,
+      },
+      [PRESET_SIZES.XXX_SMALL]: {
+        weight: 700,
         size: 14,
         lineHeight: 20,
         letterSpacing: 0,

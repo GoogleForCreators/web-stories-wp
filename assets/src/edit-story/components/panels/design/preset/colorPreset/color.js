@@ -17,101 +17,21 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Remove } from '../../../../../icons';
-import WithTooltip from '../../../../tooltip';
 import {
-  areAllType,
-  getOpaqueColor,
-  presetHasGradient,
-  presetHasOpacity,
-} from '../utils';
+  Swatch,
+  Tooltip,
+  Icons,
+  hasOpacity,
+  hasGradient,
+} from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
-import generatePatternStyles from '../../../../../utils/generatePatternStyles';
-
-const PRESET_SIZE = 30;
-const REMOVE_ICON_SIZE = 16;
-
-const Transparent = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background-image: conic-gradient(
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.24)}
-      0.25turn,
-    transparent 0turn 0.5turn,
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.24)} 0turn
-      0.75turn,
-    transparent 0turn 1turn
-  );
-  background-size: 35% 35%;
-  border-radius: 100%;
-`;
-
-const ColorButton = styled.button.attrs({ type: 'button' })`
-  cursor: pointer;
-  background-color: transparent;
-  border-color: transparent;
-  padding: 0;
-  border-width: 0;
-  display: block;
-  width: ${PRESET_SIZE}px;
-  height: ${PRESET_SIZE}px;
-  border-radius: 100%;
-  overflow: hidden;
-  position: relative;
-  ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
-`;
-
-const presetCSS = css`
-  display: block;
-  width: 100%;
-  height: 100%;
-  font-size: 13px;
-  position: relative;
-  svg {
-    width: ${REMOVE_ICON_SIZE}px;
-    height: ${REMOVE_ICON_SIZE}px;
-    position: absolute;
-    top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-    left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-    transform: rotate(45deg);
-  }
-`;
-const ColorItem = styled.div`
-  ${presetCSS}
-  ${({ color }) => generatePatternStyles(color)}
-  transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
-
-  svg {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
-  }
-`;
-
-const OpaqueColorWrapper = styled.div`
-  height: ${PRESET_SIZE}px;
-  width: 50%;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-`;
-
-const OpaqueColor = styled.div`
-  height: ${PRESET_SIZE}px;
-  width: ${PRESET_SIZE}px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  ${({ color }) => generatePatternStyles(color)}
-`;
+import { areAllType } from '../utils';
 
 function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
   const { currentPage, selectedElements } = useStory(
@@ -133,43 +53,31 @@ function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
   const applyLabel = isLocal
     ? __('Apply local color', 'web-stories')
     : __('Apply global color', 'web-stories');
-  const hasTransparency = presetHasOpacity(color);
-  const hasGradient = presetHasGradient(color);
-  const opaqueColor = hasTransparency ? getOpaqueColor(color) : color;
+  const hasTransparency = hasOpacity(color);
+  const isSolid = !hasGradient(color);
+
   // In edit mode we always enable the button for being able to delete.
-  const disabled =
-    !isEditMode &&
-    ((isBackground && hasTransparency) || (isText && hasGradient));
+  const isDisabled =
+    !isEditMode && ((isBackground && hasTransparency) || (isText && !isSolid));
   let tooltip = null;
-  if (disabled) {
+  if (isDisabled) {
     tooltip = isBackground
       ? __('Page background colors cannot have an opacity.', 'web-stories')
       : __('Gradient not allowed for Text', 'web-stories');
   }
-  const displaySplit = hasTransparency && !hasGradient;
+
   return (
-    <WithTooltip title={tooltip}>
-      <ColorButton
+    <Tooltip title={tooltip}>
+      <Swatch
         aria-label={isEditMode ? deleteLabel : applyLabel}
-        disabled={disabled}
+        isDisabled={isDisabled}
         tabIndex={activeIndex === i ? 0 : -1}
         onClick={() => handleOnClick(color)}
+        pattern={color}
       >
-        {hasTransparency && <Transparent />}
-        <ColorItem
-          color={color}
-          disabled={disabled}
-          displaySplit={displaySplit}
-        >
-          {displaySplit && (
-            <OpaqueColorWrapper>
-              <OpaqueColor color={opaqueColor} />
-            </OpaqueColorWrapper>
-          )}
-          {isEditMode && <Remove />}
-        </ColorItem>
-      </ColorButton>
-    </WithTooltip>
+        {isEditMode && <Icons.Cross />}
+      </Swatch>
+    </Tooltip>
   );
 }
 

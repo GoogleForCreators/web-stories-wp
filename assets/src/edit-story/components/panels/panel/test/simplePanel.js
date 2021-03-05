@@ -49,11 +49,6 @@ describe('Panels/Panel/SimplePanel', () => {
       titleElement = panelElement.getByRole('button', { name: titleName });
     });
 
-    it('should have a button role', () => {
-      expect(titleElement).toBeDefined();
-      expect(titleElement).toHaveAttribute('role', 'button');
-    });
-
     it('should have a label that matches the title name', () => {
       const label = titleElement.getAttribute('aria-label');
       expect(label).toStrictEqual(titleName);

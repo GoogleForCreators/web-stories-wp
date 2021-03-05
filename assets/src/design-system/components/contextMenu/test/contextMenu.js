@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-
 /**
  * Internal dependencies
  */
@@ -83,20 +78,19 @@ describe('MenuItem', () => {
 });
 
 describe('linkOrButtonValidator', () => {
-  it('should return null only `onClick` or `href` included', () => {
-    expect(linkOrButtonValidator({ onClick: noop }, '', 'Test')).toBeNull();
+  it('should return null if `href` included without `disabled`', () => {
     expect(linkOrButtonValidator({ href: 'test' }, '', 'Test')).toBeNull();
-  });
-
-  it('should throw an error if `onClick` and `href` both included', () => {
-    expect(
-      linkOrButtonValidator({ onClick: noop, href: 'test' }, '', 'Test')
-    ).toStrictEqual(expect.any(Error));
   });
 
   it('should throw an error if `href` and `disabled` are both included', () => {
     expect(
       linkOrButtonValidator({ disabled: true, href: 'test' }, '', 'Test')
     ).toStrictEqual(expect.any(Error));
+  });
+
+  it('should throw an error if `newTab=true` but `href` is not specified', () => {
+    expect(linkOrButtonValidator({ newTab: true }, '', 'Test')).toStrictEqual(
+      expect.any(Error)
+    );
   });
 });

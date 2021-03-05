@@ -28,7 +28,9 @@ import { themeHelpers } from '../../theme';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
-const DEFAULT_POPUP_Z_INDEX = 2;
+// TODO scrollbar update, commented out until design updates are done
+const DEFAULT_POPUP_Z_INDEX = 11;
+
 const Container = styled.div.attrs(
   ({
     offset: { x, y, width, height },

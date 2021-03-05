@@ -15,3 +15,5 @@
  */
 export { default as AnimatedContextMenu } from './animatedContextMenu';
 export { default as ContextMenu } from './contextMenu';
+export { MenuPropTypes } from './menu';
+export { MenuItemProps } from './menuItem';

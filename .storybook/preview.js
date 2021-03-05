@@ -22,6 +22,7 @@ import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { useDirection } from 'storybook-rtl-addon';
 
 /**
  * Internal dependencies
@@ -34,7 +35,8 @@ import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
 } from '../assets/src/dashboard/theme';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
-import { ConfigProvider } from '../assets/src/dashboard/app/config';
+import { ConfigProvider as DashboardConfigProvider } from '../assets/src/dashboard/app/config';
+import { ConfigProvider as EditorConfigProvider } from '../assets/src/edit-story/app/config';
 import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
 
 import {
@@ -83,7 +85,12 @@ addParameters({
 
 addDecorator(withKnobs);
 
-addDecorator((story, { id }) => {
+addDecorator((story, context) => {
+  const { id } = context;
+
+  const direction = useDirection(context);
+  const isRTL = 'rtl' === direction;
+
   const isDesignSystemStorybook = id.startsWith('designsystem');
   const isDashboardStorybook = id.startsWith('dashboard');
 
@@ -96,15 +103,19 @@ addDecorator((story, { id }) => {
           colors: lightMode,
         }}
       >
-        <ConfigProvider
-          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
+        <DashboardConfigProvider
+          config={{
+            api: { stories: 'stories' },
+            editStoryURL: 'editStory',
+            isRTL,
+          }}
         >
           <ApiProvider>
             <DashboardGlobalStyle />
             <DashboardKeyboardOnlyOutline />
             {story()}
           </ApiProvider>
-        </ConfigProvider>
+        </DashboardConfigProvider>
       </ThemeProvider>
     );
   }
@@ -122,10 +133,12 @@ addDecorator((story, { id }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <CropMoveableGlobalStyle />
-      <ModalGlobalStyle />
-      {story()}
+      <EditorConfigProvider config={{ isRTL }}>
+        <GlobalStyle />
+        <CropMoveableGlobalStyle />
+        <ModalGlobalStyle />
+        {story()}
+      </EditorConfigProvider>
     </ThemeProvider>
   );
 });

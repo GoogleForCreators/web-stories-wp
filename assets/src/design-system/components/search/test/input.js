@@ -32,7 +32,7 @@ describe('Search <Input />', () => {
 
   beforeEach(jest.clearAllMocks);
 
-  it('should render a <SearchInput /> combobox by default', () => {
+  it('should render a <SearchInput /> searchbox by default', () => {
     const { getByRole } = renderWithProviders(
       <SearchInput
         ariaInputLabel="search label"
@@ -40,6 +40,22 @@ describe('Search <Input />', () => {
         onClick={onClickMock}
         handleClearInput={handleClearInputMock}
         inputValue=""
+      />
+    );
+
+    const input = getByRole('searchbox');
+    expect(input).toBeInTheDocument();
+  });
+
+  it('should render a <SearchInput /> combobox if it has a list id', () => {
+    const { getByRole } = renderWithProviders(
+      <SearchInput
+        ariaInputLabel="search label"
+        ariaClearLabel="aria label for clearing value"
+        onClick={onClickMock}
+        handleClearInput={handleClearInputMock}
+        inputValue=""
+        listId={1}
       />
     );
 

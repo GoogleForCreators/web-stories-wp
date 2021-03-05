@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-export { default } from './backgroundOverlay';
+export { default as hasOpacity } from './hasOpacity';
+export { default as hasGradient } from './hasGradient';
+export { default as getOpaquePattern } from './getOpaquePattern';
+export { default as generatePatternStyles } from './generatePatternStyles';
