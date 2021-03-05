@@ -65,9 +65,9 @@ function App({ config }) {
                     <SnackbarProvider>
                       <MetaBoxesProvider>
                         <StoryProvider storyId={storyId}>
-                          <PostLock />
-                          <FontProvider>
-                            <CurrentUserProvider>
+                          <CurrentUserProvider>
+                            <PostLock />
+                            <FontProvider>
                               <MediaProvider>
                                 <AutoSaveHandler />
                                 <TransformProvider>
@@ -83,8 +83,8 @@ function App({ config }) {
                                   </DropTargetsProvider>
                                 </TransformProvider>
                               </MediaProvider>
-                            </CurrentUserProvider>
-                          </FontProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
                         </StoryProvider>
                       </MetaBoxesProvider>
                     </SnackbarProvider>
