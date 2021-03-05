@@ -280,16 +280,16 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_get_lock() {
 		$controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller( Story_Post_Type::POST_TYPE_SLUG );
-		$story    = self::factory()->post->create(
+		$story      = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'draft',
 				'post_author' => self::$author_id,
 			]
 		);
-		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
+		$new_lock   = ( time() - 100 ) . ':' . self::$author_id;
 		update_post_meta( $story, '_edit_lock', $new_lock );
-		$data = $this->call_private_method($controller, 'get_lock', [ $story]);
+		$data = $this->call_private_method( $controller, 'get_lock', [ $story ] );
 		$this->assertArrayHasKey( 'time', $data );
 		$this->assertArrayHasKey( 'user', $data );
 		$this->assertEquals( $data['user'], self::$author_id );
