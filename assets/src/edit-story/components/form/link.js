@@ -45,8 +45,9 @@ function LinkInput({
   hasError,
   ...rest
 }) {
-  const isValid = isValidUrl(withProtocol(value || ''));
-  const isNotValid = value.length > 0 && !isValid;
+  const trimmedValue = (value || '').trim();
+  const isValid = isValidUrl(withProtocol(trimmedValue));
+  const isNotValid = trimmedValue.length > 0 && !isValid;
   return (
     <>
       {description && <HelperText>{description}</HelperText>}
@@ -55,9 +56,9 @@ function LinkInput({
           placeholder={__('Web address', 'web-stories')}
           onChange={(evt) => onChange(evt.target.value)}
           onBlur={() => {
-            if (value?.length) {
-              const urlWithProtocol = withProtocol(value);
-              if (urlWithProtocol !== value) {
+            if (trimmedValue?.length) {
+              const urlWithProtocol = withProtocol(trimmedValue);
+              if (urlWithProtocol !== trimmedValue) {
                 onChange(urlWithProtocol);
               }
             }

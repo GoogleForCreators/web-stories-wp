@@ -73,8 +73,9 @@ function PageAttachmentPanel() {
 
   const updatePageAttachment = useCallback(
     (value) => {
+      const trimmedUrl = (value.url || '').trim();
       if (value.url) {
-        const urlWithProtocol = withProtocol(value.url);
+        const urlWithProtocol = withProtocol(trimmedUrl);
         const valid = isValidUrl(urlWithProtocol);
         setIsInvalidUrl(!valid);
       }
@@ -97,7 +98,7 @@ function PageAttachmentPanel() {
   );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    !isValidUrl(withProtocol(url || ''))
+    !isValidUrl(withProtocol(url || '').trim())
   );
 
   const isDefault = _ctaText === defaultCTA;
@@ -135,8 +136,9 @@ function PageAttachmentPanel() {
     >
       <LinkInput
         onChange={(value) => updatePageAttachment({ url: value })}
+        onBlur={() => updatePageAttachment({ url: url?.trim() })}
         onFocus={onFocus}
-        value={url || ''}
+        value={url}
         clear
         aria-label={__(
           'Type an address to add a page attachment link',
