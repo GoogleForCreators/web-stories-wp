@@ -112,7 +112,7 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 				'show_date'          => false,
 				'show_excerpt'       => false,
 				'show_archive_link'  => false,
-				'has_square_corners' => false,
+				'sharp_corners'      => false,
 				'image_alignment'    => 'left',
 				'circle_size'        => 150,
 			]

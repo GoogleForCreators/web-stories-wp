@@ -109,7 +109,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 				'show_date'          => false,
 				'show_excerpt'       => false,
 				'show_archive_link'  => false,
-				'has_square_corners' => false,
+				'sharp_corners'      => false,
 				'archive_link_label' => 'View all stories',
 				'class'              => '',
 				'circle_size'        => 150,

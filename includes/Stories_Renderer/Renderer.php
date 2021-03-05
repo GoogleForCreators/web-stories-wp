@@ -366,7 +366,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			$view_classes[] = sprintf( 'columns-%1$d', $this->attributes['number_of_columns'] );
 		}
 
-		if ( ! $this->is_view_type( 'circles' ) && ! empty( $this->attributes['has_square_corners'] ) ) {
+		if ( ! $this->is_view_type( 'circles' ) && ! empty( $this->attributes['sharp_corners'] ) ) {
 			$view_classes[] = 'is-style-squared';
 		} else {
 			$view_classes[] = 'is-style-default';

@@ -183,6 +183,23 @@ function SelectStories({
     }
   }, TEXT_INPUT_DEBOUNCE);
 
+  const [debouncedAuthorChange] = useDebouncedCallback((evt, newOption) => {
+    // On selecting author from the dropdown, '<Search />' component sets the newOption from the
+    // suggestions array, which in our case is author ID. Check the newOption is a number.
+    if (newOption.value) {
+      setCurrentAuthor(
+        authors.filter((author) => author.id === parseInt(newOption.value))
+      );
+    }
+
+    if ('' === newOption.value) {
+      setCurrentAuthor({
+        id: 0,
+        name: '',
+      });
+    }
+  }, TEXT_INPUT_DEBOUNCE);
+
   const onSortChange = useCallback(
     (newSort) => {
       sort.set(newSort);
@@ -199,6 +216,15 @@ function SelectStories({
       }));
   }, [authors]);
 
+  const storiesSearchOptions = useMemo(() => {
+    return orderedStories
+      .filter(({ title }) => Boolean(title?.trim().length))
+      .map(({ id, title }) => ({
+        label: title,
+        value: id.toString(),
+      }));
+  }, [orderedStories]);
+
   return (
     <>
       <StoryFilter data-testid="story-filter">
@@ -209,8 +235,9 @@ function SelectStories({
               placeholder={__('Search Stories', 'web-stories')}
               emptyText={__('No stories available', 'web-stories')}
               selectedValue={{ label: search.keyword, value: search.keyword }}
-              options={orderedStories}
+              options={storiesSearchOptions}
               handleSearchValueChange={debouncedTypeaheadChange}
+              popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
             />
           </SearchStoryInner>
           <StyledSearch
@@ -223,6 +250,8 @@ function SelectStories({
             }}
             options={authorSearchOptions}
             handleSearchValueChange={debouncedTypeaheadAuthorChange}
+            onMenuItemClick={debouncedAuthorChange}
+            popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
           />
         </SearchContainer>
         <DropdownContainer>
