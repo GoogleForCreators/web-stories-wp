@@ -344,6 +344,9 @@ const widgetScript = {
   },
   plugins: [
     new DependencyExtractionWebpackPlugin({}),
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+    }),
     new WebpackBar({
       name: 'WP Widget Script',
       color: '#F757A5',
