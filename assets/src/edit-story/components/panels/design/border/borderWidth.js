@@ -20,25 +20,30 @@
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Lock, Unlock } from '../../../../icons';
-import { Row, Numeric, Toggle } from '../../../form';
+import { Row } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
+import {
+  LockToggle,
+  NumericInput,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 
 const BorderRow = styled(Row)`
   ${({ locked }) => locked && 'justify-content: normal'};
 `;
 
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-  max-width: ${({ locked }) => (locked ? 'initial' : '36px')};
+const BoxedNumeric = styled(NumericInput)`
+  input {
+    padding: 0;
+  }
 `;
 
 const Space = styled.div`
@@ -46,17 +51,16 @@ const Space = styled.div`
 `;
 
 const Label = styled.label`
-  height: ${({ locked }) => !locked && '60px'};
+  height: ${({ locked }) => !locked && '64px'};
+  flex: ${({ locked }) => (locked ? null : 1)};
   width: ${({ locked }) => (locked ? '50%' : null)};
 `;
 
-const LabelText = styled.span`
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
+const LabelText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  as: 'span',
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
   text-align: center;
   width: 100%;
   display: inline-block;
@@ -79,18 +83,21 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
   const lockBorder = border.lockedWidth === true;
 
   const handleChange = useCallback(
-    (name, value) => {
-      const newBorder = !lockBorder
-        ? {
-            [name]: value,
-          }
-        : {
-            left: value,
-            top: value,
-            right: value,
-            bottom: value,
-          };
-      pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
+    (name, evt) => {
+      const value = Number(evt?.target?.value);
+      if (value) {
+        const newBorder = !lockBorder
+          ? {
+              [name]: value,
+            }
+          : {
+              left: value,
+              top: value,
+              right: value,
+              bottom: value,
+            };
+        pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
+      }
     },
     [pushUpdateForObject, lockBorder]
   );
@@ -105,14 +112,22 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
   const firstInputLabel = lockBorder
     ? __('Border', 'web-stories')
     : __('Left border', 'web-stories');
+
+  const getMixedValueProps = useCallback((value) => {
+    return {
+      isIndeterminate: MULTIPLE_VALUE === value,
+      placeholder: MULTIPLE_VALUE === value ? MULTIPLE_DISPLAY_VALUE : null,
+    };
+  }, []);
   return (
     <BorderRow locked={lockBorder}>
       <Label locked={lockBorder}>
         <BoxedNumeric
           locked={lockBorder}
           value={border.left}
-          onChange={(value) => handleChange('left', value)}
+          onChange={(evt) => handleChange('left', evt)}
           aria-label={firstInputLabel}
+          {...getMixedValueProps(border.left)}
         />
         {!lockBorder && <LabelText>{__('Left', 'web-stories')}</LabelText>}
       </Label>
@@ -122,8 +137,9 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           <Label>
             <BoxedNumeric
               value={border.top}
-              onChange={(value) => handleChange('top', value)}
+              onChange={(evt) => handleChange('top', evt)}
               aria-label={__('Top border', 'web-stories')}
+              {...getMixedValueProps(border.top)}
             />
             <LabelText>{__('Top', 'web-stories')}</LabelText>
           </Label>
@@ -131,8 +147,9 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           <Label>
             <BoxedNumeric
               value={border.right}
-              onChange={(value) => handleChange('right', value)}
+              onChange={(evt) => handleChange('right', evt)}
               aria-label={__('Right border', 'web-stories')}
+              {...getMixedValueProps(border.right)}
             />
             <LabelText>{__('Right', 'web-stories')}</LabelText>
           </Label>
@@ -140,8 +157,9 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           <Label>
             <BoxedNumeric
               value={border.bottom}
-              onChange={(value) => handleChange('bottom', value)}
+              onChange={(evt) => handleChange('bottom', evt)}
               aria-label={__('Bottom border', 'web-stories')}
+              {...getMixedValueProps(border.bottom)}
             />
             <LabelText>{__('Bottom', 'web-stories')}</LabelText>
           </Label>
@@ -149,11 +167,9 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
       )}
       <Space />
       <ToggleWrapper locked={lockBorder}>
-        <Toggle
-          icon={<Lock />}
-          uncheckedIcon={<Unlock />}
-          value={lockBorder}
-          onChange={() => {
+        <LockToggle
+          isLocked={lockBorder}
+          onClick={() => {
             let args = {
               lockedWidth: !lockBorder,
             };
