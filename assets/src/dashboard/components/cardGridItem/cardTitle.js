@@ -142,7 +142,12 @@ const CardTitle = ({
         <LockRow>
           <ListIcon />
           {lockUser.avatar && (
-            <LockAvatar src={lockUser.avatar['24']} alt={lockUser.name} height={24} width={24}/>
+            <LockAvatar
+              src={lockUser.avatar['24']}
+              alt={lockUser.name}
+              height={24}
+              width={24}
+            />
           )}
           {sprintf(
             /* translators: %s: user name */
