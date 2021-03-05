@@ -31,7 +31,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
 /**
  * Class Stories
  *
- * @package Google\Web_Stories\Widgets
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories extends WP_Widget {
 	use Stories_Script_Data;
