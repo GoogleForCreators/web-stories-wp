@@ -412,7 +412,7 @@ class Customizer {
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
-					'label'           => __( 'Display Archives Link', 'web-stories' ),
+					'label'           => __( 'Display Archive Link', 'web-stories' ),
 					'active_callback' => $active_callback,
 				]
 			);
