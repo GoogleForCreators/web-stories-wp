@@ -93,25 +93,29 @@ class Stories extends WP_Widget {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
+		$instance['number_of_columns'] = ! empty( $instance['number_of_columns'] ) ? (int) $instance['number_of_columns'] : 1;
+		$instance['number_of_stories'] = ! empty( $instance['number_of_stories'] ) ? (int) $instance['number_of_stories'] : 5;
+		$instance['circle_size']       = ! empty( $instance['circle_size'] ) ? (int) $instance['circle_size'] : 100;
+
 		$story_attrs = [
-			'view_type'          => $instance['view_type'],
+			'view_type'          => isset( $instance['view_type'] ) ? $instance['view_type'] : 'circles',
 			'show_title'         => (bool) $instance['show_title'],
 			'show_excerpt'       => (bool) $instance['show_excerpt'],
 			'show_author'        => (bool) $instance['show_author'],
 			'show_date'          => (bool) $instance['show_date'],
 			'show_archive_link'  => (bool) $instance['show_archive_link'],
-			'archive_link_label' => (bool) $instance['archive_link_label'],
-			'circle_size'        => (int) $instance['circle_size'],
+			'archive_link_label' => (string) $instance['archive_link_label'],
+			'circle_size'        => min( absint( $instance['circle_size'] ), 150 ),
 			'sharp_corners'      => (bool) $instance['sharp_corners'],
 			'image_alignment'    => (string) $instance['image_alignment'],
-			'number_of_columns'  => ( (int) $instance['number_of_columns'] ),
+			'number_of_columns'  => min( absint( $instance['number_of_columns'] ), 4 ),
 			'class'              => 'web-stories-list--widget',
 		];
 
 		$story_args = [
-			'posts_per_page' => $instance['number_of_stories'],
-			'orderby'        => $instance['orderby'],
-			'order'          => $instance['order'],
+			'posts_per_page' => min( absint( $instance['number_of_stories'] ), 20 ),
+			'orderby'        => ( isset( $instance['orderby'] ) ) ? (string) $instance['orderby'] : 'post_date',
+			'order'          => ( isset( $instance['order'] ) ) ? (string) $instance['order'] : 'DESC',
 		];
 
 		$story_query = new Story_Query( $story_attrs, $story_args );
@@ -138,11 +142,11 @@ class Stories extends WP_Widget {
 		$title              = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Web Stories', 'web-stories' );
 		$view_types         = $this->get_layouts();
 		$current_view_type  = ! empty( $instance['view_type'] ) ? (string) $instance['view_type'] : 'circles';
-		$show_title         = ! empty( $instance['show_title'] ) ? (int) $instance['show_title'] : '';
-		$show_author        = ! empty( $instance['show_author'] ) ? (int) $instance['show_author'] : '';
-		$show_date          = ! empty( $instance['show_date'] ) ? (int) $instance['show_date'] : '';
-		$show_excerpt       = ! empty( $instance['show_excerpt'] ) ? (int) $instance['show_excerpt'] : '';
-		$show_archive_link  = ! empty( $instance['show_archive_link'] ) ? (int) $instance['show_archive_link'] : '';
+		$show_title         = ! empty( $instance['show_title'] ) ? (bool) $instance['show_title'] : '';
+		$show_author        = ! empty( $instance['show_author'] ) ? (bool) $instance['show_author'] : '';
+		$show_date          = ! empty( $instance['show_date'] ) ? (bool) $instance['show_date'] : '';
+		$show_excerpt       = ! empty( $instance['show_excerpt'] ) ? (bool) $instance['show_excerpt'] : '';
+		$show_archive_link  = ! empty( $instance['show_archive_link'] ) ? (bool) $instance['show_archive_link'] : '';
 		$archive_link_label = ! empty( $instance['archive_link_label'] ) ? $instance['archive_link_label'] : __( 'View all stories', 'web-stories' );
 		$circle_size        = ! empty( $instance['circle_size'] ) ? (int) $instance['circle_size'] : 100;
 		$sharp_corners      = ! empty( $instance['sharp_corners'] ) ? (int) $instance['sharp_corners'] : '';
@@ -333,11 +337,11 @@ class Stories extends WP_Widget {
 
 		$this->input(
 			[
-				'id'            => 'archive_link',
-				'name'          => 'archive_link',
-				'label'         => __( 'Display Archives Link', 'web-stories' ),
+				'id'            => 'show_archive_link',
+				'name'          => 'show_archive_link',
+				'label'         => __( 'Display Archive Link', 'web-stories' ),
 				'type'          => 'checkbox',
-				'classname'     => 'widefat archive_link stories-widget-field',
+				'classname'     => 'widefat show_archive_link stories-widget-field',
 				'wrapper_class' => 'archive_link_wrapper',
 				'value'         => $show_archive_link,
 			]
