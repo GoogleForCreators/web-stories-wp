@@ -24,10 +24,10 @@ import { __ } from '@web-stories-wp/i18n';
 import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 
-function GifLayerContent({ element, ...props }) {
+function GifLayerContent({ element }) {
   const { alt } = element?.resource || {};
 
-  return <LayerText {...props}>{alt || __('GIF', 'web-stories')}</LayerText>;
+  return <LayerText>{alt || __('GIF', 'web-stories')}</LayerText>;
 }
 GifLayerContent.propTypes = {
   element: StoryPropTypes.element.isRequired,

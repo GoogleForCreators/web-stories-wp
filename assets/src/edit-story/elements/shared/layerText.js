@@ -32,12 +32,11 @@ const StyledText = styled(Text)`
   max-width: 100%;
 `;
 
-export function LayerText({ children, ...props }) {
+export function LayerText({ children }) {
   return (
     <StyledText
       forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-      {...props}
     >
       {children}
     </StyledText>

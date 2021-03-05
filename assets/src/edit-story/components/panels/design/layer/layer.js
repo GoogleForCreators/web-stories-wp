@@ -39,6 +39,7 @@ const LayerButton = styled(Button).attrs({
   'data-testid': 'layer-option',
 })`
   display: flex;
+  justify-content: flex-start;
   border: 0;
   padding: 0;
   background: transparent;
@@ -48,6 +49,11 @@ const LayerButton = styled(Button).attrs({
   align-items: center;
   user-select: none;
   border-radius: 0;
+  transition: background-color 0.3s;
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+  }
 
   :active {
     background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};

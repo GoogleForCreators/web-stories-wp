@@ -21,10 +21,10 @@ import stripHTML from '../../utils/stripHTML';
 import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 
-function TextLayerContent({ element: { content }, ...props }) {
+function TextLayerContent({ element: { content } }) {
   // Remove all tags
   const rawContent = stripHTML(content);
-  return <LayerText {...props}>{rawContent}</LayerText>;
+  return <LayerText>{rawContent}</LayerText>;
 }
 
 TextLayerContent.propTypes = {

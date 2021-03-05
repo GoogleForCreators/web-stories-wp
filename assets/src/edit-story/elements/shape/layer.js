@@ -28,14 +28,10 @@ import { getMaskByType } from '../../masks';
 import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 
-function ShapeLayerContent({ element, ...props }) {
+function ShapeLayerContent({ element }) {
   const maskDef = getMaskByType(element.mask.type);
 
-  return (
-    <LayerText {...props}>
-      {maskDef.name || __('Shape', 'web-stories')}
-    </LayerText>
-  );
+  return <LayerText>{maskDef.name || __('Shape', 'web-stories')}</LayerText>;
 }
 ShapeLayerContent.propTypes = {
   element: StoryPropTypes.element.isRequired,

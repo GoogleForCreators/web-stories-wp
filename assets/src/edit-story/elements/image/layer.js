@@ -24,15 +24,10 @@ import { __ } from '@web-stories-wp/i18n';
 import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 
-function ImageLayerContent({ element, ...props }) {
-  const { alt, attribution } = element?.resource || {};
-  const displayName = attribution?.author?.displayName;
+function ImageLayerContent({ element }) {
+  const { alt } = element?.resource || {};
 
-  return (
-    <LayerText {...props}>
-      {displayName || alt || __('Image', 'web-stories')}
-    </LayerText>
-  );
+  return <LayerText>{alt || __('Image', 'web-stories')}</LayerText>;
 }
 ImageLayerContent.propTypes = {
   element: StoryPropTypes.element.isRequired,

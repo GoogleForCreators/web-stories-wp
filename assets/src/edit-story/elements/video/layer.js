@@ -24,14 +24,10 @@ import { __ } from '@web-stories-wp/i18n';
 import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 
-function VideoLayerContent({ element, ...props }) {
+function VideoLayerContent({ element }) {
   const { alt } = element?.resource || {};
 
-  return (
-    <LayerText {...props}>
-      {alt || __('Video Content', 'web-stories')}
-    </LayerText>
-  );
+  return <LayerText>{alt || __('Video Content', 'web-stories')}</LayerText>;
 }
 VideoLayerContent.propTypes = {
   element: StoryPropTypes.element.isRequired,
