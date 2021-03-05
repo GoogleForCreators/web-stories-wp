@@ -20,11 +20,9 @@
 import {
   findMatchingColor,
   findMatchingStylePreset,
-  getOpaqueColor,
   getPanelInitialHeight,
   getShapePresets,
   getTextPresets,
-  presetHasOpacity,
 } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import objectWithout from '../../../../../utils/objectWithout';
@@ -439,49 +437,6 @@ describe('Panels/StylePreset/utils', () => {
     expect(presets).toStrictEqual(expected);
   });
 
-  it('should detect opacity in preset correctly', () => {
-    expect(presetHasOpacity(TEST_COLOR)).toBeFalse();
-    const preset1 = {
-      color: {
-        r: 1,
-        g: 1,
-        b: 1,
-        a: 0.5,
-      },
-    };
-    expect(presetHasOpacity(preset1)).toBeTrue();
-
-    const preset2 = {
-      type: 'linear',
-      stops: [TEST_COLOR, preset1],
-    };
-    expect(presetHasOpacity(preset2)).toBeTrue();
-
-    const preset3 = {
-      type: 'linear',
-      stops: [TEST_COLOR, TEST_COLOR_2],
-    };
-    expect(presetHasOpacity(preset3)).toBeFalse();
-  });
-
-  describe('getOpaqueColor', () => {
-    it('should get the opaque color correctly', () => {
-      expect(getOpaqueColor({ color: { r: 1, g: 1, b: 1 } })).toMatchObject({
-        color: { r: 1, g: 1, b: 1, a: 1 },
-      });
-      expect(
-        getOpaqueColor({ color: { r: 1, g: 1, b: 1, a: 0.4 } })
-      ).toMatchObject({
-        color: { r: 1, g: 1, b: 1, a: 1 },
-      });
-      expect(
-        getOpaqueColor({ color: { r: 1, g: 1, b: 1, a: null } })
-      ).toMatchObject({
-        color: { r: 1, g: 1, b: 1, a: 1 },
-      });
-    });
-  });
-
   describe('getPanelInitialHeight', () => {
     it('should get the initial height correctly for color presets', () => {
       const presets = [
@@ -500,11 +455,11 @@ describe('Panels/StylePreset/utils', () => {
         { color: { r: 25, g: 39, b: 13 } },
       ];
       // Three rows.
-      expect(getPanelInitialHeight(true, presets)).toStrictEqual(90);
+      expect(getPanelInitialHeight(true, presets)).toStrictEqual(96);
       // One row.
       expect(
         getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
-      ).toStrictEqual(45);
+      ).toStrictEqual(48);
 
       // No rows.
       expect(getPanelInitialHeight(true, [])).toStrictEqual(140);

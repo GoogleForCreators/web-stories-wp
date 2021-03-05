@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 export { Banner } from './banner';
 export * from './button';
 export * from './checkbox';
+export * from './contextMenu';
+export { Chip } from './chip';
 export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
 export { HexInput } from './hex';
@@ -27,8 +28,9 @@ export { NumericInput } from './input/numericInput';
 export * from './menu';
 export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
-export { Search } from './search';
+export * from './search';
 export * from './slider';
+export * from './swatch';
 export { Snackbar } from './snackbar';
 export * from './tooltip';
 export * from './keyboard';

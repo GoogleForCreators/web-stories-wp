@@ -21,10 +21,10 @@ import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
   BackgroundSizePositionPanel,
-  BackgroundOverlayPanel,
   BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
+  FilterPanel,
   ImageAccessibilityPanel,
   LinkPanel,
   LayerStylePanel,
@@ -35,7 +35,6 @@ import {
   TextBoxPanel,
   TextStylePanel,
   VideoAccessibilityPanel,
-  NoSelectionPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
   VideoPosterPanel,
@@ -52,7 +51,7 @@ function intersect(a, b) {
 
 function getDesignPanelsForSelection(elements) {
   if (elements.length === 0) {
-    return [{ type: PanelTypes.NO_SELECTION, Panel: NoSelectionPanel }];
+    return [];
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
@@ -70,8 +69,8 @@ function getDesignPanelsForSelection(elements) {
         Panel: BackgroundSizePositionPanel,
       });
       panels.push({
-        type: PanelTypes.BACKGROUND_OVERLAY,
-        Panel: BackgroundOverlayPanel,
+        type: PanelTypes.FILTER,
+        Panel: FilterPanel,
       });
       panels.push({ type: PanelTypes.ANIMATION, Panel: AnimationPanel });
     }

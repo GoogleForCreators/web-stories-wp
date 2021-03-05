@@ -25,10 +25,10 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
-describe('Background Overlay Panel', () => {
+describe('Filter Panel', () => {
   let fixture;
   let bgImageId;
-  let backgroundOverlayPanel;
+  let filterPanel;
   let getBackgroundElementOverlay;
 
   beforeEach(async () => {
@@ -49,8 +49,7 @@ describe('Background Overlay Panel', () => {
     } = await fixture.renderHook(() => useStory());
     bgImageId = elements[0].id;
 
-    backgroundOverlayPanel =
-      fixture.editor.inspector.designPanel.backgroundOverlay;
+    filterPanel = fixture.editor.inspector.designPanel.filters;
     getBackgroundElementOverlay = () =>
       fixture.editor.canvas.displayLayer.display(bgImageId).overlay;
   });
@@ -61,21 +60,21 @@ describe('Background Overlay Panel', () => {
 
   describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Apply a solid or gradient overlay', () => {
     it('should render panel when there is an image in the background', () => {
-      expect(backgroundOverlayPanel).toBeTruthy();
+      expect(filterPanel).toBeTruthy();
     });
 
     it('should not render an overlay when there is none', () => {
-      expect(backgroundOverlayPanel.none.checked).toBeTruthy();
+      expect(filterPanel.none.checked).toBeTruthy();
       expect(getBackgroundElementOverlay()).not.toBeTruthy();
     });
 
     it('should correctly show focus border only when using keyboard', async () => {
       // Click solid button
-      await fixture.events.click(backgroundOverlayPanel.solid.button);
+      await fixture.events.click(filterPanel.solid.button);
 
       // Verify button is clicked and has focus
-      expect(backgroundOverlayPanel.solid.checked).toBeTruthy();
-      expect(backgroundOverlayPanel.solid.node).toHaveFocus();
+      expect(filterPanel.solid.checked).toBeTruthy();
+      expect(filterPanel.solid.node).toHaveFocus();
 
       // Verify an overlay has been added
       const overlay = await waitFor(getBackgroundElementOverlay);
@@ -90,14 +89,14 @@ describe('Background Overlay Panel', () => {
       await fixture.events.keyboard.shortcut('shift+tab');
 
       // Verify none button has focus
-      expect(backgroundOverlayPanel.none.node).toHaveFocus();
+      expect(filterPanel.none.node).toHaveFocus();
 
       // Press space to activate none button
       await fixture.events.keyboard.press('Space');
 
       // Verify none button is toggled and overlay has been removed
       expect(getBackgroundElementOverlay()).not.toBeTruthy();
-      expect(backgroundOverlayPanel.none.checked).toBeTruthy();
+      expect(filterPanel.none.checked).toBeTruthy();
 
       // Screenshot it
       await fixture.snapshot(
@@ -106,7 +105,7 @@ describe('Background Overlay Panel', () => {
     });
 
     it('should render correct overlay when clicking "solid"', async () => {
-      await fixture.events.click(backgroundOverlayPanel.solid.button);
+      await fixture.events.click(filterPanel.solid.button);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
       expect(overlay).toBeTruthy();
@@ -114,7 +113,7 @@ describe('Background Overlay Panel', () => {
     });
 
     it('should render correct overlay when clicking "linear"', async () => {
-      await fixture.events.click(backgroundOverlayPanel.linear.button);
+      await fixture.events.click(filterPanel.linear.button);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
       expect(overlay).toBeTruthy();
@@ -125,7 +124,7 @@ describe('Background Overlay Panel', () => {
     });
 
     it('should render correct overlay when clicking "radial"', async () => {
-      await fixture.events.click(backgroundOverlayPanel.radial.button);
+      await fixture.events.click(filterPanel.radial.button);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
       expect(overlay).toBeTruthy();

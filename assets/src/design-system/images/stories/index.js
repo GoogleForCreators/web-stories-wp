@@ -22,13 +22,13 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Text } from '../../components';
-import * as Logos from '..';
+import * as Images from '..';
 
 export default {
   title: 'DesignSystem/Images',
 };
 
-const LogoList = styled.ul`
+const ImageList = styled.ul`
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -42,19 +42,19 @@ const LogoList = styled.ul`
 
 export const Default = () => {
   return (
-    <LogoList>
-      {Object.keys(Logos).map((logoName) => {
+    <ImageList>
+      {Object.keys(Images).map((imageName) => {
         // eslint-disable-next-line import/namespace
-        const Logo = Logos[logoName];
+        const Image = Images[imageName];
         return (
-          <li key={logoName}>
-            <Logo />
+          <li key={imageName}>
+            <Image />
             <Text as="span" isBold>
-              {logoName}
+              {imageName}
             </Text>
           </li>
         );
       })}
-    </LogoList>
+    </ImageList>
   );
 };

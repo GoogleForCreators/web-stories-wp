@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
+function hasGradient({ type }) {
+  return Boolean(type) && 'solid' !== type;
+}
 
-/**
- * Internal dependencies
- */
-import { TextInput } from '../index';
-
-export default {
-  title: 'Dashboard/Components/TextInput',
-  component: TextInput,
-};
-
-export const _default = () => {
-  return <TextInput value={text('Text', 'Hello Storybook')} />;
-};
+export default hasGradient;

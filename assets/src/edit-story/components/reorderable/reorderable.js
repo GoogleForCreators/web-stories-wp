@@ -36,8 +36,9 @@ const ReorderableContainer = styled.div.attrs({ role: 'listbox' })`
 const Reorderable = forwardRef(function Reorderable(
   {
     children,
-    onPositionChange = () => {},
-    getItemSize = () => 10,
+    onPositionChange,
+    getItemSize,
+    scrollSize = null,
     mode = 'horizontal',
     ...props
   },
@@ -75,12 +76,14 @@ const Reorderable = forwardRef(function Reorderable(
     },
   };
 
+  const scrollerSize = scrollSize || getItemSize();
+
   return (
     <Context.Provider value={state}>
       <ReorderableContainer ref={containerRef} {...props}>
-        <ReorderableScroller direction={-1} size={getItemSize()} />
+        <ReorderableScroller direction={-1} size={scrollerSize} />
         {children}
-        <ReorderableScroller direction={1} size={getItemSize()} />
+        <ReorderableScroller direction={1} size={scrollerSize} />
       </ReorderableContainer>
     </Context.Provider>
   );
@@ -90,6 +93,7 @@ Reorderable.propTypes = {
   children: PropTypes.node,
   onPositionChange: PropTypes.func.isRequired,
   getItemSize: PropTypes.func.isRequired,
+  scrollSize: PropTypes.number,
   mode: PropTypes.string,
 };
 

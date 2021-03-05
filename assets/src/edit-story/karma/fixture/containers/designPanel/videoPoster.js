@@ -27,16 +27,14 @@ export class VideoPoster extends AbstractPanel {
     super(node, path);
   }
 
-  get poster() {
-    return this.getByRole('region', { name: /Poster/i });
-  }
-
   get posterImage() {
-    return this.getByRoleIn(this.poster, 'img');
+    return this.getByRole('img', { alt: 'Preview poster image' });
   }
 
   get posterMenuButton() {
-    return this.getByRoleIn(this.poster, 'button', { name: /more/i });
+    return this.getByRole('button', {
+      name: /video poster/i,
+    });
   }
 
   get posterMenuEdit() {

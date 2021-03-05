@@ -24,3 +24,4 @@ export { default as addQueryArgs } from './addQueryArgs';
 export { default as useResizeEffect } from './useResizeEffect';
 export * from './constants';
 export * from './directions';
+export * from './patterns';
