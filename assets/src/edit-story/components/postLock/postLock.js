@@ -47,11 +47,11 @@ function PostLock() {
   const { previewLink } = useStory(({ state: { story: { previewLink } } }) => ({
     previewLink,
   }));
+  const { enablePostLocking } = useFeatures();
   const [showDialog, setShowDialog] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState({});
   const [nonce, setNonce] = useState('');
-  const { enablePostLocking } = useFeatures();
 
   const closeDialog = useCallback(() => {
     setShowDialog(false);
@@ -149,6 +149,7 @@ function PostLock() {
       open={showDialog}
       user={user}
       dashboardLink={dashboardLink}
+      onClose={closeDialog}
     />
   );
 }

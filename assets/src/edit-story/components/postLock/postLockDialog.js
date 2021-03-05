@@ -42,6 +42,7 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
     <Dialog
       open={open}
       title={dialogTile}
+      onClose={onClose}
       contentLabel={dialogTile}
       actions={
         <>

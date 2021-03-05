@@ -27,7 +27,7 @@ import Dialog from '../dialog';
 import { Plain } from '../button';
 import { Img, Paragraph } from './shared';
 
-function PostTakeOverDialog({ open, user, dashboardLink }) {
+function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
   const dialogTile = __(
     'Someone else has taken over this story.',
     'web-stories'
@@ -43,6 +43,7 @@ function PostTakeOverDialog({ open, user, dashboardLink }) {
       open={open}
       title={dialogTile}
       contentLabel={dialogTile}
+      onClose={onClose}
       actions={
         <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
       }
@@ -66,6 +67,7 @@ PostTakeOverDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default PostTakeOverDialog;
