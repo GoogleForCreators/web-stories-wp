@@ -36,6 +36,7 @@ const FillRow = styled(Row)`
   justify-content: space-between;
   button {
     flex: 1;
+    z-index: 1;
   }
 `;
 
