@@ -36,6 +36,9 @@ import {
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 
+const INPUT_TOTAL_HEIGHT = 64;
+const INPUT_WIDTH = 44;
+
 const BorderRow = styled(Row)`
   ${({ locked }) => locked && 'justify-content: normal'};
 `;
@@ -50,10 +53,16 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
+const Separator = styled.div`
+  width: 8px;
+  margin: -20px 6px 6px;
+  height: 1px;
+  background: ${({ theme }) => theme.colors.divider.primary};
+`;
+
 const Label = styled.label`
-  height: ${({ locked }) => !locked && '64px'};
-  flex: ${({ locked }) => (locked ? null : 1)};
-  width: ${({ locked }) => (locked ? '50%' : null)};
+  height: ${({ locked }) => !locked && `${INPUT_TOTAL_HEIGHT}px`};
+  width: ${({ locked }) => (locked ? '50%' : `${INPUT_WIDTH}px`)};
 `;
 
 const LabelText = styled(Text).attrs({
@@ -69,8 +78,24 @@ const LabelText = styled(Text).attrs({
 `;
 
 const ToggleWrapper = styled.div`
-  height: ${({ locked }) => !locked && '60px'};
+  height: ${({ locked }) => !locked && `${INPUT_TOTAL_HEIGHT - 4}px`};
 `;
+
+function UnLockedInput({ labelText, ...rest }) {
+  return (
+    <>
+      <Separator />
+      <Label>
+        <BoxedNumeric {...rest} />
+        <LabelText>{labelText}</LabelText>
+      </Label>
+    </>
+  );
+}
+
+UnLockedInput.propTypes = {
+  labelText: PropTypes.string.isRequired,
+};
 
 function WidthControls({ selectedElements, pushUpdateForObject }) {
   const border = useCommonObjectValue(
@@ -133,36 +158,26 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
       </Label>
       {!lockBorder && (
         <>
-          <Space />
-          <Label>
-            <BoxedNumeric
-              value={border.top}
-              onChange={(evt) => handleChange('top', evt)}
-              aria-label={__('Top border', 'web-stories')}
-              {...getMixedValueProps(border.top)}
-            />
-            <LabelText>{__('Top', 'web-stories')}</LabelText>
-          </Label>
-          <Space />
-          <Label>
-            <BoxedNumeric
-              value={border.right}
-              onChange={(evt) => handleChange('right', evt)}
-              aria-label={__('Right border', 'web-stories')}
-              {...getMixedValueProps(border.right)}
-            />
-            <LabelText>{__('Right', 'web-stories')}</LabelText>
-          </Label>
-          <Space />
-          <Label>
-            <BoxedNumeric
-              value={border.bottom}
-              onChange={(evt) => handleChange('bottom', evt)}
-              aria-label={__('Bottom border', 'web-stories')}
-              {...getMixedValueProps(border.bottom)}
-            />
-            <LabelText>{__('Bottom', 'web-stories')}</LabelText>
-          </Label>
+          <UnLockedInput
+            value={border.top}
+            onChange={(evt) => handleChange('top', evt)}
+            aria-label={__('Top border', 'web-stories')}
+            labelText={__('Top', 'web-stories')}
+          />
+          <UnLockedInput
+            value={border.right}
+            onChange={(evt) => handleChange('right', evt)}
+            aria-label={__('Right border', 'web-stories')}
+            labelText={__('Right', 'web-stories')}
+            {...getMixedValueProps(border.right)}
+          />
+          <UnLockedInput
+            value={border.bottom}
+            onChange={(evt) => handleChange('bottom', evt)}
+            aria-label={__('Bottom border', 'web-stories')}
+            labelText={__('Bottom', 'web-stories')}
+            {...getMixedValueProps(border.bottom)}
+          />
         </>
       )}
       <Space />
