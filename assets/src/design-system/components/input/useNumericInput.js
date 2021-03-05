@@ -47,7 +47,7 @@ export const useNumericInput = ({
    */
   const handleBlur = useCallback(
     (ev) => {
-      let newValue = oldValue.current;
+      let newValue = parseInput(oldValue.current, options);
 
       if (!revertToOriginal.current) {
         const parsedValue = parseInput(currentValue, options);
@@ -58,10 +58,11 @@ export const useNumericInput = ({
       }
 
       revertToOriginal.current = false;
-      setCurrentValue(newValue);
-
-      if (newValue !== oldValue.current) {
-        onChange(ev, newValue);
+      if (newValue !== null) {
+        setCurrentValue(newValue);
+        if (newValue !== oldValue.current) {
+          onChange(ev, newValue);
+        }
       }
     },
     [currentValue, onChange, options]
