@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\REST_API;
 
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Kses_Setup;
+use Google\Web_Stories\Tests\Private_Access;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -27,7 +27,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
 class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
-	use Kses_Setup;
+	use Private_Access;
 
 	protected $server;
 
@@ -120,7 +120,6 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/99999/lock' );
 		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
 		$this->assertErrorResponse( 'rest_post_invalid_id', $response, 404 );
 	}
 
@@ -140,7 +139,6 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $post_id . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
 		$this->assertErrorResponse( 'rest_post_invalid_id', $response, 404 );
 	}
 
@@ -180,6 +178,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
+	 * @covers ::prepare_links
 	 */
 	public function test_get_item_with_lock() {
 		wp_set_current_user( self::$author_id );
@@ -195,8 +194,12 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+		$links    = $response->get_links();
 		$this->assertArrayHasKey( 'locked', $data );
 		$this->assertTrue( $data['locked'] );
+
+		$this->assertArrayHasKey( 'self', $links );
+		$this->assertArrayHasKey( 'author', $links );
 	}
 
 	/**
@@ -270,5 +273,25 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'locked', $data['previous'] );
 		$this->assertTrue( $data['deleted'] );
 		$this->assertTrue( $data['previous']['locked'] );
+	}
+
+	/**
+	 * @covers ::get_lock
+	 */
+	public function test_get_lock() {
+		$controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller( Story_Post_Type::POST_TYPE_SLUG );
+		$story    = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'draft',
+				'post_author' => self::$author_id,
+			]
+		);
+		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
+		update_post_meta( $story, '_edit_lock', $new_lock );
+		$data = $this->call_private_method($controller, 'get_lock', [ $story]);
+		$this->assertArrayHasKey( 'time', $data );
+		$this->assertArrayHasKey( 'user', $data );
+		$this->assertEquals( $data['user'], self::$author_id );
 	}
 }
