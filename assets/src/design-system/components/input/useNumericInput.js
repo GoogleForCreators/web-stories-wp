@@ -32,7 +32,6 @@ export const useNumericInput = ({
   value,
 }) => {
   const inputRef = useRef(null);
-  const changeTracker = useRef(false);
   const oldValue = useRef(value);
   const revertToOriginal = useRef(false);
   const [currentValue, setCurrentValue] = useState(value);
@@ -59,13 +58,11 @@ export const useNumericInput = ({
       }
 
       revertToOriginal.current = false;
-      changeTracker.current = false;
       setCurrentValue(newValue);
 
       if (newValue !== oldValue.current) {
         onChange(ev, newValue);
       }
-      ev.preventDefault();
     },
     [currentValue, onChange, options]
   );
@@ -75,8 +72,6 @@ export const useNumericInput = ({
    */
   const handleChange = useCallback((ev) => {
     setCurrentValue(ev.target.value);
-    // Track value change.
-    changeTracker.current = true;
   }, []);
 
   /**
@@ -117,7 +112,6 @@ export const useNumericInput = ({
   const handleEsc = useCallback(() => {
     setCurrentValue(oldValue.current);
     revertToOriginal.current = true;
-    changeTracker.current = false;
     inputRef && inputRef.current?.blur();
   }, []);
 
@@ -136,6 +130,6 @@ export const useNumericInput = ({
     handleChange,
     handleEsc,
     handleKeyUpAndDown,
-    isIndeterminate: !changeTracker.current,
+    isIndeterminate: oldValue.current === currentValue,
   };
 };
