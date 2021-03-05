@@ -82,6 +82,7 @@ function DetailsGallery({
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View previous template', 'web-stories')}
         onClick={({ currentTarget }) => {
+          // blurring target here because memoized button remains active on click
           currentTarget.blur();
           switchToTemplateByOffset(-1);
         }}
@@ -98,6 +99,7 @@ function DetailsGallery({
         variant={BUTTON_VARIANTS.CIRCLE}
         aria-label={__('View next template', 'web-stories')}
         onClick={({ currentTarget }) => {
+          // blurring target here because memoized button remains active on click
           currentTarget.blur();
           switchToTemplateByOffset(1);
         }}
