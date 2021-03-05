@@ -21,17 +21,17 @@ import { Toggle } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
- * The background overlay panel containing buttons for toggling which overlay
- * is shown for a given background plus options for manipulating said overlay.
+ * The background filter panel containing buttons for toggling which filter
+ * is shown for a given background plus options for manipulating said filter.
  */
-export class BackgroundOverlay extends AbstractPanel {
+export class Filter extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
   }
 
   get none() {
     return this._get(
-      this.getByRole('checkbox', { name: /Set overlay: None/i }),
+      this.getByRole('checkbox', { name: /Set filter: None/i }),
       'none',
       Toggle
     );
@@ -39,7 +39,7 @@ export class BackgroundOverlay extends AbstractPanel {
 
   get solid() {
     return this._get(
-      this.getByRole('checkbox', { name: /Set overlay: Solid/i }),
+      this.getByRole('checkbox', { name: /Set filter: Tint/i }),
       'solid',
       Toggle
     );
@@ -47,7 +47,7 @@ export class BackgroundOverlay extends AbstractPanel {
 
   get linear() {
     return this._get(
-      this.getByRole('checkbox', { name: /Set overlay: Linear/i }),
+      this.getByRole('checkbox', { name: /Set filter: Linear/i }),
       'linear',
       Toggle
     );
@@ -55,7 +55,7 @@ export class BackgroundOverlay extends AbstractPanel {
 
   get radial() {
     return this._get(
-      this.getByRole('checkbox', { name: /Set overlay: Radial/i }),
+      this.getByRole('checkbox', { name: /Set filter: Vignette/i }),
       'radial',
       Toggle
     );

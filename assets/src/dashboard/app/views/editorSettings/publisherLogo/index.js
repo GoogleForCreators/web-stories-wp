@@ -19,17 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import {
-  CenterMutedText,
   Error,
-  GridItemButton,
-  GridItemContainer,
-  Logo,
   SettingForm,
   SettingSubheading,
   UploadedContainer,
@@ -42,8 +38,8 @@ import {
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { useConfig } from '../../../config';
-import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
-import PopoverLogoContextMenu from './popoverLogoContextMenu';
+import { GridItem } from './gridItem';
+import { PopoverLogoContextMenuPropTypes } from './popoverLogoContextMenu';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
@@ -69,9 +65,9 @@ export const TEXT = {
 
 function PublisherLogoSettings({
   canUploadFiles,
-  handleAddLogos,
-  handleRemoveLogo,
-  handleUpdateDefaultLogo,
+  onAddLogos,
+  onRemoveLogo,
+  onUpdateDefaultLogo,
   isLoading,
   publisherLogos,
   uploadError,
@@ -97,11 +93,20 @@ function PublisherLogoSettings({
 
   const handleRemoveLogoClick = useCallback(
     (publisherLogo, idx) => {
-      handleRemoveLogo(publisherLogo);
+      setContextMenuId(-1);
+      onRemoveLogo?.(publisherLogo);
       setIndexRemoved(idx);
       publisherLogoCount.current = publisherLogosById.length;
     },
-    [handleRemoveLogo, publisherLogosById.length]
+    [onRemoveLogo, publisherLogosById.length]
+  );
+
+  const handleUpdateDefaultLogo = useCallback(
+    (publisherLogo) => {
+      setContextMenuId(-1);
+      onUpdateDefaultLogo?.(publisherLogo);
+    },
+    [onUpdateDefaultLogo]
   );
 
   // Update publisher logo focus when logo is removed
@@ -140,31 +145,9 @@ function PublisherLogoSettings({
     items: publisherLogos,
   });
 
-  const showLogoContextMenu = !hasOnlyOneLogo;
-
   const onMenuItemToggle = useCallback((newMenuId) => {
     setActivePublisherLogoId(newMenuId);
   }, []);
-
-  const onMenuItemSelected = useCallback(
-    (sender, logo, index) => {
-      setContextMenuId(-1);
-
-      switch (sender.value) {
-        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO:
-          handleRemoveLogoClick(logo, index);
-          break;
-
-        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT:
-          handleUpdateDefaultLogo(logo);
-          break;
-
-        default:
-          break;
-      }
-    },
-    [handleUpdateDefaultLogo, handleRemoveLogoClick]
-  );
 
   useFocusOut(
     containerRef,
@@ -194,72 +177,33 @@ function PublisherLogoSettings({
             role="list"
             aria-label={__('Viewing existing publisher logos', 'web-stories')}
           >
-            {publisherLogos.map((publisherLogo, idx) => {
-              if (!publisherLogo) {
-                return null;
-              }
-
-              const isActive = activePublisherLogoId === publisherLogo.id;
-
-              return (
-                <GridItemContainer
-                  key={publisherLogo.id}
-                  ref={(el) => {
-                    itemRefs.current[publisherLogo.id] = el;
-                  }}
-                  role="listitem"
-                  active={publisherLogo.isDefault}
-                >
-                  <GridItemButton
-                    onFocus={() => {
-                      setActivePublisherLogoId(publisherLogo.id);
-                    }}
-                    data-testid={`uploaded-publisher-logo-${idx}`}
-                    isSelected={isActive}
-                    tabIndex={isActive ? 0 : -1}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setActivePublisherLogoId(publisherLogo.id);
-                    }}
-                    aria-label={sprintf(
-                      /* translators: %s: logo title.*/
-                      __('Publisher Logo %s', 'web-stories'),
-                      publisherLogo.title
-                    )}
-                  >
-                    <Logo src={publisherLogo.src} alt={publisherLogo.title} />
-                  </GridItemButton>
-                  {publisherLogo.isDefault && (
-                    <CenterMutedText
-                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-                    >
-                      {__('Default', 'web-stories')}
-                    </CenterMutedText>
-                  )}
-                  {showLogoContextMenu && (
-                    <PopoverLogoContextMenu
-                      isActive={isActive}
-                      activePublisherLogo={activePublisherLogoId}
-                      idx={idx}
-                      publisherLogo={publisherLogo}
-                      onMenuItemSelected={onMenuItemSelected}
-                      onMenuItemToggle={onMenuItemToggle}
-                      contextMenuId={{
-                        set: setContextMenuId,
-                        value: contextMenuId,
-                      }}
-                    />
-                  )}
-                </GridItemContainer>
-              );
-            })}
+            {publisherLogos.map((publisherLogo, idx) => (
+              <GridItem
+                key={publisherLogo.id}
+                ref={(el) => {
+                  itemRefs.current[publisherLogo.id] = el;
+                }}
+                contextMenuId={{
+                  set: setContextMenuId,
+                  value: contextMenuId,
+                }}
+                index={idx}
+                isActive={activePublisherLogoId === publisherLogo.id}
+                onMenuItemToggle={onMenuItemToggle}
+                onRemoveLogo={handleRemoveLogoClick}
+                onUpdateDefaultLogo={handleUpdateDefaultLogo}
+                publisherLogo={publisherLogo}
+                setActivePublisherLogoId={setActivePublisherLogoId}
+                showLogoContextMenu={!hasOnlyOneLogo}
+              />
+            ))}
           </UploadedContainer>
         )}
         {uploadError && <Error>{uploadError}</Error>}
         {canUploadFiles && (
           <>
             <FileUpload
-              onSubmit={handleAddLogos}
+              onSubmit={onAddLogos}
               id="settings_publisher_logos"
               isLoading={isLoading}
               label={TEXT.SUBMIT}
@@ -282,17 +226,12 @@ function PublisherLogoSettings({
 
 PublisherLogoSettings.propTypes = {
   canUploadFiles: PropTypes.bool,
-  handleAddLogos: PropTypes.func,
-  handleRemoveLogo: PropTypes.func,
-  handleUpdateDefaultLogo: PropTypes.func,
+  onAddLogos: PropTypes.func,
+  onRemoveLogo: PropTypes.func,
+  onUpdateDefaultLogo: PropTypes.func,
   isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.string,
-      title: PropTypes.string,
-      id: PropTypes.number,
-      isDefault: PropTypes.bool,
-    })
+    PropTypes.shape(PopoverLogoContextMenuPropTypes.publisherLogos)
   ),
   uploadError: PropTypes.string,
 };

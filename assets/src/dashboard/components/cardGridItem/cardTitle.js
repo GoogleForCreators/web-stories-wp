@@ -36,7 +36,7 @@ import { LockClosed as LockSVG } from '../../../design-system/icons';
 import { useConfig } from '../../app/config';
 
 const StyledCardTitle = styled.div`
-  padding-top: 12px;
+  padding: 12px 4px 0 4px;
   display: inline-block;
   overflow: hidden;
 `;
