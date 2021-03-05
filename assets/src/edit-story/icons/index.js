@@ -79,6 +79,7 @@ export { ReactComponent as SafeZone } from './safe_zone.svg';
 export { ReactComponent as Shapes } from './shapes.svg';
 export { ReactComponent as StopCircular } from './stop_circular.svg';
 export { ReactComponent as Text } from './text.svg';
+export { ReactComponent as TurningLine } from './turning_line.svg';
 export { ReactComponent as Underline } from './underline_icon.svg';
 export { ReactComponent as Undo } from './undo.svg';
 export { ReactComponent as UndoAlt } from './undo_icon.svg';

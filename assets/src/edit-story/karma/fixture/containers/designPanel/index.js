@@ -123,11 +123,6 @@ export class DesignPanel extends Container {
     return null;
   }
 
-  get noSelection() {
-    // @todo: implement
-    return null;
-  }
-
   get shapeStyle() {
     // @todo: implement
     return null;

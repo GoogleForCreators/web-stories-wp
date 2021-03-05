@@ -23,16 +23,37 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../../../components';
+import { DesertColor } from '../../../../design-system';
 
-const Message = styled.p`
-  ${TypographyPresets.Medium};
-  margin-top: 40px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
+const Message = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 20vh auto;
+
+  & > * {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  /* Sometimes children will contain button or anchor as cta. */
+  button,
+  a {
+    margin-top: 48px;
+  }
 `;
 
+const EmptyImage = styled(DesertColor)`
+  margin-bottom: 48px;
+`;
 function EmptyContentMessage({ children }) {
-  return <Message>{children}</Message>;
+  return (
+    <Message>
+      <EmptyImage aria-hidden width={274} height={118} />
+      {children}
+    </Message>
+  );
 }
 
 EmptyContentMessage.propTypes = {

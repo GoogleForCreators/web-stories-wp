@@ -57,7 +57,7 @@ describe('CardTitle', () => {
     expect(titleInput).toBeInTheDocument();
   });
 
-  it(`should prepend "draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
+  it(`should prepend "Draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
     const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
@@ -70,7 +70,7 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText('draft')).toBeInTheDocument();
+    expect(getByText('Draft')).toBeInTheDocument();
   });
 
   it(`should display "Scheduled" before created date when ${STORY_STATUS.FUTURE}`, () => {
