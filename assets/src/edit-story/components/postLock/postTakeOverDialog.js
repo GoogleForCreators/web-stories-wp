@@ -27,14 +27,14 @@ import Dialog from '../dialog';
 import { Plain } from '../button';
 import { Img, Paragraph } from './shared';
 
-function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
-  const dialogTile = __('Story is locked', 'web-stories');
+function PostTakeOverDialog({ open, user, dashboardLink }) {
+  const dialogTile = __(
+    'Someone else has taken over this story.',
+    'web-stories'
+  );
   const dialogContent = sprintf(
     /* translators: %s: user's name */
-    __(
-      '%s is already editing this story. Do you want to take over? ',
-      'web-stories'
-    ),
+    __('%s now has editing control of this story. ', 'web-stories'),
     user?.name
   );
 
@@ -44,11 +44,7 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
       title={dialogTile}
       contentLabel={dialogTile}
       actions={
-        <>
-          <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
-          <Plain href={previewLink}>{__('Preview', 'web-stories')}</Plain>
-          <Plain onClick={onClose}>{__('Take over', 'web-stories')}</Plain>
-        </>
+        <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
       }
     >
       <Paragraph>
@@ -66,12 +62,10 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
   );
 }
 
-PostLockDialog.propTypes = {
+PostTakeOverDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
-  previewLink: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
-export default PostLockDialog;
+export default PostTakeOverDialog;

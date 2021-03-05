@@ -28,8 +28,8 @@ import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import { useCurrentUser } from '../../app/currentUser';
-import PostLockFirstDialog from './postLockFirstDialog';
 import PostLockDialog from './postLockDialog';
+import PostTakeOverDialog from './postTakeOverDialog';
 
 function PostLock() {
   const {
@@ -134,7 +134,7 @@ function PostLock() {
 
   if (isFirstTime) {
     return (
-      <PostLockFirstDialog
+      <PostLockDialog
         open={showDialog}
         user={user}
         onClose={closeDialog}
@@ -145,7 +145,7 @@ function PostLock() {
   }
 
   return (
-    <PostLockDialog
+    <PostTakeOverDialog
       open={showDialog}
       user={user}
       dashboardLink={dashboardLink}
