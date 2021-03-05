@@ -14,21 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
-
-/**
- * Internal dependencies
- */
-import { TextInput } from '../index';
-
-export default {
-  title: 'Dashboard/Components/TextInput',
-  component: TextInput,
-};
-
-export const _default = () => {
-  return <TextInput value={text('Text', 'Hello Storybook')} />;
-};
+export { default } from './filter';

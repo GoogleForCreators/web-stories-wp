@@ -45,6 +45,7 @@ export const MenuItem = ({
   href,
   index,
   label,
+  newTab,
   onClick,
   setFocusedIndex,
   shortcut,
@@ -85,6 +86,28 @@ export const MenuItem = ({
     [label, shortcut]
   );
 
+  if (href) {
+    const newTabProps = newTab
+      ? {
+          target: '_blank',
+          rel: 'noreferrer',
+        }
+      : {};
+
+    return (
+      <Link
+        ref={itemRef}
+        aria-label={label}
+        href={href}
+        onClick={onClick}
+        onFocus={handleFocus}
+        {...newTabProps}
+      >
+        {textContent}
+      </Link>
+    );
+  }
+
   if (onClick) {
     return (
       <Button
@@ -96,12 +119,6 @@ export const MenuItem = ({
       >
         {textContent}
       </Button>
-    );
-  } else if (href) {
-    return (
-      <Link ref={itemRef} aria-label={label} href={href} onFocus={handleFocus}>
-        {textContent}
-      </Link>
     );
   }
 
@@ -122,15 +139,15 @@ export const MenuItem = ({
  * Otherwise, returns null.
  */
 export const linkOrButtonValidator = function (props, _, componentName) {
-  if (props.onClick && props.href !== undefined) {
-    return new Error(
-      `Expected one of [\`onClick\`, \`href\`] but both were passed to \`${componentName}\`. \`href\` will be ignored. Validation failed. `
-    );
-  }
-
   if (props.href && props.disabled !== undefined) {
     return new Error(
       `A link cannot be disabled. \`disabled\` will be ignored. Validation failed.`
+    );
+  }
+
+  if (typeof props.href !== 'string' && props.newTab) {
+    return new Error(
+      `Cannot open a new tab without specifying an \`href\`. \`newTab\` will be ignored. Validation failed.`
     );
   }
 
@@ -140,7 +157,6 @@ export const linkOrButtonValidator = function (props, _, componentName) {
    */
   PropTypes.checkPropTypes(
     {
-      onClick: PropTypes.func,
       href: PropTypes.string,
     },
     props,
@@ -153,13 +169,16 @@ export const linkOrButtonValidator = function (props, _, componentName) {
 
 export const MenuItemProps = {
   disabled: PropTypes.bool,
-  focusedIndex: PropTypes.number,
   href: linkOrButtonValidator,
-  index: PropTypes.number,
   label: PropTypes.string.isRequired,
-  onClick: linkOrButtonValidator,
-  setFocusedIndex: PropTypes.func,
+  newTab: PropTypes.bool,
+  onClick: PropTypes.func,
   shortcut: PropTypes.string,
 };
 
-MenuItem.propTypes = MenuItemProps;
+MenuItem.propTypes = {
+  ...MenuItemProps,
+  index: PropTypes.number,
+  focusedIndex: PropTypes.number,
+  setFocusedIndex: PropTypes.func,
+};

@@ -23,10 +23,10 @@ import PropTypes from 'prop-types';
 import { Popover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 
-const ContextMenu = ({ isOpen, items, ...props }) => {
+const ContextMenu = ({ items, ...props }) => {
   return (
-    <Popover role="dialog" isOpen={isOpen} {...props}>
-      <Menu items={items} />
+    <Popover role="dialog" isOpen={props.isOpen}>
+      <Menu items={items} {...props} />
       <Shadow />
     </Popover>
   );

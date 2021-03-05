@@ -58,14 +58,10 @@ describe('Video Poster Panel', () => {
     it('should allow user to edit and reset poster image using mouse', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
-      vaPanel.poster.scrollIntoView();
-
-      // Hover current poster image
-      await fixture.events.mouse.moveRel(vaPanel.poster, 10, 10, { steps: 2 });
+      vaPanel.posterMenuButton.scrollIntoView();
 
       // Expect menu button to exist
       expect(vaPanel.posterMenuButton).toBeTruthy();
-      await fixture.snapshot('Menu button visible');
 
       // Open the menu
       await fixture.events.click(vaPanel.posterMenuButton);
@@ -78,7 +74,6 @@ describe('Video Poster Panel', () => {
       expect(vaPanel.posterImage.src).toBe('http://dummy:url/');
 
       // Now open menu and click reset
-      await fixture.events.mouse.moveRel(vaPanel.poster, 10, 10, { steps: 2 });
       await fixture.events.click(vaPanel.posterMenuButton);
       await fixture.events.click(vaPanel.posterMenuReset);
 
@@ -91,7 +86,7 @@ describe('Video Poster Panel', () => {
       const originalPoster = vaPanel.posterImage.src;
 
       // Click current poster image
-      await fixture.events.click(vaPanel.poster);
+      await fixture.events.click(vaPanel.posterImage);
 
       // Expect menu button to exist
       expect(vaPanel.posterMenuButton).toBeTruthy();
@@ -111,7 +106,7 @@ describe('Video Poster Panel', () => {
       expect(vaPanel.posterImage.src).toBe('http://dummy:url/');
 
       // Now open menu and click reset
-      await fixture.events.click(vaPanel.poster);
+      await fixture.events.click(vaPanel.posterImage);
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('Enter');
       await fixture.events.keyboard.press('down');
