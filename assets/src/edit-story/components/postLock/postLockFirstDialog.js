@@ -53,7 +53,12 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
     >
       <Paragraph>
         {user['avatar_urls'] && (
-          <Img src={user['avatar_urls']['48']} alt={user.name} />
+          <Img
+            src={user['avatar_urls']['48']}
+            alt={user.name}
+            height={48}
+            width={48}
+          />
         )}
         {dialogContent}
       </Paragraph>

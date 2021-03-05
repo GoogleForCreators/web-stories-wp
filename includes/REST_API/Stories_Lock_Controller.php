@@ -185,7 +185,7 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 		$lock = get_post_meta( $post_id, '_edit_lock', true );
 
 		if ( $lock ) {
-			$_lock = explode( ':', $lock );
+			$_lock                = explode( ':', $lock );
 			list ( $time, $user ) = $_lock;
 			if ( $time && $user ) {
 				$lock = compact( 'time', 'user' );

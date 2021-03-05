@@ -498,8 +498,6 @@ class Story_Post_Type {
 	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
-		$user                     = wp_get_current_user();
-		$user_id                  = ( isset( $user->ID ) ? (int) $user->ID : 0 );
 		$rest_base                = self::POST_TYPE_SLUG;
 		$has_publish_action       = false;
 		$has_assign_author_action = false;
@@ -534,6 +532,7 @@ class Story_Post_Type {
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
+		$user = wp_get_current_user();
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 
@@ -547,7 +546,6 @@ class Story_Post_Type {
 				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
 				'allowedMimeTypes'      => $this->get_allowed_mime_types(),
 				'postType'              => self::POST_TYPE_SLUG,
-				'userId'                => $user_id,
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
@@ -560,13 +558,14 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'                   => [
-					'users'       => '/web-stories/v1/users/',
-					'currentUser' => '/web-stories/v1/users/me/',
-					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'       => '/web-stories/v1/media/',
-					'link'        => '/web-stories/v1/link/',
-					'statusCheck' => '/web-stories/v1/status-check/',
-					'metaBoxes'   => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'users'        => '/web-stories/v1/users/',
+					'currentUser'  => '/web-stories/v1/users/me/',
+					'stories'      => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'        => '/web-stories/v1/media/',
+					'link'         => '/web-stories/v1/link/',
+					'statusCheck'  => '/web-stories/v1/status-check/',
+					'metaBoxes'    => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'storyLocking' => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
@@ -574,7 +573,6 @@ class Story_Post_Type {
 				'postLock'              => [
 					'interval'         => $time_window,
 					'showLockedDialog' => $show_locked_dialog,
-					'api'              => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'version'               => WEBSTORIES_VERSION,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),

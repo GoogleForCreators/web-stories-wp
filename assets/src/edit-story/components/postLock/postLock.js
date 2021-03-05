@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFeatures } from 'flagged';
 import { trackError } from '@web-stories-wp/tracking';
 
@@ -27,6 +27,7 @@ import { trackError } from '@web-stories-wp/tracking';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
+import { useCurrentUser } from '../../app/currentUser';
 import PostLockFirstDialog from './postLockFirstDialog';
 import PostLockDialog from './postLockDialog';
 
@@ -35,8 +36,10 @@ function PostLock() {
     actions: { getStoryLockById, setStoryLockById, deleteStoryLockById },
   } = useAPI();
   const {
+    state: { currentUser },
+  } = useCurrentUser();
+  const {
     storyId,
-    userId,
     dashboardLink,
     postLock: { interval: postLockInterval, showLockedDialog },
   } = useConfig();
@@ -55,11 +58,16 @@ function PostLock() {
     setStoryLockById(storyId);
   }, [setStoryLockById, storyId]);
 
+  const currentUserLoaded = useMemo(
+    () => Boolean(Object.keys(currentUser).length),
+    [currentUser]
+  );
+
   const doGetStoryLock = useCallback(() => {
-    if (enablePostLocking && showLockedDialog) {
+    if (enablePostLocking && showLockedDialog && currentUserLoaded) {
       getStoryLockById(storyId)
         .then((result) => {
-          if (result.locked && result.user !== userId) {
+          if (result.locked && result.user !== currentUser.id) {
             setShowDialog(true);
             setUser(result['_embedded'].author[0]);
           } else {
@@ -76,16 +84,17 @@ function PostLock() {
     setStoryLockById,
     setShowDialog,
     storyId,
-    userId,
+    currentUser,
     enablePostLocking,
     showLockedDialog,
+    currentUserLoaded,
   ]);
 
   // Cache it to make it stable in terms of the below timeout
   const cachedDoGetStoryLock = useRef(doGetStoryLock);
   useEffect(() => {
     cachedDoGetStoryLock.current = doGetStoryLock;
-  }, [doGetStoryLock]);
+  }, [doGetStoryLock, currentUserLoaded]);
 
   useEffect(() => {
     function releasePostLock() {
@@ -109,14 +118,19 @@ function PostLock() {
   ]);
 
   useEffect(() => {
-    cachedDoGetStoryLock.current();
-    const timeout = setInterval(() => {
+    if (currentUserLoaded) {
       cachedDoGetStoryLock.current();
-      setIsFirstTime(false);
+    }
+
+    const timeout = setInterval(() => {
+      if (currentUserLoaded) {
+        cachedDoGetStoryLock.current();
+        setIsFirstTime(false);
+      }
     }, postLockInterval * 1000);
 
     return () => clearInterval(timeout);
-  }, [postLockInterval]);
+  }, [postLockInterval, currentUserLoaded]);
 
   if (isFirstTime) {
     return (

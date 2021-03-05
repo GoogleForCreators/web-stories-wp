@@ -37,11 +37,19 @@ import getAllPageLayouts from './getAllPageLayouts';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck, metaBoxes, currentUser },
+    api: {
+      stories,
+      media,
+      link,
+      users,
+      statusCheck,
+      metaBoxes,
+      currentUser,
+      storyLocking,
+    },
     encodeMarkup,
     cdnURL,
     assetsURL,
-    postLock: { api },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -82,11 +90,11 @@ function APIProvider({ children }) {
       const data = new window.FormData();
       data.append('_wpnonce', nonce);
 
-      const url = addQueryArgs(api, { _method: 'DELETE' });
+      const url = addQueryArgs(storyLocking, { _method: 'DELETE' });
 
       window.navigator.sendBeacon?.(url, data);
     },
-    [api]
+    [storyLocking]
   );
 
   const getDemoStoryById = useCallback(

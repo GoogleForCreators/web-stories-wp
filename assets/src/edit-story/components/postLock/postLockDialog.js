@@ -29,12 +29,12 @@ import { Img, Paragraph } from './shared';
 
 function PostLockDialog({ open, user, dashboardLink }) {
   const dialogTile = __(
-    'Someone else has taken over this post.',
+    'Someone else has taken over this story.',
     'web-stories'
   );
   const dialogContent = sprintf(
     /* translators: %s: user's name */
-    __('%s is now has editing control of this post. ', 'web-stories'),
+    __('%s now has editing control of this story. ', 'web-stories'),
     user?.name
   );
 
@@ -49,7 +49,12 @@ function PostLockDialog({ open, user, dashboardLink }) {
     >
       <Paragraph>
         {user['avatar_urls'] && (
-          <Img src={user['avatar_urls']['48']} alt={user.name} />
+          <Img
+            src={user['avatar_urls']['48']}
+            alt={user.name}
+            height={48}
+            width={48}
+          />
         )}
         {dialogContent}
       </Paragraph>
