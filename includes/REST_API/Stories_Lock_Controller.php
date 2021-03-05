@@ -60,7 +60,6 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 	 */
 	public function __construct( $post_type ) {
 		$this->post_type   = $post_type;
-		$this->namespace   = 'web-stories/v1';
 		$rest_base         = $post_type;
 		$post_type_object  = get_post_type_object( $post_type );
 		$parent_controller = null;
@@ -76,6 +75,7 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 
 		$this->parent_controller = $parent_controller;
 		$this->rest_base         = (string) $rest_base;
+		$this->namespace         = (string) $parent_controller->namespace;
 	}
 
 	/**
