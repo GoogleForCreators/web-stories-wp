@@ -22,3 +22,5 @@ export { ReactComponent as LogoColor } from './logo_color.svg';
 export { ReactComponent as LogoWithTypeCircle } from './logo_with_type_circle_bw.svg';
 export { ReactComponent as LogoWithTypeCircleColor } from './logo_with_type_circle_color.svg';
 export { ReactComponent as LogoWithType } from './logo_with_type_bw.svg';
+export { ReactComponent as DesertColor } from './desert_color.svg';
+export { ReactComponent as DesertBw } from './desert_bw.svg';

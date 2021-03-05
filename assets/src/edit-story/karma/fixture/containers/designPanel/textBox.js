@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { Toggle } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -33,11 +32,7 @@ export class TextBox extends AbstractPanel {
   }
 
   get fill() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Set text background mode: Fill/i }),
-      'fill',
-      Toggle
-    );
+    return this.getByRole('option', { name: /fill/i });
   }
 
   // @todo: add remaining input options:

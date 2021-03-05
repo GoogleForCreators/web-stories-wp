@@ -19,34 +19,34 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { rgba } from 'polished';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Button } from '..';
-import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
-import { resolveRoute } from '../../app/router';
 import {
+  themeHelpers,
+  Button,
   BUTTON_TYPES,
-  DEFAULT_STORY_PAGE_ADVANCE_DURATION,
-  KEYBOARD_USER_SELECTOR,
-} from '../../constants';
-import { PageSizePropType, StoryPropType } from '../../types';
-import { useFocusOut } from '../../utils';
+  BUTTON_SIZES,
+  ThemeGlobals,
+} from '../../../design-system';
 import {
   PreviewErrorBoundary,
   PreviewPage,
 } from '../../../edit-story/components/previewPage';
+import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
+import { resolveRoute } from '../../app/router';
+import { DEFAULT_STORY_PAGE_ADVANCE_DURATION } from '../../constants';
+import { PageSizePropType, StoryPropType } from '../../types';
+import { useFocusOut } from '../../utils';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
-  border-radius: ${({ theme }) =>
-    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray75};
+  border: ${({ theme }) => `1px solid ${theme.colors.border.defaultNormal}`};
   width: 100%;
   overflow: hidden;
   z-index: -1;
@@ -64,28 +64,15 @@ const EditControls = styled.div`
   justify-content: space-between;
   padding: 0;
   transition: opacity ease-in-out 300ms;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.cardItem.previewOverlay};
-  border-radius: ${({ theme }) =>
-    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
+  background: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) =>
-      `2px solid ${rgba(
-        theme.DEPRECATED_THEME.colors.bluePrimary,
-        0.85
-      )} !important`};
-  }
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    button,
-    a {
-      min-width: ${({ cardSize }) => cardSize.width};
-      & > label {
-        font-size: 12px;
-      }
+  ${({ theme }) => css`
+    &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
+      ${themeHelpers.focusCSS(theme.colors.border.focus)};
     }
-  }
+  `};
 `;
 EditControls.propTypes = {
   cardSize: PageSizePropType.isRequired,
@@ -96,7 +83,6 @@ const ActionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  text-transform: uppercase;
 `;
 
 const EmptyActionContainer = styled(ActionContainer)`
@@ -108,6 +94,7 @@ const getActionAttributes = (targetAction) =>
     ? {
         href: resolveRoute(targetAction),
         isLink: true,
+        as: 'a',
       }
     : { onClick: targetAction };
 
@@ -224,6 +211,7 @@ const CardPreviewContainer = ({
               tabIndex={tabIndex}
               data-testid="card-center-action"
               type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
               {...getActionAttributes(centerAction.targetAction)}
               aria-label={centerAction.ariaLabel}
             >
@@ -238,6 +226,8 @@ const CardPreviewContainer = ({
               tabIndex={tabIndex}
               aria-label={bottomAction.ariaLabel}
               isDisabled={!bottomAction.targetAction}
+              type={BUTTON_TYPES.PRIMARY}
+              size={BUTTON_SIZES.SMALL}
             >
               {bottomAction.label}
             </Button>

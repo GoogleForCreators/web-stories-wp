@@ -251,12 +251,15 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           story: {
             status: status || 'auto-draft',
             title: title,
-            author: author || 1,
+            author: { id: author || 1, name: '' },
             slug: title,
             date: created || Date.now().toString(),
             modified: modified || Date.now().toString(),
             featuredMedia: {
               id: 0,
+              url: '',
+              width: 1,
+              height: 1,
             },
             password: password || '',
             excerpt: excerpt || '',
@@ -276,7 +279,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           /* webpackChunkName: "chunk-getStoryMarkup" */ '../../../edit-story/output/utils/getStoryMarkup'
         );
 
-        const markup = await getStoryMarkup(
+        const markup = await getStoryMarkup.default(
           preppedStoryProps.story,
           preppedStoryProps.pages,
           preppedStoryProps.metadata,

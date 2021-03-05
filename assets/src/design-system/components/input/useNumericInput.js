@@ -58,9 +58,12 @@ export const useNumericInput = ({
       }
 
       revertToOriginal.current = false;
-
-      setCurrentValue(newValue);
-      onChange(ev, newValue);
+      if (newValue !== null) {
+        setCurrentValue(newValue);
+        if (newValue !== oldValue.current) {
+          onChange(ev, newValue);
+        }
+      }
     },
     [currentValue, onChange, options]
   );
@@ -128,5 +131,6 @@ export const useNumericInput = ({
     handleChange,
     handleEsc,
     handleKeyUpAndDown,
+    isIndeterminate: oldValue.current === currentValue,
   };
 };

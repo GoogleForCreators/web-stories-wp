@@ -31,13 +31,10 @@ import { useContext } from 'use-context-selector';
 import panelContext from '../context';
 
 const Container = styled.div`
-  padding: ${({ padding }) => padding || '10px 16px'};
+  padding: ${({ padding }) => padding || '0px 16px 8px'};
   overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? theme.colors.interactiveBg.secondaryNormal : 'transparent'};
-  ${({ hasBorder, theme }) =>
-    hasBorder &&
-    `border-top: 1px solid ${theme.DEPRECATED_THEME.colors.bg.v9};`}
 `;
 
 function Content({ children, ...rest }) {
