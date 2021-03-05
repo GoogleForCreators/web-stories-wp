@@ -15,18 +15,21 @@
  */
 
 /**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from '../../icons/video.svg';
+import StoryPropTypes from '../../types';
+import VisibleImage from '../media/visibleImage';
 
-function VideoIcon() {
-  const alt = __('Video element', 'web-stories');
-  return <Icon aria-label={alt} />;
+function VideoLayerContent({
+  element: {
+    resource: { poster, alt },
+  },
+}) {
+  return <VisibleImage src={poster} alt={alt} height="20" />;
 }
 
-export default VideoIcon;
+VideoLayerContent.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
+
+export default VideoLayerContent;
