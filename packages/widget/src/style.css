@@ -1,0 +1,19 @@
+/*
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#available-widgets [class*='web_stories'] .widget-title:before {
+  content: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMDggMjA4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjEwMCIgZmlsbD0iYmxhY2siLz4KPHBhdGggZD0iTTEzNS4yIDYyLjQwMDVDMTQwLjk0NCA2Mi40MDA1IDE0NS42IDY3LjA1NjcgMTQ1LjYgNzIuODAwNVYxMzUuMkMxNDUuNiAxNDAuOTQ0IDE0MC45NDQgMTQ1LjYgMTM1LjIgMTQ1LjZWNjIuNDAwNVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik01Ny4yIDYyLjQwMDVDNTcuMiA1Ni42NTY3IDYxLjg1NjIgNTIuMDAwNSA2Ny42IDUyLjAwMDVIMTE0LjRDMTIwLjE0NCA1Mi4wMDA1IDEyNC44IDU2LjY1NjcgMTI0LjggNjIuNDAwNVYxNDUuNkMxMjQuOCAxNTEuMzQ0IDEyMC4xNDQgMTU2IDExNC40IDE1Nkg2Ny42QzYxLjg1NjIgMTU2IDU3LjIgMTUxLjM0NCA1Ny4yIDE0NS42VjYyLjQwMDVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTU2IDcyLjgwMDVDMTYwLjMwOCA3Mi44MDA1IDE2My44IDc2LjI5MjcgMTYzLjggODAuNjAwNVYxMjcuNEMxNjMuOCAxMzEuNzA4IDE2MC4zMDggMTM1LjIgMTU2IDEzNS4yVjcyLjgwMDVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=');
+}

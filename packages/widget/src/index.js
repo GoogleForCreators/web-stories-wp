@@ -19,6 +19,11 @@
 import domReady from '@wordpress/dom-ready';
 
 /**
+ * Internal dependencies
+ */
+import './style.css';
+
+/**
  * Store field states in local variable.
  *
  * @type {Object}

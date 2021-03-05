@@ -404,6 +404,8 @@ class Stories extends WP_Widget {
 			return;
 		}
 
+		$this->enqueue_style( self::SCRIPT_HANDLE );
+
 		$this->enqueue_script( self::SCRIPT_HANDLE, [ 'jquery' ] );
 
 		wp_localize_script(
