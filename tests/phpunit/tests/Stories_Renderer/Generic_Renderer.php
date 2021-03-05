@@ -72,7 +72,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 
 		$this->story_model = $this->createMock( Story::class );
 		$this->story_query = $this->createMock( Story_Query::class );
-		$this->story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
 	/**

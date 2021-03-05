@@ -275,13 +275,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		// TODO: get from field state instead.
 		if ( ! $this->is_view_type( 'circles' ) ) {
-			if ( true === $this->attributes['show_author'] ) {
+			if ( isset( $this->attributes['show_author'] ) && true === $this->attributes['show_author'] ) {
 				$author_id = absint( get_post_field( 'post_author', $post->ID ) );
 
 				$story_data['author'] = get_the_author_meta( 'display_name', $author_id );
 			}
 
-			if ( true === $this->attributes['show_date'] ) {
+			if ( isset( $this->attributes['show_date'] ) && true === $this->attributes['show_date'] ) {
 				$story_data['date'] = get_the_date( __( 'M j, Y', 'web-stories' ), $post->ID );
 			}
 		}
