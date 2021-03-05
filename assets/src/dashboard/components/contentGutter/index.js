@@ -17,17 +17,16 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-export const StandardViewContentGutter = styled.div(
-  ({ theme }) => css`
-    margin: 0 52px;
+/**
+ * Internal dependencies
+ */
+import { PAGE_WRAPPER } from '../../constants';
 
-    @media ${theme.breakpoint.mobile} {
-      margin: 0 10px;
-    }
-  `
-);
+export const StandardViewContentGutter = styled.div`
+  margin: 0 ${PAGE_WRAPPER.GUTTER}px;
+`;
 
 export const DetailViewContentGutter = styled.div(
   ({ theme }) => `

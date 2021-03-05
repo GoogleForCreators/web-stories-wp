@@ -46,7 +46,7 @@ const Header = styled.h2`
   user-select: none;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 14px 20px;
   cursor: pointer;
 `;
 
@@ -58,6 +58,11 @@ const Heading = styled(Headline)`
 const HeaderActions = styled.div`
   display: flex;
   align-items: center;
+`;
+
+// Keeps the space for the icon even if it's not displayed.
+const IconWrapper = styled.div`
+  width: 32px;
 `;
 
 // -12px margin-left comes from 16px panel padding - 4px that it actually should be.
@@ -183,7 +188,7 @@ function Title({
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}
       >
-        {canCollapse && toggleIcon}
+        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
           id={panelTitleId}
           as="span"

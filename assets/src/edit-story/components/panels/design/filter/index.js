@@ -14,30 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { TypographyPresets } from '../typography';
-
-export const Link = styled.a`
-  ${TypographyPresets.Small};
-  margin: 0;
-  text-decoration: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
-  cursor: pointer;
-  border-bottom: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: currentColor;
-    box-shadow: none;
-    border-bottom: 1px solid currentColor;
-    outline: 0;
-  }
-`;
+export { default } from './filter';

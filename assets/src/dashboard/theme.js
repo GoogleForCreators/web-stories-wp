@@ -225,30 +225,6 @@ const theme = {
     tablet: 40,
     min: 10,
   },
-  standardViewContentGutter: {
-    desktop: 52,
-    tablet: 52,
-    largeDisplayPhone: 10,
-    smallDisplayPhone: 10,
-    min: 10,
-  },
-  grid: {
-    columnGap: {
-      desktop: 20,
-      tablet: 20,
-      largeDisplayPhone: 10,
-      smallDisplayPhone: 10,
-      min: 10,
-    },
-  },
-  previewWidth: {
-    desktop: 232,
-    tablet: 200,
-    largeDisplayPhone: 173,
-    smallDisplayPhone: 200,
-    min: 152,
-    thumbnail: 33,
-  },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
     tablet: 'screen and (max-width: 1120px)',

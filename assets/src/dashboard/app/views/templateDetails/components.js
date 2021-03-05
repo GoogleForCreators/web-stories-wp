@@ -24,6 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { TypographyPresets, Paragraph2 } from '../../../components';
+import { PAGE_WRAPPER } from '../../../constants';
 
 export const ColumnContainer = styled.section`
   ${({ theme }) => `
@@ -44,24 +45,12 @@ export const DetailContainer = styled.section.attrs({
 `;
 
 export const Column = styled.div`
-  ${({ theme }) => `
-    display: flex;
-    width: 50%;
+  display: flex;
+  width: 50%;
 
-    & + & {
-      padding-left: ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
-    }
-
-    @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
-      & + & {
-        padding-left: ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px;
-      }
-    }
-
-    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-      width: 100%;
-    }
-  `}
+  & + & {
+    padding-left: ${PAGE_WRAPPER.GUTTER}px;
+  }
 `;
 
 export const Title = styled.h1.attrs({

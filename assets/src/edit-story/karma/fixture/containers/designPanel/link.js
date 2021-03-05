@@ -31,10 +31,6 @@ export class Link extends AbstractPanel {
     return this.getByRole('textbox', { name: 'Element link' });
   }
 
-  get addressClear() {
-    return this.queryByRole('button', { name: 'Clear input' });
-  }
-
   get icon() {
     return this.queryByRole('button', { name: 'Edit link icon' });
   }

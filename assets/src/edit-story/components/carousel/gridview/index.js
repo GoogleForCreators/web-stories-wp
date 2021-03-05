@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useRef, useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -25,29 +25,47 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useGridViewKeys } from '../../../../design-system';
+import {
+  Slider,
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  Icons,
+  useResizeEffect,
+  useGridViewKeys,
+} from '../../../../design-system';
 import { useConfig, useStory } from '../../../app';
-import RangeInput from '../../rangeInput';
-import { Rectangle as RectangleIcon } from '../../../icons';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
-import PagePreview, {
-  THUMB_FRAME_HEIGHT,
-  THUMB_FRAME_WIDTH,
-} from '../pagepreview';
+import { PAGE_RATIO } from '../../../constants';
 import {
   Reorderable,
   ReorderableSeparator,
   ReorderableItem,
 } from '../../reorderable';
+import PagePreview from '../pagepreview';
 
-const PREVIEW_WIDTH = 90;
-const PREVIEW_HEIGHT = (PREVIEW_WIDTH * PAGE_HEIGHT) / PAGE_WIDTH;
-const GRID_GAP = 20;
+const MIN_GRID_GAP = 20;
+const LINE_HEIGHT = 64;
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  padding: 32px;
+`;
+
+const TopRow = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    margin-bottom: 72px;
+  }
+  @media ${({ theme }) => theme.breakpoint.wide} {
+    margin-bottom: 112px;
+  }
 `;
 
 const Wrapper = styled(Reorderable)`
@@ -58,68 +76,33 @@ const Wrapper = styled(Reorderable)`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  pointer-events: all;
+  padding: 4px;
 `;
 
 const Grid = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: ${({ scale }) =>
-    `repeat(auto-fit, minmax(${
-      scale * PREVIEW_WIDTH + THUMB_FRAME_WIDTH
-    }px, max-content))`};
-  grid-gap: ${GRID_GAP}px;
+  grid-template-columns: ${({ pageWidth }) =>
+    `repeat(auto-fit, minmax(${pageWidth}px, max-content))`};
+  grid-template-rows: repeat(auto-fill, ${({ pageHeight }) => pageHeight}px);
+  grid-gap: ${({ gapWidth }) => gapWidth}px;
   justify-content: center;
-  justify-items: center;
-  align-items: center;
+  align-items: flex-start;
   flex-grow: 1;
 `;
 
-const RangeInputWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 430px;
-  margin: 0 auto 75px auto;
-  width: 100%;
+const NoButton = styled.div`
+  flex: 0 0 56px;
 `;
 
-const FlexGrowRangeInput = styled(RangeInput)`
-  flex-grow: 1;
+const ClickableButton = styled(Button)`
+  pointer-events: all;
 `;
 
-const Rectangle = styled.button`
-  border: 0;
-  padding: 0;
-  margin: 0;
-  min-width: unset;
-  background: transparent;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-
-  &:active {
-    outline: none;
-  }
-
-  ${({ disable }) =>
-    disable &&
-    css`
-      pointer-events: none;
-      opacity: 0.3;
-    `}
-
-  svg {
-    width: ${({ isLarge }) => (isLarge ? '20px' : '12px')};
-    height: auto;
-    shape-rendering: crispEdges; /* prevents issues with anti-aliasing */
-  }
-`;
-
-const Space = styled.div`
-  flex: 0 0 20px;
+const ClickableSlider = styled(Slider)`
+  pointer-events: all;
+  width: 366px;
 `;
 
 const PageSeparator = styled(ReorderableSeparator)`
@@ -127,9 +110,10 @@ const PageSeparator = styled(ReorderableSeparator)`
   bottom: 0;
   left: ${({ width }) => width / 2}px;
   width: ${({ width, margin }) => width + margin}px;
-  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
+  height: ${({ height }) => height}px;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   ${({ before, width, margin }) =>
     before &&
@@ -139,9 +123,9 @@ const PageSeparator = styled(ReorderableSeparator)`
 `;
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
-  height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
-  width: 4px;
+  background: ${({ theme }) => theme.colors.border.selection};
+  height: ${({ height }) => height}px;
+  width: 2px;
   margin: 0px;
 `;
 
@@ -151,71 +135,7 @@ const ItemContainer = styled.div`
   position: relative;
 `;
 
-function ThumbnailSizeControl({ value, onChange }) {
-  const max = 3;
-  const min = 1;
-  const step = 1;
-
-  const updateRangeValue = (addition) => {
-    onChange(Math.min(max, Math.max(min, value + addition)));
-  };
-
-  let valueText;
-  switch (value) {
-    case max:
-      valueText = __('Large', 'web-stories');
-      break;
-    case min:
-      valueText = __('Small', 'web-stories');
-      break;
-    default:
-      valueText = __('Medium', 'web-stories');
-      break;
-  }
-
-  const decreaseBtnDisabled = value === min;
-  const increaseBtnDisabled = value === max;
-
-  return (
-    <RangeInputWrapper>
-      <Rectangle
-        onClick={() => !decreaseBtnDisabled && updateRangeValue(-step)}
-        disable={decreaseBtnDisabled}
-        aria-label={__('Decrease thumbnail size', 'web-stories')}
-      >
-        <RectangleIcon />
-      </Rectangle>
-      <Space />
-      <FlexGrowRangeInput
-        min={min}
-        max={max}
-        majorStep={step}
-        minorStep={step}
-        value={value}
-        handleChange={onChange}
-        thumbSize={24}
-        aria-label={__('Thumbnail size', 'web-stories')}
-        aria-valuetext={valueText}
-      />
-      <Space />
-      <Rectangle
-        isLarge
-        onClick={() => !increaseBtnDisabled && updateRangeValue(step)}
-        disable={increaseBtnDisabled}
-        aria-label={__('Increase thumbnail size', 'web-stories')}
-      >
-        <RectangleIcon />
-      </Rectangle>
-    </RangeInputWrapper>
-  );
-}
-
-ThumbnailSizeControl.propTypes = {
-  value: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-function GridView() {
+function GridView({ onClose }) {
   const {
     pages,
     currentPageId,
@@ -236,14 +156,26 @@ function GridView() {
   );
 
   const { isRTL } = useConfig();
-  const [zoomLevel, setZoomLevel] = useState(2);
+  const [pagesPerRow, setPagesPerRow] = useState(4);
+  const [availableWidth, setAvailableWidth] = useState(null);
+  const wrapperRef = useRef();
 
-  const width = zoomLevel * PREVIEW_WIDTH + THUMB_FRAME_WIDTH;
-  const height = zoomLevel * PREVIEW_HEIGHT + THUMB_FRAME_HEIGHT;
+  // Get updated size of wrapper
+  useResizeEffect(wrapperRef, ({ width }) => setAvailableWidth(width), []);
+
+  // Calculate max page width that can fit on the page
+  const minGaps = MIN_GRID_GAP * (pagesPerRow - 1);
+  const rawPageWidth = (availableWidth - minGaps) / pagesPerRow;
+
+  const pageWidth = Math.floor(rawPageWidth / 12) * 12;
+  const actualPageWidths = pageWidth * pagesPerRow;
+  const pageGridGap = Math.floor(
+    (availableWidth - actualPageWidths) / (pagesPerRow - 1)
+  );
+  const pageHeight = pageWidth / PAGE_RATIO;
 
   const handleClickPage = (page) => () => setCurrentPage({ pageId: page.id });
 
-  const wrapperRef = useRef();
   const gridRef = useRef();
   const pageRefs = useRef({});
 
@@ -264,9 +196,32 @@ function GridView() {
     arrangeItem,
   });
 
+  // actual divider height should be smaller than page height, but no more than LINE_HEIGHT
+  const dividerLineHeight = Math.min(pageHeight - 24, LINE_HEIGHT);
+
   return (
-    <Container>
-      <ThumbnailSizeControl value={zoomLevel} onChange={setZoomLevel} />
+    <Container aria-label={__('Grid View', 'web-stories')}>
+      <TopRow>
+        <ClickableButton
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.MEDIUM}
+          onClick={onClose}
+          aria-label={__('Close', 'web-stories')}
+        >
+          <Icons.Cross />
+        </ClickableButton>
+        <ClickableSlider
+          min={4}
+          max={12}
+          majorStep={1}
+          minorStep={1}
+          value={pagesPerRow}
+          onChange={(evt) => setPagesPerRow(evt.target.valueAsNumber)}
+          aria-label={__('Pages per row', 'web-stories')}
+        />
+        <NoButton />
+      </TopRow>
       <Wrapper
         aria-label={__('Grid View Pages List', 'web-stories')}
         ref={wrapperRef}
@@ -276,9 +231,15 @@ function GridView() {
           setCurrentPage({ pageId });
         }}
         mode={'grid'}
-        getItemSize={() => height}
+        getItemSize={() => pageHeight}
+        scrollSize={64}
       >
-        <Grid scale={zoomLevel} ref={gridRef}>
+        <Grid
+          pageWidth={pageWidth}
+          pageHeight={pageHeight}
+          gapWidth={pageGridGap}
+          ref={gridRef}
+        >
           {pages.map((page, index) => {
             const isCurrentPage = index === currentPageIndex;
             const isInteractive = pages.length > 1;
@@ -292,12 +253,12 @@ function GridView() {
               >
                 <PageSeparator
                   position={index}
-                  width={width}
-                  height={height}
-                  margin={GRID_GAP}
+                  width={pageWidth}
+                  height={pageHeight}
+                  margin={pageGridGap}
                   before
                 >
-                  <Line height={height} />
+                  <Line height={dividerLineHeight} />
                 </PageSeparator>
                 <ReorderableItem position={index}>
                   <PagePreview
@@ -318,20 +279,21 @@ function GridView() {
                     tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     isActive={isCurrentPage && isInteractive}
                     page={page}
-                    width={width}
-                    height={height}
+                    width={pageWidth}
+                    height={pageHeight}
                     onClick={handleClickPage(page)}
                     isInteractive={isInteractive}
                     gridRef={gridRef}
+                    role="option"
                   />
                 </ReorderableItem>
                 <PageSeparator
                   position={index + 1}
-                  width={width}
-                  height={height}
-                  margin={GRID_GAP}
+                  width={pageWidth}
+                  height={pageHeight}
+                  margin={pageGridGap}
                 >
-                  <Line height={height} />
+                  <Line height={dividerLineHeight} />
                 </PageSeparator>
               </ItemContainer>
             );
@@ -341,5 +303,9 @@ function GridView() {
     </Container>
   );
 }
+
+GridView.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
 
 export default GridView;

@@ -187,44 +187,11 @@ export function getPagePreset(page, storyStyles) {
   };
 }
 
-function colorHasTransparency(color) {
-  return color.a !== undefined && color.a < 1;
-}
-
-export function presetHasOpacity(preset) {
-  const { color, stops } = preset;
-  if (color) {
-    return Boolean(colorHasTransparency(color));
-  }
-  let opacityFound = false;
-  for (const colorStop of stops) {
-    if (colorHasTransparency(colorStop.color)) {
-      opacityFound = true;
-      break;
-    }
-  }
-  return opacityFound;
-}
-
-export function presetHasGradient({ type }) {
-  return Boolean(type) && 'solid' !== type;
-}
-
 export function areAllType(elType, selectedElements) {
   return (
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => elType === type)
   );
-}
-
-export function getOpaqueColor(preset) {
-  const { color } = preset;
-  return {
-    color: {
-      ...color,
-      a: 1,
-    },
-  };
 }
 
 export function getPanelInitialHeight(isColor, presets) {

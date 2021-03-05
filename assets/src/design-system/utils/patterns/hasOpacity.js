@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,33 +14,24 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
+function colorHasTransparency(color) {
+  return color.a !== undefined && color.a < 1;
+}
 
-/**
- * Internal dependencies
- */
-import { Link } from '../';
+function hasOpacity(preset) {
+  const { color, alpha, stops } = preset;
+  if (color) {
+    return Boolean(colorHasTransparency(color));
+  }
+  if (typeof alpha === 'number' && alpha < 1) {
+    return true;
+  }
+  for (const colorStop of stops || []) {
+    if (colorHasTransparency(colorStop.color)) {
+      return true;
+    }
+  }
+  return false;
+}
 
-export default {
-  title: 'Dashboard/Components/Link',
-  component: Link,
-};
-
-const CurrentColorLink = styled(Link)`
-  color: black;
-`;
-
-export const _default = () => {
-  return (
-    <>
-      <Link href="#">{'Demo link extended from Typography'}</Link>
-      <br />
-      <CurrentColorLink href="#">
-        {'Demo link extended from Typography'}
-      </CurrentColorLink>
-    </>
-  );
-};
+export default hasOpacity;

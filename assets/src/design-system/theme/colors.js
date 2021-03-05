@@ -27,6 +27,7 @@ const brand = {
   gray: {
     90: '#131516',
     80: '#26292A',
+    75: '#2E3133',
     70: '#393D3F',
     60: '#4B5253',
     50: '#5E6668',
@@ -159,11 +160,12 @@ const darkTheme = {
     positiveNormal: brand.green[40],
     positiveHover: brand.green[30],
     positivePress: brand.green[20],
+    previewOverlay: opacity.black10,
   },
   border: {
     focus: brand.blue[30],
-    disable: brand.gray[70],
-    defaultNormal: brand.gray[50],
+    disable: brand.gray[75],
+    defaultNormal: brand.gray[70],
     defaultHover: brand.gray[40],
     defaultPress: brand.gray[30],
     defaultActive: brand.gray[10],
@@ -237,6 +239,7 @@ const lightTheme = {
     positiveNormal: brand.green[20],
     positiveHover: brand.green[30],
     positivePress: brand.green[40],
+    previewOverlay: opacity.white16,
   },
   border: {
     focus: brand.blue[40],
