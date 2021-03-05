@@ -15,9 +15,9 @@
 |                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(6 / 6)*    |
 |                                                                   | Enter edit mode                                  | 🏆 **100.00%** *(5 / 5)*    |
-|                                                                   | Set different poster image                       | 🛴 **50.00%** *(1 / 2)*     |
+|                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                                   | *[total]*                                        | 🛴 **70.59%** *(12 / 17)*   |
+|                                                                   | *[total]*                                        | 🛴 **76.47%** *(13 / 17)*   |
 | Creator Can Style Text                                            | Apply B                                          | 🏔️ **94.74%** *(18 / 19)*  |
 |                                                                   | Apply I                                          | 🛴 **80.00%** *(8 / 10)*    |
 |                                                                   | Apply U                                          | 🛴 **77.78%** *(7 / 9)*     |
@@ -75,4 +75,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **76.80%** *(298 / 388)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **77.32%** *(300 / 388)* |
