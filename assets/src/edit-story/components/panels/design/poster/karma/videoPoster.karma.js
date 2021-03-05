@@ -81,7 +81,9 @@ describe('Video Poster Panel', () => {
       expect(vaPanel.posterImage.src).toBe(originalPoster);
     });
 
-    it('should allow user to edit and reset poster image using keyboard', async () => {
+    // Disable reason: flaky test. @todo fix.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow user to edit and reset poster image using keyboard', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
 

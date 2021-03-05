@@ -28,6 +28,7 @@ import 'focus-visible';
  */
 
 export const FOCUS_VISIBLE_SELECTOR = 'focus-visible';
+export const FOCUS_VISIBLE_DATA_ATTRIBUTE = 'data-focus-visible-added';
 
 export const OverrideFocusOutline = createGlobalStyle`
    /*
