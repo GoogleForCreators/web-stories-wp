@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
@@ -30,12 +29,7 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Input, Text } from '../../../../../design-system';
-import { PRESET_SIZES } from '../../../../../design-system/theme/constants/typography';
-
-const Error = styled(Text)`
-  color: ${({ theme }) => theme.colors.status.negative};
-`;
+import { Input } from '../../../../../design-system';
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
@@ -144,20 +138,20 @@ function PageAttachmentPanel() {
         onFocus={onFocus}
         value={url || ''}
         clear
-        aria-label={__('Page Attachment link', 'web-stories')}
+        aria-label={__(
+          'Type an address to add a page attachment link',
+          'web-stories'
+        )}
+        hasError={displayWarning}
+        hint={
+          displayWarning
+            ? __(
+                'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
+                'web-stories'
+              )
+            : undefined
+        }
       />
-
-      {displayWarning && (
-        <Row>
-          <Error forwardedAs="span" size={PRESET_SIZES.X_SMALL}>
-            {__(
-              'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
-              'web-stories'
-            )}
-          </Error>
-        </Row>
-      )}
-
       {showTextInput && (
         <Row>
           <Input
