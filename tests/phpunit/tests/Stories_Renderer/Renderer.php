@@ -28,7 +28,7 @@ namespace Google\Web_Stories\Tests\Stories_Renderer;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Tests\Test_Renderer;
-use Google\Web_Stories\Story_Query as Stories;
+use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Private_Access;
 use Google\Web_Stories\Stories_Renderer\Renderer as AbstractRenderer;
 
@@ -51,9 +51,9 @@ class Renderer extends \WP_UnitTestCase_Base {
 	/**
 	 * Stories mock object.
 	 *
-	 * @var Stories
+	 * @var Story_Query
 	 */
-	private $stories;
+	private $story_query;
 
 	/**
 	 * Story Model Mock.
@@ -87,8 +87,8 @@ class Renderer extends \WP_UnitTestCase_Base {
 		$this->story_model = $this->createMock( Story::class );
 		$this->story_model->load_from_post( self::$story_id );
 
-		$this->stories = $this->createMock( Stories::class );
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query = $this->createMock( Story_Query::class );
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'         => 'grid',
 				'show_title'        => true,
@@ -104,12 +104,11 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * @covers ::assets
 	 */
 	public function test_assets() {
-
-		$renderer = new Test_Renderer( $this->stories );
+		$renderer = new Test_Renderer( $this->story_query );
 
 		$renderer->assets();
 
-		$this->assertTrue( wp_style_is( \Google\Web_Stories\Stories_Renderer\Renderer::STYLE_HANDLE ) );
+		$this->assertTrue( wp_style_is( \Google\Web_Stories\Stories_Renderer\Renderer::STYLE_HANDLE, 'registered' ) );
 	}
 
 	/**
@@ -117,7 +116,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_is_view_type() {
 
-		$renderer = new Test_Renderer( $this->stories );
+		$renderer = new Test_Renderer( $this->story_query );
 
 		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'grid' ] );
 
@@ -133,12 +132,12 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_get_view_type() {
 
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type' => 'grid',
 			]
 		);
-		$renderer = new Test_Renderer( $this->stories );
+		$renderer = new Test_Renderer( $this->story_query );
 
 		$output = $this->call_private_method( $renderer, 'get_view_type' );
 
@@ -151,7 +150,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_render_story_with_poster() {
 
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'       => 'list',
 				'class'           => '',
@@ -159,9 +158,9 @@ class Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
-		$this->set_private_property( $renderer, 'story_posts', [ $this->story_model ] );
+		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
 		ob_start();
 		$this->call_private_method( $renderer, 'render_story_with_poster' );
@@ -174,10 +173,9 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * @covers ::get_content_overlay
 	 */
 	public function test_get_content_overlay() {
-
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->method( 'is_amp_request' )->willReturn( false );
-		$this->set_private_property( $renderer, 'story_posts', [ $this->story_model ] );
+		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 		$this->set_private_property( $renderer, 'content_overlay', false );
 
 		ob_start();
@@ -200,14 +198,13 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * @covers ::get_single_story_classes
 	 */
 	public function test_get_single_story_classes() {
-
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type' => 'circles',
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->story_query );
 		$expected = 'web-stories-list__story';
 
 		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
@@ -219,9 +216,9 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * @covers ::get_container_classes
 	 */
 	public function test_get_container_classes() {
-		$stories = $this->createMock( Stories::class );
-		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
-		$stories->method( 'get_story_attributes' )->willReturn(
+		$story_query = $this->createMock( Story_Query::class );
+		$story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'  => 'circles',
 				'show_title' => true,
@@ -229,7 +226,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $story_query );
 
 		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
@@ -242,9 +239,9 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * @covers ::maybe_render_archive_link
 	 */
 	public function test_maybe_render_archive_link() {
-		$stories = $this->createMock( Stories::class );
-		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
-		$stories->method( 'get_story_attributes' )->willReturn(
+		$story_query = $this->createMock( Story_Query::class );
+		$story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'show_title'         => true,
 				'show_archive_link'  => true,
@@ -252,7 +249,7 @@ class Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $story_query );
 
 		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
@@ -270,16 +267,16 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * date or author attribute is true.
 	 */
 	public function test_content_overlay_is_set() {
-		$stories = $this->createMock( Stories::class );
-		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
-		$stories->method( 'get_story_attributes' )->willReturn(
+		$story_query = $this->createMock( Story_Query::class );
+		$story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'show_title' => false,
 				'show_date'  => true,
 			]
 		);
 
-		$renderer = new Test_Renderer( $stories );
+		$renderer = new Test_Renderer( $story_query );
 
 		$overlay = $this->get_private_property( $renderer, 'content_overlay' );
 

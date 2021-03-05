@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Stories_Renderer;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Story_Query as Stories;
+use Google\Web_Stories\Story_Query;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Generic_Renderer
@@ -28,9 +28,9 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 	/**
 	 * Stories mock object.
 	 *
-	 * @var Stories
+	 * @var Story_Query
 	 */
-	private $stories;
+	private $story_query;
 
 	/**
 	 * Story post ID.
@@ -71,8 +71,8 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 		parent::setUp();
 
 		$this->story_model = $this->createMock( Story::class );
-		$this->stories     = $this->createMock( Stories::class );
-		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$this->story_query = $this->createMock( Story_Query::class );
+		$this->story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 	}
 
 	/**
@@ -80,7 +80,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_assets() {
 
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'class'      => '',
 				'view_type'  => 'grid',
@@ -88,7 +88,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
 		$this->assertTrue( wp_style_is( \Google\Web_Stories\Embed_Base::STORY_PLAYER_HANDLE ) );
@@ -99,7 +99,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_render() {
 
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'          => 'grid',
 				'number_of_columns'  => 2,
@@ -116,7 +116,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
 		$output = $renderer->render();

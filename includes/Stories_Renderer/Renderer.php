@@ -248,13 +248,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function assets() {
-
-		// Web Stories Styles for AMP and non-AMP pages.
+		// Web Stories styles for AMP and non-AMP pages.
 		$this->register_style( self::STYLE_HANDLE );
 
-		// Web Stories Lightbox script.
+		// Web Stories lightbox script.
 		$this->register_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
-
 	}
 
 	/**
