@@ -106,6 +106,8 @@ class Stories extends \WP_UnitTestCase {
 			'archive_link_label' => 'View Stories',
 			'number_of_columns'  => 2,
 			'sharp_corners'      => 1,
+			'orderby'            => 'post_date',
+			'order'              => 'DESC',
 		];
 
 		$instance = self::$testee->update( $new_instance, $old_instance );
