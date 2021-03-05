@@ -67,7 +67,6 @@ class Generic_Renderer extends Renderer {
 	 * @return string Rendered stories output.
 	 */
 	public function render( array $args = [] ) {
-
 		if ( ! $this->valid() ) {
 			return '';
 		}
@@ -81,7 +80,7 @@ class Generic_Renderer extends Renderer {
 		<div class="<?php echo esc_attr( $container_classes ); ?>" data-id="<?php echo esc_attr( (string) $this->instance_id ); ?>">
 			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
 				<?php
-				foreach ( $this->story_posts as $story ) {
+				foreach ( $this->stories as $story ) {
 					$this->render_single_story_content();
 					$this->next();
 				}

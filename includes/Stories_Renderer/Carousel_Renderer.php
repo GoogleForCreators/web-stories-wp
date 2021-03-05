@@ -64,7 +64,6 @@ class Carousel_Renderer extends Renderer {
 	 * @return void
 	 */
 	public function assets() {
-
 		parent::assets();
 
 		$this->register_script( self::SCRIPT_HANDLE );
@@ -75,7 +74,6 @@ class Carousel_Renderer extends Renderer {
 			'webStoriesCarouselSettings',
 			$this->get_carousel_settings()
 		);
-
 	}
 
 	/**
@@ -105,7 +103,6 @@ class Carousel_Renderer extends Renderer {
 	 * @return string Rendered stories output.
 	 */
 	public function render( array $args = [] ) {
-
 		if ( ! $this->valid() ) {
 			return '';
 		}
@@ -125,7 +122,7 @@ class Carousel_Renderer extends Renderer {
 					?>
 					<div class="web-stories-list__carousel <?php echo esc_attr( $this->get_view_type() ); ?>" data-id="<?php echo esc_attr( 'carousel-' . $this->instance_id ); ?>">
 						<?php
-						foreach ( $this->story_posts as $story ) {
+						foreach ( $this->stories as $story ) {
 							$this->render_single_story_content();
 							$this->next();
 						}
@@ -145,7 +142,7 @@ class Carousel_Renderer extends Renderer {
 						aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
 					>
 						<?php
-						foreach ( $this->story_posts as $story ) {
+						foreach ( $this->stories as $story ) {
 							$this->render_single_story_content();
 							$this->next();
 						}

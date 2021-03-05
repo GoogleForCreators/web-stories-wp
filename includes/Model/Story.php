@@ -41,7 +41,7 @@ class Story {
 	 *
 	 * @var int
 	 */
-	protected $id;
+	protected $id = 0;
 
 	/**
 	 * Title.
@@ -133,6 +133,7 @@ class Story {
 			return false;
 		}
 
+		$this->id      = $post->ID;
 		$this->title   = get_the_title( $post );
 		$this->excerpt = $post->post_excerpt;
 		$this->markup  = $post->post_content;
