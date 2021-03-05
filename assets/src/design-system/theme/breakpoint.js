@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export const raw = {
+  wide: 1441,
   desktop: 1121,
   tablet: 801,
   mobile: 800,
@@ -22,6 +23,7 @@ export const raw = {
 };
 
 export const breakpoint = {
+  wide: `screen and (min-width: ${raw.wide}px)`,
   desktop: `screen and (min-width: ${raw.desktop}px)`,
   tablet: `screen and (min-width: ${raw.tablet}px)`,
   tabletMax: `screen and (max-width: ${raw.desktop}px)`,

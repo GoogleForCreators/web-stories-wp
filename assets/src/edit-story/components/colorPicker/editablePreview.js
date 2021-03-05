@@ -33,8 +33,8 @@ import {
 
 const Preview = styled.button`
   margin: 0;
+  padding: 0;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding: 8px 12px;
   border-radius: 2px;
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.primary};
