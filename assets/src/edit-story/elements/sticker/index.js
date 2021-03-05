@@ -49,5 +49,4 @@ export const panels = [
   PanelTypes.SIZE_POSITION,
   PanelTypes.ANIMATION,
   PanelTypes.LINK,
-  PanelTypes.IMAGE_ACCESSIBILITY,
 ];

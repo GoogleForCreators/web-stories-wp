@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import stickers from './stickers';
+import stickers from '../../stickers';
 
 const style = {
   display: 'block',
