@@ -86,6 +86,7 @@ describe('PostLock', () => {
   let modalWrapper;
 
   beforeAll(() => {
+    jest.useFakeTimers();
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
     Modal.setAppElement(modalWrapper);
@@ -93,8 +94,9 @@ describe('PostLock', () => {
 
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
+    jest.runAllTimers();
   });
-  it('should display dialog', async () => {
+  it('should display take over dialog', async () => {
     setup(
       Promise.resolve({
         locked: true,
@@ -107,8 +109,33 @@ describe('PostLock', () => {
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
+    const myStoriesButton = screen.getByText('My Stories');
+    expect(myStoriesButton).toBeInTheDocument();
+
     const takeOverButton = screen.getByRole('button', { name: 'Take over' });
     expect(takeOverButton).toBeInTheDocument();
+  });
+
+  it('should display dialog', async () => {
+    setup(
+      Promise.resolve({
+        locked: true,
+        user: 123,
+        nonce: 'fsdfds',
+        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+      })
+    );
+
+    jest.advanceTimersByTime(152 * 1000);
+
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toBeInTheDocument();
+
+    const myStoriesButton = screen.getByText('My Stories');
+    expect(myStoriesButton).toBeInTheDocument();
+    expect(
+      screen.getByText('John Doe now has editing control of this story.')
+    ).toBeInTheDocument();
   });
 
   it('should not display dialog', async () => {
