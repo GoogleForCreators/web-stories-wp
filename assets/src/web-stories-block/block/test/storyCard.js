@@ -54,7 +54,11 @@ describe('StoryCard', () => {
         <div
           class="web-stories-list__story-poster"
         >
-          <img />
+          <div
+            class="web-stories-list__story-poster-placeholder"
+          >
+            <span />
+          </div>
         </div>
       </div>
     `);

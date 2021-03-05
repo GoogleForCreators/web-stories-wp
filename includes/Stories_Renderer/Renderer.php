@@ -86,7 +86,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var Story_Query Story_Query instance.
 	 */
-	protected $stories;
+	protected $query;
 
 	/**
 	 * Story attributes
@@ -100,7 +100,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @var array An array of story posts.
 	 */
-	protected $story_posts = [];
+	protected $stories = [];
 
 	/**
 	 * Holds required html for the lightbox.
@@ -142,11 +142,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param Story_Query $stories Story_Query instance.
+	 * @param Story_Query $query Story_Query instance.
 	 */
-	public function __construct( Story_Query $stories ) {
-		$this->stories         = $stories;
-		$this->attributes      = $this->stories->get_story_attributes();
+	public function __construct( Story_Query $query ) {
+		$this->query           = $query;
+		$this->attributes      = $this->query->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
 	}
 
@@ -180,7 +180,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return mixed|void
 	 */
 	public function current() {
-		return $this->story_posts[ $this->position ];
+		return $this->stories[ $this->position ];
 	}
 
 	/**
@@ -213,7 +213,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return bool|void
 	 */
 	public function valid() {
-		return isset( $this->story_posts[ $this->position ] );
+		return isset( $this->stories[ $this->position ] );
 	}
 
 	/**
@@ -235,7 +235,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function init() {
-		$this->story_posts = array_map( [ $this, 'prepare_story_modal' ], $this->stories->get_stories() );
+		$this->stories = array_filter( array_map( [ $this, 'prepare_stories' ], $this->query->get_stories() ) );
 
 		add_action( 'wp_footer', [ $this, 'render_stories_lightbox' ] );
 	}
@@ -248,13 +248,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function assets() {
-
-		// Web Stories Styles for AMP and non-AMP pages.
+		// Web Stories styles for AMP and non-AMP pages.
 		$this->register_style( self::STYLE_HANDLE );
 
-		// Web Stories Lightbox script.
+		// Web Stories lightbox script.
 		$this->register_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
-
 	}
 
 	/**
@@ -264,36 +262,36 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
-	 * @param object $post Array of stories.
+	 * @param object $post Array of post objects.
 	 *
-	 * @return object Returns single story item data.
+	 * @return Story|null Story object or null if given post
 	 */
-	public function prepare_story_modal( $post ) {
-		if ( ! ( $post instanceof WP_Post ) ) {
-			return $post;
+	public function prepare_stories( $post ) {
+		if ( ! $post instanceof WP_Post ) {
+			return null;
 		}
 
-		$is_circles_view = $this->is_view_type( 'circles' );
-		$a_post          = $post;
-		$author_name     = '';
-		$story_date      = '';
-		$story_data      = [];
-		$story_id        = $a_post->ID;
-		$author_id       = absint( get_post_field( 'post_author', $story_id ) );
+		$story_data = [];
 
-		if ( ! $is_circles_view ) {
-			$author_name = ( true === $this->attributes['show_author'] ) ? get_the_author_meta( 'display_name', $author_id ) : $author_name;
-			$story_date  = ( true === $this->attributes['show_date'] ) ? get_the_date( 'M j, Y', $story_id ) : $story_date;
+		// TODO: get from field state instead.
+		if ( ! $this->is_view_type( 'circles' ) ) {
+			if ( isset( $this->attributes['show_author'] ) && true === $this->attributes['show_author'] ) {
+				$author_id = absint( get_post_field( 'post_author', $post->ID ) );
+
+				$story_data['author'] = get_the_author_meta( 'display_name', $author_id );
+			}
+
+			if ( isset( $this->attributes['show_date'] ) && true === $this->attributes['show_date'] ) {
+				$story_data['date'] = get_the_date( __( 'M j, Y', 'web-stories' ), $post->ID );
+			}
 		}
 
-		$story_data['id']      = $story_id;
-		$story_data['author']  = $author_name;
-		$story_data['date']    = $story_date;
 		$story_data['classes'] = $this->get_single_story_classes();
-		$transformed_post      = new Story( $story_data );
-		$transformed_post->load_from_post( $story_id );
 
-		return $transformed_post;
+		$story = new Story( $story_data );
+		$story->load_from_post( $post );
+
+		return $story;
 	}
 
 	/**
@@ -488,9 +486,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				class="<?php echo esc_attr( $single_story_classes ); ?>"
 				on="<?php echo esc_attr( sprintf( 'tap:AMP.setState({%1$s: ! %1$s})', $lightbox_state ) ); ?>"
 			>
-				<?php
-				$this->render_story_with_poster();
-				?>
+				<?php $this->render_story_with_poster(); ?>
 			</div>
 			<?php
 		} else {
@@ -499,9 +495,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			wp_enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
 			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">
-				<?php
-					$this->render_story_with_poster();
-				?>
+				<?php $this->render_story_with_poster(); ?>
 			</div>
 			<?php
 		}
@@ -520,37 +514,52 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 *
 		 * @var Story $story
 		 */
-		$story      = $this->current();
+		$story = $this->current();
+
+		// TODO: Only rely on portrait poster image going forward.
 		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story->get_poster_square() : $story->get_poster_portrait();
 
-		?>
-		<div class="web-stories-list__story-poster">
+		if ( ! $poster_url ) {
+
+			?>
+			<div class="web-stories-list__story-poster">
+				<div class="web-stories-list__story-poster-placeholder">
+					<span>
+						<?php echo esc_html( $story->get_title() ); ?>
+					</span>
+				</div>
+			</div>
 			<?php
-			if ( $this->is_amp() ) {
-				// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
-				?>
-				<amp-img
-					src="<?php echo esc_url( $poster_url ); ?>"
-					layout="responsive"
-					width="0"
-					height="0"
-					alt="<?php echo esc_attr( $story->get_title() ); ?>"
-				>
-				</amp-img>
-			<?php } else { ?>
-				<img
-					src="<?php echo esc_url( $poster_url ); ?>"
-					alt="<?php echo esc_attr( $story->get_title() ); ?>"
-					width="<?php echo absint( $this->width ); ?>"
-					height="<?php echo absint( $this->height ); ?>"
-				>
-			<?php } ?>
-		</div>
-		<?php
+		} else {
+			?>
+			<div class="web-stories-list__story-poster">
+				<?php
+				if ( $this->is_amp() ) {
+					// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
+					?>
+					<amp-img
+						src="<?php echo esc_url( $poster_url ); ?>"
+						layout="responsive"
+						width="0"
+						height="0"
+						alt="<?php echo esc_attr( $story->get_title() ); ?>"
+					>
+					</amp-img>
+				<?php } else { ?>
+					<img
+						src="<?php echo esc_url( $poster_url ); ?>"
+						alt="<?php echo esc_attr( $story->get_title() ); ?>"
+						width="<?php echo absint( $this->width ); ?>"
+						height="<?php echo absint( $this->height ); ?>"
+					>
+				<?php } ?>
+			</div>
+			<?php
+		}
 		$this->get_content_overlay();
 
 		if ( ! $this->is_amp() ) {
-			$this->generate_lightbox_html_noamp( $story );
+			$this->generate_lightbox_html( $story );
 		} else {
 			$this->generate_amp_lightbox_html_amp( $story );
 		}
@@ -579,26 +588,21 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		<div class="web-stories-list__story-content-overlay">
 			<?php if ( $this->attributes['show_title'] ) { ?>
 				<div class="story-content-overlay__title">
-					<?php
-					echo esc_html( $story->get_title() );
-					?>
+					<?php echo esc_html( $story->get_title() ); ?>
 				</div>
 			<?php } ?>
 
 			<?php if ( $this->attributes['show_excerpt'] ) { ?>
 				<div class="story-content-overlay__excerpt">
-					<?php
-					echo esc_html( $story->get_excerpt() );
-					?>
+					<?php echo esc_html( $story->get_excerpt() ); ?>
 				</div>
 			<?php } ?>
 
 			<?php if ( ! empty( $story->get_author() ) ) { ?>
 				<div class="story-content-overlay__author">
 					<?php
-
-					/* translators: %s: author name. */
-					echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story->get_author() ) );
+						/* translators: %s: author name. */
+						echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story->get_author() ) );
 					?>
 				</div>
 			<?php } ?>
@@ -606,32 +610,30 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<?php if ( ! empty( $story->get_date() ) ) { ?>
 				<time class="story-content-overlay__date">
 					<?php
-
-					/* translators: %s: publish date. */
-					echo esc_html( sprintf( __( 'On %s', 'web-stories' ), $story->get_date() ) );
+						/* translators: %s: publish date. */
+						echo esc_html( sprintf( __( 'On %s', 'web-stories' ), $story->get_date() ) );
 					?>
 				</time>
 			<?php } ?>
 		</div>
 		<?php
-
 	}
 
 	/**
 	 * Generate HTML for the non-AMP page request.
 	 *
-	 * @since 1.5.0
-	 * @param Story $story_data Current Story.
+	 * @param Story $story Current Story.
 	 *
 	 * @return void
+	 * @since 1.5.0
 	 */
-	protected function generate_lightbox_html_noamp( $story_data ) {
+	protected function generate_lightbox_html( $story ) {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
 
 		// Collect story links to fill-in non-AMP lightbox 'amp-story-player'.
 		?>
-			<a href="<?php echo esc_url( $story_data->get_url() ); ?>"><?php echo esc_html( $story_data->get_title() ); ?></a>
+			<a href="<?php echo esc_url( $story->get_url() ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
 		<?php
 
 		$this->lightbox_html .= ob_get_clean();
@@ -640,16 +642,16 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Markup for the lightbox used on AMP pages.
 	 *
-	 * @since 1.5.0
-	 * @param Story $story_data Current Story.
+	 * @param Story $story Current Story.
 	 *
 	 * @return void
+	 * @since 1.5.0
 	 */
-	protected function generate_amp_lightbox_html_amp( $story_data ) {
+	protected function generate_amp_lightbox_html_amp( $story ) {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
-		$lightbox_state = 'lightbox' . $story_data->get_id() . $this->instance_id;
-		$lightbox_id    = 'lightbox-' . $story_data->get_id() . $this->instance_id;
+		$lightbox_state = 'lightbox' . $story->get_id() . $this->instance_id;
+		$lightbox_id    = 'lightbox-' . $story->get_id() . $this->instance_id;
 		?>
 		<amp-lightbox
 			id="<?php echo esc_attr( $lightbox_id ); ?>"
@@ -670,7 +672,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					height="6"
 					layout="responsive"
 				>
-					<a href="<?php echo( esc_url( $story_data->get_url() ) ); ?>"><?php echo esc_html( $story_data->get_title() ); ?></a>
+					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>
 			</div>
 		</amp-lightbox>
@@ -685,7 +687,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function render_stories_with_lightbox_noamp() {
+	public function render_stories_with_lightbox() {
 		$data = [
 			'controls'  => [
 				[
@@ -744,7 +746,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			if ( $this->is_amp() ) {
 				$this->render_stories_with_lightbox_amp();
 			} else {
-				$this->render_stories_with_lightbox_noamp();
+				$this->render_stories_with_lightbox();
 			}
 			?>
 		</div>

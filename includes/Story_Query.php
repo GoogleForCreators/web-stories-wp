@@ -29,6 +29,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Stories_Renderer\Carousel_Renderer;
 use Google\Web_Stories\Stories_Renderer\Generic_Renderer;
 use Google\Web_Stories\Stories_Renderer\Renderer;
+use WP_Post;
 use WP_Query;
 
 /**
@@ -102,11 +103,19 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return array An array of Story posts.
+	 * @return WP_Post[] List of Story posts.
 	 */
 	public function get_stories() {
 		$stories_query = new WP_Query();
-		return $stories_query->query( $this->query_args );
+
+		/**
+		 * List of story posts.
+		 *
+		 * @var WP_Post[] $result
+		 */
+		$result = $stories_query->query( $this->query_args );
+
+		return $result;
 	}
 
 	/**

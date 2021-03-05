@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Stories_Renderer;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Story_Query as Stories;
+use Google\Web_Stories\Story_Query;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Carousel_Renderer
@@ -28,9 +28,9 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	/**
 	 * Stories mock object.
 	 *
-	 * @var Stories
+	 * @var Story_Query
 	 */
-	private $stories;
+	private $story_query;
 
 	/**
 	 * Story post ID.
@@ -40,11 +40,16 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	private static $story_id;
 
 	/**
-	 * Story Modal.
+	 * Story model.
 	 *
 	 * @var Story
 	 */
 	private $story_model;
+
+	/**
+	 * @var \WP_Post[]
+	 */
+	private $stories;
 
 	/**
 	 * Runs once before any test in the class run.
@@ -52,7 +57,6 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	 * @param \WP_UnitTest_Factory $factory Factory class object.
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
-
 		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
@@ -71,9 +75,8 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 		parent::setUp();
 
 		$this->story_model = $this->createMock( Story::class );
-		$this->stories     = $this->createMock( Stories::class );
-		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
-		$this->story_posts = [ get_post( self::$story_id ) ];
+		$this->story_query = $this->createMock( Story_Query::class );
+		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
 	/**
@@ -82,14 +85,14 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_init() {
 
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'  => 'carousel',
 				'show_title' => true,
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Carousel_Renderer( $this->stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Carousel_Renderer( $this->story_query );
 		$renderer->init();
 
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
@@ -101,7 +104,7 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_render() {
 
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'          => 'carousel',
 				'archive_link_label' => 'View all stories',
@@ -118,7 +121,7 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Carousel_Renderer( $this->stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Carousel_Renderer( $this->story_query );
 
 		$renderer->init();
 

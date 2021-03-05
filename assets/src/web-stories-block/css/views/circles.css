@@ -26,8 +26,13 @@
   display: inline-block;
 }
 
+.web-stories-list.is-view-type-circles
+  .web-stories-list__story-poster
+  .web-stories-list__story-poster-placeholder,
 .web-stories-list.is-view-type-circles .web-stories-list__story-poster img {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   height: var(--ws-circle-size);
   width: var(--ws-circle-size);
   max-width: initial;
@@ -37,7 +42,10 @@
   padding: 2px;
 }
 
-.web-stories-list.is-view-type-circles .web-stories-list__story-poster::after,
+.web-stories-list.is-view-type-circles .web-stories-list__story-poster::after {
+  padding-bottom: var(--ws-circle-size);
+}
+
 .web-stories-list.is-view-type-circles .web-stories-list__story-poster::before {
   display: none;
 }
