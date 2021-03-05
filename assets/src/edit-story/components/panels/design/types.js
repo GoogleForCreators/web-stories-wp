@@ -36,7 +36,6 @@ const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_POSTER = 'videoPoster';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
-const NO_SELECTION = 'noSelection';
 
 const PanelTypes = {
   ELEMENT_ALIGNMENT,
@@ -61,7 +60,6 @@ const PanelTypes = {
   VIDEO_ACCESSIBILITY,
   CAPTIONS,
   ANIMATION,
-  NO_SELECTION,
 };
 
 export default PanelTypes;

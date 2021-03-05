@@ -37,6 +37,7 @@ const Wrapper = styled.section`
   flex-direction: column;
   position: relative;
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
+  ${({ noBorder }) => noBorder && 'border-bottom: none;'}
 `;
 
 function Panel({

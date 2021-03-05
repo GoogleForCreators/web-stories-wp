@@ -35,9 +35,6 @@ const Container = styled.div`
   overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
     isSecondary ? theme.colors.interactiveBg.secondaryNormal : 'transparent'};
-  ${({ hasBorder, theme }) =>
-    hasBorder &&
-    `border-top: 1px solid ${theme.DEPRECATED_THEME.colors.bg.v9};`}
 `;
 
 function Content({ children, ...rest }) {
