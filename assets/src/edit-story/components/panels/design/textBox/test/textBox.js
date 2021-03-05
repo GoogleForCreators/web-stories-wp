@@ -291,33 +291,20 @@ describe('Panels/TextBox', () => {
     });
 
     it('should not update padding if empty string is submitted', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
-        textElement,
+      const { getByRole } = renderTextBox([
+        {
+          ...textSamePadding,
+          padding: { ...DEFAULT_PADDING, horizontal: 10, vertical: 10 },
+        },
       ]);
       const input = getByRole('textbox', {
         name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+      fireEvent.blur(input);
 
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        true
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: {
-          horizontal: textElement.padding.horizontal,
-          vertical: textElement.padding.vertical,
-        },
-      });
+      expect(input).toHaveValue('10');
     });
 
     it('should update multi padding with lock and same padding', () => {
