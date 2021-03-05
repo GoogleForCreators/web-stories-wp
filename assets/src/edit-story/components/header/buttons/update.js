@@ -30,7 +30,11 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useGlobalKeyDownEffect,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+  Icons,
 } from '../../../../design-system';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -81,28 +85,27 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Button
-          variant={BUTTON_VARIANTS.RECTANGLE}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={() => saveStory({ status: 'draft' })}
-          disabled={!isEnabled}
-        >
-          {text}
-        </Button>
+        <Tooltip title={text} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={() => saveStory({ status: 'draft' })}
+            disabled={!isEnabled}
+            aria-label={text}
+          >
+            <Icons.FloppyDisk />
+          </Button>
+        </Tooltip>
       );
   }
 
   return (
-    <Button
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      type={BUTTON_TYPES.PRIMARY}
-      size={BUTTON_SIZES.SMALL}
+    <ButtonWithChecklistWarning
+      text={text}
       onClick={() => saveStory()}
       disabled={isSaving || isUploading}
-    >
-      {text}
-    </Button>
+    />
   );
 }
 

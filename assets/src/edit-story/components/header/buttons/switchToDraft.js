@@ -29,6 +29,9 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+  Icons,
 } from '../../../../design-system';
 
 function SwitchToDraft() {
@@ -50,15 +53,18 @@ function SwitchToDraft() {
 
   const label = __('Switch to Draft', 'web-stories');
   return (
-    <Button
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      type={BUTTON_TYPES.TERTIARY}
-      size={BUTTON_SIZES.SMALL}
-      onClick={handleUnPublish}
-      disabled={isSaving || isUploading}
-    >
-      {label}
-    </Button>
+    <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+      <Button
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={handleUnPublish}
+        disabled={isSaving || isUploading}
+        aria-label={label}
+      >
+        <Icons.PageSwap />
+      </Button>
+    </Tooltip>
   );
 }
 

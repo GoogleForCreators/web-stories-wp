@@ -30,12 +30,7 @@ import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import TitleMissingDialog from '../titleMissingDialog';
 import useHeader from '../use';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-} from '../../../../design-system/components/button';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Publish() {
   const { isSaving, date, storyId, saveStory, title } = useStory(
@@ -103,15 +98,11 @@ function Publish() {
 
   return (
     <>
-      <Button
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.PRIMARY}
-        size={BUTTON_SIZES.SMALL}
+      <ButtonWithChecklistWarning
         onClick={handlePublish}
         disabled={!capabilities?.hasPublishAction || isSaving || isUploading}
-      >
-        {text}
-      </Button>
+        text={text}
+      />
       <TitleMissingDialog
         open={Boolean(showDialog)}
         onIgnore={publish}
