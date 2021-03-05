@@ -31,7 +31,6 @@ import { STORY_STATUS } from '../../constants';
 import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import InlineInputForm from '../inlineInputForm';
-import { Link } from '../link';
 import { LockClosed as LockSVG } from '../../../design-system/icons';
 import { useConfig } from '../../app/config';
 
