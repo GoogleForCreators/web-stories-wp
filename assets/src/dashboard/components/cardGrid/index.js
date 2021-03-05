@@ -18,53 +18,33 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { rgba } from 'polished';
+import styled, { css } from 'styled-components';
 import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../types';
-import { KEYBOARD_USER_SELECTOR } from '../../constants';
+import { ThemeGlobals, themeHelpers } from '../../../design-system';
+import { GRID_SPACING } from '../../constants';
 
-const DashboardGrid = styled.div(
-  ({ columnHeight, columnWidth, theme }) => `
+const DashboardGrid = styled.div`
   display: grid;
   width: 100%;
-  grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.desktop}px;
-  grid-row-gap: 80px;
-  grid-template-columns:
-    repeat(auto-fill, ${columnWidth}px);
-  grid-template-rows: minmax(${columnHeight}px, auto);
+  grid-column-gap: ${GRID_SPACING.COLUMN_GAP}px;
+  grid-row-gap: ${GRID_SPACING.ROW_GAP}px;
+  grid-template-columns: ${({ columnWidth }) => `
+    repeat(auto-fill, ${columnWidth}px)`};
+  grid-template-rows: ${({ columnHeight }) =>
+    `minmax(${columnHeight}px, auto)`};
   scroll-margin-top: 30vh;
-  margin-top: 2px; // this is for keyboard focus 
 
-  ${theme.DEPRECATED_THEME.breakpoint.tablet} {
-    grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.tablet}px;
-  }
-  ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-    grid-column-gap: ${
-      theme.DEPRECATED_THEME.grid.columnGap.largeDisplayPhone
-    }px;
-  }
-  ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    grid-column-gap: ${
-      theme.DEPRECATED_THEME.grid.columnGap.smallDisplayPhone
-    }px;
-  }
-  ${theme.DEPRECATED_THEME.breakpoint.min} {
-    grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.min}px;
-  }
-  
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: 2px solid ${rgba(
-      theme.DEPRECATED_THEME.colors.bluePrimary,
-      0.85
-    )} !important; 
-  }
-`
-);
+  ${({ theme }) => css`
+    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+      ${themeHelpers.focusCSS(theme.colors.border.focus)};
+    }
+  `};
+`;
 DashboardGrid.propTypes = {
   columnHeight: PropTypes.number.isRequired,
   columnWidth: PropTypes.number.isRequired,
