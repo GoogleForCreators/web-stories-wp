@@ -184,6 +184,10 @@ class Stories extends WP_Widget {
 				'wrapper_class' => 'number_of_stories_wrapper',
 				'value'         => $number_of_stories,
 				'label_before'  => true,
+				'attributes'    => [
+					'min' => 1,
+					'max' => 20,
+				],
 			]
 		);
 
@@ -244,6 +248,10 @@ class Stories extends WP_Widget {
 				'wrapper_class' => 'number_of_columns_wrapper',
 				'value'         => $number_of_columns,
 				'label_before'  => true,
+				'attributes'    => [
+					'min' => 1,
+					'max' => 4,
+				],
 			]
 		);
 
@@ -373,10 +381,10 @@ class Stories extends WP_Widget {
 		$instance['show_date']          = ( isset( $new_instance['show_date'] ) ) ? 1 : '';
 		$instance['show_archive_link']  = ( isset( $new_instance['show_archive_link'] ) ) ? 1 : '';
 		$instance['image_alignment']    = ( isset( $new_instance['image_alignment'] ) ) ? $new_instance['image_alignment'] : '';
+		$instance['number_of_columns']  = min( absint( $new_instance['number_of_columns'] ), 4 );
 		$instance['number_of_stories']  = min( absint( $new_instance['number_of_stories'] ), 20 );
 		$instance['circle_size']        = min( absint( $new_instance['circle_size'] ), 150 );
 		$instance['archive_link_label'] = isset( $new_instance['archive_link_label'] ) ? (string) $new_instance['archive_link_label'] : '';
-		$instance['number_of_columns']  = isset( $new_instance['number_of_columns'] ) ? (int) $new_instance['number_of_columns'] : 1;
 		$instance['sharp_corners']      = ( isset( $new_instance['sharp_corners'] ) ) ? 1 : '';
 		$instance['orderby']            = ( isset( $new_instance['orderby'] ) ) ? (string) $new_instance['orderby'] : 'post_date';
 		$instance['order']              = ( isset( $new_instance['order'] ) ) ? (string) $new_instance['order'] : 'DESC';
