@@ -45,7 +45,7 @@ const List = styled.div`
 `;
 
 const Space = styled.div`
-  width: 12px;
+  width: 8px;
 `;
 
 const Spinner = styled.div`
