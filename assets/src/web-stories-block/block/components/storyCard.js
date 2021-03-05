@@ -50,7 +50,13 @@ function StoryCard({
   return (
     <div className={singleStoryClasses}>
       <div className="web-stories-list__story-poster">
-        <img src={poster} alt={title} />
+        {poster ? (
+          <img src={poster} alt={title} />
+        ) : (
+          <div className="web-stories-list__story-poster-placeholder">
+            <span>{title}</span>
+          </div>
+        )}
       </div>
       {hasContentOverlay && (
         <div className="story-content-overlay web-stories-list__story-content-overlay">

@@ -516,37 +516,52 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 *
 		 * @var Story $story
 		 */
-		$story      = $this->current();
+		$story = $this->current();
+
+		// TODO: Only rely on portrait poster image going forward.
 		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story->get_poster_square() : $story->get_poster_portrait();
 
-		?>
-		<div class="web-stories-list__story-poster">
+		if ( ! $poster_url ) {
+
+			?>
+			<div class="web-stories-list__story-poster">
+				<div class="web-stories-list__story-poster-placeholder">
+					<span>
+						<?php echo esc_html( $story->get_title() ); ?>
+					</span>
+				</div>
+			</div>
 			<?php
-			if ( $this->is_amp() ) {
-				// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
-				?>
-				<amp-img
-					src="<?php echo esc_url( $poster_url ); ?>"
-					layout="responsive"
-					width="0"
-					height="0"
-					alt="<?php echo esc_attr( $story->get_title() ); ?>"
-				>
-				</amp-img>
-			<?php } else { ?>
-				<img
-					src="<?php echo esc_url( $poster_url ); ?>"
-					alt="<?php echo esc_attr( $story->get_title() ); ?>"
-					width="<?php echo absint( $this->width ); ?>"
-					height="<?php echo absint( $this->height ); ?>"
-				>
-			<?php } ?>
-		</div>
-		<?php
+		} else {
+			?>
+			<div class="web-stories-list__story-poster">
+				<?php
+				if ( $this->is_amp() ) {
+					// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
+					?>
+					<amp-img
+						src="<?php echo esc_url( $poster_url ); ?>"
+						layout="responsive"
+						width="0"
+						height="0"
+						alt="<?php echo esc_attr( $story->get_title() ); ?>"
+					>
+					</amp-img>
+				<?php } else { ?>
+					<img
+						src="<?php echo esc_url( $poster_url ); ?>"
+						alt="<?php echo esc_attr( $story->get_title() ); ?>"
+						width="<?php echo absint( $this->width ); ?>"
+						height="<?php echo absint( $this->height ); ?>"
+					>
+				<?php } ?>
+			</div>
+			<?php
+		}
 		$this->get_content_overlay();
 
 		if ( ! $this->is_amp() ) {
-			$this->generate_lightbox_html_noamp( $story );
+			$this->generate_lightbox_html( $story );
 		} else {
 			$this->generate_amp_lightbox_html_amp( $story );
 		}
