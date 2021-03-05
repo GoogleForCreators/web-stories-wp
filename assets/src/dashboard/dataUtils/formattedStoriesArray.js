@@ -25,7 +25,9 @@ const formattedStoriesArray = [
     status: 'publish',
     title: 'ORANGE SHAPES',
     modified: toUTCDate('2020-05-21T23:25:51.000Z'),
+    modified_gmt: '2020-05-21T23:25:51.000Z',
     created: toUTCDate('2020-05-21T23:25:51.000Z'),
+    created_gmt: '2020-05-21T23:25:51.000Z',
     pages: [
       {
         elements: [
@@ -316,7 +318,9 @@ const formattedStoriesArray = [
     status: 'draft',
     title: 'GREEN SHAPES',
     modified: toUTCDate('2020-05-21T23:25:22.000Z'),
+    modified_gmt: '2020-05-21T23:25:22.000Z',
     created: toUTCDate('2020-05-21T23:25:22.000Z'),
+    created_gmt: '2020-05-21T23:25:22.000Z',
     pages: [
       {
         elements: [
@@ -608,7 +612,9 @@ const formattedStoriesArray = [
     status: 'draft',
     title: 'RED SHAPES',
     modified: toUTCDate('2020-05-21T23:24:47.000Z'),
+    modified_gmt: '2020-05-21T23:24:47.000Z',
     created: toUTCDate('2020-05-21T23:24:47.000Z'),
+    created_gmt: '2020-05-21T23:24:47.000Z',
     pages: [
       {
         elements: [
@@ -1192,7 +1198,9 @@ const formattedStoriesArray = [
     status: 'draft',
     title: 'BLUE SHAPES',
     modified: toUTCDate('2020-05-21T23:24:06.000Z'),
+    modified_gmt: '2020-05-21T23:24:06.000Z',
     created: toUTCDate('2020-05-21T23:24:06.000Z'),
+    created_gmt: '2020-05-21T23:24:06.000Z',
     pages: [
       {
         elements: [

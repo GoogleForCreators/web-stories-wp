@@ -134,6 +134,7 @@ export class Fixture {
       'captions',
       'globalStoryStyles',
       'colorPresets',
+      'filter',
       'imageAccessibility',
       'layerStyle',
       'link',

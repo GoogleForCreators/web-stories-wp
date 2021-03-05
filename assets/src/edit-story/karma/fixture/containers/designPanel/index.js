@@ -25,7 +25,7 @@ import { getByLabelText } from '@testing-library/react';
 import { Container } from '../container';
 import { Alignment } from './alignment';
 import { Animation } from './animationPanel';
-import { BackgroundOverlay } from './backgroundOverlay';
+import { Filter } from './filter';
 import { Border } from './border';
 import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
@@ -69,11 +69,11 @@ export class DesignPanel extends Container {
     );
   }
 
-  get backgroundOverlay() {
+  get filters() {
     return this._get(
-      this.getByRole('region', { name: /Overlay/ }),
-      'backgroundOverlay',
-      BackgroundOverlay
+      this.getByRole('region', { name: /Filters/ }),
+      'filters',
+      Filter
     );
   }
 

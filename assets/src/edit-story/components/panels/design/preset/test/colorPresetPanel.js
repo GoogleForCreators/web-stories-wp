@@ -29,8 +29,6 @@ import {
   getShapePresets,
   getTextPresets,
   getPagePreset,
-  presetHasOpacity,
-  presetHasGradient,
   areAllType,
   getPanelInitialHeight,
 } from '../utils';
@@ -506,10 +504,6 @@ describe('Panels/Preset', () => {
         colors: [LINEAR_COLOR],
       };
 
-      presetHasGradient.mockImplementation(({ type }) => {
-        return Boolean(type) && 'solid' !== type;
-      });
-
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
       const applyPreset = getByRole('button', { name: APPLY_GLOBAL_PRESET });
       expect(applyPreset).toBeInTheDocument();
@@ -525,10 +519,6 @@ describe('Panels/Preset', () => {
       const extraStoryPresets = {
         colors: [LINEAR_COLOR],
       };
-
-      presetHasGradient.mockImplementation(({ type }) => {
-        return Boolean(type) && 'solid' !== type;
-      });
 
       const { getByLabelText, getByRole, updateStory } = setupPanel(
         extraStylePresets,
@@ -577,9 +567,7 @@ describe('Panels/Preset', () => {
           },
         ],
       };
-      presetHasOpacity.mockImplementation((color) => {
-        return Boolean(color.color?.a !== undefined && color.color.a < 1);
-      });
+
       const { getAllByRole, updateCurrentPageProperties } = setupPanel(
         extraStylePresets,
         extraStateProps

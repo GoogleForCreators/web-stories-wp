@@ -20,10 +20,10 @@
 import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
-  BackgroundOverlayPanel,
   BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
+  FilterPanel,
   ImageAccessibilityPanel,
   LinkPanel,
   LayerStylePanel,
@@ -69,8 +69,8 @@ function getDesignPanelsForSelection(elements) {
         Panel: PageBackgroundPanel,
       });
       panels.push({
-        type: PanelTypes.BACKGROUND_OVERLAY,
-        Panel: BackgroundOverlayPanel,
+        type: PanelTypes.FILTER,
+        Panel: FilterPanel,
       });
       panels.push({ type: PanelTypes.ANIMATION, Panel: AnimationPanel });
     }

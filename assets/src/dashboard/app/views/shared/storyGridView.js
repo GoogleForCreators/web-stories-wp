@@ -188,9 +188,9 @@ const StoryGridView = ({
                   tabIndex={tabIndex}
                   onMoreButtonSelected={storyMenu.handleMenuToggle}
                   contextMenuId={storyMenu.contextMenuId}
-                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
                   story={story}
                   menuItems={generateStoryMenu({
+                    menuItemActions: storyMenu.menuItemActions,
                     menuItems: storyMenu.menuItems,
                     story,
                   })}

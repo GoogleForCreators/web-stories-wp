@@ -15,3 +15,4 @@
  */
 
 export { Search } from './search';
+export { default as SearchInput } from './input';

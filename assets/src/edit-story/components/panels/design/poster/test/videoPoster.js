@@ -54,16 +54,13 @@ describe('Panels/Poster', () => {
 
   it('should render <Poster /> panel', () => {
     const { getByRole } = renderPoster([defaultElement]);
-    const videoPoster = getByRole('region', { name: 'Video poster' });
+    const videoPoster = getByRole('region', { name: 'Poster' });
     expect(videoPoster).toBeInTheDocument();
   });
 
   it('should simulate a click on <Poster />', () => {
     const { getByRole, pushUpdate } = renderPoster([defaultElement]);
-    const videoPoster = getByRole('region', { name: 'Video poster' });
-    videoPoster.focus();
-    expect(videoPoster).toHaveFocus();
-    const menuToggle = getByRole('button', { name: 'More' });
+    const menuToggle = getByRole('button', { name: 'Video poster' });
     fireEvent.click(menuToggle);
     const editMenuItem = getByRole('menuitem', { name: 'Edit' });
     fireEvent.click(editMenuItem);
