@@ -18,6 +18,8 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
@@ -62,7 +64,12 @@ export function Popup({ isOpen, popupId, children }) {
       unmountOnExit
     >
       {(state) => (
-        <Controller id={popupId} role="dialog" state={state}>
+        <Controller
+          id={popupId}
+          role="dialog"
+          aria-label={__('Help Center', 'web-stories')}
+          state={state}
+        >
           {children}
         </Controller>
       )}
