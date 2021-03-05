@@ -455,11 +455,11 @@ describe('Panels/StylePreset/utils', () => {
         { color: { r: 25, g: 39, b: 13 } },
       ];
       // Three rows.
-      expect(getPanelInitialHeight(true, presets)).toStrictEqual(90);
+      expect(getPanelInitialHeight(true, presets)).toStrictEqual(96);
       // One row.
       expect(
         getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
-      ).toStrictEqual(45);
+      ).toStrictEqual(48);
 
       // No rows.
       expect(getPanelInitialHeight(true, [])).toStrictEqual(140);
