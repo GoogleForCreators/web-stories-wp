@@ -84,7 +84,7 @@ class Stories extends WP_Widget {
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
 
-		$title = $instance['widget_title'];
+		$title = $instance['title'];
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
@@ -99,7 +99,7 @@ class Stories extends WP_Widget {
 			'show_excerpt'       => (bool) $instance['show_excerpt'],
 			'show_author'        => (bool) $instance['show_author'],
 			'show_date'          => (bool) $instance['show_date'],
-			'show_archive_link'  => (bool) $instance['archive_link'],
+			'show_archive_link'  => (bool) $instance['show_archive_link'],
 			'archive_link_label' => (bool) $instance['archive_link_label'],
 			'circle_size'        => (int) $instance['circle_size'],
 			'sharp_corners'      => (bool) $instance['sharp_corners'],
@@ -378,6 +378,8 @@ class Stories extends WP_Widget {
 		$instance['archive_link_label'] = isset( $new_instance['archive_link_label'] ) ? (string) $new_instance['archive_link_label'] : '';
 		$instance['number_of_columns']  = isset( $new_instance['number_of_columns'] ) ? (int) $new_instance['number_of_columns'] : 1;
 		$instance['sharp_corners']      = ( isset( $new_instance['sharp_corners'] ) ) ? 1 : '';
+		$instance['orderby']            = ( isset( $new_instance['orderby'] ) ) ? (string) $new_instance['orderby'] : 'post_date';
+		$instance['order']              = ( isset( $new_instance['order'] ) ) ? (string) $new_instance['order'] : 'DESC';
 
 		return $instance;
 	}

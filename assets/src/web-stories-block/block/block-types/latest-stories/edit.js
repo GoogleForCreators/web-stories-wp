@@ -98,7 +98,7 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
   useEffect(() => {
     LATEST_STORIES_QUERY.order = order || 'desc';
     LATEST_STORIES_QUERY.orderby = orderby || 'date';
-    LATEST_STORIES_QUERY.author = authors.map(({ id }) => id);
+    LATEST_STORIES_QUERY.author = authors;
 
     debouncedFetchStories();
   }, [authors, numOfStories, order, orderby, debouncedFetchStories]);

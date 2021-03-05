@@ -253,8 +253,7 @@ class Web_Stories_Block extends Embed_Base {
 				'view_type'          => $attributes['viewType'],
 				'archive_link_label' => $attributes['archiveLinkLabel'],
 				'circle_size'        => $attributes['circleSize'],
-				'sharp_corners'      => $attributes['sharp_corners'],
-				'image_alignment'    => $attributes['image_alignment'],
+				'image_alignment'    => $attributes['imageAlignment'],
 				'number_of_columns'  => $attributes['numOfColumns'],
 			];
 
@@ -287,6 +286,7 @@ class Web_Stories_Block extends Embed_Base {
 			'show_excerpt'      => 'excerpt',
 			'show_date'         => 'date',
 			'show_archive_link' => 'archive_link',
+			'sharp_corners'     => 'sharp_corners',
 		];
 
 		$controls_state = [];
@@ -337,11 +337,7 @@ class Web_Stories_Block extends Embed_Base {
 		$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
 
 		if ( ! empty( $attributes['authors'] ) && is_array( $attributes['authors'] ) ) {
-			$author_ids = wp_list_pluck( $attributes['authors'], 'id' );
-
-			if ( ! empty( $author_ids ) ) {
-				$query_args['author__in'] = $author_ids;
-			}
+			$query_args['author__in'] = $attributes['authors'];
 		}
 
 		return $query_args;
