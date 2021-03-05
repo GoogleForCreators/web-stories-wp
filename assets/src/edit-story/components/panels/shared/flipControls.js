@@ -30,8 +30,8 @@ import {
   BUTTON_VARIANTS,
   ToggleButton,
   Icons,
+  Tooltip,
 } from '../../../../design-system';
-import { MULTIPLE_VALUE } from '../../../constants';
 
 const ControlsContainer = styled.div`
   display: flex;
@@ -52,40 +52,41 @@ const Space = styled.div`
  * @return {*} Rendered component.
  */
 function FlipControls({ value, onChange }) {
-  const getCurrentFlipValue = useCallback(
-    (prop) => {
-      if (value[prop] === MULTIPLE_VALUE) {
-        return false;
-      }
-      return value[prop];
-    },
-    [value]
-  );
+  const getCurrentFlipValue = useCallback((prop) => value[prop] === true, [
+    value,
+  ]);
   return (
     <ControlsContainer>
-      <ToggleButton
-        variant={BUTTON_VARIANTS.SQUARE}
-        size={BUTTON_SIZES.SMALL}
-        isToggled={value.horizontal === true}
-        onClick={() =>
-          onChange({ ...value, horizontal: !getCurrentFlipValue('horizontal') })
-        }
-        aria-label={__('Flip horizontally', 'web-stories')}
-      >
-        <Icons.MirrorLeftright />
-      </ToggleButton>
+      <Tooltip title={__('Flip horizontally', 'web-stories')}>
+        <ToggleButton
+          variant={BUTTON_VARIANTS.SQUARE}
+          size={BUTTON_SIZES.SMALL}
+          isToggled={value.horizontal === true}
+          onClick={() =>
+            onChange({
+              ...value,
+              horizontal: !getCurrentFlipValue('horizontal'),
+            })
+          }
+          aria-label={__('Flip horizontally', 'web-stories')}
+        >
+          <Icons.MirrorLeftright />
+        </ToggleButton>
+      </Tooltip>
       <Space />
-      <ToggleButton
-        variant={BUTTON_VARIANTS.SQUARE}
-        size={BUTTON_SIZES.SMALL}
-        isToggled={value.vertical === true}
-        onClick={() =>
-          onChange({ ...value, vertical: !getCurrentFlipValue('vertical') })
-        }
-        aria-label={__('Flip vertically', 'web-stories')}
-      >
-        <Icons.MirrorUpdown />
-      </ToggleButton>
+      <Tooltip title={__('Flip vertically', 'web-stories')}>
+        <ToggleButton
+          variant={BUTTON_VARIANTS.SQUARE}
+          size={BUTTON_SIZES.SMALL}
+          isToggled={value.vertical === true}
+          onClick={() =>
+            onChange({ ...value, vertical: !getCurrentFlipValue('vertical') })
+          }
+          aria-label={__('Flip vertically', 'web-stories')}
+        >
+          <Icons.MirrorUpdown />
+        </ToggleButton>
+      </Tooltip>
     </ControlsContainer>
   );
 }
