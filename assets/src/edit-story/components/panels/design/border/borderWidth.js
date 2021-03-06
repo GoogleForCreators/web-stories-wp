@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -69,7 +69,13 @@ const LabelText = styled(Text).attrs({
 `;
 
 const ToggleWrapper = styled.div`
-  height: ${({ locked }) => !locked && `${INPUT_TOTAL_HEIGHT - 4}px`};
+  padding-top: 2px;
+  ${({ locked }) =>
+    locked &&
+    css`
+      padding-left: 8px;
+    `};
+  align-self: stretch;
 `;
 
 function UnLockedInput({ labelText, ...rest }) {
