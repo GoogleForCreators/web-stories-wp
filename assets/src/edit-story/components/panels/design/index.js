@@ -15,7 +15,6 @@
  */
 
 export { default as AnimationPanel } from './animation';
-export { default as BackgroundSizePositionPanel } from './backgroundSizePosition';
 export { default as BorderRadiusPanel } from './borderRadius';
 export { default as BorderStylePanel } from './border';
 export { default as CaptionsPanel } from './captions';
@@ -27,7 +26,7 @@ export { default as LayerPanel } from './layer';
 export { default as LayerStylePanel } from './layerStyle';
 export { default as LinkPanel } from './link';
 export { default as PageAttachmentPanel } from './pageAttachment';
-export { default as PageStylePanel } from './pageStyle';
+export { default as PageBackgroundPanel } from './pageBackground';
 export { default as ShapeStylePanel } from './shapeStyle';
 export { default as SizePositionPanel } from './sizePosition';
 export { default as StylePresetPanel } from './preset/stylePreset';

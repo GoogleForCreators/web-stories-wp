@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
@@ -34,10 +34,19 @@ export const Headline = styled.h1`
       preset: theme.typography.presets.headline[size],
       theme,
     })}
+  ${({ as, theme }) =>
+    as === 'a' &&
+    css`
+      :hover {
+        color: ${theme.colors.fg.linkHover};
+      }
+
+      ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
+    `}
 `;
 
 Headline.propTypes = {
-  as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
+  as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a']).isRequired,
   size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.HEADLINE_SIZES),
 };
 Headline.defaultProps = {

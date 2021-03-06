@@ -447,13 +447,13 @@ describe('Grid view', () => {
       await fixture.render();
     });
 
-    it('should trigger story preview when user presses Enter while focused on a card', async () => {
+    it('should trigger story preview when user presses Enter while focused on a card preview button', async () => {
       const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
 
       await fixture.events.focus(gridContainer);
 
       await fixture.events.keyboard.press('right');
-
+      // tab to the first button
       await fixture.events.keyboard.press('tab');
 
       await fixture.events.keyboard.press('Enter');
@@ -461,7 +461,6 @@ describe('Grid view', () => {
       const viewPreviewStory = await fixture.screen.queryByTestId(
         'preview-iframe'
       );
-
       expect(viewPreviewStory).toBeTruthy();
     });
 

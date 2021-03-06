@@ -30,6 +30,9 @@ const isComingFromMenu = (previous, next) =>
 const navigationFlowTips = (previous, next) =>
   (next.navigationFlow || []).filter((key) => TIP_KEYS_MAP[key]);
 
+const isInitialHydrate = (previous, next) =>
+  !previous.isHydrated && next.isHydrated;
+
 export const resetNavigationIndexOnOpen = (previous, next) => {
   const isOpening = !previous.isOpen && next.isOpen;
   return {
@@ -91,6 +94,33 @@ export function deriveUnreadTipsCount(previous, next) {
       Object.keys(TIP_KEYS_MAP).filter((tip) => !next.readTips[tip])?.length ||
       0,
   };
+}
+
+export function deriveAutoOpen(previous, next) {
+  if (isInitialHydrate(previous, next)) {
+    const hasNewTips = previous.unreadTipsCount < next.unreadTipsCount;
+    return hasNewTips ? { isOpen: true } : {};
+  }
+  return {};
+}
+
+// If there are any unread tips, we respect users last open setting.
+// If all tips are read, we want the popup closed regardless of user setting.
+export function deriveInitialOpen(persisted) {
+  const hasUnreadTips = Boolean(persisted?.unreadTipsCount);
+  return hasUnreadTips && persisted?.isOpen !== undefined
+    ? {
+        isOpen: persisted?.isOpen,
+      }
+    : {};
+}
+
+export function deriveInitialUnreadTipsCount(persisted) {
+  return persisted?.unreadTipsCount
+    ? {
+        unreadTipsCount: persisted?.unreadTipsCount,
+      }
+    : {};
 }
 
 /**

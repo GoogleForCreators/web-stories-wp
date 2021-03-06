@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,32 +15,29 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
-import { Link } from '../';
+import StoryPropTypes from '../../types';
+import stickers from '../../stickers';
 
-export default {
-  title: 'Dashboard/Components/Link',
-  component: Link,
+const style = {
+  display: 'block',
+  position: 'absolute',
+  top: 0,
+  height: '100%',
+  width: 'auto',
 };
 
-const CurrentColorLink = styled(Link)`
-  color: black;
-`;
+const Noop = () => null;
 
-export const _default = () => {
-  return (
-    <>
-      <Link href="#">{'Demo link extended from Typography'}</Link>
-      <br />
-      <CurrentColorLink href="#">
-        {'Demo link extended from Typography'}
-      </CurrentColorLink>
-    </>
-  );
+function StickerOutput({ element }) {
+  const { sticker } = element;
+  const Sticker = stickers[sticker.type] || Noop;
+  return <Sticker className="fill" style={style} />;
+}
+
+StickerOutput.propTypes = {
+  element: StoryPropTypes.elements.sticker.isRequired,
 };
+
+export default StickerOutput;
