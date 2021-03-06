@@ -45,7 +45,7 @@ export const focusableOutlineCSS = (colorOrProps, background) => {
       ? colorOrProps
       : colorOrProps?.theme?.colors?.border?.focus;
   return css`
-    &.${FOCUS_VISIBLE_SELECTOR} {
+    &.${FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
       ${focusCSS(accent, background)};
     }
   `;
