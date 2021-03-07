@@ -25,43 +25,46 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { Headline, Text, THEME_CONSTANTS } from '../../../design-system';
 import { STORY_STATUS } from '../../constants';
 import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
-import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
-import { Link } from '../link';
 
 const StyledCardTitle = styled.div`
   padding: 12px 4px 0 4px;
   display: inline-block;
-  overflow: hidden;
+  max-width: calc(100% - 20px);
 `;
 
-const TitleStoryLink = styled(Link)`
+const TitleStoryLink = styled(Headline).attrs(() => ({
+  as: 'a',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+}))`
+  width: 100%;
   display: inline-block;
-  max-width: 100%;
-  margin-bottom: 2px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 `;
 
-const TitleBodyText = styled(Paragraph2)`
+const TitleBodyText = styled(Text).attrs(() => ({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+}))`
+  display: block;
+  color: ${({ isSecondary, theme }) =>
+    isSecondary ? theme.colors.fg.secondary : theme.colors.fg.primary};
   margin: 0;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.light};
 `;
 
-const DateHelperText = styled.span`
-  text-transform: uppercase;
-  font-weight: 500;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+const DateHelperText = styled(Text).attrs(() => ({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+}))`
   &:after {
     content: '-';
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+    color: ${({ theme }) => theme.colors.fg.secondary};
     font-weight: 400;
     padding: 0 0.25em;
   }
@@ -130,13 +133,13 @@ const CardTitle = ({
           {titleFormatted(title)}
         </TitleStoryLink>
       )}
-      <TitleBodyText className="dashboard-grid-item-date">
+      {secondaryTitle && <TitleBodyText>{secondaryTitle}</TitleBodyText>}
+      <TitleBodyText isSecondary className="dashboard-grid-item-date">
         {status === STORY_STATUS.DRAFT && (
-          <DateHelperText>{__('draft', 'web-stories')}</DateHelperText>
+          <DateHelperText isBold>{__('Draft', 'web-stories')}</DateHelperText>
         )}
         {displayDateText}
       </TitleBodyText>
-      {secondaryTitle && <TitleBodyText>{secondaryTitle}</TitleBodyText>}
     </StyledCardTitle>
   );
 };

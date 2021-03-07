@@ -306,9 +306,8 @@ describe('Background Drop-Target integration', () => {
           const bgRect = bgElement.getBoundingClientRect();
           await fixture.events.mouse.click(bgRect.left + 1, bgRect.top + 1);
           // And flip it
-          const flip = getInputByAriaLabel(fixture, 'Flip horizontally');
-          const flipLabel = flip.parentElement;
-          await fixture.events.click(flipLabel);
+          const flip = getButtonByLabel(fixture, 'Flip horizontally');
+          await fixture.events.click(flip);
         });
 
         it('should correctly handle image dropped on edge without flip', async () => {
@@ -379,9 +378,8 @@ describe('Background Drop-Target integration', () => {
           const rect = element.getBoundingClientRect();
           await fixture.events.mouse.click(rect.left + 1, rect.top + 1);
           // And flip it
-          const flip = getInputByAriaLabel(fixture, 'Flip horizontally');
-          const flipLabel = flip.parentElement;
-          flipLabel.click();
+          const flip = getButtonByLabel(fixture, 'Flip horizontally');
+          flip.click();
         });
 
         it('should correctly handle image dropped on edge with flip', async () => {
@@ -493,8 +491,8 @@ function getButtonByText(fixture, buttonText) {
   );
 }
 
-function getInputByAriaLabel(fixture, ariaLabel) {
-  return fixture.querySelector(`input[aria-label="${ariaLabel}"]`);
+function getButtonByLabel(fixture, ariaLabel) {
+  return fixture.screen.getByRole('button', { name: ariaLabel });
 }
 
 function getCanvasElementWrapperById(fixture, id) {

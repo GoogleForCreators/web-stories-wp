@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../typography';
+import { Text, THEME_CONSTANTS } from '../../../design-system';
 
-export const Link = styled.a`
-  ${TypographyPresets.Small};
-  margin: 0;
-  text-decoration: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
-  cursor: pointer;
-  border-bottom: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
-
-  &:hover,
-  &:focus,
-  &:active {
-    color: currentColor;
-    box-shadow: none;
-    border-bottom: 1px solid currentColor;
-    outline: 0;
-  }
+const StyledText = styled(Text)`
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
 `;
+
+export function LayerText({ children }) {
+  return (
+    <StyledText
+      forwardedAs="span"
+      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+    >
+      {children}
+    </StyledText>
+  );
+}
+LayerText.propTypes = { children: PropTypes.node };

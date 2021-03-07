@@ -33,7 +33,7 @@ import {
 } from './constants';
 
 const Base = styled.button(
-  ({ size, theme }) => css`
+  ({ as, size, theme }) => css`
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -61,6 +61,15 @@ const Base = styled.button(
       color: ${theme.colors.interactiveFg.active};
     }
 
+    /* additional specifications for anchors are necessary for wordpress to override common css */
+    ${as === 'a' &&
+    css`
+      &:hover,
+      &:focus {
+        color: ${theme.colors.interactiveFg.active};
+      }
+    `}
+
     &:disabled {
       pointer-events: none;
       background-color: ${theme.colors.interactiveBg.disable};
@@ -72,13 +81,22 @@ const Base = styled.button(
   `
 );
 
-const primaryColors = ({ theme }) => css`
+const primaryColors = ({ as, theme }) => css`
   background-color: ${theme.colors.interactiveBg.brandNormal};
   color: ${theme.colors.interactiveFg.brandNormal};
   &:active {
     background-color: ${theme.colors.interactiveBg.active};
     color: ${theme.colors.interactiveFg.active};
   }
+  /* additional specifications for anchors are necessary for wordpress to override common css */
+  ${as === 'a' &&
+  css`
+    &:hover,
+    &:focus {
+      color: ${theme.colors.interactiveFg.brandHover};
+    }
+  `}
+
   &:hover:enabled,
   &:focus:enabled {
     background-color: ${theme.colors.interactiveBg.brandHover};

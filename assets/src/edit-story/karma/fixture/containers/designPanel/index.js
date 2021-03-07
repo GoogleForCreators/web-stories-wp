@@ -113,22 +113,12 @@ export class DesignPanel extends Container {
     );
   }
 
-  get backgroundSizePosition() {
-    // @todo: implement
-    return null;
-  }
-
   get imageAccessibility() {
     // @todo: implement
     return null;
   }
 
   get layerStyle() {
-    // @todo: implement
-    return null;
-  }
-
-  get pageStyle() {
     // @todo: implement
     return null;
   }

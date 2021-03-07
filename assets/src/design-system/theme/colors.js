@@ -160,6 +160,7 @@ const darkTheme = {
     positiveNormal: brand.green[40],
     positiveHover: brand.green[30],
     positivePress: brand.green[20],
+    previewOverlay: opacity.black10,
   },
   border: {
     focus: brand.blue[30],
@@ -238,6 +239,7 @@ const lightTheme = {
     positiveNormal: brand.green[20],
     positiveHover: brand.green[30],
     positivePress: brand.green[40],
+    previewOverlay: opacity.white16,
   },
   border: {
     focus: brand.blue[40],

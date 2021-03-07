@@ -75,6 +75,8 @@ const TextIconContainer = styled.div`
   border: 0;
   padding: 0;
   margin: 0 -4px;
+  overflow: hidden;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
 function TextIcon(props) {
