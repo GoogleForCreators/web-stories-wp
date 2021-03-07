@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { waitForElementToBeRemoved, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { useInsertElement } from '../../../components/canvas';
+import { useStory } from '../../../app/story';
 import { getBackgroundElementId } from './background.karma';
 
 describe('Drop-Target order', () => {
@@ -39,33 +39,54 @@ describe('Drop-Target order', () => {
   });
 
   it('should replace top image when bg image is set and another one is on top', async () => {
-    const insertElement = await fixture.renderHook(() => useInsertElement());
+    // Drag first media element straight to canvas edge to set as background
+    const bgMedia = fixture.editor.library.media.item(0);
+    const canvas = fixture.editor.canvas.fullbleed.container;
 
-    const bgImage = await fixture.act(() =>
-      insertElement('image', earthImageProps)
-    );
-    const setAsBackground = fixture.screen.getByRole('button', {
-      name: 'Set as background',
-    });
-    await fixture.events.click(setAsBackground);
-
-    const topImage = await fixture.act(() =>
-      insertElement('image', marsImageProps)
-    );
-
-    const replacementImage = await fixture.act(() =>
-      insertElement('image', curiosityImageProps)
-    );
-    const replacementImageFrame = fixture.editor.canvas.framesLayer.frame(
-      replacementImage.id
-    ).node;
-    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(replacementImageFrame, 10, 10),
+    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
+      moveRel(bgMedia, 5, 5),
       down(),
-      moveBy(0, -20),
+      moveRel(canvas, 5, 5),
       up(),
     ]);
-    await waitForElementToBeRemoved(replacementImageFrame);
+
+    // Add one more element
+    await fixture.events.click(fixture.editor.library.media.item(1));
+
+    // Get the elements
+    const [bgImage, topImage] = await getElements(fixture);
+
+    // Drag the top element to align with the edge without dropping in there
+    const bgFrame = fixture.editor.canvas.framesLayer.frame(bgImage.id).node;
+    const topFrame = fixture.editor.canvas.framesLayer.frame(topImage.id).node;
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(topFrame, 25, 25),
+      down(),
+      moveRel(bgFrame, 25, 25),
+      up(),
+    ]);
+
+    // Now add one more element
+    await fixture.events.click(fixture.editor.library.media.item(2));
+
+    // Get the new element
+    const otherImage = (await getElements(fixture))[2];
+
+    const otherFrame = fixture.editor.canvas.framesLayer.frame(otherImage.id)
+      .node;
+
+    // Drag image by edge to position of top image edge
+    // (which should collide with bg image edge)
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(otherFrame, 5, 5),
+      down(),
+      moveRel(topFrame, 5, 5),
+      up(),
+    ]);
+
+    // Expect old element to have been removed
+    expect(fixture.editor.canvas.framesLayer.frame(otherImage.id)).toBeFalsy();
+
     const backgroundId = await getBackgroundElementId(fixture);
     // TODO: refactor after #2386?
     const topImageImg = fixture.editor.canvas.displayLayer
@@ -74,79 +95,56 @@ describe('Drop-Target order', () => {
     const backgroundImg = fixture.editor.canvas.displayLayer
       .display(backgroundId)
       .node.querySelector('img');
-    // TODO: improve with custom matchers
+
     await waitFor(() => {
-      expect(topImageImg.src).toBe(replacementImage.resource.src);
+      expect(topImageImg.src).toBe(otherImage.resource.src);
       expect(backgroundImg.src).toBe(bgImage.resource.src);
     });
   });
 
   it('should replace the top image when two images are in the same place on canvas', async () => {
-    const insertElement = await fixture.renderHook(() => useInsertElement());
+    // Add three images - will be added on top of each other
+    await fixture.events.click(fixture.editor.library.media.item(0));
+    await fixture.events.click(fixture.editor.library.media.item(1));
+    await fixture.events.click(fixture.editor.library.media.item(2));
 
-    const bottomImage = await fixture.act(() =>
-      insertElement('image', { ...earthImageProps, x: 100, y: 100 })
-    );
+    // Get the elements
+    const elements = await getElements(fixture);
+    // Slice out the irrelevant bg element and get the next three
+    const [bottomImage, topImage, otherImage] = elements.slice(1);
 
-    const topImage = await fixture.act(() =>
-      insertElement('image', { ...marsImageProps, x: 100, y: 100 })
-    );
-
-    const replacementImage = await fixture.act(() =>
-      insertElement('image', { ...curiosityImageProps, x: 100, y: 100 })
-    );
-    const replacementImageFrame = fixture.editor.canvas.framesLayer.frame(
-      replacementImage.id
+    const otherImageFrame = fixture.editor.canvas.framesLayer.frame(
+      otherImage.id
     ).node;
 
+    // Drag image to other image edge - they're all aligned with the
+    // same top left corner.
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(replacementImageFrame, 10, 10),
+      moveRel(otherImageFrame, 5, 5),
       down(),
       moveBy(0, 10),
       up(),
     ]);
-    await waitForElementToBeRemoved(replacementImageFrame);
+
+    // Expect old element to have been removed
+    expect(fixture.editor.canvas.framesLayer.frame(otherImage.id)).toBeFalsy();
+
     const topImageImg = fixture.editor.canvas.displayLayer
       .display(topImage.id)
       .node.querySelector('img');
     const bottomImageImg = fixture.editor.canvas.displayLayer
       .display(bottomImage.id)
       .node.querySelector('img');
-    expect(topImageImg.src).toBe(replacementImage.resource.src);
+    expect(topImageImg.src).toBe(otherImage.resource.src);
     expect(bottomImageImg.src).toBe(bottomImage.resource.src);
   });
 });
 
-const earthImageProps = {
-  x: 0,
-  y: 0,
-  width: 640 / 2,
-  height: 529 / 2,
-  resource: {
-    type: 'image',
-    mimeType: 'image/jpg',
-    src: 'http://localhost:9876/__static__/earth.jpg',
-  },
-};
-const marsImageProps = {
-  x: 0,
-  y: 0,
-  width: 540 / 2,
-  height: 810 / 2,
-  resource: {
-    type: 'image',
-    mimeType: 'image/jpg',
-    src: 'http://localhost:9876/__static__/mars.jpg',
-  },
-};
-const curiosityImageProps = {
-  x: 0,
-  y: 20,
-  width: 953 / 6,
-  height: 1280 / 6,
-  resource: {
-    type: 'image',
-    mimeType: 'image/jpg',
-    src: 'http://localhost:9876/__static__/curiosity.jpg',
-  },
-};
+async function getElements(fixture) {
+  const {
+    state: {
+      currentPage: { elements },
+    },
+  } = await fixture.renderHook(() => useStory());
+  return elements;
+}
