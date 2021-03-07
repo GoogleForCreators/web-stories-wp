@@ -49,7 +49,7 @@ const Grid = styled.div`
     'x . . . y . .'
     'w . d . h . l'
     'r . . . f . .';
-  grid-template-columns: 112px 1fr 8px 1fr 112px 1fr 32px;
+  grid-template-columns: 1fr 4px 8px 4px 1fr 4px 32px;
   grid-template-rows: repeat(3, 36px);
   row-gap: 16px;
   align-items: center;
