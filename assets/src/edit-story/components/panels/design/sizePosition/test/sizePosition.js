@@ -98,12 +98,6 @@ describe('Panels/SizePosition', () => {
     expect(element).toBeInTheDocument();
   });
 
-  it('should render Background button for Image', () => {
-    const { getByRole } = renderSizePosition([defaultImage]);
-    const element = getByRole('button', { name: 'Set as background' });
-    expect(element).toBeInTheDocument();
-  });
-
   describe('single selection', () => {
     it('should not render flip controls when not allowed', () => {
       const { queryByTitle } = renderSizePosition([defaultText]);
