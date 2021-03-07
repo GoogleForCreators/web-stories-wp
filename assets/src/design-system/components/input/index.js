@@ -38,7 +38,7 @@ import { focusCSS } from '../../theme/helpers';
 const Container = styled.div`
   position: relative;
   width: 100%;
-  min-width: 90px;
+  min-width: 40px;
 `;
 
 const Label = styled(Text)`
@@ -90,10 +90,14 @@ const InputContainer = styled.div(
 );
 
 const StyledInput = styled.input(
-  ({ theme }) => css`
+  ({ hasSuffix, theme }) => css`
     height: 100%;
     width: 100%;
-    padding: 0 8px 0 0;
+    padding: 0;
+    ${hasSuffix &&
+    css`
+      padding-right: 8px;
+    `}
     background-color: inherit;
     border: none;
     outline: none;
@@ -178,6 +182,7 @@ export const Input = forwardRef(
       // Display placeholder if value couldn't be determined.
       displayedValue = '';
     }
+    const hasSuffix = Boolean(suffix);
 
     return (
       <Container className={className}>
@@ -194,9 +199,10 @@ export const Input = forwardRef(
             onBlur={handleBlur}
             onFocus={handleFocus}
             value={displayedValue}
+            hasSuffix={hasSuffix}
             {...props}
           />
-          {suffix && (
+          {hasSuffix && (
             <Suffix
               hasLabel={Boolean(label)}
               forwardedAs="span"
