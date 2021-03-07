@@ -61,10 +61,11 @@ const MediaWrapper = styled.div`
   width: 24px;
   border-radius: 4px;
   overflow: hidden;
-  margin: 6px;
+  margin: 5px;
   img {
     object-fit: cover;
-    min-height: 24px;
+    max-height: 100%;
+    max-width: 100%;
   }
 `;
 
@@ -115,7 +116,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   const isMedia = backgroundEl.isBackground && !isDefaultBackground;
 
   const { backgroundColor } = currentPage;
-  const { LayerContent } = getDefinitionForType(backgroundEl.type);
+  const { LayerIcon } = getDefinitionForType(backgroundEl.type);
 
   // Background can only have one selected element.
   const flip = selectedElements[0]?.flip || DEFAULT_FLIP;
@@ -142,7 +143,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         <Row expand={false}>
           <SelectedMedia>
             <MediaWrapper>
-              <LayerContent element={backgroundEl} height={'100%'} />
+              <LayerIcon element={backgroundEl} />
             </MediaWrapper>
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
               {__('Media', 'web-stories')}
