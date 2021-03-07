@@ -38,7 +38,7 @@ import { focusCSS } from '../../theme/helpers';
 const Container = styled.div`
   position: relative;
   width: 100%;
-  min-width: 128px;
+  min-width: 90px;
 `;
 
 const Label = styled(Text)`
