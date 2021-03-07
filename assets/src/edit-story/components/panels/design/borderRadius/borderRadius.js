@@ -160,6 +160,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                   ? MULTIPLE_DISPLAY_VALUE
                   : ''
               }
+              isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
             />
             {!lockRadius && (
               <>
@@ -179,6 +180,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                       ? MULTIPLE_DISPLAY_VALUE
                       : ''
                   }
+                  isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
                 />
               </>
             )}
@@ -198,6 +200,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                     ? MULTIPLE_DISPLAY_VALUE
                     : ''
                 }
+                isIndeterminate={borderRadius.bottomLeft === MULTIPLE_VALUE}
               />
               <Space space={32} />
               <BoxedNumericInput
@@ -213,6 +216,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                     ? MULTIPLE_DISPLAY_VALUE
                     : ''
                 }
+                isIndeterminate={borderRadius.bottomRight === MULTIPLE_VALUE}
               />
             </Row>
           )}
