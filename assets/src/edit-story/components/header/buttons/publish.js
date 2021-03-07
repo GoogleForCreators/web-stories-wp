@@ -100,7 +100,7 @@ function Publish() {
     <>
       <ButtonWithChecklistWarning
         onClick={handlePublish}
-        isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
+        disabled={!capabilities?.hasPublishAction || isSaving || isUploading}
         text={text}
       />
       <TitleMissingDialog
