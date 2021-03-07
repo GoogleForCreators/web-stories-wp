@@ -48,7 +48,9 @@ describe('Link Panel', () => {
   };
 
   const setPageAttachmentLink = async (link) => {
-    const input = fixture.screen.getByLabelText('Page Attachment link');
+    const input = fixture.screen.getByLabelText(
+      'Type an address to add a page attachment link'
+    );
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type(link);
     await input.dispatchEvent(new window.Event('blur'));

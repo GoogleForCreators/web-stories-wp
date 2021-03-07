@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
@@ -30,13 +29,7 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { ExpandedTextInput } from '../../shared';
-
-const Error = styled.span`
-  font-size: 12px;
-  line-height: 16px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
-`;
+import { Input } from '../../../../../design-system';
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
@@ -80,8 +73,9 @@ function PageAttachmentPanel() {
 
   const updatePageAttachment = useCallback(
     (value) => {
+      const trimmedUrl = (value.url || '').trim();
       if (value.url) {
-        const urlWithProtocol = withProtocol(value.url);
+        const urlWithProtocol = withProtocol(trimmedUrl);
         const valid = isValidUrl(urlWithProtocol);
         setIsInvalidUrl(!valid);
       }
@@ -104,62 +98,70 @@ function PageAttachmentPanel() {
   );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    !isValidUrl(withProtocol(url || ''))
+    !isValidUrl(withProtocol(url || '').trim())
   );
 
   const isDefault = _ctaText === defaultCTA;
+  const showTextInput = Boolean(url) && !isInvalidUrl;
+
+  const handleChange = useCallback(
+    ({ target }) => {
+      const { value } = target;
+      // This allows smooth input value change without any lag.
+      _setCtaText(value);
+      debouncedCTAUpdate(value);
+    },
+    [debouncedCTAUpdate]
+  );
+
+  const handleBlur = useCallback(
+    ({ target }) => {
+      if (!target.value) {
+        updatePageAttachment({ ctaText: defaultCTA });
+        _setCtaText(defaultCTA);
+      } else {
+        cancelCTAUpdate();
+        updatePageAttachment({
+          ctaText: _ctaText ? _ctaText : defaultCTA,
+        });
+      }
+    },
+    [_ctaText, cancelCTAUpdate, defaultCTA, updatePageAttachment]
+  );
+
   return (
     <SimplePanel
       name="pageAttachment"
       title={__('Page Attachment', 'web-stories')}
     >
       <LinkInput
-        description={__(
-          'Type an address to add a page attachment',
+        onChange={(value) => updatePageAttachment({ url: value })}
+        onBlur={() => updatePageAttachment({ url: url?.trim() })}
+        onFocus={onFocus}
+        value={url}
+        clear
+        aria-label={__(
+          'Type an address to add a page attachment link',
           'web-stories'
         )}
-        onChange={(value) => updatePageAttachment({ url: value })}
-        onFocus={onFocus}
-        value={url || ''}
-        clear
-        aria-label={__('Page Attachment link', 'web-stories')}
+        hasError={displayWarning}
+        hint={
+          displayWarning
+            ? __(
+                'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
+                'web-stories'
+              )
+            : undefined
+        }
       />
-
-      {displayWarning && (
+      {showTextInput && (
         <Row>
-          <Error>
-            {__(
-              'Links cannot reside below the dashed line when a page attachment is present. If you add a page attachment, your viewers will not be able to click on the link.',
-              'web-stories'
-            )}
-          </Error>
-        </Row>
-      )}
-
-      {Boolean(url) && !isInvalidUrl && (
-        <Row>
-          <ExpandedTextInput
-            onChange={(value) => {
-              // This allows smooth input value change without any lag.
-              _setCtaText(value);
-              debouncedCTAUpdate(value);
-            }}
-            onBlur={(atts = {}) => {
-              const { onClear } = atts;
-              if (onClear) {
-                updatePageAttachment({ ctaText: defaultCTA });
-              } else {
-                cancelCTAUpdate();
-                updatePageAttachment({
-                  ctaText: _ctaText ? _ctaText : defaultCTA,
-                });
-              }
-            }}
+          <Input
+            onChange={handleChange}
+            onBlur={handleBlur}
             value={_ctaText}
             aria-label={__('Page Attachment CTA text', 'web-stories')}
-            clear={Boolean(_ctaText) && !isDefault}
             suffix={isDefault ? __('default', 'web-stories') : null}
-            width={isDefault ? 85 : null}
           />
         </Row>
       )}
