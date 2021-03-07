@@ -25,29 +25,46 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
-import { BoxedNumeric, Button, Row, Toggle } from '../../../form';
+import {
+  LockToggle,
+  NumericInput,
+  Tooltip,
+  PLACEMENT,
+  Icons,
+} from '../../../../../design-system';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { dataPixels } from '../../../../units';
-import { Lock as Locked, Unlock as Unlocked } from '../../../../icons';
-import useStory from '../../../../app/story/useStory';
 import { getDefinitionForType } from '../../../../elements';
 import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
-import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
 
-const StyledToggle = styled(Toggle)`
-  margin: 0 10px;
+const Grid = styled.div`
+  display: grid;
+  grid-template-areas:
+    'x . . . y . .'
+    'w . d . h . l'
+    'r . . . f . .';
+  grid-template-columns: 112px 1fr 8px 1fr 112px 1fr 32px;
+  grid-template-rows: repeat(3, 36px);
+  row-gap: 16px;
+  align-items: center;
+  justify-items: start;
 `;
 
-const Spacer = styled.span`
-  display: block;
-  width: 50px;
-  flex-shrink: 0;
+const Area = styled.div`
+  grid-area: ${({ area }) => area};
+  width: 100%;
+`;
+
+const Dash = styled.div`
+  height: 1px;
+  width: 100%;
+  background: ${({ theme }) => theme.colors.divider.primary};
 `;
 
 function SizePositionPanel({
@@ -77,14 +94,7 @@ function SizePositionPanel({
   const lockAspectRatio =
     rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
-  const { currentPage, combineElements } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-    combineElements: state.actions.combineElements,
-  }));
-  const currentBackgroundId = currentPage?.elements[0].id;
-
   const isSingleElement = selectedElements.length === 1;
-  const { isMedia } = getDefinitionForType(selectedElements[0].type);
 
   const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
@@ -130,137 +140,139 @@ function SizePositionPanel({
 
   usePresubmitHandlers(lockAspectRatio, height, width);
 
-  const handleSetBackground = useCallback(() => {
-    const setBackground = (baseColor) => {
-      if (!baseColor) {
-        combineElements({
-          firstElement: selectedElements[0],
-          secondId: currentBackgroundId,
-        });
-      } else {
-        combineElements({
-          firstElement: {
-            ...selectedElements[0],
-            resource: {
-              ...selectedElements[0].resource,
-              baseColor,
-            },
-          },
-          secondId: currentBackgroundId,
-        });
-      }
+  const getMixedValueProps = useCallback((value) => {
+    return {
+      isIndeterminate: MULTIPLE_VALUE === value,
+      placeholder: MULTIPLE_VALUE === value ? MULTIPLE_DISPLAY_VALUE : null,
     };
-    if (selectedElements[0].resource.baseColor) {
-      setBackground();
-    } else {
-      getMediaBaseColor(selectedElements[0].resource, setBackground);
-    }
-  }, [selectedElements, combineElements, currentBackgroundId]);
+  }, []);
 
   const disableHeight = !lockAspectRatio && hasText;
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
-      {isMedia && isSingleElement && (
-        <Row expand>
-          <Button onClick={handleSetBackground} fullWidth>
-            {__('Set as background', 'web-stories')}
-          </Button>
-        </Row>
-      )}
-      {/** X/Y */}
-      <Row expand>
-        <BoxedNumeric
-          suffix={_x('X', 'Position on X axis', 'web-stories')}
-          value={x}
-          min={minMaxXY.minX}
-          max={minMaxXY.maxX}
-          onChange={(value) => pushUpdate({ x: value })}
-          aria-label={__('X position', 'web-stories')}
-          canBeNegative
-        />
-        <Spacer />
-        <BoxedNumeric
-          suffix={_x('Y', 'Position on Y axis', 'web-stories')}
-          value={y}
-          min={minMaxXY.minY}
-          max={minMaxXY.maxY}
-          onChange={(value) => pushUpdate({ y: value })}
-          aria-label={__('Y position', 'web-stories')}
-          canBeNegative
-        />
-      </Row>
-      {/** Width/height & lock ratio */}
-      <Row expand>
-        <BoxedNumeric
-          suffix={_x('W', 'The Width dimension', 'web-stories')}
-          value={width}
-          min={MIN_MAX.WIDTH.MIN}
-          max={MIN_MAX.WIDTH.MAX}
-          onChange={(value) => {
-            const newWidth = value;
-            let newHeight = height;
-            if (lockAspectRatio) {
-              if (newWidth === '') {
-                newHeight = '';
-              } else if (isNum(newWidth / origRatio)) {
-                newHeight = dataPixels(newWidth / origRatio);
-              }
-            }
-            pushUpdate(getUpdateObject(newWidth, newHeight));
-          }}
-          aria-label={__('Width', 'web-stories')}
-        />
-        <StyledToggle
-          aria-label={__('Aspect ratio lock', 'web-stories')}
-          title={__('Constrain proportions', 'web-stories')}
-          icon={<Locked />}
-          uncheckedIcon={<Unlocked />}
-          value={lockAspectRatio}
-          onChange={() => pushUpdate({ lockAspectRatio: !lockAspectRatio })}
-        />
-        <BoxedNumeric
-          suffix={_x('H', 'The Height dimension', 'web-stories')}
-          value={disableHeight ? '' : height}
-          placeholder={disableHeight ? __('AUTO', 'web-stories') : ''}
-          disabled={disableHeight}
-          min={MIN_MAX.HEIGHT.MIN}
-          max={MIN_MAX.HEIGHT.MAX}
-          onChange={(value) => {
-            const newHeight = value;
-            let newWidth = width;
-            if (lockAspectRatio) {
-              if (newHeight === '') {
-                newWidth = '';
-              } else if (isNum(newHeight * origRatio)) {
-                newWidth = dataPixels(newHeight * origRatio);
-              }
-            }
-            pushUpdate(getUpdateObject(newWidth, newHeight));
-          }}
-          aria-label={__('Height', 'web-stories')}
-        />
-      </Row>
-      {/** Rotation and Flipping */}
-      <Row expand={false} spaceBetween={true}>
-        <BoxedNumeric
-          suffix={__('Rotate', 'web-stories')}
-          symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
-          value={rotationAngle}
-          min={MIN_MAX.ROTATION.MIN}
-          max={MIN_MAX.ROTATION.MAX}
-          onChange={(value) => pushUpdate({ rotationAngle: value })}
-          aria-label={__('Rotation', 'web-stories')}
-          canBeNegative
-        />
-        {canFlip && (
-          <FlipControls
-            onChange={(value) =>
-              pushUpdateForObject('flip', value, DEFAULT_FLIP, true)
-            }
-            value={flip}
+      <Grid>
+        <Area area="x">
+          <NumericInput
+            suffix={_x('X', 'Position on X axis', 'web-stories')}
+            value={x}
+            min={minMaxXY.minX}
+            max={minMaxXY.maxX}
+            onChange={(evt) => {
+              const value = Number(evt.target.value);
+              pushUpdate({ x: value }, true);
+            }}
+            aria-label={__('X position', 'web-stories')}
+            canBeNegative
+            {...getMixedValueProps(x)}
           />
+        </Area>
+        <Area area="y">
+          <NumericInput
+            suffix={_x('Y', 'Position on Y axis', 'web-stories')}
+            value={y}
+            min={minMaxXY.minY}
+            max={minMaxXY.maxY}
+            onChange={(evt) => {
+              const value = Number(evt.target.value);
+              pushUpdate({ y: value }, true);
+            }}
+            aria-label={__('Y position', 'web-stories')}
+            canBeNegative
+            {...getMixedValueProps(y)}
+          />
+        </Area>
+        {/** Width/height & lock ratio */}
+        <Area area="w">
+          <NumericInput
+            suffix={_x('W', 'The Width dimension', 'web-stories')}
+            value={width}
+            min={MIN_MAX.WIDTH.MIN}
+            max={MIN_MAX.WIDTH.MAX}
+            onChange={(evt) => {
+              const newWidth = Number(evt.target.value);
+              let newHeight = height;
+              if (lockAspectRatio) {
+                if (newWidth === '') {
+                  newHeight = '';
+                } else if (isNum(newWidth / origRatio)) {
+                  newHeight = dataPixels(newWidth / origRatio);
+                }
+              }
+              pushUpdate(getUpdateObject(newWidth, newHeight), true);
+            }}
+            aria-label={__('Width', 'web-stories')}
+            {...getMixedValueProps(width)}
+          />
+        </Area>
+        <Area area="d">
+          <Dash />
+        </Area>
+        <Area area="h">
+          <NumericInput
+            suffix={_x('H', 'The Height dimension', 'web-stories')}
+            value={disableHeight ? '' : height}
+            placeholder={disableHeight ? __('AUTO', 'web-stories') : ''}
+            disabled={disableHeight}
+            min={MIN_MAX.HEIGHT.MIN}
+            max={MIN_MAX.HEIGHT.MAX}
+            onChange={(evt) => {
+              const newHeight = Number(evt.target.value);
+              let newWidth = width;
+              if (lockAspectRatio) {
+                if (newHeight === '') {
+                  newWidth = '';
+                } else if (isNum(newHeight * origRatio)) {
+                  newWidth = dataPixels(newHeight * origRatio);
+                }
+              }
+              pushUpdate(getUpdateObject(newWidth, newHeight), true);
+            }}
+            aria-label={__('Height', 'web-stories')}
+            {...getMixedValueProps(height)}
+          />
+        </Area>
+        <Area area="l">
+          <Tooltip
+            placement={PLACEMENT.BOTTOM}
+            title={__('Constrain proportions', 'web-stories')}
+          >
+            <LockToggle
+              aria-label={__('Aspect ratio lock', 'web-stories')}
+              title={__('Constrain proportions', 'web-stories')}
+              isLocked={lockAspectRatio}
+              onClick={() =>
+                pushUpdate({ lockAspectRatio: !lockAspectRatio }, true)
+              }
+            />
+          </Tooltip>
+        </Area>
+        <Area area="r">
+          <NumericInput
+            suffix={<Icons.Angle />}
+            unit={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
+            value={rotationAngle}
+            min={MIN_MAX.ROTATION.MIN}
+            max={MIN_MAX.ROTATION.MAX}
+            onChange={(evt) => {
+              const value = Number(evt.target.value);
+              pushUpdate({ rotationAngle: value }, true);
+            }}
+            aria-label={__('Rotation', 'web-stories')}
+            canBeNegative
+            {...getMixedValueProps(rotationAngle)}
+          />
+        </Area>
+        {canFlip && (
+          <Area area="f">
+            <FlipControls
+              onChange={(value) =>
+                pushUpdateForObject('flip', value, DEFAULT_FLIP, true)
+              }
+              value={flip}
+            />
+          </Area>
         )}
-      </Row>
+      </Grid>
     </SimplePanel>
   );
 }
