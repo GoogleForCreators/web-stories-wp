@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Color, Radio, Toggle } from '../common';
+import { Color, Radio } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
