@@ -29,7 +29,7 @@ import { useLayoutContext } from '../layout';
 import { Button, BUTTON_VARIANTS, Icons } from '../../../design-system';
 
 const StyledButton = styled(Button)(
-  ({ isVisible }) => css`
+  ({ isVisible, theme }) => css`
     position: fixed;
     right: 40px;
     bottom: 40px;
@@ -41,6 +41,7 @@ const StyledButton = styled(Button)(
     align-items: center;
     contain: content;
     padding: 8px;
+    background-color: ${theme.colors.opacity.white64};
     pointer-events: ${isVisible ? 'auto' : 'none'};
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
     opacity: ${Number(isVisible)};

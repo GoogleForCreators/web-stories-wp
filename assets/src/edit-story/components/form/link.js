@@ -35,9 +35,19 @@ const MIN_MAX = {
   },
 };
 
-function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
-  const isValid = isValidUrl(withProtocol(value || ''));
-  const hasError = value.length > 0 && !isValid;
+function LinkInput({
+  onChange,
+  onBlur,
+  onFocus,
+  value,
+  description,
+  hint,
+  hasError,
+  ...rest
+}) {
+  const trimmedValue = (value || '').trim();
+  const isValid = isValidUrl(withProtocol(trimmedValue));
+  const isNotValid = trimmedValue.length > 0 && !isValid;
   return (
     <>
       {description && <HelperText>{description}</HelperText>}
@@ -46,9 +56,9 @@ function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
           placeholder={__('Web address', 'web-stories')}
           onChange={(evt) => onChange(evt.target.value)}
           onBlur={() => {
-            if (value?.length) {
-              const urlWithProtocol = withProtocol(value);
-              if (urlWithProtocol !== value) {
+            if (trimmedValue?.length) {
+              const urlWithProtocol = withProtocol(trimmedValue);
+              if (urlWithProtocol !== trimmedValue) {
                 onChange(urlWithProtocol);
               }
             }
@@ -60,8 +70,8 @@ function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
           value={value || ''}
           minLength={MIN_MAX.URL.MIN}
           maxLength={MIN_MAX.URL.MAX}
-          hasError={hasError}
-          hint={hasError ? __('Invalid web address.', 'web-stories') : null}
+          hasError={isNotValid || hasError}
+          hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
           {...rest}
         />
       </Row>
@@ -75,6 +85,8 @@ LinkInput.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   description: PropTypes.string,
+  hint: PropTypes.string,
+  hasError: PropTypes.boolean,
 };
 
 export default LinkInput;

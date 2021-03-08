@@ -95,7 +95,7 @@ describe('LibraryTabs integration', () => {
       const { textTab } = fixture.editor.library;
 
       // Click tab
-      await fixture.events.mouse.clickOn(textTab);
+      await fixture.events.mouse.clickOn(textTab, 5, 5);
       await waitFor(() => fixture.editor.library.text);
       expect(textTab).toHaveFocus();
 

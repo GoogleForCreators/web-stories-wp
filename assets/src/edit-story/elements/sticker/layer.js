@@ -15,25 +15,27 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-/**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
+import StoryPropTypes from '../../types';
+import stickers from '../../stickers';
 
-const IconContainer = styled.div`
-  height: auto;
-  width: 32px;
-`;
+const style = {
+  display: 'block',
+  height: 20,
+  width: 'auto',
+};
 
-function TextIcon() {
-  return (
-    <IconContainer>
-      <Icons.LetterT />
-    </IconContainer>
-  );
+const Noop = () => null;
+
+function StickerLayerContent({ element }) {
+  const { sticker } = element;
+  const Sticker = stickers[sticker.type] || Noop;
+  return <Sticker style={style} />;
 }
 
-export default TextIcon;
+StickerLayerContent.propTypes = {
+  element: StoryPropTypes.elements.sticker.isRequired,
+};
+
+export default StickerLayerContent;

@@ -44,7 +44,7 @@ const LayerList = styled(Reorderable).attrs({
   height: 100%;
   align-items: stretch;
   user-select: ${({ hasUserSelect }) => (hasUserSelect ? 'none' : 'initial')};
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const LayerSeparator = styled(ReorderableSeparator)`

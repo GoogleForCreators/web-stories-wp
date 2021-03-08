@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Color, Radio, Toggle } from '../common';
+import { Color, Radio } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -43,11 +43,7 @@ export class Border extends AbstractPanel {
   }
 
   get lockBorderWidth() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle border ratio lock/ }),
-      'borderLock',
-      Toggle
-    );
+    return this.getByRole('button', { name: /Toggle border ratio lock/ });
   }
 
   get borderColor() {
