@@ -46,7 +46,7 @@ describe('Document Title', () => {
     await page.waitForTimeout(100);
     await expect(await page.title()).toStartWith('Template: Beauty');
 
-    await expect(page).toClick('a', { text: 'Go to Explore Templates' });
+    await expect(page).toClick('a', { label: 'Go to Explore Templates' });
     await page.waitForTimeout(100);
     await expect(page).toMatch('Viewing all');
     await expect(page).toMatch('templates');
