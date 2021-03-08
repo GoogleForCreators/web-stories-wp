@@ -115,7 +115,7 @@
     "@testing-library/dom": "^7.29.6",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
-    "@testing-library/react-hooks": "^5.0.3",
+    "@testing-library/react-hooks": "^5.1.0",
     "@testing-library/user-event": "^12.6.0",
     "@web-stories-wp/e2e-tests": "*",
     "@wordpress/babel-plugin-import-jsx-pragma": "^3.0.1",
