@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import { Link } from '../';
@@ -38,11 +33,7 @@ export const _default = () => (
       <Link
         key={`${presetSize}_text_link`}
         size={presetSize}
-        href="#"
-        onClick={(event) => {
-          event.preventDefault();
-          action(`${presetSize} anchor clicked! Do something.`)(event);
-        }}
+        href="https://example.com"
       >
         {`${presetSize} - Click here for more information`}
         <br />

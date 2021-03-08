@@ -59,7 +59,7 @@ function ReorderableSeparator({ position, children = <Line />, ...props }) {
 
   return (
     <Wrapper
-      onMouseOver={handlePointerEnter}
+      onPointerOver={handlePointerEnter}
       ref={separatorRef}
       isReordering={isReordering}
       {...props}

@@ -80,7 +80,10 @@ export const DashboardBanner = () => {
         {
           'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with '
         }
-        <Link size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL} href="#">
+        <Link
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          href="https://policies.google.com/privacy"
+        >
           {'Google Privacy Policy'}
         </Link>
       </Text>

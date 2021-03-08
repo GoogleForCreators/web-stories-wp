@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Image = styled.img`
   display: block;
@@ -30,5 +31,10 @@ const Image = styled.img`
 function VisibleImage({ ...attrs }) {
   return <Image {...attrs} />;
 }
+
+VisibleImage.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
 
 export default VisibleImage;

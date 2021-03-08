@@ -83,14 +83,17 @@ function UpdateTemplateForm({ story }) {
     [story, includeAnimations, autoMigrateTemplate]
   );
 
+  const includeAnimationsId = 'includeAnimations';
+  const autoMigrateId = 'auto-migrate';
+
   return (
     <Container>
       <form onSubmit={handleTemplateUpdate}>
         <Title>{story.title}</Title>
         <div>
-          <label htmlFor="animation">{'Include Animations?'}</label>
+          <label htmlFor={includeAnimationsId}>{'Include Animations?'}</label>
           <input
-            id="animation"
+            id={includeAnimationsId}
             type="checkbox"
             onChange={toggleIncludeAnimations}
             defaultChecked={includeAnimations}
@@ -98,11 +101,11 @@ function UpdateTemplateForm({ story }) {
         </div>
 
         <div>
-          <label htmlFor="auto-migrate">
+          <label htmlFor={autoMigrateId}>
             {'Migrate Template to latest version?'}
           </label>
           <input
-            id="auto-migrate"
+            id={autoMigrateId}
             type="checkbox"
             onChange={toggleAutoMigrateTemplate}
             defaultChecked={autoMigrateTemplate}

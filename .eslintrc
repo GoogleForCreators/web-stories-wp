@@ -79,6 +79,7 @@
     "import/dynamic-import-chunkname": [ "error", {
       "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
     } ],
+    "jsx-a11y/label-has-for": "off",
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",

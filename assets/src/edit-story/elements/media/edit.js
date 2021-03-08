@@ -160,6 +160,7 @@ function MediaEdit({ element, box }) {
   const fadedMediaProps = {
     ref: setFullMedia,
     draggable: false,
+    alt: '',
     opacity: opacity / 100,
     ...mediaProps,
   };
@@ -218,6 +219,7 @@ function MediaEdit({ element, box }) {
   return (
     <Element ref={elementRef}>
       {isImage && (
+        /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
         <FadedImage
           {...fadedMediaProps}
           src={resource.src}
@@ -225,12 +227,14 @@ function MediaEdit({ element, box }) {
         />
       )}
       {isVideo && (
+        //eslint-disable-next-line styled-components-a11y/media-has-caption -- Faded video doesn't need captions.
         <FadedVideo {...fadedMediaProps}>
           <source src={resource.src} type={resource.mimeType} />
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
         <WithMask element={element} fill={true} applyFlip={false} box={box}>
+          {/* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */}
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
             <CropVideo {...cropMediaProps}>
