@@ -14,13 +14,14 @@
 
 namespace Google\Web_Stories\E2E\PostLock;
 
+const USERNAME = 'test_locker';
 
 function filter_meta( $value, $object_id, $meta_key ) {
 	if ( '_edit_lock' !== $meta_key ) {
 		return $value;
 	}
 
-	$user    = get_user_by( 'login', 'test_locker' );
+	$user    = get_user_by( 'login', USERNAME );
 	if ( ! $user ) {
 		return $value;
 	}
@@ -34,10 +35,10 @@ add_filter( 'get_post_metadata', __NAMESPACE__ . '\filter_meta', 10, 3 );
 
 
 function activate() {
-	$user = get_user_by( 'login', 'test_locker' );
+	$user = get_user_by( 'login', USERNAME );
 	if ( ! $user ) {
 		wp_insert_user( [
-			'user_login' => 'test_locker',
+			'user_login' => USERNAME,
 			'role'       => 'author',
 			'user_email' => 'lock@example.com',
 			'user_pass'  => 'fsfdsfds'
@@ -46,7 +47,7 @@ function activate() {
 }
 
 function deactivate() {
-	$user = get_user_by( 'login', 'test_locker' );
+	$user = get_user_by( 'login', USERNAME );
 	if ( $user ) {
 		wp_delete_user( $user->ID );
 	}
