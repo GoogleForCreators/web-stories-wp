@@ -36,7 +36,7 @@ export class SizePosition extends AbstractPanel {
   }
 
   get lockAspectRatio() {
-    return this.getByRole('button', { name: /Aspect ratio lock/ });
+    return this.getByRole('button', { name: /Lock aspect ratio/ });
   }
 
   get rotate() {

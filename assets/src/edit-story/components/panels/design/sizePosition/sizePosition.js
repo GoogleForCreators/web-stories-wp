@@ -240,11 +240,11 @@ function SizePositionPanel({
         <Area area="l">
           <Tooltip
             placement={PLACEMENT.BOTTOM}
-            title={__('Constrain proportions', 'web-stories')}
+            title={__('Lock aspect ratio', 'web-stories')}
           >
             <LockToggle
-              aria-label={__('Aspect ratio lock', 'web-stories')}
-              title={__('Constrain proportions', 'web-stories')}
+              aria-label={__('Lock aspect ratio', 'web-stories')}
+              title={__('Lock aspect ratio', 'web-stories')}
               isLocked={lockAspectRatio}
               onClick={() =>
                 pushUpdate({ lockAspectRatio: !lockAspectRatio }, true)
