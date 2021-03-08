@@ -17,23 +17,19 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
+/**
+ * Internal dependencies
+ */
+import { Media } from '../../icons';
 
-const IconContainer = styled.div`
-  height: auto;
-  width: 32px;
-`;
-
-function TextIcon() {
-  return (
-    <IconContainer>
-      <Icons.LetterT />
-    </IconContainer>
-  );
+function StickerIcon() {
+  const alt = __('Sticker element', 'web-stories');
+  return <Media aria-label={alt} />;
 }
 
-export default TextIcon;
+export default StickerIcon;

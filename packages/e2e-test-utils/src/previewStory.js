@@ -27,9 +27,9 @@ const MAX_WAIT_THRESHOLD = 5000;
 async function previewStory(editorPage) {
   let openTabs = await browser.pages();
   const expectedTabsCount = openTabs.length + 1;
-  await expect(editorPage).toClick('button:not([disabled])', {
-    text: 'Preview',
-  });
+  await expect(editorPage).toClick(
+    'button:not([disabled])[aria-label="Preview"]'
+  );
   await expect(editorPage).not.toMatch('The preview window failed to open.');
 
   let waits = 0;

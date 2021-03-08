@@ -47,6 +47,10 @@ const InspectorContainer = styled.div`
   overflow: auto;
 `;
 
+const UnjustifiedTabView = styled(TabView)`
+  justify-content: center;
+`;
+
 function InspectorLayout() {
   const {
     state: { tab },
@@ -68,7 +72,7 @@ function InspectorLayout() {
   useEscapeToBlurEffect(inspector);
   return (
     <Layout ref={inspector}>
-      <TabView
+      <UnjustifiedTabView
         label={__('Inspector Selection', 'web-stories')}
         tabs={tabs}
         initialTab={tab}

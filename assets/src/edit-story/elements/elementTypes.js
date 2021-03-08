@@ -26,6 +26,7 @@ import * as imageElement from './image';
 import * as shapeElement from './shape';
 import * as videoElement from './video';
 import * as gifElement from './gif';
+import * as stickerElement from './sticker';
 
 const elementTypes = [
   {
@@ -38,6 +39,7 @@ const elementTypes = [
   { type: 'shape', name: __('Shape', 'web-stories'), ...shapeElement },
   { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
   { type: 'gif', name: __('Gif', 'web-stories'), ...gifElement },
+  { type: 'sticker', name: __('Sticker', 'web-stories'), ...stickerElement },
 ];
 
 export default elementTypes;

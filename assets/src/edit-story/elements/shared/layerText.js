@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
+import { Text, THEME_CONSTANTS } from '../../../design-system';
 
-const IconContainer = styled.div`
-  height: auto;
-  width: 32px;
+const StyledText = styled(Text)`
+  color: inherit;
+  white-space: nowrap;
+  text-overflow: ' ';
+  overflow: hidden;
+  max-width: 100%;
 `;
 
-function TextIcon() {
+export function LayerText({ children }) {
   return (
-    <IconContainer>
-      <Icons.LetterT />
-    </IconContainer>
+    <StyledText
+      forwardedAs="span"
+      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+    >
+      {children}
+    </StyledText>
   );
 }
-
-export default TextIcon;
+LayerText.propTypes = { children: PropTypes.node };

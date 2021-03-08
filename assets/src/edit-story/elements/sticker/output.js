@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,29 @@
  */
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-/**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
+import StoryPropTypes from '../../types';
+import stickers from '../../stickers';
 
-const IconContainer = styled.div`
-  height: auto;
-  width: 32px;
-`;
+const style = {
+  display: 'block',
+  position: 'absolute',
+  top: 0,
+  height: '100%',
+  width: 'auto',
+};
 
-function TextIcon() {
-  return (
-    <IconContainer>
-      <Icons.LetterT />
-    </IconContainer>
-  );
+const Noop = () => null;
+
+function StickerOutput({ element }) {
+  const { sticker } = element;
+  const Sticker = stickers[sticker.type] || Noop;
+  return <Sticker className="fill" style={style} />;
 }
 
-export default TextIcon;
+StickerOutput.propTypes = {
+  element: StoryPropTypes.elements.sticker.isRequired,
+};
+
+export default StickerOutput;

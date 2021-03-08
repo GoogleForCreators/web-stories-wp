@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -27,10 +27,14 @@ import PropTypes from 'prop-types';
 import {
   useKeyDownEffect,
   useGlobalKeyDownEffect,
+  Headline,
+  THEME_CONSTANTS,
+  themeHelpers,
+  ThemeGlobals,
 } from '../../../design-system';
 import { useConfig } from '../../app';
 
-const ALERT_ICON_SIZE = 32;
+const ALERT_ICON_SIZE = 28;
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -53,25 +57,45 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   role: 'tab',
   'aria-selected': isActive,
 }))`
-  text-align: center;
   cursor: pointer;
   border: none;
   background: none;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
-  padding: 10px 0px;
-  margin: 0 20px;
-  margin-bottom: -1px;
+  padding: 0 4px;
+  margin: 10px 12px 9px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
+  transition: color 0.2s ease;
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.fg.primary : theme.colors.fg.tertiary};
+
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+
+  :hover {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
 
   ${({ isActive, theme }) =>
     isActive &&
-    `
-    padding-bottom: 8px;
-    border-bottom: 2px solid ${theme.colors.fg.primary};
-  `}
+    css`
+      ::after {
+        content: '';
+        position: absolute;
+        background-color: ${theme.colors.border.selection};
+        height: 2px;
+        border-radius: 1px;
+        bottom: -10px;
+        left: 4px;
+        right: 4px;
+      }
+    `}
 
   svg {
     display: block;
@@ -79,25 +103,20 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     height: 32px;
     margin: 0 -4px;
     transform-origin: center center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, color 0.2s ease;
     color: ${({ theme }) => theme.colors.fg.tertiary};
+    border-radius: ${({ theme }) => theme.borders.radius.small};
   }
 
   svg.alert {
     width: ${ALERT_ICON_SIZE}px;
-    height: auto;
-    position: absolute;
-    left: 100%;
-    top: calc(
-      50% - ${({ isActive }) => ALERT_ICON_SIZE / 2 + 2 - (isActive ? 1 : 0)}px
-    );
-    overflow: visible;
-    opacity: 1;
+    margin-left: 4px;
+
     &.warning {
-      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.warning};
+      color: ${({ theme }) => theme.colors.fg.linkNormal};
     }
     &.error {
-      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.negative};
+      color: ${({ theme }) => theme.colors.fg.negative};
     }
   }
 
@@ -112,6 +131,20 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   &:active svg:not(.alert) {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
+    svg:not(.alert) {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.tertiaryHover};
+    }
+  }
+`;
+
+const TabText = styled(Headline).attrs({
+  as: 'p',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
+})`
+  color: inherit;
 `;
 
 const noop = () => {};
@@ -124,6 +157,7 @@ function TabView({
   label = '',
   shortcut = '',
   initialTab,
+  ...rest
 }) {
   const [tab, setTab] = useState(initialTab || tabs[0]?.id);
   const { isRTL } = useConfig();
@@ -157,10 +191,7 @@ function TabView({
   const selectTabByIndex = useCallback(
     (index) => {
       // Index wraps, so -1 is last element
-      const nextTab = tabs[index < 0 ? tabs.length + index : index];
-      if (!nextTab) {
-        return;
-      }
+      const nextTab = tabs[(index + tabs.length) % tabs.length];
       tabChanged(nextTab.id);
     },
     [tabs, tabChanged]
@@ -187,20 +218,18 @@ function TabView({
   useKeyDownEffect(ref, 'end', () => selectTabByIndex(-1), [selectTabByIndex]);
 
   return (
-    <Tabs aria-label={label} ref={ref}>
+    <Tabs aria-label={label} ref={ref} {...rest}>
       {tabs.map(({ id, title, icon: Icon }) => (
         <Tab
           key={id}
           ref={(tabRef) => (tabRefs.current[id] = tabRef)}
           id={getTabId(id)}
           isActive={tab === id}
-          aria-controls={
-            getAriaControlsId ? getAriaControlsId(id) : getTabId(id)
-          }
+          aria-controls={getAriaControlsId ? getAriaControlsId(id) : null}
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
         >
-          {Boolean(title) && <span>{title}</span>}
+          {Boolean(title) && <TabText>{title}</TabText>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}
         </Tab>
       ))}

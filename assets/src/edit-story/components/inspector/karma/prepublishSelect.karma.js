@@ -44,12 +44,12 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
   async function openPrepublishPanel() {
     const { checklistTab } = fixture.editor.inspector;
-    await fixture.events.mouse.clickOn(checklistTab);
+    await fixture.events.click(checklistTab);
     await waitFor(() => fixture.editor.inspector.checklistPanel);
   }
 
   async function openRecommendedPanel() {
-    await fixture.events.mouse.clickOn(
+    await fixture.events.click(
       fixture.editor.inspector.checklistPanel.recommended
     );
     await fixture.events.sleep(500);
@@ -57,7 +57,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
   async function clickOnCanvas() {
     const canvas = fixture.querySelector('[data-testid="fullbleed"]');
-    await fixture.events.mouse.clickOn(canvas);
+    await fixture.events.click(canvas);
   }
 
   describe('Prepublish checklist tab', () => {
@@ -78,7 +78,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
 
       await openPrepublishPanel();
-      await fixture.events.mouse.clickOn(tooSmallOnPage);
+      await fixture.events.click(tooSmallOnPage);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
@@ -111,7 +111,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const tooMuchTextOnPage = fixture.screen.getByText(
         MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT
       );
-      await fixture.events.mouse.clickOn(tooMuchTextOnPage);
+      await fixture.events.click(tooMuchTextOnPage);
       await fixture.events.sleep(1000);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(4);
@@ -154,7 +154,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const fontTooSmallRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.MAIN_TEXT
       );
-      await fixture.events.mouse.clickOn(fontTooSmallRow);
+      await fixture.events.click(fontTooSmallRow);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -186,7 +186,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const linkTooSmallRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
       );
-      await fixture.events.mouse.clickOn(linkTooSmallRow);
+      await fixture.events.click(linkTooSmallRow);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -261,7 +261,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const imageMissingAltTextRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
       );
-      await fixture.events.mouse.clickOn(imageMissingAltTextRow);
+      await fixture.events.click(imageMissingAltTextRow);
 
       expect(
         fixture.editor.inspector.designPanel.node.contains(
@@ -287,7 +287,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
       );
       await openPrepublishPanel();
-      await fixture.events.mouse.clickOn(noPosterImage);
+      await fixture.events.click(noPosterImage);
       await waitFor(() => {
         expect(
           fixture.editor.inspector.documentPanel.node.querySelector(
