@@ -29,7 +29,7 @@ const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
   processing: [],
   processed: [],
-  mediaType: types.LOCAL_MEDIA_TYPE_ALL,
+  mediaType: '',
   searchTerm: '',
 };
 
