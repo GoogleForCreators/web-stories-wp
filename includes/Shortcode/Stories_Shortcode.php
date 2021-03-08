@@ -69,7 +69,7 @@ class Stories_Shortcode {
 		$attributes = shortcode_atts(
 			[
 				'view'               => 'circles',
-				'columns'            => 1,
+				'number_of_columns'  => 1,
 				'title'              => 'false',
 				'excerpt'            => 'false',
 				'author'             => 'false',
@@ -79,7 +79,7 @@ class Stories_Shortcode {
 				'image_alignment'    => 'left',
 				'class'              => '',
 				'circle_size'        => 150,
-				'number'             => 10,
+				'number_of_stories'  => 10,
 				'order'              => 'DESC',
 				'orderby'            => 'post_date',
 				'sharp_corners'      => 'false',
@@ -106,7 +106,7 @@ class Stories_Shortcode {
 
 		return [
 			'view_type'               => (string) $attributes['view'],
-			'number_of_columns'       => (int) $attributes['columns'],
+			'number_of_columns'       => (int) $attributes['number_of_columns'],
 			'show_title'              => ( 'true' === $attributes['title'] ),
 			'show_author'             => ( 'true' === $attributes['author'] ),
 			'show_date'               => ( 'true' === $attributes['date'] ),
@@ -132,7 +132,7 @@ class Stories_Shortcode {
 	private function prepare_story_args( array $attributes ) {
 		return [
 			// Show 100 stories at most to avoid 500 errors.
-			'posts_per_page' => min( (int) $attributes['number'], 100 ),
+			'posts_per_page' => min( (int) $attributes['number_of_stories'], 100 ),
 			'order'          => 'ASC' === $attributes['order'] ? 'ASC' : 'DESC',
 			'orderby'        => $attributes['orderby'],
 		];

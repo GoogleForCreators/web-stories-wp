@@ -108,8 +108,9 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 	public function test_max_number_for_stories() {
 		$stories_shortcode = new Testee();
 		$attributes        = [
-			'number' => 1000000,
-			'order'  => 'DESC',
+			'number_of_stories' => 1000000,
+			'order'             => 'DESC',
+			'orderby'           => 'post_title',
 		];
 
 		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args', [ $attributes ] );
@@ -140,7 +141,7 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 
 		$attributes = [
 			'view'               => 'grid',
-			'columns'            => 2,
+			'number_of_columns'  => 2,
 			'title'              => 'true',
 			'author'             => 'true',
 			'date'               => 'true',
