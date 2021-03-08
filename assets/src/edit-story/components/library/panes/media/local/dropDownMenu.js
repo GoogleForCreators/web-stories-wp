@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
+import { Menu, PLACEMENT, Popup } from '../../../../../../design-system';
 import { More } from '../../../../button';
-import DropDownList from '../../../../form/dropDown/list';
-import Popup from '../../../../popup';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -46,6 +46,14 @@ const DropDownContainer = styled.div`
 
 const MenuContainer = styled.div`
   z-index: 1;
+`;
+
+const menuStylesOverride = css`
+  min-width: 100px;
+  margin-top: 0;
+  li {
+    display: block;
+  }
 `;
 
 /**
@@ -69,15 +77,19 @@ function DropDownMenu({
   onMenuSelected,
 }) {
   const options = [
-    { name: __('Edit', 'web-stories'), value: 'edit' },
-    { name: __('Delete', 'web-stories'), value: 'delete' },
+    {
+      group: [
+        { label: __('Edit', 'web-stories'), value: 'edit' },
+        { label: __('Delete', 'web-stories'), value: 'delete' },
+      ],
+    },
   ];
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
 
-  const handleCurrentValue = (value) => {
+  const handleCurrentValue = (evt, value) => {
     onMenuSelected();
     switch (value) {
       case 'edit':
@@ -101,6 +113,9 @@ function DropDownMenu({
     setShowEditDialog,
   ]);
 
+  const listId = useMemo(() => `list-${uuidv4()}`, []);
+  const buttonId = useMemo(() => `button-${uuidv4()}`, []);
+
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     !resource.local && ( // Don't show menu if resource not uploaded to server yet.
@@ -116,15 +131,24 @@ function DropDownMenu({
               aria-pressed={isMenuOpen}
               aria-haspopup={true}
               aria-expanded={isMenuOpen}
+              aria-owns={isMenuOpen ? listId : null}
+              id={buttonId}
             />
-            <Popup anchor={moreButtonRef} isOpen={isMenuOpen} width={160}>
+            <Popup
+              anchor={moreButtonRef}
+              placement={PLACEMENT.BOTTOM_START}
+              isOpen={isMenuOpen}
+              width={160}
+            >
               <DropDownContainer>
-                <DropDownList
-                  handleCurrentValue={handleCurrentValue}
+                <Menu
+                  parentId={buttonId}
+                  listId={listId}
+                  onMenuItemClick={handleCurrentValue}
                   options={options}
-                  value={options[0].value}
-                  toggleOptions={onMenuCancelled}
+                  onDismissMenu={onMenuCancelled}
                   hasMenuRole
+                  menuStylesOverride={menuStylesOverride}
                 />
               </DropDownContainer>
             </Popup>
