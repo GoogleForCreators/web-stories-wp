@@ -54,7 +54,7 @@ class Lightbox {
     this.player.addEventListener('amp-story-player-close', () => {
       this.player.pause();
       this.lightboxElement.classList.toggle('show');
-      document.body.classList.toggle('ws-lightbox-open');
+      document.body.classList.toggle('web-stories-lightbox-open');
     });
   }
 
@@ -76,7 +76,7 @@ class Lightbox {
         this.player.show(storyObject.href);
         this.player.play();
         this.lightboxElement.classList.toggle('show');
-        document.body.classList.toggle('ws-lightbox-open');
+        document.body.classList.toggle('web-stories-lightbox-open');
       });
     });
   }

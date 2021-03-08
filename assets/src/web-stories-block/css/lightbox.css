@@ -1,5 +1,5 @@
 /* Lightbox styles */
-.ws-lightbox-open {
+.web-stories-lightbox-open {
   /* Stop page scroll when lightbox is visible. */
   overflow-y: hidden;
 }
