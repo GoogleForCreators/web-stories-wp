@@ -140,6 +140,7 @@ function SizePositionPanel({
 
   usePresubmitHandlers(lockAspectRatio, height, width);
 
+  const disableHeight = !lockAspectRatio && hasText;
   const enabledHeightPlaceholder =
     MULTIPLE_VALUE === height ? MULTIPLE_DISPLAY_VALUE : null;
   const heightPlaceholder = disableHeight
@@ -152,8 +153,6 @@ function SizePositionPanel({
       placeholder: MULTIPLE_VALUE === value ? MULTIPLE_DISPLAY_VALUE : null,
     };
   }, []);
-
-  const disableHeight = !lockAspectRatio && hasText;
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
       <Grid>
