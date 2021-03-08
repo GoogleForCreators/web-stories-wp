@@ -15,20 +15,10 @@
  */
 
 /**
- * Internal dependencies
+ * @param {Object} props             All props.
+ * @param {number} props.rowIndex    Identifies the virtualized row index.
+ * @param {number} props.columnIndex Identifies the virtualized column index.
+ * @return {number} itemIndex        Returns the true index of an item in a virtualized grid
  */
-import { Container } from '../container';
-
-export default class PageLayouts extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get pageLayouts() {
-    return this.getAllByRole('listitem');
-  }
-
-  pageLayout(name) {
-    return this.getByRole('listitem', { name });
-  }
-}
+export const getVirtualizedItemIndex = ({ columnIndex, rowIndex }) =>
+  columnIndex === 0 ? rowIndex * 2 : rowIndex * 2 + 1;

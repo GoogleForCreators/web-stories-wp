@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { Container } from '../container';
-
-export default class PageLayouts extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get pageLayouts() {
-    return this.getAllByRole('listitem');
-  }
-
-  pageLayout(name) {
-    return this.getByRole('listitem', { name });
-  }
-}
+export * from './components';
+export { getVirtualizedItemIndex } from './getVirtualizedItemIndex';
+export { default as useVirtualizedGridNavigation } from './useVirtualizedGridNavigation';
