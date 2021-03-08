@@ -83,7 +83,7 @@
     "sat": "^0.8.0",
     "styled-components": "^5.2.1",
     "use-context-selector": "^1.2.11",
-    "use-debounce": "^3.4.3",
+    "use-debounce": "^6.0.0",
     "use-reduction": "^2.1.0",
     "uuid": "^8.3.2",
     "valid-url": "^1.0.9",
