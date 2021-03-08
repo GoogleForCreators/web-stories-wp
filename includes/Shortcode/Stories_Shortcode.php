@@ -81,6 +81,7 @@ class Stories_Shortcode {
 				'circle_size'        => 150,
 				'number'             => 10,
 				'order'              => 'DESC',
+				'orderby'            => 'post_date',
 				'sharp_corners'      => 'false',
 			],
 			$attrs,
@@ -129,11 +130,11 @@ class Stories_Shortcode {
 	 * @return array Array of story arguments to pass to Story_Query.
 	 */
 	private function prepare_story_args( array $attributes ) {
-
 		return [
 			// Show 100 stories at most to avoid 500 errors.
 			'posts_per_page' => min( (int) $attributes['number'], 100 ),
 			'order'          => 'ASC' === $attributes['order'] ? 'ASC' : 'DESC',
+			'orderby'        => $attributes['orderby'],
 		];
 	}
 }
