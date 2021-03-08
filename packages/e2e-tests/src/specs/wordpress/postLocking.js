@@ -29,14 +29,29 @@ import {
 import {
   withExperimentalFeatures,
   visitDashboard,
+  createNewStory,
+  insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 import { percySnapshot } from '@percy/puppeteer';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
+const storyTitle = 'Test post lock';
+
 describe('Post locking', () => {
   withExperimentalFeatures(['enablePostLocking']);
   beforeAll(async () => {
+    await createNewStory();
+
+    await insertStoryTitle(storyTitle);
+
+    // Publish story.
+    // eslint-disable-next-line jest/no-standalone-expect
+    await expect(page).toClick('button', { text: 'Publish' });
+
+    // eslint-disable-next-line jest/no-standalone-expect
+    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+
     await activatePlugin('e2e-tests-post-lock-mock');
   });
 
@@ -47,13 +62,12 @@ describe('Post locking', () => {
   it('should be able to open the dashboard with locked story', async () => {
     await visitDashboard();
 
-    await expect(page).toMatch('test_locker is currently editing');
+    await expect(page).toMatch('author is currently editing');
 
     await percySnapshot(page, 'Stories Dashboard with lock', { percyCSS });
   });
 
   it('should be able to open the editor with locked story', async () => {
-    const storyTitle = 'Test Story';
     await visitAdminPage('edit.php', 'post_type=web-story');
 
     await expect(page).toMatch(storyTitle);
@@ -62,7 +76,6 @@ describe('Post locking', () => {
       page.waitForNavigation(),
       expect(page).toClick('a', { text: storyTitle }),
     ]);
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
 
     await page.waitForSelector('.ReactModal__Content');
 
