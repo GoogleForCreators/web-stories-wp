@@ -70,7 +70,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Initializes the Web Stories embed block.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
@@ -170,7 +170,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Returns script settings.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return array Script settings.
 	 */
@@ -216,7 +216,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Initializes class variable $block_attributes.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @param array $block_attributes Array containing block attributes.
 	 *
@@ -233,7 +233,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Renders the block type output for given attributes.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @param array $attributes Block attributes.
 	 *
@@ -275,7 +275,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Maps fields to the story params.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return array
 	 */
@@ -303,7 +303,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Returns arguments to be passed to the WP_Query object initialization.
 	 *
-	 * @since 1.3.0
+	 * @since 1.5.0
 	 *
 	 * @return array Query arguments.
 	 */
