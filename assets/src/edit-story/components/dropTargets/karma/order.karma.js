@@ -24,7 +24,6 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import { getBackgroundElementId } from './background.karma';
 
 describe('Drop-Target order', () => {
   let fixture;
@@ -87,7 +86,7 @@ describe('Drop-Target order', () => {
     // Expect old element to have been removed
     expect(fixture.editor.canvas.framesLayer.frame(otherImage.id)).toBeFalsy();
 
-    const backgroundId = await getBackgroundElementId(fixture);
+    const backgroundId = (await getElements(fixture))[0].id;
     // TODO: refactor after #2386?
     const topImageImg = fixture.editor.canvas.displayLayer
       .display(topImage.id)
