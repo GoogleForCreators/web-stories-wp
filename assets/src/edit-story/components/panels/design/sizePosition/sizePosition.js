@@ -140,6 +140,12 @@ function SizePositionPanel({
 
   usePresubmitHandlers(lockAspectRatio, height, width);
 
+  const enabledHeightPlaceholder =
+    MULTIPLE_VALUE === height ? MULTIPLE_DISPLAY_VALUE : null;
+  const heightPlaceholder = disableHeight
+    ? __('Auto', 'web-stories')
+    : enabledHeightPlaceholder;
+
   const getMixedValueProps = useCallback((value) => {
     return {
       isIndeterminate: MULTIPLE_VALUE === value,
@@ -228,13 +234,7 @@ function SizePositionPanel({
             }}
             aria-label={__('Height', 'web-stories')}
             isIndeterminate={MULTIPLE_VALUE === height}
-            placeholder={
-              disableHeight
-                ? __('Auto', 'web-stories')
-                : MULTIPLE_VALUE === height
-                ? MULTIPLE_DISPLAY_VALUE
-                : null
-            }
+            placeholder={heightPlaceholder}
           />
         </Area>
         <Area area="l">
