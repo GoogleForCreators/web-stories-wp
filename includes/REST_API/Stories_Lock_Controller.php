@@ -233,7 +233,18 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 			$response->add_links( $this->prepare_links( $lock, $request['id'] ) );
 		}
 
-		return $response;
+		/**
+		 * Filters the lock data for a response.
+		 *
+		 * The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug.
+		 *
+		 * @since 4.7.0
+		 *
+		 * @param WP_REST_Response $response The response object.
+		 * @param Array            $lock     Lock array.
+		 * @param WP_REST_Request  $request  Request object.
+		 */
+		return apply_filters( "rest_prepare_{$this->post_type}_lock", $response, $lock, $request );
 	}
 
 	/**
