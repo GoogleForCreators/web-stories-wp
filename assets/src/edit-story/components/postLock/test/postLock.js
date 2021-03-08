@@ -152,4 +152,20 @@ describe('PostLock', () => {
       /Unable to find role="dialog"/
     );
   });
+
+  it('should register beforeunload listener', () => {
+    jest.spyOn(window, 'addEventListener');
+    setup(
+      Promise.resolve({
+        locked: true,
+        user: 150,
+        nonce: 'fsdfds',
+        _embedded: { author: [{ id: 150, name: 'John Doe' }] },
+      })
+    );
+    expect(window.addEventListener).toHaveBeenCalledWith(
+      'beforeunload',
+      expect.any(Function)
+    );
+  });
 });
