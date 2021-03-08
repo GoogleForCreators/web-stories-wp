@@ -150,6 +150,8 @@ trait Assets {
 			$style_dependencies,
 			$entry_version
 		);
+
+		wp_style_add_data( $style_handle, 'rtl', 'replace' );
 	}
 
 	/**
