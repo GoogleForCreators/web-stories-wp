@@ -159,7 +159,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-matcher-deep-close-to": "^2.0.1",
     "jest-silent-reporter": "^0.4.0",
-    "karma": "^6.1.0",
+    "karma": "^6.1.1",
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.1",
