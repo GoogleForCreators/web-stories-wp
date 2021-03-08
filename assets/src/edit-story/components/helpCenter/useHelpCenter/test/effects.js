@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { initial } from '../';
+import { initialState } from '../';
 import {
   BASE_NAVIGATION_FLOW,
   DONE_TIP_ENTRY,
@@ -28,6 +28,8 @@ import {
   createDynamicNavigationFlow,
   deriveBottomNavigation,
   deriveDisabledButtons,
+  deriveInitialOpen,
+  deriveInitialUnreadTipsCount,
   deriveReadTip,
   deriveTransitionDirection,
   deriveUnreadTipsCount,
@@ -35,7 +37,7 @@ import {
 } from '../effects';
 
 const mockState = (overrides = {}) => ({
-  ...initial.state,
+  ...initialState,
   ...overrides,
 });
 
@@ -80,6 +82,53 @@ describe('composeEffects', () => {
       mockEffects.slice(0, i).forEach((effect) => {
         expect(mockEffect).toHaveBeenCalledAfter(effect);
       });
+    });
+  });
+});
+
+describe('deriveInitialOpen', () => {
+  it('doesnt update anything if no persisted state', () => {
+    expect(deriveInitialOpen({})).toStrictEqual({});
+  });
+
+  it('doesnt update anything if there is no persisted unreadTipsCount', () => {
+    expect(deriveInitialOpen({ isOpen: true })).toStrictEqual({});
+    expect(deriveInitialOpen({ isOpen: false })).toStrictEqual({});
+  });
+
+  it('doesnt update anything if there is no persisted isOpen', () => {
+    expect(deriveInitialOpen({ unreadTipsCount: 0 })).toStrictEqual({});
+    expect(deriveInitialOpen({ unreadTipsCount: 1 })).toStrictEqual({});
+  });
+
+  it('doesnt update anything if there are no unread tips', () => {
+    expect(
+      deriveInitialOpen({ unreadTipsCount: 0, isOpen: true })
+    ).toStrictEqual({});
+    expect(
+      deriveInitialOpen({ unreadTipsCount: 0, isOpen: false })
+    ).toStrictEqual({});
+  });
+
+  it('respects persisted isOpen if there are unread tips', () => {
+    expect(
+      deriveInitialOpen({ unreadTipsCount: 1, isOpen: true })
+    ).toStrictEqual({ isOpen: true });
+
+    expect(
+      deriveInitialOpen({ unreadTipsCount: 1, isOpen: false })
+    ).toStrictEqual({ isOpen: false });
+  });
+});
+
+describe('deriveInitialUnreadTipsCount', () => {
+  it('doesnt update anything if no persisted state', () => {
+    expect(deriveInitialUnreadTipsCount({})).toStrictEqual({});
+  });
+
+  it('updates unreadTipsCount if its persisted', () => {
+    expect(deriveInitialUnreadTipsCount({ unreadTipsCount: 2 })).toStrictEqual({
+      unreadTipsCount: 2,
     });
   });
 });

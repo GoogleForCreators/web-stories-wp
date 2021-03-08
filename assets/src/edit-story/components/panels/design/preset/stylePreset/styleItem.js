@@ -73,6 +73,7 @@ const TextWrapper = styled.div`
   padding: 3px;
   max-width: 100%;
   ${({ styles }) => styles}
+  font-size: 12px;
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
 `;
 

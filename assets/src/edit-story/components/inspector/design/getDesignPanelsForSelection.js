@@ -20,7 +20,6 @@
 import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
-  BackgroundSizePositionPanel,
   BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
@@ -29,7 +28,7 @@ import {
   LinkPanel,
   LayerStylePanel,
   PageAttachmentPanel,
-  PageStylePanel,
+  PageBackgroundPanel,
   ShapeStylePanel,
   SizePositionPanel,
   TextBoxPanel,
@@ -58,15 +57,13 @@ function getDesignPanelsForSelection(elements) {
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [
-      { type: PanelTypes.PAGE_ATTACHMENT, Panel: PageAttachmentPanel },
-    ];
+    const panels = [];
 
     const isBackgroundMedia = !elements[0].isDefaultBackground;
     if (isBackgroundMedia) {
       panels.push({
-        type: PanelTypes.BACKGROUND_SIZE_POSITION,
-        Panel: BackgroundSizePositionPanel,
+        type: PanelTypes.PAGE_BACKGROUND,
+        Panel: PageBackgroundPanel,
       });
       panels.push({
         type: PanelTypes.FILTER,
@@ -93,13 +90,22 @@ function getDesignPanelsForSelection(elements) {
       });
       // In case of default background without media:
     } else {
-      panels.unshift({ type: PanelTypes.PAGE_STYLE, Panel: PageStylePanel });
+      panels.unshift({
+        type: PanelTypes.PAGE_BACKGROUND,
+        Panel: PageBackgroundPanel,
+      });
       // Always display Presets as the first panel for background.
       panels.unshift({
         type: PanelTypes.STYLE_PRESETS,
         Panel: ColorPresetPanel,
       });
     }
+
+    panels.push({
+      type: PanelTypes.PAGE_ATTACHMENT,
+      Panel: PageAttachmentPanel,
+    });
+
     return panels;
   }
 
@@ -113,7 +119,7 @@ function getDesignPanelsForSelection(elements) {
       switch (type) {
         case PanelTypes.ANIMATION:
           return { type, Panel: AnimationPanel };
-        case PanelTypes.BACKGROUND_SIZE_POSITION:
+        case PanelTypes.PAGE_BACKGROUND:
           // Only display when isBackground.
           return null;
         case PanelTypes.COLOR_PRESETS:

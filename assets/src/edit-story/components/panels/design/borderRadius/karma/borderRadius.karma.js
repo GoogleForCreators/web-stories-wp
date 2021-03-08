@@ -42,7 +42,7 @@ describe('Border Radius Panel', () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       // Choose Fill as background for visibility.
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textBox.fill.button
+        fixture.editor.inspector.designPanel.textBox.fill
       );
 
       const panel = fixture.editor.inspector.designPanel.borderRadius;
@@ -62,7 +62,7 @@ describe('Border Radius Panel', () => {
       );
 
       // Take off lock.
-      await fixture.events.click(panel.lockBorderRadius.button);
+      await fixture.events.click(panel.lockBorderRadius);
 
       await fixture.events.click(panel.radius('Top left'), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
@@ -81,7 +81,7 @@ describe('Border Radius Panel', () => {
       const panel = fixture.editor.inspector.designPanel.borderRadius;
 
       // Take off lock.
-      await fixture.events.click(panel.lockBorderRadius.button);
+      await fixture.events.click(panel.lockBorderRadius);
       await fixture.events.click(panel.radius('Bottom left'), {
         clickCount: 3,
       });

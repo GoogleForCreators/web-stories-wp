@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState, useMemo } from 'react';
+import { useReducer, useEffect, useState, useMemo, useRef } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -25,6 +25,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { clamp } from '../../../../animation';
 import { useCurrentUser } from '../../../app';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 import { BASE_NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
 import {
   composeEffects,
@@ -35,6 +36,9 @@ import {
   deriveTransitionDirection,
   deriveUnreadTipsCount,
   resetNavigationIndexOnOpen,
+  deriveAutoOpen,
+  deriveInitialOpen,
+  deriveInitialUnreadTipsCount,
 } from './effects';
 
 /**
@@ -57,6 +61,7 @@ export const deriveState = composeEffects(
     deriveDisabledButtons,
     deriveReadTip,
     deriveUnreadTipsCount,
+    deriveAutoOpen,
   ]
 );
 
@@ -68,20 +73,29 @@ const reducer = ({ state, actions }, action) => {
   };
 };
 
+const deriveInitialState = composeEffects([
+  deriveInitialOpen,
+  deriveInitialUnreadTipsCount,
+]);
+
+const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
+
+export const initialState = {
+  isOpen: false,
+  navigationIndex: -1,
+  navigationFlow: BASE_NAVIGATION_FLOW,
+  isLeftToRightTransition: true,
+  hasBottomNavigation: false,
+  isPrevDisabled: true,
+  isNextDisabled: false,
+  readTips: {},
+  readError: false,
+  unreadTipsCount: persisted?.unreadTipsCount ?? 0,
+  isHydrated: false,
+};
+
 export const initial = {
-  state: {
-    isOpen: false,
-    navigationIndex: -1,
-    // @TODO make this dynamic based off of unread tips.
-    navigationFlow: BASE_NAVIGATION_FLOW,
-    isLeftToRightTransition: true,
-    hasBottomNavigation: false,
-    isPrevDisabled: true,
-    isNextDisabled: false,
-    readTips: {},
-    readError: false,
-    unreadTipsCount: 0,
-  },
+  state: deriveInitialState(persisted, initialState),
   // All actions are in the form: externalArgs -> state -> newStatePartial
   //
   // Actions should only update the part of state they directly effect.
@@ -123,6 +137,7 @@ export const initial = {
         ...(payload?.readTips ?? {}),
         ...state.readTips,
       },
+      isHydrated: true,
     }),
     persistingReadTipsError: () => () => ({
       readError: true,
@@ -175,15 +190,48 @@ export function useHelpCenter() {
     [store.actions]
   );
 
+  // Once app is hydrated, start persisting unreadTips
+  const { isHydrated, unreadTipsCount } = store.state;
   useEffect(() => {
-    actions.hydrateReadTipsSuccess({
-      readTips: currentUser?.meta?.web_stories_onboarding ?? {},
+    if (isHydrated) {
+      const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
+      localStore.setItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER, {
+        ...local,
+        unreadTipsCount,
+      });
+    }
+  }, [isHydrated, unreadTipsCount]);
+
+  // Persist user updates to isOpen
+  const { isOpen } = store.state;
+  useEffect(() => {
+    const local = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
+    localStore.setItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER, {
+      ...local,
+      isOpen,
     });
-  }, [actions, currentUser]);
+  }, [isOpen]);
+
+  // Hydrate unread tips once from current user endpoint.
+  useEffect(() => {
+    if (!isHydrated && currentUser?.meta?.web_stories_onboarding) {
+      actions.hydrateReadTipsSuccess({
+        readTips: currentUser.meta.web_stories_onboarding,
+      });
+    }
+  }, [actions, currentUser, isHydrated]);
 
   const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
+  const isInitialHydrationUpdate = useRef(false);
   useEffect(() => {
-    if (!persistenceKey) {
+    if (!persistenceKey && !isHydrated) {
+      return () => {};
+    }
+
+    // We don't want to persist when the update is from
+    // the initial hydrate call
+    if (!isInitialHydrationUpdate.current) {
+      isInitialHydrationUpdate.current = true;
       return () => {};
     }
     // The call to `updateCurrentUser` causes the entire app to rerender
@@ -201,7 +249,7 @@ export function useHelpCenter() {
       TRANSITION_DURATION * 1.2
     );
     return () => clearTimeout(id);
-  }, [actions, updateCurrentUser, persistenceKey]);
+  }, [actions, updateCurrentUser, persistenceKey, isHydrated]);
 
   // Components wrapped in a Transition no longer receive
   // prop updates once they start exiting. To work around

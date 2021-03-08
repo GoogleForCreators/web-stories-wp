@@ -38,6 +38,8 @@ import DragHandle from './handle';
 
 const Header = styled.h2`
   color: ${({ theme }) => theme.colors.fg.secondary};
+  background-color: ${({ isSecondary, theme }) =>
+    isSecondary && theme.colors.interactiveBg.secondaryNormal};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -58,6 +60,11 @@ const Heading = styled(Headline)`
 const HeaderActions = styled.div`
   display: flex;
   align-items: center;
+`;
+
+// Keeps the space for the icon even if it's not displayed.
+const IconWrapper = styled.div`
+  width: 32px;
 `;
 
 // -12px margin-left comes from 16px panel padding - 4px that it actually should be.
@@ -107,6 +114,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  ...props
 }) {
   const {
     state: {
@@ -163,6 +171,7 @@ function Title({
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
+      {...props}
     >
       {isResizable && (
         <DragHandle
@@ -183,7 +192,7 @@ function Title({
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}
       >
-        {canCollapse && toggleIcon}
+        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
           id={panelTitleId}
           as="span"

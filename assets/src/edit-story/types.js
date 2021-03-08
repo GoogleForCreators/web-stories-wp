@@ -334,6 +334,13 @@ StoryPropTypes.elements.shape = PropTypes.shape({
   backgroundColor: PatternPropType,
 });
 
+StoryPropTypes.elements.sticker = PropTypes.shape({
+  ...StoryElementPropTypes,
+  sticker: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }),
+});
+
 StoryPropTypes.elements.background = PropTypes.shape({
   ...StoryLayerPropTypes,
   inner: StoryPropTypes.element,
