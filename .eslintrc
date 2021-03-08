@@ -10,7 +10,8 @@
     "plugin:prettier/recommended",
     "prettier/react",
     "plugin:jsx-a11y/recommended",
-    "plugin:jsdoc/recommended"
+    "plugin:jsdoc/recommended",
+    "plugin:styled-components-a11y/recommended"
   ],
   "plugins": [
     "@babel",
@@ -19,7 +20,8 @@
     "jsdoc",
     "jsx-a11y",
     "react",
-    "react-hooks"
+    "react-hooks",
+    "styled-components-a11y"
   ],
   "parserOptions": {
     "ecmaFeatures": {
