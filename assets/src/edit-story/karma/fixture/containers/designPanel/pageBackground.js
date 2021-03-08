@@ -20,28 +20,11 @@
 import { AbstractPanel } from './abstractPanel';
 
 /**
- * The size position panel containing inputs for adding managing the size, position and rotationAngle.
+ * The page background panel containing inputs flipping and detaching images as well as setting bg color.
  */
-export class SizePosition extends AbstractPanel {
+export class PageBackground extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
-  }
-
-  get width() {
-    return this.getByRole('textbox', { name: /Width/i });
-  }
-
-  get height() {
-    return this.getByRole('textbox', { name: /Height/i });
-  }
-
-  get lockAspectRatio() {
-    return this.getByRole('button', { name: /Lock aspect ratio/ });
-  }
-
-  get rotate() {
-    // @todo Implement.
-    return null;
   }
 
   get flipVertical() {

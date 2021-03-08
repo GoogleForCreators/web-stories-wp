@@ -92,8 +92,8 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     [updateCurrentPageProperties]
   );
 
-  const { setBackgroundElement } = useStory((state) => ({
-    setBackgroundElement: state.actions.setBackgroundElement,
+  const { clearBackgroundElement } = useStory((state) => ({
+    clearBackgroundElement: state.actions.clearBackgroundElement,
   }));
 
   const removeAsBackground = useCallback(() => {
@@ -105,8 +105,8 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       },
       true
     );
-    setBackgroundElement({ elementId: null });
-  }, [pushUpdate, setBackgroundElement]);
+    clearBackgroundElement();
+  }, [pushUpdate, clearBackgroundElement]);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {

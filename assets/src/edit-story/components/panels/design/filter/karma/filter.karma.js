@@ -35,13 +35,16 @@ describe('Filter Panel', () => {
     fixture = new Fixture();
     await fixture.render();
 
-    await fixture.events.click(fixture.editor.library.media.item(0));
+    // Drag first media element straight to canvas edge to set as background
+    const media = fixture.editor.library.media.item(0);
+    const canvas = fixture.editor.canvas.fullbleed.container;
+    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
+      moveRel(media, 5, 5),
+      down(),
+      moveRel(canvas, 5, 5),
+      up(),
+    ]);
 
-    // TODO: replace with correctly addressing this button through fixture container
-    const setAsBackground = fixture.screen.getByRole('button', {
-      name: 'Set as background',
-    });
-    await fixture.events.click(setAsBackground);
     const {
       state: {
         currentPage: { elements },
