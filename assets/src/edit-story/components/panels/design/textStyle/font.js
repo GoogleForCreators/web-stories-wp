@@ -138,6 +138,10 @@ function FontControls({ selectedElements, pushUpdate }) {
           onChange={(evt) => pushUpdate({ fontSize: Number(evt.target.value) })}
           min={MIN_MAX.FONT_SIZE.MIN}
           max={MIN_MAX.FONT_SIZE.MAX}
+          isIndeterminate={MULTIPLE_VALUE === fontSize}
+          placeholder={
+            MULTIPLE_VALUE === fontSize ? MULTIPLE_DISPLAY_VALUE : null
+          }
         />
       </Row>
     </>

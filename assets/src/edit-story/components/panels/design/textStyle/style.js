@@ -36,6 +36,7 @@ import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 
@@ -116,6 +117,10 @@ function StylePanel({ selectedElements, pushUpdate }) {
           suffix={<Icons.LetterAHeight />}
           onChange={(evt, value) => pushUpdate({ lineHeight: value })}
           canBeEmpty
+          isIndeterminate={MULTIPLE_VALUE === lineHeight}
+          placeholder={
+            MULTIPLE_VALUE === lineHeight ? MULTIPLE_DISPLAY_VALUE : null
+          }
         />
         <Space />
         <StyledNumericInput
@@ -127,6 +132,10 @@ function StylePanel({ selectedElements, pushUpdate }) {
           unit="%"
           onChange={setLetterSpacingMinMax}
           canBeEmpty
+          isIndeterminate={MULTIPLE_VALUE === letterSpacing}
+          placeholder={
+            MULTIPLE_VALUE === letterSpacing ? MULTIPLE_DISPLAY_VALUE : null
+          }
         />
       </Row>
       <Row>
