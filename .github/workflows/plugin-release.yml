@@ -229,7 +229,7 @@ jobs:
           mkdir -p build/changelog
           echo "$CHANGELOG" >> build/changelog/changelog.txt
         env:
-          GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_AUTH: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
@@ -398,7 +398,7 @@ jobs:
           prerelease: ${{ env.IS_RC }}
           body_path: changelog/changelog.txt
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload regular bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -408,7 +408,7 @@ jobs:
           asset_name: web-stories.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload development bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -418,7 +418,7 @@ jobs:
           asset_name: web-stories-dev.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload composer bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -428,7 +428,7 @@ jobs:
           asset_name: web-stories-composer.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       # Done so that any triggers/webhooks will have access to the published release
       # including all the release assets.
@@ -437,7 +437,7 @@ jobs:
           curl \
             --request PATCH \
             --url https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }} \
-            --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+            --header 'Authorization: token ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}' \
             --header "Accept: application/vnd.github.v3+json" \
             --data-raw '{"draft":false}'
 
