@@ -25,11 +25,10 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../design-system';
+import { Icons, DropDown } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
-import { AdvancedDropDown } from '../../../../form';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
 import ColorGroup from './colorGroup';
 import useApplyColor from './useApplyColor';
@@ -79,7 +78,14 @@ const ColorsWrapper = styled.div`
 `;
 
 const DropDownWrapper = styled.div`
-  width: 135px;
+  width: 145px;
+  text-align: left;
+  position: relative;
+`;
+
+const StyledDropDown = styled(DropDown)`
+  background-color: transparent;
+  border: 0;
 `;
 
 const HeaderRow = styled.div`
@@ -169,12 +175,12 @@ function ColorPresetActions({ color, pushUpdate }) {
 
   const options = [
     {
-      id: LOCAL,
-      name: __('Current story', 'web-stories'),
+      value: LOCAL,
+      label: __('Current story', 'web-stories'),
     },
     {
-      id: GLOBAL,
-      name: __('All stories', 'web-stories'),
+      value: GLOBAL,
+      label: __('All stories', 'web-stories'),
     },
   ];
 
@@ -183,12 +189,14 @@ function ColorPresetActions({ color, pushUpdate }) {
     <ActionsWrapper>
       <HeaderRow>
         <DropDownWrapper>
-          <AdvancedDropDown
+          <StyledDropDown
             options={options}
-            isInline={true}
+            selectedValue={showLocalColors ? LOCAL : GLOBAL}
+            onMenuItemClick={(evt, value) =>
+              setShowLocalColors(value === LOCAL)
+            }
+            isInline
             hasSearch={false}
-            onChange={({ id }) => setShowLocalColors(id === LOCAL)}
-            selectedId={showLocalColors ? LOCAL : GLOBAL}
             aria-label={__('Select color type', 'web-stories')}
           />
         </DropDownWrapper>

@@ -30,6 +30,7 @@ export const MenuContainer = styled.div(
     dropdownHeight = DEFAULT_DROPDOWN_HEIGHT,
     styleOverride = '',
     theme,
+    isAbsolute,
   }) => css`
     position: relative;
     display: flex;
@@ -46,6 +47,15 @@ export const MenuContainer = styled.div(
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.divider.primary};
+
+    ${isAbsolute &&
+    css`
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+    `};
+
     ${styleOverride};
 
     ${themeHelpers.scrollbarCSS};
