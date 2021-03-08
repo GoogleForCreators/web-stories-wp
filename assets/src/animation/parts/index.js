@@ -173,6 +173,25 @@ export function getAnimationEffectProps(type) {
       .value]: backgroundPanAndZoomEffectProps,
   };
 
+  let keyOrder = Object.keys({
+    ...(customProps[type] || {}),
+    ...basicAnimationProps,
+  });
+
+  // PAN_AND_ZOOM design deviates from the normal input order by putting
+  // a custom prop (zoom direction) at the end. This accomodates for that.
+  if (type === BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value) {
+    const zoomDirectionKey = 'zoomDirection';
+    const zoomDirectionIndex = keyOrder.indexOf(zoomDirectionKey);
+    if (zoomDirectionIndex > -1) {
+      keyOrder = [
+        ...keyOrder.slice(0, zoomDirectionIndex),
+        ...keyOrder.slice(zoomDirectionIndex + 1),
+        zoomDirectionKey,
+      ];
+    }
+  }
+
   return {
     type,
     // This order is important.
@@ -182,10 +201,7 @@ export function getAnimationEffectProps(type) {
         ...basicAnimationProps,
         ...(customProps[type] || {}),
       },
-      keys: Object.keys({
-        ...(customProps[type] || {}),
-        ...basicAnimationProps,
-      }),
+      keys: keyOrder,
     }),
   };
 }
