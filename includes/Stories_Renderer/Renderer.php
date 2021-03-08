@@ -689,7 +689,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function render_stories_with_lightbox() {
 		$data = [
-			'controls'  => [
+			'controls' => [
 				[
 					'name'     => 'close',
 					'position' => 'start',
@@ -698,10 +698,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					'name' => 'skip-next',
 				],
 			],
-			'behaviour' => [
+			'behavior' => [
 				'autoplay' => false,
-				'on'       => 'end',
-				'action'   => 'circular-wrapping',
 			],
 		];
 		?>
