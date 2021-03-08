@@ -48,7 +48,7 @@ const Space = styled.div`
 `;
 
 const StyledNumericInput = styled(NumericInput)`
-  flex-basis: 58px;
+  flex-basis: 80px;
   text-align: center;
 `;
 
@@ -135,7 +135,9 @@ function FontControls({ selectedElements, pushUpdate }) {
           aria-label={__('Font size', 'web-stories')}
           isFloat
           value={fontSize}
-          onChange={(evt) => pushUpdate({ fontSize: Number(evt.target.value) })}
+          onChange={(evt) =>
+            pushUpdate({ fontSize: Number(evt.target.value) }, true)
+          }
           min={MIN_MAX.FONT_SIZE.MIN}
           max={MIN_MAX.FONT_SIZE.MAX}
           isIndeterminate={MULTIPLE_VALUE === fontSize}

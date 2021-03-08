@@ -115,8 +115,8 @@ function StylePanel({ selectedElements, pushUpdate }) {
           min={MIN_MAX.LINE_HEIGHT.MIN}
           max={MIN_MAX.LINE_HEIGHT.MAX}
           suffix={<Icons.LetterAHeight />}
-          onChange={(evt, value) => pushUpdate({ lineHeight: value })}
-          canBeEmpty
+          onChange={(evt, value) => pushUpdate({ lineHeight: value }, true)}
+          allowEmpty
           isIndeterminate={MULTIPLE_VALUE === lineHeight}
           placeholder={
             MULTIPLE_VALUE === lineHeight ? MULTIPLE_DISPLAY_VALUE : null
@@ -131,7 +131,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           suffix={<Icons.LetterAWidth />}
           unit="%"
           onChange={setLetterSpacingMinMax}
-          canBeEmpty
+          allowEmpty
           isIndeterminate={MULTIPLE_VALUE === letterSpacing}
           placeholder={
             MULTIPLE_VALUE === letterSpacing ? MULTIPLE_DISPLAY_VALUE : null
