@@ -201,7 +201,7 @@ const BACKGROUND_EFFECTS_LIST = [
   PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
-  `${BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.name}`,
+  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
 ];
 
 export default function EffectChooser({
@@ -574,25 +574,22 @@ export default function EffectChooser({
                   event,
                   BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
                   {
-                    animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                    animation: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
                   }
                 )
               }
               aria-disabled={disabledBackgroundEffects.includes(
-                BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
+                BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
               )}
               active={activeEffectListIndex === 7}
             >
               <WithTooltip
                 title={
                   disabledBackgroundEffects.includes(
-                    getDirectionalEffect(
-                      BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                      SCALE_DIRECTION.SCALE_OUT
-                    )
+                    BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
                   )
                     ? disabledTypeOptionsMap[
-                        BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
+                        BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
                       ]?.tooltip
                     : ''
                 }

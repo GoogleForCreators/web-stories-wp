@@ -40,6 +40,7 @@ import { EffectZoom } from '../effects/zoom';
 import { EffectRotateIn } from '../effects/rotateIn';
 import { EffectBackgroundZoom } from '../effects/backgroundZoom';
 import { EffectBackgroundPan } from '../effects/backgroundPan';
+import { EffectBackgroundPanAndZoom } from '../effects/backgroundPanAndZoom';
 import fadeInProps from '../effects/fadeIn/animationProps';
 import flyInProps from '../effects/flyIn/animationProps';
 import panProps from '../effects/pan/animationProps';
@@ -50,6 +51,7 @@ import zoomEffectProps from '../effects/zoom/animationProps';
 import dropEffectProps from '../effects/drop/animationProps';
 import backgroundZoomEffectProps from '../effects/backgroundZoom/animationProps';
 import backgroundPanEffectProps from '../effects/backgroundPan/animationProps';
+import backgroundPanAndZoomEffectProps from '../effects/backgroundPanAndZoom/animationProps';
 
 import { orderByKeys } from '../utils';
 import { AnimationBounce } from './bounce';
@@ -114,6 +116,8 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.ROTATE_IN.value]: EffectRotateIn,
       [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: EffectBackgroundZoom,
       [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: EffectBackgroundPan,
+      [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM
+        .value]: EffectBackgroundPanAndZoom,
     }[type?.value || type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
@@ -165,6 +169,8 @@ export function getAnimationEffectProps(type) {
     [ANIMATION_EFFECTS.DROP.value]: dropEffectProps,
     [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: backgroundZoomEffectProps,
     [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: backgroundPanEffectProps,
+    [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM
+      .value]: backgroundPanAndZoomEffectProps,
   };
 
   return {

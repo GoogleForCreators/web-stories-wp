@@ -17,28 +17,74 @@
 /**
  * Internal dependencies
  */
-import { BG_MIN_SCALE, BG_MAX_SCALE, SCALE_DIRECTION } from '../../constants';
-import { AnimationZoom } from '../../parts/zoom';
-import { lerp } from '../../utils';
+import {
+  SCALE_DIRECTION,
+  DIRECTION,
+  BACKGROUND_ANIMATION_EFFECTS,
+} from '../../constants';
+import SimpleAnimation from '../../parts/simpleAnimation';
+import { EffectBackgroundPan } from '../backgroundPan';
+import { EffectBackgroundZoom } from '../backgroundZoom';
 
-export function EffectBackgroundZoom({
+const defaults = {
+  fill: 'forwards',
+  duration: 1000,
+};
+
+export function EffectBackgroundPanAndZoom({
   element,
   zoomDirection = SCALE_DIRECTION.SCALE_OUT,
+  panDir = DIRECTION.RIGHT_TO_LEFT,
   duration = 1000,
   delay,
   easing,
 }) {
-  // Define the range based off the element scale
-  // at element scale 400, the range should be [1/4, 1]
-  // at element scale 100, the range should be [1, 4]
-  const range = [BG_MIN_SCALE / element.scale, BG_MAX_SCALE / element.scale];
-
-  return AnimationZoom({
-    zoomFrom: lerp(zoomDirection === SCALE_DIRECTION.SCALE_OUT ? 1 : 0, range),
-    zoomTo: 1,
+  const timings = {
+    ...defaults,
     duration,
     delay,
     easing,
-    targetLeafElement: true,
+  };
+
+  const animationName = `direction-${panDir}-${zoomDirection}-${BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value}`;
+
+  const { generatedKeyframes: zoomGeneratedKeyframes } = EffectBackgroundZoom({
+    element,
+    zoomDirection,
   });
+
+  const { generatedKeyframes: panGeneratedKeyframes } = EffectBackgroundPan({
+    element,
+    panDir,
+  });
+
+  const zoomKeyframes = Object.values(zoomGeneratedKeyframes)?.[0] || [];
+  const panKeyframes = Object.values(panGeneratedKeyframes)?.[0] || [];
+
+  const startTransform = `${zoomKeyframes?.transform[0]} ${panKeyframes?.transform[0]}`;
+  const zoomLastTransformIndex = (zoomKeyframes?.transform?.length || 1) - 1;
+  const panLastTransformIndex = (panKeyframes?.transform?.length || 1) - 1;
+  const endTransform = `${zoomKeyframes?.transform[zoomLastTransformIndex]} ${panKeyframes?.transform[panLastTransformIndex]}`;
+
+  const keyframes = {
+    transform: [startTransform, endTransform],
+  };
+
+  const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
+    animationName,
+    keyframes,
+    timings,
+    false,
+    true
+  );
+
+  return {
+    id,
+    WAAPIAnimation,
+    AMPTarget,
+    AMPAnimation,
+    generatedKeyframes: {
+      [animationName]: keyframes,
+    },
+  };
 }
