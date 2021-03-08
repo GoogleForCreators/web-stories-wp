@@ -211,7 +211,6 @@ function SizePositionPanel({
           <NumericInput
             suffix={_x('H', 'The Height dimension', 'web-stories')}
             value={disableHeight ? '' : height}
-            placeholder={disableHeight ? __('AUTO', 'web-stories') : ''}
             disabled={disableHeight}
             min={MIN_MAX.HEIGHT.MIN}
             max={MIN_MAX.HEIGHT.MAX}
@@ -228,7 +227,14 @@ function SizePositionPanel({
               pushUpdate(getUpdateObject(newWidth, newHeight), true);
             }}
             aria-label={__('Height', 'web-stories')}
-            {...getMixedValueProps(height)}
+            isIndeterminate={MULTIPLE_VALUE === height}
+            placeholder={
+              disableHeight
+                ? __('Auto', 'web-stories')
+                : MULTIPLE_VALUE === height
+                ? MULTIPLE_DISPLAY_VALUE
+                : null
+            }
           />
         </Area>
         <Area area="l">
