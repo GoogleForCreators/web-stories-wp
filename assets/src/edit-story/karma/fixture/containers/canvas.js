@@ -109,6 +109,16 @@ class Display extends Container {
       '[class^="displayElement__BackgroundOverlay-sc-"]'
     );
   }
+
+  get element() {
+    return this.node.querySelector('[class^="display__Element-sc-"]');
+  }
+
+  get replacement() {
+    return this.node.querySelector(
+      '[class^="displayElement__ReplacementContainer-sc-"]'
+    );
+  }
 }
 
 /**
