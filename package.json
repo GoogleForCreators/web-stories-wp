@@ -47,7 +47,7 @@
     "@web-stories-wp/tracking": "*",
     "@wordpress/api-fetch": "^3.21.3",
     "@wordpress/block-editor": "^5.2.6",
-    "@wordpress/blocks": "^6.25.0",
+    "@wordpress/blocks": "^7.0.6",
     "@wordpress/components": "^12.0.7",
     "@wordpress/compose": "^3.23.0",
     "@wordpress/data": "^4.26.0",
