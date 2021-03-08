@@ -66,7 +66,7 @@ describe('Size & Position Panel', () => {
 
       // Take off lock ratio by clicking on the visible part of the lock aspect ratio checkbox.
       await fixture.events.click(panel.lockAspectRatio);
-      expect(panel.height.placeholder).toBe('AUTO');
+      expect(panel.height.placeholder).toBe('Auto');
       expect(panel.height.disabled).toBeTrue();
 
       await fixture.snapshot('Unlocked element with height disabled');
@@ -94,12 +94,12 @@ describe('Size & Position Panel', () => {
 
       // Take off lock ratio by clicking on the visible part of the lock aspect ratio checkbox.
       await fixture.events.click(panel.lockAspectRatio);
-      expect(panel.height.placeholder).toBe('AUTO');
+      expect(panel.height.placeholder).toBe('Auto');
 
       await fixture.snapshot('Unlocked multi-selection with height disabled');
 
       expect(panel.height.value).toBe('');
-      expect(panel.height.placeholder).toBe('AUTO');
+      expect(panel.height.placeholder).toBe('Auto');
       expect(panel.height.disabled).toBeTrue();
       await fixture.events.click(panel.width);
       await fixture.events.keyboard.type('300');
