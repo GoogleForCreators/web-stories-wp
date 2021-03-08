@@ -37,7 +37,7 @@ jest.mock('../../../../../elements');
 describe('Panels/SizePosition', () => {
   let defaultElement, defaultImage, defaultText, unlockAspectRatioElement;
   let defaultFlip;
-  const aspectRatioLockButtonLabel = 'Aspect ratio lock';
+  const aspectRatioLockButtonLabel = 'Lock aspect ratio';
 
   beforeEach(() => {
     defaultFlip = { horizontal: false, vertical: false };
