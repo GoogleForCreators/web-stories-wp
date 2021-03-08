@@ -476,9 +476,9 @@ describe('Panels/StylePreset/utils', () => {
         { fontSize: 7 },
       ];
       // Three rows.
-      expect(getPanelInitialHeight(false, presets)).toStrictEqual(192);
+      expect(getPanelInitialHeight(false, presets)).toStrictEqual(256);
       // One row.
-      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toStrictEqual(72);
+      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toStrictEqual(96);
     });
   });
 });
