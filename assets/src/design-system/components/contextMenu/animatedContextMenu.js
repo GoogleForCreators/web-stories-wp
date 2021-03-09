@@ -201,9 +201,14 @@ ButtonInner.propTypes = {
   isReady: PropTypes.bool,
 };
 
-function AnimationContainer({ children, isOpen, ...props }) {
+function AnimationContainer({
+  children,
+  isOpen,
+  isReady,
+  onAnimationComplete,
+  ...props
+}) {
   const [align, setAlign] = useState(null);
-  const [isReady, setIsReady] = useState(false);
   const menuPositionRef = useRef(null);
   const menuTogglePositionRef = useRef(null);
 
@@ -244,10 +249,12 @@ function AnimationContainer({ children, isOpen, ...props }) {
    * from batching those renders and animating from wrong alignment.
    */
   useEffect(() => {
-    const frameId = requestAnimationFrame(() => setIsReady(Boolean(align)));
+    const frameId = requestAnimationFrame(() =>
+      onAnimationComplete(Boolean(align))
+    );
 
     return () => cancelAnimationFrame(frameId);
-  }, [align]);
+  }, [align, onAnimationComplete]);
 
   return (
     <ButtonInner
@@ -270,14 +277,24 @@ function AnimationContainer({ children, isOpen, ...props }) {
 }
 AnimationContainer.propTypes = {
   isOpen: PropTypes.bool,
+  isReady: PropTypes.bool,
+  onAnimationComplete: PropTypes.func.isRequired,
   children: PropTypes.node,
 };
 
-const AnimatedContextMenu = ({ isOpen, items, ...props }) => (
-  <AnimationContainer isOpen={isOpen}>
-    <Menu items={items} isOpen={isOpen} {...props} />
-  </AnimationContainer>
-);
+const AnimatedContextMenu = ({ isOpen, items, ...props }) => {
+  const [isReady, setIsReady] = useState(false);
+
+  return (
+    <AnimationContainer
+      isReady={isReady}
+      onAnimationComplete={setIsReady}
+      isOpen={isOpen}
+    >
+      <Menu items={items} isOpen={isOpen && isReady} {...props} />
+    </AnimationContainer>
+  );
+};
 AnimatedContextMenu.propTypes = {
   ...MenuPropTypes,
   isOpen: PropTypes.bool,
