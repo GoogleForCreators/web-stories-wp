@@ -77,7 +77,7 @@ export function EffectBackgroundPanAndZoom({
   // direction and the current media position relative to
   // the frame. This prevents area from ever being shown
   // where the media does't fill the frame during scaling
-  const origin = getMediaOrigin(getMediaBoundOffsets(element));
+  const origin = getMediaOrigin(element && getMediaBoundOffsets({ element }));
   const transformOrigin =
     {
       [DIRECTION.RIGHT_TO_LEFT]: [
