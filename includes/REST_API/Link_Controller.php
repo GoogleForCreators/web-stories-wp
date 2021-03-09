@@ -220,9 +220,9 @@ class Link_Controller extends WP_REST_Controller {
 		}
 
 		$data = [
-			'title'       => utf8_decode( $title ) ?: '',
+			'title'       => (string) utf8_decode( $title ) ?: '',
 			'image'       => $image ?: '',
-			'description' => utf8_decode( $description ) ?: '',
+			'description' => (string) utf8_decode( $description ) ?: '',
 		];
 
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
