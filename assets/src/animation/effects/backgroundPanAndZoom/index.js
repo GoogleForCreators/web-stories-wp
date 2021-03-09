@@ -25,6 +25,7 @@ import {
 import SimpleAnimation from '../../parts/simpleAnimation';
 import { EffectBackgroundPan } from '../backgroundPan';
 import { EffectBackgroundZoom } from '../backgroundZoom';
+import { getMediaBoundOffsets, lerp } from '../../utils';
 
 const defaults = {
   fill: 'forwards',
@@ -68,12 +69,48 @@ export function EffectBackgroundPanAndZoom({
   const panLastTransformIndex = (panKeyframes?.transform?.length || 1) - 1;
   const endTransform = `${panKeyframes?.transform[zoomLastTransformIndex]} ${zoomKeyframes?.transform[panLastTransformIndex]}`;
 
+  const offsets = element
+    ? getMediaBoundOffsets({ element })
+    : {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      };
+
+  const progress = {
+    vertical:
+      Math.abs(offsets.top) /
+      (Math.abs(offsets.top) + Math.abs(offsets.bottom)),
+    horizontal:
+      Math.abs(offsets.left) /
+      (Math.abs(offsets.left) + Math.abs(offsets.right)),
+  };
+  const origin = {
+    vertical: lerp(progress.vertical, [0, 100]),
+    horizontal: lerp(progress.horizontal, [0, 100]),
+  };
+
+  // console.log(`${origin.horizontal}% ${origin.vertical}%`);
+
   const transformOrigin =
     {
-      [DIRECTION.RIGHT_TO_LEFT]: ['0% 50%', '0% 50%'],
-      [DIRECTION.LEFT_TO_RIGHT]: ['100% 50%', '100% 50%'],
-      [DIRECTION.BOTTOM_TO_TOP]: ['50% 0%', '50% 0%'],
-      [DIRECTION.TOP_TO_BOTTOM]: ['50% 100%', '50% 100%'],
+      [DIRECTION.RIGHT_TO_LEFT]: [
+        `0% ${origin.vertical}%`,
+        `0% ${origin.vertical}%`,
+      ],
+      [DIRECTION.LEFT_TO_RIGHT]: [
+        `100% ${origin.vertical}%`,
+        `100% ${origin.vertical}%`,
+      ],
+      [DIRECTION.BOTTOM_TO_TOP]: [
+        `${origin.horizontal}% 0%`,
+        `${origin.horizontal}% 0%`,
+      ],
+      [DIRECTION.TOP_TO_BOTTOM]: [
+        `${origin.horizontal}% 100%`,
+        `${origin.horizontal}% 100%`,
+      ],
     }[panDir] || [];
   const keyframes = {
     transform: [startTransform, endTransform],
