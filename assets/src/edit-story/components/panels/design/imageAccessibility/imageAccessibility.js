@@ -29,6 +29,7 @@ import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 import { TextArea } from '../../../../../design-system';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
@@ -57,10 +58,14 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
       <Row>
         <TextArea
           ref={ref}
-          placeholder={__(
-            'Add assistive text for visually impaired users',
-            'web-stories'
-          )}
+          placeholder={
+            MULTIPLE_VALUE === alt
+              ? MULTIPLE_DISPLAY_VALUE
+              : __(
+                  'Add assistive text for visually impaired users',
+                  'web-stories'
+                )
+          }
           value={alt || ''}
           onChange={(evt) =>
             pushUpdate({ alt: evt?.target?.value || null }, true)
@@ -68,6 +73,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
           aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
           rows={2}
+          isIndeterminate={MULTIPLE_VALUE === alt}
         />
       </Row>
     </SimplePanel>
