@@ -103,20 +103,19 @@ class Stories_Shortcode {
 	 * @return array Attributes to pass to Story_Query class.
 	 */
 	private function prepare_story_attrs( array $attributes ) {
-
 		return [
-			'view_type'               => (string) $attributes['view'],
-			'number_of_columns'       => (int) $attributes['number_of_columns'],
-			'show_title'              => ( 'true' === $attributes['title'] ),
-			'show_author'             => ( 'true' === $attributes['author'] ),
-			'show_date'               => ( 'true' === $attributes['date'] ),
-			'show_excerpt'            => ( 'true' === $attributes['excerpt'] ),
-			'show_story_archive_link' => ( 'true' === $attributes['archive_link'] ),
-			'archive_link_label'      => $attributes['archive_link_label'],
-			'image_alignment'         => (string) $attributes['image_alignment'],
-			'class'                   => (string) $attributes['class'],
-			'circle_size'             => (int) $attributes['circle_size'],
-			'sharp_corners'           => ( 'true' === $attributes['sharp_corners'] ),
+			'view_type'          => (string) $attributes['view'],
+			'number_of_columns'  => (int) $attributes['number_of_columns'],
+			'show_title'         => ( 'true' === $attributes['title'] ),
+			'show_author'        => ( 'true' === $attributes['author'] ),
+			'show_date'          => ( 'true' === $attributes['date'] ),
+			'show_excerpt'       => ( 'true' === $attributes['excerpt'] ),
+			'show_archive_link'  => ( 'true' === $attributes['archive_link'] ),
+			'archive_link_label' => $attributes['archive_link_label'],
+			'image_alignment'    => (string) $attributes['image_alignment'],
+			'class'              => (string) $attributes['class'],
+			'circle_size'        => (int) $attributes['circle_size'],
+			'sharp_corners'      => ( 'true' === $attributes['sharp_corners'] ),
 		];
 	}
 
