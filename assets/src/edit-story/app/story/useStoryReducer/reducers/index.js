@@ -26,6 +26,7 @@ export { default as addElements } from './addElements';
 export { default as deleteElements } from './deleteElements';
 export { default as updateElements } from './updateElements';
 export { default as updateElementsByResourceId } from './updateElementsByResourceId';
+export { default as deleteElementsByResourceId } from './deleteElementsByResourceId';
 export { default as setBackgroundElement } from './setBackgroundElement';
 export { default as arrangeElement } from './arrangeElement';
 export { default as combineElements } from './combineElements';

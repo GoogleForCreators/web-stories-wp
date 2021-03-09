@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as BookmarkChip } from './bookmark-chip';
-export { default as Button, PaginationButton } from './button';
+export { default as Button } from './button';
 export { default as CardGallery } from './cardGallery';
 export { default as CardGrid } from './cardGrid';
 export {
@@ -25,12 +24,7 @@ export {
   default as CardGridItem,
 } from './cardGridItem';
 export { default as ColorList } from './colorList';
-export {
-  DetailViewContentGutter,
-  StandardViewContentGutter,
-} from './contentGutter';
-export { DetailViewNavBar } from './detailViewNavBar';
-export { default as Dropdown } from './dropdown';
+export { StandardViewContentGutter } from './contentGutter';
 export { default as FileUpload } from './fileUpload';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { default as InlineInputForm } from './inlineInputForm';
@@ -43,9 +37,7 @@ export {
   PageContent,
   NavMenuButton,
 } from './pageStructure';
-export { default as Pill } from './pill';
 export { default as PopoverMenu } from './popoverMenu';
-export { default as PopoverPanel } from './popoverPanel';
 export { default as ScrollToTop } from './scrollToTop';
 export { default as StoryMenu, MoreVerticalButton } from './storyMenu';
 export {

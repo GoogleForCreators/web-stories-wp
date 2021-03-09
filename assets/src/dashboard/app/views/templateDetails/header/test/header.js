@@ -27,16 +27,12 @@ import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 
 describe('Template Details <Header />', () => {
-  const mockBookmarkClick = jest.fn();
   const mockHandleCtaClick = jest.fn();
 
   it('should render nav bar for detail template view', () => {
     const { getByRole } = renderWithProviders(
       <LayoutProvider>
-        <Header
-          onBookmarkClick={mockBookmarkClick}
-          onHandleCtaClick={mockHandleCtaClick}
-        />
+        <Header onHandleCtaClick={mockHandleCtaClick} />
       </LayoutProvider>
     );
     const nav = getByRole('navigation');
@@ -47,10 +43,7 @@ describe('Template Details <Header />', () => {
   it('should trigger mockHandleCtaClick when cta is clicked', () => {
     const { getByText } = renderWithProviders(
       <LayoutProvider>
-        <Header
-          onBookmarkClick={mockBookmarkClick}
-          onHandleCtaClick={mockHandleCtaClick}
-        />
+        <Header onHandleCtaClick={mockHandleCtaClick} />
       </LayoutProvider>
     );
     const cta = getByText('Use template');
@@ -60,30 +53,5 @@ describe('Template Details <Header />', () => {
     fireEvent.click(cta);
 
     expect(mockHandleCtaClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('should not render bookmark button when onBookmarkClick is null', () => {
-    const { queryByRole } = renderWithProviders(
-      <LayoutProvider>
-        <Header onBookmarkClick={null} onHandleCtaClick={mockHandleCtaClick} />
-      </LayoutProvider>
-    );
-    const buttons = queryByRole('button');
-
-    expect(buttons).toBeInTheDocument();
-  });
-
-  it('should render bookmark button when onBookmarkClick is truthy', () => {
-    const { queryAllByRole } = renderWithProviders(
-      <LayoutProvider>
-        <Header
-          onBookmarkClick={mockBookmarkClick}
-          onHandleCtaClick={mockHandleCtaClick}
-        />
-      </LayoutProvider>
-    );
-    const buttons = queryAllByRole('button');
-
-    expect(buttons).toHaveLength(2);
   });
 });

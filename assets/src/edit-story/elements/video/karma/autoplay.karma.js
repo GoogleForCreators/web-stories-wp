@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { getBackgroundElementId } from '../../../components/dropTargets/karma/background.karma';
+import { useStory } from '../../../app/story';
 
 describe('Autoplay video', () => {
   let fixture;
@@ -81,7 +81,7 @@ describe('Autoplay video', () => {
     // Should not play during the drag
     expect(video1El.paused).toBe(true);
     await fixture.events.mouse.up();
-    const backgroundId = await getBackgroundElementId(fixture);
+    const backgroundId = (await getElements(fixture))[0].id;
     const backgroundElVideo = fixture.editor.canvas.displayLayer
       .display(backgroundId)
       .node.querySelector('video');
@@ -104,3 +104,12 @@ describe('Autoplay video', () => {
     expect(backgroundElVideo.paused).toBe(false);
   });
 });
+
+async function getElements(fixture) {
+  const {
+    state: {
+      currentPage: { elements },
+    },
+  } = await fixture.renderHook(() => useStory());
+  return elements;
+}

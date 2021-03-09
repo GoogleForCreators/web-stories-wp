@@ -28,11 +28,7 @@ import {
   PageSizePropType,
   TemplatePropType,
 } from '../../../../types';
-import {
-  DetailViewContentGutter,
-  Layout,
-  useLayoutContext,
-} from '../../../../components';
+import { Layout, useLayoutContext } from '../../../../components';
 import DetailsGallery from './detailsGallery';
 import RelatedGrid from './relatedGrid';
 
@@ -65,20 +61,18 @@ function Content({
 
   return (
     <Layout.Scrollable>
-      <DetailViewContentGutter>
-        <DetailsGallery
-          activeTemplateIndex={activeTemplateIndex}
-          isRTL={isRTL}
-          orderedTemplatesLength={orderedTemplatesLength}
-          switchToTemplateByOffset={switchToTemplateByOffset}
-          template={template}
-        />
-        <RelatedGrid
-          relatedTemplates={relatedTemplates}
-          pageSize={pageSize}
-          templateActions={templateActions}
-        />
-      </DetailViewContentGutter>
+      <DetailsGallery
+        activeTemplateIndex={activeTemplateIndex}
+        isRTL={isRTL}
+        orderedTemplatesLength={orderedTemplatesLength}
+        switchToTemplateByOffset={switchToTemplateByOffset}
+        template={template}
+      />
+      <RelatedGrid
+        relatedTemplates={relatedTemplates}
+        pageSize={pageSize}
+        templateActions={templateActions}
+      />
     </Layout.Scrollable>
   );
 }

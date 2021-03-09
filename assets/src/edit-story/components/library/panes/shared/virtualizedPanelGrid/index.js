@@ -14,30 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-
-import { SwatchLabel, ActiveSwatchIcon } from './components';
-
-export default function ColorSwatch({ isSelected = false, hex }) {
-  return (
-    <SwatchLabel
-      isSelected={isSelected}
-      hex={hex}
-      data-testid="swatch-pill-label"
-    >
-      <ActiveSwatchIcon hex={hex} />
-    </SwatchLabel>
-  );
-}
-
-ColorSwatch.propTypes = {
-  hex: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool,
-};
+export * from './components';
+export { getVirtualizedItemIndex } from './getVirtualizedItemIndex';
+export { default as useVirtualizedGridNavigation } from './useVirtualizedGridNavigation';

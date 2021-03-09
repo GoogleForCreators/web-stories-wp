@@ -37,7 +37,6 @@ const REMOVE_ICON_SIZE = 16;
 const PresetButton = styled.button`
   background-color: ${({ theme }) =>
     rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.16)};
-  display: inline-block;
   border-color: transparent;
   position: relative;
   cursor: pointer;
@@ -46,6 +45,9 @@ const PresetButton = styled.button`
   padding: 3px;
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
