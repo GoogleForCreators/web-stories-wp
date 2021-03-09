@@ -19,7 +19,7 @@
  */
 import { Fixture } from '../../../../../karma';
 
-describe('Video Poster Panel', () => {
+describe('Video Accessibility Panel', () => {
   let fixture;
   let vaPanel;
 

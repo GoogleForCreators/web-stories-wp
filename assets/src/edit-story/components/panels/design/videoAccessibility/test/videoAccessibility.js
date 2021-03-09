@@ -54,20 +54,24 @@ describe('Panels/VideoAccessibility', () => {
   });
 
   it('should trim video description to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText, submit } = renderVideoAccessibility([
+    const { getByPlaceholderText } = renderVideoAccessibility([
       defaultElement,
     ]);
-    const input = getByPlaceholderText('Video description');
-
-    const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
-
-    fireEvent.change(input, { target: { value: bigText } });
-    const submits = submit({
-      resource: { posterId: 0, poster: '', alt: bigText },
-    });
-    expect(submits[defaultElement.id].resource.alt).toHaveLength(
-      MIN_MAX.ALT_TEXT.MAX
+    const input = getByPlaceholderText(
+      'Add assistive text for visually impaired users'
     );
+
+    fireEvent.focus(input);
+
+    for (let i = 0; i < MIN_MAX.ALT_TEXT.MAX + 10; i++) {
+      fireEvent.keyDown(input, {
+        key: '1',
+        which: 49,
+      });
+    }
+
+    fireEvent.blur(input);
+    expect(input.value).toHaveLength(MIN_MAX.ALT_TEXT.MAX);
   });
 
   it('should display Mixed as placeholder in case of mixed value multi-selection', () => {
@@ -81,8 +85,20 @@ describe('Panels/VideoAccessibility', () => {
         },
       },
     ]);
-    const description = getByRole('textbox', { name: 'Video description' });
+    const description = getByRole('textbox', { name: 'Assistive text' });
     expect(description.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(description).toHaveValue('');
+  });
+
+  it('should simulate a click on <Poster />', () => {
+    const { getByRole, pushUpdate } = renderVideoAccessibility([
+      defaultElement,
+    ]);
+    const menuToggle = getByRole('button', { name: 'Video poster' });
+    fireEvent.click(menuToggle);
+    const editMenuItem = getByRole('menuitem', { name: 'Edit' });
+    fireEvent.click(editMenuItem);
+    expect(pushUpdate).toHaveBeenCalledTimes(1);
+    expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
   });
 });
