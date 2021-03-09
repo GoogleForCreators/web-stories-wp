@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
@@ -26,48 +26,30 @@ import { v4 as uuidv4 } from 'uuid';
 import Context from './context';
 import SnackbarContainer from './snackbarContainer';
 
-function SnackbarProvider({ children, place }) {
+function SnackbarProvider({ children, place = 'bottom-left' }) {
   const [notifications, setNotifications] = useState([]);
 
-  const timeouts = useRef({});
-
   const remove = useCallback((notification) => {
-    clearTimeout(timeouts.current[notification.key]);
     setNotifications((currentNotifications) => {
       return currentNotifications.filter(
         (item) => item.key !== notification.key
       );
     });
-
-    delete timeouts.current[notification.key];
   }, []);
 
-  const removeNotification = useCallback(
-    (notification) => {
-      timeouts.current[notification.key] = setTimeout(() => {
-        remove(notification);
-      }, notification.timeout);
-    },
-    [remove]
-  );
-
-  const create = useCallback(
-    (notification) => {
-      const newNotification = {
-        key: uuidv4(),
-        timeout: notification.timeout || 5000,
-        ...notification,
-      };
-      // React may batch state updates, so use the setter that receives the
-      // previous state.
-      setNotifications((currentNotifications) => [
-        ...currentNotifications,
-        newNotification,
-      ]);
-      removeNotification(newNotification);
-    },
-    [removeNotification]
-  );
+  const create = useCallback((notification) => {
+    const newNotification = {
+      key: uuidv4(),
+      timeout: notification.timeout || 5000,
+      ...notification,
+    };
+    // React may batch state updates, so use the setter that receives the
+    // previous state.
+    setNotifications((currentNotifications) => [
+      ...currentNotifications,
+      newNotification,
+    ]);
+  }, []);
 
   const state = useMemo(
     () => ({
@@ -91,10 +73,6 @@ function SnackbarProvider({ children, place }) {
 SnackbarProvider.propTypes = {
   place: PropTypes.string,
   children: PropTypes.node,
-};
-
-SnackbarProvider.defaultProps = {
-  place: 'bottom-left',
 };
 
 export default SnackbarProvider;
