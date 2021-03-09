@@ -25,14 +25,10 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useRef } from 'react';
 import { Row } from '../../../form';
-import {
-  Note,
-  ExpandedTextInput,
-  getCommonValue,
-  useCommonObjectValue,
-} from '../../shared';
+import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { useFocusHighlight, states, styles } from '../../../../app/highlights';
+import { TextArea } from '../../../../../design-system';
 
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
@@ -59,19 +55,20 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
       isPersistable={!highlight}
     >
       <Row>
-        <ExpandedTextInput
+        <TextArea
           ref={ref}
-          placeholder={__('Assistive text', 'web-stories')}
+          placeholder={__(
+            'Add assistive text for visually impaired users',
+            'web-stories'
+          )}
           value={alt || ''}
-          onChange={(value) => pushUpdate({ alt: value || null })}
-          clear
+          onChange={(evt) =>
+            pushUpdate({ alt: evt?.target?.value || null }, true)
+          }
           aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
-          css={highlight?.showEffect && styles.OUTLINE}
+          rows={2}
         />
-      </Row>
-      <Row>
-        <Note>{__('Text for visually impaired users.', 'web-stories')}</Note>
       </Row>
     </SimplePanel>
   );

@@ -185,7 +185,7 @@ export const TextArea = forwardRef(
   }
 );
 
-export const TextAreaPropTypes = {
+const TextAreaPropTypes = {
   'aria-label': labelAccessibilityValidator,
   className: PropTypes.string,
   disabled: PropTypes.bool,

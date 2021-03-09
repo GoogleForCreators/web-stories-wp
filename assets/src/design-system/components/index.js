@@ -36,6 +36,7 @@ export * from './tooltip';
 export * from './keyboard';
 export * from './keyboard/gridview';
 export * from './notificationBubble';
+export { TextArea } from './textArea';
 export { Toggle } from './toggle';
 export { Display, Headline, Link, Text } from './typography';
 export { VisuallyHidden } from './visuallyHidden';
