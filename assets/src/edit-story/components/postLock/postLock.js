@@ -53,6 +53,7 @@ function PostLock() {
   const [user, setUser] = useState({});
   const [nonce, setNonce] = useState('');
 
+  // When dialog is closed, then set current user to lock owner.
   const closeDialog = useCallback(() => {
     setShowDialog(false);
     setStoryLockById(storyId);
@@ -63,6 +64,7 @@ function PostLock() {
     [currentUser]
   );
 
+  // When async call only if dialog is true, current user is loaded and post locking is enabled.
   const doGetStoryLock = useCallback(() => {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
       getStoryLockById(storyId)
@@ -73,6 +75,7 @@ function PostLock() {
           } else {
             setStoryLockById(storyId);
           }
+          // Refresh notice on every request.
           setNonce(result.nonce);
         })
         .catch((err) => {
@@ -96,6 +99,7 @@ function PostLock() {
     cachedDoGetStoryLock.current = doGetStoryLock;
   }, [doGetStoryLock, currentUserLoaded]);
 
+  // Register an event on user navigating away from current tab to release / delete lock.
   useEffect(() => {
     function releasePostLock() {
       if (enablePostLocking && showLockedDialog && !showDialog && nonce) {
@@ -117,6 +121,7 @@ function PostLock() {
     nonce,
   ]);
 
+  // Register repeating callback to check lock every 150 seconds.
   useEffect(() => {
     if (currentUserLoaded) {
       cachedDoGetStoryLock.current();
@@ -132,6 +137,7 @@ function PostLock() {
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
 
+  // On first load, display dialog with option to take over.
   if (isFirstTime) {
     return (
       <PostLockDialog
@@ -144,6 +150,7 @@ function PostLock() {
     );
   }
 
+  // Second time around, show message that dialog was taken over.
   return (
     <PostTakeOverDialog
       open={showDialog}

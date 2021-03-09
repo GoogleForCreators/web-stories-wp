@@ -27,6 +27,14 @@ import Dialog from '../dialog';
 import { Plain } from '../button';
 import { Img, Paragraph } from './shared';
 
+/**
+ * @param {Object} props Component props.
+ * @param {boolean} props.open If open or not.
+ * @param {Object} props.user Lock owner's user data as a object.
+ * @param {string} props.dashboardLink Link to dashboard.
+ * @param {Function} props.onClose Function when dialog is closed.
+ * @return {*} Render.
+ */
 function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
   const dialogTile = __(
     'Someone else has taken over this story.',

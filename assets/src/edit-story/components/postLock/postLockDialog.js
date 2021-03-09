@@ -27,6 +27,15 @@ import Dialog from '../dialog';
 import { Plain } from '../button';
 import { Img, Paragraph } from './shared';
 
+/**
+ * @param {Object} props Component props.
+ * @param {boolean} props.open If open or not.
+ * @param {Object} props.user Lock owner's user data as a object.
+ * @param {string} props.dashboardLink Link to dashboard.
+ * @param {string} props.previewLink Preview link.
+ * @param {Function} props.onClose Function when dialog is closed.
+ * @return {*} Render.
+ */
 function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
   const dialogTile = __('Story is locked', 'web-stories');
   const dialogContent = sprintf(
