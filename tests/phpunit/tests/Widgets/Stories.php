@@ -122,7 +122,7 @@ class Stories extends \WP_UnitTestCase {
 	public function test_input() {
 		$function = function () {
 			$args = [
-				'label'    => 'Test input',
+				'label' => 'Test input',
 				'value' => 3,
 			];
 			$this->call_private_method( self::$testee, 'input', [ $args ] );
