@@ -58,24 +58,10 @@ class Site_Kit {
 	 */
 	public function init() {
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
-		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 
 		if ( $this->is_analytics_module_active() ) {
 			remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );
 		}
-	}
-
-	/**
-	 * Find status of site kit plugin in site.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return boolean
-	 */
-	public function is_site_kit_plugin_installed() {
-		$all_plugins = get_plugins();
-
-		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
 	}
 
 	/**
