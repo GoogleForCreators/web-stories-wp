@@ -97,8 +97,12 @@ const HiddenInput = styled.input.attrs({ type: 'radio' })`
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
   }
 
+  :focus {
+    outline: none;
+  }
+
   :focus ~ ${RadioBorder}, &.${FOCUS_VISIBLE_SELECTOR} ~ ${RadioBorder} {
-    ${themeHelpers.focusableOutlineCSS};
+    ${({ theme }) => themeHelpers.focusCSS(theme.colors.border.focus)};
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
   }
 
@@ -138,6 +142,7 @@ export function Radio({ className, hint, id, label, ...props }) {
         <RadioBorder />
         <InnerButton />
       </ButtonContainer>
+
       <LabelContainer>
         {label && (
           <Text
