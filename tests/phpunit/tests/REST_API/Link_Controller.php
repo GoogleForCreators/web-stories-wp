@@ -268,7 +268,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		$expected = [
 			'title'       => 'Chizuru Kagura estará em The King of Fighters XV; novo trailer',
 			'image'       => '',
-			'description' => 'Com a revelação de Chizuru, foi revelado a segunda equipe.',
+			'description' => 'Com a revelação de Chizuru, foi revelado a segunda equipe: a “Team Sacred Treasures”, […]',
 		];
 
 		// Subsequent requests is cached and so it should not cause a request.
