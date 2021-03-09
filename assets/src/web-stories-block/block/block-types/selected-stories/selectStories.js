@@ -40,9 +40,9 @@ import {
   DROPDOWN_TYPES,
   STORY_SORT_MENU_ITEMS,
 } from '../../../../dashboard/constants';
-import { Dropdown, InfiniteScroller } from '../../../../dashboard/components';
+import { InfiniteScroller } from '../../../../dashboard/components';
 import FontProvider from '../../../../dashboard/app/font/fontProvider';
-import { Search } from '../../../../design-system';
+import { Search, DropDown } from '../../../../design-system';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { StoryGridItem } from './components/cardGridItem';
@@ -72,36 +72,24 @@ const StoryFilter = styled.div`
   }
 `;
 
+const GRID_SPACING = {
+  COLUMN_GAP: 24,
+  ROW_GAP: 32,
+};
+
 const StoryGrid = styled.div(
-  ({ columnWidth, theme }) => `
+  ({ columnWidth }) => `
   display: grid;
   overflow: auto !important;
   width: 100%;
   height: calc(100% - 95px) !important;
   padding: 10px 5px;
-  grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.desktop}px;
+  grid-column-gap: ${GRID_SPACING.COLUMN_GAP}px;
   grid-row-gap: 80px;
   grid-template-columns: repeat(auto-fill, ${columnWidth - 5}px);
   grid-template-rows: auto !important;
   scroll-margin-top: 30vh;
   margin-top: 2px; // this is for keyboard focus
-
-  ${theme.DEPRECATED_THEME.breakpoint.tablet} {
-    grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.tablet}px;
-  }
-  ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-    grid-column-gap: ${
-      theme.DEPRECATED_THEME.grid.columnGap.largeDisplayPhone
-    }px;
-  }
-  ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    grid-column-gap: ${
-      theme.DEPRECATED_THEME.grid.columnGap.smallDisplayPhone
-    }px;
-  }
-  ${theme.DEPRECATED_THEME.breakpoint.min} {
-    grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.min}px;
-  }
 `
 );
 
@@ -113,13 +101,6 @@ const SearchContainer = styled.div`
   position: relative;
   height: 29px;
   width: 100%;
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) =>
-      `${theme.DEPRECATED_THEME.standardViewContentGutter.min}px`};
-    max-width: 100%;
-    justify-content: flex-start;
-  }
 `;
 
 const SearchStoryInner = styled.div`
@@ -255,15 +236,13 @@ function SelectStories({
           />
         </SearchContainer>
         <DropdownContainer>
-          <Dropdown
-            alignment="flex-end"
+          <DropDown
             ariaLabel={__('Choose sort option for display', 'web-stories')}
-            items={STORY_SORT_MENU_ITEMS}
+            options={STORY_SORT_MENU_ITEMS}
             type={DROPDOWN_TYPES.MENU}
-            value={sort.value}
-            onChange={(newSort) => {
-              onSortChange(newSort.value);
-            }}
+            selectedValue={sort.value}
+            onMenuItemClick={(_, newSort) => onSortChange(newSort)}
+            popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
           />
         </DropdownContainer>
       </StoryFilter>
