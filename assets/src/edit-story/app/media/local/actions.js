@@ -37,10 +37,11 @@ export const fetchMediaError = (dispatch) => (properties) =>
   });
 export const setNextPage = (dispatch) => (properties) =>
   common.setNextPage(dispatch)({ ...properties, provider: 'local' });
-export const updateMediaElement = (dispatch) => (properties) =>
+export const updateMediaElement = (dispatch) => ({ id, data }) =>
   common.updateMediaElement(dispatch)({
-    ...properties,
     provider: 'local',
+    id,
+    data,
   });
 export const deleteMediaElement = (dispatch) => (properties) =>
   common.deleteMediaElement(dispatch)({
@@ -74,6 +75,13 @@ export const removeProcessing = (dispatch) => ({ id }) => {
 export const setMedia = (dispatch) => ({ media }) => {
   dispatch({
     type: types.LOCAL_MEDIA_SET_MEDIA,
+    payload: { media },
+  });
+};
+
+export const prependMedia = (dispatch) => ({ media }) => {
+  dispatch({
+    type: types.LOCAL_MEDIA_PREPEND_MEDIA,
     payload: { media },
   });
 };

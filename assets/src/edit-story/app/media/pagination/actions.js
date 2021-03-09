@@ -62,17 +62,13 @@ export const setNextPage = (dispatch) => ({ provider }) => {
   });
 };
 
-export const updateMediaElement = (dispatch) => ({
-  provider,
-  id,
-  ...properties
-}) => {
+export const updateMediaElement = (dispatch) => ({ provider, id, data }) => {
   dispatch({
     type: types.UPDATE_MEDIA_ELEMENT,
     payload: {
       provider,
       id,
-      ...properties,
+      data,
     },
   });
 };

@@ -17,13 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  trackError,
-  getTimeTracker,
-  trackEvent,
-} from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -32,29 +27,50 @@ import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
 import { useSnackbar } from '../snackbar';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
-import { getResourceFromLocalFile, getResourceFromAttachment } from './utils';
+import { useMediaUploadQueue } from './utils';
+import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
+import useTranscodeVideo from './utils/useTranscodeVideo';
 
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
 /**
  * Upload media items to the app while displaying the local files in the library.
  *
- * @todo Revisit local resource handling.
- * See https://github.com/google/web-stories-wp/issues/6053 and https://github.com/google/web-stories-wp/issues/6088
- *
  * @param {Object} props Props.
  * @param {Array<Object<*>>} props.media Media items.
- * @param {Function} props.setMedia Actions to set media items.
+ * @param {Function} props.prependMedia Action to add new media items.
+ * @param {Function} props.updateMediaElement Action to update a media item.
+ * @param {Function} props.deleteMediaElement Action to delete a media item.
  * @return {{uploadMedia: Function, isUploading: boolean}} Upload status, and function to upload media.
  */
-function useUploadMedia({ media, setMedia }) {
+function useUploadMedia({
+  media,
+  prependMedia,
+  updateMediaElement,
+  deleteMediaElement,
+}) {
   const {
-    actions: { uploadFile },
-    state: { isTranscoding },
+    actions: { validateFileForUpload },
   } = useUploader();
   const { showSnackbar } = useSnackbar();
-  const [isUploading, setIsUploading] = useState(false);
   const setPreventUnload = usePreventWindowUnload();
+  const {
+    state: {
+      isUploading,
+      isTranscoding,
+      pending,
+      progress,
+      processed,
+      failures,
+    },
+    actions: { addItem, removeItem },
+  } = useMediaUploadQueue();
+  const {
+    isFeatureEnabled,
+    isTranscodingEnabled,
+    canTranscodeFile,
+    isFileTooLarge,
+  } = useTranscodeVideo();
 
   /**
    * @type {import('react').MutableRefObject<Array<Object<*>>>} mediaRef Ref for current media items.
@@ -77,161 +93,154 @@ function useUploadMedia({ media, setMedia }) {
     }
   }, [isTranscoding, showSnackbar]);
 
+  // Add *new* items to the media library and canvas.
+  useEffect(() => {
+    const newItems = pending.filter(
+      ({ id }) => !mediaRef.current.find(({ id: _id }) => id === _id)
+    );
+
+    if (!newItems.length) {
+      return;
+    }
+
+    for (const { onUploadStart, resource } of newItems) {
+      if (onUploadStart) {
+        onUploadStart({ resource });
+      }
+    }
+
+    const resourcesToAdd = newItems.map(({ resource }) => resource);
+
+    prependMedia({
+      media: resourcesToAdd,
+    });
+  }, [pending, prependMedia]);
+
+  // Update *existing* items in the media library and on canvas.
+  useEffect(() => {
+    for (const { id, onUploadProgress, resource } of progress) {
+      if (!resource) {
+        continue;
+      }
+
+      updateMediaElement({
+        id,
+        data: resource,
+      });
+
+      if (onUploadProgress) {
+        onUploadProgress({ id, resource: resource });
+      }
+    }
+  }, [progress, updateMediaElement]);
+
+  // Handle *processed* items.
+  // Update resources in media library and on canvas.
+  useEffect(() => {
+    for (const { id, resource, onUploadSuccess } of processed) {
+      if (!resource) {
+        continue;
+      }
+
+      updateMediaElement({ id, data: resource });
+
+      if (onUploadSuccess) {
+        onUploadSuccess({ id, resource: resource });
+      }
+
+      removeItem({ id });
+    }
+  }, [processed, updateMediaElement, removeItem]);
+
+  // Handle *failed* items.
+  // Remove resources from media library and canvas.
+  useEffect(() => {
+    for (const { id, onUploadError, error } of failures) {
+      if (onUploadError) {
+        onUploadError({ id });
+      }
+      deleteMediaElement({ id });
+      removeItem({ id });
+
+      showSnackbar({
+        message:
+          error?.message ||
+          __(
+            'File could not be uploaded. Please try a different file.',
+            'web-stories'
+          ),
+      });
+    }
+  }, [failures, deleteMediaElement, removeItem, showSnackbar]);
+
   const uploadMedia = useCallback(
     /**
+     * Upload media callback.
      *
      * @param {Array<File>} files Files to upload.
      * @param {Object} args Additional arguments.
-     * @param {Function} args.onLocalFile Callback to act on local files.
-     * @param {Function} args.onUploadedFile Callback for successful uploads.
-     * @param {Function} args.onUploadFailure Callback for uploadfailures.
-     * @return {Promise<void>}
+     * @param {Function} args.onUploadStart Callback for when upload starts.
+     * @param {Function} args.onUploadProgress Callback for when upload progresses.
+     * @param {Function} args.onUploadError Callback for when upload fails.
+     * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
+     * @return {void}
      */
-    async (files, { onLocalFile, onUploadedFile, onUploadFailure } = {}) => {
-      const mediaItems = mediaRef.current;
-
+    async (
+      files,
+      { onUploadStart, onUploadProgress, onUploadError, onUploadSuccess } = {}
+    ) => {
       // If there are no files passed, don't try to upload.
       if (!files?.length) {
         return;
       }
 
-      /**
-       * @type {Array<Object<{localResource:Object<*>, file:File, fileUploaded?:Object<*>}>>} localFiles.
-       */
-      let localFiles;
-      let updatedMedia;
+      await Promise.all(
+        files.reverse().map(async (file) => {
+          // First, let's make sure the files we're trying to upload are actually valid.
+          // We don't want to display placeholders / progress bars for items that
+          // aren't supported anyway.
 
-      // First, prepare all files for uploading by getting a resource object
-      // and adding the files to the media library.
-      try {
-        setIsUploading(true);
+          const canTranscode =
+            isFeatureEnabled && isTranscodingEnabled && canTranscodeFile(file);
+          const isTooLarge = canTranscode && isFileTooLarge(file);
 
-        localFiles = await Promise.all(
-          files.reverse().map(async (file) => ({
-            localResource: await getResourceFromLocalFile(file),
-            file,
-          }))
-        );
-
-        // localResource can be null for files with invalid or missing type.
-        localFiles = localFiles.filter((f) => f.localResource);
-
-        if (onLocalFile) {
-          localFiles = localFiles.map(({ localResource, file }) => {
-            // @todo: Remove `element` here when the `updateResource` API
-            // lands.
-            const element = onLocalFile({ resource: localResource });
-            return { localResource, file, element };
-          });
-        }
-
-        // If there are any valid local files remaining, add their resources to the library.
-        if (localFiles.length) {
-          updatedMedia = [
-            ...localFiles.map(({ localResource }) => localResource),
-            ...mediaItems,
-          ];
-          setMedia({ media: updatedMedia });
-        }
-      } catch (e) {
-        // Catching errors from getResourceFromLocalFile() above.
-
-        trackError('upload_media', e.message);
-
-        setIsUploading(false);
-
-        showSnackbar({
-          message:
-            e.message ||
-            __(
-              'File could not be uploaded. Please try a different file.',
-              'web-stories'
-            ),
-        });
-
-        return;
-      }
-
-      if (localFiles.length !== files.length) {
-        showSnackbar({
-          message: __(
-            'One or more files could not be uploaded. Please try a different file.',
-            'web-stories'
-          ),
-        });
-      }
-
-      if (localFiles.length === 0) {
-        return;
-      }
-
-      try {
-        // Upload all the files one by one and get the new resource
-        // from the uploaded attachment returned by the server.
-        const uploadedFiles = await Promise.all(
-          localFiles.map(async (localFile) => {
-            trackEvent('upload_media', {
-              file_size: localFile.file.size,
-              file_type: localFile.file.type,
+          try {
+            validateFileForUpload(file, canTranscode, isTooLarge);
+          } catch (e) {
+            showSnackbar({
+              message: e.message,
             });
-            const trackTiming = getTimeTracker('load_upload_media');
-            const fileUploaded = getResourceFromAttachment(
-              await uploadFile(localFile.file)
-            );
-            trackTiming();
-            return {
-              ...localFile,
-              fileUploaded,
-            };
-          })
-        );
 
-        setIsUploading(false);
-
-        // So callers can replace local resource with newly uploaded resource (e.g. on the canvas).
-        if (onUploadedFile) {
-          uploadedFiles.forEach(({ element, fileUploaded }) => {
-            onUploadedFile({
-              resource: fileUploaded,
-              element,
-            });
-          });
-        }
-
-        // Add newly uploaded files to the media library.
-        const uploadedFilesMap = new Map(
-          uploadedFiles.map(({ localResource, fileUploaded }) => [
-            localResource,
-            fileUploaded,
-          ])
-        );
-        setMedia({
-          media: updatedMedia.map((resource) => {
-            return uploadedFilesMap.get(resource) ?? resource;
-          }),
-        });
-      } catch (e) {
-        trackError('upload_media', e.message);
-
-        showSnackbar({
-          message: e.message,
-        });
-
-        // Remove local files from library again upon failure
-        // and inform callers so they can remove the file again (e.g. on the canvas).
-        localFiles.forEach(({ localResource, element }) => {
-          if (onUploadFailure) {
-            onUploadFailure({ element });
+            return;
           }
-          setMedia({
-            media: mediaItems.filter((resource) => resource !== localResource),
-          });
-        });
 
-        setIsUploading(false);
-      }
+          // getResourceFromLocalFile() will work for most files, which allows us
+          // to get the correct image/video dimensions right from the start.
+          // This is important for UX as we can then display resources without
+          // having to update the dimensions later on as the information becomes available.
+          // Downside: it takes a tad longer for the file to initially appear.
+          // Upside: file is displayed with the right dimensions from the beginning.
+          const resource = await getResourceFromLocalFile(file);
+          addItem({
+            file,
+            resource,
+            onUploadStart,
+            onUploadProgress,
+            onUploadError,
+            onUploadSuccess,
+          });
+        })
+      );
     },
-    [setMedia, showSnackbar, uploadFile]
+    [
+      showSnackbar,
+      validateFileForUpload,
+      addItem,
+      canTranscodeFile,
+      isFeatureEnabled,
+      isTranscodingEnabled,
+      isFileTooLarge,
+    ]
   );
 
   return {
