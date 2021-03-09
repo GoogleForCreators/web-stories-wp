@@ -28,8 +28,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
-import labelAccessibilityValidator from '../../utils/labelAccessibilityValidator';
-import useInputEventHandlers from '../../utils/useInputEventHandlers';
+import {
+  useInputEventHandlers,
+  labelAccessibilityValidator,
+} from '../../utils';
 
 const Container = styled.div`
   position: relative;
@@ -81,6 +83,7 @@ const StyledTextArea = styled.textarea(
     outline: none;
     color: ${theme.colors.fg.primary};
     resize: none;
+    ${themeHelpers.scrollbarCSS};
 
     ${themeHelpers.expandPresetStyles({
       preset: {
@@ -133,8 +136,7 @@ export const TextArea = forwardRef(
     const textAreaRef = useRef(null);
     const [focused, setFocused] = useState(false);
 
-    const hasMaxLength = typeof maxLength === 'number';
-    const hasCounter = showCount && hasMaxLength;
+    const hasCounter = showCount && maxLength > 0;
 
     const { handleBlur, handleFocus } = useInputEventHandlers({
       forwardedRef: ref,
@@ -145,9 +147,7 @@ export const TextArea = forwardRef(
       onFocus,
     });
 
-    let displayedValue = hasMaxLength
-      ? value?.substring(0, maxLength - 1)
-      : value;
+    let displayedValue = value;
     if (isIndeterminate) {
       // Display placeholder if value couldn't be determined.
       displayedValue = '';
@@ -168,6 +168,7 @@ export const TextArea = forwardRef(
             onBlur={handleBlur}
             onFocus={handleFocus}
             value={displayedValue}
+            maxLength={maxLength}
             {...props}
           />
           {hasCounter && (

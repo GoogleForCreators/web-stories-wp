@@ -27,8 +27,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
-import useInputEventHandlers from '../../utils/useInputEventHandlers';
-import labelAccessibilityValidator from '../../utils/labelAccessibilityValidator';
+import {
+  useInputEventHandlers,
+  labelAccessibilityValidator,
+} from '../../utils';
 
 const Container = styled.div`
   position: relative;

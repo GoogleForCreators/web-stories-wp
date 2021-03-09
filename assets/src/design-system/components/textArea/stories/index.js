@@ -124,7 +124,7 @@ export const _default = () => {
             label={text('TextArea 4 Label', 'Normal')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
-            showCount={true}
+            showCount
             maxLength={20}
           />
         </Row>
@@ -173,7 +173,7 @@ export const _default = () => {
               label={text('TextArea 4 Label', 'Normal')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
-              showCount={true}
+              showCount
               maxLength={200}
             />
           </Row>
