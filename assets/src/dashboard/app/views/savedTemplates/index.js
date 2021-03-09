@@ -101,7 +101,7 @@ function SavedTemplates() {
         sort={sort}
       />
       <Content
-        allPagesFetched={true}
+        allPagesFetched
         isLoading={false}
         view={view}
         page={page}
