@@ -65,45 +65,71 @@ function Content({
   templateActions,
 }) {
   const { newStoryURL } = useConfig();
-  const showLoadingAnimation = isLoading && !totalTemplates;
 
-  const emptyContent = useMemo(
-    () =>
-      showLoadingAnimation ? (
+  const pageContent = useMemo(() => {
+    if (isLoading) {
+      return (
         <LoadingContainer>
           <LoadingSpinner />
         </LoadingContainer>
-      ) : (
-        <EmptyContentMessage>
-          <Headline
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            as="h3"
-          >
-            {search?.keyword
-              ? sprintf(
-                  /* translators: %s: search term. */
-                  __(
-                    'Sorry, we couldn\'t find any results matching "%s"',
-                    'web-stories'
-                  ),
-                  search.keyword
-                )
-              : __('No templates currently available.', 'web-stories')}
-          </Headline>
-          {!search?.keyword && (
-            <Button
-              type={BUTTON_TYPES.PRIMARY}
-              size={BUTTON_SIZES.MEDIUM}
-              as="a"
-              href={newStoryURL}
-            >
-              {__('Create a new Story', 'web-stories')}
-            </Button>
+      );
+    }
+    return totalTemplates > 0 ? (
+      <>
+        <TemplateGridView
+          templates={templates}
+          pageSize={view.pageSize}
+          templateActions={templateActions}
+        />
+        <InfiniteScroller
+          canLoadMore={!allPagesFetched}
+          isLoading={isLoading}
+          allDataLoadedMessage={__('No more templates', 'web-stories')}
+          allDataLoadedAriaMessage={__(
+            'All templates are loaded',
+            'web-stories'
           )}
-        </EmptyContentMessage>
-      ),
-    [newStoryURL, search?.keyword, showLoadingAnimation]
-  );
+          loadingAriaMessage={__('Loading more templates', 'web-stories')}
+          onLoadMore={page.requestNextPage}
+        />
+      </>
+    ) : (
+      <EmptyContentMessage>
+        <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
+          {search?.keyword
+            ? sprintf(
+                /* translators: %s: search term. */
+                __(
+                  'Sorry, we couldn\'t find any results matching "%s"',
+                  'web-stories'
+                ),
+                search.keyword
+              )
+            : __('No templates currently available.', 'web-stories')}
+        </Headline>
+        {!search?.keyword && (
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.MEDIUM}
+            as="a"
+            href={newStoryURL}
+          >
+            {__('Create a new Story', 'web-stories')}
+          </Button>
+        )}
+      </EmptyContentMessage>
+    );
+  }, [
+    allPagesFetched,
+    isLoading,
+    newStoryURL,
+    page.requestNextPage,
+    search?.keyword,
+    templateActions,
+    templates,
+    totalTemplates,
+    view.pageSize,
+  ]);
 
   return (
     <Layout.Scrollable>
@@ -115,36 +141,7 @@ function Content({
               height: view.pageSize.height,
             }}
           >
-            <StandardViewContentGutter>
-              {totalTemplates > 0 ? (
-                <>
-                  <TemplateGridView
-                    templates={templates}
-                    pageSize={view.pageSize}
-                    templateActions={templateActions}
-                  />
-                  <InfiniteScroller
-                    canLoadMore={!allPagesFetched}
-                    isLoading={isLoading}
-                    allDataLoadedMessage={__(
-                      'No more templates',
-                      'web-stories'
-                    )}
-                    allDataLoadedAriaMessage={__(
-                      'All templates are loaded',
-                      'web-stories'
-                    )}
-                    loadingAriaMessage={__(
-                      'Loading more templates',
-                      'web-stories'
-                    )}
-                    onLoadMore={page.requestNextPage}
-                  />
-                </>
-              ) : (
-                emptyContent
-              )}
-            </StandardViewContentGutter>
+            <StandardViewContentGutter>{pageContent}</StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>
