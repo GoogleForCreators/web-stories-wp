@@ -145,7 +145,7 @@ export const TextArea = forwardRef(
       onFocus,
     });
 
-    let displayedValue = hasCounter
+    let displayedValue = hasMaxLength
       ? value?.substring(0, maxLength - 1)
       : value;
     if (isIndeterminate) {
