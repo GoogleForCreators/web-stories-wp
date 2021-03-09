@@ -20,25 +20,32 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
 /**
  * Internal dependencies
  */
-import Snackbar from './snackbar';
+import { useCallback } from 'react';
+import { Snackbar } from '../../../design-system';
+import { SnackbarNotification } from './types';
 
-function getLeft(place) {
+const StyledSnackbar = styled(Snackbar.Message)`
+  margin-bottom: ${({ place }) =>
+    place.indexOf('bottom') === 0 ? '0.5em' : 0};
+  margin-top: ${({ place }) => (place.indexOf('top') === 0 ? '0.5em' : 0)};
+`;
+
+function getSnackbarXPos({ place }) {
   switch (place) {
     case 'top':
     case 'bottom':
-      return 'calc(50% - 10em)';
+      return 'left: calc(50% - 10em);';
     case 'top-left':
     case 'bottom-left':
-      return '60px';
+      return 'left: 60px;';
     case 'top-right':
     case 'bottom-right':
-      return 'calc(100vw - 20.5em)';
+      return 'right: 60px;';
     default:
-      return '60px';
+      return 'left: 60px;';
   }
 }
 
@@ -46,14 +53,14 @@ const Container = styled.div`
   position: fixed;
   top: ${({ place }) => (place.indexOf('top') === 0 ? 0 : 'inherit')};
   bottom: ${({ place }) => (place.indexOf('bottom') === 0 ? 0 : 'inherit')};
-  left: ${({ place }) => getLeft(place)};
+  ${getSnackbarXPos}
   z-index: 2147483647;
 `;
 
 const ChildContainer = styled.div`
   &.react-snackbar-alert__snackbar-container-enter {
     opacity: 0;
-    transform: scaleY(0.1);
+    transform: scaleY(1);
   }
 
   &.react-snackbar-alert__snackbar-container-enter-active {
@@ -77,31 +84,46 @@ const ChildContainer = styled.div`
 `;
 
 function SnackbarContainer({
-  component: Component,
+  component: Component = StyledSnackbar,
   notifications,
   onRemove,
   place = 'bottom-left',
 }) {
-  const orderednotifications =
+  const orderedNotifications =
     place.indexOf('top') === 0 ? [...notifications].reverse() : notifications;
+
+  const _handleDismiss = useCallback(
+    (notification) => () => {
+      onRemove(notification);
+      notification.onDismiss?.();
+    },
+    [onRemove]
+  );
+
   return (
     <Container place={place}>
       <TransitionGroup>
-        {orderednotifications.map((notification) => (
+        {orderedNotifications.map((notification) => (
           <CSSTransition
             in
             appear
             key={notification.key}
             timeout={300}
+            unmountOnExit
             classNames="react-snackbar-alert__snackbar-container"
           >
             <ChildContainer>
               <Component
-                timeout={notification.timeout}
-                onDismiss={() => onRemove(notification)}
-                notification={notification}
-                data={notification.data}
+                aria-label={notification.message}
                 place={place}
+                handleDismiss={_handleDismiss(notification)}
+                handleAction={notification.onAction}
+                actionLabel={notification.actionLabel}
+                message={notification.message}
+                showCloseButton={Boolean(notification.dismissable)}
+                removeMessageTimeInterval={notification.timeout}
+                isPreventAutoDismiss={notification.preventAutoDismiss}
+                isPreventActionDismiss={notification.preventActionDismiss}
               />
             </ChildContainer>
           </CSSTransition>
@@ -113,7 +135,7 @@ function SnackbarContainer({
 
 SnackbarContainer.propTypes = {
   component: PropTypes.elementType,
-  notifications: PropTypes.array,
+  notifications: PropTypes.arrayOf(SnackbarNotification),
   onRemove: PropTypes.func.isRequired,
   place: PropTypes.oneOf([
     'top',
@@ -123,11 +145,6 @@ SnackbarContainer.propTypes = {
     'bottom-left',
     'bottom-right',
   ]),
-};
-
-SnackbarContainer.defaultProps = {
-  component: Snackbar,
-  position: 'bottom',
 };
 
 export default SnackbarContainer;

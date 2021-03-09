@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { rgba } from 'polished';
 import styled, { keyframes } from 'styled-components';
 
@@ -36,7 +36,16 @@ import {
   DEFAULT_MESSAGE_Z_INDEX,
 } from './constants';
 
-const slideIn = keyframes`
+const fromTop = keyframes`
+	from {
+		transform: translateY(-100%);
+	}
+	to {
+		transform: translateY(0);
+	}
+`;
+
+const fromBottom = keyframes`
 	from {
 		transform: translateY(100%);
 	}
@@ -48,11 +57,10 @@ const slideIn = keyframes`
 const MessageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   min-height: 48px;
-  padding: 14px 16px;
+  padding: 10px 16px;
   margin-top: 20px;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
@@ -60,16 +68,18 @@ const MessageContainer = styled.div`
     `1px solid ${rgba(theme.colors.standard.white, 0.24)}`};
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   z-index: ${({ customZIndex }) => customZIndex || DEFAULT_MESSAGE_Z_INDEX};
-
-  animation: 0.5s ${slideIn} ease-out;
+  animation: 0.5s
+    ${({ place }) => (place.indexOf('top') === -1 ? fromBottom : fromTop)}
+    ease-out;
 `;
 MessageContainer.propTypes = {
   customZIndex: PropTypes.number,
 };
 
 const Message = styled(Text)`
-  max-width: 206px;
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
+  max-width: 206px;
+  padding-right: ${({ hasAction }) => (hasAction ? '52px' : '0px')};
 `;
 
 const ActionContainer = styled.div`
@@ -83,7 +93,6 @@ const ActionButton = styled(Button)`
   min-width: 1px;
   height: 2em;
   padding: 0;
-  margin: 0 0 0 52px;
   color: ${({ theme }) => theme.colors.inverted.fg.linkNormal};
 
   ${({ theme }) =>
@@ -118,11 +127,13 @@ const CloseButton = styled(Button)`
 const SnackbarMessage = ({
   actionLabel,
   handleAction = () => {},
-  handleDismiss,
+  handleDismiss = () => {},
   isPreventAutoDismiss,
+  isPreventActionDismiss,
   message,
   removeMessageTimeInterval,
   showCloseButton,
+  place = 'bottom',
   ...props
 }) => {
   const autoDismissRef = useRef();
@@ -130,8 +141,8 @@ const SnackbarMessage = ({
 
   const messageRemovalTimeInterval = useRef(
     typeof removeMessageTimeInterval === 'number' &&
-      removeMessageTimeInterval < AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX &&
-      removeMessageTimeInterval > AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN
+      removeMessageTimeInterval <= AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX &&
+      removeMessageTimeInterval >= AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN
       ? removeMessageTimeInterval
       : AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX
   );
@@ -149,15 +160,28 @@ const SnackbarMessage = ({
     return () => clearTimeout(dismissTimeout);
   }, []);
 
+  const _handleAction = useCallback(() => {
+    handleAction();
+    !isPreventActionDismiss && handleDismiss();
+  }, [handleAction, handleDismiss, isPreventActionDismiss]);
+
   return (
-    <MessageContainer role="alert" hasAction={Boolean(actionLabel)} {...props}>
-      <Message size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+    <MessageContainer
+      role="alert"
+      hasAction={Boolean(actionLabel)}
+      place={place}
+      {...props}
+    >
+      <Message
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        hasAction={Boolean(actionLabel)}
+      >
         {message}
       </Message>
       {(actionLabel || showCloseButton) && (
         <ActionContainer>
           {actionLabel && (
-            <ActionButton onClick={handleAction}>{actionLabel}</ActionButton>
+            <ActionButton onClick={_handleAction}>{actionLabel}</ActionButton>
           )}
           {showCloseButton && (
             <CloseButton onClick={handleDismiss}>
@@ -178,8 +202,17 @@ SnackbarMessage.propTypes = {
   actionLabel: PropTypes.string,
   handleAction: PropTypes.func,
   isPreventAutoDismiss: PropTypes.bool,
+  isPreventActionDismiss: PropTypes.bool,
   removeMessageTimeInterval: PropTypes.number,
   showCloseButton: PropTypes.bool,
+  place: PropTypes.oneOf([
+    'top-left',
+    'bottom-left',
+    'top-right',
+    'bottom-right',
+    'top',
+    'bottom',
+  ]),
 };
 
 SnackbarMessage.defaultProps = {
