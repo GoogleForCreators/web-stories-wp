@@ -28,6 +28,7 @@ use WP_Widget;
  * @package Google\Web_Stories\Tests
  */
 class Stories extends \WP_UnitTestCase {
+	use Private_Access;
 	/**
 	 * Object in test.
 	 *
@@ -113,5 +114,67 @@ class Stories extends \WP_UnitTestCase {
 		$instance = self::$testee->update( $new_instance, $old_instance );
 
 		$this->assertEqualSetsWithIndex( $expected, $instance );
+	}
+
+	/**
+	 * @covers ::input
+	 */
+	public function test_input() {
+		$function = function () {
+			$args = [
+				'label'    => 'Test input',
+				'value' => 3,
+			];
+			$this->call_private_method( self::$testee, 'input', [ $args ] );
+		};
+
+		$dropdown = get_echo( $function );
+
+		$this->assertContains( 'Test input', $dropdown );
+		$this->assertContains( '<input', $dropdown );
+		$this->assertContains( '<label', $dropdown );
+	}
+
+	/**
+	 * @covers ::dropdown
+	 */
+	public function test_dropdown() {
+		$function = function () {
+			$args = [
+				'label'    => 'Test input',
+				'options'  => range( 'A', 'Z' ),
+				'selected' => 3,
+			];
+			$this->call_private_method( self::$testee, 'dropdown', [ $args ] );
+		};
+
+		$dropdown = get_echo( $function );
+
+		$this->assertContains( 'Test input', $dropdown );
+		$this->assertContains( 'selected=', $dropdown );
+		$this->assertContains( '<select', $dropdown );
+		$this->assertContains( '<label', $dropdown );
+	}
+
+
+	/**
+	 * @covers ::radio
+	 */
+	public function test_radio() {
+		$function = function () {
+			$args = [
+				'label'    => 'Test input',
+				'options'  => range( 'A', 'Z' ),
+				'selected' => 3,
+			];
+			$this->call_private_method( self::$testee, 'radio', [ $args ] );
+		};
+
+		$radio = get_echo( $function );
+
+		$this->assertContains( 'Test input', $radio );
+		$this->assertContains( 'checked=', $radio );
+		$this->assertContains( '<input', $radio );
+		$this->assertContains( '<label', $radio );
 	}
 }
