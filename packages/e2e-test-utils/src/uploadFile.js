@@ -48,7 +48,7 @@ async function uploadFile(file, checkUpload = true) {
 
   // Upload successful!
   if (checkUpload) {
-    await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
+    await page.waitForSelector(`.media-modal li[aria-label="${file}"]`);
   }
   await page.setDefaultTimeout(3000);
 
