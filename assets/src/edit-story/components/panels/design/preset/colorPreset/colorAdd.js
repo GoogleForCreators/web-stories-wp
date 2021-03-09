@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../design-system';
+import { Icons, Text } from '../../../../../../design-system';
 
 const COLOR_SIZE = 32;
 const AddColorAction = styled.button`
@@ -47,11 +47,8 @@ const AddColorAction = styled.button`
   }
 `;
 
-// @todo Use color from design system when theme reference changes.
-const Note = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
-  margin-bottom: 10px;
+const Note = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 function ColorAdd({ handleAddPreset, helper, ...rest }) {
