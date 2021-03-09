@@ -65,45 +65,70 @@ function Content({
   view,
   initialFocusStoryId,
 }) {
-  const showLoadingAnimation = isLoading && stories.length === 0;
-
-  const emptyContent = useMemo(
-    () =>
-      showLoadingAnimation ? (
+  const pageContent = useMemo(() => {
+    if (isLoading) {
+      return (
         <LoadingContainer>
           <LoadingSpinner />
         </LoadingContainer>
-      ) : (
-        <EmptyContentMessage>
-          <Headline
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            as="h3"
+      );
+    }
+
+    return stories.length > 0 ? (
+      <>
+        <StoriesView
+          filterValue={filter.value}
+          sort={sort}
+          storyActions={storyActions}
+          stories={stories}
+          view={view}
+          initialFocusStoryId={initialFocusStoryId}
+        />
+        <InfiniteScroller
+          canLoadMore={!allPagesFetched}
+          isLoading={isLoading}
+          allDataLoadedMessage={__('No more stories', 'web-stories')}
+          onLoadMore={page.requestNextPage}
+        />
+      </>
+    ) : (
+      <EmptyContentMessage>
+        <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
+          {search?.keyword
+            ? sprintf(
+                /* translators: %s: search term. */
+                __(
+                  'Sorry, we couldn\'t find any results matching "%s"',
+                  'web-stories'
+                ),
+                search.keyword
+              )
+            : __('Start telling Stories.', 'web-stories')}
+        </Headline>
+        {!search?.keyword && (
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.MEDIUM}
+            as="a"
+            href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
           >
-            {search?.keyword
-              ? sprintf(
-                  /* translators: %s: search term. */
-                  __(
-                    'Sorry, we couldn\'t find any results matching "%s"',
-                    'web-stories'
-                  ),
-                  search.keyword
-                )
-              : __('Start telling Stories.', 'web-stories')}
-          </Headline>
-          {!search?.keyword && (
-            <Button
-              type={BUTTON_TYPES.PRIMARY}
-              size={BUTTON_SIZES.MEDIUM}
-              as="a"
-              href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
-            >
-              {__('Explore templates', 'web-stories')}
-            </Button>
-          )}
-        </EmptyContentMessage>
-      ),
-    [showLoadingAnimation, search?.keyword]
-  );
+            {__('Explore templates', 'web-stories')}
+          </Button>
+        )}
+      </EmptyContentMessage>
+    );
+  }, [
+    allPagesFetched,
+    filter.value,
+    initialFocusStoryId,
+    isLoading,
+    page.requestNextPage,
+    search?.keyword,
+    sort,
+    stories,
+    storyActions,
+    view,
+  ]);
 
   return (
     <Layout.Scrollable>
@@ -115,28 +140,7 @@ function Content({
               height: view.pageSize.height,
             }}
           >
-            <StandardViewContentGutter>
-              {stories.length > 0 ? (
-                <>
-                  <StoriesView
-                    filterValue={filter.value}
-                    sort={sort}
-                    storyActions={storyActions}
-                    stories={stories}
-                    view={view}
-                    initialFocusStoryId={initialFocusStoryId}
-                  />
-                  <InfiniteScroller
-                    canLoadMore={!allPagesFetched}
-                    isLoading={isLoading}
-                    allDataLoadedMessage={__('No more stories', 'web-stories')}
-                    onLoadMore={page.requestNextPage}
-                  />
-                </>
-              ) : (
-                emptyContent
-              )}
-            </StandardViewContentGutter>
+            <StandardViewContentGutter>{pageContent}</StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>
