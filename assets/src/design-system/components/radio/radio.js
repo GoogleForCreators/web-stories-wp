@@ -132,12 +132,34 @@ const Hint = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+/**
+ * A controlled radio button. Can be used with other radio buttons.
+ *
+ * To configure a group of radio buttons, the following must be done:
+ * 1. Give all the radio buttons of a group the same `name`
+ * 2. Pass a unique `value` to each radio button. This tracks the value of the specific radio button.
+ * 3. Pass `checked={true}` to the radio button that should be selected
+ *
+ * Keyboard navigation:
+ * - [Tab] can be used to navigate between radio groups
+ * - [ArrowUp] and [ArrowDown] can be used to navigate between radio buttons
+ *
+ * @param {Object} props The props
+ * @param {string} props.className className that is applied to the outer container
+ * @param {string} props.checked whether the radio button is selected
+ * @param {string} props.hint hint to display
+ * @param {string} props.id unique id used to associate the label to the input
+ * @param {string} props.label label to display
+ * @param {Function} props.onChange change event handler
+ * @param {string} props.value the value of the radio button
+ * @return {Object} The radio button
+ */
 export function Radio({ className, hint, id, label, ...props }) {
   const inputId = useMemo(() => id || uuidv4(), [id]);
 
   return (
-    <Container>
-      <ButtonContainer className={className}>
+    <Container className={className}>
+      <ButtonContainer>
         <HiddenInput {...props} />
         <RadioBorder />
         <InnerButton />
@@ -160,7 +182,10 @@ export function Radio({ className, hint, id, label, ...props }) {
 }
 Radio.propTypes = {
   className: PropTypes.string,
+  checked: PropTypes.bool,
   hint: PropTypes.string,
   id: PropTypes.string,
   label: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
