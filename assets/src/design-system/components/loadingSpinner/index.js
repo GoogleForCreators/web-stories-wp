@@ -25,7 +25,7 @@ import { BEZIER } from '../../../animation/constants';
 
 const CIRCLE_DIAMETER = 95;
 const NUM_CIRCLES = 11;
-const ANIMATION_DURATION = 2;
+const ANIMATION_DURATION = 0.85;
 
 const TAU = Math.PI * 2;
 
