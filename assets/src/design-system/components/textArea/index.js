@@ -28,8 +28,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
-import { labelAccessibilityValidator } from '../input';
-import useHandleEvents from '../input/useHandleEvents';
+import labelAccessibilityValidator from '../../utils/labelAccessibilityValidator';
+import useInputEventHandlers from '../../utils/useInputEventHandlers';
 
 const Container = styled.div`
   position: relative;
@@ -133,7 +133,7 @@ export const TextArea = forwardRef(
     const hasMaxLength = typeof maxLength === 'number';
     const hasCounter = showCount && hasMaxLength;
 
-    const { handleBlur, handleFocus } = useHandleEvents({
+    const { handleBlur, handleFocus } = useInputEventHandlers({
       forwardedRef: ref,
       inputRef: textAreaRef,
       focused,
@@ -181,7 +181,7 @@ export const TextArea = forwardRef(
   }
 );
 
-export const InputPropTypes = {
+export const TextAreaPropTypes = {
   'aria-label': labelAccessibilityValidator,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -198,5 +198,5 @@ export const InputPropTypes = {
   isIndeterminate: PropTypes.bool,
 };
 
-TextArea.propTypes = InputPropTypes;
+TextArea.propTypes = TextAreaPropTypes;
 TextArea.displayName = 'TextArea';

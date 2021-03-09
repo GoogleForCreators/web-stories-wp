@@ -19,7 +19,7 @@
  */
 import { useCallback, useEffect } from 'react';
 
-function useHandleEvents({
+function useInputEventHandlers({
   inputRef,
   forwardedRef,
   focused,
@@ -56,4 +56,4 @@ function useHandleEvents({
   };
 }
 
-export default useHandleEvents;
+export default useInputEventHandlers;
