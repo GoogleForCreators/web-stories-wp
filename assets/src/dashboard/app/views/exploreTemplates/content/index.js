@@ -23,6 +23,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -32,6 +33,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Headline,
+  LoadingSpinner,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { useConfig } from '../../../../../edit-story/app';
@@ -41,6 +43,7 @@ import {
   InfiniteScroller,
   Layout,
   StandardViewContentGutter,
+  LoadingContainer,
 } from '../../../../components';
 import {
   ViewPropTypes,
@@ -62,6 +65,46 @@ function Content({
   templateActions,
 }) {
   const { newStoryURL } = useConfig();
+  const showLoadingAnimation = isLoading && !totalTemplates;
+
+  const emptyContent = useMemo(
+    () =>
+      showLoadingAnimation ? (
+        <LoadingContainer>
+          <LoadingSpinner />
+        </LoadingContainer>
+      ) : (
+        <EmptyContentMessage>
+          <Headline
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            as="h3"
+          >
+            {search?.keyword
+              ? sprintf(
+                  /* translators: %s: search term. */
+                  __(
+                    'Sorry, we couldn\'t find any results matching "%s"',
+                    'web-stories'
+                  ),
+                  search.keyword
+                )
+              : __('No templates currently available.', 'web-stories')}
+          </Headline>
+          {!search?.keyword && (
+            <Button
+              type={BUTTON_TYPES.PRIMARY}
+              size={BUTTON_SIZES.MEDIUM}
+              as="a"
+              href={newStoryURL}
+            >
+              {__('Create a new Story', 'web-stories')}
+            </Button>
+          )}
+        </EmptyContentMessage>
+      ),
+    [newStoryURL, search?.keyword, showLoadingAnimation]
+  );
+
   return (
     <Layout.Scrollable>
       <FontProvider>
@@ -99,33 +142,7 @@ function Content({
                   />
                 </>
               ) : (
-                <EmptyContentMessage>
-                  <Headline
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    as="h3"
-                  >
-                    {search?.keyword
-                      ? sprintf(
-                          /* translators: %s: search term. */
-                          __(
-                            'Sorry, we couldn\'t find any results matching "%s"',
-                            'web-stories'
-                          ),
-                          search.keyword
-                        )
-                      : __('No templates currently available.', 'web-stories')}
-                  </Headline>
-                  {!search?.keyword && (
-                    <Button
-                      type={BUTTON_TYPES.PRIMARY}
-                      size={BUTTON_SIZES.MEDIUM}
-                      as="a"
-                      href={newStoryURL}
-                    >
-                      {__('Create a new Story', 'web-stories')}
-                    </Button>
-                  )}
-                </EmptyContentMessage>
+                emptyContent
               )}
             </StandardViewContentGutter>
           </UnitsProvider>
