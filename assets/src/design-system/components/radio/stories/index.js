@@ -42,10 +42,12 @@ const Container = styled.div`
 
 export const _default = () => {
   const [inputState, setInputState] = useState({
-    radioOne: 3,
-    radioTwo: 3,
-    radioThree: 3,
-    radioFour: 3,
+    radioOne: 1,
+    radioTwo: 1,
+    radioThree: 2,
+    radioFour: 2,
+    radioFive: 3,
+    radioSix: 3,
   });
 
   const handleChange = (ev) => {
@@ -160,6 +162,65 @@ export const _default = () => {
             value={3}
             onChange={handleChange}
             checked={inputState.radioFour === 3}
+            label={text('Radio Button Three Label', 'Three (Disabled)')}
+            hint={text('Radio Button Three Hint', 'Hint Three')}
+            disabled
+          />
+        </Container>
+      </DarkThemeProvider>
+      <br />
+      <br />
+      <Headline as="h1">{'Disabled Radio Button Initially Selected'}</Headline>
+      <Container>
+        <Radio
+          name="radioFive"
+          value={1}
+          onChange={handleChange}
+          checked={inputState.radioFive === 1}
+          label={text('Radio Button One Label', 'One')}
+          hint={text('Radio Button One Hint', 'Hint One')}
+        />
+        <Radio
+          name="radioFive"
+          value={2}
+          onChange={handleChange}
+          checked={inputState.radioFive === 2}
+          label={text('Radio Button Two Label', 'Two')}
+          hint={text('Radio Button Two Hint', 'Hint Two')}
+        />
+        <Radio
+          name="radioFive"
+          value={3}
+          onChange={handleChange}
+          checked={inputState.radioFive === 3}
+          label={text('Radio Button Three Label', 'Three (Disabled)')}
+          hint={text('Radio Button Three Hint', 'Hint Three')}
+          disabled
+        />
+      </Container>
+      <DarkThemeProvider>
+        <Container>
+          <Radio
+            name="radioSix"
+            onChange={handleChange}
+            value={1}
+            checked={inputState.radioSix === 1}
+            label={text('Radio Button One Label', 'One')}
+            hint={text('Radio Button One Hint', 'Hint One')}
+          />
+          <Radio
+            name="radioSix"
+            onChange={handleChange}
+            value={2}
+            checked={inputState.radioSix === 2}
+            label={text('Radio Button Two Label', 'Two')}
+            hint={text('Radio Button Two Hint', 'Hint Two')}
+          />
+          <Radio
+            name="radioSix"
+            value={3}
+            onChange={handleChange}
+            checked={inputState.radioSix === 3}
             label={text('Radio Button Three Label', 'Three (Disabled)')}
             hint={text('Radio Button Three Hint', 'Hint Three')}
             disabled
