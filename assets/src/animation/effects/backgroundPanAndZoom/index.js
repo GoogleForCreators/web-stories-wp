@@ -25,7 +25,7 @@ import {
 import SimpleAnimation from '../../parts/simpleAnimation';
 import { EffectBackgroundPan } from '../backgroundPan';
 import { EffectBackgroundZoom } from '../backgroundZoom';
-import { getMediaBoundOffsets, lerp } from '../../utils';
+import { getMediaOrigin } from '../../utils';
 
 const defaults = {
   fill: 'forwards',
@@ -61,6 +61,10 @@ export function EffectBackgroundPanAndZoom({
     panDir,
   });
 
+  // The key to access the keyframes in the generated keyframes object returned
+  // is internal to the effect. Both BgPan & BgZoom only generate one set of
+  // keyframes tho, so although this feels gross, it's fine for now to avoid
+  // an alteration to the exisitng structure.
   const zoomKeyframes = Object.values(zoomGeneratedKeyframes)?.[0] || [];
   const panKeyframes = Object.values(panGeneratedKeyframes)?.[0] || [];
 
@@ -69,30 +73,11 @@ export function EffectBackgroundPanAndZoom({
   const panLastTransformIndex = (panKeyframes?.transform?.length || 1) - 1;
   const endTransform = `${panKeyframes?.transform[zoomLastTransformIndex]} ${zoomKeyframes?.transform[panLastTransformIndex]}`;
 
-  const offsets = element
-    ? getMediaBoundOffsets({ element })
-    : {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-      };
-
-  const progress = {
-    vertical:
-      Math.abs(offsets.top) /
-      (Math.abs(offsets.top) + Math.abs(offsets.bottom)),
-    horizontal:
-      Math.abs(offsets.left) /
-      (Math.abs(offsets.left) + Math.abs(offsets.right)),
-  };
-  const origin = {
-    vertical: lerp(progress.vertical, [0, 100]),
-    horizontal: lerp(progress.horizontal, [0, 100]),
-  };
-
-  // console.log(`${origin.horizontal}% ${origin.vertical}%`);
-
+  // We have to move the origin with respect to the pan
+  // direction and the current media position relative to
+  // the frame. This prevents area from ever being shown
+  // where the media does't fill the frame during scaling
+  const origin = getMediaOrigin(element);
   const transformOrigin =
     {
       [DIRECTION.RIGHT_TO_LEFT]: [
@@ -112,6 +97,7 @@ export function EffectBackgroundPanAndZoom({
         `${origin.horizontal}% 100%`,
       ],
     }[panDir] || [];
+
   const keyframes = {
     transform: [startTransform, endTransform],
     transformOrigin,

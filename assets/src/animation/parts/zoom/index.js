@@ -29,6 +29,7 @@ export function AnimationZoom({
   zoomFrom = 0,
   zoomTo = 1,
   targetLeafElement = false,
+  transformOrigin,
   ...args
 }) {
   const timings = {
@@ -40,6 +41,10 @@ export function AnimationZoom({
   const keyframes = {
     transform: [`scale(${zoomFrom})`, `scale(${zoomTo})`],
   };
+
+  if (transformOrigin) {
+    keyframes.transformOrigin = [transformOrigin, transformOrigin];
+  }
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,
