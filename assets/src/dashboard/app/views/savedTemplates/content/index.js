@@ -28,9 +28,14 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../../edit-story/units';
-import { Headline, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  Headline,
+  LoadingSpinner,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 import {
   Layout,
+  LoadingContainer,
   StandardViewContentGutter,
   InfiniteScroller,
 } from '../../../../components';
@@ -107,6 +112,39 @@ function Content({
     enabledMenuItems,
   ]);
 
+  const showLoadingAnimation = isLoading && templates.length === 0;
+
+  const emptyContent = useMemo(
+    () =>
+      showLoadingAnimation ? (
+        <LoadingContainer>
+          <LoadingSpinner />
+        </LoadingContainer>
+      ) : (
+        <EmptyContentMessage>
+          <Headline
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            as="h3"
+          >
+            {search?.keyword
+              ? sprintf(
+                  /* translators: %s: search term. */
+                  __(
+                    'Sorry, we couldn\'t find any results matching "%s"',
+                    'web-stories'
+                  ),
+                  search.keyword
+                )
+              : __(
+                  'Bookmark a story or template to get started!',
+                  'web-stories'
+                )}
+          </Headline>
+        </EmptyContentMessage>
+      ),
+    [showLoadingAnimation, search?.keyword]
+  );
+
   return (
     <Layout.Scrollable>
       <FontProvider>
@@ -146,26 +184,7 @@ function Content({
                   />
                 </>
               ) : (
-                <EmptyContentMessage>
-                  <Headline
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    as="h3"
-                  >
-                    {search?.keyword
-                      ? sprintf(
-                          /* translators: %s: search term. */
-                          __(
-                            'Sorry, we couldn\'t find any results matching "%s"',
-                            'web-stories'
-                          ),
-                          search.keyword
-                        )
-                      : __(
-                          'Bookmark a story or template to get started!',
-                          'web-stories'
-                        )}
-                  </Headline>
-                </EmptyContentMessage>
+                emptyContent
               )}
             </StandardViewContentGutter>
           </UnitsProvider>
