@@ -105,6 +105,9 @@ const StyledTextArea = styled.textarea(
 const Counter = styled.div`
   text-align: right;
   align-self: flex-end;
+  span {
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+  }
 `;
 
 export const TextArea = forwardRef(
@@ -170,6 +173,7 @@ export const TextArea = forwardRef(
           {hasCounter && (
             <Counter>
               <Text
+                as="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
               >{`${value.length}/${maxLength}`}</Text>
             </Counter>
