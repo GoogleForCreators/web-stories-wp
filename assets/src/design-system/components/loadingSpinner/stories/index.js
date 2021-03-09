@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-
-/**
  * Internal dependencies
  */
 import { LoadingSpinner } from '..';
