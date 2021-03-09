@@ -19,7 +19,7 @@
  */
 import { BG_MIN_SCALE, BG_MAX_SCALE, SCALE_DIRECTION } from '../../constants';
 import { AnimationZoom } from '../../parts/zoom';
-import { lerp, getMediaOrigin } from '../../utils';
+import { lerp, getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundZoom({
   element,
@@ -34,7 +34,7 @@ export function EffectBackgroundZoom({
   const range = [BG_MIN_SCALE / element.scale, BG_MAX_SCALE / element.scale];
 
   // Account for moving bg media relative to frame
-  const origin = getMediaOrigin(element);
+  const origin = getMediaOrigin(getMediaBoundOffsets(element));
 
   return AnimationZoom({
     zoomFrom: lerp(zoomDirection === SCALE_DIRECTION.SCALE_OUT ? 1 : 0, range),

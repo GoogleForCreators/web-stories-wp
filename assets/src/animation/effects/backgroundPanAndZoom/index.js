@@ -25,7 +25,7 @@ import {
 import SimpleAnimation from '../../parts/simpleAnimation';
 import { EffectBackgroundPan } from '../backgroundPan';
 import { EffectBackgroundZoom } from '../backgroundZoom';
-import { getMediaOrigin } from '../../utils';
+import { getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 
 const defaults = {
   fill: 'forwards',
@@ -77,7 +77,7 @@ export function EffectBackgroundPanAndZoom({
   // direction and the current media position relative to
   // the frame. This prevents area from ever being shown
   // where the media does't fill the frame during scaling
-  const origin = getMediaOrigin(element);
+  const origin = getMediaOrigin(getMediaBoundOffsets(element));
   const transformOrigin =
     {
       [DIRECTION.RIGHT_TO_LEFT]: [

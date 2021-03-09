@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { getMediaBoundOffsets, lerp } from '../utils';
+import { lerp } from '../utils';
 
 /**
  * Given a media element, calculates where the origin is on the media
@@ -24,19 +24,18 @@ import { getMediaBoundOffsets, lerp } from '../utils';
  * (with the given transform-origin) most optimistically tries to
  * fill the frame
  *
- * @param {*} element - story media element
+ * @param {Object} offsets - story media element offsets
+ * @param offsets
  * @return {Object} object containing horizontal and vertical transform origin percentages
  */
-export function getMediaOrigin(element) {
-  const offsets = element
-    ? getMediaBoundOffsets({ element })
-    : {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-      };
-
+export function getMediaOrigin(
+  offsets = {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  }
+) {
   const progress = {
     vertical:
       Math.abs(offsets.top) /
