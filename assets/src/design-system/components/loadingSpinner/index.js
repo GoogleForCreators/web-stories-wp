@@ -24,8 +24,8 @@ import styled, { keyframes } from 'styled-components';
 import { BEZIER } from '../../../animation/constants';
 
 const CIRCLE_DIAMETER = 95;
-const NUM_CIRCLES = 4;
-const ANIMATION_DURATION = 4;
+const NUM_CIRCLES = 11;
+const ANIMATION_DURATION = 2;
 
 const TAU = Math.PI * 2;
 
@@ -61,29 +61,23 @@ const Circle = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.round};
 
   animation-name: ${({ circleIndex }) => keyframes`
-    // first circle (animating over 1 sec)
-    // 0% - opacity 1
-    // 25% - opacity 0
-    // 26% -> 100% - opacity 1
-
     0% {
-      /* opacity: ${1 - circleIndex / NUM_CIRCLES}; */
-      opacity: ${
-        Math.sin(getAngleOfCircle(circleIndex + NUM_CIRCLES / 4) / 2) / 2 + 0.5
-      };
+      opacity: 1
     }
-    100% {
-      opacity: ${
-        Math.sin(getAngleOfCircle(circleIndex + NUM_CIRCLES / 4) / 2) / 2 + 0.5
-      };
+    ${`${(circleIndex * 100) / NUM_CIRCLES}%`} {
+      opacity: 1
+    }
+    ${`${((circleIndex + 1) * 100) / NUM_CIRCLES}%`} {
+      opacity: 0.3
+    }
+    ${`${((circleIndex + 1) * 100) / NUM_CIRCLES + 1}%`} {
+      opacity: 1
     }
   `};
   animation-fill-mode: both;
   animation-duration: ${ANIMATION_DURATION}s;
   animation-iteration-count: infinite;
-  /* animation-delay: ${({ circleIndex }) =>
-    ((ANIMATION_DURATION * circleIndex) / NUM_CIRCLES).toFixed(1)}s; */
-  /* animation-timing-function: ${BEZIER.easeInOutQuad}; */
+  animation-timing-function: ${BEZIER.easeInOutQuad};
 `;
 
 const numCircles = new Array(NUM_CIRCLES).fill(1);
