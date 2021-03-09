@@ -22,7 +22,7 @@ import { useState } from 'react';
  * Internal dependencies
  */
 import { text } from '@storybook/addon-knobs';
-import { Radio } from '..';
+import { Radio } from '../radio';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../typography';
 
@@ -33,7 +33,8 @@ export default {
 
 const Container = styled.div`
   display: grid;
-  row-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+
   padding: 20px 50px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border: 1px solid ${({ theme }) => theme.colors.standard.black};
@@ -41,8 +42,10 @@ const Container = styled.div`
 
 export const _default = () => {
   const [inputState, setInputState] = useState({
-    radioOne: 1,
-    radioTwo: 1,
+    radioOne: 3,
+    radioTwo: 3,
+    radioThree: 3,
+    radioFour: 3,
   });
 
   const handleChange = (ev) => {
@@ -74,7 +77,7 @@ export const _default = () => {
           value={3}
           onChange={handleChange}
           checked={inputState.radioOne === 3}
-          label={text('Radio Button Three Label', 'Three')}
+          label={text('Radio Button Three Label', 'Three (Disabled)')}
           disabled
         />
       </Container>
@@ -99,7 +102,66 @@ export const _default = () => {
             value={3}
             onChange={handleChange}
             checked={inputState.radioTwo === 3}
-            label={text('Radio Button Three Label', 'Three')}
+            label={text('Radio Button Three Label', 'Three (Disabled)')}
+            disabled
+          />
+        </Container>
+      </DarkThemeProvider>
+      <br />
+      <br />
+      <Headline as="h1">{'Radio with Hint'}</Headline>
+      <Container>
+        <Radio
+          name="radioThree"
+          value={1}
+          onChange={handleChange}
+          checked={inputState.radioThree === 1}
+          label={text('Radio Button One Label', 'One')}
+          hint={text('Radio Button One Hint', 'Hint One')}
+        />
+        <Radio
+          name="radioThree"
+          value={2}
+          onChange={handleChange}
+          checked={inputState.radioThree === 2}
+          label={text('Radio Button Two Label', 'Two')}
+          hint={text('Radio Button Two Hint', 'Hint Two')}
+        />
+        <Radio
+          name="radioThree"
+          value={3}
+          onChange={handleChange}
+          checked={inputState.radioThree === 3}
+          label={text('Radio Button Three Label', 'Three (Disabled)')}
+          hint={text('Radio Button Three Hint', 'Hint Three')}
+          disabled
+        />
+      </Container>
+      <DarkThemeProvider>
+        <Container>
+          <Radio
+            name="radioFour"
+            onChange={handleChange}
+            value={1}
+            checked={inputState.radioFour === 1}
+            label={text('Radio Button One Label', 'One')}
+            hint={text('Radio Button One Hint', 'Hint One')}
+          />
+          <Radio
+            name="radioFour"
+            onChange={handleChange}
+            value={2}
+            checked={inputState.radioFour === 2}
+            label={text('Radio Button Two Label', 'Two')}
+            hint={text('Radio Button Two Hint', 'Hint Two')}
+          />
+          <Radio
+            name="radioFour"
+            value={3}
+            onChange={handleChange}
+            checked={inputState.radioFour === 3}
+            label={text('Radio Button Three Label', 'Three (Disabled)')}
+            hint={text('Radio Button Three Hint', 'Hint Three')}
             disabled
           />
         </Container>
