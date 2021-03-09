@@ -96,6 +96,13 @@ export const LeftRailContainer = styled.nav.attrs({
   }
 `;
 
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 550px;
+`;
+
 export function LeftRail() {
   const { state } = useRouteHistory();
   const { newStoryURL, version } = useConfig();
