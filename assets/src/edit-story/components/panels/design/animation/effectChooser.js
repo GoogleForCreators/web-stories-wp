@@ -569,15 +569,22 @@ export default function EffectChooser({
             </GridItemHalfRow>
             <GridItemFullRow
               aria-label={__('Pan and Zoom Effect', 'web-stories')}
-              onClick={(event) =>
+              onClick={(event) => {
                 handleOnSelect(
                   event,
                   BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
                   {
                     animation: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                    zoomDirection: (
+                      disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                      ]?.options || []
+                    ).includes(SCALE_DIRECTION.SCALE_OUT)
+                      ? SCALE_DIRECTION.SCALE_IN
+                      : SCALE_DIRECTION.SCALE_OUT,
                   }
-                )
-              }
+                );
+              }}
               aria-disabled={disabledBackgroundEffects.includes(
                 BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
               )}

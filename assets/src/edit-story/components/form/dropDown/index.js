@@ -100,6 +100,7 @@ function DropDown({
   lightMode = false,
   placement = Placement.BOTTOM_END,
   placeholder = __('Select an option', 'web-stories'),
+  disabledOptions = [],
   ...rest
 }) {
   const selectRef = useRef();
@@ -164,6 +165,7 @@ function DropDown({
           handleCurrentValue={handleCurrentValue}
           value={activeItem && activeItem.value}
           options={options}
+          disabledOptions={disabledOptions}
           toggleOptions={toggleOptions}
           {...rest}
         />
@@ -181,6 +183,7 @@ DropDown.propTypes = {
   placeholder: PropTypes.string,
   labelledBy: PropTypes.string,
   placement: PropTypes.string,
+  disabledOptions: PropTypes.array,
 };
 
 export default DropDown;

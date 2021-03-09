@@ -66,8 +66,13 @@ const Item = styled.li.attrs({ tabIndex: '0' })`
   line-height: 1;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 
-  &:hover,
-  &:focus {
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.75;
+  }
+
+  &:hover:not([aria-disabled='true']),
+  &:focus:not([aria-disabled='true']) {
     background-color: ${({ theme }) =>
       rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.1)};
     outline: none;
@@ -82,6 +87,7 @@ function DropDownList({
   options,
   toggleOptions,
   hasMenuRole = false,
+  disabledOptions = [],
   ...rest
 }) {
   const listContainerRef = useRef();
@@ -207,16 +213,21 @@ function DropDownList({
         ref={listRef}
         role={hasMenuRole ? 'menu' : 'listbox'}
       >
-        {options.map(({ name, value: optValue }) => (
-          <Item
-            id={`dropDown-${optValue}`}
-            key={optValue}
-            onClick={(evt) => handleItemClick(optValue, evt)}
-            role={hasMenuRole ? 'menuitem' : 'option'}
-          >
-            {name}
-          </Item>
-        ))}
+        {options.map(({ name, value: optValue }) => {
+          const isDisabled = disabledOptions.includes(optValue);
+          return (
+            <Item
+              id={`dropDown-${optValue}`}
+              key={optValue}
+              disabled={isDisabled}
+              aria-disabled={isDisabled}
+              onClick={(evt) => !isDisabled && handleItemClick(optValue, evt)}
+              role={hasMenuRole ? 'menuitem' : 'option'}
+            >
+              {name}
+            </Item>
+          );
+        })}
       </List>
     </ListContainer>
   );
@@ -228,6 +239,7 @@ DropDownList.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array.isRequired,
   hasMenuRole: PropTypes.bool,
+  disabledOptions: PropTypes.array,
 };
 
 export default DropDownList;

@@ -70,6 +70,7 @@ function EffectInput({
           value={valueForField}
           onChange={(value) => onChange(value, true)}
           options={effectProps[field].values}
+          disabledOptions={disabledOptions}
         />
       );
     case FIELD_TYPES.RANGE:
