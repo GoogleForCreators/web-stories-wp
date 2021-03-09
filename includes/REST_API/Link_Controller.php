@@ -165,9 +165,7 @@ class Link_Controller extends WP_REST_Controller {
 
 		$xpath = $this->html_to_xpath( $html );
 
-		if ( libxml_get_last_error() ) {
-			libxml_clear_errors();
-
+		if ( ! $xpath ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 			return rest_ensure_response( $data );
 		}
@@ -195,10 +193,6 @@ class Link_Controller extends WP_REST_Controller {
 			$title              = $this->get_dom_attribute_content( $og_site_name_query, 'content' );
 		}
 
-		if ( $title ) {
-			$title = utf8_decode( $title );
-		}
-
 		// Site icon.
 
 		$og_image_query = $xpath->query( '//meta[@property="og:image"]' );
@@ -221,10 +215,6 @@ class Link_Controller extends WP_REST_Controller {
 		if ( ! $description ) {
 			$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
 			$description          = $this->get_dom_attribute_content( $og_description_query, 'content' );
-		}
-		
-		if ( $description ) {
-			$description = utf8_decode( $description );
 		}
 
 		$data = [
