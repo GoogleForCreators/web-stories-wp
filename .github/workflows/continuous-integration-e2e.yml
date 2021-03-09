@@ -16,7 +16,6 @@ jobs:
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
@@ -24,10 +23,6 @@ jobs:
           - browser: 'chrome'
             wp: 'latest'
             coverage: true
-          - browser: 'chrome'
-            wp: '5.7-RC2'
-            coverage: false
-            experimental: true
           - browser: 'chrome'
             wp: '5.3.6'
             coverage: false
