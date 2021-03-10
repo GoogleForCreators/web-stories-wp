@@ -30,6 +30,7 @@ import { Button } from '../button';
 import { Cross } from '../../icons';
 import { Text } from '../typography';
 import { focusableOutlineCSS } from '../../theme/helpers';
+import { noop } from '../../utils';
 import {
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
@@ -126,8 +127,8 @@ const CloseButton = styled(Button)`
 
 const SnackbarMessage = ({
   actionLabel,
-  handleAction = () => {},
-  handleDismiss = () => {},
+  handleAction = noop,
+  handleDismiss = noop,
   isPreventAutoDismiss,
   isPreventActionDismiss,
   message,
@@ -137,7 +138,7 @@ const SnackbarMessage = ({
   ...props
 }) => {
   const autoDismissRef = useRef();
-  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismiss;
+  autoDismissRef.current = isPreventAutoDismiss ? noop : handleDismiss;
 
   const messageRemovalTimeInterval = useRef(
     typeof removeMessageTimeInterval === 'number' &&
@@ -149,7 +150,7 @@ const SnackbarMessage = ({
 
   useEffect(() => {
     if (!autoDismissRef.current) {
-      return () => {};
+      return noop;
     }
 
     const dismissTimeout = setTimeout(
