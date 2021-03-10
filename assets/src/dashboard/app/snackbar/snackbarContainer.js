@@ -33,7 +33,7 @@ function SnackbarContainer({
         <Snackbar.Message
           key={`alert_${activeSnackbarMessage.id}`}
           aria-label={activeSnackbarMessage.message}
-          handleDismiss={() => handleDismissMessage(activeSnackbarMessage.id)}
+          onDismiss={() => handleDismissMessage(activeSnackbarMessage.id)}
           message={activeSnackbarMessage.message}
         />
       )}

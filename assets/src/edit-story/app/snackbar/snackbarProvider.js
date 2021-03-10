@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import { Placement } from '../../../design-system/components/snackbar/constants';
 import Context from './context';
 import SnackbarContainer from './snackbarContainer';
 
@@ -71,7 +72,7 @@ function SnackbarProvider({ children, placement = 'bottom' }) {
 }
 
 SnackbarProvider.propTypes = {
-  placement: PropTypes.string,
+  placement: Placement,
   children: PropTypes.node,
 };
 

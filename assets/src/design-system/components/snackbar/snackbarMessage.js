@@ -32,6 +32,7 @@ import { Text } from '../typography';
 import { focusableOutlineCSS } from '../../theme/helpers';
 import { noop } from '../../utils';
 import {
+  Placement,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
   DEFAULT_MESSAGE_Z_INDEX,
@@ -70,7 +71,8 @@ const MessageContainer = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   z-index: ${({ customZIndex }) => customZIndex || DEFAULT_MESSAGE_Z_INDEX};
   animation: 0.5s
-    ${({ place }) => (place.indexOf('top') === -1 ? fromBottom : fromTop)}
+    ${({ placement }) =>
+      placement.indexOf('top') === -1 ? fromBottom : fromTop}
     ease-out;
 `;
 MessageContainer.propTypes = {
@@ -127,18 +129,18 @@ const CloseButton = styled(Button)`
 
 const SnackbarMessage = ({
   actionLabel,
-  handleAction = noop,
-  handleDismiss = noop,
+  onAction = noop,
+  onDismiss = noop,
   isPreventAutoDismiss,
   isPreventActionDismiss,
   message,
   removeMessageTimeInterval,
   showCloseButton,
-  place = 'bottom',
+  placement = 'bottom',
   ...props
 }) => {
   const autoDismissRef = useRef();
-  autoDismissRef.current = isPreventAutoDismiss ? noop : handleDismiss;
+  autoDismissRef.current = isPreventAutoDismiss ? noop : onDismiss;
 
   const messageRemovalTimeInterval = useRef(
     typeof removeMessageTimeInterval === 'number' &&
@@ -161,31 +163,33 @@ const SnackbarMessage = ({
     return () => clearTimeout(dismissTimeout);
   }, []);
 
-  const _handleAction = useCallback(() => {
-    handleAction();
-    !isPreventActionDismiss && handleDismiss();
-  }, [handleAction, handleDismiss, isPreventActionDismiss]);
+  const handleAction = useCallback(() => {
+    onAction();
+    !isPreventActionDismiss && onDismiss();
+  }, [onAction, onDismiss, isPreventActionDismiss]);
+
+  const hasAction = Boolean(actionLabel);
 
   return (
     <MessageContainer
       role="alert"
-      hasAction={Boolean(actionLabel)}
-      place={place}
+      hasAction={hasAction}
+      placement={placement}
       {...props}
     >
       <Message
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        hasAction={Boolean(actionLabel)}
+        hasAction={hasAction}
       >
         {message}
       </Message>
       {(actionLabel || showCloseButton) && (
         <ActionContainer>
           {actionLabel && (
-            <ActionButton onClick={_handleAction}>{actionLabel}</ActionButton>
+            <ActionButton onClick={handleAction}>{actionLabel}</ActionButton>
           )}
           {showCloseButton && (
-            <CloseButton onClick={handleDismiss}>
+            <CloseButton onClick={onDismiss}>
               <Cross aria-hidden />
             </CloseButton>
           )}
@@ -199,21 +203,14 @@ SnackbarMessage.propTypes = {
   'aria-label': PropTypes.string.isRequired,
   customZIndex: PropTypes.number,
   message: PropTypes.string.isRequired,
-  handleDismiss: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func.isRequired,
   actionLabel: PropTypes.string,
-  handleAction: PropTypes.func,
+  onAction: PropTypes.func,
   isPreventAutoDismiss: PropTypes.bool,
   isPreventActionDismiss: PropTypes.bool,
   removeMessageTimeInterval: PropTypes.number,
   showCloseButton: PropTypes.bool,
-  place: PropTypes.oneOf([
-    'top-left',
-    'bottom-left',
-    'top-right',
-    'bottom-right',
-    'top',
-    'bottom',
-  ]),
+  placement: Placement,
 };
 
 SnackbarMessage.defaultProps = {
