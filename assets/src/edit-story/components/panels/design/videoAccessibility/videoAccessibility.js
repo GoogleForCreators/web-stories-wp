@@ -25,11 +25,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Media, Row } from '../../../form';
+import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
-import { TextArea } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const DEFAULT_RESOURCE = {
