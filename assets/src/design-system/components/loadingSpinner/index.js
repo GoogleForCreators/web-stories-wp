@@ -94,21 +94,22 @@ export function LoadingSpinner({
   numCircles = 11,
   ...props
 }) {
-  const circles = useMemo(() => new Array(numCircles).fill(1), [numCircles]);
-  const ids = useMemo(() => circles.map(() => uuidv4()), [circles]);
+  const ids = useMemo(() => new Array(numCircles).fill(1).map(() => uuidv4()), [
+    numCircles,
+  ]);
 
   return (
     <Container animationSize={animationSize} {...props}>
       {loadingMessage && (
         <AriaOnlyAlert role="status">{loadingMessage}</AriaOnlyAlert>
       )}
-      {circles.map((_, index) => {
+      {ids.map((id, index) => {
         const angle = getAngleOfCircle(index, numCircles);
         const position = getCirclePosition(angle, animationSize);
 
         return (
           <Circle
-            key={ids[index]}
+            key={id}
             circleIndex={index}
             circleSize={circleSize}
             numCircles={numCircles}
