@@ -30,8 +30,8 @@ import { Text } from '../typography';
 
 const BORDER_WIDTH = 1;
 const TEXT_GAP_HEIGHT = 4;
-const RING_DIAMETER = 24;
-const BUTTON_CONTAINER_HEIGHT = 24 + BORDER_WIDTH * 2;
+const RING_DIAMETER = 22;
+const BUTTON_CONTAINER_HEIGHT = RING_DIAMETER + BORDER_WIDTH * 2;
 const CONTAINER_HEIGHT = BUTTON_CONTAINER_HEIGHT + TEXT_GAP_HEIGHT;
 const RADIO_DIAMETER = 16;
 
@@ -165,20 +165,16 @@ export function Radio({ className, hint, id, label, ...props }) {
         <InnerButton />
       </ButtonContainer>
 
-      {(label || hint) && (
-        <LabelContainer>
-          {label && (
-            <Text
-              htmlFor={inputId}
-              as="label"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
-              {label}
-            </Text>
-          )}
-          {hint && <Hint>{hint}</Hint>}
-        </LabelContainer>
-      )}
+      <LabelContainer>
+        <Text
+          htmlFor={inputId}
+          as="label"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {label}
+        </Text>
+        {hint && <Hint>{hint}</Hint>}
+      </LabelContainer>
     </Container>
   );
 }
@@ -187,7 +183,7 @@ Radio.propTypes = {
   checked: PropTypes.bool,
   hint: PropTypes.string,
   id: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
 };
