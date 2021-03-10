@@ -16,25 +16,32 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../animation/constants';
+import { themeHelpers } from '../../theme';
 
-const CIRCLE_DIAMETER = 95;
-const NUM_CIRCLES = 11;
+const LOADING_MESSAGE = __('Loading', 'web-stories');
+
 const ANIMATION_DURATION = 0.85;
 
 const TAU = Math.PI * 2;
 
-const getAngleOfCircle = (index) => {
-  return (TAU * index) / NUM_CIRCLES;
+const AriaOnlyAlert = styled.span(themeHelpers.visuallyHidden);
+
+const getAngleOfCircle = (index, numCircles) => {
+  return (TAU * index) / numCircles;
 };
 
-const getCirclePosition = (angle) => {
-  const radius = CIRCLE_DIAMETER / 2;
+const getCirclePosition = (angle, animationSize) => {
+  const radius = animationSize / 2;
   const x = Math.sin(angle) * radius;
   const y = -Math.cos(angle) * radius;
 
@@ -43,8 +50,8 @@ const getCirclePosition = (angle) => {
 
 const Container = styled.div`
   position: relative;
-  height: ${CIRCLE_DIAMETER}px;
-  width: ${CIRCLE_DIAMETER}px;
+  height: ${({ animationSize }) => animationSize}px;
+  width: ${({ animationSize }) => animationSize}px;
   color: ${({ theme }) => theme.colors.interactiveBg.brandNormal};
 `;
 
@@ -55,22 +62,22 @@ const Circle = styled.div`
   transform: translate(-50%, -50%)
     ${({ $position: { x, y } }) => `translate(${x}px, ${y}px)`};
 
-  height: 12px;
-  width: 12px;
+  height: ${({ circleSize }) => circleSize}px;
+  width: ${({ circleSize }) => circleSize}px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.brandNormal};
   border-radius: ${({ theme }) => theme.borders.radius.round};
 
-  animation-name: ${({ circleIndex }) => keyframes`
+  animation-name: ${({ circleIndex, numCircles }) => keyframes`
     0% {
       opacity: 1
     }
-    ${`${(circleIndex * 100) / NUM_CIRCLES}%`} {
+    ${`${(circleIndex * 100) / numCircles}%`} {
       opacity: 1
     }
-    ${`${((circleIndex + 1) * 100) / NUM_CIRCLES}%`} {
+    ${`${((circleIndex + 1) * 100) / numCircles}%`} {
       opacity: 0.3
     }
-    ${`${((circleIndex + 1) * 100) / NUM_CIRCLES + 1}%`} {
+    ${`${((circleIndex + 1) * 100) / numCircles + 1}%`} {
       opacity: 1
     }
   `};
@@ -80,20 +87,41 @@ const Circle = styled.div`
   animation-timing-function: ${BEZIER.easeInOutQuad};
 `;
 
-const numCircles = new Array(NUM_CIRCLES).fill(1);
+export function LoadingSpinner({
+  animationSize = 95,
+  circleSize = 12,
+  loadingMessage = LOADING_MESSAGE,
+  numCircles = 11,
+  ...props
+}) {
+  const circles = useMemo(() => new Array(numCircles).fill(1), [numCircles]);
+  const ids = useMemo(() => circles.map(() => uuidv4()), [circles]);
 
-export function LoadingSpinner(props) {
   return (
-    <Container {...props}>
-      {numCircles.map((_, index) => {
+    <Container animationSize={animationSize} {...props}>
+      {loadingMessage && (
+        <AriaOnlyAlert role="status">{loadingMessage}</AriaOnlyAlert>
+      )}
+      {circles.map((_, index) => {
+        const angle = getAngleOfCircle(index, numCircles);
+        const position = getCirclePosition(angle, animationSize);
+
         return (
           <Circle
-            key={index}
+            key={ids[index]}
             circleIndex={index}
-            $position={getCirclePosition(getAngleOfCircle(index))}
+            circleSize={circleSize}
+            numCircles={numCircles}
+            $position={position}
           />
         );
       })}
     </Container>
   );
 }
+LoadingSpinner.propTypes = {
+  animationSize: PropTypes.number,
+  circleSize: PropTypes.number,
+  loadingMessage: PropTypes.string,
+  numCircles: PropTypes.number,
+};
