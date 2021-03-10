@@ -26,7 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Context from './context';
 import SnackbarContainer from './snackbarContainer';
 
-function SnackbarProvider({ children, place = 'bottom-left' }) {
+function SnackbarProvider({ children, placement = 'bottom' }) {
   const [notifications, setNotifications] = useState([]);
 
   const remove = useCallback((notification) => {
@@ -63,7 +63,7 @@ function SnackbarProvider({ children, place = 'bottom-left' }) {
       <SnackbarContainer
         onRemove={remove}
         notifications={notifications}
-        place={place}
+        placement={placement}
       />
       {children}
     </Context.Provider>
@@ -71,7 +71,7 @@ function SnackbarProvider({ children, place = 'bottom-left' }) {
 }
 
 SnackbarProvider.propTypes = {
-  place: PropTypes.string,
+  placement: PropTypes.string,
   children: PropTypes.node,
 };
 
