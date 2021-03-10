@@ -28,13 +28,14 @@ import { Snackbar } from '../../../design-system';
 import { SnackbarNotification } from './types';
 
 const StyledSnackbar = styled(Snackbar.Message)`
-  margin-bottom: ${({ place }) =>
-    place.indexOf('bottom') === 0 ? '0.5em' : 0};
-  margin-top: ${({ place }) => (place.indexOf('top') === 0 ? '0.5em' : 0)};
+  margin-bottom: ${({ placement }) =>
+    placement.indexOf('bottom') === 0 ? '0.5em' : 0};
+  margin-top: ${({ placement }) =>
+    placement.indexOf('top') === 0 ? '0.5em' : 0};
 `;
 
-function getSnackbarXPos({ place }) {
-  switch (place) {
+function getSnackbarXPos({ placement }) {
+  switch (placement) {
     case 'top':
     case 'bottom':
       return 'left: calc(50% - 10em);';
@@ -51,8 +52,9 @@ function getSnackbarXPos({ place }) {
 
 const Container = styled.div`
   position: fixed;
-  top: ${({ place }) => (place.indexOf('top') === 0 ? 0 : 'inherit')};
-  bottom: ${({ place }) => (place.indexOf('bottom') === 0 ? 0 : 'inherit')};
+  top: ${({ placement }) => (placement.indexOf('top') === 0 ? 0 : 'inherit')};
+  bottom: ${({ placement }) =>
+    placement.indexOf('bottom') === 0 ? 0 : 'inherit'};
   ${getSnackbarXPos}
   z-index: 2147483647;
 `;
@@ -87,10 +89,12 @@ function SnackbarContainer({
   component: Component = StyledSnackbar,
   notifications,
   onRemove,
-  place = 'bottom-left',
+  placement,
 }) {
   const orderedNotifications =
-    place.indexOf('top') === 0 ? [...notifications].reverse() : notifications;
+    placement.indexOf('top') === 0
+      ? [...notifications].reverse()
+      : notifications;
 
   const _handleDismiss = useCallback(
     (notification) => () => {
@@ -101,7 +105,7 @@ function SnackbarContainer({
   );
 
   return (
-    <Container place={place}>
+    <Container placement={placement}>
       <TransitionGroup>
         {orderedNotifications.map((notification) => (
           <CSSTransition
@@ -115,7 +119,7 @@ function SnackbarContainer({
             <ChildContainer>
               <Component
                 aria-label={notification.message}
-                place={place}
+                placement={placement}
                 handleDismiss={_handleDismiss(notification)}
                 handleAction={notification.onAction}
                 actionLabel={notification.actionLabel}
@@ -137,14 +141,14 @@ SnackbarContainer.propTypes = {
   component: PropTypes.elementType,
   notifications: PropTypes.arrayOf(SnackbarNotification),
   onRemove: PropTypes.func.isRequired,
-  place: PropTypes.oneOf([
+  placement: PropTypes.oneOf([
     'top',
     'bottom',
     'top-left',
     'top-right',
     'bottom-left',
     'bottom-right',
-  ]),
+  ]).isRequired,
 };
 
 export default SnackbarContainer;
