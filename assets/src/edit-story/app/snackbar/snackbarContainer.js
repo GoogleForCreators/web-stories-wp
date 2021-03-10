@@ -39,7 +39,11 @@ function getSnackbarXPos({ placement }) {
   switch (placement) {
     case 'top':
     case 'bottom':
-      return 'left: calc(50% - 10em);';
+      return `    
+      left: calc(50% + 4rem);
+      transform: translateX(-50%);
+      width: auto;
+    `;
     case 'top-left':
     case 'bottom-left':
       return 'left: 60px;';
