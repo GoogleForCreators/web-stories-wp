@@ -31,7 +31,6 @@ import { Headline } from '../typography';
 
 const Title = styled(Headline)`
   grid-area: title;
-  font-weight: 700;
   padding-left: 8px;
 `;
 
@@ -76,7 +75,6 @@ const Container = styled.div`
       ${Title} {
         padding-left: 0;
         margin-top: -10px;
-        font-weight: ${({ theme }) => theme.typography.weight.bold};
       }
       ${Content} {
         margin: 8px auto 18px;
@@ -122,7 +120,7 @@ export const Banner = forwardRef(
           aria-label={closeButtonLabel}
           onClick={onClose}
         >
-          <Cross aria-hidden={true} />
+          <Cross aria-hidden />
         </CloseButton>
         <Content>{children}</Content>
       </Container>

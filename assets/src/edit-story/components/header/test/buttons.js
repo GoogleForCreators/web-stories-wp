@@ -94,15 +94,7 @@ function setupButtons({
 
 describe('buttons', () => {
   const FUTURE_DATE = '2022-01-01T20:20:20Z';
-  const PREVIEW_POPUP = {
-    document: {
-      write: jest.fn(),
-    },
-    location: {
-      href: 'about:blank',
-      replace: jest.fn(),
-    },
-  };
+  let previewPopup;
   let modalWrapper;
 
   beforeAll(() => {
@@ -115,6 +107,18 @@ describe('buttons', () => {
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
     MockDate.reset();
+  });
+
+  beforeEach(() => {
+    previewPopup = {
+      document: {
+        write: jest.fn(),
+      },
+      location: {
+        href: 'about:blank',
+        replace: jest.fn(),
+      },
+    };
   });
 
   it('should display Publish button when in draft mode', () => {
@@ -335,17 +339,15 @@ describe('buttons', () => {
       },
     }));
 
-    const popup = PREVIEW_POPUP;
-
-    const mockedOpen = jest.fn(() => popup);
+    const mockedOpen = jest.fn(() => previewPopup);
     const windowSpy = jest.spyOn(global, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
     expect(saveStory).toHaveBeenCalledWith();
     expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
-    expect(popup.location.replace).toHaveBeenCalledWith(
-      'https://example.com/?preview=true'
+    expect(previewPopup.location.replace).toHaveBeenCalledWith(
+      'https://example.com/?preview=true#development=1'
     );
 
     windowSpy.mockRestore();
@@ -368,16 +370,14 @@ describe('buttons', () => {
       },
     }));
 
-    const popup = PREVIEW_POPUP;
-
-    const mockedOpen = jest.fn(() => popup);
+    const mockedOpen = jest.fn(() => previewPopup);
     const windowSpy = jest.spyOn(global, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
     expect(autoSave).toHaveBeenCalledWith();
-    expect(popup.location.replace).toHaveBeenCalledWith(
-      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true'
+    expect(previewPopup.location.replace).toHaveBeenCalledWith(
+      'https://example.com/?preview_id=1679&preview_nonce=b5ea827939&preview=true#development=1'
     );
 
     windowSpy.mockRestore();

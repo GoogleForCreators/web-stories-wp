@@ -128,22 +128,23 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'backgroundSizePosition',
       'backgroundOverlay',
       'borderRadius',
       'borderStyle',
       'captions',
       'globalStoryStyles',
       'colorPresets',
+      'filter',
       'imageAccessibility',
       'layerStyle',
       'link',
       'pageAttachment',
-      'pageStyle',
+      'pageBackground',
       'videoPoster',
       'size',
       'shapeStyle',
       'text',
+      'textBox',
       'textStyle',
       'videoOptions',
       'videoAccessibility',
@@ -468,7 +469,7 @@ class ComponentStub {
       return (
         <>
           <HookExecutor key={refresher} hooks={hooks} />
-          <Impl _wrapped={true} ref={ref} {...props} />
+          <Impl _wrapped ref={ref} {...props} />
         </>
       );
     });

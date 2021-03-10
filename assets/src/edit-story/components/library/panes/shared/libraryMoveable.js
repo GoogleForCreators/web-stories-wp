@@ -290,10 +290,10 @@ function LibraryMoveable({
             ref={moveable}
             className="default-moveable hide-handles"
             target={targetBoxRef.current}
-            edge={true}
-            draggable={true}
+            edge
+            draggable
             origin={false}
-            pinchable={true}
+            pinchable
             onDragStart={onDragStart}
             onDrag={onDrag}
             onDragEnd={onDragEnd}

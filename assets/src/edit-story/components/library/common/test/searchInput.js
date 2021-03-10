@@ -28,8 +28,7 @@ import { renderWithTheme } from '../../../../testUtils';
 jest.useFakeTimers();
 
 describe('SearchInput', () => {
-  const pressEnter = (node) =>
-    fireEvent.keyDown(node, { key: 'Enter', code: 'Enter' });
+  const pressEnter = (node) => fireEvent.submit(node.form);
   const triggerOnChange = (node) => fireEvent.change(node);
 
   const setInputValue = (input, value) => {
@@ -49,7 +48,7 @@ describe('SearchInput', () => {
       />
     );
 
-    expect(getByRole('textbox')).toBeInTheDocument();
+    expect(getByRole('searchbox')).toBeInTheDocument();
   });
 
   it('should not trigger onSearch when incremental is false and text changes', () => {
@@ -64,7 +63,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = getByRole('searchbox');
     setInputValue(input, 'cat');
     triggerOnChange(input);
 
@@ -83,7 +82,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = getByRole('searchbox');
     setInputValue(input, 'cat');
     triggerOnChange(input);
 
@@ -106,7 +105,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = getByRole('searchbox');
     setInputValue(input, '');
     triggerOnChange(input);
 
@@ -121,7 +120,7 @@ describe('SearchInput', () => {
         initialValue={'d'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental={true}
+        incremental
         delayMs={0}
       />
     );
@@ -141,7 +140,7 @@ describe('SearchInput', () => {
         initialValue={'d'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental={true}
+        incremental
         delayMs={2000}
       />
     );

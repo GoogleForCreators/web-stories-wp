@@ -31,3 +31,25 @@ export const DASHBOARD_TOP_MARGIN = 45;
 export const DEFAULT_DASHBOARD_TOP_SPACE = 10;
 
 export const DASHBOARD_LEFT_RAIL_VISIBLE_CLASSNAME = 'leftRailVisible';
+export const MIN_DASHBOARD_WIDTH = 1098;
+
+export const VIEWPORT_BREAKPOINT = {
+  TABLET: 'tablet',
+  DESKTOP: 'desktop',
+  THUMBNAIL: 'thumbnail',
+};
+
+export const STORY_PREVIEW_WIDTH = {
+  [VIEWPORT_BREAKPOINT.TABLET]: 200,
+  [VIEWPORT_BREAKPOINT.DESKTOP]: 232,
+  [VIEWPORT_BREAKPOINT.THUMBNAIL]: 33,
+};
+
+export const GRID_SPACING = {
+  COLUMN_GAP: 24,
+  ROW_GAP: 32,
+};
+
+export const PAGE_WRAPPER = {
+  GUTTER: 52,
+};

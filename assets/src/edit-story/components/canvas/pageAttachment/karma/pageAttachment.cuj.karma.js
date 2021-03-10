@@ -76,7 +76,9 @@ describe('Page Attachment', () => {
   };
 
   const setPageAttachmentLink = async (link) => {
-    const input = fixture.screen.getByLabelText('Page Attachment link');
+    const input = fixture.screen.getByLabelText(
+      'Type an address to add a page attachment link'
+    );
     await fixture.events.click(input, { clickCount: 3 });
     if ('' === link) {
       await fixture.events.keyboard.press('Del');

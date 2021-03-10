@@ -24,15 +24,12 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-
-import { Grid as GridSVG, List as ListSVG } from '../../icons';
+import { Icons, Tooltip, TOOLTIP_PLACEMENT } from '../../../design-system';
 import {
-  ICON_METRICS,
   KEYBOARD_USER_SELECTOR,
   VIEW_STYLE,
   VIEW_STYLE_LABELS,
 } from '../../constants';
-import Tooltip from '../tooltip';
 
 const Container = styled.div`
   display: flex;
@@ -61,33 +58,23 @@ const ToggleButton = styled.button`
   }
 `;
 
-const ListIcon = styled(ListSVG).attrs(ICON_METRICS.VIEW_STYLE)`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const GridIcon = styled(GridSVG).attrs(ICON_METRICS.VIEW_STYLE)`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
 export default function ViewStyleBar({ onPress, layoutStyle }) {
   return (
     <Container>
-      <Tooltip content={VIEW_STYLE_LABELS[layoutStyle]} position="right">
+      <Tooltip
+        title={VIEW_STYLE_LABELS[layoutStyle]}
+        placement={TOOLTIP_PLACEMENT.BOTTOM_END}
+        hasTail
+      >
         <ToggleButton
           aria-label={VIEW_STYLE_LABELS[layoutStyle]}
           onClick={onPress}
         >
           {layoutStyle === VIEW_STYLE.GRID && (
-            <ListIcon data-testid="list-icon" />
+            <Icons.Table height="32px" width="32px" data-testid="list-icon" />
           )}
           {layoutStyle === VIEW_STYLE.LIST && (
-            <GridIcon data-testid="grid-icon" />
+            <Icons.Box4 height="32px" width="32px" data-testid="grid-icon" />
           )}
         </ToggleButton>
       </Tooltip>

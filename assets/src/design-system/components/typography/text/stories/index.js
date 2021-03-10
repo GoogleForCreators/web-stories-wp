@@ -24,7 +24,7 @@ import { select } from '@storybook/addon-knobs';
  */
 import { Text } from '../';
 import { Headline } from '../..';
-import { THEME_CONSTANTS } from '../../../../';
+import { THEME_CONSTANTS, theme } from '../../../../';
 
 export default {
   title: 'DesignSystem/Components/Typography/Text',
@@ -71,30 +71,38 @@ export const Bold = () => (
 export const Label = () => (
   <>
     <Headline as="h1">{'Label'}</Headline>
-    {textPresetSizes.map((presetSize) => (
-      <Text
-        key={`${presetSize}_text_link`}
-        size={presetSize}
-        as={select('label', textRenderAsOptions, 'label')}
-        isBold={select('isBold', booleanOptions, false)}
-      >
-        {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
-        <br />
-      </Text>
-    ))}
+    {textPresetSizes.map((presetSize) => {
+      return (
+        theme.typography.presets.label[presetSize] && (
+          <Text
+            key={`${presetSize}_text_link`}
+            size={presetSize}
+            as="label"
+            isBold={select('isBold', booleanOptions, false)}
+          >
+            {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+            <br />
+          </Text>
+        )
+      );
+    })}
     <br />
     <Headline as="h1">{'Label - Disabled'}</Headline>
-    {textPresetSizes.map((presetSize) => (
-      <Text
-        key={`${presetSize}_text_link_disabled`}
-        size={presetSize}
-        as={select('label', textRenderAsOptions, 'label')}
-        isBold={select('isBold', booleanOptions, false)}
-        disabled
-      >
-        {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
-        <br />
-      </Text>
-    ))}
+    {textPresetSizes.map((presetSize) => {
+      return (
+        theme.typography.presets.label[presetSize] && (
+          <Text
+            key={`${presetSize}_text_link_disabled`}
+            size={presetSize}
+            as="label"
+            isBold={select('isBold', booleanOptions, false)}
+            disabled
+          >
+            {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+            <br />
+          </Text>
+        )
+      );
+    })}
   </>
 );

@@ -158,6 +158,7 @@
         ]
       }
     ],
+    "react/jsx-boolean-value": "error",
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",

@@ -117,7 +117,7 @@ export const AllDataFetched = () => {
           <StorybookLayoutContainer>
             <Content
               {...defaultProps}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, pageSize }}
             />
           </StorybookLayoutContainer>

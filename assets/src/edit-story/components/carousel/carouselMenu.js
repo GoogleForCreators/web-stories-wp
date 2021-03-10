@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
 import { useState, useCallback } from 'react';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 
@@ -36,7 +35,6 @@ import {
   PLACEMENT,
 } from '../../../design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
-import { Plain } from '../button';
 import Modal from '../modal';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import GridView from './gridview';
@@ -50,6 +48,7 @@ const Wrapper = styled.div`
 `;
 
 const MenuItems = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -66,24 +65,6 @@ const Box = styled.div`
 
 const Space = styled.span`
   width: 8px;
-`;
-
-const PlainStyled = styled(Plain)`
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
-  &:hover {
-    background-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.25)};
-  }
-`;
-
-const GridViewContainer = styled.section.attrs({
-  'aria-label': __('Grid View', 'web-stories'),
-})`
-  flex: 1;
-  margin: 70px 170px 70px 170px;
-  pointer-events: all;
 `;
 
 function CarouselMenu() {
@@ -172,19 +153,14 @@ function CarouselMenu() {
         onClose={toggleModal}
         contentLabel={__('Grid View', 'web-stories')}
         overlayStyles={{
-          alignItems: 'flex-start',
+          alignItems: 'stretch',
         }}
         contentStyles={{
           pointerEvents: 'none',
           flex: 1,
         }}
       >
-        <GridViewContainer>
-          <PlainStyled onClick={toggleModal}>
-            {__('Back', 'web-stories')}
-          </PlainStyled>
-          <GridView />
-        </GridViewContainer>
+        <GridView onClose={toggleModal} />
       </Modal>
     </>
   );

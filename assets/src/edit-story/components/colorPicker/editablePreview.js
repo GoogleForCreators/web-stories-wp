@@ -25,14 +25,20 @@ import { useCallback, useMemo, useRef, useLayoutEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useKeyDownEffect,
+} from '../../../design-system';
 
 const Preview = styled.button`
-  padding: 0;
   margin: 0;
-  border: none;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v8};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  padding: 0;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-radius: 2px;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.fg.primary};
+  width: 100%;
 `;
 
 function EditablePreview({ label, value, width, format, onChange }) {
@@ -45,11 +51,14 @@ function EditablePreview({ label, value, width, format, onChange }) {
     () => ({
       input: {
         textAlign: 'center',
-        border: 'none',
         textTransform: 'lowercase',
         width: '100%',
-        padding: '4px',
+        padding: '8px 12px',
+        border: '1px solid #5E6668',
+        color: '#E4E5E6',
         borderRadius: '2px',
+        background: 'transparent',
+        lineHeight: '18px',
       },
       wrap: {
         lineHeight: 0,
@@ -84,7 +93,9 @@ function EditablePreview({ label, value, width, format, onChange }) {
   if (!isEditing) {
     return (
       <Preview aria-label={label} onClick={enableEditing}>
-        {format(value)}
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {format(value)}
+        </Text>
       </Preview>
     );
   }

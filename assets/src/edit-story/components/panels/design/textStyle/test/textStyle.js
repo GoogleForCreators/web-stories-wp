@@ -34,7 +34,6 @@ import ColorInput from '../../../../form/color/color';
 import createSolid from '../../../../../utils/createSolid';
 import CanvasContext from '../../../../../app/canvas/context';
 import {
-  HIDDEN_PADDING,
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
@@ -128,14 +127,13 @@ Wrapper.propTypes = {
 };
 
 describe('Panels/TextStyle', () => {
-  let textElement, unlockPaddingTextElement;
+  let textElement;
   let controls;
-  const paddingRatioLockLabel = 'Toggle padding ratio lock';
 
   beforeEach(() => {
     window.fetch.resetMocks();
 
-    unlockPaddingTextElement = {
+    textElement = {
       id: '1',
       textAlign: 'normal',
       fontSize: 30,
@@ -148,11 +146,6 @@ describe('Panels/TextStyle', () => {
       height: 100,
       width: 120,
       rotationAngle: 0,
-      padding: { vertical: 0, horizontal: 0, locked: false },
-    };
-
-    textElement = {
-      ...unlockPaddingTextElement,
       padding: DEFAULT_PADDING,
     };
 
@@ -177,7 +170,7 @@ describe('Panels/TextStyle', () => {
 
   it('should render <TextStyle /> panel', () => {
     const { getByRole } = renderTextStyle([textElement]);
-    const element = getByRole('button', { name: 'Style' });
+    const element = getByRole('button', { name: 'Text' });
     expect(element).toBeInTheDocument();
   });
 
@@ -191,470 +184,8 @@ describe('Panels/TextStyle', () => {
       fontSize: 70,
       height: 171,
       lineHeight: 1,
-      padding: {
-        hasHiddenPadding: false,
-        horizontal: 0,
-        locked: true,
-        vertical: 0,
-      },
       x: dx,
       y: dy,
-    });
-  });
-
-  describe('PaddingControls', () => {
-    let textSamePadding,
-      unlockPaddingTextSamePadding,
-      textDifferentPadding,
-      unlockPaddingTextDifferentPadding;
-
-    function testUpdaterOnElementVariations({
-      pushUpdate,
-      pushUpdateForObject,
-      expectedPaddingProperties,
-    }) {
-      // Test that padding in closure of updater is expected
-      const pufoUpdateArg = pushUpdateForObject.mock.calls[0][1];
-      const padding = {};
-      const updatedProperties = pufoUpdateArg(padding);
-      expect(updatedProperties).toStrictEqual(expectedPaddingProperties);
-
-      // Test that element with hidden padding retains hidden padding
-      const withHiddenPadding = { hasHiddenPadding: true };
-      const updatedPropertiesWithHiddenPadding = pufoUpdateArg(
-        withHiddenPadding
-      );
-      const expectedPropertiesWithHiddenPadding = [
-        'horizontal',
-        'vertical',
-      ].reduce((accum, key) => {
-        if (key in expectedPaddingProperties) {
-          accum[key] = expectedPaddingProperties[key] + HIDDEN_PADDING[key];
-        }
-        return accum;
-      }, {});
-      expect(updatedPropertiesWithHiddenPadding).toStrictEqual(
-        expectedPropertiesWithHiddenPadding
-      );
-
-      // Test that element coords are updated to not move visual center
-      const puUpdateArg = pushUpdate.mock.calls[0][0];
-      [
-        {
-          x: 40,
-          y: 40,
-          width: 100,
-          height: 100,
-          padding: {},
-        },
-        // Test that element with hidden padding retains visual center
-        {
-          x: 70,
-          y: 80,
-          width: 90,
-          height: 100,
-          padding: { hasHiddenPadding: true },
-        },
-      ].forEach((el) => {
-        const updated = puUpdateArg(el);
-        const expectedPadding = el.padding.hasHiddenPadding
-          ? expectedPropertiesWithHiddenPadding
-          : expectedPaddingProperties;
-
-        const expected = {};
-        if ('horizontal' in expectedPadding) {
-          expected.x = el.x - (expectedPadding.horizontal || 0);
-          expected.width = el.width + (expectedPadding.horizontal || 0) * 2;
-        }
-
-        if ('vertical' in expectedPadding) {
-          expected.y = el.y - (expectedPadding.vertical || 0);
-          expected.height = el.height + (expectedPadding.vertical || 0) * 2;
-        }
-
-        expect(updated).toStrictEqual(expected);
-      });
-    }
-
-    beforeEach(() => {
-      textSamePadding = {
-        ...textElement,
-        id: 'textSamePadding',
-        padding: DEFAULT_PADDING,
-      };
-      unlockPaddingTextSamePadding = {
-        ...textSamePadding,
-        padding: { ...DEFAULT_PADDING, locked: false },
-      };
-      textDifferentPadding = {
-        ...textElement,
-        id: 'textDifferentPadding',
-        padding: { horizontal: 10, vertical: 20, locked: true },
-      };
-      unlockPaddingTextDifferentPadding = {
-        ...textDifferentPadding,
-        padding: { horizontal: 10, vertical: 20, locked: false },
-      };
-    });
-
-    it('should render default padding controls', () => {
-      const { getByRole } = renderTextStyle([textElement]);
-      const multi = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
-      });
-      const lock = getByRole('checkbox', { name: paddingRatioLockLabel });
-      expect(multi).toHaveValue('0');
-      expect(lock).toBeChecked();
-    });
-
-    it('should render specified padding controls', () => {
-      const { getByRole } = renderTextStyle([
-        {
-          ...textElement,
-          padding: {
-            horizontal: 11,
-            vertical: 12,
-            locked: false,
-          },
-        },
-      ]);
-      const horiz = getByRole('textbox', { name: 'Horizontal padding' });
-      const vert = getByRole('textbox', { name: 'Vertical padding' });
-      expect(horiz).toHaveValue('11');
-      expect(vert).toHaveValue('12');
-    });
-
-    it('should update horizontal padding with lock', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        textElement,
-      ]);
-      const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
-      });
-      fireEvent.change(input, { target: { value: '20' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { horizontal: 20, vertical: 20 },
-      });
-    });
-
-    it('should update horizontal padding without lock', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        unlockPaddingTextElement,
-      ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { horizontal: 11 },
-      });
-    });
-
-    it('should update vertical padding without lock', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        unlockPaddingTextElement,
-      ]);
-      const input = getByRole('textbox', { name: 'Vertical padding' });
-      fireEvent.change(input, { target: { value: '12' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { vertical: 12 },
-      });
-    });
-
-    it('should not update padding if empty string is submitted', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        textElement,
-      ]);
-      const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
-      });
-      fireEvent.change(input, { target: { value: '' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: {
-          horizontal: textElement.padding.horizontal,
-          vertical: textElement.padding.vertical,
-        },
-      });
-    });
-
-    it('should update multi padding with lock and same padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        textElement,
-        textSamePadding,
-      ]);
-      const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
-      });
-      fireEvent.change(input, { target: { value: '11' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { horizontal: 11, vertical: 11 },
-      });
-    });
-
-    it('should update multi padding with lock and different padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        textElement,
-        textDifferentPadding,
-      ]);
-      const input = getByRole('textbox', {
-        name: 'Horizontal & Vertical padding',
-      });
-      fireEvent.change(input, { target: { value: '11' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { horizontal: 11, vertical: 11 },
-      });
-    });
-
-    it('should update multi padding without lock and same padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        unlockPaddingTextElement,
-        unlockPaddingTextSamePadding,
-      ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { horizontal: 11 },
-      });
-    });
-
-    it('should update multi padding without lock and different padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        unlockPaddingTextElement,
-        unlockPaddingTextDifferentPadding,
-      ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { horizontal: 11 },
-      });
-    });
-
-    it('should correctly update only horizontal padding when multiple elements with different padding lock settings are selected', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        textElement,
-        unlockPaddingTextDifferentPadding,
-      ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
-      fireEvent.change(input, { target: { value: '11' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { horizontal: 11 },
-      });
-    });
-
-    it('should correctly update only vertical padding when multiple elements with different padding lock settings are selected', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
-        textElement,
-        unlockPaddingTextDifferentPadding,
-      ]);
-      const input = getByRole('textbox', { name: 'Vertical padding' });
-      fireEvent.change(input, { target: { value: '11' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-
-      // See that updates were pushed
-      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-
-      // See that updates are propper for element variations
-      testUpdaterOnElementVariations({
-        pushUpdateForObject,
-        pushUpdate,
-        expectedPaddingProperties: { vertical: 11 },
-      });
-    });
-
-    it('should update default element lockPadding to false when padding lock clicked', () => {
-      const { getByLabelText, pushUpdateForObject } = renderTextStyle([
-        textElement,
-      ]);
-      fireEvent.click(getByLabelText(paddingRatioLockLabel));
-      const pufoUpdater = pushUpdateForObject.mock.calls[0][1];
-      const el = { padding: {} };
-      const updatedProperties = pufoUpdater(el);
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        false
-      );
-      expect(updatedProperties).toStrictEqual({
-        locked: false,
-      });
-    });
-
-    it('should update unlock padding element lockPadding to true when padding lock clicked', () => {
-      const { getByLabelText, pushUpdateForObject } = renderTextStyle([
-        unlockPaddingTextElement,
-      ]);
-      fireEvent.click(getByLabelText(paddingRatioLockLabel));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        true
-      );
-
-      const pufoUpdater = pushUpdateForObject.mock.calls[0][1];
-      const updatedProperties = pufoUpdater({
-        horizontal: 0,
-      });
-      expect(updatedProperties).toStrictEqual({
-        horizontal: 0,
-        vertical: 0,
-        locked: true,
-      });
-    });
-
-    it('should update multiple elements with default text element and unlock padding elements lockPadding to false when padding lock clicked', () => {
-      const { getByLabelText, pushUpdateForObject } = renderTextStyle([
-        unlockPaddingTextElement,
-        textElement,
-      ]);
-      fireEvent.click(getByLabelText(paddingRatioLockLabel));
-      expect(pushUpdateForObject).toHaveBeenCalledWith(
-        'padding',
-        expect.any(Function),
-        DEFAULT_PADDING,
-        true
-      );
-
-      const pufoUpdater = pushUpdateForObject.mock.calls[0][1];
-      const updatedProperties = pufoUpdater({
-        horizontal: 0,
-      });
-      expect(updatedProperties).toStrictEqual({
-        horizontal: 0,
-        vertical: 0,
-        locked: true,
-      });
     });
   });
 
@@ -915,10 +446,6 @@ describe('Panels/TextStyle', () => {
           fallbacks: ['serif'],
         },
         fontSize: 36,
-        padding: {
-          vertical: 1,
-          horizontal: 1,
-        },
         lineHeight: 2.2,
         content:
           '<span style="font-weight: 700; letter-spacing: 0.2em">Hello world</span>',
@@ -934,14 +461,6 @@ describe('Panels/TextStyle', () => {
 
       const fontSize = getByRole('textbox', { name: 'Font size' });
       expect(fontSize.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-
-      const paddingH = getByRole('textbox', {
-        name: 'Horizontal padding',
-      });
-      expect(paddingH.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-
-      const paddingV = getByRole('textbox', { name: 'Vertical padding' });
-      expect(paddingV.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
 
       expect(controls.font.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
       expect(controls['font.weight'].placeholder).toStrictEqual(

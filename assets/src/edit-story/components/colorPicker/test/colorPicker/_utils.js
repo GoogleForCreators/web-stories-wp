@@ -59,8 +59,9 @@ function arrange(customProps = {}) {
   const getEditableAlphaElement = () => queryByLabelText(/edit opacity/i);
   const getGradientLine = () => queryByLabelText(/gradient line/i);
   const getGradientStops = () => queryAllByLabelText(/^gradient stop at/i);
+  // The gradient line is reversed, so we deduct the value from 100.
   const getGradientStopAt = (pct) =>
-    queryByLabelText(new RegExp(`gradient stop at ${pct}%`, 'i'));
+    queryByLabelText(new RegExp(`gradient stop at ${100 - pct}%`, 'i'));
   const getTempGradientStop = () =>
     queryByLabelText(/temporary gradient stop/i);
   const getGradientReverse = () => queryByLabelText(/reverse gradient stops/i);

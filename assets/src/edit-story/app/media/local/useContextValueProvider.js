@@ -51,7 +51,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     fetchMediaSuccess,
     fetchMediaError,
     resetFilters,
-    setMedia,
+    prependMedia,
     setMediaType,
     setSearchTerm,
     setNextPage,
@@ -105,7 +105,12 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [fetchMediaError, fetchMediaStart, getMedia]
   );
 
-  const { uploadMedia, isUploading } = useUploadMedia({ media, setMedia });
+  const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
+    media,
+    prependMedia,
+    updateMediaElement,
+    deleteMediaElement,
+  });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
   });
@@ -171,7 +176,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   }, [media, mediaType, searchTerm, generateMissingPosters]);
 
   return {
-    state: { ...reducerState, isUploading },
+    state: {
+      ...reducerState,
+      isUploading,
+      isTranscoding,
+    },
     actions: {
       setNextPage,
       setMediaType,

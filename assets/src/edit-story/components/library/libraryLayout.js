@@ -28,7 +28,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import TabView from '../tabview';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
-import { getTabId } from './panes/shared';
+import { getTabId, getPaneId } from './panes/shared';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
@@ -38,14 +38,16 @@ const Layout = styled.section.attrs({
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.fg.primary};
   max-height: 100%;
 `;
 
 // @todo Verify that L10N works with the translation happening here.
 const TabsArea = styled.nav.attrs({
   'aria-label': __('Library tabs', 'web-stories'),
-})``;
+})`
+  padding: 0 4px;
+`;
 
 const LibraryPaneContainer = styled.div`
   height: 100%;
@@ -78,6 +80,7 @@ function LibraryLayout() {
           initialTab={initialTab}
           onTabChange={onTabChange}
           getTabId={getTabId}
+          getAriaControlsId={getPaneId}
           shortcut="mod+option+1"
         />
       </TabsArea>

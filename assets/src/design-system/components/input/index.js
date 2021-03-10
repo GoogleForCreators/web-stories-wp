@@ -38,7 +38,7 @@ import { focusCSS } from '../../theme/helpers';
 const Container = styled.div`
   position: relative;
   width: 100%;
-  min-width: 150px;
+  min-width: 40px;
 `;
 
 const Label = styled(Text)`
@@ -55,6 +55,13 @@ const Suffix = styled(Text)`
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.tertiary};
   white-space: nowrap;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    margin: 2px -10px;
+    display: block;
+  }
 `;
 
 const InputContainer = styled.div(
@@ -65,7 +72,6 @@ const InputContainer = styled.div(
     justify-content: space-between;
     height: 36px;
     padding: 4px 12px;
-    background-color: ${theme.colors.bg.primary};
     border: 1px solid
       ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
     border-radius: ${theme.borders.radius.small};
@@ -91,10 +97,14 @@ const InputContainer = styled.div(
 );
 
 const StyledInput = styled.input(
-  ({ theme }) => css`
+  ({ hasSuffix, theme }) => css`
     height: 100%;
     width: 100%;
-    padding: 0 8px 0 0;
+    padding: 0;
+    ${hasSuffix &&
+    css`
+      padding-right: 8px;
+    `}
     background-color: inherit;
     border: none;
     outline: none;
@@ -138,6 +148,7 @@ export const Input = forwardRef(
       suffix,
       unit = '',
       value,
+      isIndeterminate = false,
       ...props
     },
     ref
@@ -174,6 +185,11 @@ export const Input = forwardRef(
     if (unit && value.length) {
       displayedValue = `${value}${!focused ? `${unit}` : ''}`;
     }
+    if (isIndeterminate) {
+      // Display placeholder if value couldn't be determined.
+      displayedValue = '';
+    }
+    const hasSuffix = Boolean(suffix);
 
     return (
       <Container className={className}>
@@ -190,9 +206,10 @@ export const Input = forwardRef(
             onBlur={handleBlur}
             onFocus={handleFocus}
             value={displayedValue}
+            hasSuffix={hasSuffix}
             {...props}
           />
-          {suffix && (
+          {hasSuffix && (
             <Suffix
               hasLabel={Boolean(label)}
               forwardedAs="span"
@@ -258,6 +275,7 @@ export const InputPropTypes = {
   suffix: PropTypes.node,
   unit: PropTypes.string,
   value: PropTypes.string.isRequired,
+  isIndeterminate: PropTypes.bool,
 };
 
 Input.propTypes = InputPropTypes;

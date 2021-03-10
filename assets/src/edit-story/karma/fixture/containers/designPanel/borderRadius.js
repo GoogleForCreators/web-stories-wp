@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { Toggle } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -35,10 +34,6 @@ export class BorderRadius extends AbstractPanel {
   }
 
   get lockBorderRadius() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Toggle corner radius lock/ }),
-      'radiusLock',
-      Toggle
-    );
+    return this.getByRole('button', { name: /Toggle corner radius lock/ });
   }
 }

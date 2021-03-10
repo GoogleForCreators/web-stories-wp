@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -27,8 +26,8 @@ import {
   identity,
   useContextSelector,
   theme as designSystemTheme,
+  themeHelpers,
 } from '../design-system';
-import { SCROLLBAR_WIDTH } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
   *,
@@ -51,35 +50,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   /*
-   * Custom dark scrollbars for Chromium & Firefox.
-   * Scoped to <Editor> to make sure we don't mess with WP dialogs
-   * like the Backbone Media Gallery dialog.
+   * Scrollbars are scoped to <Editor> to make sure we don't mess with
+   * WP dialogs like the Backbone Media Gallery dialog.
    */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.primary}
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
-  }
-
-  *::-webkit-scrollbar {
-    width: ${SCROLLBAR_WIDTH}px;
-    height: ${SCROLLBAR_WIDTH}px;
-    position:fixed;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
-    border-radius: 6px;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bg.divider, 0.04)};
-    width: 3px;
-    border-radius: 6px;
-    border: 2px solid transparent;
-    background-clip: content-box;
+  body.edit-story #wpbody * {
+    ${themeHelpers.scrollbarCSS};
   }
 `;
 

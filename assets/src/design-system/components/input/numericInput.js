@@ -31,6 +31,7 @@ export const NumericInput = ({
   max,
   min,
   value,
+  isIndeterminate: originalIsIndeterminate,
   ...props
 }) => {
   const {
@@ -40,6 +41,7 @@ export const NumericInput = ({
     handleEsc,
     handleKeyUpAndDown,
     inputRef,
+    isIndeterminate,
   } = useNumericInput({
     allowEmpty,
     isFloat,
@@ -47,6 +49,7 @@ export const NumericInput = ({
     max,
     min,
     value,
+    isIndeterminate: originalIsIndeterminate,
   });
 
   useKeyDownEffect(
@@ -85,6 +88,7 @@ export const NumericInput = ({
       onBlur={handleBlur}
       onChange={handleChange}
       value={String(currentValue)}
+      isIndeterminate={isIndeterminate && originalIsIndeterminate}
       {...props}
     />
   );

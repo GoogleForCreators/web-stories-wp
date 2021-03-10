@@ -19,7 +19,7 @@
     "update-fonts": "./src/cli.js"
   },
   "dependencies": {
-    "got": "^11.8.1",
+    "got": "^11.8.2",
     "opentype.js": "^1.3.3"
   }
 }

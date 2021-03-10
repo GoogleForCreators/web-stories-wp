@@ -64,21 +64,19 @@ async function getPrepublishErrors(story) {
         (prev, currentPage, currentIndex) => {
           const pageNum = currentIndex + 1;
           const { id: pageId, elements } = currentPage;
-
           function prepareResult(result) {
             if (typeof result !== 'undefined') {
-              if (Array.isArray(result)) {
-                return result.map((message) => ({
-                  ...message,
-                  page: pageNum,
-                  pageId,
-                }));
-              }
-              return {
-                ...result,
-                page: pageNum,
-                pageId,
-              };
+              return Array.isArray(result)
+                ? result.map((message) => ({
+                    ...message,
+                    page: pageNum,
+                    pageId,
+                  }))
+                : {
+                    ...result,
+                    page: pageNum,
+                    pageId,
+                  };
             }
             return result;
           }

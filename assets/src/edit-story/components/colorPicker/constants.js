@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-export const LINE_LENGTH = 155;
-export const LINE_WIDTH = 12;
+export const LINE_LENGTH = 172;
+export const LINE_WIDTH = 16;
+
+export const GRADIENT_STOP_SIZE = 14;
 
 export const TYPE_SOLID = 'solid';
 export const TYPE_LINEAR = 'linear';

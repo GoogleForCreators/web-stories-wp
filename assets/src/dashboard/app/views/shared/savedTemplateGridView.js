@@ -41,7 +41,7 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { STORY_STATUS } from '../../../constants';
+import { PAGE_WRAPPER, STORY_STATUS } from '../../../constants';
 import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
@@ -53,13 +53,7 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) =>
-    `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px)`};
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) =>
-      `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px)`};
-  }
+  width: calc(100% - ${PAGE_WRAPPER.GUTTER}px);
 `;
 
 const SavedTemplateGridView = ({
@@ -184,6 +178,7 @@ const SavedTemplateGridView = ({
                   onMenuItemSelected={templateMenu.handleMenuItemSelected}
                   story={template}
                   menuItems={generateStoryMenu({
+                    menuItemActions: templateMenu.menuItemActions,
                     menuItems: templateMenu.menuItems,
                     template,
                   })}

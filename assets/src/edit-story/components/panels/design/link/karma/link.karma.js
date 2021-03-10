@@ -48,7 +48,9 @@ describe('Link Panel', () => {
   };
 
   const setPageAttachmentLink = async (link) => {
-    const input = fixture.screen.getByLabelText('Page Attachment link');
+    const input = fixture.screen.getByLabelText(
+      'Type an address to add a page attachment link'
+    );
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type(link);
     await input.dispatchEvent(new window.Event('blur'));
@@ -325,51 +327,6 @@ describe('Link Panel', () => {
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');
-    });
-
-    it('should return focus to input after clearing', async () => {
-      // Verify remove button exists
-      expect(linkPanel.addressClear).toBeTruthy();
-
-      // Force focus to input - has to move out and back for weird reasons
-      linkPanel.address.focus();
-      linkPanel.addressClear.focus();
-
-      // Click on remove button
-      await fixture.events.click(linkPanel.addressClear);
-
-      // Verify remove button doesn't exist
-      expect(linkPanel.addressClear).not.toBeTruthy();
-
-      // And verify that focus has been returned to input
-      expect(linkPanel.address).toHaveFocus();
-    });
-
-    it('should show focus border on remove button when using keyboard', async () => {
-      // Verify remove button exists
-      expect(linkPanel.addressClear).toBeTruthy();
-
-      // Force focus to input - has to move out and back for weird reasons
-      linkPanel.address.focus();
-      linkPanel.addressClear.focus();
-
-      // "Tab" to move focus to remove button
-      await fixture.events.keyboard.shortcut('tab');
-
-      // Verify remove button has focus
-      expect(linkPanel.addressClear).toHaveFocus();
-
-      // Click the button by pressing enter
-      await fixture.events.keyboard.press('Enter');
-
-      // Verify remove button doesn't exist
-      expect(linkPanel.addressClear).not.toBeTruthy();
-
-      // And verify that focus has been returned to input
-      expect(linkPanel.address).toHaveFocus();
-
-      // Screenshot it
-      await fixture.snapshot('Link remove button has focus from keyboard');
     });
 
     // Disable reason: tests not implemented yet

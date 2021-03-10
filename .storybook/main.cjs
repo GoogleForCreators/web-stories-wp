@@ -31,6 +31,7 @@ module.exports = {
     '@storybook/addon-storysource/register',
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',
+    'storybook-rtl-addon',
   ],
   core: {
     builder: 'webpack5',

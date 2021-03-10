@@ -33,7 +33,7 @@ import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
-import TextSets from './textSets';
+import TextSetsPane from './textSets/textSetsPane';
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -96,7 +96,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {paneRef.current && <TextSets paneRef={paneRef} />}
+      {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>
   );
 }

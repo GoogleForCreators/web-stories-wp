@@ -25,8 +25,6 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-
-import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
 import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
@@ -42,8 +40,8 @@ const COLOR_GAP = 6;
 
 const ActionsWrapper = styled.div`
   text-align: center;
-  border-top: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v6};
-  padding: 12px 12px 20px 12px;
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
+  padding: 16px 16px 20px 16px;
 `;
 
 const AddColorPreset = styled.button`
@@ -78,8 +76,6 @@ const ColorsWrapper = styled.div`
   max-height: ${SAVED_COLOR_SIZE * 3 + 2 * COLOR_GAP}px;
   overflow-x: hidden;
   overflow-y: auto;
-
-  ${ScrollBarStyles}
 `;
 
 const DropDownWrapper = styled.div`
@@ -189,7 +185,7 @@ function ColorPresetActions({ color, pushUpdate }) {
         <DropDownWrapper>
           <AdvancedDropDown
             options={options}
-            isInline={true}
+            isInline
             hasSearch={false}
             onChange={({ id }) => setShowLocalColors(id === LOCAL)}
             selectedId={showLocalColors ? LOCAL : GLOBAL}

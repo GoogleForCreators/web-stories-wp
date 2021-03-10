@@ -18,11 +18,13 @@
  * External dependencies
  */
 import webpack from 'webpack';
+import { resolve } from 'path';
 
 /**
  * WordPress dependencies
  */
 import DependencyExtractionWebpackPlugin from '@wordpress/dependency-extraction-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 /**
  * Internal dependencies
@@ -39,11 +41,17 @@ function getConfig(group, { coverage = false } = {}) {
       entry: undefined,
       mode: 'development',
       devtool: 'inline-source-map',
+      output: {
+        ...webpackConfig.output,
+        path: resolve(process.cwd(), 'assets', 'testjs'),
+      },
       plugins: [
-        // WP's DependencyExtractionWebpackPlugin is not needed for tests and
+        // DependencyExtractionWebpackPlugin and HtmlWebpackPlugin are not needed for tests and
         // otherwise has some failures.
         ...webpackConfig.plugins.filter(
-          (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+          (plugin) =>
+            !(plugin instanceof DependencyExtractionWebpackPlugin) &&
+            !(plugin instanceof HtmlWebpackPlugin)
         ),
         // React Testing Library checks for this variable, but webpack does
         // no longer polyfill `process` in the browser.
