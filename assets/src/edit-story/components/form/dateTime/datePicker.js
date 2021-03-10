@@ -17,12 +17,15 @@
 /**
  * External dependencies
  */
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useRef, useCallback, useMemo, useEffect } from 'react';
+import { lazy, Suspense, useRef, useCallback, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { _x } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
+
+const Calendar = lazy(() =>
+  import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
+);
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
@@ -50,10 +53,13 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
             '.react-calendar__navigation button'
           ),
         ];
-        navButtons[0].tabIndex = '0';
-        navButtons.shift();
-        for (const btn of navButtons) {
-          btn.tabIndex = '-1';
+
+        if (navButtons.length) {
+          navButtons[0].tabIndex = '0';
+          navButtons.shift();
+          for (const btn of navButtons) {
+            btn.tabIndex = '-1';
+          }
         }
 
         // Dates / days.
@@ -63,24 +69,26 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
           ),
         ];
 
-        let foundActive = false;
-        for (const btn of buttons) {
-          if (!btn.classList.contains('react-calendar__tile--now')) {
-            btn.tabIndex = '-1';
-          } else {
-            btn.tabIndex = '0';
-            if (setFocus) {
-              // When changing view we need to explicitly set focus again,
-              // It seems to not be happening by default.
-              btn.focus();
+        if (buttons.length) {
+          let foundActive = false;
+          for (const btn of buttons) {
+            if (!btn.classList.contains('react-calendar__tile--now')) {
+              btn.tabIndex = '-1';
+            } else {
+              btn.tabIndex = '0';
+              if (setFocus) {
+                // When changing view we need to explicitly set focus again,
+                // It seems to not be happening by default.
+                btn.focus();
+              }
+              foundActive = true;
             }
-            foundActive = true;
           }
-        }
-        if (!foundActive) {
-          // Assume first as active.
-          buttons[0].tabIndex = '0';
-          buttons[0].focus();
+          if (!foundActive) {
+            // Assume first as active.
+            buttons[0].tabIndex = '0';
+            buttons[0].focus();
+          }
         }
       }
     },
@@ -92,34 +100,36 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
   }, [updateTabIndexes]);
 
   return (
-    <CalendarWrapper ref={nodeRef}>
-      <Calendar
-        value={value}
-        onChange={handleOnChange}
-        onViewChange={onViewChange}
-        onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}
-        nextAriaLabel={_x(
-          'Next',
-          'This label can apply to next month, year and/or decade',
-          'web-stories'
-        )}
-        prevAriaLabel={_x(
-          'Previous',
-          'This label can apply to previous month, year and/or decade',
-          'web-stories'
-        )}
-        next2AriaLabel={_x(
-          'Jump forward',
-          'This label can apply to month, year and/or decade',
-          'web-stories'
-        )}
-        prev2AriaLabel={_x(
-          'Jump backwards',
-          'This label can apply to month, year and/or decade',
-          'web-stories'
-        )}
-      />
-    </CalendarWrapper>
+    <Suspense fallback={<>{__('Loading', 'web-stories')}</>}>
+      <CalendarWrapper ref={nodeRef}>
+        <Calendar
+          value={value}
+          onChange={handleOnChange}
+          onViewChange={onViewChange}
+          onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}
+          nextAriaLabel={_x(
+            'Next',
+            'This label can apply to next month, year and/or decade',
+            'web-stories'
+          )}
+          prevAriaLabel={_x(
+            'Previous',
+            'This label can apply to previous month, year and/or decade',
+            'web-stories'
+          )}
+          next2AriaLabel={_x(
+            'Jump forward',
+            'This label can apply to month, year and/or decade',
+            'web-stories'
+          )}
+          prev2AriaLabel={_x(
+            'Jump backwards',
+            'This label can apply to month, year and/or decade',
+            'web-stories'
+          )}
+        />
+      </CalendarWrapper>
+    </Suspense>
   );
 }
 
