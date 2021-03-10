@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7adba9e29966ba04b331b29a879c0f7",
+    "content-hash": "c667cbfaadc99ab1c3b9112355b4fba5",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -73,12 +73,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "f6dd0e43857c7cc11be30a576c5dcb0dbd0f67fd"
+                "reference": "b3d0f71027fad4498348d04d90357eae615c2665"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/f6dd0e43857c7cc11be30a576c5dcb0dbd0f67fd",
-                "reference": "f6dd0e43857c7cc11be30a576c5dcb0dbd0f67fd",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/b3d0f71027fad4498348d04d90357eae615c2665",
+                "reference": "b3d0f71027fad4498348d04d90357eae615c2665",
                 "shasum": ""
             },
             "require": {
@@ -175,7 +175,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2021-03-09T07:04:14+00:00"
+            "time": "2021-03-09T20:16:47+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -1005,16 +1005,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v5.6.0",
+            "version": "v5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "ed446cce304cd49f13900274b3ed60d1b526297e"
+                "reference": "69baf30e7c92f149526da950a68222af05f7bc67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/ed446cce304cd49f13900274b3ed60d1b526297e",
-                "reference": "ed446cce304cd49f13900274b3ed60d1b526297e",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/69baf30e7c92f149526da950a68222af05f7bc67",
+                "reference": "69baf30e7c92f149526da950a68222af05f7bc67",
                 "shasum": ""
             },
             "replace": {
@@ -1043,9 +1043,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v5.6.0"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v5.7.0"
             },
-            "time": "2020-12-09T00:38:16+00:00"
+            "time": "2021-03-10T10:29:23+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
