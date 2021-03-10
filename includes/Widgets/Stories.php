@@ -600,7 +600,7 @@ class Stories extends WP_Widget {
 		);
 		ob_start();
 		?>
-		<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
+		<label for="<?php echo esc_attr( $this->get_field_id( $args['id'] ) ); ?>">
 			<?php echo esc_html( (string) $args['label'] ); ?>
 		</label>
 		<?php
