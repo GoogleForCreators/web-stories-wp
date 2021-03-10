@@ -31,7 +31,6 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
 } from '../../../../../../design-system';
-
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
 import {
@@ -50,6 +49,7 @@ import { StoryGridView, StoryListView } from '../../../shared';
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
   filterValue,
+  isLoading,
   sort,
   storyActions,
   stories,
@@ -220,34 +220,55 @@ function StoriesView({
     };
   }, [handleOnRenameStory, setTitleRenameId, titleRenameId]);
 
-  const ActiveView =
-    view.style === VIEW_STYLE.LIST ? (
-      <StoryListView
-        handleSortChange={sort.set}
-        handleSortDirectionChange={sort.setDirection}
-        pageSize={view.pageSize}
-        renameStory={renameStory}
-        sortDirection={sort.direction}
-        stories={stories}
-        storyMenu={storyMenu}
-        storySort={sort.value}
-        storyStatus={filterValue}
-      />
-    ) : (
-      <StoryGridView
-        bottomActionLabel={__('Open in editor', 'web-stories')}
-        centerActionLabelByStatus={
-          enableStoryPreviews && STORY_ITEM_CENTER_ACTION_LABELS
-        }
-        pageSize={view.pageSize}
-        renameStory={renameStory}
-        previewStory={storyActions.handlePreviewStory}
-        storyMenu={storyMenu}
-        stories={stories}
-        returnStoryFocusId={returnStoryFocusId}
-        initialFocusStoryId={initialFocusStoryId}
-      />
-    );
+  const ActiveView = useMemo(
+    () =>
+      view.style === VIEW_STYLE.LIST ? (
+        <StoryListView
+          handleSortChange={sort.set}
+          handleSortDirectionChange={sort.setDirection}
+          isLoading={isLoading}
+          pageSize={view.pageSize}
+          renameStory={renameStory}
+          sortDirection={sort.direction}
+          stories={stories}
+          storyMenu={storyMenu}
+          storySort={sort.value}
+          storyStatus={filterValue}
+        />
+      ) : (
+        <StoryGridView
+          bottomActionLabel={__('Open in editor', 'web-stories')}
+          centerActionLabelByStatus={
+            enableStoryPreviews && STORY_ITEM_CENTER_ACTION_LABELS
+          }
+          isLoading={isLoading}
+          pageSize={view.pageSize}
+          renameStory={renameStory}
+          previewStory={storyActions.handlePreviewStory}
+          storyMenu={storyMenu}
+          stories={stories}
+          returnStoryFocusId={returnStoryFocusId}
+          initialFocusStoryId={initialFocusStoryId}
+        />
+      ),
+    [
+      enableStoryPreviews,
+      filterValue,
+      initialFocusStoryId,
+      isLoading,
+      renameStory,
+      returnStoryFocusId,
+      sort?.direction,
+      sort?.set,
+      sort?.setDirection,
+      sort?.value,
+      stories,
+      storyActions?.handlePreviewStory,
+      storyMenu,
+      view?.pageSize,
+      view?.style,
+    ]
+  );
 
   return (
     <>
@@ -306,6 +327,7 @@ function StoriesView({
 
 StoriesView.propTypes = {
   filterValue: PropTypes.string,
+  isLoading: PropTypes.bool,
   sort: SortPropTypes,
   storyActions: StoryActionsPropType,
   stories: StoriesPropType,

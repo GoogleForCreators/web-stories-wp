@@ -25,17 +25,22 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
-import { TypographyPresets } from '../typography';
-import { LoadingSpinner } from '../../../design-system';
+import {
+  LoadingSpinner,
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '../../../design-system';
 
 const ScrollMessage = styled.div`
-  ${TypographyPresets.Small};
   width: 100%;
   padding: 140px 0 40px;
   margin: -100px auto 0;
   text-align: center;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+
+  p {
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+  }
 `;
 
 const LoadingContainer = styled.div`
@@ -43,7 +48,7 @@ const LoadingContainer = styled.div`
   justify-content: center;
 `;
 
-const AriaOnlyAlert = styled.span(visuallyHiddenStyles);
+const AriaOnlyAlert = styled.span(themeHelpers.visuallyHidden);
 
 const STATE = {
   loadable: 'loadable',
@@ -155,18 +160,24 @@ const InfiniteScroller = ({
     };
   }, []);
 
+  const loadingContent = useMemo(() => {
+    return canLoadMore ? (
+      <LoadingContainer>
+        <LoadingSpinner animationSize={50} circleSize={6} />
+      </LoadingContainer>
+    ) : (
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {allDataLoadedMessage}
+      </Text>
+    );
+  }, [allDataLoadedMessage, canLoadMore]);
+
   return (
     <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
       {loadingAlert && (
         <AriaOnlyAlert role="status">{loadingAlert}</AriaOnlyAlert>
       )}
-      {!canLoadMore ? (
-        allDataLoadedMessage
-      ) : (
-        <LoadingContainer>
-          <LoadingSpinner animationSize={50} circleSize={6} />
-        </LoadingContainer>
-      )}
+      {loadingContent}
     </ScrollMessage>
   );
 };
