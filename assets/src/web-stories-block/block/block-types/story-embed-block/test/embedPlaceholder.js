@@ -89,7 +89,7 @@ describe('EmbedPlaceholder', () => {
         value="https://example.com"
         onSubmit={onSubmit}
         onChange={onChange}
-        cannotEmbed={true}
+        cannotEmbed
       />
     );
     expect(

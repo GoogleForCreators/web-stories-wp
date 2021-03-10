@@ -79,7 +79,7 @@ function EditElement({ element }) {
         <SingleSelectionMoveable
           selectedElement={element}
           targetEl={editWrapper}
-          isEditMode={true}
+          isEditMode
           editMoveableRef={moveable}
         />
       )}

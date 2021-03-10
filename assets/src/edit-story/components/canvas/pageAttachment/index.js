@@ -142,7 +142,7 @@ function PageAttachment({ pageAttachment = {} }) {
             {pageAttachmentContainer && hasInvalidLinkSelected && (
               <Popup
                 anchor={{ current: pageAttachmentContainer }}
-                isOpen={true}
+                isOpen
                 placement={'left'}
                 spacing={spacing}
               >

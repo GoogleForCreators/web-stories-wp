@@ -230,7 +230,7 @@ function MediaEdit({ element, box }) {
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
-        <WithMask element={element} fill={true} applyFlip={false} box={box}>
+        <WithMask element={element} fill applyFlip={false} box={box}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
             <CropVideo {...cropMediaProps}>
