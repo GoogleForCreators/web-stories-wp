@@ -120,7 +120,7 @@ describe('SearchInput', () => {
         initialValue={'d'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental={true}
+        incremental
         delayMs={0}
       />
     );
@@ -140,7 +140,7 @@ describe('SearchInput', () => {
         initialValue={'d'}
         placeholder={'Hello'}
         onSearch={onSearchMock}
-        incremental={true}
+        incremental
         delayMs={2000}
       />
     );

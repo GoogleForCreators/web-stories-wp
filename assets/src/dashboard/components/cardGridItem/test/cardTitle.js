@@ -45,7 +45,7 @@ describe('CardTitle', () => {
         displayDate="01/20/2020"
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
-        editMode={true}
+        editMode
         id="sampleStoryId"
         tabIndex={0}
       />

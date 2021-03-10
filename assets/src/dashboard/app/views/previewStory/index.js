@@ -207,7 +207,7 @@ const PreviewStory = ({ story, handleClose }) => {
             onClick={handleClose}
             aria-label={__('close preview', 'web-stories')}
           >
-            <Icons.Cross aria-hidden={true} />
+            <Icons.Cross aria-hidden />
           </CloseButton>
         </CloseButtonContainer>
         {!previewError && (

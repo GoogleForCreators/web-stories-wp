@@ -65,7 +65,7 @@ export default function NavMenuButton({ showOnlyOnSmallViewport }) {
       showOnlyOnSmallViewport={showOnlyOnSmallViewport}
       aria-label={__('toggle main navigation', 'web-stories')}
     >
-      <MenuIcon aria-hidden={true} />
+      <MenuIcon aria-hidden />
     </TransparentButton>
   );
 }

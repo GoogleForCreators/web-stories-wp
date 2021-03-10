@@ -177,7 +177,7 @@ function MediaEditDialog({ resource, onClose }) {
 
   return (
     <Dialog
-      open={true}
+      open
       onClose={onClose}
       title={isImage ? imageDialogTitle : videoDialogTitle}
       actions={

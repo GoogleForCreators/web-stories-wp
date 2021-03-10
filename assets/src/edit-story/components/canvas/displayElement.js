@@ -155,7 +155,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
         <WithMask
           element={element}
-          fill={true}
+          fill
           box={box}
           style={{
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
@@ -179,7 +179,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             {replacementElement && (
               <WithMask
                 element={replacementElement}
-                fill={true}
+                fill
                 box={box}
                 style={{
                   opacity: opacity ? opacity / 100 : null,

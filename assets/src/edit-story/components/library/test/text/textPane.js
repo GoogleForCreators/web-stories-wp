@@ -78,7 +78,7 @@ describe('TextPane', () => {
           }}
         >
           <FontContext.Provider value={fontContextValues}>
-            <TextPane isActive={true} />
+            <TextPane isActive />
           </FontContext.Provider>
         </FlagsProvider>
       );

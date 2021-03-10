@@ -138,7 +138,7 @@ export const AllDataFetched = () => {
           <StorybookLayoutContainer>
             <Content
               {...defaultProps}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, pageSize }}
             />
           </StorybookLayoutContainer>
@@ -159,7 +159,7 @@ export const AllDataFetchedAsList = () => {
           <StorybookLayoutContainer>
             <Content
               {...defaultProps}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
             />
           </StorybookLayoutContainer>
@@ -212,7 +212,7 @@ export const NoSearchResults = () => {
               search={{
                 keyword: 'koalas',
               }}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, pageSize }}
             />
           </StorybookLayoutContainer>
