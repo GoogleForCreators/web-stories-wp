@@ -36,7 +36,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 	public static function wpSetUpBeforeClass( $factory ) {
 		$factory->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -159,7 +159,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 	public function test_create_item() {
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -177,7 +177,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
 		$request->set_param( 'post', $poster_attachment_id );
 
-		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/test-image.jpg' ) );
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -208,7 +208,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
 		$request->set_param( 'post', $revision_id );
 
-		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/test-image.jpg' ) );
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
 	}
