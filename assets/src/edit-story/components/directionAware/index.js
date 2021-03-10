@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { StyleSheetManager } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
+Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 
 /**
  * Internal dependencies
