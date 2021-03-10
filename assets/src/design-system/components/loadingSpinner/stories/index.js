@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { number } from '@storybook/addon-knobs';
+/**
  * Internal dependencies
  */
 import { LoadingSpinner } from '..';
@@ -24,5 +28,11 @@ export default {
 };
 
 export const _default = () => {
-  return <LoadingSpinner />;
+  return (
+    <LoadingSpinner
+      animationSize={number('Animation Size', 95)}
+      circleSize={number('Circle Size', 12)}
+      numCircles={number('Number of Circles', 11)}
+    />
+  );
 };
