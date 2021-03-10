@@ -152,6 +152,7 @@ const Hint = styled(Text).attrs({
  * @param {string} props.hint hint to display
  * @param {string} props.id unique id used to associate the label to the input
  * @param {string} props.label label to display
+ * @param {string} props.name name of the radio group
  * @param {Function} props.onChange change event handler
  * @param {string} props.value the value of the radio button
  * @return {Object} The radio button
@@ -186,6 +187,7 @@ Radio.propTypes = {
   hint: PropTypes.string,
   id: PropTypes.string,
   label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
 };
