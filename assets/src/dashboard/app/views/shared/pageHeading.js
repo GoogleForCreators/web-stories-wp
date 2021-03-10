@@ -51,7 +51,7 @@ const HeadlineFilters = styled.div`
 const HeaderSearch = styled.div`
   width: 208px;
   max-width: 208px;
-  min-width: 208px;
+
   margin: auto 0;
 `;
 

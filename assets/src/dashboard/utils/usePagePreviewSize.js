@@ -101,7 +101,12 @@ const sizeFromWidth = (
 };
 
 const getContainerWidth = (windowWidth) => {
-  return windowWidth > MIN_DASHBOARD_WIDTH ? windowWidth : MIN_DASHBOARD_WIDTH;
+  // Because the dashboard has a min width (MIN_DASHBOARD_WIDTH) check to see if that min should be used or the actual space of the dashboard
+  const isWindowSmallerThanMinDashboardWidth =
+    window.innerWidth < MIN_DASHBOARD_WIDTH;
+  return isWindowSmallerThanMinDashboardWidth
+    ? MIN_DASHBOARD_WIDTH
+    : windowWidth;
 };
 
 export default function usePagePreviewSize(options = {}) {
@@ -109,15 +114,14 @@ export default function usePagePreviewSize(options = {}) {
   // When the dashboard is pulled out of wordpress this id will need to be updated.
   // For now, we need to grab wordpress instead because of how the app's rendered
   const dashboardContainerRef = useRef(document.getElementById(WPBODY_ID));
+
   // BP is contingent on the actual window size
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
   const [bp, setBp] = useState(getCurrentBp(viewportWidth));
 
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    getContainerWidth(
-      dashboardContainerRef.current?.offsetWidth || window.innerWidth
-    )
+    getContainerWidth(dashboardContainerRef.current?.offsetWidth)
   );
 
   const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
