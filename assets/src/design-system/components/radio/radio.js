@@ -165,18 +165,20 @@ export function Radio({ className, hint, id, label, ...props }) {
         <InnerButton />
       </ButtonContainer>
 
-      <LabelContainer>
-        {label && (
-          <Text
-            htmlFor={inputId}
-            as="label"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
-            {label}
-          </Text>
-        )}
-        {hint && <Hint>{hint}</Hint>}
-      </LabelContainer>
+      {(label || hint) && (
+        <LabelContainer>
+          {label && (
+            <Text
+              htmlFor={inputId}
+              as="label"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {label}
+            </Text>
+          )}
+          {hint && <Hint>{hint}</Hint>}
+        </LabelContainer>
+      )}
     </Container>
   );
 }
