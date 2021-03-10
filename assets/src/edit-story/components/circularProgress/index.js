@@ -59,7 +59,7 @@ const StyledCircle = styled.circle`
 
 function CircularProgress({ size, thickness }) {
   return (
-    <CSSTransition in appear={true} timeout={0}>
+    <CSSTransition in appear timeout={0}>
       <Wrapper size={size}>
         <StyledSpinner viewBox={`${size / 2} ${size / 2} ${size} ${size}`}>
           <StyledCircle

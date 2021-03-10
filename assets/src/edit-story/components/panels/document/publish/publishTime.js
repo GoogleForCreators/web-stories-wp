@@ -122,7 +122,7 @@ function PublishTime() {
         <FieldLabel>{__('Publish', 'web-stories')}</FieldLabel>
         <StyledButton
           aria-pressed={showDatePicker}
-          aria-haspopup={true}
+          aria-haspopup
           aria-expanded={showDatePicker}
           aria-label={__('Story publish time', 'web-stories')}
           onClick={(e) => {

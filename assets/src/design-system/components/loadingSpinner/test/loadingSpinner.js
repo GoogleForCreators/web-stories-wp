@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,31 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
+import { LOADING_MESSAGE, LoadingSpinner } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Modal } from '../';
 
-describe('DesignSystem/Components/Modal', () => {
-  it('should not render a modal by default', () => {
-    const { queryByRole } = renderWithProviders(
-      <Modal onClose={jest.fn}>
-        <p>{'modal child'}</p>
-      </Modal>
-    );
+describe('LoadingSpinner', () => {
+  it('should render a loading message that is aria accessible', () => {
+    const { getByRole } = renderWithProviders(<LoadingSpinner />);
 
-    expect(queryByRole('dialog', { hidden: true })).not.toBeInTheDocument();
-  });
-
-  it('should render a modal when isOpen is true', () => {
-    const { getByRole } = renderWithProviders(
-      <Modal onClose={jest.fn} isOpen>
-        <p>{'modal child'}</p>
-      </Modal>
-    );
-
-    expect(getByRole('dialog')).toBeInTheDocument();
+    expect(getByRole('status')).toBeInTheDocument();
+    expect(getByRole('status')).toHaveTextContent(LOADING_MESSAGE);
   });
 });

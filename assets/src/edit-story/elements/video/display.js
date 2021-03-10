@@ -81,7 +81,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     <MediaDisplay
       element={element}
       mediaRef={ref}
-      showPlaceholder={true}
+      showPlaceholder
       previewMode={previewMode}
     >
       {previewMode ? (

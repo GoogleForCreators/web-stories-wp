@@ -28,13 +28,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { BEZIER } from '../../../animation/constants';
 import { themeHelpers } from '../../theme';
 
-const LOADING_MESSAGE = __('Loading', 'web-stories');
+export const LOADING_MESSAGE = __('Loading', 'web-stories');
 
 const ANIMATION_DURATION = 0.85;
-
 const TAU = Math.PI * 2;
-
-const AriaOnlyAlert = styled.span(themeHelpers.visuallyHidden);
 
 const getAngleOfCircle = (index, numCircles) => {
   return (TAU * index) / numCircles;
@@ -47,6 +44,8 @@ const getCirclePosition = (angle, animationSize) => {
 
   return { x: x.toFixed(1), y: y.toFixed(1) };
 };
+
+const AriaOnlyAlert = styled.span(themeHelpers.visuallyHidden);
 
 const Container = styled.div`
   position: relative;
@@ -94,21 +93,22 @@ export function LoadingSpinner({
   numCircles = 11,
   ...props
 }) {
-  const circles = useMemo(() => new Array(numCircles).fill(1), [numCircles]);
-  const ids = useMemo(() => circles.map(() => uuidv4()), [circles]);
+  const ids = useMemo(() => new Array(numCircles).fill(1).map(() => uuidv4()), [
+    numCircles,
+  ]);
 
   return (
     <Container animationSize={animationSize} {...props}>
       {loadingMessage && (
         <AriaOnlyAlert role="status">{loadingMessage}</AriaOnlyAlert>
       )}
-      {circles.map((_, index) => {
+      {ids.map((id, index) => {
         const angle = getAngleOfCircle(index, numCircles);
         const position = getCirclePosition(angle, animationSize);
 
         return (
           <Circle
-            key={ids[index]}
+            key={id}
             circleIndex={index}
             circleSize={circleSize}
             numCircles={numCircles}
