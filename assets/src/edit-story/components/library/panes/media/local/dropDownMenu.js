@@ -129,7 +129,7 @@ function DropDownMenu({
               onClick={onMenuOpen}
               aria-label={__('More', 'web-stories')}
               aria-pressed={isMenuOpen}
-              aria-haspopup={true}
+              aria-haspopup
               aria-expanded={isMenuOpen}
               aria-owns={isMenuOpen ? listId : null}
               id={buttonId}

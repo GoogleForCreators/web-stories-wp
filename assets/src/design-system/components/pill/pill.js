@@ -55,8 +55,8 @@ const StyledPill = styled.button(
       color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.disable};
     }
 
-    transition: color 0.6s ease 0s;
-    transition: background-color 0.6s ease 0s;
+    transition: color 0.3s ease 0s;
+    transition: background-color 0.3s ease 0s;
   `
 );
 

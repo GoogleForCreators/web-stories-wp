@@ -106,7 +106,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
         options={OPTIONS}
         selectedValue={adNetwork}
         onMenuItemClick={(_, newAdNetwork) => handleUpdate(newAdNetwork)}
-        fillWidth={true}
+        fillWidth
       />
 
       {message && (
