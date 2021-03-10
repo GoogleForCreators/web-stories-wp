@@ -84,6 +84,8 @@ class Stories extends WP_Widget {
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
 
+		$instance = wp_parse_args( $instance, $this->default_values() );
+
 		$title = $instance['title'];
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
@@ -93,12 +95,12 @@ class Stories extends WP_Widget {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
-		$instance['number_of_columns'] = ! empty( $instance['number_of_columns'] ) ? (int) $instance['number_of_columns'] : 1;
-		$instance['number_of_stories'] = ! empty( $instance['number_of_stories'] ) ? (int) $instance['number_of_stories'] : 5;
-		$instance['circle_size']       = ! empty( $instance['circle_size'] ) ? (int) $instance['circle_size'] : 100;
+		$instance['number_of_columns'] = (int) $instance['number_of_columns'];
+		$instance['number_of_stories'] = (int) $instance['number_of_stories'];
+		$instance['circle_size']       = (int) $instance['circle_size'];
 
 		$story_attrs = [
-			'view_type'          => isset( $instance['view_type'] ) ? $instance['view_type'] : 'circles',
+			'view_type'          => $instance['view_type'],
 			'show_title'         => (bool) $instance['show_title'],
 			'show_excerpt'       => (bool) $instance['show_excerpt'],
 			'show_author'        => (bool) $instance['show_author'],
@@ -114,8 +116,8 @@ class Stories extends WP_Widget {
 
 		$story_args = [
 			'posts_per_page' => min( absint( $instance['number_of_stories'] ), 20 ),
-			'orderby'        => ( isset( $instance['orderby'] ) ) ? (string) $instance['orderby'] : 'post_date',
-			'order'          => ( isset( $instance['order'] ) ) ? (string) $instance['order'] : 'DESC',
+			'orderby'        => $instance['orderby'],
+			'order'          => $instance['order'],
 		];
 
 		$story_query = new Story_Query( $story_attrs, $story_args );
@@ -139,22 +141,24 @@ class Stories extends WP_Widget {
 	public function form( $instance ) {
 		$this->enqueue_scripts();
 
-		$title              = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Web Stories', 'web-stories' );
+		$instance = wp_parse_args( $instance, $this->default_values() );
+
+		$title              = $instance['title'];
 		$view_types         = $this->get_layouts();
-		$current_view_type  = ! empty( $instance['view_type'] ) ? (string) $instance['view_type'] : 'circles';
-		$show_title         = ! empty( $instance['show_title'] ) ? (bool) $instance['show_title'] : '';
-		$show_author        = ! empty( $instance['show_author'] ) ? (bool) $instance['show_author'] : '';
-		$show_date          = ! empty( $instance['show_date'] ) ? (bool) $instance['show_date'] : '';
-		$show_excerpt       = ! empty( $instance['show_excerpt'] ) ? (bool) $instance['show_excerpt'] : '';
-		$show_archive_link  = ! empty( $instance['show_archive_link'] ) ? (bool) $instance['show_archive_link'] : '';
-		$archive_link_label = ! empty( $instance['archive_link_label'] ) ? $instance['archive_link_label'] : __( 'View all stories', 'web-stories' );
-		$circle_size        = ! empty( $instance['circle_size'] ) ? (int) $instance['circle_size'] : 100;
-		$sharp_corners      = ! empty( $instance['sharp_corners'] ) ? (int) $instance['sharp_corners'] : '';
-		$image_alignment    = ! empty( $instance['image_alignment'] ) ? (string) $instance['image_alignment'] : 'left';
-		$number_of_columns  = ! empty( $instance['number_of_columns'] ) ? (int) $instance['number_of_columns'] : 1;
-		$number_of_stories  = ! empty( $instance['number_of_stories'] ) ? (int) $instance['number_of_stories'] : 5;
-		$orderby            = ! empty( $instance['orderby'] ) ? (string) $instance['orderby'] : 'post_date';
-		$order              = ! empty( $instance['order'] ) ? (string) $instance['order'] : 'DESC';
+		$current_view_type  = (string) $instance['view_type'];
+		$show_title         = (bool) $instance['show_title'];
+		$show_author        = (bool) $instance['show_author'];
+		$show_date          = (bool) $instance['show_date'];
+		$show_excerpt       = (bool) $instance['show_excerpt'];
+		$show_archive_link  = (bool) $instance['show_archive_link'];
+		$archive_link_label = $instance['archive_link_label'];
+		$circle_size        = (int) $instance['circle_size'];
+		$sharp_corners      = (int) $instance['sharp_corners'];
+		$image_alignment    = (string) $instance['image_alignment'];
+		$number_of_columns  = (int) $instance['number_of_columns'];
+		$number_of_stories  = (int) $instance['number_of_stories'];
+		$orderby            = (string) $instance['orderby'];
+		$order              = (string) $instance['order'];
 
 		$this->input(
 			[
@@ -376,24 +380,54 @@ class Stories extends WP_Widget {
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                       = [];
-		$instance['title']              = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
-		$instance['view_type']          = ( ! empty( $new_instance['view_type'] ) ) ? $new_instance['view_type'] : '';
-		$instance['show_title']         = ( isset( $new_instance['show_title'] ) ) ? 1 : '';
-		$instance['show_excerpt']       = ( isset( $new_instance['show_excerpt'] ) ) ? 1 : '';
-		$instance['show_author']        = ( isset( $new_instance['show_author'] ) ) ? 1 : '';
-		$instance['show_date']          = ( isset( $new_instance['show_date'] ) ) ? 1 : '';
-		$instance['show_archive_link']  = ( isset( $new_instance['show_archive_link'] ) ) ? 1 : '';
-		$instance['image_alignment']    = ( isset( $new_instance['image_alignment'] ) ) ? $new_instance['image_alignment'] : '';
+		$instance = [];
+
+		$new_instance = wp_parse_args( $new_instance, $this->default_values() );
+
+		$instance['title']              = wp_strip_all_tags( $new_instance['title'] );
+		$instance['view_type']          = $new_instance['view_type'];
+		$instance['show_title']         = $new_instance['show_title'];
+		$instance['show_excerpt']       = $new_instance['show_excerpt'];
+		$instance['show_author']        = $new_instance['show_author'];
+		$instance['show_date']          = $new_instance['show_date'];
+		$instance['show_archive_link']  = $new_instance['show_archive_link'];
+		$instance['image_alignment']    = $new_instance['image_alignment'];
 		$instance['number_of_columns']  = min( absint( $new_instance['number_of_columns'] ), 4 );
 		$instance['number_of_stories']  = min( absint( $new_instance['number_of_stories'] ), 20 );
 		$instance['circle_size']        = min( absint( $new_instance['circle_size'] ), 150 );
-		$instance['archive_link_label'] = isset( $new_instance['archive_link_label'] ) ? (string) $new_instance['archive_link_label'] : '';
-		$instance['sharp_corners']      = ( isset( $new_instance['sharp_corners'] ) ) ? 1 : '';
-		$instance['orderby']            = ( isset( $new_instance['orderby'] ) ) ? (string) $new_instance['orderby'] : 'post_date';
-		$instance['order']              = ( isset( $new_instance['order'] ) ) ? (string) $new_instance['order'] : 'DESC';
+		$instance['archive_link_label'] = $new_instance['archive_link_label'];
+		$instance['sharp_corners']      = $new_instance['sharp_corners'];
+		$instance['orderby']            = $new_instance['orderby'];
+		$instance['order']              = $new_instance['order'];
 
 		return $instance;
+	}
+
+	/**
+	 * Default values of an instance.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return array
+	 */
+	private function default_values() {
+		return [
+			'title'              => esc_html__( 'Web Stories', 'web-stories' ),
+			'view_type'          => 'circles',
+			'show_title'         => '',
+			'show_excerpt'       => '',
+			'show_author'        => '',
+			'show_date'          => '',
+			'show_archive_link'  => '',
+			'image_alignment'    => 'left',
+			'number_of_columns'  => 1,
+			'number_of_stories'  => 5,
+			'circle_size'        => 100,
+			'archive_link_label' => __( 'View all stories', 'web-stories' ),
+			'sharp_corners'      => '',
+			'orderby'            => 'post_date',
+			'order'              => 'DESC',
+		];
 	}
 
 	/**
