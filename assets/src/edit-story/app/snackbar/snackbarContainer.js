@@ -17,14 +17,15 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import { Snackbar } from '../../../design-system';
+import { Placement } from '../../../design-system/components/snackbar/constants';
 import { SnackbarNotification } from './types';
 
 const StyledSnackbar = styled(Snackbar.Message)`
@@ -96,7 +97,7 @@ function SnackbarContainer({
       ? [...notifications].reverse()
       : notifications;
 
-  const _handleDismiss = useCallback(
+  const handleDismiss = useCallback(
     (notification) => () => {
       onRemove(notification);
       notification.onDismiss?.();
@@ -120,8 +121,8 @@ function SnackbarContainer({
               <Component
                 aria-label={notification.message}
                 placement={placement}
-                handleDismiss={_handleDismiss(notification)}
-                handleAction={notification.onAction}
+                onDismiss={handleDismiss(notification)}
+                onAction={notification.onAction}
                 actionLabel={notification.actionLabel}
                 message={notification.message}
                 showCloseButton={Boolean(notification.dismissable)}
@@ -141,14 +142,7 @@ SnackbarContainer.propTypes = {
   component: PropTypes.elementType,
   notifications: PropTypes.arrayOf(SnackbarNotification),
   onRemove: PropTypes.func.isRequired,
-  placement: PropTypes.oneOf([
-    'top',
-    'bottom',
-    'top-left',
-    'top-right',
-    'bottom-left',
-    'bottom-right',
-  ]).isRequired,
+  placement: Placement.isRequired,
 };
 
 export default SnackbarContainer;

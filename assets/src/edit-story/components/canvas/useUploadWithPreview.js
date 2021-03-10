@@ -105,6 +105,7 @@ function useUploadWithPreview() {
       deleteElementsByResourceId({ id });
       showSnackbar({
         message: __('Upload failed, the element was removed', 'web-stories'),
+        dismissable: true,
       });
     },
     [deleteElementsByResourceId, showSnackbar]

@@ -169,6 +169,7 @@ function MediaEditDialog({ resource, onClose }) {
       trackError('local_media_edit', err.message);
       showSnackbar({
         message: __('Failed to update, please try again.', 'web-stories'),
+        dismissable: true,
       });
     }
   }, [altText, id, onClose, showSnackbar, updateMedia, updateMediaElement]);

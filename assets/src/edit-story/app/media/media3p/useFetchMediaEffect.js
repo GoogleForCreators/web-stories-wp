@@ -100,7 +100,10 @@ export default function useFetchMediaEffect({
         });
       } catch (e) {
         fetchMediaError({ provider, pageToken });
-        showSnackbar({ message: PROVIDERS[provider].fetchMediaErrorMessage });
+        showSnackbar({
+          message: PROVIDERS[provider].fetchMediaErrorMessage,
+          dismissable: true,
+        });
       }
     }
 

@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 
 export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX = 10000;
 export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN = 1200;
 export const DEFAULT_MESSAGE_Z_INDEX = 15;
+
+export const Placement = PropTypes.oneOf([
+  'top-left',
+  'bottom-left',
+  'top-right',
+  'bottom-right',
+  'top',
+  'bottom',
+]);
