@@ -110,7 +110,7 @@ export const _default = () => {
             name="threeLight"
             value={inputState.threeLight}
             onChange={handleChange}
-            label={text('TextArea 4 Label', 'Disabled')}
+            label={text('TextArea 3 Label', 'Disabled')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
             disabled
@@ -121,10 +121,10 @@ export const _default = () => {
             name="fourLight"
             value={inputState.fourLight}
             onChange={handleChange}
-            label={text('TextArea 4 Label', 'Normal')}
+            label={text('TextArea 4 Label', 'With counter')}
             hint={text('Hint', 'Hint')}
             placeholder="placeholder"
-            showCount={true}
+            showCount
             maxLength={20}
           />
         </Row>
@@ -170,10 +170,10 @@ export const _default = () => {
               name="fourDark"
               value={inputState.fourDark}
               onChange={handleChange}
-              label={text('TextArea 4 Label', 'Normal')}
+              label={text('TextArea 4 Label', 'With counter')}
               hint={text('Hint', 'Hint')}
               placeholder="placeholder"
-              showCount={true}
+              showCount
               maxLength={200}
             />
           </Row>

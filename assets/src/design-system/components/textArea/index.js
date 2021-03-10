@@ -18,7 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef, useMemo, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -28,8 +35,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
-import labelAccessibilityValidator from '../../utils/labelAccessibilityValidator';
-import useInputEventHandlers from '../../utils/useInputEventHandlers';
+import {
+  useInputEventHandlers,
+  labelAccessibilityValidator,
+} from '../../utils';
 
 const Container = styled.div`
   position: relative;
@@ -81,13 +90,13 @@ const StyledTextArea = styled.textarea(
     outline: none;
     color: ${theme.colors.fg.primary};
     resize: none;
+    ${themeHelpers.scrollbarCSS};
 
     ${themeHelpers.expandPresetStyles({
-      preset: {
-        ...theme.typography.presets.paragraph[
+      preset:
+        theme.typography.presets.paragraph[
           THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
         ],
-      },
       theme,
     })};
 
@@ -96,7 +105,7 @@ const StyledTextArea = styled.textarea(
       border-color: ${theme.colors.border.disable};
     }
 
-    :active:enabled {
+    :active {
       color: ${theme.colors.fg.primary};
     }
   `
@@ -125,29 +134,40 @@ export const TextArea = forwardRef(
       showCount = false,
       maxLength,
       isIndeterminate = false,
+      onChange,
       ...props
     },
     ref
   ) => {
     const textAreaId = useMemo(() => id || uuidv4(), [id]);
     const textAreaRef = useRef(null);
-    const [focused, setFocused] = useState(false);
+    const [currentValue, setCurrentValue] = useState(value);
 
-    const hasMaxLength = typeof maxLength === 'number';
-    const hasCounter = showCount && hasMaxLength;
+    const hasCounter = showCount && maxLength > 0;
 
-    const { handleBlur, handleFocus } = useInputEventHandlers({
+    const { handleBlur, handleFocus, isFocused } = useInputEventHandlers({
       forwardedRef: ref,
       inputRef: textAreaRef,
-      focused,
-      setFocused,
       onBlur,
       onFocus,
     });
 
-    let displayedValue = hasMaxLength
-      ? value?.substring(0, maxLength - 1)
-      : value;
+    // Change happens only once blurring to avoid repeated onChange calls for each letter change.
+    const handleChange = useCallback(
+      (evt) => {
+        if (currentValue !== value) {
+          onChange(evt);
+        }
+      },
+      [currentValue, onChange, value]
+    );
+
+    // If new value comes from the outer world, update the local, too.
+    useEffect(() => {
+      setCurrentValue(value);
+    }, [value]);
+
+    let displayedValue = currentValue;
     if (isIndeterminate) {
       // Display placeholder if value couldn't be determined.
       displayedValue = '';
@@ -160,14 +180,19 @@ export const TextArea = forwardRef(
             {label}
           </Label>
         )}
-        <InputContainer focused={focused} hasError={hasError}>
+        <InputContainer focused={isFocused} hasError={hasError}>
           <StyledTextArea
             id={textAreaId}
             disabled={disabled}
             ref={ref || textAreaRef}
-            onBlur={handleBlur}
+            onBlur={(evt) => {
+              handleChange(evt);
+              handleBlur(evt);
+            }}
             onFocus={handleFocus}
             value={displayedValue}
+            maxLength={maxLength}
+            onChange={(evt) => setCurrentValue(evt.target.value)}
             {...props}
           />
           {hasCounter && (
