@@ -1,10 +1,17 @@
 .github
 .storybook
+.wordpress-org
 __mocks__
+__static__
 assets/css
+assets/js
 bin
 build
 docs
 node_modules
+patches
 tests
+third-party
 vendor
+/*.js
+/*.cjs
