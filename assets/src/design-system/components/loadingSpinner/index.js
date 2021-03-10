@@ -28,13 +28,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { BEZIER } from '../../../animation/constants';
 import { themeHelpers } from '../../theme';
 
-const LOADING_MESSAGE = __('Loading', 'web-stories');
+export const LOADING_MESSAGE = __('Loading', 'web-stories');
 
 const ANIMATION_DURATION = 0.85;
-
 const TAU = Math.PI * 2;
-
-const AriaOnlyAlert = styled.span(themeHelpers.visuallyHidden);
 
 const getAngleOfCircle = (index, numCircles) => {
   return (TAU * index) / numCircles;
@@ -47,6 +44,8 @@ const getCirclePosition = (angle, animationSize) => {
 
   return { x: x.toFixed(1), y: y.toFixed(1) };
 };
+
+const AriaOnlyAlert = styled.span(themeHelpers.visuallyHidden);
 
 const Container = styled.div`
   position: relative;
