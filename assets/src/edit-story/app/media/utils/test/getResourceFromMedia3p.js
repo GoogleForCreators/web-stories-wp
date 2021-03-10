@@ -82,6 +82,7 @@ describe('getResourceFromMedia3p', () => {
       title: 'NYC Postcard',
       alt: null,
       local: false,
+      isPlaceholder: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -166,6 +167,7 @@ describe('getResourceFromMedia3p', () => {
       title: 'NYC Postcard',
       alt: null,
       local: false,
+      isPlaceholder: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -366,6 +368,7 @@ describe('getResourceFromMedia3p', () => {
       title: undefined,
       alt: null,
       local: false,
+      isPlaceholder: false,
       poster: undefined,
       posterId: undefined,
       sizes: {

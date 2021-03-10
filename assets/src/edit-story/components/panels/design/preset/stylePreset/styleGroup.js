@@ -31,15 +31,14 @@ import StyleItem from './styleItem';
 const Group = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  grid-column-gap: 20px;
+  grid-row-gap: 16px;
 `;
 
-const STYLE_WIDTH = 112;
+const STYLE_WIDTH = 128;
 const ButtonWrapper = styled.div`
   height: ${SAVED_STYLE_HEIGHT}px;
   width: ${STYLE_WIDTH}px;
-  margin: auto;
 `;
 
 function StyleGroup({ styles, isEditMode, handleClick }) {

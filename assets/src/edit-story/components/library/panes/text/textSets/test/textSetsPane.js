@@ -28,7 +28,7 @@ import APIContext from '../../../../../../app/api/context';
 import ConfigContext from '../../../../../../app/config/context';
 import { renderWithTheme } from '../../../../../../testUtils';
 import StoryContext from '../../../../../../app/story/context';
-import TextSets from '../textSets';
+import TextSetsPane from '../textSetsPane';
 
 function setup() {
   const libraryValue = {
@@ -73,7 +73,7 @@ function setup() {
             <FontContext.Provider value={fontsValue}>
               <LibraryContext.Provider value={libraryValue}>
                 <MockPane>
-                  {(paneRef) => <TextSets paneRef={paneRef} />}
+                  {(paneRef) => <TextSetsPane paneRef={paneRef} />}
                 </MockPane>
               </LibraryContext.Provider>
             </FontContext.Provider>

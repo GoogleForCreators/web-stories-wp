@@ -123,10 +123,11 @@ function createResource({
   lengthFormatted,
   title,
   alt,
-  local,
   sizes,
   attribution,
   output,
+  local,
+  isPlaceholder,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -142,10 +143,11 @@ function createResource({
     lengthFormatted,
     title,
     alt,
-    local,
     sizes,
     attribution,
     output,
+    local,
+    isPlaceholder,
   };
 }
 

@@ -22,13 +22,18 @@ import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../../../../../../design-system';
+import {
+  useKeyDownEffect,
+  Tooltip,
+  PLACEMENT,
+} from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
 import Attribution from './attribution';
@@ -92,20 +97,7 @@ const UploadingIndicator = styled.div`
   }
 `;
 
-/**
- * Get a formatted element for different media types.
- *
- * @param {Object} param Parameters object
- * @param {number} param.index Index of the media element in the gallery.
- * @param {Object} param.resource Resource object
- * @param {number} param.width Width that element is inserted into editor.
- * @param {number} param.height Height that element is inserted into editor.
- * @param {string?} param.margin The margin in around the element
- * @param {Function} param.onInsert Insertion callback.
- * @param {string} param.providerType Which provider the element is from.
- * @return {null|*} Element or null if does not map to video/image.
- */
-const MediaElement = ({
+function Element({
   index,
   resource,
   width: requestedWidth,
@@ -113,7 +105,7 @@ const MediaElement = ({
   margin,
   onInsert,
   providerType,
-}) => {
+}) {
   const {
     id: resourceId,
     src,
@@ -280,7 +272,47 @@ const MediaElement = ({
       </InnerContainer>
     </Container>
   );
+}
+
+Element.propTypes = {
+  index: PropTypes.number.isRequired,
+  resource: PropTypes.object,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  margin: PropTypes.string,
+  onInsert: PropTypes.func,
+  providerType: PropTypes.string,
 };
+
+/**
+ * Get a formatted element for different media types.
+ *
+ * @param {Object} props Component props.
+ * @param {number} props.index Index of the media element in the gallery.
+ * @param {Object} props.resource Resource object
+ * @param {number} props.width Width that element is inserted into editor.
+ * @param {number} props.height Height that element is inserted into editor.
+ * @param {string?} props.margin The margin in around the element
+ * @param {Function} props.onInsert Insertion callback.
+ * @param {string} props.providerType Which provider the element is from.
+ * @return {null|*} Element or null if does not map to video/image.
+ */
+function MediaElement(props) {
+  const { isTranscoding } = props.resource;
+
+  if (isTranscoding) {
+    return (
+      <Tooltip
+        placement={PLACEMENT.BOTTOM}
+        title={__('Video optimization in progress', 'web-stories')}
+      >
+        <Element {...props} />
+      </Tooltip>
+    );
+  }
+
+  return <Element {...props} />;
+}
 
 MediaElement.propTypes = {
   index: PropTypes.number.isRequired,

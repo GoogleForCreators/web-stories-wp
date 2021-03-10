@@ -24,7 +24,7 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../design-system';
+import { Icons, Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import ColorAdd from './colorAdd';
 
 const InlineIcon = styled(Icons.Plus)`
@@ -45,17 +45,15 @@ const Wrapper = styled.div`
   line-height: 20px;
 `;
 
-// @todo Use color from design system when theme reference changes.
-const Note = styled.div`
-  font-size: 14px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
+const Note = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
   margin-bottom: 10px;
 `;
 
 function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
   return (
     <Wrapper>
-      <Note>
+      <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
             i: <InlineIcon />,

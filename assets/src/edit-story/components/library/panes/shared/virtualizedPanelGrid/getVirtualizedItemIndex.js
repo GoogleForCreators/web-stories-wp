@@ -15,25 +15,10 @@
  */
 
 /**
- * External dependencies
+ * @param {Object} props             All props.
+ * @param {number} props.rowIndex    Identifies the virtualized row index.
+ * @param {number} props.columnIndex Identifies the virtualized column index.
+ * @return {number} itemIndex        Returns the true index of an item in a virtualized grid
  */
-import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-
-import { FloatingTabLabel } from './components';
-
-export default function FloatingPill({ children, isSelected = false }) {
-  return (
-    <FloatingTabLabel isSelected={isSelected} data-testid="floating-pill-label">
-      {children}
-    </FloatingTabLabel>
-  );
-}
-
-FloatingPill.propTypes = {
-  children: PropTypes.node.isRequired,
-  isSelected: PropTypes.bool,
-};
+export const getVirtualizedItemIndex = ({ columnIndex, rowIndex }) =>
+  columnIndex === 0 ? rowIndex * 2 : rowIndex * 2 + 1;

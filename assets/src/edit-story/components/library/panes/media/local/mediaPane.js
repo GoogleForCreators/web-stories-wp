@@ -41,10 +41,7 @@ import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import createError from '../../../../../utils/createError';
-import {
-  getResourceFromMediaPicker,
-  getTypeFromMime,
-} from '../../../../../app/media/utils';
+import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
   PaneHeader,
@@ -195,7 +192,7 @@ function MediaPane(props) {
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
 
-      if (!resource.posterId) {
+      if (!resource.posterId && !resource.local) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
         uploadVideoPoster(resource.id, mediaPickerEl.url);
@@ -242,22 +239,6 @@ function MediaPane(props) {
     },
     [insertElement]
   );
-
-  const filterResource = useCallback(
-    ({ mimeType, width, height }) => {
-      const filterByMimeTypeAllowed = allowedMimeTypes.includes(mimeType);
-      const filterByMediaType =
-        !mediaType ||
-        mediaType === FILTER_NONE ||
-        mediaType === getTypeFromMime(mimeType);
-      const filterByValidMedia = width && height;
-
-      return filterByMimeTypeAllowed && filterByMediaType && filterByValidMedia;
-    },
-    [allowedMimeTypes, mediaType]
-  );
-
-  const resources = media.filter(filterResource);
 
   const onSearch = (value) => {
     const trimText = value.trim();
@@ -333,8 +314,8 @@ function MediaPane(props) {
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery
-            providerType={'local'}
-            resources={resources}
+            providerType="local"
+            resources={media}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}
             hasMore={hasMore}

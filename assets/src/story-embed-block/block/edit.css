@@ -36,9 +36,11 @@
   height: inherit;
 }
 .wp-block-web-stories-embed.alignleft .components-resizable-box__container {
+  /*!rtl:ignore*/
   margin-right: auto;
 }
 .wp-block-web-stories-embed.alignright .components-resizable-box__container {
+  /*!rtl:ignore*/
   margin-left: auto;
 }
 .wp-block-web-stories-embed.aligncenter .components-resizable-box__container {

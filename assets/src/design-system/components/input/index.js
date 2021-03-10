@@ -55,6 +55,13 @@ const Suffix = styled(Text)`
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.tertiary};
   white-space: nowrap;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    margin: 2px -10px;
+    display: block;
+  }
 `;
 
 const InputContainer = styled.div(

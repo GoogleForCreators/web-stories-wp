@@ -163,7 +163,7 @@ function MediaEditDialog({ resource, onClose }) {
       // Update server.
       await updateMedia(id, { alt_text: altText });
       // Update internal state.
-      updateMediaElement({ id, alt: altText });
+      updateMediaElement({ id, data: { alt: altText } });
       onClose();
     } catch (err) {
       trackError('local_media_edit', err.message);
