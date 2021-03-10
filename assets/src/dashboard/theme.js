@@ -192,11 +192,6 @@ const theme = {
       },
     },
   },
-  detailViewContentGutter: {
-    desktop: 80,
-    tablet: 40,
-    min: 10,
-  },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',
     tablet: 'screen and (max-width: 1120px)',

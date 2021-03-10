@@ -32,8 +32,7 @@ body.js {
 
 body.web-story_page_stories-dashboard {
   position: relative;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: scroll;
 }
 
 #adminmenuback {
