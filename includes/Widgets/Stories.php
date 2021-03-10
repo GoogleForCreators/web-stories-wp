@@ -443,10 +443,7 @@ class Stories extends WP_Widget {
 		);
 		?>
 	<p class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
-
-		<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
-			<?php echo esc_attr( $args['label'] ); ?>
-		</label>
+		<?php echo $this->label( $args ); ?>
 
 		<select
 			class="<?php echo esc_attr( (string) $args['classname'] ); ?>"
@@ -494,9 +491,7 @@ class Stories extends WP_Widget {
 		);
 		?>
 		<div class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
-			<label>
-				<?php echo esc_attr( $args['label'] ); ?>
-			</label>
+			<?php echo $this->label( $args ); ?>
 			<p>
 				<?php
 				foreach ( $args['options'] as $key => $type ) {
@@ -545,19 +540,12 @@ class Stories extends WP_Widget {
 			]
 		);
 
-		ob_start();
-		?>
-		<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
-			<?php echo esc_attr( (string) $args['label'] ); ?>
-		</label>
-		<?php
-		$label = ob_get_clean();
 		?>
 		<p class="<?php echo esc_attr( (string) $args['wrapper_class'] ); ?>">
 
 			<?php
 			if ( $args['label_before'] ) {
-				echo $label;
+				echo $this->label( $args );
 			}
 
 			$extra_attrs = '';
@@ -585,11 +573,39 @@ class Stories extends WP_Widget {
 
 			<?php
 			if ( ! $args['label_before'] ) {
-				echo $label;
+				echo $this->label( $args );
 			}
 			?>
 
 		</p>
 		<?php
 	}
+
+	/**
+	 * Display an label.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $args Label args.
+	 *
+	 * @return string
+	 */
+	private function label( array $args ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'id'    => '',
+				'label' => '',
+			]
+		);
+		ob_start();
+		?>
+		<label for="<?php echo esc_attr( $this->get_field_id( $args['id'] ) ); ?>">
+			<?php echo esc_html( (string) $args['label'] ); ?>
+		</label>
+		<?php
+
+		return (string) ob_get_clean();
+	}
+
 }
