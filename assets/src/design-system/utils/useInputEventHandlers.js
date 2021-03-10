@@ -17,42 +17,37 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-function useInputEventHandlers({
-  inputRef,
-  forwardedRef,
-  focused,
-  setFocused,
-  onFocus,
-  onBlur,
-}) {
+function useInputEventHandlers({ inputRef, forwardedRef, onFocus, onBlur }) {
+  const [isFocused, setIsFocused] = useState(false);
   useEffect(() => {
-    // focus input when focused state is set
-    if (focused && forwardedRef?.current) {
+    // focus input when isFocused state is set
+    if (isFocused && forwardedRef?.current) {
       forwardedRef.current?.select();
-    } else if (focused) {
+    } else if (isFocused) {
       inputRef.current?.select();
     }
-  }, [focused, forwardedRef, inputRef]);
+  }, [isFocused, forwardedRef, inputRef]);
 
   const handleFocus = useCallback(
     (ev) => {
       onFocus?.(ev);
-      setFocused(true);
+      setIsFocused(true);
     },
-    [onFocus, setFocused]
+    [onFocus, setIsFocused]
   );
   const handleBlur = useCallback(
     (ev) => {
       onBlur?.(ev);
-      setFocused(false);
+      setIsFocused(false);
     },
-    [onBlur, setFocused]
+    [onBlur, setIsFocused]
   );
   return {
     handleBlur,
     handleFocus,
+    isFocused,
   };
 }
 

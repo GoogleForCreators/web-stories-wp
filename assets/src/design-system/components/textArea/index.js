@@ -141,16 +141,13 @@ export const TextArea = forwardRef(
   ) => {
     const textAreaId = useMemo(() => id || uuidv4(), [id]);
     const textAreaRef = useRef(null);
-    const [focused, setFocused] = useState(false);
     const [currentValue, setCurrentValue] = useState(value);
 
     const hasCounter = showCount && maxLength > 0;
 
-    const { handleBlur, handleFocus } = useInputEventHandlers({
+    const { handleBlur, handleFocus, isFocused } = useInputEventHandlers({
       forwardedRef: ref,
       inputRef: textAreaRef,
-      focused,
-      setFocused,
       onBlur,
       onFocus,
     });
@@ -183,7 +180,7 @@ export const TextArea = forwardRef(
             {label}
           </Label>
         )}
-        <InputContainer focused={focused} hasError={hasError}>
+        <InputContainer focused={isFocused} hasError={hasError}>
           <StyledTextArea
             id={textAreaId}
             disabled={disabled}

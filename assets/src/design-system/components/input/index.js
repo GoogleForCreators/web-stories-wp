@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef, useMemo, useRef, useState } from 'react';
+import { forwardRef, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -152,20 +152,17 @@ export const Input = forwardRef(
   ) => {
     const inputId = useMemo(() => id || uuidv4(), [id]);
     const inputRef = useRef(null);
-    const [focused, setFocused] = useState(false);
 
-    const { handleBlur, handleFocus } = useInputEventHandlers({
+    const { handleBlur, handleFocus, isFocused } = useInputEventHandlers({
       forwardedRef: ref,
       inputRef,
-      focused,
-      setFocused,
       onBlur,
       onFocus,
     });
 
     let displayedValue = value;
     if (unit && value.length) {
-      displayedValue = `${value}${!focused ? `${unit}` : ''}`;
+      displayedValue = `${value}${!isFocused ? `${unit}` : ''}`;
     }
     if (isIndeterminate) {
       // Display placeholder if value couldn't be determined.
@@ -180,7 +177,7 @@ export const Input = forwardRef(
             {label}
           </Label>
         )}
-        <InputContainer focused={focused} hasError={hasError}>
+        <InputContainer focused={isFocused} hasError={hasError}>
           <StyledInput
             id={inputId}
             disabled={disabled}
