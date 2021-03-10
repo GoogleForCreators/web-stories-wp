@@ -27,7 +27,6 @@ import { useRef } from 'react';
 import { Row } from '../../../form';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
-import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 import { TextArea } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
@@ -46,14 +45,11 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
   const ref = useRef(null);
-  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
 
   return (
     <SimplePanel
-      css={highlight && styles.FLASH}
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
-      isPersistable={!highlight}
     >
       <Row>
         <TextArea
@@ -68,7 +64,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
           }
           value={alt || ''}
           onChange={(evt) =>
-            pushUpdate({ alt: evt?.target?.value || null }, true)
+            pushUpdate({ alt: evt?.target?.value?.trim() || null }, true)
           }
           aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
