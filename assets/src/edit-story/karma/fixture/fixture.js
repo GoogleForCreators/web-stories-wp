@@ -469,7 +469,7 @@ class ComponentStub {
       return (
         <>
           <HookExecutor key={refresher} hooks={hooks} />
-          <Impl _wrapped={true} ref={ref} {...props} />
+          <Impl _wrapped ref={ref} {...props} />
         </>
       );
     });

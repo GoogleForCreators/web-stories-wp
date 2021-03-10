@@ -254,7 +254,7 @@ function StoriesView({
       {ActiveView}
       {isActiveDeleteStoryDialog && (
         <Dialog
-          isOpen={true}
+          isOpen
           contentLabel={__('Dialog to confirm deleting a story', 'web-stories')}
           title={__('Delete Story', 'web-stories')}
           onClose={() => {

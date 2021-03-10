@@ -221,7 +221,7 @@ describe('DropDown <DropDown />', () => {
       <DropDown
         options={basicDropDownOptions}
         dropDownLabel={'my label'}
-        disabled={true}
+        disabled
       />
     );
 

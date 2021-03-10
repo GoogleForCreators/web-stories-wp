@@ -65,7 +65,7 @@ function EditCropMoveable({
       className="crop-moveable"
       targets={cropBox}
       origin={false}
-      resizable={true}
+      resizable
       onResize={({
         width: resizeWidth,
         height: resizeHeight,
@@ -138,7 +138,7 @@ function EditCropMoveable({
           focalY: flip?.vertical ? 100 - resizeFocalY : resizeFocalY,
         });
       }}
-      snappable={true}
+      snappable
       // todo@: it looks like resizing bounds are not supported.
       verticalGuidelines={[x - offsetX, x - offsetX + mediaWidth]}
       horizontalGuidelines={[y - offsetY, y - offsetY + mediaHeight]}

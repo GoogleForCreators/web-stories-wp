@@ -33,7 +33,7 @@ describe('DesignSystem/Components/Modal', () => {
 
   it('should render a modal when isOpen is true', () => {
     const { getByRole } = renderWithProviders(
-      <Modal onClose={jest.fn} isOpen={true}>
+      <Modal onClose={jest.fn} isOpen>
         <p>{'modal child'}</p>
       </Modal>
     );
