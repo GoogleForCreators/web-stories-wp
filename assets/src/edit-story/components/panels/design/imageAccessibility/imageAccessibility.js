@@ -23,11 +23,9 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useRef } from 'react';
-import { Row } from '../../../form';
+import { Row, TextArea } from '../../../form';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
-import { TextArea } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const DEFAULT_RESOURCE = { alt: null };
@@ -44,7 +42,6 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
-  const ref = useRef(null);
 
   return (
     <SimplePanel
@@ -53,7 +50,6 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     >
       <Row>
         <TextArea
-          ref={ref}
           placeholder={
             alt === MULTIPLE_VALUE
               ? MULTIPLE_DISPLAY_VALUE
