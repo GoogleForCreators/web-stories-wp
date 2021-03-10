@@ -50,7 +50,7 @@ const ButtonContainer = styled.div`
 const LabelContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
+  margin: 0 12px;
   gap: ${TEXT_GAP_HEIGHT}px;
 `;
 
@@ -115,6 +115,8 @@ const HiddenInput = styled.input.attrs({ type: 'radio' })`
   }
 
   :disabled {
+    cursor: auto;
+
     ~ ${RadioBorder} {
       border-color: ${({ theme }) => theme.colors.border.disable};
     }
