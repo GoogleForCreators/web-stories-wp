@@ -27,7 +27,6 @@ import styled from 'styled-components';
  */
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { TypographyPresets } from '../typography';
-import { LoadingSpinner } from '../../../design-system';
 
 const ScrollMessage = styled.div`
   ${TypographyPresets.Small};
@@ -36,11 +35,6 @@ const ScrollMessage = styled.div`
   margin: -100px auto 0;
   text-align: center;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 const AriaOnlyAlert = styled.span(visuallyHiddenStyles);
@@ -89,6 +83,7 @@ const InfiniteScroller = ({
   canLoadMore,
   isLoading,
   loadingAriaMessage = __('Loading more stories', 'web-stories'),
+  loadingMessage = __('Loading…', 'web-stories'),
 }) => {
   const loadingRef = useRef(null);
   const onLoadMoreRef = useRef(onLoadMore);
@@ -160,13 +155,7 @@ const InfiniteScroller = ({
       {loadingAlert && (
         <AriaOnlyAlert role="status">{loadingAlert}</AriaOnlyAlert>
       )}
-      {!canLoadMore ? (
-        allDataLoadedMessage
-      ) : (
-        <LoadingContainer>
-          <LoadingSpinner animationSize={50} circleSize={6} />
-        </LoadingContainer>
-      )}
+      {!canLoadMore ? allDataLoadedMessage : loadingMessage}
     </ScrollMessage>
   );
 };
@@ -178,5 +167,6 @@ InfiniteScroller.propTypes = {
   allDataLoadedAriaMessage: PropTypes.string,
   canLoadMore: PropTypes.bool,
   loadingAriaMessage: PropTypes.string,
+  loadingMessage: PropTypes.string,
 };
 export default InfiniteScroller;

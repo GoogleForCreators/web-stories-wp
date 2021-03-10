@@ -101,7 +101,6 @@ function ExploreTemplates() {
   return (
     <Layout.Provider>
       <Header
-        isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
         templates={orderedTemplates}

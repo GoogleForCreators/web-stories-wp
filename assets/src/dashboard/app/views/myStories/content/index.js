@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -29,7 +28,6 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Headline,
-  LoadingSpinner,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { UnitsProvider } from '../../../../../edit-story/units';
@@ -39,7 +37,6 @@ import { APP_ROUTES } from '../../../../constants';
 import {
   InfiniteScroller,
   Layout,
-  LoadingContainer,
   StandardViewContentGutter,
 } from '../../../../components';
 import { StoriesPropType, StoryActionsPropType } from '../../../../types';
@@ -65,71 +62,6 @@ function Content({
   view,
   initialFocusStoryId,
 }) {
-  const pageContent = useMemo(() => {
-    if (isLoading) {
-      return (
-        <LoadingContainer>
-          <LoadingSpinner />
-        </LoadingContainer>
-      );
-    }
-
-    return stories.length > 0 ? (
-      <>
-        <StoriesView
-          filterValue={filter.value}
-          sort={sort}
-          storyActions={storyActions}
-          stories={stories}
-          view={view}
-          initialFocusStoryId={initialFocusStoryId}
-        />
-        <InfiniteScroller
-          canLoadMore={!allPagesFetched}
-          isLoading={isLoading}
-          allDataLoadedMessage={__('No more stories', 'web-stories')}
-          onLoadMore={page.requestNextPage}
-        />
-      </>
-    ) : (
-      <EmptyContentMessage>
-        <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
-          {search?.keyword
-            ? sprintf(
-                /* translators: %s: search term. */
-                __(
-                  'Sorry, we couldn\'t find any results matching "%s"',
-                  'web-stories'
-                ),
-                search.keyword
-              )
-            : __('Start telling Stories.', 'web-stories')}
-        </Headline>
-        {!search?.keyword && (
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.MEDIUM}
-            as="a"
-            href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
-          >
-            {__('Explore templates', 'web-stories')}
-          </Button>
-        )}
-      </EmptyContentMessage>
-    );
-  }, [
-    allPagesFetched,
-    filter.value,
-    initialFocusStoryId,
-    isLoading,
-    page.requestNextPage,
-    search?.keyword,
-    sort,
-    stories,
-    storyActions,
-    view,
-  ]);
-
   return (
     <Layout.Scrollable>
       <FontProvider>
@@ -140,7 +72,54 @@ function Content({
               height: view.pageSize.height,
             }}
           >
-            <StandardViewContentGutter>{pageContent}</StandardViewContentGutter>
+            <StandardViewContentGutter>
+              {stories.length > 0 ? (
+                <>
+                  <StoriesView
+                    filterValue={filter.value}
+                    sort={sort}
+                    storyActions={storyActions}
+                    stories={stories}
+                    view={view}
+                    initialFocusStoryId={initialFocusStoryId}
+                  />
+                  <InfiniteScroller
+                    canLoadMore={!allPagesFetched}
+                    isLoading={isLoading}
+                    allDataLoadedMessage={__('No more stories', 'web-stories')}
+                    onLoadMore={page.requestNextPage}
+                  />
+                </>
+              ) : (
+                <EmptyContentMessage>
+                  <Headline
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="h3"
+                  >
+                    {search?.keyword
+                      ? sprintf(
+                          /* translators: %s: search term. */
+                          __(
+                            'Sorry, we couldn\'t find any results matching "%s"',
+                            'web-stories'
+                          ),
+                          search.keyword
+                        )
+                      : __('Start telling Stories.', 'web-stories')}
+                  </Headline>
+                  {!search?.keyword && (
+                    <Button
+                      type={BUTTON_TYPES.PRIMARY}
+                      size={BUTTON_SIZES.MEDIUM}
+                      as="a"
+                      href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
+                    >
+                      {__('Explore templates', 'web-stories')}
+                    </Button>
+                  )}
+                </EmptyContentMessage>
+              )}
+            </StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>

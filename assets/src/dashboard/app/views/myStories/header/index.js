@@ -61,7 +61,6 @@ const StyledPill = styled(Pill)`
 `;
 function Header({
   filter,
-  isLoading,
   search,
   sort,
   stories,
@@ -179,7 +178,6 @@ function Header({
         showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
-        isLoading={isLoading}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
@@ -196,7 +194,6 @@ function Header({
 
 Header.propTypes = {
   filter: FilterPropTypes.isRequired,
-  isLoading: PropTypes.bool,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   stories: StoriesPropType,

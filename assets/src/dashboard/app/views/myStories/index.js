@@ -132,7 +132,6 @@ function MyStories() {
   return (
     <Layout.Provider>
       <Header
-        isLoading={isLoading && !orderedStories.length}
         filter={filter}
         search={search}
         sort={sort}

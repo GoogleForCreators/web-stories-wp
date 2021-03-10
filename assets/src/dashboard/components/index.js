@@ -34,7 +34,6 @@ export { default as NavProvider, useNavContext } from './navProvider';
 export {
   AppFrame,
   LeftRail,
-  LoadingContainer,
   PageContent,
   NavMenuButton,
 } from './pageStructure';
