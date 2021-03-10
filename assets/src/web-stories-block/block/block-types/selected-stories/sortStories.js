@@ -144,7 +144,7 @@ function SortStories({
                           >
                             <StoryPreview pageSize={pageSize} story={story} />
                             <ItemOverlay
-                              isSelected={true}
+                              isSelected
                               pageSize={pageSize}
                               storyId={story.id}
                               addItemToSelectedStories={

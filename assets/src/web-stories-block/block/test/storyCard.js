@@ -86,13 +86,13 @@ describe('StoryCard', () => {
     const { container } = render(
       <StoryCard
         title={title}
-        isShowingTitle={true}
+        isShowingTitle
         date={date}
-        isShowingDate={true}
+        isShowingDate
         author={author}
-        isShowingAuthor={true}
+        isShowingAuthor
         poster={poster}
-        isShowingExcerpt={true}
+        isShowingExcerpt
         excerpt={excerpt}
       />
     );
@@ -148,7 +148,7 @@ describe('StoryCard', () => {
         author={author}
         isShowingAuthor={false}
         poster={poster}
-        isShowingExcerpt={true}
+        isShowingExcerpt
         excerpt={excerpt}
       />
     );
