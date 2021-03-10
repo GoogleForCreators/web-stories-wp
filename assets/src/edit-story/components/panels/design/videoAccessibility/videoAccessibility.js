@@ -101,7 +101,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
             onChange={(evt) =>
               pushUpdate(
                 {
-                  alt: evt?.target?.value || null,
+                  alt: evt?.target?.value?.trim() || null,
                 },
                 true
               )

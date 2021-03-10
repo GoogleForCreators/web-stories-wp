@@ -54,24 +54,11 @@ describe('Panels/VideoAccessibility', () => {
   });
 
   it('should trim video description to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText } = renderVideoAccessibility([
-      defaultElement,
-    ]);
+    const { getByPlaceholderText } = renderVideoAccessibility([defaultElement]);
     const input = getByPlaceholderText(
       'Add assistive text for visually impaired users'
     );
-
-    fireEvent.focus(input);
-
-    for (let i = 0; i < MIN_MAX.ALT_TEXT.MAX + 10; i++) {
-      fireEvent.keyDown(input, {
-        key: '1',
-        which: 49,
-      });
-    }
-
-    fireEvent.blur(input);
-    expect(input.value).toHaveLength(MIN_MAX.ALT_TEXT.MAX);
+    expect(input.maxLength).toBe(MIN_MAX.ALT_TEXT.MAX);
   });
 
   it('should display Mixed as placeholder in case of mixed value multi-selection', () => {
