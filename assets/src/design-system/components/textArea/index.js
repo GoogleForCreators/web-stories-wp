@@ -18,14 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  forwardRef,
-  useMemo,
-  useRef,
-  useState,
-  useCallback,
-  useEffect,
-} from 'react';
+import { forwardRef, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -134,14 +127,12 @@ export const TextArea = forwardRef(
       showCount = false,
       maxLength,
       isIndeterminate = false,
-      onChange,
       ...props
     },
     ref
   ) => {
     const textAreaId = useMemo(() => id || uuidv4(), [id]);
     const textAreaRef = useRef(null);
-    const [currentValue, setCurrentValue] = useState(value);
 
     const hasCounter = showCount && maxLength > 0;
 
@@ -152,22 +143,7 @@ export const TextArea = forwardRef(
       onFocus,
     });
 
-    // Change happens only once blurring to avoid repeated onChange calls for each letter change.
-    const handleChange = useCallback(
-      (evt) => {
-        if (currentValue !== value) {
-          onChange(evt);
-        }
-      },
-      [currentValue, onChange, value]
-    );
-
-    // If new value comes from the outer world, update the local, too.
-    useEffect(() => {
-      setCurrentValue(value);
-    }, [value]);
-
-    let displayedValue = currentValue;
+    let displayedValue = value;
     if (isIndeterminate) {
       // Display placeholder if value couldn't be determined.
       displayedValue = '';
@@ -185,14 +161,10 @@ export const TextArea = forwardRef(
             id={textAreaId}
             disabled={disabled}
             ref={ref || textAreaRef}
-            onBlur={(evt) => {
-              handleChange(evt);
-              handleBlur(evt);
-            }}
             onFocus={handleFocus}
             value={displayedValue}
             maxLength={maxLength}
-            onChange={(evt) => setCurrentValue(evt.target.value)}
+            onBlur={handleBlur}
             {...props}
           />
           {hasCounter && (
