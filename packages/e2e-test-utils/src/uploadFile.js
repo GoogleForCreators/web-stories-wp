@@ -21,6 +21,8 @@ import { join, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 
+const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
+
 /**
  * Uploads a file to the Media Library, and awaits its upload.
  *
@@ -38,6 +40,7 @@ async function uploadFile(file, checkUpload = true) {
     `packages/e2e-tests/src/assets/${file}`
   );
 
+  const baseName = getFileName(file);
   const tmpFileName = join(tmpdir(), file);
   copyFileSync(testMediaPath, tmpFileName);
 
@@ -48,11 +51,11 @@ async function uploadFile(file, checkUpload = true) {
 
   // Upload successful!
   if (checkUpload) {
-    await page.waitForSelector(`.media-modal li[aria-label="${file}"]`);
+    await page.waitForSelector(`.media-modal li[aria-label="${baseName}"]`);
   }
   await page.setDefaultTimeout(3000);
 
-  return file;
+  return baseName;
 }
 
 export default uploadFile;
