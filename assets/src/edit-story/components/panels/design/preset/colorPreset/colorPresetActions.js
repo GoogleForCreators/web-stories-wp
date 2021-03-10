@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
@@ -40,7 +40,7 @@ const COLOR_GAP = 6;
 const ActionsWrapper = styled.div`
   text-align: center;
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
-  padding: 16px 16px 20px 16px;
+  padding: 8px 16px 20px 16px;
 `;
 
 const AddColorPreset = styled.button`
@@ -86,6 +86,10 @@ const DropDownWrapper = styled.div`
 const StyledDropDown = styled(DropDown)`
   background-color: transparent;
   border: 0;
+`;
+
+const menuStylesOverride = css`
+  top: -12px;
 `;
 
 const HeaderRow = styled.div`
@@ -198,6 +202,7 @@ function ColorPresetActions({ color, pushUpdate }) {
             isInline
             hasSearch={false}
             aria-label={__('Select color type', 'web-stories')}
+            menuStylesOverride={menuStylesOverride}
           />
         </DropDownWrapper>
         <ButtonWrapper>

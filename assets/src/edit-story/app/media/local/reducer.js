@@ -29,7 +29,7 @@ const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
   processing: [],
   processed: [],
-  mediaType: types.LOCAL_MEDIA_TYPE_ALL,
+  mediaType: '',
   searchTerm: '',
 };
 
@@ -107,6 +107,15 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return {
         ...state,
         media,
+      };
+    }
+
+    case types.LOCAL_MEDIA_PREPEND_MEDIA: {
+      const { media } = payload;
+
+      return {
+        ...state,
+        media: [...media, ...state.media],
       };
     }
 

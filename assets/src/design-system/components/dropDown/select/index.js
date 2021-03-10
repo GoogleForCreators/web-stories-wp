@@ -55,13 +55,16 @@ const DropDownSelect = (
     ref={ref}
     {...rest}
   >
-    <Value as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
+    <Value as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
       {activeItemLabel || placeholder}
     </Value>
 
     <Label>
       {dropDownLabel && (
-        <LabelText as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
+        <LabelText
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
           {dropDownLabel}
         </LabelText>
       )}

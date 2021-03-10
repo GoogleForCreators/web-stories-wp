@@ -25,10 +25,10 @@ export default class PageLayouts extends Container {
   }
 
   get pageLayouts() {
-    return this.getAllByRole('button');
+    return this.getAllByRole('listitem');
   }
 
   pageLayout(name) {
-    return this.getByRole('button', { name });
+    return this.getByRole('listitem', { name });
   }
 }

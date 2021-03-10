@@ -79,7 +79,7 @@ describe('PageLayoutsPane', () => {
         <ConfigContext.Provider value={configValue}>
           <APIContext.Provider value={apiValue}>
             <StoryContext.Provider value={storyContext}>
-              <PageLayoutsPane isActive={true} />
+              <PageLayoutsPane isActive />
             </StoryContext.Provider>
           </APIContext.Provider>
         </ConfigContext.Provider>

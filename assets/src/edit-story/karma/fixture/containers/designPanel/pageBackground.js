@@ -15,26 +15,23 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
+import { AbstractPanel } from './abstractPanel';
 
-import { PillLabel, ActiveChoiceIcon } from './components';
+/**
+ * The page background panel containing inputs flipping and detaching images as well as setting bg color.
+ */
+export class PageBackground extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-export default function DefaultPill({ children, isSelected = false }) {
-  return (
-    <PillLabel isSelected={isSelected} data-testid="default-pill-label">
-      {children}
-      {isSelected && <ActiveChoiceIcon />}
-    </PillLabel>
-  );
+  get flipVertical() {
+    return this.getByRole('button', { name: /Flip vertically/i });
+  }
+
+  get flipHorizontal() {
+    return this.getByRole('button', { name: /Flip horizontally/i });
+  }
 }
-
-DefaultPill.propTypes = {
-  children: PropTypes.node.isRequired,
-  isSelected: PropTypes.bool,
-};

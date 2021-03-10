@@ -201,7 +201,7 @@ function PublishPanel() {
       isPersistable={!(highlightLogo || highlightPoster)}
     >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
-      <PanelContent padding={'10px 10px 10px 20px'}>
+      <PanelContent>
         <PublishTime />
         {capabilities && capabilities.hasAssignAuthorAction && users && (
           <Row>

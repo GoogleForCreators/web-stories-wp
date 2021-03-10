@@ -25,7 +25,7 @@ describe('InfiniteScroller', () => {
 
   it('should render a loading component by default', () => {
     const { getByTestId } = renderWithProviders(
-      <InfiniteScroller canLoadMore={true} onLoadMore={onGetDataMock} />
+      <InfiniteScroller canLoadMore onLoadMore={onGetDataMock} />
     );
 
     const loadingComponent = getByTestId('load-more-on-scroll');

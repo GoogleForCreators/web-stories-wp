@@ -51,7 +51,7 @@ export const MenuContainer = styled.div(
     ${isAbsolute &&
     css`
       position: absolute;
-      top: 100%;
+      top: 0;
       left: 0;
       right: 0;
     `};

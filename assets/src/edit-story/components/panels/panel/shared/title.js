@@ -36,6 +36,7 @@ import {
 import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
 
+// If the header is collapsed, we're leaving 4px less padding to apply that from the content.
 const Header = styled.h2`
   color: ${({ theme }) => theme.colors.fg.secondary};
   background-color: ${({ isSecondary, theme }) =>
@@ -48,7 +49,8 @@ const Header = styled.h2`
   user-select: none;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
+  padding: ${({ isCollapsed }) =>
+    isCollapsed ? '14px 20px' : '14px 20px 10px 20px'};
   cursor: pointer;
 `;
 
@@ -65,6 +67,7 @@ const HeaderActions = styled.div`
 // Keeps the space for the icon even if it's not displayed.
 const IconWrapper = styled.div`
   width: 32px;
+  height: 32px;
 `;
 
 // -12px margin-left comes from 16px panel padding - 4px that it actually should be.
@@ -171,6 +174,7 @@ function Title({
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
+      isCollapsed={isCollapsed}
       {...props}
     >
       {isResizable && (
