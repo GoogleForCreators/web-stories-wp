@@ -118,6 +118,7 @@ class Stories extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::input
+	 * @covers ::label
 	 */
 	public function test_input() {
 		$function = function () {
@@ -137,6 +138,7 @@ class Stories extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::dropdown
+	 * @covers ::label
 	 */
 	public function test_dropdown() {
 		$function = function () {
@@ -156,9 +158,9 @@ class Stories extends \WP_UnitTestCase {
 		$this->assertContains( '<label', $dropdown );
 	}
 
-
 	/**
 	 * @covers ::radio
+	 * @covers ::label
 	 */
 	public function test_radio() {
 		$function = function () {
@@ -176,5 +178,20 @@ class Stories extends \WP_UnitTestCase {
 		$this->assertContains( 'checked=', $radio );
 		$this->assertContains( '<input', $radio );
 		$this->assertContains( '<label', $radio );
+	}
+
+	/**
+	 * @covers ::label
+	 */
+	public function test_label() {
+		$args = [
+			'label'    => 'Test input',
+			'id'       => '123'
+		];
+
+		$label = $this->call_private_method( self::$testee, 'label', [ $args ] );
+
+		$this->assertContains( 'Test input', $label );
+		$this->assertContains( '<label', $label );
 	}
 }
