@@ -50,7 +50,7 @@ class TinyMCE extends \WP_UnitTestCase {
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE ]->src );
-		$after = wp_scripts()->get_data( \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'after' );
+		$after = wp_scripts()->get_data( \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'data' );
 		$this->assertNotEmpty( $after );
 	}
 
