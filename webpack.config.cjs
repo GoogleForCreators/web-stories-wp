@@ -299,6 +299,7 @@ const webStoriesBlock = {
       './assets/src/web-stories-block/block/edit.css',
     ],
     'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
+    'web-stories-embed': './assets/src/web-stories-block/css/embed.css',
     ...coreThemeBlockStyles,
   },
   plugins: [
