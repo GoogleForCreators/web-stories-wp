@@ -19,14 +19,14 @@
 /**
  * External dependencies
  */
-import { readFileSync } from 'fs';
+const { readFileSync } = require('fs');
 
 /**
  * Internal dependencies
  */
-import getWebpackConfig from './webpack.config.test';
+const getWebpackConfig = require('./webpack.config.test.cjs');
 
-export default function (config) {
+module.exports = function (config) {
   let specsToRetry;
   if (config.retryFailed) {
     // Loads names of failed specs and prepares them for use in a regex.
@@ -49,10 +49,10 @@ export default function (config) {
       'karma-webpack',
       'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
-      './packages/karma-puppeteer-launcher/src/index.cjs',
-      './packages/karma-puppeteer-client/src/index.cjs',
-      './packages/karma-cuj-reporter/src/index.cjs',
-      './packages/karma-failed-tests-reporter/src/index.cjs',
+      require('./packages/karma-puppeteer-launcher/src/index.cjs'),
+      require('./packages/karma-puppeteer-client/src/index.cjs'),
+      require('./packages/karma-cuj-reporter/src/index.cjs'),
+      require('./packages/karma-failed-tests-reporter/src/index.cjs'),
     ],
 
     // Frameworks to use.

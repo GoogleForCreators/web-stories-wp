@@ -17,19 +17,19 @@
 /**
  * External dependencies
  */
-import webpack from 'webpack';
-import { resolve } from 'path';
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
  * WordPress dependencies
  */
-import DependencyExtractionWebpackPlugin from '@wordpress/dependency-extraction-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
 /**
  * Internal dependencies
  */
-import webpackConfigArray from './webpack.config';
+const webpackConfigArray = require('./webpack.config.cjs');
 
 function getConfig(group, { coverage = false } = {}) {
   const config = webpackConfigArray
@@ -43,7 +43,7 @@ function getConfig(group, { coverage = false } = {}) {
       devtool: 'inline-source-map',
       output: {
         ...webpackConfig.output,
-        path: resolve(process.cwd(), 'assets', 'testjs'),
+        path: path.resolve(process.cwd(), 'assets', 'testjs'),
       },
       plugins: [
         // DependencyExtractionWebpackPlugin and HtmlWebpackPlugin are not needed for tests and
@@ -71,4 +71,4 @@ function getConfig(group, { coverage = false } = {}) {
   return config;
 }
 
-export default getConfig;
+module.exports = getConfig;

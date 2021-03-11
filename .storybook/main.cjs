@@ -73,7 +73,7 @@ module.exports = {
       options: assetRule.options || assetRule.query,
     };
 
-    // These should be sync'd with the config in `webpack.config.js`.
+    // These should be sync'd with the config in `webpack.config.cjs`.
     config.module.rules.unshift(
       {
         test: /\.svg$/,

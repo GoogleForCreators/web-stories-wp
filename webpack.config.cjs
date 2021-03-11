@@ -17,19 +17,20 @@
 /**
  * External dependencies
  */
-import path from 'path';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import WebpackBar from 'webpackbar';
-import TerserPlugin from 'terser-webpack-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import RtlCssPlugin from 'rtlcss-webpack-plugin';
-import webpack from 'webpack';
+const path = require('path');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const RtlCssPlugin = require('rtlcss-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const WebpackBar = require('webpackbar');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
  * WordPress dependencies
  */
-import DependencyExtractionWebpackPlugin from '@wordpress/dependency-extraction-webpack-plugin';
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
 /**
  * Prevents externalizing certain packages.
@@ -196,7 +197,7 @@ const templateContent = ({ htmlWebpackPlugin }) => {
     pathname.substr(pathname.lastIndexOf('/') + 1);
 
   const chunkName = htmlWebpackPlugin.options.chunks[0];
-  const omitPrimaryChunk = (f) => f != chunkName;
+  const omitPrimaryChunk = (f) => f !== chunkName;
 
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
@@ -315,4 +316,4 @@ const activationNotice = {
   },
 };
 
-export default [editorAndDashboard, storyEmbedBlock, activationNotice];
+module.exports = [editorAndDashboard, storyEmbedBlock, activationNotice];
