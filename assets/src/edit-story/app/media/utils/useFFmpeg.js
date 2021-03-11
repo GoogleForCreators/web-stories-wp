@@ -45,38 +45,123 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  */
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
+/**
+ * Custom hook to interact with FFmpeg.
+ *
+ * @see https://ffmpeg.org/ffmpeg.html
+ *
+ * @return {{
+ * isFeatureEnabled: boolean,
+ * isFileTooLarge: (function(File): boolean),
+ * isTranscodingEnabled: boolean,
+ * canTranscodeFile: (function(File): boolean),
+ * transcodeVideo: (function(File): Promise<File>)
+ * getFirstFrameOfVideo: (function(File): Promise<File>)
+ * }} Functions and vars related to FFmpeg usage.
+ */
 function useFFmpeg() {
   const { ffmpegCoreUrl } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
+  /**
+   * Whether the video optimization flag is enabled.
+   *
+   * @type {boolean} Whether the feature flag is enabled.
+   */
   const isFeatureEnabled = useFeature('videoOptimization');
 
+  async function getFFmpegInstance(file) {
+    const { createFFmpeg, fetchFile } = await import(
+      /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
+    );
+
+    const ffmpeg = createFFmpeg({
+      corePath: ffmpegCoreUrl,
+      log: isDevelopment,
+    });
+    await ffmpeg.load();
+
+    ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+
+    return ffmpeg;
+  }
+
   /**
-   * Transcode a video using ffmpeg.
+   * Extract a video's first frame using FFmpeg.
    *
-   * @param {File} file File object of original video file.
-   * @return {Promise<File>} File object of transcoded video file.
+   * Exact seeking is not possible in most formats, so ffmpeg will seek to the closest seek point before position.
+   *
+   * @param {File} file Original video file object.
+   * @return {Promise<File>} File object for the video frame.
+   */
+  async function getFirstFrameOfVideo(file) {
+    //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+    const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
+
+    try {
+      const ffmpeg = await getFFmpegInstance(file);
+
+      const tempFileName = uuidv4() + '.jpeg';
+      const outputFileName = getFileName(file) + '.jpeg';
+
+      await ffmpeg.run(
+        // Desired position.
+        // Using as an input option (before -i) saves us some time by seeking to position.
+        '-ss',
+        '00:00:01.000',
+        // Input filename.
+        '-i',
+        file.name,
+        // Stop writing to the stream after 1 frame.
+        '-frames:v',
+        '1',
+        // Resize videos if larger than 1080x1920, preserving aspect ratio.
+        // See https://trac.ffmpeg.org/wiki/Scaling
+        '-vf',
+        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
+        // Simpler color profile
+        '-pix_fmt',
+        'yuv420p',
+        // As the name says...
+        '-preset',
+        'fast', // 'veryfast' seems to cause crashes.
+        // Output filename. MUST be different from input filename.
+        tempFileName
+      );
+
+      const data = ffmpeg.FS('readFile', tempFileName);
+      return new File(
+        [new Blob([data.buffer], { type: 'image/jpeg' })],
+        outputFileName,
+        {
+          type: 'image/jpeg',
+        }
+      );
+    } catch (err) {
+      trackError('video_transcoding', err.message);
+      throw err;
+    } finally {
+      trackTiming();
+    }
+  }
+
+  /**
+   * Transcode a video using FFmpeg.
+   *
+   * @param {File} file Original video file object.
+   * @return {Promise<File>} Transcoded video file object.
    */
   async function transcodeVideo(file) {
     //eslint-disable-next-line @wordpress/no-unused-vars-before-return
     const trackTiming = getTimeTracker('load_video_transcoding');
 
     try {
-      const { createFFmpeg, fetchFile } = await import(
-        /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
-      );
-
-      const ffmpeg = createFFmpeg({
-        corePath: ffmpegCoreUrl,
-        log: isDevelopment,
-      });
-      await ffmpeg.load();
+      const ffmpeg = await getFFmpegInstance(file);
 
       const tempFileName = uuidv4() + '.mp4';
       const outputFileName = getFileName(file) + '.mp4';
 
-      ffmpeg.FS('writeFile', file.name, await fetchFile(file));
       await ffmpeg.run(
         // Input filename.
         '-i',
@@ -117,9 +202,20 @@ function useFFmpeg() {
     }
   }
 
+  /**
+   * Determines whether the given file can be transcoded.
+   *
+   * @param {File} file File object.
+   * @return {boolean} Whether transcoding is likely possible.
+   */
   const canTranscodeFile = (file) =>
     MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES.includes(file.type);
 
+  /**
+   * Whether user opted in to video optimization.
+   *
+   * @type {boolean}
+   */
   const isTranscodingEnabled = Boolean(
     currentUser.meta?.web_stories_media_optimization
   );
@@ -130,6 +226,7 @@ function useFFmpeg() {
     canTranscodeFile,
     isFileTooLarge,
     transcodeVideo,
+    getFirstFrameOfVideo,
   };
 }
 
