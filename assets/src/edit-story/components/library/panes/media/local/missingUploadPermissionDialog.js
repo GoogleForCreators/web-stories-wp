@@ -23,16 +23,27 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Plain } from '../../../../button';
-import Dialog from '../../../../dialog';
-
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Dialog,
+} from '../../../../../../design-system';
 function MissingUploadPermissionDialog({ open, onClose }) {
   return (
     <Dialog
-      open={open}
+      isOpen={open}
       onClose={onClose}
       title={__('Access Restrictions', 'web-stories')}
-      actions={<Plain onClick={onClose}>{__('Got it', 'web-stories')}</Plain>}
+      actions={
+        <Button
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={onClose}
+        >
+          {__('Got it', 'web-stories')}
+        </Button>
+      }
       maxWidth={285}
     >
       {__(
