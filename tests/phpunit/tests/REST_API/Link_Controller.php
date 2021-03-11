@@ -21,6 +21,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 	const URL_INVALID          = 'https://https://invalid.commmm';
 	const URL_404              = 'https://404.example.com';
 	const URL_500              = 'https://500.example.com';
+	const URL_CHARACTERS       = 'https://characters.example.com';
 	const URL_EMPTY_DOCUMENT   = 'https://empty.example.com';
 	const URL_VALID_TITLE_ONLY = 'https://example.com';
 	const URL_VALID            = 'https://amp.dev';
@@ -119,6 +120,15 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 					'code' => 200,
 				],
 				'body'     => '<html></html>',
+			];
+		}
+
+		if ( false !== strpos( $url, self::URL_CHARACTERS ) ) {
+			return [
+				'response' => [
+					'code' => 200,
+				],
+				'body'     => file_get_contents( __DIR__ . '/../../data/characters.example.com.html' ),
 			];
 		}
 
@@ -237,6 +247,28 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 			'title'       => '',
 			'image'       => '',
 			'description' => '',
+		];
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+		$this->assertEquals( 1, $this->request_count );
+
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+
+	public function test_characters_url() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::URL_CHARACTERS );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => 'Chizuru Kagura estará em The King of Fighters XV; novo trailer',
+			'image'       => '',
+			'description' => 'Com a revelação de Chizuru, foi revelado a segunda equipe: a “Team Sacred Treasures”, […]',
 		];
 
 		// Subsequent requests is cached and so it should not cause a request.

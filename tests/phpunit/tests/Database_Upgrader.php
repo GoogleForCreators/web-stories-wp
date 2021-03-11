@@ -274,7 +274,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -311,7 +311,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -342,7 +342,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			[
 				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
 				'hide_empty' => false,
-			] 
+			]
 		);
 
 		$slugs = wp_list_pluck( $terms, 'slug' );
@@ -360,7 +360,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			[
 				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
 				'hide_empty' => false,
-			] 
+			]
 		);
 
 		$slugs = wp_list_pluck( $terms, 'slug' );

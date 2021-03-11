@@ -35,7 +35,6 @@ import {
 import { Pencil } from '../../icons';
 import { Menu } from '../menu';
 import { Tooltip } from '../tooltip';
-import { MULTIPLE_VALUE } from '../../utils';
 import { PLACEMENT, Popup } from '../popup';
 import { ReactComponent as Landscape } from './landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
@@ -172,7 +171,6 @@ export const MediaInput = forwardRef(function Media(
   ref
 ) {
   const hasMenu = menuOptions?.length > 0;
-  const isMultiple = value === MULTIPLE_VALUE;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const buttonRef = useRef(null);
@@ -186,7 +184,7 @@ export const MediaInput = forwardRef(function Media(
   return (
     <StyledMedia ref={ref} className={className} {...rest}>
       <ImageWrapper variant={variant}>
-        {value && !isMultiple ? (
+        {value ? (
           <Img src={value} alt={alt} />
         ) : (
           <DefaultImageWrapper>

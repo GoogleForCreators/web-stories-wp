@@ -92,7 +92,7 @@ function PagePreview({ page, ...props }) {
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
                 key={id}
-                previewMode={true}
+                previewMode
                 element={{ id, ...rest }}
                 page={page}
               />

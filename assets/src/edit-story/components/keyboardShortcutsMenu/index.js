@@ -86,7 +86,7 @@ function KeyboardShortcutsMenu() {
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
             aria-label={__('Keyboard Shortcuts', 'web-stories')}
-            aria-haspopup={true}
+            aria-haspopup
             aria-expanded={isOpen}
             onClick={toggleMenu}
           >

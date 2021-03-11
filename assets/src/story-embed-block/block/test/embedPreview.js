@@ -44,7 +44,7 @@ jest.mock('../storyPlayer', () => {
 
 describe('EmbedPreview', () => {
   it('should remove overlay on mouseup', () => {
-    render(<EmbedPreview url={url} title={title} isSelected={true} />);
+    render(<EmbedPreview url={url} title={title} isSelected />);
     const overlay = screen.getByTestId('embed-preview-overlay');
     fireEvent.mouseUp(overlay);
 
@@ -55,7 +55,7 @@ describe('EmbedPreview', () => {
 
   it('should add back overlay when block gets unselected', () => {
     const { rerender } = render(
-      <EmbedPreview url={url} title={title} isSelected={true} />
+      <EmbedPreview url={url} title={title} isSelected />
     );
 
     const overlay = screen.getByTestId('embed-preview-overlay');
@@ -70,7 +70,7 @@ describe('EmbedPreview', () => {
   });
 
   it('should remove overlay on player focus', async () => {
-    render(<EmbedPreview url={url} title={title} isSelected={true} />);
+    render(<EmbedPreview url={url} title={title} isSelected />);
     const player = screen.getByTestId('amp-story-player');
     player.focus();
     await waitFor(() =>
