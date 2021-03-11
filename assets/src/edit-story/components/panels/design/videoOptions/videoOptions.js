@@ -19,25 +19,48 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Switch } from '../../../form';
+import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
+import { Checkbox, Text, THEME_CONSTANTS } from '../../../../../design-system';
+
+const Row = styled(DefaultRow)`
+  justify-content: flex-start;
+  margin-top: 2px;
+`;
+
+const Label = styled.label`
+  margin-left: 12px;
+`;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const loop = getCommonValue(selectedElements, 'loop');
 
+  const checkboxId = `cb-${uuidv4()}`;
   return (
-    <SimplePanel name="videoOptions" title={__('Playback', 'web-stories')}>
-      <Switch
-        value={loop}
-        onLabel={__('Loop', 'web-stories')}
-        offLabel={__('Play once', 'web-stories')}
-        onChange={(value) => pushUpdate({ loop: value }, true)}
-      />
+    <SimplePanel
+      name="videoOptions"
+      title={__('Video Settings', 'web-stories')}
+    >
+      <Row>
+        <Checkbox
+          id={checkboxId}
+          name={checkboxId}
+          checked={loop}
+          onChange={(evt) => pushUpdate({ loop: evt.target.checked }, true)}
+        />
+        <Label htmlFor={checkboxId}>
+          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Loop', 'web-stories')}
+          </Text>
+        </Label>
+      </Row>
     </SimplePanel>
   );
 }
