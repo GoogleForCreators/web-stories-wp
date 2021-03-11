@@ -45,7 +45,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  */
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
-function useTranscodeVideo() {
+function useFFmpeg() {
   const { ffmpegCoreUrl } = useConfig();
   const {
     state: { currentUser },
@@ -133,4 +133,4 @@ function useTranscodeVideo() {
   };
 }
 
-export default useTranscodeVideo;
+export default useFFmpeg;

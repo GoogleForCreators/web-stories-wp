@@ -29,7 +29,7 @@ import {
  */
 import { useUploader } from '../../../uploader';
 import useReduction from '../../../../utils/useReduction';
-import useTranscodeVideo from '../useTranscodeVideo';
+import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import * as reducer from './reducer';
@@ -47,7 +47,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
-  } = useTranscodeVideo();
+  } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
   const {
