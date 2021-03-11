@@ -23,19 +23,34 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Plain } from '../button';
-import Dialog from '../dialog';
-
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Dialog,
+} from '../../../design-system';
 function PreviewErrorDialog({ open, onClose, onRetry }) {
   return (
     <Dialog
-      open={open}
+      isOpen={open}
       onClose={onClose}
       title={__('Open preview', 'web-stories')}
       actions={
         <>
-          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={onRetry}>{__('Try again', 'web-stories')}</Plain>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onClose}
+          >
+            {__('Cancel', 'web-stories')}
+          </Button>
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onRetry}
+          >
+            {__('Try again', 'web-stories')}
+          </Button>
         </>
       }
     >
