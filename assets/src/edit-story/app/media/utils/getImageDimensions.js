@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,21 @@
  */
 
 /**
- * Preload image using a promise.
+ * Internal dependencies
+ */
+import preloadImage from './preloadImage';
+
+/**
+ * Get image dimensions from an image.
  *
  * @param {string} src Image source.
- * @param {string} [srcset] Image source set.
- * @return {Promise} Image object.
+ * @return {Promise} Image dimensions object.
  */
-const preloadImage = (src, srcset = undefined) => {
-  return new Promise((resolve, reject) => {
-    const image = new window.Image();
-    image.onload = () => resolve(image);
-    image.onerror = reject;
-    image.decoding = 'async';
-    if (srcset) {
-      image.srcset = srcset;
-    }
-    image.src = src;
-  });
+const getImageDimensions = (src) => {
+  return preloadImage(src).then((img) => ({
+    width: img.naturalWidth,
+    height: img.naturalHeight,
+  }));
 };
 
-export default preloadImage;
+export default getImageDimensions;

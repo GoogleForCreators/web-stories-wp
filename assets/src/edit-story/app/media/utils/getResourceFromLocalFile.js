@@ -23,6 +23,7 @@ import getTypeFromMime from './getTypeFromMime';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 import createResource from './createResource';
 import getFileName from './getFileName';
+import getImageDimensions from './getImageDimensions';
 
 /**
  * Create a local resource object.
@@ -46,26 +47,6 @@ const createFileReader = (file) => {
     reader.onload = () => resolve(reader);
     reader.onerror = reject;
     reader.readAsArrayBuffer(file);
-  });
-};
-
-/**
- * Get image dimensions from an image.
- *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
- */
-const getImageDimensions = (src) => {
-  return new Promise((resolve, reject) => {
-    const img = new window.Image();
-    img.onload = () => {
-      resolve({
-        width: img.naturalWidth,
-        height: img.naturalHeight,
-      });
-    };
-    img.onerror = reject;
-    img.src = src;
   });
 };
 
