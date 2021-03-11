@@ -75,7 +75,7 @@ export function EffectBackgroundPanAndZoom({
     }[panDir] || [];
 
   // Background animations aren't really composable through element nesting
-  // because they all target the same dom node. To accomomdate for this we
+  // because they all target the same dom node. To accommomdate for this we
   // manually compose the keyframes and use those to generate a new animation.
   const { generatedKeyframes: zoomGeneratedKeyframes } = EffectBackgroundZoom({
     element,
@@ -89,7 +89,7 @@ export function EffectBackgroundPanAndZoom({
 
   // The key to access the keyframes in the generated keyframes object returned
   // is internal to the effect. Both BgPan & BgZoom only generate one set of
-  // keyframes tho, so although this feels gross, it's fine for now to avoid
+  // keyframes though, so although this feels gross, it's fine for now to avoid
   // an alteration to the exisitng structure.
   const zoomKeyframes = Object.values(zoomGeneratedKeyframes)?.[0] || [];
   const panKeyframes = Object.values(panGeneratedKeyframes)?.[0] || [];

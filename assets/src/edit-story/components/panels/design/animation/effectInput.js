@@ -69,8 +69,10 @@ function EffectInput({
         <DropDown
           value={valueForField}
           onChange={(value) => onChange(value, true)}
-          options={effectProps[field].values}
-          disabledOptions={disabledOptions}
+          options={(effectProps[field].values || []).map((option) => ({
+            ...option,
+            disabled: disabledOptions.includes(option.value),
+          }))}
         />
       );
     case FIELD_TYPES.RANGE:

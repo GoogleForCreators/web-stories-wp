@@ -87,7 +87,6 @@ function DropDownList({
   options,
   toggleOptions,
   hasMenuRole = false,
-  disabledOptions = [],
   ...rest
 }) {
   const listContainerRef = useRef();
@@ -213,15 +212,14 @@ function DropDownList({
         ref={listRef}
         role={hasMenuRole ? 'menu' : 'listbox'}
       >
-        {options.map(({ name, value: optValue }) => {
-          const isDisabled = disabledOptions.includes(optValue);
+        {options.map(({ name, value: optValue, disabled = false }) => {
           return (
             <Item
               id={`dropDown-${optValue}`}
               key={optValue}
-              disabled={isDisabled}
-              aria-disabled={isDisabled}
-              onClick={(evt) => !isDisabled && handleItemClick(optValue, evt)}
+              disabled={disabled}
+              aria-disabled={disabled}
+              onClick={(evt) => !disabled && handleItemClick(optValue, evt)}
               role={hasMenuRole ? 'menuitem' : 'option'}
             >
               {name}
@@ -239,7 +237,6 @@ DropDownList.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array.isRequired,
   hasMenuRole: PropTypes.bool,
-  disabledOptions: PropTypes.array,
 };
 
 export default DropDownList;
