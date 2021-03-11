@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import { createBlob } from '../../../utils/blobs';
 import getTypeFromMime from './getTypeFromMime';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
@@ -125,7 +125,7 @@ const getPlaceholderResource = (file) => {
     mimeType: mimeType,
     src: '',
     width: PAGE_WIDTH,
-    height: PAGE_HEIGHT,
+    height: FULLBLEED_HEIGHT,
     alt: fileName,
     title: fileName,
   });

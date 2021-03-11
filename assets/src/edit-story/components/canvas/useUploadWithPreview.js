@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useLocalMedia, useSnackbar, useStory } from '../../app';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
+import { DANGER_ZONE_HEIGHT, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
@@ -45,7 +45,7 @@ function useUploadWithPreview() {
     ({ resource }) => {
       insertElement(resource.type, {
         resource,
-        x: resource.isPlaceholder ? 0 : undefined,
+        x: resource.isPlaceholder ? -DANGER_ZONE_HEIGHT : undefined,
         y: resource.isPlaceholder ? 0 : undefined,
       });
     },
