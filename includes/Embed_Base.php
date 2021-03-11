@@ -64,15 +64,16 @@ class Embed_Base {
 
 		// Registering a style without a `src` allows us to just use the inline style below
 		// without needing an external stylesheet.
-		wp_register_style(
-			self::SCRIPT_HANDLE,
-			'',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_style( self::SCRIPT_HANDLE );
+		wp_styles()->registered[ self::SCRIPT_HANDLE ]->src = false;
 
-		if ( is_readable( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' ) ) {
-			$css = file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' );
+		$path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/css/web-stories-embed.css';
+		if ( is_rtl() ) {
+			$path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/css/web-stories-embed-rtl.css';
+		}
+
+		if ( is_readable( $path ) ) {
+			$css = file_get_contents( $path );
 
 			if ( $css ) {
 				wp_add_inline_style( self::SCRIPT_HANDLE, $css );

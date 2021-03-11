@@ -287,6 +287,39 @@ const storyEmbedBlock = {
   },
 };
 
+const storyEmbed = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-embed': './assets/src/embed/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+    }),
+    new RtlCssPlugin({
+      filename: `../css/[name]-rtl.css`,
+    }),
+    new WebpackBar({
+      name: 'Web Stories Embeds',
+      color: '#CF3476',
+    }),
+  ].filter(Boolean),
+  optimization: {
+    ...sharedConfig.optimization,
+    splitChunks: {
+      cacheGroups: {
+        stories: {
+          name: 'web-stories-embed',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
+};
+
 const activationNotice = {
   ...sharedConfig,
   entry: {
@@ -315,4 +348,9 @@ const activationNotice = {
   },
 };
 
-module.exports = [editorAndDashboard, storyEmbedBlock, activationNotice];
+module.exports = [
+  editorAndDashboard,
+  storyEmbedBlock,
+  activationNotice,
+  storyEmbed,
+];
