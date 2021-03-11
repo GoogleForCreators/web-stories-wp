@@ -90,7 +90,7 @@ function SnackbarContainer({
         {orderednotifications.map((notification) => (
           <CSSTransition
             in
-            appear={true}
+            appear
             key={notification.key}
             timeout={300}
             classNames="react-snackbar-alert__snackbar-container"
