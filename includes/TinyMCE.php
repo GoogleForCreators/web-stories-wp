@@ -41,6 +41,13 @@ class TinyMCE {
 	use Assets;
 
 	/**
+	 * Web Stories tinymce script handle.
+	 *
+	 * @var string
+	 */
+	const SCRIPT_HANDLE = 'tinymce-button';
+
+	/**
 	 * Initialization actions.
 	 *
 	 * @since 1.5.0
@@ -100,13 +107,14 @@ class TinyMCE {
 	public function enqueue_assets() {
 		$this->enqueue_style( 'wp-components' );
 
-		// Can't use Assets::enqueue_script() because the script needs to be loaded via the mce_external_plugins filter.
-		$asset = $this->get_asset_metadata( 'tinymce-button' );
-
-		// Only works when wp_register_script and wp_enqueue_script are called separately.
-		wp_register_script( 'web-stories-tinymce-button', false, $asset['dependencies'], $asset['version'], true );
-		wp_enqueue_script( 'web-stories-tinymce-button' );
-		wp_add_inline_script( 'web-stories-tinymce-button', 'var webStoriesData = ' . wp_json_encode( $this->get_script_data() ) . ';' );
+		$this->enqueue_script( self::SCRIPT_HANDLE );
+		// Set to false because the script needs to be loaded via the mce_external_plugins filter.
+		wp_scripts()->registered[ self::SCRIPT_HANDLE ]->src = false;
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesData',
+			$this->get_script_data()
+		);
 	}
 
 	/**
