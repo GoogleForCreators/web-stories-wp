@@ -21,7 +21,7 @@ import { join, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 
-const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
+const getFileName = (name) => name.split('.').slice(0, -1).join('.');
 
 /**
  * Uploads a file to the Media Library, and awaits its upload.
