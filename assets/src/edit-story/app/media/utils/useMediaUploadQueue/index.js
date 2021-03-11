@@ -206,8 +206,6 @@ function useMediaUploadQueue() {
               poster: newResource.poster || resource.poster,
             };
 
-            console.log(newResource, newResourceWithPoster);
-
             finishUploading({
               id,
               resource: newResourceWithPoster,
