@@ -73,7 +73,8 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const isMixedValue = tracks === MULTIPLE_VALUE;
   const captionText = __('Upload a file', 'web-stories');
   const clearFileText = __('Remove file', 'web-stories');
-  // don't have a way to tell if there was an error on upload yet
+  /* @TODO: Implement error handling after removing modal and 
+  using native browser upload. */
   const uploadError = false;
 
   usePresubmitHandler(
