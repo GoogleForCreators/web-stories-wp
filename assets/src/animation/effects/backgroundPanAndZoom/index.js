@@ -121,14 +121,3 @@ export function EffectBackgroundPanAndZoom({
     },
   };
 }
-
-// const translate = 100;
-// const scale = 2;
-// const origin = {
-//   x: (p) => 50 - p,
-//   y: (p) => 50 - p,
-// };
-// const counterScaleTransform = {
-//   x: deltaScale.x * origin.x(0),
-//   y: deltaScale.x * origin.y(0),
-// };
