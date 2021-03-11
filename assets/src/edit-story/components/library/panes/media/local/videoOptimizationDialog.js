@@ -22,8 +22,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Plain } from '../../../../button';
-import Dialog from '../../../../dialog';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Dialog,
+} from '../../../../../../design-system';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
@@ -71,15 +75,25 @@ function VideoOptimizationDialog() {
 
   return (
     <Dialog
-      open={isTranscoding && !isDialogDismissed}
+      isOpen={isTranscoding && !isDialogDismissed}
       onClose={onClose}
       title={dialogTitle}
       actions={
         <>
-          <Plain onClick={onDisable}>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onDisable}
+          >
             {__('Disable optimization', 'web-stories')}
-          </Plain>
-          <Plain onClick={onClose}>{__('Sounds good', 'web-stories')}</Plain>
+          </Button>
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onClose}
+          >
+            {__('Sounds good', 'web-stories')}
+          </Button>
         </>
       }
       maxWidth={512}
