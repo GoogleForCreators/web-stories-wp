@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
@@ -26,17 +25,15 @@ import { trackClick } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { Plain } from '../button';
-import Dialog from '../dialog';
-import Link from '../link';
-
-const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
-`;
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Dialog,
+  Link,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../design-system';
 
 const SUPPORT_URL = __(
   'https://wordpress.org/support/plugin/web-stories/',
@@ -50,17 +47,26 @@ function StatusCheckFailed({ open, onClose }) {
 
   return (
     <Dialog
-      open={open}
+      isOpen={open}
       onClose={onClose}
       title={__('Unable to save your story', 'web-stories')}
       contentLabel={__('Unable to save your story', 'web-stories')}
-      actions={<Plain onClick={onClose}>{__('Dismiss', 'web-stories')}</Plain>}
+      actions={
+        <Button
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={onClose}
+        >
+          {__('Dismiss', 'web-stories')}
+        </Button>
+      }
     >
-      <Paragraph>
+      <Text as="p" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
             a: (
               <Link
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 href={SUPPORT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -74,7 +80,7 @@ function StatusCheckFailed({ open, onClose }) {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Paragraph>
+      </Text>
     </Dialog>
   );
 }
