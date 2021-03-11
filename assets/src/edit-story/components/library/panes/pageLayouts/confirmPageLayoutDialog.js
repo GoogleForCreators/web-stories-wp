@@ -18,40 +18,51 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import Dialog from '../../../dialog';
-import { Plain } from '../../../button';
-
-const DialogBody = styled.p`
-  margin: 0;
-`;
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Dialog,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 
 function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
   return (
     <Dialog
-      open
+      isOpen
       onClose={onClose}
       title={__('Confirm Page Layout', 'web-stories')}
       actions={
         <>
-          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={onConfirm}>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onClose}
+          >
+            {__('Cancel', 'web-stories')}
+          </Button>
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onConfirm}
+          >
             {__('Apply Page Layout', 'web-stories')}
-          </Plain>
+          </Button>
         </>
       }
     >
-      <DialogBody>
+      <Text as="p" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(
           'Applying page layout will clear all existing design elements and background colors on this page. Want to keep going?',
           'web-stories'
         )}
-      </DialogBody>
+      </Text>
     </Dialog>
   );
 }
