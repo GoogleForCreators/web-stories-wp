@@ -27,14 +27,12 @@ export function EffectBackgroundZoom({
   duration = 1000,
   delay,
   easing,
+  transformOrigin,
 }) {
   // Define the range based off the element scale
   // at element scale 400, the range should be [1/4, 1]
   // at element scale 100, the range should be [1, 4]
   const range = [BG_MIN_SCALE / element.scale, BG_MAX_SCALE / element.scale];
-
-  // Account for moving bg media relative to frame
-  const origin = getMediaOrigin(element && getMediaBoundOffsets({ element }));
 
   return AnimationZoom({
     zoomFrom: lerp(zoomDirection === SCALE_DIRECTION.SCALE_OUT ? 1 : 0, range),
@@ -43,6 +41,9 @@ export function EffectBackgroundZoom({
     delay,
     easing,
     targetLeafElement: true,
-    transformOrigin: `${origin.horizontal}% ${origin.vertical}%`,
+    // Account for moving bg media relative to frame
+    transformOrigin:
+      transformOrigin ||
+      getMediaOrigin(element && getMediaBoundOffsets({ element })),
   });
 }

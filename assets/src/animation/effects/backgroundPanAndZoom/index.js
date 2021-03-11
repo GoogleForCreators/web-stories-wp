@@ -49,12 +49,38 @@ export function EffectBackgroundPanAndZoom({
 
   const animationName = `direction-${panDir}-${zoomDirection}-${BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value}`;
 
+  // We have to move the origin with respect to the pan
+  // direction and the current media position relative to
+  // the frame. This prevents area from ever being shown
+  // where the media does't fill the frame during scaling
+  const origin = getMediaOrigin(element && getMediaBoundOffsets({ element }));
+  const transformOrigin =
+    {
+      [DIRECTION.RIGHT_TO_LEFT]: {
+        horizontal: 0,
+        vertical: origin.vertical,
+      },
+      [DIRECTION.LEFT_TO_RIGHT]: {
+        horizontal: 100,
+        vertical: origin.vertical,
+      },
+      [DIRECTION.BOTTOM_TO_TOP]: {
+        horizontal: origin.horizontal,
+        vertical: 0,
+      },
+      [DIRECTION.TOP_TO_BOTTOM]: {
+        horizontal: origin.horizontal,
+        vertical: 100,
+      },
+    }[panDir] || [];
+
   // Background animations aren't really composable through element nesting
   // because they all target the same dom node. To accomomdate for this we
   // manually compose the keyframes and use those to generate a new animation.
   const { generatedKeyframes: zoomGeneratedKeyframes } = EffectBackgroundZoom({
     element,
     zoomDirection,
+    transformOrigin,
   });
   const { generatedKeyframes: panGeneratedKeyframes } = EffectBackgroundPan({
     element,
@@ -73,34 +99,8 @@ export function EffectBackgroundPanAndZoom({
   const panLastTransformIndex = (panKeyframes?.transform?.length || 1) - 1;
   const endTransform = `${panKeyframes?.transform[zoomLastTransformIndex]} ${zoomKeyframes?.transform[panLastTransformIndex]}`;
 
-  // We have to move the origin with respect to the pan
-  // direction and the current media position relative to
-  // the frame. This prevents area from ever being shown
-  // where the media does't fill the frame during scaling
-  const origin = getMediaOrigin(element && getMediaBoundOffsets({ element }));
-  const transformOrigin =
-    {
-      [DIRECTION.RIGHT_TO_LEFT]: [
-        `0% ${origin.vertical}%`,
-        `0% ${origin.vertical}%`,
-      ],
-      [DIRECTION.LEFT_TO_RIGHT]: [
-        `100% ${origin.vertical}%`,
-        `100% ${origin.vertical}%`,
-      ],
-      [DIRECTION.BOTTOM_TO_TOP]: [
-        `${origin.horizontal}% 0%`,
-        `${origin.horizontal}% 0%`,
-      ],
-      [DIRECTION.TOP_TO_BOTTOM]: [
-        `${origin.horizontal}% 100%`,
-        `${origin.horizontal}% 100%`,
-      ],
-    }[panDir] || [];
-
   const keyframes = {
     transform: [startTransform, endTransform],
-    transformOrigin,
   };
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
@@ -121,3 +121,14 @@ export function EffectBackgroundPanAndZoom({
     },
   };
 }
+
+// const translate = 100;
+// const scale = 2;
+// const origin = {
+//   x: (p) => 50 - p,
+//   y: (p) => 50 - p,
+// };
+// const counterScaleTransform = {
+//   x: deltaScale.x * origin.x(0),
+//   y: deltaScale.x * origin.y(0),
+// };
