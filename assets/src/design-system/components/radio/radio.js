@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -29,22 +29,22 @@ import { FOCUS_VISIBLE_SELECTOR } from '../../theme/global';
 import { Text } from '../typography';
 
 const BORDER_WIDTH = 1;
-const TEXT_GAP_HEIGHT = 4;
-const RING_DIAMETER = 22;
-const BUTTON_CONTAINER_HEIGHT = RING_DIAMETER + BORDER_WIDTH * 2;
-const CONTAINER_HEIGHT = BUTTON_CONTAINER_HEIGHT + TEXT_GAP_HEIGHT;
+const TEXT_GAP_HEIGHT = 8;
+const RING_DIAMETER = 24;
+const CONTAINER_HEIGHT = 44;
 const RADIO_DIAMETER = 16;
 
 const Container = styled.div`
   display: flex;
   align-items: center;
-  height: ${CONTAINER_HEIGHT}px;
+  min-height: ${CONTAINER_HEIGHT}px;
+  padding: 8px 0;
 `;
 
 const ButtonContainer = styled.div`
   position: relative;
-  height: ${BUTTON_CONTAINER_HEIGHT}px;
-  width: ${BUTTON_CONTAINER_HEIGHT}px;
+  height: ${RING_DIAMETER}px;
+  width: ${RING_DIAMETER}px;
 `;
 
 const LabelContainer = styled.div`
@@ -57,6 +57,7 @@ const LabelContainer = styled.div`
 const RadioBorder = styled.span(
   ({ theme }) => css`
     display: inline-block;
+    box-sizing: border-box;
     height: ${RING_DIAMETER}px;
     width: ${RING_DIAMETER}px;
     border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
@@ -87,8 +88,8 @@ const InnerButton = styled.span(
 
 const HiddenInput = styled.input.attrs({ type: 'radio' })`
   position: absolute;
-  height: ${BUTTON_CONTAINER_HEIGHT}px;
-  width: ${BUTTON_CONTAINER_HEIGHT}px;
+  height: ${RING_DIAMETER}px;
+  width: ${RING_DIAMETER}px;
   margin: 0;
   opacity: 0;
   cursor: pointer;
@@ -157,13 +158,16 @@ const Hint = styled(Text).attrs({
  * @param {string} props.value the value of the radio button
  * @return {Object} The radio button
  */
-export function Radio({ className, hint, id, label, ...props }) {
+export const Radio = forwardRef(function RadioButton(
+  { className, hint, id, label, ...props },
+  ref
+) {
   const inputId = useMemo(() => id || uuidv4(), [id]);
 
   return (
     <Container className={className}>
       <ButtonContainer>
-        <HiddenInput {...props} />
+        <HiddenInput id={inputId} ref={ref} {...props} />
         <RadioBorder />
         <InnerButton />
       </ButtonContainer>
@@ -180,7 +184,7 @@ export function Radio({ className, hint, id, label, ...props }) {
       </LabelContainer>
     </Container>
   );
-}
+});
 Radio.propTypes = {
   className: PropTypes.string,
   checked: PropTypes.bool,
