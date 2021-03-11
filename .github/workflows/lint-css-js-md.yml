@@ -1,4 +1,4 @@
-name: JavaScript Lints
+name: CSS Lints
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  lint-js:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous
@@ -47,11 +47,17 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Detect coding standard violations (ESLint)
+      - name: Markdown Lint
+        run: npm run lint:md
+
+      - name: CSS Lint
+        run: npm run lint:css
+
+      - name: JS Lint
         run: npm run lint:js:report
         continue-on-error: true
 
-      - name: Annotate Code Linting Results
+      - name: Annotate JS Lint Results
         uses: ataylorme/eslint-annotate-action@1.1.2
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'

@@ -8,7 +8,7 @@ on:
   pull_request:
 
 jobs:
-  lint-php:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous
