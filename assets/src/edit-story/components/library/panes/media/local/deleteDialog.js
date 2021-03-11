@@ -26,11 +26,15 @@ import { trackError } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { useAPI } from '../../../../../app/api';
-import { Plain } from '../../../../button';
-import Dialog from '../../../../dialog';
-import { useSnackbar } from '../../../../../../design-system';
+import { useSnackbar } from '../../../../../app/snackbar';
 import { useLocalMedia } from '../../../../../app/media';
 import { useStory } from '../../../../../app/story';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Dialog,
+} from '../../../../../../design-system';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
@@ -91,13 +95,25 @@ function DeleteDialog({ mediaId, type, onClose }) {
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <Dialog
-      open
+      isOpen
       onClose={onClose}
       title={type === 'image' ? imageDialogTitle : videoDialogTitle}
       actions={
         <>
-          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={onDelete}>{__('Delete', 'web-stories')}</Plain>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onClose}
+          >
+            {__('Cancel', 'web-stories')}
+          </Button>
+          <Button
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onDelete}
+          >
+            {__('Delete', 'web-stories')}
+          </Button>
         </>
       }
       maxWidth={512}
