@@ -32,8 +32,8 @@ import {
   Icons,
   THEME_CONSTANTS,
   Headline,
+  themeHelpers,
 } from '../../../../../design-system';
-import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
 
 // If the header is collapsed, we're leaving 8px less padding to apply that from the content.
@@ -79,6 +79,7 @@ const Collapse = styled.button`
   color: inherit;
   height: 32px;
   display: flex; /* removes implicit line-height padding from child element */
+  align-items: center;
   padding: 0 4px 0 0;
   cursor: pointer;
   svg {
@@ -86,9 +87,8 @@ const Collapse = styled.button`
     height: 32px;
   }
   margin-left: -12px;
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) => theme.colors.border.focus} auto 2px;
-  }
+
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 function Toggle({ children, toggle, ...rest }) {
