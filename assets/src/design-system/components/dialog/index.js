@@ -53,8 +53,10 @@ const DialogActions = styled.div`
   align-self: flex-end;
   margin: 0;
 
-  & > button {
+  & > button,
+  & > a {
     margin-right: 10px;
+    margin-left: 6px;
     &:last-of-type {
       margin-right: 0;
     }
