@@ -162,6 +162,7 @@ function ColorInput({
             aria-label={label}
             value={value}
             onChange={onChange}
+            isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
           <ColorPreview>

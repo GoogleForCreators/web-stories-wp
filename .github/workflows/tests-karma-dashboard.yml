@@ -1,4 +1,4 @@
-name: Edit Story Integration Tests
+name: Dashboard Integration Tests
 
 on:
   push:
@@ -6,16 +6,16 @@ on:
       - main
       - release/*
   pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - ready_for_review
 
 jobs:
   karma:
     runs-on: ubuntu-latest
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -55,33 +55,21 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run integration tests
-        run: npm run test:karma:edit-story -- --headless --snapshots --viewport=1600:1000 --coverage || npm run test:karma:edit-story:retry-failed -- --headless --snapshots --viewport=1600:1000
+        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
-
-      - name: Add files for snapshotting
-        run: cp -r __static__ .test_artifacts/karma_snapshots/
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v1
         with:
-          file: build/logs/karma-coverage/edit-story/lcov.info
+          file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
-
-      - name: Upload Percy snapshots
-        uses: percy/snapshot-action@v0.1.2
-        with:
-          build-directory: '.test_artifacts/karma_snapshots'
-          flags: '--config=percy.config.yml'
-        env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-        if: github.event.pull_request.draft == false
 
       - name: Upload CUJ coverage
         uses: actions/upload-artifact@v2
         with:
-          name: cuj-coverage-edit-story
-          path: build/cuj-coverage-edit-story.md
+          name: cuj-coverage-dashboard
+          path: build/cuj-coverage-dashboard.md
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
   deploy-cuj-coverage:
@@ -99,13 +87,13 @@ jobs:
       - name: Download coverage file
         uses: actions/download-artifact@v2
         with:
-          name: cuj-coverage-edit-story
+          name: cuj-coverage-dashboard
 
       - name: Move file
         run: |
           mkdir -p critical-user-journeys
-          rm -rf critical-user-journeys/editor.md
-          mv cuj-coverage-edit-story.md critical-user-journeys/editor.md
+          rm -rf critical-user-journeys/dashboard.md
+          mv cuj-coverage-dashboard.md critical-user-journeys/dashboard.md
 
       - name: Commit updates
         run: |

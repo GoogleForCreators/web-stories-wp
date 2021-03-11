@@ -8,9 +8,14 @@ on:
   pull_request:
 
 jobs:
-  lint-css:
+  lint:
     runs-on: ubuntu-latest
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -42,5 +47,18 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Detect coding standard violations (stylelint)
+      - name: Markdown Lint
+        run: npm run lint:md
+
+      - name: CSS Lint
         run: npm run lint:css
+
+      - name: JS Lint
+        run: npm run lint:js:report
+        continue-on-error: true
+
+      - name: Annotate JS Lint Results
+        uses: ataylorme/eslint-annotate-action@1.1.2
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          report-json: 'build/lint-js-report.json'

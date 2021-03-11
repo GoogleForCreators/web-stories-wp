@@ -90,7 +90,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <Dialog
-      open={true}
+      open
       onClose={onClose}
       title={type === 'image' ? imageDialogTitle : videoDialogTitle}
       actions={

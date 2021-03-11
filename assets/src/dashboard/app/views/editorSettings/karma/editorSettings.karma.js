@@ -337,21 +337,22 @@ describe('Settings View', () => {
 
     await focusOnPublisherLogos();
 
-    const page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
+    const logo1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
     await fixture.events.keyboard.press('right');
-    expect(page1).toEqual(document.activeElement);
+    expect(logo1).toEqual(document.activeElement);
 
-    // // go right by 1
+    // go to second logo
     await fixture.events.keyboard.press('right');
 
-    await fixture.events.keyboard.press('Enter');
-
-    const page2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
-    expect(page2).toEqual(document.activeElement);
+    const logo2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
+    expect(logo2).toEqual(document.activeElement);
 
     await fixture.events.keyboard.press('Tab');
 
     await fixture.events.keyboard.press('Enter');
+
+    // Tab into second menu
+    await fixture.events.keyboard.press('Tab');
 
     // we want to select the second list item
     await fixture.events.keyboard.press('ArrowDown');
@@ -435,21 +436,22 @@ describe('Settings View', () => {
 
     await focusOnPublisherLogos();
 
-    const page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
+    const logo1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
     await fixture.events.keyboard.press('right');
-    expect(page1).toEqual(document.activeElement);
+    expect(logo1).toEqual(document.activeElement);
 
     // go right by 1
     await fixture.events.keyboard.press('right');
 
+    const logo2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
+    expect(logo2).toEqual(document.activeElement);
+
+    // set focus within logo2
+    await fixture.events.keyboard.press('tab');
+    // activate menu
     await fixture.events.keyboard.press('Enter');
-
-    const page2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
-    expect(page2).toEqual(document.activeElement);
-
-    await fixture.events.keyboard.press('Tab');
-
-    await fixture.events.keyboard.press('Enter');
+    //tab into menu
+    await fixture.events.keyboard.press('tab');
 
     // we want to select the first list item
     await fixture.events.keyboard.press('Enter');
