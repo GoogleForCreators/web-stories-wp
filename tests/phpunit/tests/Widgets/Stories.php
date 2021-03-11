@@ -83,7 +83,7 @@ class Stories extends \WP_UnitTestCase {
 		$new_instance = [
 			'title'              => '<p>Test Stories</p>',
 			'view_type'          => 'list',
-			'show_title'         => '',
+			'show_title'         => '1',
 			'number_of_stories'  => 100,
 			'circle_size'        => 150,
 			'archive_link_label' => 'View Stories',
@@ -101,7 +101,7 @@ class Stories extends \WP_UnitTestCase {
 			'show_excerpt'       => '',
 			'show_date'          => '',
 			'show_archive_link'  => '',
-			'image_alignment'    => '',
+			'image_alignment'    => 'left',
 			'number_of_stories'  => 20,
 			'circle_size'        => 150,
 			'archive_link_label' => 'View Stories',
@@ -110,6 +110,23 @@ class Stories extends \WP_UnitTestCase {
 			'orderby'            => 'post_date',
 			'order'              => 'DESC',
 		];
+
+		$instance = self::$testee->update( $new_instance, $old_instance );
+
+		$this->assertEqualSetsWithIndex( $expected, $instance );
+	}
+
+	/**
+	 * @covers ::update
+	 * @covers ::default_values
+	 */
+	public function test_update_default() {
+		$new_instance = [];
+
+		$old_instance = [];
+
+		$expected = $this->call_private_method( self::$testee, 'default_values' );
+
 
 		$instance = self::$testee->update( $new_instance, $old_instance );
 
@@ -185,8 +202,8 @@ class Stories extends \WP_UnitTestCase {
 	 */
 	public function test_label() {
 		$args = [
-			'label'    => 'Test input',
-			'id'       => '123'
+			'label' => 'Test input',
+			'id'    => '123',
 		];
 
 		$label = $this->call_private_method( self::$testee, 'label', [ $args ] );
