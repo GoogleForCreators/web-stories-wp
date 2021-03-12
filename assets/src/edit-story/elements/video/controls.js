@@ -177,7 +177,9 @@ function VideoControls({
     setShowControls(true);
     checkShowControls();
     const videoNode = getVideoNode();
-    setIsPlaying(!videoNode.paused);
+    if (videoNode) {
+      setIsPlaying(!videoNode.paused);
+    }
   }, 10);
 
   useEffect(() => {
