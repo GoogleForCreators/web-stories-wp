@@ -54,8 +54,38 @@ domReady(() => {
    * @return {boolean} Navigation done.
    */
   Glider.prototype.scrollItem = function (slide, dot, e) {
+    // glider-js doesn't seem to pass right amount of arguments.
+    if (e === undefined && dot?.target) {
+      e = dot;
+      dot = false;
+    }
+
+    if (e === undefined) {
+      // Somehow we ended up triggering this function twice. Abort to prevent scrolling back and forth.
+      return false;
+    }
+
     if (e) {
       e.preventDefault();
+    }
+
+    // Somehow slidesToScroll and slidesToShow can end up being 0.
+    this.opt.slidesToScroll = Math.max(1, this.opt.slidesToScroll);
+    this.opt.slidesToShow = Math.max(1, this.opt.slidesToShow);
+    // This will also cause this.itemWidth to be Infinity because division by zero returns Infinity in JS.
+    // Update this.itemWidth with actual value in this case.
+    if (this.itemWidth === Infinity) {
+      // It's a sibling.
+      const carouselWrapper = e.target.parentElement.querySelector(
+        '.web-stories-list__carousel'
+      );
+      const itemStyle = window.getComputedStyle(
+        carouselWrapper.querySelector('.web-stories-list__story')
+      );
+
+      this.itemWidth =
+        parseFloat(itemStyle.width) +
+        (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
     }
 
     const originalSlide = slide;
@@ -72,21 +102,13 @@ domReady(() => {
         if (this.opt.slidesToScroll % 1 || this.opt.slidesToShow % 1) {
           slide = this.getCurrentSlide();
         } else {
-          slide = this.slide;
+          slide = !isNaN(this.slide) ? this.slide : 0;
         }
 
-        if (isRTL) {
-          if (backwards) {
-            slide += this.opt.slidesToScroll;
-          } else {
-            slide -= this.opt.slidesToScroll;
-          }
+        if (backwards) {
+          slide -= this.opt.slidesToScroll;
         } else {
-          if (backwards) {
-            slide -= this.opt.slidesToScroll;
-          } else {
-            slide += this.opt.slidesToScroll;
-          }
+          slide += this.opt.slidesToScroll;
         }
 
         if (this.opt.rewind) {
@@ -127,14 +149,15 @@ domReady(() => {
     // For multiple instance of the glider we need to link nav arrows appropriately.
     const carouselId = carouselWrapper.dataset.id;
 
-    const navArrows = {
-      prev: !isRTL
-        ? `.${carouselId} .glider-prev`
-        : `.${carouselId} .glider-next`,
-      next: !isRTL
-        ? `.${carouselId} .glider-next`
-        : `.${carouselId} .glider-prev`,
-    };
+    const navArrows = !isRTL
+      ? {
+          prev: `.${carouselId} .glider-prev`,
+          next: `.${carouselId} .glider-next`,
+        }
+      : {
+          prev: `.${carouselId} .glider-next`,
+          next: `.${carouselId} .glider-prev`,
+        };
 
     const isCircles = carouselWrapper.classList.contains('circles');
     const itemStyle = window.getComputedStyle(

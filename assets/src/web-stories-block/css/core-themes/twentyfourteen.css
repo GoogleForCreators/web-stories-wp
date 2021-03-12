@@ -29,3 +29,9 @@
     padding-top: 92px;
   }
 }
+
+.web-stories-list.is-carousel .amp-carousel-button,
+.web-stories-list.is-carousel .glider-next,
+.web-stories-list.is-carousel .glider-prev {
+  z-index: 3; /* .site-header has 4 */
+}
