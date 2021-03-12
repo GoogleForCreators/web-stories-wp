@@ -32,7 +32,7 @@ const Noop = () => null;
 
 function StickerOutput({ element }) {
   const { sticker } = element;
-  const Sticker = stickers[sticker.type] || Noop;
+  const Sticker = stickers[sticker.type]?.svg || Noop;
   return <Sticker className="fill" style={style} />;
 }
 
