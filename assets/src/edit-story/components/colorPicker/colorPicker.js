@@ -155,7 +155,7 @@ function ColorPicker({
   }, [selectedElementIds, generatedColor, pushTransform, changedStyle]);
 
   return (
-    <CSSTransition in appear={true} classNames="picker" timeout={300}>
+    <CSSTransition in appear classNames="picker" timeout={300}>
       <Container
         role="dialog"
         aria-label={__('Color and gradient picker', 'web-stories')}

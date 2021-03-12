@@ -1,16 +1,31 @@
-name: Dashboard Integration Tests
+name: Deploy to GH Pages
 
 on:
   push:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '!.github/workflows/deploy-storybook.yml'
+      - '.storybook/**'
+      - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
+      - 'bin/**'
+      - 'tests/**'
     branches:
       - main
-      - release/*
-  pull_request:
 
 jobs:
-  karma:
+  build-storybook:
+    name: Build storybook
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -21,7 +36,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Cache node modules
         uses: pat-s/always-upload-cache@v2.1.3
@@ -36,66 +51,55 @@ jobs:
         env:
           cache-name: cache-node-modules
 
-      # TODO: Remove need for `npm install puppeteer`.
       - name: Install dependencies
-        run: |
-          npm ci
-          npm install puppeteer
+        run: npm ci
         env:
           CI: true
-          PUPPETEER_PRODUCT: chrome
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      # FIXME: https://github.com/google/web-stories-wp/issues/4364
-      - name: Increase max number of file watchers
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: Build storyook
+        run: npm run storybook:build
 
-      - name: Run integration tests
-        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
-        env:
-          DISABLE_ERROR_BOUNDARIES: true
-
-      - name: Upload code coverage report
-        uses: codecov/codecov-action@v1
-        with:
-          file: build/logs/karma-coverage/dashboard/lcov.info
-          flags: karmatests
-
-      - name: Upload CUJ coverage
+      - name: Upload storybook
         uses: actions/upload-artifact@v2
         with:
-          name: cuj-coverage-dashboard
-          path: build/cuj-coverage-dashboard.md
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+          name: storybook-files
+          path: build/storybook
 
-  deploy-cuj-coverage:
-    name: Deploy CUJ Coverage
-    needs: [karma]
+  deploy-gh-pages:
+    name: Deploy storybook
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
+    timeout-minutes: 60
+    needs: [build-storybook]
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: gh-pages
 
-      - name: Download coverage file
+      - name: Download storybook files
         uses: actions/download-artifact@v2
         with:
-          name: cuj-coverage-dashboard
+          name: storybook-files
+          path: storybook-files
 
-      - name: Move file
+      - name: Move storybook assets
         run: |
-          mkdir -p critical-user-journeys
-          rm -rf critical-user-journeys/dashboard.md
-          mv cuj-coverage-dashboard.md critical-user-journeys/dashboard.md
+          mkdir -p storybook
+          rm -rf storybook/*
+          mv storybook-files/* storybook/
 
       - name: Commit updates
         run: |
           git add .
           git status
           git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
-          git commit -m "Deploy CUJ coverage for ${{ github.sha }}"
+          git commit -m "Deploy storybook for ${{ github.sha }}"
           git pull --no-edit --quiet
           git push origin gh-pages
         env:

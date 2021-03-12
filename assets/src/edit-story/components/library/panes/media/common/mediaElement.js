@@ -250,12 +250,7 @@ function Element({
         />
         {attribution}
         {local && (
-          <CSSTransition
-            in
-            appear={true}
-            timeout={0}
-            className="uploading-indicator"
-          >
+          <CSSTransition in appear timeout={0} className="uploading-indicator">
             <UploadingIndicator />
           </CSSTransition>
         )}

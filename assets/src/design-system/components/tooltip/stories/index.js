@@ -90,7 +90,7 @@ export const _default = () => (
         title={text('Tooltip for icon - content', 'To save draft click enter')}
       >
         <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
-          <Table aria-hidden={true} />
+          <Table aria-hidden />
         </Button>
       </Tooltip>
 
@@ -144,7 +144,7 @@ export const LightMode = () => (
       title={text('Tooltip for icon - content', 'To save draft click enter')}
     >
       <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
-        <Table aria-hidden={true} />
+        <Table aria-hidden />
       </Button>
     </Tooltip>
 

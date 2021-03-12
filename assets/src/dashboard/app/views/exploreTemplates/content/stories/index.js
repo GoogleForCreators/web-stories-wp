@@ -93,7 +93,7 @@ export const AllTemplatesFetched = () => {
       <StorybookLayoutContainer>
         <Content
           {...defaultProps}
-          allPagesFetched={true}
+          allPagesFetched
           view={{ ...view, pageSize }}
         />
       </StorybookLayoutContainer>
@@ -105,7 +105,7 @@ export const NoTemplates = () => {
   return (
     <Layout.Provider>
       <StorybookLayoutContainer>
-        <Content {...defaultProps} allPagesFetched={true} totalTemplates={0} />
+        <Content {...defaultProps} allPagesFetched totalTemplates={0} />
       </StorybookLayoutContainer>
     </Layout.Provider>
   );
@@ -117,7 +117,7 @@ export const NoSearchResults = () => {
       <StorybookLayoutContainer>
         <Content
           {...defaultProps}
-          allPagesFetched={true}
+          allPagesFetched
           totalTemplates={0}
           search={{ ...search, keyword: 'polar bears' }}
         />

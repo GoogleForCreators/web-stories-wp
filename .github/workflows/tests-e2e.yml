@@ -2,10 +2,26 @@ name: E2E Tests
 
 on:
   push:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '!.github/workflows/tests-e2e.yml'
+      - '.storybook/**'
+      - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
     branches:
       - main
       - release/*
   pull_request:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '!.github/workflows/tests-e2e.yml'
+      - '.storybook/**'
+      - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
     types:
       - opened
       - reopened
@@ -16,6 +32,7 @@ jobs:
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
@@ -28,6 +45,11 @@ jobs:
             coverage: false
 
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
 

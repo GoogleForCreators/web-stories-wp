@@ -186,7 +186,7 @@ function FrameElement({ element }) {
       >
         <WithMask
           element={element}
-          fill={true}
+          fill
           flip={flip}
           eventHandlers={!maskDisabled ? eventHandlers : null}
         >

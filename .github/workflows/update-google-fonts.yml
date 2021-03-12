@@ -1,11 +1,14 @@
 name: Update Google Fonts
+
 on:
   schedule:
     - cron: '0 12 * * 1'
+
 jobs:
   update-fonts:
     name: Update Google Fonts
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout

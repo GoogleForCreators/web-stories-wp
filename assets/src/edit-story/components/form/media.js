@@ -26,6 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useMediaPicker } from '../mediaPicker';
 import { MediaInput as Input } from '../../../design-system/components/mediaInput';
+import { MULTIPLE_VALUE } from '../../constants';
 
 const MediaInput = forwardRef(
   (
@@ -35,6 +36,7 @@ const MediaInput = forwardRef(
       onChange,
       title = __('Choose an image', 'web-stories'),
       type = 'image',
+      value,
       ...rest
     },
     forwardedRef
@@ -53,10 +55,14 @@ const MediaInput = forwardRef(
       { label: __('Reset', 'web-stories'), value: 'reset' },
     ];
 
+    // No menu for mixed value.
     // Match the options from props, if none are matched, menu is not displayed.
-    const dropdownOptions = availableMenuOptions.filter(({ value }) =>
-      menuOptions.includes(value)
-    );
+    const dropdownOptions =
+      value === MULTIPLE_VALUE
+        ? []
+        : availableMenuOptions.filter(({ value: option }) =>
+            menuOptions.includes(option)
+          );
 
     const onOption = useCallback(
       (evt, opt) => {
@@ -81,6 +87,7 @@ const MediaInput = forwardRef(
         menuOptions={dropdownOptions}
         openMediaPicker={openMediaPicker}
         ref={forwardedRef}
+        value={value === MULTIPLE_VALUE ? null : value}
         {...rest}
       />
     );
@@ -93,6 +100,7 @@ MediaInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   type: PropTypes.string,
   title: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default MediaInput;

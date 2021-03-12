@@ -46,7 +46,7 @@ export const NewStoryButton = styled(Button)(
   ({ theme }) => css`
     margin-bottom: 0;
     margin-top: 0;
-    border: 2px solid ${theme.colors.border.defaultActive};
+    border: 1px solid ${theme.colors.border.defaultActive};
     border-radius: ${theme.borders.radius.medium};
     transition: background-color 0.25s linear, color 0.25s linear;
 

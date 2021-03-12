@@ -165,9 +165,7 @@ class Link_Controller extends WP_REST_Controller {
 
 		$xpath = $this->html_to_xpath( $html );
 
-		if ( libxml_get_last_error() ) {
-			libxml_clear_errors();
-
+		if ( ! $xpath ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 			return rest_ensure_response( $data );
 		}
