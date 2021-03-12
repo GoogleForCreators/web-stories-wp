@@ -9,6 +9,7 @@ on:
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
+      - 'patches/**'
     branches:
       - main
       - release/*
@@ -20,6 +21,7 @@ on:
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
+      - 'patches/**'
 
 jobs:
   unit-js:

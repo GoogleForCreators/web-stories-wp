@@ -10,6 +10,7 @@ on:
       - 'composer.json'
       - 'composer.lock'
       - 'tests/phpunit/**'
+      - 'includes/data/**'
     branches:
       - main
       - release/*
@@ -22,6 +23,7 @@ on:
       - 'composer.json'
       - 'composer.lock'
       - 'tests/phpunit/**'
+      - 'includes/data/**'
 
 jobs:
   unit-php:

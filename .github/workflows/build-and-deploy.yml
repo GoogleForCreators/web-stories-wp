@@ -8,6 +8,10 @@ on:
       - '.github/**'
       - '.storybook/**'
       - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
+      - 'bin/**'
+      - 'tests/**'
     branches:
       - main
       - release/*
@@ -18,6 +22,10 @@ on:
       - '.github/**'
       - '.storybook/**'
       - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
+      - 'bin/**'
+      - 'tests/**'
 
 jobs:
   bundle-size:
