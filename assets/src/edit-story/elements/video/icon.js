@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Video } from '../../icons';
+import { Icons } from '../../../design-system';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
 
@@ -32,7 +32,7 @@ function VideoLayerContent({
   },
 }) {
   if (!poster) {
-    return <Video width={28} height={28} title={alt} />;
+    return <Icons.Video width={28} height={28} title={alt} />;
   }
 
   return <VisibleImage src={poster} alt={alt} width={28} height={28} />;
