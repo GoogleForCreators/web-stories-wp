@@ -35,12 +35,6 @@ if [ "$1" == '--reset-site' ]; then
 	wp db reset --yes --quiet
 fi
 
-if [ "$WP_VERSION" == "latest" ]; then
-	# Potentially update WordPress
-	echo -e $(status_message "Updating WordPress")
-	wp core update --force --quiet
-fi
-
 if [ ! -z "$WP_VERSION" ] && [ "$WP_VERSION" != "latest" ]; then
 	# Potentially downgrade WordPress
 	echo -e $(status_message "Downloading WordPress version $WP_VERSION...")
@@ -50,6 +44,12 @@ fi
 # Install WordPress.
 echo -e $(status_message "Installing WordPress...")
 wp core install --title="$SITE_TITLE" --admin_user=admin --admin_password=password --admin_email=test@test.com --skip-email --url=http://localhost:$HOST_PORT --quiet
+
+if [ "$WP_VERSION" == "latest" ]; then
+	# Potentially update WordPress
+	echo -e $(status_message "Updating WordPress")
+	wp core update --force --quiet
+fi
 
 # Create additional users.
 echo -e $(status_message "Creating additional users...")
