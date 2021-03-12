@@ -1,4 +1,4 @@
-name: PHP Lints
+name: Lint PHP
 
 on:
   push:
@@ -8,9 +8,16 @@ on:
   pull_request:
 
 jobs:
-  lint-php:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
 

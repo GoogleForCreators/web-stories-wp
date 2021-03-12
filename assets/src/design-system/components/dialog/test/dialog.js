@@ -45,7 +45,7 @@ describe('DesignSystem/Components/Dialog', () => {
     const { getByRole, getByText } = renderWithProviders(
       <Dialog
         onClose={jest.fn}
-        isOpen={true}
+        isOpen
         title="dialog title"
         actions={ActionsNode}
       >

@@ -1,4 +1,4 @@
-name: JavaScript Unit Tests
+name: Lint CSS/JS/MD
 
 on:
   push:
@@ -8,9 +8,16 @@ on:
   pull_request:
 
 jobs:
-  unit-js:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -21,7 +28,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Cache node modules
         uses: pat-s/always-upload-cache@v2.1.3
@@ -36,26 +43,24 @@ jobs:
         env:
           cache-name: cache-node-modules
 
-      - name: Setup Jest cache
-        uses: actions/cache@v2.1.4
-        id: cache-jest-cache
-        with:
-          path: .jest-cache
-          key: ${{ runner.os }}-${{ steps.nvm.outputs.NVMRC }}-jest
-
-      # Rollup is needed for tests in `packages/migration/src` expecting `module.js`
       - name: Install dependencies
-        run: |
-          npm ci
-          npx rollup --config packages/migration/src/rollup.config.migrate.js
+        run: npm ci
         env:
           CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Run JavaScript unit tests
-        run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
+      - name: Markdown Lint
+        run: npm run lint:md
 
-      - name: Upload code coverage report
-        uses: codecov/codecov-action@v1
+      - name: CSS Lint
+        run: npm run lint:css
+
+      - name: JS Lint
+        run: npm run lint:js:report
+        continue-on-error: true
+
+      - name: Annotate JS Lint Results
+        uses: ataylorme/eslint-annotate-action@1.1.2
         with:
-          file: build/logs/lcov.info
-          flags: unittests
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          report-json: 'build/lint-js-report.json'
