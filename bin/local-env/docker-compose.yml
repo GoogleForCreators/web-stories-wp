@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   wordpress:
-    image: wordpress:php${PHP_VERSION:-7.4}
+    image: wordpress:5.6-php${PHP_VERSION:-7.4}
     ports:
       - '127.0.0.1:8899:80'
     environment:
