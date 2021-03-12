@@ -11,6 +11,7 @@ on:
       - 'composer.lock'
       - 'tests/phpunit/**'
       - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
     branches:
       - main
       - release/*
@@ -24,6 +25,7 @@ on:
       - 'composer.lock'
       - 'tests/phpunit/**'
       - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
 
 jobs:
   unit-php:

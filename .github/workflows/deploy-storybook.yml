@@ -5,7 +5,7 @@ on:
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
-      - '.github/**'
+      - '!.github/workflows/deploy-storybook.yml'
       - '.storybook/**'
       - '.wordpress-org/**'
       - '__mocks__/**'
