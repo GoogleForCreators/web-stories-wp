@@ -51,7 +51,7 @@ function Selection() {
     return null;
   }
 
-  // No need for displaying non-functional frame for selected background.
+  // No need for displaying non-functional frame for video placeholders.
   const isVideoPlaceholder = selectedElements[0]?.resource?.isPlaceholder;
   if (isVideoPlaceholder) {
     return null;
