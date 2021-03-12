@@ -2,12 +2,24 @@ name: Deploy to GH Pages
 
 on:
   push:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '!.github/workflows/deploy-storybook.yml'
+      - '.storybook/**'
+      - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
+      - 'bin/**'
+      - 'tests/**'
     branches:
       - main
 
 jobs:
   build-storybook:
+    name: Build storybook
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Cancel previous
         uses: styfle/cancel-workflow-action@0.8.0
@@ -55,7 +67,9 @@ jobs:
           path: build/storybook
 
   deploy-gh-pages:
+    name: Deploy storybook
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     needs: [build-storybook]
     steps:
       - name: Cancel previous
