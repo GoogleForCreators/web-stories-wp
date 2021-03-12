@@ -2,10 +2,32 @@ name: Editor Integration Tests
 
 on:
   push:
+    # Only run if editor-related files changed.
+    paths:
+      - 'assets/src/edit-story/**.js'
+      - 'babel.config.cjs'
+      - 'karma-edit-story.config.cjs'
+      - 'webpack.config.cjs'
+      - 'webpack.config.test.cjs'
+      - 'packages/**/*.js'
+      - '**/package.json'
+      - 'package-lock.json'
+      - '__static__/**'
     branches:
       - main
       - release/*
   pull_request:
+    # Only run if editor-related files changed.
+    paths:
+      - 'assets/src/edit-story/**.js'
+      - 'babel.config.cjs'
+      - 'karma-edit-story.config.cjs'
+      - 'webpack.config.cjs'
+      - 'webpack.config.test.cjs'
+      - 'packages/**/*.js'
+      - '**/package.json'
+      - 'package-lock.json'
+      - '__static__/**'
     types:
       - opened
       - reopened

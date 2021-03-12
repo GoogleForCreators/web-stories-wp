@@ -2,10 +2,26 @@ name: Lint PHP
 
 on:
   push:
+    # Only run if PHP-related files changed.
+    paths:
+      - '**.php'
+      - 'phpcs.xml.dist'
+      - 'phpmd.xml'
+      - 'phpstan.neon.dist'
+      - 'composer.json'
+      - 'composer.lock'
     branches:
       - main
       - release/*
   pull_request:
+    # Only run if PHP-related files changed.
+    paths:
+      - '**.php'
+      - 'phpcs.xml.dist'
+      - 'phpmd.xml'
+      - 'phpstan.neon.dist'
+      - 'composer.json'
+      - 'composer.lock'
 
 jobs:
   lint:
