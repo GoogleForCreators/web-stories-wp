@@ -68,6 +68,7 @@ function StoriesPreview(props) {
       [`is-view-type-${viewType}`]: viewType,
       [`columns-${numOfColumns}`]: GRID_VIEW_TYPE === viewType && numOfColumns,
       [`align${align}`]: align,
+      'has-archive-link': fieldState['show_archive_link'],
     },
     'web-stories-list'
   );

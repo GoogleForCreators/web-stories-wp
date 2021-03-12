@@ -7,10 +7,17 @@
   }
 }
 
+.web-stories-list.is-carousel.has-archive-link {
+  margin-top: calc(
+    24px + 35px
+  ); /* default margin from common.css plus below offset */
+}
+
 .web-stories-theme-header-section
   .web-stories-list.is-carousel.has-archive-link {
   position: relative;
-  padding-top: 42px;
+  margin-top: 24px;
+  padding-top: calc(24px + 35px);
 }
 
 .web-stories-list.is-carousel .web-stories-list__archive-link {
