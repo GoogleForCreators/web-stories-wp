@@ -7,17 +7,21 @@ name: 'CodeQL'
 
 on:
   push:
-    # Don't run for docs-only changes.
+    # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
+      - '.github/**'
+      - '.wordpress-org/**'
     branches:
       - main
       - 'release/**'
       - static-site
   pull_request:
-    # Don't run for docs-only changes.
+    # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
+      - '.github/**'
+      - '.wordpress-org/**'
     # The branches below must be a subset of the branches above
     branches:
       - main

@@ -2,9 +2,12 @@ name: Deploy to GH Pages
 
 on:
   push:
-    # Don't run for docs-only changes.
+    # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
+      - '.github/**'
+      - '.storybook/**'
+      - '.wordpress-org/**'
     branches:
       - main
 
