@@ -92,6 +92,7 @@ export const MiniCard = styled.div(
     cursor: pointer;
     border: 1px solid ${theme.colors.border.defaultNormal};
     border-radius: ${theme.borders.radius.small};
+    overflow: hidden;
  
   `
 );
