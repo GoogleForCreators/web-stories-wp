@@ -20,6 +20,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { Text, THEME_CONSTANTS } from '../../../../design-system';
+
 export const Container = styled.div`
   position: relative;
   margin-top: 28px;
@@ -30,13 +35,12 @@ export const Container = styled.div`
   }
 `;
 
-export const Title = styled.h2`
+export const Title = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
   flex: 1 1 auto;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
-  font-weight: 500;
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
+  color: ${({ theme }) => theme.colors.fg.primary};
+  font-weight: 400;
   margin-bottom: 28px;
 `;
 

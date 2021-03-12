@@ -35,13 +35,13 @@ import { useUnits } from '../../../../units';
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
-const createGrid = ({ columns, gap, minWidth }) => css`
+const createGrid = ({ columns, columnGap, rowGap, minWidth }) => css`
   min-width: ${minWidth}px;
-  width: calc(${100 / columns}% - ${(gap * (columns - 1)) / columns}px);
+  width: calc(${100 / columns}% - ${(columnGap * (columns - 1)) / columns}px);
   margin-top: 0px;
-  margin-left: ${gap}px;
+  margin-left: ${columnGap}px;
   &:nth-of-type(n + ${columns + 1}) {
-    margin-top: ${gap}px;
+    margin-top: ${rowGap}px;
   }
   &:nth-of-type(${columns}n + 1) {
     margin-left: 0;
@@ -54,13 +54,13 @@ const Aspect = styled.div.attrs({ role: 'button' })`
   flex-grow: 0;
   flex-shrink: 0;
   @media screen and (min-width: 1220px) {
-    ${createGrid({ columns: 4, gap: 12, minWidth: 50 })}
+    ${createGrid({ columns: 4, columnGap: 12, rowGap: 24, minWidth: 50 })}
   }
   @media screen and (min-width: 1100px) and (max-width: 1220px) {
-    ${createGrid({ columns: 3, gap: 12, minWidth: 50 })}
+    ${createGrid({ columns: 3, columnGap: 12, rowGap: 24, minWidth: 50 })}
   }
   @media screen and (max-width: 1100px) {
-    ${createGrid({ columns: 2, gap: 12, minWidth: 50 })}
+    ${createGrid({ columns: 2, columnGap: 12, rowGap: 24, minWidth: 50 })}
   }
 `;
 
@@ -75,8 +75,8 @@ const ShapePreviewContainer = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray24};
-  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,7 +111,7 @@ const ShapePreviewSizer = styled.div`
 `;
 
 const Path = styled.path`
-  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  fill: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 function ShapePreview({ mask, isPreview }) {

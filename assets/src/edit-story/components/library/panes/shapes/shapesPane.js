@@ -49,7 +49,7 @@ function ShapesPane(props) {
           disabled
         />
       )}
-      <Section title={__('Basic shapes', 'web-stories')}>
+      <Section title={__('Shapes', 'web-stories')}>
         <SectionContent>
           {MASKS.filter((mask) => mask.showInLibrary).map((mask) => (
             <ShapePreview mask={mask} key={mask.type} isPreview />
