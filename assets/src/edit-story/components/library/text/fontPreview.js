@@ -36,7 +36,6 @@ const Preview = styled.button`
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
   padding: 8px 16px;
-  margin-bottom: 12px;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   width: 100%;
   border: none;

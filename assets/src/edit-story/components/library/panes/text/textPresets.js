@@ -73,10 +73,10 @@ const DEFAULT_PRESET = {
 
 const PRESETS = [
   {
-    title: __('Heading 1', 'web-stories'),
+    title: __('Title 1', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
-        'Heading 1',
+        'Title 1',
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.BOLD,
@@ -92,10 +92,10 @@ const PRESETS = [
     },
   },
   {
-    title: __('Heading 2', 'web-stories'),
+    title: __('Title 2', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.MEDIUM}">${__(
-        'Heading 2',
+        'Title 2',
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.MEDIUM,
@@ -111,10 +111,10 @@ const PRESETS = [
     },
   },
   {
-    title: __('Heading 3', 'web-stories'),
+    title: __('Title 3', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${__(
-        'Heading 3',
+        'Title 3',
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.NORMAL,
