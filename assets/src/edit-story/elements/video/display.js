@@ -84,7 +84,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
       showPlaceholder
       previewMode={previewMode}
     >
-      {previewMode ? (
+      {previewMode || !resource.src ? (
         <Image
           src={poster || resource.poster}
           alt={element.alt || resource.alt}
