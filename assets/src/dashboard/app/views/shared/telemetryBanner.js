@@ -38,7 +38,6 @@ import useTelemetryOptIn from './useTelemetryOptIn';
 
 const Label = styled.label.attrs({ htmlFor: 'telemetry-banner-opt-in' })`
   display: flex;
-  cursor: pointer;
 `;
 
 const LabelText = styled(Text)`

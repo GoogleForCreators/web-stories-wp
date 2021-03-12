@@ -97,7 +97,6 @@ export const CheckboxLabel = styled(Text)`
   display: flex;
   justify-content: flex-start;
   margin-top: 8px;
-  cursor: pointer;
 `;
 
 export const CheckboxLabelText = styled(HelperText)`

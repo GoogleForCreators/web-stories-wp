@@ -119,6 +119,10 @@ const StyledInput = styled.input(
       theme,
     })};
 
+    ::placeholder {
+      color: ${theme.colors.fg.tertiary};
+    }
+
     :disabled {
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
