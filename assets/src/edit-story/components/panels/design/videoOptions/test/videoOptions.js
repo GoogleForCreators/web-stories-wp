@@ -49,7 +49,7 @@ describe('Panels/VideoOptions', () => {
 
   it('should render <VideoOptions /> panel', () => {
     const { getByText } = renderVideoOptions([defaultElement]);
-    const panel = getByText('Video Settings');
+    const panel = getByText('Video settings');
     expect(panel).toBeInTheDocument();
   });
 });

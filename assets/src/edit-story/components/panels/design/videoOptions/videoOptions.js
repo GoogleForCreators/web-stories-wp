@@ -46,12 +46,11 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   return (
     <SimplePanel
       name="videoOptions"
-      title={__('Video Settings', 'web-stories')}
+      title={__('Video settings', 'web-stories')}
     >
       <Row>
         <Checkbox
           id={checkboxId}
-          name={checkboxId}
           checked={loop}
           onChange={(evt) => pushUpdate({ loop: evt.target.checked }, true)}
         />
