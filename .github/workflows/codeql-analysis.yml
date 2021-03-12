@@ -3,7 +3,7 @@ name: CodeQL
 on:
   push:
     # Only run if JS files changed.
-    paths-ignore:
+    paths:
       - '**.js'
       - '**.cjs'
     branches:
@@ -11,7 +11,7 @@ on:
       - release/*
   pull_request:
     # Only run if JS files changed.
-    paths-ignore:
+    paths:
       - '**.js'
       - '**.cjs'
     # The branches below must be a subset of the branches above
