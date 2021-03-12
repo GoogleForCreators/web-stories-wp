@@ -42,16 +42,14 @@ class TinyMCE extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::enqueue_assets
+	 * @covers ::register_assets
 	 */
-	public function test_enqueue_assets() {
+	public function test_register_assets() {
 		$tinymce = new \Google\Web_Stories\TinyMCE();
-		$tinymce->enqueue_assets();
+		$tinymce->register_assets();
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE ]->src );
-		$after = wp_scripts()->get_data( \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'data' );
-		$this->assertNotEmpty( $after );
 	}
 
 	/**

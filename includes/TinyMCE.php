@@ -112,8 +112,8 @@ class TinyMCE {
 		$asset = $this->get_asset_metadata( 'tinymce-button' );
 
 		// Only works when wp_register_script and wp_enqueue_script are called separately.
-		wp_register_script( 'web-stories-tinymce-button', false, $asset['dependencies'], $asset['version'], true );
-		wp_add_inline_script( 'web-stories-tinymce-button', 'var webStoriesData = ' . wp_json_encode( $this->get_script_data() ) . ';' );
+		wp_register_script( self::SCRIPT_HANDLE, false, $asset['dependencies'], $asset['version'], true );
+		wp_add_inline_script( self::SCRIPT_HANDLE, 'var webStoriesData = ' . wp_json_encode( $this->get_script_data() ) . ';' );
 
 		// TODO: ensure localization via wp_set_script_translations(), avoiding PHP notices due to miissing src.
 	}
@@ -127,7 +127,7 @@ class TinyMCE {
 	 */
 	public function enqueue_assets() {
 		$this->enqueue_style( 'wp-components' );
-		wp_enqueue_script( 'web-stories-tinymce-button' );
+		wp_enqueue_script( self::SCRIPT_HANDLE );
 	}
 
 	/**
