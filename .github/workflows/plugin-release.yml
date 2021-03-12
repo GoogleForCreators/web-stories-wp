@@ -31,6 +31,7 @@ jobs:
   checks:
     name: Checks
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -66,8 +67,9 @@ jobs:
   # bump the assets version accordingly in the `static-site` branch.
   assets-version:
     name: Prepare static assets
-    needs: checks
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [checks]
     steps:
       # TODO: Define behavior for patch releases.
       #
@@ -157,8 +159,9 @@ jobs:
   # Generate the changelog before we do any commits.
   changelog:
     name: Changelog
-    needs: checks
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [checks]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -229,8 +232,9 @@ jobs:
 
   build:
     name: Build plugin
-    needs: [assets-version, changelog]
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [assets-version, changelog]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -356,8 +360,9 @@ jobs:
 
   create-release:
     name: Create Release
-    needs: [build, changelog]
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [build, changelog]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -437,8 +442,9 @@ jobs:
   # See http://plugins.svn.wordpress.org/buddypress/tags/ and https://wordpress.org/plugins/bp-beta-tester/ for inspiration.
   deploy:
     name: Deploy plugin to WordPress.org
-    needs: create-release
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [create-release]
     # This step requires additional review
     # See https://docs.github.com/en/actions/reference/environments
     environment: Production
