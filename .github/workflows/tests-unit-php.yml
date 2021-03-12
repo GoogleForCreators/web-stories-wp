@@ -2,15 +2,36 @@ name: PHP Unit Tests
 
 on:
   push:
+    # Only run if PHP-related files changed.
+    paths:
+      - '**.php'
+      - 'phpunit.xml.dist'
+      - 'phpunit-multisite.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'tests/phpunit/**'
+      - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
     branches:
       - main
       - release/*
   pull_request:
+    # Only run if PHP-related files changed.
+    paths:
+      - '**.php'
+      - 'phpunit.xml.dist'
+      - 'phpunit-multisite.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'tests/phpunit/**'
+      - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
 
 jobs:
   unit-php:
     name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     services:
       mysql:
         image: mariadb:latest
