@@ -85,6 +85,7 @@ function MyStories() {
     showStoriesWhileLoading,
   } = useStoryView({
     filters: STORY_STATUSES,
+    isLoading,
     totalPages,
   });
 
@@ -107,13 +108,6 @@ function MyStories() {
     sort.value,
     view.style,
   ]);
-
-  useEffect(() => {
-    // reset ref state after request is finished
-    if (!isLoading) {
-      showStoriesWhileLoading.current = false;
-    }
-  }, [isLoading, showStoriesWhileLoading]);
 
   const [lastActiveStoryId, setLastActiveStoryId] = useState(null);
 

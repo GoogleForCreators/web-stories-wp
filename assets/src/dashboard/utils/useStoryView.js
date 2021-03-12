@@ -30,7 +30,11 @@ import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import { usePagePreviewSize } from './index';
 
-export default function useStoryView({ filters, totalPages }) {
+export default function useStoryView({
+  filters,
+  isLoading = false,
+  totalPages,
+}) {
   const enableStoryPreviews = useFeature('enableStoryPreviews');
 
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
@@ -130,6 +134,13 @@ export default function useStoryView({ filters, totalPages }) {
       search_view: viewStyle,
     });
   }, [searchKeyword, filter, sortDirection, sort, viewStyle]);
+
+  useEffect(() => {
+    // reset ref state after request is finished
+    if (!isLoading) {
+      showStoriesWhileLoading.current = false;
+    }
+  }, [isLoading]);
 
   return useMemo(
     () => ({
