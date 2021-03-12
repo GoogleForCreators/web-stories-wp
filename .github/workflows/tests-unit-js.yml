@@ -5,7 +5,7 @@ on:
     # Only run if JS-related files changed.
     paths:
       - '**.js'
-      - 'package.json'
+      - '**/package.json'
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
@@ -16,7 +16,7 @@ on:
     # Only run if JS-related files changed.
     paths:
       - '**.js'
-      - 'package.json'
+      - '**/package.json'
       - 'package-lock.json'
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
