@@ -36,7 +36,7 @@ if [ "$1" == '--reset-site' ]; then
 fi
 
 if [ "$WP_VERSION" == "latest" ]; then
-  # Potentially update WordPress
+	# Potentially update WordPress
 	echo -e $(status_message "Updating WordPress")
 	wp core update --force --quiet
 fi
