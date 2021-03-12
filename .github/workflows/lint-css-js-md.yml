@@ -1,4 +1,4 @@
-name: CSS Lints
+name: Lint CSS/JS/MD
 
 on:
   push:
@@ -9,7 +9,9 @@ on:
 
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Cancel previous
         uses: styfle/cancel-workflow-action@0.8.0
