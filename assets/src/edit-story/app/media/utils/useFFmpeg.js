@@ -139,7 +139,7 @@ function useFFmpeg() {
         }
       );
     } catch (err) {
-      trackError('video_transcoding', err.message);
+      trackError('video_poster_generation_ffmpeg', err.message);
       throw err;
     } finally {
       trackTiming();
