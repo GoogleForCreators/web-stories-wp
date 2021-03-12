@@ -2,10 +2,26 @@ name: E2E Tests
 
 on:
   push:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '!.github/workflows/tests-e2e.yml'
+      - '.storybook/**'
+      - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
     branches:
       - main
       - release/*
   pull_request:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '!.github/workflows/tests-e2e.yml'
+      - '.storybook/**'
+      - '.wordpress-org/**'
+      - '__mocks__/**'
+      - '__static__/**'
     types:
       - opened
       - reopened

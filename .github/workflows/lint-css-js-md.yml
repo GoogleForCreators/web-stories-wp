@@ -2,10 +2,36 @@ name: Lint CSS/JS/MD
 
 on:
   push:
+    # Only run if CSS/JS/MD-related files changed.
+    paths:
+      - '**.js'
+      - '**.cjs'
+      - '**.css'
+      - 'packages/**/*.md'
+      - '.eslint*'
+      - '.markdownlint*'
+      - '.nvmrc'
+      - '.prettier*'
+      - '.stylelint*'
+      - '**/package.json'
+      - 'package-lock.json'
     branches:
       - main
       - release/*
   pull_request:
+    # Only run if CSS/JS/MD-related files changed.
+    paths:
+      - '**.js'
+      - '**.cjs'
+      - '**.css'
+      - 'packages/**/*.md'
+      - '.eslint*'
+      - '.markdownlint*'
+      - '.nvmrc'
+      - '.prettier*'
+      - '.stylelint*'
+      - '**/package.json'
+      - 'package-lock.json'
 
 jobs:
   lint:

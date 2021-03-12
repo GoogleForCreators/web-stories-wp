@@ -2,10 +2,26 @@ name: JavaScript Unit Tests
 
 on:
   push:
+    # Only run if JS-related files changed.
+    paths:
+      - '**.js'
+      - '**/package.json'
+      - 'package-lock.json'
+      - 'packages/templates/src/raw/**'
+      - 'packages/text-sets/src/raw/**'
+      - 'patches/**'
     branches:
       - main
       - release/*
   pull_request:
+    # Only run if JS-related files changed.
+    paths:
+      - '**.js'
+      - '**/package.json'
+      - 'package-lock.json'
+      - 'packages/templates/src/raw/**'
+      - 'packages/text-sets/src/raw/**'
+      - 'patches/**'
 
 jobs:
   unit-js:

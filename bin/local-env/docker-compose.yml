@@ -2,7 +2,8 @@ version: '3.1'
 
 services:
   wordpress:
-    image: wordpress:php${PHP_VERSION:-7.4}
+    # See https://github.com/docker-library/wordpress/pull/575
+    image: wordpress:5.6-php${PHP_VERSION:-7.4}
     ports:
       - '127.0.0.1:8899:80'
     environment:
