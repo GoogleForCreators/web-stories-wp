@@ -50,7 +50,6 @@ function StatusPanel() {
     }) => ({ status, password, updateStory })
   );
   const [password, setPassword] = useState(savedPassword);
-  const passwordError = password && password.length > 20;
 
   useEffect(() => {
     // updated displayed password when stored password is updated
@@ -89,7 +88,7 @@ function StatusPanel() {
   });*/
 
   const handleChangePassword = useCallback((evt) => {
-    setPassword(evt.target.value.trim());
+    setPassword(evt.target.value);
   }, []);
 
   // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
@@ -171,12 +170,6 @@ function StatusPanel() {
               onBlur={handleUpdatePassword}
               onChange={handleChangePassword}
               placeholder={__('Enter a password', 'web-stories')}
-              hasError={passwordError}
-              hint={
-                passwordError
-                  ? __('Must not exceed 20 characters', 'web-stories')
-                  : ''
-              }
             />
           </InputRow>
         )}
