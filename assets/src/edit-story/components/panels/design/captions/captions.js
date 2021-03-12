@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
@@ -50,6 +50,17 @@ const InputRow = styled.div`
   flex-grow: 1;
   margin-right: 8px;
 `;
+
+const StyledFileInput = styled(Input)(
+  ({ hasMixedValue, theme }) => css`
+    ${!hasMixedValue &&
+    css`
+      * > input:disabled {
+        color: ${theme.colors.fg.primary};
+      }
+    `};
+  `
+);
 
 const UploadButton = styled(Button)`
   padding: 12px 8px;
@@ -138,11 +149,12 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     >
       {isMixedValue && (
         <Row>
-          <Input
+          <StyledFileInput
             value={MULTIPLE_DISPLAY_VALUE}
             disabled
             aria-label={__('Filename', 'web-stories')}
             onChange={() => handleRemoveTrack()}
+            hasMixedValue={isMixedValue}
           />
         </Row>
       )}
@@ -151,10 +163,11 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         tracks.map(({ id, trackName }) => (
           <Row key={`row-filename-${id}`}>
             <InputRow>
-              <Input
+              <StyledFileInput
                 value={trackName}
                 aria-label={__('Filename', 'web-stories')}
                 onChange={() => handleRemoveTrack(id)}
+                hasMixedValue={isMixedValue}
                 disabled
               />
             </InputRow>
