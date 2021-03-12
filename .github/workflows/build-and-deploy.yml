@@ -2,10 +2,22 @@ name: Build plugin
 
 on:
   push:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '.github/**'
+      - '.storybook/**'
+      - '.wordpress-org/**'
     branches:
       - main
       - release/*
   pull_request:
+    # Don't run for irrelevant changes.
+    paths-ignore:
+      - 'docs/**'
+      - '.github/**'
+      - '.storybook/**'
+      - '.wordpress-org/**'
 
 jobs:
   bundle-size:

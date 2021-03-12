@@ -7,13 +7,20 @@ name: 'CodeQL'
 
 on:
   push:
+    # Don't run for docs-only changes.
+    paths-ignore:
+      - 'docs/**'
     branches:
       - main
       - 'release/**'
       - static-site
   pull_request:
+    # Don't run for docs-only changes.
+    paths-ignore:
+      - 'docs/**'
     # The branches below must be a subset of the branches above
-    branches: [main]
+    branches:
+      - main
   schedule:
     - cron: '0 7 * * 1'
 

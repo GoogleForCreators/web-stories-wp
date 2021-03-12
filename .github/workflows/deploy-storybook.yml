@@ -2,6 +2,9 @@ name: Deploy to GH Pages
 
 on:
   push:
+    # Don't run for docs-only changes.
+    paths-ignore:
+      - 'docs/**'
     branches:
       - main
 
