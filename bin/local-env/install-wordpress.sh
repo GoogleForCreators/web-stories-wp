@@ -35,6 +35,12 @@ if [ "$1" == '--reset-site' ]; then
 	wp db reset --yes --quiet
 fi
 
+if [ "$WP_VERSION" == "latest" ]; then
+  # Potentially update WordPress
+	echo -e $(status_message "Updating WordPress")
+	wp core update --force --quiet
+fi
+
 if [ ! -z "$WP_VERSION" ] && [ "$WP_VERSION" != "latest" ]; then
 	# Potentially downgrade WordPress
 	echo -e $(status_message "Downloading WordPress version $WP_VERSION...")
