@@ -23,7 +23,8 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useSnackbar, useStory } from '../../app';
+import { useLocalMedia, useStory } from '../../app';
+import { useSnackbar } from '../../../design-system';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import useInsertElement from './useInsertElement';
 

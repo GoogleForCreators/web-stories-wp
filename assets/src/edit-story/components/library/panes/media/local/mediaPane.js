@@ -34,6 +34,7 @@ import {
   Text,
   THEME_CONSTANTS,
   DropDown,
+  useSnackbar,
 } from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
@@ -54,7 +55,6 @@ import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
 import { Placement } from '../../../../popup';
 import { PANE_PADDING } from '../../shared';
-import { useSnackbar } from '../../../../../app';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';

@@ -30,3 +30,14 @@ export const Placement = PropTypes.oneOf([
   'top',
   'bottom',
 ]);
+
+export const SnackbarNotification = PropTypes.shape({
+  message: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  actionLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  dismissable: PropTypes.bool,
+  onAction: PropTypes.func,
+  onDismiss: PropTypes.func,
+  preventActionDismiss: PropTypes.bool,
+  preventAutoDismiss: PropTypes.bool,
+  timeout: PropTypes.number,
+});

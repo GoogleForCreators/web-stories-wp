@@ -25,7 +25,7 @@ import { useConfig } from './config';
 import { useFont } from './font';
 import { useLocalMedia, useMedia } from './media';
 import { useStory } from './story';
-import { useSnackbar } from './snackbar';
+
 import { useCanvas } from './canvas';
 import { useCurrentUser } from './currentUser';
 
@@ -39,7 +39,6 @@ export {
   useFont,
   useLocalMedia,
   useMedia,
-  useSnackbar,
   useCanvas,
   useCurrentUser,
 };

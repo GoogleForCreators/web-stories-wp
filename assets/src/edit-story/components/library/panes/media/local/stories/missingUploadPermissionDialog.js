@@ -24,7 +24,7 @@ import { action } from '@storybook/addon-actions';
 import MissingUploadPermissionDialog from '../missingUploadPermissionDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import SnackbarContext from '../../../../../../app/snackbar/context';
+import SnackbarContext from '../../../../../../../design-system/components/snackbar/context';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Missing Upload Permission',

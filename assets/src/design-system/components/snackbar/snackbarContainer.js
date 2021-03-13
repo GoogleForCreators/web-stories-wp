@@ -16,23 +16,137 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+/**
+ * Internal dependencies
+ */
+import { SnackbarMessage } from './snackbarMessage';
+import { Placement, SnackbarNotification } from './constants';
 
-export const SnackbarContainer = styled.div`
+const StyledContainer = styled.div`
   position: fixed;
-  bottom: 16px;
-  left: 0;
-  right: 0;
+  top: ${({ placement }) => (placement.indexOf('top') === 0 ? 0 : 'inherit')};
+  bottom: ${({ placement }) =>
+    placement.indexOf('bottom') === 0 ? 0 : 'inherit'};
+  ${getSnackbarXPos}
   display: flex;
   flex-direction: column;
   align-items: ${({ alignItems }) => alignItems};
   width: 100%;
+  z-index: 2147483647;
 `;
 
-SnackbarContainer.propTypes = {
+function getSnackbarXPos({ placement }) {
+  switch (placement) {
+    case 'top':
+    case 'bottom':
+      return `    
+      left: calc(50% + 4rem);
+      transform: translateX(-50%);
+      width: auto;
+    `;
+    case 'top-left':
+    case 'bottom-left':
+      return 'left: 60px;';
+    case 'top-right':
+    case 'bottom-right':
+      return 'right: 60px;';
+    default:
+      return 'left: 60px;';
+  }
+}
+
+StyledContainer.propTypes = {
   alignItems: PropTypes.string,
 };
-SnackbarContainer.defaultProps = {
+StyledContainer.defaultProps = {
   alignItems: 'center',
+};
+
+const ChildContainer = styled.div`
+  &.react-snackbar-alert__snackbar-container-enter {
+    opacity: 0;
+    transform: scaleY(1);
+  }
+
+  &.react-snackbar-alert__snackbar-container-enter-active {
+    opacity: 1;
+    transform: scaleY(1);
+    transition: 300ms ease-out;
+    transition-property: opacity, transform;
+  }
+
+  &.react-snackbar-alert__snackbar-container-exit {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  &.react-snackbar-alert__snackbar-container-exit-active {
+    opacity: 0;
+    transform: scaleY(0.1);
+    transition: 300ms ease-out;
+    transition-property: opacity, transform;
+  }
+`;
+
+export const SnackbarContainer = ({
+  component: Component = SnackbarMessage,
+  notifications,
+  onRemove,
+  placement,
+}) => {
+  const orderedNotifications =
+    placement.indexOf('top') === 0
+      ? [...notifications].reverse()
+      : notifications;
+
+  const handleDismiss = useCallback(
+    (notification) => () => {
+      onRemove(notification);
+      notification.onDismiss?.();
+    },
+    [onRemove]
+  );
+
+  return (
+    <StyledContainer placement={placement}>
+      <TransitionGroup>
+        {orderedNotifications.map((notification) => (
+          <CSSTransition
+            in
+            appear
+            key={notification.key}
+            timeout={300}
+            unmountOnExit
+            classNames="react-snackbar-alert__snackbar-container"
+          >
+            <ChildContainer>
+              <Component
+                aria-label={notification.message}
+                placement={placement}
+                onDismiss={handleDismiss(notification)}
+                onAction={notification.onAction}
+                actionLabel={notification.actionLabel}
+                message={notification.message}
+                showCloseButton={Boolean(notification.dismissable)}
+                removeMessageTimeInterval={notification.timeout}
+                isPreventAutoDismiss={notification.preventAutoDismiss}
+                isPreventActionDismiss={notification.preventActionDismiss}
+              />
+            </ChildContainer>
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
+    </StyledContainer>
+  );
+};
+
+SnackbarContainer.propTypes = {
+  component: PropTypes.elementType,
+  notifications: PropTypes.arrayOf(SnackbarNotification),
+  onRemove: PropTypes.func.isRequired,
+  placement: Placement.isRequired,
 };

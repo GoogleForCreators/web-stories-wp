@@ -27,7 +27,7 @@ import MediaEditDialog from '../panes/media/local/mediaEditDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
-import SnackbarContext from '../../../app/snackbar/context';
+import SnackbarContext from '../../../../design-system/components/snackbar/context';
 
 const updateMedia = jest.fn();
 const updateMediaElement = jest.fn();

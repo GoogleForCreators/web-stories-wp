@@ -25,16 +25,15 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout } from '../../../components';
-import { ALERT_SEVERITY } from '../../../constants';
 import { useTemplateView, usePagePreviewSize } from '../../../utils/';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
-import { useSnackbarContext } from '../../snackbar';
 import FontProvider from '../../font/fontProvider';
+import { useSnackbar } from '../../../../design-system';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
-import { DashboardSnackbar, PreviewStoryView } from '..';
+import { PreviewStoryView } from '..';
 import Header from './header';
 import Content from './content';
 
@@ -49,11 +48,7 @@ function TemplateDetails() {
     actions,
   } = useRouteHistory();
 
-  const { addSnackbarMessage } = useSnackbarContext(
-    ({ actions: { addSnackbarMessage } }) => ({
-      addSnackbarMessage,
-    })
-  );
+  const { showSnackbar } = useSnackbar();
 
   const {
     isLoading,
@@ -118,10 +113,9 @@ function TemplateDetails() {
     templateFetchFn(id)
       .then(setTemplate)
       .catch(() => {
-        addSnackbarMessage({
+        showSnackbar({
           message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-          severity: ALERT_SEVERITY.ERROR,
-          id: Date.now(),
+          dismissable: true,
         });
       });
   }, [
@@ -132,7 +126,7 @@ function TemplateDetails() {
     isLocal,
     templateId,
     templates,
-    addSnackbarMessage,
+    showSnackbar,
   ]);
 
   const templatedId = template?.id;
@@ -226,9 +220,6 @@ function TemplateDetails() {
               handlePreviewTemplate,
             }}
           />
-          <Layout.Fixed>
-            <DashboardSnackbar />
-          </Layout.Fixed>
         </Layout.Provider>
       </TransformProvider>
     </FontProvider>

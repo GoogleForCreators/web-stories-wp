@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
 
-export const SnackbarNotification = PropTypes.shape({
-  message: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  actionLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  dismissable: PropTypes.bool,
-  onAction: PropTypes.func,
-  onDismiss: PropTypes.func,
-  preventActionDismiss: PropTypes.bool,
-  preventAutoDismiss: PropTypes.bool,
-  timeout: PropTypes.number,
-});
+/**
+ * Internal dependencies
+ */
+import { createContext } from '../../../design-system/utils/context';
+
+export default createContext({});

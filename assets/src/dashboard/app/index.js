@@ -31,6 +31,8 @@ import {
   theme as externalDesignSystemTheme,
   lightMode,
   ThemeGlobals,
+  useSnackbar,
+  SnackbarProvider,
 } from '../../design-system';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
@@ -42,10 +44,10 @@ import {
 } from '../constants';
 
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
+import usePrevious from '../../edit-story/utils/usePrevious';
 import ApiProvider from './api/apiProvider';
 import { ConfigProvider } from './config';
 import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
-import { SnackbarProvider } from './snackbar';
 import {
   EditorSettingsView,
   ExploreTemplatesView,
@@ -55,6 +57,7 @@ import {
   TemplateDetailsView,
 } from './views';
 import useApi from './api/useApi';
+import useApiAlerts from './api/useApiAlerts';
 
 const AppContent = () => {
   const {
@@ -63,6 +66,7 @@ const AppContent = () => {
       queryParams: { id: templateId },
     },
   } = useRouteHistory();
+
   const { currentTemplate } = useApi(
     ({
       state: {
@@ -114,6 +118,18 @@ const AppContent = () => {
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
     matchPath(currentPath, NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL);
+
+  useApiAlerts();
+  const { clearSnackbar } = useSnackbar();
+
+  // if the current path changes clear the snackbar
+  const prevPath = usePrevious(currentPath);
+
+  useEffect(() => {
+    if (currentPath !== prevPath) {
+      clearSnackbar();
+    }
+  }, [clearSnackbar, currentPath, prevPath]);
 
   return (
     <AppFrame>

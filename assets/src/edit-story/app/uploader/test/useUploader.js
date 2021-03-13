@@ -27,7 +27,7 @@ import useUploader from '../useUploader';
 
 const mockShowSnackbar = jest.fn();
 
-jest.mock('../../snackbar', () => ({
+jest.mock('../../../../design-system/components/snackbar/useSnackbar', () => ({
   useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 
