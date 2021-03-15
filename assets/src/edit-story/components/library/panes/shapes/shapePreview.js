@@ -30,7 +30,7 @@ import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { useUnits } from '../../../../units';
-import { themeHelpers, useKeyDownEffect } from '../../../../../design-system';
+import { themeHelpers } from '../../../../../design-system';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -163,15 +163,6 @@ function ShapePreview({ mask, isPreview, index }) {
     trackEvent('insert_shape', { name: mask.type });
   }, [insertElement, shapeData, mask.type]);
 
-  useKeyDownEffect(
-    ref,
-    {
-      key: ['enter', 'space'],
-    },
-    onClick,
-    [onClick]
-  );
-
   const getSVG = (displayLabel = true) => {
     return (
       <svg
@@ -194,8 +185,9 @@ function ShapePreview({ mask, isPreview, index }) {
   };
 
   // We use rovingTabIndex for navigating so only the first item will have 0 as tabIndex.
+  // onClick on Aspect is for the keyboard only.
   return (
-    <Aspect ref={ref} tabIndex={index === 0 ? 0 : -1}>
+    <Aspect ref={ref} tabIndex={index === 0 ? 0 : -1} onClick={onClick}>
       <AspectInner>
         <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
           <ShapePreviewSizer />
