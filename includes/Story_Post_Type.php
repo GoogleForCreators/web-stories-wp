@@ -187,6 +187,7 @@ class Story_Post_Type {
 		);
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		add_action( 'current_screen', [ $this, 'send_headers' ] );
 		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
@@ -753,5 +754,27 @@ class Story_Post_Type {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Add cross origin headers, to make sure the ffmpeg loads.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param WP_Screen $screen Current screen.
+	 *
+	 * @return void
+	 */
+	public function send_headers( $screen ) {
+		if ( ! $screen instanceof WP_Screen ) {
+			return;
+		}
+
+		if ( self::POST_TYPE_SLUG !== $screen->post_type && 'post' !== $screen->base ) {
+			return;
+		}
+
+		header( 'Cross-Origin-Opener-Policy: same-origin' );
+		header( 'Cross-Origin-Embedder-Policy: require-corp' );
 	}
 }
