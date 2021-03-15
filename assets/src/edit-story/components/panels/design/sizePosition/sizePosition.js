@@ -100,6 +100,10 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
+  const isAspectAlwaysLocked = selectedElements.some(
+    ({ type }) => getDefinitionForType(type).isAspectAlwaysLocked
+  );
+
   const hasText = selectedElements.some(({ type }) => 'text' === type);
 
   const actualDimensions = useMemo(() => {
@@ -244,8 +248,10 @@ function SizePositionPanel({
             <LockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
               title={__('Lock aspect ratio', 'web-stories')}
-              isLocked={lockAspectRatio}
+              isLocked={lockAspectRatio || isAspectAlwaysLocked}
+              disabled={isAspectAlwaysLocked}
               onClick={() =>
+                !isAspectAlwaysLocked &&
                 pushUpdate({ lockAspectRatio: !lockAspectRatio }, true)
               }
             />
