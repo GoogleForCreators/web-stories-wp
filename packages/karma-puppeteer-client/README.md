@@ -6,7 +6,7 @@ events and nantive browser support. The APIs are exposed via `karmaPuppeteer` gl
 Notice, that all exposed Puppeeter APIs that accept an element selector, also
 accept the element reference in its place. Thus, both of these forms are valid:
 
-```JavaScript
+```js
 karmaPuppeteer.click('.element1') // Valid. Finds the element by the selector.
 karmaPuppeteer.click(element1) // Also valid. Passes the element by reference.
 ```
