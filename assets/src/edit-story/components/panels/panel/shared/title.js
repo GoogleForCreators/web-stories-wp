@@ -88,7 +88,11 @@ const Collapse = styled.button`
   }
   margin-left: -12px;
 
-  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus, theme.colors.bg.secondary)};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 function Toggle({ children, toggle, ...rest }) {
