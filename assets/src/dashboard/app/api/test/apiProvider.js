@@ -121,7 +121,7 @@ describe('ApiProvider', () => {
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {
-          avatar: {},
+          avatar: null,
           id: 0,
           name: '',
         },
@@ -217,7 +217,7 @@ describe('ApiProvider', () => {
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {
-          avatar: {},
+          avatar: null,
           id: 0,
           name: '',
         },
@@ -325,7 +325,7 @@ describe('ApiProvider', () => {
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {
-          avatar: {},
+          avatar: null,
           id: 0,
           name: '',
         },
@@ -380,7 +380,7 @@ describe('ApiProvider', () => {
         author: 'admin',
         link: 'https://www.story-link.com',
         lockUser: {
-          avatar: {},
+          avatar: null,
           id: 0,
           name: '',
         },
