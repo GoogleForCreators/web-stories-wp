@@ -18,6 +18,7 @@
     "header",
     "jsdoc",
     "jsx-a11y",
+    "markdown",
     "react",
     "react-hooks"
   ],
@@ -413,11 +414,20 @@
         "*.md",
         "**/*.md"
       ],
-      "plugins": [
-        "markdown"
+      "processor": "markdown/markdown"
+    },
+    {
+      "files": [
+        "**/*.md/*.js"
       ],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "impliedStrict": true
+        }
+      },
       "rules": {
         "@wordpress/dependency-group": "off",
+        "no-console": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off",

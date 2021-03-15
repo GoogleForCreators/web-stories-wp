@@ -363,7 +363,7 @@ export default function StoryListView({
                         tabIndex={0}
                         onFocus={onFocusSelectAll}
                         onBlur={onBlurDeselectAll}
-                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
                         as="h4"
                       >
                         {titleFormatted(story.title)}
