@@ -35,6 +35,7 @@ import {
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { dataPixels } from '../../../../units';
 import { getDefinitionForType } from '../../../../elements';
+import stickers from '../../../../stickers';
 import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
@@ -42,6 +43,10 @@ import { getCommonValue, useCommonObjectValue } from '../../shared';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
+
+function getStickerAspectRatio(element) {
+  return stickers?.[element?.sticker?.type].aspectRatio || 1;
+}
 
 const Grid = styled.div`
   display: grid;
@@ -207,7 +212,18 @@ function SizePositionPanel({
                   newHeight = dataPixels(newWidth / origRatio);
                 }
               }
-              pushUpdate(getUpdateObject(newWidth, newHeight), true);
+              pushUpdate((element) => {
+                // For stickers, we maintain aspect ratio of the sticker
+                // regardless of input and selected elements.
+                if (element?.type === 'sticker') {
+                  const aspectRatio = getStickerAspectRatio(element);
+                  return getUpdateObject(
+                    newWidth,
+                    Math.floor(newWidth / aspectRatio)
+                  );
+                }
+                return getUpdateObject(newWidth, newHeight);
+              }, true);
             }}
             aria-label={__('Width', 'web-stories')}
             {...getMixedValueProps(width)}
@@ -233,7 +249,18 @@ function SizePositionPanel({
                   newWidth = dataPixels(newHeight * origRatio);
                 }
               }
-              pushUpdate(getUpdateObject(newWidth, newHeight), true);
+              pushUpdate((element) => {
+                // For stickers, we maintain aspect ratio of the sticker
+                // regardless of input and selected elements.
+                if (element?.type === 'sticker') {
+                  const aspectRatio = getStickerAspectRatio(element);
+                  return getUpdateObject(
+                    Math.floor(newHeight * aspectRatio),
+                    newHeight
+                  );
+                }
+                return getUpdateObject(newWidth, newHeight);
+              }, true);
             }}
             aria-label={__('Height', 'web-stories')}
             isIndeterminate={MULTIPLE_VALUE === height}
