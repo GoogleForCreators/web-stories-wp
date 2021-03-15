@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -122,7 +122,7 @@ function PublishPanel() {
     }
   }, [tab, loadUsers]);
 
-  const { capabilities, allowedImageMimeTypes } = useConfig();
+  const { capabilities, allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) =>
@@ -164,6 +164,30 @@ function PublishPanel() {
     },
     [updateStory]
   );
+
+  const publisherLogoErrorMessage = useMemo(() => {
+    /* translators: %s is a list of allowed file extensions. */
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as publisher logo.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [ allowedImageFileTypes ]);
+
+  const posterErrorMessage = useMemo(() => {
+    /* translators: %s is a list of allowed file extensions. */
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as a poster.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [ allowedImageFileTypes ]);
 
   useEffect(() => {
     if (users?.length) {
@@ -237,6 +261,7 @@ function PublishPanel() {
               ref={publisherLogoRef}
               value={publisherLogoUrl}
               onChange={handleChangePublisherLogo}
+              onChangeErrorText={publisherLogoErrorMessage}
               title={__('Select as publisher logo', 'web-stories')}
               buttonInsertText={__('Select as publisher logo', 'web-stories')}
               type={allowedImageMimeTypes}
@@ -255,6 +280,7 @@ function PublishPanel() {
               ref={posterButtonRef}
               value={featuredMedia?.url}
               onChange={handleChangePoster}
+              onChangeErrorText={posterErrorMessage}
               title={__('Select as poster image', 'web-stories')}
               buttonInsertText={__('Select as poster image', 'web-stories')}
               type={allowedImageMimeTypes}

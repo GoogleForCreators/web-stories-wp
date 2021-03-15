@@ -165,20 +165,6 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
-      if (!allowedMimeTypes.includes(resource.mimeType)) {
-        /* translators: %s is a list of allowed file extensions. */
-        const message = sprintf(
-          /* translators: %s: list of allowed file types. */
-          __('Please choose only %s to insert into page.', 'web-stories'),
-          allowedFileTypes.join(
-            /* translators: delimiter used in a list */
-            __(', ', 'web-stories')
-          )
-        );
-
-        throw createError('ValidError', resource.title, message);
-      }
-
       // WordPress media picker event, sizes.medium.url is the smallest image
       insertMediaElement(
         resource,
@@ -197,8 +183,20 @@ function MediaPane(props) {
     }
   };
 
+  /* translators: %s is a list of allowed file extensions. */
+  const onSelectErrorMessage = sprintf(
+    /* translators: %s: list of allowed file types. */
+    __('Please choose only %s to insert into page.', 'web-stories'),
+    allowedFileTypes.join(
+      /* translators: delimiter used in a list */
+      __(', ', 'web-stories')
+    )
+  );
+
+
   const openMediaPicker = useMediaPicker({
     onSelect,
+    onSelectErrorMessage,
     onClose,
     type: allowedMimeTypes,
     onPermissionError: () => setIsPermissionDialogOpen(true),

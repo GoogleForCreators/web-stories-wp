@@ -21,7 +21,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import {
   THEME_CONSTANTS,
   useBatchingCallback,
 } from '../../../../../design-system';
-import { useStory, useAPI, useCanvas } from '../../../../app';
+import { useStory, useAPI, useCanvas, useConfig } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
@@ -91,6 +91,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
+
+  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -165,6 +167,18 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     },
     [handleChange]
   );
+
+  const iconErrorMessage = useMemo(() => {
+    /* translators: %s is a list of allowed file extensions. */
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as an icon.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [ allowedImageFileTypes ]);
 
   const hasLinkSet = Boolean(link.url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
@@ -243,10 +257,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             <Media
               value={link.icon || ''}
               onChange={handleChangeIcon}
+              onChangeErrorText={iconErrorMessage}
               title={__('Select as link icon', 'web-stories')}
               ariaLabel={__('Edit link icon', 'web-stories')}
               buttonInsertText={__('Select as link icon', 'web-stories')}
-              type={'image'}
+              type={allowedImageMimeTypes}
               isLoading={fetchingMetadata}
               variant={MEDIA_VARIANTS.CIRCLE}
               menuOptions={link.icon ? ['edit', 'remove'] : []}

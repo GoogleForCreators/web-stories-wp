@@ -95,7 +95,8 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
 
   const UploadCaption = useMediaPicker({
     onSelect: handleChangeTrack,
-    type: 'text/vtt',
+    onSelectErrorMessage:  __('Please choose a VTT file to use as caption.', 'web-stories'),
+    type: ['text/vtt'],
     title: captionText,
     buttonInsertText: __('Select caption', 'web-stories'),
   });
