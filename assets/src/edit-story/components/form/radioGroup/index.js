@@ -40,7 +40,7 @@ function RadioGroup({
   value: selectedValue,
   ...radioButtonProps
 }) {
-  const groupId = useMemo(() => uuidv4(), []);
+  const groupId = useMemo(() => id || uuidv4(), [id]);
   const groupRef = useRef(null);
   useRadioNavigation(groupRef);
 
@@ -72,7 +72,7 @@ RadioGroup.propTypes = {
   className: PropTypes.string,
   groupLabel: PropTypes.string.isRequired,
   id: PropTypes.string,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
