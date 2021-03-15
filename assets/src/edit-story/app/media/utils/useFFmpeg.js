@@ -65,7 +65,9 @@ function useFFmpeg() {
     state: { currentUser },
   } = useCurrentUser();
   /**
-   * Whether the video optimization flag is enabled.
+   * Whether the video optimization feature is enabled.
+   *
+   * @todo Check for window.crossOriginIsolated
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
