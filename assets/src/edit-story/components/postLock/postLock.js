@@ -68,15 +68,23 @@ function PostLock() {
   const doGetStoryLock = useCallback(() => {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
       getStoryLockById(storyId)
-        .then((result) => {
-          if (result.locked && result.user.id !== currentUser.id) {
+        .then(({ locked, nonce: newNonce, _embedded }) => {
+          const author = _embedded?.author?.[0] || {};
+          const lockUser = author
+            ? {
+                id: author.id,
+                name: author.name,
+                avatar: author.avatar_urls?.['48'],
+              }
+            : null;
+          if (locked && lockUser.id !== currentUser.id) {
             setShowDialog(true);
-            setUser(result.user);
+            setUser(lockUser);
           } else {
             setStoryLockById(storyId);
           }
           // Refresh notice on every request.
-          setNonce(result.nonce);
+          setNonce(newNonce);
         })
         .catch((err) => {
           trackError('post_lock', err.message);
