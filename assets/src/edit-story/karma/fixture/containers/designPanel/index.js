@@ -31,6 +31,7 @@ import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
 import { Layers } from './layers';
 import { Link } from './link';
+import { PageBackground } from './pageBackground';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { TextStylePreset } from './textStylePreset';
@@ -154,6 +155,14 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /Animation/ }),
       'animation',
       Animation
+    );
+  }
+
+  get pageBackground() {
+    return this._get(
+      this.getByRole('region', { name: /Page background/ }),
+      'pageBackground',
+      PageBackground
     );
   }
 

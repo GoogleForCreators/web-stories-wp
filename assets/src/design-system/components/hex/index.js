@@ -25,8 +25,6 @@ import PropTypes from 'prop-types';
  */
 import { parseToRgb } from 'polished';
 import { Input, useKeyDownEffect } from '../';
-// @todo Should the multiple value come from the editor / input usage instead?
-import { MULTIPLE_VALUE } from '../../utils';
 import { InputPropTypes } from '../input';
 import getHexFromValue from './getHexFromValue';
 import getPreviewText from './getPreviewText';
@@ -35,9 +33,6 @@ export const HexInput = forwardRef(function Hex(
   { value, placeholder, onChange, ...rest },
   ref
 ) {
-  const isMixed = value === MULTIPLE_VALUE;
-  value = isMixed ? '' : value;
-
   const [inputValue, setInputValue] = useState('');
 
   const inputRef = useRef(null);
@@ -62,10 +57,10 @@ export const HexInput = forwardRef(function Hex(
       const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
 
       // Keep same opacity as before though. In case of mixed values, set to default (1).
-      const a = isMixed ? 1 : value.color.a;
+      const a = value.color.a;
       onChange({ color: { r, g, b, a } });
     }
-  }, [inputValue, previewText, onChange, value, isMixed]);
+  }, [inputValue, previewText, onChange, value]);
 
   const handleEnter = useCallback(() => {
     validateAndSubmitInput();

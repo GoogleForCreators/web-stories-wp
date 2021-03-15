@@ -18,6 +18,7 @@
     "header",
     "jsdoc",
     "jsx-a11y",
+    "markdown",
     "react",
     "react-hooks"
   ],
@@ -158,6 +159,7 @@
         ]
       }
     ],
+    "react/jsx-boolean-value": "error",
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
@@ -411,11 +413,20 @@
         "*.md",
         "**/*.md"
       ],
-      "plugins": [
-        "markdown"
+      "processor": "markdown/markdown"
+    },
+    {
+      "files": [
+        "**/*.md/*.js"
       ],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "impliedStrict": true
+        }
+      },
       "rules": {
         "@wordpress/dependency-group": "off",
+        "no-console": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off",

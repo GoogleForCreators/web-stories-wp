@@ -73,7 +73,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick }) {
             <ColorGroup
               colors={localStyles}
               handleAddPreset={addLocalPreset}
-              isLocal={true}
+              isLocal
               handleClick={(preset) =>
                 handlePresetClick(preset, true /* isLocal */)
               }

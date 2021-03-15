@@ -82,9 +82,7 @@ describe('Panels/LayerStyle', () => {
     expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 }, true);
   });
 
-  // Disable reason: Will be implemented once #6574 is merged
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should display mixed in case of multi-selection with different values', () => {
+  it('should display mixed in case of multi-selection with different values', () => {
     const { getByRole } = renderLayerStyle([
       { ...defaultElement, opacity: 50 },
       { id: 2, opacity: 80 },

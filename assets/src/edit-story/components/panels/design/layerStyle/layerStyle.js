@@ -29,6 +29,7 @@ import { NumericInput } from '../../../../../design-system';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const MIN_MAX = {
   OPACITY: {
@@ -64,6 +65,8 @@ function LayerStylePanel({ selectedElements, pushUpdate }) {
           min={MIN_MAX.OPACITY.MIN}
           max={MIN_MAX.OPACITY.MAX}
           aria-label={__('Opacity in percent', 'web-stories')}
+          placeholder={opacity === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
+          isIndeterminate={opacity === MULTIPLE_VALUE}
         />
       </ShortRow>
     </SimplePanel>

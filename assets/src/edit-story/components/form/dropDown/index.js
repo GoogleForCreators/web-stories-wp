@@ -146,7 +146,7 @@ function DropDown({
       <DropDownSelect
         onClick={handleSelectClick}
         aria-pressed={isOpen}
-        aria-haspopup={true}
+        aria-haspopup
         aria-expanded={isOpen}
         aria-disabled={disabled}
         disabled={disabled}
@@ -159,12 +159,7 @@ function DropDown({
         </DropDownTitle>
         <DropdownIcon />
       </DropDownSelect>
-      <Popup
-        anchor={selectRef}
-        isOpen={isOpen}
-        placement={placement}
-        fillWidth={true}
-      >
+      <Popup anchor={selectRef} isOpen={isOpen} placement={placement} fillWidth>
         <DropDownList
           handleCurrentValue={handleCurrentValue}
           value={activeItem && activeItem.value}

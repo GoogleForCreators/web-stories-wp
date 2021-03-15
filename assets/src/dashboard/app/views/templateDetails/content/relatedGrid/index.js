@@ -22,6 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { Headline, THEME_CONSTANTS } from '../../../../../../design-system';
 import { UnitsProvider } from '../../../../../../edit-story/units';
 import {
   PageSizePropType,
@@ -29,7 +30,7 @@ import {
   TemplateActionsPropType,
 } from '../../../../../types';
 import { TemplateGridView } from '../../../shared';
-import { RowContainer, SubHeading } from './../../components';
+import { RowContainer } from './../../components';
 
 function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {
   if (relatedTemplates.length === 0) {
@@ -38,7 +39,10 @@ function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {
 
   return (
     <RowContainer>
-      <SubHeading>{__('Related Templates', 'web-stories')}</SubHeading>
+      <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
+        {__('Related Templates', 'web-stories')}
+      </Headline>
+
       <UnitsProvider
         pageSize={{
           width: pageSize.width,

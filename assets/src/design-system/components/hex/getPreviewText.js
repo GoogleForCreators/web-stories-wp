@@ -19,18 +19,13 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 
-/**
- * Internal dependencies
- */
-import { MULTIPLE_VALUE } from '../../utils';
-
 function printRGB(r, g, b) {
   const hex = (v) => v.toString(16).padStart(2, '0');
   return `${hex(r)}${hex(g)}${hex(b)}`.toUpperCase();
 }
 
 function getPreviewText(pattern) {
-  if (!pattern || pattern === MULTIPLE_VALUE) {
+  if (!pattern) {
     return null;
   }
   switch (pattern.type) {

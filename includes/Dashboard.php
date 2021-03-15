@@ -103,7 +103,6 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
-		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 	}
 
 	/**
@@ -234,19 +233,6 @@ class Dashboard {
 			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 			'after'
 		);
-	}
-
-	/**
-	 * Find status of site kit plugin in site.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return boolean
-	 */
-	public function is_site_kit_plugin_installed() {
-		$all_plugins = get_plugins();
-
-		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
 	}
 
 	/**

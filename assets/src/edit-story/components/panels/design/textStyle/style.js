@@ -107,7 +107,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
       <Row>
         <ExpandedNumeric
           aria-label={__('Line-height', 'web-stories')}
-          float={true}
+          float
           value={lineHeight}
           min={MIN_MAX.LINE_HEIGHT.MIN}
           max={MIN_MAX.LINE_HEIGHT.MAX}

@@ -228,7 +228,7 @@ function VideoControls({
 
   return (
     <Controls data-controls-id={id} {...box}>
-      {showControls && (
+      {showControls && element.resource.src && (
         <TransitionWrapper
           in={hovering}
           appear
