@@ -91,10 +91,10 @@ function useInsertElement() {
         handleRegisterUsage(resource);
       }
       // Auto-play on insert.
-      if (type === 'video') {
+      if (type === 'video' && resource?.src) {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
-          if (videoEl) {
+          if (videoEl?.src) {
             videoEl.play().catch(() => {});
           }
         });

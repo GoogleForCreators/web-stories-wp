@@ -104,12 +104,13 @@ function VideoControls({
   elementRef,
   element,
 }) {
+  const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
     element.height < PLAY_ABOVE_BREAKPOINT_HEIGHT;
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(!isTransforming);
+  const [isPlaying, setIsPlaying] = useState(!isTransforming && hasVideoSrc);
   const { id } = element;
   const getVideoNode = useCallback(
     () => document.getElementById(`video-${id}`),
@@ -127,12 +128,12 @@ function VideoControls({
       setShowControls(false);
     }
     const syncTimer = setTimeout(() => {
-      if (isSelected && videoNode && !videoNode.paused) {
+      if (isSelected && videoNode && !videoNode.paused && hasVideoSrc) {
         setIsPlaying(true);
       }
     });
     return () => clearTimeout(syncTimer);
-  }, [getVideoNode, id, isSelected, isEditing]);
+  }, [getVideoNode, id, isSelected, isEditing, hasVideoSrc]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
@@ -196,7 +197,7 @@ function VideoControls({
   const handlePlayPause = (evt) => {
     evt.stopPropagation();
     const videoNode = getVideoNode();
-    if (!videoNode) {
+    if (!videoNode?.src) {
       return;
     }
 
