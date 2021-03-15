@@ -32,9 +32,7 @@ export default {
 export const _default = () => {
   const user = {
     name: 'Matt Mullenweg',
-    avatar_urls: {
-      48: 'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
-    },
+    avatar: 'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
   };
   const dashboardLink = 'http://www.example.com/dashboard';
   return (

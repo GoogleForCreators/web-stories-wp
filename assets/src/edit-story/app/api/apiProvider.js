@@ -71,11 +71,20 @@ function APIProvider({ children }) {
         _embed: 'author',
       });
 
-      return apiFetch({ path }).then(({ locked, nonce, _embedded }) => ({
-        locked,
-        nonce,
-        user: _embedded?.author?.[0] || null,
-      }));
+      return apiFetch({ path }).then(({ locked, nonce, _embedded }) => {
+        const user = _embedded?.author?.[0] || {};
+        return {
+          locked,
+          nonce,
+          user: user
+            ? {
+                id: user.id,
+                name: user.name,
+                avatar: user.avatar_urls['48'],
+              }
+            : null,
+        };
+      });
     },
     [stories]
   );

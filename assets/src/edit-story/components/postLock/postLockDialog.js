@@ -56,19 +56,16 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
       actions={
         <>
           <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
-          <Plain href={previewLink}>{__('Preview', 'web-stories')}</Plain>
+          <Plain href={previewLink} target="_blank" rel="noreferrer">
+            {__('Preview', 'web-stories')}
+          </Plain>
           <Plain onClick={onClose}>{__('Take over', 'web-stories')}</Plain>
         </>
       }
     >
       <Paragraph>
-        {user['avatar_urls'] && (
-          <Img
-            src={user['avatar_urls']['48']}
-            alt={user.name}
-            height={48}
-            width={48}
-          />
+        {user.avatar && (
+          <Img src={user.avatar} alt={user.name} height={48} width={48} />
         )}
         {dialogContent}
       </Paragraph>

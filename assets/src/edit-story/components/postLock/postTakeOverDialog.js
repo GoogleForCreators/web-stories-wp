@@ -57,9 +57,9 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
       }
     >
       <Paragraph>
-        {user['avatar_urls'] && (
+        {user.avatar && (
           <Img
-            src={user['avatar_urls']['48']}
+            src={user.avatar}
             alt={user.name}
             height={48}
             width={48}

@@ -150,7 +150,7 @@ function PostLock() {
     );
   }
 
-  // Second time around, show message that dialog was taken over.
+  // Second time around, show message that story was taken over.
   return (
     <PostTakeOverDialog
       open={showDialog}

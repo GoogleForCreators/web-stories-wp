@@ -146,7 +146,7 @@ const CardTitle = ({
           <ListIcon />
           {lockUser.avatar && (
             <LockAvatar
-              src={lockUser.avatar['24']}
+              src={lockUser.avatar}
               alt={lockUser.name}
               height={24}
               width={24}

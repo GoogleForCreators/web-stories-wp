@@ -65,7 +65,7 @@ export default function reshapeStoryObject(editStoryURL) {
       lockUser: {
         id: lockUser[0].id,
         name: lockUser[0].name,
-        avatar: lockUser[0]['avatar_urls'],
+        avatar: lockUser[0].avatar_urls['24'],
       },
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,

@@ -64,7 +64,7 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 		$post_type_object  = get_post_type_object( $post_type );
 		$parent_controller = null;
 
-		if ( $post_type_object instanceof \WP_Post_Type ) {
+		if ( $post_type_object instanceof WP_Post_Type ) {
 			$parent_controller = $post_type_object->get_rest_controller();
 			$rest_base         = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 		}
@@ -185,8 +185,7 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 		$lock = get_post_meta( $post_id, '_edit_lock', true );
 
 		if ( $lock ) {
-			$_lock                = explode( ':', $lock );
-			list ( $time, $user ) = $_lock;
+			list ( $time, $user ) = explode( ':', $lock );
 			if ( $time && $user ) {
 				$lock = compact( 'time', 'user' );
 			}
