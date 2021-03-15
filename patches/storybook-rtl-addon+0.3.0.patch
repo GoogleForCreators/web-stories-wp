@@ -1,0 +1,13 @@
+diff --git a/node_modules/storybook-rtl-addon/dist/Tool.js b/node_modules/storybook-rtl-addon/dist/Tool.js
+index d9f7042..77ad4cd 100644
+--- a/node_modules/storybook-rtl-addon/dist/Tool.js
++++ b/node_modules/storybook-rtl-addon/dist/Tool.js
+@@ -46,7 +46,7 @@ var constants_1 = require("./constants");
+ var DirectionLTR_1 = __importDefault(require("./icons/DirectionLTR"));
+ var DirectionRTL_1 = __importDefault(require("./icons/DirectionRTL"));
+ var utils_1 = require("./utils");
+-var shared_1 = require("@storybook/addon-knobs/dist/shared");
++var shared_1 = require("@storybook/addon-knobs/dist/cjs");
+ var emitEvent = function (api, direction) {
+     api.getChannel().emit(constants_1.Direction_MODE_EVENT_NAME, direction);
+ };
