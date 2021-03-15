@@ -84,7 +84,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
       showPlaceholder
       previewMode={previewMode}
     >
-      {previewMode || !resource.src ? (
+      {previewMode ? (
         <Image
           src={poster || resource.poster}
           alt={element.alt || resource.alt}
@@ -104,7 +104,9 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-testid="videoElement"
           data-leaf-element="true"
         >
-          <source src={resource.src} type={resource.mimeType} />
+          {resource.src && (
+            <source src={resource.src} type={resource.mimeType} />
+          )}
           {tracks &&
             tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
               <track

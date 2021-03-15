@@ -225,17 +225,12 @@ function MediaEdit({ element, box }) {
           srcSet={calculateSrcSet(resource)}
         />
       )}
-      {isVideo && resource.src && (
+      {isVideo && (
         <FadedVideo {...fadedMediaProps}>
-          <source src={resource.src} type={resource.mimeType} />
+          {resource.src && (
+            <source src={resource.src} type={resource.mimeType} />
+          )}
         </FadedVideo>
-      )}
-      {isVideo && !resource.src && (
-        <FadedImage
-          {...fadedMediaProps}
-          src={resource.poster}
-          srcSet={calculateSrcSet(resource)}
-        />
       )}
       <CropBox ref={setCropBox} {...borderProps}>
         <WithMask element={element} fill applyFlip={false} box={box}>
