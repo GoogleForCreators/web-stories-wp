@@ -59,7 +59,6 @@ const Row = styled.div`
 const IconContainer = styled.div`
   height: 32px;
   width: 32px;
-  margin-right: -8px;
 `;
 
 export const _default = () => {
