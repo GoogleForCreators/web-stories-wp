@@ -69,9 +69,9 @@ function PostLock() {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
       getStoryLockById(storyId)
         .then((result) => {
-          if (result.locked && result.user !== currentUser.id) {
+          if (result.locked && result.user.id !== currentUser.id) {
             setShowDialog(true);
-            setUser(result['_embedded'].author[0]);
+            setUser(result.user);
           } else {
             setStoryLockById(storyId);
           }

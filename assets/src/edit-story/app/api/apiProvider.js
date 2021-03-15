@@ -71,7 +71,11 @@ function APIProvider({ children }) {
         _embed: 'author',
       });
 
-      return apiFetch({ path });
+      return apiFetch({ path }).then(({ locked, nonce, _embedded }) => ({
+        locked,
+        nonce,
+        user: _embedded?.author?.[0] || null,
+      }));
     },
     [stories]
   );
