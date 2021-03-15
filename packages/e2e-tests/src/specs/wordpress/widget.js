@@ -36,18 +36,18 @@ describe('Web Stories Widget', () => {
       await expect(page).toClick('button', { text: 'Add widget: Web Stories' });
       await expect(page).toClick('button', { text: 'Add Widget' });
       await expect(page).toMatchElement(
-        '.widget-liquid-right .stories-field-wrapper'
+        '.widget-liquid-right .web-stories-field-wrapper'
       );
 
       await page.evaluate(() => {
         const input = document.querySelector(
-          '.widget-liquid-right .stories-field-wrapper input'
+          '.widget-liquid-right .web-stories-field-wrapper input'
         );
         input.value = '';
       });
 
       await page.type(
-        '.widget-liquid-right .stories-field-wrapper input',
+        '.widget-liquid-right .web-stories-field-wrapper input',
         'Test widget'
       );
 
