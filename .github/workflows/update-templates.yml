@@ -1,7 +1,9 @@
 name: Migrate Templates
+
 on:
   schedule:
     - cron: '0 12 * * 1'
+
 jobs:
   update-template:
     name: Migrate templates and text sets
