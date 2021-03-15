@@ -128,6 +128,9 @@ wp plugin install amp --force --quiet
 echo -e $(status_message "Installing Classic editor plugin...")
 wp plugin install classic-editor --force --quiet
 
+echo -e $(status_message "Activating Twenty Twenty theme...")
+wp theme activate twentytwenty --force --quiet
+
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")
 wp rewrite structure '%postname%' --hard --quiet

@@ -63,7 +63,7 @@ class Stories extends WP_Widget {
 		$name           = __( 'Web Stories', 'web-stories' );
 		$widget_options = [
 			'description' => __( 'Display Web Stories in Sidebar Section.', 'web-stories' ),
-			'classname'   => 'google-stories-widget',
+			'classname'   => 'web-stories-widget',
 		];
 
 		parent::__construct( $id_base, $name, $widget_options );
@@ -472,7 +472,7 @@ class Stories extends WP_Widget {
 				'name'          => wp_generate_uuid4(),
 				'label'         => '',
 				'classname'     => 'widefat',
-				'wrapper_class' => 'stories-field-wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper',
 			]
 		);
 		?>
@@ -520,7 +520,7 @@ class Stories extends WP_Widget {
 				'name'          => wp_generate_uuid4(),
 				'label'         => '',
 				'classname'     => 'widefat',
-				'wrapper_class' => 'stories-field-wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper',
 			]
 		);
 		?>
@@ -569,7 +569,7 @@ class Stories extends WP_Widget {
 				'label'         => '',
 				'value'         => '',
 				'classname'     => 'widefat',
-				'wrapper_class' => 'stories-field-wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper',
 				'label_before'  => false,
 			]
 		);
