@@ -178,7 +178,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         __(', ', 'web-stories')
       )
     );
-  }, [ allowedImageFileTypes ]);
+  }, [allowedImageFileTypes]);
 
   const hasLinkSet = Boolean(link.url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;

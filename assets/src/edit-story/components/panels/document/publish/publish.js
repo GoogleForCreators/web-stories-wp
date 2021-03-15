@@ -122,7 +122,11 @@ function PublishPanel() {
     }
   }, [tab, loadUsers]);
 
-  const { capabilities, allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
+  const {
+    capabilities,
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+  } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) =>
@@ -175,7 +179,7 @@ function PublishPanel() {
         __(', ', 'web-stories')
       )
     );
-  }, [ allowedImageFileTypes ]);
+  }, [allowedImageFileTypes]);
 
   const posterErrorMessage = useMemo(() => {
     /* translators: %s is a list of allowed file extensions. */
@@ -187,7 +191,7 @@ function PublishPanel() {
         __(', ', 'web-stories')
       )
     );
-  }, [ allowedImageFileTypes ]);
+  }, [allowedImageFileTypes]);
 
   useEffect(() => {
     if (users?.length) {

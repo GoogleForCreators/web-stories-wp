@@ -64,7 +64,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
         __(', ', 'web-stories')
       )
     );
-  }, [ allowedImageFileTypes ]);
+  }, [allowedImageFileTypes]);
 
   return (
     <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>

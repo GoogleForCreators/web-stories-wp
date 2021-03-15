@@ -35,7 +35,7 @@ function renderLinkPanel(selectedElements) {
     capabilities: {
       hasUploadMediaAction: true,
     },
-    allowedImageFileTypes: ['png', 'jpg']
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
   };
 
   const storyContextValue = {

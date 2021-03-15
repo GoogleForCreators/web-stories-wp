@@ -34,7 +34,10 @@ const MediaInput = forwardRef(
       buttonInsertText = __('Choose an image', 'web-stories'),
       menuOptions = [],
       onChange,
-      onChangeErrorText = __('Unable to use this file type, please select a valid image type.', 'web-stories'),
+      onChangeErrorText = __(
+        'Unable to use this file type, please select a valid image type.',
+        'web-stories'
+      ),
       title = __('Choose an image', 'web-stories'),
       type = 'image',
       value,

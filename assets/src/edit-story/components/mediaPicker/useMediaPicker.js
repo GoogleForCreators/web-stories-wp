@@ -115,7 +115,7 @@ export default function useMediaPicker({
 
         // Only allow user to select a mime type from allowed list.
         if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
-          showSnackbar({ message:  onSelectErrorMessage });
+          showSnackbar({ message: onSelectErrorMessage });
 
           return;
         }
@@ -140,10 +140,12 @@ export default function useMediaPicker({
     },
     [
       hasUploadMediaAction,
+      showSnackbar,
       onPermissionError,
       onClose,
       onSelect,
       buttonInsertText,
+      onSelectErrorMessage,
       multiple,
       type,
       title,

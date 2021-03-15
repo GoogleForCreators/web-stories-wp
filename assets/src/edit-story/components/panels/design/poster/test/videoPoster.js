@@ -35,12 +35,12 @@ jest.mock('../../../../mediaPicker', () => ({
 
 function renderPoster(selectedElements) {
   const configValue = {
-    allowedImageFileTypes: ['png', 'jpg']
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
   };
 
   const wrapper = (params) => (
     <ConfigContext.Provider value={configValue}>
-        {params.children}
+      {params.children}
     </ConfigContext.Provider>
   );
 

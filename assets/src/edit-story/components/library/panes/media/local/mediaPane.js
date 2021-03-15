@@ -39,7 +39,6 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
-import createError from '../../../../../utils/createError';
 import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
@@ -192,7 +191,6 @@ function MediaPane(props) {
       __(', ', 'web-stories')
     )
   );
-
 
   const openMediaPicker = useMediaPicker({
     onSelect,
