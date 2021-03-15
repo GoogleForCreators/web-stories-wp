@@ -18,8 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { _x } from '@web-stories-wp/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { Text } from '../../../design-system';
 
 const RequiredWrapper = styled.div`
   display: flex;
@@ -28,17 +32,18 @@ const RequiredWrapper = styled.div`
   align-items: center;
 `;
 
-const Text = styled.span`
-  font-size: 12px;
-  line-height: 14px;
-  font-style: italic;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.required, 0.55)};
+const StyledText = styled(Text).attrs({
+  as: 'span',
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 function Required() {
   return (
     <RequiredWrapper>
-      <Text>{_x('Required', 'Required form input', 'web-stories')}</Text>
+      <StyledText>
+        {_x('Required', 'Required form input', 'web-stories')}
+      </StyledText>
     </RequiredWrapper>
   );
 }

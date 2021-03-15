@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -28,6 +29,11 @@ import { Row, Media } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue, Note } from '../../shared';
 import { useConfig } from '../../../../app/config';
+
+const Wrapper = styled.div`
+  height: 114px;
+  width: 64px;
+`;
 
 const DEFAULT_RESOURCE = {
   poster: null,
@@ -57,16 +63,18 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   return (
     <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>
       <Row>
-        <Media
-          value={poster}
-          onChange={handleChangePoster}
-          title={__('Select as video poster', 'web-stories')}
-          buttonInsertText={__('Set as video poster', 'web-stories')}
-          alt={__('Preview poster image', 'web-stories')}
-          type={allowedImageMimeTypes}
-          ariaLabel={__('Video poster', 'web-stories')}
-          menuOptions={['edit', 'reset']}
-        />
+        <Wrapper>
+          <Media
+            value={poster}
+            onChange={handleChangePoster}
+            title={__('Select as video poster', 'web-stories')}
+            buttonInsertText={__('Set as video poster', 'web-stories')}
+            alt={__('Preview poster image', 'web-stories')}
+            type={allowedImageMimeTypes}
+            ariaLabel={__('Video poster', 'web-stories')}
+            menuOptions={['edit', 'reset']}
+          />
+        </Wrapper>
       </Row>
       <Row>
         <Note>

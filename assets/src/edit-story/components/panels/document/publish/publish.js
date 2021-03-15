@@ -29,18 +29,22 @@ import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { useAPI } from '../../../../app/api';
 import { useFocusHighlight, states, styles } from '../../../../app/highlights';
-import { Row, AdvancedDropDown, Label, Media, Required } from '../../../form';
+import { Row, AdvancedDropDown, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
 import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
-  width: 106px;
+  height: 40px;
 `;
 
-const FieldLabel = styled(Label)`
-  flex-basis: ${({ width }) => (width ? width : '64px')};
+const Label = styled(Text).attrs({
+  as: 'label',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const MediaWrapper = styled.div`
@@ -50,11 +54,20 @@ const MediaWrapper = styled.div`
       ${styles.OUTLINE}
       border-radius: 0;
     `}
-  flex-basis: 134px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  height: 96px;
+`;
+
+const Sizer = styled.div`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
 `;
 
 const HighlightRow = styled(Row)`
   position: relative;
+  justify-content: space-between;
   &::after {
     content: '';
     position: absolute;
@@ -65,6 +78,10 @@ const HighlightRow = styled(Row)`
     ${({ isHighlighted }) => isHighlighted && styles.FLASH}
     pointer-events: none;
   }
+`;
+
+const MediaInputWrapper = styled.div`
+  height: 160px;
 `;
 
 function PublishPanel() {
@@ -205,9 +222,6 @@ function PublishPanel() {
         <PublishTime />
         {capabilities && capabilities.hasAssignAuthorAction && users && (
           <Row>
-            <FieldLabel id={authorLabelId}>
-              {__('Author', 'web-stories')}
-            </FieldLabel>
             {isUsersLoading || !visibleOptions ? (
               <AdvancedDropDown
                 placeholder={__('Loading…', 'web-stories')}
@@ -226,41 +240,49 @@ function PublishPanel() {
             )}
           </Row>
         )}
-        <Row>
-          {/* @todo Replace this with selection to choose between publisher logos */}
-          <LabelWrapper>
-            <FieldLabel>{__('Publisher logo', 'web-stories')}</FieldLabel>
-            <Required />
-          </LabelWrapper>
-          <MediaWrapper isHighlighted={highlightLogo?.showEffect}>
-            <Media
-              ref={publisherLogoRef}
-              value={publisherLogoUrl}
-              onChange={handleChangePublisherLogo}
-              title={__('Select as publisher logo', 'web-stories')}
-              buttonInsertText={__('Select as publisher logo', 'web-stories')}
-              type={allowedImageMimeTypes}
-              ariaLabel={__('Publisher logo', 'web-stories')}
-              variant={MEDIA_VARIANTS.CIRCLE}
-            />
-          </MediaWrapper>
-        </Row>
         <HighlightRow isHighlighted={highlightPoster?.showEffect}>
-          <LabelWrapper>
-            <FieldLabel>{__('Poster image', 'web-stories')}</FieldLabel>
-            <Required />
-          </LabelWrapper>
-          <MediaWrapper isHighlighted={highlightPoster?.showEffect}>
-            <Media
-              ref={posterButtonRef}
-              value={featuredMedia?.url}
-              onChange={handleChangePoster}
-              title={__('Select as poster image', 'web-stories')}
-              buttonInsertText={__('Select as poster image', 'web-stories')}
-              type={allowedImageMimeTypes}
-              ariaLabel={__('Poster image', 'web-stories')}
-            />
-          </MediaWrapper>
+          <MediaInputWrapper>
+            <MediaWrapper isHighlighted={highlightPoster?.showEffect}>
+              <Sizer width={54} height={96}>
+                <Media
+                  ref={posterButtonRef}
+                  value={featuredMedia?.url}
+                  onChange={handleChangePoster}
+                  title={__('Select as poster image', 'web-stories')}
+                  buttonInsertText={__('Select as poster image', 'web-stories')}
+                  type={allowedImageMimeTypes}
+                  ariaLabel={__('Poster image', 'web-stories')}
+                />
+              </Sizer>
+            </MediaWrapper>
+            <LabelWrapper>
+              <Label>{__('Poster image', 'web-stories')}</Label>
+              <Required />
+            </LabelWrapper>
+          </MediaInputWrapper>
+          <MediaInputWrapper>
+            <MediaWrapper isHighlighted={highlightLogo?.showEffect}>
+              <Sizer width={72} height={72}>
+                <Media
+                  ref={publisherLogoRef}
+                  value={publisherLogoUrl}
+                  onChange={handleChangePublisherLogo}
+                  title={__('Select as publisher logo', 'web-stories')}
+                  buttonInsertText={__(
+                    'Select as publisher logo',
+                    'web-stories'
+                  )}
+                  type={allowedImageMimeTypes}
+                  ariaLabel={__('Publisher logo', 'web-stories')}
+                  variant={MEDIA_VARIANTS.CIRCLE}
+                />
+              </Sizer>
+            </MediaWrapper>
+            <LabelWrapper>
+              <Label>{__('Publisher logo', 'web-stories')}</Label>
+              <Required />
+            </LabelWrapper>
+          </MediaInputWrapper>
         </HighlightRow>
       </PanelContent>
     </Panel>

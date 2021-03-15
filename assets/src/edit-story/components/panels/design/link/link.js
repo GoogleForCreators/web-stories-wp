@@ -52,6 +52,11 @@ const IconText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+const MediaWrapper = styled.div`
+  width: 54px;
+  height: 54px;
+`;
+
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
@@ -240,17 +245,19 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             />
           </Row>
           <Row spaceBetween={false}>
-            <Media
-              value={link.icon || ''}
-              onChange={handleChangeIcon}
-              title={__('Select as link icon', 'web-stories')}
-              ariaLabel={__('Edit link icon', 'web-stories')}
-              buttonInsertText={__('Select as link icon', 'web-stories')}
-              type={'image'}
-              isLoading={fetchingMetadata}
-              variant={MEDIA_VARIANTS.CIRCLE}
-              menuOptions={link.icon ? ['edit', 'remove'] : []}
-            />
+            <MediaWrapper>
+              <Media
+                value={link.icon || ''}
+                onChange={handleChangeIcon}
+                title={__('Select as link icon', 'web-stories')}
+                ariaLabel={__('Edit link icon', 'web-stories')}
+                buttonInsertText={__('Select as link icon', 'web-stories')}
+                type={'image'}
+                isLoading={fetchingMetadata}
+                variant={MEDIA_VARIANTS.CIRCLE}
+                menuOptions={link.icon ? ['edit', 'remove'] : []}
+              />
+            </MediaWrapper>
             <IconInfo>
               <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
                 {__('Optional brand icon', 'web-stories')}
