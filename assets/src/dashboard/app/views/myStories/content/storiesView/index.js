@@ -26,12 +26,13 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import {
-  Dialog,
   Button,
   BUTTON_TYPES,
   BUTTON_SIZES,
   LoadingSpinner,
   useSnackbar,
+  Text,
+  THEME_CONSTANTS,
 } from '../../../../../../design-system';
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
@@ -40,6 +41,7 @@ import {
   ViewPropTypes,
   ShowStoriesWhileLoadingPropType,
 } from '../../../../../utils/useStoryView';
+import { Dialog } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
@@ -332,11 +334,13 @@ function StoriesView({
             </>
           }
         >
-          {sprintf(
-            /* translators: %s: story title. */
-            __('Are you sure you want to delete "%s"?', 'web-stories'),
-            titleFormatted(activeStory.title)
-          )}
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+            {sprintf(
+              /* translators: %s: story title. */
+              __('Are you sure you want to delete "%s"?', 'web-stories'),
+              titleFormatted(activeStory.title)
+            )}
+          </Text>
         </Dialog>
       )}
     </>
