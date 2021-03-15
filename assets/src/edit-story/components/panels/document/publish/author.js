@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useEffect, useState } from 'react';
 
 /**
@@ -95,10 +94,8 @@ function Author() {
     [updateStory]
   );
 
-  const authorLabelId = `author-label-${uuidv4()}`;
   const dropDownParams = {
     hasSearch: true,
-    'aria-labelledby': authorLabelId,
     lightMode: true,
     onChange: handleChangeAuthor,
     getOptionsByQuery: getAuthorsBySearch,
@@ -120,6 +117,7 @@ function Author() {
           primaryOptions={visibleOptions}
           searchResultsLabel={__('Search results', 'web-stories')}
           disabled={isSaving}
+          aria-label={__('Author', 'web-stories')}
           {...dropDownParams}
         />
       )}
