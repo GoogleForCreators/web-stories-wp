@@ -2,10 +2,30 @@ name: PHP Unit Tests
 
 on:
   push:
+    # Only run if PHP-related files changed.
+    paths:
+      - '**.php'
+      - 'phpunit.xml.dist'
+      - 'phpunit-multisite.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'tests/phpunit/**'
+      - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
     branches:
       - main
       - release/*
   pull_request:
+    # Only run if PHP-related files changed.
+    paths:
+      - '**.php'
+      - 'phpunit.xml.dist'
+      - 'phpunit-multisite.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'tests/phpunit/**'
+      - 'includes/data/**'
+      - '.github/workflows/tests-unit-php.yml'
 
 jobs:
   unit-php:
