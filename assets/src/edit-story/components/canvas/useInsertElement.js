@@ -94,7 +94,7 @@ function useInsertElement() {
       if (type === 'video' && resource?.src) {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
-          if (videoEl?.src) {
+          if (videoEl) {
             videoEl.play().catch(() => {});
           }
         });

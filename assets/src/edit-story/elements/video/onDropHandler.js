@@ -18,7 +18,7 @@ function onDropHandler(dropTargetId) {
   // Auto-play video on drop
   setTimeout(() => {
     const videoEl = document.getElementById(`video-${dropTargetId}`);
-    if (videoEl?.src) {
+    if (videoEl) {
       videoEl.load();
       videoEl.play().catch(() => {});
     }

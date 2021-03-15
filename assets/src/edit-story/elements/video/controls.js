@@ -197,7 +197,7 @@ function VideoControls({
   const handlePlayPause = (evt) => {
     evt.stopPropagation();
     const videoNode = getVideoNode();
-    if (!videoNode?.src) {
+    if (!videoNode) {
       return;
     }
 
