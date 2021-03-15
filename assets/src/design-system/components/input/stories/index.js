@@ -141,7 +141,7 @@ export const _default = () => {
         </Row>
       </Container>
       <DarkThemeProvider>
-        <Container darkMode>
+        <Container>
           <Row>
             <Input
               aria-label="input-four"
@@ -275,7 +275,7 @@ export const Numeric = () => {
         </Row>
       </Container>
       <DarkThemeProvider>
-        <Container darkMode>
+        <Container>
           <Row>
             <NumericInput
               aria-label="input-three"
