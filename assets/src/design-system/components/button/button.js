@@ -126,10 +126,39 @@ const tertiaryColors = ({ theme }) => css`
   }
 `;
 
+const quaternaryColors = ({ theme }) => css`
+  background-color: ${theme.colors.interactiveBg.quaternaryNormal};
+  border: 1px solid ${theme.colors.border.defaultNormal};
+
+  &:hover {
+    border-color: ${theme.colors.border.quaternaryHover};
+    background-color: ${theme.colors.interactiveBg.quaternaryNormal};
+  }
+
+  &:focus {
+    box-shadow: none;
+    border-color: ${theme.colors.border.quaternaryHover};
+    background-color: ${theme.colors.interactiveBg.quaternaryNormal};
+  }
+
+  &:active {
+    border-color: ${theme.colors.border.quaternaryActive};
+    background-color: ${theme.colors.interactiveBg.quaternaryNormal};
+  }
+
+  ${themeHelpers.focusableOutlineCSS};
+
+  &:disabled {
+    border-color: ${theme.colors.border.disable};
+    background-color: ${theme.colors.quaternaryNormal};
+  }
+`;
+
 const buttonColors = {
   [BUTTON_TYPES.PRIMARY]: primaryColors,
   [BUTTON_TYPES.SECONDARY]: secondaryColors,
   [BUTTON_TYPES.TERTIARY]: tertiaryColors,
+  [BUTTON_TYPES.QUATERNARY]: quaternaryColors,
 };
 
 const ButtonRectangle = styled(Base)`
@@ -166,6 +195,7 @@ const ButtonCircle = styled(ButtonSquare)`
 `;
 
 const ButtonIcon = styled(Base)`
+  ${({ type }) => type && buttonColors?.[type]};
   width: ${THEME_CONSTANTS.ICON_SIZE}px;
   height: ${THEME_CONSTANTS.ICON_SIZE}px;
   svg {
