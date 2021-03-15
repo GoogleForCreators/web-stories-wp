@@ -39,7 +39,6 @@ const ICON_LEFT_POSITION = 19;
 
 const Background = styled.div(
   ({ theme }) => css`
-    box-sizing: border-box;
     position: absolute;
     top: -${BORDER_WIDTH}px;
     left: -${BORDER_WIDTH}px;
@@ -55,7 +54,6 @@ const Background = styled.div(
 
 const Circle = styled.span(
   ({ theme }) => css`
-    box-sizing: border-box;
     pointer-events: none;
 
     :after {
@@ -75,7 +73,6 @@ const Circle = styled.span(
 
 const IconContainer = styled.div(
   ({ theme }) => css`
-    box-sizing: border-box;
     position: absolute;
     width: ${ICON_CONTAINER_WIDTH}px;
     top: ${ICON_TOP_POSITION}px;
@@ -93,10 +90,9 @@ const IconContainer = styled.div(
 
 const ToggleContainer = styled.div(
   ({ theme }) => css`
-    box-sizing: border-box;
     position: relative;
-    height: ${TOGGLE_HEIGHT - BORDER_WIDTH * 2}px;
-    width: ${TOGGLE_WIDTH - BORDER_WIDTH * 2}px;
+    height: ${TOGGLE_HEIGHT}px;
+    width: ${TOGGLE_WIDTH}px;
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.x_large};
 
