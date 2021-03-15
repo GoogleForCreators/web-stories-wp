@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -30,6 +30,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { styles, states, useFocusHighlight } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {
   alt: null,
@@ -70,10 +71,16 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     [pushUpdate, rawPoster]
   );
 
+  // Used for focusing and highlighting the panel from the pre-publish checkist.
+  const ref = useRef();
+  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
+
   return (
     <SimplePanel
+      css={highlight && styles.FLASH}
       name="videoAccessibility"
       title={__('Accessibility', 'web-stories')}
+      isPersistable={!highlight}
     >
       <Row>
         <Media
@@ -88,6 +95,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         />
         <InputsWrapper>
           <TextArea
+            ref={ref}
             placeholder={
               alt === MULTIPLE_VALUE
                 ? MULTIPLE_DISPLAY_VALUE
