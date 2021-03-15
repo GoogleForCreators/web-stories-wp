@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, { createRef, useCallback, useMemo } from 'react';
+import React, { createRef, useCallback, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
 
@@ -30,7 +30,7 @@ import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { useUnits } from '../../../../units';
-import { themeHelpers } from '../../../../../design-system';
+import { themeHelpers, useKeyDownEffect } from '../../../../../design-system';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -128,7 +128,7 @@ const Path = styled.path`
   fill: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-function ShapePreview({ mask, isPreview }) {
+function ShapePreview({ mask, isPreview, index }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -137,6 +137,7 @@ function ShapePreview({ mask, isPreview }) {
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
+  const ref = useRef();
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole
   // component with large paddings, and only drags the svg part of it.
@@ -162,6 +163,15 @@ function ShapePreview({ mask, isPreview }) {
     trackEvent('insert_shape', { name: mask.type });
   }, [insertElement, shapeData, mask.type]);
 
+  useKeyDownEffect(
+    ref,
+    {
+      key: ['enter', 'space'],
+    },
+    onClick,
+    [onClick]
+  );
+
   const getSVG = (displayLabel = true) => {
     return (
       <svg
@@ -183,8 +193,9 @@ function ShapePreview({ mask, isPreview }) {
     );
   };
 
+  // We use rovingTabIndex for navigating so only the first item will have 0 as tabIndex.
   return (
-    <Aspect>
+    <Aspect ref={ref} tabIndex={index === 0 ? 0 : -1}>
       <AspectInner>
         <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
           <ShapePreviewSizer />
@@ -208,6 +219,7 @@ function ShapePreview({ mask, isPreview }) {
 ShapePreview.propTypes = {
   mask: PropTypes.object.isRequired,
   isPreview: PropTypes.bool,
+  index: PropTypes.number,
 };
 
 export default ShapePreview;
