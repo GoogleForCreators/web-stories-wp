@@ -92,12 +92,9 @@ function TextPane(props) {
 
       <Section title={__('Presets', 'web-stories')}>
         <GridContainer>
-          {PRESETS.map(({ title, element }, i) => (
+          {PRESETS.map(({ title, element }) => (
             <FontPreview
-              key={
-                /* eslint-disable-next-line react/no-array-index-key */
-                i
-              }
+              key={title}
               title={title}
               element={element}
               onClick={() => onClick(title, element)}
