@@ -278,15 +278,11 @@ function StoriesView({
     initialFocusStoryId,
     renameStory,
     returnStoryFocusId,
-    sort?.direction,
-    sort?.set,
-    sort?.setDirection,
-    sort?.value,
+    sort,
     stories,
     storyActions?.handlePreviewStory,
     storyMenu,
-    view?.pageSize,
-    view?.style,
+    view,
   ]);
 
   return (
