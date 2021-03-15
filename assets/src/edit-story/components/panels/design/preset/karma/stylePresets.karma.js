@@ -229,10 +229,10 @@ describe('Panel: Style Presets', () => {
       const storyContext = await fixture.renderHook(() => useStory());
       // Verify that both now have bold.
       expect(storyContext.state.selectedElements[0].content).toContain(
-        '<span style="font-weight: 700">'
+        '<span style="font-weight: 500">'
       );
       expect(storyContext.state.selectedElements[1].content).toContain(
-        '<span style="font-weight: 700">'
+        '<span style="font-weight: 500">'
       );
       await fixture.snapshot('2 selected texts, same style');
     });
