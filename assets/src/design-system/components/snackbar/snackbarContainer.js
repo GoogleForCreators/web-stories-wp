@@ -37,6 +37,7 @@ const StyledContainer = styled.div`
   align-items: ${({ alignItems }) => alignItems};
   width: 100%;
   z-index: 2147483647;
+  pointer-events: none;
 `;
 
 function getSnackbarXPos({ placement }) {

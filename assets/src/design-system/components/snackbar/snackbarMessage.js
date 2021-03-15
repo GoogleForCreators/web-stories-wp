@@ -74,6 +74,7 @@ const MessageContainer = styled.div`
     ${({ placement }) =>
       placement.indexOf('top') === -1 ? fromBottom : fromTop}
     ease-out;
+  pointer-events: auto;
 `;
 MessageContainer.propTypes = {
   customZIndex: PropTypes.number,
