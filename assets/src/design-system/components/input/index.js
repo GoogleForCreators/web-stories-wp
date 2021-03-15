@@ -56,7 +56,7 @@ const Suffix = styled(Text)`
   svg {
     width: 32px;
     height: 32px;
-    margin: 2px 0;
+    margin: 2px -10px;
     display: block;
   }
 `;
