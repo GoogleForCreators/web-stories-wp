@@ -27,7 +27,6 @@ import {
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-import { clickButton } from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {
   beforeAll(async () => {
@@ -38,28 +37,20 @@ describe('TinyMCE button', () => {
     await deactivatePlugin('classic-editor');
   });
 
-  beforeEach(async () => {
+  it('should allow inserting shortcode via modal', async () => {
     await visitAdminPage('post-new.php');
 
-    await clickButton('.mce-web-stories');
+    // Ensure we're in the visual editor.
+    await expect(page).toClick('#content-tmce');
+
+    await expect(page).toClick('.mce-web-stories button');
 
     await page.waitForSelector('.components-modal__frame', {
       visible: true,
     });
-  });
-
-  afterEach(async () => {
-    // Rest after test to TinyMCE.
-    await clickButton('#content-tmce');
-  });
-
-  it('should display TinyMCE dialog', async () => {
-    await expect(page).toMatch('Archive Link Label');
 
     await percySnapshot(page, 'TinyMCE dialog');
-  });
 
-  it('should display TinyMCE insert shortcode', async () => {
     await expect(page).toMatch('Archive Link Label');
 
     await expect(page).toClick('button', { text: 'Insert' });
