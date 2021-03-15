@@ -52,6 +52,8 @@ class Lightbox {
 
     // Event triggered when user clicks on close (X) button.
     this.player.addEventListener('amp-story-player-close', () => {
+      // Rewind the story and pause there upon closing the lightbox.
+      this.player.rewind();
       this.player.pause();
       this.lightboxElement.classList.toggle('show');
       document.body.classList.toggle('web-stories-lightbox-open');
