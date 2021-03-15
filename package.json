@@ -68,7 +68,7 @@
     "patch-package": "^6.2.2",
     "polished": "^4.1.1",
     "prop-types": "^15.7.2",
-    "query-string": "^6.14.0",
+    "query-string": "^6.14.1",
     "react": "^16.14.0",
     "react-calendar": "^3.3.0",
     "react-color": "^2.19.3",
