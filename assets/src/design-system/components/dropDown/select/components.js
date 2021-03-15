@@ -37,7 +37,7 @@ export const SelectButton = styled.button(
     justify-content: space-between;
 
     border-radius: ${theme.borders.radius.small};
-    background-color: ${theme.colors.bg.primary};
+    background-color: transparent;
     border: 1px solid
       ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
 
