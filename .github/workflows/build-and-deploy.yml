@@ -71,8 +71,8 @@ jobs:
           pattern: '{assets/js/*.js,assets/css/*.css}'
           build-script: 'build:js'
           minimum-change-threshold: 100
-          # Ignore webpack content hash in bundle filenames.
-          strip-hash: '.*-(\w{20})\.js$'
+          # Ignore chunk and module hashes in bundle filenames.
+          strip-hash: '.*-(\w{20})|^(\d{2,5})\.js$'
 
   build:
     name: Package ZIP files
