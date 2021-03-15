@@ -19,16 +19,14 @@
  */
 import { useState, useCallback, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
 import Popup from '../../popup';
+import DropDownSelect from '../../../../design-system/components/dropDown/select';
 import OptionsContainer from './container';
 import List from './list';
 
@@ -42,54 +40,9 @@ const Container = styled.div`
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.font};
 `;
 
-const DropDownSelect = styled.button`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 1;
-  background-color: ${({ theme, lightMode }) =>
-    lightMode
-      ? rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)
-      : rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
-  border-radius: 4px;
-  padding: 2px 0 2px 6px;
-  cursor: pointer;
-  border: 0;
-
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      pointer-events: none;
-      opacity: 0.3;
-    `}
-
-  svg {
-    width: 28px;
-    height: 28px;
-    color: ${({ theme, lightMode }) =>
-      lightMode
-        ? theme.DEPRECATED_THEME.colors.fg.white
-        : rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
-  }
-`;
-
-const DropDownTitle = styled.span`
-  user-select: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
-`;
-
 /**
  * @param {Object} props All props.
  * @param {Function} props.onChange Triggered when user clicks on the option in the list.
- * @param {boolean} props.lightMode Lightmode.
- * @param {string} props.placeholder Displayed in the input when the dropdown is not open.
  * @param {boolean} props.disabled Disables opening the dropdown if set.
  * @param {number} props.selectedId The selected option ID.
  * @param {Array} props.options All options, used for search.
@@ -103,12 +56,11 @@ const DropDownTitle = styled.span`
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
  * @param {boolean} props.isInline If to display the selection list inline instead of as a separate popup modal.
+ * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
  */
 function DropDown({
   onChange,
-  lightMode = false,
-  placeholder = __('Select an Option', 'web-stories'),
   disabled = false,
   selectedId,
   options,
@@ -122,6 +74,7 @@ function DropDown({
   searchResultsLabel,
   renderer,
   isInline = false,
+  dropDownLabel = '',
   ...rest
 }) {
   if (!options && !getOptionsByQuery) {
@@ -211,17 +164,16 @@ function DropDown({
   return (
     <Container onKeyDown={handleKeyPress}>
       <DropDownSelect
-        onClick={toggleDropDown}
         aria-pressed={isOpen}
         aria-haspopup
         aria-expanded={isOpen}
         ref={ref}
-        lightMode={lightMode}
+        activeItemLabel={selectedOption?.name}
+        hasError={false}
+        dropDownLabel={dropDownLabel}
+        onSelectClick={toggleDropDown}
         {...rest}
-      >
-        <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
-        <DropDownIcon />
-      </DropDownSelect>
+      />
       {isOpen && !disabled && isInline && list}
       {!disabled && !isInline && (
         <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
@@ -235,7 +187,6 @@ function DropDown({
 DropDown.propTypes = {
   selectedId: PropTypes.any,
   onChange: PropTypes.func.isRequired,
-  lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   options: PropTypes.array,
@@ -248,6 +199,7 @@ DropDown.propTypes = {
   priorityLabel: PropTypes.string,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  dropDownLabel: PropTypes.string,
   isInline: PropTypes.bool,
 };
 

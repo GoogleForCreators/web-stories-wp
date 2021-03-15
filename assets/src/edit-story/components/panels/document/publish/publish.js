@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -27,14 +26,14 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
-import { useAPI } from '../../../../app/api';
 import { useFocusHighlight, states, styles } from '../../../../app/highlights';
-import { Row, AdvancedDropDown, Media, Required } from '../../../form';
+import { Row, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
 import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
 import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import PublishTime from './publishTime';
+import Author from './author';
 
 const LabelWrapper = styled.div`
   height: 40px;
@@ -57,6 +56,7 @@ const MediaWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  margin-top: 4px;
   height: 96px;
 `;
 
@@ -86,11 +86,7 @@ const MediaInputWrapper = styled.div`
 
 function PublishPanel() {
   const {
-    actions: { getAuthors },
-  } = useAPI();
-  const {
-    state: { tab, users, isUsersLoading },
-    actions: { loadUsers },
+    state: { users },
   } = useInspector();
 
   const posterButtonRef = useRef();
@@ -102,18 +98,10 @@ function PublishPanel() {
     publisherLogoRef
   );
 
-  const {
-    isSaving,
-    author,
-    featuredMedia,
-    publisherLogoUrl,
-    updateStory,
-  } = useStory(
+  const { featuredMedia, publisherLogoUrl, updateStory } = useStory(
     ({
       state: {
-        meta: { isSaving },
         story: {
-          author = {},
           featuredMedia = { id: 0, url: '', height: 0, width: 0 },
           publisherLogoUrl = '',
         },
@@ -121,23 +109,12 @@ function PublishPanel() {
       actions: { updateStory },
     }) => {
       return {
-        isSaving,
-        author,
         featuredMedia,
         publisherLogoUrl,
         updateStory,
       };
     }
   );
-
-  const [queriedUsers, setQueriedUsers] = useState(null);
-  const [visibleOptions, setVisibleOptions] = useState(null);
-
-  useEffect(() => {
-    if (tab === 'document') {
-      loadUsers();
-    }
-  }, [tab, loadUsers]);
 
   const { capabilities, allowedImageMimeTypes } = useConfig();
 
@@ -156,19 +133,6 @@ function PublishPanel() {
     [updateStory]
   );
 
-  const getAuthorsBySearch = useCallback(
-    (search) => {
-      return getAuthors(search).then((data) => {
-        const userData = data.map(({ id, name }) => ({
-          id,
-          name,
-        }));
-        setQueriedUsers(userData);
-      });
-    },
-    [getAuthors]
-  );
-
   // @todo Enforce square image while selecting in Media Library.
   const handleChangePublisherLogo = useCallback(
     (image) => {
@@ -182,35 +146,6 @@ function PublishPanel() {
     [updateStory]
   );
 
-  useEffect(() => {
-    if (users?.length) {
-      const currentAuthor = users.find(({ id }) => author.id === id);
-      if (!currentAuthor) {
-        setVisibleOptions([author, ...users]);
-      } else {
-        setVisibleOptions(users);
-      }
-    }
-  }, [author, users]);
-
-  const handleChangeAuthor = useCallback(
-    ({ id, name }) => {
-      updateStory({
-        properties: { author: { id, name } },
-      });
-    },
-    [updateStory]
-  );
-
-  const authorLabelId = `author-label-${uuidv4()}`;
-  const dropDownParams = {
-    hasSearch: true,
-    'aria-labelledby': authorLabelId,
-    lightMode: true,
-    onChange: handleChangeAuthor,
-    getOptionsByQuery: getAuthorsBySearch,
-    selectedId: author.id,
-  };
   return (
     <Panel
       name="publishing"
@@ -221,24 +156,7 @@ function PublishPanel() {
       <PanelContent>
         <PublishTime />
         {capabilities && capabilities.hasAssignAuthorAction && users && (
-          <Row>
-            {isUsersLoading || !visibleOptions ? (
-              <AdvancedDropDown
-                placeholder={__('Loading…', 'web-stories')}
-                disabled
-                primaryOptions={[]}
-                {...dropDownParams}
-              />
-            ) : (
-              <AdvancedDropDown
-                options={queriedUsers}
-                primaryOptions={visibleOptions}
-                searchResultsLabel={__('Search results', 'web-stories')}
-                disabled={isSaving}
-                {...dropDownParams}
-              />
-            )}
-          </Row>
+          <Author />
         )}
         <HighlightRow isHighlighted={highlightPoster?.showEffect}>
           <MediaInputWrapper>
