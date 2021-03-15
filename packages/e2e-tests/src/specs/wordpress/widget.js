@@ -78,11 +78,23 @@ describe('Web Stories Widget', () => {
   describe('Customizer', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('customize.php');
+
       await expect(page).toClick('li', { text: 'Widgets' });
-      // Targeting the first built-in widget area, Footer #1.
-      await expect(page).toClick(
-        '.control-panel-widgets.current-panel .control-section-sidebar .accordion-section-title'
+
+      await expect(page).toMatchElement('.control-panel-widgets.current-panel');
+      await expect(page).toMatchElement(
+        '#accordion-section-sidebar-widgets-sidebar-1 .accordion-section-title'
       );
+
+      // expect(page).toClick(...) doesn't seem to work.
+      await page.evaluate(() => {
+        document
+          .querySelector(
+            '#accordion-section-sidebar-widgets-sidebar-1 .accordion-section-title'
+          )
+          .click();
+      });
+
       await expect(page).toClick('button', { text: 'Add a Widget' });
       await expect(page).toMatch('Web Stories');
 
@@ -105,10 +117,15 @@ describe('Web Stories Widget', () => {
         visible: false,
       });
 
-      const frameHandle = await page.$("iframe[title='Site Preview']");
-      const frame = await frameHandle.contentFrame();
-      await expect(frame).toMatchElement('.web-stories-widget');
-      await expect(frame).toMatch('Test widget');
+      await expect(page).toClick('#save');
+      await expect(page).toMatchElement('#save[value="Published"]');
+
+      // TODO: Ensure this works reliably in tests.
+
+      //const frameHandle = await page.$("iframe[title='Site Preview']");
+      //const frame = await frameHandle.contentFrame();
+      //await expect(frame).toMatchElement('.web-stories-widget');
+      //await expect(frame).toMatch('Test widget');
     });
   });
 });
