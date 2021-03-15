@@ -90,6 +90,7 @@ trait Theme_Support {
 				],
 				'date'              => [
 					'enabled' => false,
+					'default' => false,
 				],
 				'archive_link'      => [
 					'enabled' => true,

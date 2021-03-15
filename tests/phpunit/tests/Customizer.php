@@ -345,6 +345,7 @@ class Customizer extends \WP_UnitTestCase {
 				],
 				'date'              => [
 					'enabled' => false,
+					'default' => false,
 				],
 				'archive_link'      => [
 					'enabled' => true,
