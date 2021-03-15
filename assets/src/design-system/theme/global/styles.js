@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,25 @@
  * limitations under the License.
  */
 
-export {
-  OverrideFocusOutline,
-  FOCUS_VISIBLE_SELECTOR,
-  FOCUS_VISIBLE_DATA_ATTRIBUTE,
-} from './overrideFocusOutline';
-export { OverrideScrollbarCSS } from './overrideScrollbarCSS';
-export { Styles } from './styles';
+/**
+ * External dependencies
+ */
+import { createGlobalStyle } from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { overrideFocusOutlineStyles } from './overrideFocusOutline';
+
+/**
+ * All components in the design system are created using the following global styling.
+ * Not having these css rules may result in styling defects.
+ */
+export const Styles = createGlobalStyle`
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  ${overrideFocusOutlineStyles};
+`;

@@ -48,7 +48,7 @@ export const Menu = () => {
   const [mounted, setMounted] = useState(true);
   return (
     <ThemeProvider theme={dsTheme}>
-      <ThemeGlobals.OverrideFocusOutline />
+      <ThemeGlobals.Styles />
       <button onClick={() => setMounted((v) => !v)}>
         {mounted ? 'unmount' : 'mount'}
       </button>

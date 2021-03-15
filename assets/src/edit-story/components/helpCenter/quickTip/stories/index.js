@@ -52,7 +52,7 @@ export const QuickTip = () => {
   const [toggled, setToggled] = useState(true);
   return (
     <ThemeProvider theme={dsTheme}>
-      <ThemeGlobals.OverrideFocusOutline />
+      <ThemeGlobals.Styles />
       <button onClick={() => setToggled((v) => !v)}>{'toggleTips'}</button>
       <Bg>
         <Container>

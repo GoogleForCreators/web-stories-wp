@@ -125,7 +125,7 @@ addDecorator((story, context) => {
     const dsTheme = { ...designSystemTheme, colors: lightMode };
     return (
       <ThemeProvider theme={dsTheme}>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         {story()}
       </ThemeProvider>
     );
