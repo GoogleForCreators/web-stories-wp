@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
 import { visitAdminPage } from '@wordpress/e2e-test-utils';
 
 async function deleteWidgets() {
