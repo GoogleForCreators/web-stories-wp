@@ -26,13 +26,15 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Dialog,
+  Text,
+  THEME_CONSTANTS,
 } from '../../../../../../design-system';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
 import { useCurrentUser } from '../../../../../app/currentUser';
 import { useLocalMedia } from '../../../../../app/media';
+import Dialog from '../../../../dialog';
 
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
@@ -75,7 +77,7 @@ function VideoOptimizationDialog() {
 
   return (
     <Dialog
-      isOpen={isTranscoding && !isDialogDismissed}
+      open={isTranscoding && !isDialogDismissed}
       onClose={onClose}
       title={dialogTitle}
       actions={
@@ -96,9 +98,10 @@ function VideoOptimizationDialog() {
           </Button>
         </>
       }
-      maxWidth={512}
     >
-      {dialogDescription}
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+        {dialogDescription}
+      </Text>
     </Dialog>
   );
 }

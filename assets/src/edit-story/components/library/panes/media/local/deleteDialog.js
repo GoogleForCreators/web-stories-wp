@@ -25,16 +25,12 @@ import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import { useAPI } from '../../../../../app/api';
 import { useSnackbar } from '../../../../../app/snackbar';
 import { useLocalMedia } from '../../../../../app/media';
 import { useStory } from '../../../../../app/story';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Dialog,
-} from '../../../../../../design-system';
+import Dialog from '../../../../dialog';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
@@ -95,31 +91,20 @@ function DeleteDialog({ mediaId, type, onClose }) {
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <Dialog
-      isOpen
+      open
       onClose={onClose}
       title={type === 'image' ? imageDialogTitle : videoDialogTitle}
-      actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onClose}
-          >
-            {__('Cancel', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onDelete}
-          >
-            {__('Delete', 'web-stories')}
-          </Button>
-        </>
-      }
+      closeText={__('Cancel', 'web-stories')}
+      onConfirm={onDelete}
+      confirmText={__('Delete', 'web-stories')}
       maxWidth={512}
     >
-      {type === 'image' ? imageDialogDescription : videoDialogDescription}
-      <strong>{__('This action can not be undone.', 'web-stories')}</strong>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+        {type === 'image' ? imageDialogDescription : videoDialogDescription}
+      </Text>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p" isBold>
+        {__('This action can not be undone.', 'web-stories')}
+      </Text>
     </Dialog>
   );
 }

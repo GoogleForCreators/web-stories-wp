@@ -28,6 +28,7 @@ import { THEME_CONSTANTS } from '../../../theme';
 import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../button';
 import { Text } from '../../typography';
 import { Dialog } from '..';
+import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 
 export default {
   title: 'DesignSystem/Components/Dialog',
@@ -132,5 +133,61 @@ export const With2Actions = () => {
         </Text>
       </Dialog>
     </>
+  );
+};
+
+export const With2ActionsDarkTheme = () => {
+  const [toggleDialog, setToggleDialog] = useState(false);
+
+  const ActionsNode = (
+    <>
+      <Button
+        size={BUTTON_SIZES.SMALL}
+        type={BUTTON_TYPES.TERTIARY}
+        onClick={() => {
+          action('cancel button clicked');
+          setToggleDialog(!toggleDialog);
+        }}
+      >
+        {'Secondary'}
+      </Button>
+      <Button
+        size={BUTTON_SIZES.SMALL}
+        type={BUTTON_TYPES.PRIMARY}
+        onClick={() => {
+          action('button clicked');
+        }}
+      >
+        {'Primary'}
+      </Button>
+    </>
+  );
+  return (
+    <DarkThemeProvider>
+      <Button
+        size={BUTTON_SIZES.SMALL}
+        type={BUTTON_TYPES.PRIMARY}
+        onClick={() => setToggleDialog(!toggleDialog)}
+      >
+        {'Toggle Dialog'}
+      </Button>
+      <Dialog
+        onClose={() => {
+          action('close dialog clicked');
+          setToggleDialog(!toggleDialog);
+        }}
+        isOpen={toggleDialog}
+        title={text('title', 'Headline')}
+        contentLabel={'Dialog content Label for modal'}
+        actions={ActionsNode}
+      >
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {text(
+            'body text',
+            'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
+          )}
+        </Text>
+      </Dialog>
+    </DarkThemeProvider>
   );
 };

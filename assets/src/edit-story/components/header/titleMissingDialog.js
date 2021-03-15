@@ -29,11 +29,11 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Dialog,
   Link,
   Text,
   THEME_CONSTANTS,
 } from '../../../design-system';
+import Dialog from '../dialog';
 
 const RECOMMENDATION_URL = __(
   'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
@@ -47,7 +47,7 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
   );
   return (
     <Dialog
-      isOpen={open}
+      open={open}
       onClose={onClose}
       title={__('Missing title', 'web-stories')}
       actions={

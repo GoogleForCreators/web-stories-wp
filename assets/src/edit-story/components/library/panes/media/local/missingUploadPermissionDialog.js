@@ -27,12 +27,14 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Dialog,
+  Text,
+  THEME_CONSTANTS,
 } from '../../../../../../design-system';
+import Dialog from '../../../../dialog';
 function MissingUploadPermissionDialog({ open, onClose }) {
   return (
     <Dialog
-      isOpen={open}
+      open={open}
       onClose={onClose}
       title={__('Access Restrictions', 'web-stories')}
       actions={
@@ -44,12 +46,13 @@ function MissingUploadPermissionDialog({ open, onClose }) {
           {__('Got it', 'web-stories')}
         </Button>
       }
-      maxWidth={285}
     >
-      {__(
-        `You don't have access to upload images or publish a story. Please check with your administrator to request upload and publish access.`,
-        'web-stories'
-      )}
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+        {__(
+          `You don't have access to upload images or publish a story. Please check with your administrator to request upload and publish access.`,
+          'web-stories'
+        )}
+      </Text>
     </Dialog>
   );
 }

@@ -26,20 +26,13 @@ import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Dialog,
-  Input,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../../../design-system';
+import { Input, Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../../design-system';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
+import Dialog from '../../../../dialog';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -145,28 +138,12 @@ function MediaEditDialog({ resource, onClose }) {
 
   return (
     <Dialog
-      isOpen
+      open
       onClose={onClose}
       title={isImage ? imageDialogTitle : videoDialogTitle}
-      actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onClose}
-          >
-            {__('Cancel', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={updateMediaItem}
-          >
-            {__('Save', 'web-stories')}
-          </Button>
-        </>
-      }
-      maxWidth={530}
+      closeText={__('Cancel', 'web-stories')}
+      onConfirm={updateMediaItem}
+      confirmText={__('Save', 'web-stories')}
     >
       <DialogBody>
         {type === 'image' ? (
@@ -183,7 +160,7 @@ function MediaEditDialog({ resource, onClose }) {
         <MetadataTextContainer>
           {isValid(parsedDate) && (
             <DateText
-              as="span"
+              forwardedAs="span"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
             >
               {sprintf(

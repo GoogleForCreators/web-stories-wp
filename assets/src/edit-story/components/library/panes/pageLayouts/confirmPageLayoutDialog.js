@@ -23,14 +23,8 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Dialog,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import Dialog from '../../../dialog';
 
 function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
   return (
@@ -38,24 +32,9 @@ function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
       isOpen
       onClose={onClose}
       title={__('Confirm Page Layout', 'web-stories')}
-      actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onClose}
-          >
-            {__('Cancel', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onConfirm}
-          >
-            {__('Apply Page Layout', 'web-stories')}
-          </Button>
-        </>
-      }
+      closeText={__('Cancel', 'web-stories')}
+      onConfirm={onConfirm}
+      confirmText={__('Apply Page Layout', 'web-stories')}
     >
       <Text as="p" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(

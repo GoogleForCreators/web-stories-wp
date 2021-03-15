@@ -30,11 +30,11 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Dialog,
   Link,
   Text,
   THEME_CONSTANTS,
 } from '../../../design-system';
+import Dialog from '../dialog';
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
   const onAddToPostClick = useCallback((evt) => {
@@ -47,7 +47,7 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
 
   return (
     <Dialog
-      isOpen={open}
+      open={open}
       onClose={onClose}
       title={__('Story published!', 'web-stories')}
       actions={

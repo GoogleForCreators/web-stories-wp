@@ -29,11 +29,11 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Dialog,
   Link,
   Text,
   THEME_CONSTANTS,
 } from '../../../design-system';
+import Dialog from '../dialog';
 
 const SUPPORT_URL = __(
   'https://wordpress.org/support/plugin/web-stories/',
@@ -47,7 +47,7 @@ function StatusCheckFailed({ open, onClose }) {
 
   return (
     <Dialog
-      isOpen={open}
+      open={open}
       onClose={onClose}
       title={__('Unable to save your story', 'web-stories')}
       contentLabel={__('Unable to save your story', 'web-stories')}

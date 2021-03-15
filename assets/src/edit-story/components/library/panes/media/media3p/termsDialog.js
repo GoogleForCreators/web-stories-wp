@@ -30,11 +30,11 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Dialog,
   Text,
   Link,
   THEME_CONSTANTS,
 } from '../../../../../../design-system';
+import Dialog from '../../../../dialog';
 
 const TERMS_URL = 'https://wp.stories.google/docs#Terms';
 
@@ -65,7 +65,8 @@ function TermsDialog() {
 
   return (
     <Dialog
-      isOpen={dialogOpen}
+      open={dialogOpen}
+      contentLabel={__('Third party stock content terms', 'web-stories')}
       onClose={acknowledgeTerms}
       ariaHideApp={false}
       actions={
