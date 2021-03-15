@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use WP_Post_Type;
 use WP_REST_Posts_Controller;
 use WP_REST_Controller;
 use WP_REST_Response;
