@@ -50,7 +50,6 @@ const StyledChip = styled.span`
 
 const ChipContainer = styled.button(
   ({ theme, disabled }) => css`
-    box-sizing: border-box;
     display: inline-flex;
     justify-content: center;
     align-items: center;

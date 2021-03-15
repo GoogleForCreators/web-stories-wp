@@ -26,12 +26,6 @@ import { useContext } from 'react';
 import { themeHelpers } from '../design-system';
 
 export const GlobalStyle = createGlobalStyle`
-	*,
-	*::after,
-	*::before {
-		box-sizing: border-box;
-    }
-    
   h1, h2, h3, h4, h5, h6, p, a {
     margin: 0;
   }
