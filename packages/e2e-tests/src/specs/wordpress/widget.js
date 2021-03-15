@@ -32,6 +32,18 @@ describe('Web Stories Widget', () => {
   describe('Widgets Screen', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('widgets.php');
+
+      // Hotfix for WordPress 5.3 where `wpWidgets.l10n.widgetAdded`
+      // is referenced by wp-admin/js/widgets.js, but doesn't actually exist.
+      // See:
+      // https://github.com/WordPress/wordpress-develop/blob/8eb0eb36e026ca5c7f7c8f84b28390709c98089b/src/wp-includes/script-loader.php#L1735-L1747
+      // https://github.com/WordPress/wordpress-develop/blob/8eb0eb36e026ca5c7f7c8f84b28390709c98089b/src/js/_enqueues/admin/widgets.js#L721
+      await page.evaluate(() => {
+        if (window.wpWidgets?.l10n) {
+          window.wpWidgets.l10n.widgetAdded = 'Widget added';
+        }
+      });
+
       await expect(page).toMatch('Web Stories');
       await expect(page).toClick('button', { text: 'Add widget: Web Stories' });
       await expect(page).toClick('button', { text: 'Add Widget' });
@@ -51,11 +63,15 @@ describe('Web Stories Widget', () => {
         'Test widget'
       );
 
-      await expect(page).toMatchElement('.widget-control-save');
+      await expect(page).toMatchElement(
+        '.widget-liquid-right .widget-control-save'
+      );
 
       await page.keyboard.press('Enter');
 
-      await expect(page).toMatchElement('.widget-control-save:disabled');
+      await expect(page).toMatchElement(
+        '.widget-liquid-right .widget-control-save:disabled'
+      );
     });
   });
 
