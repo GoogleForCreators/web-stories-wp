@@ -30,6 +30,7 @@ import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { useUnits } from '../../../../units';
+import { themeHelpers } from '../../../../../design-system';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -49,10 +50,23 @@ const createGrid = ({ columns, columnGap, rowGap, minWidth }) => css`
 `;
 
 // Using button directly breaks the DOM nesting for tests.
-const Aspect = styled.div.attrs({ role: 'button' })`
+const Aspect = styled.button`
+  background: transparent;
+  outline: none;
+  border: 0;
+  padding: 0;
+
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
+
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+
   @media screen and (min-width: 1220px) {
     ${createGrid({ columns: 4, columnGap: 12, rowGap: 24, minWidth: 50 })}
   }
