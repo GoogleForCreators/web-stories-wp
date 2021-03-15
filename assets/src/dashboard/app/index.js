@@ -44,7 +44,7 @@ import {
 } from '../constants';
 
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
-import usePrevious from '../../edit-story/utils/usePrevious';
+import usePrevious from '../../design-system/utils/usePrevious';
 import ApiProvider from './api/apiProvider';
 import { ConfigProvider } from './config';
 import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
