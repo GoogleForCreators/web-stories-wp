@@ -172,6 +172,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [checks]
+    outputs:
+      release_name: ${{ steps.changelog.outputs.release_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -210,12 +212,21 @@ jobs:
       # For stable releases, generate full changelog since last stable release.
       # TODO: Implement tag logic for patch releases.
       - name: Generate changelog
+        id: changelog
         run: |
           TAG_NAME_WITHOUT_SUFFIX=${TAG_NAME/-rc.*/}
           if $IS_RC; then
+            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
+
+            # This is the first RC for this version (e.g. v1.5.0-rc.1), so previous version is v1.4.0, without suffix.
+            if ! git describe --abbrev=0 --tags --match "$TAG_NAME_WITHOUT_SUFFIX" &>/dev/null; then
+              PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
+            fi
           else
+            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME_WITHOUT_SUFFIX | head -1)
+            PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
           fi
 
           RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
@@ -231,6 +242,8 @@ jobs:
 
           mkdir -p build/changelog
           echo "$CHANGELOG" >> build/changelog/changelog.txt
+
+          echo "::set-output name=release_name::${RELEASE_NAME}"
         env:
           GITHUB_AUTH: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
@@ -241,10 +254,12 @@ jobs:
           path: build/changelog
 
   build:
-    name: Build plugin
+    name: Build new version
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [assets-version, changelog]
+    outputs:
+      release_branch: ${{ steps.release_branch.outputs.release_branch }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -315,6 +330,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Create release branch
+        id: release_branch
         run: |
           VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
@@ -325,8 +341,7 @@ jobs:
             git checkout --track origin/$BRANCH
           fi
 
-      - name: Update plugin version
-        run: npm run workflow:version $PLUGIN_VERSION
+          echo "::set-output name=release_branch::${BRANCH/-rc./ RC}"
 
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
@@ -334,13 +349,41 @@ jobs:
         env:
           ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
 
-      - name: Commit changes
+      - name: Commit assets version bump
+        run: |
+          git add .
+          git status
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
+          git commit -m "Update assets version to $ASSETS_VERSION"
+          git push -u origin HEAD
+        if: ${{ env.ASSETS_VERSION }}
+        env:
+          ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
+
+      - name: Update plugin version
+        run: npm run workflow:version $PLUGIN_VERSION
+
+      - name: Commit plugin version bump
         run: |
           git add .
           git status
           git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
           git commit -m "Prepare release $PLUGIN_VERSION"
           git push -u origin HEAD
+
+      # Only non-patch release version bumps should be cherry picked to main
+      # This will cherry-pick the last commit from the release branch, as
+      # we only want the plugin version bump, not the assets version bump.
+      - name: Cherry-pick to main
+        run: |
+          git checkout main
+          git cherry-pick $BRANCH
+          git pull --rebase
+          git push
+          git checkout $BRANCH
+        if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
+        env:
+          BRANCH: ${{ steps.release_branch.outputs.release_branch }}
 
       - name: Build plugin
         run: npm run build:js
@@ -389,21 +432,25 @@ jobs:
           name: changelog
           path: changelog
 
-      - name: Set release name
-        id: release_name
-        run: echo "::set-output name=RELEASE_NAME::${PLUGIN_VERSION/-rc./ RC}"
+      - name: Set branch name
+        id: release_branch
+        run: |
+          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
+          BRANCH=release/$VERSION_WITHOUT_SUFFIX
+          echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
 
       - name: Create Release Draft
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ steps.release_name.outputs.RELEASE_NAME }}
+          release_name: ${{ needs.changelog.outputs.release_name }}
+          commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           draft: true
           prerelease: ${{ env.IS_RC }}
           body_path: changelog/changelog.txt
         env:
-          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload regular bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -413,7 +460,7 @@ jobs:
           asset_name: web-stories.zip
           asset_content_type: application/zip
         env:
-          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload development bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -423,7 +470,7 @@ jobs:
           asset_name: web-stories-dev.zip
           asset_content_type: application/zip
         env:
-          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload composer bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -433,7 +480,7 @@ jobs:
           asset_name: web-stories-composer.zip
           asset_content_type: application/zip
         env:
-          PLUGIN_RELEASE_ACCESS_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       # Done so that any triggers/webhooks will have access to the published release
       # including all the release assets.
@@ -472,7 +519,7 @@ jobs:
           path: release-assets
 
       - name: Check out trunk folder
-        run: svn checkout $PLUGIN_REPO_URL svn
+        run: svn checkout $PLUGIN_REPO_URL svn --username "$SVN_USERNAME"
 
       - name: Get previous stable tag
         id: get_previous_stable_tag
@@ -492,7 +539,7 @@ jobs:
 
       - name: Replace stable tag placeholder with pre-existing stable tag
         run: |
-          sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${STABLE_TAG}/g" ./readme.txt
+          sed -r -i "s/${STABLE_TAG_REGEX}/${STABLE_TAG}/g" ./readme.txt
         working-directory: ./svn/trunk
         env:
           STABLE_TAG: ${{ steps.get_previous_stable_tag.outputs.stable_tag }}
@@ -513,21 +560,23 @@ jobs:
       # Otherwise, if there were any errors, we risk changing this to a tag that doesn't exist.
       # TODO: Move to separate workflow that can be manually triggered after email confirmation?
       - name: Update stable tag
-        working-directory: ./trunk
+        working-directory: ./svn
         run: |
+          sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./trunk/readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
-          sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./readme.txt
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
 
   # Post-release version bumps for non-patch releases.
   post-release:
-    name: Build plugin
+    name: Post-release version bump
     needs: [deploy]
     runs-on: ubuntu-latest
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: main
 
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
@@ -558,7 +607,6 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
-
       - name: Update plugin version
         run: npm run workflow:version -- --increment preminor --preid alpha
 
@@ -568,4 +616,5 @@ jobs:
           git status
           git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
           git commit -m "Post-release version bump"
+          git pull --rebase
           git push -u origin HEAD
