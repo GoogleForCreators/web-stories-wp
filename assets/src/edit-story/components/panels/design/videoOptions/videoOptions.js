@@ -31,7 +31,6 @@ import { getCommonValue } from '../../shared';
 import { Checkbox, Text, THEME_CONSTANTS } from '../../../../../design-system';
 
 const Row = styled(DefaultRow)`
-  justify-content: flex-start;
   margin-top: 2px;
 `;
 
@@ -48,7 +47,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       name="videoOptions"
       title={__('Video settings', 'web-stories')}
     >
-      <Row>
+      <Row spaceBetween={false}>
         <Checkbox
           id={checkboxId}
           checked={loop}
