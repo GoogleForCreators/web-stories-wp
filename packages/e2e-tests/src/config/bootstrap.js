@@ -212,6 +212,7 @@ async function runAxeTestsForStoriesEditor() {
       'label',
       'landmark-banner-is-top-level',
       'landmark-no-duplicate-banner',
+      'landmark-one-main',
       'landmark-unique',
       'page-has-heading-one',
       'region',

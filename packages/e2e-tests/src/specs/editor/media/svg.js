@@ -39,7 +39,7 @@ describe('SVG', () => {
     await expect(page).toClick('button', { text: 'Media Library' });
 
     await expect(page).toClick(
-      '.attachments-browser .attachments .attachment[aria-label="video-play"]'
+      '.attachments-browser .attachments .attachment[aria-label="arrow"]'
     );
 
     await expect(page).toClick('button', { text: 'Insert into page' });
