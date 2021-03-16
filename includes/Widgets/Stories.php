@@ -146,11 +146,11 @@ class Stories extends WP_Widget {
 		$title              = $instance['title'];
 		$view_types         = $this->get_layouts();
 		$current_view_type  = (string) $instance['view_type'];
-		$show_title         = (bool) $instance['show_title'];
-		$show_author        = (bool) $instance['show_author'];
-		$show_date          = (bool) $instance['show_date'];
-		$show_excerpt       = (bool) $instance['show_excerpt'];
-		$show_archive_link  = (bool) $instance['show_archive_link'];
+		$show_title         = ! empty( $instance['show_title'] );
+		$show_author        = ! empty( $instance['show_author'] );
+		$show_date          = ! empty( $instance['show_date'] );
+		$show_excerpt       = ! empty( $instance['show_excerpt'] );
+		$show_archive_link  = ! empty( $instance['show_archive_link'] );
 		$archive_link_label = $instance['archive_link_label'];
 		$circle_size        = (int) $instance['circle_size'];
 		$sharp_corners      = (int) $instance['sharp_corners'];
@@ -321,7 +321,6 @@ class Stories extends WP_Widget {
 				'id'            => 'image_alignment',
 				'name'          => 'image_alignment',
 				'label'         => __( 'Image Alignment', 'web-stories' ),
-				'type'          => 'checkbox',
 				'classname'     => 'widefat image_alignment stories-widget-field',
 				'wrapper_class' => 'image_alignment_wrapper',
 			]
@@ -596,7 +595,7 @@ class Stories extends WP_Widget {
 				type="<?php echo esc_attr( (string) $args['type'] ); ?>"
 				id="<?php echo $this->get_field_id( $args['id'] ); ?>"
 				name="<?php echo $this->get_field_name( $args['name'] ); ?>"
-				value="<?php echo $args['value']; ?>"
+				value="<?php echo ( 'checkbox' === $args['type'] ) ? 1 : $args['value'] ?>"
 				<?php
 				if ( 'checkbox' === $args['type'] ) {
 					checked( 1, $args['value'], true );
