@@ -39,6 +39,7 @@ class TinyMCE extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'mce_buttons', [ $tinymce, 'tinymce_web_stories_button' ] ) );
 		$this->assertSame( 10, has_filter( 'mce_external_plugins', [ $tinymce, 'web_stories_mce_plugin' ] ) );
 		$this->assertSame( 10, has_filter( 'admin_footer', [ $tinymce, 'web_stories_tinymce_root_element' ] ) );
+		$this->assertSame( 10, has_filter( 'script_loader_tag', [ $tinymce, 'script_loader_tag' ] ) );
 	}
 
 	/**
@@ -49,7 +50,6 @@ class TinyMCE extends \WP_UnitTestCase {
 		$tinymce->register_assets();
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'registered' ) );
-		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE ]->src );
 	}
 
 	/**
@@ -81,6 +81,16 @@ class TinyMCE extends \WP_UnitTestCase {
 		$result  = trim( $result );
 
 		$this->assertSame( '<div id="web-stories-tinymce"></div>', $result );
+	}
+
+	/**
+	 * @covers ::script_loader_tag
+	 */
+	public function test_script_loader_tag() {
+		$tinymce = new \Google\Web_Stories\TinyMCE();
+		$result  = $tinymce->script_loader_tag( '<script></script>', 'another-handle', 'http://www.example.com' );
+
+		$this->assertSame( '<script></script>', $result );
 	}
 
 	/**
