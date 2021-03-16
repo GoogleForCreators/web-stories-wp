@@ -21,8 +21,15 @@ import { join, extname, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 
-const hashCode = (s) =>
-  s.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0);
+/**
+ * Generate hash value of a source string.
+ *
+ * @param {string} s String to be hashed.
+ * @return {number} Number hash value from string.
+ */
+function hashCode(s) {
+  return s.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0);
+}
 
 const getFileName = (name) => name.split('.').slice(0, -1).join('.');
 /**
