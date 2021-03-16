@@ -95,6 +95,7 @@ const MediaInput = forwardRef(
 );
 
 MediaInput.propTypes = {
+  className: PropTypes.string,
   buttonInsertText: PropTypes.string,
   menuOptions: PropTypes.array,
   onChange: PropTypes.func.isRequired,

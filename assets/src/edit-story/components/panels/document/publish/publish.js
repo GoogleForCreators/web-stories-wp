@@ -44,6 +44,7 @@ const Label = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
+  font-size: 14px;
 `;
 
 const MediaWrapper = styled.div`
@@ -158,7 +159,11 @@ function PublishPanel() {
         {capabilities && capabilities.hasAssignAuthorAction && users && (
           <Author />
         )}
-        <HighlightRow isHighlighted={highlightPoster?.showEffect}>
+        <HighlightRow
+          isHighlighted={
+            highlightPoster?.showEffect || highlightLogo?.showEffect
+          }
+        >
           <MediaInputWrapper>
             <MediaWrapper isHighlighted={highlightPoster?.showEffect}>
               <Sizer width={54} height={96}>
@@ -166,15 +171,15 @@ function PublishPanel() {
                   ref={posterButtonRef}
                   value={featuredMedia?.url}
                   onChange={handleChangePoster}
-                  title={__('Select as poster image', 'web-stories')}
-                  buttonInsertText={__('Select as poster image', 'web-stories')}
+                  title={__('Select as cover image', 'web-stories')}
+                  buttonInsertText={__('Select as cover image', 'web-stories')}
                   type={allowedImageMimeTypes}
-                  ariaLabel={__('Poster image', 'web-stories')}
+                  ariaLabel={__('Cover image', 'web-stories')}
                 />
               </Sizer>
             </MediaWrapper>
             <LabelWrapper>
-              <Label>{__('Poster image', 'web-stories')}</Label>
+              <Label>{__('Cover image', 'web-stories')}</Label>
               <Required />
             </LabelWrapper>
           </MediaInputWrapper>

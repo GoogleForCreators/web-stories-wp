@@ -23,7 +23,7 @@ import { _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Text } from '../../../design-system';
+import { Text, THEME_CONSTANTS } from '../../../design-system';
 
 const RequiredWrapper = styled.div`
   display: flex;
@@ -34,8 +34,10 @@ const RequiredWrapper = styled.div`
 
 const StyledText = styled(Text).attrs({
   as: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
+  font-size: 12px;
 `;
 
 function Required() {
