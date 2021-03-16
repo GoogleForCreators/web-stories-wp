@@ -19,8 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Glider from 'glider-js';
-import 'glider-js/glider.css';
+import Glider from '@web-stories-wp/glider';
 
 /**
  * WordPress dependencies
@@ -73,7 +72,7 @@ function StoriesPreview(props) {
     'web-stories-list'
   );
 
-  const storiesLoop = () =>
+  const StoriesLoop = () =>
     stories.map((story) => {
       return (
         <StoryCard
@@ -95,35 +94,39 @@ function StoriesPreview(props) {
     });
 
   useEffect(() => {
-    if (carouselContainer.current) {
-      const storyItem = carouselContainer.current.querySelector(
-        '.web-stories-list__story'
-      );
-
-      if (!storyItem) {
-        return;
-      }
-
-      const itemStyle = window.getComputedStyle(storyItem);
-      const itemWidth =
-        parseFloat(itemStyle.width) +
-        (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
-
-      /* eslint-disable-next-line no-new */
-      new Glider(carouselContainer.current, {
-        slidesToShow: 'auto',
-        slidesToScroll: 'auto',
-        itemWidth,
-        duration: 0.25,
-        skipTrack: true,
-        scrollLock: true,
-        arrows: {
-          prev: carouselPrev.current,
-          next: carouselNext.current,
-        },
-      });
+    if (!carouselContainer.current) {
+      return;
     }
-  });
+
+    const storyItem = carouselContainer.current.querySelector(
+      '.web-stories-list__story'
+    );
+
+    if (!storyItem) {
+      return;
+    }
+
+    const itemStyle = window.getComputedStyle(storyItem);
+    const itemWidth =
+      parseFloat(itemStyle.width) +
+      (parseFloat(itemStyle.marginLeft) + parseFloat(itemStyle.marginRight));
+
+    const instance = new Glider(carouselContainer.current, {
+      slidesToShow: 'auto',
+      slidesToScroll: 'auto',
+      itemWidth,
+      duration: 0.25,
+      skipTrack: true,
+      scrollLock: true,
+      arrows: {
+        prev: carouselPrev.current,
+        next: carouselNext.current,
+      },
+    });
+
+    // Force resize to ensure Glider.js has the correct clientWidth for the carouselContainer.
+    instance.resize();
+  }, [stories.length]);
 
   return (
     <div
@@ -137,7 +140,9 @@ function StoriesPreview(props) {
         {CIRCLES_VIEW_TYPE === viewType || CAROUSEL_VIEW_TYPE === viewType ? (
           <>
             <div className="web-stories-list__carousel" ref={carouselContainer}>
-              <div className="glider-track">{storiesLoop()}</div>
+              <div className="glider-track">
+                <StoriesLoop />
+              </div>
             </div>
             <div
               aria-label={__('Previous', 'web-stories')}
@@ -151,7 +156,7 @@ function StoriesPreview(props) {
             />
           </>
         ) : (
-          <>{storiesLoop()}</>
+          <StoriesLoop />
         )}
       </div>
       {fieldState['show_archive_link'] && (

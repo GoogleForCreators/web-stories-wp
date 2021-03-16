@@ -95,8 +95,8 @@ const StoryGrid = styled.div(
 
 const SearchContainer = styled.div`
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 60% 25% 15%;
+  grid-template-columns: 57% 15% 15% 10%;
+  grid-column-gap: 1%;
   vertical-align: baseline;
   position: relative;
   height: 29px;
@@ -234,17 +234,17 @@ function SelectStories({
             onMenuItemClick={debouncedAuthorChange}
             popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
           />
+          <DropdownContainer>
+            <DropDown
+              ariaLabel={__('Choose sort option for display', 'web-stories')}
+              options={STORY_SORT_MENU_ITEMS}
+              type={DROPDOWN_TYPES.MENU}
+              selectedValue={sort.value}
+              onMenuItemClick={(_, newSort) => onSortChange(newSort)}
+              popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
+            />
+          </DropdownContainer>
         </SearchContainer>
-        <DropdownContainer>
-          <DropDown
-            ariaLabel={__('Choose sort option for display', 'web-stories')}
-            options={STORY_SORT_MENU_ITEMS}
-            type={DROPDOWN_TYPES.MENU}
-            selectedValue={sort.value}
-            onMenuItemClick={(_, newSort) => onSortChange(newSort)}
-            popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
-          />
-        </DropdownContainer>
       </StoryFilter>
       {!orderedStories.length && search.keyword && (
         <p>
