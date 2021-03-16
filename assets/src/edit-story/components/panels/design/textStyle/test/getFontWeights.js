@@ -24,7 +24,7 @@ describe('getFontWeights', () => {
     const result = getFontWeights();
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchObject({
-      name: 'Regular',
+      label: 'Regular',
       value: '400',
     });
   });
@@ -33,7 +33,7 @@ describe('getFontWeights', () => {
     const result = getFontWeights({ family: 'Roboto' });
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchObject({
-      name: 'Regular',
+      label: 'Regular',
       value: '400',
     });
   });
@@ -43,15 +43,15 @@ describe('getFontWeights', () => {
     expect(result).toHaveLength(3);
     expect(result).toStrictEqual([
       {
-        name: 'Extra-light',
+        label: 'Extra-light',
         value: '200',
       },
       {
-        name: 'Regular',
+        label: 'Regular',
         value: '400',
       },
       {
-        name: 'Bold',
+        label: 'Bold',
         value: '700',
       },
     ]);

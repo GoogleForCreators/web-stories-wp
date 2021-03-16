@@ -1,0 +1,3 @@
+# Widget
+
+WordPress widget javascript. 

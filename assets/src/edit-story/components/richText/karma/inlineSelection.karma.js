@@ -86,6 +86,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Set font weight (should also toggle bold, as "Black" is >700)
       // - wait for autofocus to return
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
       await richTextHasFocus();
 
@@ -241,6 +242,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         const selectFontWeight = async (weight) => {
           await data.fixture.events.click(fontWeight.select);
+          await data.fixture.events.sleep(300);
           await data.fixture.events.click(fontWeight.option(weight));
           await richTextHasFocus();
         };
