@@ -51,13 +51,6 @@ describe('Autoplay video', () => {
   });
 
   it('should autoplay on insert and on drop', async () => {
-    // TODO: Switch to role selector after they are merged
-    const allFilter = Array.from(mediaPane.querySelectorAll('span')).find(
-      (el) => el.textContent === 'All Types'
-    );
-    await fixture.events.mouse.clickOn(allFilter);
-    const videoFilter = document.querySelector('#dropDown-video');
-    await fixture.events.mouse.clickOn(videoFilter);
     const video = Array.from(mediaPane.querySelectorAll('video')).filter(
       (el) => el.ariaLabel === 'ranger9'
     );

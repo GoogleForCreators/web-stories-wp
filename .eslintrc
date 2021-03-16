@@ -444,6 +444,7 @@
       "excludedFiles": [
         "packages/activation-notice/**/*.js",
         "packages/i18n/**/*.js",
+        "packages/tinymce-button/**/*.js"
       ],
       "rules":{
         "no-restricted-imports": [
@@ -457,6 +458,14 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "packages/tinymce-button/src/**/*.js"
+      ],
+      "globals": {
+        "tinymce": "readonly"
       }
     }
   ]

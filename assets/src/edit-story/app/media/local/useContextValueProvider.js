@@ -27,6 +27,7 @@ import { useAPI, useConfig } from '../..';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
+import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
  * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext
@@ -77,7 +78,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       fetchMediaStart({ pageToken: p });
       const trackTiming = getTimeTracker('load_media');
       getMedia({
-        mediaType: currentMediaType,
+        mediaType:
+          currentMediaType === LOCAL_MEDIA_TYPE_ALL ? '' : currentMediaType,
         searchTerm: currentSearchTerm,
         pagingNum: p,
         cacheBust: cacheBust,

@@ -39,7 +39,7 @@ export class Select extends Container {
 
   get optionList() {
     return this.getByRoleIn(this.node.ownerDocument, 'listbox', {
-      name: this.name,
+      name: new RegExp(this.name),
     });
   }
 
