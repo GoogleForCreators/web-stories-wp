@@ -61,7 +61,7 @@ const MediaWrapper = styled.div`
   height: 96px;
 `;
 
-const Sizer = styled.div`
+const StyledMedia = styled(Media)`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
 `;
@@ -166,17 +166,17 @@ function PublishPanel() {
         >
           <MediaInputWrapper>
             <MediaWrapper isHighlighted={highlightPoster?.showEffect}>
-              <Sizer width={54} height={96}>
-                <Media
-                  ref={posterButtonRef}
-                  value={featuredMedia?.url}
-                  onChange={handleChangePoster}
-                  title={__('Select as cover image', 'web-stories')}
-                  buttonInsertText={__('Select as cover image', 'web-stories')}
-                  type={allowedImageMimeTypes}
-                  ariaLabel={__('Cover image', 'web-stories')}
-                />
-              </Sizer>
+              <StyledMedia
+                ref={posterButtonRef}
+                width={54}
+                height={96}
+                value={featuredMedia?.url}
+                onChange={handleChangePoster}
+                title={__('Select as cover image', 'web-stories')}
+                buttonInsertText={__('Select as cover image', 'web-stories')}
+                type={allowedImageMimeTypes}
+                ariaLabel={__('Cover image', 'web-stories')}
+              />
             </MediaWrapper>
             <LabelWrapper>
               <Label>{__('Cover image', 'web-stories')}</Label>
@@ -185,21 +185,18 @@ function PublishPanel() {
           </MediaInputWrapper>
           <MediaInputWrapper>
             <MediaWrapper isHighlighted={highlightLogo?.showEffect}>
-              <Sizer width={72} height={72}>
-                <Media
-                  ref={publisherLogoRef}
-                  value={publisherLogoUrl}
-                  onChange={handleChangePublisherLogo}
-                  title={__('Select as publisher logo', 'web-stories')}
-                  buttonInsertText={__(
-                    'Select as publisher logo',
-                    'web-stories'
-                  )}
-                  type={allowedImageMimeTypes}
-                  ariaLabel={__('Publisher logo', 'web-stories')}
-                  variant={MEDIA_VARIANTS.CIRCLE}
-                />
-              </Sizer>
+              <StyledMedia
+                width={72}
+                height={72}
+                ref={publisherLogoRef}
+                value={publisherLogoUrl}
+                onChange={handleChangePublisherLogo}
+                title={__('Select as publisher logo', 'web-stories')}
+                buttonInsertText={__('Select as publisher logo', 'web-stories')}
+                type={allowedImageMimeTypes}
+                ariaLabel={__('Publisher logo', 'web-stories')}
+                variant={MEDIA_VARIANTS.CIRCLE}
+              />
             </MediaWrapper>
             <LabelWrapper>
               <Label>{__('Publisher logo', 'web-stories')}</Label>

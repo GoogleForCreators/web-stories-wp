@@ -30,7 +30,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue, Note } from '../../shared';
 import { useConfig } from '../../../../app/config';
 
-const Wrapper = styled.div`
+const StyledMedia = styled(Media)`
   height: 114px;
   width: 64px;
 `;
@@ -63,18 +63,16 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   return (
     <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>
       <Row>
-        <Wrapper>
-          <Media
-            value={poster}
-            onChange={handleChangePoster}
-            title={__('Select as video poster', 'web-stories')}
-            buttonInsertText={__('Set as video poster', 'web-stories')}
-            alt={__('Preview poster image', 'web-stories')}
-            type={allowedImageMimeTypes}
-            ariaLabel={__('Video poster', 'web-stories')}
-            menuOptions={['edit', 'reset']}
-          />
-        </Wrapper>
+        <StyledMedia
+          value={poster}
+          onChange={handleChangePoster}
+          title={__('Select as video poster', 'web-stories')}
+          buttonInsertText={__('Set as video poster', 'web-stories')}
+          alt={__('Preview poster image', 'web-stories')}
+          type={allowedImageMimeTypes}
+          ariaLabel={__('Video poster', 'web-stories')}
+          menuOptions={['edit', 'reset']}
+        />
       </Row>
       <Row>
         <Note>
