@@ -55,7 +55,6 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   );
 
   const posterErrorMessage = useMemo(() => {
-    /* translators: %s is a list of allowed file extensions. */
     return sprintf(
       /* translators: %s: list of allowed file types. */
       __('Please choose only %s as a poster.', 'web-stories'),
