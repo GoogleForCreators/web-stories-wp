@@ -182,7 +182,6 @@ function MediaPane(props) {
     }
   };
 
-  /* translators: %s is a list of allowed file extensions. */
   const onSelectErrorMessage = sprintf(
     /* translators: %s: list of allowed file types. */
     __('Please choose only %s to insert into page.', 'web-stories'),
