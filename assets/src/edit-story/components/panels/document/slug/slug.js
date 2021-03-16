@@ -29,7 +29,12 @@ import cleanForSlug from '../../../../utils/cleanForSlug';
 import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Input, Link, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  Input,
+  Link,
+  ThemeGlobals,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -38,8 +43,18 @@ export const MIN_MAX = {
   },
 };
 
-const StyledRow = styled(Row)`
+const PermalinkRow = styled(Row)`
   margin-bottom: 12px;
+
+  * input {
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+
+    :active,
+    :focus,
+    .${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+      color: ${({ theme }) => theme.colors.fg.primary};
+    }
+  }
 `;
 
 const LinkContainer = styled.div`
@@ -58,8 +73,9 @@ function SlugPanel() {
   const [slug, setSlug] = useState(savedSlug);
 
   useEffect(() => {
-    setSlug(slug);
-  }, [slug]);
+    /* Update shown slug when slug updates externally */
+    setSlug(savedSlug);
+  }, [savedSlug]);
 
   const updateSlug = useCallback(
     (value, isEditing) => {
@@ -72,7 +88,10 @@ function SlugPanel() {
     [updateStory]
   );
 
-  const handleChange = useCallback((evt) => setSlug(evt.target.value), []);
+  const handleChange = useCallback(
+    (evt) => setSlug(cleanForSlug(evt.target.value, true)),
+    []
+  );
 
   const handleBlur = useCallback((evt) => updateSlug(evt.target.value, false), [
     updateSlug,
@@ -89,9 +108,9 @@ function SlugPanel() {
       title={__('Permalink', 'web-stories')}
       collapsedByDefault={false}
     >
-      <StyledRow>
+      <PermalinkRow>
         <Input
-          value={savedSlug}
+          value={slug}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={__('Enter slug', 'web-stories')}
@@ -99,7 +118,7 @@ function SlugPanel() {
           minLength={MIN_MAX.PERMALINK.MIN}
           maxLength={MIN_MAX.PERMALINK.MAX}
         />
-      </StyledRow>
+      </PermalinkRow>
       <LinkContainer>
         <Link
           rel="noopener noreferrer"
