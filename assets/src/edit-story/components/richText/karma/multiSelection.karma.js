@@ -81,6 +81,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
@@ -138,6 +139,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
 
       // Select both text fields
@@ -156,6 +158,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Bold'));
       await data.fixture.events.click(fontColor.button);
       waitFor(() => fontColor.picker);
@@ -202,11 +205,13 @@ describe('Styling multiple text fields', () => {
       // Make text field 1 black
       await selectTextField(0);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
 
       // Make text field 2 bold
       await selectTextField(1);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Bold'));
 
       // Select both text fields
@@ -239,11 +244,13 @@ describe('Styling multiple text fields', () => {
       // Make text field 1 black
       await selectTextField(0);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
 
       // Make text field 2 light
       await selectTextField(1);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Light'));
 
       // Select both text fields
@@ -256,7 +263,7 @@ describe('Styling multiple text fields', () => {
       // Toggle it by pressing the bold button
       await data.fixture.events.click(bold.button);
 
-      // Verify bold is now off and font weight is Bold
+      // Verify bold is now on and font weight is Bold
       expect(bold.checked).toBe(true);
       expect(fontWeight.value).toBe('Bold');
 

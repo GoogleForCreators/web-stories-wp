@@ -122,7 +122,7 @@ function FontControls({ selectedElements, pushUpdate }) {
         {fontWeights && (
           <>
             <StyledDropDown
-              aria-label={__('Font weight', 'web-stories')}
+              ariaLabel={__('Font weight', 'web-stories')}
               placeholder={MULTIPLE_DISPLAY_VALUE}
               options={fontWeights}
               selectedValue={MULTIPLE_VALUE === fontWeight ? '' : fontWeight}

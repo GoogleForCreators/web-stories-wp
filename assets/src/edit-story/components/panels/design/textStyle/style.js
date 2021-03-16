@@ -105,6 +105,12 @@ function StylePanel({ selectedElements, pushUpdate }) {
     [pushUpdate, textAlign]
   );
 
+  // We need to weed out the chance, that either of these are MULTIPLE_VALUE.
+  // If not strictly true, treat as false in every way.
+  const isTrulyBold = isBold === true;
+  const isTrulyItalic = isItalic === true;
+  const isTrulyUnderline = isUnderline === true;
+
   return (
     <>
       <Row>
@@ -168,34 +174,34 @@ function StylePanel({ selectedElements, pushUpdate }) {
           <Icons.AlignTextJustified />
         </Toggle>
         <Toggle
-          isToggled={isBold}
-          onClick={() => handleClickBold(!isBold)}
+          isToggled={isTrulyBold}
+          onClick={() => handleClickBold(!isTrulyBold)}
           aria-label={__('Toggle: bold', 'web-stories')}
         >
           <Icons.LetterBBold />
         </Toggle>
         <Toggle
-          isToggled={isItalic}
+          isToggled={isTrulyItalic}
           onClick={async () => {
             await maybeEnqueueFontStyle(
               selectedElements.map(({ font, content }) => {
                 return {
                   font,
-                  fontStyle: isItalic ? 'normal' : 'italic',
+                  fontStyle: isTrulyItalic ? 'normal' : 'italic',
                   fontWeight,
                   content: stripHTML(content),
                 };
               })
             );
-            handleClickItalic(!isItalic);
+            handleClickItalic(!isTrulyItalic);
           }}
           aria-label={__('Toggle: italic', 'web-stories')}
         >
           <Icons.LetterIItalic />
         </Toggle>
         <Toggle
-          isToggled={isUnderline}
-          onClick={() => handleClickUnderline(!isUnderline)}
+          isToggled={isTrulyUnderline}
+          onClick={() => handleClickUnderline(!isTrulyUnderline)}
           aria-label={__('Toggle: underline', 'web-stories')}
         >
           <Icons.LetterUUnderline />

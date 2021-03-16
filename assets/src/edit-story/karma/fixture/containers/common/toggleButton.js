@@ -20,30 +20,21 @@
 import { Container } from '../container';
 
 /**
- * The select dropdown, which is actually just a button that open a popup
- * containing the actual dropdown options.
+ * An icon-based toggle, that is either on or off and is surrounded by a label
+ * acting as the button to trigger it. The actual toggle element (the
+ * `<input type="checkbox" />`) is visually hidden so any mouse-user would
+ * click the surrounding label rather than the input.
  */
-export class Select extends Container {
+export class ToggleButton extends Container {
   constructor(node, path) {
     super(node, path);
-    this.name = this.node.getAttribute('aria-label');
   }
 
-  get select() {
+  get checked() {
+    return this.node.getAttribute('aria-pressed') === 'true';
+  }
+
+  get button() {
     return this.node;
-  }
-
-  get value() {
-    return this.node.innerText;
-  }
-
-  get optionList() {
-    return this.getByRoleIn(this.node.ownerDocument, 'listbox', {
-      name: new RegExp(this.name),
-    });
-  }
-
-  option(name) {
-    return this.getByRoleIn(this.optionList, 'option', { name });
   }
 }
