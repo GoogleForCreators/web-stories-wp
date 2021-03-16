@@ -20,7 +20,7 @@
 import { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { text } from '@storybook/addon-knobs';
-
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -35,6 +35,11 @@ export default {
   component: Dialog,
 };
 
+const InvertedWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
+`;
 export const _default = () => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
@@ -51,7 +56,7 @@ export const _default = () => {
     </Button>
   );
   return (
-    <>
+    <InvertedWrapper>
       <Button
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
@@ -76,7 +81,7 @@ export const _default = () => {
           )}
         </Text>
       </Dialog>
-    </>
+    </InvertedWrapper>
   );
 };
 
@@ -107,7 +112,7 @@ export const With2Actions = () => {
     </>
   );
   return (
-    <>
+    <InvertedWrapper>
       <Button
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
@@ -132,7 +137,7 @@ export const With2Actions = () => {
           )}
         </Text>
       </Dialog>
-    </>
+    </InvertedWrapper>
   );
 };
 
@@ -164,30 +169,32 @@ export const With2ActionsDarkTheme = () => {
   );
   return (
     <DarkThemeProvider>
-      <Button
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
-        onClick={() => setToggleDialog(!toggleDialog)}
-      >
-        {'Toggle Dialog'}
-      </Button>
-      <Dialog
-        onClose={() => {
-          action('close dialog clicked');
-          setToggleDialog(!toggleDialog);
-        }}
-        isOpen={toggleDialog}
-        title={text('title', 'Headline')}
-        contentLabel={'Dialog content Label for modal'}
-        actions={ActionsNode}
-      >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {text(
-            'body text',
-            'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
-          )}
-        </Text>
-      </Dialog>
+      <InvertedWrapper>
+        <Button
+          size={BUTTON_SIZES.SMALL}
+          type={BUTTON_TYPES.PRIMARY}
+          onClick={() => setToggleDialog(!toggleDialog)}
+        >
+          {'Toggle Dialog'}
+        </Button>
+        <Dialog
+          onClose={() => {
+            action('close dialog clicked');
+            setToggleDialog(!toggleDialog);
+          }}
+          isOpen={toggleDialog}
+          title={text('title', 'Headline')}
+          contentLabel={'Dialog content Label for modal'}
+          actions={ActionsNode}
+        >
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {text(
+              'body text',
+              'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
+            )}
+          </Text>
+        </Dialog>
+      </InvertedWrapper>
     </DarkThemeProvider>
   );
 };
