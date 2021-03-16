@@ -47,7 +47,7 @@ function MissingUploadPermissionDialog({ open, onClose }) {
         </Button>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(
           `You don't have access to upload images or publish a story. Please check with your administrator to request upload and publish access.`,
           'web-stories'

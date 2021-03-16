@@ -402,7 +402,7 @@ function EditorSettings() {
         onConfirm={handleDialogConfirmRemoveLogo}
         confirmText={__('Delete Logo', 'web-stories')}
       >
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {__(
             'The logo will be removed from any stories that currently use it as their publisher logo.',
             'web-stories'

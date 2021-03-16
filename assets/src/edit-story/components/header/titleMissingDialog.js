@@ -69,7 +69,7 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
         </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
             a: (

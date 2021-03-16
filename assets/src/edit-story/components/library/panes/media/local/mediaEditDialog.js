@@ -192,7 +192,7 @@ function MediaEditDialog({ resource, onClose }) {
             placeholder={isImage ? imageInputTitle : videoInputTitle}
             onChange={handleAltTextChange}
           />
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {isImage ? imageDialogDescription : videoDialogDescription}
           </Text>
         </MetadataTextContainer>

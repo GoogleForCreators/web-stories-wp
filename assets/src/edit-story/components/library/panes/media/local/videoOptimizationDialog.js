@@ -99,7 +99,7 @@ function VideoOptimizationDialog() {
         </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {dialogDescription}
       </Text>
     </Dialog>

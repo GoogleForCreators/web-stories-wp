@@ -36,7 +36,7 @@ function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
       onConfirm={onConfirm}
       confirmText={__('Apply Page Layout', 'web-stories')}
     >
-      <Text as="p" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(
           'Applying page layout will clear all existing design elements and background colors on this page. Want to keep going?',
           'web-stories'

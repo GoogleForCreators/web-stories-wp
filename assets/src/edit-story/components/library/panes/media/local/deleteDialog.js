@@ -99,10 +99,10 @@ function DeleteDialog({ mediaId, type, onClose }) {
       confirmText={__('Delete', 'web-stories')}
       maxWidth={512}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {type === 'image' ? imageDialogDescription : videoDialogDescription}
       </Text>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p" isBold>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} isBold>
         {__('This action can not be undone.', 'web-stories')}
       </Text>
     </Dialog>

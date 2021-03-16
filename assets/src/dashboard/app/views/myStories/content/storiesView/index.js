@@ -334,7 +334,7 @@ function StoriesView({
             </>
           }
         >
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
               /* translators: %s: story title. */
               __('Are you sure you want to delete "%s"?', 'web-stories'),

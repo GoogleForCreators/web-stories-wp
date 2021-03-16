@@ -61,7 +61,7 @@ function StatusCheckFailed({ open, onClose }) {
         </Button>
       }
     >
-      <Text as="p" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
             a: (

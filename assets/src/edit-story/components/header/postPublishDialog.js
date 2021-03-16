@@ -70,7 +70,7 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
         </>
       }
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -90,7 +90,7 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
           )}
         </TranslateWithMarkup>
       </Text>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="p">
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('Would you like to include it on a new post?', 'web-stories')}
       </Text>
     </Dialog>
