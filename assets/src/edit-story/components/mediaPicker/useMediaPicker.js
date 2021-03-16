@@ -46,7 +46,7 @@ export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
   onSelect,
-  onSelectErrorMessage = __('Unable to use this file type. ', 'web-stories'),
+  onSelectErrorMessage = __('Unable to use this file type.', 'web-stories'),
   onClose,
   onPermissionError,
   type = '',
