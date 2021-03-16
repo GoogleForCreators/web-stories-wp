@@ -50,7 +50,10 @@ function useTranscodeVideo() {
   const {
     state: { currentUser },
   } = useCurrentUser();
-  const isFeatureEnabled = useFeature('videoOptimization');
+
+  const isFeatureSupported = Boolean(window?.crossOriginIsolated);
+  const isFeatureEnabled =
+    useFeature('videoOptimization') && isFeatureSupported;
 
   /**
    * Transcode a video using ffmpeg.
@@ -124,12 +127,9 @@ function useTranscodeVideo() {
     currentUser.meta?.web_stories_media_optimization
   );
 
-  const ffmpegSupported = Boolean(window?.crossOriginIsolated);
-
   return {
     isFeatureEnabled,
     isTranscodingEnabled,
-    ffmpegSupported,
     canTranscodeFile,
     isFileTooLarge,
     transcodeVideo,
