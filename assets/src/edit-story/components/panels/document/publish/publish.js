@@ -170,7 +170,6 @@ function PublishPanel() {
   );
 
   const publisherLogoErrorMessage = useMemo(() => {
-    /* translators: %s is a list of allowed file extensions. */
     return sprintf(
       /* translators: %s: list of allowed file types. */
       __('Please choose only %s as publisher logo.', 'web-stories'),
