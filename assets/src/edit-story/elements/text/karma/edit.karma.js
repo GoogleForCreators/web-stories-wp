@@ -73,7 +73,7 @@ describe('TextEdit integration', () => {
         await fixture.events.click(frame);
         editor = fixture.querySelector('[data-testid="textEditor"]');
         editLayer = fixture.querySelector('[data-testid="editLayer"]');
-        boldToggle = fixture.querySelector('[data-testid="boldToggle"]');
+        boldToggle = fixture.editor.inspector.designPanel.textStyle.bold;
       });
 
       it('should mount editor', async () => {

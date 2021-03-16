@@ -14,12 +14,27 @@
  * limitations under the License.
  */
 
-export const LOCAL_MEDIA_RESET_FILTERS = 'LOCAL_MEDIA_RESET_FILTERS';
-export const LOCAL_MEDIA_SET_SEARCH_TERM = 'LOCAL_MEDIA_SET_SEARCH_TERM';
-export const LOCAL_MEDIA_SET_MEDIA_TYPE = 'LOCAL_MEDIA_SET_MEDIA_TYPE';
-export const LOCAL_MEDIA_SET_MEDIA = 'LOCAL_MEDIA_SET_MEDIA';
-export const LOCAL_MEDIA_PREPEND_MEDIA = 'LOCAL_MEDIA_PREPEND_MEDIA';
-export const LOCAL_MEDIA_REMOVE_PROCESSING = 'LOCAL_MEDIA_REMOVE_PROCESSING';
-export const LOCAL_MEDIA_ADD_PROCESSING = 'LOCAL_MEDIA_ADD_PROCESSING';
+/**
+ * Internal dependencies
+ */
+import { Container } from '../container';
 
-export const LOCAL_MEDIA_TYPE_ALL = 'LOCAL_MEDIA_TYPE_ALL';
+/**
+ * An icon-based toggle, that is either on or off and is surrounded by a label
+ * acting as the button to trigger it. The actual toggle element (the
+ * `<input type="checkbox" />`) is visually hidden so any mouse-user would
+ * click the surrounding label rather than the input.
+ */
+export class ToggleButton extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get checked() {
+    return this.node.getAttribute('aria-pressed') === 'true';
+  }
+
+  get button() {
+    return this.node;
+  }
+}
