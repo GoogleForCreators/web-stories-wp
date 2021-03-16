@@ -19,6 +19,7 @@
  */
 import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -26,10 +27,16 @@ import { __ } from '@web-stories-wp/i18n';
 import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
-import Note from '../../shared/note';
 import { useFocusHighlight, states, styles } from '../../../../app/highlights';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 
-export const EXCERPT_MAX_LENGTH = 200;
+// Margin -4px is making up for extra margin added by rows.
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+  margin-top: -4px;
+`;
+
+export const EXCERPT_MAX_LENGTH = 100;
 
 function ExcerptPanel() {
   const { excerpt, updateStory } = useStory(
@@ -57,7 +64,7 @@ function ExcerptPanel() {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       name="excerpt"
-      title={__('Story Description', 'web-stories')}
+      title={__('Excerpt', 'web-stories')}
       collapsedByDefault={false}
       isPersistable={!highlight}
     >
@@ -66,20 +73,21 @@ function ExcerptPanel() {
           ref={ref}
           value={excerpt}
           onChange={handleTextChange}
-          placeholder={__('Write a description of the story', 'web-stories')}
-          aria-label={__('Story Description', 'web-stories')}
+          placeholder={__('Write an excerpt', 'web-stories')}
+          aria-label={__('Excerpt', 'web-stories')}
           maxLength={EXCERPT_MAX_LENGTH}
+          showCount
           rows={4}
           css={highlight?.showEffect && styles.OUTLINE}
         />
       </Row>
       <Row>
-        <Note>
+        <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {__(
-            'Stories with a description tend to do better on search and have a wider reach.',
+            'Stories with a description tend to do better on search and have a wider reach',
             'web-stories'
           )}
-        </Note>
+        </StyledText>
       </Row>
     </SimplePanel>
   );
