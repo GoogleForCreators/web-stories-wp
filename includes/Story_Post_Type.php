@@ -757,7 +757,13 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Add cross origin headers, to make sure the ffmpeg loads.
+	 * Send headers to enable cross-origin isolation.
+	 *
+	 * This is required for WebAssembly threads as used for the
+	 * video optimization feature powered by fffmpeg.wasm.
+	 *
+	 * @link https://web.dev/coop-coep/
+	 * @link https://ffmpegwasm.github.io/
 	 *
 	 * @since 1.5.0
 	 *
