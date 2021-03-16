@@ -25,14 +25,7 @@ import { trackClick } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Link,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../design-system';
+import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
 
 const SUPPORT_URL = __(
@@ -51,15 +44,8 @@ function StatusCheckFailed({ open, onClose }) {
       onClose={onClose}
       title={__('Unable to save your story', 'web-stories')}
       contentLabel={__('Unable to save your story', 'web-stories')}
-      actions={
-        <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={onClose}
-        >
-          {__('Dismiss', 'web-stories')}
-        </Button>
-      }
+      onPrimary={onClose}
+      primaryText={__('Dismiss', 'web-stories')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup

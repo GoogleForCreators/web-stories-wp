@@ -26,14 +26,7 @@ import { trackClick } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Link,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../design-system';
+import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
@@ -50,25 +43,10 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
       open={open}
       onClose={onClose}
       title={__('Story published!', 'web-stories')}
-      actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onClose}
-          >
-            {__('Dismiss', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            href={confirmURL}
-            onClick={onAddToPostClick}
-          >
-            {__('Add to new post', 'web-stories')}
-          </Button>
-        </>
-      }
+      secondaryText={__('Dismiss', 'web-stories')}
+      primaryText={__('Add to new post', 'web-stories')}
+      onPrimary={onAddToPostClick}
+      primaryRest={{ href: confirmURL }}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup

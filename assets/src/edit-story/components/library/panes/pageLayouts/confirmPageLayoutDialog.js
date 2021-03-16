@@ -32,9 +32,9 @@ function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
       isOpen
       onClose={onClose}
       title={__('Confirm Page Layout', 'web-stories')}
-      closeText={__('Cancel', 'web-stories')}
-      onConfirm={onConfirm}
-      confirmText={__('Apply Page Layout', 'web-stories')}
+      secondaryText={__('Cancel', 'web-stories')}
+      onPrimary={onConfirm}
+      primaryText={__('Apply Page Layout', 'web-stories')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(

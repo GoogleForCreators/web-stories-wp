@@ -398,9 +398,9 @@ function EditorSettings() {
         )}
         title={__('Are you sure you want to remove this logo?', 'web-stories')}
         onClose={() => setActiveDialog(null)}
-        closeText={__('Cancel', 'web-stories')}
-        onConfirm={handleDialogConfirmRemoveLogo}
-        confirmText={__('Delete Logo', 'web-stories')}
+        secondaryText={__('Cancel', 'web-stories')}
+        onPrimary={handleDialogConfirmRemoveLogo}
+        primaryText={__('Delete Logo', 'web-stories')}
       >
         <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {__(

@@ -26,14 +26,7 @@ import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Text,
-  Link,
-  THEME_CONSTANTS,
-} from '../../../../../../design-system';
+import { Text, Link, THEME_CONSTANTS } from '../../../../../../design-system';
 import Dialog from '../../../../dialog';
 
 const TERMS_URL = 'https://wp.stories.google/docs#Terms';
@@ -69,15 +62,8 @@ function TermsDialog() {
       contentLabel={__('Third party stock content terms', 'web-stories')}
       onClose={acknowledgeTerms}
       ariaHideApp={false}
-      actions={
-        <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={acknowledgeTerms}
-        >
-          {__('Dismiss', 'web-stories')}
-        </Button>
-      }
+      onPrimary={acknowledgeTerms}
+      primaryText={__('Dismiss', 'web-stories')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup

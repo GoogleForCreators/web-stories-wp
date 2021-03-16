@@ -26,9 +26,6 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import {
-  Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
   LoadingSpinner,
   useSnackbar,
   Text,
@@ -302,37 +299,23 @@ function StoriesView({
             setFocusedStory({ id: activeStory.id });
             setActiveDialog('');
           }}
-          actions={
-            <>
-              <Button
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={() => {
-                  setFocusedStory({ id: activeStory.id });
-                  setActiveDialog('');
-                }}
-                aria-label={sprintf(
-                  /* translators: %s: story title */
-                  __('Cancel deleting story "%s"', 'web-stories'),
-                  titleFormatted(activeStory.title)
-                )}
-              >
-                {__('Cancel', 'web-stories')}
-              </Button>
-              <Button
-                type={BUTTON_TYPES.PRIMARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={handleOnDeleteStory}
-                aria-label={sprintf(
-                  /* translators: %s: story title */
-                  __('Confirm deleting story "%s"', 'web-stories'),
-                  titleFormatted(activeStory.title)
-                )}
-              >
-                {__('Delete', 'web-stories')}
-              </Button>
-            </>
-          }
+          secondaryText={__('Cancel', 'web-stories')}
+          secondaryRest={{
+            ['aria-label']: sprintf(
+              /* translators: %s: story title */
+              __('Cancel deleting story "%s"', 'web-stories'),
+              titleFormatted(activeStory.title)
+            ),
+          }}
+          primaryText={__('Delete', 'web-stories')}
+          onPrimary={handleOnDeleteStory}
+          primaryRest={{
+            ['aria-label']: sprintf(
+              /* translators: %s: story title */
+              __('Confirm deleting story "%s"', 'web-stories'),
+              titleFormatted(activeStory.title)
+            ),
+          }}
         >
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(

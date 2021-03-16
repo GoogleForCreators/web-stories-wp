@@ -25,14 +25,7 @@ import { trackClick } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Link,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../design-system';
+import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
 
 const RECOMMENDATION_URL = __(
@@ -50,24 +43,10 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
       open={open}
       onClose={onClose}
       title={__('Missing title', 'web-stories')}
-      actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onFix}
-          >
-            {__('Add a title', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onIgnore}
-          >
-            {__('Publish without title', 'web-stories')}
-          </Button>
-        </>
-      }
+      onSecondary={onFix}
+      secondaryText={__('Add a title', 'web-stories')}
+      primaryText={__('Publish without title', 'web-stories')}
+      onPrimary={onIgnore}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup

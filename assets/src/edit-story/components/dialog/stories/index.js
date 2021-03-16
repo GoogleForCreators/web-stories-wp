@@ -23,13 +23,7 @@ import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../design-system';
+import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import Dialog from '../dialog';
 
 export default {
@@ -43,9 +37,9 @@ export const _default = () => {
       open={boolean('open', true)}
       onClose={action('closed')}
       title={text('title', 'my dialog title')}
-      onConfirm={action('confirmed')}
-      closeText={text('closeText', 'cancel action')}
-      confirmText={text('confirmText', 'confirm action')}
+      onPrimary={action('confirmed')}
+      secondaryText={text('secondaryText', 'cancel action')}
+      primaryText={text('primaryText', 'confirm action')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
@@ -62,25 +56,13 @@ export const WithCustomAction = () => {
       open={boolean('open', true)}
       onClose={action('closed')}
       title={text('title', 'my dialog title')}
-      actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={action('closed')}
-          >
-            {'Dismiss'}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            href={text('Confirmation as Link', 'https://example.com')}
-            onClick={action('confirmed')}
-          >
-            {'Add to new post'}
-          </Button>
-        </>
-      }
+      onPrimary={action('primary clicked')}
+      primaryRest={{
+        href: 'https://example.com',
+      }}
+      primaryText={text('primaryText', 'primary button')}
+      secondaryText={text('secondaryText', 'secondary button')}
+      onSecondary={action('secondary clicked')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {

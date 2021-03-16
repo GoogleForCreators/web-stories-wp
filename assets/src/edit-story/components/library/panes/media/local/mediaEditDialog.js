@@ -141,9 +141,9 @@ function MediaEditDialog({ resource, onClose }) {
       open
       onClose={onClose}
       title={isImage ? imageDialogTitle : videoDialogTitle}
-      closeText={__('Cancel', 'web-stories')}
-      onConfirm={updateMediaItem}
-      confirmText={__('Save', 'web-stories')}
+      secondaryText={__('Cancel', 'web-stories')}
+      onPrimary={updateMediaItem}
+      primaryText={__('Save', 'web-stories')}
     >
       <DialogBody>
         {type === 'image' ? (

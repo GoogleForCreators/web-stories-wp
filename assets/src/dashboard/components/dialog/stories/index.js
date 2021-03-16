@@ -43,9 +43,9 @@ export const _default = () => {
       isOpen={boolean('isOpen', true)}
       onClose={action('closed')}
       title={text('title', 'my dialog title')}
-      onConfirm={action('confirmed')}
-      closeText={text('closeText', 'cancel action')}
-      confirmText={text('confirmText', 'confirm action')}
+      onPrimary={action('confirmed')}
+      secondaryText={text('secondaryText', 'cancel action')}
+      primaryText={text('primaryText', 'confirm action')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {

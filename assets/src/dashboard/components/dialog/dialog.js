@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -31,15 +32,63 @@ import {
   theme,
 } from '../../../design-system';
 
+/**
+ * Dialog is wrapped in a ThemeProvider so that colors can be inverted.
+ *
+ * @param {boolean} isOpen When true, dialog will be visible - passed to dialog directly
+ * @param {Function} onClose Action taken on 'x'/clicking outside of dialog. Default secondary action.
+ * @param {Function} onSecondary Action taken on secondary button click when specified.
+ * @param {Function} onPrimary Action taken on primary button click.
+ * @param {string} primaryText When present, primary button will render.
+ * @param {string} secondaryText When present, secondary button will render.
+ * @param {Object} primaryRest Unique props needed on primary button, spread on button.
+ * @param {Object} secondaryRest Unique props needed on secondary button, spread on button.
+ * @param {Object} actions Custom actions object for when the API restrictions of primary and secondary structure are too much.
+ * @param {Node} children Contents of dialog
+ */
+
 const Dialog = ({
   onClose,
-  closeText,
-  onConfirm,
-  confirmText,
+  onSecondary,
+  onPrimary,
+  primaryText,
+  secondaryText,
+  primaryRest,
+  secondaryRest,
   actions,
   children,
   ...rest
 }) => {
+  const _PrimaryButton = useMemo(
+    () =>
+      primaryText && (
+        <Button
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={() => onPrimary?.()}
+          {...primaryRest}
+        >
+          {primaryText}
+        </Button>
+      ),
+    [primaryText, primaryRest, onPrimary]
+  );
+
+  const _SecondaryButton = useMemo(
+    () =>
+      secondaryText && (
+        <Button
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={() => onSecondary?.() || onClose()}
+          {...secondaryRest}
+        >
+          {secondaryText}
+        </Button>
+      ),
+    [secondaryText, secondaryRest, onSecondary, onClose]
+  );
+
   return (
     <ThemeProvider theme={theme}>
       <StyledDialog
@@ -48,20 +97,8 @@ const Dialog = ({
         actions={
           actions || (
             <>
-              <Button
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={onClose}
-              >
-                {closeText}
-              </Button>
-              <Button
-                type={BUTTON_TYPES.PRIMARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={onConfirm}
-              >
-                {confirmText}
-              </Button>
+              {_SecondaryButton}
+              {_PrimaryButton}
             </>
           )
         }
@@ -75,11 +112,14 @@ const Dialog = ({
 Dialog.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
-  closeText: PropTypes.string,
-  onConfirm: PropTypes.func,
-  confirmText: PropTypes.string,
+  onPrimary: PropTypes.func,
+  onSecondary: PropTypes.func,
+  primaryText: PropTypes.string,
+  primaryRest: PropTypes.object,
+  secondaryText: PropTypes.string,
+  secondaryRest: PropTypes.object,
   actions: PropTypes.object,
-  children: PropTypes.array,
+  children: PropTypes.node,
 };
 
 export default Dialog;

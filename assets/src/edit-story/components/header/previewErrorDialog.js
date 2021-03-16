@@ -31,9 +31,9 @@ function PreviewErrorDialog({ open, onClose, onRetry }) {
       open={open}
       onClose={onClose}
       title={__('Open preview', 'web-stories')}
-      closeText={__('Cancel', 'web-stories')}
-      onConfirm={onRetry}
-      confirmText={__('Try again', 'web-stories')}
+      secondaryText={__('Cancel', 'web-stories')}
+      onPrimary={onRetry}
+      primaryText={__('Try again', 'web-stories')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('The preview window failed to open.', 'web-stories')}

@@ -94,9 +94,9 @@ function DeleteDialog({ mediaId, type, onClose }) {
       open
       onClose={onClose}
       title={type === 'image' ? imageDialogTitle : videoDialogTitle}
-      closeText={__('Cancel', 'web-stories')}
-      onConfirm={onDelete}
-      confirmText={__('Delete', 'web-stories')}
+      secondaryText={__('Cancel', 'web-stories')}
+      onPrimary={onDelete}
+      primaryText={__('Delete', 'web-stories')}
       maxWidth={512}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
