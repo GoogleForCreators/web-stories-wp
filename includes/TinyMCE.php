@@ -131,7 +131,7 @@ class TinyMCE {
 	public function script_loader_tag( $tag, $handle, $src ) {
 		if ( self::SCRIPT_HANDLE === $handle ) {
 			$tag = str_replace( $src, '', $tag );
-			$tag = preg_replace( '#<script src=\'\'(.*?)>(.*?)</script>#is', '', $tag );
+			$tag = (string) preg_replace( '#<script src=\'\'(.*?)>(.*?)</script>#is', '', $tag );
 		}
 
 		return $tag;

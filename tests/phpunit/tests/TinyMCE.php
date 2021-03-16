@@ -88,9 +88,9 @@ class TinyMCE extends \WP_UnitTestCase {
 	 */
 	public function test_script_loader_tag() {
 		$tinymce = new \Google\Web_Stories\TinyMCE();
-		$result  = $tinymce->script_loader_tag( '<script></script>', 'another-handle', 'http://www.example.com' );
+		$result  = $tinymce->script_loader_tag( "<script src='http://www.example.com/test.js'></script>", \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'http://www.example.com/test.js' );
 
-		$this->assertSame( '<script></script>', $result );
+		$this->assertSame( '', $result );
 	}
 
 	/**
