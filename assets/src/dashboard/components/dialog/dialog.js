@@ -41,7 +41,7 @@ const Dialog = ({
   ...rest
 }) => {
   return (
-    <ThemeProvider theme={{ ...theme }}>
+    <ThemeProvider theme={theme}>
       <StyledDialog
         onClose={onClose}
         {...rest}
