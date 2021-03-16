@@ -20,8 +20,11 @@
 import { join, extname, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
-import { v4 as uuid } from 'uuid';
 
+const hashCode = (s) =>
+  s.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0);
+
+const getFileName = (name) => name.split('.').slice(0, -1).join('.');
 /**
  * Uploads a file to the Media Library, and awaits its upload.
  *
@@ -41,7 +44,7 @@ async function uploadFile(file, checkUpload = true) {
   );
 
   // Copy file to <newname>.ext for upload.
-  const newBaseName = uuid();
+  const newBaseName = hashCode(getFileName(file));
   const newFileName = newBaseName + fileExtension;
   const tmpFileName = join(tmpdir(), newFileName);
   copyFileSync(testMediaPath, tmpFileName);
