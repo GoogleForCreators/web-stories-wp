@@ -24,10 +24,10 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Headline, Radio, themeHelpers } from '../../../../design-system';
+import { Radio, themeHelpers } from '../../../../design-system';
 import useRadioNavigation from '../shared/useRadioNavigation';
 
-const VisuallyHiddenLabel = styled(Headline)`
+const VisuallyHiddenLabel = styled.h4`
   ${themeHelpers.visuallyHidden};
 `;
 
@@ -51,9 +51,7 @@ function RadioGroup({
       role="radiogroup"
       aria-labelledby={groupId}
     >
-      <VisuallyHiddenLabel id={groupId} as="h4">
-        {groupLabel}
-      </VisuallyHiddenLabel>
+      <VisuallyHiddenLabel id={groupId}>{groupLabel}</VisuallyHiddenLabel>
       {options.map(({ helper = '', label, value }) => (
         <Radio
           key={value}
