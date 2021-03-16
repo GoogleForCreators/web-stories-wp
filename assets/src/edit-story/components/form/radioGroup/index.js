@@ -54,7 +54,7 @@ function RadioGroup({
       <VisuallyHiddenLabel id={groupId} as="h4">
         {groupLabel}
       </VisuallyHiddenLabel>
-      {options.map(({ helper, label, value }) => (
+      {options.map(({ helper = '', label, value }) => (
         <Radio
           key={value}
           name={name}
