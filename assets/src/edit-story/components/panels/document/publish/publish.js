@@ -48,12 +48,6 @@ const Label = styled(Text).attrs({
 `;
 
 const MediaWrapper = styled.div`
-  ${({ isHighlighted }) =>
-    isHighlighted &&
-    css`
-      ${styles.OUTLINE}
-      border-radius: 0;
-    `}
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -64,6 +58,11 @@ const MediaWrapper = styled.div`
 const StyledMedia = styled(Media)`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
+  ${({ isHighlighted }) =>
+    isHighlighted &&
+    css`
+      ${styles.OUTLINE}
+    `}
 `;
 
 const HighlightRow = styled(Row)`
@@ -165,8 +164,9 @@ function PublishPanel() {
           }
         >
           <MediaInputWrapper>
-            <MediaWrapper isHighlighted={highlightPoster?.showEffect}>
+            <MediaWrapper>
               <StyledMedia
+                isHighlighted={highlightPoster?.showEffect}
                 ref={posterButtonRef}
                 width={54}
                 height={96}
@@ -184,8 +184,9 @@ function PublishPanel() {
             </LabelWrapper>
           </MediaInputWrapper>
           <MediaInputWrapper>
-            <MediaWrapper isHighlighted={highlightLogo?.showEffect}>
+            <MediaWrapper>
               <StyledMedia
+                isHighlighted={highlightLogo?.showEffect}
                 width={72}
                 height={72}
                 ref={publisherLogoRef}
