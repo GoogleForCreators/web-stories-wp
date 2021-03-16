@@ -189,5 +189,5 @@ wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png --quiet
 
 wp option patch insert web_stories_experiments enableSVG 1
-wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
+wp media import /var/www/html/wp-content/e2e-assets/arrow.svg
 wp option patch insert web_stories_experiments enableSVG 0
