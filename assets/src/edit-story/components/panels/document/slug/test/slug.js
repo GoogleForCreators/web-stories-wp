@@ -85,13 +85,7 @@ describe('SlugPanel', () => {
       target: { value: 'name with spaces ' },
     });
 
-    await waitFor(() =>
-      expect(updateStory).toHaveBeenCalledWith({
-        properties: {
-          slug: 'name-with-spaces-',
-        },
-      })
-    );
+    expect(input).toHaveValue('name with spaces ');
 
     fireEvent.blur(input, {
       target: { value: 'name with spaces ' },
@@ -113,7 +107,7 @@ describe('SlugPanel', () => {
 
     const bigSlug = ''.padStart(MIN_MAX.PERMALINK.MAX + 10, '1');
 
-    fireEvent.change(input, {
+    fireEvent.blur(input, {
       target: { value: bigSlug },
     });
 
@@ -126,7 +120,7 @@ describe('SlugPanel', () => {
       })
     );
 
-    fireEvent.change(input, {
+    fireEvent.blur(input, {
       target: { value: '1234' },
     });
 

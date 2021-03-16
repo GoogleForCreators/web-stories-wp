@@ -88,10 +88,7 @@ function SlugPanel() {
     [updateStory]
   );
 
-  const handleChange = useCallback(
-    (evt) => setSlug(cleanForSlug(evt.target.value, true)),
-    []
-  );
+  const handleChange = useCallback((evt) => setSlug(evt.target.value), []);
 
   const handleBlur = useCallback((evt) => updateSlug(evt.target.value, false), [
     updateSlug,
