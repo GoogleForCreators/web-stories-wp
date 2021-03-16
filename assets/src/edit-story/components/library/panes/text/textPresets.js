@@ -75,11 +75,11 @@ const PRESETS = [
   {
     title: __('Title 1', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.MEDIUM}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
         'Title 1',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.MEDIUM,
+      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2.667),
       lineHeight: 1.19,
       x: DEFAULT_LEFT_MARGIN,
@@ -94,11 +94,11 @@ const PRESETS = [
   {
     title: __('Title 2', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.MEDIUM}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
         'Title 2',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.MEDIUM,
+      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -113,11 +113,11 @@ const PRESETS = [
   {
     title: __('Title 3', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.MEDIUM}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
         'Title 3',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.MEDIUM,
+      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(1.6),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
