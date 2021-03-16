@@ -132,13 +132,11 @@ const quaternaryColors = ({ theme }) => css`
 
   &:hover {
     border-color: ${theme.colors.border.quaternaryHover};
-    background-color: ${theme.colors.interactiveBg.quaternaryNormal};
   }
 
   &:focus {
     box-shadow: none;
     border-color: ${theme.colors.border.quaternaryHover};
-    background-color: ${theme.colors.interactiveBg.quaternaryNormal};
   }
 
   &:active {
@@ -150,7 +148,7 @@ const quaternaryColors = ({ theme }) => css`
 
   &:disabled {
     border-color: ${theme.colors.border.disable};
-    background-color: ${theme.colors.quaternaryNormal};
+    background-color: ${theme.colors.interactiveBg.quaternaryNormal};
   }
 `;
 
