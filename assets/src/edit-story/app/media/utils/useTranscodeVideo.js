@@ -124,9 +124,12 @@ function useTranscodeVideo() {
     currentUser.meta?.web_stories_media_optimization
   );
 
+  const ffmpegSupported = Boolean(window?.crossOriginIsolated);
+
   return {
     isFeatureEnabled,
     isTranscodingEnabled,
+    ffmpegSupported,
     canTranscodeFile,
     isFileTooLarge,
     transcodeVideo,

@@ -68,6 +68,7 @@ function useUploadMedia({
   const {
     isFeatureEnabled,
     isTranscodingEnabled,
+    ffmpegSupported,
     canTranscodeFile,
     isFileTooLarge,
   } = useTranscodeVideo();
@@ -201,7 +202,10 @@ function useUploadMedia({
           // aren't supported anyway.
 
           const canTranscode =
-            isFeatureEnabled && isTranscodingEnabled && canTranscodeFile(file);
+            isFeatureEnabled &&
+            isTranscodingEnabled &&
+            ffmpegSupported &&
+            canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
@@ -239,6 +243,7 @@ function useUploadMedia({
       canTranscodeFile,
       isFeatureEnabled,
       isTranscodingEnabled,
+      ffmpegSupported,
       isFileTooLarge,
     ]
   );
