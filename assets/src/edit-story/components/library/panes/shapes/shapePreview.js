@@ -36,7 +36,7 @@ import { themeHelpers } from '../../../../../design-system';
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
-const createGrid = ({ columns, columnGap, rowGap, minWidth }) => css`
+const createGrid = ({ columns, columnGap = 12, rowGap = 24, minWidth = 50 }) => css`
   min-width: ${minWidth}px;
   width: calc(${100 / columns}% - ${(columnGap * (columns - 1)) / columns}px);
   margin-top: 0px;
@@ -68,13 +68,13 @@ const Aspect = styled.button`
     )};
 
   @media screen and (min-width: 1220px) {
-    ${createGrid({ columns: 4, columnGap: 12, rowGap: 24, minWidth: 50 })}
+    ${createGrid({ columns: 4 })}
   }
   @media screen and (min-width: 1100px) and (max-width: 1220px) {
-    ${createGrid({ columns: 3, columnGap: 12, rowGap: 24, minWidth: 50 })}
+    ${createGrid({ columns: 3 })}
   }
   @media screen and (max-width: 1100px) {
-    ${createGrid({ columns: 2, columnGap: 12, rowGap: 24, minWidth: 50 })}
+    ${createGrid({ columns: 2 })}
   }
 `;
 

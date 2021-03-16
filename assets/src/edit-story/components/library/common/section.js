@@ -40,7 +40,6 @@ export const Title = styled(Text).attrs({
 })`
   flex: 1 1 auto;
   color: ${({ theme }) => theme.colors.fg.primary};
-  font-weight: 400;
   margin-bottom: 28px;
 `;
 
