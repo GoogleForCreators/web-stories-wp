@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prepublish checklist should return guidance for the story 1`] = `
+Array [
+  Object {
+    "help": <constants__DashedList>
+      <li>
+        Use as a representation of the story
+      </li>
+      <li>
+        Avoid images with embedded text
+      </li>
+      <li>
+        Use an image that's at least 640x853px
+      </li>
+      <li>
+        Maintain a 3:4 aspect ratio
+      </li>
+    </constants__DashedList>,
+    "highlight": "POSTER",
+    "message": "Add cover image",
+    "storyId": 120,
+    "type": "error",
+  },
+  Object {
+    "help": <constants__DashedList>
+      <li>
+        Keep under 10 words
+      </li>
+      <li>
+        Don't exceed 40 characters
+      </li>
+    </constants__DashedList>,
+    "highlight": "STORY_TITLE",
+    "message": "Add story title",
+    "storyId": 120,
+    "type": "error",
+  },
+  Object {
+    "help": <constants__DashedList>
+      <li>
+        Incorporate a brief description for better user experience
+      </li>
+    </constants__DashedList>,
+    "highlight": "EXCERPT",
+    "message": "Add story description",
+    "storyId": 120,
+    "type": "warning",
+  },
+  Object {
+    "help": <constants__DashedList>
+      <li>
+        It is recommended to have between 4 and 30 pages in your story
+      </li>
+    </constants__DashedList>,
+    "message": "Make story longer",
+    "storyId": 120,
+    "type": "guidance",
+  },
+  Object {
+    "help": <constants__DashedList>
+      <li>
+        Make your story text 100 characters or more
+      </li>
+    </constants__DashedList>,
+    "message": "Increase amount of total text",
+    "storyId": 120,
+    "type": "guidance",
+  },
+]
+`;
