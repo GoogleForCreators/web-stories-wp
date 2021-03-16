@@ -29,8 +29,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';
-import { Dropdown as ToggleIcon } from '../../../../icons';
-import { useKeyDownEffect } from '../../../../../design-system';
+import { useKeyDownEffect, Icons } from '../../../../../design-system';
 import useFocusOut from '../../../../utils/useFocusOut';
 
 const StyledButton = styled.button`
@@ -69,9 +68,9 @@ const Time = styled.span`
   display: inline-block;
 `;
 
-const StyledToggleIcon = styled(ToggleIcon)`
-  height: 26px;
-  min-width: 25px;
+const StyledToggleIcon = styled(Icons.ChevronDownSmall)`
+  width: 32px;
+  height: auto;
 `;
 
 function PublishTime() {
