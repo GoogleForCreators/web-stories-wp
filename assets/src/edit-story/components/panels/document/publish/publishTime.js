@@ -77,7 +77,6 @@ function PublishTime() {
     <>
       <Row>
         <DropDownSelect
-          hasError={false}
           dropDownLabel={__('Publish', 'web-stories')}
           aria-pressed={showDatePicker}
           aria-haspopup

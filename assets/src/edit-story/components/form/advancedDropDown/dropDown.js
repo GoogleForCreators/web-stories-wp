@@ -169,7 +169,6 @@ function DropDown({
         aria-expanded={isOpen}
         ref={ref}
         activeItemLabel={selectedOption?.name}
-        hasError={false}
         dropDownLabel={dropDownLabel}
         onSelectClick={toggleDropDown}
         {...rest}
