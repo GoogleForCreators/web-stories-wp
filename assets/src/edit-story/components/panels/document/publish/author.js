@@ -94,6 +94,7 @@ function Author() {
     [updateStory]
   );
 
+  const isLoading = isUsersLoading || !visibleOptions;
   const dropDownParams = {
     hasSearch: true,
     lightMode: true,
@@ -101,26 +102,18 @@ function Author() {
     getOptionsByQuery: getAuthorsBySearch,
     selectedId: author.id,
     dropDownLabel: __('Author', 'web-stories'),
+    placeholder: isLoading ? __('Loading…', 'web-stories') : '',
+    disabled: isLoading ? true : isSaving,
+    primaryOptions: isLoading ? [] : visibleOptions,
   };
   return (
     <Row>
-      {isUsersLoading || !visibleOptions ? (
-        <AdvancedDropDown
-          placeholder={__('Loading…', 'web-stories')}
-          disabled
-          primaryOptions={[]}
-          {...dropDownParams}
-        />
-      ) : (
-        <AdvancedDropDown
-          options={queriedUsers}
-          primaryOptions={visibleOptions}
-          searchResultsLabel={__('Search results', 'web-stories')}
-          disabled={isSaving}
-          aria-label={__('Author', 'web-stories')}
-          {...dropDownParams}
-        />
-      )}
+      <AdvancedDropDown
+        options={queriedUsers}
+        searchResultsLabel={__('Search results', 'web-stories')}
+        aria-label={__('Author', 'web-stories')}
+        {...dropDownParams}
+      />
     </Row>
   );
 }
