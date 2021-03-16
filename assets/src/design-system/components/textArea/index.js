@@ -39,7 +39,10 @@ const Container = styled.div`
   min-width: 100px;
 `;
 
-const CounterText = styled(Text)`
+const CounterText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  as: 'span',
+})`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
@@ -177,10 +180,7 @@ export const TextArea = forwardRef(
           />
           {hasCounter && (
             <Counter>
-              <CounterText
-                as="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >{`${value.length}/${maxLength}`}</CounterText>
+              <CounterText>{`${value.length}/${maxLength}`}</CounterText>
             </Counter>
           )}
         </InputContainer>

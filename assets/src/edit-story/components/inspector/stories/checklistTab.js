@@ -58,8 +58,8 @@ export const _default = () => {
         'Keep the title clear and clean, ideally under 10 words in less than 40 characters.',
     },
     {
-      message: 'Missing Story Description',
-      help: 'Add a Story Description in the Document panel.',
+      message: 'Missing Excerpt',
+      help: 'Add an Excerpt in the Document panel.',
       storyId: 120,
       type: 'warning',
     },

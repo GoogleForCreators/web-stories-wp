@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { fireEvent, waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
@@ -46,7 +41,6 @@ function setupPanel() {
 
   return {
     getByRole,
-    updateStory,
   };
 }
 
@@ -64,44 +58,20 @@ describe('ExcerptPanel', () => {
 
   it('should render Excerpt Panel', () => {
     const { getByRole } = setupPanel();
-    const element = getByRole('button', { name: 'Story Description' });
+    const element = getByRole('button', { name: 'Excerpt' });
     expect(element).toBeInTheDocument();
   });
 
   it('should display textbox', () => {
     const { getByRole } = setupPanel();
-    const input = getByRole('textbox', { name: 'Story Description' });
+    const input = getByRole('textbox', { name: 'Excerpt' });
     expect(input).toBeInTheDocument();
   });
 
-  it('should respect excerpt character limit', async () => {
-    const { getByRole, updateStory } = setupPanel();
-    const input = getByRole('textbox', { name: 'Story Description' });
+  it('should respect excerpt character limit', () => {
+    const { getByRole } = setupPanel();
+    const input = getByRole('textbox', { name: 'Excerpt' });
 
-    const bigExcerpt = ''.padStart(EXCERPT_MAX_LENGTH + 10, '1');
-
-    fireEvent.change(input, {
-      target: { value: bigExcerpt },
-    });
-
-    await waitFor(() =>
-      expect(updateStory).toHaveBeenCalledWith({
-        properties: {
-          excerpt: bigExcerpt.slice(0, EXCERPT_MAX_LENGTH),
-        },
-      })
-    );
-
-    fireEvent.change(input, {
-      target: { value: 'This is the excerpt.' },
-    });
-
-    await waitFor(() =>
-      expect(updateStory).toHaveBeenCalledWith({
-        properties: {
-          excerpt: 'This is the excerpt.',
-        },
-      })
-    );
+    expect(input.maxLength).toBe(EXCERPT_MAX_LENGTH);
   });
 });
