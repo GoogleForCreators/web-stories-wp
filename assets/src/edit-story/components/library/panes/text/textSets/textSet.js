@@ -26,7 +26,7 @@ import { useCallback, forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../../../design-system';
+import { ThemeGlobals, themeHelpers } from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
@@ -49,9 +49,12 @@ const TextSetItem = styled.div`
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  cursor: default;
+  cursor: pointer;
+  transition: background-color 0.3s;
 
-  &:hover {
+  &:hover,
+  &:focus,
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
     background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryHover};
   }
