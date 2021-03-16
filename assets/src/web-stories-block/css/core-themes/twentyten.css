@@ -1,0 +1,11 @@
+.web-stories-theme-header-section .web-stories-list {
+  max-width: 940px;
+  margin: 0 auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: white;
+}
+
+.has-web-stories #wrapper {
+  margin-top: 0;
+}

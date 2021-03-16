@@ -1,0 +1,37 @@
+.web-stories-theme-header-section .web-stories-list {
+  background: #000;
+  border-bottom: none;
+}
+
+.web-stories-theme-header-section
+  .web-stories-list
+  .web-stories-list__story-content-overlay {
+  color: #fff;
+}
+
+@media screen and (min-width: 783px) {
+  .has-web-stories .site-main {
+    margin-top: 0;
+  }
+}
+
+@media screen and (min-width: 1008px) {
+  .web-stories-theme-header-section .web-stories-list {
+    z-index: 1;
+    width: 100%;
+    max-width: 1260px;
+    padding-bottom: 22px;
+    padding-top: 64px;
+  }
+
+  .web-stories-theme-header-section
+    .web-stories-list.is-carousel.has-archive-link {
+    padding-top: 92px;
+  }
+}
+
+.web-stories-list.is-carousel .amp-carousel-button,
+.web-stories-list.is-carousel .glider-next,
+.web-stories-list.is-carousel .glider-prev {
+  z-index: 3; /* .site-header has 4 */
+}
