@@ -23,19 +23,21 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Placement } from './constants';
+import { Placement } from '../../components/snackbar/constants';
 import Context from './context';
-import { Snackbar } from './';
 
 function SnackbarProvider({ children, placement = 'bottom' }) {
   const [notifications, setNotifications] = useState([]);
 
-  const remove = useCallback((notification) => {
-    setNotifications((currentNotifications) => {
-      return currentNotifications.filter(
-        (item) => item.key !== notification.key
-      );
-    });
+  const remove = useCallback((toRemove) => {
+    setNotifications((currentNotifications) =>
+      currentNotifications.filter((item) => {
+        if (Array.isArray(toRemove)) {
+          return !toRemove.find(({ key }) => key === item.key);
+        }
+        return item.key !== toRemove.key;
+      })
+    );
   }, []);
 
   const create = useCallback((notification) => {
@@ -59,20 +61,14 @@ function SnackbarProvider({ children, placement = 'bottom' }) {
     () => ({
       showSnackbar: create,
       clearSnackbar: clear,
+      removeSnack: remove,
+      currentSnacks: notifications,
+      placement,
     }),
-    [create, clear]
+    [create, clear, remove, notifications, placement]
   );
 
-  return (
-    <Context.Provider value={state}>
-      <Snackbar.Container
-        onRemove={remove}
-        notifications={notifications}
-        placement={placement}
-      />
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 SnackbarProvider.propTypes = {

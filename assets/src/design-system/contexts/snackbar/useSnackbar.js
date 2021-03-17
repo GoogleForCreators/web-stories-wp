@@ -17,10 +17,9 @@
 /**
  * Internal dependencies
  */
-import { SnackbarContainer as Container } from './snackbarContainer';
-import { SnackbarMessage as Message } from './snackbarMessage';
-import { SnackbarNotification, Placement } from './constants';
+import { identity, useContextSelector } from '../..';
+import Context from './context';
 
-const Snackbar = { Container, Message };
-
-export { Snackbar, SnackbarNotification, Placement };
+export function useSnackbar(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}

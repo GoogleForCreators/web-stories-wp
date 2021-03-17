@@ -17,6 +17,6 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../design-system/utils/context';
+import { createContext } from '../../utils/context';
 
 export default createContext({});

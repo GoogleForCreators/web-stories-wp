@@ -23,9 +23,9 @@ import { act, renderHook } from '@testing-library/react-hooks';
  */
 import ConfigContext from '../../../app/config/context';
 import useMediaPicker from '../useMediaPicker';
-import SnackbarContext from '../../../../design-system/components/snackbar/context';
+import SnackbarContext from '../../../../design-system/contexts/snackbar/context';
 
-jest.mock('../../../../design-system/components/snackbar/useSnackbar', () => ({
+jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
   useSnackbar: () => {
     return {
       showSnackbar: jest.fn(),

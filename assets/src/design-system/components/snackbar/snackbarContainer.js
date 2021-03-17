@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -69,27 +69,25 @@ StyledContainer.defaultProps = {
 
 const ChildContainer = styled.div`
   &.react-snackbar-alert__snackbar-container-enter {
+    max-height: 0px;
     opacity: 0;
-    transform: scaleY(1);
+    transition: all 300ms ease-out;
   }
 
   &.react-snackbar-alert__snackbar-container-enter-active {
     opacity: 1;
-    transform: scaleY(1);
-    transition: 300ms ease-out;
-    transition-property: opacity, transform;
+    max-height: 100px;
+    transition: all 300ms ease-out;
   }
 
   &.react-snackbar-alert__snackbar-container-exit {
     opacity: 1;
-    transform: scaleY(1);
+    transition: all 300ms ease-out;
   }
 
   &.react-snackbar-alert__snackbar-container-exit-active {
     opacity: 0;
-    transform: scaleY(0.1);
-    transition: 300ms ease-out;
-    transition-property: opacity, transform;
+    transition: all 300ms ease-out;
   }
 `;
 
@@ -98,6 +96,7 @@ export const SnackbarContainer = ({
   notifications,
   onRemove,
   placement,
+  max = 10,
 }) => {
   const orderedNotifications =
     placement.indexOf('top') === 0
@@ -112,19 +111,26 @@ export const SnackbarContainer = ({
     [onRemove]
   );
 
+  useEffect(() => {
+    if (typeof max === 'number' && notifications.length > max) {
+      setTimeout(() => {
+        onRemove(notifications.slice(0, notifications.length - max));
+      }, 300);
+    }
+  }, [max, notifications, onRemove]);
+
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
         {orderedNotifications.map((notification) => (
           <CSSTransition
             in
-            appear
             key={notification.key}
             timeout={300}
             unmountOnExit
             classNames="react-snackbar-alert__snackbar-container"
           >
-            <ChildContainer>
+            <ChildContainer placement={placement}>
               <Component
                 aria-label={notification.message}
                 placement={placement}
@@ -150,4 +156,5 @@ SnackbarContainer.propTypes = {
   notifications: PropTypes.arrayOf(SnackbarNotification),
   onRemove: PropTypes.func.isRequired,
   placement: Placement.isRequired,
+  max: PropTypes.number,
 };

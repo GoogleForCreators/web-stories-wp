@@ -35,12 +35,9 @@ jest.mock('../api', () => ({
 }));
 
 const mockShowSnackbar = jest.fn();
-jest.mock(
-  '../../../../../design-system/components/snackbar/useSnackbar',
-  () => ({
-    useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
-  })
-);
+jest.mock('../../../../../design-system/contexts/snackbar/useSnackbar', () => ({
+  useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
+}));
 
 describe('useFetchMediaEffect', () => {
   let fetchMediaStart;

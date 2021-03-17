@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { identity, useContextSelector } from '../../';
-import Context from './context';
-
-export function useSnackbar(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
+export { default as SnackbarProvider } from './snackbar/snackbarProvider';
+export { useSnackbar } from './snackbar/useSnackbar';

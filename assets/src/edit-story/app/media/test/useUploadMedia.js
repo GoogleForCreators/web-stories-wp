@@ -61,7 +61,7 @@ jest.mock('../utils/useMediaUploadQueue', () => ({
 
 const mockShowSnackbar = jest.fn();
 
-jest.mock('../../../../design-system/components/snackbar/useSnackbar', () => ({
+jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
   useSnackbar: jest.fn(() => ({
     showSnackbar: mockShowSnackbar,
   })),
