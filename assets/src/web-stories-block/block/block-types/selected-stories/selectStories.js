@@ -107,9 +107,7 @@ const SearchStoryInner = styled.div`
   grid-column: 2;
 `;
 
-const DropdownContainer = styled.div`
-  margin: auto 8px;
-`;
+const DropdownContainer = styled.div``;
 
 // Overrides WP input styles with some increased specificity.
 const StyledSearch = styled(Search)(
