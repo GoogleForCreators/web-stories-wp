@@ -36,6 +36,12 @@ function renderLinkPanel(selectedElements) {
       hasUploadMediaAction: true,
     },
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
   };
 
   const storyContextValue = {
