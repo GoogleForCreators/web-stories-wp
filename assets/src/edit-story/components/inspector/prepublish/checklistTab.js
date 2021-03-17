@@ -16,8 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, Fragment } from 'react';
-import styled from 'styled-components';
+import { useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
@@ -25,145 +24,21 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { SimplePanel } from '../../panels/panel';
-import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
-import { Label } from '../../form';
 import { useHighlights } from '../../../app/highlights';
-
-const MAX_NUMBER_FOR_BADGE = 99;
-
-const NumberBadge = styled.span`
-  display: inline-flex;
-  height: 20px;
-  width: 20px;
-  line-height: 20px;
-  justify-content: center;
-  margin-left: 14px;
-  border-radius: 50%;
-  font-size: ${({ number }) =>
-    number > MAX_NUMBER_FOR_BADGE ? '10px' : '12px'};
-  &::after {
-    content: ${({ number }) => `"${annotateNumber(number)}"`};
-  }
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
-  background-color: ${({ theme, error }) =>
-    error
-      ? theme.DEPRECATED_THEME.colors.fg.negative
-      : theme.DEPRECATED_THEME.colors.fg.warning};
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 200px;
-  max-width: calc(100% - 10px);
-`;
-
-const PanelTitle = styled.span`
-  color: ${({ theme, error }) =>
-    error
-      ? theme.DEPRECATED_THEME.colors.fg.negative
-      : theme.DEPRECATED_THEME.colors.fg.warning};
-`;
-
-const Row = styled.button`
-  border: none;
-  background: transparent;
-  text-align: left;
-  padding: 0;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  line-height: 24px;
-  &:not(:first-child) {
-    margin-top: 9px;
-  }
-  margin-bottom: 16px;
-  margin-left: ${({ pageGroup }) => (pageGroup ? '16px' : '0')};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  width: calc(100% - 10px);
-  max-width: 210px;
-  &:focus {
-    outline: 2px solid
-      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
-    outline-offset: 5px;
-  }
-`;
-
-const Underline = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-`;
-
-const HelperText = styled.span`
-  display: block;
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
-`;
-
-const PageIndicator = styled(Label)`
-  &:not(:first-child) {
-    padding-top: 9px;
-  }
-  margin-bottom: 8px;
-  margin-left: 16px;
-  display: flex;
-  align-items: center;
-  svg {
-    height: 14px;
-    width: 9px;
-    margin-right: 6px;
-  }
-`;
-
-const EmptyLayout = styled.div`
-  margin-top: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Checkmark = styled(CheckmarkIcon)`
-  margin-bottom: 16px;
-  height: 64px;
-  width: 64px;
-  padding: 8px 15px 5px 17px;
-  border-radius: 50%;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.positive};
-  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.positive};
-  overflow: visible;
-`;
-
-const EmptyHeading = styled.h1`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  margin: 0;
-`;
-
-const EmptyParagraph = styled.p`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
-  line-height: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.description.lineHeight};
-  margin: 0;
-`;
-
-const VisuallyHidden = styled.span`
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
-`;
-
-function annotateNumber(number) {
-  if (number <= MAX_NUMBER_FOR_BADGE) {
-    return number;
-  }
-  return `${MAX_NUMBER_FOR_BADGE}+`;
-}
+import { Link, THEME_CONSTANTS } from '../../../../design-system';
+import EmptyChecklist from './emptyChecklist';
+import {
+  PageIndicator,
+  IssueDescription,
+  IssueTitle,
+  PageGroup,
+  Row,
+  PanelTitle,
+  TitleWrapper,
+  NumberBadge,
+} from './styles';
+import { TEXT } from './constants';
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
@@ -250,17 +125,18 @@ const ChecklistTab = (props) => {
     (args) => {
       const { id, message, help, pageGroup } = args;
       const onPrepublish = getOnPrepublishSelect(args);
-      const accessibleText = __('Select offending element', 'web-stories');
+      const accessibleText = TEXT.ACCESSIBLE_LINK_TITLE;
       return (
         <Row {...onPrepublish} tabIndex={0} key={id} pageGroup={pageGroup}>
-          {onPrepublish.onClick ? (
-            <Underline title={accessibleText}>{message}</Underline>
-          ) : (
-            message
-          )}
-          <HelperText>{help}</HelperText>
+          <IssueTitle>{message}</IssueTitle>
+          <IssueDescription>{help}</IssueDescription>
           {onPrepublish.onClick && (
-            <VisuallyHidden>{accessibleText}</VisuallyHidden>
+            <Link
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              title={accessibleText}
+            >
+              {TEXT.DISPLAY_LINK}
+            </Link>
           )}
         </Row>
       );
@@ -272,7 +148,7 @@ const ChecklistTab = (props) => {
     (entry) => {
       const [pageNum, messages] = entry;
       return (
-        <Fragment key={`guidance-page-group-${pageNum}`}>
+        <PageGroup key={`guidance-page-group-${pageNum}`}>
           <PageIndicator>
             {sprintf(
               /* translators: %s: page number. */
@@ -283,7 +159,7 @@ const ChecklistTab = (props) => {
           {messages.map((message) =>
             renderRow({ ...message, pageGroup: true })
           )}
-        </Fragment>
+        </PageGroup>
       );
     },
     [renderRow]
@@ -299,13 +175,7 @@ const ChecklistTab = (props) => {
     Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
 
   if (!showHighPriorityItems && !showRecommendedItems) {
-    return (
-      <EmptyLayout>
-        <Checkmark />
-        <EmptyHeading>{__('Awesome work!', 'web-stories')}</EmptyHeading>
-        <EmptyParagraph>{__('No Issues Found', 'web-stories')}</EmptyParagraph>
-      </EmptyLayout>
-    );
+    return <EmptyChecklist />;
   }
 
   return (
@@ -316,13 +186,11 @@ const ChecklistTab = (props) => {
           name="checklist"
           title={
             <TitleWrapper>
-              <PanelTitle error>
-                {__('High Priority', 'web-stories')}
-              </PanelTitle>
-              <NumberBadge error number={highPriorityLength} />
+              <PanelTitle>{TEXT.HIGH_PRIORITY_TITLE}</PanelTitle>
+              <NumberBadge number={highPriorityLength} />
             </TitleWrapper>
           }
-          ariaLabel={__('High Priority', 'web-stories')}
+          ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
         >
           {highPriority.map(renderRow)}
           {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
@@ -333,13 +201,11 @@ const ChecklistTab = (props) => {
           name="checklist"
           title={
             <TitleWrapper>
-              <PanelTitle recommended>
-                {__('Recommended', 'web-stories')}
-              </PanelTitle>
-              <NumberBadge recommended number={recommendedLength} />
+              <PanelTitle isRecommended>{TEXT.RECOMMENDED_TITLE}</PanelTitle>
+              <NumberBadge isRecommended number={recommendedLength} />
             </TitleWrapper>
           }
-          ariaLabel={__('Recommended', 'web-stories')}
+          ariaLabel={TEXT.RECOMMENDED_TITLE}
         >
           {recommended.map(renderRow)}
           {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}
