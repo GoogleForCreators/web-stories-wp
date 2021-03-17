@@ -1,0 +1,30 @@
+.web-stories-theme-header-section .web-stories-list {
+  max-width: 68.571428571rem;
+  margin: 0 auto;
+  padding-right: 1.714285714rem;
+  padding-left: 1.714285714rem;
+}
+
+.web-stories-theme-header-section
+  .web-stories-list.is-carousel.has-archive-link {
+  padding-top: 52px;
+  background: white;
+}
+
+@media screen and (min-width: 600px) {
+  .web-stories-theme-header-section .web-stories-list {
+    max-width: 68.571428571rem;
+    box-shadow: 0 -10px 6px rgb(100 100 100 / 30%);
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .web-stories-theme-header-section .web-stories-list {
+    padding-right: 2.857142857rem;
+    padding-left: 2.857142857rem;
+  }
+
+  .has-web-stories .site {
+    margin-top: 0;
+  }
+}

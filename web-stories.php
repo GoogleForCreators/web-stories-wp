@@ -116,7 +116,7 @@ function web_stories_get_compat_instance() {
 		array(
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
-			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-block.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
 		)

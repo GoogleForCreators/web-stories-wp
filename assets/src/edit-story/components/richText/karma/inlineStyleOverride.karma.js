@@ -192,6 +192,7 @@ describe('Inline style override', () => {
 
         // Open dropdown and select "Black"
         await data.fixture.events.click(fontWeight.select);
+        await data.fixture.events.sleep(300);
         await data.fixture.events.click(fontWeight.option('Black'));
 
         // Wait for focus to return to text

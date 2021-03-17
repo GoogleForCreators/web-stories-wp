@@ -18,6 +18,7 @@
     "header",
     "jsdoc",
     "jsx-a11y",
+    "markdown",
     "react",
     "react-hooks"
   ],
@@ -412,11 +413,20 @@
         "*.md",
         "**/*.md"
       ],
-      "plugins": [
-        "markdown"
+      "processor": "markdown/markdown"
+    },
+    {
+      "files": [
+        "**/*.md/*.js"
       ],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "impliedStrict": true
+        }
+      },
       "rules": {
         "@wordpress/dependency-group": "off",
+        "no-console": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off",
@@ -434,6 +444,7 @@
       "excludedFiles": [
         "packages/activation-notice/**/*.js",
         "packages/i18n/**/*.js",
+        "packages/tinymce-button/**/*.js"
       ],
       "rules":{
         "no-restricted-imports": [
@@ -447,6 +458,14 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "packages/tinymce-button/src/**/*.js"
+      ],
+      "globals": {
+        "tinymce": "readonly"
       }
     }
   ]

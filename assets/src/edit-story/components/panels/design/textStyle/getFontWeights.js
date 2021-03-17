@@ -39,14 +39,14 @@ const fontWeightNames = {
  * @return {Array<Object<{name: string, value: string}>>}} Font weights list.
  */
 function getFontWeights(font) {
-  const defaultFontWeights = [{ name: fontWeightNames[400], value: '400' }];
+  const defaultFontWeights = [{ label: fontWeightNames[400], value: '400' }];
 
   if (!font?.weights) {
     return defaultFontWeights;
   }
 
   return font.weights.map((weight) => ({
-    name: fontWeightNames[weight],
+    label: fontWeightNames[weight],
     value: weight.toString(),
   }));
 }

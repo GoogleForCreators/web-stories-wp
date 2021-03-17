@@ -27,7 +27,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
+import {
+  Icons,
+  themeHelpers,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../design-system';
 import Popup from '../../popup';
 import OptionsContainer from './container';
 import List from './list';
@@ -51,11 +56,18 @@ const DropDownSelect = styled.button`
   background-color: ${({ theme, lightMode }) =>
     lightMode
       ? rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)
-      : rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
-  border-radius: 4px;
-  padding: 2px 0 2px 6px;
-  cursor: pointer;
+      : 'transparent'};
   border: 0;
+  border-radius: 4px;
+  ${({ theme, lightMode }) =>
+    !lightMode &&
+    `
+    border: 1px solid ${theme.colors.border.defaultNormal};
+  `}
+  padding: 2px 0 2px 12px;
+  cursor: pointer;
+
+  ${themeHelpers.focusableOutlineCSS};
 
   ${({ disabled }) =>
     disabled &&
@@ -64,25 +76,23 @@ const DropDownSelect = styled.button`
       opacity: 0.3;
     `}
 
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border.defaultHover};
+  }
+
   svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: auto;
     color: ${({ theme, lightMode }) =>
       lightMode
         ? theme.DEPRECATED_THEME.colors.fg.white
-        : rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
+        : theme.colors.fg.secondary};
   }
 `;
 
-const DropDownTitle = styled.span`
+const DropDownTitle = styled(Text)`
   user-select: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 /**
@@ -219,8 +229,13 @@ function DropDown({
         lightMode={lightMode}
         {...rest}
       >
-        <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
-        <DropDownIcon />
+        <DropDownTitle
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {selectedOption?.name || placeholder}
+        </DropDownTitle>
+        <Icons.ChevronDownSmall />
       </DropDownSelect>
       {isOpen && !disabled && isInline && list}
       {!disabled && !isInline && (
