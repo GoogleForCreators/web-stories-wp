@@ -68,7 +68,7 @@ export const TitleWrapper = styled.span`
 
 export const PanelTitle = styled(Headline).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
-  as: 'h3',
+  as: 'span',
 })`
   color: ${({ isRecommended, theme }) =>
     isRecommended ? theme.colors.fg.linkNormal : theme.colors.fg.negative};
@@ -91,7 +91,7 @@ export const PageGroup = styled.div`
 `;
 
 export const IssueTitle = styled(Headline).attrs({
-  as: 'h4',
+  as: 'h3',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   color: ${({ theme }) => theme.colors.standard.white};
