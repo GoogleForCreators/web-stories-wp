@@ -77,7 +77,7 @@ describe('SlugPanel', () => {
     expect(url).toBeInTheDocument();
   });
 
-  it('should allow now allow trailing spaces while typing or onblur', async () => {
+  it('should not allow trailing spaces while typing and onblur', async () => {
     const { getByRole, updateStory } = setupPanel();
     const input = getByRole('textbox', { name: 'URL slug' });
 

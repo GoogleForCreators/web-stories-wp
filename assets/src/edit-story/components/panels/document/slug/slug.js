@@ -33,6 +33,7 @@ import {
   Input,
   Link,
   ThemeGlobals,
+  themeHelpers,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 
@@ -59,6 +60,14 @@ const PermalinkRow = styled(Row)`
 
 const LinkContainer = styled.div`
   margin-bottom: 16px;
+
+  ${Link} {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
 function SlugPanel() {
