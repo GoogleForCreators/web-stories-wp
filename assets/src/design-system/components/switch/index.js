@@ -35,7 +35,6 @@ const VisuallyHiddenRadioGroupLabel = styled.h4`
 `;
 
 const SwitchContainer = styled.div`
-  box-sizing: border-box;
   position: relative;
   height: ${SWITCH_HEIGHT}px;
   display: flex;
@@ -64,7 +63,6 @@ const HiddenRadioButton = styled.input.attrs({ type: 'radio' })`
 `;
 
 const RadioButtonLabel = styled(Text).attrs({ forwardedAs: 'label' })`
-  box-sizing: border-box;
   flex: 1;
   width: 50%;
   padding: 0px 6px;
@@ -92,7 +90,6 @@ const RadioButtonLabel = styled(Text).attrs({ forwardedAs: 'label' })`
 `;
 
 const SlidingButton = styled.span`
-  box-sizing: border-box;
   position: absolute;
   display: block;
   top: 0;
