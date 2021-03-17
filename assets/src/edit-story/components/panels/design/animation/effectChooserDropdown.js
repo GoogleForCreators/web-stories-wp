@@ -26,11 +26,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Dropdown as DropdownIcon } from '../../../../icons';
 import { isKeyboardUser } from '../../../../utils/keyboardOnlyOutline';
-import { DropDownSelect, DropDownTitle } from '../../../form/dropDown';
 import Popup, { Placement } from '../../../popup';
 import { themeHelpers } from '../../../../../design-system';
+import DropDownSelect from '../../../../../design-system/components/dropDown/select';
 import EffectChooser from './effectChooser';
 
 const Container = styled.div`
@@ -78,15 +77,11 @@ export default function EffectChooserDropdown({
   return (
     <>
       <DropDownSelect
+        activeItemLabel={selectedEffectTitle || __('None', 'web-stories')}
         aria-label={__('Animation: Effect Chooser', 'web-stories')}
         ref={selectRef}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <DropDownTitle>
-          {selectedEffectTitle || __('Select Animation', 'web-stories')}
-        </DropDownTitle>
-        <DropdownIcon />
-      </DropDownSelect>
+        onSelectClick={() => setIsOpen(!isOpen)}
+      />
       <Popup
         anchor={selectRef}
         isOpen={isOpen}

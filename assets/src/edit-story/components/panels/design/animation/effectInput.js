@@ -29,8 +29,9 @@ import styled from 'styled-components';
 import { FIELD_TYPES } from '../../../../../animation';
 import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../../animation/types';
-import { DropDown, BoxedNumeric } from '../../../form';
+import { DropDown } from '../../../form';
 import RangeInput from '../../../rangeInput';
+import { NumericInput } from '../../../../../design-system/components';
 import { DirectionRadioInput } from './directionRadioInput';
 
 const RangeContainer = styled.div`
@@ -104,16 +105,14 @@ function EffectInput({
       );
     default:
       return (
-        <BoxedNumeric
+        <NumericInput
           aria-label={effectProps[field].label}
           suffix={effectProps[field].label}
-          symbol={effectProps[field].unit}
+          unit={effectProps[field].unit}
           value={valueForField}
           min={0}
           onChange={onChange}
-          canBeNegative={false}
-          float={effectProps[field].type === FIELD_TYPES.FLOAT}
-          flexBasis={'100%'}
+          isFloat={effectProps[field].type === FIELD_TYPES.FLOAT}
         />
       );
   }
