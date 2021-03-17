@@ -44,9 +44,17 @@ function PostLock() {
     postLock: { interval: postLockInterval, showLockedDialog },
   } = useConfig();
 
-  const { previewLink } = useStory(({ state: { story: { previewLink } } }) => ({
-    previewLink,
-  }));
+  const { previewLink, lockUser } = useStory(
+    ({
+      state: {
+        story: { previewLink, lockUser },
+      },
+    }) => ({
+      previewLink,
+      lockUser,
+    })
+  );
+
   const { enablePostLocking } = useFeatures();
   const [showDialog, setShowDialog] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(true);
@@ -70,16 +78,16 @@ function PostLock() {
       getStoryLockById(storyId)
         .then(({ locked, nonce: newNonce, _embedded }) => {
           const author = _embedded?.author?.[0] || {};
-          const lockUser = author
+          const lockAuthor = author
             ? {
                 id: author.id,
                 name: author.name,
                 avatar: author.avatar_urls?.['48'],
               }
             : null;
-          if (locked && lockUser.id !== currentUser.id) {
+          if (locked && lockAuthor.id !== currentUser.id) {
             setShowDialog(true);
-            setUser(lockUser);
+            setUser(lockAuthor);
           } else {
             setStoryLockById(storyId);
           }
@@ -106,6 +114,21 @@ function PostLock() {
   useEffect(() => {
     cachedDoGetStoryLock.current = doGetStoryLock;
   }, [doGetStoryLock, currentUserLoaded]);
+
+  useEffect(() => {
+    if (enablePostLocking && showLockedDialog && currentUserLoaded) {
+      if (lockUser && lockUser?.id !== currentUser.id) {
+        setShowDialog(true);
+        setUser(lockUser);
+      }
+    }
+  }, [
+    lockUser,
+    currentUser,
+    currentUserLoaded,
+    enablePostLocking,
+    showLockedDialog,
+  ]);
 
   // Register an event on user navigating away from current tab to release / delete lock.
   useEffect(() => {
