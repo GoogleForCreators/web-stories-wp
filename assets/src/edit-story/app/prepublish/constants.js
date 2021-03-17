@@ -342,7 +342,7 @@ export const MESSAGES = {
   },
   DISTRIBUTION: {
     MISSING_DESCRIPTION: {
-      MAIN_TEXT: __('Add story description', 'web-stories'),
+      MAIN_TEXT: __('Add excerpt', 'web-stories'),
       HELPER_TEXT: (
         <DashedList>
           <li>
