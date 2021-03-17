@@ -26,7 +26,11 @@ import { useCallback, forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { ThemeGlobals, themeHelpers } from '../../../../../../design-system';
+import {
+  BUTTON_TRANSITION_TIMING,
+  ThemeGlobals,
+  themeHelpers,
+} from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
@@ -50,7 +54,7 @@ const TextSetItem = styled.div`
     theme.colors.interactiveBg.secondaryNormal};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
 
   &:hover,
   &:focus,
