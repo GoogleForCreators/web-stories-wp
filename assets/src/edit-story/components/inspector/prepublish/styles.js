@@ -101,7 +101,8 @@ export const IssueDescription = styled.div`
   padding: 4px 0;
 
   ul {
-    list-style-type: none;
+    list-style-type: '•';
+    list-style-position: inside;
     margin: 0;
   }
   li {
@@ -117,6 +118,10 @@ export const IssueDescription = styled.div`
     margin: 0;
     &:last-of-type {
       padding-bottom: 0;
+    }
+    &:before {
+      content: '';
+      padding-right: 4px;
     }
   }
 `;
