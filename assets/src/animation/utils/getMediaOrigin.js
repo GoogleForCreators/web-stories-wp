@@ -25,7 +25,6 @@ import { lerp } from '../utils';
  * fill the frame
  *
  * @param {Object} offsets - story media element offsets
- * @param offsets
  * @return {Object} object containing horizontal and vertical transform origin percentages
  */
 export function getMediaOrigin(
