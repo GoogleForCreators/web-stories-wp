@@ -63,6 +63,7 @@ NumberBadge.propTypes = {
 export const TitleWrapper = styled.span`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `;
 
 export const PanelTitle = styled(Headline).attrs({

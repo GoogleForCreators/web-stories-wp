@@ -59,6 +59,8 @@ const Header = styled.h2`
 const Heading = styled(Headline)`
   color: inherit;
   line-height: 32px;
+  width: 100%;
+  display: flex;
 `;
 
 const HeaderActions = styled.div`
@@ -81,6 +83,7 @@ const Collapse = styled.button`
   color: ${({ theme, isCollapsed }) =>
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   height: 32px;
+  width: 100%;
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   cursor: pointer;
