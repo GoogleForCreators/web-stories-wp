@@ -77,7 +77,7 @@ describe('SlugPanel', () => {
     expect(url).toBeInTheDocument();
   });
 
-  it('should allow trailing spaces while typing but not onblur', async () => {
+  it('should allow now allow trailing spaces while typing or onblur', async () => {
     const { getByRole, updateStory } = setupPanel();
     const input = getByRole('textbox', { name: 'URL slug' });
 
@@ -85,16 +85,16 @@ describe('SlugPanel', () => {
       target: { value: 'name with spaces ' },
     });
 
-    expect(input).toHaveValue('name with spaces ');
+    expect(input).toHaveValue('name-with-spaces-');
 
     fireEvent.blur(input, {
-      target: { value: 'name with spaces ' },
+      target: { value: 'different name with spaces ' },
     });
 
     await waitFor(() =>
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
-          slug: 'name-with-spaces',
+          slug: 'different-name-with-spaces',
         },
       })
     );

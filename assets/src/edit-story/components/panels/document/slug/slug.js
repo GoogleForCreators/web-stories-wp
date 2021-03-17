@@ -46,7 +46,7 @@ export const MIN_MAX = {
 const PermalinkRow = styled(Row)`
   margin-bottom: 12px;
 
-  * input {
+  input {
     color: ${({ theme }) => theme.colors.fg.tertiary};
 
     :active,
@@ -78,19 +78,22 @@ function SlugPanel() {
   }, [savedSlug]);
 
   const updateSlug = useCallback(
-    (value, isEditing) => {
+    (value) => {
       const newSlug = value.slice(0, MIN_MAX.PERMALINK.MAX);
 
       updateStory({
-        properties: { slug: cleanForSlug(newSlug, isEditing) },
+        properties: { slug: cleanForSlug(newSlug) },
       });
     },
     [updateStory]
   );
 
-  const handleChange = useCallback((evt) => setSlug(evt.target.value), []);
+  const handleChange = useCallback(
+    (evt) => setSlug(cleanForSlug(evt.target.value, true)),
+    []
+  );
 
-  const handleBlur = useCallback((evt) => updateSlug(evt.target.value, false), [
+  const handleBlur = useCallback((evt) => updateSlug(evt.target.value), [
     updateSlug,
   ]);
 
