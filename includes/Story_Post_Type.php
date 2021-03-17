@@ -514,6 +514,10 @@ class Story_Post_Type {
 			}
 		}
 
+		if ( $story_id ) {
+			$this->setup_lock( $story_id );
+		}
+
 		// Media settings.
 		$max_upload_size = wp_max_upload_size();
 		if ( ! $max_upload_size ) {
@@ -595,6 +599,31 @@ class Story_Post_Type {
 		 * @param array $settings Array of settings passed to web stories editor.
 		 */
 		return apply_filters( 'web_stories_editor_settings', $settings );
+	}
+
+	/**
+	 * Setup up post lock.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param int $story_id Post id of story.
+	 *
+	 * @return void
+	 */
+	protected function setup_lock( $story_id ) {
+		if ( current_user_can( 'edit_post', $story_id ) ) {
+			// Make sure these functions are loaded.
+			if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/post.php';
+			}
+
+			// Check current lock.
+			$lock_user_id = wp_check_post_lock( $story_id );
+			if ( ! $lock_user_id ) {
+				// If no lock set, create new lock.
+				wp_set_post_lock( $story_id );
+			}
+		}
 	}
 
 	/**
