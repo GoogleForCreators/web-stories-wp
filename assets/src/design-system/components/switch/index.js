@@ -124,7 +124,7 @@ const SlidingButton = styled.span`
  */
 export const Switch = forwardRef(function (
   {
-    className = '',
+    className,
     disabled,
     groupLabel,
     id,
