@@ -23,6 +23,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+use DG\BypassFinals;
+
+BypassFinals::enable();
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 
