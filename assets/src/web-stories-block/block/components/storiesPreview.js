@@ -126,7 +126,12 @@ function StoriesPreview(props) {
 
     // Force resize to ensure Glider.js has the correct clientWidth for the carouselContainer.
     instance.resize();
-  }, [stories.length]);
+
+    // Force correct trackWidth, especially when switching view types.
+    const trackWidth = itemWidth * stories.length;
+    instance.trackWidth = trackWidth;
+    instance.track.style.width = `${trackWidth}px`;
+  }, [stories.length, viewType, circleSize]);
 
   return (
     <div
