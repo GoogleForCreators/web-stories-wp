@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
+export { default as SnackbarContext } from './snackbar/context';
 export { default as SnackbarProvider } from './snackbar/snackbarProvider';
 export { useSnackbar } from './snackbar/useSnackbar';

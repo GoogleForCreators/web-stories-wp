@@ -26,7 +26,7 @@ import { object } from '@storybook/addon-knobs';
 import MediaEditDialog from '../mediaEditDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import SnackbarContext from '../../../../../../../design-system/components/snackbar/context';
+import { SnackbarContext } from '../../../../../../../design-system';
 import testImage from './test-image.jpg';
 
 export default {

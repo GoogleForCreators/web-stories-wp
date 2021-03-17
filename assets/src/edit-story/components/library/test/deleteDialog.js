@@ -26,7 +26,7 @@ import DeleteDialog from '../panes/media/local/deleteDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
-import SnackbarContext from '../../../../design-system/contexts/snackbar/context';
+import { SnackbarContext } from '../../../../design-system';
 
 const deleteMedia = jest.fn();
 const deleteMediaElement = jest.fn();
