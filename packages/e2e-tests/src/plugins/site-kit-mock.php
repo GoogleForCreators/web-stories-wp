@@ -23,20 +23,20 @@ define( 'GOOGLESITEKIT_VERSION', '1.0.0' );
  */
 function print_amp_gtag() {
 	$property_id  = 'XXX-YYY';
-	$gtag_amp_opt = array(
-		'vars'            => array(
+	$gtag_amp_opt = [
+		'vars'            => [
 			'gtag_id' => $property_id,
-			'config'  => array(
-				$property_id => array(
+			'config'  => [
+				$property_id => [
 					'groups' => 'default',
-					'linker' => array(
-						'domains' => array( home_url() ),
-					),
-				),
-			),
-		),
+					'linker' => [
+						'domains' => [ home_url() ],
+					],
+				],
+			],
+		],
 		'optoutElementId' => '__gaOptOutExtension',
-	);
+	];
 
 	/**
 	 * Filters the gtag configuration options for the amp-analytics tag.
@@ -112,7 +112,7 @@ function get_tag_amp_block_on_consent_attribute() {
 	 * @param bool|string $blocked Whether or not the tag requires user consent to load. Alternatively, this can also be one of
 	 *                             the special string values '_till_responded', '_till_accepted', or '_auto_reject'. Default: false.
 	 */
-	$block_on_consent = apply_filters( "googlesitekit_analytics_tag_amp_block_on_consent", false );
+	$block_on_consent = apply_filters( 'googlesitekit_analytics_tag_amp_block_on_consent', false );
 
 	if ( in_array( $block_on_consent, get_allowed_amp_block_on_consent_values(), true ) ) {
 		return sprintf( ' data-block-on-consent="%s"', $block_on_consent );
@@ -127,9 +127,9 @@ function get_tag_amp_block_on_consent_attribute() {
 
 
 function get_allowed_amp_block_on_consent_values() {
-	return array(
+	return [
 		'_till_responded',
 		'_till_accepted',
 		'_auto_reject',
-	);
+	];
 }
