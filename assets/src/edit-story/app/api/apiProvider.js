@@ -56,7 +56,7 @@ function APIProvider({ children }) {
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
-        _embed: 'wp:featuredmedia,author',
+        _embed: 'wp:featuredmedia,wp:lockuser,author',
         web_stories_demo: false,
       });
 
