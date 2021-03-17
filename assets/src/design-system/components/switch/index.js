@@ -29,6 +29,10 @@ import { Text } from '../typography';
 import { useKeyDownEffect } from '../keyboard';
 
 const SWITCH_HEIGHT = 32;
+const VALUES = {
+  ON: 'ON',
+  OFF: 'OFF',
+};
 
 const VisuallyHiddenRadioGroupLabel = styled.h4`
   ${themeHelpers.visuallyHidden};
@@ -148,7 +152,7 @@ export const Switch = forwardRef(function (
 
   const handleChange = useCallback(
     (evt) => {
-      onChange(evt, evt.target.value === 'true');
+      onChange(evt, evt.target.value === VALUES.ON);
     },
     [onChange]
   );
@@ -168,8 +172,7 @@ export const Switch = forwardRef(function (
   return (
     <SwitchContainer
       ref={radioGroupRef}
-      /* Class should contain "mousetrap" to enable keyboard shortcuts on inputs. */
-      className={'mousetrap ' + className}
+      className={className}
       role="radiogroup"
       aria-labelledby={ids.group}
     >
@@ -188,7 +191,7 @@ export const Switch = forwardRef(function (
           disabled={disabled}
           id={ids.onInput}
           onChange={handleChange}
-          value
+          value={VALUES.ON}
           {...props}
         />
       </RadioButtonLabel>
@@ -203,7 +206,7 @@ export const Switch = forwardRef(function (
           disabled={disabled}
           id={ids.offInput}
           onChange={handleChange}
-          value={false}
+          value={VALUES.OFF}
           {...props}
         />
       </RadioButtonLabel>
