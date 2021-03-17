@@ -34,9 +34,19 @@ import paneId from './paneId';
 
 const SectionContent = styled.div`
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+
+  display: grid;
+  grid-column-gap: 12px;
+  grid-row-gap: 24px;
+  @media screen and (min-width: 1220px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media screen and (min-width: 1100px) and (max-width: 1220px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 function ShapesPane(props) {

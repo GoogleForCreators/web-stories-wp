@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import React, { createRef, useCallback, useMemo, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -36,29 +36,12 @@ import { themeHelpers } from '../../../../../design-system';
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
-const createGrid = ({ columns, columnGap = 12, rowGap = 24, minWidth = 50 }) => css`
-  min-width: ${minWidth}px;
-  width: calc(${100 / columns}% - ${(columnGap * (columns - 1)) / columns}px);
-  margin-top: 0px;
-  margin-left: ${columnGap}px;
-  &:nth-of-type(n + ${columns + 1}) {
-    margin-top: ${rowGap}px;
-  }
-  &:nth-of-type(${columns}n + 1) {
-    margin-left: 0;
-  }
-`;
-
-// Using button directly breaks the DOM nesting for tests.
 const Aspect = styled.button`
   background: transparent;
   outline: none;
   border: 0;
   padding: 0;
-
   position: relative;
-  flex-grow: 0;
-  flex-shrink: 0;
 
   border-radius: ${({ theme }) => theme.borders.radius.small};
   ${({ theme }) =>
@@ -66,16 +49,6 @@ const Aspect = styled.button`
       theme.colors.border.focus,
       theme.colors.bg.secondary
     )};
-
-  @media screen and (min-width: 1220px) {
-    ${createGrid({ columns: 4 })}
-  }
-  @media screen and (min-width: 1100px) and (max-width: 1220px) {
-    ${createGrid({ columns: 3 })}
-  }
-  @media screen and (max-width: 1100px) {
-    ${createGrid({ columns: 2 })}
-  }
 `;
 
 const AspectInner = styled.div`
@@ -94,7 +67,6 @@ const ShapePreviewContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 
   svg {
     display: inline-block;
