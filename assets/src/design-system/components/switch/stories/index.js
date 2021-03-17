@@ -68,10 +68,10 @@ export const _default = () => {
 
   return (
     <>
-      <Headline as="h1">{'Radio'}</Headline>
+      <Headline as="h1">{'Switch'}</Headline>
       <Container>
         <div>
-          <Text>{'Switch'}</Text>
+          <Text>{'Normal'}</Text>
           <Switch
             name="radioOne"
             groupLabel="radio one"
@@ -97,7 +97,7 @@ export const _default = () => {
       <DarkThemeProvider>
         <Container>
           <div>
-            <Text>{'Switch'}</Text>
+            <Text>{'Normal'}</Text>
             <Switch
               name="radioTwo"
               groupLabel="radio two"
