@@ -43,22 +43,21 @@ const SwitchContainer = styled.div`
   align-items: center;
   appearance: none;
   background: ${({ theme }) => theme.colors.divider.secondary};
-  border: none;
   border-radius: 100px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const HiddenRadioButton = styled.input.attrs({ type: 'radio' })`
   position: absolute;
-  height: 0 !important;
-  width: 0 !important;
-  padding: 0 !important;
-  min-width: unset !important;
+  height: 0;
+  width: 0;
+  padding: 0;
+  min-width: unset;
   appearance: none;
-  border: 0 !important;
-  box-shadow: none !important;
-  margin: -1px !important;
-  outline: none !important;
+  border: 0;
+  box-shadow: none;
+  margin: -1px;
+  outline: none;
   overflow: hidden;
 `;
 
