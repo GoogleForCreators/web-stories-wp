@@ -41,10 +41,9 @@ const Container = styled.div`
 
 const CounterText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
-  as: 'span',
+  forwardedAs: 'span',
 })`
   color: ${({ theme }) => theme.colors.fg.tertiary};
-  font-size: 12px;
 `;
 
 const Label = styled(Text)`

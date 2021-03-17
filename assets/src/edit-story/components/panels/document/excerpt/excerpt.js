@@ -49,9 +49,9 @@ function ExcerptPanel() {
   );
 
   const handleTextChange = useCallback(
-    (text) => {
+    (evt) => {
       updateStory({
-        properties: { excerpt: text },
+        properties: { excerpt: evt.target.value },
       });
     },
     [updateStory]
