@@ -66,8 +66,13 @@ const Item = styled.li.attrs({ tabIndex: '0' })`
   line-height: 1;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 
-  &:hover,
-  &:focus {
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.75;
+  }
+
+  &:hover:not([aria-disabled='true']),
+  &:focus:not([aria-disabled='true']) {
     background-color: ${({ theme }) =>
       rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.1)};
     outline: none;
@@ -207,16 +212,20 @@ function DropDownList({
         ref={listRef}
         role={hasMenuRole ? 'menu' : 'listbox'}
       >
-        {options.map(({ name, value: optValue }) => (
-          <Item
-            id={`dropDown-${optValue}`}
-            key={optValue}
-            onClick={(evt) => handleItemClick(optValue, evt)}
-            role={hasMenuRole ? 'menuitem' : 'option'}
-          >
-            {name}
-          </Item>
-        ))}
+        {options.map(({ name, value: optValue, disabled = false }) => {
+          return (
+            <Item
+              id={`dropDown-${optValue}`}
+              key={optValue}
+              disabled={disabled}
+              aria-disabled={disabled}
+              onClick={(evt) => !disabled && handleItemClick(optValue, evt)}
+              role={hasMenuRole ? 'menuitem' : 'option'}
+            >
+              {name}
+            </Item>
+          );
+        })}
       </List>
     </ListContainer>
   );
