@@ -113,11 +113,11 @@ const RadioButtonLabel = styled(Text).attrs({
   white-space: nowrap;
   transition: color 0.15s ease-out;
 
-  ${({ isActive, disabled, theme }) =>
+  ${({ disabled, theme }) =>
     disabled &&
     css`
       cursor: default;
-      color: ${isActive ? theme.colors.fg.disable : theme.colors.fg.secondary};
+      color: ${theme.colors.fg.disable};
     `}
 
   /* add focus styling on the slider when the hidden input is focused */
