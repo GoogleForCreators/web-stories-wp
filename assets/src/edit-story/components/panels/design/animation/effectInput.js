@@ -118,27 +118,6 @@ function EffectInput({
           onMenuItemClick={(evt) => onChange(evt.target.value, true)}
         />
       );
-    case FIELD_TYPES.RANGE:
-      return (
-        <RangeContainer>
-          <Label htmlFor={rangeId}>
-            <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-              {effectProps[field].label}
-            </StyledText>
-          </Label>
-          <RangeInput
-            id={rangeId}
-            aria-label={effectProps[field].label}
-            value={valueForField}
-            handleChange={(value) => onChange(value, true)}
-            minorStep={0.01}
-            majorStep={0.1}
-            min={0}
-            max={1}
-            style={{ width: '100%' }}
-          />
-        </RangeContainer>
-      );
     case FIELD_TYPES.DIRECTION_PICKER:
       return (
         <DirectionRadioInput

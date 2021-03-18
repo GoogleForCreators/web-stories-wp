@@ -140,6 +140,7 @@ const GridItemHalfRow = styled(GridItem)`
 
 const NoEffect = styled(GridItemFullRow)`
   height: 36px;
+  text-transform: none;
 `;
 
 /**
