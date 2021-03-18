@@ -125,8 +125,8 @@ const Grid = styled.div.attrs({ role: 'list' })`
   display: grid;
   justify-content: center;
   gap: 12px 4px;
-  grid-template-columns: repeat(4, 58px);
-  padding: 16px 0px 16px 16px;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 16px 2px 16px 16px;
   position: relative;
 `;
 
