@@ -69,6 +69,7 @@ const SwitchContainer = styled.div`
     disabled
       ? css`
           cursor: default;
+          background: ${theme.colors.divider.tertiary};
 
           ${SlidingButton} {
             background-color: ${theme.colors.interactiveBg.disable};

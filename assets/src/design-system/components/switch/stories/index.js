@@ -39,7 +39,7 @@ const Container = styled.div`
   column-gap: 80px;
 
   padding: 20px 50px;
-  background-color: ${({ theme }) => theme.colors.bg.primary};
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
   border: 1px solid ${({ theme }) => theme.colors.standard.black};
 
   > div {
