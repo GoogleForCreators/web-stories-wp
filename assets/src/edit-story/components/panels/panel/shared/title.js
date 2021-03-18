@@ -38,7 +38,8 @@ import DragHandle from './handle';
 
 // If the header is collapsed, we're leaving 4px less padding to apply that from the content.
 const Header = styled.h2`
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme, isCollapsed }) =>
+    isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   background-color: ${({ isSecondary, theme }) =>
     isSecondary && theme.colors.interactiveBg.secondaryNormal};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
@@ -55,7 +56,7 @@ const Header = styled.h2`
 `;
 
 const Heading = styled(Headline)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: inherit;
   line-height: 32px;
 `;
 
