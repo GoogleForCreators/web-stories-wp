@@ -79,11 +79,14 @@ describe('PageAdvancementPanel', () => {
     const element = getByRole('button', { name: 'Page Advancement' });
     expect(element).toBeInTheDocument();
 
-    const slider = getByRole('slider', { name: 'Default Page Duration' });
-
-    fireEvent.change(slider, {
-      target: { valueAsNumber: 0, value: '0' },
+    const input = getByRole('textbox', {
+      name: 'Default page duration in seconds',
     });
+
+    fireEvent.change(input, {
+      target: { value: '0' },
+    });
+    fireEvent.blur(input);
 
     await waitFor(() =>
       expect(updateStory).toHaveBeenCalledWith({
@@ -94,9 +97,10 @@ describe('PageAdvancementPanel', () => {
     );
 
     updateStory.mockClear();
-    fireEvent.change(slider, {
-      target: { valueAsNumber: 1, value: '1' },
+    fireEvent.change(input, {
+      target: { value: '1' },
     });
+    fireEvent.blur(input);
 
     await waitFor(() => {
       expect(updateStory).toHaveBeenCalledWith({
@@ -107,9 +111,10 @@ describe('PageAdvancementPanel', () => {
       expect(updateStory).toHaveBeenCalledTimes(1);
     });
 
-    fireEvent.change(slider, {
-      target: { valueAsNumber: 21, value: '21' },
+    fireEvent.change(input, {
+      target: { value: '21' },
     });
+    fireEvent.blur(input);
 
     await waitFor(() =>
       expect(updateStory).toHaveBeenCalledWith({
