@@ -17,159 +17,41 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../../../design-system';
+import {
+  Switch as BaseSwitch,
+  SwitchPropTypes,
+  useKeyDownEffect,
+} from '../../../design-system';
 
-const SwitchContainer = styled.div`
-  appearance: none;
-  position: relative;
-  background: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.divider, 0.04)};
-  border-radius: 100px;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
-  padding: 8px 4px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border: none;
-`;
+function Switch({ onChange, value, ...props }) {
+  const switchRef = useRef(null);
 
-// Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
-const RadioButton = styled.input.attrs(({ checked, value, id }) => ({
-  type: 'radio',
-  name: 'switch',
-  className: 'mousetrap',
-  checked,
-  value,
-  id,
-}))`
-  overflow: hidden;
-  min-width: unset !important;
-  width: 0 !important;
-  height: 0 !important;
-  border: 0 !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  outline: none !important;
-  box-shadow: none !important;
-  position: absolute;
-  appearance: none;
-`;
-
-const Label = styled.label`
-  z-index: 1;
-  width: 50%;
-  text-align: center;
-  opacity: 0.86;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  flex: 1;
-  padding: 0px 6px;
-  color: ${({ hasOffset, theme }) =>
-    hasOffset
-      ? theme.colors.bg.primary
-      : theme.DEPRECATED_THEME.colors.bg.divider};
-
-  ${({ disabled }) =>
-    disabled &&
-    `
-    cursor: default;
-    opacity: 0.3;
-  `}
-
-  ${KEYBOARD_USER_SELECTOR} &:focus-within ~ span {
-    background-color: ${({ theme }) =>
-      theme.DEPRECATED_THEME.colors.accent.primary};
-  }
-`;
-
-const SwitchSpan = styled.span`
-  position: absolute;
-  z-index: 0;
-  top: 1px;
-  left: 1px;
-  display: block;
-  width: calc(50% - 3px);
-  height: 28px;
-  border-radius: 100px;
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
-  transition: left 0.15s ease-out;
-
-  ${({ hasOffset }) => hasOffset && `left: calc(50% + 2px);`}
-`;
-
-function Switch({ value, disabled, onChange, onLabel, offLabel }) {
-  const handleChange = useCallback(
-    (checked) => {
-      if (onChange) {
-        onChange(checked);
-      }
+  const handleToggleValue = useCallback(
+    (evt) => {
+      onChange(evt, !value);
     },
-    [onChange]
+    [onChange, value]
   );
-  const ref = useRef();
-  useKeyDownEffect(
-    ref,
-    ['space', 'enter', 'left', 'right'],
-    () => handleChange(!value),
-    [handleChange, value]
-  );
+
+  useKeyDownEffect(switchRef, ['space', 'enter'], handleToggleValue, [
+    handleToggleValue,
+    value,
+  ]);
 
   return (
-    <SwitchContainer ref={ref}>
-      <Label disabled={disabled} hasOffset={Boolean(value)}>
-        {onLabel}
-        <RadioButton
-          disabled={disabled}
-          onChange={() => handleChange(true)}
-          checked={value}
-          value="on"
-        />
-      </Label>
-      <Label disabled={disabled} hasOffset={!value}>
-        {offLabel}
-        <RadioButton
-          disabled={disabled}
-          onChange={() => handleChange(false)}
-          checked={!value}
-          value="off"
-        />
-      </Label>
-      <SwitchSpan hasOffset={!value} />
-    </SwitchContainer>
+    <BaseSwitch ref={switchRef} onChange={onChange} value={value} {...props} />
   );
 }
-
-Switch.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  onLabel: PropTypes.string.isRequired,
-  offLabel: PropTypes.string.isRequired,
-  value: PropTypes.bool,
-  disabled: PropTypes.bool,
-};
-
+Switch.propTypes = SwitchPropTypes;
 Switch.defaultProps = {
-  value: false,
-  disabled: false,
-  onLabel: __('On', 'web-stories'),
   offLabel: __('Off', 'web-stories'),
+  onLabel: __('On', 'web-stories'),
 };
 
 export default Switch;
