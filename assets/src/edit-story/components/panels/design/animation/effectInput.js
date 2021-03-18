@@ -33,9 +33,20 @@ import { DropDown } from '../../../form';
 import RangeInput from '../../../rangeInput';
 import { NumericInput } from '../../../../../design-system/components';
 import { DirectionRadioInput } from './directionRadioInput';
+import { INPUT_HEIGHT } from './constants';
 
 const RangeContainer = styled.div`
   width: 100%;
+`;
+
+const StyledInput = styled(NumericInput)`
+  height: ${INPUT_HEIGHT}px;
+  div {
+    height: calc(100% + 1px);
+    border-radius: 0;
+    border-color: ${({ theme }) => theme.colors.border.defaultNormal}
+      transparent transparent transparent;
+  }
 `;
 
 const Label = styled.label`
@@ -105,7 +116,7 @@ function EffectInput({
       );
     default:
       return (
-        <NumericInput
+        <StyledInput
           aria-label={effectProps[field].label}
           suffix={effectProps[field].label}
           unit={effectProps[field].unit}

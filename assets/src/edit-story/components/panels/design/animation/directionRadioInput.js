@@ -120,9 +120,9 @@ const DirectionIndicator = styled(Direction)``;
 
 const Fieldset = styled.fieldset`
   position: relative;
-  height: 80px;
-  width: 80px;
-  border: 1px solid #393d3f;
+  height: 91px;
+  width: 88px;
+  border-right: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
 `;
 
 const Figure = styled.div`

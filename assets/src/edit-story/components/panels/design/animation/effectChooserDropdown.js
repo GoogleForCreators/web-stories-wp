@@ -31,6 +31,7 @@ import Popup, { Placement } from '../../../popup';
 import { themeHelpers } from '../../../../../design-system';
 import DropDownSelect from '../../../../../design-system/components/dropDown/select';
 import EffectChooser from './effectChooser';
+import { INPUT_HEIGHT } from './constants';
 
 const Container = styled.div`
   overflow-y: scroll;
@@ -40,6 +41,17 @@ const Container = styled.div`
   background: ${({ theme }) => theme.colors.standard.black};
 
   ${themeHelpers.scrollbarCSS};
+`;
+
+const StyledDropDownSelect = styled(DropDownSelect)`
+  margin: -1px -1px 0 -1px;
+  width: calc(100% + 2px);
+  border-color: transparent transparent ${({ theme }) =>
+    theme.colors.border.defaultNormal}; transparent;
+  height: ${INPUT_HEIGHT}px;
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border.defaultNormal};;
+  }
 `;
 
 export default function EffectChooserDropdown({
@@ -76,7 +88,7 @@ export default function EffectChooserDropdown({
 
   return (
     <>
-      <DropDownSelect
+      <StyledDropDownSelect
         activeItemLabel={selectedEffectTitle || __('None', 'web-stories')}
         aria-label={__('Animation: Effect Chooser', 'web-stories')}
         ref={selectRef}
