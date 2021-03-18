@@ -112,7 +112,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 **Release Date:** March 18, 2021.
 
-* New feature: new enhanced Gutenberg block for displaying your stories.
+* New feature: new ways to showcase your stories with an enhanced Gutenberg block, widget, and theme integrations.
 * New feature: new preview mode to see how your stories look on different devices.
 * Refreshed UI in the editor and dashboard.
 * Bug fixes and performance improvements.
@@ -176,7 +176,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.5.0 =
 
-New Gutenberg blocks, new story preview mode, updated UI, bug fixes and performance improvements.
+Enhanced Gutenberg block, new story preview mode, updated UI, bug fixes and performance improvements.
 
 = 1.4.0 =
 
