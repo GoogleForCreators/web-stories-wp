@@ -188,6 +188,7 @@ function StoryPicker({
 
   useEffect(() => {
     if (isSortingStories) {
+      setIsFetchingForTheFirstTime(false);
       return;
     }
 
