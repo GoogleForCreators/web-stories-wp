@@ -541,6 +541,8 @@ class Story_Post_Type {
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 
+		$nonce = wp_create_nonce( 'wp_rest' );
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -580,6 +582,7 @@ class Story_Post_Type {
 					'showLockedDialog' => $show_locked_dialog,
 				],
 				'version'               => WEBSTORIES_VERSION,
+				'nonce'                 => $nonce,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'metaBoxes'             => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'         => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',

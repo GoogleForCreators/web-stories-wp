@@ -41,6 +41,7 @@ function PostLock() {
   const {
     storyId,
     dashboardLink,
+    nonce: firstNonce,
     postLock: { interval: postLockInterval, showLockedDialog },
   } = useConfig();
 
@@ -59,7 +60,7 @@ function PostLock() {
   const [showDialog, setShowDialog] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState({});
-  const [nonce, setNonce] = useState('');
+  const [nonce, setNonce] = useState(firstNonce);
 
   // When dialog is closed, then set current user to lock owner.
   const closeDialog = useCallback(() => {
@@ -154,10 +155,6 @@ function PostLock() {
 
   // Register repeating callback to check lock every 150 seconds.
   useEffect(() => {
-    if (currentUserLoaded) {
-      cachedDoGetStoryLock.current();
-    }
-
     const timeout = setInterval(() => {
       if (currentUserLoaded) {
         cachedDoGetStoryLock.current();
