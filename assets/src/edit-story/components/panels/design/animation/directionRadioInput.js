@@ -228,11 +228,6 @@ const Label = styled.label`
         `;
     }
   }}
-
-  input:focus ~ * > ${DirectionIndicator} {
-    outline: 2px auto
-      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.primary};
-  }
 `;
 
 const HiddenLegend = styled.legend`

@@ -34,7 +34,11 @@ import {
   NumericInput,
   DropDown,
 } from '../../../../../design-system/components';
-import {THEME_CONSTANTS, Text, ThemeGlobals} from '../../../../../design-system';
+import {
+  THEME_CONSTANTS,
+  Text,
+  ThemeGlobals,
+} from '../../../../../design-system';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
 
