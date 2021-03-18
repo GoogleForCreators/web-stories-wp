@@ -51,6 +51,9 @@ const StyledDropDownSelect = styled(DropDownSelect)`
     width: calc(100% + 2px);
     border-color: transparent transparent ${theme.colors.border.defaultNormal} transparent;
     height: ${INPUT_HEIGHT}px;
+    &:hover {
+      border-color: transparent transparent ${theme.colors.border.defaultNormal} transparent;
+    }
   `}
 `;
 

@@ -34,7 +34,7 @@ import {
   NumericInput,
   DropDown,
 } from '../../../../../design-system/components';
-import { THEME_CONSTANTS, Text } from '../../../../../design-system';
+import {THEME_CONSTANTS, Text, ThemeGlobals} from '../../../../../design-system';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
 
@@ -53,6 +53,9 @@ const StyledInput = styled(NumericInput)`
   div {
     height: calc(100% + 1px);
     ${outerGridBordersCss}
+    &:focus-within {
+      border-radius: ${({ theme }) => theme.borders.radius.small};
+    }
   }
 `;
 
@@ -60,6 +63,12 @@ const StyledDropDown = styled(DropDown)`
   button {
     height: 46px;
     ${outerGridBordersCss}
+    &:hover {
+      ${outerGridBordersCss}
+    }
+    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
+      border-radius: ${({ theme }) => theme.borders.radius.small};
+    }
   }
 `;
 

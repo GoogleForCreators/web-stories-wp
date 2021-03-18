@@ -376,7 +376,7 @@ export const DirectionRadioInput = ({
               direction={direction}
             >
               <Tooltip
-                title={tooltip}
+                title={disabled ? tooltip : ''}
                 placement={
                   isInternalScaleDirection(direction)
                     ? getPostfixFromCamelCase(direction)
