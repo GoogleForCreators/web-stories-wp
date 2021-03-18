@@ -36,9 +36,8 @@ import { INPUT_HEIGHT } from './constants';
 const Container = styled.div`
   overflow-y: scroll;
   max-height: 240px;
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.standard.black};
-
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background: ${({ theme }) => theme.colors.bg.primary};
   ${themeHelpers.scrollbarCSS};
 `;
 

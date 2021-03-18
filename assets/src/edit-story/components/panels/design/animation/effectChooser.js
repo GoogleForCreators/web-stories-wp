@@ -70,9 +70,9 @@ import {
   PanAndZoomAnimation,
 } from './effectChooserElements';
 
+// Full panel width minus the padding & scrollbar.
 const Container = styled.div`
-  width: ${PANEL_WIDTH}px;
-  background: ${({ theme }) => theme.colors.bg.primary};
+  width: ${PANEL_WIDTH - 22}px;
 `;
 
 const ContentWrapper = styled.div`
@@ -85,7 +85,7 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
     active
       ? theme.colors.interactiveBg.secondaryPress
       : theme.colors.interactiveBg.secondaryNormal};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
   overflow: hidden;
@@ -784,6 +784,7 @@ export default function EffectChooser({
               <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
             </GridItemHalfRow>
             <GridItemHalfRow
+              size={12}
               aria-label={__('Scale In Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
