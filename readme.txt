@@ -2,7 +2,7 @@
 
 Contributors:      google
 Requires at least: 5.3
-Tested up to:      5.7
+Tested up to:      5.6
 Requires PHP:      5.6
 Stable tag:        V.V.V
 License:           Apache License 2.0
