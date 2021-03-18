@@ -33,6 +33,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 
 	protected static $author_id;
 	protected static $subscriber;
+	protected static $editor;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$subscriber = $factory->user->create(
@@ -43,6 +44,12 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 		self::$author_id  = $factory->user->create(
 			[
 				'role' => 'author',
+			]
+		);
+		self::$editor     = $factory->user->create(
+			[
+				'role'       => 'editor',
+				'user_email' => 'editor@example.com',
 			]
 		);
 	}
@@ -94,6 +101,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
+	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item() {
 		wp_set_current_user( self::$author_id );
@@ -114,6 +122,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
+	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_no_story() {
 		wp_set_current_user( self::$author_id );
@@ -126,6 +135,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
+	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_not_a_story() {
 		wp_set_current_user( self::$author_id );
@@ -144,6 +154,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_item
+	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_no_perm() {
 		$story    = self::factory()->post->create(
@@ -160,6 +171,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 
 	/**
 	 * @covers ::get_item
+	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_wrong_perm() {
 		wp_set_current_user( self::$subscriber );
@@ -179,6 +191,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
 	 * @covers ::prepare_links
+	 * @covers ::get_item_permissions_check
 	 */
 	public function test_get_item_with_lock() {
 		wp_set_current_user( self::$author_id );
@@ -205,6 +218,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::update_item
 	 * @covers ::prepare_item_for_response
+	 * @covers ::update_item_permissions_check
 	 */
 	public function test_update_item() {
 		wp_set_current_user( self::$author_id );
@@ -226,6 +240,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::delete_item
 	 * @covers ::prepare_item_for_response
+	 * @covers ::delete_item_permissions_check
 	 */
 	public function test_delete_item() {
 		wp_set_current_user( self::$author_id );
@@ -251,6 +266,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::delete_item
 	 * @covers ::prepare_item_for_response
+	 * @covers ::delete_item_permissions_check
 	 */
 	public function test_delete_item_with_lock() {
 		wp_set_current_user( self::$author_id );
@@ -273,6 +289,29 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'locked', $data['previous'] );
 		$this->assertTrue( $data['deleted'] );
 		$this->assertTrue( $data['previous']['locked'] );
+	}
+
+	/**
+	 * @covers ::delete_item
+	 * @covers ::prepare_item_for_response
+	 * @covers ::delete_item_permissions_check
+	 */
+	public function test_delete_item_with_lock_another_user() {
+		wp_set_current_user( self::$editor );
+		$story    = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'draft',
+				'post_author' => self::$author_id,
+			]
+		);
+		$new_lock = ( time() - 100 ) . ':' . self::$author_id;
+		update_post_meta( $story, '_edit_lock', $new_lock );
+
+		$request  = new WP_REST_Request( \WP_REST_Server::DELETABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_cannot_delete_others_lock', $response, 403 );
 	}
 
 	/**

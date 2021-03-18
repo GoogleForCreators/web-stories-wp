@@ -100,7 +100,7 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'get_item' ],
-					'permission_callback' => [ $this->parent_controller, 'update_item_permissions_check' ],
+					'permission_callback' => [ $this, 'get_item_permissions_check' ],
 					'args'                => [
 						'context' => $this->get_context_param( [ 'default' => 'view' ] ),
 					],
@@ -109,13 +109,13 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 				[
 					'methods'             => WP_REST_Server::EDITABLE,
 					'callback'            => [ $this, 'update_item' ],
-					'permission_callback' => [ $this->parent_controller, 'update_item_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
 				],
 				[
 					'methods'             => WP_REST_Server::DELETABLE,
 					'callback'            => [ $this, 'delete_item' ],
-					'permission_callback' => [ $this->parent_controller, 'update_item_permissions_check' ],
+					'permission_callback' => [ $this, 'delete_item_permissions_check' ],
 					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::DELETABLE ),
 				],
 			]
@@ -193,6 +193,50 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 		}
 
 		return $lock;
+	}
+
+	/**
+	 * Checks if a given request has access to read a lock.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has read access for the item, WP_Error object otherwise.
+	 */
+	public function get_item_permissions_check( $request ) {
+		return $this->parent_controller->update_item_permissions_check( $request );
+	}
+
+	/**
+	 * Checks if a given request has access to update a lock.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has access to update the item, WP_Error object otherwise.
+	 */
+	public function update_item_permissions_check( $request ) {
+		return $this->parent_controller->update_item_permissions_check( $request );
+	}
+
+	/**
+	 * Checks if a given request has access to delete a lock.
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has access to delete the item, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
+		$result = $this->parent_controller->update_item_permissions_check( $request );
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		$lock = $this->get_lock( $request['id'] );
+		if ( is_array( $lock ) && isset( $lock['user'] ) && get_current_user_id() !== (int) $lock['user'] ) {
+			return new WP_Error(
+				'rest_cannot_delete_others_lock',
+				__( 'Sorry, you are not allowed delete others lock.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		return true;
 	}
 
 	/**
