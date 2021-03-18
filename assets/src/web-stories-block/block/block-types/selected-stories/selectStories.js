@@ -123,8 +123,8 @@ const StyledSearch = styled(Search)(
 );
 
 function SelectStories({
-  selectedStories,
-  orderedStories,
+  selectedStories = [],
+  orderedStories = [],
   pageSize,
   search,
   sort,
@@ -272,6 +272,7 @@ function SelectStories({
                 role="list"
                 columnWidth={pageSize.width}
                 ariaLabel={__('Viewing stories', 'web-stories')}
+                columnHeight={pageSize.containerHeight}
               >
                 {orderedStories.map((story) => {
                   const isSelected = selectedStories.includes(story.id);

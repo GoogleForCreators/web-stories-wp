@@ -22,10 +22,15 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { CardGrid, CardGridItem } from '../../../../../dashboard/components';
-import { PAGE_WRAPPER } from '../../../../../dashboard/constants';
+import { GRID_SPACING } from '../../../../../dashboard/constants';
 
 const StoryGrid = styled(CardGrid)`
-  width: calc(100% - ${PAGE_WRAPPER.GUTTER}px);
+  grid-column-gap: ${GRID_SPACING.COLUMN_GAP}px;
+  grid-row-gap: ${GRID_SPACING.ROW_GAP}px;
+  grid-template-columns: ${({ columnWidth }) => `
+    repeat(auto-fill, ${columnWidth}px)`};
+  grid-template-rows: ${({ columnHeight }) =>
+    `minmax(${columnHeight}px, auto)`};
 `;
 
 const StoryGridItem = styled(CardGridItem)`

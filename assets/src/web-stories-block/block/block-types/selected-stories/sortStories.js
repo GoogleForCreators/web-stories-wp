@@ -85,6 +85,8 @@ function SortStories({
             pageSize={pageSize}
             role="list"
             ariaLabel={__('Sorting Stories', 'web-stories')}
+            columnWidth={pageSize.width}
+            columnHeight={pageSize.containerHeight}
           >
             {selectedStoryList.map((story, index) => {
               return (

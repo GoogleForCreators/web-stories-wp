@@ -178,7 +178,7 @@ function StoryPicker({
 
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
-      return stories[storyId];
+      return stories[storyId] ?? [];
     });
   }, [stories, storiesOrderById]);
 
