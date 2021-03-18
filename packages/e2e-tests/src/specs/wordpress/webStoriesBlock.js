@@ -34,6 +34,11 @@ import {
   insertBlock,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../config/bootstrap';
+
 const EMBED_BLOCK_CONTENT = `
 <!-- wp:web-stories/embed {"url":"https://preview.amp.dev/documentation/examples/introduction/stories_in_amp","title":"Stories in AMP - Hello World","poster":"https://amp.dev/static/samples/img/story_dog2_portrait.jpg"} -->
 <div class="wp-block-web-stories-embed alignnone"><amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp" style="--story-player-poster:url('https://amp.dev/static/samples/img/story_dog2_portrait.jpg')">Stories in AMP - Hello World</a></amp-story-player></div>
@@ -42,8 +47,12 @@ const EMBED_BLOCK_CONTENT = `
 
 describe('Web Stories Block', () => {
   let stopRequestInterception;
+  let removeErrorMessage;
 
   beforeAll(async () => {
+    removeErrorMessage = addAllowedErrorMessage(
+      'Failed to load resource: the server responded with a status of 404'
+    );
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
       // amp-story-player scripts
@@ -72,6 +81,7 @@ describe('Web Stories Block', () => {
   afterAll(async () => {
     await page.setRequestInterception(false);
     stopRequestInterception();
+    removeErrorMessage();
   });
 
   it('should insert a new web stories block', async () => {
