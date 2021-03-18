@@ -45,6 +45,12 @@ fi
 echo -e $(status_message "Installing WordPress...")
 wp core install --title="$SITE_TITLE" --admin_user=admin --admin_password=password --admin_email=test@test.com --skip-email --url=http://localhost:$HOST_PORT --quiet
 
+if [ "$WP_VERSION" == "latest" ]; then
+	# Potentially update WordPress
+	echo -e $(status_message "Updating WordPress")
+	wp core update --force --quiet
+fi
+
 # Create additional users.
 echo -e $(status_message "Creating additional users...")
 if [ ! "$(wp user get editor --field=login)" ]; then
@@ -121,6 +127,9 @@ wp plugin install amp --force --quiet
 
 echo -e $(status_message "Installing Classic editor plugin...")
 wp plugin install classic-editor --force --quiet
+
+echo -e $(status_message "Activating Twenty Twenty theme...")
+wp theme activate twentytwenty --quiet
 
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")

@@ -63,6 +63,10 @@ function reducer(state, { type, payload }) {
       return reducers.updateElementsByResourceId(state, payload);
     }
 
+    case types.DELETE_ELEMENTS_BY_RESOURCE_ID: {
+      return reducers.deleteElementsByResourceId(state, payload);
+    }
+
     case types.COMBINE_ELEMENTS: {
       return reducers.combineElements(state, payload);
     }

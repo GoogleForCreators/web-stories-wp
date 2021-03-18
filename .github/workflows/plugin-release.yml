@@ -2,7 +2,7 @@
 #
 # Builds the plugin for release candidates and stable releases.
 #
-# Creates the release branch, the actual releas on GitHub, and the correct tag.
+# Creates the release branch, the actual release on GitHub, and the correct tag.
 #
 # For new major releases, the action should be run from the `main` branch.
 # For patch releases, the action should be run from the corresponding release branch (e.g. `release/1.2.0`)
@@ -31,6 +31,7 @@ jobs:
   checks:
     name: Checks
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -61,13 +62,24 @@ jobs:
             exit 1
           fi
 
+      - name: Ensure readme.txt contains changelog
+        run: |
+          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
+          CHANGELOG_REGEX="= $VERSION_WITHOUT_SUFFIX ="
+
+          if ! grep -q -P "$CHANGELOG_REGEX" readme.txt; then
+            echo "No changelog found in readme.txt"
+            exit 1
+          fi
+
   # Get the current CDN assets version.
   # If the static assets on the CDN have changed since the last release,
   # bump the assets version accordingly in the `static-site` branch.
   assets-version:
     name: Prepare static assets
-    needs: checks
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [checks]
     steps:
       # TODO: Define behavior for patch releases.
       #
@@ -157,8 +169,11 @@ jobs:
   # Generate the changelog before we do any commits.
   changelog:
     name: Changelog
-    needs: checks
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [checks]
+    outputs:
+      release_name: ${{ steps.changelog.outputs.release_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -197,12 +212,21 @@ jobs:
       # For stable releases, generate full changelog since last stable release.
       # TODO: Implement tag logic for patch releases.
       - name: Generate changelog
+        id: changelog
         run: |
           TAG_NAME_WITHOUT_SUFFIX=${TAG_NAME/-rc.*/}
           if $IS_RC; then
+            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
+
+            # This is the first RC for this version (e.g. v1.5.0-rc.1), so previous version is v1.4.0, without suffix.
+            if ! git describe --abbrev=0 --tags --match "$TAG_NAME_WITHOUT_SUFFIX" &>/dev/null; then
+              PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
+            fi
           else
+            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME_WITHOUT_SUFFIX | head -1)
+            PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
           fi
 
           RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
@@ -218,8 +242,10 @@ jobs:
 
           mkdir -p build/changelog
           echo "$CHANGELOG" >> build/changelog/changelog.txt
+
+          echo "::set-output name=release_name::${RELEASE_NAME}"
         env:
-          GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_AUTH: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
@@ -228,9 +254,12 @@ jobs:
           path: build/changelog
 
   build:
-    name: Build plugin
-    needs: [assets-version, changelog]
+    name: Build new version
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [assets-version, changelog]
+    outputs:
+      release_branch: ${{ steps.release_branch.outputs.release_branch }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -301,6 +330,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Create release branch
+        id: release_branch
         run: |
           VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
@@ -311,8 +341,7 @@ jobs:
             git checkout --track origin/$BRANCH
           fi
 
-      - name: Update plugin version
-        run: npm run workflow:version $PLUGIN_VERSION
+          echo "::set-output name=release_branch::${BRANCH/-rc./ RC}"
 
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
@@ -320,13 +349,41 @@ jobs:
         env:
           ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
 
-      - name: Commit changes
+      - name: Commit assets version bump
         run: |
-          git add .
+          git add web-stories.php
+          git status
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
+          git commit -m "Update assets version to $ASSETS_VERSION"
+          git push -u origin HEAD
+        if: ${{ env.ASSETS_VERSION }}
+        env:
+          ASSETS_VERSION: ${{ steps.assets_version.outputs.ASSETS_VERSION }}
+
+      - name: Update plugin version
+        run: npm run workflow:version $PLUGIN_VERSION
+
+      - name: Commit plugin version bump
+        run: |
+          git add web-stories.php
           git status
           git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
           git commit -m "Prepare release $PLUGIN_VERSION"
           git push -u origin HEAD
+
+      # Only non-patch release version bumps should be cherry picked to main
+      # This will cherry-pick the last commit from the release branch, as
+      # we only want the plugin version bump, not the assets version bump.
+      - name: Cherry-pick to main
+        run: |
+          git checkout main
+          git cherry-pick $BRANCH
+          git pull --rebase
+          git push
+          git checkout $BRANCH
+        if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
+        env:
+          BRANCH: ${{ steps.release_branch.outputs.release_branch }}
 
       - name: Build plugin
         run: npm run build:js
@@ -356,8 +413,9 @@ jobs:
 
   create-release:
     name: Create Release
-    needs: [build, changelog]
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [build, changelog]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -374,21 +432,25 @@ jobs:
           name: changelog
           path: changelog
 
-      - name: Set release name
-        id: release_name
-        run: echo "::set-output name=RELEASE_NAME::${PLUGIN_VERSION/-rc./ RC}"
+      - name: Set branch name
+        id: release_branch
+        run: |
+          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
+          BRANCH=release/$VERSION_WITHOUT_SUFFIX
+          echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
 
       - name: Create Release Draft
         id: create_release
         uses: actions/create-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ steps.release_name.outputs.RELEASE_NAME }}
+          release_name: ${{ needs.changelog.outputs.release_name }}
+          commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           draft: true
           prerelease: ${{ env.IS_RC }}
           body_path: changelog/changelog.txt
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload regular bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -398,7 +460,7 @@ jobs:
           asset_name: web-stories.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload development bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -408,7 +470,7 @@ jobs:
           asset_name: web-stories-dev.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Upload composer bundle
         uses: actions/upload-release-asset@v1.0.2
@@ -418,7 +480,7 @@ jobs:
           asset_name: web-stories-composer.zip
           asset_content_type: application/zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       # Done so that any triggers/webhooks will have access to the published release
       # including all the release assets.
@@ -427,7 +489,7 @@ jobs:
           curl \
             --request PATCH \
             --url https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }} \
-            --header 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' \
+            --header 'Authorization: token ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}' \
             --header "Accept: application/vnd.github.v3+json" \
             --data-raw '{"draft":false}'
 
@@ -437,8 +499,9 @@ jobs:
   # See http://plugins.svn.wordpress.org/buddypress/tags/ and https://wordpress.org/plugins/bp-beta-tester/ for inspiration.
   deploy:
     name: Deploy plugin to WordPress.org
-    needs: create-release
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [create-release]
     # This step requires additional review
     # See https://docs.github.com/en/actions/reference/environments
     environment: Production
@@ -456,24 +519,27 @@ jobs:
           path: release-assets
 
       - name: Check out trunk folder
-        run: svn checkout $PLUGIN_REPO_URL svn
+        run: svn checkout $PLUGIN_REPO_URL svn --username "$SVN_USERNAME"
 
       - name: Get previous stable tag
         id: get_previous_stable_tag
-        run: echo ::set-output name=stable_tag::$(grep "$STABLE_TAG_REGEX" ./trunk/readme.txt)
+        # Returns the whole matching line.
+        run: echo ::set-output name=stable_tag::$(grep -P "$STABLE_TAG_REGEX" ./svn/trunk/readme.txt)
 
       - name: Delete everything in trunk
         run: find . -maxdepth 1 -not -name ".svn" -not -name "." -not -name ".." -exec rm -rf {} +
         working-directory: ./svn/trunk
 
       - name: Unzip release asset into trunk
-        run: unzip release-assets/web-stories.zip -d svn/trunk
+        run: |
+          unzip release-assets/web-stories.zip
+          mv web-stories/* svn/trunk
         env:
           PLUGIN_URL: ${{ github.event.release.assets[0].browser_download_url }}
 
       - name: Replace stable tag placeholder with pre-existing stable tag
         run: |
-          sed -i "s/${STABLE_TAG_REGEX}/Stable tag: ${STABLE_TAG}/g" ./readme.txt
+          sed -r -i "s/${STABLE_TAG_REGEX}/${STABLE_TAG}/g" ./readme.txt
         working-directory: ./svn/trunk
         env:
           STABLE_TAG: ${{ steps.get_previous_stable_tag.outputs.stable_tag }}
@@ -494,8 +560,61 @@ jobs:
       # Otherwise, if there were any errors, we risk changing this to a tag that doesn't exist.
       # TODO: Move to separate workflow that can be manually triggered after email confirmation?
       - name: Update stable tag
-        working-directory: ./trunk
+        working-directory: ./svn
         run: |
-          sed -i "s/${STABLE_TAG_REGEX}/Stable tag: ${PLUGIN_VERSION}/g" ./readme.txt
+          sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./trunk/readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+
+  # Post-release version bumps for non-patch releases.
+  post-release:
+    name: Post-release version bump
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Cache node modules
+        uses: pat-s/always-upload-cache@v2.1.3
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+        env:
+          cache-name: cache-node-modules
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
+      - name: Update plugin version
+        run: npm run workflow:version -- --increment preminor --preid alpha
+
+      - name: Commit changes
+        run: |
+          git add web-stories.php
+          git status
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
+          git commit -m "Post-release version bump"
+          git pull --rebase
+          git push -u origin HEAD

@@ -18,18 +18,17 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../design-system';
+import { Icons, DropDown } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
-import { AdvancedDropDown } from '../../../../form';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
 import ColorGroup from './colorGroup';
 import useApplyColor from './useApplyColor';
@@ -41,7 +40,7 @@ const COLOR_GAP = 6;
 const ActionsWrapper = styled.div`
   text-align: center;
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
-  padding: 16px 16px 20px 16px;
+  padding: 8px 16px 20px 16px;
 `;
 
 const AddColorPreset = styled.button`
@@ -79,7 +78,18 @@ const ColorsWrapper = styled.div`
 `;
 
 const DropDownWrapper = styled.div`
-  width: 135px;
+  width: 145px;
+  text-align: left;
+  position: relative;
+`;
+
+const StyledDropDown = styled(DropDown)`
+  background-color: transparent;
+  border: 0;
+`;
+
+const menuStylesOverride = css`
+  top: -12px;
 `;
 
 const HeaderRow = styled.div`
@@ -169,12 +179,12 @@ function ColorPresetActions({ color, pushUpdate }) {
 
   const options = [
     {
-      id: LOCAL,
-      name: __('Current story', 'web-stories'),
+      value: LOCAL,
+      label: __('Current story', 'web-stories'),
     },
     {
-      id: GLOBAL,
-      name: __('All stories', 'web-stories'),
+      value: GLOBAL,
+      label: __('All stories', 'web-stories'),
     },
   ];
 
@@ -183,13 +193,16 @@ function ColorPresetActions({ color, pushUpdate }) {
     <ActionsWrapper>
       <HeaderRow>
         <DropDownWrapper>
-          <AdvancedDropDown
+          <StyledDropDown
             options={options}
-            isInline={true}
+            selectedValue={showLocalColors ? LOCAL : GLOBAL}
+            onMenuItemClick={(evt, value) =>
+              setShowLocalColors(value === LOCAL)
+            }
+            isInline
             hasSearch={false}
-            onChange={({ id }) => setShowLocalColors(id === LOCAL)}
-            selectedId={showLocalColors ? LOCAL : GLOBAL}
             aria-label={__('Select color type', 'web-stories')}
+            menuStylesOverride={menuStylesOverride}
           />
         </DropDownWrapper>
         <ButtonWrapper>

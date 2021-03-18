@@ -67,7 +67,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -473,7 +473,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$feed = $this->do_rss2();
 
 		$this->assertContains( '<img', $feed );
-		$this->assertContains( 'images/test-image.jpg', $feed );
+		$this->assertContains( 'images/canola.jpg', $feed );
 		$this->assertContains( 'wp-block-web-stories-embed', $feed );
 	}
 

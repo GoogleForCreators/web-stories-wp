@@ -38,11 +38,9 @@ function arrange(children = null) {
   const { getByRole, queryByLabelText } = renderWithTheme(children);
   const button = getByRole('button', { name: 'Color' });
   const input = queryByLabelText('Color', { selector: 'input' });
-  const swatch = getByRole('status');
   return {
     button,
     input,
-    swatch,
     queryByLabelText,
   };
 }
@@ -61,7 +59,7 @@ describe('<ColorInput />', () => {
     getPreviewTextMock.mockImplementation(() => {
       return 'FF0000';
     });
-    const { button, swatch, input } = arrange(
+    const { button, input } = arrange(
       <ColorInput
         onChange={() => {}}
         value={createSolid(255, 0, 0)}
@@ -73,9 +71,6 @@ describe('<ColorInput />', () => {
     expect(button).toHaveAttribute('aria-label', 'Color');
 
     expect(input).toHaveValue('FF0000');
-
-    expect(swatch).toBeDefined();
-    expect(swatch).toHaveStyle('background-color: red');
   });
 
   it('should render one big button if gradient', () => {
@@ -83,10 +78,13 @@ describe('<ColorInput />', () => {
       return 'Radial';
     });
 
-    const { button, swatch, input } = arrange(
+    const { button, input } = arrange(
       <ColorInput
         onChange={() => {}}
-        value={{ type: 'radial' }}
+        value={{
+          type: 'radial',
+          stops: [createSolid(255, 0, 0), createSolid(0, 255, 0)],
+        }}
         label="Color"
       />
     );
@@ -96,9 +94,6 @@ describe('<ColorInput />', () => {
     expect(button).toHaveTextContent('Radial');
 
     expect(input).toBeNull();
-
-    expect(swatch).toBeDefined();
-    expect(swatch).toHaveStyle('background-color: red');
   });
 
   it('should render multiple if applicable', () => {
@@ -116,7 +111,7 @@ describe('<ColorInput />', () => {
   it('should open the color picker when clicked', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
-    const value = { a: 1 };
+    const value = { color: { r: 0, g: 0, b: 0, a: 1 } };
     const { button, queryByLabelText } = arrange(
       <ColorInput
         onChange={onChange}

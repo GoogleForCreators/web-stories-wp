@@ -120,7 +120,7 @@ export const Banner = forwardRef(
           aria-label={closeButtonLabel}
           onClick={onClose}
         >
-          <Cross aria-hidden={true} />
+          <Cross aria-hidden />
         </CloseButton>
         <Content>{children}</Content>
       </Container>

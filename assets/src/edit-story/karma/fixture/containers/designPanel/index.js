@@ -25,12 +25,13 @@ import { getByLabelText } from '@testing-library/react';
 import { Container } from '../container';
 import { Alignment } from './alignment';
 import { Animation } from './animationPanel';
-import { BackgroundOverlay } from './backgroundOverlay';
+import { Filter } from './filter';
 import { Border } from './border';
 import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
 import { Layers } from './layers';
 import { Link } from './link';
+import { PageBackground } from './pageBackground';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { TextStylePreset } from './textStylePreset';
@@ -69,11 +70,11 @@ export class DesignPanel extends Container {
     );
   }
 
-  get backgroundOverlay() {
+  get filters() {
     return this._get(
-      this.getByRole('region', { name: /Overlay/ }),
-      'backgroundOverlay',
-      BackgroundOverlay
+      this.getByRole('region', { name: /Filters/ }),
+      'filters',
+      Filter
     );
   }
 
@@ -113,27 +114,12 @@ export class DesignPanel extends Container {
     );
   }
 
-  get backgroundSizePosition() {
-    // @todo: implement
-    return null;
-  }
-
   get imageAccessibility() {
     // @todo: implement
     return null;
   }
 
   get layerStyle() {
-    // @todo: implement
-    return null;
-  }
-
-  get noSelection() {
-    // @todo: implement
-    return null;
-  }
-
-  get pageStyle() {
     // @todo: implement
     return null;
   }
@@ -169,6 +155,14 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /Animation/ }),
       'animation',
       Animation
+    );
+  }
+
+  get pageBackground() {
+    return this._get(
+      this.getByRole('region', { name: /Page background/ }),
+      'pageBackground',
+      PageBackground
     );
   }
 

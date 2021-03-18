@@ -447,13 +447,13 @@ describe('Grid view', () => {
       await fixture.render();
     });
 
-    it('should trigger story preview when user presses Enter while focused on a card', async () => {
+    it('should trigger story preview when user presses Enter while focused on a card preview button', async () => {
       const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
 
       await fixture.events.focus(gridContainer);
 
       await fixture.events.keyboard.press('right');
-
+      // tab to the first button
       await fixture.events.keyboard.press('tab');
 
       await fixture.events.keyboard.press('Enter');
@@ -461,7 +461,6 @@ describe('Grid view', () => {
       const viewPreviewStory = await fixture.screen.queryByTestId(
         'preview-iframe'
       );
-
       expect(viewPreviewStory).toBeTruthy();
     });
 
@@ -868,7 +867,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created)
+        getRelativeDisplayDate(stories[id].created_gmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -908,7 +907,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified)
+        getRelativeDisplayDate(stories[id].modified_gmt)
       );
 
       // Last Modified is the fifth column
@@ -1035,7 +1034,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created)
+        getRelativeDisplayDate(stories[id].created_gmt)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -1076,7 +1075,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified)
+        getRelativeDisplayDate(stories[id].modified_gmt)
       );
 
       // Last Modified is the fifth column

@@ -23,12 +23,16 @@ import { useDebouncedCallback } from 'use-debounce';
  * Internal dependencies
  */
 import { useResizeEffect } from '../../design-system';
-import theme from '../theme';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   FULLBLEED_RATIO,
+  MIN_DASHBOARD_WIDTH,
   PAGE_RATIO,
   WPBODY_ID,
+  VIEWPORT_BREAKPOINT,
+  STORY_PREVIEW_WIDTH,
+  GRID_SPACING,
+  PAGE_WRAPPER,
 } from '../constants';
 
 /**
@@ -52,15 +56,12 @@ export const getPagePreviewHeights = (width) => {
   return { fullBleedHeight, storyHeight };
 };
 
-const descendingBreakpointKeys = Object.keys(theme.breakpoint.raw).sort(
-  (a, b) => theme.breakpoint.raw[b] - theme.breakpoint.raw[a]
-);
 const getCurrentBp = (availableContainerSpace) =>
-  descendingBreakpointKeys.reduce((current, bp) => {
-    return availableContainerSpace <= theme.breakpoint.raw[bp] ? bp : current;
-  }, descendingBreakpointKeys[0]);
+  availableContainerSpace <= MIN_DASHBOARD_WIDTH
+    ? VIEWPORT_BREAKPOINT.TABLET
+    : VIEWPORT_BREAKPOINT.DESKTOP;
 
-// To determine the size of a story page we take the default page size according to breakpoint
+// To determine the size of a story page we take the page size according to min viewport width
 // and then find the remaining width in the given space that the dashboard is showing stories in
 // if the container isn't important to size then respectSetWidth catches it (thumbnails or isn't a grid)
 // otherwise, we're taking the available space we have and finding out how many items in the default size we can fit in a row
@@ -78,13 +79,13 @@ const sizeFromWidth = (
     return { width, height: storyHeight, containerHeight: fullBleedHeight };
   }
 
-  if (bp === 'desktop') {
+  if (bp === VIEWPORT_BREAKPOINT.DESKTOP) {
     availableContainerSpace -= DASHBOARD_LEFT_NAV_WIDTH;
   }
 
   const itemsInRow = Math.floor(availableContainerSpace / width);
-  const columnGapWidth = theme.grid.columnGap[bp] * (itemsInRow - 1);
-  const pageGutter = theme.standardViewContentGutter[bp] * 2;
+  const columnGapWidth = GRID_SPACING.COLUMN_GAP * (itemsInRow - 1);
+  const pageGutter = PAGE_WRAPPER.GUTTER * 2;
   const takenSpace = width * itemsInRow + columnGapWidth + pageGutter;
   const remainingSpace = availableContainerSpace - takenSpace;
   const addToWidthValue = remainingSpace / itemsInRow;
@@ -99,6 +100,10 @@ const sizeFromWidth = (
   };
 };
 
+const getContainerWidth = (windowWidth) => {
+  return windowWidth > MIN_DASHBOARD_WIDTH ? windowWidth : MIN_DASHBOARD_WIDTH;
+};
+
 export default function usePagePreviewSize(options = {}) {
   const { thumbnailMode = false, isGrid } = options;
   // When the dashboard is pulled out of wordpress this id will need to be updated.
@@ -106,10 +111,13 @@ export default function usePagePreviewSize(options = {}) {
   const dashboardContainerRef = useRef(document.getElementById(WPBODY_ID));
   // BP is contingent on the actual window size
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
   const [bp, setBp] = useState(getCurrentBp(viewportWidth));
 
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    dashboardContainerRef.current?.offsetWidth || window.innerWidth
+    getContainerWidth(
+      dashboardContainerRef.current?.offsetWidth || window.innerWidth
+    )
   );
 
   const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
@@ -123,7 +131,7 @@ export default function usePagePreviewSize(options = {}) {
   useResizeEffect(
     dashboardContainerRef,
     ({ width }) => {
-      setAvailableContainerSpace(width);
+      setAvailableContainerSpace(getContainerWidth(width));
 
       if (window.innerWidth !== viewportWidth) {
         debounceSetViewportWidth(window.innerWidth);
@@ -135,7 +143,7 @@ export default function usePagePreviewSize(options = {}) {
   return useMemo(
     () => ({
       pageSize: sizeFromWidth(
-        theme.previewWidth[thumbnailMode ? 'thumbnail' : bp],
+        STORY_PREVIEW_WIDTH[thumbnailMode ? VIEWPORT_BREAKPOINT.THUMBNAIL : bp],
         {
           respectSetWidth: !isGrid || thumbnailMode,
           availableContainerSpace,

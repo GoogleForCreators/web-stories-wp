@@ -59,12 +59,7 @@ describe('Switch', () => {
     const onChange = jest.fn();
 
     const { getByText, getByRole } = renderWithTheme(
-      <Switch
-        onChange={onChange}
-        onLabel={onLabel}
-        offLabel={offLabel}
-        value={true}
-      />
+      <Switch onChange={onChange} onLabel={onLabel} offLabel={offLabel} value />
     );
 
     const onLabelEl = getByText(onLabel);

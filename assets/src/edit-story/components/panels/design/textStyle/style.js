@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -27,20 +26,17 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import {
-  OffsetVertical,
-  OffsetHorizontal,
-  AlignLeftAlt,
-  AlignCenterAlt,
-  AlignMiddleAlt,
-  AlignRightAlt,
-  Bold,
-  Italic,
-  Underline,
-} from '../../../../icons';
+  NumericInput,
+  Icons,
+  ToggleButton,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+} from '../../../../../design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
-import { Numeric, Row, ToggleButton, usePresubmitHandler } from '../../../form';
+import { Row, usePresubmitHandler } from '../../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 
@@ -55,24 +51,23 @@ const MIN_MAX = {
   },
 };
 
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
-
-const ExpandedNumeric = styled(BoxedNumeric)`
+const StyledNumericInput = styled(NumericInput)`
   flex-grow: 1;
-
-  svg {
-    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
-    width: 16px;
-    height: 16px;
-  }
 `;
 
 const Space = styled.div`
   flex: 0 0 10px;
 `;
+
+function Toggle(props) {
+  return (
+    <ToggleButton
+      size={BUTTON_SIZES.SMALL}
+      variant={BUTTON_VARIANTS.SQUARE}
+      {...props}
+    />
+  );
+}
 
 function StylePanel({ selectedElements, pushUpdate }) {
   const {
@@ -92,7 +87,8 @@ function StylePanel({ selectedElements, pushUpdate }) {
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
   const setLetterSpacingMinMax = useCallback(
-    (value) => handleSetLetterSpacing(clamp(value, MIN_MAX.LETTER_SPACING)),
+    (evt, value) =>
+      handleSetLetterSpacing(clamp(value, MIN_MAX.LETTER_SPACING)),
     [handleSetLetterSpacing]
   );
 
@@ -102,101 +98,114 @@ function StylePanel({ selectedElements, pushUpdate }) {
     };
   }, []);
 
+  const handleTextAlign = useCallback(
+    (alignment) => () => {
+      pushUpdate({ textAlign: textAlign === alignment ? '' : alignment }, true);
+    },
+    [pushUpdate, textAlign]
+  );
+
+  // We need to weed out the chance, that either of these are MULTIPLE_VALUE.
+  // If not strictly true, treat as false in every way.
+  const isTrulyBold = isBold === true;
+  const isTrulyItalic = isItalic === true;
+  const isTrulyUnderline = isUnderline === true;
+
   return (
     <>
       <Row>
-        <ExpandedNumeric
+        <StyledNumericInput
           aria-label={__('Line-height', 'web-stories')}
-          float={true}
+          isFloat
           value={lineHeight}
           min={MIN_MAX.LINE_HEIGHT.MIN}
           max={MIN_MAX.LINE_HEIGHT.MAX}
-          suffix={<OffsetVertical />}
-          onChange={(value) => pushUpdate({ lineHeight: value })}
-          canBeEmpty
+          suffix={<Icons.LetterAHeight />}
+          onChange={(evt, value) => pushUpdate({ lineHeight: value }, true)}
+          allowEmpty
+          isIndeterminate={MULTIPLE_VALUE === lineHeight}
+          placeholder={
+            MULTIPLE_VALUE === lineHeight ? MULTIPLE_DISPLAY_VALUE : null
+          }
         />
         <Space />
-        <ExpandedNumeric
+        <StyledNumericInput
           aria-label={__('Letter-spacing', 'web-stories')}
           value={letterSpacing}
           min={MIN_MAX.LETTER_SPACING.MIN}
           max={MIN_MAX.LETTER_SPACING.MAX}
-          suffix={<OffsetHorizontal />}
-          symbol="%"
+          suffix={<Icons.LetterAWidth />}
+          unit="%"
           onChange={setLetterSpacingMinMax}
-          canBeEmpty
+          allowEmpty
+          isIndeterminate={MULTIPLE_VALUE === letterSpacing}
+          placeholder={
+            MULTIPLE_VALUE === letterSpacing ? MULTIPLE_DISPLAY_VALUE : null
+          }
         />
       </Row>
       <Row>
-        <ToggleButton
-          icon={<AlignLeftAlt />}
-          value={textAlign === 'left'}
-          onChange={(value) =>
-            pushUpdate({ textAlign: value ? 'left' : '' }, true)
-          }
+        <Toggle
+          isToggled={textAlign === 'left'}
+          onClick={handleTextAlign('left')}
           aria-label={__('Align: left', 'web-stories')}
-        />
-        <ToggleButton
-          icon={<AlignCenterAlt />}
-          value={textAlign === 'center'}
-          onChange={(value) =>
-            pushUpdate({ textAlign: value ? 'center' : '' }, true)
-          }
+        >
+          <Icons.AlignTextLeft />
+        </Toggle>
+        <Toggle
+          isToggled={textAlign === 'center'}
+          onClick={handleTextAlign('center')}
           aria-label={__('Align: center', 'web-stories')}
-        />
-        <ToggleButton
-          icon={<AlignRightAlt />}
-          value={textAlign === 'right'}
-          onChange={(value) =>
-            pushUpdate({ textAlign: value ? 'right' : '' }, true)
-          }
+        >
+          <Icons.AlignTextCenter />
+        </Toggle>
+        <Toggle
+          isToggled={textAlign === 'right'}
+          onClick={handleTextAlign('right')}
           aria-label={__('Align: right', 'web-stories')}
-        />
-        <ToggleButton
-          icon={<AlignMiddleAlt />}
-          value={textAlign === 'justify'}
-          onChange={(value) =>
-            pushUpdate({ textAlign: value ? 'justify' : '' }, true)
-          }
+        >
+          <Icons.AlignTextRight />
+        </Toggle>
+        <Toggle
+          isToggled={textAlign === 'justify'}
+          onClick={handleTextAlign('justify')}
           aria-label={__('Align: justify', 'web-stories')}
-        />
-        <ToggleButton
-          data-testid="boldToggle"
-          icon={<Bold />}
-          value={isBold}
-          iconWidth={9}
-          iconHeight={10}
-          onChange={handleClickBold}
+        >
+          <Icons.AlignTextJustified />
+        </Toggle>
+        <Toggle
+          isToggled={isTrulyBold}
+          onClick={() => handleClickBold(!isTrulyBold)}
           aria-label={__('Toggle: bold', 'web-stories')}
-        />
-        <ToggleButton
-          icon={<Italic />}
-          value={isItalic}
-          iconWidth={10}
-          iconHeight={10}
-          onChange={async (value) => {
+        >
+          <Icons.LetterBBold />
+        </Toggle>
+        <Toggle
+          isToggled={isTrulyItalic}
+          onClick={async () => {
             await maybeEnqueueFontStyle(
               selectedElements.map(({ font, content }) => {
                 return {
                   font,
-                  fontStyle: value ? 'italic' : 'normal',
+                  fontStyle: isTrulyItalic ? 'normal' : 'italic',
                   fontWeight,
                   content: stripHTML(content),
                 };
               })
             );
-            handleClickItalic(value);
+            handleClickItalic(!isTrulyItalic);
           }}
           aria-label={__('Toggle: italic', 'web-stories')}
-        />
-        <ToggleButton
-          icon={<Underline />}
-          value={isUnderline}
-          iconWidth={8}
-          iconHeight={21}
-          onChange={handleClickUnderline}
+        >
+          <Icons.LetterIItalic />
+        </Toggle>
+        <Toggle
+          isToggled={isTrulyUnderline}
+          onClick={() => handleClickUnderline(!isTrulyUnderline)}
           aria-label={__('Toggle: underline', 'web-stories')}
-        />
+        >
+          <Icons.LetterUUnderline />
+        </Toggle>
       </Row>
     </>
   );

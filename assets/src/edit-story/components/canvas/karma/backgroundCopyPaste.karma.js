@@ -77,7 +77,7 @@ describe('Background Copy Paste integration', () => {
     await setBackgroundColor('FF0000');
     await gotoPage(2);
     await setBackgroundColor('00FF00');
-    await addBackgroundImage('blue-marble');
+    await addBackgroundImage(0);
 
     // Verify setup - 1 element on each page
     await gotoPage(1);
@@ -115,7 +115,7 @@ describe('Background Copy Paste integration', () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
-    await addBackgroundImage('blue-marble');
+    await addBackgroundImage(0);
     await gotoPage(2);
     await setBackgroundColor('00FF00');
 
@@ -160,12 +160,18 @@ describe('Background Copy Paste integration', () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
-    await addBackgroundImage('blue-marble');
-    await setOverlay('linear');
+    await addBackgroundImage(0);
+    await fixture.events.sleep(100);
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.filters.linear.button
+    );
     await gotoPage(2);
     await setBackgroundColor('00FF00');
-    await addBackgroundImage('saturn');
-    await setOverlay('radial');
+    await addBackgroundImage(1);
+    await fixture.events.sleep(100);
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.filters.radial.button
+    );
 
     // Verify setup - 1 image on each page with correct overlay
     await gotoPage(1);
@@ -179,7 +185,7 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getNumElements()).toBe(1);
     await gotoPage(2);
-    expect(await getCanvasBackgroundImage()).toHaveProperty('src', /saturn/);
+    expect(await getCanvasBackgroundImage()).toHaveProperty('src', /curiosity/);
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
       'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
@@ -242,21 +248,17 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.keyboard.type(hex);
     await fixture.events.keyboard.press('tab');
   }
-  function setOverlay(overlayName) {
-    const overlayCheckbox = getInputByAriaLabel(
-      new RegExp(`set overlay: ${overlayName}`, 'i')
-    );
-    const overlayLabel = overlayCheckbox.parentNode;
-    overlayLabel.click();
-  }
-  async function addBackgroundImage(imageAlt) {
-    // Click img in library to add it to page
-    const source = getMediaElement(imageAlt);
-    await fixture.events.click(source);
+  async function addBackgroundImage(index) {
+    // Drag image to canvas corner to set as background
+    const image = fixture.editor.library.media.item(index);
+    const canvas = fixture.editor.canvas.fullbleed.container;
 
-    // Click "set as background"
-    const setAsBackground = getButtonByText('Set as background');
-    await fixture.events.click(setAsBackground);
+    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
+      moveRel(image, 5, 5),
+      down(),
+      moveRel(canvas, 5, 5),
+      up(),
+    ]);
   }
   async function getNumElements() {
     const {
@@ -293,22 +295,11 @@ describe('Background Copy Paste integration', () => {
     return Array.from(fixture.querySelectorAll(tagName)).find(matcher);
   }
 
-  function getByInnerText(text) {
-    return (el) =>
-      typeof text === 'string'
-        ? el.innerText === text
-        : text.test(el.innerText);
-  }
-
   function getByAttribute(attr, value) {
     return (el) =>
       typeof value === 'string'
         ? el.getAttribute(attr) === value
         : value.test(el.getAttribute(attr));
-  }
-
-  function getButtonByText(buttonText) {
-    return getElementByQueryAndMatcher('button', getByInnerText(buttonText));
   }
 
   function getButtonByAriaLabel(ariaLabel) {
@@ -322,13 +313,6 @@ describe('Background Copy Paste integration', () => {
     return getElementByQueryAndMatcher(
       'input',
       getByAttribute('aria-label', ariaLabel)
-    );
-  }
-
-  function getMediaElement(imageAlt) {
-    return getElementByQueryAndMatcher(
-      '[data-testid^="mediaElement"] img',
-      getByAttribute('alt', imageAlt)
     );
   }
 

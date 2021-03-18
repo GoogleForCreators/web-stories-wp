@@ -38,14 +38,16 @@ const Layout = styled.section.attrs({
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.fg.primary};
   max-height: 100%;
 `;
 
 // @todo Verify that L10N works with the translation happening here.
 const TabsArea = styled.nav.attrs({
   'aria-label': __('Library tabs', 'web-stories'),
-})``;
+})`
+  padding: 0 4px;
+`;
 
 const LibraryPaneContainer = styled.div`
   height: 100%;

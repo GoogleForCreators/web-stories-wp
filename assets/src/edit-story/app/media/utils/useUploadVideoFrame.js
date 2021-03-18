@@ -90,9 +90,11 @@ function useUploadVideoFrame({ updateMediaElement }) {
       setProperties(id, newState);
       updateMediaElement({
         id,
-        posterId,
-        poster,
-        ...newSize,
+        data: {
+          posterId,
+          poster,
+          ...newSize,
+        },
       });
     } catch (err) {
       // TODO: Potentially display error message to user.

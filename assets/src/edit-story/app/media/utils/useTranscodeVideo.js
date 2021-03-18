@@ -23,6 +23,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import {
@@ -58,47 +59,62 @@ function useTranscodeVideo() {
    * @return {Promise<File>} File object of transcoded video file.
    */
   async function transcodeVideo(file) {
-    const { createFFmpeg, fetchFile } = await import(
-      /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
-    );
+    //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+    const trackTiming = getTimeTracker('load_video_transcoding');
 
-    const ffmpeg = createFFmpeg({
-      corePath: ffmpegCoreUrl,
-      log: isDevelopment,
-    });
-    await ffmpeg.load();
+    try {
+      const { createFFmpeg, fetchFile } = await import(
+        /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
+      );
 
-    const tempFileName = uuidv4() + '.mp4';
-    const outputFileName = getFileName(file) + '.mp4';
+      const ffmpeg = createFFmpeg({
+        corePath: ffmpegCoreUrl,
+        log: isDevelopment,
+      });
+      await ffmpeg.load();
 
-    ffmpeg.FS('writeFile', file.name, await fetchFile(file));
-    // TODO: Optimize arguments.
-    await ffmpeg.run(
-      // Input filename.
-      '-i',
-      file.name,
-      // Use H.264 video codec.
-      '-vcodec',
-      'libx264',
-      // Resize videos if larger than 1080x1920, preserving aspect ratio.
-      // See https://trac.ffmpeg.org/wiki/Scaling
-      '-vf',
-      "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
-      // As the name says...
-      '-preset',
-      'fast', // 'veryfast' seems to cause crashes.
-      // Output filename. MUST be different from input filename.
-      tempFileName
-    );
+      const tempFileName = uuidv4() + '.mp4';
+      const outputFileName = getFileName(file) + '.mp4';
 
-    const data = ffmpeg.FS('readFile', tempFileName);
-    return new File(
-      [new Blob([data.buffer], { type: 'video/mp4' })],
-      outputFileName,
-      {
-        type: 'video/mp4',
-      }
-    );
+      ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+      await ffmpeg.run(
+        // Input filename.
+        '-i',
+        file.name,
+        // Use H.264 video codec.
+        '-vcodec',
+        'libx264',
+        // Resize videos if larger than 1080x1920, preserving aspect ratio.
+        // See https://trac.ffmpeg.org/wiki/Scaling
+        '-vf',
+        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
+        // move some information to the beginning of your file.
+        '-movflags',
+        '+faststart',
+        // Simpler color profile
+        '-pix_fmt',
+        'yuv420p',
+        // As the name says...
+        '-preset',
+        'fast', // 'veryfast' seems to cause crashes.
+        // Output filename. MUST be different from input filename.
+        tempFileName
+      );
+
+      const data = ffmpeg.FS('readFile', tempFileName);
+      return new File(
+        [new Blob([data.buffer], { type: 'video/mp4' })],
+        outputFileName,
+        {
+          type: 'video/mp4',
+        }
+      );
+    } catch (err) {
+      trackError('video_transcoding', err.message);
+      throw err;
+    } finally {
+      trackTiming();
+    }
   }
 
   const canTranscodeFile = (file) =>

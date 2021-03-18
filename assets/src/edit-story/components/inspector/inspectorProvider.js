@@ -65,7 +65,7 @@ function InspectorProvider({ children }) {
       checklist.some(({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR) ? (
         <Icons.ExclamationOutline className="alert error" />
       ) : (
-        <Icons.ExclamationTriangle className="alert warning" />
+        <Icons.ExclamationOutline className="alert warning" />
       ),
     [checklist]
   );

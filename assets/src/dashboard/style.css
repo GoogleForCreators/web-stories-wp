@@ -26,7 +26,7 @@ body.js {
 }
 
 #screen-meta,
-#screen-meta-links ~ :not(.web-stories-wp):not(.clear) {
+#screen-meta ~ :not(.web-stories-wp):not(.clear) {
   display: none;
 }
 

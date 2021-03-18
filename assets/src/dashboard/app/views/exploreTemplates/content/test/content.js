@@ -95,7 +95,7 @@ describe('Explore Templates <Content />', function () {
     expect(useButtons).toHaveLength(fakeTemplates.length);
   });
 
-  it('should show "No templates currently available" if no templates are present.', function () {
+  it('should show "No templates currently available." if no templates are present.', function () {
     const { getByText } = renderWithProviders(
       <LayoutProvider>
         <Content
@@ -113,7 +113,7 @@ describe('Explore Templates <Content />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('No templates currently available')).toBeInTheDocument();
+    expect(getByText('No templates currently available.')).toBeInTheDocument();
   });
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no templates are found for a search query are present.', function () {

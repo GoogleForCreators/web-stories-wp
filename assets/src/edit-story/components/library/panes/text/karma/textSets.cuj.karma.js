@@ -63,6 +63,29 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     expect(selection.length).toBeGreaterThan(1);
   });
 
+  it('should allow inserting text set by keyboard', async () => {
+    await waitFor(
+      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      { timeout: 2000 }
+    );
+    const textSets = fixture.editor.library.text.textSets;
+
+    await fixture.events.focus(textSets[0]);
+
+    await fixture.events.keyboard.press('down');
+
+    const activeTextSetId = textSets[2].getAttribute('data-testid');
+    const documentTestId = document.activeElement.getAttribute('data-testid');
+
+    expect(activeTextSetId).toBe(documentTestId);
+    await fixture.events.keyboard.press('Enter');
+
+    const storyContext = await fixture.renderHook(() => useStory());
+    const selection = storyContext.state.selectedElements;
+    // Text sets contain at least 2 elements.
+    expect(selection.length).toBeGreaterThan(1);
+  });
+
   // Disable reason: flakey tests.
   // See https://github.com/google/web-stories-wp/pull/6162
   // eslint-disable-next-line jasmine/no-disabled-tests

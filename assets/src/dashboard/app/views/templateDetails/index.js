@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
@@ -42,7 +41,6 @@ import Content from './content';
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
-  const enableBookmarks = useFeature('enableBookmarkActions');
 
   const {
     state: {
@@ -183,8 +181,6 @@ function TemplateDetails() {
     [activeTemplateIndex, templatesOrderById, actions, templates]
   );
 
-  const handleBookmarkClickSelected = useCallback(() => {}, []);
-
   const onHandleCta = useCallback(() => {
     trackEvent('use_template', {
       name: template.title,
@@ -214,9 +210,7 @@ function TemplateDetails() {
       <TransformProvider>
         <Layout.Provider>
           <Header
-            onBookmarkClick={
-              enableBookmarks ? handleBookmarkClickSelected : null
-            }
+            templateTitle={template?.title}
             onHandleCtaClick={onHandleCta}
           />
           <Content

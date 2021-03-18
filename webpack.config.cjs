@@ -18,10 +18,12 @@
  * External dependencies
  */
 const path = require('path');
+const glob = require('glob');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -156,6 +158,9 @@ const sharedConfig = {
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
+    new RtlCssPlugin({
+      filename: `../css/[name]-rtl.css`,
+    }),
     new webpack.EnvironmentPlugin({
       DISABLE_PREVENT: false,
       DISABLE_ERROR_BOUNDARIES: false,
@@ -247,10 +252,11 @@ const editorAndDashboard = {
   },
 };
 
-const storyEmbedBlock = {
+const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    'web-stories-embed-block': './assets/src/story-embed-block/index.js',
+    lightbox: './packages/stories-lightbox/src/index.js',
+    'carousel-view': './packages/stories-carousel/src/index.js',
   },
   plugins: [
     process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
@@ -260,6 +266,47 @@ const storyEmbedBlock = {
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
+    new RtlCssPlugin({
+      filename: `../css/[name]-rtl.css`,
+    }),
+    new WebpackBar({
+      name: 'WP Frontend Scripts',
+      color: '#EEE070',
+    }),
+  ].filter(Boolean),
+};
+
+// Collect all core themes style sheet paths.
+const coreThemesBlockStylesPaths = glob.sync(
+  './assets/src/web-stories-block/css/core-themes/*.css'
+);
+
+// Build entry object for the Core Themes Styles.
+const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
+  const fileName = path.parse(curr).name;
+
+  return {
+    ...acc,
+    [`web-stories-theme-style-${fileName}`]: curr,
+  };
+}, {});
+
+const webStoriesBlock = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-block': [
+      './assets/src/web-stories-block/index.js',
+      './assets/src/web-stories-block/block/edit.css',
+    ],
+    'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
+    'web-stories-embed': './assets/src/web-stories-block/css/embed.css',
+    ...coreThemeBlockStyles,
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      injectPolyfill: true,
+    }),
     new WebpackBar({
       name: 'Web Stories Block',
       color: '#357BB5',
@@ -267,16 +314,6 @@ const storyEmbedBlock = {
   ].filter(Boolean),
   optimization: {
     ...sharedConfig.optimization,
-    splitChunks: {
-      cacheGroups: {
-        stories: {
-          name: 'web-stories-embed-block',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
   },
 };
 
@@ -308,4 +345,45 @@ const activationNotice = {
   },
 };
 
-module.exports = [editorAndDashboard, storyEmbedBlock, activationNotice];
+const widgetScript = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-widget': './packages/widget/src/index.js',
+  },
+  plugins: [
+    new DependencyExtractionWebpackPlugin({}),
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+    }),
+    new WebpackBar({
+      name: 'WP Widget Script',
+      color: '#F757A5',
+    }),
+  ],
+};
+
+const storiesMCEButton = {
+  ...sharedConfig,
+  entry: {
+    'tinymce-button': './packages/tinymce-button/src/index.js',
+  },
+  plugins: [
+    new DependencyExtractionWebpackPlugin({}),
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+    }),
+    new WebpackBar({
+      name: 'WP TinyMCE Button',
+      color: '#4deaa2',
+    }),
+  ],
+};
+
+module.exports = [
+  editorAndDashboard,
+  activationNotice,
+  webStoriesBlock,
+  webStoriesScripts,
+  widgetScript,
+  storiesMCEButton,
+];

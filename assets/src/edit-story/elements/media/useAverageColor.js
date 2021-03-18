@@ -42,7 +42,15 @@ function useAverageColor(ref, onAverageColor) {
     }
 
     const element = ref.current;
-    if (element.complete) {
+
+    if (!element) {
+      return undefined;
+    }
+
+    // element.complete indicates whether the browser has finished fetching the image, whether successful or not.
+    // That means this value is also true if the image has no `src` value indicating an image to load.
+    // Hence also checking for `src` here.
+    if (element.src && element.complete) {
       checkAverageColor();
 
       return undefined;

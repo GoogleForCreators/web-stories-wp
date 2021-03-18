@@ -20,22 +20,20 @@
 import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
-  BackgroundSizePositionPanel,
-  BackgroundOverlayPanel,
   BorderRadiusPanel,
   BorderStylePanel,
   CaptionsPanel,
+  FilterPanel,
   ImageAccessibilityPanel,
   LinkPanel,
   LayerStylePanel,
   PageAttachmentPanel,
-  PageStylePanel,
+  PageBackgroundPanel,
   ShapeStylePanel,
   SizePositionPanel,
   TextBoxPanel,
   TextStylePanel,
   VideoAccessibilityPanel,
-  NoSelectionPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
   VideoPosterPanel,
@@ -52,26 +50,24 @@ function intersect(a, b) {
 
 function getDesignPanelsForSelection(elements) {
   if (elements.length === 0) {
-    return [{ type: PanelTypes.NO_SELECTION, Panel: NoSelectionPanel }];
+    return [];
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [
-      { type: PanelTypes.PAGE_ATTACHMENT, Panel: PageAttachmentPanel },
-    ];
+    const panels = [];
 
     const isBackgroundMedia = !elements[0].isDefaultBackground;
     if (isBackgroundMedia) {
       panels.push({
-        type: PanelTypes.BACKGROUND_SIZE_POSITION,
-        Panel: BackgroundSizePositionPanel,
+        type: PanelTypes.PAGE_BACKGROUND,
+        Panel: PageBackgroundPanel,
       });
       panels.push({
-        type: PanelTypes.BACKGROUND_OVERLAY,
-        Panel: BackgroundOverlayPanel,
+        type: PanelTypes.FILTER,
+        Panel: FilterPanel,
       });
       panels.push({ type: PanelTypes.ANIMATION, Panel: AnimationPanel });
     }
@@ -94,13 +90,22 @@ function getDesignPanelsForSelection(elements) {
       });
       // In case of default background without media:
     } else {
-      panels.unshift({ type: PanelTypes.PAGE_STYLE, Panel: PageStylePanel });
+      panels.unshift({
+        type: PanelTypes.PAGE_BACKGROUND,
+        Panel: PageBackgroundPanel,
+      });
       // Always display Presets as the first panel for background.
       panels.unshift({
         type: PanelTypes.STYLE_PRESETS,
         Panel: ColorPresetPanel,
       });
     }
+
+    panels.push({
+      type: PanelTypes.PAGE_ATTACHMENT,
+      Panel: PageAttachmentPanel,
+    });
+
     return panels;
   }
 
@@ -114,7 +119,7 @@ function getDesignPanelsForSelection(elements) {
       switch (type) {
         case PanelTypes.ANIMATION:
           return { type, Panel: AnimationPanel };
-        case PanelTypes.BACKGROUND_SIZE_POSITION:
+        case PanelTypes.PAGE_BACKGROUND:
           // Only display when isBackground.
           return null;
         case PanelTypes.COLOR_PRESETS:

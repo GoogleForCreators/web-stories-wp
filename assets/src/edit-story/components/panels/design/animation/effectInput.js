@@ -69,9 +69,9 @@ function EffectInput({
         <DropDown
           value={valueForField}
           onChange={(value) => onChange(value, true)}
-          options={effectProps[field].values.map((v) => ({
-            value: v,
-            name: v,
+          options={(effectProps[field].values || []).map((option) => ({
+            ...option,
+            disabled: disabledOptions.includes(option.value),
           }))}
         />
       );

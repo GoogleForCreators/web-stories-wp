@@ -20,5 +20,3 @@ export const KEYS = {
   RIGHT: 'ArrowRight',
   UP: 'ArrowUp',
 };
-
-export const MULTIPLE_VALUE = '((MULTIPLE))';

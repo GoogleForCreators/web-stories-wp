@@ -87,7 +87,7 @@ export const ErrorRenderingPreview = () => {
 
 export const LoadingPreview = () => {
   return (
-    <Wrapper isLoading={true}>
+    <Wrapper isLoading>
       <PreviewStory
         story={completeTemplateObject}
         handleClose={action('close action triggered')}

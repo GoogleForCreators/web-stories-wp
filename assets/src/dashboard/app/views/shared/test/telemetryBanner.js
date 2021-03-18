@@ -99,7 +99,7 @@ describe('TelemetryBanner', () => {
 
   it('should not be able to be checked when disabled', () => {
     const { getByRole } = renderWithProviders(
-      <TelemetryBannerTestContainer disabled={true} />
+      <TelemetryBannerTestContainer disabled />
     );
 
     const checkbox = getByRole('checkbox');
