@@ -53,9 +53,12 @@ const StyledRow = styled(Row)`
 `;
 
 const GroupWrapper = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  margin: -1px;
+  ${({ hasAnimation, theme }) =>
+    hasAnimation &&
+    `
+    border: 1px solid ${theme.colors.border.defaultNormal};
+    border-radius: ${theme.borders.radius.small};
+  `}
 `;
 
 const backgroundAnimationTooltip = __(
@@ -210,6 +213,7 @@ function AnimationPanel({
     return {};
   }, [selectedElements]);
 
+  const selectedEffectTitle = getEffectName(updatedAnimations[0]?.type);
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
@@ -218,11 +222,11 @@ function AnimationPanel({
     </SimplePanel>
   ) : (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-      <GroupWrapper>
+      <GroupWrapper hasAnimation={selectedEffectTitle}>
         <StyledRow>
           <EffectChooserDropdown
             onAnimationSelected={handleAddOrUpdateElementEffect}
-            selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
+            selectedEffectTitle={selectedEffectTitle}
             onNoEffectSelected={handleRemoveEffect}
             isBackgroundEffects={isBackground}
             disabledTypeOptionsMap={disabledTypeOptionsMap}

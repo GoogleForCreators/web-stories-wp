@@ -44,14 +44,14 @@ const Container = styled.div`
 `;
 
 const StyledDropDownSelect = styled(DropDownSelect)`
-  margin: -1px -1px 0 -1px;
-  width: calc(100% + 2px);
-  border-color: transparent transparent ${({ theme }) =>
-    theme.colors.border.defaultNormal}; transparent;
-  height: ${INPUT_HEIGHT}px;
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.border.defaultNormal};;
-  }
+  ${({ hasAnimation, theme }) =>
+    hasAnimation &&
+    `
+    margin: -1px -1px 0 -1px;
+    width: calc(100% + 2px);
+    border-color: transparent transparent ${theme.colors.border.defaultNormal} transparent;
+    height: ${INPUT_HEIGHT}px;
+  `}
 `;
 
 export default function EffectChooserDropdown({
@@ -89,6 +89,7 @@ export default function EffectChooserDropdown({
   return (
     <>
       <StyledDropDownSelect
+        hasAnimation={Boolean(selectedEffectTitle)}
         activeItemLabel={selectedEffectTitle || __('None', 'web-stories')}
         aria-label={__('Animation: Effect Chooser', 'web-stories')}
         ref={selectRef}
