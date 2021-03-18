@@ -19,7 +19,6 @@
  */
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import styled, { css } from 'styled-components';
 
 /**
@@ -29,22 +28,13 @@ import { __ } from '@web-stories-wp/i18n';
 import { FIELD_TYPES } from '../../../../../animation';
 import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../../animation/types';
-import RangeInput from '../../../rangeInput';
 import {
   NumericInput,
   DropDown,
 } from '../../../../../design-system/components';
-import {
-  THEME_CONSTANTS,
-  Text,
-  ThemeGlobals,
-} from '../../../../../design-system';
+import { ThemeGlobals } from '../../../../../design-system';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
-
-const RangeContainer = styled.div`
-  width: 100%;
-`;
 
 const outerGridBordersCss = css`
   border-radius: 0;
@@ -76,14 +66,6 @@ const StyledDropDown = styled(DropDown)`
   }
 `;
 
-const StyledText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.primary};
-`;
-
-const Label = styled.label`
-  display: block;
-`;
-
 function EffectInput({
   effectProps,
   effectConfig,
@@ -92,8 +74,6 @@ function EffectInput({
   disabledOptions,
   tooltip,
 }) {
-  const rangeId = `range-${uuidv4()}`;
-
   const directionControlOnChange = useCallback(
     (value) => onChange(value, true),
     [onChange]
