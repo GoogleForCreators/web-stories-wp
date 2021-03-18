@@ -20,7 +20,7 @@
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
@@ -42,13 +42,24 @@ const RangeContainer = styled.div`
   width: 100%;
 `;
 
+const outerGridBordersCss = css`
+  border-radius: 0;
+  border-color: ${({ theme }) => theme.colors.border.defaultNormal} transparent
+    transparent transparent;
+`;
+
 const StyledInput = styled(NumericInput)`
   height: ${INPUT_HEIGHT}px;
   div {
     height: calc(100% + 1px);
-    border-radius: 0;
-    border-color: ${({ theme }) => theme.colors.border.defaultNormal}
-      transparent transparent transparent;
+    ${outerGridBordersCss}
+  }
+`;
+
+const StyledDropDown = styled(DropDown)`
+  button {
+    height: 46px;
+    ${outerGridBordersCss}
   }
 `;
 
@@ -79,7 +90,7 @@ function EffectInput({
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (
-        <DropDown
+        <StyledDropDown
           options={(effectProps[field].values || []).map(
             ({ name, ...rest }) => ({
               ...rest,
