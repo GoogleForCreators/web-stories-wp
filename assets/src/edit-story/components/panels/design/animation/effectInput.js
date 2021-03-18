@@ -42,6 +42,12 @@ const outerGridBordersCss = css`
     transparent transparent;
 `;
 
+const outerGridBordersCss = css`
+  border-radius: 0;
+  border-color: ${({ theme }) => theme.colors.border.defaultNormal} transparent
+    transparent transparent;
+`;
+
 const StyledInput = styled(NumericInput)`
   height: ${INPUT_HEIGHT}px;
   div {
