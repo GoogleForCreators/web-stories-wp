@@ -183,6 +183,17 @@ function AnimationPanel({
             normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
           ].filter(Boolean),
         },
+        [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]: {
+          tooltip: backgroundAnimationTooltip,
+          options: [
+            !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
+            !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
+            !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
+            !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
+            normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
+            normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
+          ].filter(Boolean),
+        },
       };
     }
     return {};

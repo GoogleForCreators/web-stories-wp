@@ -177,9 +177,11 @@ function StoryPicker({
   }, [authorKeyword, fetchAuthors]);
 
   const orderedStories = useMemo(() => {
-    return storiesOrderById.map((storyId) => {
-      return stories[storyId];
-    });
+    return storiesOrderById
+      .map((storyId) => {
+        return stories[storyId];
+      })
+      .filter(Boolean);
   }, [stories, storiesOrderById]);
 
   useEffect(() => {
