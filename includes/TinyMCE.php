@@ -65,6 +65,7 @@ class TinyMCE {
 		add_filter( 'mce_buttons', [ $this, 'tinymce_web_stories_button' ] );
 		add_filter( 'mce_external_plugins', [ $this, 'web_stories_mce_plugin' ] );
 		add_action( 'admin_footer', [ $this, 'web_stories_tinymce_root_element' ] );
+		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
 	}
 
 	/**
@@ -108,14 +109,32 @@ class TinyMCE {
 	public function register_assets() {
 		$this->enqueue_style( 'wp-components' );
 
-		// Can't use Assets::enqueue_script() because the script needs to be loaded via the mce_external_plugins filter.
-		$asset = $this->get_asset_metadata( 'tinymce-button' );
+		$this->enqueue_script( self::SCRIPT_HANDLE );
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesData',
+			$this->get_script_data()
+		);
+	}
 
-		// Only works when wp_register_script and wp_enqueue_script are called separately.
-		wp_register_script( self::SCRIPT_HANDLE, false, $asset['dependencies'], $asset['version'], true );
-		wp_add_inline_script( self::SCRIPT_HANDLE, 'var webStoriesData = ' . wp_json_encode( $this->get_script_data() ) . ';' );
+	/**
+	 * High jack the tinymce to render an empty script tag for tinymce.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $tag    The `<script>` tag for the enqueued script.
+	 * @param string $handle The script's registered handle.
+	 * @param string $src    The script's source URL.
+	 *
+	 * @return string $tag The `<script>` tag for the enqueued script.
+	 */
+	public function script_loader_tag( $tag, $handle, $src ) {
+		if ( self::SCRIPT_HANDLE === $handle ) {
+			$tag = str_replace( $src, '', $tag );
+			$tag = (string) preg_replace( '#<script src=\'\'(.*?)>(.*?)</script>#is', '', $tag );
+		}
 
-		// TODO: ensure localization via wp_set_script_translations(), avoiding PHP notices due to miissing src.
+		return $tag;
 	}
 
 	/**
