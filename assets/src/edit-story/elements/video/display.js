@@ -85,13 +85,13 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
       previewMode={previewMode}
     >
       {previewMode ? (
-        <Image
+        (poster || resource.poster) && (<Image
           src={poster || resource.poster}
           alt={element.alt || resource.alt}
           style={style}
           {...videoProps}
           ref={ref}
-        />
+        />)
       ) : (
         <Video
           id={`video-${id}`}
