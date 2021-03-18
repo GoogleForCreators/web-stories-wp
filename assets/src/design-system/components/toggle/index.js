@@ -33,7 +33,7 @@ const CIRCLE_INITIAL_POSITION = (TOGGLE_HEIGHT - CIRCLE_DIAMETER) / 2;
 const CIRCLE_FINAL_POSITION =
   TOGGLE_WIDTH - CIRCLE_INITIAL_POSITION - CIRCLE_DIAMETER;
 
-const ICON_WIDTH = 32;
+const ICON_CONTAINER_WIDTH = 32;
 const ICON_TOP_POSITION = -6;
 const ICON_LEFT_POSITION = 19;
 
@@ -74,7 +74,7 @@ const Circle = styled.span(
 const IconContainer = styled.div(
   ({ theme }) => css`
     position: absolute;
-    width: ${ICON_WIDTH}px;
+    width: ${ICON_CONTAINER_WIDTH}px;
     top: ${ICON_TOP_POSITION}px;
     left: ${ICON_LEFT_POSITION}px;
     z-index: 1;
