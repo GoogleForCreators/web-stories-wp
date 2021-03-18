@@ -27,6 +27,7 @@ import React, {
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -68,6 +69,7 @@ import {
   PanRightAnimation,
   PanBottomAnimation,
   PanLeftAnimation,
+  PanAndZoomAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -200,6 +202,7 @@ const BACKGROUND_EFFECTS_LIST = [
   PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
+  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
 ];
 
 export default function EffectChooser({
@@ -214,6 +217,7 @@ export default function EffectChooser({
   const { isRTL } = useConfig();
   const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
+  const { enableExperimentalAnimationEffects } = useFeatures();
 
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
@@ -565,6 +569,52 @@ export default function EffectChooser({
                 </ZoomOutAnimation>
               </WithTooltip>
             </GridItemHalfRow>
+            {enableExperimentalAnimationEffects && (
+              <GridItemFullRow
+                aria-label={__('Pan and Zoom Effect', 'web-stories')}
+                onClick={(event) => {
+                  handleOnSelect(
+                    event,
+                    BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                    {
+                      animation:
+                        BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                      zoomDirection: (
+                        disabledTypeOptionsMap[
+                          BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                        ]?.options || []
+                      ).includes(SCALE_DIRECTION.SCALE_OUT)
+                        ? SCALE_DIRECTION.SCALE_IN
+                        : SCALE_DIRECTION.SCALE_OUT,
+                    }
+                  );
+                }}
+                aria-disabled={disabledBackgroundEffects.includes(
+                  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                )}
+                active={activeEffectListIndex === 7}
+              >
+                <WithTooltip
+                  title={
+                    disabledBackgroundEffects.includes(
+                      BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                    )
+                      ? disabledTypeOptionsMap[
+                          BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                        ]?.tooltip
+                      : ''
+                  }
+                  placement="left"
+                >
+                  <ContentWrapper>
+                    {__('Pan and Zoom', 'web-stories')}
+                  </ContentWrapper>
+                  <PanAndZoomAnimation>
+                    {__('Pan and Zoom', 'web-stories')}
+                  </PanAndZoomAnimation>
+                </WithTooltip>
+              </GridItemFullRow>
+            )}
           </>
         ) : (
           <>
