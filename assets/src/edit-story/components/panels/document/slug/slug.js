@@ -63,7 +63,7 @@ const LinkContainer = styled.div`
 
   ${Link} {
     ${({ theme }) =>
-      themeHelpers.focusCSS(
+      themeHelpers.focusableOutlineCSS(
         theme.colors.border.focus,
         theme.colors.bg.secondary
       )};
