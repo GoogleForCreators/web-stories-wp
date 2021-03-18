@@ -153,13 +153,11 @@ const Fieldset = styled.fieldset`
 
 const Figure = styled.div`
   position: absolute;
-  display: block;
   top: 50%;
   left: 50%;
   width: 8px;
   height: 8px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v9};
-  background: #e4e5e6;
+  background-color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 2px;
   transform: translate(-50%, -50%);
 `;
@@ -237,14 +235,11 @@ const Label = styled.label`
   }
 `;
 
-const hidden = css`
+const HiddenLegend = styled.legend`
   position: absolute;
   opacity: 0;
   clip-path: polygon(0 0);
   cursor: pointer;
-`;
-const HiddenLegend = styled.legend`
-  ${hidden}
 `;
 
 const RadioGroup = styled.div`
