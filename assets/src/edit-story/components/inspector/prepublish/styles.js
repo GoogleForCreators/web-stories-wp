@@ -44,7 +44,6 @@ export const NumberBadge = styled.span`
   width: 20px;
   line-height: 20px;
   justify-content: center;
-  margin-left: 14px;
   border-radius: 50%;
   font-size: ${({ number }) =>
     number > MAX_NUMBER_FOR_BADGE ? '10px' : '12px'};
@@ -131,10 +130,8 @@ export const PageIndicator = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  padding-bottom: 12px;
-  &:not(:first-child) {
-    padding-top: 20px;
-  }
+  padding: 20px 0 8px;
+  display: inline-block;
 `;
 
 export const EmptyLayout = styled.div`

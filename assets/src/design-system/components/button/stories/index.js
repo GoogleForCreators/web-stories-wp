@@ -31,6 +31,8 @@ import { Cross } from '../../../icons';
 import { Button } from '../button';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../constants';
 import { ToggleButton, LockToggle } from '../toggleButton';
+import { ButtonAsLink } from '../buttonAsLink';
+import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 
 export default {
   title: 'DesignSystem/Components/Button',
@@ -233,6 +235,25 @@ export const PrebakedButtons = () => {
           </Row>
         </Container>
       </ThemeProvider>
+    </>
+  );
+};
+
+export const _ButtonAsLink = () => {
+  return (
+    <>
+      <Container>
+        <Row>
+          <ButtonAsLink>{'A button that looks like a link'}</ButtonAsLink>
+        </Row>
+      </Container>
+      <DarkThemeProvider>
+        <Container>
+          <Row>
+            <ButtonAsLink>{'A button that looks like a link'}</ButtonAsLink>
+          </Row>
+        </Container>
+      </DarkThemeProvider>
     </>
   );
 };

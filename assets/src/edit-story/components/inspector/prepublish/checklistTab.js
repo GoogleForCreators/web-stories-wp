@@ -26,7 +26,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import { SimplePanel } from '../../panels/panel';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
-import { Link, THEME_CONSTANTS } from '../../../../design-system';
+import { ButtonAsLink, THEME_CONSTANTS } from '../../../../design-system';
 import EmptyChecklist from './emptyChecklist';
 import {
   PageIndicator,
@@ -125,18 +125,18 @@ const ChecklistTab = (props) => {
     (args) => {
       const { id, message, help, pageGroup } = args;
       const onPrepublish = getOnPrepublishSelect(args);
-      const accessibleText = TEXT.ACCESSIBLE_LINK_TITLE;
       return (
-        <Row {...onPrepublish} tabIndex={0} key={id} pageGroup={pageGroup}>
+        <Row key={id} pageGroup={pageGroup}>
           <IssueTitle>{message}</IssueTitle>
           <IssueDescription>{help}</IssueDescription>
-          {onPrepublish.onClick && (
-            <Link
+          {onPrepublish?.onClick && (
+            <ButtonAsLink
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              title={accessibleText}
+              aria-label={TEXT.ACCESSIBLE_LINK_TITLE}
+              {...onPrepublish}
             >
               {TEXT.DISPLAY_LINK}
-            </Link>
+            </ButtonAsLink>
           )}
         </Row>
       );
