@@ -31,10 +31,11 @@ import CurrentUserContext from '../../../app/currentUser/context';
 import PostLock from '../postLock';
 import APIContext from '../../../app/api/context';
 
-function setup(response) {
+function setup(response, _storyContextValue = {}) {
   const configValue = {
     storyId: 123,
     dashboardLink: 'http://www.example.com/dashboard',
+    nonce: '12345',
     postLock: {
       interval: 150,
       showLockedDialog: true,
@@ -53,8 +54,13 @@ function setup(response) {
     state: {
       story: {
         previewLink: 'http://www.example.com/preview',
+        lockUser: {
+          id: 150,
+          name: 'John Doe',
+        },
       },
     },
+    ..._storyContextValue,
   };
 
   const userContextValue = {
@@ -97,13 +103,21 @@ describe('PostLock', () => {
     jest.runAllTimers();
   });
   it('should display take over dialog', async () => {
+    const storyContextValue = {
+      state: {
+        story: {
+          lockUser: { id: 123, name: 'John Doe' },
+        },
+      },
+    };
     setup(
       Promise.resolve({
         locked: true,
         user: 123,
         nonce: 'fsdfds',
         _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-      })
+      }),
+      storyContextValue
     );
 
     const dialog = await screen.findByRole('dialog');
