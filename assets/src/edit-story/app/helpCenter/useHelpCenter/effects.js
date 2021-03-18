@@ -20,7 +20,7 @@ import {
   DONE_TIP_ENTRY,
   BASE_NAVIGATION_FLOW,
   TIP_KEYS_MAP,
-} from '../constants';
+} from '../../../components/helpCenter/constants';
 
 const isMenuIndex = (previous, next) => next.navigationIndex < 0;
 

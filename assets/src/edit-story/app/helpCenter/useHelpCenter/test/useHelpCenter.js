@@ -22,8 +22,9 @@ import { renderHook, act } from '@testing-library/react-hooks';
  */
 import APIContext from '../../../../app/api/context';
 import { CurrentUserProvider } from '../../../../app/currentUser';
-import { DONE_TIP_ENTRY } from '../../constants';
+import { DONE_TIP_ENTRY } from '../../../../components/helpCenter/constants';
 import { useHelpCenter } from '../';
+import HelpCenterProvider from '../../provider';
 
 function setup() {
   const currentUser = { meta: {} };
@@ -41,7 +42,9 @@ function setup() {
   };
   const wrapper = ({ children }) => (
     <APIContext.Provider value={apiContextValue}>
-      <CurrentUserProvider>{children}</CurrentUserProvider>
+      <CurrentUserProvider>
+        <HelpCenterProvider>{children}</HelpCenterProvider>
+      </CurrentUserProvider>
     </APIContext.Provider>
   );
 

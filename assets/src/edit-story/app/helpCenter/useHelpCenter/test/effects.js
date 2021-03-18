@@ -16,13 +16,13 @@
 /**
  * Internal dependencies
  */
-import { initialState } from '../';
+import { initialState } from '../../provider';
 import {
   BASE_NAVIGATION_FLOW,
   DONE_TIP_ENTRY,
   TIPS,
   TIP_KEYS_MAP,
-} from '../../constants';
+} from '../../../../components/helpCenter/constants';
 import {
   composeEffects,
   createDynamicNavigationFlow,

@@ -26,11 +26,11 @@ import styled from 'styled-components';
 import { ThemeGlobals } from '../../../design-system';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
+import { useHelpCenter } from '../../app/helpCenter';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
 import { POPUP_ID } from './constants';
 import { Toggle } from './toggle';
-import { useHelpCenter } from './useHelpCenter';
 import { Popup } from './popup';
 import { forceFocusCompanion } from './utils';
 
