@@ -38,8 +38,10 @@ import {
 } from '../../../../../design-system';
 import DragHandle from './handle';
 
-// If the header is collapsed, we're leaving 8px less padding to apply that from the content.
-const Header = styled.h2`
+// If the header is collapsed, we're leaving 4px less padding to apply that from the content.
+const Header = styled(Headline).attrs({
+  as: 'h2',
+})`
   color: ${({ theme }) => theme.colors.fg.secondary};
   background-color: ${({ isSecondary, theme }) =>
     isSecondary && theme.colors.interactiveBg.secondaryNormal};
@@ -56,11 +58,19 @@ const Header = styled.h2`
   cursor: pointer;
 `;
 
-const Heading = styled(Headline)`
-  color: inherit;
-  line-height: 32px;
+const Heading = styled.span`
+  color: ${({ theme, isCollapsed }) =>
+    isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   width: 100%;
   display: flex;
+  ${({ theme }) =>
+    themeHelpers.expandPresetStyles({
+      preset:
+        theme.typography.presets.headline[
+          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL
+        ],
+      theme,
+    })};
 `;
 
 const HeaderActions = styled.div`
@@ -86,6 +96,7 @@ const Collapse = styled.button`
   width: 100%;
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
+  align-items: center;
   cursor: pointer;
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
@@ -216,7 +227,6 @@ function Title({
         <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
           id={panelTitleId}
-          as="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
         >
           {children}
