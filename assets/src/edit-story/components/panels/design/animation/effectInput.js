@@ -20,18 +20,20 @@
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { rgba } from 'polished';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { FIELD_TYPES } from '../../../../../animation';
 import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../../animation/types';
-import { DropDown } from '../../../form';
 import RangeInput from '../../../rangeInput';
-import { NumericInput } from '../../../../../design-system/components';
+import {
+  NumericInput,
+  DropDown,
+} from '../../../../../design-system/components';
 import { THEME_CONSTANTS, Text } from '../../../../../design-system';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
@@ -78,12 +80,18 @@ function EffectInput({
     case FIELD_TYPES.DROPDOWN:
       return (
         <DropDown
-          value={valueForField}
-          onChange={(value) => onChange(value, true)}
-          options={(effectProps[field].values || []).map((option) => ({
-            ...option,
-            disabled: disabledOptions.includes(option.value),
-          }))}
+          options={(effectProps[field].values || []).map(
+            ({ name, ...rest }) => ({
+              ...rest,
+              label: name,
+              disabled: disabledOptions.includes(rest.value),
+            })
+          )}
+          placeholder={__('Select a value', 'web-stories')}
+          ariaLabel={__('Select effect value', 'web-stories')}
+          isKeepMenuOpenOnSelection={false}
+          selectedValue={valueForField}
+          onMenuItemClick={(evt) => onChange(evt.target.value, true)}
         />
       );
     case FIELD_TYPES.RANGE:
