@@ -32,7 +32,14 @@ import {
 } from '../../../../../animation';
 import { useConfig } from '../../../../app/config';
 import useRadioNavigation from '../../../form/shared/useRadioNavigation';
-import WithTooltip from '../../../tooltip';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Tooltip,
+} from '../../../../../design-system';
 
 const Svg = styled.svg`
   display: block;
@@ -64,23 +71,40 @@ const Svg = styled.svg`
   }};
 `;
 
-const Icon = styled.div`
-  padding: 4px;
-  border-radius: 4px;
-  stroke: #e4e5e6;
-  stroke-width: 1px;
+const StyledButton = styled(Button)`
+  z-index: 0;
   ${({ selected, disabled, theme }) =>
     selected &&
     !disabled &&
     css`
-      background-color: ${theme.DEPRECATED_THEME.colors.accent.primary};
+      background-color: ${theme.colors.interactiveBg.secondaryPress};
     `}
 
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      stroke: #5e6668;
-    `}
+  svg {
+    transform-origin: 50% 50%;
+    transform: ${({ direction }) => {
+      switch (direction) {
+        case DIRECTION.RIGHT_TO_LEFT:
+          return 'rotate(270deg)';
+        case DIRECTION.TOP_TO_BOTTOM:
+          return 'rotate(180deg)';
+        case DIRECTION.LEFT_TO_RIGHT:
+          return 'rotate(90deg)';
+        case ROTATION.COUNTER_CLOCKWISE:
+          return 'rotateX(180deg) rotateZ(90deg)';
+        case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+          return 'rotate(-135deg)';
+        case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+          return 'rotate(135deg)';
+        case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+          return 'rotate(-315deg)';
+        case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+          return 'rotate(315deg)';
+        default:
+          return 'rotate(0deg)';
+      }
+    }};
+  }
 `;
 
 const RotationIcon = ({ direction }) => (
@@ -98,21 +122,23 @@ const DirectionIcon = ({ direction }) => (
   </Svg>
 );
 
-const Direction = ({ className, direction, selected, disabled }) => (
-  <Icon
+const Direction = ({ className, direction, ...rest }) => (
+  <StyledButton
+    variant={BUTTON_VARIANTS.SQUARE}
+    type={BUTTON_TYPES.TERTIARY}
+    size={BUTTON_SIZES.SMALL}
     className={className}
     direction={direction}
-    selected={selected}
-    disabled={disabled}
+    {...rest}
   >
     {[...Object.values(DIRECTION), ...Object.values(SCALE_DIRECTION)].includes(
       direction
     ) ? (
-      <DirectionIcon direction={direction} />
+      <Icons.ArrowUp />
     ) : (
       <RotationIcon direction={direction} />
     )}
-  </Icon>
+  </StyledButton>
 );
 
 // Must be a styled component to add component selectors in css
@@ -218,9 +244,6 @@ const hidden = css`
   cursor: pointer;
 `;
 const HiddenLegend = styled.legend`
-  ${hidden}
-`;
-const HiddenInput = styled.input`
   ${hidden}
 `;
 
@@ -357,17 +380,8 @@ export const DirectionRadioInput = ({
               htmlFor={direction}
               direction={direction}
             >
-              <HiddenInput
-                id={direction}
-                type="radio"
-                name="direction"
-                value={valueForInternalValue(direction)}
-                onChange={onChange}
-                checked={value === direction || direction?.includes(value)}
-                disabled={isDisabled}
-              />
-              <WithTooltip
-                title={isDisabled ? tooltip : ''}
+              <Tooltip
+                title={tooltip}
                 placement={
                   isInternalScaleDirection(direction)
                     ? getPostfixFromCamelCase(direction)
@@ -378,8 +392,9 @@ export const DirectionRadioInput = ({
                   direction={direction}
                   selected={value === direction || direction?.includes(value)}
                   disabled={isDisabled}
+                  onClick={() => onChange(valueForInternalValue(direction))}
                 />
-              </WithTooltip>
+              </Tooltip>
             </Label>
           );
         })}

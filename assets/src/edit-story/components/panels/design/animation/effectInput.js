@@ -70,7 +70,7 @@ function EffectInput({
   const rangeId = `range-${uuidv4()}`;
 
   const directionControlOnChange = useCallback(
-    ({ nativeEvent: { target } }) => onChange(target.value, true),
+    (value) => onChange(value, true),
     [onChange]
   );
 
