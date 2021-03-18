@@ -16,6 +16,6 @@
     "date-fns-tz": "^1.0.12"
   },
   "devDependencies": {
-    "mockdate": "^3.0.2"
+    "mockdate": "^3.0.3"
   }
 }
