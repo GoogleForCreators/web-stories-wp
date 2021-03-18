@@ -30,7 +30,8 @@ import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { useUnits } from '../../../../units';
-import { themeHelpers } from '../../../../../design-system';
+import { themeHelpers, ThemeGlobals } from '../../../../../design-system';
+import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -44,6 +45,17 @@ const Aspect = styled.button`
   position: relative;
 
   border-radius: ${({ theme }) => theme.borders.radius.small};
+  background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
+
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
+
+  &:hover,
+  &:focus,
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
+  }
+
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(
       theme.colors.border.focus,
@@ -62,7 +74,6 @@ const ShapePreviewContainer = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   display: flex;
   justify-content: center;
