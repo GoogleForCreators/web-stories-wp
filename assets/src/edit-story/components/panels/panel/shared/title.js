@@ -32,14 +32,14 @@ import {
   Icons,
   THEME_CONSTANTS,
   Headline,
+  themeHelpers,
 } from '../../../../../design-system';
-import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
+import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
 import DragHandle from './handle';
 
 // If the header is collapsed, we're leaving 4px less padding to apply that from the content.
 const Header = styled.h2`
-  color: ${({ theme, isCollapsed }) =>
-    isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
+  color: ${({ theme }) => theme.colors.fg.secondary};
   background-color: ${({ isSecondary, theme }) =>
     isSecondary && theme.colors.interactiveBg.secondaryNormal};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
@@ -75,19 +75,26 @@ const IconWrapper = styled.div`
 // Since the svg-s are 32px and have extra room around, this needs to be removed
 const Collapse = styled.button`
   border: none;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   background: transparent;
-  color: inherit;
+  color: ${({ theme, isCollapsed }) =>
+    isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   height: 32px;
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   cursor: pointer;
+  margin-left: -12px;
+  transition: ${BUTTON_TRANSITION_TIMING};
+
+  &:hover,
+  &:focus {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
+  ${themeHelpers.focusableOutlineCSS};
+
   svg {
     width: 32px;
     height: 32px;
-  }
-  margin-left: -12px;
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) => theme.colors.border.focus} auto 2px;
   }
 `;
 
@@ -196,6 +203,7 @@ function Title({
         aria-label={ariaLabel}
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}
+        isCollapsed={isCollapsed}
       >
         <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
