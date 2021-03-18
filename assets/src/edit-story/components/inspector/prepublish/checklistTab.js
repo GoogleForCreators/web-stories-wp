@@ -23,22 +23,22 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { SimplePanel } from '../../panels/panel';
+import { ButtonAsLink, THEME_CONSTANTS } from '../../../../design-system';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
-import { ButtonAsLink, THEME_CONSTANTS } from '../../../../design-system';
+import { SimplePanel } from '../../panels/panel';
+import { TEXT } from './constants';
 import EmptyChecklist from './emptyChecklist';
 import {
-  PageIndicator,
   IssueDescription,
   IssueTitle,
-  PageGroup,
-  Row,
-  PanelTitle,
-  TitleWrapper,
   NumberBadge,
+  PageIndicator,
+  PageGroup,
+  PanelTitle,
+  Row,
+  TitleWrapper,
 } from './styles';
-import { TEXT } from './constants';
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
