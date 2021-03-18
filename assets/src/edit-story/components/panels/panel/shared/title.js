@@ -33,6 +33,7 @@ import {
   THEME_CONSTANTS,
   Headline,
   themeHelpers,
+  ThemeGlobals,
 } from '../../../../../design-system';
 import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
 import DragHandle from './handle';
@@ -87,7 +88,7 @@ const Collapse = styled.button`
   transition: ${BUTTON_TRANSITION_TIMING};
 
   &:hover,
-  &:focus {
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
   ${themeHelpers.focusableOutlineCSS};
