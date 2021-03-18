@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { forwardRef, useCallback, useMemo, useRef } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -158,7 +158,6 @@ export const Switch = forwardRef(function (
   },
   ref
 ) {
-  const radioGroupRef = useRef(ref);
   const ids = useMemo(
     () => ({
       group: id || uuidv4(),
@@ -177,7 +176,7 @@ export const Switch = forwardRef(function (
 
   return (
     <SwitchContainer
-      ref={radioGroupRef}
+      ref={ref}
       className={className}
       role="radiogroup"
       aria-labelledby={ids.group}
