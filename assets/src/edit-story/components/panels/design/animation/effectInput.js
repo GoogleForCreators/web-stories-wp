@@ -32,6 +32,7 @@ import { AnimationFormPropTypes } from '../../../../../animation/types';
 import { DropDown } from '../../../form';
 import RangeInput from '../../../rangeInput';
 import { NumericInput } from '../../../../../design-system/components';
+import { THEME_CONSTANTS, Text } from '../../../../../design-system';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
 
@@ -49,14 +50,12 @@ const StyledInput = styled(NumericInput)`
   }
 `;
 
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.primary};
+`;
+
 const Label = styled.label`
   display: block;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
 `;
 
 function EffectInput({
@@ -90,7 +89,11 @@ function EffectInput({
     case FIELD_TYPES.RANGE:
       return (
         <RangeContainer>
-          <Label htmlFor={rangeId}>{effectProps[field].label}</Label>
+          <Label htmlFor={rangeId}>
+            <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {effectProps[field].label}
+            </StyledText>
+          </Label>
           <RangeInput
             id={rangeId}
             aria-label={effectProps[field].label}
