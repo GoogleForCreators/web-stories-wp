@@ -39,10 +39,12 @@ function Switch({ onChange, value, ...props }) {
     [onChange, value]
   );
 
-  useKeyDownEffect(switchRef, ['space', 'enter'], handleToggleValue, [
+  useKeyDownEffect(
+    switchRef,
+    ['space', 'enter', 'left', 'right', 'up', 'down'],
     handleToggleValue,
-    value,
-  ]);
+    [handleToggleValue, value]
+  );
 
   return (
     <BaseSwitch ref={switchRef} onChange={onChange} value={value} {...props} />
