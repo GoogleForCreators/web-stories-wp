@@ -126,7 +126,7 @@ const Grid = styled.div.attrs({ role: 'list' })`
   justify-content: center;
   gap: 12px 4px;
   grid-template-columns: repeat(4, 58px);
-  padding: 15px;
+  padding: 16px 0px 16px 16px;
   position: relative;
 `;
 
@@ -139,9 +139,7 @@ const GridItemHalfRow = styled(GridItem)`
 `;
 
 const NoEffect = styled(GridItemFullRow)`
-  padding: 8px 15px;
-  height: auto;
-  text-transform: capitalize;
+  height: 36px;
 `;
 
 /**
