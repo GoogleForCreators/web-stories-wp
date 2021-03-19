@@ -25,11 +25,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { DropDown, NumericInput } from '../../../../../design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { Numeric, Row, DropDown, usePresubmitHandler } from '../../../form';
+import { Row, usePresubmitHandler } from '../../../form';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
@@ -46,9 +47,13 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
+const StyledNumericInput = styled(NumericInput)`
+  flex-basis: 80px;
+  text-align: center;
+`;
+
+const StyledDropDown = styled(DropDown)`
+  background-color: transparent;
 `;
 
 function FontControls({ selectedElements, pushUpdate }) {
@@ -80,7 +85,7 @@ function FontControls({ selectedElements, pushUpdate }) {
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const handleFontWeightPickerChange = useCallback(
-    async (value) => {
+    async (evt, value) => {
       await maybeEnqueueFontStyle(
         selectedElements.map(({ font, content }) => {
           return {
@@ -116,26 +121,29 @@ function FontControls({ selectedElements, pushUpdate }) {
       <Row>
         {fontWeights && (
           <>
-            <DropDown
-              data-testid="font.weight"
-              aria-label={__('Font weight', 'web-stories')}
+            <StyledDropDown
+              ariaLabel={__('Font weight', 'web-stories')}
               placeholder={MULTIPLE_DISPLAY_VALUE}
               options={fontWeights}
-              value={MULTIPLE_VALUE === fontWeight ? '' : fontWeight}
-              onChange={handleFontWeightPickerChange}
+              selectedValue={MULTIPLE_VALUE === fontWeight ? '' : fontWeight}
+              onMenuItemClick={handleFontWeightPickerChange}
             />
             <Space />
           </>
         )}
-        <BoxedNumeric
+        <StyledNumericInput
           aria-label={__('Font size', 'web-stories')}
-          float
+          isFloat
           value={fontSize}
-          flexBasis={58}
-          textCenter
-          onChange={(value) => pushUpdate({ fontSize: value })}
+          onChange={(evt) =>
+            pushUpdate({ fontSize: Number(evt.target.value) }, true)
+          }
           min={MIN_MAX.FONT_SIZE.MIN}
           max={MIN_MAX.FONT_SIZE.MAX}
+          isIndeterminate={MULTIPLE_VALUE === fontSize}
+          placeholder={
+            MULTIPLE_VALUE === fontSize ? MULTIPLE_DISPLAY_VALUE : null
+          }
         />
       </Row>
     </>
