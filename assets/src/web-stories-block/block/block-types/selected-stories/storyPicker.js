@@ -97,7 +97,9 @@ function StoryPicker({
   isSortingStories,
   setIsSortingStories,
 }) {
-  const [fetchingForTheFirstTime, setFetchingForTheFirstTime] = useState(true);
+  const [isFetchingForTheFirstTime, setIsFetchingForTheFirstTime] = useState(
+    true
+  );
   const [currentAuthor, setCurrentAuthor] = useState([]);
   const [authorKeyword, setAuthorKeyword] = useState('');
   const { maxNumOfStories } = useConfig();
@@ -157,7 +159,7 @@ function StoryPicker({
     }
 
     await fetchStories(query);
-    setFetchingForTheFirstTime(false);
+    setIsFetchingForTheFirstTime(false);
   }, [
     page.value,
     search.keyword,
@@ -165,7 +167,7 @@ function StoryPicker({
     sort,
     currentAuthor,
     fetchStories,
-    setFetchingForTheFirstTime,
+    setIsFetchingForTheFirstTime,
   ]);
 
   const fetchStoryAuthors = useCallback(async () => {
@@ -177,17 +179,17 @@ function StoryPicker({
   }, [authorKeyword, fetchAuthors]);
 
   const orderedStories = useMemo(() => {
-    return storiesOrderById.map((storyId) => {
-      return stories[storyId];
-    });
+    return storiesOrderById
+      .map((storyId) => {
+        return stories[storyId];
+      })
+      .filter(Boolean);
   }, [stories, storiesOrderById]);
 
   useEffect(() => {
     if (isSortingStories) {
-      setFetchingForTheFirstTime(false);
+      setIsFetchingForTheFirstTime(false);
       return;
-    } else if (!orderedStories.length) {
-      setFetchingForTheFirstTime(true);
     }
 
     fetchWebStories();
@@ -237,7 +239,7 @@ function StoryPicker({
       shouldCloseOnClickOutside={false}
     >
       <ModalContent>
-        {fetchingForTheFirstTime ? (
+        {isFetchingForTheFirstTime ? (
           <LoaderContainer>
             {__('Fetching stories', 'web-stories')}
           </LoaderContainer>
@@ -289,7 +291,7 @@ function StoryPicker({
       </ModalContent>
       <ModalFooter>
         <ModalFooterLeft>
-          {!isSortingStories && !fetchingForTheFirstTime && (
+          {!isSortingStories && !isFetchingForTheFirstTime && (
             <LimitIndicator
               reachedMaximum={selectedStories.length >= maxNumOfStories}
             >

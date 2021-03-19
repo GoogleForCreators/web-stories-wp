@@ -15,17 +15,27 @@
  */
 
 /**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+
+/**
  * Internal dependencies
  */
+import { Icons } from '../../../design-system';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
 
 function VideoLayerContent({
   element: {
-    resource: { poster, alt },
+    resource: { poster, alt = __('Video', 'web-stories') },
   },
 }) {
-  return <VisibleImage src={poster} alt={alt} height="20" />;
+  if (!poster) {
+    return <Icons.Video width={28} height={28} title={alt} />;
+  }
+
+  return <VisibleImage src={poster} alt={alt} width={28} height={28} />;
 }
 
 VideoLayerContent.propTypes = {

@@ -24,7 +24,7 @@ import { FlagsProvider } from 'flagged';
  * Internal dependencies
  */
 import CurrentUserContext from '../../../currentUser/context';
-import useTranscodeVideo from '../useTranscodeVideo';
+import useFFmpeg from '../useFFmpeg';
 
 jest.mock('@ffmpeg/ffmpeg', () => {
   return {
@@ -44,7 +44,7 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
     },
   };
 
-  return renderHook(() => useTranscodeVideo(), {
+  return renderHook(() => useFFmpeg(), {
     // eslint-disable-next-line react/display-name, react/prop-types
     wrapper: ({ children }) => (
       <FlagsProvider
@@ -60,7 +60,7 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
   });
 }
 
-describe('useTranscodeVideo', () => {
+describe('useFFmpeg', () => {
   describe('isFeatureEnabled', () => {
     it('should return true if feature is enabled', () => {
       const { result } = arrange({

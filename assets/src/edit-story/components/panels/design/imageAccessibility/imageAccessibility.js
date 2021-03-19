@@ -19,19 +19,15 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useRef } from 'react';
-import { Row } from '../../../form';
-import {
-  Note,
-  ExpandedTextInput,
-  getCommonValue,
-  useCommonObjectValue,
-} from '../../shared';
+import { Row, TextArea } from '../../../form';
+import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = { alt: null };
@@ -49,6 +45,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
   const ref = useRef(null);
+  // When the panel needs to be focused from somewhere else (e.g. the prepublish checklist).
   const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
 
   return (
@@ -59,19 +56,25 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
       isPersistable={!highlight}
     >
       <Row>
-        <ExpandedTextInput
+        <TextArea
           ref={ref}
-          placeholder={__('Assistive text', 'web-stories')}
+          placeholder={
+            alt === MULTIPLE_VALUE
+              ? MULTIPLE_DISPLAY_VALUE
+              : __(
+                  'Add assistive text for visually impaired users',
+                  'web-stories'
+                )
+          }
           value={alt || ''}
-          onChange={(value) => pushUpdate({ alt: value || null })}
-          clear
+          onChange={(evt) =>
+            pushUpdate({ alt: evt?.target?.value?.trim() || null }, true)
+          }
           aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
-          css={highlight?.showEffect && styles.OUTLINE}
+          rows={2}
+          isIndeterminate={alt === MULTIPLE_VALUE}
         />
-      </Row>
-      <Row>
-        <Note>{__('Text for visually impaired users.', 'web-stories')}</Note>
       </Row>
     </SimplePanel>
   );

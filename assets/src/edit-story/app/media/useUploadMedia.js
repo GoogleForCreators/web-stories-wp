@@ -29,7 +29,7 @@ import { useSnackbar } from '../snackbar';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { useMediaUploadQueue } from './utils';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
-import useTranscodeVideo from './utils/useTranscodeVideo';
+import useFFmpeg from './utils/useFFmpeg';
 
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
@@ -70,7 +70,7 @@ function useUploadMedia({
     isTranscodingEnabled,
     canTranscodeFile,
     isFileTooLarge,
-  } = useTranscodeVideo();
+  } = useFFmpeg();
 
   /**
    * @type {import('react').MutableRefObject<Array<Object<*>>>} mediaRef Ref for current media items.

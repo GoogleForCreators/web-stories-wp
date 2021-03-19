@@ -1,10 +1,6 @@
 /* Web Stories: Circles View */
-.web-stories-list.is-carousel .web-stories-list__carousel {
-  display: flex;
-  overflow-y: hidden;
-}
 
-.web-stories-theme-header-section .web-stories-list {
+.web-stories-theme-header-section .web-stories-list.is-view-type-circles {
   border-bottom: 1px solid #ccc;
   padding: 12px 0;
 }

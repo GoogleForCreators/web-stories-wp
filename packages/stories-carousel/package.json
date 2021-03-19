@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "glider-js": "^1.7.3",
+    "@web-stories-wp/glider": "*",
     "@wordpress/dom-ready": "^2.12.0"
   },
   "devDependencies": {}
