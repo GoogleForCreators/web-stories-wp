@@ -64,7 +64,7 @@ function ExcerptPanel() {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       name="excerpt"
-      title={__('Excerpt', 'web-stories')}
+      title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
       isPersistable={!highlight}
     >
@@ -73,8 +73,8 @@ function ExcerptPanel() {
           ref={ref}
           value={excerpt}
           onChange={handleTextChange}
-          placeholder={__('Write an excerpt', 'web-stories')}
-          aria-label={__('Excerpt', 'web-stories')}
+          placeholder={__('Write a description of the story', 'web-stories')}
+          aria-label={__('Story Description', 'web-stories')}
           maxLength={EXCERPT_MAX_LENGTH}
           showCount
           rows={4}

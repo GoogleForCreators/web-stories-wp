@@ -43,7 +43,7 @@ Array [
       </li>
     </constants__DashedList>,
     "highlight": "EXCERPT",
-    "message": "Add excerpt",
+    "message": "Add story description",
     "storyId": 120,
     "type": "warning",
   },
