@@ -28,6 +28,7 @@ import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import {
+  BUTTON_TRANSITION_TIMING,
   useContext,
   Icons,
   THEME_CONSTANTS,
@@ -35,7 +36,6 @@ import {
   themeHelpers,
   ThemeGlobals,
 } from '../../../../../design-system';
-import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
 import DragHandle from './handle';
 
 // If the header is collapsed, we're leaving 4px less padding to apply that from the content.
@@ -88,10 +88,14 @@ const Collapse = styled.button`
   transition: ${BUTTON_TRANSITION_TIMING};
 
   &:hover,
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
-  ${themeHelpers.focusableOutlineCSS};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 
   svg {
     width: 32px;
