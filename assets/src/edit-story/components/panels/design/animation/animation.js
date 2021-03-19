@@ -59,6 +59,7 @@ const GroupWrapper = styled.div`
     border: 1px solid ${theme.colors.border.defaultNormal};
     border-radius: ${theme.borders.radius.small};
   `}
+  margin-bottom: 16px;
 `;
 
 const backgroundAnimationTooltip = __(
