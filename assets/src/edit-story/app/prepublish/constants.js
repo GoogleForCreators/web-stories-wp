@@ -474,7 +474,7 @@ export const MESSAGES = {
                 a: (
                   <Link
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    rel="noreferrer"
+                    rel="noreferrer noopener"
                     target="_blank"
                     onClick={(evt) =>
                       trackClick(evt, 'click_pre_publish_video_docs')

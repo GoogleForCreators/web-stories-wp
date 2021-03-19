@@ -201,11 +201,32 @@ const ButtonIcon = styled(Base)`
   }
 `;
 
+const ButtonLink = styled(Base)`
+  ${({ theme, size }) => css`
+    ${themeHelpers.expandPresetStyles({
+      preset: theme.typography.presets.link[size],
+      theme,
+    })};
+
+    color: ${theme.colors.fg.linkNormal};
+    border-radius: 0;
+
+    :hover {
+      color: ${theme.colors.fg.linkHover};
+    }
+    &:active,
+    &:disabled {
+      background-color: ${theme.colors.opacity.footprint};
+    }
+  `}
+`;
+
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
   [BUTTON_VARIANTS.SQUARE]: ButtonSquare,
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
+  [BUTTON_VARIANTS.LINK]: ButtonLink,
 };
 
 const Button = forwardRef(function Button(

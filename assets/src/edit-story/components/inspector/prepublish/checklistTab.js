@@ -23,7 +23,11 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { ButtonAsLink, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  Button,
+  BUTTON_VARIANTS,
+  THEME_CONSTANTS,
+} from '../../../../design-system';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel } from '../../panels/panel';
@@ -124,19 +128,20 @@ const ChecklistTab = (props) => {
   const renderRow = useCallback(
     (args) => {
       const { id, message, help, pageGroup } = args;
-      const onPrepublish = getOnPrepublishSelect(args);
+      const prepublishProps = getOnPrepublishSelect(args);
       return (
         <Row key={id} pageGroup={pageGroup}>
           <IssueTitle>{message}</IssueTitle>
           <IssueDescription>{help}</IssueDescription>
-          {onPrepublish?.onClick && (
-            <ButtonAsLink
+          {prepublishProps?.onClick && (
+            <Button
+              variant={BUTTON_VARIANTS.LINK}
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               aria-label={TEXT.ACCESSIBLE_LINK_TITLE}
-              {...onPrepublish}
+              {...prepublishProps}
             >
               {TEXT.DISPLAY_LINK}
-            </ButtonAsLink>
+            </Button>
           )}
         </Row>
       );

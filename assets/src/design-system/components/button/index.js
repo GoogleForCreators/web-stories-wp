@@ -17,4 +17,3 @@
 export * from './button';
 export * from './constants';
 export * from './toggleButton';
-export * from './buttonAsLink';
