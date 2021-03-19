@@ -98,10 +98,6 @@ const standard = {
   black: '#000',
   white: '#FFF',
 };
-const disable = {
-  dark: '#2F3131',
-  light: '#E4E4E1',
-};
 
 const opacity = {
   footprint: 'transparent',
@@ -145,7 +141,7 @@ const darkTheme = {
   },
   interactiveBg: {
     active: brand.violet[70],
-    disable: disable.dark,
+    disable: brand.gray[80],
     brandNormal: brand.violet[20],
     brandHover: brand.violet[30],
     brandPress: brand.violet[40],
@@ -229,7 +225,7 @@ const lightTheme = {
   },
   interactiveBg: {
     active: brand.violet[10],
-    disable: disable.light,
+    disable: brand.gray[10],
     brandNormal: brand.violet[20],
     brandHover: brand.violet[30],
     brandPress: brand.violet[40],
