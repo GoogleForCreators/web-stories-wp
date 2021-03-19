@@ -73,7 +73,7 @@ class Embed_Base {
 		}
 
 		if ( is_readable( $path ) ) {
-			$css = file_get_contents( $path );
+			$css = file_get_contents( $path ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
 
 			if ( $css ) {
 				wp_add_inline_style( self::SCRIPT_HANDLE, $css );

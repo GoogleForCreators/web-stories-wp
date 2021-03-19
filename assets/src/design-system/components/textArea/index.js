@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { forwardRef, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
@@ -35,7 +36,7 @@ import {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  min-width: 40px;
+  min-width: 100px;
 `;
 
 const Label = styled(Text)`
@@ -48,27 +49,13 @@ const Hint = styled(Text)`
     theme.colors.fg[hasError ? 'negative' : 'tertiary']};
 `;
 
-const Suffix = styled(Text)`
-  background: transparent;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
-  white-space: nowrap;
-
-  svg {
-    width: 32px;
-    height: 32px;
-    margin: 2px -10px;
-    display: block;
-  }
-`;
-
 const InputContainer = styled.div(
   ({ focused, hasError, theme }) => css`
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 36px;
-    padding: 4px 12px;
+    padding: 8px 12px;
     border: 1px solid
       ${theme.colors.border[hasError ? 'negativeNormal' : 'defaultNormal']};
     border-radius: ${theme.borders.radius.small};
@@ -80,58 +67,52 @@ const InputContainer = styled.div(
       border-color: ${theme.colors.border.defaultActive};
     `};
 
-    ${focused &&
-    css`
-      ${Suffix} {
-        color: ${theme.colors.fg.primary};
-      }
-    `};
-
     :focus-within {
       ${focusCSS(theme.colors.border.focus)};
     }
   `
 );
 
-const StyledInput = styled.input(
-  ({ hasSuffix, theme }) => css`
+const StyledTextArea = styled.textarea(
+  ({ theme }) => css`
     height: 100%;
     width: 100%;
     padding: 0;
-    ${hasSuffix &&
-    css`
-      padding-right: 8px;
-    `}
     background-color: inherit;
     border: none;
     outline: none;
     color: ${theme.colors.fg.primary};
+    resize: none;
+    ${themeHelpers.scrollbarCSS};
 
     ${themeHelpers.expandPresetStyles({
-      preset: {
-        ...theme.typography.presets.paragraph[
+      preset:
+        theme.typography.presets.paragraph[
           THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
         ],
-      },
       theme,
     })};
 
     :disabled {
       color: ${theme.colors.fg.disable};
       border-color: ${theme.colors.border.disable};
-
-      & ~ ${Suffix} {
-        color: ${theme.colors.fg.disable};
-      }
     }
 
-    :active:enabled {
+    :active {
       color: ${theme.colors.fg.primary};
     }
   `
 );
 
-export const Input = forwardRef(
+const Counter = styled.div`
+  text-align: right;
+  align-self: flex-end;
+  span {
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+  }
+`;
+
+export const TextArea = forwardRef(
   (
     {
       className,
@@ -142,61 +123,57 @@ export const Input = forwardRef(
       label,
       onBlur,
       onFocus,
-      suffix,
-      unit = '',
       value,
+      showCount = false,
+      maxLength,
       isIndeterminate = false,
       ...props
     },
     ref
   ) => {
-    const inputId = useMemo(() => id || uuidv4(), [id]);
-    const inputRef = useRef(null);
+    const textAreaId = useMemo(() => id || uuidv4(), [id]);
+    const textAreaRef = useRef(null);
+
+    const hasCounter = showCount && maxLength > 0;
 
     const { handleBlur, handleFocus, isFocused } = useInputEventHandlers({
       forwardedRef: ref,
-      inputRef,
+      inputRef: textAreaRef,
       onBlur,
       onFocus,
     });
 
     let displayedValue = value;
-    if (unit && value.length) {
-      displayedValue = `${value}${!isFocused ? `${unit}` : ''}`;
-    }
     if (isIndeterminate) {
       // Display placeholder if value couldn't be determined.
       displayedValue = '';
     }
-    const hasSuffix = Boolean(suffix);
 
     return (
       <Container className={className}>
         {label && (
-          <Label htmlFor={inputId} forwardedAs="label" disabled={disabled}>
+          <Label htmlFor={textAreaId} forwardedAs="label" disabled={disabled}>
             {label}
           </Label>
         )}
         <InputContainer focused={isFocused} hasError={hasError}>
-          <StyledInput
-            id={inputId}
+          <StyledTextArea
+            id={textAreaId}
             disabled={disabled}
-            ref={ref || inputRef}
-            onBlur={handleBlur}
+            ref={ref || textAreaRef}
             onFocus={handleFocus}
             value={displayedValue}
-            hasSuffix={hasSuffix}
+            maxLength={maxLength}
+            onBlur={handleBlur}
             {...props}
           />
-          {hasSuffix && (
-            <Suffix
-              hasLabel={Boolean(label)}
-              forwardedAs="span"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              onClick={handleFocus}
-            >
-              {suffix}
-            </Suffix>
+          {hasCounter && (
+            <Counter>
+              <Text
+                as="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              >{`${value.length}/${maxLength}`}</Text>
+            </Counter>
           )}
         </InputContainer>
         {hint && <Hint hasError={hasError}>{hint}</Hint>}
@@ -205,7 +182,7 @@ export const Input = forwardRef(
   }
 );
 
-export const InputPropTypes = {
+const TextAreaPropTypes = {
   'aria-label': labelAccessibilityValidator,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -216,11 +193,11 @@ export const InputPropTypes = {
   onBlur: PropTypes.func,
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
-  suffix: PropTypes.node,
-  unit: PropTypes.string,
   value: PropTypes.string.isRequired,
+  showCount: PropTypes.bool,
+  maxLength: PropTypes.number,
   isIndeterminate: PropTypes.bool,
 };
 
-Input.propTypes = InputPropTypes;
-Input.displayName = 'Input';
+TextArea.propTypes = TextAreaPropTypes;
+TextArea.displayName = 'TextArea';
