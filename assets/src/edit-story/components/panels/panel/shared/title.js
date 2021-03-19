@@ -38,7 +38,7 @@ import {
 } from '../../../../../design-system';
 import DragHandle from './handle';
 
-// If the header is collapsed, we're leaving 4px less padding to apply that from the content.
+// If the header is collapsed, we're leaving 8px less padding to apply that from the content.
 const Header = styled(Headline).attrs({
   as: 'h2',
 })`
