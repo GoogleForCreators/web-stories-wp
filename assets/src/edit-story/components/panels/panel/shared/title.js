@@ -32,15 +32,12 @@ import {
   Icons,
   THEME_CONSTANTS,
   Headline,
-  themeHelpers,
 } from '../../../../../design-system';
+import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
 
-// If the header is collapsed, we're leaving 4px less padding to apply that from the content.
-const Header = styled(Headline).attrs({
-  as: 'h2',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
-})`
+// If the header is collapsed, we're leaving 8px less padding to apply that from the content.
+const Header = styled.h2`
   color: ${({ theme }) => theme.colors.fg.secondary};
   background-color: ${({ isSecondary, theme }) =>
     isSecondary && theme.colors.interactiveBg.secondaryNormal};
@@ -57,17 +54,9 @@ const Header = styled(Headline).attrs({
   cursor: pointer;
 `;
 
-const Heading = styled.span`
+const Heading = styled(Headline)`
   color: ${({ theme, isCollapsed }) =>
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
-  ${({ theme }) =>
-    themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.headline[
-          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL
-        ],
-      theme,
-    })};
   line-height: 32px;
 `;
 
@@ -90,7 +79,6 @@ const Collapse = styled.button`
   color: inherit;
   height: 32px;
   display: flex; /* removes implicit line-height padding from child element */
-  align-items: center;
   padding: 0 4px 0 0;
   cursor: pointer;
   svg {
@@ -98,8 +86,9 @@ const Collapse = styled.button`
     height: 32px;
   }
   margin-left: -12px;
-
-  ${themeHelpers.focusableOutlineCSS};
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) => theme.colors.border.focus} auto 2px;
+  }
 `;
 
 function Toggle({ children, toggle, ...rest }) {
@@ -209,7 +198,12 @@ function Title({
         aria-controls={panelContentId}
       >
         <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
-        <Heading id={panelTitleId} isCollapsed={isCollapsed}>
+        <Heading
+          id={panelTitleId}
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          isCollapsed={isCollapsed}
+        >
           {children}
         </Heading>
       </Toggle>
