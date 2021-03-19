@@ -41,36 +41,6 @@ import {
   Tooltip,
 } from '../../../../../design-system';
 
-const Svg = styled.svg`
-  display: block;
-  height: ${({ size }) => size};
-  width: ${({ size }) => size};
-  fill: none;
-  transform-origin: 50% 50%;
-  transform: ${({ direction }) => {
-    switch (direction) {
-      case DIRECTION.RIGHT_TO_LEFT:
-        return 'rotate(270deg)';
-      case DIRECTION.TOP_TO_BOTTOM:
-        return 'rotate(180deg)';
-      case DIRECTION.LEFT_TO_RIGHT:
-        return 'rotate(90deg)';
-      case ROTATION.COUNTER_CLOCKWISE:
-        return 'rotateX(180deg) rotateZ(90deg)';
-      case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
-        return 'rotate(-135deg)';
-      case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
-        return 'rotate(135deg)';
-      case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
-        return 'rotate(-315deg)';
-      case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
-        return 'rotate(315deg)';
-      default:
-        return 'rotate(0deg)';
-    }
-  }};
-`;
-
 const StyledButton = styled(Button)`
   z-index: 0;
   ${({ selected, disabled, theme }) =>
@@ -107,21 +77,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const RotationIcon = ({ direction }) => (
-  <Svg size="16px" viewBox="0 0 19 18" direction={direction}>
-    <path
-      strokeLinecap="round"
-      d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9"
-    />
-  </Svg>
-);
-
-const DirectionIcon = ({ direction }) => (
-  <Svg size="13px" viewBox="0 0 10 11" direction={direction}>
-    <path strokeLinecap="round" d="M5 11L5 1M5 1L9 5M5 1L1 5" />
-  </Svg>
-);
-
 const Direction = ({ className, direction, ...rest }) => (
   <StyledButton
     variant={BUTTON_VARIANTS.SQUARE}
@@ -133,11 +88,7 @@ const Direction = ({ className, direction, ...rest }) => (
   >
     {[...Object.values(DIRECTION), ...Object.values(SCALE_DIRECTION)].includes(
       direction
-    ) ? (
-      <Icons.ArrowUp />
-    ) : (
-      <RotationIcon direction={direction} />
-    )}
+    ) && <Icons.ArrowUp />}
   </StyledButton>
 );
 
@@ -412,12 +363,4 @@ Direction.propTypes = {
   direction: directionPropType,
   selected: PropTypes.bool,
   disabled: PropTypes.bool,
-};
-
-DirectionIcon.propTypes = {
-  direction: directionPropType,
-};
-
-RotationIcon.propTypes = {
-  direction: directionPropType,
 };
