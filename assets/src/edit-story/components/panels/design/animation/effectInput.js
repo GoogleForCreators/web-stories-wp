@@ -116,7 +116,7 @@ function EffectInput({
           unit={effectProps[field].unit}
           value={valueForField}
           min={0}
-          onChange={onChange}
+          onChange={(evt) => onChange(evt.target.value)}
           isFloat={effectProps[field].type === FIELD_TYPES.FLOAT}
         />
       );
