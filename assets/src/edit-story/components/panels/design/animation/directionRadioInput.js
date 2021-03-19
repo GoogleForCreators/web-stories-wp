@@ -43,6 +43,8 @@ import {
 
 const StyledButton = styled(Button)`
   z-index: 0;
+  width: 28px;
+  height: 28px;
   ${({ selected, disabled, theme }) =>
     selected &&
     !disabled &&
@@ -99,6 +101,7 @@ const Fieldset = styled.fieldset`
   position: relative;
   height: 91px;
   width: 88px;
+  margin-top: 1px;
   border-right: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
 `;
 
@@ -113,6 +116,7 @@ const Figure = styled.div`
   transform: translate(-50%, -50%);
 `;
 
+const SPACE_FROM_EDGE = 3;
 const Label = styled.label`
   position: absolute;
   cursor: pointer;
@@ -122,58 +126,52 @@ const Label = styled.label`
       case DIRECTION.RIGHT_TO_LEFT:
         return css`
           top: 50%;
-          right: 4px;
+          right: ${SPACE_FROM_EDGE}px;
           transform: translateY(-50%);
         `;
       case DIRECTION.TOP_TO_BOTTOM:
         return css`
-          top: 4px;
+          top: ${SPACE_FROM_EDGE}px;
           left: 50%;
           transform: translateX(-50%);
         `;
       case DIRECTION.LEFT_TO_RIGHT:
         return css`
           top: 50%;
-          left: 4px;
+          left: ${SPACE_FROM_EDGE}px;
           transform: translateY(-50%);
-        `;
-      case ROTATION.CLOCKWISE:
-        return css`
-          top: 4px;
-          left: 4px;
-          transform: translateX(20%);
         `;
       case ROTATION.COUNTER_CLOCKWISE:
         return css`
-          bottom: 4px;
-          right: 4px;
+          bottom: ${SPACE_FROM_EDGE}px;
+          right: ${SPACE_FROM_EDGE}px;
           transform: translate(-10%, -10%);
         `;
 
       case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
         return css`
-          bottom: 4px;
-          left: 4px;
+          bottom: ${SPACE_FROM_EDGE}px;
+          left: ${SPACE_FROM_EDGE}px;
         `;
       case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
         return css`
-          top: 4px;
-          left: 4px;
+          top: ${SPACE_FROM_EDGE}px;
+          left: ${SPACE_FROM_EDGE}px;
         `;
       case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
         return css`
-          top: 4px;
-          right: 4px;
+          top: ${SPACE_FROM_EDGE}px;
+          right: ${SPACE_FROM_EDGE}px;
         `;
       case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
         return css`
-          bottom: 4px;
-          right: 4px;
+          bottom: ${SPACE_FROM_EDGE}px;
+          right: ${SPACE_FROM_EDGE}px;
         `;
 
       default:
         return css`
-          bottom: 4px;
+          bottom: ${SPACE_FROM_EDGE}px;
           left: 50%;
           transform: translateX(-50%);
         `;
