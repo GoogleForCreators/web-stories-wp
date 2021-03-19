@@ -33,6 +33,7 @@ export * from './radio';
 export * from './search';
 export * from './slider';
 export * from './swatch';
+export * from './switch';
 export { Snackbar } from './snackbar';
 export * from './tooltip';
 export * from './keyboard';
