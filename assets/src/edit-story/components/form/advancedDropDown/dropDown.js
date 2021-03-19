@@ -22,16 +22,17 @@ import { useDebouncedCallback } from 'use-debounce';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
+import {
+  Icons,
+  themeHelpers,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../design-system';
 import Popup from '../../popup';
 import OptionsContainer from './container';
 import List from './list';
@@ -42,8 +43,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  color: ${({ theme }) => theme.colors.fg.black};
-  font-family: ${({ theme }) => theme.fonts.body1.font};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.black};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.font};
 `;
 
 const DropDownSelect = styled.button`
@@ -54,12 +55,19 @@ const DropDownSelect = styled.button`
   flex-grow: 1;
   background-color: ${({ theme, lightMode }) =>
     lightMode
-      ? rgba(theme.colors.fg.white, 0.1)
-      : rgba(theme.colors.bg.black, 0.3)};
-  border-radius: 4px;
-  padding: 2px 0 2px 6px;
-  cursor: pointer;
+      ? rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)
+      : 'transparent'};
   border: 0;
+  border-radius: 4px;
+  ${({ theme, lightMode }) =>
+    !lightMode &&
+    `
+    border: 1px solid ${theme.colors.border.defaultNormal};
+  `}
+  padding: 2px 0 2px 12px;
+  cursor: pointer;
+
+  ${themeHelpers.focusableOutlineCSS};
 
   ${({ disabled }) =>
     disabled &&
@@ -68,22 +76,23 @@ const DropDownSelect = styled.button`
       opacity: 0.3;
     `}
 
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border.defaultHover};
+  }
+
   svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: auto;
     color: ${({ theme, lightMode }) =>
-      lightMode ? theme.colors.fg.white : rgba(theme.colors.fg.white, 0.3)};
+      lightMode
+        ? theme.DEPRECATED_THEME.colors.fg.white
+        : theme.colors.fg.secondary};
   }
 `;
 
-const DropDownTitle = styled.span`
+const DropDownTitle = styled(Text)`
   user-select: none;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 /**
@@ -220,8 +229,13 @@ function DropDown({
         lightMode={lightMode}
         {...rest}
       >
-        <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
-        <DropDownIcon />
+        <DropDownTitle
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {selectedOption?.name || placeholder}
+        </DropDownTitle>
+        <Icons.ChevronDownSmall />
       </DropDownSelect>
       {isOpen && !disabled && isInline && list}
       {!disabled && !isInline && (

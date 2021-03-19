@@ -28,9 +28,11 @@ import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';
 
-const Wrapper = styled.section`
-  margin-right: ${({ marginRight }) => marginRight}px;
+const Outer = styled.section`
   height: 100%;
+`;
+const Inner = styled(Outer)`
+  margin-right: ${({ marginRight }) => marginRight}px;
 `;
 
 function CarouselContainer() {
@@ -46,9 +48,11 @@ function CarouselContainer() {
 
   return (
     <CarouselProvider availableSpace={width}>
-      <Wrapper ref={ref} marginRight={margin}>
-        <CarouselLayout />
-      </Wrapper>
+      <Outer ref={ref}>
+        <Inner marginRight={margin}>
+          <CarouselLayout />
+        </Inner>
+      </Outer>
     </CarouselProvider>
   );
 }

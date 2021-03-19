@@ -26,6 +26,7 @@ import PropTypes from 'prop-types';
 import { THEME_CONSTANTS } from '../../../theme';
 import {
   SelectButton,
+  ChevronWrap,
   StyledChevron,
   Value,
   LabelText,
@@ -54,18 +55,26 @@ const DropDownSelect = (
     ref={ref}
     {...rest}
   >
-    <Value as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
+    <Value
+      forwardedAs="span"
+      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+    >
       {activeItemLabel || placeholder}
     </Value>
 
     <Label>
       {dropDownLabel && (
-        <LabelText as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
+        <LabelText
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
           {dropDownLabel}
         </LabelText>
       )}
 
-      <StyledChevron isOpen={isOpen} />
+      <ChevronWrap isOpen={isOpen}>
+        <StyledChevron />
+      </ChevronWrap>
     </Label>
   </SelectButton>
 );

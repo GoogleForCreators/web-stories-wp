@@ -26,9 +26,13 @@ import { useMemo, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
+import { Radio as Unselected, RadioSelected } from '../../../icons';
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useRadioNavigation from '../shared/useRadioNavigation';
+
+const Selected = styled(RadioSelected)`
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.radio};
+`;
 
 const RadioButton = styled.label`
   display: block;
@@ -66,9 +70,9 @@ const Radio = styled.input.attrs({ className: 'mousetrap' })`
 
 const Helper = styled.div`
   margin-left: ${TEXT_OFFSET}px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.54)};
   font-size: 12px;
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
 `;
 
 function RadioGroup({ onChange, value: selectedValue, options }) {
@@ -91,7 +95,7 @@ function RadioGroup({ onChange, value: selectedValue, options }) {
             aria-labelledby={`radio-${i}-${radioGroupId}`}
           />
           <Label isActive={value === selectedValue}>
-            {value === selectedValue ? <Selected /> : <UnSelected />}
+            {value === selectedValue ? <Selected /> : <Unselected />}
             <Name id={`radio-${i}-${radioGroupId}`}>{name}</Name>
           </Label>
           {helper && <Helper>{helper}</Helper>}

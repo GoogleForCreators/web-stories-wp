@@ -19,11 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackError } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -33,7 +30,7 @@ import { Plain } from '../../../../button';
 import Dialog from '../../../../dialog';
 import { useSnackbar } from '../../../../../app/snackbar';
 import { useLocalMedia } from '../../../../../app/media';
-import { trackError } from '../../../../../../tracking';
+import { useStory } from '../../../../../app/story';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
@@ -52,19 +49,30 @@ function DeleteDialog({ mediaId, type, onClose }) {
   const { deleteMediaElement } = useLocalMedia((state) => ({
     deleteMediaElement: state.actions.deleteMediaElement,
   }));
+  const { deleteElementsByResourceId } = useStory((state) => ({
+    deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
+  }));
 
   const onDelete = useCallback(async () => {
     onClose();
     try {
       await deleteMedia(mediaId);
       deleteMediaElement({ id: mediaId });
+      deleteElementsByResourceId({ id: mediaId });
     } catch (err) {
-      trackError('local media deletion', err.message);
+      trackError('local_media_deletion', err.message);
       showSnackbar({
         message: __('Failed to delete media item.', 'web-stories'),
       });
     }
-  }, [deleteMedia, deleteMediaElement, mediaId, onClose, showSnackbar]);
+  }, [
+    deleteMedia,
+    deleteMediaElement,
+    deleteElementsByResourceId,
+    mediaId,
+    onClose,
+    showSnackbar,
+  ]);
 
   const imageDialogTitle = __('Delete Image?', 'web-stories');
   const videoDialogTitle = __('Delete Video?', 'web-stories');
@@ -82,7 +90,7 @@ function DeleteDialog({ mediaId, type, onClose }) {
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <Dialog
-      open={true}
+      open
       onClose={onClose}
       title={type === 'image' ? imageDialogTitle : videoDialogTitle}
       actions={

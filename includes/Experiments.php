@@ -210,6 +210,17 @@ class Experiments {
 		return [
 			/**
 			 * Author: @littlemilkstudio
+			 * Issue: 6379
+			 * Creation date: 2021-03-09
+			 */
+			[
+				'name'        => 'enableExperimentalAnimationEffects',
+				'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
+				'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
 			 * Issue: 5880
 			 * Creation date: 2021-01-19
 			 */
@@ -218,6 +229,7 @@ class Experiments {
 				'label'       => __( 'Quick Tips', 'web-stories' ),
 				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @carlos-kelly
@@ -284,17 +296,6 @@ class Experiments {
 				'label'       => __( 'Story Previews', 'web-stories' ),
 				'description' => __( 'Enable story preview functionality', 'web-stories' ),
 				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @dmmulroy
-			 * Issue: #2044
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextMagicAndHelperMode',
-				'label'       => __( 'Text Magic', 'web-stories' ),
-				'description' => __( 'Enable text magic and helper mode icons', 'web-stories' ),
-				'group'       => 'editor',
 			],
 			/**
 			 * Author: @dmmulroy
@@ -396,13 +397,7 @@ class Experiments {
 		$result = [];
 
 		foreach ( $experiments as $experiment ) {
-			if ( array_key_exists( 'default', $experiment ) ) {
-				$enabled = (bool) $experiment['default'];
-			} else {
-				$enabled = $this->is_experiment_enabled( $experiment['name'] );
-			}
-
-			$result[ $experiment['name'] ] = $enabled;
+			$result[ $experiment['name'] ] = $this->is_experiment_enabled( $experiment['name'] );
 		}
 
 		return $result;
@@ -443,5 +438,21 @@ class Experiments {
 
 		$experiments = get_option( Settings::SETTING_NAME_EXPERIMENTS );
 		return ! empty( $experiments[ $name ] );
+	}
+
+	/**
+	 * Returns the names of all enabled experiments.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return array List of all enabled experiments.
+	 */
+	public function get_enabled_experiments() {
+		$experiments = array_filter(
+			wp_list_pluck( $this->get_experiments(), 'name' ),
+			[ $this, 'is_experiment_enabled' ]
+		);
+
+		return $experiments;
 	}
 }

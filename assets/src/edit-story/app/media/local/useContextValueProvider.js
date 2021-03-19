@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useRef } from 'react';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -26,7 +27,7 @@ import { useAPI, useConfig } from '../..';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
-import { getTimeTracker } from '../../../../tracking';
+import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
  * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext
@@ -51,7 +52,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     fetchMediaSuccess,
     fetchMediaError,
     resetFilters,
-    setMedia,
+    prependMedia,
     setMediaType,
     setSearchTerm,
     setNextPage,
@@ -75,9 +76,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       callback
     ) => {
       fetchMediaStart({ pageToken: p });
-      const trackTiming = getTimeTracker('load', 'editor', 'Media');
+      const trackTiming = getTimeTracker('load_media');
       getMedia({
-        mediaType: currentMediaType,
+        mediaType:
+          currentMediaType === LOCAL_MEDIA_TYPE_ALL ? '' : currentMediaType,
         searchTerm: currentSearchTerm,
         pagingNum: p,
         cacheBust: cacheBust,
@@ -105,7 +107,12 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [fetchMediaError, fetchMediaStart, getMedia]
   );
 
-  const { uploadMedia, isUploading } = useUploadMedia({ media, setMedia });
+  const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
+    media,
+    prependMedia,
+    updateMediaElement,
+    deleteMediaElement,
+  });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
   });
@@ -171,7 +178,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   }, [media, mediaType, searchTerm, generateMissingPosters]);
 
   return {
-    state: { ...reducerState, isUploading },
+    state: {
+      ...reducerState,
+      isUploading,
+      isTranscoding,
+    },
     actions: {
       setNextPage,
       setMediaType,

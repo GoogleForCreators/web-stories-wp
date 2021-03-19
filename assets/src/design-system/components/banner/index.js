@@ -24,14 +24,13 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Close } from '../../icons';
+import { Cross } from '../../icons';
 import { THEME_CONSTANTS } from '../../theme';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
-import { Text } from '../typography';
+import { Headline } from '../typography';
 
-const Title = styled(Text)`
+const Title = styled(Headline)`
   grid-area: title;
-  font-weight: 700;
   padding-left: 8px;
 `;
 
@@ -65,7 +64,8 @@ const Container = styled.div`
   ${({ isDashboard }) =>
     isDashboard &&
     css`
-      max-height: 164px;
+      max-height: 184px;
+      border-radius: 0;
       grid-template-columns: 1fr 32px;
       grid-template-rows: 3;
       grid-column-gap: 0;
@@ -75,7 +75,6 @@ const Container = styled.div`
       ${Title} {
         padding-left: 0;
         margin-top: -10px;
-        font-weight: normal;
       }
       ${Content} {
         margin: 8px auto 18px;
@@ -105,9 +104,10 @@ export const Banner = forwardRef(
         {...rest}
       >
         <Title
+          as="h2"
           size={
             THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES[
-              isDashboard ? 'LARGE' : 'MEDIUM'
+              isDashboard ? 'X_SMALL' : 'XX_SMALL'
             ]
           }
         >
@@ -120,7 +120,7 @@ export const Banner = forwardRef(
           aria-label={closeButtonLabel}
           onClick={onClose}
         >
-          <Close aria-hidden={true} />
+          <Cross aria-hidden />
         </CloseButton>
         <Content>{children}</Content>
       </Container>

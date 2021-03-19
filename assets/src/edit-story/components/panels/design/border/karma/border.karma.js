@@ -54,7 +54,7 @@ describe('Border Panel', () => {
       expect(element.border.bottom).toBe(2);
 
       // Take off lock.
-      await fixture.events.click(panel.lockBorderWidth.button);
+      await fixture.events.click(panel.lockBorderWidth);
 
       await fixture.events.click(panel.width('Top'), { clickCount: 3 });
       await fixture.events.keyboard.type('10');

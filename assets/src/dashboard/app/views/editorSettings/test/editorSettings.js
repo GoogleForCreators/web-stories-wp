@@ -27,9 +27,9 @@ import {
   rawPublisherLogos,
 } from '../../../../dataUtils/formattedPublisherLogos';
 import { renderWithProviders } from '../../../../testUtils';
+import { TEXT as AD_NETWORK_TEXT } from '../adManagement';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
-import { TEXT as AD_NETWORK_TEXT } from '../adNetwork';
 
 import EditorSettings from '../';
 import { AD_NETWORK_TYPE } from '../../../../constants';
@@ -55,6 +55,7 @@ function createProviderValues({
 }) {
   return {
     config: {
+      allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
       capabilities: {
         canUploadFiles: canUploadFiles,
         canManageSettings: canManageSettings,
@@ -72,12 +73,16 @@ function createProviderValues({
           adNetwork,
           activePublisherLogoId: activeLogoId,
           publisherLogoIds: logoIds,
+          error: {},
         },
         media: {
           isLoading,
           newlyCreatedMediaIds: [],
           mediaById: logos,
+          error: {},
         },
+        stories: { error: {} },
+        templates: { error: {} },
         currentUser: {
           isUpdating: false,
           data: {

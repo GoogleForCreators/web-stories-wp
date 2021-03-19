@@ -19,11 +19,10 @@
  */
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackError } from '../../../tracking';
 import ErrorActions from './errorActions';
 
 class ErrorBoundary extends Component {
@@ -41,7 +40,7 @@ class ErrorBoundary extends Component {
     const msg = errorInfo
       ? `${error.message}\n\n${errorInfo.componentName}\n${errorInfo.componentStack}`
       : error.message;
-    trackError('editor error boundary', msg, true);
+    trackError('editor_error_boundary', msg, true);
   }
 
   render() {

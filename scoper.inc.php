@@ -95,25 +95,20 @@ return [
 					'vendor/ampproject/amp-wp/includes/templates/class-amp-content-sanitizer.php',
 				]
 			)
-			->append( [ 'vendor/ampproject/amp-wp/composer.json' ] ),
+				->append( [ 'vendor/ampproject/amp-wp/composer.json' ] ),
 
-		// AMP Common + Optimizer.
+		// AMP PHP Toolbox (Common + Optimizer).
 		Finder::create()
 			->files()
 			->ignoreVCS( true )
 			->ignoreDotFiles( true )
 			->notName( '/LICENSE|.*\\.md|.*\\.svg|.*\\.xml|.*\\.dist|composer\\.json|composer\\.lock/' )
-			->exclude(
-				[
-					'bin',
-					'tests',
-				]
-			)
 			->in(
 				[
-					'vendor/ampproject/amp-wp/lib',
+					'vendor/ampproject/amp-toolbox/src',
 				]
-			),
+			)
+			->append( [ 'vendor/ampproject/amp-toolbox/composer.json' ] ),
 
 		// FasterImage (used by AMP_Img_Sanitizer).
 		Finder::create()
@@ -161,7 +156,7 @@ return [
 			->files()
 			->ignoreVCS( true )
 			->ignoreDotFiles( true )
-			->name( '*.php' )
+			->name( '/\.*.php8?/' )
 			->in( 'vendor/symfony/polyfill-mbstring/Resources' )
 			->append(
 				[

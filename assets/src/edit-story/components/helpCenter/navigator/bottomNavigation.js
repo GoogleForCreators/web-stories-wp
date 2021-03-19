@@ -18,21 +18,27 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { useEffect, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../../animation';
 import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
+import { useConfig } from '../../../app/config';
+import { TRANSITION_DURATION } from '../constants';
+import { forceFocusCompanion } from '../utils';
 import { NavBar, NavButton } from './components';
+
+const secondaryTextStyle = css`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
 
 const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
-  transition: 0.3s transform ${BEZIER.default};
+  transition: transform ${TRANSITION_DURATION}ms ${BEZIER.default};
+  z-index: 2;
   ${({ isHidden }) =>
     isHidden &&
     css`
@@ -42,60 +48,107 @@ const BottomNavBar = styled(NavBar)`
 
 const BottomNavButtons = styled.div`
   display: flex;
-  padding: 0 8px;
+  padding: 0 16px;
+  white-space: nowrap;
 `;
+
+const ArrowWrap = styled.div`
+  ${secondaryTextStyle}
+  margin: -5px -16px;
+  ${({ isRTL }) =>
+    isRTL &&
+    css`
+      transform: rotate(180deg);
+    `}
+  svg {
+    display: block;
+  }
+`;
+
+const onCondition = (condition) => (fn) => {
+  if (condition) {
+    fn();
+  }
+};
 
 export function BottomNavigation({
   onAllTips,
   onPrev,
   onNext,
   hasBottomNavigation,
+  isNextDisabled,
+  isPrevDisabled,
 }) {
+  const { isRTL } = useConfig();
+  // If either the prev or next has focus and become disabled,
+  // we want to force focus to the companion instead of losing
+  // it to the canvas.
+  const prevButtonRef = useRef(null);
+  const nextButtonRef = useRef(null);
+  const [local, setLocal] = useState({
+    isPrevDisabled,
+    isNextDisabled,
+  });
+  // We want to force focus one render before we disable the actual
+  // DOM elements so we can see if they're currently focused.
+  useEffect(() => {
+    [
+      isPrevDisabled && document.activeElement === prevButtonRef.current,
+      isNextDisabled && document.activeElement === nextButtonRef.current,
+    ].forEach((condition) => onCondition(condition)(forceFocusCompanion));
+    setLocal({ isPrevDisabled, isNextDisabled });
+  }, [isPrevDisabled, isNextDisabled]);
+
   return (
     <BottomNavBar
-      aria-hidden={hasBottomNavigation}
+      aria-hidden={!hasBottomNavigation}
       isHidden={!hasBottomNavigation}
     >
       <BottomNavButtons>
         <NavButton
-          onClick={onAllTips}
+          onClick={() => {
+            forceFocusCompanion();
+            onAllTips();
+          }}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
           disabled={!hasBottomNavigation}
         >
-          <Icons.Arrow />
-          <span>{__('All Tips', 'web-stories')}</span>
+          <ArrowWrap isRTL={isRTL}>
+            <Icons.ArrowLeft />
+          </ArrowWrap>
+          <span css={secondaryTextStyle}>{__('All Tips', 'web-stories')}</span>
         </NavButton>
       </BottomNavButtons>
       <BottomNavButtons>
-        {Boolean(onPrev) && (
-          <NavButton
-            onClick={onPrev}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            disabled={!hasBottomNavigation}
-          >
-            {__('Previous', 'web-stories')}
-          </NavButton>
-        )}
-        {Boolean(onNext) && (
-          <NavButton
-            onClick={onNext}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            disabled={!hasBottomNavigation}
-          >
-            {__('Next', 'web-stories')}
-          </NavButton>
-        )}
+        <NavButton
+          ref={prevButtonRef}
+          onClick={onPrev}
+          type={BUTTON_TYPES.PLAIN}
+          size={BUTTON_SIZES.SMALL}
+          disabled={!hasBottomNavigation || local.isPrevDisabled}
+        >
+          {__('Previous', 'web-stories')}
+        </NavButton>
+        <NavButton
+          ref={nextButtonRef}
+          onClick={onNext}
+          type={BUTTON_TYPES.PLAIN}
+          size={BUTTON_SIZES.SMALL}
+          disabled={!hasBottomNavigation || local.isNextDisabled}
+        >
+          {__('Next', 'web-stories')}
+        </NavButton>
       </BottomNavButtons>
     </BottomNavBar>
   );
 }
 
 BottomNavigation.propTypes = {
-  onNext: PropTypes.func.required,
-  onPrev: PropTypes.func.required,
-  onAllTips: PropTypes.func.required,
+  onNext: PropTypes.func.isRequired,
+  onPrev: PropTypes.func.isRequired,
+  onAllTips: PropTypes.func.isRequired,
   hasBottomNavigation: PropTypes.bool,
+  isNextDisabled: PropTypes.bool,
+  isPrevDisabled: PropTypes.bool,
 };

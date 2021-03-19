@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -29,7 +29,7 @@ import Context from './context';
 function CurrentUserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({});
   const {
-    actions: { getCurrentUser },
+    actions: { getCurrentUser, updateCurrentUser: _updateCurrentUser },
   } = useAPI();
 
   useEffect(() => {
@@ -38,9 +38,17 @@ function CurrentUserProvider({ children }) {
     }
   }, [currentUser, getCurrentUser]);
 
+  const updateCurrentUser = useCallback(
+    (data) => _updateCurrentUser(data).then(setCurrentUser),
+    [_updateCurrentUser]
+  );
+
   const state = {
     state: {
       currentUser,
+    },
+    actions: {
+      updateCurrentUser,
     },
   };
 

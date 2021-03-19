@@ -15,13 +15,9 @@
  */
 
 /**
- * External dependencies
- */
-
-/**
  * Internal dependencies
  */
-import { Input, labelAccessibilityValidator } from '../';
+import { Input } from '../';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Input', () => {
@@ -48,32 +44,14 @@ describe('Input', () => {
 
     expect(getByText('This is my input hint')).toBeInTheDocument();
   });
-});
 
-describe('labelAccessibilityValidator', () => {
-  it('should return null if `label` or `aria-label` are passed in as a prop', () => {
-    expect(
-      labelAccessibilityValidator({ label: 'test' }, '', 'Test')
-    ).toBeNull();
-    expect(
-      labelAccessibilityValidator({ 'aria-label': 'test' }, '', 'Test')
-    ).toBeNull();
-    expect(
-      labelAccessibilityValidator(
-        { label: 'test', 'aria-label': 'test' },
-        '',
-        'Test'
-      )
-    ).toBeNull();
-  });
+  it('should render a suffix', () => {
+    const { getByText } = renderWithProviders(
+      <Input aria-label="test" suffix="suffix" />
+    );
 
-  it.each`
-    propName
-    ${'label'}
-    ${'aria-label'}
-  `('should throw an error if `label` is not a string type', ({ propName }) => {
-    expect(
-      labelAccessibilityValidator({ [propName]: 2 }, '', 'Test')
-    ).toStrictEqual(expect.any(Error));
+    const suffixElement = getByText('suffix');
+
+    expect(suffixElement).toBeInTheDocument();
   });
 });

@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * External dependencies
@@ -27,6 +27,14 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Headline,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
+import { useConfig } from '../../../../../edit-story/app';
 import { UnitsProvider } from '../../../../../edit-story/units';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
@@ -53,6 +61,7 @@ function Content({
   search,
   templateActions,
 }) {
+  const { newStoryURL } = useConfig();
   return (
     <Layout.Scrollable>
       <FontProvider>
@@ -91,16 +100,31 @@ function Content({
                 </>
               ) : (
                 <EmptyContentMessage>
-                  {search?.keyword
-                    ? sprintf(
-                        /* translators: %s: search term. */
-                        __(
-                          'Sorry, we couldn\'t find any results matching "%s"',
-                          'web-stories'
-                        ),
-                        search.keyword
-                      )
-                    : __('No templates currently available', 'web-stories')}
+                  <Headline
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="h3"
+                  >
+                    {search?.keyword
+                      ? sprintf(
+                          /* translators: %s: search term. */
+                          __(
+                            'Sorry, we couldn\'t find any results matching "%s"',
+                            'web-stories'
+                          ),
+                          search.keyword
+                        )
+                      : __('No templates currently available.', 'web-stories')}
+                  </Headline>
+                  {!search?.keyword && (
+                    <Button
+                      type={BUTTON_TYPES.PRIMARY}
+                      size={BUTTON_SIZES.MEDIUM}
+                      as="a"
+                      href={newStoryURL}
+                    >
+                      {__('Create a new Story', 'web-stories')}
+                    </Button>
+                  )}
                 </EmptyContentMessage>
               )}
             </StandardViewContentGutter>

@@ -20,36 +20,27 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
-import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
-import { useContext } from '../../../../../design-system';
-import { trackEvent } from '../../../../../tracking';
+import {
+  useContext,
+  Icons,
+  THEME_CONSTANTS,
+  Headline,
+} from '../../../../../design-system';
+import { KEYBOARD_USER_SELECTOR } from '../../../../utils/keyboardOnlyOutline';
 import DragHandle from './handle';
 
-function getBackgroundColor(isPrimary, isSecondary, theme) {
-  if (isPrimary) {
-    return rgba(theme.colors.bg.black, 0.07);
-  }
-  if (isSecondary) {
-    return rgba(theme.colors.fg.white, 0.07);
-  }
-  return 'transparent';
-}
-
-const Header = styled.h2.attrs({ role: 'button' })`
-  background-color: ${({ isPrimary, isSecondary, theme }) =>
-    getBackgroundColor(isPrimary, isSecondary, theme)};
-  border: 0 solid ${({ theme }) => rgba(theme.colors.fg.gray16, 0.6)};
-  border-top-width: ${({ isPrimary, isSecondary }) =>
-    isPrimary || isSecondary ? 0 : '1px'};
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
+// If the header is collapsed, we're leaving 8px less padding to apply that from the content.
+const Header = styled.h2`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  background-color: ${({ isSecondary, theme }) =>
+    isSecondary && theme.colors.interactiveBg.secondaryNormal};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -58,17 +49,15 @@ const Header = styled.h2.attrs({ role: 'button' })`
   user-select: none;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: ${({ isCollapsed }) =>
+    isCollapsed ? '14px 20px' : '14px 20px 6px 20px'};
   cursor: pointer;
 `;
 
-const Heading = styled.span`
-  color: inherit;
-  margin: 0;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 19px;
-  width: 100%;
+const Heading = styled(Headline)`
+  color: ${({ theme, isCollapsed }) =>
+    isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
+  line-height: 32px;
 `;
 
 const HeaderActions = styled.div`
@@ -76,19 +65,29 @@ const HeaderActions = styled.div`
   align-items: center;
 `;
 
+// Keeps the space for the icon even if it's not displayed.
+const IconWrapper = styled.div`
+  width: 32px;
+  height: 32px;
+`;
+
+// -12px margin-left comes from 16px panel padding - 4px that it actually should be.
+// Since the svg-s are 32px and have extra room around, this needs to be removed
 const Collapse = styled.button`
   border: none;
   background: transparent;
   color: inherit;
-  width: 28px;
-  height: 28px;
+  height: 32px;
   display: flex; /* removes implicit line-height padding from child element */
-  padding: 0;
+  padding: 0 4px 0 0;
   cursor: pointer;
   svg {
-    width: 28px;
-    height: 28px;
-    ${({ isCollapsed }) => isCollapsed && `transform: rotate(.5turn);`}
+    width: 32px;
+    height: 32px;
+  }
+  margin-left: -12px;
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) => theme.colors.border.focus} auto 2px;
   }
 `;
 
@@ -119,6 +118,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  ...props
 }) {
   const {
     state: {
@@ -127,7 +127,6 @@ function Title({
       resizeable,
       panelContentId,
       panelTitleId,
-      panelTitleReadable,
       ariaHidden,
     },
     actions: {
@@ -165,23 +164,19 @@ function Title({
   }, [setExpandToHeight, height, resizeable]);
 
   const toggle = isCollapsed ? expand : collapse;
-  const onToggle = useCallback(() => {
-    toggle();
-    trackEvent('panel_toggled', 'editor', '', '', {
-      panel_id: panelTitleReadable,
-      status: isCollapsed ? 'collapsed' : 'expanded',
-    });
-  }, [panelTitleReadable, isCollapsed, toggle]);
 
+  const toggleIcon = isCollapsed ? (
+    <Icons.ChevronRightSmall />
+  ) : (
+    <Icons.ChevronDownSmall />
+  );
   return (
     <Header
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
-      aria-label={ariaLabel}
-      aria-expanded={!isCollapsed}
-      aria-controls={panelContentId}
-      onClick={onToggle}
+      isCollapsed={isCollapsed}
+      {...props}
     >
       {isResizable && (
         <DragHandle
@@ -194,19 +189,25 @@ function Title({
           tabIndex={ariaHidden ? -1 : 0}
         />
       )}
-      <Heading id={panelTitleId}>{children}</Heading>
-      <HeaderActions>
-        {secondaryAction}
-        {canCollapse && (
-          <Toggle
-            isCollapsed={isCollapsed}
-            toggle={onToggle}
-            tabIndex={ariaHidden ? -1 : 0}
-          >
-            <Arrow />
-          </Toggle>
-        )}
-      </HeaderActions>
+      <Toggle
+        toggle={toggle}
+        disabled={!canCollapse}
+        tabIndex={ariaHidden ? -1 : 0}
+        aria-label={ariaLabel}
+        aria-expanded={!isCollapsed}
+        aria-controls={panelContentId}
+      >
+        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
+        <Heading
+          id={panelTitleId}
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          isCollapsed={isCollapsed}
+        >
+          {children}
+        </Heading>
+      </Toggle>
+      {secondaryAction && <HeaderActions>{secondaryAction}</HeaderActions>}
     </Header>
   );
 }

@@ -17,18 +17,14 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../tracking';
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
@@ -44,11 +40,14 @@ import {
 } from '../../../../utils/useStoryView';
 import { TemplatesPropType } from '../../../../types';
 import { BodyViewOptions, PageHeading } from '../../shared';
+import { getSearchOptions } from '../../utils';
 
 function Header({ filter, search, sort, templates, view }) {
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
+
+  const searchOptions = useMemo(() => getSearchOptions(templates), [templates]);
 
   const resultsLabel = useDashboardResultsLabel({
     isActiveSearch: Boolean(search.keyword),
@@ -65,8 +64,9 @@ function Header({ filter, search, sort, templates, view }) {
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_saved_templates', 'dashboard', '', '', {
+  const [debouncedSearchChange] = useDebouncedCallback(async (value) => {
+    await trackEvent('search', {
+      search_type: 'saved_templates',
       search_term: value,
     });
     search.setKeyword(value);
@@ -75,11 +75,12 @@ function Header({ filter, search, sort, templates, view }) {
   return (
     <>
       <PageHeading
-        defaultTitle={__('Saved Templates', 'web-stories')}
+        heading={__('Saved Templates', 'web-stories')}
         searchPlaceholder={__('Search Templates', 'web-stories')}
-        stories={templates}
-        handleTypeaheadChange={debouncedTypeaheadChange}
-        typeaheadValue={search.keyword}
+        searchOptions={searchOptions}
+        showSearch
+        handleSearchChange={debouncedSearchChange}
+        searchValue={search.keyword}
       />
       <BodyViewOptions
         showSortDropdown

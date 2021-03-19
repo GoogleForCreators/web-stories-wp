@@ -127,7 +127,7 @@ class Meta_Sanitizer extends \WP_UnitTestCase {
 
 			'Do not break the correct viewport tag'       => [
 				'<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">' . $amp_boilerplate . '</head><body></body></html>',
-				'<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">' . $amp_boilerplate . '</head><body></body></html>',
+				'<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,minimum-scale=1">' . $amp_boilerplate . '</head><body></body></html>',
 			],
 
 			'Move charset and viewport tags from body to head' => [

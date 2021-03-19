@@ -15,17 +15,25 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory, useLocalMedia, useHistory } from '../../../app';
 import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
-import { Outline } from '../../button';
-import { useGlobalKeyDownEffect } from '../../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  useGlobalKeyDownEffect,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+  Icons,
+} from '../../../../design-system';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
@@ -60,6 +68,11 @@ function Update() {
     [saveStory, isSaving]
   );
 
+  // The button is enabled only if we're not already saving nor uploading. And
+  // then only if there are new changes or the story has meta-boxes – as these
+  // can update without us knowing it.
+  const isEnabled =
+    !isSaving && !isUploading && (hasNewChanges || hasMetaBoxes);
   let text;
   switch (status) {
     case 'publish':
@@ -72,22 +85,26 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline
-          onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={
-            !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
-          }
-        >
-          {text}
-        </Outline>
+        <Tooltip title={text} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={() => saveStory({ status: 'draft' })}
+            disabled={!isEnabled}
+            aria-label={text}
+          >
+            <Icons.FloppyDisk />
+          </Button>
+        </Tooltip>
       );
   }
 
   return (
     <ButtonWithChecklistWarning
-      onClick={() => saveStory()}
-      isDisabled={isSaving || isUploading}
       text={text}
+      onClick={() => saveStory()}
+      disabled={isSaving || isUploading}
     />
   );
 }

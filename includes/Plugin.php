@@ -37,10 +37,13 @@ use Google\Web_Stories\REST_API\Status_Check_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
-use Google\Web_Stories\Block\Embed_Block;
 use Google\Web_Stories\REST_API\Stories_Settings_Controller;
 use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
+use Google\Web_Stories\Shortcode\Stories_Shortcode;
+use Google\Web_Stories\Block\Web_Stories_Block;
+use Google\Web_Stories\Integrations\Core_Themes_Support;
+use Google\Web_Stories\TinyMCE;
 
 /**
  * Plugin class.
@@ -91,11 +94,11 @@ class Plugin {
 	public $admin;
 
 	/**
-	 * Gutenberg Blocks.
+	 * Web Stories Block.
 	 *
-	 * @var Embed_Block
+	 * @var Web_Stories_Block
 	 */
-	public $embed_block;
+	public $web_stories_block;
 
 	/**
 	 * Embed shortcode
@@ -196,6 +199,13 @@ class Plugin {
 	public $kses;
 
 	/**
+	 * Customizer object.
+	 *
+	 * @var Customizer
+	 */
+	public $customizer;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
@@ -207,6 +217,7 @@ class Plugin {
 	public function register() {
 		// Plugin compatibility / polyfills.
 		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
+		add_action( 'init', [ $this, 'includes' ] );
 
 		// Settings.
 		$this->settings = new Settings();
@@ -232,9 +243,6 @@ class Plugin {
 		$this->kses = new KSES();
 		add_action( 'init', [ $this->kses, 'init' ], 11 );
 
-		$this->tracking = new Tracking();
-		add_action( 'init', [ $this->tracking, 'init' ] );
-
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
 
@@ -253,12 +261,18 @@ class Plugin {
 		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
 
 		// Gutenberg Blocks.
-		$this->embed_block = new Embed_Block();
-		add_action( 'init', [ $this->embed_block, 'init' ] );
+		$this->web_stories_block = new Web_Stories_Block();
+		add_action( 'init', [ $this->web_stories_block, 'init' ] );
 
 		// Embed shortcode.
 		$this->embed_shortcode = new Embed_Shortcode();
 		add_action( 'init', [ $this->embed_shortcode, 'init' ] );
+
+		$story_shortcode = new Stories_Shortcode();
+		add_action( 'init', [ $story_shortcode, 'init' ] );
+
+		$this->customizer = new Customizer();
+		add_action( 'init', [ $this->customizer, 'init' ] );
 
 		// Frontend.
 		$this->discovery = new Discovery();
@@ -306,6 +320,19 @@ class Plugin {
 
 		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		$this->tracking = new Tracking( $this->experiments, $site_kit );
+		add_action( 'admin_init', [ $this->tracking, 'init' ] );
+
+		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
+
+		$tinymce = new TinyMCE();
+		add_action( 'admin_enqueue_scripts', [ $tinymce, 'init' ] );
+
+		// Embed Webstories using customizer settings for core themes.
+		$webstories_core_themes_support = new Core_Themes_Support();
+		add_action( 'after_setup_theme', [ $webstories_core_themes_support, 'init' ] );
+		$this->integrations['webstories_core_themes_support'] = $webstories_core_themes_support;
 	}
 
 	/**
@@ -319,6 +346,15 @@ class Plugin {
 	 */
 	public function load_amp_plugin_compat() {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
+	}
+
+	/**
+	 * Include necessary files.
+	 *
+	 * @return void
+	 */
+	public function includes() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 	}
 
 	/**
@@ -353,5 +389,14 @@ class Plugin {
 
 		$stories_settings = new Stories_Settings_Controller();
 		$stories_settings->register_routes();
+	}
+
+	/**
+	 * Register Widgets.
+	 *
+	 * @return void
+	 */
+	public function register_widgets() {
+		register_widget( __NAMESPACE__ . '\Widgets\Stories' );
 	}
 }

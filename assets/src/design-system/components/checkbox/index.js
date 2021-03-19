@@ -37,13 +37,12 @@ const Border = styled.div(
     width: ${CONTAINER_WIDTH}px;
     border-radius: ${theme.borders.radius.small};
     border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
-    pointer-events: none;
   `
 );
 
 const StyledCheckmark = styled(Checkmark)`
   height: auto;
-  width: 16px;
+  width: 32px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
@@ -57,6 +56,7 @@ const CheckboxContainer = styled.div(
     width: ${CONTAINER_WIDTH}px;
     min-height: ${CONTAINER_WIDTH}px;
     min-width: ${CONTAINER_WIDTH}px;
+    cursor: pointer;
 
     /* Hide Checkbox */
     input[type='checkbox'] {
@@ -91,7 +91,13 @@ const CheckboxContainer = styled.div(
 
 const BaseCheckbox = ({ checked, disabled, ...props }, ref) => (
   <CheckboxContainer disabled={disabled}>
-    <input type="checkbox" ref={ref} disabled={disabled} {...props} />
+    <input
+      type="checkbox"
+      ref={ref}
+      checked={checked}
+      disabled={disabled}
+      {...props}
+    />
     {checked && <StyledCheckmark data-testid="checkbox-checkmark" />}
     <Border />
   </CheckboxContainer>

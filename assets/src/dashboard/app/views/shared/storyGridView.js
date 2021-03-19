@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect, useState } from 'react';
+import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
@@ -42,8 +43,7 @@ import {
   PageSizePropType,
   RenameStoryPropType,
 } from '../../../types';
-import { STORY_STATUS } from '../../../constants';
-import { getRelativeDisplayDate } from '../../../../date';
+import { PAGE_WRAPPER, STORY_STATUS } from '../../../constants';
 import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
@@ -55,13 +55,7 @@ export const DetailRow = styled.div`
 `;
 
 const StoryGrid = styled(CardGrid)`
-  width: ${({ theme }) =>
-    `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px)`};
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) =>
-      `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px)`};
-  }
+  width: calc(100% - ${PAGE_WRAPPER.GUTTER}px);
 `;
 
 const StoryGridView = ({
@@ -188,9 +182,9 @@ const StoryGridView = ({
                   tabIndex={tabIndex}
                   onMoreButtonSelected={storyMenu.handleMenuToggle}
                   contextMenuId={storyMenu.contextMenuId}
-                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
                   story={story}
                   menuItems={generateStoryMenu({
+                    menuItemActions: storyMenu.menuItemActions,
                     menuItems: storyMenu.menuItems,
                     story,
                   })}

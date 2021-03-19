@@ -18,74 +18,117 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
-import { themeHelpers, Text, THEME_CONSTANTS } from '../../../../design-system';
-import { TranslateWithMarkup } from '../../../../i18n';
+import {
+  themeHelpers,
+  Text,
+  THEME_CONSTANTS,
+  VisuallyHidden,
+} from '../../../../design-system';
+import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { GUTTER_WIDTH } from '../constants';
+import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';
+import { ReactComponent as DoneCheckmark } from './doneCheckmark.svg';
 
 const Panel = styled.div`
   width: 100%;
+  padding-bottom: ${NAVIGATION_HEIGHT}px;
+`;
+
+const Overflow = styled.div`
+  position: relative;
+  width: 100%;
+  max-height: 70vh;
   padding: ${GUTTER_WIDTH}px;
 
   strong {
     font-weight: 700;
   }
-
-  .screenreader {
-    position: absolute;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
-  }
 `;
 
-// @TODO update with actual figure.
-const Figure = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.secondary};
+const Video = styled.video`
   height: 180px;
   margin-bottom: ${GUTTER_WIDTH}px;
 `;
 
 const Title = styled.h1`
   ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
+  color: ${({ theme }) => theme.colors.fg.primary};
   line-height: 32px;
   margin: 0 0 8px 0;
 `;
 
+const Paragraph = styled(Text)`
+  & + & {
+    margin-top: 8px;
+  }
+`;
+
+const DoneContainer = styled.div`
+  ${themeHelpers.centerContent}
+  height: 180px;
+  margin-bottom: ${GUTTER_WIDTH}px;
+  svg {
+    display: block;
+  }
+`;
+
 export function QuickTip({
-  figureSrc,
   title,
   description,
   isLeftToRightTransition = true,
+  figureSrc,
+  isDone = false,
   ...transitionProps
 }) {
+  const { cdnURL } = useConfig();
   return (
     <Transitioner
       {...transitionProps}
       isLeftToRightTransition={isLeftToRightTransition}
     >
       <Panel>
-        <Figure />
-        <Title>{title}</Title>
-        {description.map((paragraph, i) => (
-          <Text
-            // eslint-disable-next-line react/no-array-index-key
-            key={`${title}-${i}`}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
-            <TranslateWithMarkup
-              mapping={{
-                screenreader: <span className="screenreader" />,
-              }}
+        <Overflow>
+          {Boolean(figureSrc) && (
+            <Video
+              controls={false}
+              autoPlay
+              loop
+              muted
+              noControls
+              preload="true"
             >
-              {paragraph}
-            </TranslateWithMarkup>
-          </Text>
-        ))}
+              <source src={`${cdnURL}${figureSrc}.webm`} type="video/webm" />
+              <source src={`${cdnURL}${figureSrc}.mp4`} type="video/mp4" />
+            </Video>
+          )}
+          {isDone && (
+            <DoneContainer>
+              <DoneCheckmark height={135} width={135} />
+            </DoneContainer>
+          )}
+          <Title>{title}</Title>
+          {description.map((paragraph, i) => (
+            <Paragraph
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${title}-${i}`}
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              <TranslateWithMarkup
+                mapping={{
+                  screenreader: <VisuallyHidden />,
+                }}
+              >
+                {paragraph}
+              </TranslateWithMarkup>
+            </Paragraph>
+          ))}
+        </Overflow>
       </Panel>
     </Transitioner>
   );
@@ -93,7 +136,8 @@ export function QuickTip({
 
 QuickTip.propTypes = {
   figureSrc: PropTypes.string,
-  title: PropTypes.string,
-  description: PropTypes.string,
+  isDone: PropTypes.bool,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.arrayOf(PropTypes.string).isRequired,
   isLeftToRightTransition: PropTypes.bool,
 };

@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
+import { DATA_VERSION } from '@web-stories-wp/migration';
 
 /**
  * WordPress dependencies
@@ -28,7 +29,6 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
-import { DATA_VERSION } from '../../../migration';
 import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
@@ -271,6 +271,17 @@ function APIProvider({ children }) {
     });
   }, [currentUser]);
 
+  const updateCurrentUser = useCallback(
+    (data) => {
+      return apiFetch({
+        path: currentUser,
+        method: 'POST',
+        data,
+      });
+    },
+    [currentUser]
+  );
+
   // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
   const saveMetaBoxes = useCallback(
     (story, formData) => {
@@ -332,6 +343,7 @@ function APIProvider({ children }) {
       getStatusCheck,
       getPageLayouts,
       getCurrentUser,
+      updateCurrentUser,
     },
   };
 

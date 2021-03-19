@@ -15,18 +15,66 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from '../../icons/shapes.svg';
+import { getMaskByType } from '../../masks';
+import { elementWithBackgroundColor } from '../shared';
+import StoryPropTypes from '../../types';
 
-function ShapeIcon() {
-  const alt = __('Shape element', 'web-stories');
-  return <Icon aria-label={alt} />;
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  width: 28px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background-color: ${({ theme }) => theme.colors.opacity.black10};
+`;
+
+const ShapePreview = styled.div`
+  ${elementWithBackgroundColor}
+  width: ${({ width = 16 }) => width}px;
+  height: auto;
+`;
+
+function ShapeLayerIcon({ element: { id, mask, backgroundColor } }) {
+  const maskDef = getMaskByType(mask.type);
+
+  const maskId = `mask-${maskDef.type}-${id}-layer-preview`;
+
+  return (
+    <Container>
+      <ShapePreview
+        style={{
+          clipPath: `url(#${maskId})`,
+        }}
+        width={16 * maskDef.ratio}
+        backgroundColor={backgroundColor}
+      >
+        <svg width={0} height={0}>
+          <defs>
+            <clipPath
+              id={maskId}
+              transform={`scale(1 ${maskDef.ratio})`}
+              clipPathUnits="objectBoundingBox"
+            >
+              <path d={maskDef.path} />
+            </clipPath>
+          </defs>
+        </svg>
+      </ShapePreview>
+    </Container>
+  );
 }
 
-export default ShapeIcon;
+ShapeLayerIcon.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
+
+export default ShapeLayerIcon;

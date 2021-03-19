@@ -41,13 +41,14 @@ export default {
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
-      <SnackbarContainer customZIndex={number('customZIndex')}>
+      <SnackbarContainer>
         <SnackbarMessage
-          actionLabel={text('actionLabel', 'Retry')}
-          ariaLabel={text(
-            'ariaLabel',
+          actionLabel={text('actionLabel', '')}
+          aria-label={text(
+            'aria-label',
             'this is my aria label giving my message context for screen reader users'
           )}
+          customZIndex={number('customZIndex')}
           handleAction={action('handle action clicked')}
           handleDismiss={action('handle dismiss fired')}
           isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
@@ -59,13 +60,14 @@ export const _default = () => (
 );
 
 export const LightThemeDefault = () => (
-  <SnackbarContainer customZIndex={number('customZIndex')}>
+  <SnackbarContainer>
     <SnackbarMessage
-      actionLabel={text('actionLabel', 'Retry')}
-      ariaLabel={text(
-        'ariaLabel',
+      actionLabel={text('actionLabel', '')}
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
+      customZIndex={number('customZIndex')}
       handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
@@ -74,14 +76,34 @@ export const LightThemeDefault = () => (
   </SnackbarContainer>
 );
 
-export const NoActionWithRemoveMessageTimingOverride = () => (
+export const Action = () => (
   <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
-      actionLabel={text('actionLabel', '')}
-      ariaLabel={text(
-        'ariaLabel',
+      actionLabel={text('actionLabel', 'Retry')}
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
+      customZIndex={number('customZIndex')}
+      handleAction={action('handle action clicked')}
+      handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
+      removeMessageTimeInterval={80000}
+      showCloseButton={false}
+    />
+  </SnackbarContainer>
+);
+
+export const EarlyDismissWithAction = () => (
+  <SnackbarContainer customZIndex={number('customZIndex')}>
+    <SnackbarMessage
+      actionLabel={text('actionLabel', 'Retry')}
+      aria-label={text(
+        'aria-label',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      customZIndex={number('customZIndex')}
       handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
@@ -91,14 +113,34 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
   </SnackbarContainer>
 );
 
-export const LongMessage = () => (
-  <SnackbarContainer customZIndex={number('customZIndex')}>
+export const NoActionWithRemoveMessageTimingOverride = () => (
+  <SnackbarContainer>
     <SnackbarMessage
-      actionLabel={text('actionLabel', 'Retry')}
-      ariaLabel={text(
-        'ariaLabel',
+      actionLabel={text('actionLabel', '')}
+      aria-label={text(
+        'aria-label',
         'this is my aria label giving my message context for screen reader users'
       )}
+      customZIndex={number('customZIndex')}
+      handleAction={action('handle action clicked')}
+      handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
+      removeMessageTimeInterval={80000}
+      showCloseButton={false}
+    />
+  </SnackbarContainer>
+);
+
+export const LongMessage = () => (
+  <SnackbarContainer>
+    <SnackbarMessage
+      actionLabel={text('actionLabel', 'Retry')}
+      aria-label={text(
+        'aria-label',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      customZIndex={number('customZIndex')}
       handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}

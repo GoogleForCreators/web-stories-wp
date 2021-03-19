@@ -17,15 +17,19 @@
 /**
  * External dependencies
  */
+import { useState, useCallback } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { select } from '@storybook/addon-knobs';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
 import { theme, THEME_CONSTANTS } from '../../../theme';
 import { Headline, Text } from '../../typography';
-import { Close } from '../../../icons';
-import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '..';
+import { Cross } from '../../../icons';
+import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
+import { ToggleButton, LockToggle } from '../toggleButton';
 
 export default {
   title: 'DesignSystem/Components/Button',
@@ -33,10 +37,12 @@ export default {
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.bg.primary};
+  border: 1px solid ${(props) => props.theme.colors.fg.black};
 
   display: flex;
   align-items: space-evenly;
   flex-direction: column;
+  padding: 20px;
 `;
 
 const Row = styled.div`
@@ -52,17 +58,18 @@ const Row = styled.div`
   }
 `;
 
+function ButtonContent({ variant }) {
+  return variant === BUTTON_VARIANTS.RECTANGLE ? 'Standard Button' : <Cross />;
+}
+
+ButtonContent.propTypes = {
+  variant: PropTypes.oneOf(Object.values(BUTTON_VARIANTS)),
+};
+
 const ButtonCombosToDisplay = () => (
   <Container>
     <Headline as="h2">{'Buttons by Variant, Size, and Type'}</Headline>
     {Object.values(BUTTON_VARIANTS).map((buttonVariant) => {
-      const buttonContent =
-        buttonVariant === BUTTON_VARIANTS.RECTANGLE ? (
-          'Standard Button'
-        ) : (
-          <Close />
-        );
-
       return Object.values(BUTTON_SIZES).map((buttonSize) => (
         <Row key={`${buttonVariant}_${buttonSize}_row_storybook`}>
           {Object.values(BUTTON_TYPES).map((buttonType) => (
@@ -73,7 +80,7 @@ const ButtonCombosToDisplay = () => (
                 type={buttonType}
                 size={buttonSize}
               >
-                {buttonContent}
+                <ButtonContent variant={buttonVariant} />
               </Button>
               <Text>
                 {`variant: ${buttonVariant}`} <br />
@@ -149,7 +156,7 @@ const ButtonCombosToDisplay = () => (
   </Container>
 );
 
-export const _default = () => {
+export const DarkTheme = () => {
   return (
     <ThemeProvider theme={theme}>
       <ButtonCombosToDisplay />
@@ -157,4 +164,74 @@ export const _default = () => {
   );
 };
 
-export const LightThemeButtons = () => <ButtonCombosToDisplay />;
+export const LightTheme = () => <ButtonCombosToDisplay />;
+
+const TOGGLE_VARIANTS = [BUTTON_VARIANTS.CIRCLE, BUTTON_VARIANTS.SQUARE];
+const ToggleButtonContainer = ({ isToggled, swapToggled }) => (
+  <Container>
+    {Object.values(BUTTON_SIZES).map((buttonSize) => (
+      <Row key={`${buttonSize}_row_storybook`}>
+        {TOGGLE_VARIANTS.map((buttonVariant) => (
+          <div key={`${buttonVariant}_${buttonSize}_storybook`}>
+            <ToggleButton
+              key={`${buttonVariant}_storybook`}
+              variant={buttonVariant}
+              size={buttonSize}
+              isToggled={isToggled}
+              onClick={swapToggled}
+            >
+              <ButtonContent variant={buttonVariant} />
+            </ToggleButton>
+            <Text>
+              {`variant: ${buttonVariant}`} <br />
+              {`size: ${buttonSize}`} <br />
+              {`is on: ${isToggled}`}
+            </Text>
+          </div>
+        ))}
+      </Row>
+    ))}
+  </Container>
+);
+
+ToggleButtonContainer.propTypes = {
+  isToggled: PropTypes.bool.isRequired,
+  swapToggled: PropTypes.func.isRequired,
+};
+
+export const ToggleButtons = () => {
+  const [isToggled, setToggled] = useState(false);
+  const swapToggled = useCallback(() => setToggled((b) => !b), []);
+  return (
+    <>
+      <ToggleButtonContainer isToggled={isToggled} swapToggled={swapToggled} />
+      <ThemeProvider theme={theme}>
+        <ToggleButtonContainer
+          isToggled={isToggled}
+          swapToggled={swapToggled}
+        />
+      </ThemeProvider>
+    </>
+  );
+};
+
+export const PrebakedButtons = () => {
+  const [isLocked, setLocked] = useState(false);
+  const swapLocked = useCallback(() => setLocked((b) => !b), []);
+  return (
+    <>
+      <Container>
+        <Row>
+          <LockToggle isLocked={isLocked} onClick={swapLocked} />
+        </Row>
+      </Container>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <Row>
+            <LockToggle isLocked={isLocked} onClick={swapLocked} />
+          </Row>
+        </Container>
+      </ThemeProvider>
+    </>
+  );
+};

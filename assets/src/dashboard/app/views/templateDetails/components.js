@@ -18,26 +18,23 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { TypographyPresets, Paragraph2 } from '../../../components';
+import { MIN_DASHBOARD_WIDTH } from '../../../constants';
 
 export const ColumnContainer = styled.section`
-  ${({ theme }) => `
-    display: flex;
-    margin-bottom: 40px;
+  display: grid;
+  column-gap: 24px;
+  grid-template-columns: minmax(50%, auto) 1fr;
+  width: calc(100% - 300px);
+  margin: 124px auto 154px;
 
-    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-      display: block;
-    }
-  `}
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
+    margin-left: 88px;
+  }
 `;
 
 export const DetailContainer = styled.section.attrs({
@@ -48,58 +45,7 @@ export const DetailContainer = styled.section.attrs({
 `;
 
 export const Column = styled.div`
-  ${({ theme }) => `
-    display: flex;
-    width: 50%;
-
-    & + & {
-      padding-left: ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
-    }
-
-    @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
-      & + & {
-        padding-left: ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px;
-      }
-    }
-
-    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-      width: 100%;
-    }
-  `}
-`;
-
-export const Title = styled.h1.attrs({
-  'aria-label': __('Template Title', 'web-stories'),
-})`
-  ${TypographyPresets.ExtraLarge};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
-`;
-
-export const ByLine = styled(Paragraph2)(
-  ({ theme }) => `
-    margin: 0 0 20px;
-    color: ${theme.DEPRECATED_THEME.colors.gray400};
-  `
-);
-
-export const Text = styled(Paragraph2)`
-  ${({ theme }) => `
-    margin: 0 0 20px;
-    color: ${theme.DEPRECATED_THEME.colors.gray900};
-  `}
-`;
-
-export const MetadataContainer = styled.fieldset`
-  border: 0;
-  > label {
-    margin: 0 10px 14px 0;
-
-    > span {
-      display: flex;
-      align-items: center;
-      opacity: 1 !important;
-    }
-  }
+  display: flex;
 `;
 
 export const RowContainer = styled.section.attrs({
@@ -108,36 +54,11 @@ export const RowContainer = styled.section.attrs({
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 40px;
-  margin: 0 20px 0;
-
+  margin: 0 80px 0;
+  & > h3 {
+    padding-bottom: 32px;
+  }
   & > div {
     width: 100%;
   }
 `;
-
-export const SubHeading = styled.h2`
-  ${TypographyPresets.Large};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
-  margin-bottom: 20px;
-`;
-
-export const LargeDisplayPagination = styled.div(
-  ({ theme }) => `
-    display: flex;
-    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-      display: none;
-    }
-  `
-);
-
-export const SmallDisplayPagination = styled.div(
-  ({ theme }) => `
-    display: none;
-    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-      width: 100%;
-      display: flex;
-      justify-content: flex-start;
-      margin: 0 10px 10px 0;
-    }
-  `
-);

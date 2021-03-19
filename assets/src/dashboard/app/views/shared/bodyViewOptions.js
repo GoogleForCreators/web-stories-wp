@@ -15,28 +15,26 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackClick } from '../../../../tracking';
 import {
-  Dropdown,
-  StandardViewContentGutter,
-  ViewStyleBar,
-  TypographyPresets,
-} from '../../../components';
+  Text,
+  THEME_CONSTANTS,
+  DropDown,
+  Link,
+} from '../../../../design-system';
+import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
+import TelemetryBanner from './telemetryBanner';
 
 const DisplayFormatContainer = styled.div`
   height: ${({ theme }) => theme.DEPRECATED_THEME.formatContainer.height}px;
@@ -51,28 +49,18 @@ const StorySortDropdownContainer = styled.div`
   align-self: flex-end;
 `;
 
-const SortDropdown = styled(Dropdown)`
-  min-width: 210px;
-`;
-
 const ControlsContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const Label = styled.span`
-  ${TypographyPresets.Small};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+const StyledLink = styled(Link)`
+  margin-right: 24px;
 `;
 
-const ExternalLink = styled.a`
-  ${TypographyPresets.Small};
-  margin-right: 15px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
+const StyledDropDown = styled(DropDown)`
+  width: 210px;
 `;
 
 export default function BodyViewOptions({
@@ -87,39 +75,39 @@ export default function BodyViewOptions({
   sortDropdownAriaLabel,
   wpListURL,
 }) {
-  const handleClassicListViewClick = useCallback(
-    (evt) => {
-      trackClick(evt, 'open_classic_list_view', 'dashboard', wpListURL);
-    },
-    [wpListURL]
-  );
+  const handleClassicListViewClick = useCallback((evt) => {
+    trackClick(evt, 'open_classic_list_view');
+  }, []);
 
   return (
     <StandardViewContentGutter>
+      <TelemetryBanner />
       <DisplayFormatContainer>
-        <Label>{resultsLabel}</Label>
+        <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <TranslateWithMarkup>{resultsLabel}</TranslateWithMarkup>
+        </Text>
         <ControlsContainer>
           {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
             <StorySortDropdownContainer>
-              <SortDropdown
-                alignment="flex-end"
+              <StyledDropDown
                 ariaLabel={sortDropdownAriaLabel}
-                items={pageSortOptions}
+                options={pageSortOptions}
                 type={DROPDOWN_TYPES.MENU}
-                value={currentSort}
-                onChange={(newSort) => handleSortChange(newSort.value)}
+                selectedValue={currentSort}
+                onMenuItemClick={(_, newSort) => handleSortChange(newSort)}
               />
             </StorySortDropdownContainer>
           )}
           {showGridToggle && (
             <ControlsContainer>
               {layoutStyle === VIEW_STYLE.LIST && wpListURL && (
-                <ExternalLink
+                <StyledLink
                   href={wpListURL}
                   onClick={handleClassicListViewClick}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 >
                   {__('See classic WP list view', 'web-stories')}
-                </ExternalLink>
+                </StyledLink>
               )}
               <ViewStyleBar
                 layoutStyle={layoutStyle}

@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -26,7 +26,6 @@ import {
   PAGE_HEIGHT,
   FONT_WEIGHT,
   BACKGROUND_TEXT_MODE,
-  HIDDEN_PADDING,
 } from '../../../../constants';
 import { dataFontEm } from '../../../../units';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
@@ -34,13 +33,13 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 // Measured in editor. As small as you can make
 // width with preset font before line wraps
 const DEFAULT_WIDTH = {
-  DEFAULT: 160,
-  HEADING_1: 181,
-  HEADING_2: 139,
-  HEADING_3: 114,
+  DEFAULT: 165,
+  HEADING_1: 186,
+  HEADING_2: 145,
+  HEADING_3: 120,
   PARAGRAPH: 200,
-  CAPTION: 64,
-  LABEL: 52,
+  CAPTION: 70,
+  LABEL: 56,
 };
 
 // @todo Once none of the elements are placed randomly, default x can be moved to text/index.js
@@ -56,8 +55,7 @@ const DEFAULT_TEXT_BORDER_RADIUS = {
 
 const DEFAULT_TEXT_PADDING = {
   locked: true,
-  hasHiddenPadding: true,
-  ...HIDDEN_PADDING,
+  hasHiddenPadding: false,
 };
 
 const DEFAULT_PRESET = {
@@ -89,7 +87,7 @@ const PRESETS = [
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_WIDTH.HEADING_1,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
     },
   },
@@ -108,7 +106,7 @@ const PRESETS = [
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_WIDTH.HEADING_2,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
     },
   },
@@ -127,7 +125,7 @@ const PRESETS = [
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_WIDTH.HEADING_3,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
     },
   },
@@ -146,7 +144,7 @@ const PRESETS = [
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_WIDTH.PARAGRAPH,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
     },
   },
@@ -165,7 +163,7 @@ const PRESETS = [
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_WIDTH.CAPTION,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
     },
   },
@@ -181,7 +179,7 @@ const PRESETS = [
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_WIDTH.LABEL,
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
     },
   },

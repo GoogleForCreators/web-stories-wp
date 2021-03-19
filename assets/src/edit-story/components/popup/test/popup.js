@@ -27,7 +27,7 @@ describe('Popup', () => {
     };
     document.body.append(anchor.current);
     const { getByText } = renderWithTheme(
-      <Popup anchor={anchor} isOpen={true}>
+      <Popup anchor={anchor} isOpen>
         {'Hello World!'}
       </Popup>
     );

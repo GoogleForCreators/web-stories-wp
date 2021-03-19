@@ -32,11 +32,11 @@ export const Container = styled.div`
 
 export const Title = styled.h2`
   flex: 1 1 auto;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
   font-weight: 500;
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
   margin-bottom: 28px;
 `;
 

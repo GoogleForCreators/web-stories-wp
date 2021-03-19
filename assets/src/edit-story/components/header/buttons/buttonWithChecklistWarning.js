@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -26,35 +26,59 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Primary } from '../../button';
-import WithTooltip from '../../tooltip';
 import { usePrepublishChecklist } from '../../inspector/prepublish';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
-import { ButtonContent, WarningIcon } from './styles';
+import {
+  Icons,
+  Button as DefaultButton,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  TOOLTIP_PLACEMENT,
+  Tooltip,
+} from '../../../../design-system';
+
+const Button = styled(DefaultButton)`
+  svg {
+    margin-right: -10px;
+    margin-left: 2px;
+  }
+`;
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
   const { checklist, refreshChecklist } = usePrepublishChecklist();
-
-  const tooltip = checklist.some(
+  const hasErrors = checklist.some(
     ({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type
-  )
-    ? __('There are items in the checklist to resolve', 'web-stories')
-    : null;
-
+  );
   const button = (
-    <Primary onPointerEnter={refreshChecklist} {...buttonProps}>
-      <ButtonContent>
-        {text}
-        {tooltip && <WarningIcon />}
-      </ButtonContent>
-    </Primary>
+    <Button
+      variant={BUTTON_VARIANTS.RECTANGLE}
+      type={BUTTON_TYPES.PRIMARY}
+      size={BUTTON_SIZES.SMALL}
+      onPointerEnter={refreshChecklist}
+      {...buttonProps}
+    >
+      {text}
+      {hasErrors && <Icons.ExclamationOutline height={24} width={24} />}
+    </Button>
   );
 
-  return tooltip ? <WithTooltip title={tooltip}>{button}</WithTooltip> : button;
+  return hasErrors ? (
+    <Tooltip
+      title={__('There are items in the checklist to resolve', 'web-stories')}
+      placement={TOOLTIP_PLACEMENT.BOTTOM}
+      hasTail
+    >
+      {button}
+    </Tooltip>
+  ) : (
+    button
+  );
 }
 
 ButtonWithChecklistWarning.propTypes = {

@@ -20,12 +20,8 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useCallback, useRef } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -35,6 +31,7 @@ import { Button, TextInput, Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const BoxedTextInput = styled(TextInput)`
   padding: 6px 6px;
@@ -103,8 +100,16 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
+  const buttonRef = useRef();
+  const highlight = useFocusHighlight(states.CAPTIONS, buttonRef);
+
   return (
-    <SimplePanel name="caption" title={__('Captions', 'web-stories')}>
+    <SimplePanel
+      css={highlight?.showEffect && styles.FLASH}
+      name="caption"
+      title={__('Captions', 'web-stories')}
+      isPersistable={!highlight}
+    >
       {isMixedValue && (
         <Row>
           <BoxedTextInput
@@ -132,7 +137,12 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         ))}
       {!tracks.length && (
         <Row expand>
-          <Button onClick={UploadCaption} fullWidth>
+          <Button
+            css={highlight?.showEffect && styles.OUTLINE}
+            ref={buttonRef}
+            onClick={UploadCaption}
+            fullWidth
+          >
             {captionText}
           </Button>
         </Row>

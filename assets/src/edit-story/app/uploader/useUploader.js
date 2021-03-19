@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -30,8 +26,9 @@ import { __, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../app/api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
-import useTranscodeVideo from '../media/utils/useTranscodeVideo';
-import { trackError } from '../../../tracking';
+import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
+
+const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2));
 
 function useUploader() {
   const {
@@ -51,9 +48,6 @@ function useUploader() {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
-  const { transcodeVideo, canTranscodeFile } = useTranscodeVideo();
-
-  const bytesToMB = (bytes) => Math.round(bytes / Math.pow(1024, 2), 2);
 
   const isValidType = useCallback(
     ({ type }) => {
@@ -62,7 +56,7 @@ function useUploader() {
     [allowedMimeTypes]
   );
 
-  const fileSizeCheck = useCallback(
+  const isFileSizeWithinLimits = useCallback(
     ({ size }) => {
       return size <= maxUpload;
     },
@@ -70,13 +64,17 @@ function useUploader() {
   );
 
   /**
-   * Uploads a file.
+   * Validates a file for upload.
+   *
+   * @throws Throws an error if file doesn't meet requirements.
    *
    * @param {Object} file File object.
-   * @param {Object} _additionalData Additional Data object.
+   * @param {boolean} canTranscodeFile Whether file can be transcoded by consumer.
+   * @param {boolean} isFileTooLarge Whether file is too large for consumer.
    */
-  const uploadFile = useCallback(
-    async (file, _additionalData = {}) => {
+  const validateFileForUpload = useCallback(
+    (file, canTranscodeFile, isFileTooLarge) => {
+      // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
           'Sorry, you are unable to upload files.',
@@ -84,7 +82,9 @@ function useUploader() {
         );
         throw createError('PermissionError', file.name, message);
       }
-      if (!fileSizeCheck(file)) {
+
+      // The file is too large for the site anyway, abort.
+      if (!isFileSizeWithinLimits(file)) {
         const message = sprintf(
           /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
           __(
@@ -97,7 +97,8 @@ function useUploader() {
         throw createError('SizeError', file.name, message);
       }
 
-      if (!isValidType(file) && !canTranscodeFile(file)) {
+      // TODO: Move this check to useUploadMedia?
+      if (!isValidType(file) && !canTranscodeFile) {
         /* translators: %s is a list of allowed file extensions. */
         const message = sprintf(
           /* translators: %s: list of allowed file types. */
@@ -111,59 +112,59 @@ function useUploader() {
         throw createError('ValidError', file.name, message);
       }
 
-      const additionalData = {
-        post: storyId,
-        media_source: 'editor',
-        ..._additionalData,
-      };
-
-      if (canTranscodeFile(file)) {
-        try {
-          // TODO: Only transcode & optimize video if needed (criteria TBD).
-          const newFile = await transcodeVideo(file);
-          additionalData.media_source = 'video-optimization';
-          return uploadMedia(newFile, additionalData);
-        } catch (err) {
-          trackError('video transcoding', err.message);
-
-          if (!isValidType(file)) {
-            /* translators: %s is a list of allowed file extensions. */
-            const message = sprintf(
-              /* translators: %s: list of allowed file types. */
-              __('Please choose only %s to upload.', 'web-stories'),
-              allowedFileTypes.join(
-                /* translators: delimiter used in a list */
-                __(', ', 'web-stories')
-              )
-            );
-
-            throw createError('ValidError', file.name, message);
-          }
-
-          const message = __('Video optimization failed', 'web-stories');
-          throw createError('TranscodingError', file.name, message);
-        }
+      // TODO: Move this check to useUploadMedia?
+      if (isFileTooLarge) {
+        const message = sprintf(
+          /* translators: 1: File size in MB. 2: Maximum allowed file size in MB. */
+          __(
+            'Your file is too large (%1$s MB) and cannot be processed. Please try again with a file that is smaller than %2$s MB.',
+            'web-stories'
+          ),
+          bytesToMB(file.size),
+          bytesToMB(MEDIA_TRANSCODING_MAX_FILE_SIZE)
+        );
+        throw createError('SizeError', file.name, message);
       }
-
-      return uploadMedia(file, additionalData);
     },
     [
-      allowedFileTypes,
-      fileSizeCheck,
       hasUploadMediaAction,
-      isValidType,
+      isFileSizeWithinLimits,
       maxUpload,
-      uploadMedia,
-      storyId,
-      canTranscodeFile,
-      transcodeVideo,
+      allowedFileTypes,
+      isValidType,
     ]
   );
 
-  return {
-    uploadFile,
-    isValidType,
-  };
+  /**
+   * Uploads a file.
+   *
+   * @param {Object} file File object.
+   * @param {Object} additionalData Additional Data object.
+   */
+  const uploadFile = useCallback(
+    (file, additionalData = {}) => {
+      // This will throw if the file cannot be uploaded.
+      validateFileForUpload(file);
+
+      const _additionalData = {
+        post: storyId,
+        media_source: 'editor',
+        ...additionalData,
+      };
+
+      return uploadMedia(file, _additionalData);
+    },
+    [validateFileForUpload, uploadMedia, storyId]
+  );
+
+  return useMemo(() => {
+    return {
+      actions: {
+        uploadFile,
+        validateFileForUpload,
+      },
+    };
+  }, [validateFileForUpload, uploadFile]);
 }
 
 export default useUploader;

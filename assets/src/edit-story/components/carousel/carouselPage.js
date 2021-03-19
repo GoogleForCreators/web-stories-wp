@@ -19,22 +19,18 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { ReorderableSeparator, ReorderableItem } from '../reorderable';
-import CarouselPagePreview from './carouselPagePreview';
+import PagePreview from './pagepreview';
 import useCarousel from './useCarousel';
 import { THUMBNAIL_LINE_WIDTH } from './constants';
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.colors.accent.primary};
+  background: ${({ theme }) => theme.colors.border.selection};
   height: ${({ height }) => height}px;
   width: ${THUMBNAIL_LINE_WIDTH}px;
   margin: 0px;
@@ -133,7 +129,7 @@ function CarouselPage({ pageId, index }) {
         </PageSeparator>
       )}
       <ReorderablePage position={index} margin={pageThumbMargin}>
-        <CarouselPagePreview
+        <PagePreview
           tabIndex={isCurrentPage && hasMultiplePages ? 0 : -1}
           onClick={() => clickPage(page)}
           role="option"

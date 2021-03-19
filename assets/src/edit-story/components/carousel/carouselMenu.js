@@ -17,27 +17,25 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
 import { useState, useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import {
-  GridView as GridViewButton,
-  MetaBoxes as MetaBoxesButton,
-  Plain,
-} from '../button';
+  Button,
+  Icons,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  Tooltip,
+  PLACEMENT,
+} from '../../../design-system';
+import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import Modal from '../modal';
-import WithTooltip from '../tooltip';
-import { Placement } from '../popup';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import GridView from './gridview';
 
@@ -50,6 +48,7 @@ const Wrapper = styled.div`
 `;
 
 const MenuItems = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -64,95 +63,104 @@ const Box = styled.div`
   align-items: center;
 `;
 
-const PlainStyled = styled(Plain)`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
-  &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.25)};
-  }
+const Space = styled.span`
+  width: 8px;
 `;
-
-const StyledGridViewButton = styled(GridViewButton).attrs({
-  height: '16',
-  width: '16',
-})``;
-
-const GridViewContainer = styled.section.attrs({
-  'aria-label': __('Grid View', 'web-stories'),
-})`
-  flex: 1;
-  margin: 70px 170px 70px 170px;
-  pointer-events: all;
-`;
-
-const StyledMetaBoxesButton = styled(MetaBoxesButton).attrs({
-  height: '24',
-  width: '24',
-})``;
 
 function CarouselMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
-  const openModal = useCallback(() => setIsGridViewOpen(true), []);
-  const closeModal = useCallback(() => setIsGridViewOpen(false), []);
 
-  const { toggleMetaBoxesVisible, hasMetaBoxes } = useMetaBoxes(
-    ({ state, actions }) => ({
-      hasMetaBoxes: state.hasMetaBoxes,
-      toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
-    })
-  );
+  const toggleModal = useCallback(() => {
+    setIsGridViewOpen((prevIsOpen) => {
+      const newIsOpen = !prevIsOpen;
+
+      trackEvent('grid_view_toggled', {
+        status: newIsOpen ? 'open' : 'closed',
+      });
+
+      return newIsOpen;
+    });
+  }, [setIsGridViewOpen]);
+
+  const {
+    metaBoxesVisible,
+    toggleMetaBoxesVisible,
+    hasMetaBoxes,
+  } = useMetaBoxes(({ state, actions }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+    metaBoxesVisible: state.metaBoxesVisible,
+    toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
+  }));
+
+  const handleMetaBoxesClick = useCallback(() => {
+    toggleMetaBoxesVisible();
+    trackEvent('meta_boxes_toggled', {
+      status: metaBoxesVisible ? 'visible' : 'hidden',
+    });
+  }, [metaBoxesVisible, toggleMetaBoxesVisible]);
 
   return (
     <>
       <Wrapper>
         <MenuItems>
           {hasMetaBoxes && (
-            <Box>
-              <WithTooltip
-                title={__('Third-Party Meta Boxes', 'web-stories')}
-                placement={Placement.TOP}
-              >
-                <StyledMetaBoxesButton
-                  onClick={toggleMetaBoxesVisible}
-                  aria-label={__('Third-Party Meta Boxes', 'web-stories')}
-                />
-              </WithTooltip>
-            </Box>
+            <>
+              <Box>
+                <Tooltip
+                  title={__('Third-Party Meta Boxes', 'web-stories')}
+                  placement={PLACEMENT.TOP}
+                  hasTail
+                >
+                  <Button
+                    variant={BUTTON_VARIANTS.SQUARE}
+                    type={BUTTON_TYPES.TERTIARY}
+                    size={BUTTON_SIZES.SMALL}
+                    onClick={handleMetaBoxesClick}
+                    aria-label={__('Third-Party Meta Boxes', 'web-stories')}
+                  >
+                    <Icons.LetterMOutline />
+                  </Button>
+                </Tooltip>
+              </Box>
+              <Space />
+            </>
           )}
           <Box>
             <KeyboardShortcutsMenu />
           </Box>
+          <Space />
           <Box>
-            <WithTooltip
+            <Tooltip
               title={__('Grid View', 'web-stories')}
-              placement={Placement.TOP}
+              placement={PLACEMENT.TOP}
+              hasTail
             >
-              <StyledGridViewButton
-                onClick={openModal}
+              <Button
+                variant={BUTTON_VARIANTS.SQUARE}
+                type={BUTTON_TYPES.PLAIN}
+                size={BUTTON_SIZES.SMALL}
+                onClick={toggleModal}
                 aria-label={__('Grid View', 'web-stories')}
-              />
-            </WithTooltip>
+              >
+                <Icons.Box4 />
+              </Button>
+            </Tooltip>
           </Box>
         </MenuItems>
       </Wrapper>
       <Modal
         open={isGridViewOpen}
-        onClose={closeModal}
+        onClose={toggleModal}
         contentLabel={__('Grid View', 'web-stories')}
         overlayStyles={{
-          alignItems: 'flex-start',
+          alignItems: 'stretch',
         }}
         contentStyles={{
           pointerEvents: 'none',
           flex: 1,
         }}
       >
-        <GridViewContainer>
-          <PlainStyled onClick={closeModal}>
-            {__('Back', 'web-stories')}
-          </PlainStyled>
-          <GridView />
-        </GridViewContainer>
+        <GridView onClose={toggleModal} />
       </Modal>
     </>
   );

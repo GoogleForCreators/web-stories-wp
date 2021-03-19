@@ -18,6 +18,7 @@
     "header",
     "jsdoc",
     "jsx-a11y",
+    "markdown",
     "react",
     "react-hooks"
   ],
@@ -66,7 +67,7 @@
     ] ],
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
-        "target": "./assets/src/migration/migrations",
+        "target": "./packages/migration/src/migrations",
         "from": "./assets/src/edit-story",
         "except": [ "./migration/migrations" ]
       }, {
@@ -158,6 +159,7 @@
         ]
       }
     ],
+    "react/jsx-boolean-value": "error",
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
@@ -331,7 +333,10 @@
       }
     },
     {
-      "files": ["tests/e2e/**/*.js"],
+      "files": [
+        "packages/e2e-test-utils/**/*.js",
+        "packages/e2e-tests/src/**/*.js"
+      ],
       "extends": [
         "plugin:jest/all"
       ],
@@ -353,7 +358,7 @@
       }
     },
     {
-      "files": ["tests/e2e/specs/**/*.js"],
+      "files": ["packages/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
       }
@@ -370,11 +375,11 @@
         ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
-        "tests/e2e/*.js",
-        "tests/e2e/config/*.js",
+        "packages/e2e-tests/src/*.js",
+        "packages/e2e-tests/src/config/*.js",
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs",
-        "assets/src/migration/**/*.js",
+        "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js"
       ],
@@ -397,7 +402,7 @@
     },
     {
       "files": [
-        "assets/src/migration/utils/updateTemplates.js"
+        "packages/migration/src/utils/updateTemplates.js"
       ],
       "rules": {
         "eslint-comments/no-unused-disable": "off"
@@ -408,15 +413,59 @@
         "*.md",
         "**/*.md"
       ],
-      "plugins": [
-        "markdown"
+      "processor": "markdown/markdown"
+    },
+    {
+      "files": [
+        "**/*.md/*.js"
       ],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "impliedStrict": true
+        }
+      },
       "rules": {
         "@wordpress/dependency-group": "off",
+        "no-console": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off",
         "prettier/prettier": "off"
+      }
+    },
+    {
+      "files": [
+        "assets/src/animation/**/*.js",
+        "assets/src/dashboard/**/*.js",
+        "assets/src/design-system/**/*.js",
+        "assets/src/edit-story/**/*.js",
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        "packages/activation-notice/**/*.js",
+        "packages/i18n/**/*.js",
+        "packages/tinymce-button/**/*.js"
+      ],
+      "rules":{
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@wordpress/i18n",
+                "message": "Use @web-stories-wp/i18n instead."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "packages/tinymce-button/src/**/*.js"
+      ],
+      "globals": {
+        "tinymce": "readonly"
       }
     }
   ]

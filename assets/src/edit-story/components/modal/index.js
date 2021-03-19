@@ -20,7 +20,6 @@
 import { default as ReactModal } from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle } from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -74,7 +73,7 @@ function Modal({
           right: 0,
           bottom: 0,
           zIndex: 10,
-          background: rgba(theme.colors.bg.workspace, 0.96),
+          background: theme.colors.bg.primary,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

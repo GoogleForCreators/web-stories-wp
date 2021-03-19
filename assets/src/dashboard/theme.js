@@ -23,7 +23,7 @@ import { useContext } from 'react';
 /**
  * Internal dependencies
  */
-import { DROPDOWN_TYPES } from './constants';
+import { themeHelpers } from '../design-system';
 
 export const GlobalStyle = createGlobalStyle`
 	*,
@@ -34,6 +34,10 @@ export const GlobalStyle = createGlobalStyle`
     
   h1, h2, h3, h4, h5, h6, p, a {
     margin: 0;
+  }
+
+  body.web-story_page_stories-dashboard #wpbody {
+    ${themeHelpers.scrollbarCSS};
   }
 `;
 
@@ -99,29 +103,6 @@ const theme = {
   button: {
     borderRadius: 100,
   },
-  dropdown: {
-    [DROPDOWN_TYPES.PANEL]: {
-      background: 'transparent',
-      activeBackground: colors.gray25,
-      borderRadius: 40,
-      border: borders.gray50,
-      arrowColor: colors.bluePrimary,
-    },
-    [DROPDOWN_TYPES.COLOR_PANEL]: {
-      background: 'transparent',
-      activeBackground: colors.gray25,
-      borderRadius: 40,
-      border: borders.gray50,
-      arrowColor: colors.bluePrimary,
-    },
-    [DROPDOWN_TYPES.MENU]: {
-      background: 'transparent',
-      activeBackground: 'transparent',
-      borderRadius: 4,
-      border: borders.transparent,
-      arrowColor: colors.gray300,
-    },
-  },
   leftRail: {
     logoMargin: '75px auto 20px',
   },
@@ -131,16 +112,8 @@ const theme = {
   chip: {
     shadow: '0px 1px 3px rgba(0, 0, 0, 0.2)',
   },
-  typeahead: {
-    borderRadius: 100,
-  },
   formatContainer: {
     height: 76,
-  },
-  expandedTypeahead: {
-    borderRadius: 8,
-    boxShadow:
-      '0px 0.181152px 2.29372px rgba(0, 0, 0, 0.031357), 0px 0.500862px 5.15978px rgba(0, 0, 0, 0.045),0px 1.20588px 8.99337px rgba(0, 0, 0, 0.058643), 0px 4px 17px rgba(0, 0, 0, 0.09)',
   },
   floatingTab: {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
@@ -167,10 +140,6 @@ const theme = {
   cardItem: {
     previewOverlay:
       'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
-  },
-  popoverPanel: {
-    desktopWidth: 595,
-    tabletWidth: 395,
   },
   typography: {
     family: { ...themeFonts },
@@ -227,30 +196,6 @@ const theme = {
     desktop: 80,
     tablet: 40,
     min: 10,
-  },
-  standardViewContentGutter: {
-    desktop: 52,
-    tablet: 52,
-    largeDisplayPhone: 10,
-    smallDisplayPhone: 10,
-    min: 10,
-  },
-  grid: {
-    columnGap: {
-      desktop: 20,
-      tablet: 20,
-      largeDisplayPhone: 10,
-      smallDisplayPhone: 10,
-      min: 10,
-    },
-  },
-  previewWidth: {
-    desktop: 232,
-    tablet: 200,
-    largeDisplayPhone: 173,
-    smallDisplayPhone: 200,
-    min: 152,
-    thumbnail: 33,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',

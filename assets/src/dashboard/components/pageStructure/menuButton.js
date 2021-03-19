@@ -19,11 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -69,7 +65,7 @@ export default function NavMenuButton({ showOnlyOnSmallViewport }) {
       showOnlyOnSmallViewport={showOnlyOnSmallViewport}
       aria-label={__('toggle main navigation', 'web-stories')}
     >
-      <MenuIcon aria-hidden={true} />
+      <MenuIcon aria-hidden />
     </TransparentButton>
   );
 }

@@ -65,7 +65,7 @@ describe('Settings View', () => {
 
   function navigateToEditorSettings() {
     const editorSettingsMenuItem = fixture.screen.queryByRole('link', {
-      name: /^Editor Settings$/,
+      name: /^Settings$/,
     });
     return fixture.events.click(editorSettingsMenuItem);
   }
@@ -337,21 +337,22 @@ describe('Settings View', () => {
 
     await focusOnPublisherLogos();
 
-    const page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
+    const logo1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
     await fixture.events.keyboard.press('right');
-    expect(page1).toEqual(document.activeElement);
+    expect(logo1).toEqual(document.activeElement);
 
-    // // go right by 1
+    // go to second logo
     await fixture.events.keyboard.press('right');
 
-    await fixture.events.keyboard.press('Enter');
-
-    const page2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
-    expect(page2).toEqual(document.activeElement);
+    const logo2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
+    expect(logo2).toEqual(document.activeElement);
 
     await fixture.events.keyboard.press('Tab');
 
     await fixture.events.keyboard.press('Enter');
+
+    // Tab into second menu
+    await fixture.events.keyboard.press('Tab');
 
     // we want to select the second list item
     await fixture.events.keyboard.press('ArrowDown');
@@ -370,6 +371,101 @@ describe('Settings View', () => {
     ).queryAllByTestId(/^uploaded-publisher-logo-/);
 
     expect(updatedLogos.length).toBeLessThan(initialPublisherLogosLength);
+  });
+
+  it('should update the default logo on click', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo-\d+$/
+    );
+    expect(PublisherLogos).toBeTruthy();
+
+    // Check that the first publisher logo is set to the default
+    const firstPublisherLogoIsDefault = Array.from(
+      PublisherLogos[0].children
+    ).find((node) => node.textContent === 'Default');
+    expect(firstPublisherLogoIsDefault).toBeTruthy();
+
+    const ContextMenuButtons = within(settingsView).queryAllByTestId(
+      /^publisher-logo-context-menu-button-\d+$/
+    );
+    expect(ContextMenuButtons).toBeTruthy();
+
+    await fixture.events.click(ContextMenuButtons[1]);
+
+    const ContextMenu = within(settingsView).getByTestId(
+      'publisher-logo-context-menu-1'
+    );
+    expect(ContextMenu).toBeDefined();
+
+    const UpdateDefaultLogoButton = within(ContextMenu).getByText(
+      'Set as Default'
+    );
+    expect(UpdateDefaultLogoButton).toBeTruthy();
+
+    await fixture.events.click(UpdateDefaultLogoButton);
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('editor-settings')
+    ).queryAllByTestId(/^publisher-logo-\d+$/);
+
+    // Check that the second publisher logo is set to the default
+    const secondPublisherLogoIsDefault = Array.from(
+      UpdatedPublisherLogos[1].children
+    ).find((node) => node.textContent === 'Default');
+    expect(secondPublisherLogoIsDefault).toBeTruthy();
+  });
+
+  it('should update the default logo on keydown enter', async () => {
+    const settingsView = await fixture.screen.getByTestId(
+      'publisher-logos-container'
+    );
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo-\d+$/
+    );
+    expect(PublisherLogos).toBeTruthy();
+
+    // Check that the first publisher logo is set to the default
+    const firstPublisherLogoIsDefault = Array.from(
+      PublisherLogos[0].children
+    ).find((node) => node.textContent === 'Default');
+
+    expect(firstPublisherLogoIsDefault).toBeTruthy();
+
+    await focusOnPublisherLogos();
+
+    const logo1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
+    await fixture.events.keyboard.press('right');
+    expect(logo1).toEqual(document.activeElement);
+
+    // go right by 1
+    await fixture.events.keyboard.press('right');
+
+    const logo2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
+    expect(logo2).toEqual(document.activeElement);
+
+    // set focus within logo2
+    await fixture.events.keyboard.press('tab');
+    // activate menu
+    await fixture.events.keyboard.press('Enter');
+    //tab into menu
+    await fixture.events.keyboard.press('tab');
+
+    // we want to select the first list item
+    await fixture.events.keyboard.press('Enter');
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('publisher-logos-container')
+    ).queryAllByTestId(/^publisher-logo-\d+/);
+
+    // Check that the second publisher logo is set to the default
+    const secondPublisherLogoIsDefault = Array.from(
+      UpdatedPublisherLogos[1].children
+    ).find((node) => node.textContent === 'Default');
+
+    expect(secondPublisherLogoIsDefault).toBeTruthy();
   });
 
   it('should render the telemetry settings checkbox', async () => {

@@ -17,10 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -31,8 +28,9 @@ const Panel = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
 `;
 
-const Heading = styled.h4`
+const Heading = styled.h1`
   ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
+  color: ${({ theme }) => theme.colors.fg.primary};
   line-height: 32px;
   margin: 0 0 8px 0;
 `;

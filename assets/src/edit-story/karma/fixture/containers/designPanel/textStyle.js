@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Toggle, Select, Color } from '../common';
+import { ToggleButton, Select, Color } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -31,25 +31,25 @@ export class TextStyle extends AbstractPanel {
 
   get bold() {
     return this._get(
-      this.getByRole('checkbox', { name: /Toggle: bold/ }),
+      this.getByRole('button', { name: /Toggle: bold/ }),
       'bold',
-      Toggle
+      ToggleButton
     );
   }
 
   get italic() {
     return this._get(
-      this.getByRole('checkbox', { name: /Toggle: italic/ }),
+      this.getByRole('button', { name: /Toggle: italic/ }),
       'italic',
-      Toggle
+      ToggleButton
     );
   }
 
   get underline() {
     return this._get(
-      this.getByRole('checkbox', { name: /Toggle: underline/ }),
+      this.getByRole('button', { name: /Toggle: underline/ }),
       'underline',
-      Toggle
+      ToggleButton
     );
   }
 
@@ -82,21 +82,10 @@ export class TextStyle extends AbstractPanel {
   }
 
   get collapse() {
-    return this.getByRole('button', { name: 'Style' });
-  }
-
-  get fill() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Set text background mode: Fill/i }),
-      'fill',
-      Toggle
-    );
+    return this.getByRole('button', { name: 'Text' });
   }
 
   // @todo: add remaining input options:
   // * font family and size
   // * justify toggles
-  // * fill style
-  // * background color
-  // * padding (lock ratio, combined padding and individual paddings)
 }

@@ -16,14 +16,13 @@
 
 export { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 
-export const SCROLLBAR_WIDTH = 11;
 export const ADMIN_TOOLBAR_HEIGHT = 32;
-export const HEADER_HEIGHT = 48;
+export const HEADER_HEIGHT = 64;
 export const CANVAS_MIN_WIDTH = 570;
 export const LIBRARY_MIN_WIDTH = 220;
 export const LIBRARY_MAX_WIDTH = 360;
 export const INSPECTOR_MIN_WIDTH = 220;
-export const INSPECTOR_MAX_WIDTH = 280;
+export const INSPECTOR_MAX_WIDTH = 308;
 export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
@@ -35,6 +34,9 @@ export const PAGE_HEIGHT = 618;
 export const ALLOWED_EDITOR_PAGE_WIDTHS = [412, 268, 223];
 
 export const FULLBLEED_RATIO = 9 / 16;
+
+export const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
+export const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 export const DESIGN_SPACE_MARGIN = 48;
 
@@ -84,5 +86,7 @@ export const HIDDEN_PADDING = {
   vertical: 4,
 };
 
-export const SAVED_COLOR_SIZE = 30;
-export const SAVED_STYLE_HEIGHT = 48;
+export const SAVED_COLOR_SIZE = 32;
+export const SAVED_STYLE_HEIGHT = 64;
+
+export * from './media';

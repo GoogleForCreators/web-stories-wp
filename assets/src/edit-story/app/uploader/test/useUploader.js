@@ -22,7 +22,14 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import ConfigContext from '../../config/context';
+import APIContext from '../../api/context';
 import useUploader from '../useUploader';
+
+const mockShowSnackbar = jest.fn();
+
+jest.mock('../../snackbar', () => ({
+  useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
+}));
 
 function setup(args) {
   const configValue = {
@@ -38,52 +45,102 @@ function setup(args) {
     },
     ...args,
   };
-  const wrapper = (params) => (
+
+  const apiValue = {
+    actions: {
+      uploadMedia: jest.fn(() => 'Upload successful!'),
+    },
+  };
+
+  const wrapper = ({ children }) => (
     <ConfigContext.Provider value={configValue}>
-      {params.children}
+      <APIContext.Provider value={apiValue}>{children}</APIContext.Provider>
     </ConfigContext.Provider>
   );
   const { result } = renderHook(() => useUploader(), { wrapper });
+
   return {
-    uploadFile: result.current.uploadFile,
-    isValidType: result.current.isValidType,
+    actions: result.current.actions,
   };
 }
 
 describe('useUploader', () => {
-  it('throws an error when user does not have upload permissions', async () => {
-    const { uploadFile } = setup({
-      capabilities: {
-        hasUploadMediaAction: false,
-      },
+  beforeEach(() => {
+    mockShowSnackbar.mockReset();
+  });
+
+  describe('validateFileForUpload', () => {
+    it('throws an error if user does not have upload capabilities', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({
+        capabilities: {
+          hasUploadMediaAction: false,
+        },
+      });
+
+      await expect(() => validateFileForUpload({})).toThrow(
+        'Sorry, you are unable to upload files.'
+      );
     });
 
-    await expect(uploadFile({})).rejects.toThrow(
-      'Sorry, you are unable to upload files.'
-    );
-  });
+    it('throws an error if file is too large', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({
+        maxUpload: 2000000,
+      });
 
-  it('user uploads a to large file', async () => {
-    const { uploadFile } = setup({
-      maxUpload: 2000000,
+      await expect(() => validateFileForUpload({ size: 3000000 })).toThrow(
+        'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
+      );
     });
 
-    await expect(uploadFile({ size: 3000000 })).rejects.toThrow(
-      'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
-    );
+    it('throws an error if file type is not supported and cannot be transcoded', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
+
+      await expect(() =>
+        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+      ).toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
+    });
+
+    it('throws an error if file is too large for transcoding', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({
+        maxUpload: 1024 * 1024 * 1024 * 10,
+      });
+
+      await expect(() =>
+        validateFileForUpload(
+          {
+            size: 1024 * 1024 * 1024 * 3,
+            type: 'video/quicktime',
+          },
+          true,
+          true
+        )
+      ).toThrow(
+        'Your file is too large (3072 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
+      );
+    });
   });
 
-  it('user uploads an invalid file', async () => {
-    const { uploadFile } = setup({});
+  describe('uploadFile', () => {
+    it('uploads image', async () => {
+      const {
+        actions: { uploadFile },
+      } = setup({});
 
-    await expect(
-      uploadFile({ size: 20000, type: 'application/pdf' })
-    ).rejects.toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
-  });
+      const file = {
+        size: 20000,
+        type: 'image/png',
+      };
 
-  it('isValidType is given an invalid file', () => {
-    const { isValidType } = setup({});
-
-    expect(isValidType({ type: 'application/pdf' })).toBe(false);
+      const result = await uploadFile(file);
+      expect(result).toStrictEqual('Upload successful!');
+    });
   });
 });

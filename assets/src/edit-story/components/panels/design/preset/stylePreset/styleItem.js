@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -39,8 +35,8 @@ import generatePatternStyles from '../../../../../utils/generatePatternStyles';
 const REMOVE_ICON_SIZE = 16;
 
 const PresetButton = styled.button`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.16)};
-  display: inline-block;
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.16)};
   border-color: transparent;
   position: relative;
   cursor: pointer;
@@ -49,13 +45,16 @@ const PresetButton = styled.button`
   padding: 3px;
   height: 100%;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
     position: absolute;
     top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
     left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-    color: ${({ theme }) => theme.colors.fg.primary};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
   }
 `;
 
@@ -76,6 +75,7 @@ const TextWrapper = styled.div`
   padding: 3px;
   max-width: 100%;
   ${({ styles }) => styles}
+  font-size: 12px;
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
 `;
 

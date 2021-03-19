@@ -18,59 +18,40 @@
  * External dependencies
  */
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { rgba } from 'polished';
+import styled, { css } from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { ChevronLeft } from '../../icons';
 import { useLayoutContext } from '../layout';
-import { KEYBOARD_USER_SELECTOR } from '../../constants';
+import { Button, BUTTON_VARIANTS, Icons } from '../../../design-system';
 
-const ScrollButton = styled.button`
-  position: fixed;
-  right: 40px;
-  bottom: 40px;
-  height: 50px;
-  width: 50px;
-  display: flex;
-  align-self: center;
-  justify-content: space-around;
-  align-items: center;
-  contain: content;
-  padding: 8px;
-  pointer-events: ${({ isVisible }) => (isVisible ? 'auto' : 'none')};
-  cursor: pointer;
-  border-radius: 50%;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  opacity: ${({ isVisible }) => Number(isVisible)};
-  transition: opacity 300ms ease-in-out;
+const StyledButton = styled(Button)(
+  ({ isVisible, theme }) => css`
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-self: center;
+    justify-content: space-around;
+    align-items: center;
+    contain: content;
+    padding: 8px;
+    background-color: ${theme.colors.opacity.white64};
+    pointer-events: ${isVisible ? 'auto' : 'none'};
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+    opacity: ${Number(isVisible)};
+    transition: opacity 300ms ease-in-out;
+  `
+);
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) =>
-      `2px solid ${rgba(
-        theme.DEPRECATED_THEME.colors.bluePrimary,
-        0.85
-      )} !important`};
-  }
-`;
-
-const DropUpArrowIcon = styled(ChevronLeft)`
-  top: -2px;
+const DropUpArrowIcon = styled(Icons.ChevronUp)`
   position: relative;
-  transform: rotate(-90deg);
-  width: 100%;
-  height: 100%;
+  transform: scale(2.4);
 `;
 
 const ScrollToTop = () => {
@@ -92,14 +73,16 @@ const ScrollToTop = () => {
   }, [handleScroll]);
 
   return (
-    <ScrollButton
+    <StyledButton
+      aria-hidden={isVisible}
+      aria-label={__('scroll back to top', 'web-stories')}
       data-testid="scroll-to-top-button"
       isVisible={isVisible}
       onClick={scrollToTop}
-      title={__('scroll back to top', 'web-stories')}
+      variant={BUTTON_VARIANTS.CIRCLE}
     >
-      <DropUpArrowIcon aria-hidden={true} />
-    </ScrollButton>
+      <DropUpArrowIcon aria-hidden />
+    </StyledButton>
   );
 };
 

@@ -19,18 +19,19 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Add } from '../../../../../../design-system/icons/action';
-import { TranslateWithMarkup } from '../../../../../../i18n';
+import { Icons, Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import ColorAdd from './colorAdd';
+
+const InlineIcon = styled(Icons.Plus)`
+  display: inline-block;
+  width: 17px;
+  margin: -3px;
+`;
 
 const ActionWrapper = styled.div`
   width: 50%;
@@ -44,9 +45,7 @@ const Wrapper = styled.div`
   line-height: 20px;
 `;
 
-// @todo Use color from design system when theme reference changes.
-const Note = styled.div`
-  font-size: 14px;
+const Note = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin-bottom: 10px;
 `;
@@ -54,10 +53,10 @@ const Note = styled.div`
 function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
   return (
     <Wrapper>
-      <Note>
+      <Note size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
-            i: <Add width={18} height={13} />,
+            i: <InlineIcon />,
           }}
         >
           {__(

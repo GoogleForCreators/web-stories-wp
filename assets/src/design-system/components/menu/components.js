@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../theme';
 import { DEFAULT_DROPDOWN_HEIGHT } from './constants';
 
 export const MenuContainer = styled.div(
@@ -29,6 +30,7 @@ export const MenuContainer = styled.div(
     dropdownHeight = DEFAULT_DROPDOWN_HEIGHT,
     styleOverride = '',
     theme,
+    isAbsolute,
   }) => css`
     position: relative;
     display: flex;
@@ -41,10 +43,22 @@ export const MenuContainer = styled.div(
     overscroll-behavior: none auto;
     z-index: 2;
     margin-top: 8px;
+    padding: 4px 0;
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
-    border: 2px solid ${theme.colors.divider.primary};
-    ${styleOverride}
+    border: 1px solid ${theme.colors.divider.primary};
+
+    ${isAbsolute &&
+    css`
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    `};
+
+    ${styleOverride};
+
+    ${themeHelpers.scrollbarCSS};
   `
 );
 MenuContainer.propTypes = {

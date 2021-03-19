@@ -18,30 +18,30 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../../../tracking';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Text,
+  THEME_CONSTANTS,
+  DropDown,
+} from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
-import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
 import createError from '../../../../../utils/createError';
-import {
-  getResourceFromMediaPicker,
-  getTypeFromMime,
-} from '../../../../../app/media/utils';
+import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
   PaneHeader,
@@ -52,33 +52,41 @@ import {
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
-import { DropDown } from '../../../../form';
 import { Placement } from '../../../../popup';
 import { PANE_PADDING } from '../../shared';
 import { useSnackbar } from '../../../../../app';
+import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
+import VideoOptimizationDialog from './videoOptimizationDialog';
 
 export const ROOT_MARGIN = 300;
 
 const FilterArea = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 24px;
   padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
 `;
 
-const SearchCount = styled.span`
+const SearchCount = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+})`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-style: italic;
 `;
 
+const StyledDropDown = styled(DropDown)`
+  background-color: transparent;
+  width: 132px;
+`;
+
+const FILTER_NONE = LOCAL_MEDIA_TYPE_ALL;
 const FILTERS = [
-  { value: '', name: __('All Types', 'web-stories') },
-  { value: 'image', name: __('Images', 'web-stories') },
-  { value: 'video', name: __('Video', 'web-stories') },
+  { value: FILTER_NONE, label: __('All Types', 'web-stories') },
+  { value: 'image', label: __('Images', 'web-stories') },
+  { value: 'video', label: __('Video', 'web-stories') },
 ];
 
 function MediaPane(props) {
@@ -184,7 +192,7 @@ function MediaPane(props) {
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
 
-      if (!resource.posterId) {
+      if (!resource.posterId && !resource.local) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
         uploadVideoPoster(resource.id, mediaPickerEl.url);
@@ -209,11 +217,8 @@ function MediaPane(props) {
    * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
-    (filter) => {
+    (evt, filter) => {
       setMediaType({ mediaType: filter });
-      trackEvent('filter_media', 'editor', '', '', {
-        type: filter,
-      });
     },
     [setMediaType]
   );
@@ -235,30 +240,20 @@ function MediaPane(props) {
     [insertElement]
   );
 
-  const filterResource = useCallback(
-    ({ mimeType, width, height }) => {
-      const filterByMimeTypeAllowed = allowedMimeTypes.includes(mimeType);
-      const filterByMediaType = mediaType
-        ? mediaType === getTypeFromMime(mimeType)
-        : true;
-      const filterByValidMedia = width && height;
-
-      return filterByMimeTypeAllowed && filterByMediaType && filterByValidMedia;
-    },
-    [allowedMimeTypes, mediaType]
-  );
-
-  const resources = media.filter(filterResource);
-
   const onSearch = (value) => {
     const trimText = value.trim();
     if (trimText !== searchTerm) {
       setSearchTerm({ searchTerm: trimText });
-      trackEvent('search_media', 'editor', '', '', {
-        search_term: trimText,
-      });
     }
   };
+
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'media',
+      search_term: searchTerm,
+      search_filter: mediaType,
+    });
+  }, [searchTerm, mediaType]);
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
@@ -277,9 +272,9 @@ function MediaPane(props) {
             />
           </SearchInputContainer>
           <FilterArea>
-            <DropDown
-              value={mediaType?.toString() || FILTERS[0].value}
-              onChange={onFilter}
+            <StyledDropDown
+              selectedValue={mediaType?.toString() || FILTER_NONE}
+              onMenuItemClick={onFilter}
               options={FILTERS}
               placement={Placement.BOTTOM_START}
               fitContentWidth
@@ -299,9 +294,14 @@ function MediaPane(props) {
               </SearchCount>
             )}
             {!isSearching && (
-              <Primary onClick={openMediaPicker}>
+              <Button
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={openMediaPicker}
+              >
                 {__('Upload', 'web-stories')}
-              </Primary>
+              </Button>
             )}
           </FilterArea>
         </PaneHeader>
@@ -314,8 +314,8 @@ function MediaPane(props) {
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery
-            providerType={'local'}
-            resources={resources}
+            providerType="local"
+            resources={media}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}
             hasMore={hasMore}
@@ -329,6 +329,7 @@ function MediaPane(props) {
           open={isPermissionDialogOpen}
           onClose={() => setIsPermissionDialogOpen(false)}
         />
+        <VideoOptimizationDialog />
       </PaneInner>
     </StyledPane>
   );

@@ -17,50 +17,31 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
-import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useMemo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { SettingForm, SettingHeading, FormLabel } from '../components';
-
-const CheckBox = styled.input.attrs({
-  type: 'checkbox',
-  id: 'media-optimization',
-})`
-  height: 18px;
-  width: 18px;
-  margin: 0 12px 0 0;
-  flex: 1 0 18px;
-`;
-
-const Label = styled.label.attrs({ htmlFor: 'media-optimization' })`
-  display: flex;
-  justify-content: flex-start;
-`;
+import {
+  SettingForm,
+  SettingHeading,
+  CheckboxLabel,
+  CheckboxLabelText,
+} from '../components';
+import { Checkbox, THEME_CONSTANTS } from '../../../../../design-system';
 
 export default function MediaOptimizationSettings({
   selected,
   onCheckboxSelected,
   disabled,
 }) {
-  const checkboxRef = useRef();
-  const focusOnCheckbox = useRef(false);
-
-  const checked = Boolean(selected);
-
-  useEffect(() => {
-    if (focusOnCheckbox.current) {
-      checkboxRef.current.focus();
-    }
-  });
+  const mediaOptimizationId = useMemo(
+    () => `media-optimization-${uuidv4()}`,
+    []
+  );
 
   return (
     <SettingForm>
@@ -70,27 +51,25 @@ export default function MediaOptimizationSettings({
         </SettingHeading>
       </div>
       <div>
-        <Label>
-          <CheckBox
-            ref={checkboxRef}
+        <CheckboxLabel forwardedAs="label" htmlFor={mediaOptimizationId}>
+          <Checkbox
+            id={mediaOptimizationId}
             data-testid="media-optimization-settings-checkbox"
             disabled={disabled}
-            onChange={() => {
-              onCheckboxSelected();
-              focusOnCheckbox.current = true;
-            }}
-            onBlur={() => {
-              focusOnCheckbox.current = false;
-            }}
-            checked={checked}
+            onChange={onCheckboxSelected}
+            checked={Boolean(selected)}
           />
-          <FormLabel aria-checked={checked}>
+          <CheckboxLabelText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            aria-checked={Boolean(selected)}
+            forwardedAs="span"
+          >
             {__(
               'Automatically optimize videos used in Web Stories. We recommend enabling this feature. Video files that are too large or have an unsupported format (like .mov) will otherwise not display properly.',
               'web-stories'
             )}
-          </FormLabel>
-        </Label>
+          </CheckboxLabelText>
+        </CheckboxLabel>
       </div>
     </SettingForm>
   );

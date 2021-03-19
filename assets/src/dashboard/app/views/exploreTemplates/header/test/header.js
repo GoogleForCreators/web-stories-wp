@@ -31,42 +31,6 @@ import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Header from '../';
 
-const fakeTemplates = [
-  {
-    id: 1,
-    title: 'Beauty',
-    createdBy: 'Google',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-    status: 'template',
-    pages: [{ id: '10' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-  {
-    id: 2,
-    title: 'Cooking',
-    createdBy: 'Google',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-    status: 'template',
-    pages: [{ id: '20' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-  {
-    id: 3,
-    title: 'Fitness',
-    createdBy: 'Google',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
-    status: 'template',
-    pages: [{ id: '30' }],
-    centerTargetAction: () => {},
-    bottomTargetAction: () => {},
-  },
-];
-
 describe('Explore Templates <Header />', function () {
   it('should have results label that says "Viewing all templates" on initial page view', function () {
     const { getByText } = renderWithProviders(
@@ -75,7 +39,6 @@ describe('Explore Templates <Header />', function () {
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={3}
           search={{ keyword: '', setKeyword: jest.fn() }}
-          templates={fakeTemplates}
           sort={{
             value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
             set: jest.fn(),
@@ -92,68 +55,13 @@ describe('Explore Templates <Header />', function () {
     expect(getByText('Viewing all templates')).toBeInTheDocument();
   });
 
-  it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithProviders(
-      <LayoutProvider>
-        <Header
-          filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
-          totalTemplates={8}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn }}
-          templates={fakeTemplates}
-          sort={{
-            value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
-            set: jest.fn,
-          }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-        />
-      </LayoutProvider>,
-      { features: { enableInProgressTemplateActions: true } }
-    );
-    expect(getByPlaceholderText('Search Templates')).toHaveValue(
-      'Harry Potter'
-    );
-    expect(getByText('8 results')).toBeInTheDocument();
-  });
-
-  it('should call the set keyword function when new text is searched', function () {
-    const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithProviders(
-      <LayoutProvider>
-        <Header
-          filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
-          totalTemplates={8}
-          search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
-          templates={fakeTemplates}
-          sort={{
-            value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
-            set: jest.fn,
-          }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-        />
-      </LayoutProvider>,
-      { features: { enableInProgressTemplateActions: true } }
-    );
-    fireEvent.change(getByPlaceholderText('Search Templates'), {
-      target: { value: 'Hermione Granger' },
-    });
-    expect(setKeywordFn).toHaveBeenCalledWith('Hermione Granger');
-  });
-
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithProviders(
+    const { getByLabelText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={8}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn }}
-          templates={fakeTemplates}
           sort={{
             value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
             set: setSortFn,
@@ -166,7 +74,7 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { features: { enableInProgressTemplateActions: true } }
     );
-    fireEvent.click(getAllByText('Popular')[0].parentElement);
+    fireEvent.click(getByLabelText('Choose sort option for display'));
     fireEvent.click(getByText('Recent'));
 
     expect(setSortFn).toHaveBeenCalledWith('recent');
@@ -178,8 +86,6 @@ describe('Explore Templates <Header />', function () {
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
           totalTemplates={8}
-          search={{ keyword: '', setKeyword: jest.fn }}
-          templates={fakeTemplates}
           sort={{
             value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
             set: jest.fn,

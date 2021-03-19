@@ -17,25 +17,18 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Layout } from '../../../../../design-system/icons/editor';
-
-const StyledLayoutIcon = styled(Layout)({
-  transform: 'scale(0.71)',
-});
+import { Icons } from '../../../../../design-system';
 
 function PageLayoutsIcon() {
   return (
-    <StyledLayoutIcon aria-label={__('Page layouts library', 'web-stories')} />
+    <Icons.Box4Alternate
+      aria-label={__('Page layouts library', 'web-stories')}
+    />
   );
 }
 

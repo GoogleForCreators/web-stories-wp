@@ -16,12 +16,8 @@
 
 export { default as BodyViewOptions } from './bodyViewOptions';
 export { default as EmptyContentMessage } from './emptyContentMessage';
-export {
-  default as PageHeading,
-  HeaderToggleButtonContainer,
-} from './pageHeading';
+export { default as PageHeading } from './pageHeading';
 export { default as SavedTemplateGridView } from './savedTemplateGridView';
 export { default as StoryGridView } from './storyGridView';
 export { default as StoryListView } from './storyListView';
 export { default as TemplateGridView } from './templateGridView';
-export { default as TypeaheadSearch } from './typeaheadSearch';

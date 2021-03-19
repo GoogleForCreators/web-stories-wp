@@ -55,7 +55,7 @@ describe('useGenericResultsLabel()', function () {
       {}
     );
     expect(result.current).toBe(
-      RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.ALL]
+      RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.ALL](0)
     );
   });
 
@@ -69,7 +69,7 @@ describe('useGenericResultsLabel()', function () {
       {}
     );
     expect(result.current).toBe(
-      RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.DRAFT]
+      RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.DRAFT](0)
     );
   });
 
@@ -85,7 +85,7 @@ describe('useGenericResultsLabel()', function () {
     expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][
         STORY_STATUS.PUBLISHED_AND_FUTURE
-      ]
+      ](0)
     );
   });
 
@@ -100,7 +100,7 @@ describe('useGenericResultsLabel()', function () {
         }),
       {}
     );
-    expect(result.current).toBe('4 results');
+    expect(result.current).toBe('<strong>4</strong> results');
   });
 
   it(`should show "1 result" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.MY_STORIES}`, function () {
@@ -114,7 +114,7 @@ describe('useGenericResultsLabel()', function () {
         }),
       {}
     );
-    expect(result.current).toBe('1 result');
+    expect(result.current).toBe('<strong>1</strong> result');
   });
 
   it(`should show "0 results" if isActiveSearch is true and totalResults is 0 for ${DASHBOARD_VIEWS.MY_STORIES}`, function () {
@@ -128,7 +128,7 @@ describe('useGenericResultsLabel()', function () {
         }),
       {}
     );
-    expect(result.current).toBe('0 results');
+    expect(result.current).toBe('<strong>0</strong> results');
   });
 
   // saved templates
@@ -189,7 +189,7 @@ describe('useGenericResultsLabel()', function () {
         }),
       {}
     );
-    expect(result.current).toBe('30 results');
+    expect(result.current).toBe('<strong>30</strong> results');
   });
 
   // template gallery
@@ -206,7 +206,7 @@ describe('useGenericResultsLabel()', function () {
     expect(result.current).toBe(
       RESULT_LABELS[DASHBOARD_VIEWS.TEMPLATES_GALLERY][
         TEMPLATES_GALLERY_STATUS.ALL
-      ]
+      ](0)
     );
   });
 
@@ -221,6 +221,6 @@ describe('useGenericResultsLabel()', function () {
         }),
       {}
     );
-    expect(result.current).toBe('41 results');
+    expect(result.current).toBe('<strong>41</strong> results');
   });
 });

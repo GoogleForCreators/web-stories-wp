@@ -15,16 +15,16 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as ElementsTabIcon } from './elements.svg';
+import { Icons } from '../../../../../design-system';
 
 function ElementsIcon() {
-  return <ElementsTabIcon aria-label={__('Elements library', 'web-stories')} />;
+  return <Icons.Box4 aria-label={__('Elements library', 'web-stories')} />;
 }
 
 export default ElementsIcon;

@@ -38,7 +38,6 @@ const Video = styled.video`
 
 const Image = styled.img`
   position: absolute;
-  max-width: initial;
   max-height: initial;
   object-fit: contain;
   width: ${({ width }) => `${width}px`};
@@ -82,17 +81,19 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     <MediaDisplay
       element={element}
       mediaRef={ref}
-      showPlaceholder={true}
+      showPlaceholder
       previewMode={previewMode}
     >
       {previewMode ? (
-        <Image
-          src={poster || resource.poster}
-          alt={element.alt || resource.alt}
-          style={style}
-          {...videoProps}
-          ref={ref}
-        />
+        (poster || resource.poster) && (
+          <Image
+            src={poster || resource.poster}
+            alt={element.alt || resource.alt}
+            style={style}
+            {...videoProps}
+            ref={ref}
+          />
+        )
       ) : (
         <Video
           id={`video-${id}`}
@@ -105,7 +106,9 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-testid="videoElement"
           data-leaf-element="true"
         >
-          <source src={resource.src} type={resource.mimeType} />
+          {resource.src && (
+            <source src={resource.src} type={resource.mimeType} />
+          )}
           {tracks &&
             tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
               <track

@@ -38,20 +38,22 @@ const DialogBox = styled.div`
   display: flex;
   max-height: calc(100% - 64px);
   flex-direction: column;
-  box-shadow: 0px 11px 15px -7px ${({ theme }) => rgba(theme.colors.bg.black, 0.2)},
-    0px 24px 38px 3px ${({ theme }) => rgba(theme.colors.bg.black, 0.14)},
-    0px 9px 46px 8px ${({ theme }) => rgba(theme.colors.bg.black, 0.12)};
-  color: ${({ theme }) => rgba(theme.colors.bg.black, 0.87)};
+  box-shadow: 0px 11px 15px -7px ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.2)},
+    0px 24px 38px 3px
+      ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.14)},
+    0px 9px 46px 8px
+      ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.12)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.87)};
   transition: box-shadow ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)
     0ms;
-  background-color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 const DialogTitle = styled.h1`
   flex: 0 0 auto;
   margin: 0;
   padding: 24px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-weight: 500;
   font-size: 20px;
   line-height: 23px;
@@ -60,15 +62,15 @@ const DialogContent = styled.div`
   flex: 1 1 auto;
   padding: 0px 24px;
   overflow-y: auto;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
-  color: ${({ theme }) => rgba(theme.colors.fg.black, 0.6)};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.black, 0.6)};
 
   b {
-    color: ${({ theme }) => rgba(theme.colors.fg.black, 0.7)};
+    color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.black, 0.7)};
   }
 `;
 const DialogActions = styled.div`

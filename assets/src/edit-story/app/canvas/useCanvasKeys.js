@@ -113,6 +113,17 @@ function useCanvasKeys(ref) {
             currentSelectedIds?.length === 1
               ? getNodeForElement(currentSelectedIds[0])
               : null;
+
+          // Check if the selection event happened outside the canvas area
+          // If there is any text selection, we should not add the preventScroll setting,
+          // so that the user can select the text properly.
+          const sel = window.getSelection();
+          if (sel.toString() !== '') {
+            return;
+          }
+
+          // If there is a multi-selection happening inside the canvas
+          // container, we should prevent the first element from scrolling.
           if (selectedFrame) {
             selectedFrame.focus({ preventScroll: true });
           } else {

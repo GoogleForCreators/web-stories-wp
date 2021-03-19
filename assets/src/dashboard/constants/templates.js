@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@web-stories-wp/i18n';
 
 export const TEMPLATE_CATEGORIES = {
   DIY_CRAFTS: 'diy_crafts',
@@ -142,7 +142,17 @@ export const TEMPLATES_GALLERY_STATUS = {
 };
 
 export const TEMPLATES_GALLERY_VIEWING_LABELS = {
-  [TEMPLATES_GALLERY_STATUS.ALL]: __('Viewing all templates', 'web-stories'),
+  [TEMPLATES_GALLERY_STATUS.ALL]: (n) =>
+    sprintf(
+      /* translators: %d: number of templates in view */
+      _n(
+        'Viewing <strong>%d</strong> template',
+        'Viewing all <strong>%d</strong> templates',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
 };
 export const TEMPLATES_GALLERY_SORT_OPTIONS = {
   POPULAR: 'popular',

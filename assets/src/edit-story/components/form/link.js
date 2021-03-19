@@ -17,20 +17,15 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { isValidUrl, withProtocol } from '../../utils/url';
+import { Input } from '../../../design-system';
 import Row from './row';
-import TextInput from './text';
 import HelperText from './helperText';
 
 const MIN_MAX = {
@@ -40,33 +35,30 @@ const MIN_MAX = {
   },
 };
 
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px 6px;
-  border-radius: 4px;
-  flex-grow: 1;
-`;
-
-const Error = styled.span`
-  font-size: 12px;
-  line-height: 16px;
-  color: ${({ theme }) => theme.colors.warning};
-`;
-
-function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
-  const isValid = isValidUrl(withProtocol(value || ''));
+function LinkInput({
+  onChange,
+  onBlur,
+  onFocus,
+  value,
+  description,
+  hint,
+  hasError,
+  ...rest
+}) {
+  const trimmedValue = (value || '').trim();
+  const isValid = isValidUrl(withProtocol(trimmedValue));
+  const isNotValid = trimmedValue.length > 0 && !isValid;
   return (
     <>
       {description && <HelperText>{description}</HelperText>}
       <Row>
-        <BoxedTextInput
+        <Input
           placeholder={__('Web address', 'web-stories')}
-          onChange={onChange}
-          onBlur={(atts = {}) => {
-            const { onClear } = atts;
-            // If the onBlur is not clearing the field, add protocol.
-            if (value.length > 0 && !onClear) {
-              const urlWithProtocol = withProtocol(value);
-              if (urlWithProtocol !== value) {
+          onChange={(evt) => onChange(evt.target.value)}
+          onBlur={() => {
+            if (trimmedValue?.length) {
+              const urlWithProtocol = withProtocol(trimmedValue);
+              if (urlWithProtocol !== trimmedValue) {
                 onChange(urlWithProtocol);
               }
             }
@@ -78,14 +70,11 @@ function LinkInput({ onChange, onBlur, onFocus, value, description, ...rest }) {
           value={value || ''}
           minLength={MIN_MAX.URL.MIN}
           maxLength={MIN_MAX.URL.MAX}
+          hasError={isNotValid || hasError}
+          hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
           {...rest}
         />
       </Row>
-      {value.length > 0 && !isValid && (
-        <Row>
-          <Error>{__('Invalid web address.', 'web-stories')}</Error>
-        </Row>
-      )}
     </>
   );
 }
@@ -96,6 +85,8 @@ LinkInput.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   description: PropTypes.string,
+  hint: PropTypes.string,
+  hasError: PropTypes.boolean,
 };
 
 export default LinkInput;

@@ -29,11 +29,12 @@
 /**
  * @typedef UpdateMediaElementPayload
  * @property {string} id id of the media to update
- * @property {string} posterId poster id
- * @property {string} poster poster
- * @property {number} height height in pixels
- * @property {number} width width in pixels
- * @property {string} alt alt string that describes the media
+ * @property {Object} data Updated data.
+ * @property {string} data.posterId poster id
+ * @property {string} data.poster poster
+ * @property {number} data.height height in pixels
+ * @property {number} data.width width in pixels
+ * @property {string} data.alt alt string that describes the media
  */
 
 /**

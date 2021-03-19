@@ -1,11 +1,14 @@
 name: Migrate Templates
+
 on:
   schedule:
     - cron: '0 12 * * 1'
+
 jobs:
   update-template:
     name: Migrate templates and text sets
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
@@ -16,7 +19,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.4
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
@@ -39,13 +42,8 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Update templates and FTUE story
+      - name: Update story data (templates, text sets, FTUE)
         run: npm run workflow:migrate
-
-      - name: Update text sets
-        run: |
-          npm run workflow:text-sets
-          npx prettier --write assets/src/edit-story/components/library/panes/text/textSets/raw/*.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3

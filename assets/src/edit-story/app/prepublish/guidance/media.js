@@ -107,10 +107,14 @@ export function videoElementSizeOnPage(page) {
   );
   if (videoElementsOnPage.length === 1) {
     const [videoElement] = videoElementsOnPage;
-    return {
-      pageId: page.id,
-      ...mediaElementSizeOnPage(videoElement),
-    };
+    const sizeOnPageMessage = mediaElementSizeOnPage(videoElement);
+
+    return (
+      sizeOnPageMessage && {
+        pageId: page.id,
+        ...sizeOnPageMessage,
+      }
+    );
   }
   return undefined;
 }

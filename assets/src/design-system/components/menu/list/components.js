@@ -43,36 +43,20 @@ export const ListItemLabel = styled.li`
 `;
 
 export const ListItem = styled.li(
-  ({ disabled, isSelected, theme }) => css`
+  ({ disabled, theme }) => css`
+    position: relative;
     display: grid;
-    grid-template-columns: 16px 1fr;
+    grid-template-columns: 32px 1fr;
     padding: 6px 2px 6px 8px;
     margin: 4px 8px;
     border-radius: ${theme.borders.radius.small};
     align-items: center;
-    background-color: ${isSelected
-      ? theme.colors.interactiveBg.brandNormal
-      : 'inherit'};
     cursor: ${disabled ? 'default' : 'pointer'};
 
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
-    &:focus {
-      background-color: ${isSelected
-        ? theme.colors.interactiveBg.brandNormal
-        : theme.colors.interactiveBg.brandHover};
-    }
-
     &:hover {
-      background-color: ${isSelected
-        ? theme.colors.interactiveBg.brandNormal
-        : theme.colors.interactiveBg.brandHover};
-    }
-
-    &:active {
-      background-color: ${isSelected
-        ? theme.colors.interactiveBg.brandActive
-        : theme.colors.interactiveBg.brandPress};
+      background-color: ${theme.colors.bg.tertiary};
     }
 
     ${disabled &&
@@ -86,8 +70,6 @@ export const ListItem = styled.li(
 
     svg {
       color: ${theme.colors.fg.primary};
-      height: 8px;
-      width: auto;
     }
 
     & > span {
@@ -112,10 +94,10 @@ export const NoOptionsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-items: center;
+  width: 100%;
 `;
 export const NoOptionsMessage = styled(Text)`
-  padding: 6px 8px;
-  margin: 4px;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
-  font-style: italic;
+  padding: 6px 16px;
+  margin: 4px auto;
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;

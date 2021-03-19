@@ -9,3 +9,6 @@ snapshot:
     span.update-plugins {
       display: none !important;
     }
+    .story-media-display-element {
+      background-color: transparent !important;
+    }

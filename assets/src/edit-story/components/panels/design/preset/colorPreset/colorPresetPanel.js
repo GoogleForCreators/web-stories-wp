@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -35,7 +31,7 @@ import ColorGroup from './colorGroup';
 
 const Title = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
   margin-bottom: 10px;
 `;
 
@@ -77,7 +73,7 @@ function ColorPresetPanel({ isEditMode, handlePresetClick }) {
             <ColorGroup
               colors={localStyles}
               handleAddPreset={addLocalPreset}
-              isLocal={true}
+              isLocal
               handleClick={(preset) =>
                 handlePresetClick(preset, true /* isLocal */)
               }

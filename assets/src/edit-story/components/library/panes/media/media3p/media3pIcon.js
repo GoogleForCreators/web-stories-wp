@@ -15,17 +15,17 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Media } from '../../../../../icons';
+import { Icons } from '../../../../../../design-system';
 
 function Media3pIcon() {
-  return <Media aria-label={__('Explore Media', 'web-stories')} />;
+  return <Icons.Picture aria-label={__('Explore Media', 'web-stories')} />;
 }
 
 export default Media3pIcon;

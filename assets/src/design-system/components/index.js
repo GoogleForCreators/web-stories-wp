@@ -13,18 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+export { Banner } from './banner';
 export * from './button';
 export * from './checkbox';
+export * from './contextMenu';
+export { Chip } from './chip';
 export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
+export { HexInput } from './hex';
 export { Input } from './input';
+export { LoadingSpinner } from './loadingSpinner';
+export { MediaInput } from './mediaInput';
 export { Modal } from './modal';
+export { NumericInput } from './input/numericInput';
+export * from './menu';
 export { Pill } from './pill';
 export { Popup, PLACEMENT } from './popup';
-export * as Snackbar from './snackbar';
+export * from './radio';
+export * from './search';
+export * from './slider';
+export * from './swatch';
+export * from './switch';
+export { Snackbar } from './snackbar';
 export * from './tooltip';
 export * from './keyboard';
 export * from './keyboard/gridview';
 export * from './notificationBubble';
+export { TextArea } from './textArea';
+export { Toggle } from './toggle';
 export { Display, Headline, Link, Text } from './typography';
+export { VisuallyHidden } from './visuallyHidden';

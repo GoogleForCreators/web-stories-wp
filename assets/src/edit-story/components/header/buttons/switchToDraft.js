@@ -18,17 +18,21 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory, useLocalMedia } from '../../../app';
-import { Outline } from '../../button';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+  Icons,
+} from '../../../../design-system';
 
 function SwitchToDraft() {
   const { isSaving, saveStory } = useStory(
@@ -47,10 +51,20 @@ function SwitchToDraft() {
     saveStory,
   ]);
 
+  const label = __('Switch to Draft', 'web-stories');
   return (
-    <Outline onClick={handleUnPublish} isDisabled={isSaving || isUploading}>
-      {__('Switch to Draft', 'web-stories')}
-    </Outline>
+    <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+      <Button
+        variant={BUTTON_VARIANTS.SQUARE}
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={handleUnPublish}
+        disabled={isSaving || isUploading}
+        aria-label={label}
+      >
+        <Icons.PageSwap />
+      </Button>
+    </Tooltip>
   );
 }
 
