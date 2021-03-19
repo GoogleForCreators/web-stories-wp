@@ -60,7 +60,7 @@ const StyledDropDown = styled(DropDown)`
     &:hover {
       ${outerGridBordersCss}
     }
-    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
+    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
       border-radius: ${({ theme }) => theme.borders.radius.small};
     }
   }
