@@ -31,6 +31,7 @@ import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
+  Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   LogoWithTypeCircleColor,
@@ -50,7 +51,6 @@ import {
   NavLink,
   NavList,
   NavListItem,
-  NewStoryButton,
   PathName,
 } from './navigationComponents';
 
@@ -172,14 +172,14 @@ export function LeftRail() {
           <LogoWithTypeCircleColor title={__('Web Stories', 'web-stories')} />
         </Header>
         <Content>
-          <NewStoryButton
-            type={BUTTON_TYPES.PLAIN}
+          <Button
+            type={BUTTON_TYPES.QUATERNARY}
             size={BUTTON_SIZES.SMALL}
             href={newStoryURL}
             onClick={onCreateNewStoryClick}
           >
             {__('Create New Story', 'web-stories')}
-          </NewStoryButton>
+          </Button>
         </Content>
         <Content>
           <NavList>
