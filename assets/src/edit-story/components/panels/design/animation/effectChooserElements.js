@@ -24,6 +24,7 @@ export const PANEL_WIDTH = 276;
 
 export const BaseAnimationCell = styled.div`
   display: none;
+  transform-origin: 50% 50%;
 `;
 
 const dropKeyframes = keyframes`
@@ -292,4 +293,19 @@ const zoomOutKeyframes = keyframes`
 
 export const ZoomOutAnimation = styled(BaseAnimationCell)`
   animation: ${zoomOutKeyframes} 2s linear infinite;
+`;
+
+const panAndZoomKeyframes = keyframes`
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, 0, 0) scale(2);
+  }
+  50%, 100% {
+    opacity: 1;
+    transform: none;
+  }
+`;
+
+export const PanAndZoomAnimation = styled(BaseAnimationCell)`
+  animation: ${panAndZoomKeyframes} 2s linear infinite;
 `;

@@ -53,12 +53,13 @@ const Header = styled(Headline).attrs({
   align-items: center;
   justify-content: space-between;
   padding: ${({ isCollapsed }) =>
-    isCollapsed ? '14px 20px' : '14px 20px 10px 20px'};
+    isCollapsed ? '14px 20px' : '14px 20px 6px 20px'};
   cursor: pointer;
 `;
 
 const Heading = styled.span`
-  color: ${({ theme }) => theme.colors.fg.primary};
+  color: ${({ theme, isCollapsed }) =>
+    isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   ${({ theme }) =>
     themeHelpers.expandPresetStyles({
       preset:
@@ -67,6 +68,7 @@ const Heading = styled.span`
         ],
       theme,
     })};
+  line-height: 32px;
 `;
 
 const HeaderActions = styled.div`
@@ -207,7 +209,9 @@ function Title({
         aria-controls={panelContentId}
       >
         <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
-        <Heading id={panelTitleId}>{children}</Heading>
+        <Heading id={panelTitleId} isCollapsed={isCollapsed}>
+          {children}
+        </Heading>
       </Toggle>
       {secondaryAction && <HeaderActions>{secondaryAction}</HeaderActions>}
     </Header>

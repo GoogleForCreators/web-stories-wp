@@ -18,14 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -34,6 +27,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
+import {
+  useInputEventHandlers,
+  labelAccessibilityValidator,
+} from '../../utils';
 
 const Container = styled.div`
   position: relative;
@@ -159,35 +156,17 @@ export const Input = forwardRef(
   ) => {
     const inputId = useMemo(() => id || uuidv4(), [id]);
     const inputRef = useRef(null);
-    const [focused, setFocused] = useState(false);
 
-    useEffect(() => {
-      // focus input when focused state is set
-      if (focused && ref?.current) {
-        ref.current?.select();
-      } else if (focused) {
-        inputRef.current?.select();
-      }
-    }, [focused, ref]);
-
-    const handleFocus = useCallback(
-      (ev) => {
-        onFocus?.(ev);
-        setFocused(true);
-      },
-      [onFocus]
-    );
-    const handleBlur = useCallback(
-      (ev) => {
-        onBlur?.(ev);
-        setFocused(false);
-      },
-      [onBlur]
-    );
+    const { handleBlur, handleFocus, isFocused } = useInputEventHandlers({
+      forwardedRef: ref,
+      inputRef,
+      onBlur,
+      onFocus,
+    });
 
     let displayedValue = value;
     if (unit && value.length) {
-      displayedValue = `${value}${!focused ? `${unit}` : ''}`;
+      displayedValue = `${value}${!isFocused ? `${unit}` : ''}`;
     }
     if (isIndeterminate) {
       // Display placeholder if value couldn't be determined.
@@ -202,7 +181,7 @@ export const Input = forwardRef(
             {label}
           </Label>
         )}
-        <InputContainer focused={focused} hasError={hasError}>
+        <InputContainer focused={isFocused} hasError={hasError}>
           <StyledInput
             id={inputId}
             disabled={disabled}
@@ -229,41 +208,6 @@ export const Input = forwardRef(
     );
   }
 );
-
-/**
- * Custom propTypes validator used to check if either `label`
- * or `aria-label` have been passed to the component.
- * This also checks that they are of the correct type.
- *
- * @param {Object} props the props supplied to the component.
- * @param {string} _ the name of the prop.
- * @param {string} componentName the name of the component.
- * @return {Error|null} Returns an error if the conditions have not been met.
- * Otherwise, returns null.
- */
-export const labelAccessibilityValidator = function (props, _, componentName) {
-  if (!props.label && !props['aria-label']) {
-    return new Error(
-      `\`label\` or \`aria-label\` must be supplied to \`${componentName}\`. Validation failed.`
-    );
-  }
-
-  if (props.label && typeof props.label !== 'string') {
-    return new Error(
-      `Invalid prop \`label\` of type \`${typeof props.label}\` supplied to \`${componentName}\`, expected \`string\`.`
-    );
-  }
-
-  if (props['aria-label'] && typeof props['aria-label'] !== 'string') {
-    return new Error(
-      `Invalid prop \`aria-label\` of type \`${typeof props[
-        'aria-label'
-      ]}\` supplied to \`${componentName}\`, expected \`string\`.`
-    );
-  }
-
-  return null;
-};
 
 export const InputPropTypes = {
   'aria-label': labelAccessibilityValidator,

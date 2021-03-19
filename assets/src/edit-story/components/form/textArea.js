@@ -17,58 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, forwardRef } from 'react';
-import styled from 'styled-components';
+import { useCallback, forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 
-const StyledTextArea = styled.textarea`
-  width: 100%;
-  padding: 0;
-  border: none;
-  appearance: none;
-  box-shadow: none !important;
-  outline: none;
-  background-color: transparent;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
-  resize: ${({ resizeable }) => (resizeable ? 'auto' : 'none')};
-
-  &:disabled {
-    background-color: transparent;
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  }
-`;
-
-const Container = styled.div`
-  width: 100%;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
-
-  ${({ disabled, readOnly }) => (disabled || readOnly) && `opacity: 0.3`};
-
-  padding: 6px;
-  padding-left: 12px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  &:focus-within {
-    border-color: ${({ theme }) =>
-      theme.DEPRECATED_THEME.colors.whiteout} !important;
-  }
-`;
-
-const Counter = styled.div`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
-  text-align: right;
-  line-height: 1;
-  padding-right: 6px;
-`;
+/**
+ * Internal dependencies
+ */
+import { TextArea as StyledTextArea } from '../../../design-system';
 
 const TextArea = forwardRef(
   (
@@ -77,62 +32,49 @@ const TextArea = forwardRef(
       placeholder,
       value,
       maxLength,
-      readOnly,
       disabled,
-      resizeable,
-      showTextLimit,
       rows,
-      onTextChange,
+      onChange,
       onBlur,
       ...rest
     },
     ref
   ) => {
-    const hasMaxLength = typeof maxLength === 'number';
-    const showCounter = showTextLimit && hasMaxLength;
-
+    const [currentValue, setCurrentValue] = useState(value);
+    // Change happens only once blurring to avoid repeated onChange calls for each letter change.
     const handleChange = useCallback(
-      (e) => {
-        const str = e.target.value || '';
-        const text = hasMaxLength ? str.slice(0, maxLength) : str;
-
-        onTextChange(text, e);
+      (evt) => {
+        if (currentValue !== value) {
+          onChange(evt);
+        }
       },
-      [onTextChange, hasMaxLength, maxLength]
+      [currentValue, onChange, value]
     );
+
+    // If new value comes from the outer world, update the local, too.
+    useEffect(() => {
+      setCurrentValue(value);
+    }, [value]);
 
     const handleBlur = useCallback(
       (e) => {
-        if (e.target.form) {
-          e.target.form.dispatchEvent(
-            new window.Event('submit', { cancelable: true })
-          );
-        }
-
+        handleChange(e);
         if (onBlur) {
           onBlur(e);
         }
       },
-      [onBlur]
+      [onBlur, handleChange]
     );
 
     return (
-      <Container className={className}>
-        <StyledTextArea
-          placeholder={placeholder}
-          maxLength={maxLength}
-          disabled={disabled}
-          readOnly={readOnly}
-          resizeable={resizeable}
-          rows={rows}
-          value={value}
-          {...rest}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          ref={ref}
-        />
-        {showCounter && <Counter>{`${value.length}/${maxLength}`}</Counter>}
-      </Container>
+      <StyledTextArea
+        placeholder={placeholder}
+        value={currentValue}
+        {...rest}
+        onChange={(evt) => setCurrentValue(evt.target.value)}
+        onBlur={handleBlur}
+        ref={ref}
+      />
     );
   }
 );
@@ -144,12 +86,9 @@ TextArea.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
-  readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
-  resizeable: PropTypes.bool,
-  showTextLimit: PropTypes.bool,
   rows: PropTypes.number,
-  onTextChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
 };
 

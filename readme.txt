@@ -1,9 +1,7 @@
 === Web Stories ===
 
 Contributors:      google
-Requires at least: 5.3
 Tested up to:      5.7
-Requires PHP:      5.6
 Stable tag:        V.V.V
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -110,6 +108,15 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.5.0 =
+
+**Release Date:** March 18, 2021.
+
+* New feature: new ways to showcase your stories with an enhanced Gutenberg block, widget, and theme integrations.
+* New feature: new preview mode to see how your stories look on different devices.
+* Refreshed UI in the editor and dashboard.
+* Bug fixes and performance improvements.
+
 = 1.4.0 =
 
 **Release Date:** February 17, 2021.
@@ -166,6 +173,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+
+Enhanced Gutenberg block, new story preview mode, updated UI, bug fixes and performance improvements.
 
 = 1.4.0 =
 
