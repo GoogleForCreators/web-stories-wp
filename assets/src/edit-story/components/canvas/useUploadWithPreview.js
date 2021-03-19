@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useSnackbar, useStory } from '../../app';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
+import { useLocalMedia, useStory } from '../../app';
+import { DANGER_ZONE_HEIGHT, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
@@ -39,13 +38,12 @@ function useUploadWithPreview() {
       deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
     })
   );
-  const { showSnackbar } = useSnackbar();
 
   const onUploadStart = useCallback(
     ({ resource }) => {
       insertElement(resource.type, {
         resource,
-        x: resource.isPlaceholder ? 0 : undefined,
+        x: resource.isPlaceholder ? -DANGER_ZONE_HEIGHT : undefined,
         y: resource.isPlaceholder ? 0 : undefined,
       });
     },
@@ -103,11 +101,8 @@ function useUploadWithPreview() {
   const onUploadError = useCallback(
     ({ id }) => {
       deleteElementsByResourceId({ id });
-      showSnackbar({
-        message: __('Upload failed, the element was removed', 'web-stories'),
-      });
     },
-    [deleteElementsByResourceId, showSnackbar]
+    [deleteElementsByResourceId]
   );
 
   const uploadWithPreview = useCallback(

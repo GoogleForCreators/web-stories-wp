@@ -24,7 +24,7 @@ const blobCache = {};
 /**
  * Create a blob URL from a file.
  *
- * @param {File} file File object.
+ * @param {File|Blob|MediaSource} file File object.
  * @return {string} Blob URL.
  */
 export function createBlob(file) {

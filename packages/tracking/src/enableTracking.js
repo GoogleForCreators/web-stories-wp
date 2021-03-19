@@ -45,9 +45,14 @@ async function loadTrackingScript(sendPageView = true) {
     return;
   }
 
-  await loadScriptTag(
-    `https://www.googletagmanager.com/gtag/js?id=${config.trackingId}&l=${DATA_LAYER}`
-  );
+  try {
+    await loadScriptTag(
+      `https://www.googletagmanager.com/gtag/js?id=${config.trackingId}&l=${DATA_LAYER}`
+    );
+  } catch {
+    // Loading was not possible, probably because of an ad blocker.
+    return;
+  }
 
   // This way we'll get "Editor" and "Dashboard" instead of "Edit Story ‹ Web Stories Dev — WordPress".
   const pageTitle = config.appName;
