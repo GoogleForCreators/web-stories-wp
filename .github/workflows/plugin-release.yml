@@ -55,7 +55,7 @@ jobs:
           fi
 
       - name: Ensure RC exists for stable release
-        if: ${{ ! env.IS_RC }}
+        if: ${{ ! contains(github.event.inputs.version, 'rc') }}
         run: |
           if ! git describe --abbrev=0 --tags --match "$TAG_NAME-rc.*" &>/dev/null; then
             echo "No RC exists for this planned stable release"
