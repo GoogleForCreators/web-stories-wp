@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,19 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_HEIGHT, DANGER_ZONE_HEIGHT } from '../constants';
-import { getCorners } from './getBoundRect';
+import preloadImage from './preloadImage';
 
-const isLinkBelowLimit = (element, verifyLink = true) => {
-  if (verifyLink && !element.link?.url?.length > 0) {
-    return false;
-  }
-  const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
-  const { x, y, width, height, rotationAngle } = element;
-  const points = getCorners(rotationAngle, x, y, width, height);
-  return Object.keys(points).find((point) => points[point].y > limit);
+/**
+ * Get image dimensions from an image.
+ *
+ * @param {string} src Image source.
+ * @return {Promise} Image dimensions object.
+ */
+const getImageDimensions = (src) => {
+  return preloadImage(src).then((img) => ({
+    width: img.naturalWidth,
+    height: img.naturalHeight,
+  }));
 };
 
-export default isLinkBelowLimit;
+export default getImageDimensions;

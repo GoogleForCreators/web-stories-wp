@@ -17,13 +17,22 @@
 /**
  * Internal dependencies
  */
-import { Input } from '../';
+import { TextArea } from '../';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
-describe('Input', () => {
-  it('should render the input', () => {
+describe('TextArea', () => {
+  const defaultProps = {
+    value: '',
+    onChange: () => {},
+  };
+
+  it('should render the textarea', () => {
     const { getByPlaceholderText } = renderWithProviders(
-      <Input aria-label="test" placeholder="my placeholder" />
+      <TextArea
+        {...defaultProps}
+        aria-label="test"
+        placeholder="my placeholder"
+      />
     );
 
     expect(getByPlaceholderText('my placeholder')).toBeInTheDocument();
@@ -31,7 +40,7 @@ describe('Input', () => {
 
   it('should render a label', () => {
     const { getByText } = renderWithProviders(
-      <Input label="This is my input label" />
+      <TextArea {...defaultProps} label="This is my input label" />
     );
 
     expect(getByText('This is my input label')).toBeInTheDocument();
@@ -39,19 +48,27 @@ describe('Input', () => {
 
   it('should render a hint', () => {
     const { getByText } = renderWithProviders(
-      <Input aria-label="test" hint="This is my input hint" />
+      <TextArea
+        {...defaultProps}
+        aria-label="test"
+        hint="This is my input hint"
+      />
     );
 
     expect(getByText('This is my input hint')).toBeInTheDocument();
   });
 
-  it('should render a suffix', () => {
+  it('should render the counter', () => {
     const { getByText } = renderWithProviders(
-      <Input aria-label="test" suffix="suffix" />
+      <TextArea
+        {...defaultProps}
+        aria-label="test"
+        showCount
+        maxLength={10}
+        value="foo"
+      />
     );
 
-    const suffixElement = getByText('suffix');
-
-    expect(suffixElement).toBeInTheDocument();
+    expect(getByText('3/10')).toBeInTheDocument();
   });
 });

@@ -20,3 +20,8 @@
 import { enableFetchMocks } from 'jest-fetch-mock';
 
 enableFetchMocks();
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useLayoutEffect: jest.requireActual('react').useEffect,
+}));
