@@ -35,7 +35,7 @@ export const focusCSS = (accent, background) => css`
   outline: none;
   box-shadow: ${({ theme }) =>
     `0px 0px 0 2px ${background || theme.colors.bg.primary}, 0px 0px 0 4px ${
-      accent || theme.colors.border.focus
+      typeof accent === 'string' ? accent : theme.colors.border.focus
     }`};
 `;
 

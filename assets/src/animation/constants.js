@@ -81,6 +81,10 @@ export const BACKGROUND_ANIMATION_EFFECTS = {
     name: __('Zoom', 'web-stories'),
   },
   PAN: { value: 'effect-background-pan', name: ANIMATION_EFFECTS.PAN.name },
+  PAN_AND_ZOOM: {
+    value: 'effect-background-pan-and-zoom',
+    name: __('Pan and Zoom', 'web-stories'),
+  },
 };
 
 export const ANIMATION_PARTS = {
