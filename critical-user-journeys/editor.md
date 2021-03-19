@@ -1,12 +1,12 @@
 | **CUJ**                                                           | **Action**                                       | **Completion**              |
 | ----------------------------------------------------------------- | ------------------------------------------------ | --------------------------- |
-| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **33.33%** *(4 / 12)*    |
+| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **25.00%** *(3 / 12)*    |
 |                                                                   | Apply a link to multi-selection                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Edit brand icon                                  | 🚨 **0.00%** *(0 / 2)*      |
 |                                                                   | Edit description                                 | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Link with Page Attachment                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | *[total]*                                        | 🚨 **36.84%** *(7 / 19)*    |
+|                                                                   | *[total]*                                        | 🚨 **31.58%** *(6 / 19)*    |
 | Creator Can Add Image/Video to Page                               | Can add media                                    | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
@@ -75,4 +75,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **77.55%** *(304 / 392)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **77.04%** *(302 / 392)* |
