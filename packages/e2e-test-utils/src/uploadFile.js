@@ -17,21 +17,12 @@
 /**
  * External dependencies
  */
-import { join, extname, resolve } from 'path';
+import { join, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
 
-/**
- * Generate hash value of a source string.
- *
- * @param {string} s String to be hashed.
- * @return {number} Number hash value from string.
- */
-function hashCode(s) {
-  return s.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0);
-}
-
 const getFileName = (name) => name.split('.').slice(0, -1).join('.');
+
 /**
  * Uploads a file to the Media Library, and awaits its upload.
  *
@@ -42,7 +33,6 @@ const getFileName = (name) => name.split('.').slice(0, -1).join('.');
  * @return {string|null} The name of the file as it was uploaded.
  */
 async function uploadFile(file, checkUpload = true) {
-  const fileExtension = extname(file);
   await page.setDefaultTimeout(10000);
 
   const testMediaPath = resolve(
@@ -50,9 +40,9 @@ async function uploadFile(file, checkUpload = true) {
     `packages/e2e-tests/src/assets/${file}`
   );
 
-  // Copy file to <newname>.ext for upload.
-  const newBaseName = hashCode(getFileName(file));
-  const newFileName = newBaseName + fileExtension;
+  // Prefixing makes it easier to identify files from tests later on.
+  const newFileName = `e2e-${file}`;
+  const newBaseName = getFileName(newFileName);
   const tmpFileName = join(tmpdir(), newFileName);
   copyFileSync(testMediaPath, tmpFileName);
 
