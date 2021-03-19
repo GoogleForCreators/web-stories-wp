@@ -189,28 +189,6 @@ class Analytics {
 						'send_to'        => $tracking_id,
 					],
 				],
-				// Fired when the bookend is shown to the user, after the last page of the current story.
-				'storyBookendEnter'   => [
-					'on'      => 'story-bookend-enter',
-					'request' => 'event',
-					'vars'    => [
-						'event_name'     => 'custom',
-						'event_action'   => 'story_bookend_enter',
-						'event_category' => '${title}',
-						'send_to'        => $tracking_id,
-					],
-				],
-				// Fired when the bookend is dismissed by the user.
-				'storyBookendExit'    => [
-					'on'      => 'story-bookend-exit',
-					'request' => 'event',
-					'vars'    => [
-						'event_name'     => 'custom',
-						'event_action'   => 'story_bookend_exit',
-						'event_category' => '${title}',
-						'send_to'        => $tracking_id,
-					],
-				],
 			],
 		];
 
