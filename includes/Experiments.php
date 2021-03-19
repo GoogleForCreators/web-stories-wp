@@ -210,6 +210,17 @@ class Experiments {
 		return [
 			/**
 			 * Author: @littlemilkstudio
+			 * Issue: 6379
+			 * Creation date: 2021-03-09
+			 */
+			[
+				'name'        => 'enableExperimentalAnimationEffects',
+				'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
+				'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
 			 * Issue: 5880
 			 * Creation date: 2021-01-19
 			 */
