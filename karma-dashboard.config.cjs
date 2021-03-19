@@ -186,7 +186,7 @@ module.exports = function (config) {
     customClientContextFile:
       'assets/src/karma-fixture/client_with_context.html',
   });
-}
+};
 
 /**
  * Returns a viewport object for  a given flag.
