@@ -23,12 +23,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import PresetPanel from '../presetPanel';
+import PresetPanel, { PRESET_TYPES } from '../presetPanel';
 
 function ColorPresetPanel({ pushUpdate }) {
   return (
     <PresetPanel
-      presetType="color"
+      presetType={PRESET_TYPES.COLOR_PRESET_TYPE}
       title={__('Saved colors', 'web-stories')}
       pushUpdate={pushUpdate}
     />
