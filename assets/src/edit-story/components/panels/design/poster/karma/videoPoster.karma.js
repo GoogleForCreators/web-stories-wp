@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -31,6 +35,12 @@ describe('Video Poster Panel', () => {
   afterEach(() => {
     fixture.restore();
   });
+
+  async function focusOnTitle() {
+    await fixture.events.click(vaPanel.panelTitle);
+    await fixture.events.sleep(100);
+    await fixture.events.click(vaPanel.panelTitle);
+  }
 
   describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Set different poster image', () => {
     beforeEach(async () => {
@@ -81,23 +91,24 @@ describe('Video Poster Panel', () => {
       expect(vaPanel.posterImage.src).toBe(originalPoster);
     });
 
-    // Disable reason: flaky test. @todo fix.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should allow user to edit and reset poster image using keyboard', async () => {
+    it('should allow user to edit and reset poster image using keyboard', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
 
-      // Click current poster image
-      await fixture.events.click(vaPanel.posterImage);
+      // Ensure focus right before the menu button.
+      await vaPanel.panelTitle.scrollIntoView();
+      await focusOnTitle();
 
       // Expect menu button to exist
       expect(vaPanel.posterMenuButton).toBeTruthy();
       await fixture.snapshot('Menu button visible');
 
-      // Tab to the menu button and focus it
+      // Tab to the menu button to focus on it.
       await fixture.events.keyboard.press('tab');
       expect(vaPanel.posterMenuButton).toHaveFocus();
+
       await fixture.events.keyboard.press('Enter');
+      await waitFor(() => expect(vaPanel.posterMenuEdit).toBeDefined());
       await fixture.snapshot('Menu open');
 
       // And click on edit
@@ -108,7 +119,7 @@ describe('Video Poster Panel', () => {
       expect(vaPanel.posterImage.src).toBe('http://dummy:url/');
 
       // Now open menu and click reset
-      await fixture.events.click(vaPanel.posterImage);
+      await focusOnTitle();
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('Enter');
       await fixture.events.keyboard.press('down');
