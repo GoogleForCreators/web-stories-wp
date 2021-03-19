@@ -128,6 +128,7 @@ export const IssueDescription = styled.div`
 export const PageIndicator = styled(Text).attrs({
   forwardedAs: 'span',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  isBold: true,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
   padding: 20px 0 8px;
