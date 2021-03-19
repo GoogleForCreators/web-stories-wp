@@ -163,4 +163,51 @@ describe('useStoryView()', function () {
 
     expect(result.current.page.value).toBe(2);
   });
+
+  it('should not show stories while loading by default', () => {
+    const { result } = renderHook(
+      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      {}
+    );
+
+    expect(result.current.showStoriesWhileLoading.current).toBe(false);
+  });
+
+  it('should set showStoriesWhileLoading to true when next page is called', () => {
+    const { result } = renderHook(
+      () => useStoryView({ filters: STORY_STATUSES, totalPages: 2 }),
+      {}
+    );
+
+    act(() => {
+      result.current.page.requestNextPage();
+    });
+
+    expect(result.current.showStoriesWhileLoading.current).toBe(true);
+  });
+
+  it('should reset showStoriesWhileLoading when `isLoading` is set to false', () => {
+    let isLoading = true;
+    const { result, rerender } = renderHook(
+      () =>
+        useStoryView({
+          filters: STORY_STATUSES,
+          isLoading,
+          totalPages: 2,
+        }),
+      {}
+    );
+
+    // set showStoriesWhileLoading to `true`
+    act(() => {
+      result.current.page.requestNextPage();
+    });
+    expect(result.current.showStoriesWhileLoading.current).toBe(true);
+
+    isLoading = false;
+
+    rerender();
+
+    expect(result.current.showStoriesWhileLoading.current).toBe(false);
+  });
 });
