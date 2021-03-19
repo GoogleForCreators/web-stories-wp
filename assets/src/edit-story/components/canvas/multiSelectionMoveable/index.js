@@ -191,7 +191,7 @@ function MultiSelectionMoveable({ selectedElements }) {
       ...selectedElements.map((element) => element.id),
       backgroundElement.id,
     ])
-  ).filter(({ isBackground }) => !isBackground);
+  );
 
   const snapProps = useSnapping({
     isDragging,

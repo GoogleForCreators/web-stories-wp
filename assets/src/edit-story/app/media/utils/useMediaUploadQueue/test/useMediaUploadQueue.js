@@ -23,9 +23,9 @@ import { renderHook, act } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import useMediaUploadQueue from '../';
-import useTranscodeVideo from '../../useTranscodeVideo';
+import useFFmpeg from '../../useFFmpeg';
 
-jest.mock('../../useTranscodeVideo', () => ({
+jest.mock('../../useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isFeatureEnabled: true,
@@ -71,7 +71,7 @@ jest.mock('../../../../uploader', () => ({
 
 describe('useMediaUploadQueue', () => {
   afterEach(() => {
-    useTranscodeVideo.mockClear();
+    useFFmpeg.mockClear();
   });
 
   it('sets initial state for upload queue', async () => {

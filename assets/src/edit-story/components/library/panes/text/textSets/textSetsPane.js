@@ -87,7 +87,7 @@ function TextSetsPane({ paneRef }) {
   );
 
   const addIdToTextSets = useCallback(
-    (textSetsArray) =>
+    (textSetsArray = []) =>
       textSetsArray.map((elements) => {
         return {
           id: `text_set_${uuidv4()}`,
@@ -100,7 +100,7 @@ function TextSetsPane({ paneRef }) {
     if (showInUse) {
       return addIdToTextSets(getTextSetsForInUseFonts());
     }
-    return addIdToTextSets(selectedCat ? textSets[selectedCat] : allTextSets);
+    return addIdToTextSets(selectedCat ? textSets?.[selectedCat] : allTextSets);
   }, [
     selectedCat,
     textSets,
