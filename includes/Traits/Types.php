@@ -50,6 +50,19 @@ trait Types {
 			}
 		}
 
+		return $this->get_file_type_exts( $mime_types );
+	}
+
+	/**
+	 * Returns a list of allowed file types.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param array $mime_types Array of mime types.
+	 *
+	 * @return array
+	 */
+	public function get_file_type_exts( array $mime_types = [] ) {
 		$allowed_file_types = [];
 		$all_mime_types     = wp_get_mime_types();
 

@@ -25,19 +25,30 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
-import { TypographyPresets } from '../typography';
+import {
+  LoadingSpinner,
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '../../../design-system';
 
 const ScrollMessage = styled.div`
-  ${TypographyPresets.Small};
   width: 100%;
   padding: 140px 0 40px;
   margin: -100px auto 0;
   text-align: center;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+
+  p {
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+  }
 `;
 
-const AriaOnlyAlert = styled.span(visuallyHiddenStyles);
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const AriaOnlyAlert = styled.span(themeHelpers.visuallyHidden);
 
 const STATE = {
   loadable: 'loadable',
@@ -83,7 +94,6 @@ const InfiniteScroller = ({
   canLoadMore,
   isLoading,
   loadingAriaMessage = __('Loading more stories', 'web-stories'),
-  loadingMessage = __('Loading…', 'web-stories'),
 }) => {
   const loadingRef = useRef(null);
   const onLoadMoreRef = useRef(onLoadMore);
@@ -94,7 +104,7 @@ const InfiniteScroller = ({
   const loadingAlert = useMemo(() => {
     if (loadState === STATE.loading_internal) {
       return loadingAriaMessage;
-    } else if (!canLoadMore) {
+    } else if (loadState !== STATE.loading_external && !canLoadMore) {
       return allDataLoadedAriaMessage;
     }
     return null;
@@ -150,12 +160,32 @@ const InfiniteScroller = ({
     };
   }, []);
 
+  const loadingContent = useMemo(() => {
+    if (loadState === STATE.loading_external) {
+      return null;
+    }
+
+    if (!canLoadMore) {
+      return (
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {allDataLoadedMessage}
+        </Text>
+      );
+    }
+
+    return (
+      <LoadingContainer>
+        <LoadingSpinner animationSize={50} circleSize={6} />
+      </LoadingContainer>
+    );
+  }, [allDataLoadedMessage, canLoadMore, loadState]);
+
   return (
     <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
       {loadingAlert && (
         <AriaOnlyAlert role="status">{loadingAlert}</AriaOnlyAlert>
       )}
-      {!canLoadMore ? allDataLoadedMessage : loadingMessage}
+      {loadingContent}
     </ScrollMessage>
   );
 };
@@ -167,6 +197,5 @@ InfiniteScroller.propTypes = {
   allDataLoadedAriaMessage: PropTypes.string,
   canLoadMore: PropTypes.bool,
   loadingAriaMessage: PropTypes.string,
-  loadingMessage: PropTypes.string,
 };
 export default InfiniteScroller;

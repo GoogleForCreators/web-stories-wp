@@ -65,7 +65,7 @@ function ExcerptPanel() {
         <TextArea
           ref={ref}
           value={excerpt}
-          onTextChange={handleTextChange}
+          onChange={handleTextChange}
           placeholder={__('Write a description of the story', 'web-stories')}
           aria-label={__('Story Description', 'web-stories')}
           maxLength={EXCERPT_MAX_LENGTH}

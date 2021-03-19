@@ -46,7 +46,7 @@ const SelectedStoriesEdit = ({
   setAttributes,
   isSelected: isEditing,
 }) => {
-  const { stories, archiveLinkLabel } = attributes;
+  const { stories = [], archiveLinkLabel } = attributes;
 
   const [selectedStories, setSelectedStories] = useState(stories);
   const [selectedStoriesObject, setSelectedStoriesObject] = useState([]);
