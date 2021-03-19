@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/stories-carousel",
+  "name": "@web-stories-wp/glider",
   "private": true,
   "engines": {
     "node": ">= 15",
@@ -11,8 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/glider": "*",
-    "@wordpress/dom-ready": "^2.12.0"
+    "glider-js": "^1.7.3"
   },
   "devDependencies": {}
 }

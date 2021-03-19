@@ -2,11 +2,6 @@
 @import '../css/style.css';
 
 /* Carousel view styles */
-.web-stories-list.is-view-type-carousel .web-stories-list__inner-wrapper,
-.web-stories-list.is-view-type-circles .web-stories-list__inner-wrapper {
-  display: flex;
-  overflow-x: scroll;
-}
 
 .web-stories-list.is-view-type-carousel .web-stories-list__story {
   margin-right: 10px;
