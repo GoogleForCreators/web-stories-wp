@@ -53,7 +53,7 @@
     "@wordpress/api-fetch": "^3.21.3",
     "@wordpress/block-editor": "^5.2.6",
     "@wordpress/blocks": "^7.0.6",
-    "@wordpress/components": "^12.0.7",
+    "@wordpress/components": "^13.0.0",
     "@wordpress/compose": "^3.23.0",
     "@wordpress/data": "^4.26.0",
     "@wordpress/date": "^3.12.0",
