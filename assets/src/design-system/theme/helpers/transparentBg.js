@@ -22,9 +22,9 @@ import { css } from 'styled-components';
 export const transparentBg = css`
   background-image: conic-gradient(
     ${({ theme }) => theme.colors.fg.tertiary} 0.25turn,
-    ${({ theme }) => theme.colors.bg.primary} 0turn 0.5turn,
+    transparent 0turn 0.5turn,
     ${({ theme }) => theme.colors.fg.tertiary} 0turn 0.75turn,
-    ${({ theme }) => theme.colors.bg.primary} 0turn 1turn
+    transparent 0turn 1turn
   );
   background-size: 8px 8px;
 `;
