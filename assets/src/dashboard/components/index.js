@@ -69,4 +69,4 @@ export {
   TypographyPresets,
 } from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
-export { default as Tooltip } from './tooltip';
+export { DeprecatedTooltip, Tooltip } from './tooltip';

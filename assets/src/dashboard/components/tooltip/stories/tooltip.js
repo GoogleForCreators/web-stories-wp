@@ -22,7 +22,7 @@ import { text, select } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import styled from 'styled-components';
-import Tooltip from '../';
+import { DeprecatedTooltip } from '../';
 
 const Container = styled.div`
   display: flex;
@@ -31,8 +31,8 @@ const Container = styled.div`
 `;
 
 export default {
-  title: 'Dashboard/Components/Tooltip',
-  component: Tooltip,
+  title: 'Dashboard/Components/Tooltip (Deprecated)',
+  component: DeprecatedTooltip,
 };
 
 export const _default = () => {
@@ -44,12 +44,12 @@ export const _default = () => {
   const position = select('Position', positionValues, 'left');
   return (
     <Container>
-      <Tooltip
+      <DeprecatedTooltip
         position={position}
         content={text('tooltipContent', 'Tooltip Content')}
       >
         <button>{text('buttonTitle', 'Hover Over Me')}</button>
-      </Tooltip>
+      </DeprecatedTooltip>
     </Container>
   );
 };

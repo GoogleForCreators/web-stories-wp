@@ -23,14 +23,14 @@ import { fireEvent } from '@testing-library/react';
  */
 import { act } from 'react-dom/test-utils';
 import { renderWithProviders } from '../../../testUtils/';
-import Tooltip from '../';
+import DeprecatedTooltip from '../deprecatedTooltip';
 
-describe('<Tooltip />', function () {
+describe('<DeprecatedTooltip />', function () {
   it('should be not visible when the mouse is not hovering over the container', function () {
     const { getByText } = renderWithProviders(
-      <Tooltip content="Grid View">
+      <DeprecatedTooltip content="Grid View">
         <div />
-      </Tooltip>
+      </DeprecatedTooltip>
     );
 
     expect(getByText('Grid View')).not.toBeVisible();
@@ -38,9 +38,9 @@ describe('<Tooltip />', function () {
 
   it('should be visible when the mouse is hovering over the container', function () {
     const { getByTestId, getByText } = renderWithProviders(
-      <Tooltip content="Grid View">
+      <DeprecatedTooltip content="Grid View">
         <div />
-      </Tooltip>
+      </DeprecatedTooltip>
     );
 
     const mouseEvent = new MouseEvent('mouseover', {
