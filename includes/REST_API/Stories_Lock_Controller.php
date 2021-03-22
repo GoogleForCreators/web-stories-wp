@@ -282,7 +282,7 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 		 *
 		 * The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug.
 		 *
-		 * @since 4.7.0
+		 * @since 1.6.0
 		 *
 		 * @param WP_REST_Response $response The response object.
 		 * @param Array            $lock     Lock array.
