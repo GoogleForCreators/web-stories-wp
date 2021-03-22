@@ -80,13 +80,13 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
 const Play = styled(Icons.PlayFilled)`
   width: 100%;
   height: 100%;
-  color: white;
+  color: ${({ theme }) => theme.colors.standard.white};
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
 const Pause = styled(Icons.StopFilled)`
   width: 100%;
   height: 100%;
-  color: white;
+  color: ${({ theme }) => theme.colors.standard.white};
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
 
