@@ -44,7 +44,10 @@ describe('Video Poster Panel', () => {
           state: () => ({
             get: () => ({
               first: () => ({
-                toJSON: () => ({ url: 'http://dummy:url/' }),
+                toJSON: () => ({
+                  url: 'http://dummy:url/',
+                  mime: 'image/jpeg',
+                }),
               }),
             }),
           }),
