@@ -168,6 +168,7 @@ function onBlurDeselectAll() {
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
+  hideStoryList,
   pageSize,
   renameStory,
   sortDirection,
@@ -336,96 +337,102 @@ export default function StoryListView({
           </TableRow>
         </StickyTableHeader>
         <TableBody>
-          {stories.map((story) => (
-            <StyledTableRow key={`story-${story.id}`}>
-              <TablePreviewCell>
-                <PreviewContainer>
-                  <PreviewErrorBoundary>
-                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
-                  </PreviewErrorBoundary>
-                </PreviewContainer>
-              </TablePreviewCell>
-              <TableCell>
-                <TitleTableCellContainer>
-                  {renameStory.id === story.id ? (
-                    <InlineInputForm
-                      onEditComplete={(newTitle) =>
-                        renameStory.handleOnRenameStory(story, newTitle)
-                      }
-                      onEditCancel={renameStory.handleCancelRename}
-                      value={story.title}
-                      id={story.id}
-                      label={__('Rename story', 'web-stories')}
-                    />
-                  ) : (
-                    <>
-                      <Headline
-                        tabIndex={0}
-                        onFocus={onFocusSelectAll}
-                        onBlur={onBlurDeselectAll}
-                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-                        as="h4"
-                      >
-                        {titleFormatted(story.title)}
-                      </Headline>
-                      <StoryMenu
-                        onMoreButtonSelected={storyMenu.handleMenuToggle}
-                        contextMenuId={storyMenu.contextMenuId}
-                        story={story}
-                        menuItems={generateStoryMenu({
-                          menuItemActions: storyMenu.menuItemActions,
-                          menuItems: storyMenu.menuItems,
-                          story,
-                        })}
-                        verticalAlign="center"
+          {!hideStoryList &&
+            stories.map((story) => (
+              <StyledTableRow
+                key={`story-${story.id}`}
+                data-testid={`story-list-item-${story.id}`}
+              >
+                <TablePreviewCell>
+                  <PreviewContainer>
+                    <PreviewErrorBoundary>
+                      <PreviewPage page={story.pages[0]} pageSize={pageSize} />
+                    </PreviewErrorBoundary>
+                  </PreviewContainer>
+                </TablePreviewCell>
+                <TableCell>
+                  <TitleTableCellContainer>
+                    {renameStory.id === story.id ? (
+                      <InlineInputForm
+                        onEditComplete={(newTitle) =>
+                          renameStory.handleOnRenameStory(story, newTitle)
+                        }
+                        onEditCancel={renameStory.handleCancelRename}
+                        value={story.title}
+                        id={story.id}
+                        label={__('Rename story', 'web-stories')}
                       />
-                    </>
-                  )}
-                </TitleTableCellContainer>
-              </TableCell>
-              <TableCell>
-                <Text
-                  as="span"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                >
-                  {story.author || '—'}
-                </Text>
-              </TableCell>
-              <TableCell>
-                <Text
-                  as="span"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                >
-                  {getRelativeDisplayDate(story.created_gmt)}
-                </Text>
-              </TableCell>
-              <TableCell>
-                <Text
-                  as="span"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                >
-                  {getRelativeDisplayDate(story.modified_gmt)}
-                </Text>
-              </TableCell>
-              {storyStatus !== STORY_STATUS.DRAFT && (
-                <TableStatusCell>
+                    ) : (
+                      <>
+                        <Headline
+                          tabIndex={0}
+                          onFocus={onFocusSelectAll}
+                          onBlur={onBlurDeselectAll}
+                          size={
+                            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL
+                          }
+                          as="h4"
+                        >
+                          {titleFormatted(story.title)}
+                        </Headline>
+                        <StoryMenu
+                          onMoreButtonSelected={storyMenu.handleMenuToggle}
+                          contextMenuId={storyMenu.contextMenuId}
+                          story={story}
+                          menuItems={generateStoryMenu({
+                            menuItemActions: storyMenu.menuItemActions,
+                            menuItems: storyMenu.menuItems,
+                            story,
+                          })}
+                          verticalAlign="center"
+                        />
+                      </>
+                    )}
+                  </TitleTableCellContainer>
+                </TableCell>
+                <TableCell>
                   <Text
                     as="span"
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                   >
-                    {story.status === STORY_STATUS.PUBLISH &&
-                      __('Published', 'web-stories')}
-                    {story.status === STORY_STATUS.FUTURE &&
-                      __('Scheduled', 'web-stories')}
-                    {story.status === STORY_STATUS.DRAFT &&
-                      __('Draft', 'web-stories')}
-                    {story.status === STORY_STATUS.PRIVATE &&
-                      __('Private', 'web-stories')}
+                    {story.author || '—'}
                   </Text>
-                </TableStatusCell>
-              )}
-            </StyledTableRow>
-          ))}
+                </TableCell>
+                <TableCell>
+                  <Text
+                    as="span"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  >
+                    {getRelativeDisplayDate(story.created_gmt)}
+                  </Text>
+                </TableCell>
+                <TableCell>
+                  <Text
+                    as="span"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  >
+                    {getRelativeDisplayDate(story.modified_gmt)}
+                  </Text>
+                </TableCell>
+                {storyStatus !== STORY_STATUS.DRAFT && (
+                  <TableStatusCell>
+                    <Text
+                      as="span"
+                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    >
+                      {story.status === STORY_STATUS.PUBLISH &&
+                        __('Published', 'web-stories')}
+                      {story.status === STORY_STATUS.FUTURE &&
+                        __('Scheduled', 'web-stories')}
+                      {story.status === STORY_STATUS.DRAFT &&
+                        __('Draft', 'web-stories')}
+                      {story.status === STORY_STATUS.PRIVATE &&
+                        __('Private', 'web-stories')}
+                    </Text>
+                  </TableStatusCell>
+                )}
+              </StyledTableRow>
+            ))}
         </TableBody>
       </Table>
     </ListView>
@@ -435,6 +442,7 @@ export default function StoryListView({
 StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  hideStoryList: PropTypes.bool,
   pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   sortDirection: PropTypes.string.isRequired,

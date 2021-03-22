@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Button, Headline, Link, Text } from '../../../design-system';
+import { Headline, Link, Text } from '../../../design-system';
 
 export const Content = styled.div`
   display: flex;
@@ -41,30 +41,6 @@ export const Header = styled(Headline)`
     height: 64px;
   }
 `;
-
-export const NewStoryButton = styled(Button)(
-  ({ theme }) => css`
-    margin-bottom: 0;
-    margin-top: 0;
-    border: 1px solid ${theme.colors.border.defaultActive};
-    border-radius: ${theme.borders.radius.medium};
-    transition: background-color 0.25s linear, color 0.25s linear;
-
-    :hover {
-      color: ${theme.colors.bg.primary};
-      background-color: ${theme.colors.interactiveBg.brandPress};
-      border-color: ${theme.colors.interactiveFg.brandPress};
-    }
-
-    :focus {
-      color: ${theme.colors.fg.primary};
-    }
-
-    :active {
-      color: ${theme.colors.bg.primary};
-    }
-  `
-);
 
 export const NavList = styled.ul`
   margin: 0;

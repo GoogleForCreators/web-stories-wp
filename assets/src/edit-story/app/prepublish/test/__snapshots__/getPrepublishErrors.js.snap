@@ -18,7 +18,7 @@ Array [
       </li>
     </constants__DashedList>,
     "highlight": "POSTER",
-    "message": "Add poster image",
+    "message": "Add cover image",
     "storyId": 120,
     "type": "error",
   },

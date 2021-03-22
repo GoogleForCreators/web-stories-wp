@@ -64,9 +64,9 @@ describe('Inspector Tabs integration', () => {
       await fixture.events.click(documentTab);
       await waitFor(() => fixture.editor.inspector.documentPanel);
       await waitFor(() =>
-        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
-          'John Doe'
-        )
+        expect(
+          fixture.editor.inspector.documentPanel.author.textContent
+        ).toContain('John Doe')
       );
       fixture.events.click(fixture.editor.inspector.documentPanel.author);
       // Ensure the debounced callback has taken effect.
@@ -82,9 +82,9 @@ describe('Inspector Tabs integration', () => {
 
       await fixture.events.sleep(300);
       await waitFor(() =>
-        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
-          'Jane Doe'
-        )
+        expect(
+          fixture.editor.inspector.documentPanel.author.textContent
+        ).toContain('Jane Doe')
       );
     });
 
@@ -94,9 +94,9 @@ describe('Inspector Tabs integration', () => {
       // Click document tab
       await fixture.events.click(documentTab);
       await waitFor(() =>
-        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
-          'John Doe'
-        )
+        expect(
+          fixture.editor.inspector.documentPanel.author.textContent
+        ).toContain('John Doe')
       );
       fixture.events.click(fixture.editor.inspector.documentPanel.author);
       // Ensure the debounced callback has taken effect.

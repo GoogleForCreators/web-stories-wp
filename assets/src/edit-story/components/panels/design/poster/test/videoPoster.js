@@ -24,6 +24,7 @@ import { fireEvent } from '@testing-library/react';
  */
 import Poster from '../videoPoster';
 import { renderPanel } from '../../../shared/test/_utils';
+import ConfigContext from '../../../../../app/config/context';
 
 jest.mock('../../../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {
@@ -32,14 +33,31 @@ jest.mock('../../../../mediaPicker', () => ({
   },
 }));
 
+function renderPoster(selectedElements) {
+  const configValue = {
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
+  };
+
+  const wrapper = (params) => (
+    <ConfigContext.Provider value={configValue}>
+      {params.children}
+    </ConfigContext.Provider>
+  );
+
+  return renderPanel(Poster, selectedElements, wrapper);
+}
+
 describe('Panels/Poster', () => {
   const defaultElement = {
     type: 'video',
     resource: { posterId: 0, poster: '', alt: '' },
   };
-  function renderPoster(...args) {
-    return renderPanel(Poster, ...args);
-  }
 
   beforeAll(() => {
     localStorage.setItem(
