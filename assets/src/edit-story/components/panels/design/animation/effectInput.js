@@ -80,6 +80,7 @@ function EffectInput({
   );
 
   const valueForField = effectConfig[field] || effectProps[field].defaultValue;
+  const isFloat = effectProps[field].type === FIELD_TYPES.FLOAT;
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (
@@ -116,8 +117,15 @@ function EffectInput({
           unit={effectProps[field].unit}
           value={valueForField}
           min={0}
-          onChange={(evt) => onChange(evt.target.value)}
-          isFloat={effectProps[field].type === FIELD_TYPES.FLOAT}
+          onChange={(evt) =>
+            onChange(
+              isFloat
+                ? parseFloat(evt.target.value)
+                : parseInt(evt.target.value),
+              true
+            )
+          }
+          isFloat={isFloat}
         />
       );
   }
