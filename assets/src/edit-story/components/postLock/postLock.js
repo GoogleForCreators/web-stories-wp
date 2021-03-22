@@ -92,7 +92,7 @@ function PostLock() {
           } else {
             setStoryLockById(storyId);
           }
-          // Refresh notice on every request.
+          // Refresh nonce on every request.
           setNonce(newNonce);
         })
         .catch((err) => {
