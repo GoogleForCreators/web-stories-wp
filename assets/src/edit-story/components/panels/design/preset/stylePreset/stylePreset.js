@@ -23,12 +23,13 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import PresetPanel, { PRESET_TYPES } from '../presetPanel';
+import PresetPanel from '../presetPanel';
+import { PRESET_TYPES } from '../constants';
 
 function StylePresetPanel({ pushUpdate }) {
   return (
     <PresetPanel
-      presetType={PRESET_TYPES.STYLE_PRESET_TYPE}
+      presetType={PRESET_TYPES.STYLE}
       title={__('Saved styles', 'web-stories')}
       pushUpdate={pushUpdate}
     />

@@ -27,6 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Icons } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
+import { PRESET_TYPES } from './constants';
 
 const buttonCSS = css`
   border: none;
@@ -72,7 +73,7 @@ function PresetsHeader({
   canCollapse,
   presetType,
 }) {
-  const isColor = 'color' === presetType;
+  const isColor = PRESET_TYPES.COLOR === presetType;
   const editLabel = isColor
     ? __('Edit colors', 'web-stories')
     : __('Edit styles', 'web-stories');
