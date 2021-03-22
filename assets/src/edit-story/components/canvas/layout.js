@@ -89,11 +89,11 @@ const Layer = styled.section`
     'c c c c c c c' ${CAROUSEL_HEIGHT}px
     /
     1fr
-    ${PAGE_NAV_WIDTH}px
-    ${PAGE_NAV_GAP}px
+    var(--page-nav-width)
+    var(--page-nav-gap)
     var(--viewport-width-px)
-    ${PAGE_NAV_GAP}px
-    ${PAGE_NAV_WIDTH}px
+    var(--page-nav-gap)
+    var(--page-nav-width)
     1fr;
   height: 100%;
 `;
@@ -280,6 +280,7 @@ function useLayoutParamsCssVars() {
   // scroll. By not setting an explicit width, we can ensure that.
   return {
     '--page-nav-width': `${hasPageNavigation ? PAGE_NAV_WIDTH : 0}px`,
+    '--page-nav-gap': `${hasPageNavigation ? PAGE_NAV_GAP : 0}px`,
     '--page-width-px': `${pageWidth}px`,
     '--page-height-px': `${pageHeight}px`,
     '--fullbleed-height-px': `${fullHeight}px`,
