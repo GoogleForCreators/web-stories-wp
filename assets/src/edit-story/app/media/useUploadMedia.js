@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
-import { useSnackbar } from '../snackbar';
+import { useSnackbar } from '../../../design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { useMediaUploadQueue } from './utils';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';

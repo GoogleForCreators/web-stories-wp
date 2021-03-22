@@ -31,6 +31,7 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   LoadingSpinner,
+  useSnackbar,
 } from '../../../../../../design-system';
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
@@ -45,7 +46,6 @@ import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
 } from '../../../../../constants';
-import { useSnackbarContext } from '../../../../snackbar';
 import { StoryGridView, StoryListView } from '../../../shared';
 import { LoadingContainer } from '../../../../../components';
 
@@ -71,9 +71,7 @@ function StoriesView({
   const [focusedStory, setFocusedStory] = useState({});
   const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
 
-  const {
-    actions: { addSnackbarMessage },
-  } = useSnackbarContext();
+  const { showSnackbar } = useSnackbar();
 
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
@@ -163,7 +161,7 @@ function StoriesView({
       setContextMenuId(-1);
       global.navigator.clipboard.writeText(story.link);
 
-      addSnackbarMessage({
+      showSnackbar({
         message:
           story.title.length > 0
             ? sprintf(
@@ -175,10 +173,10 @@ function StoriesView({
                 '(no title) has been copied to your clipboard.',
                 'web-stories'
               ),
-        id: Date.now(),
+        dismissable: true,
       });
     },
-    [addSnackbarMessage]
+    [showSnackbar]
   );
 
   const enabledMenuItems = useMemo(() => {

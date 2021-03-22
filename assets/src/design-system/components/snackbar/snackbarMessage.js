@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useCallback } from 'react';
 import { rgba } from 'polished';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -38,24 +38,6 @@ import {
   DEFAULT_MESSAGE_Z_INDEX,
 } from './constants';
 
-const fromTop = keyframes`
-	from {
-		transform: translateY(-100%);
-	}
-	to {
-		transform: translateY(0);
-	}
-`;
-
-const fromBottom = keyframes`
-	from {
-		transform: translateY(100%);
-	}
-	to {
-		transform: translateY(0);
-	}
-`;
-
 const MessageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -70,10 +52,7 @@ const MessageContainer = styled.div`
     `1px solid ${rgba(theme.colors.standard.white, 0.24)}`};
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   z-index: ${({ customZIndex }) => customZIndex || DEFAULT_MESSAGE_Z_INDEX};
-  animation: 0.5s
-    ${({ placement }) =>
-      placement.indexOf('top') === -1 ? fromBottom : fromTop}
-    ease-out;
+  pointer-events: auto;
 `;
 MessageContainer.propTypes = {
   customZIndex: PropTypes.number,

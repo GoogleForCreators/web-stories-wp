@@ -28,7 +28,7 @@ import { trackError } from '@web-stories-wp/tracking';
 import { useAPI } from '../../../../../app/api';
 import { Plain } from '../../../../button';
 import Dialog from '../../../../dialog';
-import { useSnackbar } from '../../../../../app/snackbar';
+import { useSnackbar } from '../../../../../../design-system';
 import { useLocalMedia } from '../../../../../app/media';
 import { useStory } from '../../../../../app/story';
 

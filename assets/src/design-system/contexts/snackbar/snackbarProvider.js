@@ -23,25 +23,26 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Placement } from '../../../design-system/components/snackbar/constants';
+import { Placement } from '../../components/snackbar/constants';
 import Context from './context';
-import SnackbarContainer from './snackbarContainer';
 
 function SnackbarProvider({ children, placement = 'bottom' }) {
   const [notifications, setNotifications] = useState([]);
 
-  const remove = useCallback((notification) => {
-    setNotifications((currentNotifications) => {
-      return currentNotifications.filter(
-        (item) => item.key !== notification.key
-      );
-    });
+  const remove = useCallback((toRemove) => {
+    setNotifications((currentNotifications) =>
+      currentNotifications.filter((item) => {
+        if (Array.isArray(toRemove)) {
+          return !toRemove.find(({ key }) => key === item.key);
+        }
+        return item.key !== toRemove.key;
+      })
+    );
   }, []);
 
   const create = useCallback((notification) => {
     const newNotification = {
       key: uuidv4(),
-      timeout: notification.timeout || 5000,
       ...notification,
     };
     // React may batch state updates, so use the setter that receives the
@@ -52,23 +53,22 @@ function SnackbarProvider({ children, placement = 'bottom' }) {
     ]);
   }, []);
 
+  const clear = useCallback(() => {
+    setNotifications([]);
+  }, []);
+
   const state = useMemo(
     () => ({
       showSnackbar: create,
+      clearSnackbar: clear,
+      removeSnack: remove,
+      currentSnacks: notifications,
+      placement,
     }),
-    [create]
+    [create, clear, remove, notifications, placement]
   );
 
-  return (
-    <Context.Provider value={state}>
-      <SnackbarContainer
-        onRemove={remove}
-        notifications={notifications}
-        placement={placement}
-      />
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
 SnackbarProvider.propTypes = {
