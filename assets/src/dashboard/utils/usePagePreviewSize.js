@@ -121,7 +121,9 @@ export default function usePagePreviewSize(options = {}) {
   const [bp, setBp] = useState(getCurrentBp(viewportWidth));
 
   const [availableContainerSpace, setAvailableContainerSpace] = useState(
-    getContainerWidth(dashboardContainerRef.current?.offsetWidth)
+    getContainerWidth(
+      dashboardContainerRef.current?.offsetWidth || window.innerWidth
+    )
   );
 
   const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
