@@ -105,7 +105,7 @@
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
     "@babel/plugin-syntax-top-level-await": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-env": "^7.13.10",
     "@babel/preset-react": "^7.12.10",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@prettier/plugin-xml": "^0.13.0",
