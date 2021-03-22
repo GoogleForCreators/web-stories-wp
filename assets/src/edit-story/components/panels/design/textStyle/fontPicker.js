@@ -168,6 +168,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
       onObserve={onObserve}
       renderer={forwardRef(renderer)}
       disabled={!fonts?.length}
+      dropDownLabel={__('Font', 'web-stories')}
     />
   );
 }

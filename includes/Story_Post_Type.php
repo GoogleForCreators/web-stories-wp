@@ -525,7 +525,7 @@ class Story_Post_Type {
 		}
 
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
+		
 		$dashboard_url = add_query_arg(
 			[
 				'post_type' => self::POST_TYPE_SLUG,
@@ -543,6 +543,10 @@ class Story_Post_Type {
 
 		$nonce = wp_create_nonce( 'wp_rest' );
 
+		$mime_types       = $this->get_allowed_mime_types();
+		$mime_image_types = $this->get_allowed_image_mime_types();
+
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -550,8 +554,9 @@ class Story_Post_Type {
 				'isRTL'                 => is_rtl(),
 				'locale'                => ( new Locale() )->get_locale_settings(),
 				'allowedFileTypes'      => $this->get_allowed_file_types(),
-				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
-				'allowedMimeTypes'      => $this->get_allowed_mime_types(),
+				'allowedImageFileTypes' => $this->get_file_type_exts( $mime_image_types ),
+				'allowedImageMimeTypes' => $mime_image_types,
+				'allowedMimeTypes'      => $mime_types,
 				'postType'              => self::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,

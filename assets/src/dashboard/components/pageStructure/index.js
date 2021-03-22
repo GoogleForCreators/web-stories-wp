@@ -31,6 +31,7 @@ import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
+  Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   LogoWithTypeCircleColor,
@@ -50,13 +51,14 @@ import {
   NavLink,
   NavList,
   NavListItem,
-  NewStoryButton,
   PathName,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
-  overflow-x: scroll;
-  min-width: 100%;
+  width: 100%;
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
+    width: ${MIN_DASHBOARD_WIDTH}px;
+  }
 `;
 
 export const PageContent = styled.div`
@@ -70,7 +72,6 @@ export const PageContent = styled.div`
   @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     left: 0;
     width: 100%;
-    min-width: ${MIN_DASHBOARD_WIDTH}px;
   }
 `;
 
@@ -172,14 +173,14 @@ export function LeftRail() {
           <LogoWithTypeCircleColor title={__('Web Stories', 'web-stories')} />
         </Header>
         <Content>
-          <NewStoryButton
-            type={BUTTON_TYPES.PLAIN}
+          <Button
+            type={BUTTON_TYPES.QUATERNARY}
             size={BUTTON_SIZES.SMALL}
             href={newStoryURL}
             onClick={onCreateNewStoryClick}
           >
             {__('Create New Story', 'web-stories')}
-          </NewStoryButton>
+          </Button>
         </Content>
         <Content>
           <NavList>

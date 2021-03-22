@@ -28,7 +28,8 @@ import PropTypes from 'prop-types';
 import { theme, THEME_CONSTANTS } from '../../../theme';
 import { Headline, Text } from '../../typography';
 import { Cross } from '../../../icons';
-import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
+import { Button } from '../button';
+import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../constants';
 import { ToggleButton, LockToggle } from '../toggleButton';
 
 export default {

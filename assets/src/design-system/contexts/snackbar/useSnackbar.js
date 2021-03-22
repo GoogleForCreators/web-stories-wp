@@ -14,5 +14,12 @@
  * limitations under the License.
  */
 
-export { default as SnackbarProvider } from './snackbarProvider';
-export { default as useSnackbar } from './useSnackbar';
+/**
+ * Internal dependencies
+ */
+import { identity, useContextSelector } from '../..';
+import Context from './context';
+
+export function useSnackbar(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
