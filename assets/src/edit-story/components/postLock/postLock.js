@@ -86,7 +86,7 @@ function PostLock() {
                 avatar: author.avatar_urls?.['48'],
               }
             : null;
-          if (locked && lockAuthor.id !== currentUser.id) {
+          if (locked && lockAuthor?.id !== currentUser.id) {
             setShowDialog(true);
             setUser(lockAuthor);
           } else {
