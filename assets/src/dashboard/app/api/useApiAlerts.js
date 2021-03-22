@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { useEffect } from 'react';
-
 /**
  * Internal dependencies
  */
-import { SnackbarContainer, useSnackbarContext } from '../../snackbar';
-import useApi from '../../api/useApi';
+import { useSnackbar } from '../../../design-system';
+import useApi from './useApi';
 
-function SnackbarView() {
+function useApiAlerts() {
   const { storyError, templateError, settingsError, mediaError } = useApi(
     ({
       state: {
@@ -34,56 +33,50 @@ function SnackbarView() {
         settings: { error: settingsError },
         media: { error: mediaError },
       },
-    }) => ({ storyError, templateError, settingsError, mediaError })
+    }) => ({
+      storyError,
+      templateError,
+      settingsError,
+      mediaError,
+    })
   );
+  const { showSnackbar } = useSnackbar();
 
-  const {
-    actions: { removeSnackbarMessage, addSnackbarMessage },
-    state: { activeSnackbarMessage },
-  } = useSnackbarContext();
-
+  // if there is an API error, display a snackbar
   useEffect(() => {
     if (storyError?.id) {
-      addSnackbarMessage({
+      showSnackbar({
         message: storyError.message,
-        id: storyError.id,
+        dismissable: true,
       });
     }
-  }, [storyError, addSnackbarMessage]);
+  }, [storyError, showSnackbar]);
 
   useEffect(() => {
     if (templateError?.id) {
-      addSnackbarMessage({
+      showSnackbar({
         message: templateError.message,
-        id: templateError.id,
+        dismissable: true,
       });
     }
-  }, [templateError, addSnackbarMessage]);
+  }, [templateError, showSnackbar]);
 
   useEffect(() => {
     if (settingsError?.id) {
-      addSnackbarMessage({
+      showSnackbar({
         message: settingsError.message,
-        id: settingsError.id,
+        dismissable: true,
       });
     }
-  }, [settingsError, addSnackbarMessage]);
+  }, [settingsError, showSnackbar]);
 
   useEffect(() => {
     if (mediaError?.id) {
-      addSnackbarMessage({
+      showSnackbar({
         message: mediaError.message,
-        id: mediaError.id,
+        dismissable: true,
       });
     }
-  }, [mediaError, addSnackbarMessage]);
-
-  return (
-    <SnackbarContainer
-      activeSnackbarMessage={activeSnackbarMessage}
-      handleDismissMessage={removeSnackbarMessage}
-    />
-  );
+  }, [mediaError, showSnackbar]);
 }
-
-export default SnackbarView;
+export default useApiAlerts;

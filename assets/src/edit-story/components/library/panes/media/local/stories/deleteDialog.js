@@ -25,7 +25,7 @@ import React from 'react';
 import DeleteDialog from '../deleteDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import SnackbarContext from '../../../../../../app/snackbar/context';
+import { SnackbarContext } from '../../../../../../../design-system';
 import StoryContext from '../../../../../../app/story/context';
 
 export default {
