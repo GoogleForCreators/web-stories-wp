@@ -41,9 +41,8 @@ import {
   Input,
   Text,
   THEME_CONSTANTS,
-  Tooltip,
-  TOOLTIP_PLACEMENT,
 } from '../../../../../design-system';
+import { Tooltip } from '../../../tooltip';
 
 const InputRow = styled.div`
   display: flex;
@@ -175,11 +174,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
                 disabled
               />
             </InputRow>
-            <Tooltip
-              hasTail
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-              title={clearFileText}
-            >
+            <Tooltip hasTail title={clearFileText}>
               <Button
                 aria-label={clearFileText}
                 type={BUTTON_TYPES.TERTIARY}

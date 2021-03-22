@@ -32,9 +32,8 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-  Tooltip,
-  TOOLTIP_PLACEMENT,
 } from '../../../../design-system';
+import { Tooltip } from '../../tooltip';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -148,7 +147,7 @@ function Preview() {
   const label = __('Preview', 'web-stories');
   return (
     <>
-      <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+      <Tooltip title={label} hasTail>
         <Button
           variant={BUTTON_VARIANTS.SQUARE}
           type={BUTTON_TYPES.TERTIARY}

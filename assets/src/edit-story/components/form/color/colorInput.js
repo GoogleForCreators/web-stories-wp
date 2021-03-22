@@ -33,13 +33,13 @@ import {
   HexInput,
   Text,
   THEME_CONSTANTS,
-  Tooltip as DefaultTooltip,
   Swatch,
   getOpaquePattern,
 } from '../../../../design-system';
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
+import { Tooltip as DefaultTooltip } from '../../tooltip';
 
 const Preview = styled.div`
   height: 36px;

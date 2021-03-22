@@ -39,9 +39,8 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  TOOLTIP_PLACEMENT,
-  Tooltip,
 } from '../../../../design-system';
+import { Tooltip } from '../../tooltip';
 
 const Button = styled(DefaultButton)`
   svg {
@@ -71,7 +70,6 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
   return hasErrors ? (
     <Tooltip
       title={__('There are items in the checklist to resolve', 'web-stories')}
-      placement={TOOLTIP_PLACEMENT.BOTTOM}
       hasTail
     >
       {button}

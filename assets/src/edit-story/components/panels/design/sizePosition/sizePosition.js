@@ -25,13 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  LockToggle,
-  NumericInput,
-  Tooltip,
-  PLACEMENT,
-  Icons,
-} from '../../../../../design-system';
+import { LockToggle, NumericInput, Icons } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { dataPixels } from '../../../../units';
 import { getDefinitionForType } from '../../../../elements';
@@ -40,6 +34,7 @@ import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
+import { Tooltip } from '../../../tooltip';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
@@ -268,10 +263,7 @@ function SizePositionPanel({
           />
         </Area>
         <Area area="l">
-          <Tooltip
-            placement={PLACEMENT.BOTTOM}
-            title={__('Lock aspect ratio', 'web-stories')}
-          >
+          <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
             <LockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
               title={__('Lock aspect ratio', 'web-stories')}
