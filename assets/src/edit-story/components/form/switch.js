@@ -29,7 +29,13 @@ import {
   useKeyDownEffect,
 } from '../../../design-system';
 
-function Switch({ onChange, value, ...props }) {
+function Switch({
+  offLabel = __('Off', 'web-stories'),
+  onChange,
+  onLabel = __('On', 'web-stories'),
+  value,
+  ...props
+}) {
   const switchRef = useRef(null);
 
   const handleToggleValue = useCallback(
@@ -47,13 +53,16 @@ function Switch({ onChange, value, ...props }) {
   );
 
   return (
-    <BaseSwitch ref={switchRef} onChange={onChange} value={value} {...props} />
+    <BaseSwitch
+      ref={switchRef}
+      offLabel={offLabel}
+      onChange={onChange}
+      onLabel={onLabel}
+      value={value}
+      {...props}
+    />
   );
 }
 Switch.propTypes = SwitchPropTypes;
-Switch.defaultProps = {
-  offLabel: __('Off', 'web-stories'),
-  onLabel: __('On', 'web-stories'),
-};
 
 export default Switch;

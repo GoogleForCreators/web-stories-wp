@@ -94,13 +94,18 @@ const HiddenRadioButton = styled.input.attrs({ type: 'radio' })`
   margin: -1px;
   outline: none;
   overflow: hidden;
+  opacity: 0;
 `;
 
 const RadioButtonLabel = styled(Text).attrs({
   forwardedAs: 'label',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
+  height: ${SWITCH_HEIGHT}px;
   width: 50%;
   padding: 0px 6px;
   z-index: 1;
