@@ -27,12 +27,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as PlayIcon } from '../../icons/play.svg';
-import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
 import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
+import { Icons } from '../../../design-system';
 
-const PLAY_BUTTON_SIZE = 48;
+const PLAY_BUTTON_SIZE = 72;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
 const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
 
@@ -78,16 +77,16 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   }
 `;
 
-const Play = styled(PlayIcon)`
+const Play = styled(Icons.PlayFilled)`
   width: 100%;
   height: 100%;
-  opacity: 0.84;
+  color: white;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
-const Pause = styled(PauseIcon)`
+const Pause = styled(Icons.StopFilled)`
   width: 100%;
   height: 100%;
-  opacity: 0.84;
+  color: white;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
 
