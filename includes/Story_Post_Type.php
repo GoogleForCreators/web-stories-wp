@@ -525,7 +525,7 @@ class Story_Post_Type {
 		}
 
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		
+
 		$dashboard_url = add_query_arg(
 			[
 				'post_type' => self::POST_TYPE_SLUG,
@@ -619,7 +619,17 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	protected function setup_lock( $story_id ) {
-		if ( current_user_can( 'edit_post', $story_id ) ) {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object instanceof WP_Post_Type ) {
+			return;
+		}
+
+		if ( ! property_exists( $post_type_object->cap, 'edit_post' ) ) {
+			return;
+		}
+
+		if ( current_user_can( $post_type_object->cap->edit_post ) ) {
 			// Make sure these functions are loaded.
 			if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/post.php';
