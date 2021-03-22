@@ -276,7 +276,7 @@ class HTML {
 	 * @return string
 	 */
 	protected function print_social_share( $content ) {
-		$share_providers = [ 'twitter', 'linkedin', 'email', 'system', ];
+		$share_providers = [ 'twitter', 'linkedin', 'email', 'system' ];
 
 		/**
 		 * Filters the list of sharing providers in the Web Stories sharing dialog.
