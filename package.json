@@ -86,7 +86,7 @@
     "react-photo-gallery": "^8.0.0",
     "react-pure-render": "^1.0.2",
     "react-transition-group": "^4.4.1",
-    "react-virtual": "^2.3.2",
+    "react-virtual": "^2.6.0",
     "resize-observer-polyfill": "^1.5.1",
     "sat": "^0.8.0",
     "styled-components": "^5.2.1",
