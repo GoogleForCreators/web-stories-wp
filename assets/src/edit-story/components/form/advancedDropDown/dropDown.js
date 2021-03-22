@@ -19,21 +19,14 @@
  */
 import { useState, useCallback, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import {
-  Icons,
-  themeHelpers,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../design-system';
 import Popup from '../../popup';
+import DropDownSelect from '../../../../design-system/components/dropDown/select';
 import OptionsContainer from './container';
 import List from './list';
 
@@ -47,59 +40,9 @@ const Container = styled.div`
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.font};
 `;
 
-const DropDownSelect = styled.button`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 1;
-  background-color: ${({ theme, lightMode }) =>
-    lightMode
-      ? rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)
-      : 'transparent'};
-  border: 0;
-  border-radius: 4px;
-  ${({ theme, lightMode }) =>
-    !lightMode &&
-    `
-    border: 1px solid ${theme.colors.border.defaultNormal};
-  `}
-  padding: 2px 0 2px 12px;
-  cursor: pointer;
-
-  ${themeHelpers.focusableOutlineCSS};
-
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      pointer-events: none;
-      opacity: 0.3;
-    `}
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.border.defaultHover};
-  }
-
-  svg {
-    width: 32px;
-    height: auto;
-    color: ${({ theme, lightMode }) =>
-      lightMode
-        ? theme.DEPRECATED_THEME.colors.fg.white
-        : theme.colors.fg.secondary};
-  }
-`;
-
-const DropDownTitle = styled(Text)`
-  user-select: none;
-  color: ${({ theme }) => theme.colors.fg.primary};
-`;
-
 /**
  * @param {Object} props All props.
  * @param {Function} props.onChange Triggered when user clicks on the option in the list.
- * @param {boolean} props.lightMode Lightmode.
- * @param {string} props.placeholder Displayed in the input when the dropdown is not open.
  * @param {boolean} props.disabled Disables opening the dropdown if set.
  * @param {number} props.selectedId The selected option ID.
  * @param {Array} props.options All options, used for search.
@@ -113,12 +56,11 @@ const DropDownTitle = styled(Text)`
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
  * @param {boolean} props.isInline If to display the selection list inline instead of as a separate popup modal.
+ * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
  */
 function DropDown({
   onChange,
-  lightMode = false,
-  placeholder = __('Select an Option', 'web-stories'),
   disabled = false,
   selectedId,
   options,
@@ -132,6 +74,7 @@ function DropDown({
   searchResultsLabel,
   renderer,
   isInline = false,
+  dropDownLabel = '',
   ...rest
 }) {
   if (!options && !getOptionsByQuery) {
@@ -221,22 +164,15 @@ function DropDown({
   return (
     <Container onKeyDown={handleKeyPress}>
       <DropDownSelect
-        onClick={toggleDropDown}
         aria-pressed={isOpen}
         aria-haspopup
         aria-expanded={isOpen}
         ref={ref}
-        lightMode={lightMode}
+        activeItemLabel={selectedOption?.name}
+        dropDownLabel={dropDownLabel}
+        onSelectClick={toggleDropDown}
         {...rest}
-      >
-        <DropDownTitle
-          as="span"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
-          {selectedOption?.name || placeholder}
-        </DropDownTitle>
-        <Icons.ChevronDownSmall />
-      </DropDownSelect>
+      />
       {isOpen && !disabled && isInline && list}
       {!disabled && !isInline && (
         <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
@@ -250,7 +186,6 @@ function DropDown({
 DropDown.propTypes = {
   selectedId: PropTypes.any,
   onChange: PropTypes.func.isRequired,
-  lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   options: PropTypes.array,
@@ -263,6 +198,7 @@ DropDown.propTypes = {
   priorityLabel: PropTypes.string,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  dropDownLabel: PropTypes.string,
   isInline: PropTypes.bool,
 };
 

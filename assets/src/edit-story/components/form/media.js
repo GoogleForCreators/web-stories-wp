@@ -34,6 +34,10 @@ const MediaInput = forwardRef(
       buttonInsertText = __('Choose an image', 'web-stories'),
       menuOptions = [],
       onChange,
+      onChangeErrorText = __(
+        'Unable to use this file type, please select a valid image type.',
+        'web-stories'
+      ),
       title = __('Choose an image', 'web-stories'),
       type = 'image',
       value,
@@ -45,6 +49,7 @@ const MediaInput = forwardRef(
       title,
       buttonInsertText,
       onSelect: onChange,
+      onSelectErrorMessage: onChangeErrorText,
       type,
     });
 
@@ -95,9 +100,11 @@ const MediaInput = forwardRef(
 );
 
 MediaInput.propTypes = {
+  className: PropTypes.string,
   buttonInsertText: PropTypes.string,
   menuOptions: PropTypes.array,
   onChange: PropTypes.func.isRequired,
+  onChangeErrorText: PropTypes.string,
   type: PropTypes.string,
   title: PropTypes.string,
   value: PropTypes.string,
