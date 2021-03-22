@@ -20,7 +20,7 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { _x, sprintf } from '@web-stories-wp/i18n';
-import { getTimeTracker } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -28,6 +28,7 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
 import { useAPI } from '../../../../app/api';
 import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
+import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
 import { PAGE_LAYOUT_TYPES } from './constants';
@@ -44,13 +45,10 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
-// padding-top is to help outlines on page layouts render
 export const PageLayoutsParentContainer = styled.div`
+  ${virtualPaneContainer}
   overflow-x: hidden;
   overflow-y: scroll;
-  margin-top: 26px;
-  padding-top: 2px;
-  width: 100%;
 `;
 
 function PageLayoutsPane(props) {
@@ -65,7 +63,7 @@ function PageLayoutsPane(props) {
   // load and process pageLayouts
   useEffect(() => {
     async function loadPageLayouts() {
-      const trackTiming = getTimeTracker('load', 'editor', 'Page Layouts');
+      const trackTiming = getTimeTracker('load_page_layouts');
       setPageLayouts(await getPageLayouts());
       trackTiming();
     }
@@ -117,6 +115,11 @@ function PageLayoutsPane(props) {
 
   const handleSelectPageLayoutType = useCallback((key) => {
     setSelectedPageLayoutType(key);
+    trackEvent('search', {
+      search_type: 'page_layouts',
+      search_term: '',
+      search_category: key,
+    });
   }, []);
 
   return (

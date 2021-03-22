@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import { MESSAGES } from '../../constants';
 import * as accessibilityChecks from '../accessibility';
 
@@ -98,6 +99,107 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       expect(
         accessibilityChecks.textElementFontLowContrast(element)
       ).toBeUndefined();
+    });
+  });
+
+  describe('pageBackgroundTextLowContrast', () => {
+    const bgEl = {
+      x: 1,
+      y: 1,
+      type: 'shape',
+      isBackground: true,
+      height: PAGE_HEIGHT,
+      width: PAGE_WIDTH,
+      backgroundColor: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+        },
+      },
+    };
+    const textEl = {
+      type: 'text',
+      backgroundTextMode: 'NONE',
+      content: 'Fill with text',
+      x: 1,
+      y: 1,
+      width: 175,
+      height: 36,
+      fontSize: 12,
+    };
+    const page = {
+      id: 123,
+      pageSize: {
+        height: PAGE_HEIGHT,
+        width: PAGE_WIDTH,
+      },
+      elements: [bgEl, textEl],
+      backgroundColor: {
+        color: {
+          r: 2,
+          g: 12,
+          b: 1,
+        },
+      },
+    };
+
+    it('should return a warning if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
+      expect(
+        await accessibilityChecks.pageBackgroundTextLowContrast(page)
+      ).toStrictEqual([
+        {
+          message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
+          help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
+          elements: [
+            { ...bgEl, backgroundColor: page.backgroundColor },
+            textEl,
+          ],
+          pageId: page.id,
+          type: 'warning',
+        },
+      ]);
+    });
+    it('should return undefined if the text size is large enough', async () => {
+      const largeGreyTextEl = {
+        ...textEl,
+        content: '<span style="color:#777777">I woke up like this</span>',
+        fontSize: 84,
+      };
+      const smallGreyTextEl = {
+        ...textEl,
+        content: '<span style="color:#777777">I woke up like this</span>',
+      };
+
+      const whiteBgPage = {
+        ...page,
+        backgroundColor: {
+          color: {
+            r: 255,
+            g: 255,
+            b: 255,
+          },
+        },
+      };
+      const [pass] = await accessibilityChecks.pageBackgroundTextLowContrast({
+        ...whiteBgPage,
+        elements: [bgEl, largeGreyTextEl],
+      });
+      expect(pass).toBeUndefined();
+      const [fail] = await accessibilityChecks.pageBackgroundTextLowContrast({
+        ...whiteBgPage,
+        elements: [bgEl, smallGreyTextEl],
+      });
+      expect(fail).not.toBeUndefined();
+    });
+
+    it('should return undefined if the contrast is great enough', async () => {
+      const whiteBackgroundColor = { color: { r: 255, g: 255, b: 255 } };
+      const [check] = await accessibilityChecks.pageBackgroundTextLowContrast({
+        ...page,
+        backgroundColor: whiteBackgroundColor,
+      });
+      expect(check).toBeUndefined();
     });
   });
 
@@ -215,17 +317,18 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         type: 'video',
         resource: {},
       };
-      expect(
-        accessibilityChecks.videoElementMissingDescription(element)
-      ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
-        elementId: element.id,
-        type: 'warning',
-      });
+      const test = accessibilityChecks.videoElementMissingDescription(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
-    it('should return a warning if video element has empty descriiption', () => {
+    it('should return a warning if video element has empty description', () => {
       const element = {
         id: 'elementid',
         type: 'video',
@@ -234,14 +337,15 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
           alt: '',
         },
       };
-      expect(
-        accessibilityChecks.videoElementMissingDescription(element)
-      ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
-        elementId: element.id,
-        type: 'warning',
-      });
+      const test = accessibilityChecks.videoElementMissingDescription(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return undefined if video element has title', () => {
@@ -276,14 +380,16 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'video',
       };
-      expect(
-        accessibilityChecks.videoElementMissingCaptions(element)
-      ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
-        elementId: element.id,
-        type: 'warning',
-      });
+
+      const test = accessibilityChecks.videoElementMissingCaptions(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return a warning if video element has empty captions', () => {
@@ -292,14 +398,15 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         type: 'video',
         tracks: [],
       };
-      expect(
-        accessibilityChecks.videoElementMissingCaptions(element)
-      ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
-        elementId: element.id,
-        type: 'warning',
-      });
+      const test = accessibilityChecks.videoElementMissingCaptions(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.MAIN_TEXT
+      );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return undefined if video element has captions', () => {
@@ -460,14 +567,15 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         type: 'image',
         resource: {},
       };
-      expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
-        {
-          message: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT,
-          help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
-          elementId: element.id,
-          type: 'warning',
-        }
+      const test = accessibilityChecks.imageElementMissingAlt(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
       );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return a warning if image element has empty alt', () => {
@@ -479,14 +587,15 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
           alt: '',
         },
       };
-      expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
-        {
-          message: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT,
-          help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
-          elementId: element.id,
-          type: 'warning',
-        }
+      const test = accessibilityChecks.imageElementMissingAlt(element);
+      expect(test.message).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
       );
+      expect(test.help).toStrictEqual(
+        MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT
+      );
+      expect(test.elementId).toStrictEqual(element.id);
+      expect(test.type).toStrictEqual('warning');
     });
 
     it('should return undefined if image element has alt', () => {

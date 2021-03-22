@@ -37,11 +37,26 @@ use WP_Post;
  */
 class Story {
 	/**
+	 * Story ID.
+	 *
+	 * @var int
+	 */
+	protected $id = 0;
+
+	/**
 	 * Title.
 	 *
 	 * @var string
 	 */
 	protected $title = '';
+
+	/**
+	 * Excerpt.
+	 *
+	 * @var string
+	 */
+	protected $excerpt = '';
+
 	/**
 	 * URL.
 	 *
@@ -74,6 +89,20 @@ class Story {
 	protected $poster_square;
 
 	/**
+	 * Date for the story.
+	 *
+	 * @var string
+	 */
+	protected $date;
+
+	/**
+	 * Author of story.
+	 *
+	 * @var string
+	 */
+	protected $author;
+
+	/**
 	 * Story constructor.
 	 *
 	 * @since 1.0.0
@@ -104,9 +133,11 @@ class Story {
 			return false;
 		}
 
-		$this->title  = get_the_title( $post );
-		$this->markup = $post->post_content;
-		$this->url    = (string) get_permalink( $post );
+		$this->id      = $post->ID;
+		$this->title   = get_the_title( $post );
+		$this->excerpt = $post->post_excerpt;
+		$this->markup  = $post->post_content;
+		$this->url     = (string) get_permalink( $post );
 
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
@@ -128,6 +159,15 @@ class Story {
 	 */
 	public function get_title() {
 		return $this->title;
+	}
+
+	/**
+	 * Getter for excerpt attribute.
+	 *
+	 * @return string
+	 */
+	public function get_excerpt() {
+		return $this->excerpt;
 	}
 
 	/**
@@ -184,4 +224,32 @@ class Story {
 	public function get_poster_square() {
 		return $this->poster_square;
 	}
+
+	/**
+	 * Get the story ID.
+	 *
+	 * @return int
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
+	 * Get author of the story.
+	 *
+	 * @return string
+	 */
+	public function get_author() {
+		return $this->author;
+	}
+
+	/**
+	 * Date for the story.
+	 *
+	 * @return string
+	 */
+	public function get_date() {
+		return $this->date;
+	}
+
 }

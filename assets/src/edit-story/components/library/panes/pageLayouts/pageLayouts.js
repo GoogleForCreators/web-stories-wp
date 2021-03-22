@@ -17,45 +17,35 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useVirtual } from 'react-virtual';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { PANE_PADDING } from '../shared';
-import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
-import { UnitsProvider } from '../../../../units';
 import { useStory } from '../../../../app';
+import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { duplicatePage } from '../../../../elements';
+
+import { UnitsProvider } from '../../../../units';
 import isDefaultPage from '../../../../utils/isDefaultPage';
+import { PANE_PADDING } from '../shared';
+import {
+  getVirtualizedItemIndex,
+  useVirtualizedGridNavigation,
+  VirtualizedContainer,
+  PANEL_GRID_ROW_GAP,
+  VirtualizedWrapper,
+} from '../shared/virtualizedPanelGrid';
 import PageLayout from './pageLayout';
+import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 
 const PAGE_LAYOUT_PANE_WIDTH = 158;
-const PAGE_LAYOUT_ROW_GAP = 12;
 
-const PageLayoutsContainer = styled.div`
-  height: ${({ height }) => `${height}px`};
-  width: 100%;
-  position: relative;
-`;
-
-const PageLayoutsRow = styled.div`
-  position: absolute;
-  top: 0;
-  left: ${PANE_PADDING};
-  height: ${({ height }) => `${height}px`};
-  transform: ${({ translateY }) => `translateY(${translateY}px)`};
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 12px;
-`;
-
-function PageLayouts(props) {
-  const { pages, parentRef } = props;
-
+function PageLayouts({ pages, parentRef }) {
   const { replaceCurrentPage, currentPage } = useStory(
     ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
       replaceCurrentPage,
@@ -63,12 +53,17 @@ function PageLayouts(props) {
     })
   );
 
-  const handleApplyPageLayout = useCallback(
-    (page) => {
-      const duplicatedPage = duplicatePage(page);
-      replaceCurrentPage({ page: duplicatedPage });
-    },
-    [replaceCurrentPage]
+  const containerRef = useRef();
+  const pageRefs = useRef({});
+
+  const [selectedPage, setSelectedPage] = useState();
+  const [isConfirming, setIsConfirming] = useState();
+
+  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
+
+  const requiresConfirmation = useMemo(
+    () => currentPage && !isDefaultPage(currentPage),
+    [currentPage]
   );
 
   const pageSize = useMemo(() => {
@@ -78,19 +73,83 @@ function PageLayouts(props) {
     return { width, height, containerHeight };
   }, []);
 
+  const handleApplyPageLayout = useCallback(
+    (page) => {
+      const duplicatedPage = duplicatePage(page);
+      replaceCurrentPage({ page: duplicatedPage });
+      trackEvent('insert_page_layout', {
+        name: page.title,
+      });
+
+      setSelectedPage(null);
+    },
+    [replaceCurrentPage]
+  );
+
+  const handlePageClick = useCallback(
+    (page) => {
+      if (requiresConfirmation) {
+        setIsConfirming(true);
+        setSelectedPage(page);
+      } else {
+        handleApplyPageLayout(page);
+        setSelectedPage(null);
+      }
+    },
+    [requiresConfirmation, handleApplyPageLayout]
+  );
+
+  const handleCloseDialog = useCallback(() => {
+    setSelectedPage(null);
+    setIsConfirming(false);
+  }, [setIsConfirming]);
+
+  const handleConfirmDialog = useCallback(() => {
+    handleApplyPageLayout(selectedPage);
+    setIsConfirming(false);
+  }, [selectedPage, handleApplyPageLayout]);
+
   const rowVirtualizer = useVirtual({
-    size: Math.ceil(pages.length / 2),
+    size: Math.ceil((pages || []).length / 2),
     parentRef,
     estimateSize: useCallback(
-      () => pageSize.containerHeight + PAGE_LAYOUT_ROW_GAP,
+      () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
       [pageSize.containerHeight]
     ),
-    overscan: 2,
+    overscan: 4,
   });
 
-  const requiresConfirmation = useMemo(
-    () => currentPage && !isDefaultPage(currentPage),
-    [currentPage]
+  const columnVirtualizer = useVirtual({
+    horizontal: true,
+    size: 2,
+    parentRef,
+    estimateSize: useCallback(() => pageSize.width + PANEL_GRID_ROW_GAP, [
+      pageSize.width,
+    ]),
+    overscan: 0,
+  });
+
+  const {
+    activeGridItemId,
+    handleGridFocus,
+    handleGridItemFocus,
+    isGridFocused,
+  } = useVirtualizedGridNavigation({
+    rowVirtualizer,
+    containerRef,
+    gridItemRefs: pageRefs,
+    gridItemIds: pageIds,
+  });
+
+  const handleKeyboardPageClick = useCallback(
+    ({ key }, page) => {
+      if (key === 'Enter') {
+        if (isGridFocused) {
+          handlePageClick(page);
+        }
+      }
+    },
+    [isGridFocused, handlePageClick]
   );
 
   return (
@@ -100,35 +159,56 @@ function PageLayouts(props) {
         height: pageSize.height,
       }}
     >
-      <PageLayoutsContainer height={rowVirtualizer.totalSize}>
-        {rowVirtualizer.virtualItems.map((virtualRow) => {
-          const firstColumnIndex = virtualRow.index * 2;
-          const indexes = [firstColumnIndex, firstColumnIndex + 1];
-          return (
-            <PageLayoutsRow
-              key={virtualRow.index}
-              height={virtualRow.size}
-              translateY={virtualRow.start}
-            >
-              {indexes.map((index) => {
-                const page = pages[index];
-                if (!page) {
-                  return null;
-                }
-                return (
-                  <PageLayout
-                    key={page.id}
-                    page={page}
-                    pageSize={pageSize}
-                    onConfirm={() => handleApplyPageLayout(page)}
-                    requiresConfirmation={requiresConfirmation}
-                  />
-                );
-              })}
-            </PageLayoutsRow>
-          );
-        })}
-      </PageLayoutsContainer>
+      <VirtualizedWrapper height={rowVirtualizer.totalSize}>
+        <VirtualizedContainer
+          height={rowVirtualizer.totalSize}
+          ref={containerRef}
+          columnWidth={pageSize.width}
+          rowHeight={pageSize.containerHeight}
+          paneLeft={PANE_PADDING}
+          onFocus={handleGridFocus}
+          role="list"
+          aria-label={__('Page Layout Options', 'web-stories')}
+        >
+          {rowVirtualizer.virtualItems.map((virtualRow) =>
+            columnVirtualizer.virtualItems.map((virtualColumn) => {
+              const pageIndex = getVirtualizedItemIndex({
+                columnIndex: virtualColumn.index,
+                rowIndex: virtualRow.index,
+              });
+
+              const page = pages[pageIndex];
+
+              if (!page) {
+                return null;
+              }
+              const isActive = activeGridItemId === page.id && isGridFocused;
+
+              return (
+                <PageLayout
+                  key={pageIndex}
+                  data-testid={`page_layout_${page.id}`}
+                  ref={(el) => (pageRefs.current[page.id] = el)}
+                  translateY={virtualRow.start}
+                  translateX={virtualColumn.start}
+                  page={page}
+                  pageSize={pageSize}
+                  isActive={isActive}
+                  onFocus={() => handleGridItemFocus(page.id)}
+                  onClick={() => handlePageClick(page)}
+                  onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+                />
+              );
+            })
+          )}
+        </VirtualizedContainer>
+        {isConfirming && (
+          <ConfirmPageLayoutDialog
+            onConfirm={handleConfirmDialog}
+            onClose={handleCloseDialog}
+          />
+        )}
+      </VirtualizedWrapper>
     </UnitsProvider>
   );
 }

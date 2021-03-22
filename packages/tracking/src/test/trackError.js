@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,16 +33,13 @@ describe('trackError', () => {
   it('adds a tracking event to the dataLayer', async () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    config.trackingId = 'UA-12345678-1';
     const error = new Error('mock error');
 
     gtag.mockImplementationOnce((type, eventName, eventData) => {
       eventData.event_callback();
     });
-    await trackError('error_cateogry', error.message);
+    await trackError(error.message);
     expect(gtag).toHaveBeenCalledWith('event', 'exception', {
-      send_to: 'UA-12345678-1',
-      event_category: 'error_cateogry',
       description: 'mock error',
       fatal: false,
       event_callback: expect.any(Function),
@@ -52,7 +49,7 @@ describe('trackError', () => {
   it('does not push to dataLayer when tracking is disabled', async () => {
     config.trackingEnabled = false;
     const error = new Error('mock error');
-    await trackError('error_cateogry', error.message);
+    await trackError(error.message);
     expect(gtag).not.toHaveBeenCalled();
   });
 });

@@ -20,71 +20,116 @@
 import { DATA_LAYER } from './constants';
 import { config, gtag } from './shared';
 
+const SCRIPT_IDENTIFIER = 'data-web-stories-tracking';
+
+function loadScriptTag(url) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.setAttribute(SCRIPT_IDENTIFIER, '');
+    script.async = true;
+    script.src = url;
+    script.addEventListener('load', resolve);
+    script.addEventListener('error', reject);
+    document.head.appendChild(script);
+  });
+}
+
 /**
  * Loads the Analytics tracking script.
  *
  * @param {boolean} [sendPageView=true] Whether to send a page view event or not upon loading.
  * @return {Promise<void>} Promise.
  */
-function loadTrackingScript(sendPageView = true) {
-  const SCRIPT_IDENTIFIER = 'data-web-stories-tracking';
-
+async function loadTrackingScript(sendPageView = true) {
   if (document.querySelector(`script[${SCRIPT_IDENTIFIER}]`)) {
-    return Promise.resolve();
+    return;
   }
 
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.setAttribute(SCRIPT_IDENTIFIER, '');
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${config.trackingId}&l=${DATA_LAYER}`;
-    script.addEventListener('load', resolve);
-    script.addEventListener('error', reject);
-    document.head.appendChild(script);
+  try {
+    await loadScriptTag(
+      `https://www.googletagmanager.com/gtag/js?id=${config.trackingId}&l=${DATA_LAYER}`
+    );
+  } catch {
+    // Loading was not possible, probably because of an ad blocker.
+    return;
+  }
 
-    gtag('js', new Date());
-    // TODO: provide custom pageview-related parameters?
-    // See https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-    gtag('config', config.trackingId, {
-      app_version: config.appVersion,
-      anonymize_ip: true,
-      app_name: config.appName,
-      send_page_view: sendPageView,
-      // Setting the transport method to 'beacon' lets the hit be sent
-      // using 'navigator.sendBeacon' in browsers that support it.
-      transport_type: 'beacon',
-    });
+  // This way we'll get "Editor" and "Dashboard" instead of "Edit Story ‹ Web Stories Dev — WordPress".
+  const pageTitle = config.appName;
 
-    // Support GA4 in parallel.
-    // At some point, only this will remain.
-    gtag('config', config.trackingIdGA4, {
-      app_name: config.appName,
-      send_page_view: sendPageView,
-      // Setting the transport method to 'beacon' lets the hit be sent
-      // using 'navigator.sendBeacon' in browsers that support it.
-      transport_type: 'beacon',
-    });
+  // 'Plugin Activation' -> '/plugin-activation'
+  // This way we get nicer looking paths like '/editor' instead of 'wp-admin/post-new.php?post_type=web-story'.
+  const pagePath = '/' + config.appName.replace(/ /g, '-').toLowerCase();
 
-    // Clean up location param.
-    const url = new URL(window.location.href);
-    url.searchParams.delete('paged');
-    url.searchParams.delete('plugin_status');
-    url.searchParams.delete('post');
-    url.searchParams.delete('s');
+  gtag('js', new Date());
 
-    gtag('set', 'location', url.toString());
+  // Note: `set` commands need to be placed before `config` commands to ensure
+  // those values are passed along with the initial config.
+
+  // Universal Analytics custom dimensions.
+  gtag('set', {
+    custom_map: {
+      dimension1: 'analytics',
+      dimension2: 'adNetwork',
+      dimension3: 'search_order',
+      dimension4: 'search_orderby',
+      dimension5: 'file_size',
+      dimension6: 'file_type',
+      dimension7: 'status',
+      dimension8: 'siteLocale',
+      dimension9: 'userLocale',
+      dimension10: 'userRole',
+      dimension11: 'enabledExperiments',
+      dimension12: 'wpVersion',
+      dimension13: 'phpVersion',
+      dimension14: 'isMultisite',
+      dimension15: 'name',
+      dimension16: 'activePlugins',
+    },
+  });
+
+  // Google Analytics 4 user properties.
+  // See https://developers.google.com/analytics/devguides/collection/ga4/persistent-values
+  // See https://developers.google.com/analytics/devguides/collection/ga4/user-properties
+  gtag('set', 'user_properties', config.userProperties);
+
+  gtag('config', config.trackingId, {
+    anonymize_ip: true,
+    app_name: config.appName,
+    app_version: config.appVersion,
+    send_page_view: sendPageView,
+    // Setting the transport method to 'beacon' lets the hit be sent
+    // using 'navigator.sendBeacon' in browsers that support it.
+    transport_type: 'beacon',
+    page_title: pageTitle,
+    page_path: pagePath,
+    // Re-using user properties values for the custom dimensions.
+    ...config.userProperties,
+  });
+
+  // Support GA4 in parallel.
+  // At some point, only this will remain.
+  gtag('config', config.trackingIdGA4, {
+    app_name: config.appName,
+    // This doesn't seem to be fully working for web properties.
+    // See https://support.google.com/analytics/answer/9268042
+    app_version: config.appVersion,
+    send_page_view: sendPageView,
+    // Setting the transport method to 'beacon' lets the hit be sent
+    // using 'navigator.sendBeacon' in browsers that support it.
+    transport_type: 'beacon',
+    page_title: pageTitle,
+    page_path: pagePath,
   });
 }
 
 async function enableTracking(sendPageView) {
-  if (!config.trackingAllowed) {
-    return Promise.resolve();
+  if (!config.trackingAllowed || config.trackingEnabled) {
+    return;
   }
 
+  await loadTrackingScript(sendPageView);
   config.trackingEnabled = true;
-
-  //eslint-disable-next-line no-return-await
-  return await loadTrackingScript(sendPageView);
 }
 
 export default enableTracking;

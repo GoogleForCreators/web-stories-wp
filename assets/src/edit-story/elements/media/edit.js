@@ -89,6 +89,7 @@ const CropVideo = styled.video`
   max-height: initial;
 `;
 
+//eslint-disable-next-line complexity
 function MediaEdit({ element, box }) {
   const {
     id,
@@ -226,11 +227,13 @@ function MediaEdit({ element, box }) {
       )}
       {isVideo && (
         <FadedVideo {...fadedMediaProps}>
-          <source src={resource.src} type={resource.mimeType} />
+          {resource.src && (
+            <source src={resource.src} type={resource.mimeType} />
+          )}
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
-        <WithMask element={element} fill={true} applyFlip={false} box={box}>
+        <WithMask element={element} fill applyFlip={false} box={box}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
             <CropVideo {...cropMediaProps}>

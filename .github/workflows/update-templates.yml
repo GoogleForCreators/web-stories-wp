@@ -1,11 +1,14 @@
 name: Migrate Templates
+
 on:
   schedule:
     - cron: '0 12 * * 1'
+
 jobs:
   update-template:
     name: Migrate templates and text sets
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
@@ -16,7 +19,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.4
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 

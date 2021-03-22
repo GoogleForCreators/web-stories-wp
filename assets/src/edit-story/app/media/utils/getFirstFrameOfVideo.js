@@ -56,7 +56,12 @@ function getFirstFrameOfVideo(src) {
         canvas.height = video.videoHeight;
 
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        try {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        } catch (err) {
+          // Browser probably doesn't support the video codec.
+          reject(err);
+        }
 
         canvas.toBlob(resolve, 'image/jpeg');
       },

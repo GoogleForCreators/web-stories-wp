@@ -220,7 +220,7 @@ function SingleSelectionMoveable({
       zIndex={0}
       ref={useCombinedRefs(moveable, editMoveableRef)}
       target={targetEl}
-      edge={true}
+      edge
       draggable={actionsEnabled}
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
@@ -229,7 +229,7 @@ function SingleSelectionMoveable({
       {...rotateProps}
       {...snapProps}
       origin={false}
-      pinchable={true}
+      pinchable
     />
   );
 }

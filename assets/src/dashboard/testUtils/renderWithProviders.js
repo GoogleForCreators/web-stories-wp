@@ -30,6 +30,7 @@ import {
 } from '../../design-system';
 import theme from '../theme';
 import { ConfigProvider } from '../app/config';
+import { SnackbarProvider } from '../app/snackbar';
 import MockApiProvider from './mockApiProvider';
 
 const defaultProviderValues = {
@@ -41,6 +42,7 @@ const defaultProviderValues = {
   },
   config: {
     capabilities: { canReadPrivatePosts: true },
+    allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
   },
   api: {},
 };
@@ -58,7 +60,9 @@ export const renderWithProviders = (
       <ThemeProvider theme={mergedProviderValues.theme}>
         <ConfigProvider config={mergedProviderValues.config}>
           <MockApiProvider value={mergedProviderValues.api}>
-            {children}
+            <SnackbarProvider value={mergedProviderValues.snackbar}>
+              {children}
+            </SnackbarProvider>
           </MockApiProvider>
         </ConfigProvider>
       </ThemeProvider>

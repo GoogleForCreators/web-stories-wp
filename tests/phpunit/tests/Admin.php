@@ -59,7 +59,7 @@ class Admin extends \WP_UnitTestCase {
 		self::$post_id        = $factory->post->create( [] );
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',

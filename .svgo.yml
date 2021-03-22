@@ -1,5 +1,0 @@
-plugins:
-  - removeViewBox: false
-  - removeDimensions: true
-  - convertColors:
-      currentColor: /\b(?!url|none)/i

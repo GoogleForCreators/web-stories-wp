@@ -11,7 +11,9 @@ on:
 
 jobs:
   remove-pr:
+    name: Cleanup storage
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v2

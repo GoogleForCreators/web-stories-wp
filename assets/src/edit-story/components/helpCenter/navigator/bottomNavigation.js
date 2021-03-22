@@ -25,14 +25,20 @@ import { useEffect, useState, useRef } from 'react';
  */
 import { BEZIER } from '../../../../animation';
 import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
+import { useConfig } from '../../../app/config';
 import { TRANSITION_DURATION } from '../constants';
 import { forceFocusCompanion } from '../utils';
 import { NavBar, NavButton } from './components';
+
+const secondaryTextStyle = css`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
 
 const BottomNavBar = styled(NavBar)`
   position: absolute;
   bottom: 0;
   transition: transform ${TRANSITION_DURATION}ms ${BEZIER.default};
+  z-index: 2;
   ${({ isHidden }) =>
     isHidden &&
     css`
@@ -42,7 +48,21 @@ const BottomNavBar = styled(NavBar)`
 
 const BottomNavButtons = styled.div`
   display: flex;
-  padding: 0 8px;
+  padding: 0 16px;
+  white-space: nowrap;
+`;
+
+const ArrowWrap = styled.div`
+  ${secondaryTextStyle}
+  margin: -5px -16px;
+  ${({ isRTL }) =>
+    isRTL &&
+    css`
+      transform: rotate(180deg);
+    `}
+  svg {
+    display: block;
+  }
 `;
 
 const onCondition = (condition) => (fn) => {
@@ -59,6 +79,7 @@ export function BottomNavigation({
   isNextDisabled,
   isPrevDisabled,
 }) {
+  const { isRTL } = useConfig();
   // If either the prev or next has focus and become disabled,
   // we want to force focus to the companion instead of losing
   // it to the canvas.
@@ -80,12 +101,11 @@ export function BottomNavigation({
 
   return (
     <BottomNavBar
-      aria-hidden={hasBottomNavigation}
+      aria-hidden={!hasBottomNavigation}
       isHidden={!hasBottomNavigation}
     >
       <BottomNavButtons>
         <NavButton
-          aria-label={__('Navigate to Help Center Main Menu', 'web-stories')}
           onClick={() => {
             forceFocusCompanion();
             onAllTips();
@@ -94,14 +114,15 @@ export function BottomNavigation({
           size={BUTTON_SIZES.SMALL}
           disabled={!hasBottomNavigation}
         >
-          <Icons.Arrow />
-          <span>{__('All Tips', 'web-stories')}</span>
+          <ArrowWrap isRTL={isRTL}>
+            <Icons.ArrowLeft />
+          </ArrowWrap>
+          <span css={secondaryTextStyle}>{__('All Tips', 'web-stories')}</span>
         </NavButton>
       </BottomNavButtons>
       <BottomNavButtons>
         <NavButton
           ref={prevButtonRef}
-          aria-label={__('Navigate to Previous Tip', 'web-stories')}
           onClick={onPrev}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}
@@ -111,7 +132,6 @@ export function BottomNavigation({
         </NavButton>
         <NavButton
           ref={nextButtonRef}
-          aria-label={__('Navigate to Next Tip', 'web-stories')}
           onClick={onNext}
           type={BUTTON_TYPES.PLAIN}
           size={BUTTON_SIZES.SMALL}

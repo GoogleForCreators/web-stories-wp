@@ -22,10 +22,12 @@ import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ToggleButtonGroup, useLayoutContext } from '../../../../components';
+import { Pill } from '../../../../../design-system';
+import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
@@ -44,15 +46,22 @@ import {
   ViewPropTypes,
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
-import {
-  BodyViewOptions,
-  HeaderToggleButtonContainer,
-  PageHeading,
-} from '../../shared';
+import { BodyViewOptions, PageHeading } from '../../shared';
 import { useConfig } from '../../../config';
+import { getSearchOptions } from '../../utils';
 
+const StyledPill = styled(Pill)`
+  margin: 0 2px;
+  white-space: nowrap;
+
+  & > span {
+    padding-left: 8px;
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+  }
+`;
 function Header({
   filter,
+  isLoading,
   search,
   sort,
   stories,
@@ -66,18 +75,21 @@ function Header({
 
   const { capabilities: { canReadPrivatePosts } = {} } = useConfig();
 
+  const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
+
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
     isActiveSearch: Boolean(search.keyword),
-    totalResults: totalStoriesByStatus?.all,
+    totalResults: (filter.value.split(',') || []).reduce(
+      (totalResults, filterKey) =>
+        (totalResults += totalStoriesByStatus[filterKey] || 0),
+      0
+    ),
     view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
   const handleClick = useCallback(
-    async (filterValue) => {
-      await trackEvent('filter_stories', 'dashboard', '', '', {
-        status: filterValue,
-      });
+    (filterValue) => {
       filter.set(filterValue);
       scrollToTop();
     },
@@ -93,38 +105,43 @@ function Header({
     }
 
     return (
-      <HeaderToggleButtonContainer>
-        <ToggleButtonGroup
-          buttons={STORY_STATUSES.map((storyStatus) => {
-            if (
-              storyStatus.status === STORY_STATUS.PRIVATE &&
-              (!totalStoriesByStatus.private ||
-                totalStoriesByStatus.private < 1 ||
-                !canReadPrivatePosts)
-            ) {
-              return null;
-            }
-            return {
-              handleClick: () => {
+      <>
+        {STORY_STATUSES.map((storyStatus) => {
+          const isStoryPrivate = storyStatus.status === STORY_STATUS.PRIVATE;
+          const cantReadPrivate =
+            !canReadPrivatePosts ||
+            !totalStoriesByStatus.private ||
+            totalStoriesByStatus.private < 1;
+
+          if (isStoryPrivate && cantReadPrivate) {
+            return null;
+          }
+          const label = storyStatus.label;
+          const labelCount = totalStoriesByStatus?.[storyStatus.status] ? (
+            <span>{totalStoriesByStatus?.[storyStatus.status]}</span>
+          ) : null;
+
+          const ariaLabel = sprintf(
+            /* translators: %s is story status */
+            __('Filter stories by %s', 'web-stories'),
+            storyStatus.label
+          );
+          return (
+            <StyledPill
+              key={storyStatus.value}
+              onClick={() => {
                 handleClick(storyStatus.value);
-              },
-              key: storyStatus.value,
-              isActive: filter.value === storyStatus.value,
-              disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
-              ['aria-label']: sprintf(
-                /* translators: %s is story status */
-                __('Filter stories by %s', 'web-stories'),
-                storyStatus.label
-              ),
-              text: `${storyStatus.label} ${
-                totalStoriesByStatus?.[storyStatus.status]
-                  ? `(${totalStoriesByStatus?.[storyStatus.status]})`
-                  : ''
-              }`,
-            };
-          }).filter(Boolean)}
-        />
-      </HeaderToggleButtonContainer>
+              }}
+              isActive={filter.value === storyStatus.value}
+              disabled={totalStoriesByStatus?.[storyStatus.status] <= 0}
+              aria-label={ariaLabel}
+            >
+              {label}
+              {labelCount && labelCount}
+            </StyledPill>
+          );
+        }).filter(Boolean)}
+      </>
     );
   }, [totalStoriesByStatus, canReadPrivatePosts, filter.value, handleClick]);
 
@@ -136,8 +153,9 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
-    await trackEvent('search_stories', 'dashboard', '', '', {
+  const [debouncedSearchChange] = useDebouncedCallback(async (value) => {
+    await trackEvent('search', {
+      search_type: 'dashboard',
       search_term: value,
     });
     search.setKeyword(value);
@@ -146,19 +164,22 @@ function Header({
   return (
     <>
       <PageHeading
-        defaultTitle={__('My Stories', 'web-stories')}
+        heading={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
-        stories={stories}
-        handleTypeaheadChange={debouncedTypeaheadChange}
-        typeaheadValue={search.keyword}
+        searchOptions={searchOptions}
+        handleSearchChange={debouncedSearchChange}
+        showSearch
+        searchValue={search.keyword}
       >
         {HeaderToggleButtons}
       </PageHeading>
+
       <BodyViewOptions
         showGridToggle
         showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
+        isLoading={isLoading}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
@@ -175,6 +196,7 @@ function Header({
 
 Header.propTypes = {
   filter: FilterPropTypes.isRequired,
+  isLoading: PropTypes.bool,
   search: SearchPropTypes.isRequired,
   sort: SortPropTypes.isRequired,
   stories: StoriesPropType,

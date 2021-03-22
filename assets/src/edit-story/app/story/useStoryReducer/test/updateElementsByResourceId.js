@@ -180,7 +180,7 @@ describe('updateElementsByResourceId', () => {
     ]);
   });
 
-  it('should do nothing is id not given', () => {
+  it('should do nothing if id not given', () => {
     const { restore, updateElementsByResourceId } = setupReducer();
 
     // Set an initial state.

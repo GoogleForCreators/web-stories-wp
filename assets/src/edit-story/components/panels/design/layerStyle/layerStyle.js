@@ -17,16 +17,19 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, _x } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import clamp from '../../../../utils/clamp';
-import { Row, BoxedNumeric, usePresubmitHandler } from '../../../form';
+import { NumericInput } from '../../../../../design-system';
+import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const MIN_MAX = {
   OPACITY: {
@@ -35,6 +38,10 @@ const MIN_MAX = {
   },
 };
 
+const ShortRow = styled(Row)`
+  width: 128px;
+`;
+
 function defaultOpacity({ opacity }) {
   return typeof opacity !== 'undefined' ? opacity : MIN_MAX.OPACITY.MAX;
 }
@@ -42,29 +49,26 @@ function defaultOpacity({ opacity }) {
 function LayerStylePanel({ selectedElements, pushUpdate }) {
   const opacity = getCommonValue(selectedElements, defaultOpacity);
 
-  usePresubmitHandler(({ opacity: newOpacity }, { opacity: oldOpacity }) => {
-    const value =
-      typeof newOpacity === 'undefined' || typeof oldOpacity === 'undefined'
-        ? MIN_MAX.OPACITY.MAX
-        : newOpacity;
-    return {
-      opacity: clamp(value, MIN_MAX.OPACITY),
-    };
-  }, []);
+  const handleChange = useCallback(
+    (evt, value) => pushUpdate({ opacity: value ?? 100 }, true),
+    [pushUpdate]
+  );
 
   return (
     <SimplePanel name="layerStyle" title={__('Layer', 'web-stories')}>
-      <Row expand={false} spaceBetween={true}>
-        <BoxedNumeric
+      <ShortRow>
+        <NumericInput
           suffix={__('Opacity', 'web-stories')}
-          symbol={_x('%', 'Percentage', 'web-stories')}
+          unit={_x('%', 'Percentage', 'web-stories')}
           value={opacity}
-          onChange={(value) => pushUpdate({ opacity: value })}
+          onChange={handleChange}
           min={MIN_MAX.OPACITY.MIN}
           max={MIN_MAX.OPACITY.MAX}
-          aria-label={__('Opacity in percentage', 'web-stories')}
+          aria-label={__('Opacity in percent', 'web-stories')}
+          placeholder={opacity === MULTIPLE_VALUE ? MULTIPLE_DISPLAY_VALUE : ''}
+          isIndeterminate={opacity === MULTIPLE_VALUE}
         />
-      </Row>
+      </ShortRow>
     </SimplePanel>
   );
 }

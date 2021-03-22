@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import useInsertElement from '../components/canvas/useInsertElement';
-import { addBackgroundImage } from '../components/dropTargets/karma/background.karma';
 import { useStory } from '../app/story';
 import { Fixture } from './fixture';
 
@@ -228,12 +227,38 @@ describe('Background Copy & Paste', () => {
     });
     await fixture.events.click(addNewPageButton, { clickCount: 1 });
 
-    // Navigate back to previous page and aff Background image
+    // Navigate back to previous page and add Background image
     await goToPreviousPage();
+    const bgMedia = fixture.editor.library.media.item(0);
+    const canvas = fixture.editor.canvas.fullbleed.container;
+    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
+      moveRel(bgMedia, 5, 5),
+      down(),
+      moveRel(canvas, 5, 5),
+      up(),
+    ]);
+
     // we want to zoom in a little bit so background
     // is big enough for all background animations.
     // scale is between 100 -> 400
-    await addBackgroundImage(fixture, { properties: { scale: 200 } });
+    const backgroundElement = await fixture.renderHook(() =>
+      useStory(({ state }) => state.currentPage.elements[0])
+    );
+    const bgFrame = fixture.editor.canvas.framesLayer.frame(
+      backgroundElement.id
+    ).node;
+    // Click twice to enter edit mode
+    await fixture.events.click(bgFrame);
+    await fixture.events.click(bgFrame);
+    const slider = fixture.editor.canvas.editLayer.sizeSlider;
+    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+      moveRel(slider, 5, 5),
+      down(),
+      moveBy(50, 0, { steps: 4 }),
+      up(),
+    ]);
+    // Click just below the slider to exit edit mode
+    await fixture.events.mouse.clickOn(slider, 0, 20);
   });
 
   afterEach(() => {

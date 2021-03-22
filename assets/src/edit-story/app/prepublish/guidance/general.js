@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { states } from '../../highlights';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,
   MESSAGES,
@@ -75,6 +76,7 @@ export function storyTitleLength(story) {
       storyId: story.id,
       message: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.MAIN_TEXT,
       help: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.HELPER_TEXT,
+      highlight: states.STORY_TITLE,
     };
   }
   return undefined;

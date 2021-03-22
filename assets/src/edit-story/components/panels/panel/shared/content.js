@@ -19,12 +19,11 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { useContext } from '../../../../../design-system';
+import { useContext } from 'use-context-selector';
 
 /**
  * Internal dependencies
@@ -32,12 +31,10 @@ import { useContext } from '../../../../../design-system';
 import panelContext from '../context';
 
 const Container = styled.div`
-  padding: ${({ padding }) => padding || '10px 20px'};
+  padding: ${({ padding }) => padding || '8px 16px 8px'};
   overflow: auto;
   background-color: ${({ isSecondary, theme }) =>
-    isSecondary ? rgba(theme.colors.fg.white, 0.07) : 'transparent'};
-  ${({ hasBorder, theme }) =>
-    hasBorder && `border-top: 1px solid ${theme.colors.bg.v9};`}
+    isSecondary ? theme.colors.interactiveBg.secondaryNormal : 'transparent'};
 `;
 
 function Content({ children, ...rest }) {

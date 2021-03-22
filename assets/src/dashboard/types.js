@@ -24,9 +24,9 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../edit-story/types';
 import {
+  STORY_CONTEXT_MENU_ACTIONS,
   STORY_STATUS,
   TEMPLATES_GALLERY_STATUS,
-  ALERT_SEVERITY,
 } from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
@@ -116,7 +116,16 @@ export const PageSizePropType = PropTypes.shape({
 export const StoryMenuPropType = PropTypes.shape({
   handleMenuToggle: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
-  handleMenuItemSelected: PropTypes.func.isRequired,
+  menuItemActions: PropTypes.shape({
+    default: PropTypes.func.isRequired,
+    ...Object.keys(STORY_CONTEXT_MENU_ACTIONS).reduce(
+      (menuItemActionsShape, menuActionKey) => ({
+        ...menuItemActionsShape,
+        [menuActionKey]: PropTypes.func,
+      }),
+      {}
+    ),
+  }),
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -131,18 +140,3 @@ export const RenameStoryPropType = PropTypes.shape({
   id: PropTypes.number,
   handleCancelRename: PropTypes.func,
 });
-
-export const AlertSeveritiesPropType = PropTypes.oneOf(
-  Object.values(ALERT_SEVERITY)
-);
-
-export const ToastMessagePropType = PropTypes.shape({
-  message: PropTypes.shape({
-    title: PropTypes.string,
-    body: PropTypes.string.isRequired,
-  }),
-  severity: AlertSeveritiesPropType,
-  id: PropTypes.number.isRequired,
-});
-
-export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);

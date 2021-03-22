@@ -23,7 +23,6 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
-import { ScrollBarStyles } from '../../../library/common/scrollbarStyles';
 
 export const List = styled.div`
   width: 100%;
@@ -36,11 +35,6 @@ export const List = styled.div`
   font-size: 14px;
   text-align: left;
   list-style: none;
-  scrollbar-width: thin;
-  scrollbar-color: transparent
-    ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
-
-  ${ScrollBarStyles}
 `;
 
 export const Group = styled.ul`
@@ -49,11 +43,11 @@ export const Group = styled.ul`
 
 export const GroupLabel = styled.li`
   background: transparent;
-  font-family: ${({ theme }) => theme.fonts.tab.family};
-  font-weight: ${({ theme }) => theme.fonts.tab.weight};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   line-height: 14px;
-  color: ${({ theme }) => theme.colors.accent.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
   padding: 8px;
   margin: 0;
 `;
@@ -66,12 +60,13 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   position: relative;
   padding: 8px 16px;
   margin: 6px 0 0 0;
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
   white-space: nowrap;
   line-height: 1;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   cursor: pointer;
   background-clip: padding-box;
 
@@ -81,11 +76,13 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
 
   :hover,
   :focus {
-    background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.1)};
+    background-color: ${({ theme }) =>
+      rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.1)};
   }
 
   :focus {
-    border: 2px solid ${({ theme }) => theme.colors.accent.secondary};
+    border: 2px solid
+      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
     outline: none;
   }
 `;
@@ -102,7 +99,7 @@ export const NoResult = styled.div`
   padding: 13px 11px;
   margin: 0;
   text-align: center;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.75)};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.75)};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
   line-height: 14px;
 `;

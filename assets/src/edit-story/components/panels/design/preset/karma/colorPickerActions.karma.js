@@ -105,6 +105,7 @@ describe('Saved Styles: Color Picker', () => {
       await fixture.events.click(fontColor.button);
       await waitFor(() => fontColor.picker);
       await fixture.events.click(fontColor.picker.colorTypeSelect);
+      await fixture.events.sleep(500);
       await fixture.events.click(
         fixture.screen.getByRole('option', { name: ALL_STORIES })
       );
@@ -115,6 +116,7 @@ describe('Saved Styles: Color Picker', () => {
       await fixture.events.click(fontColor.button);
       await waitFor(() => fontColor.picker);
       await fixture.events.click(fontColor.picker.colorTypeSelect);
+      await fixture.events.sleep(500);
       await fixture.events.click(
         fixture.screen.getByRole('option', { name: ALL_STORIES })
       );

@@ -24,14 +24,13 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Close } from '../../icons';
+import { Cross } from '../../icons';
 import { THEME_CONSTANTS } from '../../theme';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
 import { Headline } from '../typography';
 
 const Title = styled(Headline)`
   grid-area: title;
-  font-weight: 700;
   padding-left: 8px;
 `;
 
@@ -76,7 +75,6 @@ const Container = styled.div`
       ${Title} {
         padding-left: 0;
         margin-top: -10px;
-        font-weight: ${({ theme }) => theme.typography.weight.bold};
       }
       ${Content} {
         margin: 8px auto 18px;
@@ -122,7 +120,7 @@ export const Banner = forwardRef(
           aria-label={closeButtonLabel}
           onClick={onClose}
         >
-          <Close aria-hidden={true} />
+          <Cross aria-hidden />
         </CloseButton>
         <Content>{children}</Content>
       </Container>

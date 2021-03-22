@@ -17,8 +17,13 @@
 export { createContext, useContext, identity } from './context';
 export { default as isNullOrUndefinedOrEmptyString } from './isNullOrUndefinedOrEmptyString';
 export { noop } from './noop';
+export { default as addQueryArgs } from './addQueryArgs';
+export { default as labelAccessibilityValidator } from './labelAccessibilityValidator';
 export { default as useBatchingCallback } from './useBatchingCallback';
 export { default as useContextSelector } from './useContextSelector';
 export { default as useFocusOut } from './useFocusOut';
-export { default as addQueryArgs } from './addQueryArgs';
+export { default as useInputEventHandlers } from './useInputEventHandlers';
 export { default as useResizeEffect } from './useResizeEffect';
+export * from './constants';
+export * from './directions';
+export * from './patterns';

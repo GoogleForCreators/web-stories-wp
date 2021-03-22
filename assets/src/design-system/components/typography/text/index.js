@@ -27,7 +27,7 @@ import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
 const textCss = ({ isBold, size, theme }) => css`
-  ${defaultTypographyStyle}
+  ${defaultTypographyStyle};
   ${themeHelpers.expandPresetStyles({
     preset: theme.typography.presets.paragraph[size],
     theme,
@@ -35,6 +35,17 @@ const textCss = ({ isBold, size, theme }) => css`
   font-weight: ${isBold
     ? theme.typography.weight.bold
     : theme.typography.presets.paragraph[size].weight};
+`;
+
+const labelTextCss = ({ isBold, size, theme }) => css`
+  ${defaultTypographyStyle};
+  ${themeHelpers.expandPresetStyles({
+    preset: theme.typography.presets.label[size],
+    theme,
+  })};
+  font-weight: ${isBold
+    ? theme.typography.weight.bold
+    : theme.typography.presets.label[size].weight};
 `;
 
 const Paragraph = styled.p`
@@ -46,7 +57,7 @@ const Span = styled.span`
 `;
 
 const Label = styled.label`
-  ${textCss};
+  ${labelTextCss};
 
   color: ${({ disabled, theme }) =>
     disabled ? theme.colors.fg.disable : 'auto'};

@@ -18,17 +18,30 @@
  * External dependencies
  */
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { Icons, Text } from '../../../../design-system';
 import TabView from '../';
 
-const TabContent = styled.div`
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 40%);
+  column-gap: 32px;
+`;
+
+const TabWrapper = styled.div`
+  background: ${({ theme }) => theme.colors.bg.primary};
+`;
+
+const TabContent = styled.section`
   padding: 16px;
+`;
+const UnjustifiedTabView = styled(TabView)`
+  justify-content: center;
 `;
 
 export default {
@@ -36,21 +49,76 @@ export default {
   component: TabView,
 };
 
-export const _default = () => {
-  const [tab, setTab] = useState('design');
-  const tabs = [
-    { id: 'design', title: 'Design' },
-    { id: 'document', title: 'Document' },
-    { id: 'pre-publish', title: 'Pre-publish' },
-  ];
+const ICON_TABS = [
+  {
+    id: 'media',
+    content: 'Media',
+    icon: Icons.ArrowCloud,
+  },
+  {
+    id: 'thirdparty',
+    content: 'Thirdparty',
+    icon: Icons.Picture,
+  },
+  {
+    id: 'text',
+    content: 'Text',
+    icon: Icons.LetterT,
+  },
+  {
+    id: 'shapes',
+    content: 'Shapes',
+    icon: Icons.Shapes,
+  },
+  {
+    id: 'layouts',
+    content: 'Layouts',
+    icon: Icons.Box4Alternate,
+  },
+];
 
+const TEXT_TABS = [
+  {
+    id: 'design',
+    title: 'Design',
+  },
+  {
+    id: 'document',
+    title: 'Document',
+  },
+  {
+    id: 'pre-publish',
+    title: 'Pre-publish',
+    icon: function Error() {
+      return <Icons.ExclamationOutline className="alert error" />;
+    },
+  },
+];
+
+function TabDisplay({ TabsComponent, tabs }) {
+  const [tab, setTab] = useState(tabs[0].id);
+  const activeTab = tabs.find(({ id }) => id === tab);
   return (
-    <>
-      <TabView onTabChange={(id) => setTab(id)} tabs={tabs} />
-      <TabContent>{`Tab content: ${
-        tabs.find(({ id }) => id === tab).title
-      }`}</TabContent>
-    </>
+    <TabWrapper>
+      <TabsComponent onTabChange={(id) => setTab(id)} tabs={tabs} />
+      <TabContent>
+        <Text>{`Tab content: ${activeTab.content || activeTab.title}`}</Text>
+      </TabContent>
+    </TabWrapper>
+  );
+}
+
+TabDisplay.propTypes = {
+  TabsComponent: PropTypes.func.isRequired,
+  tabs: PropTypes.array.isRequired,
+};
+
+export const _default = () => {
+  return (
+    <Wrapper>
+      <TabDisplay TabsComponent={TabView} tabs={ICON_TABS} />
+      <TabDisplay TabsComponent={UnjustifiedTabView} tabs={TEXT_TABS} />
+    </Wrapper>
   );
 };
 

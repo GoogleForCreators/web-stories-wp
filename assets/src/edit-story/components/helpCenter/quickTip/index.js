@@ -33,6 +33,7 @@ import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';
+import { ReactComponent as DoneCheckmark } from './doneCheckmark.svg';
 
 const Panel = styled.div`
   width: 100%;
@@ -68,12 +69,27 @@ const Paragraph = styled(Text)`
   }
 `;
 
+const DoneContainer = styled.div`
+  ${themeHelpers.centerContent}
+  height: 180px;
+  margin-bottom: ${GUTTER_WIDTH}px;
+  color: #f4f2ef;
+
+  svg {
+    display: block;
+
+    path {
+      color: #4285f4;
+    }
+  }
+`;
+
 export function QuickTip({
-  figureSrc,
   title,
   description,
   isLeftToRightTransition = true,
-  figure,
+  figureSrc,
+  isDone = false,
   ...transitionProps
 }) {
   const { cdnURL } = useConfig();
@@ -84,10 +100,23 @@ export function QuickTip({
     >
       <Panel>
         <Overflow>
-          {Boolean(figure) && (
-            <Video controls={false} autoPlay loop muted preload noControls>
-              <source src={`${cdnURL}${figure}`} type="video/webm" />
+          {Boolean(figureSrc) && (
+            <Video
+              controls={false}
+              autoPlay
+              loop
+              muted
+              noControls
+              preload="true"
+            >
+              <source src={`${cdnURL}${figureSrc}.webm`} type="video/webm" />
+              <source src={`${cdnURL}${figureSrc}.mp4`} type="video/mp4" />
             </Video>
+          )}
+          {isDone && (
+            <DoneContainer>
+              <DoneCheckmark height={135} width={135} />
+            </DoneContainer>
           )}
           <Title>{title}</Title>
           {description.map((paragraph, i) => (
@@ -112,9 +141,9 @@ export function QuickTip({
 }
 
 QuickTip.propTypes = {
-  figureSrc: PropTypes.string.isRequired,
+  figureSrc: PropTypes.string,
+  isDone: PropTypes.bool,
   title: PropTypes.string.isRequired,
   description: PropTypes.arrayOf(PropTypes.string).isRequired,
-  figure: PropTypes.string,
   isLeftToRightTransition: PropTypes.bool,
 };

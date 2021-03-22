@@ -119,7 +119,7 @@ function PresetPanel({ presetType, title, pushUpdate }) {
         title={title}
         presetType={presetType}
       />
-      <PanelContent isPrimary padding={!hasPresets && '0'}>
+      <PanelContent isPrimary>
         {isColor && (
           <ColorPresetPanel
             isEditMode={isEditMode}

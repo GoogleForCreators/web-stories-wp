@@ -27,12 +27,13 @@ import styled, { keyframes } from 'styled-components';
  */
 import { THEME_CONSTANTS } from '../../theme';
 import { Button } from '../button';
-import { Close } from '../../icons/navigation';
+import { Cross } from '../../icons';
 import { Text } from '../typography';
 import { focusableOutlineCSS } from '../../theme/helpers';
 import {
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
+  DEFAULT_MESSAGE_Z_INDEX,
 } from './constants';
 
 const slideIn = keyframes`
@@ -58,9 +59,13 @@ const MessageContainer = styled.div`
   border: ${({ theme }) =>
     `1px solid ${rgba(theme.colors.standard.white, 0.24)}`};
   border-radius: ${({ theme }) => theme.borders.radius.medium};
+  z-index: ${({ customZIndex }) => customZIndex || DEFAULT_MESSAGE_Z_INDEX};
 
   animation: 0.5s ${slideIn} ease-out;
 `;
+MessageContainer.propTypes = {
+  customZIndex: PropTypes.number,
+};
 
 const Message = styled(Text)`
   max-width: 206px;
@@ -95,7 +100,7 @@ const ActionButton = styled(Button)`
 
 const CloseButton = styled(Button)`
   height: 2em;
-  padding: 12px 6px;
+  padding: 0;
   margin-left: 16px;
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
 
@@ -106,7 +111,7 @@ const CloseButton = styled(Button)`
     )}
 
   svg {
-    height: 16px;
+    height: 32px;
   }
 `;
 
@@ -156,7 +161,7 @@ const SnackbarMessage = ({
           )}
           {showCloseButton && (
             <CloseButton onClick={handleDismiss}>
-              <Close aria-hidden />
+              <Cross aria-hidden />
             </CloseButton>
           )}
         </ActionContainer>
@@ -167,6 +172,7 @@ const SnackbarMessage = ({
 
 SnackbarMessage.propTypes = {
   'aria-label': PropTypes.string.isRequired,
+  customZIndex: PropTypes.number,
   message: PropTypes.string.isRequired,
   handleDismiss: PropTypes.func.isRequired,
   actionLabel: PropTypes.string,

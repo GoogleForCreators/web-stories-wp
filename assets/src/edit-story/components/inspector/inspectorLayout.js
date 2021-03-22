@@ -18,7 +18,9 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -35,14 +37,18 @@ const Layout = styled.section.attrs({
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.bg.panel};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const InspectorContainer = styled.div`
   height: 100%;
   padding: 0;
   overflow: auto;
+`;
+
+const UnjustifiedTabView = styled(TabView)`
+  justify-content: center;
 `;
 
 function InspectorLayout() {
@@ -52,14 +58,25 @@ function InspectorLayout() {
     refs: { inspector },
     data: { tabs },
   } = useInspector();
+
+  const onTabChange = useCallback(
+    (id) => {
+      setTab(id);
+      trackEvent('inspector_tab_change', {
+        name: id,
+      });
+    },
+    [setTab]
+  );
+
   useEscapeToBlurEffect(inspector);
   return (
     <Layout ref={inspector}>
-      <TabView
+      <UnjustifiedTabView
         label={__('Inspector Selection', 'web-stories')}
         tabs={tabs}
         initialTab={tab}
-        onTabChange={(id) => setTab(id)}
+        onTabChange={onTabChange}
         getAriaControlsId={getTabId}
         shortcut="mod+option+3"
       />

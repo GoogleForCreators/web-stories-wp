@@ -17,16 +17,11 @@
 /**
  * Infer element type from mime type of its resource
  *
- * @param {string} mimeType Mime type.
+ * @param {string|null} mimeType Mime type.
  * @return {string|null} Element type.
  */
 const getTypeFromMime = (mimeType) => {
-  if (mimeType.match('image.*')) {
-    return 'image';
-  } else if (mimeType.match('video.*')) {
-    return 'video';
-  }
-  return null;
+  return mimeType?.split('/')[0] || null;
 };
 
 export default getTypeFromMime;

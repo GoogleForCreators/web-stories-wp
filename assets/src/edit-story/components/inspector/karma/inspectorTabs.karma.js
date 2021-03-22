@@ -41,7 +41,7 @@ describe('Inspector Tabs integration', () => {
       const { documentTab } = fixture.editor.inspector;
 
       // Click document tab
-      await fixture.events.mouse.clickOn(documentTab);
+      await fixture.events.click(documentTab);
       await waitFor(() => fixture.editor.inspector.documentPanel);
       expect(documentTab).toHaveFocus();
 
@@ -61,12 +61,12 @@ describe('Inspector Tabs integration', () => {
       const { documentTab } = fixture.editor.inspector;
 
       // Click document tab
-      await fixture.events.mouse.clickOn(documentTab);
+      await fixture.events.click(documentTab);
       await waitFor(() => fixture.editor.inspector.documentPanel);
       await waitFor(() =>
-        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
-          'John Doe'
-        )
+        expect(
+          fixture.editor.inspector.documentPanel.author.textContent
+        ).toContain('John Doe')
       );
       fixture.events.click(fixture.editor.inspector.documentPanel.author);
       // Ensure the debounced callback has taken effect.
@@ -82,9 +82,9 @@ describe('Inspector Tabs integration', () => {
 
       await fixture.events.sleep(300);
       await waitFor(() =>
-        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
-          'Jane Doe'
-        )
+        expect(
+          fixture.editor.inspector.documentPanel.author.textContent
+        ).toContain('Jane Doe')
       );
     });
 
@@ -92,11 +92,11 @@ describe('Inspector Tabs integration', () => {
       const { documentTab } = fixture.editor.inspector;
 
       // Click document tab
-      await fixture.events.mouse.clickOn(documentTab);
+      await fixture.events.click(documentTab);
       await waitFor(() =>
-        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
-          'John Doe'
-        )
+        expect(
+          fixture.editor.inspector.documentPanel.author.textContent
+        ).toContain('John Doe')
       );
       fixture.events.click(fixture.editor.inspector.documentPanel.author);
       // Ensure the debounced callback has taken effect.
@@ -118,7 +118,7 @@ describe('Inspector Tabs integration', () => {
     it('should show high priority items open in checklist by default', async () => {
       const { checklistTab } = fixture.editor.inspector;
 
-      await fixture.events.mouse.clickOn(checklistTab);
+      await fixture.events.click(checklistTab);
 
       await waitFor(() => {
         expect(

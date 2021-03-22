@@ -1,4 +1,4 @@
-name: 'PR Tasks Completed Check'
+name: PR Tasks Completed Check
 on:
   pull_request:
     types:
@@ -7,8 +7,15 @@ on:
 
 jobs:
   task-check:
+    name: Task Check
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
+      - name: Cancel previous
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+
       - uses: kentaro-m/task-completed-checker-action@v0.1.0
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'

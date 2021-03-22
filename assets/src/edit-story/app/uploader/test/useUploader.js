@@ -24,17 +24,11 @@ import { renderHook } from '@testing-library/react-hooks';
 import ConfigContext from '../../config/context';
 import APIContext from '../../api/context';
 import useUploader from '../useUploader';
-import useTranscodeVideo from '../../media/utils/useTranscodeVideo';
 
-jest.mock('../../media/utils/useTranscodeVideo', () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
-    isFeatureEnabled: true,
-    isTranscodingEnabled: true,
-    canTranscodeFile: jest.fn(),
-    isFileTooLarge: jest.fn(),
-    transcodeVideo: jest.fn(),
-  })),
+const mockShowSnackbar = jest.fn();
+
+jest.mock('../../snackbar', () => ({
+  useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 
 function setup(args) {
@@ -66,126 +60,79 @@ function setup(args) {
   const { result } = renderHook(() => useUploader(), { wrapper });
 
   return {
-    uploadFile: result.current.uploadFile,
-    isValidType: result.current.isValidType,
+    actions: result.current.actions,
   };
 }
 
 describe('useUploader', () => {
-  afterEach(() => {
-    useTranscodeVideo.mockClear();
+  beforeEach(() => {
+    mockShowSnackbar.mockReset();
   });
 
-  describe('isValidType', () => {
-    it('returns false if file type is not in list', () => {
-      const { isValidType } = setup({});
-      expect(isValidType({ type: 'application/pdf' })).toBeFalse();
-    });
-
-    it('returns true if file type is in list', () => {
-      const { isValidType } = setup({});
-      expect(isValidType({ type: 'video/mp4' })).toBeTrue();
-    });
-  });
-
-  describe('uploadFile', () => {
+  describe('validateFileForUpload', () => {
     it('throws an error if user does not have upload capabilities', async () => {
-      const { uploadFile } = setup({
+      const {
+        actions: { validateFileForUpload },
+      } = setup({
         capabilities: {
           hasUploadMediaAction: false,
         },
       });
 
-      await expect(uploadFile({})).rejects.toThrow(
+      await expect(() => validateFileForUpload({})).toThrow(
         'Sorry, you are unable to upload files.'
       );
     });
 
     it('throws an error if file is too large', async () => {
-      const { uploadFile } = setup({
+      const {
+        actions: { validateFileForUpload },
+      } = setup({
         maxUpload: 2000000,
       });
 
-      await expect(uploadFile({ size: 3000000 })).rejects.toThrow(
+      await expect(() => validateFileForUpload({ size: 3000000 })).toThrow(
         'Your file is 3MB and the upload limit is 2MB. Please resize and try again!'
       );
     });
 
     it('throws an error if file type is not supported and cannot be transcoded', async () => {
-      const { uploadFile } = setup({});
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
 
-      await expect(
-        uploadFile({ size: 20000, type: 'video/mov' })
-      ).rejects.toThrow(
-        'Please choose only png, jpeg, jpg, gif, mp4 to upload.'
-      );
+      await expect(() =>
+        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+      ).toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
     });
 
     it('throws an error if file is too large for transcoding', async () => {
-      useTranscodeVideo.mockImplementationOnce(
-        jest.fn(() => ({
-          isFeatureEnabled: true,
-          isTranscodingEnabled: true,
-          canTranscodeFile: jest.fn(() => true),
-          isFileTooLarge: jest.fn(() => true),
-          transcodeVideo: jest.fn(),
-        }))
-      );
-
-      const { uploadFile } = setup({
+      const {
+        actions: { validateFileForUpload },
+      } = setup({
         maxUpload: 1024 * 1024 * 1024 * 10,
       });
 
-      await expect(
-        uploadFile({
-          size: 1024 * 1024 * 1024 * 3,
-          type: 'video/mov',
-        })
-      ).rejects.toThrow(
+      await expect(() =>
+        validateFileForUpload(
+          {
+            size: 1024 * 1024 * 1024 * 3,
+            type: 'video/quicktime',
+          },
+          true,
+          true
+        )
+      ).toThrow(
         'Your file is too large (3072 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
       );
     });
+  });
 
-    it('uploads video after transcoding', async () => {
-      const transcodeVideo = jest.fn(
-        () =>
-          new File(['foo'], 'foo.mp4', {
-            type: 'video/mp4',
-          })
-      );
-      useTranscodeVideo.mockImplementationOnce(
-        jest.fn(() => ({
-          isFeatureEnabled: true,
-          isTranscodingEnabled: true,
-          canTranscodeFile: jest.fn(() => true),
-          isFileTooLarge: jest.fn(() => false),
-          transcodeVideo,
-        }))
-      );
-
-      const { uploadFile } = setup({});
-
-      const file = {
-        size: 20000,
-        type: 'video/mov',
-      };
-
-      const result = await uploadFile(file);
-      expect(result).toStrictEqual('Upload successful!');
-      expect(transcodeVideo).toHaveBeenCalledTimes(1);
-      expect(transcodeVideo).toHaveBeenCalledWith(file);
-    });
-
-    it('uploads image without transcoding', async () => {
-      const transcodeVideo = jest.fn();
-      useTranscodeVideo.mockImplementationOnce(
-        jest.fn(() => ({
-          isFeatureEnabled: false,
-          isTranscodingEnabled: false,
-        }))
-      );
-
-      const { uploadFile } = setup({});
+  describe('uploadFile', () => {
+    it('uploads image', async () => {
+      const {
+        actions: { uploadFile },
+      } = setup({});
 
       const file = {
         size: 20000,
@@ -194,35 +141,6 @@ describe('useUploader', () => {
 
       const result = await uploadFile(file);
       expect(result).toStrictEqual('Upload successful!');
-      expect(transcodeVideo).not.toHaveBeenCalled();
-    });
-
-    it('throws an error if video transcoding failed', async () => {
-      const transcodeVideo = jest
-        .fn()
-        .mockRejectedValue(new Error('ffmpeg error'));
-      useTranscodeVideo.mockImplementationOnce(
-        jest.fn(() => ({
-          isFeatureEnabled: true,
-          isTranscodingEnabled: true,
-          canTranscodeFile: jest.fn(() => true),
-          isFileTooLarge: jest.fn(() => false),
-          transcodeVideo,
-        }))
-      );
-
-      const { uploadFile } = setup({});
-
-      const file = {
-        size: 20000,
-        type: 'video/mp4',
-      };
-
-      await expect(uploadFile(file)).rejects.toThrow(
-        'Video could not be processed'
-      );
-      expect(transcodeVideo).toHaveBeenCalledTimes(1);
-      expect(transcodeVideo).toHaveBeenCalledWith(file);
     });
   });
 });

@@ -19,7 +19,9 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -29,16 +31,22 @@ import Dialog from '../dialog';
 import Link from '../link';
 
 const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
 `;
 
+const RECOMMENDATION_URL = __(
+  'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
+  'web-stories'
+);
+
 function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
-  const link = __(
-    'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
-    'web-stories'
+  const onClick = useCallback(
+    (evt) => trackClick(evt, 'click_stories_best_practices_docs'),
+    []
   );
   return (
     <Dialog
@@ -57,7 +65,14 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
       <Paragraph>
         <TranslateWithMarkup
           mapping={{
-            a: <Link href={link} target="_blank" rel="noopener noreferrer" />,
+            a: (
+              <Link
+                href={RECOMMENDATION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClick}
+              />
+            ),
           }}
         >
           {__(

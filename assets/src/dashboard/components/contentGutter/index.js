@@ -19,19 +19,14 @@
  */
 import styled from 'styled-components';
 
-export const StandardViewContentGutter = styled.div(
-  ({ theme }) => `
-    margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
+/**
+ * Internal dependencies
+ */
+import { PAGE_WRAPPER } from '../../constants';
 
-    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.largeDisplayPhone}px;
-    }
-
-    @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.smallDisplayPhone}px;
-    }
-  `
-);
+export const StandardViewContentGutter = styled.div`
+  margin: 0 ${PAGE_WRAPPER.GUTTER}px;
+`;
 
 export const DetailViewContentGutter = styled.div(
   ({ theme }) => `

@@ -18,33 +18,78 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DetailViewNavBar, Layout } from '../../../../components';
+import {
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  Icons,
+  themeHelpers,
+} from '../../../../../design-system';
+import { Layout } from '../../../../components';
 import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
+import { parentRoute } from '../../../router/route';
 
-function Header({ onBookmarkClick, onHandleCtaClick }) {
+const Nav = styled.nav`
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  margin: 48px 0 84px;
+  padding: 0 88px;
+`;
+
+const HiddenHeading = styled.h2`
+  ${themeHelpers.visuallyHidden};
+`;
+function Header({ onHandleCtaClick, templateTitle }) {
   return (
     <Layout.Fixed>
-      <DetailViewNavBar
-        ctaText={__('Use template', 'web-stories')}
-        closeViewAriaLabel={sprintf(
-          /* translators: %s: page title of link */
-          __('Go to %s', 'web-stories'),
-          ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
-        )}
-        handleBookmarkClick={onBookmarkClick}
-        handleCta={onHandleCtaClick}
-      />
+      <Nav>
+        <HiddenHeading>
+          {sprintf(
+            /* translators: %s: template title */
+            __('Template Details for %s', 'web-stories'),
+            templateTitle
+          )}
+        </HiddenHeading>
+        <Button
+          type={BUTTON_TYPES.TERTIARY}
+          variant={BUTTON_VARIANTS.CIRCLE}
+          size={BUTTON_SIZES.SMALL}
+          as="a"
+          aria-label={sprintf(
+            /* translators: %s: page title of link */
+            __('Go to %s', 'web-stories'),
+            ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
+          )}
+          href={parentRoute()}
+        >
+          <Icons.CrossLarge />
+        </Button>
+        <Button
+          onClick={onHandleCtaClick}
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          aria-label={sprintf(
+            /* translators: %s: template title */
+            __('Use %s template to create new story', 'web-stories'),
+            templateTitle
+          )}
+        >
+          {__('Use template', 'web-stories')}
+        </Button>
+      </Nav>
     </Layout.Fixed>
   );
 }
 
 Header.propTypes = {
-  onBookmarkClick: PropTypes.func,
   onHandleCtaClick: PropTypes.func,
+  templateTitle: PropTypes.string,
 };
 
 export default Header;

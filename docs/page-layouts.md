@@ -1,6 +1,6 @@
 # Page Layouts
 
-Page layouts allow people to apply individual pages defined in templates to their story without choosing an entire template. Page layouts are based on the same JSON definitions as templates defined in `src/dashboard/templates/raw`.
+Page layouts allow people to apply individual pages defined in templates to their story without choosing an entire template. Page layouts are based on the same JSON definitions as templates defined in `packages/templates/src/raw`.
 
 ## How Page Layouts differ from Template Pages
 

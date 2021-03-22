@@ -23,21 +23,23 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Lock as Locked } from '../../../../icons';
+import { Button, BUTTON_TYPES, Icons } from '../../../../../design-system';
 import StoryPropTypes from '../../../../types';
 import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';
+import { LayerText } from '../../../../elements/shared/layerText';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
-const LayerButton = styled.button.attrs({
-  type: 'button',
+const LayerButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PLAIN,
   tabIndex: -1,
   role: 'option',
   // Because the layer panel is aria-hidden, we need something else to select by
   'data-testid': 'layer-option',
 })`
   display: flex;
+  justify-content: flex-start;
   border: 0;
   padding: 0;
   background: transparent;
@@ -46,52 +48,52 @@ const LayerButton = styled.button.attrs({
   overflow: hidden;
   align-items: center;
   user-select: none;
+  border-radius: 0;
+  transition: background-color 0.3s;
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+  }
+
+  :active {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+  }
 
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      background: ${theme.colors.fg.gray24};
+      background: ${theme.colors.interactiveBg.secondaryPress};
     `}
-
-  &:active {
-    outline: none;
-  }
 `;
 
 const LayerIconWrapper = styled.div`
-  width: 52px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 8px;
-
-  svg {
-    height: 28px;
-    width: 28px;
-    opacity: 0.5;
-    color: ${({ theme }) => theme.colors.fg.white};
-  }
+  margin-right: 12px;
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const LayerDescription = styled.div`
+  position: relative;
   width: calc(100% - 60px);
   display: flex;
   align-items: center;
   margin-left: 0;
   text-align: left;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.description.family};
-  font-size: ${({ theme }) => theme.fonts.description.size};
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-const LockedIcon = styled(Locked)`
-  height: 18px !important;
-  width: 18px !important;
-`;
+const IconWrapper = styled.div`
+  position: absolute;
+  right: -2px;
+  width: 32px;
 
-const BackgroundDescription = styled.div`
-  opacity: 0.5;
+  svg {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
 `;
 
 const LayerContentContainer = styled.div`
@@ -108,7 +110,6 @@ function Layer({ layer }) {
     currentPage: state.state.currentPage,
   }));
   const isBackground = currentPage.elements[0].id === layer.id;
-  const showPreview = !isBackground || layer.type !== 'shape';
 
   return (
     <LayerButton
@@ -117,22 +118,20 @@ function Layer({ layer }) {
       onClick={handleClick}
     >
       <LayerIconWrapper>
-        {isBackground ? (
-          <LockedIcon aria-label={__('Background element', 'web-stories')} />
-        ) : (
-          <LayerIcon />
-        )}
+        <LayerIcon element={layer} />
       </LayerIconWrapper>
       <LayerDescription>
-        {showPreview && (
-          <LayerContentContainer>
+        <LayerContentContainer>
+          {isBackground ? (
+            <LayerText>{__('Background', 'web-stories')}</LayerText>
+          ) : (
             <LayerContent element={layer} />
-          </LayerContentContainer>
-        )}
+          )}
+        </LayerContentContainer>
         {isBackground && (
-          <BackgroundDescription>
-            {__('Background (locked)', 'web-stories')}
-          </BackgroundDescription>
+          <IconWrapper>
+            <Icons.LockClosed />
+          </IconWrapper>
         )}
       </LayerDescription>
     </LayerButton>

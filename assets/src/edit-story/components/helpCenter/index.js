@@ -18,19 +18,14 @@
  */
 import { useRef, useEffect } from 'react';
 import { useFeatures } from 'flagged';
-import styled, { ThemeProvider, StyleSheetManager } from 'styled-components';
-import stylisRTLPlugin from 'stylis-plugin-rtl';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import {
-  theme as dsTheme,
-  ThemeGlobals,
-  useFocusOut,
-} from '../../../design-system';
-import { useConfig } from '../../app/config';
+import { ThemeGlobals } from '../../../design-system';
 import { Z_INDEX } from '../canvas/layout';
+import DirectionAware from '../directionAware';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
 import { POPUP_ID } from './constants';
@@ -51,16 +46,10 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
-const withRTLPlugins = [stylisRTLPlugin];
-const withoutRTLPlugins = [];
-
 export const HelpCenter = () => {
-  const { isRTL } = useConfig();
   const ref = useRef(null);
   const { enableQuickTips } = useFeatures();
   const { state, actions } = useHelpCenter();
-
-  useFocusOut(ref, actions.close, []);
 
   // Set Focus on the expanded companion
   // whenever it opens
@@ -71,10 +60,8 @@ export const HelpCenter = () => {
   }, [state.isOpen]);
 
   return enableQuickTips ? (
-    <StyleSheetManager
-      stylisPlugins={isRTL ? withRTLPlugins : withoutRTLPlugins}
-    >
-      <ThemeProvider theme={dsTheme}>
+    <DirectionAware>
+      <>
         <ThemeGlobals.OverrideFocusOutline />
         <Wrapper ref={ref}>
           <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
@@ -88,6 +75,7 @@ export const HelpCenter = () => {
               isPrevDisabled={state.isPrevDisabled}
             >
               <Companion
+                readTips={state.readTips}
                 tipKey={state.navigationFlow[state.navigationIndex]}
                 onTipSelect={actions.goToTip}
                 isLeftToRightTransition={state.isLeftToRightTransition}
@@ -97,11 +85,11 @@ export const HelpCenter = () => {
           <Toggle
             isOpen={state.isOpen}
             onClick={actions.toggle}
-            notificationCount={1}
+            notificationCount={state.unreadTipsCount}
             popupId={POPUP_ID}
           />
         </Wrapper>
-      </ThemeProvider>
-    </StyleSheetManager>
+      </>
+    </DirectionAware>
   ) : null;
 };

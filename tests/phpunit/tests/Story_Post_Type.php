@@ -67,7 +67,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -204,14 +204,30 @@ class Story_Post_Type extends \WP_UnitTestCase {
 					->willReturn( [] );
 		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
 
-		$story_post_type           = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$args            = [ $experiments, $meta_boxes ];
+		$story_post_type = $this->getMockBuilder( \Google\Web_Stories\Story_Post_Type::class )
+								->setConstructorArgs( $args )
+								->setMethods( [ 'get_asset_metadata' ] )
+								->getMock();
+		$story_post_type->method( 'get_asset_metadata' )
+				->willReturn(
+					[
+						'dependencies' => [],
+						'version'      => '9.9.9',
+						'js'           => [ 'fake_js_chunk' ],
+						'css'          => [ 'fake_css_chunk' ],
+					]
+				);
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$story_post_type->admin_enqueue_scripts( 'post.php' );
 
 		unset( $GLOBALS['current_screen'] );
 
-		$this->assertTrue( wp_script_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
-		$this->assertTrue( wp_style_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_script_is( 'fake_js_chunk', 'registered' ) );
+
+		$this->assertTrue( wp_style_is( \Google\Web_Stories\Story_Post_Type::WEB_STORIES_SCRIPT_HANDLE ) );
+		$this->assertTrue( wp_style_is( 'fake_css_chunk', 'registered' ) );
 	}
 
 	/**
@@ -457,7 +473,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$feed = $this->do_rss2();
 
 		$this->assertContains( '<img', $feed );
-		$this->assertContains( 'images/test-image.jpg', $feed );
+		$this->assertContains( 'images/canola.jpg', $feed );
 		$this->assertContains( 'wp-block-web-stories-embed', $feed );
 	}
 

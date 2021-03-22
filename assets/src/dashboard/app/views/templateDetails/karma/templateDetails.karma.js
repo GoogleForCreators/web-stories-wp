@@ -22,6 +22,7 @@ import qs from 'query-string';
 /**
  * Internal dependencies
  */
+import stripHTML from '../../../../../edit-story/utils/stripHTML';
 import Fixture from '../../../../karma/fixture';
 import {
   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
@@ -115,8 +116,21 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       await fixture.events.click(closeLink);
 
-      const viewTemplates = fixture.screen.queryByText(
-        TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL]
+      const templatesGridEl = fixture.screen.getByLabelText(
+        'Available templates'
+      );
+      const labelTextContent = stripHTML(
+        TEMPLATES_GALLERY_VIEWING_LABELS[TEMPLATES_GALLERY_STATUS.ALL](
+          templatesGridEl.children.length
+        )
+      );
+      const hasDirectTextChild = (node) =>
+        (Array.from(node?.childNodes) || []).some(
+          (n) => n?.nodeName === '#text'
+        );
+      const viewTemplates = fixture.screen.getByText(
+        (_, node) =>
+          node.textContent === labelTextContent && hasDirectTextChild(node)
       );
 
       expect(viewTemplates).toBeTruthy();
@@ -195,9 +209,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       const utils = within(templateDetailsSection);
 
       // Assert that the rendered title matches the title from state
-      const initialTemplateTitle = utils.getByRole('heading', {
-        name: /Template Title/,
-      });
+      const initialTemplateTitle = utils.getByTestId('template-details-title');
+
       expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
 
       // Click the view next button to cycle to the next related template
@@ -214,9 +227,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       const nextTemplate = templates[nextTemplateId];
 
       // Assert that the rendered title matches the title from state
-      const nextTemplateTitle = utils.getByRole('heading', {
-        name: /Template Title/,
-      });
+      const nextTemplateTitle = utils.getByTestId('template-details-title');
+
       expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
     });
 
@@ -234,9 +246,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       const utils = within(templateDetailsSection);
 
       // Assert that the rendered title matches the title from state
-      const initialTemplateTitle = utils.getByRole('heading', {
-        name: /Template Title/,
-      });
+      const initialTemplateTitle = utils.getByTestId('template-details-title');
+
       expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
 
       // Click the view next button to cycle to the next related template
@@ -251,9 +262,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       const nextTemplate = templates[nextTemplateId];
 
       // Assert that the rendered title matches the title from state
-      const nextTemplateTitle = utils.getByRole('heading', {
-        name: /Template Title/,
-      });
+      const nextTemplateTitle = utils.getByTestId('template-details-title');
+
       expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
 
       // Click the previous template button and assert we went back to the initial template
@@ -267,9 +277,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       expect(currentTemplateId).toEqual(initialTemplateId);
 
-      const currentTemplateTitle = utils.getByRole('heading', {
-        name: /Template Title/,
-      });
+      const currentTemplateTitle = utils.getByTestId('template-details-title');
 
       expect(currentTemplateTitle.innerText).toEqual(initialTemplate.title);
     });
@@ -281,17 +289,15 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       expect(initialTemplateId).toBeTruthy();
 
       const initialTemplate = templates[initialTemplateId];
-
       const templateDetailsSection = fixture.screen.getByRole('region', {
         name: /Template Details/,
       });
 
-      const templateDetailsUtils = within(templateDetailsSection);
+      const utils = within(templateDetailsSection);
 
       // Assert that the rendered title matches the title from state
-      const initialTemplateTitle = templateDetailsUtils.getByRole('heading', {
-        name: /Template Title/,
-      });
+      const initialTemplateTitle = utils.getByTestId('template-details-title');
+
       expect(initialTemplateTitle.innerText).toEqual(initialTemplate.title);
 
       const relatedTemplatesSection = fixture.screen.getByRole('region', {
@@ -304,10 +310,10 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       ).queryAllByTestId(/template-grid-item-/)[0];
 
       // Hover over the first related templated and click the View Button
-      // const firstRelatedTemplateUtils = within(firstRelatedTemplate);
       await fixture.events.hover(firstRelatedTemplate);
-      const utils = within(firstRelatedTemplate);
-      const view = utils.getByText(
+
+      const relatedTemplateUtils = within(firstRelatedTemplate);
+      const view = relatedTemplateUtils.getByText(
         new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
       );
       await fixture.events.click(view);
@@ -318,9 +324,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       const nextTemplate = templates[nextTemplateId];
 
-      const nextTemplateTitle = templateDetailsUtils.getByRole('heading', {
-        name: /Template Title/,
-      });
+      const nextTemplateTitle = utils.getByTestId('template-details-title');
+
       expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
     });
   });

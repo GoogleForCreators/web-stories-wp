@@ -197,7 +197,7 @@ function MultiSelectionMoveable({ selectedElements }) {
       ...selectedElements.map((element) => element.id),
       backgroundElement.id,
     ])
-  ).filter(({ isBackground }) => !isBackground);
+  );
 
   const snapProps = useSnapping({
     isDragging,
@@ -238,9 +238,9 @@ function MultiSelectionMoveable({ selectedElements }) {
       ref={moveable}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
-      draggable={true}
-      resizable={true}
-      rotatable={true}
+      draggable
+      resizable
+      rotatable
       renderDirections={CORNER_HANDLES}
       {...dragProps}
       {...rotateProps}

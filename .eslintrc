@@ -18,6 +18,7 @@
     "header",
     "jsdoc",
     "jsx-a11y",
+    "markdown",
     "react",
     "react-hooks"
   ],
@@ -158,6 +159,7 @@
         ]
       }
     ],
+    "react/jsx-boolean-value": "error",
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
@@ -331,7 +333,10 @@
       }
     },
     {
-      "files": ["tests/e2e/**/*.js"],
+      "files": [
+        "packages/e2e-test-utils/**/*.js",
+        "packages/e2e-tests/src/**/*.js"
+      ],
       "extends": [
         "plugin:jest/all"
       ],
@@ -353,7 +358,7 @@
       }
     },
     {
-      "files": ["tests/e2e/specs/**/*.js"],
+      "files": ["packages/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
       }
@@ -370,8 +375,8 @@
         ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
-        "tests/e2e/*.js",
-        "tests/e2e/config/*.js",
+        "packages/e2e-tests/src/*.js",
+        "packages/e2e-tests/src/config/*.js",
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs",
         "packages/migration/src/**/*.js",
@@ -408,11 +413,20 @@
         "*.md",
         "**/*.md"
       ],
-      "plugins": [
-        "markdown"
+      "processor": "markdown/markdown"
+    },
+    {
+      "files": [
+        "**/*.md/*.js"
       ],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "impliedStrict": true
+        }
+      },
       "rules": {
         "@wordpress/dependency-group": "off",
+        "no-console": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off",
@@ -428,7 +442,9 @@
         "packages/**/*.js"
       ],
       "excludedFiles": [
-        "packages/i18n/**/*.js"
+        "packages/activation-notice/**/*.js",
+        "packages/i18n/**/*.js",
+        "packages/tinymce-button/**/*.js"
       ],
       "rules":{
         "no-restricted-imports": [
@@ -442,6 +458,14 @@
             ]
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "packages/tinymce-button/src/**/*.js"
+      ],
+      "globals": {
+        "tinymce": "readonly"
       }
     }
   ]

@@ -18,20 +18,17 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-
-import { ScrollBarStyles } from '../../../../library/common/scrollbarStyles';
-import { Add } from '../../../../../../design-system/icons';
+import { Icons, DropDown } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
 import { findMatchingColor } from '../utils';
-import { AdvancedDropDown } from '../../../../form';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
 import ColorGroup from './colorGroup';
 import useApplyColor from './useApplyColor';
@@ -42,33 +39,34 @@ const COLOR_GAP = 6;
 
 const ActionsWrapper = styled.div`
   text-align: center;
-  border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
-  padding: 12px 12px 20px 12px;
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
+  padding: 8px 16px 20px 16px;
 `;
 
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
   cursor: pointer;
-  padding: 8px 0px;
+  padding: 0;
   line-height: 20px;
   svg {
-    width: 16px;
-    height: 16px;
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    width: 32px;
+    height: 32px;
   }
 `;
 
 const CtaWrapper = styled.div`
   font-size: 14px;
-  line-height: 30px;
-  margin-right: 5px;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
+  line-height: 32px;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
 
   svg {
-    color: ${({ theme }) => theme.colors.fg.white};
-    width: 20px;
-    height: 14px;
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    width: 32px;
+    height: 32px;
+    vertical-align: bottom;
   }
 `;
 
@@ -77,12 +75,21 @@ const ColorsWrapper = styled.div`
   max-height: ${SAVED_COLOR_SIZE * 3 + 2 * COLOR_GAP}px;
   overflow-x: hidden;
   overflow-y: auto;
-
-  ${ScrollBarStyles}
 `;
 
 const DropDownWrapper = styled.div`
-  width: 135px;
+  width: 145px;
+  text-align: left;
+  position: relative;
+`;
+
+const StyledDropDown = styled(DropDown)`
+  background-color: transparent;
+  border: 0;
+`;
+
+const menuStylesOverride = css`
+  top: -12px;
 `;
 
 const HeaderRow = styled.div`
@@ -92,6 +99,11 @@ const HeaderRow = styled.div`
 const ButtonWrapper = styled.div`
   text-align: end;
   flex-grow: 1;
+`;
+
+const Strong = styled.span`
+  font-size: 24px;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 function ColorPresetActions({ color, pushUpdate }) {
@@ -167,12 +179,12 @@ function ColorPresetActions({ color, pushUpdate }) {
 
   const options = [
     {
-      id: LOCAL,
-      name: __('Current story', 'web-stories'),
+      value: LOCAL,
+      label: __('Current story', 'web-stories'),
     },
     {
-      id: GLOBAL,
-      name: __('All stories', 'web-stories'),
+      value: GLOBAL,
+      label: __('All stories', 'web-stories'),
     },
   ];
 
@@ -181,13 +193,16 @@ function ColorPresetActions({ color, pushUpdate }) {
     <ActionsWrapper>
       <HeaderRow>
         <DropDownWrapper>
-          <AdvancedDropDown
+          <StyledDropDown
             options={options}
-            isInline={true}
+            selectedValue={showLocalColors ? LOCAL : GLOBAL}
+            onMenuItemClick={(evt, value) =>
+              setShowLocalColors(value === LOCAL)
+            }
+            isInline
             hasSearch={false}
-            onChange={({ id }) => setShowLocalColors(id === LOCAL)}
-            selectedId={showLocalColors ? LOCAL : GLOBAL}
             aria-label={__('Select color type', 'web-stories')}
+            menuStylesOverride={menuStylesOverride}
           />
         </DropDownWrapper>
         <ButtonWrapper>
@@ -195,7 +210,7 @@ function ColorPresetActions({ color, pushUpdate }) {
             aria-label={__('Add color', 'web-stories')}
             onClick={() => handleAddColorPreset(color)}
           >
-            <Add />
+            <Icons.Plus />
           </AddColorPreset>
         </ButtonWrapper>
       </HeaderRow>
@@ -214,10 +229,10 @@ function ColorPresetActions({ color, pushUpdate }) {
           <CtaWrapper>
             <TranslateWithMarkup
               mapping={{
-                i: <Add />,
+                b: <Strong />,
               }}
             >
-              {__('Click <i></i> to save a color', 'web-stories')}
+              {__('Click <b>+</b> to save a color', 'web-stories')}
             </TranslateWithMarkup>
           </CtaWrapper>
         )}

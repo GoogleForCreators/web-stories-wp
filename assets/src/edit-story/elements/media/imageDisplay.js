@@ -74,7 +74,7 @@ function ImageDisplay({ element, box, previewMode }) {
   useEffect(() => {
     let timeout;
     let mounted = true;
-    if (resourceList.get(resource.id)?.type !== 'fullsize') {
+    if (resourceList.get(resource.id)?.type !== 'fullsize' && resource.src) {
       timeout = setTimeout(async () => {
         const preloadedImg = await preloadImage(resource.src, srcSet);
         if (mounted) {

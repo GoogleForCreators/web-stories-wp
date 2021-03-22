@@ -44,12 +44,12 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
   async function openPrepublishPanel() {
     const { checklistTab } = fixture.editor.inspector;
-    await fixture.events.mouse.clickOn(checklistTab);
+    await fixture.events.click(checklistTab);
     await waitFor(() => fixture.editor.inspector.checklistPanel);
   }
 
   async function openRecommendedPanel() {
-    await fixture.events.mouse.clickOn(
+    await fixture.events.click(
       fixture.editor.inspector.checklistPanel.recommended
     );
     await fixture.events.sleep(500);
@@ -57,7 +57,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
   async function clickOnCanvas() {
     const canvas = fixture.querySelector('[data-testid="fullbleed"]');
-    await fixture.events.mouse.clickOn(canvas);
+    await fixture.events.click(canvas);
   }
 
   describe('Prepublish checklist tab', () => {
@@ -78,7 +78,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
 
       await openPrepublishPanel();
-      await fixture.events.mouse.clickOn(tooSmallOnPage);
+      await fixture.events.click(tooSmallOnPage);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
@@ -111,7 +111,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const tooMuchTextOnPage = fixture.screen.getByText(
         MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT
       );
-      await fixture.events.mouse.clickOn(tooMuchTextOnPage);
+      await fixture.events.click(tooMuchTextOnPage);
       await fixture.events.sleep(1000);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(4);
@@ -154,7 +154,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const fontTooSmallRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.MAIN_TEXT
       );
-      await fixture.events.mouse.clickOn(fontTooSmallRow);
+      await fixture.events.click(fontTooSmallRow);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -186,7 +186,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const linkTooSmallRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
       );
-      await fixture.events.mouse.clickOn(linkTooSmallRow);
+      await fixture.events.click(linkTooSmallRow);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -240,6 +240,62 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(storyContext.state.selectedElementIds[0]).toEqual(
         tooSmallLinkElement.id
       );
+    });
+
+    it('should open the design inspector panel and focus the text input', async () => {
+      await fixture.act(() => {
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        });
+      });
+      await openPrepublishPanel();
+      await openRecommendedPanel();
+      const imageMissingAltTextRow = fixture.screen.getByText(
+        MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
+      );
+      await fixture.events.click(imageMissingAltTextRow);
+
+      expect(
+        fixture.editor.inspector.designPanel.node.contains(
+          document.activeElement
+        )
+      ).toBeTrue();
+      await fixture.snapshot(
+        'design tab opened and focused by checklist panel'
+      );
+    });
+
+    it('should open the document inspector panel', async () => {
+      await fixture.events.click(fixture.editor.library.media.item(0));
+
+      let storyContext = await fixture.renderHook(() => useStory());
+      const [elementId] = storyContext.state.selectedElementIds;
+
+      await clickOnCanvas();
+      storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
+
+      const noPosterImage = fixture.screen.getByText(
+        MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
+      );
+      await openPrepublishPanel();
+      await fixture.events.click(noPosterImage);
+      await waitFor(() => {
+        expect(
+          fixture.editor.inspector.documentPanel.node.querySelector(
+            `[id^="panel-publishing-"]`
+          )
+        ).not.toBeNull();
+      });
+      await fixture.snapshot('document tab opened by checklist panel');
     });
   });
 });

@@ -35,7 +35,7 @@ export const focusCSS = (accent, background) => css`
   outline: none;
   box-shadow: ${({ theme }) =>
     `0px 0px 0 2px ${background || theme.colors.bg.primary}, 0px 0px 0 4px ${
-      accent || theme.colors.border.focus
+      typeof accent === 'string' ? accent : theme.colors.border.focus
     }`};
 `;
 
@@ -45,9 +45,7 @@ export const focusableOutlineCSS = (colorOrProps, background) => {
       ? colorOrProps
       : colorOrProps?.theme?.colors?.border?.focus;
   return css`
-    border: 2px solid transparent;
-
-    &.${FOCUS_VISIBLE_SELECTOR} {
+    &.${FOCUS_VISIBLE_SELECTOR}, &[data-focus-visible-added] {
       ${focusCSS(accent, background)};
     }
   `;

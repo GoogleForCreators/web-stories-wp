@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useSnackbar, useStory } from '../../app';
-import objectPick from '../../utils/objectPick';
+import { useLocalMedia, useStory } from '../../app';
+import { DANGER_ZONE_HEIGHT, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
@@ -32,75 +32,95 @@ function useUploadWithPreview() {
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));
   const insertElement = useInsertElement();
-  const { updateElementsByResourceId, deleteElementById } = useStory(
+  const { updateElementsByResourceId, deleteElementsByResourceId } = useStory(
     (state) => ({
       updateElementsByResourceId: state.actions.updateElementsByResourceId,
-      deleteElementById: state.actions.deleteElementById,
+      deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
     })
   );
-  const { showSnackbar } = useSnackbar();
 
-  const onLocalFile = useCallback(
+  const onUploadStart = useCallback(
     ({ resource }) => {
-      return insertElement(resource.type, { resource });
+      insertElement(resource.type, {
+        resource,
+        x: resource.isPlaceholder ? -DANGER_ZONE_HEIGHT : undefined,
+        y: resource.isPlaceholder ? 0 : undefined,
+      });
     },
     [insertElement]
   );
 
-  const onUploadedFile = useCallback(
-    ({ resource, element }) => {
-      const blobUrl = element.resource.src;
-      const keysToUpdate = objectPick(resource, [
-        'src',
-        'sizes',
-        'width',
-        'height',
-        'length',
-        'lengthFormatted',
-        'id',
-      ]);
+  const updateElement = useCallback(
+    ({ id, resource }) => {
       updateElementsByResourceId({
-        // We want to update all resources without id (still uploading)
-        id: undefined,
+        id,
         properties: (el) => {
-          if (el.resource?.src === blobUrl) {
-            const updatedResource = {
-              ...el.resource,
-              ...keysToUpdate,
-            };
+          const hasChangedDimensions =
+            el.resource.width !== resource.width ||
+            el.resource.height !== resource.height;
+
+          if (!hasChangedDimensions) {
             return {
-              resource: updatedResource,
+              type: resource.type,
+              resource,
             };
           }
-          return {};
+
+          return {
+            resource,
+            type: resource.type,
+            width: resource.width,
+            height: resource.height,
+            x: PAGE_WIDTH / 2 - resource.width / 2,
+            y: PAGE_HEIGHT / 2 - resource.height / 2,
+          };
         },
       });
-      if (resource.type === 'video') {
+    },
+    [updateElementsByResourceId]
+  );
+
+  const onUploadProgress = useCallback(
+    ({ id, resource }) => {
+      updateElement({ id, resource });
+    },
+    [updateElement]
+  );
+
+  const onUploadSuccess = useCallback(
+    ({ id, resource }) => {
+      updateElement({ id, resource });
+
+      if (resource.type === 'video' && !resource.local) {
         uploadVideoPoster(resource.id, resource.src);
       }
     },
-    [updateElementsByResourceId, uploadVideoPoster]
+    [updateElement, uploadVideoPoster]
   );
 
-  const onUploadFailure = useCallback(
-    ({ element }) => {
-      deleteElementById({ elementId: element.id });
-      showSnackbar({
-        message: __('Upload failed, the element was removed', 'web-stories'),
-      });
+  const onUploadError = useCallback(
+    ({ id }) => {
+      deleteElementsByResourceId({ id });
     },
-    [deleteElementById, showSnackbar]
+    [deleteElementsByResourceId]
   );
 
   const uploadWithPreview = useCallback(
     (files) => {
       uploadMedia(files, {
-        onLocalFile,
-        onUploadedFile,
-        onUploadFailure,
+        onUploadStart,
+        onUploadProgress,
+        onUploadError,
+        onUploadSuccess,
       });
     },
-    [uploadMedia, onLocalFile, onUploadedFile, onUploadFailure]
+    [
+      uploadMedia,
+      onUploadStart,
+      onUploadProgress,
+      onUploadError,
+      onUploadSuccess,
+    ]
   );
 
   return uploadWithPreview;

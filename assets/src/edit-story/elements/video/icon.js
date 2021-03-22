@@ -22,11 +22,24 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from '../../icons/video.svg';
+import { Icons } from '../../../design-system';
+import StoryPropTypes from '../../types';
+import VisibleImage from '../media/visibleImage';
 
-function VideoIcon() {
-  const alt = __('Video element', 'web-stories');
-  return <Icon aria-label={alt} />;
+function VideoLayerContent({
+  element: {
+    resource: { poster, alt = __('Video', 'web-stories') },
+  },
+}) {
+  if (!poster) {
+    return <Icons.Video width={28} height={28} title={alt} />;
+  }
+
+  return <VisibleImage src={poster} alt={alt} width={28} height={28} />;
 }
 
-export default VideoIcon;
+VideoLayerContent.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
+
+export default VideoLayerContent;

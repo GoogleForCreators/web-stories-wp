@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Checkmark } from '../../icons';
+import { CheckmarkSmall } from '../../icons';
 import { FOCUS_VISIBLE_SELECTOR } from '../../theme/global';
 
 const BORDER_WIDTH = 1;
@@ -31,13 +31,11 @@ const TOGGLE_WIDTH = 44;
 const CIRCLE_DIAMETER = 28;
 const CIRCLE_INITIAL_POSITION = (TOGGLE_HEIGHT - CIRCLE_DIAMETER) / 2;
 const CIRCLE_FINAL_POSITION =
-  TOGGLE_WIDTH +
-  CIRCLE_INITIAL_POSITION -
-  (CIRCLE_DIAMETER / 2 - CIRCLE_INITIAL_POSITION / 2);
+  TOGGLE_WIDTH - CIRCLE_INITIAL_POSITION - CIRCLE_DIAMETER;
 
-const ICON_WIDTH = 7;
-const ICON_TOP_POSITION = 8;
-const ICON_LEFT_POSITION = 30.5;
+const ICON_CONTAINER_WIDTH = 32;
+const ICON_TOP_POSITION = -6;
+const ICON_LEFT_POSITION = 19;
 
 const Background = styled.div(
   ({ theme }) => css`
@@ -68,15 +66,15 @@ const Circle = styled.span(
       background-color: ${theme.colors.fg.secondary};
       border-radius: ${theme.borders.radius.round};
       cursor: pointer;
-      transition: background-color 0.3s, border-color 0.3s, transform 0.15s;
+      transition: background-color 0.3s, border-color 0.3s, left 0.15s;
     }
   `
 );
 
-const StyledCheckmark = styled(Checkmark)(
+const IconContainer = styled.div(
   ({ theme }) => css`
     position: absolute;
-    width: ${ICON_WIDTH}px;
+    width: ${ICON_CONTAINER_WIDTH}px;
     top: ${ICON_TOP_POSITION}px;
     left: ${ICON_LEFT_POSITION}px;
     z-index: 1;
@@ -84,8 +82,8 @@ const StyledCheckmark = styled(Checkmark)(
     transition: opacity 0.15s;
     pointer-events: none;
 
-    path {
-      fill: ${theme.colors.standard.white};
+    svg {
+      color: ${theme.colors.standard.white};
     }
   `
 );
@@ -109,6 +107,8 @@ const ToggleContainer = styled.div(
       cursor: pointer;
 
       :disabled {
+        cursor: default;
+
         ~ ${Background} {
           border-color: ${theme.colors.fg.disable};
         }
@@ -126,8 +126,8 @@ const ToggleContainer = styled.div(
           background-color: ${theme.colors.bg.secondary};
         }
 
-        ~ ${StyledCheckmark} path {
-          fill: ${theme.colors.interactiveFg.disable};
+        ~ ${IconContainer} svg {
+          color: ${theme.colors.fg.disable};
         }
       }
 
@@ -146,11 +146,11 @@ const ToggleContainer = styled.div(
         }
 
         ~ ${Circle}:after {
-          transform: translate3d(${CIRCLE_FINAL_POSITION}px, 0, 0);
+          left: ${CIRCLE_FINAL_POSITION}px;
           background-color: ${theme.colors.interactiveBg.positiveNormal};
         }
 
-        ~ ${StyledCheckmark} {
+        ~ ${IconContainer} {
           opacity: 1;
         }
       }
@@ -175,16 +175,16 @@ const ToggleContainer = styled.div(
   `
 );
 
-export const Toggle = (props) => {
-  return (
-    <ToggleContainer>
-      <input type="checkbox" {...props} />
-      <Background />
-      <StyledCheckmark />
-      <Circle />
-    </ToggleContainer>
-  );
-};
+export const Toggle = (props) => (
+  <ToggleContainer>
+    <input type="checkbox" {...props} />
+    <Background />
+    <IconContainer>
+      <CheckmarkSmall />
+    </IconContainer>
+    <Circle />
+  </ToggleContainer>
+);
 
 Toggle.propTypes = {
   checked: propTypes.bool,

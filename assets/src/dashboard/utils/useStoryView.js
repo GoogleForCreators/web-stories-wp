@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -29,10 +30,14 @@ import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import { usePagePreviewSize } from './index';
 
-export default function useStoryView({ filters, totalPages }) {
+export default function useStoryView({
+  filters,
+  isLoading = false,
+  totalPages,
+}) {
   const enableStoryPreviews = useFeature('enableStoryPreviews');
 
-  const [viewStyle, _setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
     filters.length > 0 ? filters[0].value : null
@@ -41,6 +46,7 @@ export default function useStoryView({ filters, totalPages }) {
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [activePreview, _setActivePreview] = useState();
+  const showStoriesWhileLoading = useRef(false);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -57,17 +63,10 @@ export default function useStoryView({ filters, totalPages }) {
 
   const setSort = useCallback(
     (newSort) => {
-      if (newSort !== sort) {
-        trackEvent('sort_stories', 'dashboard', '', '', {
-          order: sortDirection,
-          orderby: newSort,
-        });
-      }
-
       _setSort(newSort);
       setPageClamped(1);
     },
-    [sort, sortDirection, setPageClamped]
+    [setPageClamped]
   );
 
   const setFilter = useCallback(
@@ -81,23 +80,11 @@ export default function useStoryView({ filters, totalPages }) {
   const setSortDirection = useCallback(
     (newSortDirection) => {
       if (newSortDirection !== sortDirection) {
-        trackEvent('sort_stories', 'dashboard', '', '', {
-          order: newSortDirection,
-          orderby: sort,
-        });
-
         _setSortDirection(newSortDirection);
       }
     },
-    [sort, sortDirection]
+    [sortDirection]
   );
-
-  const setViewStyle = useCallback((newViewStyle) => {
-    trackEvent('toggle_stories_view', 'dashboard', '', '', {
-      mode: newViewStyle,
-    });
-    _setViewStyle(newViewStyle);
-  }, []);
 
   const toggleViewStyle = useCallback(() => {
     const newViewStyle =
@@ -132,10 +119,28 @@ export default function useStoryView({ filters, totalPages }) {
     [enableStoryPreviews]
   );
 
-  const requestNextPage = useCallback(() => setPageClamped(page + 1), [
-    page,
-    setPageClamped,
-  ]);
+  const requestNextPage = useCallback(() => {
+    showStoriesWhileLoading.current = true;
+    setPageClamped(page + 1);
+  }, [page, setPageClamped]);
+
+  useEffect(() => {
+    trackEvent('search', {
+      search_type: 'dashboard_stories',
+      search_term: searchKeyword,
+      search_filter: filter,
+      search_order: sortDirection,
+      search_orderby: sort,
+      search_view: viewStyle,
+    });
+  }, [searchKeyword, filter, sortDirection, sort, viewStyle]);
+
+  useEffect(() => {
+    // reset ref state after request is finished
+    if (!isLoading) {
+      showStoriesWhileLoading.current = false;
+    }
+  }, [isLoading]);
 
   return useMemo(
     () => ({
@@ -167,6 +172,7 @@ export default function useStoryView({ filters, totalPages }) {
         keyword: searchKeyword,
         setKeyword: setSearchKeyword,
       },
+      showStoriesWhileLoading,
     }),
     [
       activePreview,
@@ -215,4 +221,8 @@ export const PagePropTypes = PropTypes.shape({
 export const SearchPropTypes = PropTypes.shape({
   keyword: PropTypes.string,
   setKeyword: PropTypes.func,
+});
+
+export const ShowStoriesWhileLoadingPropType = PropTypes.shape({
+  current: PropTypes.boolean,
 });

@@ -20,12 +20,12 @@
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 import { toUTCDate } from '@web-stories-wp/date';
-
+import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies
  */
 import base64Encode from '../../../edit-story/utils/base64Encode';
-import getAllTemplates from '../../templates';
+
 import { APP_ROUTES } from '../../constants';
 import templateReducer, {
   defaultTemplatesState,
@@ -133,10 +133,7 @@ const useTemplateApi = (dataAdapter, config) => {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
           payload: {
-            message: {
-              body: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-              title: ERRORS.LOAD_TEMPLATES.TITLE,
-            },
+            message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
           },
         });
       }
@@ -182,10 +179,7 @@ const useTemplateApi = (dataAdapter, config) => {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.FETCH_MY_TEMPLATES_FAILURE,
           payload: {
-            message: {
-              body: err.message,
-              title: ERRORS.LOAD_TEMPLATES.TITLE,
-            },
+            message: ERRORS.LOAD_TEMPLATES.MESSAGE,
             code: err.code,
           },
         });
@@ -281,10 +275,7 @@ const useTemplateApi = (dataAdapter, config) => {
         dispatch({
           type: TEMPLATE_ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
           payload: {
-            message: {
-              body: err.message,
-              title: ERRORS.CREATE_TEMPLATE_FROM_STORY.TITLE,
-            },
+            message: ERRORS.CREATE_TEMPLATE_FROM_STORY.MESSAGE,
             code: err.code,
           },
         });

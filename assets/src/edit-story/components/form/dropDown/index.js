@@ -39,12 +39,12 @@ const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  color: ${({ theme }) => theme.colors.fg.black};
-  font-family: ${({ theme }) => theme.fonts.body1.font};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.black};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.font};
   border-radius: 4px;
   border: 1px solid transparent;
   ${KEYBOARD_USER_SELECTOR} &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout};
+    border-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.whiteout};
   }
 `;
 
@@ -57,8 +57,8 @@ export const DropDownSelect = styled.button`
   border: 0;
   background-color: ${({ theme, lightMode }) =>
     lightMode
-      ? rgba(theme.colors.fg.white, 0.1)
-      : rgba(theme.colors.bg.black, 0.3)};
+      ? rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)
+      : rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
   border-radius: 4px;
   padding: 2px 0 2px 6px;
   cursor: pointer;
@@ -75,18 +75,21 @@ export const DropDownSelect = styled.button`
     width: 28px;
     height: 28px;
     color: ${({ theme, lightMode }) =>
-      lightMode ? theme.colors.fg.white : rgba(theme.colors.fg.white, 0.3)};
+      lightMode
+        ? theme.DEPRECATED_THEME.colors.fg.white
+        : rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
   }
 `;
 
 export const DropDownTitle = styled.span`
   user-select: none;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.label.weight};
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
 `;
 
 function DropDown({
@@ -143,7 +146,7 @@ function DropDown({
       <DropDownSelect
         onClick={handleSelectClick}
         aria-pressed={isOpen}
-        aria-haspopup={true}
+        aria-haspopup
         aria-expanded={isOpen}
         aria-disabled={disabled}
         disabled={disabled}
@@ -156,12 +159,7 @@ function DropDown({
         </DropDownTitle>
         <DropdownIcon />
       </DropDownSelect>
-      <Popup
-        anchor={selectRef}
-        isOpen={isOpen}
-        placement={placement}
-        fillWidth={true}
-      >
+      <Popup anchor={selectRef} isOpen={isOpen} placement={placement} fillWidth>
         <DropDownList
           handleCurrentValue={handleCurrentValue}
           value={activeItem && activeItem.value}

@@ -62,48 +62,51 @@ const MetadataTextContainer = styled.div`
 `;
 
 const MediaDateText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.date.family};
-  line-height: ${({ theme }) => theme.fonts.date.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.date.size};
-  font-weight: ${({ theme }) => theme.fonts.date.weight};
-  color: ${({ theme }) => theme.grayout};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
   margin-bottom: 8px;
 `;
 
 const MediaTitleText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.title.family};
-  line-height: ${({ theme }) => theme.fonts.title.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.title.size};
-  font-weight: ${({ theme }) => theme.fonts.title.weight};
-  color: ${({ theme }) => theme.colors.bg.v9};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.size};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.weight};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v9};
 `;
 
 const MediaSizeText = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  color: ${({ theme }) => theme.colors.bg.v11};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v11};
 `;
 
 const Input = styled.input`
-  background: ${({ theme }) => theme.colors.bg.white};
-  border: 1px solid ${({ theme }) => theme.colors.fg.v3};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.white};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
   box-sizing: border-box;
   border-radius: 4px;
-  font-family: ${({ theme }) => theme.fonts.input.family};
-  line-height: ${({ theme }) => theme.fonts.input.lineHeight};
-  font-size: ${({ theme }) => theme.fonts.input.size};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.family};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.lineHeight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.size};
   padding: 7px 10px;
   margin-top: 20px;
   margin-bottom: 4px;
 `;
 
 const DialogDescription = styled.p`
-  font-family: ${({ theme }) => theme.fonts.description.family};
-  line-height: ${({ theme }) => theme.fonts.description.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.description.weight};
-  font-size: ${({ theme }) => theme.fonts.description.size};
-  color: ${({ theme }) => theme.grayout};
+  font-family: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.family};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.lineHeight};
+  font-weight: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.description.weight};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
   margin: 0;
 `;
 
@@ -160,10 +163,10 @@ function MediaEditDialog({ resource, onClose }) {
       // Update server.
       await updateMedia(id, { alt_text: altText });
       // Update internal state.
-      updateMediaElement({ id, alt: altText });
+      updateMediaElement({ id, data: { alt: altText } });
       onClose();
     } catch (err) {
-      trackError('local media edit', err.message);
+      trackError('local_media_edit', err.message);
       showSnackbar({
         message: __('Failed to update, please try again.', 'web-stories'),
       });
@@ -174,7 +177,7 @@ function MediaEditDialog({ resource, onClose }) {
 
   return (
     <Dialog
-      open={true}
+      open
       onClose={onClose}
       title={isImage ? imageDialogTitle : videoDialogTitle}
       actions={

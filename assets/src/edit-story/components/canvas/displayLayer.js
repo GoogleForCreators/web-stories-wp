@@ -125,6 +125,9 @@ function DisplayLayer() {
     }) => ({ editingElement, setPageContainer, setFullbleedContainer })
   );
 
+  const isBackgroundSelected =
+    selectedElements?.[0]?.id === currentPage?.elements?.[0]?.id;
+
   const resetAnimationState = useCallback(() => {
     updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
   }, [updateAnimationState]);
@@ -153,6 +156,7 @@ function DisplayLayer() {
           ref={setPageContainer}
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
+          isBackgroundSelected={isBackgroundSelected}
           overlay={
             currentPage && (
               <PageAttachment pageAttachment={currentPage.pageAttachment} />

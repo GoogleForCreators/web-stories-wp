@@ -18,9 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
 /**
  * Internal dependencies
  */
@@ -32,7 +31,7 @@ function SnackbarProvider({ children, place }) {
 
   const timeouts = useRef({});
 
-  const remove = (notification) => {
+  const remove = useCallback((notification) => {
     clearTimeout(timeouts.current[notification.key]);
     setNotifications((currentNotifications) => {
       return currentNotifications.filter(
@@ -41,33 +40,41 @@ function SnackbarProvider({ children, place }) {
     });
 
     delete timeouts.current[notification.key];
-  };
+  }, []);
 
-  const removeNotification = (notification) => {
-    const timeout = setTimeout(() => {
-      remove(notification);
-    }, notification.timeout);
-    timeouts.current[notification.key] = timeout;
-  };
+  const removeNotification = useCallback(
+    (notification) => {
+      timeouts.current[notification.key] = setTimeout(() => {
+        remove(notification);
+      }, notification.timeout);
+    },
+    [remove]
+  );
 
-  const create = (notification) => {
-    const newNotification = {
-      key: uuidv4(),
-      timeout: notification.timeout || 5000,
-      ...notification,
-    };
-    // React may batch state updates, so use the setter that receives the
-    // previous state.
-    setNotifications((currentNotifications) => [
-      ...currentNotifications,
-      newNotification,
-    ]);
-    removeNotification(newNotification);
-  };
+  const create = useCallback(
+    (notification) => {
+      const newNotification = {
+        key: uuidv4(),
+        timeout: notification.timeout || 5000,
+        ...notification,
+      };
+      // React may batch state updates, so use the setter that receives the
+      // previous state.
+      setNotifications((currentNotifications) => [
+        ...currentNotifications,
+        newNotification,
+      ]);
+      removeNotification(newNotification);
+    },
+    [removeNotification]
+  );
 
-  const state = {
-    showSnackbar: create,
-  };
+  const state = useMemo(
+    () => ({
+      showSnackbar: create,
+    }),
+    [create]
+  );
 
   return (
     <Context.Provider value={state}>

@@ -17,128 +17,77 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
-import styled from 'styled-components';
+import { useCallback, forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 
-const StyledTextArea = styled.textarea`
-  width: 100%;
-  padding: 0;
-  border: none;
-  appearance: none;
-  box-shadow: none !important;
-  outline: none;
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-  resize: ${({ resizeable }) => (resizeable ? 'auto' : 'none')};
+/**
+ * Internal dependencies
+ */
+import { TextArea as StyledTextArea } from '../../../design-system';
 
-  &:disabled {
-    background-color: transparent;
-    color: ${({ theme }) => theme.colors.fg.white};
-  }
-`;
-
-const Container = styled.div`
-  width: 100%;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
-
-  ${({ disabled, readOnly }) => (disabled || readOnly) && `opacity: 0.3`};
-
-  padding: 6px;
-  padding-left: 12px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout} !important;
-  }
-`;
-
-const Counter = styled.div`
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.tab.size};
-  text-align: right;
-  line-height: 1;
-  padding-right: 6px;
-`;
-
-function TextArea({
-  className,
-  placeholder,
-  value,
-  maxLength,
-  readOnly,
-  disabled,
-  resizeable,
-  showTextLimit,
-  rows,
-  onTextChange,
-  onBlur,
-  ...rest
-}) {
-  const hasMaxLength = typeof maxLength === 'number';
-  const showCounter = showTextLimit && hasMaxLength;
-
-  const handleChange = useCallback(
-    (e) => {
-      const str = e.target.value || '';
-      const text = hasMaxLength ? str.slice(0, maxLength) : str;
-
-      onTextChange(text, e);
+const TextArea = forwardRef(
+  (
+    {
+      className,
+      placeholder,
+      value,
+      disabled,
+      rows,
+      onChange,
+      onBlur,
+      ...rest
     },
-    [onTextChange, hasMaxLength, maxLength]
-  );
+    ref
+  ) => {
+    const [currentValue, setCurrentValue] = useState(value);
+    // Change happens only once blurring to avoid repeated onChange calls for each letter change.
+    const handleChange = useCallback(
+      (evt) => {
+        if (currentValue !== value) {
+          onChange(evt);
+        }
+      },
+      [currentValue, onChange, value]
+    );
 
-  const handleBlur = useCallback(
-    (e) => {
-      if (e.target.form) {
-        e.target.form.dispatchEvent(
-          new window.Event('submit', { cancelable: true })
-        );
-      }
+    // If new value comes from the outer world, update the local, too.
+    useEffect(() => {
+      setCurrentValue(value);
+    }, [value]);
 
-      if (onBlur) {
-        onBlur(e);
-      }
-    },
-    [onBlur]
-  );
+    const handleBlur = useCallback(
+      (e) => {
+        handleChange(e);
+        if (onBlur) {
+          onBlur(e);
+        }
+      },
+      [onBlur, handleChange]
+    );
 
-  return (
-    <Container className={className}>
+    return (
       <StyledTextArea
         placeholder={placeholder}
-        maxLength={maxLength}
-        disabled={disabled}
-        readOnly={readOnly}
-        resizeable={resizeable}
-        rows={rows}
-        value={value}
+        value={currentValue}
         {...rest}
-        onChange={handleChange}
+        onChange={(evt) => setCurrentValue(evt.target.value)}
         onBlur={handleBlur}
+        ref={ref}
       />
-      {showCounter && <Counter>{`${value.length}/${maxLength}`}</Counter>}
-    </Container>
-  );
-}
+    );
+  }
+);
+
+TextArea.displayName = 'TextArea';
 
 TextArea.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
-  readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
-  resizeable: PropTypes.bool,
-  showTextLimit: PropTypes.bool,
   rows: PropTypes.number,
-  onTextChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
 };
 

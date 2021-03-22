@@ -21,6 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { Compass, FloppyDisk, HomeWithHeart } from '../icons';
 import { STORY_VIEWING_LABELS } from './stories';
 import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
@@ -33,9 +34,7 @@ export const Z_INDEX = {
   LAYOUT_FIXED: 5,
   STICKY_TABLE: 2,
   POPOVER_MENU: 10,
-  TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
-  TOASTER: 15,
 };
 
 export const APP_ROUTES = {
@@ -45,7 +44,10 @@ export const APP_ROUTES = {
   TEMPLATE_DETAIL: 'template-detail',
 
   EDITOR_SETTINGS: '/editor-settings',
-  SUPPORT: 'https://wordpress.org/support/plugin/web-stories/',
+  SUPPORT: __(
+    'https://wordpress.org/support/plugin/web-stories/',
+    'web-stories'
+  ),
   STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
@@ -64,22 +66,31 @@ export const ROUTE_TITLES = {
     'Template Details',
     'web-stories'
   ),
-  [APP_ROUTES.EDITOR_SETTINGS]: __('Editor Settings', 'web-stories'),
+  [APP_ROUTES.EDITOR_SETTINGS]: __('Settings', 'web-stories'),
   [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
   DEFAULT: __('My Stories', 'web-stories'),
 };
 
 export const PRIMARY_PATHS = [
-  { value: APP_ROUTES.MY_STORIES, label: ROUTE_TITLES[APP_ROUTES.MY_STORIES] },
+  {
+    value: APP_ROUTES.MY_STORIES,
+    label: ROUTE_TITLES[APP_ROUTES.MY_STORIES],
+    Icon: HomeWithHeart,
+  },
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
     label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
     inProgress: true,
+    Icon: FloppyDisk,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
+    Icon: Compass,
   },
+];
+
+export const SECONDARY_PATHS = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
@@ -88,7 +99,7 @@ export const PRIMARY_PATHS = [
     value: APP_ROUTES.SUPPORT,
     label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
     isExternal: true,
-    trackingEvent: 'open_support_page',
+    trackingEvent: 'click_support_page',
   },
 ];
 

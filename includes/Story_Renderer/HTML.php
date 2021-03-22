@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
-use AmpProject\Dom\Document as AMP_Document;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
@@ -310,6 +309,7 @@ class HTML {
 
 		$config  = [
 			'bookendVersion' => 'v1.0',
+			'components'     => [],
 			'shareProviders' => $share_providers,
 		];
 		$bookend = sprintf(

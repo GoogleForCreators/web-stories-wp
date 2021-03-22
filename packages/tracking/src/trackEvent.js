@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,37 +24,60 @@ import track from './track';
 /**
  * Send an Analytics tracking event.
  *
- * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
- * @see  https://support.google.com/analytics/answer/1033068#Anatomy
+ * Note: Only use custom events if the existing events don't handle your use case.
  *
- * @param {string} eventName The event name (e.g. 'search').
- * @param {string} eventCategory The event category (e.g. 'editor'). GA defaults this to 'engagement'.
- * @param {string} [eventLabel] The event label (e.g. 'search_term').
- * @param {string} [eventValue] The event value (e.g. the actual search term).
- * @param {Object<*>} [additionalData] Additional event data to send.
+ * @see https://developers.google.com/analytics/devguides/collection/ga4/events
+ * @see https://support.google.com/analytics/answer/9267735
+ * @see https://support.google.com/analytics/answer/9310895?hl=en
+ *
+ * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
+ * @param {Object<*>} [eventParameters] Event parameters.
  * @return {Promise<void>} Promise that always resolves.
  */
-//eslint-disable-next-line require-await
-async function trackEvent(
-  eventName,
-  eventCategory,
-  eventLabel = '',
-  eventValue = '',
-  additionalData = {}
-) {
-  if (!isTrackingEnabled()) {
+async function trackEvent(eventName, eventParameters = {}) {
+  if (!(await isTrackingEnabled())) {
     return Promise.resolve();
   }
 
-  const eventData = {
-    send_to: config.trackingId,
-    event_category: eventCategory,
-    event_label: eventLabel,
-    event_value: eventValue,
-    ...additionalData,
-  };
+  let gtagEventParameters = {};
 
-  return track(eventName, eventData);
+  // Universal Analytics backwards compatibility.
+  const {
+    search_type,
+    duration,
+    title_length,
+    unread_count,
+    ...rest
+  } = eventParameters;
+  if (search_type) {
+    gtagEventParameters = {
+      ...rest,
+      event_label: search_type,
+    };
+  } else if (duration) {
+    gtagEventParameters = {
+      ...rest,
+      value: duration,
+    };
+  } else if (title_length) {
+    gtagEventParameters = {
+      ...rest,
+      value: title_length,
+    };
+  } else if (unread_count) {
+    gtagEventParameters = {
+      ...rest,
+      value: unread_count,
+    };
+  }
+
+  if (Object.values(gtagEventParameters).length) {
+    track(eventName, { ...gtagEventParameters, send_to: config.trackingId });
+    track(eventName, { ...eventParameters, send_to: config.trackingIdGA4 });
+    return Promise.resolve();
+  }
+
+  return track(eventName, eventParameters);
 }
 
 export default trackEvent;

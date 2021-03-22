@@ -23,6 +23,8 @@
 import { mkdirSync, rmdirSync } from 'fs';
 import { relative } from 'path';
 import program from 'commander';
+import semver from 'semver';
+const { inc: semverInc } = semver;
 
 /**
  * Internal dependencies
@@ -37,7 +39,6 @@ import {
 
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
-const README_FILE = 'readme.txt';
 const BUILD_DIR = 'build/web-stories';
 
 program
@@ -47,8 +48,19 @@ program
     '--nightly',
     'Whether this is a nightly build and thus should append the current revision to the version number.'
   )
+  .option(
+    '--increment <level>',
+    `Increment a version by the specified level. Level can
+be one of: major, minor, patch, premajor, preminor,
+prepatch, or prerelease. Only one version may be specified.`
+  )
+  .option(
+    '--preid <identifier>',
+    `Identifier to be used to prefix premajor, preminor, prepatch or prerelease version increments.`,
+    'alpha'
+  )
   .description('Bump the version of the plugin', {
-    version: 'The version number.',
+    version: 'The desired version number.',
   })
   .on('--help', () => {
     console.log('');
@@ -59,14 +71,17 @@ program
     console.log('  # Nightly build');
     console.log('  $ index.js version --nightly');
   })
-  .action((version, { nightly }) => {
+  .action((version, { nightly, increment, preid }) => {
     const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
-    const readmeFilePath = `${PLUGIN_DIR}/${README_FILE}`;
 
     const currentVersion = getCurrentVersionNumber(pluginFilePath);
-    const newVersion = version || currentVersion;
+    let newVersion = version || currentVersion;
 
-    updateVersionNumbers(pluginFilePath, readmeFilePath, newVersion, nightly);
+    if (increment) {
+      newVersion = semverInc(currentVersion, increment, undefined, preid);
+    }
+
+    updateVersionNumbers(pluginFilePath, newVersion, nightly);
     const constantVersion = getCurrentVersionNumber(pluginFilePath, true);
 
     console.log(

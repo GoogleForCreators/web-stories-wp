@@ -41,7 +41,7 @@ describe('help center toggle <Toggle />', () => {
   it('should have propper aria attributes when open', () => {
     const popupId = 'id-for-popup';
     const { getByRole } = renderWithProviders(
-      <Toggle isOpen={true} popupId={popupId} />
+      <Toggle isOpen popupId={popupId} />
     );
 
     const toggle = getByRole('button');
