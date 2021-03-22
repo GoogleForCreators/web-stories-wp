@@ -77,6 +77,17 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   }
 `;
 
+const ButtonBackground = styled.div`
+  width: ${PLAY_BUTTON_SIZE / 2}px;
+  height: ${PLAY_BUTTON_SIZE / 2}px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #c4c4c4;
+  border-radius: 50%;
+`;
+
 const Play = styled(Icons.PlayFilled)`
   width: 100%;
   height: 100%;
@@ -244,6 +255,7 @@ function VideoControls({
             onMouseDown={handlePlayPause}
             isAbove={isPlayAbove}
           >
+            <ButtonBackground />
             {isPlaying ? <Pause /> : <Play />}
           </ButtonWrapper>
         </TransitionWrapper>
