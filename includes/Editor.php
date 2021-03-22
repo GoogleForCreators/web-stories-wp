@@ -109,6 +109,11 @@ class Editor {
 					continue;
 				}
 
+				$cross_origin = $node->getAttribute( 'crossorigin' );
+				if ( $cross_origin ) {
+					continue;
+				}
+
 				if ( $this->starts_with( $value, $site_url ) ) {
 					continue;
 				}
