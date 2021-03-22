@@ -160,7 +160,7 @@
     "glob": "^7.1.6",
     "html-webpack-plugin": "^4.5.2",
     "husky": "^4.3.7",
-    "jasmine-core": "^3.6.0",
+    "jasmine-core": "^3.7.1",
     "jest": "^26.6.3",
     "jest-axe": "^4.1.0",
     "jest-canvas-mock": "^2.3.1",
