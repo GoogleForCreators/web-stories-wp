@@ -59,12 +59,17 @@ function useZoomSetting() {
       }
       case ZOOM_SETTING.FIT: {
         // See how much we can fit inside so all is visible
+        // However, leave some extra space, as we don't want it to hug too tightly to the edges.
+        // Beware, that these are slightly magic numbers, that just happens to look good
+        const horizontalPaddingForFit = 72;
+        const verticalPaddingForFit = 36;
         if (workspaceRatio > FULLBLEED_RATIO) {
-          // workspace is limited in the height, so use the height converted
-          maxPageWidth = workspaceSize.height * FULLBLEED_RATIO;
+          // workspace is limited in the height, so use the (height - padding) converted
+          maxPageWidth =
+            (workspaceSize.height - verticalPaddingForFit) * FULLBLEED_RATIO;
         } else {
-          // workspace is limited in the width, so use the width
-          maxPageWidth = workspaceSize.width;
+          // workspace is limited in the width, so use the width - padding
+          maxPageWidth = workspaceSize.width - horizontalPaddingForFit;
         }
         break;
       }

@@ -35,6 +35,11 @@ import {
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useLayout } from '../../app';
+import {
+  PAGEMENU_HEIGHT,
+  PAGEMENU_MARGIN_TOP,
+  PAGEMENU_MARGIN_BOTTOM,
+} from './pagemenu';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -46,8 +51,9 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const HEADER_SPACE = 16;
-const MENU_HEIGHT = 48;
+const HEADER_GAP = 16;
+const MENU_HEIGHT = PAGEMENU_HEIGHT + PAGEMENU_MARGIN_TOP;
+const MENU_GAP = PAGEMENU_MARGIN_BOTTOM;
 const CAROUSEL_HEIGHT = 104;
 
 // @todo: the menu height is not responsive
@@ -66,12 +72,15 @@ const Layer = styled.section`
   grid:
     'head      head      head      head      head    ' ${HEADER_HEIGHT}px
     '.         .         .         .         .       ' minmax(
-      ${HEADER_SPACE}px,
+      ${HEADER_GAP}px,
       1fr
     )
     '.         prev      page      next      .       ' var(--viewport-height-px)
     'menu      menu      menu      menu      menu    ' ${MENU_HEIGHT}px
-    '.         .         .         .         .       ' 1fr
+    '.         .         .         .         .       ' minmax(
+      ${MENU_GAP}px,
+      1fr
+    )
     'carousel  carousel  carousel  carousel  carousel' ${CAROUSEL_HEIGHT}px
     /
     1fr
@@ -108,6 +117,21 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   }
 `;
 
+const ZOOM_PADDING = '72px';
+const PaddedPage = styled.div`
+  width: calc(
+    var(--page-width-px) +
+      ${({ addMargin }) => (addMargin ? ZOOM_PADDING : '0')}
+  );
+  height: calc(
+    var(--fullbleed-height-px) +
+      ${({ addMargin }) => (addMargin ? ZOOM_PADDING : '0')}
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 // Overflow is not hidden for media edit layer.
 const PageAreaWithOverflow = styled.div`
   ${({ background }) => generatePatternStyles(background)}
@@ -116,6 +140,7 @@ const PageAreaWithOverflow = styled.div`
   width: var(--page-width-px);
   height: var(--fullbleed-height-px);
   border-radius: 4px;
+
   ${({ isControlled }) =>
     isControlled &&
     css`
@@ -167,7 +192,12 @@ function useLayoutParams(containerRef) {
     // space for the page is:
     const maxWidth = width;
     const maxHeight =
-      height - HEADER_HEIGHT - HEADER_SPACE - MENU_HEIGHT - CAROUSEL_HEIGHT;
+      height -
+      HEADER_HEIGHT -
+      HEADER_GAP -
+      MENU_HEIGHT -
+      MENU_GAP -
+      CAROUSEL_HEIGHT;
 
     setWorkspaceSize({ width: maxWidth, height: maxHeight });
   });
@@ -240,9 +270,17 @@ const PageArea = forwardRef(function PageArea(
     background,
     isControlled = false,
     hideScrollbars = false,
+    className = '',
   },
   ref
 ) {
+  const { hasVerticalOverflow, hasHorizontalOverflow } = useLayout(
+    ({ state: { hasVerticalOverflow, hasHorizontalOverflow } }) => ({
+      hasVerticalOverflow,
+      hasHorizontalOverflow,
+    })
+  );
+
   return (
     <PageAreaFullbleedContainer
       ref={fullbleedRef}
@@ -250,16 +288,19 @@ const PageArea = forwardRef(function PageArea(
       aria-label={__('Fullbleed area', 'web-stories')}
       role="region"
       hideScrollbars={hideScrollbars}
+      className={className}
     >
-      <PageAreaWithOverflow
-        showOverflow={showOverflow}
-        background={background}
-        isControlled={isControlled}
-      >
-        <PageAreaSafeZone ref={ref} data-testid="safezone">
-          {children}
-        </PageAreaSafeZone>
-      </PageAreaWithOverflow>
+      <PaddedPage addMargin={hasHorizontalOverflow && hasVerticalOverflow}>
+        <PageAreaWithOverflow
+          showOverflow={showOverflow}
+          background={background}
+          isControlled={isControlled}
+        >
+          <PageAreaSafeZone ref={ref} data-testid="safezone">
+            {children}
+          </PageAreaSafeZone>
+        </PageAreaWithOverflow>
+      </PaddedPage>
       {overlay}
     </PageAreaFullbleedContainer>
   );
@@ -273,6 +314,7 @@ PageArea.propTypes = {
   background: PropTypes.object,
   isControlled: PropTypes.bool,
   hideScrollbars: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export {
