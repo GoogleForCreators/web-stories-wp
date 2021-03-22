@@ -13,5 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as DeprecatedTooltip } from './deprecatedTooltip';
 export { default as Tooltip } from './tooltip';
