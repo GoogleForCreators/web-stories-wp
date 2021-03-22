@@ -198,7 +198,9 @@ function DropTargetsProvider({ children }) {
         setActiveDropTargetId(null);
 
         const { onDropHandler } = getDefinitionForType(resource.type);
-        if (onDropHandler) {
+        // onDropHandler will play the video, but we don't want that for videos
+        // that don't have a src because they are still uploading.
+        if (onDropHandler && resource.src && !resource.isPlaceholder) {
           onDropHandler(activeDropTargetId);
         }
       };

@@ -22,19 +22,15 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { CardGrid, CardGridItem } from '../../../../../dashboard/components';
+import { GRID_SPACING } from '../../../../../dashboard/constants';
 
 const StoryGrid = styled(CardGrid)`
-  overflow: auto;
-  height: calc(100% - 95px);
-  grid-template-rows: auto;
-
-  width: ${({ theme }) =>
-    `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px)`};
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) =>
-      `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px)`};
-  }
+  grid-column-gap: ${GRID_SPACING.COLUMN_GAP}px;
+  grid-row-gap: ${GRID_SPACING.ROW_GAP}px;
+  grid-template-columns: ${({ columnWidth }) => `
+    repeat(auto-fill, ${columnWidth}px)`};
+  grid-template-rows: ${({ columnHeight }) =>
+    `minmax(${columnHeight}px, auto)`};
 `;
 
 const StoryGridItem = styled(CardGridItem)`

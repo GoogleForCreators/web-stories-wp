@@ -78,7 +78,7 @@ jest.mock('../../config', () => ({
 
 jest.mock('../../../app/media/utils');
 
-jest.mock('../utils/useTranscodeVideo', () => ({
+jest.mock('../utils/useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
     isFeatureEnabled: true,

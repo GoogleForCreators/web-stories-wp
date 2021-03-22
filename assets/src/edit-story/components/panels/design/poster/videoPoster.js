@@ -18,8 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useMemo } from 'react';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -28,6 +29,11 @@ import { Row, Media } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue, Note } from '../../shared';
 import { useConfig } from '../../../../app/config';
+
+const StyledMedia = styled(Media)`
+  height: 114px;
+  width: 64px;
+`;
 
 const DEFAULT_RESOURCE = {
   poster: null,
@@ -41,7 +47,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   );
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
-  const { allowedImageMimeTypes } = useConfig();
+  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) => {
@@ -54,12 +60,24 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
     [pushUpdate, rawPoster]
   );
 
+  const posterErrorMessage = useMemo(() => {
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as a poster.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [allowedImageFileTypes]);
+
   return (
     <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>
       <Row>
-        <Media
+        <StyledMedia
           value={poster}
           onChange={handleChangePoster}
+          onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           alt={__('Preview poster image', 'web-stories')}

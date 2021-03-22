@@ -96,7 +96,7 @@ export const MESSAGES = {
       ),
     },
     MISSING_POSTER: {
-      MAIN_TEXT: __('Add poster image', 'web-stories'),
+      MAIN_TEXT: __('Add cover image', 'web-stories'),
       HELPER_TEXT: (
         <DashedList>
           <li>{__('Use as a representation of the story', 'web-stories')}</li>
