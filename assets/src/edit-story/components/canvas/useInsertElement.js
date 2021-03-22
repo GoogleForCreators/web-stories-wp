@@ -91,7 +91,7 @@ function useInsertElement() {
         handleRegisterUsage(resource);
       }
       // Auto-play on insert.
-      if (type === 'video') {
+      if (type === 'video' && resource?.src && !resource.isPlaceholder) {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {

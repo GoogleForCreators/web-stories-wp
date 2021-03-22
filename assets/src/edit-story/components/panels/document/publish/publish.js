@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -116,7 +116,11 @@ function PublishPanel() {
     }
   );
 
-  const { capabilities, allowedImageMimeTypes } = useConfig();
+  const {
+    capabilities,
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+  } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) =>
@@ -145,6 +149,28 @@ function PublishPanel() {
     },
     [updateStory]
   );
+
+  const publisherLogoErrorMessage = useMemo(() => {
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as publisher logo.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [allowedImageFileTypes]);
+
+  const posterErrorMessage = useMemo(() => {
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as a poster.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [allowedImageFileTypes]);
 
   return (
     <Panel
@@ -176,6 +202,7 @@ function PublishPanel() {
                 buttonInsertText={__('Select as cover image', 'web-stories')}
                 type={allowedImageMimeTypes}
                 ariaLabel={__('Cover image', 'web-stories')}
+                onChangeErrorText={posterErrorMessage}
               />
             </MediaWrapper>
             <LabelWrapper>
@@ -192,6 +219,7 @@ function PublishPanel() {
                 ref={publisherLogoRef}
                 value={publisherLogoUrl}
                 onChange={handleChangePublisherLogo}
+                onChangeErrorText={publisherLogoErrorMessage}
                 title={__('Select as publisher logo', 'web-stories')}
                 buttonInsertText={__('Select as publisher logo', 'web-stories')}
                 type={allowedImageMimeTypes}

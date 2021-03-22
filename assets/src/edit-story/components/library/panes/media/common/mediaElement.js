@@ -159,7 +159,7 @@ function Element({
         setShowVideoDetail(false);
         if (mediaElement.current && hoverTimer == null) {
           const timer = setTimeout(() => {
-            if (activeRef.current) {
+            if (activeRef.current && src) {
               const playPromise = mediaElement.current.play();
               if (playPromise) {
                 // All supported browsers return promise but unit test runner does not.
@@ -173,7 +173,7 @@ function Element({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current) {
+        if (mediaElement.current && src) {
           // Stop video and reset position.
           mediaElement.current.pause();
           mediaElement.current.currentTime = 0;
@@ -181,7 +181,7 @@ function Element({
       }
     }
     return resetHoverTime;
-  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
+  }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = (thumbnailUrl, baseColor) => () => {
     onInsert({ ...resource, baseColor }, thumbnailUrl);
