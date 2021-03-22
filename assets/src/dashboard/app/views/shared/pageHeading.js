@@ -28,30 +28,34 @@ import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 const HeadingContainer = styled(StandardViewContentGutter)`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 16px;
   padding-top: 48px;
-  padding-bottom: 24px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
 `;
 
 const StyledHeadline = styled(Display)`
   display: flex;
   align-items: center;
-  margin-right: 8px;
+  margin-right: 28px;
+  padding-bottom: 24px;
   white-space: nowrap;
 `;
 
 const HeadlineFilters = styled.div`
   display: flex;
   align-items: center;
-  margin: 0 auto;
+  margin: auto 0 auto 0;
+  padding-bottom: 24px;
 `;
 
 const HeaderSearch = styled.div`
   width: 208px;
   max-width: 208px;
+  min-width: 208px;
   margin: auto 0;
+  padding-bottom: 24px;
 `;
 
 const PageHeading = ({
