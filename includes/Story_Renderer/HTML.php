@@ -276,20 +276,7 @@ class HTML {
 	 * @return string
 	 */
 	protected function print_social_share( $content ) {
-		$share_providers = [
-			[
-				'provider' => 'twitter',
-			],
-			[
-				'provider' => 'linkedin',
-			],
-			[
-				'provider' => 'email',
-			],
-			[
-				'provider' => 'system',
-			],
-		];
+		$share_providers = [ 'twitter', 'linkedin', 'email', 'system', ];
 
 		/**
 		 * Filters the list of sharing providers in the Web Stories sharing dialog.
@@ -310,7 +297,7 @@ class HTML {
 			'shareProviders' => $share_providers,
 		];
 		$social_share = sprintf(
-			'<amp-story-social-share><script type="application/json">%s</script></amp-story-social-share>',
+			'<amp-story-social-share layout="nodisplay"><script type="application/json">%s</script></amp-story-social-share>',
 			wp_json_encode( $config )
 		);
 
