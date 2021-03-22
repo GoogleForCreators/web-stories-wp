@@ -243,4 +243,10 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
+export {
+  Button,
+  BUTTON_TRANSITION_TIMING,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+};
