@@ -26,10 +26,12 @@ import { useRef } from 'react';
  */
 import { useFeatures } from 'flagged';
 import { MASKS } from '../../../../masks';
+import STICKERS from '../../../../stickers';
 import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import ShapePreview from './shapePreview';
+import StickerButton from './stickerButton';
 import paneId from './paneId';
 
 const SectionContent = styled.div`
@@ -48,6 +50,8 @@ const SectionContent = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 `;
+
+const STICKER_TYPES = Object.keys(STICKERS);
 
 function ShapesPane(props) {
   const { showTextAndShapesSearchInput } = useFeatures();
@@ -68,6 +72,13 @@ function ShapesPane(props) {
         <SectionContent ref={ref}>
           {MASKS.filter((mask) => mask.showInLibrary).map((mask, i) => (
             <ShapePreview mask={mask} key={mask.type} index={i} isPreview />
+          ))}
+        </SectionContent>
+      </Section>
+      <Section title={__('Stickers', 'web-stories')}>
+        <SectionContent>
+          {STICKER_TYPES.map((stickerType) => (
+            <StickerButton key={stickerType} stickerType={stickerType} />
           ))}
         </SectionContent>
       </Section>

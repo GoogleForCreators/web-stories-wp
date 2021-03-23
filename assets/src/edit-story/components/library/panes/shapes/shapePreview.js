@@ -34,7 +34,7 @@ import { themeHelpers, ThemeGlobals } from '../../../../../design-system';
 import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
 
 // By default, the element should be 33% of the page.
-const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
+export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
 const Aspect = styled.button`
