@@ -70,7 +70,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
   overflow-y: scroll;
-  max-height: ${window.innerHeight}px;
+  max-height: 100vh;
 `;
 
 function Popup({
