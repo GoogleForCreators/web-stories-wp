@@ -210,6 +210,17 @@ class Experiments {
 		return [
 			/**
 			 * Author: @littlemilkstudio
+			 * Issue: 6708
+			 * Creation date: 2021-03-23
+			 */
+			[
+				'name'        => 'enableHiddenStickers',
+				'label'       => __( 'Enable Hidden Stickers', 'web-stories' ),
+				'description' => __( 'Appends sticker buttons to the bottom off the shapes panel in library.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
 			 * Issue: 6379
 			 * Creation date: 2021-03-09
 			 */
