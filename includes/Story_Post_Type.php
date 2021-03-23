@@ -625,22 +625,24 @@ class Story_Post_Type {
 			return;
 		}
 
-		if ( ! property_exists( $post_type_object->cap, 'edit_post' ) ) {
+		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
 			return;
 		}
 
-		if ( current_user_can( $post_type_object->cap->edit_post ) ) {
-			// Make sure these functions are loaded.
-			if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/post.php';
-			}
 
-			// Check current lock.
-			$lock_user_id = wp_check_post_lock( $story_id );
-			if ( ! $lock_user_id ) {
-				// If no lock set, create new lock.
-				wp_set_post_lock( $story_id );
-			}
+		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
+			return;
+		}
+		// Make sure these functions are loaded.
+		if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/post.php';
+		}
+
+		// Check current lock.
+		$lock_user_id = wp_check_post_lock( $story_id );
+		if ( ! $lock_user_id ) {
+			// If no lock set, create new lock.
+			wp_set_post_lock( $story_id );
 		}
 	}
 
