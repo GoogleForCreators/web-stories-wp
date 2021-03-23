@@ -38,7 +38,7 @@ const Heading = styled.h1`
 export function Header() {
   return (
     <Panel>
-      <Heading>{__('Web Stories Help Center', 'web-stories')}</Heading>
+      <Heading as="h2">{__('Web Stories Help Center', 'web-stories')}</Heading>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {__(
           'Discover tips & resources to help you get the most out of your Web Stories.',

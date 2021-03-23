@@ -27,7 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Radio, themeHelpers } from '../../../../design-system';
 import useRadioNavigation from '../shared/useRadioNavigation';
 
-const VisuallyHiddenLabel = styled.h4`
+const VisuallyHiddenLabel = styled.h3`
   ${themeHelpers.visuallyHidden};
 `;
 
