@@ -47,10 +47,7 @@ export const SelectButton = styled.button(
     text-overflow: ellipsis;
     cursor: pointer;
 
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )}
+    ${themeHelpers.focusableOutlineCSS}
 
     &:hover {
       border-color: ${theme.colors.border[

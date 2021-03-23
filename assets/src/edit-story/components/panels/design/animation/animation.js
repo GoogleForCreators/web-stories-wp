@@ -227,7 +227,6 @@ function AnimationPanel({
         <StyledRow>
           <EffectChooserDropdown
             onAnimationSelected={handleAddOrUpdateElementEffect}
-            selectedEffectTitle={selectedEffectTitle}
             onNoEffectSelected={handleRemoveEffect}
             isBackgroundEffects={isBackground}
             disabledTypeOptionsMap={disabledTypeOptionsMap}

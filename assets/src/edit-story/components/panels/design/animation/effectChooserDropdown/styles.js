@@ -60,6 +60,15 @@ export const AnimationListItem = styled.li`
   color: ${({ theme }) => theme.colors.fg.primary};
   text-transform: uppercase;
   transition: background 0.1s linear;
+  margin: 0;
+  /* Account for tooltip nested inside of list items wrapping actual content */
+  & > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 
   &[aria-disabled='true'] {
     background: ${({ theme }) => theme.colors.interactiveBg.disable};
@@ -83,17 +92,32 @@ export const AnimationListItem = styled.li`
       display: none;
     }
   }
+
+  ${({ noEffect }) =>
+    noEffect &&
+    css`
+      height: 36px;
+      font-size: 14px;
+      text-transform: none;
+
+      /* noEffect doesn't have an active style so we want to just leave the display alone */
+      ${ContentWrapper} {
+        display: inline-block !important;
+      }
+    `}
+
   ${themeHelpers.focusableOutlineCSS};
 `;
 
 export const styleOverrideForAnimationEffectMenu = css`
   display: inline-block;
+  margin-top: 0;
+  padding: 16px 4px 16px 16px;
   ul {
     display: grid;
     justify-content: center;
     gap: 12px 4px;
     grid-template-columns: repeat(4, 1fr);
-    padding: 16px 2px 16px 16px;
     position: relative;
   }
 `;
@@ -108,6 +132,9 @@ export const styleOverrideForSelectButton = ({ theme }) => css`
     border-color: transparent transparent ${theme.colors.border.defaultNormal}
       transparent;
   }
-`;
 
-export const NoEffect = styled.div``;
+  ${themeHelpers.focusableOutlineCSS(
+    theme.colors.border.focus,
+    theme.colors.bg.secondary
+  )}
+`;

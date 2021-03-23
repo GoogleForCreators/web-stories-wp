@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -421,3 +422,29 @@ export const foregroundEffectOptions = {
     },
   },
 };
+
+const ANIMATION_OPTION_PROP_TYPE = {
+  ariaLabel: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  Effect: PropTypes.node,
+  gridSpace: PropTypes.oneOf(Object.values(GRID_SIZING)),
+  size: PropTypes.number,
+  scaleDirection: PropTypes.oneOf(Object.values(SCALE_DIRECTION)),
+  panDirection: PropTypes.oneOf(Object.values(DIRECTION)),
+  zoomDirection: PropTypes.oneOf(Object.values(SCALE_DIRECTION)),
+  flyInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
+  rotateInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
+  whooshInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
+};
+
+export const ANIMATION_DROPDOWN_OPTION_PROP_TYPE = {
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  animation: PropTypes.shape(ANIMATION_OPTION_PROP_TYPE),
+};
+
+export const ANIMATION_DIRECTION_PROP_TYPE = PropTypes.oneOf([
+  ...Object.values(DIRECTION),
+  ...Object.values(SCALE_DIRECTION),
+  false,
+]);
