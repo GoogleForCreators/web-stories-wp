@@ -13,26 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import React from 'react';
-import { action } from '@storybook/addon-actions';
 
-/**
- * Internal dependencies
- */
-import EffectChooserDropdown from '../effectChooserDropdown';
-
-export default {
-  title: 'Animations/Effect Chooser',
-  component: EffectChooserDropdown,
-};
-
-export const _default = () => {
-  return (
-    <EffectChooserDropdown
-      onAnimationSelected={(sender) => action('onAnimationSelected', sender)}
-    />
-  );
-};
+// Because some animations have the same effect name we have to specify based on direction
+export const getDirectionalEffect = (effect, direction) =>
+  direction ? `${effect} ${direction}`.trim() : effect;

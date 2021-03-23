@@ -44,7 +44,7 @@ import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { Note } from '../../shared';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
-import EffectChooserDropdown from './effectChooserDropdown';
+import { EffectChooserDropdown } from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
 
