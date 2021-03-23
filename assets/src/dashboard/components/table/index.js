@@ -18,13 +18,15 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../../design-system';
+import { STORY_PREVIEW_WIDTH, VIEWPORT_BREAKPOINT } from '../../constants';
 import { TypographyPresets } from '../typography';
-import { Z_INDEX } from '../../constants';
+
+const CELL_PADDING = 16;
 
 export const Table = styled.table`
   ${TypographyPresets.Small};
@@ -35,58 +37,52 @@ export const Table = styled.table`
 export const TableBody = styled.tbody``;
 
 export const TableHeader = styled.thead`
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray50};
-  border-top: ${({ theme }) => theme.DEPRECATED_THEME.table.border};
-  border-bottom: ${({ theme }) => theme.DEPRECATED_THEME.table.border};
+  background: ${({ theme }) => theme.colors.bg.secondary};
 `;
 
 export const StickyTableHeader = styled(TableHeader)`
   width: 100%;
   border-top: 0;
   border-bottom: 0;
+
   th {
     height: 100%;
-    background: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray50};
-    border-top-width: 0;
-    border-bottom: ${({ theme }) => theme.DEPRECATED_THEME.table.border};
+    background: ${({ theme }) => theme.colors.bg.secondary};
     position: sticky;
-    z-index: ${Z_INDEX.STICKY_TABLE};
-    top: ${({ top }) => `${top}px` || 0};
+    z-index: 2;
+    top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
+
+    :first-child {
+      border-top-left-radius: ${({ theme }) => theme.borders.radius.small};
+      border-bottom-left-radius: ${({ theme }) => theme.borders.radius.small};
+    }
+
+    :last-child {
+      border-top-right-radius: ${({ theme }) => theme.borders.radius.small};
+      border-bottom-right-radius: ${({ theme }) => theme.borders.radius.small};
+    }
   }
 `;
-StickyTableHeader.propTypes = {
-  top: PropTypes.number,
-};
 
 export const TableHeaderCell = styled.th`
-  padding: ${({ theme }) => theme.DEPRECATED_THEME.table.headerCellPadding}px;
-  font-weight: ${({ theme }) =>
-    theme.DEPRECATED_THEME.typography.weight.normal};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+  padding: 16px;
   text-align: left;
+  white-space: nowrap;
 `;
 
 export const TablePreviewHeaderCell = styled(TableHeaderCell)`
   padding-right: 0;
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-    display: none;
-  }
 `;
 
 export const TableDateHeaderCell = styled(TableHeaderCell)`
   min-width: 160px;
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-    min-width: 150px;
-  }
 `;
 
 export const TableStatusHeaderCell = styled(TableHeaderCell)`
   display: table-cell;
   min-width: 100px;
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+  @media ${({ theme }) => theme.breakpoint.tabletMax} {
     display: none;
   }
 `;
@@ -104,14 +100,6 @@ export const TableTitleHeaderCell = styled(TableHeaderCell)`
     display: none;
     margin-right: 5px;
   }
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-    padding-left: ${({ theme }) =>
-      theme.DEPRECATED_THEME.table.headerCellPadding}px;
-    span {
-      display: inline;
-    }
-  }
 `;
 
 export const TableContentHeaderCell = styled(TableHeaderCell)`
@@ -119,28 +107,35 @@ export const TableContentHeaderCell = styled(TableHeaderCell)`
   min-width: 150px;
 `;
 
-export const TableRow = styled.tr``;
+export const TableRow = styled.tr`
+  min-width: 1250px;
+
+  @media ${({ theme }) => theme.breakpoint.tabletMax} {
+    min-width: 0;
+  }
+`;
 
 export const TableCell = styled.td`
-  padding: ${({ theme }) => theme.DEPRECATED_THEME.table.cellPadding}px;
-  font-weight: ${({ theme }) =>
-    theme.DEPRECATED_THEME.typography.weight.normal};
+  padding: ${CELL_PADDING}px;
+  font-weight: normal;
   word-break: break-word;
-  font-size: ${({ theme }) =>
-    theme.DEPRECATED_THEME.typography.presets.s.size}px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
-  height: ${({ theme }) => theme.DEPRECATED_THEME.table.cellPadding * 2 + 50}px;
+  height: ${CELL_PADDING * 2 + 50}px;
   vertical-align: middle;
-  line-height: ${({ theme }) =>
-    theme.DEPRECATED_THEME.table.headerContentSize}px;
+
+  span {
+    color: ${({ theme }) => theme.colors.standard.black};
+    line-height: 20px;
+  }
 `;
 
 export const TableStatusCell = styled(TableCell)`
   display: table-cell;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray400};
-  font-weight: 500;
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+  span {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+
+  @media ${({ theme }) => theme.breakpoint.tabletMax} {
     display: none;
   }
 `;
@@ -157,9 +152,5 @@ export const TableContentCell = styled(TableCell)`
 `;
 
 export const TablePreviewCell = styled(TableCell)`
-  width: ${({ theme }) => theme.DEPRECATED_THEME.previewWidth.thumbnail}px;
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
-    display: none;
-  }
+  width: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL]}px;
 `;

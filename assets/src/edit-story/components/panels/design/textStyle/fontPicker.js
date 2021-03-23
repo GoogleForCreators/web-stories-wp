@@ -19,11 +19,7 @@
  */
 import { forwardRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -31,11 +27,8 @@ import { __ } from '@wordpress/i18n';
 import objectPick from '../../../../utils/objectPick';
 import stripHTML from '../../../../utils/stripHTML';
 import { useFont } from '../../../../app/font';
-import {
-  AdvancedDropDown,
-  MULTIPLE_DISPLAY_VALUE,
-  MULTIPLE_VALUE,
-} from '../../../form';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { AdvancedDropDown } from '../../../form';
 import { Option, Selected } from '../../../form/advancedDropDown/list/styled';
 import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
@@ -175,6 +168,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
       onObserve={onObserve}
       renderer={forwardRef(renderer)}
       disabled={!fonts?.length}
+      dropDownLabel={__('Font', 'web-stories')}
     />
   );
 }

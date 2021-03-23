@@ -18,18 +18,15 @@
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
-import { trackEvent } from '../../../tracking';
+import { useSnackbar } from '../../../design-system';
 
 /**
  * Custom hook to open the WordPress media modal.
@@ -38,6 +35,7 @@ import { trackEvent } from '../../../tracking';
  * @param {string} [props.title] Media modal title.
  * @param {string} [props.buttonInsertText] Text to use for the "Insert" button.
  * @param {Function} props.onSelect Selection callback. Used to process the inserted image.
+ * @param {string} props.onSelectErrorMessage Text displayed when incorrect file type is selected.
  * @param {Function?} props.onClose Close Callback.
  * @param {Function?} props.onPermissionError Callback for when user does not have upload permissions.
  * @param {string} props.type Media type.
@@ -48,6 +46,7 @@ export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
   onSelect,
+  onSelectErrorMessage = __('Unable to use this file type.', 'web-stories'),
   onClose,
   onPermissionError,
   type = '',
@@ -59,6 +58,7 @@ export default function useMediaPicker({
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+  const { showSnackbar } = useSnackbar();
   useEffect(() => {
     try {
       // Work around that forces default tab as upload tab.
@@ -83,7 +83,7 @@ export default function useMediaPicker({
 
   const openMediaPicker = useCallback(
     (evt) => {
-      trackEvent('open_media_modal', 'editor');
+      trackEvent('open_media_modal');
 
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {
@@ -112,6 +112,13 @@ export default function useMediaPicker({
           .get('selection')
           .first()
           .toJSON();
+
+        // Only allow user to select a mime type from allowed list.
+        if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
+          showSnackbar({ message: onSelectErrorMessage });
+
+          return;
+        }
         onSelect(mediaPickerEl);
       });
 
@@ -133,10 +140,12 @@ export default function useMediaPicker({
     },
     [
       hasUploadMediaAction,
+      showSnackbar,
       onPermissionError,
       onClose,
       onSelect,
       buttonInsertText,
+      onSelectErrorMessage,
       multiple,
       type,
       title,

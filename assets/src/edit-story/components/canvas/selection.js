@@ -18,13 +18,13 @@
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
-import { useStory } from '../../app';
-import useCanvas from '../canvas/useCanvas';
+import { useStory, useCanvas } from '../../app';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 
 function Selection() {
-  const { selectedElements, isAnimating } = useStory((state) => ({
+  const { currentPage, selectedElements, isAnimating } = useStory((state) => ({
+    currentPage: state.state.currentPage,
     selectedElements: state.state.selectedElements,
     isAnimating: [
       STORY_ANIMATION_STATE.PLAYING,
@@ -40,13 +40,25 @@ function Selection() {
     })
   );
 
-  // Do not show selection for in editing mode.
-  if (editingElement || isAnimating) {
+  // No selection.
+  if (selectedElements.length === 0) {
     return null;
   }
 
-  // No selection.
-  if (selectedElements.length === 0) {
+  // No need for displaying non-functional frame for selected background.
+  const isBackground = selectedElements[0].id === currentPage.elements?.[0]?.id;
+  if (isBackground) {
+    return null;
+  }
+
+  // No need for displaying non-functional frame for video placeholders.
+  const isVideoPlaceholder = selectedElements[0]?.resource?.isPlaceholder;
+  if (isVideoPlaceholder) {
+    return null;
+  }
+
+  // Do not show selection for in editing mode.
+  if (editingElement || isAnimating) {
     return null;
   }
 

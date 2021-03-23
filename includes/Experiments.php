@@ -209,6 +209,29 @@ class Experiments {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 6379
+			 * Creation date: 2021-03-09
+			 */
+			[
+				'name'        => 'enableExperimentalAnimationEffects',
+				'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
+				'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 5880
+			 * Creation date: 2021-01-19
+			 */
+			[
+				'name'        => 'enableQuickTips',
+				'label'       => __( 'Quick Tips', 'web-stories' ),
+				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28
@@ -276,17 +299,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2044
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextMagicAndHelperMode',
-				'label'       => __( 'Text Magic', 'web-stories' ),
-				'description' => __( 'Enable text magic and helper mode icons', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2098
 			 * Creation date: 2020-06-04
 			 */
@@ -339,6 +351,7 @@ class Experiments {
 				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
 				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
@@ -352,15 +365,15 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @zachhale
-			 * Issue: #5079
-			 * Creation date: 2020-11-04
+			 * Author: @swissspidy
+			 * Issue: #5669
+			 * Creation date: 2021-01-21
 			 */
 			[
-				'name'        => 'showPageLayoutsTab',
-				'label'       => __( 'Page layouts tab', 'web-stories' ),
-				'description' => __( 'Enable page layouts tab', 'web-stories' ),
-				'group'       => 'editor',
+				'name'        => 'videoOptimization',
+				'label'       => __( 'Video optimization', 'web-stories' ),
+				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
+				'group'       => 'general',
 			],
 		];
 	}
@@ -384,13 +397,7 @@ class Experiments {
 		$result = [];
 
 		foreach ( $experiments as $experiment ) {
-			if ( array_key_exists( 'default', $experiment ) ) {
-				$enabled = (bool) $experiment['default'];
-			} else {
-				$enabled = $this->is_experiment_enabled( $experiment['name'] );
-			}
-
-			$result[ $experiment['name'] ] = $enabled;
+			$result[ $experiment['name'] ] = $this->is_experiment_enabled( $experiment['name'] );
 		}
 
 		return $result;
@@ -431,5 +438,21 @@ class Experiments {
 
 		$experiments = get_option( Settings::SETTING_NAME_EXPERIMENTS );
 		return ! empty( $experiments[ $name ] );
+	}
+
+	/**
+	 * Returns the names of all enabled experiments.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return array List of all enabled experiments.
+	 */
+	public function get_enabled_experiments() {
+		$experiments = array_filter(
+			wp_list_pluck( $this->get_experiments(), 'name' ),
+			[ $this, 'is_experiment_enabled' ]
+		);
+
+		return $experiments;
 	}
 }

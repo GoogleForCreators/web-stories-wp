@@ -15,18 +15,24 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Media } from '../../icons';
+import StoryPropTypes from '../../types';
+import VisibleImage from '../media/visibleImage';
+import { getSmallestUrlForWidth } from '../media/util';
 
-function GifIcon() {
-  const alt = __('GIF element', 'web-stories');
-  return <Media aria-label={alt} />;
+function GifLayerIcon({
+  element: {
+    resource,
+    resource: { alt },
+  },
+}) {
+  const src = getSmallestUrlForWidth(0, resource);
+  return <VisibleImage src={src} alt={alt} height="20" />;
 }
 
-export default GifIcon;
+GifLayerIcon.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
+
+export default GifLayerIcon;

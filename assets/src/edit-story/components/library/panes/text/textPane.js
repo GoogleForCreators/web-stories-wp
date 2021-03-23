@@ -17,15 +17,12 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import ResizeObserver from 'resize-observer-polyfill';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -36,7 +33,7 @@ import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
-import TextSets from './textSets';
+import TextSetsPane from './textSets/textSetsPane';
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -52,6 +49,14 @@ function TextPane(props) {
   const { showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
+
+  const onClick = useCallback(
+    (title, element) => {
+      insertPreset(element);
+      trackEvent('insert_text_preset', { name: title });
+    },
+    [insertPreset]
+  );
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
@@ -87,11 +92,11 @@ function TextPane(props) {
             }
             title={title}
             element={element}
-            onClick={() => insertPreset(element)}
+            onClick={() => onClick(title, element)}
           />
         ))}
       </Section>
-      {paneRef.current && <TextSets paneRef={paneRef} />}
+      {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>
   );
 }

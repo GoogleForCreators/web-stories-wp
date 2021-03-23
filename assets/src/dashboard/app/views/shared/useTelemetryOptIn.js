@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState, useEffect, useRef } from 'react';
+import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -25,6 +26,7 @@ import { useCallback, useState, useEffect, useRef } from 'react';
 import useApi from '../../api/useApi';
 import { useRouteHistory } from '../../router';
 import { APP_ROUTES } from '../../../constants';
+import localStore from '../../../../edit-story/utils/localStore';
 
 // The value associated with this key indicates if the user has interacted with
 // the banner previously. If they have, we do not show the banner again.
@@ -65,6 +67,14 @@ export default function useTelemetryOptIn() {
   const dataFetched = useRef(false);
 
   useEffect(() => {
+    if (optedIn) {
+      enableTracking();
+    } else {
+      disableTracking();
+    }
+  }, [optedIn]);
+
+  useEffect(() => {
     if (!dataIsLoaded && !dataFetched.current) {
       fetchCurrentUser();
       dataFetched.current = true;
@@ -73,13 +83,13 @@ export default function useTelemetryOptIn() {
 
   const _toggleWebStoriesTrackingOptIn = useCallback(() => {
     toggleWebStoriesTrackingOptIn();
-    localStorage.setItem(LOCAL_STORAGE_KEY, true);
+    localStore.setItemByKey(LOCAL_STORAGE_KEY, true);
     setOptInCheckboxClicked(true);
   }, [toggleWebStoriesTrackingOptIn]);
 
   const closeBanner = useCallback(() => {
     setBannerPreviouslyClosed(true);
-    localStorage.setItem(LOCAL_STORAGE_KEY, true);
+    localStore.setItemByKey(LOCAL_STORAGE_KEY, true);
   }, []);
 
   let bannerVisible = true;

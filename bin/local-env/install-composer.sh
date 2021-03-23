@@ -1,5 +1,5 @@
 #!/bin/bash
-COMPOSER_VERSION='1.10.17'
+COMPOSER_VERSION=$(curl -Ls -w %{url_effective} -o /dev/null https://github.com/composer/composer/releases/latest | rev | cut -d '/' -f 1 | rev)
 
 # Exit if any command fails
 set -e

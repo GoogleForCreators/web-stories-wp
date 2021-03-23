@@ -18,19 +18,20 @@
  * External dependencies
  */
 import { select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
  */
 import { Text } from '../';
-import { THEME_CONSTANTS } from '../../../../';
+import { Headline } from '../..';
+import { THEME_CONSTANTS, theme } from '../../../../';
 
 export default {
   title: 'DesignSystem/Components/Typography/Text',
   component: Text,
 };
 
+const booleanOptions = [true, false];
 const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 const textRenderAsOptions = ['p', 'a', 'span'];
 
@@ -67,19 +68,41 @@ export const Bold = () => (
   </>
 );
 
-export const Link = () => (
+export const Label = () => (
   <>
-    {textPresetSizes.map((presetSize) => (
-      <Text
-        key={`${presetSize}_text_link`}
-        size={presetSize}
-        as={select('as', textRenderAsOptions, 'a')}
-        href="#"
-        onClick={action('anchor clicked! Do something.')}
-      >
-        {`${presetSize} - Click here for more information`}
-        <br />
-      </Text>
-    ))}
+    <Headline as="h1">{'Label'}</Headline>
+    {textPresetSizes.map((presetSize) => {
+      return (
+        theme.typography.presets.label[presetSize] && (
+          <Text
+            key={`${presetSize}_text_link`}
+            size={presetSize}
+            as="label"
+            isBold={select('isBold', booleanOptions, false)}
+          >
+            {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+            <br />
+          </Text>
+        )
+      );
+    })}
+    <br />
+    <Headline as="h1">{'Label - Disabled'}</Headline>
+    {textPresetSizes.map((presetSize) => {
+      return (
+        theme.typography.presets.label[presetSize] && (
+          <Text
+            key={`${presetSize}_text_link_disabled`}
+            size={presetSize}
+            as="label"
+            isBold={select('isBold', booleanOptions, false)}
+            disabled
+          >
+            {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
+            <br />
+          </Text>
+        )
+      );
+    })}
   </>
 );

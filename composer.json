@@ -11,11 +11,13 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "^2.0.8",
+    "ampproject/amp-toolbox": "^0.1",
+    "ampproject/amp-wp": "dev-develop",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
-    "enshrined/svg-sanitize": "^0.13.3",
+    "enshrined/svg-sanitize": "^0.14.0",
     "mcaskill/composer-exclude-files": "^2.0",
+    "sabberworm/php-css-parser": "dev-master#bfdd976",
     "symfony/polyfill-mbstring": "^1.18"
   },
   "provide": {
@@ -25,7 +27,8 @@
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-    "php-stubs/wordpress-stubs": "^5.5",
+    "dg/bypass-finals": "1.1.3",
+    "php-stubs/wordpress-stubs": "^5.7",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
@@ -43,47 +46,29 @@
   "extra": {
     "downloads": {
       "composer-normalize": {
-        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.9.0/composer-normalize.phar",
         "path": "vendor/bin/composer-normalize",
-        "type": "phar"
-      },
-      "phpstan": {
-        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.52/phpstan.phar",
-        "path": "vendor/bin/phpstan",
-        "type": "phar"
+        "type": "phar",
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.13.2/composer-normalize.phar"
       },
       "php-scoper": {
-        "url": "https://github.com/humbug/php-scoper/releases/download/0.13.5/php-scoper.phar",
         "path": "vendor/bin/php-scoper",
-        "type": "phar"
+        "type": "phar",
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.14.0/php-scoper.phar"
+      },
+      "phpstan": {
+        "path": "vendor/bin/phpstan",
+        "type": "phar",
+        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.77/phpstan.phar"
       }
     },
+    "enable-patching": true,
     "exclude-from-files": [
       "ampproject/amp-wp/back-compat/back-compat.php",
       "ampproject/amp-wp/includes/amp-helper-functions.php",
       "ampproject/amp-wp/includes/admin/functions.php",
       "ampproject/amp-wp/includes/deprecated.php",
       "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
-    ],
-    "patches": {
-      "sabberworm/php-css-parser": {
-        "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
-        "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
-      },
-      "enshrined/svg-sanitize": {
-        "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch",
-        "Fix a PHP 8 deprecation warning <https://github.com/darylldoyle/svg-sanitizer/pull/45>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...c23734ebfa35aa40e975e76415da3698329ae7b2.patch"
-      }
-    },
-    "patches-ignore": {
-      "ampproject/amp-wp": {
-        "sabberworm/php-css-parser": {
-          "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "patches/php-css-parser-pull-193.patch",
-          "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "patches/php-css-parser-pull-185.patch",
-          "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "patches/php-css-parser-commit-10a2501.patch"
-        }
-      }
-    }
+    ]
   },
   "autoload": {
     "psr-4": {
@@ -105,11 +90,6 @@
     {
       "type": "vcs",
       "url": "https://github.com/ampproject/amp-wp",
-      "no-api": true
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
       "no-api": true
     }
   ],

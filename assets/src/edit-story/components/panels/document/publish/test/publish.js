@@ -47,7 +47,16 @@ function setupPanel(
     actions: { updateStory },
   };
 
-  const config = { capabilities };
+  const config = {
+    capabilities,
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
+  };
   const loadUsers = jest.fn();
 
   const inspectorContextValue = {
@@ -97,7 +106,7 @@ describe('PublishPanel', () => {
   it('should render PublishPanel', async () => {
     const { getByText } = setupPanel();
     const publishPanel = getByText('Publishing');
-    const publisherLogo = getByText('Publisher Logo');
+    const publisherLogo = getByText('Publisher logo');
 
     await waitFor(() => expect(publishPanel).toBeDefined());
     await waitFor(() => expect(publisherLogo).toBeDefined());

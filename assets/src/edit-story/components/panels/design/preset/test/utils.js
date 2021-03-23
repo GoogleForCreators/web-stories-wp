@@ -20,9 +20,9 @@
 import {
   findMatchingColor,
   findMatchingStylePreset,
+  getPanelInitialHeight,
   getShapePresets,
   getTextPresets,
-  presetHasOpacity,
 } from '../utils';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import objectWithout from '../../../../../utils/objectWithout';
@@ -50,7 +50,7 @@ describe('Panels/StylePreset/utils', () => {
     font: TEXT_ELEMENT_DEFAULT_FONT,
   };
   it('should return matching color object', () => {
-    const stylePresets = {
+    const globalStoryStyles = {
       colors: [
         TEST_COLOR,
         {
@@ -69,11 +69,13 @@ describe('Panels/StylePreset/utils', () => {
         b: 1,
       },
     };
-    expect(findMatchingColor(color, stylePresets, true)).toStrictEqual(color);
+    expect(findMatchingColor(color, globalStoryStyles, true)).toStrictEqual(
+      color
+    );
   });
 
   it('should return undefined when not finding matching color', () => {
-    const stylePresets = {
+    const globalStoryStyles = {
       colors: [
         {
           color: {
@@ -91,11 +93,13 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    expect(findMatchingColor(TEST_COLOR, stylePresets, true)).not.toBeDefined();
+    expect(
+      findMatchingColor(TEST_COLOR, globalStoryStyles, true)
+    ).not.toBeDefined();
   });
 
   it('should return matching text style preset', () => {
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [STYLE_PRESET],
     };
     const stylePreset = {
@@ -116,13 +120,13 @@ describe('Panels/StylePreset/utils', () => {
       },
       font: TEXT_ELEMENT_DEFAULT_FONT,
     };
-    expect(findMatchingStylePreset(stylePreset, stylePresets)).toStrictEqual(
-      stylePreset
-    );
+    expect(
+      findMatchingStylePreset(stylePreset, globalStoryStyles)
+    ).toStrictEqual(stylePreset);
   });
 
   it('should return not return non-matching text style preset', () => {
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [STYLE_PRESET],
     };
     const stylePreset = {
@@ -144,7 +148,7 @@ describe('Panels/StylePreset/utils', () => {
       font: TEXT_ELEMENT_DEFAULT_FONT,
     };
     expect(
-      findMatchingStylePreset(stylePreset, stylePresets)
+      findMatchingStylePreset(stylePreset, globalStoryStyles)
     ).not.toBeDefined();
   });
 
@@ -176,7 +180,7 @@ describe('Panels/StylePreset/utils', () => {
         ...objectWithout(stylePreset, ['color']),
       },
     ];
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [],
       colors: [],
     };
@@ -211,7 +215,7 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, stylePresets, 'style');
+    const presets = getTextPresets(elements, globalStoryStyles, 'style');
     expect(presets).toStrictEqual(expected);
   });
 
@@ -225,7 +229,7 @@ describe('Panels/StylePreset/utils', () => {
           '<span style="color: rgb(1,1,1)">O</span><span style="color: rgb(2,1,1)">K</span>',
       },
     ];
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [],
       colors: [],
     };
@@ -233,7 +237,7 @@ describe('Panels/StylePreset/utils', () => {
       colors: [],
       textStyles: [],
     };
-    const presets = getTextPresets(elements, stylePresets, 'color');
+    const presets = getTextPresets(elements, globalStoryStyles, 'color');
     expect(presets).toStrictEqual(expected);
   });
 
@@ -258,7 +262,7 @@ describe('Panels/StylePreset/utils', () => {
         ...objectWithout(stylePreset, ['color']),
       },
     ];
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [],
       fillColors: [],
     };
@@ -271,7 +275,7 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, stylePresets, 'style');
+    const presets = getTextPresets(elements, globalStoryStyles, 'style');
     expect(presets).toStrictEqual(expected);
   });
 
@@ -284,7 +288,7 @@ describe('Panels/StylePreset/utils', () => {
         content: '<span style="font-weight: 600">Semi-bold</span>',
       },
     ];
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [],
       colors: [],
     };
@@ -302,7 +306,7 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, stylePresets, 'style');
+    const presets = getTextPresets(elements, globalStoryStyles, 'style');
     expect(presets).toStrictEqual(expected);
   });
 
@@ -327,7 +331,7 @@ describe('Panels/StylePreset/utils', () => {
         ...objectWithout(stylePreset, ['color']),
       },
     ];
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [],
       fillColors: [],
     };
@@ -340,7 +344,7 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, stylePresets, 'style');
+    const presets = getTextPresets(elements, globalStoryStyles, 'style');
     expect(presets).toStrictEqual(expected);
   });
 
@@ -393,39 +397,59 @@ describe('Panels/StylePreset/utils', () => {
         backgroundColor: TEST_COLOR_2,
       },
     ];
-    const stylePresets = {
+    const globalStoryStyles = {
       textStyles: [],
       colors: [],
     };
     const expected = {
       colors: [TEST_COLOR, TEST_COLOR_2],
     };
-    const presets = getShapePresets(elements, stylePresets);
+    const presets = getShapePresets(elements, globalStoryStyles);
     expect(presets).toStrictEqual(expected);
   });
 
-  it('should detect opacity in preset correctly', () => {
-    expect(presetHasOpacity(TEST_COLOR)).toBeFalse();
-    const preset1 = {
-      color: {
-        r: 1,
-        g: 1,
-        b: 1,
-        a: 0.5,
-      },
-    };
-    expect(presetHasOpacity(preset1)).toBeTrue();
+  describe('getPanelInitialHeight', () => {
+    it('should get the initial height correctly for color presets', () => {
+      const presets = [
+        { color: { r: 25, g: 39, b: 1 } },
+        { color: { r: 25, g: 39, b: 2 } },
+        { color: { r: 25, g: 39, b: 3 } },
+        { color: { r: 25, g: 39, b: 4 } },
+        { color: { r: 25, g: 39, b: 5 } },
+        { color: { r: 25, g: 39, b: 6 } },
+        { color: { r: 25, g: 39, b: 7 } },
+        { color: { r: 25, g: 39, b: 8 } },
+        { color: { r: 25, g: 39, b: 9 } },
+        { color: { r: 25, g: 39, b: 10 } },
+        { color: { r: 25, g: 39, b: 11 } },
+        { color: { r: 25, g: 39, b: 12 } },
+        { color: { r: 25, g: 39, b: 13 } },
+      ];
+      // Three rows.
+      expect(getPanelInitialHeight(true, presets)).toStrictEqual(96);
+      // One row.
+      expect(
+        getPanelInitialHeight(true, [{ color: { r: 196, g: 196, b: 196 } }])
+      ).toStrictEqual(48);
 
-    const preset2 = {
-      type: 'linear',
-      stops: [TEST_COLOR, preset1],
-    };
-    expect(presetHasOpacity(preset2)).toBeTrue();
+      // No rows.
+      expect(getPanelInitialHeight(true, [])).toStrictEqual(140);
+    });
 
-    const preset3 = {
-      type: 'linear',
-      stops: [TEST_COLOR, TEST_COLOR_2],
-    };
-    expect(presetHasOpacity(preset3)).toBeFalse();
+    it('should get the initial height correctly for style presets', () => {
+      const presets = [
+        { fontSize: 1 },
+        { fontSize: 2 },
+        { fontSize: 3 },
+        { fontSize: 4 },
+        { fontSize: 5 },
+        { fontSize: 6 },
+        { fontSize: 7 },
+      ];
+      // Three rows.
+      expect(getPanelInitialHeight(false, presets)).toStrictEqual(256);
+      // One row.
+      expect(getPanelInitialHeight(false, [{ fontSize: 1 }])).toStrictEqual(96);
+    });
   });
 });

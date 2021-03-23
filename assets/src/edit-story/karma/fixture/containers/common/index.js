@@ -19,5 +19,6 @@
  */
 export { Radio } from './radio';
 export { Toggle } from './toggle';
+export { ToggleButton } from './toggleButton';
 export { Select } from './select';
 export { Color } from './color';

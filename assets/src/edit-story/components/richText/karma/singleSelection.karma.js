@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { MULTIPLE_DISPLAY_VALUE } from '../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
 describe('Styling single text field', () => {
@@ -77,6 +77,7 @@ describe('Styling single text field', () => {
 
       // Set font weight (should also toggle bold, as "Black" is >700)
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
 
       // Set letter spacing
@@ -140,6 +141,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.click(underline.button);
       await richTextHasFocus();
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
       await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');
@@ -157,6 +159,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Bold'));
       await data.fixture.events.click(fontColor.button);
       waitFor(() => fontColor.picker);
@@ -239,10 +242,12 @@ describe('Styling single text field', () => {
       await data.fixture.events.keyboard.press('Enter');
       await setSelection(0, 1);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
       await richTextHasFocus();
       await setSelection(1, 'Fill in some text'.length);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Bold'));
       await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');
@@ -274,6 +279,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.keyboard.press('Enter');
       await setSelection(0, 1);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Bold'));
       await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');
@@ -311,10 +317,12 @@ describe('Styling single text field', () => {
       await data.fixture.events.keyboard.press('Enter');
       await setSelection(0, 1);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Black'));
       await richTextHasFocus();
       await setSelection(1, 2);
       await data.fixture.events.click(fontWeight.select);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontWeight.option('Bold'));
       await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');

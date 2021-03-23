@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useEffect, useCallback, useState } from 'react';
+import { trackError } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../tracking';
 import { useAPI } from '../../app';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';
@@ -37,11 +37,9 @@ function StatusCheck() {
   useEffect(() => {
     // If it succeeds, do nothing.
     // Only in case of failure do we want to alert the user and track the error.
-    getStatusCheck(getContent()).catch((error) => {
+    getStatusCheck(getContent()).catch((err) => {
       setShowDialog(true);
-      trackEvent('error', 'editor', '', '', {
-        error,
-      });
+      trackError('status_check', err.message);
     });
   }, [getStatusCheck]);
 

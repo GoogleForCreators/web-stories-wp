@@ -12,7 +12,7 @@ Set this environment variable to disable unwanted `beforeunload` dialogs when re
 **NODE_ENV** (`production`|`development`|`test`):
 Defines the mode webpack and other tools operate in. Automatically set by tests / build tools, usually no need to override manually.
 
-**BUNDLE_ANALZYER** (bool):
+**BUNDLE_ANALYZER** (bool):
 Enables the `webpack-bundle-analyzer` plugin to analyze the final bundle composition. Default: `false`
 
 **BABEL_CACHE_DIRECTORY** (string):
@@ -46,3 +46,8 @@ Slow down all interactions by a certain time for easier debugging. Useful in com
 
 **PUPPETEER_DEVTOOLS** (bool):
 Whether to open dev tools during tests. Default: `false`
+
+## Local Environment
+
+**PHP_VERSION** (string):
+PHP version which local environment runs in. Default: `7.4` 

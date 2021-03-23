@@ -1,0 +1,5366 @@
+{
+  "version": 25,
+  "pages": [
+    {
+      "animations": [
+        {
+          "id": "47b3834a-d155-4d65-b3b8-a05277dec29d",
+          "targets": ["c7a5dbe5-43f8-4510-8741-7e3900e3d487"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-225%",
+          "duration": 500,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "27f57e7e-a23c-4f3c-bb8b-c85427779e9c",
+          "targets": ["d3c1350e-1e2f-4f43-ae55-7fac7fd59932"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "duration": 500,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "2dc97458-b6a0-4395-8b0f-fdeaac734690",
+          "targets": ["0b0ba715-00b7-4b12-8c51-2fa4035bca6b"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-225%",
+          "duration": 500,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "f37471b2-5173-4d63-8b5d-229f3dd6a080",
+          "targets": ["3970117d-3e7f-4eb0-94c6-a90873ba11c5"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "duration": 500,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "b5d957fc-93a0-4d0f-91ca-3cff48303c3e",
+          "targets": ["ce3de6dc-492d-47ab-aa0b-aa86cf1363cd"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-15%",
+          "offsetY": "-15%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "type": "spin",
+          "rotation": "-120",
+          "stopAngle": "0",
+          "id": "59bcc046-aef4-41ec-98cc-bc1f0a482a1a",
+          "duration": 6000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "forwards",
+          "targets": ["0d36df49-4416-4506-a017-859029fe80ca"]
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "17bad711-de31-4f09-8d30-f83ade1d6f2a",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 52,
+          "y": 27,
+          "width": 360,
+          "height": 648,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 270,
+          "focalX": 41.91473010440877,
+          "focalY": 20.55378631524039,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "ccb83cf6-b35b-41b1-bc5f-7f7383decc8a",
+          "id": "ce3de6dc-492d-47ab-aa0b-aa86cf1363cd",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page1_bg.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 528,
+            "title": "ent_page1_bg",
+            "alt": "ent_page1_bg",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 85,
+          "y": 0,
+          "width": 273,
+          "height": 47,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.7,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "c7a5dbe5-43f8-4510-8741-7e3900e3d487",
+          "content": "<span style=\"font-weight: 700; color: #fff\">WEEKLY</span>",
+          "fontSize": 68,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": -269,
+          "y": 304,
+          "width": 586,
+          "height": 54,
+          "opacity": 10,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": -90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "c7a5dbe5-43f8-4510-8741-7e3900e3d487",
+          "id": "3970117d-3e7f-4eb0-94c6-a90873ba11c5",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">ENTERTAINMENT</span></span>",
+          "fontSize": 68,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 94,
+          "y": 260,
+          "width": 586,
+          "height": 54,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "3970117d-3e7f-4eb0-94c6-a90873ba11c5",
+          "id": "d3c1350e-1e2f-4f43-ae55-7fac7fd59932",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">ENTERTAINMENT</span></span>",
+          "fontSize": 68,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 51,
+          "y": 572,
+          "width": 273,
+          "height": 47,
+          "opacity": 10,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 180,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.7,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "c7a5dbe5-43f8-4510-8741-7e3900e3d487",
+          "id": "0b0ba715-00b7-4b12-8c51-2fa4035bca6b",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">WEEKLY</span></span>",
+          "fontSize": 68,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 96,
+          "y": 375,
+          "width": 150,
+          "height": 150,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "new-music"
+          },
+          "id": "0d36df49-4416-4506-a017-859029fe80ca"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 143,
+          "y": 412,
+          "width": 56,
+          "height": 74,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "music-note"
+          },
+          "id": "748e7c7b-a7da-4ee0-bfd5-645804ac2766"
+        }
+      ],
+      "type": "page",
+      "id": "04df622c-0d7f-4760-a06c-e88d9d9ac435",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "cover"
+    },
+    {
+      "animations": [
+        {
+          "id": "b5d957fc-93a0-4d0f-91ca-3cff48303c3e",
+          "targets": ["816de043-a84a-43af-af61-9a4d00a04e9b"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-16%",
+          "offsetY": "-22%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "2eb4d2d7-a0d9-436a-92b7-aec84408ee6b",
+          "targets": ["5efefa69-c1d0-4331-905b-3936d866f0eb"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 1000,
+          "delay": 600,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "0f4c99f7-7dfc-47eb-a363-0431ce0ec321",
+          "targets": ["5bfb51c9-3d47-4a78-be2c-776db5143bc9"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 1000,
+          "delay": 700,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "03a2ad36-aa88-4807-baba-29d72c2b2313",
+          "targets": ["26df8c19-b913-441a-bff1-bf1b677cb159"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 1000,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "c1ce98a2-a766-4e77-bb38-558297e58c07",
+          "targets": ["74ea4aa6-1165-42cf-9849-90ab25e6b76e"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 1000,
+          "delay": 1200,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "7a27a752-537d-4dcd-9677-5926437c0e19",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 55,
+          "y": 70,
+          "width": 357,
+          "height": 606,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 110,
+          "focalX": 41.49743929933975,
+          "focalY": 54.586814873401416,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "816de043-a84a-43af-af61-9a4d00a04e9b",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page2_image1.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 529,
+            "title": "ent_page2_image1",
+            "alt": "ent_page2_image1",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": -20,
+          "y": 535,
+          "width": 452,
+          "height": 64,
+          "opacity": 10,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
+          "id": "26df8c19-b913-441a-bff1-bf1b677cb159",
+          "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
+          "fontSize": 81,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": -20,
+          "y": 503,
+          "width": 452,
+          "height": 64,
+          "opacity": 30,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "5efefa69-c1d0-4331-905b-3936d866f0eb",
+          "id": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
+          "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
+          "fontSize": 81,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": -20,
+          "y": 470,
+          "width": 452,
+          "height": 65,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "c7a5dbe5-43f8-4510-8741-7e3900e3d487",
+          "id": "5efefa69-c1d0-4331-905b-3936d866f0eb",
+          "content": "<span style=\"font-weight: 700; color: #fff\">THE TOP 10</span>",
+          "fontSize": 81,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 55,
+          "y": 16,
+          "width": 209,
+          "height": 35,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "74ea4aa6-1165-42cf-9849-90ab25e6b76e",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">New Artists</span>",
+          "fontSize": 35,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "9670b092-e11b-433e-aa8a-659e4ee982c9",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "section"
+    },
+    {
+      "animations": [
+        {
+          "id": "845efc10-c8e3-493a-b718-82041a4b2b72",
+          "targets": ["942add2b-e206-4802-bf78-64bd514ab574"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 300,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both"
+        },
+        {
+          "id": "1252c055-46d9-4216-8388-ec2d20e31772",
+          "targets": ["942add2b-e206-4802-bf78-64bd514ab574"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "6",
+          "offsetY": "-8%",
+          "duration": 300,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "8815279d-42b2-4bbd-a42f-6d5d27324cd9",
+          "targets": ["741cf9c1-5c4e-400a-88d1-f8d85988d103"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "8%",
+          "duration": 300,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "fdc603a9-56f8-4178-9bab-1739b6136a25",
+          "targets": ["a8a8df4d-5750-4508-9698-69226f88a94f"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 500,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "24bc05c8-36eb-4226-b2cd-e5ef53aebb3d",
+          "targets": ["37fa4bdd-2898-4b95-bf2a-ae0d4e474f47"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "74fc114a-f4a3-44bf-8d3d-15100c3ba7b6",
+          "targets": ["741cf9c1-5c4e-400a-88d1-f8d85988d103"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 300,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "aa20cc9c-1675-41e4-86d8-24094c899a5c",
+          "targets": ["8bef4ffe-0a36-4444-ac4c-48b548217cb9"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 500,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "a1b1a71a-1866-4e97-b6e4-9689d59e04ed",
+          "targets": ["a8a8df4d-5750-4508-9698-69226f88a94f"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 300,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inExpo",
+          "fill": "forwards"
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "03d49bf5-7b5e-4d7c-b09e-7c3ebde20c94",
+          "isDefaultBackground": true
+        },
+        {
+          "x": -242,
+          "y": 219,
+          "width": 829,
+          "height": 256,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.7,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "942add2b-e206-4802-bf78-64bd514ab574",
+          "id": "741cf9c1-5c4e-400a-88d1-f8d85988d103",
+          "content": "<span style=\"color: rgba(78, 20, 80, 0.5)\"><span style=\"font-weight: 700\">PINK</span></span>",
+          "fontSize": 367,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": -286,
+          "y": 207,
+          "width": 829,
+          "height": 256,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.7,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "74ea4aa6-1165-42cf-9849-90ab25e6b76e",
+          "id": "942add2b-e206-4802-bf78-64bd514ab574",
+          "content": "<span style=\"color: rgba(78, 20, 80, 1)\"><span style=\"font-weight: 700\">PINK</span></span>",
+          "fontSize": 367,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 1,
+          "y": 43,
+          "width": 81,
+          "height": 202,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "74ea4aa6-1165-42cf-9849-90ab25e6b76e",
+          "id": "a8a8df4d-5750-4508-9698-69226f88a94f",
+          "content": "<span style=\"font-weight: 700; color: #fff\">“</span>",
+          "fontSize": 202,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 45,
+          "y": 160,
+          "width": 324,
+          "height": 366,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.83,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "a8a8df4d-5750-4508-9698-69226f88a94f",
+          "id": "37fa4bdd-2898-4b95-bf2a-ae0d4e474f47",
+          "content": "<span style=\"font-weight: 700; color: #ff00d6\">PINK</span>\n<span style=\"font-weight: 700; color: #fff\">IS NOT</span>\n<span style=\"font-weight: 700; color: #fff\">JUST A</span>\n<span style=\"font-weight: 700; color: #fff\">COLOR,</span>\n<span style=\"font-weight: 700; color: #fff\">IT'S AN</span>\n<span style=\"font-weight: 700; color: #fff\">ATTITUDE!</span>",
+          "fontSize": 64,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 251,
+          "y": 555,
+          "width": 100,
+          "height": 26,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "right",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "37fa4bdd-2898-4b95-bf2a-ae0d4e474f47",
+          "id": "8bef4ffe-0a36-4444-ac4c-48b548217cb9",
+          "content": "<span style=\"color: #fff\">– Artist</span>",
+          "fontSize": 26,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "73e07f65-ae5a-4a85-8802-7ea5cfaa45b2",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "quote"
+    },
+    {
+      "animations": [
+        {
+          "id": "7b1c2ce6-687a-4ebb-8487-ee1794fcc71a",
+          "targets": ["7f6f6565-2e46-4ef5-964c-d6c44350416d"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "272a185d-e802-412a-a8ff-508331cd1a00",
+          "targets": ["7f6f6565-2e46-4ef5-964c-d6c44350416d"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "ea3f239b-72f8-4976-8e61-71ed9169e2dd",
+          "targets": ["7f6f6565-2e46-4ef5-964c-d6c44350416d"],
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1,
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "cc4add9f-b5b8-4c2c-b82d-554fe2e6261a",
+          "targets": ["17fff8ec-3742-4837-bbcb-6f547744c46a"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-15",
+          "offsetY": 0,
+          "duration": 3500,
+          "delay": 550,
+          "direction": "reverse",
+          "easingPreset": "inOutSine",
+          "fill": "forwards"
+        },
+        {
+          "id": "d3c08912-2d26-40cb-b956-97ef4053bf4d",
+          "targets": ["17fff8ec-3742-4837-bbcb-6f547744c46a"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "duration": 650,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "56dc290e-eeef-4717-9d8b-e25c3be2ae17",
+          "targets": ["2ed3fa60-d97a-4641-b858-a024163090aa"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-15",
+          "offsetY": 0,
+          "duration": 3500,
+          "delay": 650,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "90610918-60d8-4db2-80d1-4f4204765efa",
+          "targets": ["2ed3fa60-d97a-4641-b858-a024163090aa"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 650,
+          "delay": 150,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "4e7bf09a-2f84-421c-b788-d1ff376a5b8f",
+          "targets": ["e23cd5e4-d0c9-436d-a1b1-b91dcf909373"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "01b6e829-03bf-40b8-af00-9f6c378c50b0",
+          "targets": ["fc016a73-3d6f-43a3-8542-6de6651a2829"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50%",
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "346f2e29-7d0f-423a-8bd6-0b2ff7b5d94d",
+          "targets": ["fc016a73-3d6f-43a3-8542-6de6651a2829"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "87fe44ec-dfa5-450c-8250-1859f8e4fe07",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 48,
+          "y": -57,
+          "width": 364,
+          "height": 425,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 100,
+          "focalX": 50.193135557679454,
+          "focalY": 58.677063671635366,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page4_image1.jpg",
+            "width": 220,
+            "height": 329,
+            "posterId": 0,
+            "id": 530,
+            "title": "ent_page4_image1",
+            "alt": "ent_page4_image1",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 78,
+          "y": 340,
+          "width": 595,
+          "height": 81,
+          "opacity": 10,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": -90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.75,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "17fff8ec-3742-4837-bbcb-6f547744c46a",
+          "id": "2ed3fa60-d97a-4641-b858-a024163090aa",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">SPOTLIGHT</span></span>",
+          "fontSize": 108,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 49,
+          "y": 408,
+          "width": 272,
+          "height": 70,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "8bef4ffe-0a36-4444-ac4c-48b548217cb9",
+          "id": "e23cd5e4-d0c9-436d-a1b1-b91dcf909373",
+          "content": "<span style=\"color: #fff\">Toronto-based singer D7</span>",
+          "fontSize": 35,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 50,
+          "y": 493,
+          "width": 343,
+          "height": 84,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.43,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e23cd5e4-d0c9-436d-a1b1-b91dcf909373",
+          "id": "fc016a73-3d6f-43a3-8542-6de6651a2829",
+          "content": "<span style=\"color: #fff\">D7 first gained media attention in 2020 when a video of her singing \"Nowhere to Go\" was shared over a million times. Her deput album was well received.</span>",
+          "fontSize": 15,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": -149,
+          "y": 150,
+          "width": 352,
+          "height": 53,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": -90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.83,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e23cd5e4-d0c9-436d-a1b1-b91dcf909373",
+          "id": "17fff8ec-3742-4837-bbcb-6f547744c46a",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">SPOTLIGHT</span></span>",
+          "fontSize": 64,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "582c5a25-6f17-4107-8e60-6ae4721c932f",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
+    },
+    {
+      "animations": [
+        {
+          "id": "b58e5cbc-2c2a-4347-be8e-c448dbab73f3",
+          "targets": ["46058255-8bf6-4302-88eb-f9bd71304225"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "e7508a9f-b994-405e-90ce-60a2c940c28c",
+          "targets": ["46058255-8bf6-4302-88eb-f9bd71304225"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "f113927a-62e3-4da8-914d-938bcccb219b",
+          "targets": ["46058255-8bf6-4302-88eb-f9bd71304225"],
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1.1,
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "ac0645ca-cfb7-4ae5-b318-b4fa8d9f51f7",
+          "targets": ["07ca71a9-b60e-4373-8ee1-65be94c152f0"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "duration": 750,
+          "delay": 50,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "f151f4ef-515f-4172-a7b1-d53949ba6326",
+          "targets": ["fd434caf-7752-47d3-b41b-0a1048f116a8"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 600,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "4134ecd0-2dce-4c22-bee9-adbaa47e4243",
+          "targets": ["ff9a77cf-c942-4a04-84ea-d7134d97f360"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "20%",
+          "duration": 600,
+          "delay": 550,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "7cb4c116-47ca-4dd6-a722-e0c628e557ee",
+          "targets": ["ff9a77cf-c942-4a04-84ea-d7134d97f360"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 550,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "7fe1259b-1ad3-4ad4-b414-6155fc118fc9",
+          "targets": ["ed850d1c-3f8f-4154-ad72-a90d30dc836d"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-10",
+          "offsetY": 0,
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "8107be09-1d92-4b95-8ff1-6a5380241055",
+          "targets": ["ed850d1c-3f8f-4154-ad72-a90d30dc836d"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "3c1615e5-48be-4e64-a580-ab5f46b124f6",
+          "targets": ["d61d1f44-9af9-4cdc-8912-caf2aa0c4993"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "5%",
+          "offsetY": "15%",
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "4c19f7a5-739b-4fd3-b1b0-991ad42d3fc9",
+          "targets": ["837db927-1ee6-4419-ace6-c59f83f0ca49"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "5%",
+          "offsetY": "15%",
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "3b9ad5c6-556f-4990-b2cc-7530a19ab68c",
+          "targets": ["76c34633-deca-4d3b-ad89-9f8f787aabf3"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-5%",
+          "offsetY": "-15%",
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "6d4c2d83-d397-46c5-84b7-88fbba1dffc2",
+          "targets": ["d61d1f44-9af9-4cdc-8912-caf2aa0c4993"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "ff88c402-3469-49e3-a3bc-d38c83b59954",
+          "targets": ["837db927-1ee6-4419-ace6-c59f83f0ca49"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "f10a5d72-7624-41d2-ac9f-52d7745d38cc",
+          "targets": ["76c34633-deca-4d3b-ad89-9f8f787aabf3"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 800,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "f2972fa0-abb5-4af0-a729-7d429383d739",
+          "targets": ["46058255-8bf6-4302-88eb-f9bd71304225"],
+          "type": "zoom",
+          "zoomFrom": 1.1,
+          "zoomTo": 1,
+          "duration": 3000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both"
+        },
+        {
+          "id": "aded41e8-0139-49d2-a33e-4240c5cc4cc9",
+          "type": "effect-whoosh-in",
+          "targets": ["030a889c-6cce-4745-b0b9-1c38a93c932a"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "771fa48c-a791-4e71-b053-91ef23276501",
+          "type": "effect-whoosh-in",
+          "targets": ["c13a96c1-7696-4343-b045-889178ee4445"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "45183f3d-f03b-48d1-8f2e-7061cf5befc4",
+          "type": "effect-whoosh-in",
+          "targets": ["0e9586ab-0e6a-4e72-89f5-dbbd420ba25e"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "1b7d46c9-b000-470d-be5a-0f718f2957df",
+          "type": "effect-whoosh-in",
+          "targets": ["b769af25-9dc3-4f19-bd34-b94c1e9812a8"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        },
+        {
+          "id": "731fe13f-75b9-4072-b6a2-a3b5f0715b62",
+          "type": "effect-whoosh-in",
+          "targets": ["1c599d8f-79fb-42ce-bf26-7cec1e79cdeb"],
+          "whooshInDir": "leftToRight",
+          "duration": 600,
+          "delay": 650
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "923c69d0-84f6-4223-8f7e-8fd7f0d0363f",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 0,
+          "y": -57,
+          "width": 30,
+          "height": 286,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "07ca71a9-b60e-4373-8ee1-65be94c152f0"
+        },
+        {
+          "x": 21,
+          "y": -57,
+          "width": 392,
+          "height": 372,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-15T20:53:50",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page5_image1.jpg",
+            "width": 330,
+            "height": 199,
+            "posterId": 0,
+            "id": 1248,
+            "title": "ent_page5_image1",
+            "alt": "ent_page5_image1",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
+          "id": "46058255-8bf6-4302-88eb-f9bd71304225"
+        },
+        {
+          "x": 37,
+          "y": 346,
+          "width": 272,
+          "height": 70,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e23cd5e4-d0c9-436d-a1b1-b91dcf909373",
+          "id": "fd434caf-7752-47d3-b41b-0a1048f116a8",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">New Album Review</span>",
+          "fontSize": 35,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 37,
+          "y": 433,
+          "width": 332,
+          "height": 42,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.43,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "fc016a73-3d6f-43a3-8542-6de6651a2829",
+          "id": "ff9a77cf-c942-4a04-84ea-d7134d97f360",
+          "content": "<span style=\"color: #fff\">Trevor and Inband explores electronic sounds with haunting vocals.</span>",
+          "fontSize": 15,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 264,
+          "y": 564,
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "b6325820-9ffe-41d3-97e9-eb969ff9ef22",
+          "id": "76c34633-deca-4d3b-ad89-9f8f787aabf3"
+        },
+        {
+          "x": 254,
+          "y": 553,
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "3f8f943f-ca2c-4604-b9e7-d300c4b2b9d6",
+          "id": "837db927-1ee6-4419-ace6-c59f83f0ca49"
+        },
+        {
+          "x": 257.5,
+          "y": 555,
+          "width": 101,
+          "height": 28,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "7cb85853-5318-455d-8f48-2f4056e66dac",
+          "id": "d61d1f44-9af9-4cdc-8912-caf2aa0c4993",
+          "content": "<span style=\"color: #fff\">See More</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          }
+        },
+        {
+          "x": 136,
+          "y": 563,
+          "width": 75,
+          "height": 11,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 800],
+              [1, 800],
+              [0, 900],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "fd434caf-7752-47d3-b41b-0a1048f116a8",
+          "id": "ed850d1c-3f8f-4154-ad72-a90d30dc836d",
+          "content": "<span style=\"font-style: italic; color: #fff\">5 out of 5</span>",
+          "fontSize": 12,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "x": 98,
+          "y": 561,
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "id": "1c599d8f-79fb-42ce-bf26-7cec1e79cdeb"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "1c599d8f-79fb-42ce-bf26-7cec1e79cdeb",
+          "id": "b769af25-9dc3-4f19-bd34-b94c1e9812a8",
+          "x": 82,
+          "y": 561
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "1c599d8f-79fb-42ce-bf26-7cec1e79cdeb",
+          "id": "0e9586ab-0e6a-4e72-89f5-dbbd420ba25e",
+          "x": 67,
+          "y": 561
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "0e9586ab-0e6a-4e72-89f5-dbbd420ba25e",
+          "id": "c13a96c1-7696-4343-b045-889178ee4445",
+          "x": 52,
+          "y": 561
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 1
+            }
+          },
+          "type": "shape",
+          "width": 14,
+          "height": 13,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "star"
+          },
+          "basedOn": "c13a96c1-7696-4343-b045-889178ee4445",
+          "id": "030a889c-6cce-4745-b0b9-1c38a93c932a",
+          "x": 37,
+          "y": 561
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "7494b712-c8d0-4189-a85c-32aa52a22032",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
+    },
+    {
+      "animations": [
+        {
+          "id": "d048cc30-676e-46f9-8197-3e47d0cece37",
+          "targets": ["9bcf8de4-b888-486b-93cb-f27bc58c637d"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-11%",
+          "offsetY": "-56%",
+          "duration": 600,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "b3bf2635-292a-4a34-9da5-d9a85c5a1b30",
+          "targets": ["842c2576-5887-4eb2-a9ba-93a6eea67b7d"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 600,
+          "delay": 350,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both"
+        },
+        {
+          "id": "33105774-b4f9-4b15-b656-68f4d11b03e3",
+          "targets": ["7134bc0d-5c49-40fb-ac4a-dac7dc45dccf"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 600,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both"
+        },
+        {
+          "id": "16d2f104-07fc-4e34-bf83-5fcd9d685fec",
+          "targets": ["99964f56-048a-4e9c-bc0c-79ff8f9e32d5"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 600,
+          "delay": 550,
+          "direction": "normal",
+          "easingPreset": "outSine",
+          "fill": "both"
+        },
+        {
+          "id": "8f616338-229b-4ca6-aff2-bfebaa438f59",
+          "targets": ["883294a7-1863-4ef1-b3b3-05f4e99f027c"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100",
+          "duration": 600,
+          "delay": 550,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "fdc26a98-c834-475a-aaab-cd6bce903ecc",
+          "targets": ["7807179c-ca03-44f5-b164-de59858ed73b"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "10",
+          "duration": 600,
+          "delay": 650,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "47508c42-d837-4cde-b6c6-92a991f05995",
+          "targets": ["7807179c-ca03-44f5-b164-de59858ed73b"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 650,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "3fb75a52-ac04-4979-9a26-c28e725c3ed3",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 39,
+          "y": 114,
+          "width": 375,
+          "height": 305,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 200,
+          "focalX": 50.079165168465856,
+          "focalY": 43.117469706013374,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page6_image1.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 532,
+            "title": "ent_page6_image1",
+            "alt": "ent_page6_image1",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
+          "id": "9bcf8de4-b888-486b-93cb-f27bc58c637d"
+        },
+        {
+          "x": 41,
+          "y": 10,
+          "width": 272,
+          "height": 35,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "fd434caf-7752-47d3-b41b-0a1048f116a8",
+          "id": "883294a7-1863-4ef1-b3b3-05f4e99f027c",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Summer Hits</span>",
+          "fontSize": 35,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 41,
+          "y": 53,
+          "width": 349,
+          "height": 42,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.43,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "ff9a77cf-c942-4a04-84ea-d7134d97f360",
+          "id": "7807179c-ca03-44f5-b164-de59858ed73b",
+          "content": "<span style=\"color: #fff\">Summer’s here and so are the great hits! Let’s check out the scenes with Trevor and Inband.</span>",
+          "fontSize": 15,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 39,
+          "y": 451,
+          "width": 386,
+          "height": 63,
+          "opacity": 10,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "26df8c19-b913-441a-bff1-bf1b677cb159",
+          "id": "99964f56-048a-4e9c-bc0c-79ff8f9e32d5",
+          "content": "<span style=\"font-weight: 700; color: #fff\">OUT NOW</span>",
+          "fontSize": 79,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 39,
+          "y": 481,
+          "width": 386,
+          "height": 63,
+          "opacity": 30,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "5bfb51c9-3d47-4a78-be2c-776db5143bc9",
+          "id": "7134bc0d-5c49-40fb-ac4a-dac7dc45dccf",
+          "content": "<span style=\"font-weight: 700; color: #fff\">OUT NOW</span>",
+          "fontSize": 79,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 39,
+          "y": 516,
+          "width": 386,
+          "height": 63,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.8,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "5efefa69-c1d0-4331-905b-3936d866f0eb",
+          "id": "842c2576-5887-4eb2-a9ba-93a6eea67b7d",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">OUT NOW</span></span>",
+          "fontSize": 79,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "fd60f532-b619-4162-8df9-d8241cc88e45",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
+    },
+    {
+      "animations": [
+        {
+          "id": "f113927a-62e3-4da8-914d-938bcccb219b",
+          "targets": ["6314a691-d449-4d99-9f12-64a9c7e5b477"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "-100%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "348eca7a-6524-4859-97fb-dda42b376b74",
+          "targets": ["6314a691-d449-4d99-9f12-64a9c7e5b477"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "outCubic",
+          "fill": "both"
+        },
+        {
+          "id": "1f619c53-d711-43a6-9e22-ad9cec019753",
+          "targets": ["6314a691-d449-4d99-9f12-64a9c7e5b477"],
+          "type": "zoom",
+          "zoomFrom": 2,
+          "zoomTo": 1.1,
+          "duration": 1000,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "f2972fa0-abb5-4af0-a729-7d429383d739",
+          "targets": ["6314a691-d449-4d99-9f12-64a9c7e5b477"],
+          "type": "zoom",
+          "zoomFrom": 1.1,
+          "zoomTo": 1,
+          "duration": 3000,
+          "delay": 1000,
+          "direction": "normal",
+          "easingPreset": "linear",
+          "fill": "both"
+        },
+        {
+          "id": "ffea8686-6086-4f7f-9f8f-08d62637383f",
+          "targets": ["0fdf2c26-3138-41cf-ae7c-e508635ae6fe"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 600,
+          "delay": 350,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "7cb4c116-47ca-4dd6-a722-e0c628e557ee",
+          "targets": ["b0d4ee54-76eb-4050-821d-5d11181b6a2c"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "20%",
+          "duration": 600,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "8ed6330e-dada-4c89-9fa2-34444ab0c4f5",
+          "targets": ["b0d4ee54-76eb-4050-821d-5d11181b6a2c"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 450,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "f1d3853d-aa0a-4bfc-8b40-d09c94153814",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 36,
+          "y": 0,
+          "width": 376,
+          "height": 392,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 110,
+          "focalX": 49.89204749754657,
+          "focalY": 62.22262102275575,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page7_image1.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 533,
+            "title": "ent_page7_image1",
+            "alt": "ent_page7_image1",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "9bcf8de4-b888-486b-93cb-f27bc58c637d",
+          "id": "6314a691-d449-4d99-9f12-64a9c7e5b477"
+        },
+        {
+          "x": 36,
+          "y": 420,
+          "width": 272,
+          "height": 70,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "883294a7-1863-4ef1-b3b3-05f4e99f027c",
+          "id": "0fdf2c26-3138-41cf-ae7c-e508635ae6fe",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Behind the Scenes</span>",
+          "fontSize": 35,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 36,
+          "y": 509,
+          "width": 340,
+          "height": 92,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "ff9a77cf-c942-4a04-84ea-d7134d97f360",
+          "id": "b0d4ee54-76eb-4050-821d-5d11181b6a2c",
+          "content": "<span style=\"color: #fff\">It’s one thing to listen to music; it’s another to learn how it’s made! We’ll take you through the production process of one of our favorite songs.</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "877c2ef2-1faa-4a7b-9f5b-364dcfa3d856",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "editorial"
+    },
+    {
+      "animations": [
+        {
+          "id": "1c473f6f-621a-4ef9-9ceb-6d52c881857c",
+          "targets": ["97bead85-66e2-4ea0-af98-8b1305d41884"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": 0,
+          "offsetY": "100%",
+          "duration": 700,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "167c2fd8-d1d6-4c4b-a85d-f6a315d262e8",
+          "targets": ["24deb6f3-2a32-4638-8702-7fc1157b9956"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "ffb9adf7-a899-4526-b96b-057d51fa70cb",
+          "targets": ["24deb6f3-2a32-4638-8702-7fc1157b9956"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "ac583c73-a82f-4f55-a415-d95d0263cd01",
+          "targets": ["e53c70ed-d9e7-442b-ab62-0c236111e1db"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "4833ff67-5b32-4edb-a651-47c33801df18",
+          "targets": ["e53c70ed-d9e7-442b-ab62-0c236111e1db"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "9e8173b4-9fbe-43da-b200-66241f6307c3",
+          "targets": ["84d3c738-e445-460d-96cc-e04f1184a554"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "9b3bfa18-61fb-433a-916c-94f6ae958e42",
+          "targets": ["84d3c738-e445-460d-96cc-e04f1184a554"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "eb391f7d-9e55-40eb-b575-2b649147cf7d",
+          "targets": ["24deb6f3-2a32-4638-8702-7fc1157b9956"],
+          "type": "zoom",
+          "zoomFrom": 2.5,
+          "zoomTo": 1,
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "dd3a41de-6122-40ee-ae2f-c7fec5ac8252",
+          "targets": ["e53c70ed-d9e7-442b-ab62-0c236111e1db"],
+          "type": "zoom",
+          "zoomFrom": 2.5,
+          "zoomTo": 1,
+          "duration": 800,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "e4946702-023b-423c-9b77-808c40de8cbf",
+          "targets": ["84d3c738-e445-460d-96cc-e04f1184a554"],
+          "type": "zoom",
+          "zoomFrom": 2.5,
+          "zoomTo": 1,
+          "duration": 800,
+          "delay": 405,
+          "direction": "normal",
+          "easingPreset": "inOutSine",
+          "fill": "both"
+        },
+        {
+          "id": "df83e37f-39b5-40c6-8eef-c026645354b4",
+          "targets": ["4e907f06-b5e0-4254-b469-8f0a505cd915"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "419fa54e-5d8b-4034-8f7b-c932e809ac6f",
+          "targets": ["016efcac-89dc-4123-bec4-f7422f8babd6"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "e780de43-8475-4390-a5ec-efc8640a714f",
+          "targets": ["6403aa20-a02a-499d-832a-0982518395f5"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "36d20248-818c-4fd5-9f27-e1ca8da3ec65",
+          "targets": ["2942198b-fcac-4d56-bc37-b5a16de50651"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "58497109-c6f1-4b27-aeb5-9931bc2eda17",
+          "targets": ["2942198b-fcac-4d56-bc37-b5a16de50651"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "bfa4814b-9c06-4bf9-a1d1-788b43636397",
+          "targets": ["787be6c3-3d2d-4d08-9db1-801e2f1bf7f1"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 405,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "18f032c4-e363-47a6-b8a5-7c64992e033e",
+          "targets": ["787be6c3-3d2d-4d08-9db1-801e2f1bf7f1"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 405,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "ea959b3d-1c9a-4971-81ab-ad6ab5e571dc",
+          "targets": ["b2b65d7c-5689-4c40-a40e-5a9a628bc04e"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        },
+        {
+          "id": "71b31cc4-d3c6-4fa9-bf1f-5b1298d33775",
+          "targets": ["b2b65d7c-5689-4c40-a40e-5a9a628bc04e"],
+          "type": "move",
+          "overflowHidden": true,
+          "offsetX": "100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 500,
+          "direction": "normal",
+          "easingPreset": "inCubic",
+          "fill": "both"
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "777737d1-e79e-4f4e-9708-cf5a41962d77",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 0,
+          "y": 471,
+          "width": 309,
+          "height": 16,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "4e907f06-b5e0-4254-b469-8f0a505cd915",
+          "id": "6403aa20-a02a-499d-832a-0982518395f5"
+        },
+        {
+          "x": 0,
+          "y": 315,
+          "width": 309,
+          "height": 16,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "4e907f06-b5e0-4254-b469-8f0a505cd915",
+          "id": "016efcac-89dc-4123-bec4-f7422f8babd6"
+        },
+        {
+          "x": 0,
+          "y": 158,
+          "width": 309,
+          "height": 16,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 214
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "id": "4e907f06-b5e0-4254-b469-8f0a505cd915"
+        },
+        {
+          "x": -2,
+          "y": 166,
+          "width": 352,
+          "height": 110,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 130,
+          "focalX": 55.59746548940643,
+          "focalY": 37.583736990182935,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "24deb6f3-2a32-4638-8702-7fc1157b9956",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image1.jpg",
+            "width": 220,
+            "height": 90,
+            "posterId": 0,
+            "id": 534,
+            "title": "ent_page8_image1",
+            "alt": "ent_page8_image1",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 0,
+          "y": 480,
+          "width": 352,
+          "height": 110,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 110,
+          "focalX": 50,
+          "focalY": 35.61736883198913,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "24deb6f3-2a32-4638-8702-7fc1157b9956",
+          "id": "84d3c738-e445-460d-96cc-e04f1184a554",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-26T17:40:35",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image3.jpg",
+            "width": 176,
+            "height": 70,
+            "posterId": 0,
+            "id": 1834,
+            "title": "ent_page8_image3",
+            "alt": "ent_page8_image3",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": -2,
+          "y": 323,
+          "width": 352,
+          "height": 110,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 160,
+          "focalX": 31.375571576243427,
+          "focalY": 57.36004155908421,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "84d3c738-e445-460d-96cc-e04f1184a554",
+          "id": "e53c70ed-d9e7-442b-ab62-0c236111e1db",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image2.jpg",
+            "width": 220,
+            "height": 147,
+            "posterId": 0,
+            "id": 535,
+            "title": "ent_page8_image2",
+            "alt": "ent_page8_image2",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 0,
+          "y": 248,
+          "width": 268,
+          "height": 46,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "0fdf2c26-3138-41cf-ae7c-e508635ae6fe",
+          "id": "2942198b-fcac-4d56-bc37-b5a16de50651",
+          "content": "<span style=\"font-weight: 700; color: #fff\">MURDER MYSTERY</span>",
+          "fontSize": 26,
+          "padding": {
+            "horizontal": 10,
+            "vertical": 10
+          }
+        },
+        {
+          "x": 0,
+          "y": 408,
+          "width": 268,
+          "height": 46,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "2942198b-fcac-4d56-bc37-b5a16de50651",
+          "id": "787be6c3-3d2d-4d08-9db1-801e2f1bf7f1",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">DOCUMENTARY</span></span>",
+          "fontSize": 26,
+          "padding": {
+            "horizontal": 10,
+            "vertical": 10
+          }
+        },
+        {
+          "x": 40,
+          "y": 25,
+          "width": 251,
+          "height": 105,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "0fdf2c26-3138-41cf-ae7c-e508635ae6fe",
+          "id": "97bead85-66e2-4ea0-af98-8b1305d41884",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">This summer’s must-see blockbusters</span>",
+          "fontSize": 35,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 0,
+          "y": 566,
+          "width": 268,
+          "height": 48,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "2942198b-fcac-4d56-bc37-b5a16de50651",
+          "id": "b2b65d7c-5689-4c40-a40e-5a9a628bc04e",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 700\">POLITICAL BIOPIC</span></span>",
+          "fontSize": 26,
+          "padding": {
+            "horizontal": 10,
+            "vertical": 11
+          }
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "3d0dbbd3-70c0-4376-b1bf-c8015def1050",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "list"
+    },
+    {
+      "animations": [
+        {
+          "id": "ff7c667c-e61b-4e44-bb34-f1f7bdb3a73d",
+          "targets": ["4f12d40d-d1c9-488f-a4f8-48e81f141c27"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 0,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "7dad3449-7d01-4f0b-8051-b48981d55152",
+          "targets": ["f449ade2-50c9-4495-9887-2e906e1e925f"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "-100%",
+          "offsetY": 0,
+          "duration": 800,
+          "delay": 100,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "916d3069-b987-4b69-8bfe-e31d6c14e123",
+          "targets": ["77770ec0-6e97-40bc-813b-1e0500033fc3"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50%",
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "5ba05464-9ff5-49e4-9d01-729b47c3ba27",
+          "targets": ["77770ec0-6e97-40bc-813b-1e0500033fc3"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "91930e62-c73c-489a-ad6a-e2358f015711",
+          "targets": ["c6c185a6-32d1-42ed-b376-5733abe06f55"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "85b59597-22c9-4d37-a858-f605cb20a04d",
+          "targets": ["33c99ae6-6566-4fcd-8fd7-a6c6ed162374"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "83039f0a-2afb-4969-8787-a8c0934783aa",
+          "targets": ["f2e11fcc-6f0f-4de1-afa3-a072bd52685c"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "c35cd535-65fd-4e23-bac8-a1f19c8245a9",
+          "targets": ["507dba78-9d97-4f60-9075-43472c6b91cc"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "579500c5-9289-4ef7-ade7-97d037cc77d2",
+          "targets": ["e279e4c7-f45a-4642-86ce-8c86644f7198"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": "0",
+          "offsetY": "50%",
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "b0a32d19-2ee9-4648-943a-cd4512daf3eb",
+          "targets": ["e279e4c7-f45a-4642-86ce-8c86644f7198"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "c38aee67-7052-4db8-9aeb-b698b8c47213",
+          "targets": ["9379053f-520a-4138-9720-dd14e3115431"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "7c175b4d-0399-4a00-bd31-5ee6d2dbe950",
+          "targets": ["01c957dd-499c-4e32-8917-5293bd52cbee"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "9ca973b5-3c74-4c95-b88a-04e613c97e07",
+          "targets": ["ea388d41-74f1-422c-b8bd-648ed640b2d3"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "476bd5f8-74e1-450d-a742-f2ac26ceeb1d",
+          "targets": ["857f8f9d-55e7-45c6-8ffd-d69d3ca60c12"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "4c68305c-6574-42a3-974a-ec7d5ff5224d",
+          "targets": ["78953cce-d23a-4bef-97e5-dec04f6a45a9"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "50%",
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "cdd1a2c2-e4a6-4174-8279-68846e650442",
+          "targets": ["78953cce-d23a-4bef-97e5-dec04f6a45a9"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "cf431d86-0cde-4b8f-b70b-b0606e30d56a",
+          "targets": ["786b9306-0b57-4a0a-9843-2e38304be5ce"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "df80f749-5828-4384-9578-6f151a81f3de",
+          "targets": ["88568499-f049-4a3d-88f1-ed6c0793c3a6"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "9c760fa0-7e78-4546-80f3-21d3ee0f933b",
+          "targets": ["4dbd5cae-d36c-468e-9914-13c82c0897fe"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "89eab1c1-7c9c-47e5-b3fb-f2b3c2b772aa",
+          "targets": ["9300db37-ac48-4bfc-b91b-0ffb4da5f8d0"],
+          "type": "fade",
+          "fadeFrom": 0,
+          "fadeTo": 1,
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inSine",
+          "fill": "both"
+        },
+        {
+          "id": "63a4605f-c5b8-4e57-845c-15259ebadbd9",
+          "targets": ["c6c185a6-32d1-42ed-b376-5733abe06f55"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "753e3168-614f-4025-9b63-ec00b51347b2",
+          "targets": ["f2e11fcc-6f0f-4de1-afa3-a072bd52685c"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "c591ca79-92f8-43c4-87e1-da8997816746",
+          "targets": ["507dba78-9d97-4f60-9075-43472c6b91cc"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "ac93c155-db37-4ece-8795-dc605ae4e2a8",
+          "targets": ["9379053f-520a-4138-9720-dd14e3115431"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "71f94dbb-e177-435c-b089-873e5a4e190b",
+          "targets": ["857f8f9d-55e7-45c6-8ffd-d69d3ca60c12"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "e9af4e68-6465-46fe-8ba8-271928acca43",
+          "targets": ["ea388d41-74f1-422c-b8bd-648ed640b2d3"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "8cc82a02-2312-4109-9674-e4b8d4e33f6b",
+          "targets": ["9300db37-ac48-4bfc-b91b-0ffb4da5f8d0"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "4249e051-6ce7-4f22-98b6-20613f709cc9",
+          "targets": ["88568499-f049-4a3d-88f1-ed6c0793c3a6"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "85d59a20-6a55-4189-a2aa-3aca3949b396",
+          "targets": ["4dbd5cae-d36c-468e-9914-13c82c0897fe"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "200%",
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "5467c102-141c-4e90-8bd5-59a889f50796",
+          "targets": ["33c99ae6-6566-4fcd-8fd7-a6c6ed162374"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "225%",
+          "duration": 600,
+          "delay": 200,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "a98efd16-d160-4c7b-b7c7-7c2cbef3d189",
+          "targets": ["01c957dd-499c-4e32-8917-5293bd52cbee"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "225%",
+          "duration": 600,
+          "delay": 300,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        },
+        {
+          "id": "945d1935-ff9d-47bc-8ea1-3be2cebb1c4d",
+          "targets": ["786b9306-0b57-4a0a-9843-2e38304be5ce"],
+          "type": "move",
+          "overflowHidden": false,
+          "offsetX": 0,
+          "offsetY": "225%",
+          "duration": 600,
+          "delay": 400,
+          "direction": "normal",
+          "easingPreset": "inOutCubic",
+          "fill": "both"
+        }
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "type": "shape",
+          "id": "ffce028c-042d-4b3c-a489-3cc31162ed10",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 26,
+          "y": 154,
+          "width": 160,
+          "height": 124,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "id": "77770ec0-6e97-40bc-813b-1e0500033fc3",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image1.jpg",
+            "width": 220,
+            "height": 165,
+            "posterId": 0,
+            "id": 536,
+            "title": "ent_page9_image1",
+            "alt": "ent_page9_image1",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 26,
+          "y": 312,
+          "width": 160,
+          "height": 124,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 100,
+          "focalX": 49.851188990309694,
+          "focalY": 34.28571451955782,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "77770ec0-6e97-40bc-813b-1e0500033fc3",
+          "id": "e279e4c7-f45a-4642-86ce-8c86644f7198",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image2.jpg",
+            "width": 220,
+            "height": 275,
+            "posterId": 0,
+            "id": 537,
+            "title": "ent_page9_image2",
+            "alt": "ent_page9_image2",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 26,
+          "y": 470,
+          "width": 160,
+          "height": 124,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "image",
+          "basedOn": "e279e4c7-f45a-4642-86ce-8c86644f7198",
+          "id": "78953cce-d23a-4bef-97e5-dec04f6a45a9",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image3.jpg",
+            "width": 220,
+            "height": 147,
+            "posterId": 0,
+            "id": 538,
+            "title": "ent_page9_image3",
+            "alt": "ent_page9_image3",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "width": 338,
+          "height": 66,
+          "opacity": 30,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.83,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"font-weight: 700; color: #fff\">STORIES</span>",
+          "fontSize": 80,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "basedOn": "4f12d40d-d1c9-488f-a4f8-48e81f141c27",
+          "id": "f449ade2-50c9-4495-9887-2e906e1e925f",
+          "x": -1,
+          "y": 57
+        },
+        {
+          "x": -1,
+          "y": 19,
+          "width": 234,
+          "height": 66,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 0.83,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "97bead85-66e2-4ea0-af98-8b1305d41884",
+          "id": "4f12d40d-d1c9-488f-a4f8-48e81f141c27",
+          "content": "<span style=\"font-weight: 700; color: #fff\">MORE</span>",
+          "fontSize": 80,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 210,
+          "y": 175,
+          "width": 162,
+          "height": 31,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "97bead85-66e2-4ea0-af98-8b1305d41884",
+          "id": "c6c185a6-32d1-42ed-b376-5733abe06f55",
+          "content": "<span style=\"font-weight: 700; color: #fff\">OUR TOP PICKS&nbsp;FOR THE GRAMMYS</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 210,
+          "y": 331,
+          "width": 113,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "c6c185a6-32d1-42ed-b376-5733abe06f55",
+          "id": "9379053f-520a-4138-9720-dd14e3115431",
+          "content": "<span style=\"font-weight: 700; color: #fff\">TRENDING SUPERHERO</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "x": 210,
+          "y": 488,
+          "width": 145,
+          "height": 31,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "c6c185a6-32d1-42ed-b376-5733abe06f55",
+          "id": "9300db37-ac48-4bfc-b91b-0ffb4da5f8d0",
+          "content": "<span style=\"font-weight: 700; color: #fff\">NEW SUMMER MOVIES</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "76c34633-deca-4d3b-ad89-9f8f787aabf3",
+          "id": "4dbd5cae-d36c-468e-9914-13c82c0897fe",
+          "x": 219,
+          "y": 542
+        },
+        {
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "837db927-1ee6-4419-ace6-c59f83f0ca49",
+          "id": "88568499-f049-4a3d-88f1-ed6c0793c3a6",
+          "x": 209,
+          "y": 531
+        },
+        {
+          "width": 101,
+          "height": 28,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"color: #fff\">See More</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          },
+          "basedOn": "d61d1f44-9af9-4cdc-8912-caf2aa0c4993",
+          "id": "786b9306-0b57-4a0a-9843-2e38304be5ce",
+          "x": 212.5,
+          "y": 533
+        },
+        {
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "4dbd5cae-d36c-468e-9914-13c82c0897fe",
+          "id": "507dba78-9d97-4f60-9075-43472c6b91cc",
+          "x": 219,
+          "y": 231
+        },
+        {
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "88568499-f049-4a3d-88f1-ed6c0793c3a6",
+          "id": "f2e11fcc-6f0f-4de1-afa3-a072bd52685c",
+          "x": 209,
+          "y": 220
+        },
+        {
+          "width": 101,
+          "height": 28,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"color: #fff\">See More</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          },
+          "basedOn": "786b9306-0b57-4a0a-9843-2e38304be5ce",
+          "id": "33c99ae6-6566-4fcd-8fd7-a6c6ed162374",
+          "x": 212.5,
+          "y": 222
+        },
+        {
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 82,
+              "g": 82,
+              "b": 82
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "507dba78-9d97-4f60-9075-43472c6b91cc",
+          "id": "857f8f9d-55e7-45c6-8ffd-d69d3ca60c12",
+          "x": 218,
+          "y": 386
+        },
+        {
+          "width": 108,
+          "height": 32,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "type": "shape",
+          "basedOn": "f2e11fcc-6f0f-4de1-afa3-a072bd52685c",
+          "id": "ea388d41-74f1-422c-b8bd-648ed640b2d3",
+          "x": 208,
+          "y": 375
+        },
+        {
+          "width": 101,
+          "height": 28,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"color: #fff\">See More</span>",
+          "fontSize": 16,
+          "padding": {
+            "horizontal": 11,
+            "vertical": 6
+          },
+          "basedOn": "33c99ae6-6566-4fcd-8fd7-a6c6ed162374",
+          "id": "01c957dd-499c-4e32-8917-5293bd52cbee",
+          "x": 211.5,
+          "y": 377
+        }
+      ],
+      "backgroundOverlay": "none",
+      "type": "page",
+      "id": "f4ea7828-e328-47e6-bf9d-a786ab192ee1",
+      "backgroundColor": {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0
+        }
+      },
+      "pageLayoutType": "list"
+    }
+  ]
+}

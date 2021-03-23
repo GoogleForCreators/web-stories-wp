@@ -24,7 +24,7 @@ import { render, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useContextSelector } from '../context';
+import { createContext, useContextSelector } from '../../../design-system';
 
 describe('useContextSelector', () => {
   let context;

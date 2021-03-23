@@ -22,17 +22,13 @@ import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button';
-import { useKeyDownEffect } from '../../../../keyboard';
+import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import Pill from './pill';
 
@@ -50,7 +46,8 @@ import useHandleRowVisibility from './useHandleRowVisibility';
 const Section = styled.div`
   height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
   min-height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.workspace, 0.8)};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -80,7 +77,7 @@ const ExpandButton = styled(ArrowDown)`
   display: flex;
   position: absolute;
   bottom: -16px;
-  background: ${({ theme }) => theme.colors.fg.gray16};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray16};
   max-height: none;
   width: 32px;
   height: 32px;

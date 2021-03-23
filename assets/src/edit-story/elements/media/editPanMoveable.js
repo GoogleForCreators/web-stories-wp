@@ -26,7 +26,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
-import { useKeyDownEffect } from '../../components/keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import getFocalFromOffset from './getFocalFromOffset';
 
@@ -101,8 +101,8 @@ function EditPanMoveable({
     <Moveable
       ref={moveableRef}
       targets={croppedMedia}
-      origin={true}
-      draggable={true}
+      origin
+      draggable
       throttleDrag={0}
       onDrag={({ dist }) => {
         let [tx, ty] = dist;
@@ -128,8 +128,8 @@ function EditPanMoveable({
         update();
       }}
       // Snappable
-      snappable={true}
-      snapCenter={true}
+      snappable
+      snapCenter
       // todo@: Moveable defines bounds and guidelines as the vertical and
       // horizontal lines and doesn't work well with `rotationAngle > 0` for
       // cropping/panning. It's possible to define a larger bounds using

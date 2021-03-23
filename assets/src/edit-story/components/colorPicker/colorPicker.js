@@ -22,17 +22,13 @@ import { useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { PatternPropType } from '../../types';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect } from '../../../design-system';
 import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import useFocusTrapping from '../../utils/useFocusTrapping';
@@ -44,14 +40,9 @@ import Header from './header';
 import useColor from './useColor';
 
 const Container = styled.div`
-  border-radius: 6px;
-  background: ${({ theme }) => theme.colors.bg.v8};
-  color: ${({ theme }) => theme.colors.fg.white};
-  width: 240px;
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.colors.bg.secondary};
+  width: 256px;
   user-select: none;
   display: flex;
   flex-direction: column;
@@ -70,9 +61,7 @@ const Container = styled.div`
   }
 `;
 
-const Body = styled.div`
-  border-top: 1px solid ${({ theme }) => theme.colors.fg.v6};
-`;
+const Body = styled.div``;
 
 function ColorPicker({
   color,
@@ -166,7 +155,7 @@ function ColorPicker({
   }, [selectedElementIds, generatedColor, pushTransform, changedStyle]);
 
   return (
-    <CSSTransition in appear={true} classNames="picker" timeout={300}>
+    <CSSTransition in appear classNames="picker" timeout={300}>
       <Container
         role="dialog"
         aria-label={__('Color and gradient picker', 'web-stories')}
@@ -179,8 +168,8 @@ function ColorPicker({
           setToSolid={setToSolid}
           onClose={handleCloseAndRefocus}
         />
-        {type !== 'solid' && (
-          <Body>
+        <Body>
+          {type !== 'solid' && (
             <GradientPicker
               stops={stops}
               currentStopIndex={currentStopIndex}
@@ -191,9 +180,7 @@ function ColorPicker({
               onRotate={rotateClockwise}
               onMove={moveCurrentStopBy}
             />
-          </Body>
-        )}
-        <Body>
+          )}
           <CurrentColorPicker
             color={currentColor}
             onChange={updateCurrentColor}

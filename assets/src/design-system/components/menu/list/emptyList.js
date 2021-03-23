@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../../theme';
 import { NoOptionsContainer, NoOptionsMessage } from './components';
 
 const EmptyList = ({ emptyText }) => {
@@ -29,7 +30,9 @@ const EmptyList = ({ emptyText }) => {
   }
   return (
     <NoOptionsContainer>
-      <NoOptionsMessage>{emptyText} </NoOptionsMessage>
+      <NoOptionsMessage size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+        {emptyText}
+      </NoOptionsMessage>
     </NoOptionsContainer>
   );
 };

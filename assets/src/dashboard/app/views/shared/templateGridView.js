@@ -19,17 +19,16 @@
  */
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../constants';
+import {
+  PAGE_WRAPPER,
+  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
+} from '../../../constants';
 import {
   CardGridItem,
   CardPreviewContainer,
@@ -41,17 +40,11 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { useGridViewKeys, useFocusOut } from '../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 
 const GridContainer = styled(CardGrid)`
-  width: ${({ theme }) =>
-    `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px)`};
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    width: ${({ theme }) =>
-      `calc(100% - ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px)`};
-  }
+  width: calc(100% - ${PAGE_WRAPPER.GUTTER}px);
 `;
 
 function TemplateGridView({ pageSize, templates, templateActions }) {
@@ -64,13 +57,11 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const targetAction = useCallback(
     (template) => {
-      return async () => {
-        await trackEvent(
-          'use_template',
-          'dashboard',
-          template.title,
-          template.id
-        );
+      return () => {
+        trackEvent('use_template', {
+          name: template.title,
+          template_id: template.id,
+        });
         templateActions.createStoryFromTemplate(template);
       };
     },

@@ -19,7 +19,7 @@
  */
 import { BG_MIN_SCALE, BG_MAX_SCALE, SCALE_DIRECTION } from '../../constants';
 import { AnimationZoom } from '../../parts/zoom';
-import { lerp } from '../../utils';
+import { lerp, getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundZoom({
   element,
@@ -27,6 +27,7 @@ export function EffectBackgroundZoom({
   duration = 1000,
   delay,
   easing,
+  transformOrigin,
 }) {
   // Define the range based off the element scale
   // at element scale 400, the range should be [1/4, 1]
@@ -40,5 +41,9 @@ export function EffectBackgroundZoom({
     delay,
     easing,
     targetLeafElement: true,
+    // Account for moving bg media relative to frame
+    transformOrigin:
+      transformOrigin ||
+      getMediaOrigin(element && getMediaBoundOffsets({ element })),
   });
 }

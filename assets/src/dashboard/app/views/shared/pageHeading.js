@@ -18,115 +18,77 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import cssLerp from '../../../utils/cssLerp';
-import { StoriesPropType } from '../../../types';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../../constants/pageStructure';
-import {
-  TypographyPresets,
-  NavMenuButton,
-  StandardViewContentGutter,
-} from '../../../components';
-import TypeaheadSearch from './typeaheadSearch';
-import TelemetryBanner from './telemetryBanner';
+import { Display, Search, THEME_CONSTANTS } from '../../../../design-system';
+import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 
-const StyledHeader = styled.h2`
-  ${TypographyPresets.ExtraExtraLarge};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
+const HeadingContainer = styled(StandardViewContentGutter)`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  line-height: 1;
-  font-size: ${cssLerp('36px', '30px', '--squish-progress')};
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-top: 48px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
+`;
+
+const StyledHeadline = styled(Display)`
+  display: flex;
+  align-items: center;
+  margin-right: 28px;
+  padding-bottom: 24px;
   white-space: nowrap;
-
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
-    font-size: ${cssLerp('30px', '24px', '--squish-progress')};
-  }
 `;
 
-const Content = styled.div`
+const HeadlineFilters = styled.div`
   display: flex;
-  align-items: ${({ centerContent }) =>
-    centerContent ? 'center' : 'flex-end'};
-  height: 100%;
-`;
-
-const SearchContainer = styled.div`
-  display: inline-block;
-  vertical-align: baseline;
-  position: relative;
-  width: 100%;
-  height: 29px;
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-    left: ${({ theme }) =>
-      `${theme.DEPRECATED_THEME.standardViewContentGutter.min}px`};
-    max-width: 100%;
-    justify-content: flex-start;
-  }
-`;
-
-const SearchInner = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: min(${DASHBOARD_LEFT_NAV_WIDTH}px, 100%);
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const HeadingBodyWrapper = styled(StandardViewContentGutter)`
-  display: grid;
-  grid-template-columns: 25% 50% 1fr;
   align-items: center;
-  height: 75px;
-  padding-bottom: 3px;
-  border-bottom: ${({ theme }) =>
-    theme.DEPRECATED_THEME.subNavigationBar.border};
+  margin: auto 0 auto 0;
+  padding-bottom: 24px;
 `;
 
-export const HeaderToggleButtonContainer = styled.div`
-  display: block;
-  flex: 1;
-  height: 65%;
+const HeaderSearch = styled.div`
+  width: 208px;
+  max-width: 208px;
+  min-width: 208px;
+  margin: auto 0;
+  padding-bottom: 24px;
 `;
 
 const PageHeading = ({
   children,
-  defaultTitle,
+  heading,
   searchPlaceholder,
-  centerContent = false,
-  stories = [],
-  showTypeahead = true,
-  handleTypeaheadChange,
-  typeaheadValue = '',
+  searchOptions = [],
+  showSearch,
+  handleSearchChange,
+  searchValue = '',
 }) => {
   return (
-    <>
-      <TelemetryBanner />
-      <HeadingBodyWrapper>
-        <StyledHeader>
-          <NavMenuButton showOnlyOnSmallViewport />
-          {defaultTitle}
-        </StyledHeader>
-        <Content centerContent={centerContent}>{children}</Content>
-        {showTypeahead && (
-          <SearchContainer>
-            <SearchInner>
-              <TypeaheadSearch
-                placeholder={searchPlaceholder}
-                currentValue={typeaheadValue}
-                stories={stories}
-                handleChange={handleTypeaheadChange}
-              />
-            </SearchInner>
-          </SearchContainer>
-        )}
-      </HeadingBodyWrapper>
-    </>
+    <HeadingContainer>
+      <StyledHeadline
+        as="h2"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      >
+        <NavMenuButton showOnlyOnSmallViewport />
+        {heading}
+      </StyledHeadline>
+      {children && <HeadlineFilters>{children}</HeadlineFilters>}
+      {showSearch && (
+        <HeaderSearch>
+          <Search
+            placeholder={searchPlaceholder}
+            selectedValue={{ label: searchValue, value: searchValue }}
+            options={searchOptions}
+            handleSearchValueChange={handleSearchChange}
+            emptyText={__('No options available', 'web-stories')}
+          />
+        </HeaderSearch>
+      )}
+    </HeadingContainer>
   );
 };
 
@@ -135,13 +97,14 @@ PageHeading.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  centerContent: PropTypes.bool,
-  defaultTitle: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired,
   searchPlaceholder: PropTypes.string,
-  stories: StoriesPropType,
-  showTypeahead: PropTypes.bool,
-  handleTypeaheadChange: PropTypes.func,
-  typeaheadValue: PropTypes.string,
+  searchOptions: PropTypes.arrayOf(
+    PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })
+  ),
+  showSearch: PropTypes.bool,
+  handleSearchChange: PropTypes.func,
+  searchValue: PropTypes.string,
 };
 
 export default PageHeading;

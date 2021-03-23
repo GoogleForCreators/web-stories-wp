@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -42,13 +38,14 @@ const AttributionPill = styled.div`
   display: flex;
   flex-wrap: nowrap;
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.fg.white};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.7)};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.7)};
   cursor: pointer;
 `;
 
 const logo = css`
-  fill: ${({ theme }) => theme.colors.fg.white};
+  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   margin-left: 6px;
   line-height: 14px;
 `;

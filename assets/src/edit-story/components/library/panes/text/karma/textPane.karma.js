@@ -116,18 +116,18 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
+    // Heading 3 should be positioned in the default position again.
     await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
     await verifyStaggeredPosition('Heading 3');
 
-    // Caption should be positioned in the default position again.
     await fixture.events.click(fixture.editor.library.text.preset('Caption'));
-    await verifyDefaultPosition('Caption', 'Caption');
+    await verifyStaggeredPosition('Caption');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await verifyStaggeredPosition(PARAGRAPH_TEXT);
+    await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
 
-    await fixture.events.click(fixture.editor.library.text.preset('OVERLINE'));
-    await verifyStaggeredPosition('OVERLINE');
+    await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+    await verifyStaggeredPosition('LABEL');
 
     await fixture.snapshot('staggered all text presets');
   });

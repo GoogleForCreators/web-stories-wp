@@ -30,6 +30,7 @@ import StoryPropTypes from '../../../../../types';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
+import { ContentType } from '../../../../../app/media';
 
 const styledTiles = css`
   width: 100%;
@@ -54,11 +55,13 @@ const Duration = styled.div`
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.6)};
-  font-family: ${({ theme }) => theme.fonts.duration.family};
-  font-size: ${({ theme }) => theme.fonts.duration.size};
-  line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
+  background: ${({ theme }) => rgba(theme.colors.bg.primary, 0.6)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.size};
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.duration.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.duration.letterSpacing};
   padding: 0 6px;
   border-radius: 10px;
 `;
@@ -102,11 +105,14 @@ function InnerElement({
   };
 
   useAverageColor(
-    type === 'video' ? hiddenPoster : mediaElement,
+    [ContentType.VIDEO, ContentType.GIF].includes(type)
+      ? hiddenPoster
+      : mediaElement,
     setAverageColor
   );
 
   useEffect(() => {
+    // assign display poster for videos
     if (resource.poster && resource.poster.includes('blob')) {
       newVideoPosterRef.current = resource.poster;
     }
@@ -117,73 +123,90 @@ function InnerElement({
       mediaElement.current.style.opacity = 1;
     }
   };
+
   let media;
-  const cloneProps = {
+  const thumbnailURL = getSmallestUrlForWidth(width, resource);
+  const { lengthFormatted, poster, mimeType, output } = resource;
+  const posterSrc = type === ContentType.GIF ? output.poster : poster;
+  const displayPoster = posterSrc ?? newVideoPosterRef.current;
+
+  const commonProps = {
     width: width,
     height: height,
     alt: alt,
     'aria-label': alt,
+  };
+  const cloneProps = {
+    ...commonProps,
     loading: 'lazy',
     draggable: false,
   };
-  const thumbnailURL = getSmallestUrlForWidth(width, resource);
-  const { lengthFormatted, poster, mimeType } = resource;
-  if (['image', 'gif'].includes(type)) {
-    media = (
-      <Image
-        key={src}
-        src={thumbnailURL}
-        ref={mediaElement}
-        width={width}
-        height={height}
-        alt={alt}
-        aria-label={alt}
-        loading={'lazy'}
-        onLoad={makeMediaVisible}
-        draggable={false}
-      />
-    );
+  const imageProps = {
+    ...cloneProps,
+    src: thumbnailURL,
+    onLoad: makeMediaVisible,
+  };
+  const videoProps = {
+    ...commonProps,
+    loop: type === ContentType.GIF,
+    muted: true,
+    preload: 'none',
+    poster: displayPoster,
+    showWithoutDelay: Boolean(newVideoPosterRef.current),
+  };
+
+  if (type === ContentType.IMAGE) {
+    media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
-  } else if (type === 'video') {
-    const displayPoster = poster ? poster : newVideoPosterRef.current;
+  } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
-        <Video
-          key={src}
-          ref={mediaElement}
-          poster={displayPoster}
-          width={width}
-          height={height}
-          preload="none"
-          aria-label={alt}
-          muted
-          showWithoutDelay={newVideoPosterRef.current}
-        >
-          <source
-            src={getSmallestUrlForWidth(width, resource)}
-            type={mimeType}
-          />
+        <Video key={src} {...videoProps} ref={mediaElement}>
+          {type === ContentType.GIF ? (
+            <>
+              <source
+                src={getSmallestUrlForWidth(width, {
+                  ...resource,
+                  sizes: resource.output.sizes.mp4,
+                })}
+                type="video/mp4"
+              />
+              <source
+                src={getSmallestUrlForWidth(width, {
+                  ...resource,
+                  sizes: resource.output.sizes.webm,
+                })}
+                type="video/webm"
+              />
+            </>
+          ) : (
+            <source
+              src={getSmallestUrlForWidth(width, resource)}
+              type={mimeType}
+            />
+          )}
         </Video>
-        {/* This hidden image allows us to fade in the poster image in the
-        gallery as there's no event when a video's poster loads. */}
         {!newVideoPosterRef.current && (
           <HiddenPosterImage
             ref={hiddenPoster}
-            src={poster}
+            src={posterSrc}
             onLoad={makeMediaVisible}
           />
         )}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
-    cloneProps.src = poster;
+    cloneProps.src = posterSrc;
   }
   if (!media) {
     throw new Error('Invalid media element type.');
   }
 
   const dragHandler = (event) => {
-    if (type === 'video' && !mediaElement.current?.paused) {
+    if (
+      [ContentType.VIDEO, ContentType.GIF].includes(type) &&
+      !mediaElement.current?.paused
+    ) {
       mediaElement.current.pause();
     }
     if (!draggingResource) {
@@ -217,7 +240,7 @@ function InnerElement({
           },
         }}
         onClick={onClick(
-          type === 'image' ? thumbnailURL : poster,
+          type === ContentType.IMAGE ? thumbnailURL : posterSrc,
           mediaBaseColor.current
         )}
         cloneElement={CloneImg}

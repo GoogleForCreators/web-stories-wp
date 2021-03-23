@@ -20,26 +20,21 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import { useResizeEffect, THEME_CONSTANTS } from '../../../design-system';
 import {
   FULLBLEED_RATIO,
   PAGE_RATIO,
   ALLOWED_EDITOR_PAGE_WIDTHS,
   HEADER_HEIGHT,
-  PAGE_NAV_WIDTH,
 } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
-import useResizeEffect from '../../utils/useResizeEffect';
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import useCanvas from './useCanvas';
+import { useCanvas } from '../../app';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -51,23 +46,12 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const MENU_HEIGHT = 48;
+const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE;
+const MENU_GAP = 16;
+const CAROUSEL_HEIGHT = 104;
+const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE;
+const PAGE_NAV_GAP = 24;
 
-export const CAROUSEL_VERTICAL_PADDING = 24;
-export const COMPACT_CAROUSEL_VERTICAL_PADDING = 32;
-
-export const COMPACT_THUMB_WIDTH = 72;
-export const COMPACT_THUMB_HEIGHT = 8;
-
-const MAX_CAROUSEL_THUMB_HEIGHT = 128;
-export const MIN_CAROUSEL_THUMB_HEIGHT = 52;
-
-const MIN_CAROUSEL_HEIGHT =
-  COMPACT_CAROUSEL_VERTICAL_PADDING * 2 + COMPACT_THUMB_HEIGHT;
-const MAX_CAROUSEL_HEIGHT =
-  MAX_CAROUSEL_THUMB_HEIGHT + CAROUSEL_VERTICAL_PADDING * 2;
-
-// @todo: the menu height is not responsive
 const Layer = styled.section`
   ${pointerEventsCss}
 
@@ -80,20 +64,37 @@ const Layer = styled.section`
   ${({ zIndex }) => (typeof zIndex === 'number' ? `z-index: ${zIndex};` : '')}
 
   display: grid;
+  /*
+    . = empty space
+    h = header
+    b = back navigation
+    f = forward navigation
+    p = canvas page
+    m = page action menu
+    c = thumbnail carousel
+
+    Also note that we need to specify all the widths and heights
+    even though some of the elements could just use the size that
+    the element takes up. This is because we reuse this grid in 3
+    different layers on top of each other and some elements are
+    missing in some layers, but we still need them to align perfectly.
+  */
   grid:
-    'head      head      head      head      head    ' ${HEADER_HEIGHT}px
-    '.         .         .         .         .       ' minmax(16px, 1fr)
-    '.         prev      page      next      .       ' var(
-      --fullbleed-height-px
-    )
-    '.         .         menu      .         .       ' ${MENU_HEIGHT}px
-    '.         .         .         .         .       ' 1fr
-    'carousel  carousel  carousel  carousel  carousel' minmax(
-      ${MIN_CAROUSEL_HEIGHT}px,
-      ${MAX_CAROUSEL_HEIGHT}px
-    )
-    / 1fr ${PAGE_NAV_WIDTH}px var(--fullbleed-width-px)
-    ${PAGE_NAV_WIDTH}px 1fr;
+    'h h h h h h h' ${HEADER_HEIGHT}px
+    '. . . . . . .' minmax(16px, 1fr)
+    '. b . p . f .' var(--fullbleed-height-px)
+    '. . . . . . .' ${MENU_GAP}px
+    'm m m m m m m' ${MENU_HEIGHT}px
+    '. . . . . . .' 1fr
+    'c c c c c c c' ${CAROUSEL_HEIGHT}px
+    /
+    1fr
+    ${PAGE_NAV_WIDTH}px
+    ${PAGE_NAV_GAP}px
+    var(--fullbleed-width-px)
+    ${PAGE_NAV_GAP}px
+    ${PAGE_NAV_WIDTH}px
+    1fr;
   height: 100%;
 `;
 
@@ -101,8 +102,7 @@ const Area = styled.div`
   ${pointerEventsCss}
 
   grid-area: ${({ area }) => area};
-  overflow: ${({ overflowAllowed }) =>
-    overflowAllowed ? 'visible' : 'hidden'};
+  overflow: ${({ canOverflow }) => (canOverflow ? 'visible' : 'hidden')};
   position: relative;
   width: 100%;
   height: 100%;
@@ -112,12 +112,27 @@ const Area = styled.div`
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
 const PageAreaFullbleedContainer = styled(Area).attrs({
-  area: 'page',
-  overflowAllowed: true,
+  area: 'p',
+  canOverflow: true,
 })`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ isBackgroundSelected, theme }) =>
+    isBackgroundSelected &&
+    `
+    &:before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: ${theme.colors.border.selection} 1px solid;
+      border-radius: 10px;
+    }
+  `}
 `;
 
 // Overflow is not hidden for media edit layer.
@@ -130,7 +145,7 @@ const PageAreaWithOverflow = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 5px;
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -141,23 +156,29 @@ const PageAreaSafeZone = styled.div`
   margin: auto 0;
 `;
 
-const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
+const HeadArea = styled(Area).attrs({ area: 'h' })``;
 
-const MenuArea = styled(Area).attrs({ area: 'menu', overflowAllowed: false })``;
+const MenuArea = styled(Area).attrs({ area: 'm', canOverflow: true })``;
 
-const NavArea = styled(Area).attrs({ overflowAllowed: false })`
+const NavArea = styled(Area)`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const NavPrevArea = styled(NavArea).attrs({ area: 'prev' })``;
+const NavPrevArea = styled(NavArea).attrs({
+  area: 'b',
+  canOverflow: true,
+})``;
 
-const NavNextArea = styled(NavArea).attrs({ area: 'next' })``;
+const NavNextArea = styled(NavArea).attrs({
+  area: 'f',
+  canOverflow: true,
+})``;
 
 const CarouselArea = styled(Area).attrs({
-  area: 'carousel',
-  overflowAllowed: true,
+  area: 'c',
+  canOverflow: true,
 })``;
 
 /**
@@ -172,8 +193,7 @@ function useLayoutParams(containerRef) {
     // See Layer's `grid` CSS above. Per the layout, the maximum available
     // space for the page is:
     const maxWidth = width - PAGE_NAV_WIDTH * 2;
-    const maxHeight =
-      height - HEADER_HEIGHT - MENU_HEIGHT - MIN_CAROUSEL_HEIGHT;
+    const maxHeight = height - HEADER_HEIGHT - MENU_HEIGHT - CAROUSEL_HEIGHT;
 
     const bestSize =
       ALLOWED_EDITOR_PAGE_WIDTHS.find(
@@ -202,6 +222,7 @@ const PageArea = forwardRef(function PageArea(
     fullbleedRef = createRef(),
     overlay = [],
     background,
+    isBackgroundSelected = false,
   },
   ref
 ) {
@@ -210,6 +231,7 @@ const PageArea = forwardRef(function PageArea(
       ref={fullbleedRef}
       data-testid="fullbleed"
       aria-label={__('Fullbleed area', 'web-stories')}
+      isBackgroundSelected={isBackgroundSelected}
       role="region"
     >
       <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
@@ -228,6 +250,7 @@ PageArea.propTypes = {
   fullbleedRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   overlay: PropTypes.node,
   background: PropTypes.object,
+  isBackgroundSelected: PropTypes.bool,
 };
 
 export {

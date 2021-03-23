@@ -17,33 +17,31 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
-import { Row, TextInput, HelperText, RadioGroup } from '../../../form';
+import { Row, RadioGroup } from '../../../form';
 import { SimplePanel } from '../../panel';
+import { Input, Text, THEME_CONSTANTS } from '../../../../../design-system';
 
-const BoxedTextInput = styled(TextInput)`
-  padding: 6px 6px;
-  border-radius: 4px;
-  flex-grow: 1;
-  &:focus {
-    background-color: ${({ theme }) => theme.colors.fg.white};
-  }
+const InputRow = styled(Row)`
+  margin-left: 34px;
+`;
+
+const HelperText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 function StatusPanel() {
-  const { status = '', password, updateStory } = useStory(
+  const { status = '', password: savedPassword, updateStory } = useStory(
     ({
       state: {
         story: { status, password },
@@ -51,13 +49,19 @@ function StatusPanel() {
       actions: { updateStory },
     }) => ({ status, password, updateStory })
   );
+  const [password, setPassword] = useState(savedPassword);
+
+  useEffect(() => {
+    // updated displayed password when stored password is updated
+    setPassword(savedPassword);
+  }, [savedPassword]);
 
   const { capabilities } = useConfig();
 
   const visibilityOptions = [
     {
       value: 'draft',
-      name: __('Draft', 'web-stories'),
+      label: __('Draft', 'web-stories'),
       helper: __('Visible to just me', 'web-stories'),
     },
   ];
@@ -65,12 +69,12 @@ function StatusPanel() {
   if (capabilities?.hasPublishAction) {
     visibilityOptions.push({
       value: 'publish',
-      name: __('Public', 'web-stories'),
+      label: __('Public', 'web-stories'),
       helper: __('Visible to everyone', 'web-stories'),
     });
     visibilityOptions.push({
       value: 'private',
-      name: __('Private', 'web-stories'),
+      label: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
     });
   }
@@ -78,12 +82,17 @@ function StatusPanel() {
   const passwordProtected = 'protected';
   // @todo Add this back once we have FE implementation, too.
   /*visibilityOptions.push({
-    name: __('Password Protected', 'web-stories'),
+    label: __('Password Protected', 'web-stories'),
     value: passwordProtected,
+    helper: __('Need password to view', 'web-stories'),
   });*/
 
+  const handleChangePassword = useCallback((evt) => {
+    setPassword(evt.target.value);
+  }, []);
+
   // @todo this should still allow showing the moment where the warning is red, currently just doesn't allow adding more.
-  const handleChangePassword = useCallback(
+  const handleUpdatePassword = useCallback(
     (value) => {
       if (isValidPassword(value)) {
         updateStory({
@@ -99,9 +108,12 @@ function StatusPanel() {
   };
 
   const handleChangeVisibility = useCallback(
-    (value) => {
+    (evt) => {
       // If password protected but no password, do nothing.
-      if (value === passwordProtected && !isValidPassword(password)) {
+      if (
+        evt.target.value === passwordProtected &&
+        !isValidPassword(password)
+      ) {
         return;
       }
       // If password protected, keep the previous status.
@@ -109,7 +121,7 @@ function StatusPanel() {
         passwordProtected === status
           ? { password }
           : {
-              status: value,
+              status: evt.target.value,
               password: '',
             };
       updateStory({ properties });
@@ -132,31 +144,34 @@ function StatusPanel() {
   return (
     <SimplePanel
       name="status"
-      title={__('Status & Visibility', 'web-stories')}
+      title={__('Status and visibility', 'web-stories')}
       collapsedByDefault={false}
     >
       <>
         <Row>
+          <HelperText>
+            {__('Set the current status of your story to', 'web-stories')}
+          </HelperText>
+        </Row>
+        <Row>
           <RadioGroup
+            groupLabel="Visibility"
+            name="radio-group-visibility"
             options={visibilityOptions}
             onChange={handleChangeVisibility}
             value={getStatusValue(status)}
           />
         </Row>
         {passwordProtected === status && (
-          <>
-            <Row>
-              <BoxedTextInput
-                label={__('Password', 'web-stories')}
-                value={password}
-                onChange={handleChangePassword}
-                placeholder={__('Enter a password', 'web-stories')}
-              />
-            </Row>
-            <HelperText isWarning={password && password.length > 20}>
-              {__('Must not exceed 20 characters', 'web-stories')}
-            </HelperText>
-          </>
+          <InputRow>
+            <Input
+              aria-label={__('Password', 'web-stories')}
+              value={password}
+              onBlur={handleUpdatePassword}
+              onChange={handleChangePassword}
+              placeholder={__('Enter a password', 'web-stories')}
+            />
+          </InputRow>
         )}
       </>
     </SimplePanel>

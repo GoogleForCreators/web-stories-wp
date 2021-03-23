@@ -15,23 +15,19 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
-/**
- * Internal dependencies
- */
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
-import { toUTCDate } from '../../../date';
+import { __ } from '@web-stories-wp/i18n';
+import { migrate, DATA_VERSION } from '@web-stories-wp/migration';
 
 // TODO: this is mostly placeholder to generally lend shape to saved templates that matches stories. We do no have stories formatted and returned in saved template API yet
 export default function reshapeSavedTemplateObject(originalSavedTemplateData) {
   const {
     id,
     title,
-    modified_gmt,
+    modified,
     status,
-    date_gmt,
+    date,
     link,
     story_data: storyData = {},
   } = originalSavedTemplateData;
@@ -58,8 +54,8 @@ export default function reshapeSavedTemplateObject(originalSavedTemplateData) {
     id,
     status,
     title: title,
-    modified: toUTCDate(modified_gmt || new Date()),
-    created: toUTCDate(date_gmt || new Date()),
+    modified: modified,
+    created: date,
     pages: updatedStoryData?.pages,
     author: __('Google', 'web-stories'),
     link,

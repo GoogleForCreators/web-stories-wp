@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import Captions from '../captions';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../form';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import ConfigContext from '../../../../../app/config/context';
 import { renderPanel } from '../../../shared/test/_utils';
+import Captions from '../captions';
 
 describe('Panels/Captions', () => {
   const defaultElement = {
@@ -57,7 +57,9 @@ describe('Panels/Captions', () => {
 
   it('should render <Captions /> panel', () => {
     const { getByRole } = renderCaptions([defaultElement]);
-    const captionRegion = getByRole('region', { name: /Captions/i });
+    const captionRegion = getByRole('region', {
+      name: /Caption and subtitles/i,
+    });
     expect(captionRegion).toBeInTheDocument();
   });
 

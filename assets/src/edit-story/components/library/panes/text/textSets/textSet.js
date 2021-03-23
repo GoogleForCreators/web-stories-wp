@@ -17,35 +17,54 @@
 /**
  * External dependencies
  */
-import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback, forwardRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import {
+  BUTTON_TRANSITION_TIMING,
+  ThemeGlobals,
+  themeHelpers,
+} from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
-import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useLibrary from '../../../useLibrary';
 import { dataToEditorX, dataToEditorY } from '../../../../../units';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.div`
-  position: relative;
-  width: ${TEXT_SET_SIZE}px;
+  position: absolute;
+  top: 0;
   height: ${TEXT_SET_SIZE}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
-  border-radius: 4px;
+  width: ${TEXT_SET_SIZE}px;
+  display: flex;
+  flex-direction: column;
+  transform: ${({ translateX, translateY }) =>
+    `translateX(${translateX}px) translateY(${translateY}px)`};
+
+  ${themeHelpers.focusableOutlineCSS};
+
+  background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   cursor: pointer;
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: -webkit-focus-ring-color auto 2px;
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
+
+  &:hover,
+  &:focus,
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
+  }
+  &:active {
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryPress};
   }
 `;
 
@@ -54,10 +73,10 @@ const DragContainer = styled.div`
   opacity: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
+  background-color: ${({ theme }) => theme.colors.opacity.white24};
 `;
 
-function TextSet({ elements }) {
+function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   const { insertTextSet } = useLibrary((state) => ({
     insertTextSet: state.actions.insertTextSet,
   }));
@@ -66,6 +85,20 @@ function TextSet({ elements }) {
     canvasPageSize: state.canvasPageSize,
   }));
 
+  const onClick = useCallback(() => {
+    insertTextSet(elements);
+    trackEvent('insert_textset');
+  }, [elements, insertTextSet]);
+
+  const handleKeyboardPageClick = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') {
+        onClick();
+      }
+    },
+    [onClick]
+  );
+
   const { textSetHeight, textSetWidth } = elements[0];
   const { width: pageWidth, height: pageHeight } = canvasPageSize;
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
@@ -73,14 +106,20 @@ function TextSet({ elements }) {
   return (
     <TextSetItem
       role="listitem"
+      tabIndex={0}
       aria-label={__('Insert Text Set', 'web-stories')}
+      translateX={translateX}
+      translateY={translateY}
+      ref={ref}
+      onKeyUp={handleKeyboardPageClick}
+      {...rest}
     >
       <TextSetElements isForDisplay elements={elements} />
       <LibraryMoveable
         type={'textSet'}
         elements={elements}
         elementProps={{}}
-        onClick={() => insertTextSet(elements)}
+        onClick={onClick}
         previewSize={{
           width: TEXT_SET_SIZE,
           height: TEXT_SET_SIZE,
@@ -106,6 +145,10 @@ function TextSet({ elements }) {
 
 TextSet.propTypes = {
   elements: PropTypes.array.isRequired,
+  translateY: PropTypes.number.isRequired,
+  translateX: PropTypes.number.isRequired,
 };
 
-export default TextSet;
+TextSet.displayName = 'TextSet';
+
+export default forwardRef(TextSet);

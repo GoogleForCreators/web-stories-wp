@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { useEffect, useState } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import usePrevious from '../../../utils/usePrevious';
+import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
+import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useAPI } from '../../api';
-import { useConfig } from '../../config';
 
 /**
  * Effect to save meta boxes for a story.
@@ -39,13 +38,10 @@ import { useConfig } from '../../config';
  * @return {{isSavingMetaBoxes: boolean}} Metaboxes status.
  */
 function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
-  const isFeatureEnabled = useFeature('customMetaBoxes');
-  const { metaBoxes = {} } = useConfig();
-
-  const locations = Object.keys(metaBoxes);
-  const hasMetaBoxes = locations.some((location) =>
-    Boolean(metaBoxes[location]?.length)
-  );
+  const { hasMetaBoxes, locations } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+    locations: state.locations,
+  }));
 
   const {
     actions: { saveMetaBoxes },
@@ -60,7 +56,6 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
   useEffect(() => {
     if (
       !hasMetaBoxes ||
-      !isFeatureEnabled ||
       isSaving ||
       isAutoSaving ||
       isSavingMetaBoxes ||
@@ -104,7 +99,6 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
 
     save();
   }, [
-    isFeatureEnabled,
     hasMetaBoxes,
     story,
     isSaving,

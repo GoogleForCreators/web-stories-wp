@@ -93,12 +93,16 @@ describe('My Stories <Header />', function () {
         <Header
           filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
+          search={{
+            keyword: 'Harry Potter',
+            setKeyword: jest.fn(),
+          }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            future: 5,
+            publish: 5,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -109,7 +113,9 @@ describe('My Stories <Header />', function () {
       </LayoutProvider>
     );
     expect(getByPlaceholderText('Search Stories')).toHaveValue('Harry Potter');
-    expect(getByText('19 results')).toBeInTheDocument();
+    expect(
+      getByText((_, node) => node.textContent === '19 results')
+    ).toBeInTheDocument();
   });
 
   it('should have results label that says "Viewing drafts" when filter is set to drafts', function () {
@@ -137,7 +143,7 @@ describe('My Stories <Header />', function () {
   });
 
   it('should have 3 toggle buttons, one for each status that say how many items belong to that status', function () {
-    const { getByText } = renderWithProviders(
+    const { queryByText, getByRole } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -157,9 +163,109 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('All Stories (19)')).toBeInTheDocument();
-    expect(getByText('Drafts (9)')).toBeInTheDocument();
-    expect(getByText('Published (10)')).toBeInTheDocument();
+
+    const allStoriesButton = getByRole('button', {
+      name: /Filter stories by All Stories/,
+    });
+
+    const draftsButton = getByRole('button', {
+      name: /Filter stories by Drafts/,
+    });
+    const publishedButton = getByRole('button', {
+      name: /Filter stories by Published/,
+    });
+
+    expect(allStoriesButton).toHaveTextContent('All Stories19');
+    expect(draftsButton).toHaveTextContent('Drafts9');
+    expect(publishedButton).toHaveTextContent('Published10');
+
+    expect(queryByText('Private')).not.toBeInTheDocument();
+  });
+
+  it('should show the private tab only when there are private stories.', function () {
+    const { getByRole } = renderWithProviders(
+      <LayoutProvider>
+        <Header
+          filter={STORY_STATUSES[0]}
+          stories={fakeStories}
+          search={{ keyword: '', setKeyword: jest.fn() }}
+          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            private: 2,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+          wpListURL="fakeurltoWordPressList.com"
+        />
+      </LayoutProvider>
+    );
+
+    const allStoriesButton = getByRole('button', {
+      name: /Filter stories by All Stories/,
+    });
+
+    const draftsButton = getByRole('button', {
+      name: /Filter stories by Drafts/,
+    });
+    const publishedButton = getByRole('button', {
+      name: /Filter stories by Published/,
+    });
+    const privateButton = getByRole('button', {
+      name: /Filter stories by Private/,
+    });
+
+    expect(allStoriesButton).toHaveTextContent('All Stories19');
+    expect(draftsButton).toHaveTextContent('Drafts9');
+    expect(publishedButton).toHaveTextContent('Published10');
+    expect(privateButton).toHaveTextContent('Private2');
+  });
+
+  it('should not show the private tab even if there are private stories when the user does not have permission.', function () {
+    const { getByRole, queryByText } = renderWithProviders(
+      <LayoutProvider>
+        <Header
+          filter={STORY_STATUSES[0]}
+          stories={fakeStories}
+          search={{ keyword: '', setKeyword: jest.fn() }}
+          sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
+          totalStoriesByStatus={{
+            all: 19,
+            draft: 9,
+            private: 2,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+          }}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 200, height: 300 },
+          }}
+          wpListURL="fakeurltoWordPressList.com"
+        />
+      </LayoutProvider>,
+      {
+        config: {
+          capabilities: { canReadPrivatePosts: false },
+        },
+      }
+    );
+    const allStoriesButton = getByRole('button', {
+      name: /Filter stories by All Stories/,
+    });
+
+    const draftsButton = getByRole('button', {
+      name: /Filter stories by Drafts/,
+    });
+    const publishedButton = getByRole('button', {
+      name: /Filter stories by Published/,
+    });
+    expect(allStoriesButton).toHaveTextContent('All Stories19');
+    expect(draftsButton).toHaveTextContent('Drafts9');
+    expect(publishedButton).toHaveTextContent('Published10');
+    expect(queryByText('Private')).not.toBeInTheDocument();
   });
 
   it('should call the set keyword function when new text is searched', async function () {
@@ -169,7 +275,10 @@ describe('My Stories <Header />', function () {
         <Header
           filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: setKeywordFn }}
+          search={{
+            keyword: 'Harry Potter',
+            setKeyword: setKeywordFn,
+          }}
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
@@ -194,12 +303,15 @@ describe('My Stories <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', async function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithProviders(
+    const { getByLabelText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
           stories={fakeStories}
-          search={{ keyword: 'Harry Potter', setKeyword: jest.fn() }}
+          search={{
+            keyword: 'Harry Potter',
+            setKeyword: jest.fn(),
+          }}
           sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
           totalStoriesByStatus={{
             all: 19,
@@ -214,7 +326,7 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.click(getAllByText('Created by')[0].parentElement);
+    fireEvent.click(getByLabelText('Choose sort option for display'));
     fireEvent.click(getByText('Last modified'));
 
     await waitFor(() => {

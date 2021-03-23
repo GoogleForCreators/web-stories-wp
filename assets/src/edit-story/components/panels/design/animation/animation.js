@@ -22,11 +22,7 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { shallowEqual } from 'react-pure-render';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -183,6 +179,17 @@ function AnimationPanel({
         [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: {
           tooltip: backgroundAnimationTooltip,
           options: [
+            normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
+            normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
+          ].filter(Boolean),
+        },
+        [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]: {
+          tooltip: backgroundAnimationTooltip,
+          options: [
+            !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
+            !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
+            !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
+            !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
             normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
             normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
           ].filter(Boolean),

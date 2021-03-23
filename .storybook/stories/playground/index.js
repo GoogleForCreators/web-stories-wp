@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import App from '../../../assets/src/edit-story/app';
+import App from '../../../assets/src/edit-story/editorApp';
 
 export default {
   title: 'Playground/Stories Editor',

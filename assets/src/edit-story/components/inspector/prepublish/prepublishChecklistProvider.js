@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  */
 import { useStory } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
-import usePrevious from '../../../utils/usePrevious';
+import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useLayout } from '../../../app/layout';
 import Context from './context';
 

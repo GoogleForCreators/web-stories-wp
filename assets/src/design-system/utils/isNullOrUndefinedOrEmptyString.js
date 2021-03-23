@@ -14,5 +14,7 @@
  * limitations under the License.
  */
 
-export const isNullOrUndefinedOrEmptyString = (val) =>
+const isNullOrUndefinedOrEmptyString = (val) =>
   val === null || val === undefined || val === '';
+
+export default isNullOrUndefinedOrEmptyString;

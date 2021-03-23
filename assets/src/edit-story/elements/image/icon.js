@@ -15,18 +15,24 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { Media } from '../../icons';
+import StoryPropTypes from '../../types';
+import VisibleImage from '../media/visibleImage';
+import { getSmallestUrlForWidth } from '../media/util';
 
-function ImageIcon() {
-  const alt = __('Image element', 'web-stories');
-  return <Media aria-label={alt} />;
+function ImageLayerIcon({
+  element: {
+    resource,
+    resource: { alt },
+  },
+}) {
+  const src = getSmallestUrlForWidth(0, resource);
+  return <VisibleImage src={src} alt={alt} height="20" />;
 }
 
-export default ImageIcon;
+ImageLayerIcon.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
+
+export default ImageLayerIcon;

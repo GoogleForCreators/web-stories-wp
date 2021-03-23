@@ -73,7 +73,7 @@ describe('paginatedMediaGallery', () => {
         providerType={providerType}
         resources={resources}
         isMediaLoading={false}
-        isMediaLoaded={true}
+        isMediaLoaded
         hasMore={false}
         onInsert={() => {}}
         setNextPage={() => {}}
@@ -89,9 +89,9 @@ describe('paginatedMediaGallery', () => {
       <PaginatedMediaGallery
         providerType={providerType}
         resources={resources}
-        isMediaLoading={true}
+        isMediaLoading
         isMediaLoaded={false}
-        hasMore={true}
+        hasMore
         onInsert={() => {}}
         setNextPage={() => {}}
       />

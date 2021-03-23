@@ -18,38 +18,39 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
+import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '../../../../tracking';
-import addQueryArgs from '../../../utils/addQueryArgs';
-import { useStory, useLocalMedia, useConfig } from '../../../app';
-import { Outline } from '../../button';
+import { useStory, useLocalMedia } from '../../../app';
 import escapeHTML from '../../../utils/escapeHTML';
 import PreviewErrorDialog from '../previewErrorDialog';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+} from '../../../../design-system';
 
 const PREVIEW_TARGET = 'story-preview';
 
 function Preview() {
-  const { isSaving, link, status, autoSave, saveStory } = useStory(
+  const { isSaving, previewLink, status, autoSave, saveStory } = useStory(
     ({
       state: {
         meta: { isSaving },
-        story: { link, status },
+        story: { status, previewLink },
       },
       actions: { autoSave, saveStory },
-    }) => ({ isSaving, link, status, autoSave, saveStory })
+    }) => ({ isSaving, status, previewLink, autoSave, saveStory })
   );
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
-  const { previewLink: autoSaveLink } = useConfig();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
     null
@@ -57,15 +58,23 @@ function Preview() {
   const isDraft = 'draft' === status;
 
   /**
+   * Applies any local transforms (e.g. AMP development mode) to the stored preview link.
+   *
+   * @param {string} urlString The original preview link.
+   * @return {string} The decorated preview link.
+   */
+  const decoratePreviewLink = (urlString) => {
+    const url = new URL(urlString);
+    // #development=1 triggers amp-story's multi-aspect preview mode.
+    url.hash = '#development=1';
+    return url.toString();
+  };
+
+  /**
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
-    trackEvent('preview_story', 'editor');
-
-    // Display the actual link in case of a draft.
-    const previewLink = isDraft
-      ? addQueryArgs(link, { preview: 'true' })
-      : autoSaveLink;
+    trackEvent('preview_story');
 
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
@@ -84,12 +93,13 @@ function Preview() {
         popup.document.write(
           escapeHTML(__('Please wait. Generating the preview…', 'web-stories'))
         );
+        const decoratedPreviewLink = decoratePreviewLink(previewLink);
         // Force redirect to the preview URL after 5 seconds. The saving tab
         // might get frozen by the browser.
         popup.document.write(
           `<script>
             setTimeout(function() {
-              location.replace(${JSON.stringify(previewLink)});
+              location.replace(${JSON.stringify(decoratedPreviewLink)});
             }, 5000);
           </script>`
         );
@@ -106,20 +116,25 @@ function Preview() {
         if (popup && !popup.closed) {
           if (popup.location.href) {
             // Auto-save sends an updated preview link, use that instead if available.
-            const updatedPreviewLink = update?.preview_link ?? previewLink;
+            const updatedPreviewLink = decoratePreviewLink(
+              update?.preview_link ?? previewLink
+            );
             popup.location.replace(updatedPreviewLink);
           }
         }
       })
       .catch(() => setPreviewLinkToOpenViaDialog(previewLink));
-  }, [autoSave, autoSaveLink, isDraft, link, saveStory]);
+  }, [autoSave, isDraft, previewLink, saveStory]);
 
   const openPreviewLinkSync = useCallback(
     (evt) => {
       setPreviewLinkToOpenViaDialog(null);
       // Ensure that this method is as safe as possible and pass the random
       // target in case the normal target is not openable.
-      window.open(previewLinkToOpenViaDialog, PREVIEW_TARGET + Math.random());
+      const decoratedPreviewLink = decoratePreviewLink(
+        previewLinkToOpenViaDialog
+      );
+      window.open(decoratedPreviewLink, PREVIEW_TARGET + Math.random());
       evt.preventDefault();
     },
     [previewLinkToOpenViaDialog]
@@ -130,11 +145,21 @@ function Preview() {
     []
   );
 
+  const label = __('Preview', 'web-stories');
   return (
     <>
-      <Outline onClick={openPreviewLink} isDisabled={isSaving || isUploading}>
-        {__('Preview', 'web-stories')}
-      </Outline>
+      <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+        <Button
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={openPreviewLink}
+          disabled={isSaving || isUploading}
+          aria-label={label}
+        >
+          <Icons.Eye />
+        </Button>
+      </Tooltip>
       <PreviewErrorDialog
         open={Boolean(previewLinkToOpenViaDialog)}
         onClose={onDialogClose}

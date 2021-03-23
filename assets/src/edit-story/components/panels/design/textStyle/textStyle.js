@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -27,7 +27,6 @@ import { SimplePanel } from '../../panel';
 import { usePresubmitHandler } from '../../../form';
 import StyleControls from './style';
 import ColorControls from './color';
-import PaddingControls from './padding';
 import FontControls from './font';
 
 function StylePanel(props) {
@@ -36,14 +35,13 @@ function StylePanel(props) {
 
   return (
     <SimplePanel
-      name="style"
-      title={__('Style', 'web-stories')}
+      name="textStyle"
+      title={__('Text', 'web-stories')}
       isPersistable={false}
     >
       <FontControls {...props} />
       <StyleControls {...props} />
       <ColorControls {...props} />
-      <PaddingControls {...props} />
     </SimplePanel>
   );
 }

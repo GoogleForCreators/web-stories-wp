@@ -19,11 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -35,9 +31,7 @@ const DialogBody = styled.p`
   margin: 0;
 `;
 
-function ConfirmPageLayoutDialog(props) {
-  const { onClose, onConfirm } = props;
-
+function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
   return (
     <Dialog
       open

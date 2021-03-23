@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * External dependencies
@@ -37,10 +37,11 @@ import {
   Icons,
   Modal,
   Text,
+  THEME_CONSTANTS,
+  useResizeEffect,
 } from '../../../../design-system';
 import { WPBODY_ID } from '../../../constants';
 import { StoryPropType } from '../../../types';
-import { useResizeEffect } from '../../../utils';
 import useApi from '../../api/useApi';
 import { ERRORS } from '../../textContent';
 
@@ -59,9 +60,8 @@ const CloseButton = styled(Button)`
 // 54 getting subtracted from height is the size of the close button + margin. The Iframe wants specifics in safari, this is important to make sure the close button is visible.
 const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
-
-  height: ${({ dimensions }) => `${dimensions.height - 54}px`};
-  max-height: calc(100vh - 54px);
+  min-height: 90vh;
+  height: calc(100% - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
 
   &:focus {
     border: ${({ theme }) => theme.DEPRECATED_THEME.borders.bluePrimary};
@@ -143,7 +143,7 @@ const PreviewStory = ({ story, handleClose }) => {
       localStorage.removeItem(AMP_LOCAL_STORAGE);
     }
     if (!story || !story.pages.length) {
-      setPreviewError(ERRORS.RENDER_PREVIEW.TITLE);
+      setPreviewError(ERRORS.RENDER_PREVIEW.MESSAGE);
     } else {
       createStoryPreview(story);
     }
@@ -187,7 +187,7 @@ const PreviewStory = ({ story, handleClose }) => {
       isOpen
       onClose={handleClose}
       contentStyles={{
-        height: `${modalDimensions.height}px`,
+        height: `calc(100% - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px)`,
         width: `${modalDimensions.width}px`,
         display: 'flex',
         flexDirection: 'column',
@@ -207,7 +207,7 @@ const PreviewStory = ({ story, handleClose }) => {
             onClick={handleClose}
             aria-label={__('close preview', 'web-stories')}
           >
-            <Icons.Close aria-hidden={true} />
+            <Icons.Cross aria-hidden />
           </CloseButton>
         </CloseButtonContainer>
         {!previewError && (

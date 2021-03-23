@@ -77,6 +77,12 @@ const updateElementsByResourceId = (dispatch) => ({ id, properties }) =>
     payload: { id, properties },
   });
 
+const deleteElementsByResourceId = (dispatch) => ({ id }) =>
+  dispatch({
+    type: types.DELETE_ELEMENTS_BY_RESOURCE_ID,
+    payload: { id },
+  });
+
 const updateElementById = (dispatch) => ({ elementId, properties }) =>
   dispatch({
     type: types.UPDATE_ELEMENTS,
@@ -89,10 +95,14 @@ const updateSelectedElements = (dispatch) => ({ properties }) =>
     payload: { elementIds: null, properties },
   });
 
-const combineElements = (dispatch) => ({ firstElement, secondId }) =>
+const combineElements = (dispatch) => ({
+  firstElement,
+  secondId,
+  shouldRetainAnimations,
+}) =>
   dispatch({
     type: types.COMBINE_ELEMENTS,
-    payload: { firstElement, secondId },
+    payload: { firstElement, secondId, shouldRetainAnimations },
   });
 
 const setBackgroundElement = (dispatch) => ({ elementId }) =>
@@ -154,6 +164,7 @@ export const exposedActions = {
   deleteSelectedElements,
   updateElementsById,
   updateElementsByResourceId,
+  deleteElementsByResourceId,
   updateElementById,
   updateSelectedElements,
   combineElements,

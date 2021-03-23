@@ -19,11 +19,8 @@
  */
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __, _x, sprintf } from '@wordpress/i18n';
+import { _x, sprintf } from '@web-stories-wp/i18n';
+import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -31,6 +28,7 @@ import { __, _x, sprintf } from '@wordpress/i18n';
 import { useAPI } from '../../../../app/api';
 import { Pane } from '../shared';
 import PillGroup from '../shared/pillGroup';
+import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
 import { PAGE_LAYOUT_TYPES } from './constants';
@@ -47,28 +45,31 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
-// padding-top is to help outlines on page layouts render
 export const PageLayoutsParentContainer = styled.div`
+  ${virtualPaneContainer}
   overflow-x: hidden;
   overflow-y: scroll;
-  margin-top: 26px;
-  padding-top: 2px;
-  width: 100%;
 `;
 
 function PageLayoutsPane(props) {
   const {
-    actions: { getTemplates },
+    actions: { getPageLayouts },
   } = useAPI();
-  const [templates, setTemplates] = useState([]);
+  const [pageLayouts, setPageLayouts] = useState([]);
   const [selectedPageLayoutType, setSelectedPageLayoutType] = useState(null);
 
   const pageLayoutsParentRef = useRef();
 
-  // load and process templates
+  // load and process pageLayouts
   useEffect(() => {
-    getTemplates().then((result) => setTemplates(result));
-  }, [getTemplates, setTemplates]);
+    async function loadPageLayouts() {
+      const trackTiming = getTimeTracker('load_page_layouts');
+      setPageLayouts(await getPageLayouts());
+      trackTiming();
+    }
+
+    loadPageLayouts();
+  }, [getPageLayouts, setPageLayouts]);
 
   const pills = useMemo(
     () =>
@@ -81,7 +82,7 @@ function PageLayoutsPane(props) {
 
   const filteredPages = useMemo(
     () =>
-      templates.reduce((pages, template) => {
+      pageLayouts.reduce((pages, template) => {
         const templatePages = template.pages.reduce((acc, page) => {
           // skip unselected page layout types if not matching
           if (
@@ -109,11 +110,16 @@ function PageLayoutsPane(props) {
 
         return [...pages, ...templatePages];
       }, []),
-    [templates, selectedPageLayoutType]
+    [pageLayouts, selectedPageLayoutType]
   );
 
   const handleSelectPageLayoutType = useCallback((key) => {
     setSelectedPageLayoutType(key);
+    trackEvent('search', {
+      search_type: 'page_layouts',
+      search_term: '',
+      search_category: key,
+    });
   }, []);
 
   return (
@@ -125,10 +131,7 @@ function PageLayoutsPane(props) {
           selectItem={handleSelectPageLayoutType}
           deselectItem={() => handleSelectPageLayoutType(null)}
         />
-        <PageLayoutsParentContainer
-          ref={pageLayoutsParentRef}
-          title={__('Page Layouts', 'web-stories')}
-        >
+        <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
           {pageLayoutsParentRef.current && (
             <PageLayouts
               parentRef={pageLayoutsParentRef}

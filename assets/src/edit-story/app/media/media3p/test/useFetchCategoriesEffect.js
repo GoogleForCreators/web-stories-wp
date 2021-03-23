@@ -35,7 +35,7 @@ jest.mock('../api', () => ({
 }));
 
 const mockShowSnackbar = jest.fn();
-jest.mock('../../../snackbar', () => ({
+jest.mock('../../../../../design-system/contexts/snackbar/useSnackbar', () => ({
   useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 
@@ -73,7 +73,7 @@ describe('useFetchCategoriesEffect', () => {
         categories: [
           {
             name: 'categories/unsplash:c7USHrQ0Ljw',
-            displayName: 'COVID-19',
+            label: 'COVID-19',
           },
         ],
       })
@@ -93,7 +93,7 @@ describe('useFetchCategoriesEffect', () => {
         categories: [
           {
             name: 'categories/unsplash:c7USHrQ0Ljw',
-            displayName: 'COVID-19',
+            label: 'COVID-19',
           },
         ],
       })

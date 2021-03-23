@@ -15,17 +15,17 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Upload } from '../../../../../icons';
+import { Icons } from '../../../../../../design-system';
 
 function MediaIcon() {
-  return <Upload aria-label={__('Media Gallery', 'web-stories')} />;
+  return <Icons.ArrowCloud aria-label={__('Media Gallery', 'web-stories')} />;
 }
 
 export default MediaIcon;

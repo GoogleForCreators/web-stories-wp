@@ -23,9 +23,9 @@ import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../';
-import { Text } from '../../';
-import { Banner } from '..';
+import { THEME_CONSTANTS } from '../../../theme';
+import { Text, Link } from '../../typography';
+import { Banner } from '../';
 
 const demoBgUrl = 'https://picsum.photos/id/240/1500/160';
 
@@ -80,13 +80,9 @@ export const DashboardBanner = () => {
         {
           'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with '
         }
-        <Text
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          href="#"
-          as="a"
-        >
+        <Link size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL} href="#">
           {'Google Privacy Policy'}
-        </Text>
+        </Link>
       </Text>
     </Banner>
   );

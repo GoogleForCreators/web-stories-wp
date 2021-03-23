@@ -18,17 +18,22 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Headline,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 import { UnitsProvider } from '../../../../../edit-story/units';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
+import { resolveRoute } from '../../../router';
+import { APP_ROUTES } from '../../../../constants';
 import {
   InfiniteScroller,
   Layout,
@@ -40,6 +45,7 @@ import {
   ViewPropTypes,
   PagePropTypes,
   SortPropTypes,
+  ShowStoriesWhileLoadingPropType,
 } from '../../../../utils/useStoryView';
 import FontProvider from '../../../font/fontProvider';
 import { EmptyContentMessage } from '../../shared';
@@ -56,6 +62,7 @@ function Content({
   storyActions,
   view,
   initialFocusStoryId,
+  showStoriesWhileLoading,
 }) {
   return (
     <Layout.Scrollable>
@@ -72,11 +79,16 @@ function Content({
                 <>
                   <StoriesView
                     filterValue={filter.value}
+                    isLoading={isLoading}
                     sort={sort}
                     storyActions={storyActions}
                     stories={stories}
                     view={view}
                     initialFocusStoryId={initialFocusStoryId}
+                    loading={{
+                      isLoading,
+                      showStoriesWhileLoading,
+                    }}
                   />
                   <InfiniteScroller
                     canLoadMore={!allPagesFetched}
@@ -87,16 +99,31 @@ function Content({
                 </>
               ) : (
                 <EmptyContentMessage>
-                  {search?.keyword
-                    ? sprintf(
-                        /* translators: %s: search term. */
-                        __(
-                          'Sorry, we couldn\'t find any results matching "%s"',
-                          'web-stories'
-                        ),
-                        search.keyword
-                      )
-                    : __('Create a story to get started!', 'web-stories')}
+                  <Headline
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="h3"
+                  >
+                    {search?.keyword
+                      ? sprintf(
+                          /* translators: %s: search term. */
+                          __(
+                            'Sorry, we couldn\'t find any results matching "%s"',
+                            'web-stories'
+                          ),
+                          search.keyword
+                        )
+                      : __('Start telling Stories.', 'web-stories')}
+                  </Headline>
+                  {!search?.keyword && (
+                    <Button
+                      type={BUTTON_TYPES.PRIMARY}
+                      size={BUTTON_SIZES.MEDIUM}
+                      as="a"
+                      href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
+                    >
+                      {__('Explore templates', 'web-stories')}
+                    </Button>
+                  )}
                 </EmptyContentMessage>
               )}
             </StandardViewContentGutter>
@@ -117,6 +144,7 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   view: ViewPropTypes,
   initialFocusStoryId: PropTypes.number,
+  showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
 };
 
 export default Content;

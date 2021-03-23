@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import PageAttachment from '../index';
-import CanvasContext from '../../context';
+import CanvasContext from '../../../../app/canvas/context';
 import { renderWithTheme } from '../../../../testUtils';
 import StoryContext from '../../../../app/story/context';
 

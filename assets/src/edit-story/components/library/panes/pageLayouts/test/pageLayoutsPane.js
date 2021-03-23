@@ -56,13 +56,13 @@ function flushPromiseQueue() {
 }
 
 describe('PageLayoutsPane', () => {
-  const getTemplates = jest.fn();
+  const getPageLayouts = jest.fn();
   let templates;
 
   function renderWithTemplates() {
     const apiValue = {
       actions: {
-        getTemplates,
+        getPageLayouts,
       },
     };
     const storyContext = {
@@ -79,7 +79,7 @@ describe('PageLayoutsPane', () => {
         <ConfigContext.Provider value={configValue}>
           <APIContext.Provider value={apiValue}>
             <StoryContext.Provider value={storyContext}>
-              <PageLayoutsPane isActive={true} />
+              <PageLayoutsPane isActive />
             </StoryContext.Provider>
           </APIContext.Provider>
         </ConfigContext.Provider>
@@ -91,11 +91,11 @@ describe('PageLayoutsPane', () => {
     templates = TEMPLATE_NAMES.map((name, index) =>
       createTemplate(name, index)
     );
-    getTemplates.mockResolvedValue(templates);
+    getPageLayouts.mockResolvedValue(templates);
   });
 
   it('should render <PageLayoutsPane /> with dummy layouts', async () => {
-    const { queryByText, queryByTitle } = renderWithTemplates();
+    const { queryByText, queryByLabelText } = renderWithTemplates();
 
     await act(async () => {
       // Needed to flush all promises to get templates to resolve
@@ -109,8 +109,8 @@ describe('PageLayoutsPane', () => {
       });
 
     TEMPLATE_NAMES.forEach((name) => {
-      expect(queryByTitle(`${name} Cover`)).toBeInTheDocument();
-      expect(queryByTitle(`${name} Section`)).toBeInTheDocument();
+      expect(queryByLabelText(`${name} Cover`)).toBeInTheDocument();
+      expect(queryByLabelText(`${name} Section`)).toBeInTheDocument();
     });
   });
 });

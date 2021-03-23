@@ -26,28 +26,17 @@ body.js {
 }
 
 #screen-meta,
-#screen-meta-links ~ :not(.web-stories-wp):not(.clear) {
+#screen-meta ~ :not(.web-stories-wp):not(.clear) {
   display: none;
 }
 
 body.web-story_page_stories-dashboard {
   position: relative;
+  overflow: scroll;
 }
 
 #adminmenuback {
   z-index: 4;
-}
-
-body.web-story_page_stories-dashboard #wpwrap,
-body.web-story_page_stories-dashboard #wpbody-content {
-  position: absolute;
-  overflow: hidden;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
 }
 
 body.js.web-story_page_stories-dashboard #wpcontent,

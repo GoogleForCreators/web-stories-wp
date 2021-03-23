@@ -108,7 +108,7 @@ describe('Form/Numeric', () => {
         value={0.9}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        float={true}
+        float
         aria-label="Numeric"
       />
     );
@@ -128,7 +128,7 @@ describe('Form/Numeric', () => {
         value={0}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        float={true}
+        float
         aria-label="Numeric"
       />
     );
@@ -148,7 +148,7 @@ describe('Form/Numeric', () => {
         value={0.38934985}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        float={true}
+        float
         aria-label="Numeric"
       />
     );
@@ -206,7 +206,7 @@ describe('Form/Numeric', () => {
         value={2}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        float={true}
+        float
         aria-label="Numeric"
       />
     );
@@ -226,7 +226,7 @@ describe('Form/Numeric', () => {
         value={2.34598345}
         onChange={onChangeMock}
         onBlur={onBlurMock}
-        float={true}
+        float
         aria-label="Numeric"
       />
     );

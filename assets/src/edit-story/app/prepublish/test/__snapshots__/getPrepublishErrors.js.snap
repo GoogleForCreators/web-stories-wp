@@ -3,32 +3,67 @@
 exports[`prepublish checklist should return guidance for the story 1`] = `
 Array [
   Object {
-    "help": "Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.",
-    "message": "Missing story cover image",
+    "help": <constants__DashedList>
+      <li>
+        Use as a representation of the story
+      </li>
+      <li>
+        Avoid images with embedded text
+      </li>
+      <li>
+        Use an image that's at least 640x853px
+      </li>
+      <li>
+        Maintain a 3:4 aspect ratio
+      </li>
+    </constants__DashedList>,
+    "highlight": "POSTER",
+    "message": "Add cover image",
     "storyId": 120,
     "type": "error",
   },
   Object {
-    "help": "Keep the title clear and clean, ideally under 10 words in less than 40 characters.",
-    "message": "Missing story title",
+    "help": <constants__DashedList>
+      <li>
+        Keep under 10 words
+      </li>
+      <li>
+        Don't exceed 40 characters
+      </li>
+    </constants__DashedList>,
+    "highlight": "STORY_TITLE",
+    "message": "Add story title",
     "storyId": 120,
     "type": "error",
   },
   Object {
-    "help": "Add a Story Description in the Document panel.",
-    "message": "Missing Story Description",
+    "help": <constants__DashedList>
+      <li>
+        Incorporate a brief description for better user experience
+      </li>
+    </constants__DashedList>,
+    "highlight": "EXCERPT",
+    "message": "Add story description",
     "storyId": 120,
     "type": "warning",
   },
   Object {
-    "help": "Use between 4 and 30 pages in your story.",
-    "message": "Story too short",
+    "help": <constants__DashedList>
+      <li>
+        It is recommended to have between 4 and 30 pages in your story
+      </li>
+    </constants__DashedList>,
+    "message": "Make story longer",
     "storyId": 120,
     "type": "guidance",
   },
   Object {
-    "help": "The entire story should have a minimum of 100 characters of text in total.",
-    "message": "Too little text",
+    "help": <constants__DashedList>
+      <li>
+        Make your story text 100 characters or more
+      </li>
+    </constants__DashedList>,
+    "message": "Increase amount of total text",
     "storyId": 120,
     "type": "guidance",
   },

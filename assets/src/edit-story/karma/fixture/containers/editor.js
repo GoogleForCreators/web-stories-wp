@@ -19,6 +19,7 @@
  */
 import { Container } from './container';
 import { Canvas } from './canvas';
+import { GridView } from './gridView';
 import { Carousel } from './carousel';
 import { Library } from './library';
 import { Inspector } from './inspector';
@@ -65,6 +66,16 @@ export class Editor extends Container {
       this.getByRole('region', { name: 'Page Carousel' }),
       'carousel',
       Carousel
+    );
+  }
+
+  get gridView() {
+    return this._get(
+      this.getByRoleIn(this.node.ownerDocument, 'region', {
+        name: 'Grid View',
+      }),
+      'gridView',
+      GridView
     );
   }
 }

@@ -20,15 +20,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import {
+  isNullOrUndefinedOrEmptyString,
+  useKeyDownEffect,
+  useFocusOut,
+} from '../../../../../design-system';
 import loadStylesheet from '../../../../utils/loadStylesheet';
 import { useConfig } from '../../../../app/config';
 import { GOOGLE_MENU_FONT_URL } from '../../../../app/font';
@@ -38,8 +40,6 @@ import {
   DIRECTION,
   SCALE_DIRECTION,
 } from '../../../../../animation';
-import useFocusOut from '../../../../utils/useFocusOut';
-import { useKeyDownEffect } from '../../../keyboard';
 import WithTooltip from '../../../tooltip';
 import {
   GRID_ITEM_HEIGHT,
@@ -63,11 +63,10 @@ import {
   PanRightAnimation,
   PanBottomAnimation,
   PanLeftAnimation,
+  PanAndZoomAnimation,
 } from './effectChooserElements';
-import { isNullOrUndefinedOrEmptyString } from './utils/isNullOrUndefinedOrEmptyString';
 
 const Container = styled.div`
-  background: black;
   width: ${PANEL_WIDTH}px;
 `;
 
@@ -77,7 +76,8 @@ const ContentWrapper = styled.div`
 
 const GridItem = styled.button.attrs({ role: 'listitem' })`
   border: none;
-  background: ${({ active }) => (active ? '#5732A3' : '#333')};
+  background: ${({ active, theme }) =>
+    active ? theme.DEPRECATED_THEME.colors.accent.primary : '#333'};
   border-radius: 4px;
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
@@ -85,7 +85,7 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   font-family: 'Teko', sans-serif;
   font-size: 20px;
   line-height: 1;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   text-transform: uppercase;
   transition: background 0.1s linear;
 
@@ -99,7 +99,8 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
 
   &:hover:not([aria-disabled='true']),
   &:focus:not([aria-disabled='true']) {
-    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
+    background: ${({ active, theme }) =>
+      active ? theme.DEPRECATED_THEME.colors.accent.primary : '#1C73E8'};
 
     ${BaseAnimationCell} {
       display: inline-block;
@@ -137,9 +138,9 @@ const NoEffect = styled(GridItemFullRow)`
     padding: 8px 15px;
     height: auto;
     text-transform: capitalize;
-    font-family: ${theme.fonts.paragraph.small.family};
-    font-size: ${theme.fonts.paragraph.small.size};
-    line-height: ${theme.fonts.paragraph.small.lineHeight};
+    font-family: ${theme.DEPRECATED_THEME.fonts.paragraph.small.family};
+    font-size: ${theme.DEPRECATED_THEME.fonts.paragraph.small.size};
+    line-height: ${theme.DEPRECATED_THEME.fonts.paragraph.small.lineHeight};
     font-weight: normal;
   `}
 `;
@@ -147,7 +148,7 @@ const GridLabel = styled.div`
   grid-column-start: span 4;
   padding: 15px 15px 0 18px;
   span {
-    color: ${({ theme }) => theme.colors.fg.white};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
     font-weight: 500;
     font-size: 14px;
   }
@@ -195,6 +196,7 @@ const BACKGROUND_EFFECTS_LIST = [
   PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
+  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
 ];
 
 export default function EffectChooser({
@@ -209,6 +211,7 @@ export default function EffectChooser({
   const { isRTL } = useConfig();
   const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
+  const { enableExperimentalAnimationEffects } = useFeatures();
 
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
@@ -560,6 +563,52 @@ export default function EffectChooser({
                 </ZoomOutAnimation>
               </WithTooltip>
             </GridItemHalfRow>
+            {enableExperimentalAnimationEffects && (
+              <GridItemFullRow
+                aria-label={__('Pan and Zoom Effect', 'web-stories')}
+                onClick={(event) => {
+                  handleOnSelect(
+                    event,
+                    BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                    {
+                      animation:
+                        BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                      zoomDirection: (
+                        disabledTypeOptionsMap[
+                          BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                        ]?.options || []
+                      ).includes(SCALE_DIRECTION.SCALE_OUT)
+                        ? SCALE_DIRECTION.SCALE_IN
+                        : SCALE_DIRECTION.SCALE_OUT,
+                    }
+                  );
+                }}
+                aria-disabled={disabledBackgroundEffects.includes(
+                  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                )}
+                active={activeEffectListIndex === 7}
+              >
+                <WithTooltip
+                  title={
+                    disabledBackgroundEffects.includes(
+                      BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                    )
+                      ? disabledTypeOptionsMap[
+                          BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                        ]?.tooltip
+                      : ''
+                  }
+                  placement="left"
+                >
+                  <ContentWrapper>
+                    {__('Pan and Zoom', 'web-stories')}
+                  </ContentWrapper>
+                  <PanAndZoomAnimation>
+                    {__('Pan and Zoom', 'web-stories')}
+                  </PanAndZoomAnimation>
+                </WithTooltip>
+              </GridItemFullRow>
+            )}
           </>
         ) : (
           <>

@@ -26,7 +26,8 @@ import { rgba } from 'polished';
 const brand = {
   gray: {
     90: '#131516',
-    80: '#2F3131',
+    80: '#26292A',
+    75: '#2E3133',
     70: '#393D3F',
     60: '#4B5253',
     50: '#5E6668',
@@ -103,6 +104,7 @@ const opacity = {
   white64: rgba(standard.white, 0.64),
   white24: rgba(standard.white, 0.24),
   white16: rgba(standard.white, 0.16),
+  white8: rgba(standard.white, 0.08),
   black64: rgba(standard.black, 0.64),
   black24: rgba(standard.black, 0.24),
   black10: rgba(standard.black, 0.1),
@@ -135,6 +137,7 @@ const darkTheme = {
     active: brand.gray[5],
     brandNormal: brand.gray[90],
     brandHover: brand.gray[90],
+    brandPress: brand.violet[40],
   },
   interactiveBg: {
     active: brand.violet[70],
@@ -151,17 +154,19 @@ const darkTheme = {
     tertiaryNormal: opacity.footprint,
     tertiaryHover: brand.gray[70],
     tertiaryPress: brand.gray[60],
+    quaternaryNormal: opacity.footprint,
     negativeNormal: brand.red[40],
     negativeHover: brand.red[30],
     negativePress: brand.red[20],
     positiveNormal: brand.green[40],
     positiveHover: brand.green[30],
     positivePress: brand.green[20],
+    previewOverlay: opacity.black10,
   },
   border: {
     focus: brand.blue[30],
-    disable: brand.gray[70],
-    defaultNormal: brand.gray[50],
+    disable: brand.gray[75],
+    defaultNormal: brand.gray[70],
     defaultHover: brand.gray[40],
     defaultPress: brand.gray[30],
     defaultActive: brand.gray[10],
@@ -169,17 +174,26 @@ const darkTheme = {
     positiveHover: brand.green[30],
     positivePress: brand.green[20],
     positiveActive: brand.green[10],
+    quaternaryNormal: brand.gray[70],
+    quaternaryHover: brand.gray[40],
+    quaternaryPress: standard.black,
+    quaternaryActive: brand.gray[30],
     negativeNormal: brand.red[40],
     negativeHover: brand.red[30],
     negativePress: brand.red[20],
     negativeActive: brand.red[10],
+    selection: brand.blue[30],
   },
   divider: {
     primary: opacity.white24,
-    secondary: opacity.white16,
+    secondary: opacity.white8,
+    tertiary: opacity.black24,
   },
   form: {
     dropDownSubtitle: brand.gray[20], // equivalent to fg.secondary
+  },
+  shadow: {
+    active: opacity.white16,
   },
 };
 
@@ -207,6 +221,7 @@ const lightTheme = {
     active: brand.gray[90],
     brandNormal: brand.gray[90],
     brandHover: brand.gray[90],
+    brandPress: brand.violet[40],
   },
   interactiveBg: {
     active: brand.violet[10],
@@ -223,12 +238,14 @@ const lightTheme = {
     tertiaryNormal: opacity.footprint,
     tertiaryHover: brand.gray[10],
     tertiaryPress: brand.gray[20],
+    quaternaryNormal: opacity.footprint,
     negativeNormal: brand.red[20],
     negativeHover: brand.red[30],
     negativePress: brand.red[40],
     positiveNormal: brand.green[20],
     positiveHover: brand.green[30],
     positivePress: brand.green[40],
+    previewOverlay: opacity.white16,
   },
   border: {
     focus: brand.blue[40],
@@ -245,13 +262,22 @@ const lightTheme = {
     negativeHover: brand.red[30],
     negativePress: brand.red[40],
     negativeActive: brand.red[90],
+    quaternaryNormal: brand.gray[20],
+    quaternaryHover: brand.gray[30],
+    quaternaryPress: standard.white,
+    quaternaryActive: brand.gray[40],
+    selection: brand.blue[40],
   },
   divider: {
     primary: opacity.black24,
     secondary: opacity.black10,
+    tertiary: opacity.white24,
   },
   form: {
     dropDownSubtitle: brand.gray[50], // equivalent to fg.tertiary
+  },
+  shadow: {
+    active: opacity.black10,
   },
 };
 

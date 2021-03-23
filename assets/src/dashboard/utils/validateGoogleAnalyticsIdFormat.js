@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-const googleAnalyticsIdFormatRegex = /^ua-\d+-\d+$/;
+// GA4 measurement ID format is not yet supported in AMP.
+// See https://github.com/google/web-stories-wp/issues/6479
+const idFormatRegex = /^ua-\d+-\d+$/;
 
 export default function validateGoogleAnalyticsIdFormat(value = '') {
-  return Boolean(value.toLowerCase().match(googleAnalyticsIdFormatRegex));
+  return Boolean(value.toLowerCase().match(idFormatRegex));
 }

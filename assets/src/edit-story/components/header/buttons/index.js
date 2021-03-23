@@ -23,7 +23,7 @@ import { useState, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import addQueryArgs from '../../../utils/addQueryArgs';
+import { addQueryArgs } from '../../../../design-system';
 import { useStory } from '../../../app';
 import CircularProgress from '../../circularProgress';
 import PostPublishDialog from '../postPublishDialog';
@@ -41,10 +41,20 @@ const ButtonList = styled.nav`
 
 const List = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Space = styled.div`
-  width: 6px;
+  width: 8px;
+`;
+
+const Spinner = styled.div`
+  position: absolute;
+  top: 0;
+`;
+
+const IconWithSpinner = styled.div`
+  position: relative;
 `;
 
 function Loading() {
@@ -52,10 +62,11 @@ function Loading() {
     isSaving: state.state.meta.isSaving,
   }));
   return (
-    <>
-      {isSaving && <CircularProgress size={30} />}
-      <Space />
-    </>
+    isSaving && (
+      <Spinner>
+        <CircularProgress size={32} />
+      </Spinner>
+    )
   );
 }
 
@@ -88,11 +99,12 @@ function Buttons() {
     <>
       <ButtonList>
         <List>
-          <Loading />
-          {isDraft && <Update />}
-          {!isDraft && <SwitchToDraft />}
+          <IconWithSpinner>
+            <Preview />
+            <Loading />
+          </IconWithSpinner>
           <Space />
-          <Preview />
+          {isDraft ? <Update /> : <SwitchToDraft />}
           <Space />
           {isDraft && <Publish />}
           {!isDraft && <Update />}

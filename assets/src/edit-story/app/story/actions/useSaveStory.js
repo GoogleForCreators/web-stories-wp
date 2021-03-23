@@ -15,15 +15,12 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useState } from 'react';
 import { useFeatures } from 'flagged';
+import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -32,7 +29,7 @@ import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useSnackbar } from '../../snackbar';
+import { useSnackbar } from '../../../../design-system';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
 
@@ -69,6 +66,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         story.status
       );
 
+      const trackTiming = getTimeTracker('load_save_story');
+
       return saveStoryById({
         storyId,
         ...getStoryPropsToSave({ story, pages, metadata, flags }),
@@ -78,6 +77,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           const properties = {
             ...objectPick(post, ['status', 'slug', 'link']),
             featuredMediaUrl: post.featured_media_url,
+            previewLink: post.preview_link,
           };
           updateStory({ properties });
 
@@ -89,11 +89,13 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         .catch(() => {
           showSnackbar({
             message: __('Failed to save the story', 'web-stories'),
+            dismissable: true,
           });
         })
         .finally(() => {
           setIsSaving(false);
           resetNewChanges();
+          trackTiming();
         });
     },
     [

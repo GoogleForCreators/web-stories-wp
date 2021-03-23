@@ -26,6 +26,7 @@ import { FlagsProvider } from 'flagged';
 import APIContext from '../../../api/context';
 import ConfigContext from '../../../config/context';
 import useSaveMetaBoxes from '../useSaveMetaBoxes';
+import { MetaBoxesProvider } from '../../../../integrations/wordpress/metaBoxes';
 
 const saveMetaBoxes = jest.fn().mockResolvedValue(true);
 
@@ -42,7 +43,7 @@ const render = ({ configValue, isEnabled, ...initialProps }) => {
         <FlagsProvider features={{ customMetaBoxes: isEnabled }}>
           <ConfigContext.Provider value={configValue}>
             <APIContext.Provider value={apiContextValue}>
-              {children}
+              <MetaBoxesProvider>{children}</MetaBoxesProvider>
             </APIContext.Provider>
           </ConfigContext.Provider>
         </FlagsProvider>

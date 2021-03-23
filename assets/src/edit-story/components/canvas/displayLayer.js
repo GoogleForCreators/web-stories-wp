@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { memo, useCallback, useEffect, useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -32,10 +28,9 @@ import {
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '../../../animation';
-import { useStory } from '../../app';
+import { useStory, useCanvas } from '../../app';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
-import useCanvas from './useCanvas';
 import PageAttachment from './pageAttachment';
 
 function DisplayPage({
@@ -125,6 +120,9 @@ function DisplayLayer() {
     }) => ({ editingElement, setPageContainer, setFullbleedContainer })
   );
 
+  const isBackgroundSelected =
+    selectedElements?.[0]?.id === currentPage?.elements?.[0]?.id;
+
   const resetAnimationState = useCallback(() => {
     updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
   }, [updateAnimationState]);
@@ -153,6 +151,7 @@ function DisplayLayer() {
           ref={setPageContainer}
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
+          isBackgroundSelected={isBackgroundSelected}
           overlay={
             currentPage && (
               <PageAttachment pageAttachment={currentPage.pageAttachment} />

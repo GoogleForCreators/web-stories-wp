@@ -20,76 +20,88 @@
 import styled from 'styled-components';
 import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../animation';
-import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
-import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
+import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  LogoWithTypeCircleColor,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../design-system';
+import {
+  DASHBOARD_LEFT_NAV_WIDTH,
+  MIN_DASHBOARD_WIDTH,
+} from '../../constants/pageStructure';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
   Header,
-  NavButton,
   NavLink,
   NavList,
   NavListItem,
+  PathName,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  width: 100%;
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
+    width: ${MIN_DASHBOARD_WIDTH}px;
+  }
 `;
 
 export const PageContent = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  padding-top: 10px;
+  width: ${({ fullWidth }) =>
+    fullWidth ? '100%' : `calc(100% - ${DASHBOARD_LEFT_NAV_WIDTH}px)`};
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     left: 0;
+    width: 100%;
   }
 `;
 
 export const LeftRailContainer = styled.nav.attrs({
   ['data-testid']: 'dashboard-left-rail',
 })`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  top: 0;
+  top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  border-right: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray50};
+  background: ${({ theme }) => theme.colors.bg.primary};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
-  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     padding-left: 0;
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
     transform: translateX(${({ isOpen }) => (isOpen ? 'none' : `-100%`)});
   }
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 550px;
 `;
 
 export function LeftRail() {
@@ -118,7 +130,7 @@ export function LeftRail() {
     [toggleSideBar, leftRailRef, upperContentRef]
   );
 
-  const enabledPaths = useMemo(() => {
+  const enabledPrimaryPaths = useMemo(() => {
     if (enableInProgressViews) {
       return PRIMARY_PATHS;
     }
@@ -139,12 +151,12 @@ export function LeftRail() {
     }
   }, [sideBarVisible]);
 
-  const onCreateNewStoryClick = useCallback(async () => {
-    await trackEvent('create_new_story', 'dashboard');
+  const onCreateNewStoryClick = useCallback(() => {
+    trackEvent('create_new_story');
   }, []);
 
-  const onExternalLinkClick = useCallback((path) => {
-    trackEvent(path.trackingEvent, 'dashboard');
+  const onExternalLinkClick = useCallback((evt, path) => {
+    trackClick(evt, path.trackingEvent);
   }, []);
 
   return (
@@ -157,26 +169,30 @@ export function LeftRail() {
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <Header>
-          <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
+        <Header forwardedAs="h2">
+          <LogoWithTypeCircleColor
+            title={__('Web Stories Dashboard', 'web-stories')}
+          />
         </Header>
         <Content>
-          <NavButton
-            type={BUTTON_TYPES.CTA}
+          <Button
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
             href={newStoryURL}
-            isLink
             onClick={onCreateNewStoryClick}
           >
             {__('Create New Story', 'web-stories')}
-          </NavButton>
+          </Button>
         </Content>
         <Content>
           <NavList>
-            {enabledPaths.map((path) => (
+            {enabledPrimaryPaths.map(({ Icon, ...path }) => (
               <NavListItem key={path.value}>
                 <NavLink
                   active={path.value === state.currentPath}
                   href={resolveRoute(path.value)}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  isBold
                   aria-label={
                     path.value === state.currentPath
                       ? sprintf(
@@ -189,10 +205,13 @@ export function LeftRail() {
                   {...(path.isExternal && {
                     rel: 'noreferrer',
                     target: '_blank',
-                    onClick: () => onExternalLinkClick(path),
+                    onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
-                  {path.label}
+                  {Icon && <Icon width="22px" />}
+                  <PathName as="span" isBold>
+                    {path.label}
+                  </PathName>
                 </NavLink>
               </NavListItem>
             ))}
@@ -200,7 +219,40 @@ export function LeftRail() {
         </Content>
       </div>
       <Content>
-        <AppInfo>
+        <NavList>
+          {SECONDARY_PATHS.map((path) => (
+            <NavListItem key={path.value}>
+              <NavLink
+                active={path.value === state.currentPath}
+                href={resolveRoute(path.value)}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                aria-label={
+                  path.value === state.currentPath
+                    ? sprintf(
+                        /* translators: %s: the current page, for example "My Stories". */
+                        __('%s (active view)', 'web-stories'),
+                        path.label
+                      )
+                    : path.label
+                }
+                {...(path.isExternal && {
+                  rel: 'noreferrer',
+                  target: '_blank',
+                  onClick: (evt) => onExternalLinkClick(evt, path),
+                })}
+              >
+                <Text
+                  as="span"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                  isBold
+                >
+                  {path.label}
+                </Text>
+              </NavLink>
+            </NavListItem>
+          ))}
+        </NavList>
+        <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {sprintf(
             /* translators: %s: Current Year, %v: App Version */
             __('\u00A9 %s Google Version %v', 'web-stories'),

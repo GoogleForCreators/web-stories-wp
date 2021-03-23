@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\Site_Kit;
+
 /**
  * Tracking class.
  */
@@ -47,11 +49,38 @@ class Tracking {
 	const TRACKING_ID = 'UA-168571240-1';
 
 	/**
-	 * Name of the user meta key used for opt-in.
+	 * Google Analytics 4 measurement ID.
 	 *
 	 * @var string
 	 */
-	const OPTIN_META_KEY = 'web_stories_tracking_optin';
+	const TRACKING_ID_GA4 = 'G-T88C9951CM';
+
+	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Site_Kit instance.
+	 *
+	 * @var Site_Kit Site_Kit instance.
+	 */
+	private $site_kit;
+
+	/**
+	 * Tracking constructor.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 * @param Site_Kit    $site_kit Site_Kit instance.
+	 */
+	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
+		$this->experiments = $experiments;
+		$this->site_kit    = $site_kit;
+	}
 
 	/**
 	 * Initializes tracking.
@@ -63,21 +92,6 @@ class Tracking {
 	 * @return void
 	 */
 	public function init() {
-		register_meta(
-			'user',
-			static::OPTIN_META_KEY,
-			[
-				'type'              => 'boolean',
-				'sanitize_callback' => 'rest_sanitize_boolean',
-				'default'           => false,
-				'show_in_rest'      => true,
-				'auth_callback'     => static function() {
-					return current_user_can( 'edit_user', get_current_user_id() );
-				},
-				'single'            => true,
-			]
-		);
-
 		// By not passing an actual script src we can print only the inline script.
 		wp_register_script(
 			self::SCRIPT_HANDLE,
@@ -104,6 +118,41 @@ class Tracking {
 		return [
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
+			'trackingIdGA4'   => self::TRACKING_ID_GA4,
+			// This doesn't seem to be fully working for web properties.
+			// So we send it as both app_version and a user property.
+			// See https://support.google.com/analytics/answer/9268042.
+			'appVersion'      => WEBSTORIES_VERSION,
+			'userProperties'  => $this->get_user_properties(),
+		];
+	}
+
+	/**
+	 * Returns a list of user properties.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return array User properties.
+	 */
+	private function get_user_properties() {
+		$role        = ! empty( wp_get_current_user()->roles ) ? wp_get_current_user()->roles[0] : '';
+		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
+
+		$site_kit_status = $this->site_kit->get_plugin_status();
+		$active_plugins  = $site_kit_status['active'] ? 'google-site-kit' : '';
+		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( get_option( Settings::SETTING_NAME_TRACKING_ID ) );
+
+		return [
+			'siteLocale'         => get_locale(),
+			'userLocale'         => get_user_locale(),
+			'userRole'           => $role,
+			'enabledExperiments' => $experiments,
+			'wpVersion'          => get_bloginfo( 'version' ),
+			'phpVersion'         => PHP_VERSION,
+			'isMultisite'        => (int) is_multisite(),
+			'adNetwork'          => (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ),
+			'analytics'          => $analytics,
+			'activePlugins'      => $active_plugins,
 		];
 	}
 
@@ -113,6 +162,6 @@ class Tracking {
 	 * @return bool True if tracking enabled, and False if not.
 	 */
 	public function is_active() {
-		return (bool) get_user_meta( get_current_user_id(), static::OPTIN_META_KEY, true );
+		return (bool) get_user_meta( get_current_user_id(), User_Preferences::OPTIN_META_KEY, true );
 	}
 }

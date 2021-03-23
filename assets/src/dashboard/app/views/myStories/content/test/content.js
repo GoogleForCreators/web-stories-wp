@@ -21,7 +21,7 @@ import { renderWithProviders } from '../../../../../testUtils';
 
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
-import { ToastProvider } from '../../../../../components';
+import { SnackbarProvider } from '../../../../../../design-system';
 import Content from '../';
 
 const fakeStories = [
@@ -69,7 +69,7 @@ describe('My Stories <Content />', function () {
 
   it('should render the content grid with the correct story count.', function () {
     const { getAllByTestId } = renderWithProviders(
-      <ToastProvider>
+      <SnackbarProvider>
         <LayoutProvider>
           <Content
             filter={STORY_STATUSES[0]}
@@ -90,16 +90,16 @@ describe('My Stories <Content />', function () {
             }}
           />
         </LayoutProvider>
-      </ToastProvider>,
+      </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
 
     expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 
-  it('should show "Create a story to get started!" if no stories are present.', function () {
+  it('should show "Start telling Stories." if no stories are present.', function () {
     const { getByText } = renderWithProviders(
-      <ToastProvider>
+      <SnackbarProvider>
         <LayoutProvider>
           <Content
             filter={STORY_STATUSES[0]}
@@ -120,16 +120,16 @@ describe('My Stories <Content />', function () {
             }}
           />
         </LayoutProvider>
-      </ToastProvider>,
+      </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
 
-    expect(getByText('Create a story to get started!')).toBeInTheDocument();
+    expect(getByText('Start telling Stories.')).toBeInTheDocument();
   });
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
     const { getByText } = renderWithProviders(
-      <ToastProvider>
+      <SnackbarProvider>
         <LayoutProvider>
           <Content
             filter={STORY_STATUSES[0]}
@@ -150,7 +150,7 @@ describe('My Stories <Content />', function () {
             }}
           />
         </LayoutProvider>
-      </ToastProvider>,
+      </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } }
     );
 

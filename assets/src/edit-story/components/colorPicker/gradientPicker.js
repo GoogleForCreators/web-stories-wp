@@ -19,41 +19,41 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { ColorStopPropType } from '../../types';
 import {
-  GradientReverser as Reverse,
-  GradientRotator as Rotate,
-} from '../../icons';
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../design-system/components/button';
+import { Button, Icons, Tooltip } from '../../../design-system';
 import GradientLine from './gradientLine';
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: -3px;
-  padding: 12px;
+  align-items: flex-end;
+  padding: 16px 14px;
+  height: 74px;
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
 
-const Button = styled.button`
-  border: 0;
+const SmallButton = styled(Button)`
+  width: 24px;
+  height: 24px;
   padding: 0;
-  background: transparent;
-  display: flex;
-  color: white;
-
+  margin-bottom: -3px;
   svg {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
   }
+`;
+
+const Space = styled.div`
+  width: 6px;
 `;
 
 function GradientPicker({
@@ -68,6 +68,8 @@ function GradientPicker({
   onRotate,
   onReverse,
 }) {
+  const reverseLabel = __('Reverse gradient stops', 'web-stories');
+  const rotateLabel = __('Rotate gradient', 'web-stories');
   return (
     <Wrapper>
       <GradientLine
@@ -78,18 +80,29 @@ function GradientPicker({
         onDelete={onDelete}
         onMove={onMove}
       />
-      <Button
-        onClick={onReverse}
-        aria-label={__('Reverse gradient stops', 'web-stories')}
-      >
-        <Reverse />
-      </Button>
-      <Button
-        onClick={onRotate}
-        aria-label={__('Rotate gradient', 'web-stories')}
-      >
-        <Rotate id="gradient-rotator" />
-      </Button>
+      <Space />
+      <Tooltip hasTail title={reverseLabel}>
+        <SmallButton
+          aria-label={reverseLabel}
+          onClick={onReverse}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.SQUARE}
+        >
+          <Icons.ArrowsLeftright />
+        </SmallButton>
+      </Tooltip>
+      <Tooltip hasTail title={rotateLabel}>
+        <SmallButton
+          onClick={onRotate}
+          aria-label={rotateLabel}
+          type={BUTTON_TYPES.TERTIARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.SQUARE}
+        >
+          <Icons.ArrowRightCurved id="gradient-rotator" />
+        </SmallButton>
+      </Tooltip>
     </Wrapper>
   );
 }

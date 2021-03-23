@@ -7,12 +7,32 @@ This includes, but is not limited to, assets for these areas:
 * Plugin activation message
 * Get Started story (FTUE)
 * Templates
+* Help Center (FTUE)
 
 Assets are versioned. Whenever new assets have been added, or existing assets modified, the version will be incremented upon the next release.
 
+## Git LFS
+
+To keep repository size reasonable, CDN assets are stored with [Git Large File Storage (LFS)](https://docs.github.com/en/github/managing-large-files/about-git-large-file-storage).
+
+In order to be able to add new assets, you have to [install Git LFS](https://docs.github.com/en/github/managing-large-files/installing-git-large-file-storage) on your machine.
+
+You can download it from [git-lfs.github.com](https://git-lfs.github.com/) (or use `brew install git-lfs` if you're on Mac).
+
+Verify that the installation was succcessful:
+
+```bash
+$ git lfs install
+> Git LFS initialized.
+```
+
+**Note:** If the above command prints warning regarding pre-existing Git hooks, run `git lfs update --manual` for instructions on how to merge hooks.
+
 ## Adding Assets
 
-First, add the new assets to the CDN by following these steps
+**Important:** Make sure Git LFS is installed!
+
+First, add the new assets to the CDN by following these steps:
 
 1. Switch to the `static-site` branch.  
   `git checkout static-site`

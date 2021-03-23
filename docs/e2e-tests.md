@@ -78,6 +78,6 @@ This will launch the browser with the devtools already open. Breakpoints can the
 
 Sometimes one might want to test additional scenarios that aren't possible in a WordPress installation out of the box. The tests setup allows adding some utility plugins that can be activated during E2E tests.
 
-These plugins can be added to `tests/e2e/plugins` and then activated via the WordPress admin.
+These plugins can be added to `packages/e2e-tests/src/plugins` and then activated via the WordPress admin.
 
-Test utilities like `createNewStory()` reside in the `tests/e2e/utils` folder.
+Test utilities like `createNewStory()` reside in the `packages/e2e-test-utils/src` folder.

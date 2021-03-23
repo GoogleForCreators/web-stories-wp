@@ -39,11 +39,12 @@ const RangeContainer = styled.div`
 
 const Label = styled.label`
   display: block;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
 `;
 
 function EffectInput({
@@ -68,9 +69,9 @@ function EffectInput({
         <DropDown
           value={valueForField}
           onChange={(value) => onChange(value, true)}
-          options={effectProps[field].values.map((v) => ({
-            value: v,
-            name: v,
+          options={(effectProps[field].values || []).map((option) => ({
+            ...option,
+            disabled: disabledOptions.includes(option.value),
           }))}
         />
       );

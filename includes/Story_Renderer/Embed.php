@@ -29,7 +29,7 @@ namespace Google\Web_Stories\Story_Renderer;
 
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
-use function Google\Web_Stories\is_amp;
+use Google\Web_Stories\Traits\Amp;
 
 /**
  * Class Embed
@@ -37,6 +37,9 @@ use function Google\Web_Stories\is_amp;
  * @package Google\Web_Stories\Story_Renderer
  */
 class Embed {
+
+	use Amp;
+
 	/**
 	 * Current post.
 	 *
@@ -90,7 +93,7 @@ class Embed {
 		// This CSS is used for AMP and non-AMP.
 		wp_enqueue_style( Embed_Base::SCRIPT_HANDLE );
 
-		if ( is_amp() ) {
+		if ( $this->is_amp() ) {
 			ob_start();
 			?>
 			<div class="<?php echo esc_attr( "$class web-stories-embed web-stories-embed-amp $align" ); ?>">
@@ -98,7 +101,7 @@ class Embed {
 					<amp-story-player
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"
-						layout="responsive">
+						layout="intrinsic">
 						<a
 							href="<?php echo esc_url( $url ); ?>"
 							style="<?php echo esc_attr( $poster_style ); ?>">

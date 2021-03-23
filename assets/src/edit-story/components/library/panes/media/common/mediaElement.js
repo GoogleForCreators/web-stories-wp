@@ -22,14 +22,20 @@ import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../../../../keyboard';
+import {
+  useKeyDownEffect,
+  Tooltip,
+  PLACEMENT,
+} from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import { ContentType } from '../../../../../app/media';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 
@@ -51,7 +57,8 @@ const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
@@ -67,9 +74,9 @@ const UploadingIndicator = styled.div`
   height: 4px;
   background: linear-gradient(
     270deg,
-    ${({ theme }) => theme.colors.loading.primary} 15%,
-    ${({ theme }) => theme.colors.loading.secondary} 50%,
-    ${({ theme }) => theme.colors.loading.primary} 85%
+    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 15%,
+    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.secondary} 50%,
+    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 85%
   );
   background-size: 400% 400%;
   position: absolute;
@@ -90,20 +97,7 @@ const UploadingIndicator = styled.div`
   }
 `;
 
-/**
- * Get a formatted element for different media types.
- *
- * @param {Object} param Parameters object
- * @param {number} param.index Index of the media element in the gallery.
- * @param {Object} param.resource Resource object
- * @param {number} param.width Width that element is inserted into editor.
- * @param {number} param.height Height that element is inserted into editor.
- * @param {string?} param.margin The margin in around the element
- * @param {Function} param.onInsert Insertion callback.
- * @param {string} param.providerType Which provider the element is from.
- * @return {null|*} Element or null if does not map to video/image.
- */
-const MediaElement = ({
+function Element({
   index,
   resource,
   width: requestedWidth,
@@ -111,7 +105,7 @@ const MediaElement = ({
   margin,
   onInsert,
   providerType,
-}) => {
+}) {
   const {
     id: resourceId,
     src,
@@ -146,7 +140,7 @@ const MediaElement = ({
   activeRef.current = active;
 
   useEffect(() => {
-    if (type !== 'video') {
+    if (![ContentType.VIDEO, ContentType.GIF].includes(type)) {
       return undefined;
     }
     const resetHoverTime = () => {
@@ -165,7 +159,7 @@ const MediaElement = ({
         setShowVideoDetail(false);
         if (mediaElement.current && hoverTimer == null) {
           const timer = setTimeout(() => {
-            if (activeRef.current) {
+            if (activeRef.current && src) {
               const playPromise = mediaElement.current.play();
               if (playPromise) {
                 // All supported browsers return promise but unit test runner does not.
@@ -179,7 +173,7 @@ const MediaElement = ({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current) {
+        if (mediaElement.current && src) {
           // Stop video and reset position.
           mediaElement.current.pause();
           mediaElement.current.currentTime = 0;
@@ -187,7 +181,7 @@ const MediaElement = ({
       }
     }
     return resetHoverTime;
-  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
+  }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = (thumbnailUrl, baseColor) => () => {
     onInsert({ ...resource, baseColor }, thumbnailUrl);
@@ -256,12 +250,7 @@ const MediaElement = ({
         />
         {attribution}
         {local && (
-          <CSSTransition
-            in
-            appear={true}
-            timeout={0}
-            className="uploading-indicator"
-          >
+          <CSSTransition in appear timeout={0} className="uploading-indicator">
             <UploadingIndicator />
           </CSSTransition>
         )}
@@ -278,7 +267,47 @@ const MediaElement = ({
       </InnerContainer>
     </Container>
   );
+}
+
+Element.propTypes = {
+  index: PropTypes.number.isRequired,
+  resource: PropTypes.object,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  margin: PropTypes.string,
+  onInsert: PropTypes.func,
+  providerType: PropTypes.string,
 };
+
+/**
+ * Get a formatted element for different media types.
+ *
+ * @param {Object} props Component props.
+ * @param {number} props.index Index of the media element in the gallery.
+ * @param {Object} props.resource Resource object
+ * @param {number} props.width Width that element is inserted into editor.
+ * @param {number} props.height Height that element is inserted into editor.
+ * @param {string?} props.margin The margin in around the element
+ * @param {Function} props.onInsert Insertion callback.
+ * @param {string} props.providerType Which provider the element is from.
+ * @return {null|*} Element or null if does not map to video/image.
+ */
+function MediaElement(props) {
+  const { isTranscoding } = props.resource;
+
+  if (isTranscoding) {
+    return (
+      <Tooltip
+        placement={PLACEMENT.BOTTOM}
+        title={__('Video optimization in progress', 'web-stories')}
+      >
+        <Element {...props} />
+      </Tooltip>
+    );
+  }
+
+  return <Element {...props} />;
+}
 
 MediaElement.propTypes = {
   index: PropTypes.number.isRequired,

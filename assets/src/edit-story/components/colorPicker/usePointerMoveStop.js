@@ -22,31 +22,17 @@ import { useLayoutEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { LINE_LENGTH, LINE_WIDTH } from './constants';
-import {
-  getPageX,
-  getPageY,
-  setPointerCapture,
-  releasePointerCapture,
-} from './utils';
+import { LINE_LENGTH } from './constants';
+import { getPageX, setPointerCapture, releasePointerCapture } from './utils';
 
-function usePointerMoveStop(ref, onMove, onDelete) {
+function usePointerMoveStop(ref, onMove) {
   const lastPageX = useRef(null);
   useLayoutEffect(() => {
     const node = ref.current;
-
-    const lineY = node.getBoundingClientRect().top + LINE_WIDTH * 1.5;
-
     const onPointerMove = (evt) => {
       const relativeDeltaX = getPageX(evt) - lastPageX.current;
       lastPageX.current = getPageX(evt);
-      onMove(relativeDeltaX / LINE_LENGTH);
-
-      const absoluteDeltaY = Math.abs(lineY - getPageY(evt));
-      if (absoluteDeltaY > 30) {
-        onDelete();
-        onPointerUp(evt);
-      }
+      onMove(-relativeDeltaX / LINE_LENGTH);
     };
 
     const onPointerUp = (evt) => {
@@ -68,7 +54,7 @@ function usePointerMoveStop(ref, onMove, onDelete) {
 
     node.addEventListener('pointerdown', onPointerDown);
     return () => node.removeEventListener('pointerdown', onPointerDown);
-  }, [ref, onMove, onDelete]);
+  }, [ref, onMove]);
 }
 
 export default usePointerMoveStop;

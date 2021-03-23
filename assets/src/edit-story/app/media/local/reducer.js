@@ -110,6 +110,15 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
+    case types.LOCAL_MEDIA_PREPEND_MEDIA: {
+      const { media } = payload;
+
+      return {
+        ...state,
+        media: [...media, ...state.media],
+      };
+    }
+
     case types.LOCAL_MEDIA_ADD_PROCESSING: {
       const { id } = payload;
       if (!id || state.processing.includes(id)) {

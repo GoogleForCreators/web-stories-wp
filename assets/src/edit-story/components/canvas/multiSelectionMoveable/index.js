@@ -24,13 +24,12 @@ import { useRef, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import Moveable from '../../moveable';
-import { useStory } from '../../../app';
+import { useStory, useCanvas } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
-import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
 import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
@@ -192,7 +191,7 @@ function MultiSelectionMoveable({ selectedElements }) {
       ...selectedElements.map((element) => element.id),
       backgroundElement.id,
     ])
-  ).filter(({ isBackground }) => !isBackground);
+  );
 
   const snapProps = useSnapping({
     isDragging,
@@ -233,9 +232,9 @@ function MultiSelectionMoveable({ selectedElements }) {
       ref={moveable}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
-      draggable={true}
-      resizable={true}
-      rotatable={true}
+      draggable
+      resizable
+      rotatable
       renderDirections={CORNER_HANDLES}
       {...dragProps}
       {...rotateProps}

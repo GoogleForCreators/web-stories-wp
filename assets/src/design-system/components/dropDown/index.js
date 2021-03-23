@@ -20,11 +20,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -33,7 +29,6 @@ import { THEME_CONSTANTS } from '../../theme';
 import { Menu, MENU_OPTIONS } from '../menu';
 import { Popup, PLACEMENT } from '../popup';
 import { DropDownContainer, Hint } from './components';
-import { DEFAULT_POPUP_FILL_WIDTH } from './constants';
 import DropDownSelect from './select';
 import useDropDown from './useDropDown';
 /**
@@ -51,6 +46,7 @@ import useDropDown from './useDropDown';
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
  * @param {number} props.popupFillWidth Allows for an override of how much of popup width to take up for dropDown.
  * @param {number} props.popupZIndex Allows for an override of the default popup z index (2).
+ * @param {boolean} props.isInline If true, will show menu inline rather than in a popup.
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
@@ -67,8 +63,9 @@ export const DropDown = ({
   onMenuItemClick,
   options = [],
   placement = PLACEMENT.BOTTOM,
-  popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
+  popupFillWidth = true,
   popupZIndex,
+  isInline = false,
   selectedValue = '',
   ...rest
 }) => {
@@ -106,6 +103,24 @@ export const DropDown = ({
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const selectButtonId = useMemo(() => `select-button-${uuidv4()}`, []);
 
+  const menu = (
+    <Menu
+      activeValue={activeOption?.value}
+      parentId={selectButtonId}
+      listId={listId}
+      menuAriaLabel={sprintf(
+        /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
+        __('%s Option List Selector', 'web-stories'),
+        ariaLabel || dropDownLabel
+      )}
+      onDismissMenu={handleDismissMenu}
+      onMenuItemClick={handleMenuItemClick}
+      options={normalizedOptions}
+      isAbsolute={isInline}
+      {...rest}
+    />
+  );
+
   return (
     <DropDownContainer>
       <DropDownSelect
@@ -124,7 +139,9 @@ export const DropDown = ({
         ref={selectRef}
         {...rest}
       />
-      {!disabled && (
+      {!disabled && isInline ? (
+        isOpen.value && menu
+      ) : (
         <Popup
           anchor={selectRef}
           isOpen={isOpen.value}
@@ -132,20 +149,7 @@ export const DropDown = ({
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
         >
-          <Menu
-            activeValue={activeOption?.value}
-            parentId={selectButtonId}
-            listId={listId}
-            menuAriaLabel={sprintf(
-              /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
-              __('%s Option List Selector', 'web-stories'),
-              ariaLabel || dropDownLabel
-            )}
-            onDismissMenu={handleDismissMenu}
-            onMenuItemClick={handleMenuItemClick}
-            options={normalizedOptions}
-            {...rest}
-          />
+          {menu}
         </Popup>
       )}
       {hint && (
@@ -173,8 +177,9 @@ DropDown.propTypes = {
   onMenuItemClick: PropTypes.func,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
-  popupFillWidth: PropTypes.number,
+  popupFillWidth: PropTypes.bool,
   popupZIndex: PropTypes.number,
+  isInline: PropTypes.bool,
   renderItem: PropTypes.object,
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,

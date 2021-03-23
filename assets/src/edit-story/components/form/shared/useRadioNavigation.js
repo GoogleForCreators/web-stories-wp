@@ -21,7 +21,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../keyboard';
+import { useKeyDownEffect } from '../../../../design-system';
 
 function useRadioNavigation(ref) {
   const changeCurrent = useCallback(
@@ -46,8 +46,9 @@ function useRadioNavigation(ref) {
         return;
       }
 
-      // Now focus this one
+      // Now select this one
       list[newIndex].focus();
+      list[newIndex].click();
     },
     [ref]
   );

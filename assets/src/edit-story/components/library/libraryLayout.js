@@ -18,11 +18,9 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -30,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 import TabView from '../tabview';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
-import { getTabId } from './panes/shared';
+import { getTabId, getPaneId } from './panes/shared';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
@@ -39,15 +37,17 @@ const Layout = styled.section.attrs({
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.bg.panel};
-  color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
+  color: ${({ theme }) => theme.colors.fg.primary};
   max-height: 100%;
 `;
 
 // @todo Verify that L10N works with the translation happening here.
 const TabsArea = styled.nav.attrs({
   'aria-label': __('Library tabs', 'web-stories'),
-})``;
+})`
+  padding: 0 4px;
+`;
 
 const LibraryPaneContainer = styled.div`
   height: 100%;
@@ -61,6 +61,16 @@ function LibraryLayout() {
     tabs: state.data.tabs,
   }));
 
+  const onTabChange = useCallback(
+    (id) => {
+      setTab(id);
+      trackEvent('library_tab_change', {
+        name: id,
+      });
+    },
+    [setTab]
+  );
+
   return (
     <Layout>
       <TabsArea>
@@ -68,8 +78,9 @@ function LibraryLayout() {
           label={__('Element Library Selection', 'web-stories')}
           tabs={tabs}
           initialTab={initialTab}
-          onTabChange={(id) => setTab(id)}
+          onTabChange={onTabChange}
           getTabId={getTabId}
+          getAriaControlsId={getPaneId}
           shortcut="mod+option+1"
         />
       </TabsArea>

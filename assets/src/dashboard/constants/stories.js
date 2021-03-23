@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@web-stories-wp/i18n';
 
 export const DEFAULT_STORY_PAGE_ADVANCE_DURATION = 2000;
 
@@ -111,11 +111,12 @@ export const STORY_SORT_MENU_ITEMS = [
 ];
 
 export const STORY_STATUS = {
-  ALL: 'publish,draft,future',
+  ALL: 'publish,draft,future,private',
   PUBLISHED_AND_FUTURE: 'publish,future',
   DRAFT: 'draft',
   FUTURE: 'future',
   PUBLISH: 'publish',
+  PRIVATE: 'private',
 };
 
 export const STORY_ITEM_CENTER_ACTION_LABELS = {
@@ -140,15 +141,47 @@ export const STORY_STATUSES = [
     value: STORY_STATUS.PUBLISHED_AND_FUTURE,
     status: STORY_STATUS.PUBLISHED_AND_FUTURE,
   },
+  {
+    label: __('Private', 'web-stories'),
+    value: STORY_STATUS.PRIVATE,
+    status: STORY_STATUS.PRIVATE,
+  },
 ];
 
 export const STORY_VIEWING_LABELS = {
-  [STORY_STATUS.ALL]: __('Viewing all stories', 'web-stories'),
-  [STORY_STATUS.DRAFT]: __('Viewing drafts', 'web-stories'),
-  [STORY_STATUS.PUBLISHED_AND_FUTURE]: __(
-    'Viewing published stories',
-    'web-stories'
-  ),
+  [STORY_STATUS.ALL]: (n) =>
+    sprintf(
+      /* translators: %d: number of stories in view */
+      _n(
+        'Viewing <strong>%d</strong> story',
+        'Viewing all <strong>%d</strong> stories',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
+  [STORY_STATUS.DRAFT]: (n) =>
+    sprintf(
+      /* translators: %d: number of draft stories in view */
+      _n(
+        'Viewing <strong>%d</strong> draft',
+        'Viewing <strong>%d</strong> drafts',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
+  [STORY_STATUS.PUBLISHED_AND_FUTURE]: (n) =>
+    sprintf(
+      /* translators: %d: number of published stories in view */
+      _n(
+        'Viewing <strong>%d</strong> published story',
+        'Viewing <strong>%d</strong> published stories',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
 };
 
 export const STORY_ANIMATION_STATE = {

@@ -19,10 +19,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -30,7 +27,8 @@ import { __, sprintf } from '@wordpress/i18n';
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { UnitsProvider } from '../../../edit-story/units';
 import { StoryPropType } from '../../types';
-import { getPagePreviewHeights, useGridViewKeys } from '../../utils';
+import { getPagePreviewHeights } from '../../utils';
+import { useGridViewKeys } from '../../../design-system';
 import { PreviewPage } from '../../../edit-story/components/previewPage';
 import {
   ActiveCard,

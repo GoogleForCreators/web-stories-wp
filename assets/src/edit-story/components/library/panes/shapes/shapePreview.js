@@ -18,8 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createRef } from 'react';
+import React, { createRef, useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -74,7 +75,7 @@ const ShapePreviewContainer = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray24};
   border-radius: 4px;
   display: flex;
   justify-content: center;
@@ -110,7 +111,7 @@ const ShapePreviewSizer = styled.div`
 `;
 
 const Path = styled.path`
-  fill: ${({ theme }) => theme.colors.fg.white};
+  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
 function ShapePreview({ mask, isPreview }) {
@@ -129,14 +130,23 @@ function ShapePreview({ mask, isPreview }) {
 
   // Contains the data to be passed in for insertElement() calls in order
   // to insert the correct shape.
-  const shapeData = {
-    backgroundColor: createSolidFromString('#c4c4c4'),
-    width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
-    height: DEFAULT_ELEMENT_WIDTH,
-    mask: {
-      type: mask.type,
-    },
-  };
+  const shapeData = useMemo(
+    () => ({
+      backgroundColor: createSolidFromString('#c4c4c4'),
+      width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
+      height: DEFAULT_ELEMENT_WIDTH,
+      mask: {
+        type: mask.type,
+      },
+    }),
+    [mask.ratio, mask.type]
+  );
+
+  const onClick = useCallback(() => {
+    // Shapes inserted with a specific size.
+    insertElement('shape', shapeData);
+    trackEvent('insert_shape', { name: mask.type });
+  }, [insertElement, shapeData, mask.type]);
 
   const getSVG = (displayLabel = true) => {
     return (
@@ -170,10 +180,7 @@ function ShapePreview({ mask, isPreview }) {
       <LibraryMoveable
         type={'shape'}
         elementProps={shapeData}
-        onClick={() => {
-          // Shapes inserted with a specific size.
-          insertElement('shape', shapeData);
-        }}
+        onClick={onClick}
         cloneElement={ShapeClone}
         cloneProps={{
           width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * mask.ratio),

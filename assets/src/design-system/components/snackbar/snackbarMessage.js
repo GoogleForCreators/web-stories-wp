@@ -18,51 +18,56 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { rgba } from 'polished';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../theme';
 import { Button } from '../button';
+import { Cross } from '../../icons';
 import { Text } from '../typography';
+import { focusableOutlineCSS } from '../../theme/helpers';
+import { noop } from '../../utils';
 import {
+  Placement,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
+  DEFAULT_MESSAGE_Z_INDEX,
 } from './constants';
-
-const slideIn = keyframes`
-	from {
-		transform: translateY(100%);
-	}
-	to {
-		transform: translateY(0);
-	}
-`;
 
 const MessageContainer = styled.div`
   box-sizing: border-box;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  width: ${({ hasAction }) => (hasAction ? 336 : 208)}px;
   min-height: 48px;
-  padding: 14px 16px;
+  padding: 10px 16px;
   margin-top: 20px;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   border: ${({ theme }) =>
     `1px solid ${rgba(theme.colors.standard.white, 0.24)}`};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-
-  animation: 0.5s ${slideIn} ease-out;
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
+  z-index: ${({ customZIndex }) => customZIndex || DEFAULT_MESSAGE_Z_INDEX};
+  pointer-events: auto;
 `;
+MessageContainer.propTypes = {
+  customZIndex: PropTypes.number,
+};
 
 const Message = styled(Text)`
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
+  max-width: 206px;
+  padding-right: ${({ hasAction }) => (hasAction ? '52px' : '0px')};
+`;
+
+const ActionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const ActionButton = styled(Button)`
@@ -70,40 +75,63 @@ const ActionButton = styled(Button)`
   min-width: 1px;
   height: 2em;
   padding: 0;
-  margin: 0 0 0 auto;
-  text-decoration: underline;
   color: ${({ theme }) => theme.colors.inverted.fg.linkNormal};
 
-  &:focus,
+  ${({ theme }) =>
+    focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.inverted.bg.primary
+    )}
+
   &:hover,
   &:active {
     color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
   }
 `;
 
+const CloseButton = styled(Button)`
+  height: 2em;
+  padding: 0;
+  margin-left: 16px;
+  color: ${({ theme }) => theme.colors.inverted.fg.primary};
+
+  ${({ theme }) =>
+    focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.inverted.bg.primary
+    )}
+
+  svg {
+    height: 32px;
+  }
+`;
+
 const SnackbarMessage = ({
   actionLabel,
-  ariaLabel,
-  handleAction = () => {},
-  handleDismiss,
+  onAction = noop,
+  onDismiss = noop,
   isPreventAutoDismiss,
+  isPreventActionDismiss,
   message,
   removeMessageTimeInterval,
+  showCloseButton,
+  placement = 'bottom',
+  ...props
 }) => {
   const autoDismissRef = useRef();
-  autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismiss;
+  autoDismissRef.current = isPreventAutoDismiss ? noop : onDismiss;
 
   const messageRemovalTimeInterval = useRef(
     typeof removeMessageTimeInterval === 'number' &&
-      removeMessageTimeInterval < AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX &&
-      removeMessageTimeInterval > AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN
+      removeMessageTimeInterval <= AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX &&
+      removeMessageTimeInterval >= AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN
       ? removeMessageTimeInterval
       : AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX
   );
 
   useEffect(() => {
     if (!autoDismissRef.current) {
-      return () => {};
+      return noop;
     }
 
     const dismissTimeout = setTimeout(
@@ -114,30 +142,58 @@ const SnackbarMessage = ({
     return () => clearTimeout(dismissTimeout);
   }, []);
 
+  const handleAction = useCallback(() => {
+    onAction();
+    !isPreventActionDismiss && onDismiss();
+  }, [onAction, onDismiss, isPreventActionDismiss]);
+
+  const hasAction = Boolean(actionLabel);
+
   return (
     <MessageContainer
       role="alert"
-      aria-label={ariaLabel}
-      hasAction={Boolean(actionLabel)}
+      hasAction={hasAction}
+      placement={placement}
+      {...props}
     >
-      <Message size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Message
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        hasAction={hasAction}
+      >
         {message}
       </Message>
-      {actionLabel && (
-        <ActionButton onClick={handleAction}>{actionLabel}</ActionButton>
+      {(actionLabel || showCloseButton) && (
+        <ActionContainer>
+          {actionLabel && (
+            <ActionButton onClick={handleAction}>{actionLabel}</ActionButton>
+          )}
+          {showCloseButton && (
+            <CloseButton onClick={onDismiss}>
+              <Cross aria-hidden />
+            </CloseButton>
+          )}
+        </ActionContainer>
       )}
     </MessageContainer>
   );
 };
 
 SnackbarMessage.propTypes = {
-  ariaLabel: PropTypes.string.isRequired,
+  'aria-label': PropTypes.string.isRequired,
+  customZIndex: PropTypes.number,
   message: PropTypes.string.isRequired,
-  handleDismiss: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func.isRequired,
   actionLabel: PropTypes.string,
-  handleAction: PropTypes.func,
+  onAction: PropTypes.func,
   isPreventAutoDismiss: PropTypes.bool,
+  isPreventActionDismiss: PropTypes.bool,
   removeMessageTimeInterval: PropTypes.number,
+  showCloseButton: PropTypes.bool,
+  placement: Placement,
+};
+
+SnackbarMessage.defaultProps = {
+  showCloseButton: true,
 };
 
 export { SnackbarMessage };

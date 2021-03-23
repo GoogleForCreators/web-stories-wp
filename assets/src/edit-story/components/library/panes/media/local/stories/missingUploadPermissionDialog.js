@@ -24,7 +24,7 @@ import { action } from '@storybook/addon-actions';
 import MissingUploadPermissionDialog from '../missingUploadPermissionDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import SnackbarContext from '../../../../../../app/snackbar/context';
+import { SnackbarContext } from '../../../../../../../design-system';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Missing Upload Permission',
@@ -48,10 +48,7 @@ export const _default = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <MissingUploadPermissionDialog
-            open={true}
-            onClose={action('closed')}
-          />
+          <MissingUploadPermissionDialog open onClose={action('closed')} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

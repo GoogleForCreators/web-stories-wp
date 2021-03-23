@@ -47,7 +47,7 @@ describe('FileUpload', () => {
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
-        isLoading={true}
+        isLoading
       />
     );
     expect(getByText(/^Loading/)).toBeInTheDocument();

@@ -18,11 +18,8 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
+import { useFeature } from 'flagged';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -35,21 +32,17 @@ import {
 } from '../../../../design-system';
 import useApi from '../../api/useApi';
 import { Layout } from '../../../components';
-import {
-  MIN_IMG_WIDTH,
-  MIN_IMG_HEIGHT,
-  AD_NETWORK_TYPE,
-} from '../../../constants';
+import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import useTelemetryOptIn from '../shared/useTelemetryOptIn';
+import useMediaOptimization from '../shared/useMediaOptimization';
 import GoogleAnalyticsSettings from './googleAnalytics';
-import GoogleAdSenseSettings from './googleAdSense';
-import GoogleAdManagerSettings from './googleAdManager';
-import AdNetworkSettings from './adNetwork';
 import { Main, Wrapper } from './components';
+import AdManagement from './adManagement';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
+import MediaOptimizationSettings from './mediaOptimization';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
@@ -107,16 +100,25 @@ function EditorSettings() {
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
-    siteKitCapabilities = {},
+    siteKitStatus = {},
     maxUpload,
     maxUploadFormatted,
+    allowedImageMimeTypes,
   } = useConfig();
 
   const {
-    disabled,
+    disabled: disableOptedIn,
     toggleWebStoriesTrackingOptIn,
     optedIn,
   } = useTelemetryOptIn();
+
+  const {
+    disabled: disableMediaOptimization,
+    toggleWebStoriesMediaOptimization,
+    mediaOptimization,
+  } = useMediaOptimization();
+
+  const videoOptimization = useFeature('videoOptimization');
 
   const [activeDialog, setActiveDialog] = useState(null);
   const [activeLogo, setActiveLogo] = useState('');
@@ -163,37 +165,22 @@ function EditorSettings() {
     [updateSettings]
   );
 
-  const handleUpdateAdSensePublisherId = useCallback(
-    (newAdSensePublisherId) =>
-      updateSettings({ adSensePublisherId: newAdSensePublisherId }),
-    [updateSettings]
-  );
-
-  const handleUpdateAdSenseSlotId = useCallback(
-    (newAdSenseSlotId) => updateSettings({ adSenseSlotId: newAdSenseSlotId }),
-    [updateSettings]
-  );
-
-  const handleUpdateAdManagerSlotId = useCallback(
-    (newAdManagerSlotId) =>
-      updateSettings({ adManagerSlotId: newAdManagerSlotId }),
-    [updateSettings]
-  );
-
-  const handleUpdateAdNetwork = useCallback(
-    (newAdNetwork) => updateSettings({ adNetwork: newAdNetwork }),
-    [updateSettings]
-  );
-
   const handleAddLogos = useCallback(
     async (files) => {
       let allFileSizesWithinMaxUpload = true;
+      let allFileTypeSupported = true;
       let errorProcessingImages = false;
       const imagePromises = [];
 
       files.forEach((file) => {
         allFileSizesWithinMaxUpload =
           allFileSizesWithinMaxUpload && file.size <= maxUpload;
+        const fileTypeSupported = allowedImageMimeTypes.includes(file.type);
+        allFileTypeSupported = allFileTypeSupported && fileTypeSupported;
+
+        if (fileTypeSupported) {
+          return;
+        }
 
         imagePromises.push(
           new Promise((resolve, reject) => {
@@ -225,6 +212,20 @@ function EditorSettings() {
                   'web-stories'
                 ),
                 maxUploadFormatted
+              );
+        return setMediaError(errorText);
+      }
+
+      if (!allFileTypeSupported) {
+        const errorText =
+          files.length === 1
+            ? __(
+                'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.',
+                'web-stories'
+              )
+            : __(
+                'Sorry, one or more of these files are of an unsupported file type. Only jpg, png, and static gifs are supported for publisher logos.',
+                'web-stories'
               );
         return setMediaError(errorText);
       }
@@ -277,7 +278,7 @@ function EditorSettings() {
       setMediaError('');
       return uploadMedia(files);
     },
-    [maxUpload, maxUploadFormatted, uploadMedia]
+    [maxUpload, maxUploadFormatted, uploadMedia, allowedImageMimeTypes]
   );
 
   const handleRemoveLogo = useCallback((media) => {
@@ -348,26 +349,21 @@ function EditorSettings() {
   return (
     <Layout.Provider>
       <Wrapper data-testid="editor-settings">
-        <Layout.Squishable>
-          <PageHeading
-            defaultTitle={__('Settings', 'web-stories')}
-            showTypeahead={false}
-          />
-        </Layout.Squishable>
+        <PageHeading heading={__('Settings', 'web-stories')} />
         <Layout.Scrollable>
           <Main>
             {canManageSettings && (
               <GoogleAnalyticsSettings
                 handleUpdate={handleUpdateGoogleAnalyticsId}
                 googleAnalyticsId={googleAnalyticsId}
-                siteKitCapabilities={siteKitCapabilities}
+                siteKitStatus={siteKitStatus}
               />
             )}
             {canManageSettings && (
               <PublisherLogoSettings
-                handleAddLogos={handleAddLogos}
-                handleRemoveLogo={handleRemoveLogo}
-                handleUpdateDefaultLogo={handleUpdateDefaultLogo}
+                onAddLogos={handleAddLogos}
+                onRemoveLogo={handleRemoveLogo}
+                onUpdateDefaultLogo={handleUpdateDefaultLogo}
                 publisherLogos={orderedPublisherLogos}
                 canUploadFiles={canUploadFiles}
                 isLoading={isMediaLoading}
@@ -375,31 +371,25 @@ function EditorSettings() {
               />
             )}
             <TelemetrySettings
-              disabled={disabled}
+              disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
               selected={optedIn}
             />
+            {videoOptimization && canUploadFiles && (
+              <MediaOptimizationSettings
+                disabled={disableMediaOptimization}
+                onCheckboxSelected={toggleWebStoriesMediaOptimization}
+                selected={mediaOptimization}
+              />
+            )}
             {canManageSettings && (
-              <>
-                <AdNetworkSettings
-                  handleUpdate={handleUpdateAdNetwork}
-                  adNetwork={adNetwork}
-                />
-                {AD_NETWORK_TYPE.ADSENSE === adNetwork && (
-                  <GoogleAdSenseSettings
-                    handleUpdatePublisherId={handleUpdateAdSensePublisherId}
-                    handleUpdateSlotId={handleUpdateAdSenseSlotId}
-                    publisherId={adSensePublisherId}
-                    slotId={adSenseSlotId}
-                  />
-                )}
-                {AD_NETWORK_TYPE.ADMANAGER === adNetwork && (
-                  <GoogleAdManagerSettings
-                    handleUpdate={handleUpdateAdManagerSlotId}
-                    slotId={adManagerSlotId}
-                  />
-                )}
-              </>
+              <AdManagement
+                updateSettings={updateSettings}
+                adNetwork={adNetwork}
+                publisherId={adSensePublisherId}
+                adSenseSlotId={adSenseSlotId}
+                adManagerSlotId={adManagerSlotId}
+              />
             )}
           </Main>
         </Layout.Scrollable>

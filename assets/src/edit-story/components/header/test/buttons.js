@@ -23,6 +23,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import Modal from 'react-modal';
+import MockDate from 'mockdate';
 
 /**
  * Internal dependencies
@@ -47,13 +48,18 @@ function setupButtons({
   const storyContextValue = {
     state: {
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
-      story: { status: 'draft', storyId: 123, date: null, ...extraStoryProps },
+      story: {
+        status: 'draft',
+        storyId: 123,
+        date: null,
+        previewLink:
+          'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+        ...extraStoryProps,
+      },
     },
     actions: { saveStory, autoSave },
   };
   const configValue = {
-    previewLink:
-      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
     capabilities: {
       hasPublishAction: true,
     },
@@ -87,26 +93,32 @@ function setupButtons({
 }
 
 describe('buttons', () => {
-  const FUTURE_DATE = '9999-01-01T20:20:20';
-  const PREVIEW_POPUP = {
-    document: {
-      write: jest.fn(),
-    },
-    location: {
-      href: 'about:blank',
-      replace: jest.fn(),
-    },
-  };
+  const FUTURE_DATE = '2022-01-01T20:20:20Z';
+  let previewPopup;
   let modalWrapper;
 
   beforeAll(() => {
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
     Modal.setAppElement(modalWrapper);
+    MockDate.set('2020-07-15T12:00:00+00:00');
   });
 
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
+    MockDate.reset();
+  });
+
+  beforeEach(() => {
+    previewPopup = {
+      document: {
+        write: jest.fn(),
+      },
+      location: {
+        href: 'about:blank',
+        replace: jest.fn(),
+      },
+    };
   });
 
   it('should display Publish button when in draft mode', () => {
@@ -311,7 +323,7 @@ describe('buttons', () => {
   it('should open draft preview when clicking on Preview via about:blank', () => {
     const { getByRole, saveStory } = setupButtons({
       story: {
-        link: 'https://example.com',
+        previewLink: 'https://example.com/?preview=true',
       },
     });
     const previewButton = getByRole('button', { name: 'Preview' });
@@ -327,17 +339,15 @@ describe('buttons', () => {
       },
     }));
 
-    const popup = PREVIEW_POPUP;
-
-    const mockedOpen = jest.fn(() => popup);
+    const mockedOpen = jest.fn(() => previewPopup);
     const windowSpy = jest.spyOn(global, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
     expect(saveStory).toHaveBeenCalledWith();
     expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
-    expect(popup.location.replace).toHaveBeenCalledWith(
-      'https://example.com/?preview=true'
+    expect(previewPopup.location.replace).toHaveBeenCalledWith(
+      'https://example.com/?preview=true#development=1'
     );
 
     windowSpy.mockRestore();
@@ -360,16 +370,14 @@ describe('buttons', () => {
       },
     }));
 
-    const popup = PREVIEW_POPUP;
-
-    const mockedOpen = jest.fn(() => popup);
+    const mockedOpen = jest.fn(() => previewPopup);
     const windowSpy = jest.spyOn(global, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
     expect(autoSave).toHaveBeenCalledWith();
-    expect(popup.location.replace).toHaveBeenCalledWith(
-      'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true'
+    expect(previewPopup.location.replace).toHaveBeenCalledWith(
+      'https://example.com/?preview_id=1679&preview_nonce=b5ea827939&preview=true#development=1'
     );
 
     windowSpy.mockRestore();

@@ -24,8 +24,9 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Layout, ToastProvider } from '../../../../../components';
+import { Layout } from '../../../../../components';
 import { VIEW_STYLE } from '../../../../../constants';
+import { SnackbarProvider } from '../../../../../../design-system';
 import {
   formattedStoriesArray,
   formattedTemplatesArray,
@@ -84,24 +85,24 @@ export const _default = () => {
 
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <ToastProvider>
+      <SnackbarProvider>
         <Layout.Provider>
           <StorybookLayoutContainer>
             <Content {...defaultProps} view={{ ...view, pageSize }} />
           </StorybookLayoutContainer>
         </Layout.Provider>
-      </ToastProvider>
+      </SnackbarProvider>
     </FlagsProvider>
   );
 };
 
 export const NoSavedTemplates = () => (
   <Layout.Provider>
-    <ToastProvider>
+    <SnackbarProvider>
       <StorybookLayoutContainer>
         <Content {...defaultProps} templates={[]} />
       </StorybookLayoutContainer>
-    </ToastProvider>
+    </SnackbarProvider>
   </Layout.Provider>
 );
 
@@ -111,17 +112,17 @@ export const AllDataFetched = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <ToastProvider>
+      <SnackbarProvider>
         <Layout.Provider>
           <StorybookLayoutContainer>
             <Content
               {...defaultProps}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, pageSize }}
             />
           </StorybookLayoutContainer>
         </Layout.Provider>
-      </ToastProvider>
+      </SnackbarProvider>
     </FlagsProvider>
   );
 };

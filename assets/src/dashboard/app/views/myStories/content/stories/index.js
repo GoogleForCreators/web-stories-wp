@@ -24,7 +24,7 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Layout, ToastProvider } from '../../../../../components';
+import { Layout } from '../../../../../components';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
@@ -35,8 +35,9 @@ import {
   formattedStoriesArray,
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
-import Content from '../';
 import { usePagePreviewSize } from '../../../../../utils';
+import { SnackbarProvider } from '../../../../../../design-system';
+import Content from '../';
 import StoriesView from '../storiesView';
 
 export default {
@@ -105,24 +106,24 @@ export const _default = () => {
 
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <ToastProvider>
+      <SnackbarProvider>
         <Layout.Provider>
           <StorybookLayoutContainer>
             <Content {...defaultProps} view={{ ...view, pageSize }} />
           </StorybookLayoutContainer>
         </Layout.Provider>
-      </ToastProvider>
+      </SnackbarProvider>
     </FlagsProvider>
   );
 };
 
 export const NoStories = () => (
   <Layout.Provider>
-    <ToastProvider>
+    <SnackbarProvider>
       <StorybookLayoutContainer>
         <Content {...defaultProps} stories={[]} />
       </StorybookLayoutContainer>
-    </ToastProvider>
+    </SnackbarProvider>
   </Layout.Provider>
 );
 
@@ -132,17 +133,17 @@ export const AllDataFetched = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <ToastProvider>
+      <SnackbarProvider>
         <Layout.Provider>
           <StorybookLayoutContainer>
             <Content
               {...defaultProps}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, pageSize }}
             />
           </StorybookLayoutContainer>
         </Layout.Provider>
-      </ToastProvider>
+      </SnackbarProvider>
     </FlagsProvider>
   );
 };
@@ -153,24 +154,24 @@ export const AllDataFetchedAsList = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <ToastProvider>
+      <SnackbarProvider>
         <Layout.Provider>
           <StorybookLayoutContainer>
             <Content
               {...defaultProps}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
             />
           </StorybookLayoutContainer>
         </Layout.Provider>
-      </ToastProvider>
+      </SnackbarProvider>
     </FlagsProvider>
   );
 };
 
 export const _StoriesViewGrid = () => (
   <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-    <ToastProvider>
+    <SnackbarProvider>
       <StoriesView
         filterValue={STORY_STATUS.ALL}
         sort={sort}
@@ -178,13 +179,13 @@ export const _StoriesViewGrid = () => (
         stories={formattedStoriesArray}
         view={view}
       />
-    </ToastProvider>
+    </SnackbarProvider>
   </FlagsProvider>
 );
 
 export const _StoriesViewList = () => (
   <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-    <ToastProvider>
+    <SnackbarProvider>
       <StoriesView
         filterValue={STORY_STATUS.ALL}
         sort={sort}
@@ -192,7 +193,7 @@ export const _StoriesViewList = () => (
         stories={formattedStoriesArray}
         view={{ ...view, style: VIEW_STYLE.LIST }}
       />
-    </ToastProvider>
+    </SnackbarProvider>
   </FlagsProvider>
 );
 
@@ -202,7 +203,7 @@ export const NoSearchResults = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <ToastProvider>
+      <SnackbarProvider>
         <Layout.Provider>
           <StorybookLayoutContainer>
             <Content
@@ -211,12 +212,12 @@ export const NoSearchResults = () => {
               search={{
                 keyword: 'koalas',
               }}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, pageSize }}
             />
           </StorybookLayoutContainer>
         </Layout.Provider>
-      </ToastProvider>
+      </SnackbarProvider>
     </FlagsProvider>
   );
 };

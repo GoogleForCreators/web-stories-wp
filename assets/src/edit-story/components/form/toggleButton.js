@@ -26,8 +26,8 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../keyboard';
-import MULTIPLE_VALUE from './multipleValue';
+import { useKeyDownEffect } from '../../../design-system';
+import { MULTIPLE_VALUE } from '../../constants';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
 const CheckBoxInput = styled.input.attrs({
@@ -56,11 +56,12 @@ const Container = styled.div`
 `;
 
 const Label = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.54)};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
+  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
+  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) =>
+    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
   margin-top: 8px;
 `;
 
@@ -77,11 +78,12 @@ const ContainerLabel = styled.label`
   border-radius: 4px;
   border: 1px solid transparent;
   ${KEYBOARD_USER_SELECTOR} &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout};
+    border-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.whiteout};
   }
 
   ${({ value, theme }) =>
-    value && `background-color: ${rgba(theme.colors.fg.white, 0.1)};`}
+    value &&
+    `background-color: ${rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};`}
 
   ${({ disabled }) =>
     disabled &&
@@ -91,7 +93,7 @@ const ContainerLabel = styled.label`
   `}
 
   svg {
-    color: ${({ theme }) => theme.colors.mg.v2};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.mg.v2};
     width: ${({ iconWidth }) => iconWidth}px;
     height: ${({ iconHeight }) => iconHeight}px;
   }

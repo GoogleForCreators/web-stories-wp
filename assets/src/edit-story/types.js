@@ -24,8 +24,7 @@ import PropTypes from 'prop-types';
  */
 import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/backgroundOverlay';
-import { BACKGROUND_TEXT_MODE } from './constants';
-import MULTIPLE_VALUE from './components/form/multipleValue';
+import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 
 export const HexPropType = PropTypes.shape({
   r: PropTypes.number.isRequired,
@@ -97,6 +96,7 @@ StoryPropTypes.story = PropTypes.shape({
     height: PropTypes.number.isRequired,
   }),
   password: PropTypes.string.isRequired,
+  currentStoryStyles: PropTypes.array,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 });
@@ -334,6 +334,13 @@ StoryPropTypes.elements.shape = PropTypes.shape({
   backgroundColor: PatternPropType,
 });
 
+StoryPropTypes.elements.sticker = PropTypes.shape({
+  ...StoryElementPropTypes,
+  sticker: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }),
+});
+
 StoryPropTypes.elements.background = PropTypes.shape({
   ...StoryLayerPropTypes,
   inner: StoryPropTypes.element,
@@ -373,6 +380,7 @@ export default StoryPropTypes;
  * @typedef {Resource} Resource Resource data for elements
  * @property {{ full: { height: number, width: number }, output: Object }} sizes The data for the full-size element
  * @property {boolean} local Whether the media was uploaded by the user
+ * @property {boolean} isPlaceholder Whether the resource is a placeholder and not fully uploaded yet.
  * @property {string} src The source string for the resource
  */
 

@@ -15,13 +15,9 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { sprintf, _n } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
+import { sprintf, _n } from '@web-stories-wp/i18n';
 import { useMemo } from 'react';
 
 /**
@@ -36,14 +32,24 @@ export default function useDashboardResultsLabel({
   view,
 }) {
   const resultsLabel = useMemo(() => {
+    const numResults = totalResults ?? 0;
     const defaultLabel = RESULT_LABELS[view]?.[currentFilter] || '';
+    const interprettedDefaultLabel =
+      typeof defaultLabel === 'function'
+        ? defaultLabel(numResults)
+        : defaultLabel;
     return isActiveSearch
       ? sprintf(
           /* translators: %s: number of results */
-          _n('%s result', '%s results', totalResults, 'web-stories'),
-          totalResults
+          _n(
+            '<strong>%s</strong> result',
+            '<strong>%s</strong> results',
+            numResults,
+            'web-stories'
+          ),
+          numResults
         )
-      : defaultLabel;
+      : interprettedDefaultLabel;
   }, [isActiveSearch, totalResults, view, currentFilter]);
 
   return resultsLabel;

@@ -21,56 +21,46 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
-import { useAPI } from '../../../../app/api';
-import useBatchingCallback from '../../../../utils/useBatchingCallback';
+import {
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  useBatchingCallback,
+} from '../../../../../design-system';
+import { useStory, useAPI, useCanvas, useConfig } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
-import { Close } from '../../../../icons';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { Media, Row, Button, LinkInput, MULTIPLE_VALUE } from '../../../form';
-import { useCanvas } from '../../../canvas';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { Media, Row, LinkInput } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
-import { ExpandedTextInput, useCommonObjectValue } from '../../shared';
-
-const IconText = styled.span`
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body2.family};
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-`;
+import { useCommonObjectValue } from '../../shared';
+import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
 
 const IconInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 12px;
+  margin-left: 20px;
 `;
 
-const IconRemoveButton = styled(Button)`
-  margin-top: 6px;
-  justify-content: flex-start;
-  align-self: flex-start;
-  padding: 4px 6px;
+const IconText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-const CloseIcon = styled(Close)`
-  margin-right: 4px;
+const StyledMedia = styled(Media)`
+  width: 54px;
+  height: 54px;
 `;
 
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: ${({ theme }) => theme.colors.warning};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
@@ -106,6 +96,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
+
+  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -176,10 +168,21 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChangeIcon = useCallback(
     (image) => {
-      handleChange({ icon: image.sizes?.medium?.url || image.url }, true);
+      handleChange({ icon: image?.sizes?.medium?.url || image?.url }, true);
     },
     [handleChange]
   );
+
+  const iconErrorMessage = useMemo(() => {
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as an icon.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [allowedImageFileTypes]);
 
   const hasLinkSet = Boolean(link.url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
@@ -201,10 +204,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     link.url,
   ]);
 
+  const isMultipleUrl = MULTIPLE_VALUE === link.url;
+  const isMultipleDesc = MULTIPLE_VALUE === link.desc;
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <LinkInput
-        description={__('Type an address to apply a link', 'web-stories')}
         onChange={(value) =>
           !displayLinkGuidelines &&
           handleChange({ url: value }, !value /* submit */)
@@ -217,7 +221,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           setIsLinkFocused(true);
         }}
         value={link.url || ''}
-        clear
+        placeholder={
+          isMultipleUrl
+            ? MULTIPLE_DISPLAY_VALUE
+            : __('Enter an address to apply a link', 'web-stories')
+        }
+        isIndeterminate={isMultipleUrl}
         aria-label={__('Element link', 'web-stories')}
       />
       {displayLinkGuidelines && (
@@ -234,39 +243,37 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       {displayMetaFields && (
         <>
           <Row>
-            <ExpandedTextInput
-              placeholder={__('Optional description', 'web-stories')}
-              onChange={(value) =>
-                handleChange({ desc: value }, !value /* submit */)
+            <Input
+              placeholder={
+                isMultipleDesc
+                  ? MULTIPLE_DISPLAY_VALUE
+                  : __('Optional description', 'web-stories')
+              }
+              onChange={({ target }) =>
+                handleChange({ desc: target.value }, !target.value /* submit */)
               }
               value={link.desc || ''}
               aria-label={__('Link description', 'web-stories')}
+              isIndeterminate={isMultipleDesc}
             />
           </Row>
           <Row spaceBetween={false}>
-            <Media
+            <StyledMedia
               value={link.icon || ''}
               onChange={handleChangeIcon}
+              onChangeErrorText={iconErrorMessage}
               title={__('Select as link icon', 'web-stories')}
               ariaLabel={__('Edit link icon', 'web-stories')}
               buttonInsertText={__('Select as link icon', 'web-stories')}
-              type={'image'}
-              size={64}
-              loading={fetchingMetadata}
-              circle
+              type={allowedImageMimeTypes}
+              isLoading={fetchingMetadata}
+              variant={MEDIA_VARIANTS.CIRCLE}
+              menuOptions={link.icon ? ['edit', 'remove'] : []}
             />
             <IconInfo>
-              <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
-              {link.icon && (
-                <IconRemoveButton
-                  onClick={() =>
-                    handleChange({ icon: null }, true /* submit */)
-                  }
-                >
-                  <CloseIcon width={14} height={14} />
-                  {__('Remove', 'web-stories')}
-                </IconRemoveButton>
-              )}
+              <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                {__('Optional brand icon', 'web-stories')}
+              </IconText>
             </IconInfo>
           </Row>
         </>

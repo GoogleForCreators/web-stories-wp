@@ -1,0 +1,103 @@
+.block-editor-block-list__block[data-type='web-stories/embed'] .wp-block {
+  height: auto;
+  overflow: hidden;
+}
+
+/* Loading Indicator */
+.wp-block-web-stories-embed.is-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  min-height: 200px;
+  text-align: center;
+  background: #f8f9f9;
+}
+
+.wp-block-web-stories-embed.is-loading p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+}
+
+/* Placeholder */
+
+.wp-block-web-stories-embed .components-placeholder__learn-more {
+  margin-top: 1em;
+}
+
+/* Actual Edit Component */
+
+.wp-block-web-stories-embed
+  .components-resizable-box__container
+  amp-story-player {
+  width: inherit;
+  height: inherit;
+}
+.wp-block-web-stories-embed.alignleft .components-resizable-box__container {
+  /*!rtl:ignore*/
+  margin-right: auto;
+}
+.wp-block-web-stories-embed.alignright .components-resizable-box__container {
+  /*!rtl:ignore*/
+  margin-left: auto;
+}
+.wp-block-web-stories-embed.aligncenter .components-resizable-box__container {
+  margin: auto;
+}
+
+.wp-block-web-stories-embed
+  .components-resizable-box__container.hide-resize-handle
+  .components-resizable-box__handle {
+  display: none;
+}
+.wp-block-web-stories-embed
+  .components-resizable-box__container.show-resize-handle
+  .components-resizable-box__handle {
+  display: block;
+}
+/* Embed Preview Component */
+
+.web-stories-embed-preview {
+  position: relative;
+  width: inherit;
+  height: inherit;
+}
+
+.web-stories-embed-preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+
+/* Block Inspector */
+
+.web-stories-embed-poster-label {
+  display: block !important;
+}
+
+.web-stories-embed-size-control {
+  margin-bottom: 1em;
+}
+
+.web-stories-embed-size-control__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.web-stories-embed-size-control__width input,
+.web-stories-embed-size-control__height input {
+  line-height: 1.25;
+}
+
+.web-stories-embed-size-control__width {
+  margin-right: 5px;
+}
+
+.web-stories-embed-size-control__height {
+  margin-left: 5px;
+}

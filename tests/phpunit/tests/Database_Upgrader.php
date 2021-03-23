@@ -274,7 +274,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -311,7 +311,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -329,6 +329,42 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, true );
 
 		$this->assertSame( '', $meta );
+	}
+
+	/**
+	 * @covers ::v_2_add_term
+	 */
+	public function test_v_2_add_term() {
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$this->call_private_method( $object, 'v_2_add_term' );
+
+		$terms = get_terms(
+			[
+				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+				'hide_empty' => false,
+			]
+		);
+
+		$slugs = wp_list_pluck( $terms, 'slug' );
+		$this->assertContains( 'editor', $slugs );
+	}
+
+	/**
+	 * @covers ::v_3_add_term
+	 */
+	public function test_v_3_add_term() {
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$this->call_private_method( $object, 'v_3_add_term' );
+
+		$terms = get_terms(
+			[
+				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+				'hide_empty' => false,
+			]
+		);
+
+		$slugs = wp_list_pluck( $terms, 'slug' );
+		$this->assertContains( 'video-optimization', $slugs );
 	}
 
 	/**

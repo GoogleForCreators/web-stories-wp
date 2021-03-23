@@ -25,16 +25,18 @@ import { getByLabelText } from '@testing-library/react';
 import { Container } from '../container';
 import { Alignment } from './alignment';
 import { Animation } from './animationPanel';
-import { BackgroundOverlay } from './backgroundOverlay';
+import { Filter } from './filter';
 import { Border } from './border';
 import { BorderRadius } from './borderRadius';
 import { ColorPreset } from './colorPreset';
 import { Layers } from './layers';
 import { Link } from './link';
+import { PageBackground } from './pageBackground';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { TextStylePreset } from './textStylePreset';
 import { VideoPoster } from './videoPoster';
+import { TextBox } from './textBox';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -46,9 +48,17 @@ export class DesignPanel extends Container {
 
   get textStyle() {
     return this._get(
-      this.getByRole('region', { name: /Style/ }),
+      this.getByRole('region', { name: 'Text' }),
       'textStyle',
       TextStyle
+    );
+  }
+
+  get textBox() {
+    return this._get(
+      this.getByRole('region', { name: /Text box/ }),
+      'textBox',
+      TextBox
     );
   }
 
@@ -60,11 +70,11 @@ export class DesignPanel extends Container {
     );
   }
 
-  get backgroundOverlay() {
+  get filters() {
     return this._get(
-      this.getByRole('region', { name: /Overlay/ }),
-      'backgroundOverlay',
-      BackgroundOverlay
+      this.getByRole('region', { name: /Filters/ }),
+      'filters',
+      Filter
     );
   }
 
@@ -104,27 +114,12 @@ export class DesignPanel extends Container {
     );
   }
 
-  get backgroundSizePosition() {
-    // @todo: implement
-    return null;
-  }
-
   get imageAccessibility() {
     // @todo: implement
     return null;
   }
 
   get layerStyle() {
-    // @todo: implement
-    return null;
-  }
-
-  get noSelection() {
-    // @todo: implement
-    return null;
-  }
-
-  get pageStyle() {
     // @todo: implement
     return null;
   }
@@ -163,8 +158,16 @@ export class DesignPanel extends Container {
     );
   }
 
+  get pageBackground() {
+    return this._get(
+      this.getByRole('region', { name: /Page background/ }),
+      'pageBackground',
+      PageBackground
+    );
+  }
+
   get layerPanel() {
-    // The whole panel is aria-hidden now for accessibiility reasons
+    // The whole panel is aria-hidden now for accessibility reasons
     // thus it cannot be accessed by role:
     return this._get(
       getByLabelText(this._node, 'Layers'),

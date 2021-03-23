@@ -98,12 +98,10 @@ const DEFAULT_PROVIDER_STATE = (index) => ({
       categories: [
         {
           id: `provider${index}/1`,
-          displayName: `Tiny dogs for provider ${index}`,
           label: `${index} Dogs`,
         },
         {
           id: `provider${index}/2`,
-          displayName: `Tiny cats for provider ${index}`,
           label: `${index} Cats`,
         },
       ],
@@ -151,7 +149,7 @@ describe('Media3pPane', () => {
 
   it('should display terms dialog', () => {
     const { queryByText, getByRole } = renderWithTheme(
-      <Media3pPane isActive={true} />
+      <Media3pPane isActive />
     );
 
     expect(
@@ -166,7 +164,7 @@ describe('Media3pPane', () => {
   });
 
   it('should render <Media3pPane /> with no media', () => {
-    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
 
     expect(queryByText('No media found')).not.toBeInTheDocument();
     expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
@@ -175,7 +173,7 @@ describe('Media3pPane', () => {
   it('should render "No media found" text once loading is completed', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = false;
-    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
 
     expect(queryByText('No media found')).toBeInTheDocument();
     expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
@@ -185,7 +183,7 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = false;
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = true;
     useMediaResult.media3p.PROVIDER_1.state.media = [];
-    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
 
     expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
   });
@@ -194,7 +192,7 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = false;
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
 
     expect(getComputedStyle(queryByText('Trending')).display).not.toBe('none');
   });
@@ -202,7 +200,7 @@ describe('Media3pPane', () => {
   it('should render <Media3pPane /> with the "Trending" text', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
 
     expect(getComputedStyle(queryByText('Trending')).display).not.toBe('none');
   });
@@ -210,7 +208,7 @@ describe('Media3pPane', () => {
   it('should render <Media3pPane /> with enabled search when a category is not selected', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { container } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { container } = renderWithTheme(<Media3pPane isActive />);
 
     expect(container.querySelector('input')).toBeEnabled();
   });
@@ -221,7 +219,7 @@ describe('Media3pPane', () => {
     useMediaResult.selectedProvider = 'PROVIDER_1';
     useMediaResult.media3p.PROVIDER_1.state.categories.selectedCategoryId =
       'provider1/1';
-    const { container } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { container } = renderWithTheme(<Media3pPane isActive />);
 
     expect(container.querySelector('input')).toBeDisabled();
   });
@@ -229,11 +227,11 @@ describe('Media3pPane', () => {
   it('should render <Media3pPane /> with the category display name when selected', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { getByTestId } = renderWithTheme(<Media3pPane isActive={true} />);
+    const { getByTestId } = renderWithTheme(<Media3pPane isActive />);
 
     const subHeading = getByTestId('media-subheading');
 
     expect(getComputedStyle(subHeading).display).not.toBe('none');
-    expect(subHeading).toHaveTextContent('Tiny dogs for provider 1');
+    expect(subHeading).toHaveTextContent('1 Dogs');
   });
 });

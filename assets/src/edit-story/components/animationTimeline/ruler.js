@@ -15,28 +15,24 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { sprintf, _n } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import { Fragment } from 'react';
+import { sprintf, _n } from '@web-stories-wp/i18n';
+import * as React from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
 const Path = styled.path`
   fill: none;
-  stroke: ${({ theme }) => rgba(theme.colors.fg.white, 0.4)};
+  stroke: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.4)};
   shape-rendering: crispEdges;
 `;
 
 const Text = styled.text`
-  font-family: ${({ theme }) => theme.fonts.label.family};
+  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
   font-size: 13px;
-  fill: ${({ theme }) => rgba(theme.colors.fg.white, 0.8)};
+  fill: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.8)};
 `;
 
 export const MARK_OFFSET = 40.0;
@@ -60,7 +56,7 @@ export default function AnimationRuler({ duration }) {
         {range.map((value, index) => {
           const isValueMajor = isMajor(index);
           return (
-            <Fragment key={`ruler-mark-${value}`}>
+            <React.Fragment key={`ruler-mark-${value}`}>
               {isValueMajor && (
                 <Text x={value * MARK_OFFSET + 5} y={20}>
                   {sprintf(
@@ -77,7 +73,7 @@ export default function AnimationRuler({ duration }) {
                   isValueMajor ? 8 : 18
                 },${RULER_HEIGHT} Z`}
               />
-            </Fragment>
+            </React.Fragment>
           );
         })}
       </g>

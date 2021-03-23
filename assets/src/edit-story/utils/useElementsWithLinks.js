@@ -22,8 +22,7 @@ import { useCallback, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../app/story';
-import { useCanvas } from '../components/canvas';
+import { useStory, useCanvas } from '../app';
 import isElementBelowLimit from './isElementBelowLimit';
 
 function useElementsWithLinks() {

@@ -15,24 +15,26 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import { useFeatures } from 'flagged';
+import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia, useHistory, useConfig } from '../../../app';
-import { Outline, Primary } from '../../button';
-import { useGlobalKeyDownEffect } from '../../keyboard';
-import WithTooltip from '../../tooltip';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
-import { usePrepublishChecklist } from '../../inspector/prepublish';
-import { ButtonContent, WarningIcon } from './styles';
+import { useStory, useLocalMedia, useHistory } from '../../../app';
+import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  useGlobalKeyDownEffect,
+  Tooltip,
+  TOOLTIP_PLACEMENT,
+  Icons,
+} from '../../../../design-system';
+import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
   const { isSaving, status, saveStory } = useStory(
@@ -50,19 +52,9 @@ function Update() {
   const {
     state: { hasNewChanges },
   } = useHistory();
-
-  const { checklist, refreshChecklist } = usePrepublishChecklist();
-  const {
-    showPrePublishTab,
-    customMetaBoxes: isMetaBoxesFeatureEnabled,
-  } = useFeatures();
-  const { metaBoxes = {} } = useConfig();
-
-  const hasMetaBoxes =
-    isMetaBoxesFeatureEnabled &&
-    Object.keys(metaBoxes).some((location) =>
-      Boolean(metaBoxes[location]?.length)
-    );
+  const { hasMetaBoxes } = useMetaBoxes(({ state }) => ({
+    hasMetaBoxes: state.hasMetaBoxes,
+  }));
 
   useGlobalKeyDownEffect(
     { key: ['mod+s'] },
@@ -76,6 +68,11 @@ function Update() {
     [saveStory, isSaving]
   );
 
+  // The button is enabled only if we're not already saving nor uploading. And
+  // then only if there are new changes or the story has meta-boxes – as these
+  // can update without us knowing it.
+  const isEnabled =
+    !isSaving && !isUploading && (hasNewChanges || hasMetaBoxes);
   let text;
   switch (status) {
     case 'publish':
@@ -88,39 +85,28 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Outline
-          onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={
-            !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
-          }
-        >
-          {text}
-        </Outline>
+        <Tooltip title={text} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={() => saveStory({ status: 'draft' })}
+            disabled={!isEnabled}
+            aria-label={text}
+          >
+            <Icons.FloppyDisk />
+          </Button>
+        </Tooltip>
       );
   }
 
-  const tooltip = showPrePublishTab
-    ? checklist.some(({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type) &&
-      __('There are items in the checklist to resolve', 'web-stories')
-    : null;
-
-  const button = (
-    <Primary
-      onPointerEnter={refreshChecklist}
+  return (
+    <ButtonWithChecklistWarning
+      text={text}
       onClick={() => saveStory()}
-      isDisabled={isSaving || isUploading}
-    >
-      <ButtonContent>
-        {text}
-        {tooltip && <WarningIcon />}
-      </ButtonContent>
-    </Primary>
+      disabled={isSaving || isUploading}
+    />
   );
-
-  const wrappedWithTooltip = (
-    <WithTooltip title={tooltip}>{button}</WithTooltip>
-  );
-  return tooltip ? wrappedWithTooltip : button;
 }
 
 export default Update;
