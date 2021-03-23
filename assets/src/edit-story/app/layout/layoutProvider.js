@@ -28,7 +28,7 @@ import useOffset from './useOffset';
 
 function LayoutProvider({ children }) {
   const zoomValue = useZoomSetting();
-  const offsetValue = useOffset();
+  const offsetValue = useOffset(zoomValue.state.zoomSetting);
 
   const value = {
     state: {

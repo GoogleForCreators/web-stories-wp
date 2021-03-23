@@ -39,7 +39,6 @@ const FramesPageArea = styled(PageArea).attrs({
 })`
   pointer-events: initial;
 `;
-
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 const DesignSpaceGuideline = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.negativePress};

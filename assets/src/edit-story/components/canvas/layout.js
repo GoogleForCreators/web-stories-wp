@@ -118,46 +118,27 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   overflow: ${({ hideScrollbars }) =>
     hideScrollbars ? 'hidden' : 'var(--overflow-x) var(--overflow-y)'};
 
-  &::-webkit-scrollbar,
-  &::-webkit-scrollbar-corner {
-    background-color: ${({ theme }) => theme.colors.bg.workspace};
-  }
+  ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
+    isControlled &&
+    css`
+      overflow: hidden;
+      width: calc(100% - ${hasVerticalOverflow ? SCROLLBAR_WIDTH : 0}px);
+      height: calc(100% - ${hasHorizontalOverflow ? SCROLLBAR_WIDTH : 0}px);
+    `}
 `;
 
-const ZOOM_PADDING = '72px';
 const PaddedPage = styled.div`
-  width: calc(
-    var(--page-width-px) +
-      ${({ addMargin }) => (addMargin ? ZOOM_PADDING : '0')}
-  );
-  height: calc(
-    var(--fullbleed-height-px) +
-      ${({ addMargin }) => (addMargin ? ZOOM_PADDING : '0')}
-  );
+  width: calc(var(--page-width-px) + var(--page-padding-px));
+  height: calc(var(--fullbleed-height-px) + var(--page-padding-px));
   display: flex;
   align-items: center;
   justify-content: center;
-
-  ${({ isBackgroundSelected, theme }) =>
-    isBackgroundSelected &&
-    `
-    &:before {
-      content: '';
-      position: absolute;
-      top: -4px;
-      left: -4px;
-      right: -4px;
-      bottom: -4px;
-      border: ${theme.colors.border.selection} 1px solid;
-      border-radius: 10px;
-    }
-  `}
 `;
 
 // Overflow is not hidden for media edit layer.
 const PageAreaWithOverflow = styled.div`
   ${({ background }) => generatePatternStyles(background)}
-  overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
+  overflow: visible;
   position: relative;
   width: var(--page-width-px);
   height: var(--fullbleed-height-px);
@@ -172,6 +153,21 @@ const PageAreaWithOverflow = styled.div`
       left: var(--scroll-left-px);
       top: var(--scroll-top-px);
     `};
+
+  ${({ isBackgroundSelected, theme }) =>
+    isBackgroundSelected &&
+    css`
+      &:before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: ${theme.colors.border.selection} 1px solid;
+        border-radius: ${theme.borders.radius.medium};
+      }
+    `}
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -179,8 +175,6 @@ const PageAreaSafeZone = styled.div`
   height: var(--page-height-px);
   overflow: visible;
   position: relative;
-  margin: auto 0;
-  top: calc((var(--fullbleed-height-px) - var(--page-height-px)) / 2);
 `;
 
 const HeadArea = styled(Area).attrs({ area: 'h' })``;
@@ -238,8 +232,9 @@ function useLayoutParamsCssVars() {
   const {
     pageWidth,
     pageHeight,
-    workspaceWidth,
-    workspaceHeight,
+    pagePadding,
+    viewportWidth,
+    viewportHeight,
     hasPageNavigation,
     hasVerticalOverflow,
     hasHorizontalOverflow,
@@ -250,8 +245,9 @@ function useLayoutParamsCssVars() {
       state: {
         pageWidth,
         pageHeight,
-        workspaceWidth,
-        workspaceHeight,
+        pagePadding,
+        viewportWidth,
+        viewportHeight,
         hasPageNavigation,
         hasVerticalOverflow,
         hasHorizontalOverflow,
@@ -261,8 +257,9 @@ function useLayoutParamsCssVars() {
     }) => ({
       pageWidth,
       pageHeight,
-      workspaceWidth,
-      workspaceHeight,
+      pagePadding,
+      viewportWidth,
+      viewportHeight,
       hasPageNavigation,
       hasVerticalOverflow,
       hasHorizontalOverflow,
@@ -271,23 +268,17 @@ function useLayoutParamsCssVars() {
     })
   );
   const fullHeight = pageWidth / FULLBLEED_RATIO;
-  const widthPadding = hasVerticalOverflow ? SCROLLBAR_WIDTH : 0;
-  const viewportWidth = hasHorizontalOverflow
-    ? workspaceWidth
-    : pageWidth + widthPadding;
-  const viewportHeight = hasVerticalOverflow ? workspaceHeight : fullHeight;
-  // We need to make sure the element is correctly placed when there's no horizontal
-  // scroll. By not setting an explicit width, we can ensure that.
   return {
     '--page-nav-width': `${hasPageNavigation ? PAGE_NAV_WIDTH : 0}px`,
     '--page-nav-gap': `${hasPageNavigation ? PAGE_NAV_GAP : 0}px`,
     '--page-width-px': `${pageWidth}px`,
     '--page-height-px': `${pageHeight}px`,
+    '--page-padding-px': `${pagePadding}px`,
     '--fullbleed-height-px': `${fullHeight}px`,
     '--viewport-width-px': `${viewportWidth}px`,
     '--viewport-height-px': `${viewportHeight}px`,
-    '--overflow-x': hasHorizontalOverflow ? 'scroll' : 'hidden',
-    '--overflow-y': hasVerticalOverflow ? 'scroll' : 'hidden',
+    '--overflow-x': hasHorizontalOverflow ? 'scroll' : 'visible',
+    '--overflow-y': hasVerticalOverflow ? 'scroll' : 'visible',
     '--scroll-left-px': `-${scrollLeft}px`,
     '--scroll-top-px': `-${scrollTop}px`,
   };
@@ -296,7 +287,6 @@ function useLayoutParamsCssVars() {
 const PageArea = forwardRef(function PageArea(
   {
     children,
-    showOverflow = false,
     fullbleedRef = createRef(),
     overlay = [],
     background,
@@ -313,22 +303,23 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow,
     })
   );
-
   return (
     <PageAreaFullbleedContainer
       ref={fullbleedRef}
       data-testid="fullbleed"
       aria-label={__('Fullbleed area', 'web-stories')}
-      isBackgroundSelected={isBackgroundSelected}
       role="region"
       hideScrollbars={hideScrollbars}
+      isControlled={isControlled}
+      hasHorizontalOverflow={hasHorizontalOverflow}
+      hasVerticalOverflow={hasVerticalOverflow}
       className={className}
     >
-      <PaddedPage addMargin={hasHorizontalOverflow && hasVerticalOverflow}>
+      <PaddedPage>
         <PageAreaWithOverflow
-          showOverflow={showOverflow}
           background={background}
           isControlled={isControlled}
+          isBackgroundSelected={isBackgroundSelected}
         >
           <PageAreaSafeZone ref={ref} data-testid="safezone">
             {children}
@@ -342,7 +333,6 @@ const PageArea = forwardRef(function PageArea(
 
 PageArea.propTypes = {
   children: PropTypes.node,
-  showOverflow: PropTypes.bool,
   fullbleedRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   overlay: PropTypes.node,
   background: PropTypes.object,

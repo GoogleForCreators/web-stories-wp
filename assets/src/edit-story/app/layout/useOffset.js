@@ -17,10 +17,14 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function useOffset() {
+function useOffset(zoomSetting) {
   const [scrollOffset, setScrollOffset] = useState({ left: 0, top: 0 });
+  // Reset scroll offset whenever zoom setting changes
+  useEffect(() => {
+    setScrollOffset({ left: 0, top: 0 });
+  }, [zoomSetting]);
   return {
     state: {
       scrollLeft: scrollOffset.left,
