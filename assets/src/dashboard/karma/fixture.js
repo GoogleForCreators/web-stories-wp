@@ -39,7 +39,6 @@ import actPromise from '../../karma-fixture/actPromise';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
-
 configure({
   getElementError: (message) => {
     const error = new Error(message);
