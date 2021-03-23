@@ -36,6 +36,7 @@ import {
 const ZOOM_PADDING_LARGE = 72;
 const ZOOM_PADDING_MEDIUM = 36;
 const ZOOM_PADDING_SMALL = 24;
+const ZOOM_PADDING_NONE = 12;
 
 function useZoomSetting() {
   // TODO store in localSettings?
@@ -117,7 +118,7 @@ function useZoomSetting() {
         ? ZOOM_PADDING_LARGE
         : hasVerticalOverflow || hasHorizontalOverflow
         ? ZOOM_PADDING_SMALL
-        : 0;
+        : ZOOM_PADDING_NONE;
     const viewportWidth = hasHorizontalOverflow
       ? workspaceSize.width
       : pageWidth + pagePadding + (hasVerticalOverflow ? SCROLLBAR_WIDTH : 0);

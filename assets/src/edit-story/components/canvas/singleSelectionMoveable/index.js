@@ -56,8 +56,9 @@ function SingleSelectionMoveable({
   const {
     actions: { pushTransform },
   } = useTransform();
-  const { scrollLeft, scrollTop } = useLayout(
-    ({ state: { scrollLeft, scrollTop } }) => ({
+  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
+    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
+      zoomSetting,
       scrollLeft,
       scrollTop,
     })
@@ -77,13 +78,13 @@ function SingleSelectionMoveable({
     latestEvent.current = pushEvent;
   }, [pushEvent]);
 
-  // If scroll ever updates, update rect
+  // If zoom or scroll ever updates, update rect
   useEffect(() => {
     if (!moveable.current) {
       return;
     }
     moveable.current.updateRect();
-  }, [scrollLeft, scrollTop]);
+  }, [zoomSetting, scrollLeft, scrollTop]);
 
   useEffect(() => {
     if (!moveable.current) {

@@ -135,6 +135,12 @@ const PaddedPage = styled.div`
   justify-content: center;
 `;
 
+const selectionBorder = css`
+  &::before {
+    border-color: ${({ theme }) => theme.colors.border.selection};
+  }
+`;
+
 // Overflow is not hidden for media edit layer.
 const PageAreaWithOverflow = styled.div`
   ${({ background }) => generatePatternStyles(background)}
@@ -154,20 +160,33 @@ const PageAreaWithOverflow = styled.div`
       top: var(--scroll-top-px);
     `};
 
-  ${({ isBackgroundSelected, theme }) =>
-    isBackgroundSelected &&
-    css`
-      &:before {
-        content: '';
-        position: absolute;
-        top: -4px;
-        left: -4px;
-        right: -4px;
-        bottom: -4px;
-        border: ${theme.colors.border.selection} 1px solid;
-        border-radius: ${theme.borders.radius.medium};
-      }
-    `}
+  &::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: transparent 1px solid;
+    border-radius: ${({ theme }) => theme.borders.radius.medium};
+    transition: border-color 0.3s;
+  }
+
+  ${({ isBackgroundSelected }) => isBackgroundSelected && selectionBorder}
+
+  &:hover {
+    ${selectionBorder}
+  }
+`;
+
+const PageAreaWithoutOverflow = styled.div`
+  overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
+  position: relative;
+  width: var(--page-width-px);
+  height: var(--fullbleed-height-px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const PageAreaSafeZone = styled.div`
@@ -321,9 +340,11 @@ const PageArea = forwardRef(function PageArea(
           isControlled={isControlled}
           isBackgroundSelected={isBackgroundSelected}
         >
-          <PageAreaSafeZone ref={ref} data-testid="safezone">
-            {children}
-          </PageAreaSafeZone>
+          <PageAreaWithoutOverflow>
+            <PageAreaSafeZone ref={ref} data-testid="safezone">
+              {children}
+            </PageAreaSafeZone>
+          </PageAreaWithoutOverflow>
         </PageAreaWithOverflow>
       </PaddedPage>
       {overlay}
