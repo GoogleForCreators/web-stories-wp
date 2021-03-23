@@ -34,8 +34,6 @@ import {
 
 // Beware, that these are slightly magic numbers, that just happens to look good
 const ZOOM_PADDING_LARGE = 72;
-const ZOOM_PADDING_MEDIUM = 36;
-const ZOOM_PADDING_SMALL = 24;
 const ZOOM_PADDING_NONE = 12;
 
 function useZoomSetting() {
@@ -71,7 +69,7 @@ function useZoomSetting() {
         if (workspaceRatio > FULLBLEED_RATIO) {
           // workspace is limited in the height, so use the (height - padding) converted
           maxPageWidth =
-            (workspaceSize.height - ZOOM_PADDING_MEDIUM) * FULLBLEED_RATIO;
+            (workspaceSize.height - ZOOM_PADDING_LARGE) * FULLBLEED_RATIO;
         } else {
           // workspace is limited in the width, so use the width - padding
           maxPageWidth = workspaceSize.width - ZOOM_PADDING_LARGE;
@@ -108,25 +106,18 @@ function useZoomSetting() {
     const hasVerticalOverflow =
       pageHeight >=
       workspaceSize.height - ZOOM_PADDING_LARGE - 2 * PAGE_WIDTH_FACTOR;
+    const hasAnyOverflow = hasHorizontalOverflow || hasVerticalOverflow;
     const hasPageNavigation =
-      pageWidth < workspaceSize.width - 2 * PAGE_NAV_WIDTH;
-    // If scroll in both directions, add large padding,
-    // else if still scroll, add a small padding,
-    // else none
-    const pagePadding =
-      hasVerticalOverflow && hasHorizontalOverflow
-        ? ZOOM_PADDING_LARGE
-        : hasVerticalOverflow || hasHorizontalOverflow
-        ? ZOOM_PADDING_SMALL
-        : ZOOM_PADDING_NONE;
-    const viewportWidth = hasHorizontalOverflow
+      !hasAnyOverflow && pageWidth < workspaceSize.width - 2 * PAGE_NAV_WIDTH;
+    // if any scroll, add a lage padding, else just a bit to allow to show hover frame
+    const pagePadding = hasAnyOverflow ? ZOOM_PADDING_LARGE : ZOOM_PADDING_NONE;
+    // If any kind of scroll, use entire available workspace
+    const viewportWidth = hasAnyOverflow
       ? workspaceSize.width
-      : pageWidth + pagePadding + (hasVerticalOverflow ? SCROLLBAR_WIDTH : 0);
-    const viewportHeight = hasVerticalOverflow
+      : pageWidth + pagePadding;
+    const viewportHeight = hasAnyOverflow
       ? workspaceSize.height
-      : fullbleedHeight +
-        pagePadding +
-        (hasHorizontalOverflow ? SCROLLBAR_WIDTH : 0);
+      : fullbleedHeight + pagePadding;
     return {
       zoomSetting,
       pageWidth,

@@ -35,7 +35,7 @@ import Selection from './selection';
 import PageNav from './pagenav';
 
 const FramesPageArea = styled(PageArea).attrs({
-  showOverflow: false,
+  showOverflow: true,
 })`
   pointer-events: initial;
 `;

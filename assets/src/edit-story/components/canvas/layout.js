@@ -115,6 +115,11 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
   area: 'p',
   canOverflow: true,
 })`
+  display: flex;
+  justify-content: ${({ hasHorizontalOverflow }) =>
+    hasHorizontalOverflow ? 'flex-start' : 'center'};
+  align-items: ${({ hasVerticalOverflow }) =>
+    hasVerticalOverflow ? 'flex-start' : 'center'};
   overflow: ${({ hideScrollbars }) =>
     hideScrollbars ? 'hidden' : 'var(--overflow-x) var(--overflow-y)'};
 
@@ -130,15 +135,31 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
 const PaddedPage = styled.div`
   width: calc(var(--page-width-px) + var(--page-padding-px));
   height: calc(var(--fullbleed-height-px) + var(--page-padding-px));
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: calc(0.5 * var(--page-padding-px));
 `;
 
-const selectionBorder = css`
-  &::before {
-    border-color: ${({ theme }) => theme.colors.border.selection};
-  }
+// This layers is needed to clip the frames at the desired page padding
+// if the layer is scrollable
+const PageClip = styled.div`
+  ${({ hasHorizontalOverflow, hasVerticalOverflow }) =>
+    (hasHorizontalOverflow || hasVerticalOverflow) &&
+    css`
+      overflow: hidden;
+      width: ${hasHorizontalOverflow
+        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-width-px) - ${SCROLLBAR_WIDTH}px)`};
+      flex-basis: ${hasHorizontalOverflow
+        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-width-px) - ${SCROLLBAR_WIDTH}px)`};
+      height: ${hasVerticalOverflow
+        ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
+        : `calc(var(--viewport-height-px) - ${SCROLLBAR_WIDTH}px)`};
+      flex-shrink: 0;
+      flex-grow: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
 `;
 
 // Overflow is not hidden for media edit layer.
@@ -160,23 +181,20 @@ const PageAreaWithOverflow = styled.div`
       top: var(--scroll-top-px);
     `};
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: transparent 1px solid;
-    border-radius: ${({ theme }) => theme.borders.radius.medium};
-    transition: border-color 0.3s;
-  }
-
-  ${({ isBackgroundSelected }) => isBackgroundSelected && selectionBorder}
-
-  &:hover {
-    ${selectionBorder}
-  }
+  ${({ isBackgroundSelected, theme }) =>
+    isBackgroundSelected &&
+    css`
+      &:before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        right: -4px;
+        bottom: -4px;
+        border: ${theme.colors.border.selection} 1px solid;
+        border-radius: ${theme.borders.radius.medium};
+      }
+    `}
 `;
 
 const PageAreaWithoutOverflow = styled.div`
@@ -312,6 +330,7 @@ const PageArea = forwardRef(function PageArea(
     isControlled = false,
     hideScrollbars = false,
     className = '',
+    showOverflow = false,
     isBackgroundSelected = false,
   },
   ref
@@ -334,19 +353,24 @@ const PageArea = forwardRef(function PageArea(
       hasVerticalOverflow={hasVerticalOverflow}
       className={className}
     >
-      <PaddedPage>
-        <PageAreaWithOverflow
-          background={background}
-          isControlled={isControlled}
-          isBackgroundSelected={isBackgroundSelected}
-        >
-          <PageAreaWithoutOverflow>
-            <PageAreaSafeZone ref={ref} data-testid="safezone">
-              {children}
-            </PageAreaSafeZone>
-          </PageAreaWithoutOverflow>
-        </PageAreaWithOverflow>
-      </PaddedPage>
+      <PageClip
+        hasHorizontalOverflow={hasHorizontalOverflow}
+        hasVerticalOverflow={hasVerticalOverflow}
+      >
+        <PaddedPage>
+          <PageAreaWithOverflow
+            background={background}
+            isControlled={isControlled}
+            isBackgroundSelected={isBackgroundSelected}
+          >
+            <PageAreaWithoutOverflow showOverflow={showOverflow}>
+              <PageAreaSafeZone ref={ref} data-testid="safezone">
+                {children}
+              </PageAreaSafeZone>
+            </PageAreaWithoutOverflow>
+          </PageAreaWithOverflow>
+        </PaddedPage>
+      </PageClip>
       {overlay}
     </PageAreaFullbleedContainer>
   );
@@ -360,6 +384,7 @@ PageArea.propTypes = {
   isControlled: PropTypes.bool,
   hideScrollbars: PropTypes.bool,
   className: PropTypes.string,
+  showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
 };
 
