@@ -19,7 +19,13 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
-import { render, act, screen, waitFor } from '@testing-library/react';
+import {
+  configure,
+  render,
+  act,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import Modal from 'react-modal';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
@@ -38,6 +44,15 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
+
+configure({
+  getElementError: (message) => {
+    const error = new Error(message);
+    error.name = 'TestingLibraryElementError';
+    error.stack = null;
+    return error;
+  },
+});
 
 export const MEDIA_PER_PAGE = 20;
 const DEFAULT_CONFIG = {

@@ -19,7 +19,13 @@
  */
 import React from 'react';
 import { FlagsProvider } from 'flagged';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  configure,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -32,6 +38,16 @@ import ComponentStub from '../../karma-fixture/componentStub';
 import actPromise from '../../karma-fixture/actPromise';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
+
+
+configure({
+  getElementError: (message) => {
+    const error = new Error(message);
+    error.name = 'TestingLibraryElementError';
+    error.stack = null;
+    return error;
+  },
+});
 
 const defaultConfig = {
   capabilities: {
