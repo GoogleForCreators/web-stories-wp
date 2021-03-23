@@ -16,13 +16,7 @@
 /**
  * External dependencies
  */
-import {
-  createContext,
-  useMemo,
-  useRef,
-  useCallback,
-  useState,
-} from 'react';
+import { createContext, useMemo, useRef, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const LayoutContext = createContext(null);
