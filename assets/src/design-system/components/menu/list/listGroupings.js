@@ -30,7 +30,7 @@ import List from './list';
 const ListGroupings = ({
   options,
   activeValue,
-  listLength,
+  listlength,
   listId,
   hasMenuRole,
   handleMenuItemSelect,
@@ -49,22 +49,22 @@ const ListGroupings = ({
       role={hasMenuRole ? 'menu' : 'listbox'}
     >
       {group.map((groupOption, optionIndex) => {
-        const isSelected = groupOption.value === activeValue;
+        const selected = groupOption.value === activeValue;
         const optionInset = getInset(options, groupIndex, optionIndex);
 
         return (
           <ListItem
             key={groupOption.value}
             aria-posinset={optionInset + 1}
-            aria-selected={isSelected}
-            aria-setsize={listLength}
+            aria-selected={selected}
+            aria-setsize={listlength}
             id={`dropDownMenuItem-${groupOption.value}`}
-            isSelected={isSelected}
+            selected={selected}
             onClick={(event) =>
               !groupOption.disabled && handleMenuItemSelect(event, groupOption)
             }
             option={groupOption}
-            listLength={listLength}
+            listlength={listlength}
             role={hasMenuRole ? 'menuitem' : 'option'}
             ref={(el) => (optionsRef.current[optionInset] = el)}
             tabIndex={0}
@@ -78,7 +78,7 @@ ListGroupings.propTypes = {
   options: MENU_OPTIONS,
   isManyGroups: PropTypes.bool,
   activeValue: DROP_DOWN_VALUE_TYPE,
-  listLength: PropTypes.number,
+  listlength: PropTypes.number,
   hasMenuRole: PropTypes.bool,
   handleMenuItemSelect: PropTypes.func.isRequired,
   renderItem: PropTypes.object,

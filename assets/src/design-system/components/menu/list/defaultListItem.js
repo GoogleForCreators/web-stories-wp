@@ -37,15 +37,15 @@ const ActiveIcon = styled(CheckmarkSmall)`
   transform: translateY(-50%);
 `;
 
-const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
+const DefaultListItem = ({ option, selected, ...rest }, ref) => (
   <ListItem
     {...rest}
     ref={ref}
-    isSelected={isSelected}
+    selected={selected}
     disabled={option.disabled}
     aria-disabled={option.disabled}
   >
-    {isSelected && (
+    {selected && (
       <ActiveIcon
         data-testid={'dropdownMenuItem_active_icon'}
         aria-label={__('Selected', 'web-stories')}
@@ -66,5 +66,5 @@ export default forwardRef(DefaultListItem);
 
 DefaultListItem.propTypes = {
   option: DROP_DOWN_ITEM,
-  isSelected: PropTypes.bool,
+  selected: PropTypes.bool,
 };

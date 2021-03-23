@@ -99,15 +99,15 @@ describe('<Menu />', () => {
 
   it('should override list items when renderMenu is present', () => {
     // eslint-disable-next-line react/display-name
-    const OverrideRenderItem = forwardRef(({ isSelected, ...rest }, ref) => {
+    const OverrideRenderItem = forwardRef(({ selected, ...rest }, ref) => {
       return (
         <li {...rest} ref={ref}>
-          {isSelected ? 'I AM SELECTED' : 'I AM EXTRA CONTENT'}
+          {selected ? 'I AM SELECTED' : 'I AM EXTRA CONTENT'}
         </li>
       );
     });
     OverrideRenderItem.propTypes = {
-      isSelected: PropTypes.bool,
+      selected: PropTypes.bool,
     };
 
     const { queryAllByText, getByText } = renderWithProviders(

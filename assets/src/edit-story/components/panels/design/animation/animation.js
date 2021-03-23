@@ -145,7 +145,7 @@ function AnimationPanel({
   // the all the focus updates go through prevents the reset from
   // overriding this play call.
   const activeElement = document.activeElement;
-  const [dedbouncedUpdateAnimationState] = useDebouncedCallback(() => {
+  const [debouncedUpdateAnimationState] = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
         animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
@@ -153,11 +153,11 @@ function AnimationPanel({
       playUpdatedAnimation.current = false;
     }
   }, 100);
-  useEffect(dedbouncedUpdateAnimationState, [
+  useEffect(debouncedUpdateAnimationState, [
     selectedElementAnimations,
     updateAnimationState,
     activeElement,
-    dedbouncedUpdateAnimationState,
+    debouncedUpdateAnimationState,
   ]);
 
   const handleRemoveEffect = useCallback(() => {

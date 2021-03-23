@@ -76,7 +76,7 @@ const Menu = ({
     [onMenuItemClick]
   );
 
-  const { focusedIndex, listLength } = useDropDownMenu({
+  const { focusedIndex, listlength } = useDropDownMenu({
     activeValue,
     handleMenuItemSelect,
     isRTL,
@@ -128,7 +128,7 @@ const Menu = ({
           options={options}
           activeValue={activeValue}
           listId={listId}
-          listLength={listLength}
+          listlength={listlength}
           hasMenuRole={hasMenuRole}
           handleMenuItemSelect={handleMenuItemSelect}
           renderItem={renderItem}

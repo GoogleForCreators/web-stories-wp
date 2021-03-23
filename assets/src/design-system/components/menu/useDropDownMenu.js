@@ -45,7 +45,7 @@ export default function useDropDownMenu({
     [options]
   );
 
-  const listLength = allOptions.length;
+  const listlength = allOptions.length;
   const [focusedValue, setFocusedValue] = useState(activeValue);
 
   const getFocusedIndex = useCallback(
@@ -97,7 +97,7 @@ export default function useDropDownMenu({
         [KEYS.ARROW_DOWN, isRTL ? KEYS.ARROW_LEFT : KEYS.ARROW_RIGHT].includes(
           key
         ) &&
-        focusedIndex < listLength - 1
+        focusedIndex < listlength - 1
       ) {
         handleMoveFocus(1);
       } else if (
@@ -109,7 +109,7 @@ export default function useDropDownMenu({
         handleReturnToParent?.();
       }
     },
-    [focusedIndex, handleMoveFocus, handleReturnToParent, isRTL, listLength]
+    [focusedIndex, handleMoveFocus, handleReturnToParent, isRTL, listlength]
   );
 
   const handleMenuItemEnter = useCallback(
@@ -148,8 +148,8 @@ export default function useDropDownMenu({
     () => ({
       focusedValue,
       focusedIndex,
-      listLength,
+      listlength,
     }),
-    [focusedIndex, focusedValue, listLength]
+    [focusedIndex, focusedValue, listlength]
   );
 }
