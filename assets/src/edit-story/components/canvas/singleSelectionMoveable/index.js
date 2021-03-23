@@ -78,13 +78,24 @@ function SingleSelectionMoveable({
     latestEvent.current = pushEvent;
   }, [pushEvent]);
 
-  // If zoom or scroll ever updates, update rect
+  // If scroll ever updates, update rect now
   useEffect(() => {
     if (!moveable.current) {
       return;
     }
     moveable.current.updateRect();
-  }, [zoomSetting, scrollLeft, scrollTop]);
+  }, [scrollLeft, scrollTop]);
+
+  // If zoom ever updates, update rect now AND in a frame's time
+  useEffect(() => {
+    if (!moveable.current) {
+      return;
+    }
+    moveable.current.updateRect();
+    // Disable reason: Not necessary to cancel - only waits one frame
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => moveable.current.updateRect());
+  }, [zoomSetting]);
 
   useEffect(() => {
     if (!moveable.current) {

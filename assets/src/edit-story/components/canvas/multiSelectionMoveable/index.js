@@ -60,8 +60,9 @@ function MultiSelectionMoveable({ selectedElements }) {
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
   }));
-  const { scrollLeft, scrollTop } = useLayout(
-    ({ state: { scrollLeft, scrollTop } }) => ({
+  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
+    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
+      zoomSetting,
       scrollLeft,
       scrollTop,
     })
@@ -80,6 +81,17 @@ function MultiSelectionMoveable({ selectedElements }) {
       moveable.current.updateRect();
     }
   }, [selectedElements, moveable, nodesById, scrollLeft, scrollTop]);
+
+  // If zoom ever updates, update rect now AND in a frame's time
+  useEffect(() => {
+    if (!moveable.current) {
+      return;
+    }
+    moveable.current.updateRect();
+    // Disable reason: Not necessary to cancel - only waits one frame
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => moveable.current.updateRect());
+  }, [zoomSetting]);
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
