@@ -34,7 +34,7 @@ import SizePosition from '../sizePosition';
 
 jest.mock('../../../../../elements');
 
-describe('Panels/SizePosition', () => {
+describe('panels/SizePosition', () => {
   let defaultElement, defaultImage, defaultText, unlockAspectRatioElement;
   let defaultFlip;
   const aspectRatioLockButtonLabel = 'Lock aspect ratio';
@@ -161,13 +161,12 @@ describe('Panels/SizePosition', () => {
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          width: 150,
-          height: 150 / (100 / 80),
-        },
-        true
-      );
+      const [updateArg, submitArg] = pushUpdate.mock.calls[0];
+      expect(updateArg()).toStrictEqual({
+        width: 150,
+        height: 150 / (100 / 80),
+      });
+      expect(submitArg).toBeTrue();
     });
 
     it('should update height with lock ratio', () => {
@@ -175,13 +174,12 @@ describe('Panels/SizePosition', () => {
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          height: 160,
-          width: 160 * (100 / 80),
-        },
-        true
-      );
+      const [updateArg, submitArg] = pushUpdate.mock.calls[0];
+      expect(updateArg()).toStrictEqual({
+        height: 160,
+        width: 160 * (100 / 80),
+      });
+      expect(submitArg).toBeTrue();
     });
 
     it('should update width without lock ratio', () => {
@@ -192,7 +190,9 @@ describe('Panels/SizePosition', () => {
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith({ width: 150, height: 80 }, true);
+      const [updateArg, submitArg] = pushUpdate.mock.calls[0];
+      expect(updateArg()).toStrictEqual({ width: 150, height: 80 });
+      expect(submitArg).toBeTrue();
     });
 
     it('should disable height without lock ratio for text element', () => {
@@ -313,13 +313,12 @@ describe('Panels/SizePosition', () => {
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          width: 150,
-          height: dataPixels(150 / (100 / 80)),
-        },
-        true
-      );
+      const [updateArg, submitArg] = pushUpdate.mock.calls[0];
+      expect(updateArg()).toStrictEqual({
+        width: 150,
+        height: dataPixels(150 / (100 / 80)),
+      });
+      expect(submitArg).toBeTrue();
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual(
@@ -344,13 +343,12 @@ describe('Panels/SizePosition', () => {
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          width: 150,
-          height: MULTIPLE_VALUE,
-        },
-        true
-      );
+      const [updateArg, submitArg] = pushUpdate.mock.calls[0];
+      expect(updateArg()).toStrictEqual({
+        width: 150,
+        height: MULTIPLE_VALUE,
+      });
+      expect(submitArg).toBeTrue();
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual(
@@ -375,13 +373,12 @@ describe('Panels/SizePosition', () => {
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          height: 160,
-          width: MULTIPLE_VALUE,
-        },
-        true
-      );
+      const [updateArg, submitArg] = pushUpdate.mock.calls[0];
+      expect(updateArg()).toStrictEqual({
+        height: 160,
+        width: MULTIPLE_VALUE,
+      });
+      expect(submitArg).toBeTrue();
 
       const submits = submit({ height: 160, width: MULTIPLE_VALUE });
       expect(submits[image.id]).toStrictEqual(
@@ -436,13 +433,12 @@ describe('Panels/SizePosition', () => {
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '2000' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          height: 2000,
-          width: 2000 * (100 / 80),
-        },
-        true
-      );
+      const [updateArg, submitArg] = pushUpdate.mock.calls[0];
+      expect(updateArg()).toStrictEqual({
+        height: 2000,
+        width: 2000 * (100 / 80),
+      });
+      expect(submitArg).toBeTrue();
 
       const submits = submit({ height: 2000, width: 2000 * (100 / 80) });
       expect(submits[image.id]).toStrictEqual(

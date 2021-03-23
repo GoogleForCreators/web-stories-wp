@@ -21,7 +21,7 @@ import { renderWithProviders } from '../../../../../testUtils';
 import { formattedTemplatesArray } from '../../../../../storybookUtils';
 import { VIEW_STYLE, SAVED_TEMPLATES_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
-import { SnackbarProvider } from '../../../../snackbar';
+import { SnackbarProvider } from '../../../../../../design-system';
 import Content from '../';
 
 jest.mock(

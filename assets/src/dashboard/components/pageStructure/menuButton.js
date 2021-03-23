@@ -24,6 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { MIN_DASHBOARD_WIDTH } from '../../constants';
 import { Menu as MenuSvg } from '../../icons';
 import { useNavContext } from '../navProvider';
 
@@ -51,7 +52,7 @@ const TransparentButton = styled.button`
     showOnlyOnSmallViewport &&
     css`
       display: none;
-      @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
+      @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
         display: inline-block;
       }
     `}

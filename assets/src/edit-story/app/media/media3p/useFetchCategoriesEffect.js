@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useSnackbar } from '../../snackbar';
+import { useSnackbar } from '../../../../design-system';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
@@ -71,6 +71,7 @@ export default function useFetchCategoriesEffect({
         fetchCategoriesError({ provider });
         showSnackbar({
           message: PROVIDERS[provider].fetchCategoriesErrorMessage,
+          dismissable: true,
         });
       }
     }

@@ -58,6 +58,7 @@ const TextSetsToggle = styled.div`
   display: flex;
   p {
     margin: auto 12px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
   }
 `;
 
@@ -148,7 +149,7 @@ function TextSetsPane({ paneRef }) {
       <TitleBar>
         <Headline
           as="h3"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
         >
           {PANE_TEXT.TITLE}
         </Headline>
