@@ -44,6 +44,8 @@ use Google\Web_Stories\Shortcode\Stories_Shortcode;
 use Google\Web_Stories\Block\Web_Stories_Block;
 use Google\Web_Stories\Integrations\Core_Themes_Support;
 use Google\Web_Stories\TinyMCE;
+use Google\Web_Stories\Admin\PluginRowMeta;
+use Google\Web_Stories\Admin\PluginActionLinks;
 
 /**
  * Plugin class.
@@ -248,6 +250,12 @@ class Plugin {
 
 		$this->meta_boxes = new Meta_Boxes();
 		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
+
+		$plugin_row_meta = new PluginRowMeta();
+		add_action( 'admin_init', [ $plugin_row_meta, 'init' ] );
+
+		$plugin_actoin_links = new PluginActionLinks();
+		add_action( 'admin_init', [ $plugin_actoin_links, 'init' ] );
 
 		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
 		add_action( 'init', [ $this->story, 'init' ] );
