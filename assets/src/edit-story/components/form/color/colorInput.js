@@ -205,7 +205,7 @@ function ColorInput({
             hasOpacity={hasOpacity}
             onClose={onClose}
             renderFooter={(props) =>
-              colorPickerActions(props, null, propagateDimensionChange)
+              colorPickerActions?.(props, null, propagateDimensionChange)
             }
             changedStyle={changedStyle}
           />
