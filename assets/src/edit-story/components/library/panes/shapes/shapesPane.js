@@ -54,7 +54,7 @@ const SectionContent = styled.div`
 const STICKER_TYPES = Object.keys(STICKERS);
 
 function ShapesPane(props) {
-  const { showTextAndShapesSearchInput, enableHiddenStickers } = useFeatures();
+  const { showTextAndShapesSearchInput, enableStickers } = useFeatures();
 
   const ref = useRef();
   useRovingTabIndex({ ref });
@@ -75,7 +75,7 @@ function ShapesPane(props) {
           ))}
         </SectionContent>
       </Section>
-      {enableHiddenStickers && (
+      {enableStickers && (
         <Section title={__('Stickers', 'web-stories')}>
           <SectionContent>
             {STICKER_TYPES.map((stickerType) => (

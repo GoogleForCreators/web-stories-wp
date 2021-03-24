@@ -214,9 +214,9 @@ class Experiments {
 			 * Creation date: 2021-03-23
 			 */
 			[
-				'name'        => 'enableHiddenStickers',
-				'label'       => __( 'Enable Hidden Stickers', 'web-stories' ),
-				'description' => __( 'Appends sticker buttons to the bottom off the shapes panel in library.', 'web-stories' ),
+				'name'        => 'enableStickers',
+				'label'       => __( 'Enable Stickers', 'web-stories' ),
+				'description' => __( 'Appends sticker buttons to the bottom of the shapes panel in library.', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
