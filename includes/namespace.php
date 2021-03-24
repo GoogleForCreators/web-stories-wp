@@ -39,14 +39,14 @@ use WP_Site;
  */
 function setup_new_site() {
 	$story = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
-	$story->init();
+	$story->register();
 	$story->add_caps_to_roles();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 
 	$database_upgrader = new Database_Upgrader();
-	$database_upgrader->init();
+	$database_upgrader->register();
 }
 
 /**
@@ -57,6 +57,8 @@ function setup_new_site() {
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  *
  * @since 1.0.0
+ *
+ * TODO Add these to activation interface to classes.
  *
  * @param bool $network_wide Whether to activate network-wide.
  *
@@ -121,6 +123,8 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
 
 /**
  * Handles plugin deactivation.
+ *
+ * TODO Add these to deactivation interface to classes.
  *
  * @since 1.0.0
  *

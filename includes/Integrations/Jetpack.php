@@ -27,6 +27,9 @@
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_Screen;
@@ -34,7 +37,7 @@ use WP_Screen;
 /**
  * Class Jetpack.
  */
-class Jetpack {
+class Jetpack implements Service, Delayed, Registerable {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -42,7 +45,7 @@ class Jetpack {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
@@ -51,6 +54,24 @@ class Jetpack {
 		}
 
 		add_filter( 'jetpack_is_amp_request', [ $this, 'force_amp_request' ] );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 10;
 	}
 
 	/**

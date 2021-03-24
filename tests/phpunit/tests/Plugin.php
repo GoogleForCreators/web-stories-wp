@@ -22,28 +22,6 @@ namespace Google\Web_Stories\Tests;
  */
 class Plugin extends \WP_UnitTestCase {
 	/**
-	 * @covers ::register
-	 */
-	public function test_register() {
-		$plugin = new \Google\Web_Stories\Plugin();
-		$plugin->register();
-
-		$this->assertSame( 10, has_action( 'init', [ $plugin->adsense, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'init', [ $plugin->ad_manager, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'init', [ $plugin->media, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'init', [ $plugin->story, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'init', [ $plugin->template, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'init', [ $plugin->dashboard, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'admin_init', [ $plugin->admin, 'init' ] ) );
-		$this->assertSame( 5, has_action( 'admin_init', [ $plugin->database_upgrader, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'init', [ $plugin->web_stories_block, 'init' ] ) );
-		$this->assertSame( 10, has_action( 'init', [ $plugin->discovery, 'init' ] ) );
-		$this->assertSame( 5, has_action( 'init', [ $plugin->settings, 'init' ] ) );
-		$this->assertSame( 7, has_action( 'init', [ $plugin->experiments, 'init' ] ) );
-		$this->assertSame( 100, has_action( 'rest_api_init', [ $plugin, 'register_rest_routes' ] ) );
-	}
-
-	/**
 	 * @covers ::load_amp_plugin_compat
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled

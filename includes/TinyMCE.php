@@ -28,6 +28,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
@@ -36,7 +39,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  *
  * @package Google\Web_Stories
  */
-class TinyMCE {
+class TinyMCE implements Service, Delayed, Registerable {
 	use Stories_Script_Data;
 	use Assets;
 
@@ -54,7 +57,7 @@ class TinyMCE {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		if ( $this->is_block_editor() ) {
 			return;
 		}
@@ -66,6 +69,24 @@ class TinyMCE {
 		add_filter( 'mce_external_plugins', [ $this, 'web_stories_mce_plugin' ] );
 		add_action( 'admin_footer', [ $this, 'web_stories_tinymce_root_element' ] );
 		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 10;
 	}
 
 	/**

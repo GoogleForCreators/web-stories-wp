@@ -46,8 +46,17 @@ class Embed_Shortcode extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_shortcode( self::SHORTCODE_NAME, [ $this, 'render_shortcode' ] );
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 10;
 	}
 
 	/**

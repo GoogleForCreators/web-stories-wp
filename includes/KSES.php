@@ -26,6 +26,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use WP_Post_Type;
 
 /**
@@ -33,7 +36,7 @@ use WP_Post_Type;
  *
  * Provides KSES utility methods to override the ones from core.
  */
-class KSES {
+class KSES implements Service, Delayed, Registerable {
 	/**
 	 * Initializes KSES filters for all post types if user can edit stories.
 	 *
@@ -41,7 +44,7 @@ class KSES {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 
 		$edit_posts       = false;
 		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
@@ -64,6 +67,24 @@ class KSES {
 			add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
 			remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 		}
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 11;
 	}
 
 	/**

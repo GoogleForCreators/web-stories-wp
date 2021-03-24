@@ -38,11 +38,11 @@ class Activation_Notice extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$activation_notice = new \Google\Web_Stories\Activation_Notice( $this->activation_flag );
-		$activation_notice->init();
+		$activation_notice->register();
 
 		$this->assertSame( 10, has_action( 'admin_enqueue_scripts', [ $activation_notice, 'enqueue_assets' ] ) );
 		$this->assertSame( 10, has_action( 'admin_notices', [ $activation_notice, 'render_notice' ] ) );

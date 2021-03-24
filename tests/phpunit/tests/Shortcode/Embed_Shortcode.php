@@ -134,7 +134,7 @@ class Embed_Shortcode extends \WP_UnitTestCase {
 	 */
 	public function test_render_shortcode_with_poster() {
 		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode();
-		$embed_shortcode->init();
+		$embed_shortcode->register();
 
 		$this->go_to( '/?feed=rss2' );
 

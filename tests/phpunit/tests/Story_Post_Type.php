@@ -101,13 +101,13 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
-		$story_post_type->init();
+		$story_post_type->register();
 
 		$this->assertSame( 10, has_filter( 'admin_enqueue_scripts', [ $story_post_type, 'admin_enqueue_scripts' ] ) );
 		$this->assertSame( 10, has_filter( 'show_admin_bar', [ $story_post_type, 'show_admin_bar' ] ) );
@@ -457,7 +457,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
-		$story_post_type->init();
+		$story_post_type->register();
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'stories';

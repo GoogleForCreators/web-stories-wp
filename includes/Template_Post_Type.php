@@ -26,12 +26,15 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\REST_API\Stories_Base_Controller;
 
 /**
  * Class Template_Post_Type.
  */
-class Template_Post_Type {
+class Template_Post_Type implements Service, Delayed, Registerable {
 	/**
 	 * The slug of the template post type.
 	 *
@@ -46,7 +49,7 @@ class Template_Post_Type {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -94,5 +97,23 @@ class Template_Post_Type {
 				'rest_controller_class' => Stories_Base_Controller::class,
 			]
 		);
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 10;
 	}
 }

@@ -26,12 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Traits\Assets;
 
 /**
  * Class Activation_Notice.
  */
-class Activation_Notice {
+class Activation_Notice implements Service, Registerable {
 	use Assets;
 
 	/**
@@ -66,7 +68,7 @@ class Activation_Notice {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'render_notice' ] );
 		add_action( 'network_admin_notices', [ $this, 'render_notice' ] );

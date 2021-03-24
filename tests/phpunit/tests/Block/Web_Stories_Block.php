@@ -136,7 +136,7 @@ class Web_Stories_Block extends \WP_UnitTestCase {
 	 */
 	public function test_render_block_with_poster() {
 		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
-		$embed_block->init();
+		$embed_block->register();
 
 		$this->go_to( '/?feed=rss2' );
 

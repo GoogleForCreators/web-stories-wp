@@ -26,6 +26,10 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
+
 /**
  * Class Database_Upgrader
  *
@@ -33,7 +37,7 @@ namespace Google\Web_Stories;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader {
+class Database_Upgrader implements Service, Delayed, Registerable {
 
 	/**
 	 * The slug of database option.
@@ -56,7 +60,7 @@ class Database_Upgrader {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		$routines = [
 			'1.0.0' => 'upgrade_1',
 			'2.0.0' => 'v_2_replace_conic_style_presets',
@@ -81,6 +85,24 @@ class Database_Upgrader {
 
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
 		$this->finish_up( $version );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 5;
 	}
 
 	/**

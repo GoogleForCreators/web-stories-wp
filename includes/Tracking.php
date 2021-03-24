@@ -28,12 +28,15 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Integrations\Site_Kit;
 
 /**
  * Tracking class.
  */
-class Tracking {
+class Tracking implements Service, Delayed, Registerable {
 	/**
 	 * Web Stories tracking script handle.
 	 *
@@ -91,7 +94,7 @@ class Tracking {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		// By not passing an actual script src we can print only the inline script.
 		wp_register_script(
 			self::SCRIPT_HANDLE,
@@ -105,6 +108,24 @@ class Tracking {
 			self::SCRIPT_HANDLE,
 			'window.webStoriesTrackingSettings = ' . wp_json_encode( $this->get_settings() ) . ';'
 		);
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 10;
 	}
 
 	/**

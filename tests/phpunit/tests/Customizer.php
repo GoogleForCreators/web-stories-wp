@@ -125,9 +125,12 @@ class Customizer extends \WP_UnitTestCase {
 		);
 	}
 
-	public function test_init() {
+	/**
+	 * @covers ::register
+	 */
+	public function test_register() {
 
-		$this->customizer->init();
+		$this->customizer->register();
 		$this->assertSame(
 			10,
 			has_action(

@@ -74,7 +74,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		$this->register_script( self::SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE, Tracking::SCRIPT_HANDLE ] );
 		$this->register_style( self::SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE, Embed_Base::SCRIPT_HANDLE ] );
 
@@ -165,6 +165,15 @@ class Web_Stories_Block extends Embed_Base {
 				'editor_style'    => self::SCRIPT_HANDLE,
 			]
 		);
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 10;
 	}
 
 	/**
