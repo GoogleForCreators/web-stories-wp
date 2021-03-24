@@ -169,8 +169,10 @@ export function LeftRail() {
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <Header as="h1">
-          <LogoWithTypeCircleColor title={__('Web Stories', 'web-stories')} />
+        <Header forwardedAs="h2">
+          <LogoWithTypeCircleColor
+            title={__('Web Stories Dashboard', 'web-stories')}
+          />
         </Header>
         <Content>
           <Button

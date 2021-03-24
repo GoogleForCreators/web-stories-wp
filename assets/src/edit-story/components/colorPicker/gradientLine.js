@@ -27,6 +27,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { ColorStopPropType } from '../../types';
+import { themeHelpers } from '../../../design-system/theme';
 import Pointer from './pointer';
 import GradientStop from './gradientStop';
 import useKeyMoveStop from './useKeyMoveStop';
@@ -38,18 +39,11 @@ import usePointerMoveStop from './usePointerMoveStop';
 import { LINE_LENGTH, LINE_WIDTH } from './constants';
 
 const Line = styled.div`
+  ${themeHelpers.transparentBg}
   width: ${LINE_LENGTH}px;
   height: ${LINE_WIDTH}px;
   border-radius: 2px;
   position: relative;
-
-  background: conic-gradient(
-    #fff 0.25turn,
-    #d3d4d4 0turn 0.5turn,
-    #fff 0turn 0.75turn,
-    #d3d4d4 0turn 1turn
-  );
-  background-size: 14px 14px;
 
   &:focus {
     /* The line will only have temporary focus while deleting stops */
