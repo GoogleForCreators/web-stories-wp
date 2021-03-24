@@ -140,7 +140,7 @@ function OptionList({
           (option) => option && observer.unobserve(option)
         );
       }
-      // clear exisiting option references before next update to filteredGroup
+      // clear existing option references before next update to filteredGroup
       optionsRef.current = [];
     };
   }, [observer, onObserve, filteredListGroups]);
