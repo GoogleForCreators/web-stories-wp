@@ -47,7 +47,7 @@ function renderLinkPanel(selectedElements) {
 
   const canvasContext = {
     state: {
-      displayLinkGuidelines: true
+      displayLinkGuidelines: true,
     },
     actions: {
       clearEditing: jest.fn(),
