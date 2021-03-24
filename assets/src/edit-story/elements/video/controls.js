@@ -78,17 +78,6 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   }
 `;
 
-const ButtonBackground = styled.div`
-  width: ${ICON_SVG_SIZE / 2}px;
-  height: ${ICON_SVG_SIZE / 2}px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #c4c4c4;
-  border-radius: 50%;
-`;
-
 const iconCss = css`
   width: ${ICON_SVG_SIZE}px;
   height: ${ICON_SVG_SIZE}px;
@@ -262,7 +251,6 @@ function VideoControls({
             onMouseDown={handlePlayPause}
             isAbove={isPlayAbove}
           >
-            <ButtonBackground />
             {isPlaying ? <Pause /> : <Play />}
           </ButtonWrapper>
         </TransitionWrapper>
