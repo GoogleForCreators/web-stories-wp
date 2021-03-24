@@ -50,6 +50,7 @@ const TargetBox = styled.div`
     `};
   top: 0;
   z-index: 1;
+  cursor: pointer;
 `;
 
 function LibraryMoveable({

@@ -36,7 +36,7 @@ $demo      = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-d
 
 // Preload common data.
 $preload_paths = [
-	sprintf( '/web-stories/v1/%s/%s/?context=edit&_embed=%s&web_stories_demo=%s', $rest_base, $post->ID, urlencode( 'wp:featuredmedia,author' ), $demo ),
+	sprintf( '/web-stories/v1/%s/%s/?context=edit&_embed=%s&web_stories_demo=%s', $rest_base, $post->ID, urlencode( 'wp:featuredmedia,wp:lockuser,author' ), $demo ),
 	'/web-stories/v1/media/?context=edit&per_page=100&page=1&_web_stories_envelope=true',
 	'/web-stories/v1/users/?per_page=100&who=authors',
 	'/web-stories/v1/users/me/',

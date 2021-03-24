@@ -242,6 +242,34 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$slug         = $story_object->post_name;
 		$this->assertContains( $slug, $data['preview_link'] );
 	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_lock() {
+		wp_set_current_user( self::$user_id );
+		$future_date = strtotime( '+1 day' );
+		$story       = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_author' => self::$user_id,
+			]
+		);
+		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		update_post_meta( $story, '_edit_lock', $new_lock );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$links    = $response->get_links();
+
+		$this->assertArrayHasKey( 'https://api.w.org/lockuser', $links );
+		$this->assertArrayHasKey( 'https://api.w.org/lock', $links );
+	}
+
+
 	/**
 	 * @covers ::get_items
 	 */

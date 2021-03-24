@@ -50,6 +50,7 @@ const defaultConfig = {
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',
   isRTL: false,
+  userId: 123,
   locale: {
     dateFormat: 'F j, Y',
     timeFormat: 'g:i a',
