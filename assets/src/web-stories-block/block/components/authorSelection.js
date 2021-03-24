@@ -27,6 +27,7 @@ import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { useEffect } from '@wordpress/element';
 
 /**
  * AuthorSelection props.
@@ -40,7 +41,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useEffect } from 'react';
 import { FETCH_AUTHORS_DEBOUNCE } from '../constants';
 import Autocomplete from './autocomplete';
 

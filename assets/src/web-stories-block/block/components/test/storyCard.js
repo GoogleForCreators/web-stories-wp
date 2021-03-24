@@ -22,7 +22,7 @@ import { render } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import StoryCard from '../components/storyCard';
+import StoryCard from '../storyCard';
 
 jest.mock('@wordpress/element', () => {
   const originalModule = jest.requireActual('react');
@@ -30,6 +30,9 @@ jest.mock('@wordpress/element', () => {
     ...originalModule,
     concatChildren: jest.fn(),
     createInterpolateElement: jest.fn(() => null),
+    RawHTML: jest.fn(({ children, className }) => (
+      <div className={className}>{children}</div>
+    )),
   };
 });
 

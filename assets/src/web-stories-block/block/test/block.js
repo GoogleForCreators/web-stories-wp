@@ -24,6 +24,15 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import { name, settings } from '../';
 
+jest.mock('@wordpress/element', () => {
+  const originalModule = jest.requireActual('react');
+  return {
+    ...originalModule,
+    concatChildren: jest.fn(),
+    createInterpolateElement: jest.fn(() => null),
+  };
+});
+
 jest.mock('../globals', () => ({
   webStoriesBlockSettings: {
     config: {
@@ -31,6 +40,7 @@ jest.mock('../globals', () => ({
     },
   },
 }));
+
 describe('Block Registration', () => {
   it('should register Web Stories block without errors', () => {
     const block = registerBlockType(name, settings);
