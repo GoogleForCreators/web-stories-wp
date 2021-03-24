@@ -50,9 +50,9 @@ interface Injector extends Service {
 	 *
 	 * @param string|class-string|object $interface_or_class Interface or class to make an object
 	 *                                   instance out of.
-	 * @param array               $arguments          Optional. Additional arguments to pass
-	 *                                                to the constructor. Defaults to an
-	 *                                                empty array.
+	 * @param array                      $arguments          Optional. Additional arguments to pass
+	 *                                                       to the constructor. Defaults to an
+	 *                                                       empty array.
 	 * @return object Instantiated object.
 	 */
 	public function make( $interface_or_class, $arguments = [] );
