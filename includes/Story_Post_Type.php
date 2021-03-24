@@ -111,11 +111,12 @@ class Story_Post_Type implements Service, Delayed, Registerable {
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
+	 * @param Decoder     $decoder Decoder instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes ) {
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder ) {
 		$this->experiments = $experiments;
 		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = new Decoder();
+		$this->decoder     = $decoder;
 	}
 
 	/**

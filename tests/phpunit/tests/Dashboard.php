@@ -42,7 +42,8 @@ class Dashboard extends \WP_UnitTestCase {
 	public function test_get_not_set_hook_suffix() {
 		$dashboard = new \Google\Web_Stories\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class )
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class )
 		);
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix( 'nothing' ) );
@@ -55,7 +56,8 @@ class Dashboard extends \WP_UnitTestCase {
 	public function test_add_menu_page_no_user() {
 		$dashboard = new \Google\Web_Stories\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class )
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class )
 		);
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
@@ -72,7 +74,8 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class )
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class )
 		);
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
@@ -90,7 +93,8 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class )
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class )
 		);
 		$dashboard->add_menu_page();
 		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
@@ -109,7 +113,8 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
-			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class )
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class )
 		);
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( 'foo' );
@@ -127,7 +132,11 @@ class Dashboard extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 
-		$args      = [ $experiments, $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ) ];
+		$args      = [
+			$experiments,
+			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
+			$this->createMock( \Google\Web_Stories\Decoder::class ),
+		];
 		$dashboard = $this->getMockBuilder( \Google\Web_Stories\Dashboard::class )
 						->setConstructorArgs( $args )
 						->setMethods( [ 'get_asset_metadata' ] )

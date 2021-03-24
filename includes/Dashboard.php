@@ -86,10 +86,11 @@ class Dashboard implements Service, Delayed, Registerable {
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Site_Kit    $site_kit    Site_Kit instance.
+	 * @param Decoder     $decoder Decoder instance.
 	 */
-	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder();
+		$this->decoder     = $decoder;
 		$this->site_kit    = $site_kit;
 	}
 

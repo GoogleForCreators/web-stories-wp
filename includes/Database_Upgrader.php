@@ -285,7 +285,7 @@ class Database_Upgrader implements Service, Delayed, Registerable {
 	 * @return void
 	 */
 	protected function add_stories_caps() {
-		$story_post_type = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
+		$story_post_type = new Story_Post_Type( new Experiments(), new Meta_Boxes(), new Decoder() );
 		$story_post_type->add_caps_to_roles();
 	}
 

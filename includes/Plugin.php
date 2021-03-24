@@ -180,6 +180,7 @@ class Plugin extends ServiceBasedPlugin {
 			Activation_Flag::class,
 			Integrations\Site_Kit::class,
 			Analytics::class,
+			Decoder::class,
 		];
 	}
 

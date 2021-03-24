@@ -80,8 +80,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		parent::setUp();
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
 
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$story_post_type->add_caps_to_roles();
 	}
 
@@ -93,8 +94,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
 
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$story_post_type->remove_caps_from_roles();
 
 		parent::tearDown();
@@ -106,7 +108,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_register() {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$story_post_type->register();
 
 		$this->assertSame( 10, has_filter( 'admin_enqueue_scripts', [ $story_post_type, 'admin_enqueue_scripts' ] ) );
@@ -132,8 +135,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
 
-		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$results   = $post_type->get_editor_settings();
 		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
@@ -148,9 +152,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
-		$results   = $post_type->get_editor_settings();
+		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$post_type  = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
+		$results    = $post_type->get_editor_settings();
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -162,7 +166,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 
 		$this->call_private_method( $story_post_type, 'setup_lock', [ self::$story_id ] );
 
@@ -179,7 +184,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 
 		$this->call_private_method( $story_post_type, 'setup_lock', [ self::$story_id ] );
 
@@ -203,7 +209,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$post_type       = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$filtered_params = $story_post_type->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals(
 			$filtered_params,
@@ -231,7 +238,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$post_type->name = 'post';
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$filtered_params = $story_post_type->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals( $filtered_params, $query_params );
 	}
@@ -242,7 +250,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_get_post_type_icon() {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$valid           = $this->call_private_method( $story_post_type, 'get_post_type_icon' );
 		$this->assertContains( 'data:image/svg+xml;base64', $valid );
 	}
@@ -255,8 +264,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
 
-		$args            = [ $experiments, $meta_boxes ];
+		$args            = [ $experiments, $meta_boxes, $decoder ];
 		$story_post_type = $this->getMockBuilder( \Google\Web_Stories\Story_Post_Type::class )
 								->setConstructorArgs( $args )
 								->setMethods( [ 'get_asset_metadata' ] )
@@ -288,7 +298,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_filter_use_block_editor_for_post_type() {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 
 		$use_block_editor = $story_post_type->filter_use_block_editor_for_post_type( true, $story_post_type::POST_TYPE_SLUG );
 		$this->assertFalse( $use_block_editor );
@@ -303,7 +314,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 
 		$template_include = $story_post_type->filter_template_include( 'current' );
 		$this->assertContains( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
@@ -317,7 +329,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->go_to( get_permalink( self::$story_id ) );
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$show_admin_bar  = $story_post_type->show_admin_bar( 'current' );
 		$this->assertFalse( $show_admin_bar );
 		$this->assertTrue( is_singular( $story_post_type::POST_TYPE_SLUG ) );
@@ -332,7 +345,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$story_post_type->add_caps_to_roles();
 
 		$administrator = get_role( 'administrator' );
@@ -350,7 +364,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_redirect_post_type_archive_urls_true() {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$query           = new \WP_Query();
 		$result          = $story_post_type->redirect_post_type_archive_urls( true, $query );
 		$this->assertTrue( $result );
@@ -362,7 +377,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_redirect_post_type_archive_urls_no_permalink() {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$query           = new \WP_Query();
 		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
 		$this->assertFalse( $result );
@@ -376,7 +392,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$query           = new \WP_Query();
 		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
 		$this->assertFalse( $result );
@@ -390,7 +407,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'stories';
@@ -414,7 +432,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'stories';
@@ -435,7 +454,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'client/stories';
@@ -456,7 +476,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$story_post_type->register();
 
 		$query                    = new \WP_Query();
@@ -477,7 +498,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_remove_caps_from_roles() {
 		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
 		$story_post_type->remove_caps_from_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );

@@ -38,7 +38,7 @@ use WP_Site;
  * @return void
  */
 function setup_new_site() {
-	$story = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
+	$story = new Story_Post_Type( new Experiments(), new Meta_Boxes(), new Decoder() );
 	$story->register();
 	$story->add_caps_to_roles();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
@@ -114,7 +114,7 @@ function remove_site( $error, $site ) {
 		return;
 	}
 	$site_id = (int) $site->blog_id;
-	$story   = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
+	$story   = new Story_Post_Type( new Experiments(), new Meta_Boxes(), new Decoder() );
 	switch_to_blog( $site_id );
 	$story->remove_caps_from_roles();
 	restore_current_blog();
