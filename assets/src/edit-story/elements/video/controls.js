@@ -31,7 +31,8 @@ import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
 import { Icons } from '../../../design-system';
 
-const PLAY_BUTTON_SIZE = 72;
+const PLAY_BUTTON_SIZE = 50;
+const ICON_SVG_SIZE = 72;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
 const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
 
@@ -78,8 +79,8 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
 `;
 
 const ButtonBackground = styled.div`
-  width: ${PLAY_BUTTON_SIZE / 2}px;
-  height: ${PLAY_BUTTON_SIZE / 2}px;
+  width: ${ICON_SVG_SIZE / 2}px;
+  height: ${ICON_SVG_SIZE / 2}px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -88,17 +89,23 @@ const ButtonBackground = styled.div`
   border-radius: 50%;
 `;
 
-const Play = styled(Icons.PlayFilled)`
-  width: 100%;
-  height: 100%;
+const iconCss = css`
+  width: ${ICON_SVG_SIZE}px;
+  height: ${ICON_SVG_SIZE}px;
+  pointer-events: none;
+  transform: translate(
+    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px,
+    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
+  );
   color: ${({ theme }) => theme.colors.standard.white};
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
 `;
+
+const Play = styled(Icons.PlayFilled)`
+  ${iconCss};
+`;
 const Pause = styled(Icons.StopFilled)`
-  width: 100%;
-  height: 100%;
-  color: ${({ theme }) => theme.colors.standard.white};
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
+  ${iconCss};
 `;
 
 const playAboveSpacing = {
