@@ -58,8 +58,6 @@ function setup_new_site() {
  *
  * @since 1.0.0
  *
- * TODO Add these to activation interface to classes.
- *
  * @param bool $network_wide Whether to activate network-wide.
  *
  * @return void
@@ -124,8 +122,6 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
 /**
  * Handles plugin deactivation.
  *
- * TODO Add these to deactivation interface to classes.
- *
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to deactivate network-wide.
@@ -133,11 +129,6 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
-	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
-
 	do_action( 'web_stories_deactivation', $network_wide );
 }
 

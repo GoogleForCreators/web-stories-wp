@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
+use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
@@ -50,7 +52,7 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type implements Service, Delayed, Registerable {
+class Story_Post_Type implements Service, Delayed, Registerable, Activateable, Deactivateable {
 	use Publisher;
 	use Types;
 	use Assets;
@@ -215,6 +217,27 @@ class Story_Post_Type implements Service, Delayed, Registerable {
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->add_caps_to_roles();
+	}
+
+	/**
+	 * Deactivate the service.
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function deactivate( $network_wide ) {
+		$this->remove_caps_from_roles();
+		unregister_post_type( self::POST_TYPE_SLUG );
 	}
 
 	/**

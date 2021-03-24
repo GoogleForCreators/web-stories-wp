@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
@@ -37,7 +38,7 @@ use Google\Web_Stories\Infrastructure\Service;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader implements Service, Delayed, Registerable {
+class Database_Upgrader implements Service, Delayed, Registerable, Activateable {
 
 	/**
 	 * The slug of database option.
@@ -85,6 +86,16 @@ class Database_Upgrader implements Service, Delayed, Registerable {
 
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
 		$this->finish_up( $version );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->register();
 	}
 
 	/**
