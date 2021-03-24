@@ -48,7 +48,7 @@ interface Injector extends Service {
 	/**
 	 * Make an object instance out of an interface or class.
 	 *
-	 * @param class-string|object $interface_or_class Interface or class to make an object
+	 * @param string|class-string|object $interface_or_class Interface or class to make an object
 	 *                                   instance out of.
 	 * @param array               $arguments          Optional. Additional arguments to pass
 	 *                                                to the constructor. Defaults to an

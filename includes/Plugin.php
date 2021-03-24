@@ -74,11 +74,11 @@ class Plugin extends ServiceBasedPlugin {
 		'media'                        => Media::class,
 		'kses'                         => KSES::class,
 		'template_post_type'           => Template_Post_Type::class,
-		'meta_box'                     => Meta_Boxes::class,
+		'meta_boxes'                   => Meta_Boxes::class,
 		'story_post_type'              => Story_Post_Type::class,
 		'embed_base'                   => Embed_Base::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
-		'web_stories_embed'            => Shortcode\Embed_Shortcode::class,
+		'embed_shortcode'              => Shortcode\Embed_Shortcode::class,
 		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
 		'customizer'                   => Customizer::class,
 		'discovery'                    => Discovery::class,
@@ -97,7 +97,7 @@ class Plugin extends ServiceBasedPlugin {
 		'tinymce'                      => TinyMCE::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
 		'rest_api_factory'             => REST_API_Factory::class,
-		'register_widget'              => Register_Widget::class,
+		'register.widget'              => Register_Widget::class,
 	];
 
 	/**
@@ -171,5 +171,32 @@ class Plugin extends ServiceBasedPlugin {
 				return Services::get( 'injector' );
 			},
 		];
+	}
+
+	/**
+	 * Backward compatibility, old style class stored all classes instances as class properties.
+	 * Use a magic getting to populate these class properties.
+	 *
+	 * @param string $name property name.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $name ) {
+		$services = $this->get_service_classes();
+		if ( isset( $services[ $name ] ) ) {
+			return $this->instantiate_service( $services[ $name ] );
+		}
+
+		if ( 'integrations' === $name ) {
+			return [
+				'webstories_core_themes_support' => $this->instantiate_service( $services['integrations.themes_support'] ),
+				'site-kit'                       => $this->instantiate_service( $services['integrations.sitekit'] ),
+				'nextgen_gallery'                => $this->instantiate_service( $services['integrations.nextgen_gallery'] ),
+				'jetpack'                        => $this->instantiate_service( $services['integrations.jetpack'] ),
+				'amp'                            => $this->instantiate_service( $services['integrations.amp'] ),
+			];
+		}
+
+		return $this->$name;
 	}
 }

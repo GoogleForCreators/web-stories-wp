@@ -341,7 +341,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	/**
 	 * Instantiate a single service.
 	 *
-	 * @param class-string|object $class Service class to instantiate.
+	 * @param string|class-string|object $class Service class to instantiate.
 	 *
 	 * @throws InvalidService If the service could not be properly instantiated.
 	 *
