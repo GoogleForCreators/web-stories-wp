@@ -62,7 +62,14 @@ const DialogActions = styled.div`
   }
 `;
 
-export function Dialog({ children, title, actions, isOpen, onClose, ...rest }) {
+export function Dialog({
+  children,
+  title,
+  actions = [],
+  isOpen = false,
+  onClose,
+  ...rest
+}) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} {...rest}>
       <DialogBox>
@@ -91,4 +98,9 @@ Dialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   contentLabel: PropTypes.string,
+};
+
+Dialog.defaultProps = {
+  isOpen: false,
+  actions: [],
 };
