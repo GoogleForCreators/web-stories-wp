@@ -23,6 +23,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -87,7 +88,9 @@ const iconCss = css`
     ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
   );
   color: ${({ theme }) => theme.colors.standard.white};
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(
+    0px 0px 10px ${({ theme }) => rgba(theme.colors.bg.primary, 0.4)}
+  );
 `;
 
 const Play = styled(Icons.PlayFilled)`
