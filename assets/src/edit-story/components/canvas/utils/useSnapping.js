@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { useCallback, useEffect } from 'react';
-
-/**
  * Internal dependencies
  */
 import { FULLBLEED_RATIO } from '../../../constants';
@@ -27,12 +22,7 @@ import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
 import { useCanvas } from '../../../app';
 
-function useSnapping({
-  isDragging,
-  canSnap,
-  otherNodes,
-  snappingOffsetX = null,
-}) {
+function useSnapping({ canSnap, otherNodes, snappingOffsetX = null }) {
   const {
     canvasWidth,
     canvasHeight,
@@ -62,36 +52,6 @@ function useSnapping({
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
   canSnap = canSnap && !snapDisabled && !activeDropTargetId;
-
-  const toggleDesignSpace = useCallback(
-    (visible) => {
-      if (designSpaceGuideline) {
-        designSpaceGuideline.style.visibility = visible ? 'visible' : 'hidden';
-      }
-    },
-    [designSpaceGuideline]
-  );
-  const handleSnap = useCallback(
-    ({ elements }) =>
-      // Show design space if we're snapping to any of its edges
-      toggleDesignSpace(
-        isDragging &&
-          elements
-            .flat()
-            .some(
-              ({ center, element }) =>
-                element === designSpaceGuideline && !center
-            )
-      ),
-    [toggleDesignSpace, isDragging, designSpaceGuideline]
-  );
-
-  // Always hide design space guideline when dragging stops
-  useEffect(() => {
-    if (!isDragging) {
-      toggleDesignSpace(false);
-    }
-  }, [isDragging, toggleDesignSpace]);
 
   if (!canvasContainer || !pageContainer) {
     return {};
@@ -132,7 +92,6 @@ function useSnapping({
     snapCenter: canSnap,
     snapGap: canSnap,
     isDisplaySnapDigit: false,
-    onSnap: handleSnap,
     horizontalGuidelines,
     verticalGuidelines,
     elementGuidelines,
