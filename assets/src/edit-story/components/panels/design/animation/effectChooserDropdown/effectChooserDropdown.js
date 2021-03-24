@@ -50,10 +50,8 @@ export default function EffectChooserDropdown({
   direction,
 }) {
   const { enableExperimentalAnimationEffects } = useFeatures();
-  const selectedValue = useMemo(
-    () => getDirectionalEffect(selectedEffectType, direction),
-    [selectedEffectType, direction]
-  );
+
+  const selectedValue = getDirectionalEffect(selectedEffectType, direction);
 
   // Determine if any background effects are disabled due to element positioning
   const disabledBackgroundEffects = useMemo(
