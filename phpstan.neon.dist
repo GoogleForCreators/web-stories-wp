@@ -15,6 +15,7 @@ services:
 parameters:
   level: 8
   inferPrivatePropertyTypeFromConstructor: true
+  checkGenericClassInNonGenericObjectType: false
   checkMissingIterableValueType: false
   paths:
     - includes/
