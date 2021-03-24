@@ -97,26 +97,8 @@ class Plugin extends ServiceBasedPlugin {
 		'tinymce'                      => TinyMCE::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
 		'rest_api_factory'             => REST_API_Factory::class,
+		'register_widget'              => Register_Widget::class,
 	];
-
-	/**
-	 * Initialize plugin functionality.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
-	 * @return void
-	 */
-	public function register() {
-		// Plugin compatibility / polyfills.
-		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
-		add_action( 'init', [ $this, 'includes' ] );
-
-		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
-
-		$this->register_services();
-	}
 
 	/**
 	 * Get the list of services to register.
@@ -189,36 +171,5 @@ class Plugin extends ServiceBasedPlugin {
 				return Services::get( 'injector' );
 			},
 		];
-	}
-
-	/**
-	 * Initializes functionality to improve compatibility with the AMP plugin.
-	 *
-	 * Loads a separate PHP file that allows defining functions in the global namespace.
-	 *
-	 * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
-	 *
-	 * @return void
-	 */
-	public function load_amp_plugin_compat() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
-	}
-
-	/**
-	 * Include necessary files.
-	 *
-	 * @return void
-	 */
-	public function includes() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
-	}
-
-	/**
-	 * Register Widgets.
-	 *
-	 * @return void
-	 */
-	public function register_widgets() {
-		register_widget( __NAMESPACE__ . '\Widgets\Stories' );
 	}
 }

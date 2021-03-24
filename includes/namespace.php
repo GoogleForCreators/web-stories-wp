@@ -137,6 +137,32 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
 
 
 /**
+ * Initializes functionality to improve compatibility with the AMP plugin.
+ *
+ * Loads a separate PHP file that allows defining functions in the global namespace.
+ *
+ * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
+ *
+ * @return void
+ */
+function load_amp_plugin_compat() {
+	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
+}
+add_action( 'wp', __NAMESPACE__ . '\load_amp_plugin_compat' );
+
+
+/**
+ * Include necessary files.
+ *
+ * @return void
+ */
+function includes() {
+	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
+}
+add_action( 'init', __NAMESPACE__ . '\includes' );
+
+
+/**
  * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
  * Expected to be called in the context of `array_reduce`.
  *
