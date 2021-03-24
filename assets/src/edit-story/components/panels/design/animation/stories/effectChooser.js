@@ -16,23 +16,51 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { boolean, select } from '@storybook/addon-knobs';
+import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { SCALE_DIRECTION, DIRECTION } from '../../../../../../animation';
 
 /**
  * Internal dependencies
  */
-import EffectChooserDropdown from '../effectChooserDropdown';
+import { EffectChooserDropdown } from '../effectChooserDropdown';
+import {
+  backgroundEffectOptions,
+  foregroundEffectOptions,
+} from '../effectChooserDropdown/dropdownConstants';
 
 export default {
-  title: 'Animations/Effect Chooser',
+  title: 'Stories Editor/Components/Panels/Animations/Effect Chooser',
   component: EffectChooserDropdown,
 };
 
+const Container = styled.div`
+  width: 276px;
+  margin: 25vh 30px 0;
+`;
 export const _default = () => {
+  const allEffectTypes = [
+    ...Object.keys(foregroundEffectOptions),
+    ...Object.keys(backgroundEffectOptions),
+  ];
+  const allDirections = [
+    ...Object.values(DIRECTION),
+    ...Object.values(SCALE_DIRECTION),
+  ];
   return (
-    <EffectChooserDropdown
-      onAnimationSelected={(sender) => action('onAnimationSelected', sender)}
-    />
+    <Container>
+      <EffectChooserDropdown
+        onAnimationSelected={(sender) => action('onAnimationSelected', sender)}
+        onNoEffectSelected={() => action('onNoEffectSelected')}
+        isBackgroundEffects={boolean('isBackgroundEffects', false)}
+        selectedEffectType={select('selectedEffectType', allEffectTypes)}
+        disabledTypeOptionsMap={[]}
+        direction={select('direction', allDirections)}
+      />
+    </Container>
   );
 };

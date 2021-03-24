@@ -71,7 +71,9 @@ export default function EffectChooserDropdown({
     );
   }, [disabledTypeOptionsMap]);
 
-  const disabledBackgroundEffects = getDisabledBackgroundEffects();
+  const disabledBackgroundEffects = useMemo(getDisabledBackgroundEffects, [
+    getDisabledBackgroundEffects,
+  ]);
 
   // Set up dropdown options by effect type (background vs foreground)
   const expandedPlacement = isBackgroundEffects
