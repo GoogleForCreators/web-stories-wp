@@ -31,15 +31,6 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 use Google\Web_Stories\Infrastructure\Injector;
 
-use Google\Web_Stories\REST_API\Embed_Controller;
-use Google\Web_Stories\REST_API\Status_Check_Controller;
-use Google\Web_Stories\REST_API\Stories_Lock_Controller;
-use Google\Web_Stories\REST_API\Stories_Media_Controller;
-use Google\Web_Stories\REST_API\Link_Controller;
-use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
-use Google\Web_Stories\REST_API\Stories_Settings_Controller;
-use Google\Web_Stories\REST_API\Stories_Users_Controller;
-
 /**
  * Plugin class.
  */
@@ -105,6 +96,7 @@ class Plugin extends ServiceBasedPlugin {
 		'tracking'                     => Tracking::class,
 		'tinymce'                      => TinyMCE::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
+		'rest_api_factory'             => REST_API_Factory::class,
 	];
 
 	/**
@@ -120,10 +112,6 @@ class Plugin extends ServiceBasedPlugin {
 		// Plugin compatibility / polyfills.
 		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
 		add_action( 'init', [ $this, 'includes' ] );
-
-		// REST API endpoints.
-		// High priority so it runs after create_initial_rest_routes().
-		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
 		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
 
@@ -223,48 +211,6 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	public function includes() {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
-	}
-
-	/**
-	 * Registers REST API routes.
-	 *
-	 * TODO Convert to factory class.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function register_rest_routes() {
-
-		$link_controller = new Link_Controller();
-		$link_controller->register_routes();
-
-		$status_check = new Status_Check_Controller();
-		$status_check->register_routes();
-
-		$embed_controller = new Embed_Controller();
-		$embed_controller->register_routes();
-
-		$templates_autosaves = new Stories_Autosaves_Controller( Template_Post_Type::POST_TYPE_SLUG );
-		$templates_autosaves->register_routes();
-
-		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
-		$stories_autosaves->register_routes();
-
-		$templates_lock = new Stories_Lock_Controller( Template_Post_Type::POST_TYPE_SLUG );
-		$templates_lock->register_routes();
-
-		$stories_lock = new Stories_Lock_Controller( Story_Post_Type::POST_TYPE_SLUG );
-		$stories_lock->register_routes();
-
-		$stories_media = new Stories_Media_Controller( 'attachment' );
-		$stories_media->register_routes();
-
-		$stories_users = new Stories_Users_Controller();
-		$stories_users->register_routes();
-
-		$stories_settings = new Stories_Settings_Controller();
-		$stories_settings->register_routes();
 	}
 
 	/**
