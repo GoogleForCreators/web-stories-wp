@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Capabilities_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
 
 class Embed_Controller extends \WP_Test_REST_TestCase {
+	use Capabilities_Setup;
 	/**
 	 * @var \WP_REST_Server
 	 */
@@ -68,7 +68,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		$story_content  = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_title'   => 'Embed Controller Test Story',
 				'post_status'  => 'publish',
 				'post_content' => $story_content,
@@ -96,12 +96,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 		$this->request_count = 0;
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes, $decoder );
-		$story_post_type->add_caps_to_roles();
+		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
@@ -111,12 +106,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes, $decoder );
-		$story_post_type->remove_caps_from_roles();
+		$this->remove_caps_from_roles();
 
 		$this->set_permalink_structure( '' );
 		$_SERVER['REQUEST_URI'] = '';
@@ -286,11 +276,8 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		// Without (re-)registering the post type here there won't be any rewrite rules for it
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
-		// @todo Investigate why this is  needed (leakage between tests?).
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
+		// @todo Investigate why this is  needed (leakage between tests?)
+		$story_post_type = $this->get_story_object();
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -320,10 +307,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?).
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder         = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder );
+		$story_post_type = $this->get_story_object();
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );

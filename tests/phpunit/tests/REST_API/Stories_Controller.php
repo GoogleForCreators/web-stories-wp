@@ -17,9 +17,8 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Capabilities_Setup;
 use Google\Web_Stories\Tests\Kses_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -28,7 +27,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
 class Stories_Controller extends \WP_Test_REST_TestCase {
-	use Kses_Setup;
+	use Kses_Setup, Capabilities_Setup;
 
 	protected $server;
 
@@ -132,12 +131,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes, $decoder );
-		$story_post_type->add_caps_to_roles();
+		$this->add_caps_to_roles();
 
 		$this->set_permalink_structure( '/%postname%/' );
 	}
@@ -147,12 +141,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes, $decoder );
-		$story_post_type->remove_caps_from_roles();
+		$this->remove_caps_from_roles();
 
 		$this->set_permalink_structure( '' );
 
