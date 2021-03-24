@@ -23,20 +23,10 @@ import { useDebouncedCallback } from 'use-debounce';
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
-import { useEffect } from '@wordpress/element';
-
-/**
- * AuthorSelection props.
- *
- * @typedef AuthorSelectionProps
- *
- * @property {Array<number>} authors List of author IDs.
- * @property {()=>void} setAttributes Callable function for saving attribute values.
- */
 
 /**
  * Internal dependencies
@@ -50,6 +40,15 @@ import Autocomplete from './autocomplete';
 const USERS_LIST_QUERY = {
   per_page: 100,
 };
+
+/**
+ * AuthorSelection props.
+ *
+ * @typedef AuthorSelectionProps
+ *
+ * @property {Array<number>} authors List of author IDs.
+ * @property {()=>void} setAttributes Callable function for saving attribute values.
+ */
 
 /**
  * AuthorSelection component. Used for selecting authors of stories.
