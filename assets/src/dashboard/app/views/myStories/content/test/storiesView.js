@@ -18,41 +18,50 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import { SnackbarProvider } from '../../../../../../design-system';
+import { SnackbarProvider } from '../../../../../../design-system/contexts';
+import { noop } from '../../../../../../design-system/utils';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
   VIEW_STYLE,
+  STORY_STATUS,
 } from '../../../../../constants';
 import StoriesView from '../storiesView';
+import { TransformProvider } from '../../../../../../edit-story/components/transform';
+import FontProvider from '../../../../font/fontProvider';
 
 const fakeStories = [
   {
     id: 1,
     status: 'publish',
     title: 'Story A',
-    pages: [{ id: '10' }],
+    pages: [{ id: '10', elements: [] }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
-    editStoryLink: () => {},
+    editStoryLink: 'https://example.com',
+    previewLink: 'https://example.com',
   },
   {
     id: 2,
     status: 'draft',
     title: 'Story B',
-    pages: [{ id: '20' }],
+    pages: [{ id: '20', elements: [] }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
-    editStoryLink: () => {},
+    link: 'https://example.com',
+    editStoryLink: 'https://example.com',
+    previewLink: 'https://example.com',
   },
   {
     id: 3,
     status: 'publish',
     title: 'Story C',
-    pages: [{ id: '30' }],
+    pages: [{ id: '30', elements: [] }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
-    editStoryLink: () => {},
+    link: 'https://example.com',
+    editStoryLink: 'https://example.com',
+    previewLink: 'https://example.com',
   },
 ];
 
@@ -61,10 +70,12 @@ describe('My Stories <StoriesView />', function () {
     const { getAllByTestId } = renderWithProviders(
       <SnackbarProvider>
         <StoriesView
-          filterValue="all"
+          filterValue={STORY_STATUS.ALL}
           sort={{
             value: STORY_SORT_OPTIONS.NAME,
             direction: SORT_DIRECTION.ASC,
+            set: noop,
+            setDirection: noop,
           }}
           storyActions={{
             createTemplateFromStory: jest.fn,
@@ -75,11 +86,17 @@ describe('My Stories <StoriesView />', function () {
           stories={fakeStories}
           view={{
             style: VIEW_STYLE.GRID,
-            pageSize: { width: 210, height: 316 },
+            pageSize: { width: 210, height: 316, containerHeight: 316 },
           }}
         />
       </SnackbarProvider>,
-      { features: { enableInProgressStoryActions: false } }
+      { features: { enableInProgressStoryActions: false } },
+      {},
+      ({ children }) => (
+        <TransformProvider>
+          <FontProvider>{children}</FontProvider>
+        </TransformProvider>
+      )
     );
 
     expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
@@ -90,10 +107,12 @@ describe('My Stories <StoriesView />', function () {
       const { queryByTestId } = renderWithProviders(
         <SnackbarProvider>
           <StoriesView
-            filterValue="all"
+            filterValue={STORY_STATUS.ALL}
             sort={{
               value: STORY_SORT_OPTIONS.NAME,
               direction: SORT_DIRECTION.ASC,
+              set: noop,
+              setDirection: noop,
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -104,7 +123,7 @@ describe('My Stories <StoriesView />', function () {
             stories={fakeStories}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 210, height: 316 },
+              pageSize: { width: 210, height: 316, containerHeight: 316 },
             }}
             loading={{
               isLoading: true,
@@ -112,7 +131,13 @@ describe('My Stories <StoriesView />', function () {
             }}
           />
         </SnackbarProvider>,
-        { features: { enableInProgressStoryActions: false } }
+        { features: { enableInProgressStoryActions: false } },
+        {},
+        ({ children }) => (
+          <TransformProvider>
+            <FontProvider>{children}</FontProvider>
+          </TransformProvider>
+        )
       );
 
       expect(queryByTestId(/^story-grid-item/)).not.toBeInTheDocument();
@@ -122,10 +147,12 @@ describe('My Stories <StoriesView />', function () {
       const { queryAllByTestId } = renderWithProviders(
         <SnackbarProvider>
           <StoriesView
-            filterValue="all"
+            filterValue={STORY_STATUS.ALL}
             sort={{
               value: STORY_SORT_OPTIONS.NAME,
               direction: SORT_DIRECTION.ASC,
+              set: noop,
+              setDirection: noop,
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -136,7 +163,7 @@ describe('My Stories <StoriesView />', function () {
             stories={fakeStories}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 210, height: 316 },
+              pageSize: { width: 210, height: 316, containerHeight: 316 },
             }}
             loading={{
               isLoading: true,
@@ -144,7 +171,13 @@ describe('My Stories <StoriesView />', function () {
             }}
           />
         </SnackbarProvider>,
-        { features: { enableInProgressStoryActions: false } }
+        { features: { enableInProgressStoryActions: false } },
+        {},
+        ({ children }) => (
+          <TransformProvider>
+            <FontProvider>{children}</FontProvider>
+          </TransformProvider>
+        )
       );
 
       expect(queryAllByTestId(/^story-grid-item/)).toHaveLength(
@@ -156,10 +189,12 @@ describe('My Stories <StoriesView />', function () {
       const { queryByTestId } = renderWithProviders(
         <SnackbarProvider>
           <StoriesView
-            filterValue="all"
+            filterValue={STORY_STATUS.ALL}
             sort={{
               value: STORY_SORT_OPTIONS.NAME,
               direction: SORT_DIRECTION.ASC,
+              set: noop,
+              setDirection: noop,
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -170,7 +205,7 @@ describe('My Stories <StoriesView />', function () {
             stories={fakeStories}
             view={{
               style: VIEW_STYLE.LIST,
-              pageSize: { width: 210, height: 316 },
+              pageSize: { width: 210, height: 316, containerHeight: 316 },
             }}
             loading={{
               isLoading: true,
@@ -178,7 +213,13 @@ describe('My Stories <StoriesView />', function () {
             }}
           />
         </SnackbarProvider>,
-        { features: { enableInProgressStoryActions: false } }
+        { features: { enableInProgressStoryActions: false } },
+        {},
+        ({ children }) => (
+          <TransformProvider>
+            <FontProvider>{children}</FontProvider>
+          </TransformProvider>
+        )
       );
 
       expect(queryByTestId(/^story-list-item/)).not.toBeInTheDocument();
@@ -188,10 +229,12 @@ describe('My Stories <StoriesView />', function () {
       const { queryAllByTestId } = renderWithProviders(
         <SnackbarProvider>
           <StoriesView
-            filterValue="all"
+            filterValue={STORY_STATUS.ALL}
             sort={{
               value: STORY_SORT_OPTIONS.NAME,
               direction: SORT_DIRECTION.ASC,
+              set: noop,
+              setDirection: noop,
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -202,7 +245,7 @@ describe('My Stories <StoriesView />', function () {
             stories={fakeStories}
             view={{
               style: VIEW_STYLE.LIST,
-              pageSize: { width: 210, height: 316 },
+              pageSize: { width: 210, height: 316, containerHeight: 316 },
             }}
             loading={{
               isLoading: true,
@@ -210,7 +253,13 @@ describe('My Stories <StoriesView />', function () {
             }}
           />
         </SnackbarProvider>,
-        { features: { enableInProgressStoryActions: false } }
+        { features: { enableInProgressStoryActions: false } },
+        {},
+        ({ children }) => (
+          <TransformProvider>
+            <FontProvider>{children}</FontProvider>
+          </TransformProvider>
+        )
       );
 
       expect(queryAllByTestId(/^story-list-item/)).toHaveLength(

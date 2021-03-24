@@ -228,7 +228,7 @@ function OptionList({
         return (
           group.options.length > 0 && (
             <Group
-              key={group.label}
+              key={groupLabelId}
               role="group"
               aria-labelledby={groupLabelId}
             >

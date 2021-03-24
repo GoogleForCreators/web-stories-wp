@@ -29,28 +29,34 @@ const fakeStories = [
     id: 1,
     status: 'publish',
     title: 'Story A',
-    pages: [{ id: '10' }],
+    pages: [{ id: '10', elements: [] }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
-    editStoryLink: () => {},
+    link: 'https://example.com',
+    editStoryLink: 'https://example.com',
+    previewLink: 'https://example.com',
   },
   {
     id: 2,
     status: 'draft',
     title: 'Story B',
-    pages: [{ id: '20' }],
+    pages: [{ id: '20', elements: [] }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
-    editStoryLink: () => {},
+    link: 'https://example.com',
+    editStoryLink: 'https://example.com',
+    previewLink: 'https://example.com',
   },
   {
     id: 3,
     status: 'publish',
     title: 'Story C',
-    pages: [{ id: '30' }],
+    pages: [{ id: '30', elements: [] }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
-    editStoryLink: () => {},
+    link: 'https://example.com',
+    editStoryLink: 'https://example.com',
+    previewLink: 'https://example.com',
   },
 ];
 
@@ -58,6 +64,7 @@ jest.mock(
   '../../../../../../edit-story/components/previewPage/previewPage.js',
   () => () => null
 );
+
 jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
   children
 );
@@ -80,7 +87,7 @@ describe('My Stories <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300 },
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -110,7 +117,7 @@ describe('My Stories <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300 },
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -140,7 +147,7 @@ describe('My Stories <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300 },
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,

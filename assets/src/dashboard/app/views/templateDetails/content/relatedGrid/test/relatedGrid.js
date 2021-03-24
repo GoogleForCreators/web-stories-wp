@@ -21,20 +21,29 @@ import RelatedGrid from '../';
 import { renderWithProviders } from '../../../../../../testUtils';
 import LayoutProvider from '../../../../../../components/layout/provider';
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';
+import { TransformProvider } from '../../../../../../../edit-story/components/transform';
+import FontProvider from '../../../../../font/fontProvider';
 
 describe('Template Details <RelatedGrid />', () => {
   it('should render a grid of related templates', () => {
     const { queryAllByRole } = renderWithProviders(
       <LayoutProvider>
         <RelatedGrid
-          pageSize={{ width: 200, height: 350 }}
+          pageSize={{ width: 200, height: 350, containerHeight: 350 }}
           relatedTemplates={formattedTemplatesArray.slice(0, 3)}
           templateActions={{
             createStoryFromTemplate: jest.fn(),
             handlePreviewTemplate: jest.fn(),
           }}
         />
-      </LayoutProvider>
+      </LayoutProvider>,
+      {},
+      {},
+      ({ children }) => (
+        <TransformProvider>
+          <FontProvider>{children}</FontProvider>
+        </TransformProvider>
+      )
     );
 
     const gridItems = queryAllByRole('listitem');
@@ -46,7 +55,7 @@ describe('Template Details <RelatedGrid />', () => {
     const { queryByRole } = renderWithProviders(
       <LayoutProvider>
         <RelatedGrid
-          pageSize={{ width: 200, height: 350 }}
+          pageSize={{ width: 200, height: 350, containerHeight: 350 }}
           relatedTemplates={[]}
           templateActions={{
             createStoryFromTemplate: jest.fn(),
