@@ -33,6 +33,7 @@ use WP_Error;
 use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Conditional;
 
 /**
  * Class SVG
@@ -41,7 +42,7 @@ use Google\Web_Stories\Infrastructure\Registerable;
  *
  * @package Google\Web_Stories
  */
-class SVG implements Service, Delayed, Registerable {
+class SVG implements Service, Delayed, Registerable, Conditional {
 	/**
 	 * File extension.
 	 *
@@ -71,28 +72,6 @@ class SVG implements Service, Delayed, Registerable {
 	protected $svgs = [];
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
-	 * SVG constructor.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 *
-	 * @return void
-	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
-	}
-
-	/**
 	 * Register filters and actions.
 	 *
 	 * @since 1.3.0
@@ -100,10 +79,6 @@ class SVG implements Service, Delayed, Registerable {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) ) {
-			return;
-		}
-
 		add_filter( 'web_stories_allowed_mime_types', [ $this, 'web_stories_allowed_mime_types' ] );
 
 		// Check if svg uploads, already enabled.
@@ -118,6 +93,16 @@ class SVG implements Service, Delayed, Registerable {
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'wp_generate_attachment_metadata' ], 10, 3 );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'wp_check_filetype_and_ext' ], 10, 5 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
+	}
+
+	/**
+	 * Check whether the conditional object is currently needed.
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	public static function is_needed() {
+		$experiments = new Experiments();
+		return $experiments->is_experiment_enabled( 'enableSVG' );
 	}
 
 	/**

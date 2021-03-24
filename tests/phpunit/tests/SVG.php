@@ -327,10 +327,6 @@ class SVG extends \WP_UnitTestCase {
 	 * @return \Google\Web_Stories\SVG
 	 */
 	protected function get_svg_object() {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-
-		return new \Google\Web_Stories\SVG( $experiments );
+		return new \Google\Web_Stories\SVG();
 	}
 }
