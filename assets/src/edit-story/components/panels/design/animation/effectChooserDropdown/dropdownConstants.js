@@ -184,7 +184,7 @@ export const backgroundEffectOptions = {
       zoomDirection: SCALE_DIRECTION.SCALE_IN,
       gridSpace: GRID_SIZING.HALF,
       Effect: ZoomInAnimation,
-      size: 12,
+      size: 14,
     },
   },
   [getDirectionalEffect(
@@ -202,7 +202,7 @@ export const backgroundEffectOptions = {
       zoomDirection: SCALE_DIRECTION.SCALE_OUT,
       gridSpace: GRID_SIZING.HALF,
       Effect: ZoomOutAnimation,
-      size: 12,
+      size: 20,
     },
   },
   [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]: {
@@ -213,6 +213,7 @@ export const backgroundEffectOptions = {
       value: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
       zoomDirection: 'extremely specific, look at effect chooser',
       Effect: PanAndZoomAnimation,
+      size: 26,
     },
   },
 };
@@ -255,7 +256,7 @@ export const foregroundEffectOptions = {
       flyInDirection: DIRECTION.LEFT_TO_RIGHT,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInLeftAnimation,
-      size: 18,
+      size: 16,
     },
   },
   [getDirectionalEffect(
@@ -273,7 +274,7 @@ export const foregroundEffectOptions = {
       flyInDirection: DIRECTION.TOP_TO_BOTTOM,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInTopAnimation,
-      size: 18,
+      size: 16,
     },
   },
   [getDirectionalEffect(
@@ -291,7 +292,7 @@ export const foregroundEffectOptions = {
       flyInDirection: DIRECTION.BOTTOM_TO_TOP,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInBottomAnimation,
-      size: 18,
+      size: 16,
     },
   },
   [getDirectionalEffect(
@@ -309,7 +310,7 @@ export const foregroundEffectOptions = {
       flyInDirection: DIRECTION.RIGHT_TO_LEFT,
       gridSpace: GRID_SIZING.QUARTER,
       Effect: FlyInRightAnimation,
-      size: 18,
+      size: 16,
     },
   },
   [ANIMATION_EFFECTS.PULSE.value]: {
@@ -382,7 +383,7 @@ export const foregroundEffectOptions = {
       whooshInDirection: DIRECTION.LEFT_TO_RIGHT,
       gridSpace: GRID_SIZING.HALF,
       Effect: WhooshInLeftAnimation,
-      size: 24,
+      size: 20,
     },
   },
   [getDirectionalEffect(
@@ -400,7 +401,7 @@ export const foregroundEffectOptions = {
       whooshInDirection: DIRECTION.RIGHT_TO_LEFT,
       gridSpace: GRID_SIZING.HALF,
       Effect: WhooshInRightAnimation,
-      size: 24,
+      size: 20,
     },
   },
   [getDirectionalEffect(
@@ -418,7 +419,7 @@ export const foregroundEffectOptions = {
       scaleDirection: SCALE_DIRECTION.SCALE_IN,
       gridSpace: GRID_SIZING.HALF,
       Effect: ZoomInAnimation,
-      size: 12,
+      size: 14,
     },
   },
   [getDirectionalEffect(
@@ -436,7 +437,7 @@ export const foregroundEffectOptions = {
       scaleDirection: SCALE_DIRECTION.SCALE_OUT,
       gridSpace: GRID_SIZING.HALF,
       Effect: ZoomOutAnimation,
-      size: 12,
+      size: 20,
     },
   },
 };
