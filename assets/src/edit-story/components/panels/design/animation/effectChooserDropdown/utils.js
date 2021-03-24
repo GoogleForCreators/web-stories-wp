@@ -14,6 +14,33 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { effectValueExceptions } from './dropdownConstants';
+
 // Because some animations have the same effect name we have to specify based on direction
-export const getDirectionalEffect = (effect, direction) =>
-  direction ? `${effect} ${direction}`.trim() : effect;
+export const getDirectionalEffect = (effect, direction) => {
+  if (effectValueExceptions.indexOf(effect) > -1) {
+    return effect;
+  }
+  return direction ? `${effect} ${direction}`.trim() : effect;
+};
+
+export const getDisabledBackgroundEffects = (
+  backgroundEffectOptions,
+  disabledTypeOptionsMap
+) => {
+  const disabledDirectionalEffects = Object.entries(disabledTypeOptionsMap)
+    .map(([effect, val]) => [effect, val.options])
+    .reduce(
+      (directionalEffects, [effect, directions]) => [
+        ...directionalEffects,
+        ...(directions || []).map((dir) => getDirectionalEffect(effect, dir)),
+      ],
+      []
+    );
+  return Object.keys(backgroundEffectOptions).filter((directionalEffect) =>
+    disabledDirectionalEffects.includes(directionalEffect)
+  );
+};

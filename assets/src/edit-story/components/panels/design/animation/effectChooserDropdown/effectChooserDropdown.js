@@ -34,7 +34,7 @@ import {
   experimentalEffects,
   ANIMATION_DIRECTION_PROP_TYPE,
 } from './dropdownConstants';
-import { getDirectionalEffect } from './utils';
+import { getDirectionalEffect, getDisabledBackgroundEffects } from './utils';
 import {
   styleOverrideForSelectButton,
   styleOverrideForAnimationEffectMenu,
@@ -50,30 +50,21 @@ export default function EffectChooserDropdown({
   direction,
 }) {
   const { enableExperimentalAnimationEffects } = useFeatures();
-
   const selectedValue = useMemo(
     () => getDirectionalEffect(selectedEffectType, direction),
     [selectedEffectType, direction]
   );
-  // BACKGROUND EFFECT SET UP
-  const getDisabledBackgroundEffects = useCallback(() => {
-    const disabledDirectionalEffects = Object.entries(disabledTypeOptionsMap)
-      .map(([effect, val]) => [effect, val.options])
-      .reduce(
-        (directionalEffects, [effect, directions]) => [
-          ...directionalEffects,
-          ...(directions || []).map((dir) => getDirectionalEffect(effect, dir)),
-        ],
-        []
-      );
-    return Object.keys(backgroundEffectOptions).filter((directionalEffect) =>
-      disabledDirectionalEffects.includes(directionalEffect)
-    );
-  }, [disabledTypeOptionsMap]);
 
-  const disabledBackgroundEffects = useMemo(getDisabledBackgroundEffects, [
-    getDisabledBackgroundEffects,
-  ]);
+  // Determine if any background effects are disabled due to element positioning
+  const disabledBackgroundEffects = useMemo(
+    () =>
+      isBackgroundEffects &&
+      getDisabledBackgroundEffects(
+        backgroundEffectOptions,
+        disabledTypeOptionsMap
+      ),
+    [disabledTypeOptionsMap, isBackgroundEffects]
+  );
 
   // Set up dropdown options by effect type (background vs foreground)
   const expandedPlacement = isBackgroundEffects
@@ -84,41 +75,46 @@ export default function EffectChooserDropdown({
     : foregroundEffectOptions;
 
   // remove experiments if needed
-  const availableAnimationOptions = useMemo(() => {
-    return enableExperimentalAnimationEffects
-      ? Object.values(animationOptionsObject)
-      : Object.values(animationOptionsObject).filter(({ value }) => {
-          return experimentalEffects.indexOf(value) === -1;
-        });
-  }, [animationOptionsObject, enableExperimentalAnimationEffects]);
+  const availableAnimationOptions = useMemo(
+    () =>
+      enableExperimentalAnimationEffects
+        ? Object.values(animationOptionsObject)
+        : Object.values(animationOptionsObject).filter(({ value }) => {
+            return experimentalEffects.indexOf(value) === -1;
+          }),
+    [animationOptionsObject, enableExperimentalAnimationEffects]
+  );
 
-  const assembledOptions = useMemo(() => {
-    return availableAnimationOptions?.map((option) => {
-      const isDisabled =
-        isBackgroundEffects && disabledBackgroundEffects.includes(option.value);
-      return {
-        ...option,
-        disabled: isDisabled,
-        tooltip:
-          isDisabled &&
-          disabledTypeOptionsMap[option.animation?.value]?.tooltip,
-      };
-    });
-  }, [
-    availableAnimationOptions,
-    isBackgroundEffects,
-    disabledBackgroundEffects,
-    disabledTypeOptionsMap,
-  ]);
+  const assembledOptions = useMemo(
+    () =>
+      availableAnimationOptions?.map((option) => {
+        const isDisabled =
+          isBackgroundEffects &&
+          disabledBackgroundEffects.includes(option.value);
+        return {
+          ...option,
+          disabled: isDisabled,
+          tooltip:
+            isDisabled &&
+            disabledTypeOptionsMap[option.animation?.value]?.tooltip,
+        };
+      }),
+    [
+      availableAnimationOptions,
+      isBackgroundEffects,
+      disabledBackgroundEffects,
+      disabledTypeOptionsMap,
+    ]
+  );
 
   const handleSelect = useCallback(
-    (_, value) => {
+    (event, value) => {
+      event.preventDefault();
       if (value === NO_ANIMATION) {
         onNoEffectSelected();
       }
 
-      const selectedAnimation = animationOptionsObject[value].animation;
-
+      const selectedAnimation = animationOptionsObject[value]?.animation;
       onAnimationSelected({
         animation: selectedAnimation.value,
         panDir: selectedAnimation?.panDirection,

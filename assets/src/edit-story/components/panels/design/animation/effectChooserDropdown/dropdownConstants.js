@@ -53,12 +53,28 @@ import { getDirectionalEffect } from './utils';
 
 export const NO_ANIMATION = 'none';
 
+/**
+ * GRID_SIZING is used for how to present effect options visually in dropDown
+ */
 export const GRID_SIZING = {
   HALF: 'half',
   QUARTER: 'quarter',
 };
 
+/**
+ * Effects that are behind feature flag
+ */
 export const experimentalEffects = [
+  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+];
+
+/**
+ * Some effects are more complicated or have just 1 prebaked option in the effect drop down.
+ * For these we want to make sure we're mapping the appropriate value to the drop down selectedValue
+ * which means ignoring direction which `getDirectionalEffect` ties into to give 1 effect several
+ * options in the drop down.
+ */
+export const effectValueExceptions = [
   BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
 ];
 
