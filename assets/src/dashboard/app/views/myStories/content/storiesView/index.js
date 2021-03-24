@@ -38,7 +38,7 @@ import {
   ViewPropTypes,
   ShowStoriesWhileLoadingPropType,
 } from '../../../../../utils/useStoryView';
-import { Dialog } from '../../../../../components';
+import { Dialog, LoadingContainer } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
@@ -46,7 +46,6 @@ import {
   STORY_CONTEXT_MENU_ITEMS,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
-import { LoadingContainer } from '../../../../../components';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({

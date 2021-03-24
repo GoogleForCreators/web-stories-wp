@@ -25,9 +25,12 @@ import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useSnackbar,
+} from '../../../../../../design-system';
 import { useAPI } from '../../../../../app/api';
-import { useSnackbar } from '../../../../../app/snackbar';
 import { useLocalMedia } from '../../../../../app/media';
 import { useStory } from '../../../../../app/story';
 import Dialog from '../../../../dialog';

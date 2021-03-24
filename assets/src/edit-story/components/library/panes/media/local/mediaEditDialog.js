@@ -26,10 +26,14 @@ import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { Input, Text, THEME_CONSTANTS } from '../../../../../../design-system';
+import {
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  useSnackbar,
+} from '../../../../../../design-system';
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
-import { useSnackbar } from '../../../../../../design-system';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import Dialog from '../../../../dialog';
