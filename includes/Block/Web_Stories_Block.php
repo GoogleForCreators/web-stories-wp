@@ -32,6 +32,7 @@ use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 use WP_Post_Type;
+use WP_Block_Type_Registry;
 
 /**
  * Latest Stories block class.
@@ -83,6 +84,11 @@ class Web_Stories_Block extends Embed_Base {
 			'webStoriesBlockSettings',
 			$this->get_script_settings()
 		);
+
+		// Check to see if block is already registered.
+		if ( $this->is_register( self::BLOCK_NAME ) ) {
+			return;
+		}
 
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.
@@ -352,4 +358,15 @@ class Web_Stories_Block extends Embed_Base {
 		return $query_args;
 	}
 
+	/**
+	 * Checks if a block type is registered.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param string $name Block type name including namespace.
+	 * @return bool True if the block type is registered, false otherwise.
+	 */
+	protected function is_register( $name ) {
+		return WP_Block_Type_Registry::get_instance()->is_registered( $name );
+	}
 }

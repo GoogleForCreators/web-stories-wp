@@ -63,7 +63,8 @@ function setup_new_site() {
  * @return void
  */
 function activate( $network_wide = false ) {
-	setup_new_site();
+	$web_stories = new Plugin();
+	$web_stories->activate( $network_wide );
 
 	do_action( 'web_stories_activation', $network_wide );
 }
@@ -129,6 +130,9 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
+	$web_stories = new Plugin();
+	$web_stories->deactivate( $network_wide );
+
 	do_action( 'web_stories_deactivation', $network_wide );
 }
 
