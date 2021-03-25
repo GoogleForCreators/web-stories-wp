@@ -19,7 +19,7 @@
  */
 import { useState, useEffect } from 'react';
 
-function useOffset(zoomSetting) {
+function useScrollOffset(zoomSetting) {
   const [scrollOffset, setScrollOffset] = useState({ left: 0, top: 0 });
   // Reset scroll offset whenever zoom setting changes
   useEffect(() => {
@@ -34,4 +34,4 @@ function useOffset(zoomSetting) {
   };
 }
 
-export default useOffset;
+export default useScrollOffset;

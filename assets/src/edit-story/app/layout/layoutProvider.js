@@ -24,11 +24,11 @@ import PropTypes from 'prop-types';
  */
 import Context from './context';
 import useZoomSetting from './useZoomSetting';
-import useOffset from './useOffset';
+import useScrollOffset from './useScrollOffset';
 
 function LayoutProvider({ children }) {
   const zoomValue = useZoomSetting();
-  const offsetValue = useOffset(zoomValue.state.zoomSetting);
+  const offsetValue = useScrollOffset(zoomValue.state.zoomSetting);
 
   const value = {
     state: {
