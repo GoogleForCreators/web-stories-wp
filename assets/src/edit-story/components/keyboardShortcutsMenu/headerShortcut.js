@@ -43,7 +43,7 @@ function HeaderShortcut(props) {
     <List role="group">
       <Item role="listitem">
         <Headline
-          as="h1"
+          as="h2"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           {...props}
         >

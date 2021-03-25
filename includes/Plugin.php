@@ -34,6 +34,7 @@ use Google\Web_Stories\Integrations\NextGen_Gallery;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Status_Check_Controller;
+use Google\Web_Stories\REST_API\Stories_Lock_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
@@ -383,6 +384,12 @@ class Plugin {
 
 		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
 		$stories_autosaves->register_routes();
+
+		$templates_lock = new Stories_Lock_Controller( Template_Post_Type::POST_TYPE_SLUG );
+		$templates_lock->register_routes();
+
+		$stories_lock = new Stories_Lock_Controller( Story_Post_Type::POST_TYPE_SLUG );
+		$stories_lock->register_routes();
 
 		$stories_media = new Stories_Media_Controller( 'attachment' );
 		$stories_media->register_routes();

@@ -71,7 +71,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
       }
 
       const query = {
-        _embed: 'author',
+        _embed: 'wp:lock,wp:lockuser,author',
         context: 'edit',
         _web_stories_envelope: true,
         search: searchTerm || undefined,
@@ -158,7 +158,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         const path = queryString.stringifyUrl({
           url: `${storyApi}${story.id}/`,
           query: {
-            _embed: 'author',
+            _embed: 'wp:lock,wp:lockuser,author',
           },
         });
 
@@ -386,7 +386,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         const path = queryString.stringifyUrl({
           url: storyApi,
           query: {
-            _embed: 'author',
+            _embed: 'wp:lock,wp:lockuser,author',
           },
         });
 
