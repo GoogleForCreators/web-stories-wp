@@ -20,6 +20,7 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
@@ -30,11 +31,22 @@ import { STORY_STATUS } from '../../constants';
 import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import InlineInputForm from '../inlineInputForm';
+import { LockClosed as LockSVG } from '../../../design-system/icons';
+import { useConfig } from '../../app/config';
 
 const StyledCardTitle = styled.div`
   padding: 12px 4px 0 4px;
   display: inline-block;
   max-width: calc(100% - 20px);
+`;
+
+const LockRow = styled.div`
+  margin-bottom: 5px;
+`;
+const LockAvatar = styled.img`
+  height: 16px;
+  width: 16px;
+  margin-right: 5px;
 `;
 
 const TitleStoryLink = styled(Headline).attrs(() => ({
@@ -69,6 +81,14 @@ const DateHelperText = styled(Text).attrs(() => ({
     padding: 0 0.25em;
   }
 `;
+// TODO: Fix dirty workaround.
+const ListIcon = styled(LockSVG)`
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  margin: -9px -3px -10px -8px;
+`;
 
 const CardTitle = ({
   id,
@@ -81,7 +101,12 @@ const CardTitle = ({
   onEditComplete,
   onEditCancel,
   tabIndex,
+  locked = false,
+  lockUser = {},
 }) => {
+  const { enablePostLocking } = useFeatures();
+  const { userId } = useConfig();
+
   const displayDateText = useMemo(() => {
     if (!displayDate) {
       return null;
@@ -110,8 +135,30 @@ const CardTitle = ({
     }
   }, [status, displayDate]);
 
+  const showLockIcon = useMemo(() => {
+    return enablePostLocking && locked && userId !== lockUser.id;
+  }, [enablePostLocking, lockUser, locked, userId]);
+
   return (
     <StyledCardTitle>
+      {showLockIcon && (
+        <LockRow>
+          <ListIcon />
+          {lockUser.avatar && (
+            <LockAvatar
+              src={lockUser.avatar}
+              alt={lockUser.name}
+              height={24}
+              width={24}
+            />
+          )}
+          {sprintf(
+            /* translators: %s: user name */
+            __('%s is currently editing', 'web-stories'),
+            lockUser.name
+          )}
+        </LockRow>
+      )}
       {editMode ? (
         <InlineInputForm
           onEditComplete={onEditComplete}
@@ -151,6 +198,8 @@ CardTitle.propTypes = {
   secondaryTitle: PropTypes.string,
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
+  locked: PropTypes.bool,
+  lockUser: PropTypes.object,
   displayDate: PropTypes.string,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,

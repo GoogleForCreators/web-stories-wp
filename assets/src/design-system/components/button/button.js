@@ -243,4 +243,4 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
+export { Button };

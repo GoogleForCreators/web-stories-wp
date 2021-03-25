@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -28,6 +29,11 @@ import { Row, Media } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue, Note } from '../../shared';
 import { useConfig } from '../../../../app/config';
+
+const StyledMedia = styled(Media)`
+  height: 114px;
+  width: 64px;
+`;
 
 const DEFAULT_RESOURCE = {
   poster: null,
@@ -68,7 +74,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   return (
     <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>
       <Row>
-        <Media
+        <StyledMedia
           value={poster}
           onChange={handleChangePoster}
           onChangeErrorText={posterErrorMessage}

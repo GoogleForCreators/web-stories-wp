@@ -52,6 +52,11 @@ const IconText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+const StyledMedia = styled(Media)`
+  width: 54px;
+  height: 54px;
+`;
+
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
@@ -223,6 +228,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         }
         isIndeterminate={isMultipleUrl}
         aria-label={__('Element link', 'web-stories')}
+        hasError={displayLinkGuidelines}
       />
       {displayLinkGuidelines && (
         <Row>
@@ -253,7 +259,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             />
           </Row>
           <Row spaceBetween={false}>
-            <Media
+            <StyledMedia
               value={link.icon || ''}
               onChange={handleChangeIcon}
               onChangeErrorText={iconErrorMessage}

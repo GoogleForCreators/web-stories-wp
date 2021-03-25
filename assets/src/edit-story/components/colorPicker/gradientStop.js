@@ -26,7 +26,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import { Icons } from '../../../design-system';
+import { Icons, themeHelpers } from '../../../design-system';
 import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
 const POINTER_MARGIN = 10;
@@ -62,14 +62,11 @@ const Background = styled.div`
 `;
 
 const Transparent = styled.div`
-  ${fillCss}
-  background: conic-gradient(
-    #fff 0.25turn,
-    #d3d4d4 0turn 0.5turn,
-    #fff 0turn 0.75turn,
-    #d3d4d4 0turn 1turn
-  );
-  background-size: 10px 10px;
+  ${themeHelpers.transparentBg}
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
 `;
 
 const StopPointer = styled.div`

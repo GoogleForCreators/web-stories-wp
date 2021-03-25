@@ -30,7 +30,7 @@ import { useAPI } from '../../../../../app/api';
 import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';
 import { useLocalMedia } from '../../../../../app/media';
-import { useSnackbar } from '../../../../../app/snackbar';
+import { useSnackbar } from '../../../../../../design-system';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 
@@ -169,6 +169,7 @@ function MediaEditDialog({ resource, onClose }) {
       trackError('local_media_edit', err.message);
       showSnackbar({
         message: __('Failed to update, please try again.', 'web-stories'),
+        dismissable: true,
       });
     }
   }, [altText, id, onClose, showSnackbar, updateMedia, updateMediaElement]);

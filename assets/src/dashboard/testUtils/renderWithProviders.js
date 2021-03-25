@@ -27,10 +27,10 @@ import { FlagsProvider } from 'flagged';
 import {
   theme as externalDesignSystemTheme,
   lightMode,
+  SnackbarProvider,
 } from '../../design-system';
 import theme from '../theme';
 import { ConfigProvider } from '../app/config';
-import { SnackbarProvider } from '../app/snackbar';
 import MockApiProvider from './mockApiProvider';
 
 const defaultProviderValues = {

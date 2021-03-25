@@ -10,7 +10,7 @@
     "commander": "./src/index.js"
   },
   "dependencies": {
-    "commander": "^7.1.0",
+    "commander": "^7.2.0",
     "semver": "^7.3.4"
   }
 }

@@ -375,6 +375,18 @@ class Experiments {
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
 				'group'       => 'general',
 			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #3126
+			 * Creation date: 2021-02-02
+			 */
+			[
+				'name'        => 'enablePostLocking',
+				'label'       => __( 'Post locking', 'web-stories' ),
+				'description' => __( 'Enable post locking', 'web-stories' ),
+				'group'       => 'general',
+			],
 		];
 	}
 

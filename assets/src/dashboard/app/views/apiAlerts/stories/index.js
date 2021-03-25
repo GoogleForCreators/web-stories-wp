@@ -21,10 +21,18 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
-import { Button, BUTTON_TYPES } from '../../../../../design-system';
-import { SnackbarProvider } from '../../../snackbar';
+import {
+  Button,
+  BUTTON_TYPES,
+  SnackbarProvider,
+} from '../../../../../design-system';
 import { ApiContext } from '../../../api/apiProvider';
-import SnackbarView from '../';
+import useApiAlerts from '../../../api/useApiAlerts';
+
+const SnackbarView = () => {
+  useApiAlerts();
+  return <div />;
+};
 
 export default {
   title: 'Dashboard/Views/DashboardSnackbar',
@@ -32,69 +40,19 @@ export default {
 };
 
 const storyErrors = [
-  {
-    message: {
-      body: 'I am an error about loading stories.',
-      title: 'Unable to Load Stories',
-    },
-  },
-  {
-    message: {
-      body: 'I am another error about loading stories.',
-      title: 'Unable to Load Stories',
-    },
-  },
-  {
-    message: {
-      body: 'Error updating story.',
-      title: 'Unable to Update Story',
-    },
-  },
-  {
-    message: {
-      body: 'Something is really not working!',
-      title: 'Oh No!',
-    },
-  },
-  {
-    message: {
-      body: 'I am the last preloaded error for stories in this storybook.',
-      title: 'Unable to Load Stories',
-    },
-  },
+  { message: 'I am an error about loading stories.' },
+  { message: 'I am another error about loading stories.' },
+  { message: 'Error updating story.' },
+  { message: 'Something is really not working!' },
+  { message: 'I am the last preloaded error for stories in this storybook.' },
 ];
 
 const templateErrors = [
-  {
-    message: {
-      body: 'I am a template error.',
-      title: 'Unable to Load Templates',
-    },
-  },
-  {
-    message: {
-      body: 'I am another template error.',
-      title: 'Unable to Load Templates',
-    },
-  },
-  {
-    message: {
-      body: 'I am the third template error.',
-      title: 'Unable to Create Story From Template',
-    },
-  },
-  {
-    message: {
-      body: 'Something is really not working (still)!',
-      title: 'Oh No!',
-    },
-  },
-  {
-    message: {
-      body: 'I am the last preloaded error for templates in this storybook.',
-      title: 'Unable to Load Templates',
-    },
-  },
+  { message: 'I am a template error.' },
+  { message: 'I am another template error.' },
+  { message: 'I am the third template error.' },
+  { message: 'Something is really not working (still)!' },
+  { message: 'I am the last preloaded error for templates in this storybook.' },
 ];
 
 export const _default = () => {

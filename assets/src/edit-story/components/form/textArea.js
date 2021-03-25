@@ -31,7 +31,6 @@ const TextArea = forwardRef(
       className,
       placeholder,
       value,
-      maxLength,
       disabled,
       rows,
       onChange,

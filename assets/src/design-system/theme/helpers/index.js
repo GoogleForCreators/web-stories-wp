@@ -20,3 +20,4 @@ export { expandPresetStyles, expandTextPreset } from './expandPresetStyles';
 export { fullSizeAbsolute, fullSizeRelative } from './fullSize';
 export { centerContent } from './centerContent';
 export { visuallyHidden } from './visuallyHidden';
+export { transparentBg } from './transparentBg';

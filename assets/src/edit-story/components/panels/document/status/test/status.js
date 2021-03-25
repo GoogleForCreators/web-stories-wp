@@ -41,7 +41,7 @@ function setupPanel(
     },
     actions: { updateStory },
   };
-  const { getByRole, queryByText } = renderWithTheme(
+  const result = renderWithTheme(
     <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
         <StatusPanel />
@@ -49,8 +49,7 @@ function setupPanel(
     </ConfigContext.Provider>
   );
   return {
-    getByRole,
-    queryByText,
+    ...result,
     updateStory,
   };
 }
@@ -68,12 +67,12 @@ describe('StatusPanel', () => {
   });
 
   it('should render Status Panel', () => {
-    const { getByRole } = setupPanel();
-    const element = getByRole('button', { name: 'Status & Visibility' });
+    const { getByRole, getAllByRole } = setupPanel();
+    const element = getByRole('button', { name: 'Status and visibility' });
     expect(element).toBeInTheDocument();
 
-    const radioOption = getByRole('radio', { name: 'Draft' });
-    expect(radioOption).toBeInTheDocument();
+    const radioOptions = getAllByRole('radio');
+    expect(radioOptions).toHaveLength(3);
   });
 
   it('should not render the status option without correct permissions', () => {
@@ -84,10 +83,8 @@ describe('StatusPanel', () => {
   });
 
   it('should update the story when clicking on status', () => {
-    const { getByRole, updateStory } = setupPanel();
-    const publishOption = getByRole('radio', { name: /Public/i }).closest(
-      'label'
-    );
+    const { getByText, updateStory } = setupPanel();
+    const publishOption = getByText('Public');
     fireEvent.click(publishOption);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {

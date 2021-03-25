@@ -37,7 +37,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       <SnackbarMessage
         message="this is an error"
         aria-label="aria label for my alert"
-        handleDismiss={mockHandleDismiss}
+        onDismiss={mockHandleDismiss}
       />
     );
 
@@ -54,7 +54,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       <SnackbarMessage
         message="this is an error"
         aria-label="aria label for my alert"
-        handleDismiss={mockHandleDismiss}
+        onDismiss={mockHandleDismiss}
       />
     );
     jest.runAllTimers();
@@ -66,7 +66,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       <SnackbarMessage
         aria-label="aria label for my alert"
         message="this is an error"
-        handleDismiss={mockHandleDismiss}
+        onDismiss={mockHandleDismiss}
         showCloseButton
       />
     );
@@ -85,7 +85,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       <SnackbarMessage
         aria-label="aria label for my alert"
         message="this is an error"
-        handleDismiss={noop}
+        onDismiss={noop}
         showCloseButton={false}
       />
     );
@@ -100,8 +100,8 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       <SnackbarMessage
         aria-label="aria label for my alert"
         message="this is an error"
-        handleAction={mockActionClick}
-        handleDismiss={noop}
+        onAction={mockActionClick}
+        onDismiss={noop}
         actionLabel="retry"
       />
     );
