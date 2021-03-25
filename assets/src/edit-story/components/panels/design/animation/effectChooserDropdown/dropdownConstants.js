@@ -234,7 +234,7 @@ export const foregroundEffectOptions = {
   },
   [ANIMATION_EFFECTS.FADE_IN.value]: {
     value: ANIMATION_EFFECTS.FADE_IN.value,
-    label: __('Fade in', 'web-stories'),
+    label: __('Fade In', 'web-stories'),
     animation: {
       ariaLabel: __('Fade In Effect', 'web-stories'),
       value: ANIMATION_EFFECTS.FADE_IN.value,
@@ -249,7 +249,7 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.LEFT_TO_RIGHT
     ),
-    label: __('Fly in', 'web-stories'),
+    label: __('Fly In', 'web-stories'),
     animation: {
       ariaLabel: __('Fly In from Left Effect', 'web-stories'),
       value: ANIMATION_EFFECTS.FLY_IN.value,
@@ -267,7 +267,7 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.TOP_TO_BOTTOM
     ),
-    label: __('Fly in', 'web-stories'),
+    label: __('Fly In', 'web-stories'),
     animation: {
       ariaLabel: __('Fly In from Top Effect', 'web-stories'),
       value: ANIMATION_EFFECTS.FLY_IN.value,
@@ -285,7 +285,7 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.BOTTOM_TO_TOP
     ),
-    label: __('Fly in', 'web-stories'),
+    label: __('Fly In', 'web-stories'),
     animation: {
       ariaLabel: __('Fly In from Bottom Effect', 'web-stories'),
       value: ANIMATION_EFFECTS.FLY_IN.value,
@@ -303,7 +303,7 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.RIGHT_TO_LEFT
     ),
-    label: __('Fly in', 'web-stories'),
+    label: __('Fly In', 'web-stories'),
     animation: {
       ariaLabel: __('Fly In from Right Effect', 'web-stories'),
       value: ANIMATION_EFFECTS.FLY_IN.value,

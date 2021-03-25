@@ -28,6 +28,7 @@ import { ANIMATION_DROPDOWN_OPTION_PROP_TYPE } from './dropdownConstants';
 const DropDownItem = forwardRef(({ option, ...rest }, ref) => (
   <AnimationListItem
     ref={ref}
+    aria-label={option.animation?.ariaLabel || option.label}
     disabled={option.disabled}
     aria-disabled={option.disabled}
     size={option.animation?.size}
