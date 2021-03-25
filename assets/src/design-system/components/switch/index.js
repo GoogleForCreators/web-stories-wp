@@ -18,15 +18,14 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { forwardRef, useCallback, useMemo, useRef } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../theme';
+import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
-import { useKeyDownEffect } from '../keyboard';
 
 const SWITCH_HEIGHT = 32;
 const VALUES = {
@@ -36,6 +35,21 @@ const VALUES = {
 
 const VisuallyHiddenRadioGroupLabel = styled.h4`
   ${themeHelpers.visuallyHidden};
+`;
+
+const SlidingButton = styled.span`
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: ${SWITCH_HEIGHT}px;
+  border-radius: 100px;
+  background-color: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
+  transition: all 0.15s ease-out;
+  z-index: 0;
+
+  ${({ hasOffset }) => hasOffset && `left: 50%`}
 `;
 
 const SwitchContainer = styled.div`
@@ -49,6 +63,23 @@ const SwitchContainer = styled.div`
   background: ${({ theme }) => theme.colors.divider.secondary};
   border-radius: 100px;
   color: ${({ theme }) => theme.colors.fg.primary};
+  cursor: pointer;
+
+  ${({ disabled, theme }) =>
+    disabled
+      ? css`
+          cursor: default;
+          background: ${theme.colors.divider.tertiary};
+
+          ${SlidingButton} {
+            background-color: ${theme.colors.interactiveBg.disable};
+          }
+        `
+      : css`
+          :hover ${SlidingButton} {
+            background-color: ${theme.colors.interactiveBg.primaryHover};
+          }
+        `};
 `;
 
 const HiddenRadioButton = styled.input.attrs({ type: 'radio' })`
@@ -63,10 +94,18 @@ const HiddenRadioButton = styled.input.attrs({ type: 'radio' })`
   margin: -1px;
   outline: none;
   overflow: hidden;
+  opacity: 0;
 `;
 
-const RadioButtonLabel = styled(Text).attrs({ forwardedAs: 'label' })`
+const RadioButtonLabel = styled(Text).attrs({
+  forwardedAs: 'label',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
+  height: ${SWITCH_HEIGHT}px;
   width: 50%;
   padding: 0px 6px;
   z-index: 1;
@@ -79,32 +118,17 @@ const RadioButtonLabel = styled(Text).attrs({ forwardedAs: 'label' })`
   white-space: nowrap;
   transition: color 0.15s ease-out;
 
-  ${({ disabled }) =>
+  ${({ disabled, theme }) =>
     disabled &&
     css`
       cursor: default;
-      opacity: 0.3;
+      color: ${theme.colors.fg.disable};
     `}
 
   /* add focus styling on the slider when the hidden input is focused */
   :focus-within ~ span {
     ${themeHelpers.focusCSS};
   }
-`;
-
-const SlidingButton = styled.span`
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: ${SWITCH_HEIGHT}px;
-  border-radius: 100px;
-  background-color: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
-  transition: left 0.15s ease-out;
-  z-index: 0;
-
-  ${({ hasOffset }) => hasOffset && `left: 50%`}
 `;
 
 /**
@@ -140,7 +164,6 @@ export const Switch = forwardRef(function (
   },
   ref
 ) {
-  const radioGroupRef = useRef(ref);
   const ids = useMemo(
     () => ({
       group: id || uuidv4(),
@@ -157,24 +180,14 @@ export const Switch = forwardRef(function (
     [onChange]
   );
 
-  const handleKeyDown = useCallback(
-    (evt) => {
-      onChange(evt, !value);
-    },
-    [onChange, value]
-  );
-
-  useKeyDownEffect(radioGroupRef, ['space', 'enter'], handleKeyDown, [
-    handleKeyDown,
-    value,
-  ]);
-
   return (
     <SwitchContainer
-      ref={radioGroupRef}
+      ref={ref}
       className={className}
       role="radiogroup"
       aria-labelledby={ids.group}
+      aria-disabled={disabled}
+      disabled={disabled}
     >
       <VisuallyHiddenRadioGroupLabel id={ids.group}>
         {groupLabel}
@@ -215,18 +228,18 @@ export const Switch = forwardRef(function (
   );
 });
 Switch.displayName = 'Switch';
-Switch.propTypes = {
+export const SwitchPropTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   groupLabel: PropTypes.string.isRequired,
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
-  offLabel: PropTypes.string,
+  offLabel: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onLabel: PropTypes.string,
-  value: PropTypes.bool.isRequired,
+  onLabel: PropTypes.string.isRequired,
+  value: PropTypes.bool,
 };
+Switch.propTypes = SwitchPropTypes;
 Switch.defaultProps = {
-  offLabel: __('Off', 'web-stories'),
-  onLabel: __('On', 'web-stories'),
+  value: false,
 };
