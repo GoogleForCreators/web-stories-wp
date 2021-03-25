@@ -671,6 +671,7 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
+            preview_link: 'http://stories.local/?post_type=web-story&p=1',
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,

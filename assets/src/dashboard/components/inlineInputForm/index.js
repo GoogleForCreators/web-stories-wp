@@ -23,11 +23,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { useFocusOut } from '../../utils/';
 import { Input } from '../../../design-system';
-
-const Label = styled.label(visuallyHiddenStyles);
 
 const StyledInput = styled(Input)`
   div {
@@ -87,7 +84,6 @@ const InlineInputForm = ({
   );
   return (
     <div ref={inputContainerRef}>
-      <Label htmlFor={`${id}`}>{label}</Label>
       <StyledInput
         id={`${id}`}
         data-testid="inline-input-form"
@@ -97,6 +93,7 @@ const InlineInputForm = ({
         placeholder={placeholder}
         hasError={Boolean(error)}
         hint={error}
+        aria-label={label}
       />
     </div>
   );

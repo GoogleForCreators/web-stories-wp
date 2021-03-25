@@ -174,7 +174,7 @@ function getSettingsState() {
     adSensePublisherId: '',
     adSenseSlotId: '',
     adManagerSlotId: '',
-    adNetwork: '',
+    adNetwork: 'none',
   };
 }
 
