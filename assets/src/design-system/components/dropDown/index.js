@@ -68,6 +68,7 @@ export const DropDown = ({
   popupZIndex,
   isInline = false,
   selectedValue = '',
+  className,
   ...rest
 }) => {
   const selectRef = useRef();
@@ -123,7 +124,7 @@ export const DropDown = ({
   );
 
   return (
-    <DropDownContainer>
+    <DropDownContainer className={className}>
       <DropDownSelect
         activeItemLabel={activeOption?.label}
         aria-pressed={isOpen.value}
@@ -169,6 +170,7 @@ DropDown.propTypes = {
   ariaLabel: PropTypes.string,
   disabled: PropTypes.bool,
   dropDownLabel: PropTypes.string,
+  className: PropTypes.string,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,

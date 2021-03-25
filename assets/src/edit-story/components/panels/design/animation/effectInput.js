@@ -19,32 +19,51 @@
  */
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
-import { rgba } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { FIELD_TYPES } from '../../../../../animation';
 import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../../animation/types';
-import { DropDown, BoxedNumeric } from '../../../form';
-import RangeInput from '../../../rangeInput';
+import {
+  NumericInput,
+  DropDown,
+} from '../../../../../design-system/components';
+import { ThemeGlobals } from '../../../../../design-system';
 import { DirectionRadioInput } from './directionRadioInput';
+import { INPUT_HEIGHT } from './constants';
 
-const RangeContainer = styled.div`
-  width: 100%;
+const outerGridBordersCss = css`
+  border-radius: 0;
+  border-color: ${({ theme }) => theme.colors.border.defaultNormal} transparent
+    transparent transparent;
 `;
 
-const Label = styled.label`
-  display: block;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.3)};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
+const StyledInput = styled(NumericInput)`
+  height: ${INPUT_HEIGHT}px;
+  div {
+    height: calc(100% + 1px);
+    ${outerGridBordersCss}
+    &:focus-within {
+      border-radius: ${({ theme }) => theme.borders.radius.small};
+    }
+  }
+`;
+
+const StyledDropDown = styled(DropDown)`
+  button {
+    height: 46px;
+    ${outerGridBordersCss}
+    &:hover {
+      ${outerGridBordersCss}
+    }
+    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
+      border-radius: ${({ theme }) => theme.borders.radius.small};
+    }
+  }
 `;
 
 function EffectInput({
@@ -55,42 +74,30 @@ function EffectInput({
   disabledOptions,
   tooltip,
 }) {
-  const rangeId = `range-${uuidv4()}`;
-
   const directionControlOnChange = useCallback(
-    ({ nativeEvent: { target } }) => onChange(target.value, true),
+    (value) => onChange(value, true),
     [onChange]
   );
 
   const valueForField = effectConfig[field] || effectProps[field].defaultValue;
+  const isFloat = effectProps[field].type === FIELD_TYPES.FLOAT;
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (
-        <DropDown
-          value={valueForField}
-          onChange={(value) => onChange(value, true)}
-          options={(effectProps[field].values || []).map((option) => ({
-            ...option,
-            disabled: disabledOptions.includes(option.value),
-          }))}
+        <StyledDropDown
+          options={(effectProps[field].values || []).map(
+            ({ name, ...rest }) => ({
+              ...rest,
+              label: name,
+              disabled: disabledOptions.includes(rest.value),
+            })
+          )}
+          placeholder={__('Select a value', 'web-stories')}
+          ariaLabel={__('Select effect value', 'web-stories')}
+          isKeepMenuOpenOnSelection={false}
+          selectedValue={valueForField}
+          onMenuItemClick={(evt) => onChange(evt.target.value, true)}
         />
-      );
-    case FIELD_TYPES.RANGE:
-      return (
-        <RangeContainer>
-          <Label htmlFor={rangeId}>{effectProps[field].label}</Label>
-          <RangeInput
-            id={rangeId}
-            aria-label={effectProps[field].label}
-            value={valueForField}
-            handleChange={(value) => onChange(value, true)}
-            minorStep={0.01}
-            majorStep={0.1}
-            min={0}
-            max={1}
-            style={{ width: '100%' }}
-          />
-        </RangeContainer>
       );
     case FIELD_TYPES.DIRECTION_PICKER:
       return (
@@ -104,16 +111,21 @@ function EffectInput({
       );
     default:
       return (
-        <BoxedNumeric
+        <StyledInput
           aria-label={effectProps[field].label}
           suffix={effectProps[field].label}
-          symbol={effectProps[field].unit}
+          unit={effectProps[field].unit}
           value={valueForField}
           min={0}
-          onChange={onChange}
-          canBeNegative={false}
-          float={effectProps[field].type === FIELD_TYPES.FLOAT}
-          flexBasis={'100%'}
+          onChange={(evt) =>
+            onChange(
+              isFloat
+                ? parseFloat(evt.target.value)
+                : parseInt(evt.target.value),
+              true
+            )
+          }
+          isFloat={isFloat}
         />
       );
   }

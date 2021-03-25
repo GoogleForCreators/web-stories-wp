@@ -26,21 +26,33 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Dropdown as DropdownIcon } from '../../../../icons';
 import { isKeyboardUser } from '../../../../utils/keyboardOnlyOutline';
-import { DropDownSelect, DropDownTitle } from '../../../form/dropDown';
 import Popup, { Placement } from '../../../popup';
 import { themeHelpers } from '../../../../../design-system';
+import DropDownSelect from '../../../../../design-system/components/dropDown/select';
 import EffectChooser from './effectChooser';
+import { INPUT_HEIGHT } from './constants';
 
 const Container = styled.div`
   overflow-y: scroll;
   max-height: 240px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.standard.black};
-
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background: ${({ theme }) => theme.colors.bg.primary};
   ${themeHelpers.scrollbarCSS};
+`;
+
+const StyledDropDownSelect = styled(DropDownSelect)`
+  ${({ hasAnimation, theme }) =>
+    hasAnimation &&
+    `
+    margin: -1px -1px 0 -1px;
+    width: calc(100% + 2px);
+    border-color: transparent transparent ${theme.colors.border.defaultNormal} transparent;
+    height: ${INPUT_HEIGHT}px;
+    &:hover {
+      border-color: transparent transparent ${theme.colors.border.defaultNormal} transparent;
+    }
+  `}
 `;
 
 export default function EffectChooserDropdown({
@@ -77,16 +89,13 @@ export default function EffectChooserDropdown({
 
   return (
     <>
-      <DropDownSelect
+      <StyledDropDownSelect
+        hasAnimation={Boolean(selectedEffectTitle)}
+        activeItemLabel={selectedEffectTitle || __('None', 'web-stories')}
         aria-label={__('Animation: Effect Chooser', 'web-stories')}
         ref={selectRef}
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <DropDownTitle>
-          {selectedEffectTitle || __('Select Animation', 'web-stories')}
-        </DropDownTitle>
-        <DropdownIcon />
-      </DropDownSelect>
+        onSelectClick={() => setIsOpen(!isOpen)}
+      />
       <Popup
         anchor={selectRef}
         isOpen={isOpen}
