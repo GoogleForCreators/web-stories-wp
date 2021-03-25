@@ -125,7 +125,7 @@ class HTML extends WP_UnitTestCase {
 	 */
 	public function test_add_publisher_logo() {
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
-		add_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
+		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
 
 		$post = self::factory()->post->create_and_get(
 			[
