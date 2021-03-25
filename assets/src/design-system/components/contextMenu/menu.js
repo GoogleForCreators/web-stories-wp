@@ -121,7 +121,7 @@ const MenuList = styled.ul(
   `
 );
 
-const Menu = ({ isOpen, items, ...props }) => {
+const Menu = ({ isOpen = false, items, ...props }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
@@ -188,7 +188,7 @@ const Menu = ({ isOpen, items, ...props }) => {
 };
 
 export const MenuPropTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       ...MenuItemProps,

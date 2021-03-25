@@ -32,7 +32,9 @@ describe('Pill', () => {
 
   it('should render the default button as a pill', () => {
     const { getByRole } = renderWithProviders(
-      <Pill onClick={onClickMock}>{pillText}</Pill>
+      <Pill onClick={onClickMock} isActive={false}>
+        {pillText}
+      </Pill>
     );
 
     expect(getByRole('button')).toHaveTextContent(pillText);
@@ -40,7 +42,7 @@ describe('Pill', () => {
 
   it('should not trigger a click on <Pill /> when disabled', () => {
     const { getByText } = renderWithProviders(
-      <Pill disabled onClick={onClickMock}>
+      <Pill disabled onClick={onClickMock} isActive={false}>
         {pillText}
       </Pill>
     );
@@ -54,7 +56,7 @@ describe('Pill', () => {
 
   it('should simulate a click on <Pill />', () => {
     const { getByText } = renderWithProviders(
-      <Pill onClick={onClickMock}>{pillText}</Pill>
+      <Pill onClick={onClickMock} isActive={false}>{pillText}</Pill>
     );
 
     const pil = getByText(pillText);
