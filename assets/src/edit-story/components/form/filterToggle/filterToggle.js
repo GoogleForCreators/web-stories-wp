@@ -69,6 +69,7 @@ const Button = styled.button(
     img {
       width: 100%;
       height: 100%;
+      border-radius: ${theme.borders.radius.small};
     }
 
     ${Overlay} {
