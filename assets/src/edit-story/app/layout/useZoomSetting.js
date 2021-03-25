@@ -36,7 +36,9 @@ import {
 const ZOOM_PADDING_LARGE = 72;
 const ZOOM_PADDING_NONE = 12;
 
-function useZoomSetting() {
+const LEGACY_PAGE_WIDTHS = [412, 268, 223];
+
+function useZoomSetting(hasCanvasZoom) {
   // TODO store in localSettings?
   const [zoomSetting, setZoomSetting] = useState(ZOOM_SETTING.FIT);
   const [workspaceSize, setWorkspaceSize] = useState({
@@ -45,6 +47,30 @@ function useZoomSetting() {
   });
 
   const state = useMemo(() => {
+    if (!hasCanvasZoom) {
+      // Use the old legacy method of calculating possible page size:
+      const maxWidth = workspaceSize.width - PAGE_NAV_WIDTH * 2;
+      const maxHeight = workspaceSize.height;
+
+      const bestSize =
+        LEGACY_PAGE_WIDTHS.find(
+          (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
+        ) || LEGACY_PAGE_WIDTHS[LEGACY_PAGE_WIDTHS.length - 1];
+
+      return {
+        zoomSetting: null,
+        pageWidth: bestSize,
+        pageHeight: bestSize / PAGE_RATIO,
+        hasHorizontalOverflow: false,
+        hasVerticalOverflow: false,
+        hasPageNavigation: true,
+        pagePadding: ZOOM_PADDING_NONE,
+        viewportWidth: bestSize + ZOOM_PADDING_NONE,
+        viewportHeight: bestSize / PAGE_RATIO + ZOOM_PADDING_NONE,
+        workspaceWidth: workspaceSize.width,
+        workspaceHeight: workspaceSize.height,
+      };
+    }
     // Calculate page size based on zoom setting
     let maxPageWidth;
     const workspaceRatio = workspaceSize.width / workspaceSize.height;
@@ -131,7 +157,7 @@ function useZoomSetting() {
       workspaceWidth: workspaceSize.width,
       workspaceHeight: workspaceSize.height,
     };
-  }, [workspaceSize, zoomSetting]);
+  }, [hasCanvasZoom, workspaceSize, zoomSetting]);
 
   return {
     state,

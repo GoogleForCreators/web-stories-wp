@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -27,8 +28,12 @@ import useZoomSetting from './useZoomSetting';
 import useScrollOffset from './useScrollOffset';
 
 function LayoutProvider({ children }) {
-  const zoomValue = useZoomSetting();
-  const offsetValue = useScrollOffset(zoomValue.state.zoomSetting);
+  const { hasCanvasZoom } = useFeatures();
+  const zoomValue = useZoomSetting(hasCanvasZoom);
+  const offsetValue = useScrollOffset(
+    hasCanvasZoom,
+    zoomValue.state.zoomSetting
+  );
 
   const value = {
     state: {
