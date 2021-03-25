@@ -23,8 +23,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../design-system/theme';
-import { BUTTON_TRANSITION_TIMING } from '../../../../design-system/components/button';
+import {THEME_CONSTANTS, themeHelpers} from '../../../../design-system/theme';
+import { BUTTON_TRANSITION_TIMING, Text } from '../../../../design-system';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PatternPropType } from '../../../types';
 
@@ -98,13 +98,29 @@ const Button = styled.button(
   `
 );
 
-function FilterToggle({ isToggled, filter, children, ...rest }) {
+const Wrapper = styled.div``;
+
+const StyledText = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.border.defaultActive};
+  margin-top: 8px;
+  text-align: center;
+  width: 100%;
+  display: block;
+`;
+
+function FilterToggle({ isToggled, filter, children, label, ...rest }) {
   return (
-    <Button {...rest} isToggled={isToggled} aria-pressed={isToggled}>
-      {children}
-      <Filter filter={filter} />
-      <Overlay />
-    </Button>
+    <Wrapper>
+      <Button {...rest} isToggled={isToggled} aria-pressed={isToggled}>
+        {children}
+        <Filter filter={filter} />
+        <Overlay />
+      </Button>
+      {label && <StyledText>{label}</StyledText>}
+    </Wrapper>
   );
 }
 
@@ -112,6 +128,7 @@ FilterToggle.propTypes = {
   isToggled: PropTypes.bool.isRequired,
   filter: PatternPropType.isRequired,
   children: PropTypes.node.isRequired,
+  label: PropTypes.string,
 };
 
 export default FilterToggle;
