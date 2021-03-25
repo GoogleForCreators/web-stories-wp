@@ -34,6 +34,7 @@ import {
   deriveTransitionDirection,
   deriveUnreadTipsCount,
   resetNavigationIndexOnOpen,
+  resetIsOpeningToTip,
 } from '../effects';
 
 const mockState = (overrides = {}) => ({
@@ -415,5 +416,23 @@ describe('createDynamicNavigationFlow', () => {
         ],
       });
     });
+  });
+});
+
+describe('resetIsOpeningToTip', () => {
+  it('only sets the flag to true if the state is being toggled', () => {
+    let previousState = mockState({ isOpeningToTip: false });
+    let nextState = mockState({ isOpeningToTip: true });
+    const testTrue = resetIsOpeningToTip(previousState, nextState);
+    expect(testTrue.isOpeningToTip).toBe(true);
+
+    previousState = mockState({ isOpeningToTip: true });
+    const testBothTrue = resetIsOpeningToTip(previousState, nextState);
+    expect(testBothTrue.isOpeningToTip).toBe(false);
+
+    previousState = mockState({ isOpeningToTip: false });
+    nextState = mockState({ isOpeningToTip: false });
+    const testBothFalse = resetIsOpeningToTip(previousState, nextState);
+    expect(testBothFalse.isOpeningToTip).toBe(false);
   });
 });

@@ -17,40 +17,35 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { useDebouncedCallback } from 'use-debounce/lib';
 /**
  * Internal dependencies
  */
-// import { useCurrentUser } from '../currentUser';
+import { KEYS } from '../../components/helpCenter/constants';
 import { useHelpCenter } from '../helpCenter';
 
 const TRIGGER_CONTEXTS = {
   SAFE_ZONE: 'safeZone',
-  // todo [@embarks]: other onboarding triggers
 };
 
 export function useUserOnboarding(selector) {
   const triggerType = selector(TRIGGER_CONTEXTS);
 
-  // const { updateCurrentUser, currentUser } = useCurrentUser(
-  //   ({ state, actions }) => ({
-  //     currentUser: state.currentUser,
-  //     updateCurrentUser: actions.updateCurrentUser,
-  //   })
-  // );
-
   const { openToUnreadTip } = useHelpCenter(({ actions }) => ({
     openToUnreadTip: actions.openToUnreadTip,
   }));
 
+  const [openToUnreadTipDebounced] = useDebouncedCallback(openToUnreadTip, 300);
+
   const trigger = useCallback(() => {
     switch (triggerType) {
       case TRIGGER_CONTEXTS.SAFE_ZONE:
-        openToUnreadTip('safeZone');
+        openToUnreadTipDebounced(KEYS.SAFE_ZONE);
         break;
       default:
         return;
     }
-  }, [triggerType, openToUnreadTip]);
+  }, [triggerType, openToUnreadTipDebounced]);
 
   return trigger;
 }
