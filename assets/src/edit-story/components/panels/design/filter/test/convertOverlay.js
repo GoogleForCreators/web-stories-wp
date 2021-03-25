@@ -29,22 +29,22 @@ describe('convertOverlay', () => {
   });
 
   describe('when converting from no overlay', () => {
-    it('should return default 30% black when converting to solid overlay', () => {
+    it('should return default 50% black when converting to solid overlay', () => {
       const result = convertOverlay(null, OverlayType.NONE, OverlayType.SOLID);
-      // expect 30% black
-      const expected = { color: { r: 0, g: 0, b: 0, a: 0.3 } };
+      // expect 50% black
+      const expected = { color: { r: 0, g: 0, b: 0, a: 0.5 } };
       expect(result).toStrictEqual(expected);
     });
 
     it('should return default transparent-to-black when converting to linear overlay', () => {
       const result = convertOverlay(null, OverlayType.NONE, OverlayType.LINEAR);
-      // expect 90% transparent-to-black (top-to-bottom) linear gradient as specified
+      // expect 0-70% transparent-to-black (top-to-bottom) linear gradient as specified
       const expected = {
         type: 'linear',
         rotation: 0,
         stops: [
-          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.4 },
-          { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
+          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
+          { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
         ],
         alpha: 0.9,
       };
@@ -53,13 +53,12 @@ describe('convertOverlay', () => {
 
     it('should return default black vignette when converting to radial overlay', () => {
       const result = convertOverlay(null, OverlayType.NONE, OverlayType.RADIAL);
-      // expect 60% black vignette as specified
       const expected = {
         type: 'radial',
         size: { w: 0.8, h: 0.5 },
         stops: [
-          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.25 },
-          { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
+          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
+          { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
         ],
         alpha: 0.6,
       };
@@ -117,10 +116,10 @@ describe('convertOverlay', () => {
       alpha: 0.8,
     };
 
-    it('should return most opaque color stop (blue) at 30% opacity', () => {
+    it('should return most opaque color stop (blue) at 50% opacity', () => {
       const result = convertOverlay(gb, OverlayType.LINEAR, OverlayType.SOLID);
       // expect 30% blue
-      const expected = { color: { r: 0, g: 0, b: 255, a: 0.3 } };
+      const expected = { color: { r: 0, g: 0, b: 255, a: 0.5 } };
       expect(result).toStrictEqual(expected);
     });
 
@@ -154,8 +153,8 @@ describe('convertOverlay', () => {
 
     it('should return most opaque color stop (pink) at 30% opacity', () => {
       const result = convertOverlay(p, OverlayType.RADIAL, OverlayType.SOLID);
-      // expect 30% pink
-      const expected = { color: { r: 255, g: 192, b: 203, a: 0.3 } };
+      // expect 50% pink
+      const expected = { color: { r: 255, g: 192, b: 203, a: 0.5 } };
       expect(result).toStrictEqual(expected);
     });
 
