@@ -29,8 +29,7 @@ import Row from '../../row';
 import { dummyImage } from '../../../devTools/dummyData';
 
 const StyledRow = styled(Row)`
-  justify-content: flex-start;
-  align-items: flex-start;
+  width: 300px;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
   padding: 20px;
   button {
@@ -82,7 +81,7 @@ export const _default = () => {
     {
       value: 'c',
       filter: null,
-      label: __('Option C without description', 'web-stories'),
+      label: __('None', 'web-stories'),
     },
   ];
   const [value, setValue] = useState('a');

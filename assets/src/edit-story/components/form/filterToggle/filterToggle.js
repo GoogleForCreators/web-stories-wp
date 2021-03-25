@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {THEME_CONSTANTS, themeHelpers} from '../../../../design-system/theme';
+import { THEME_CONSTANTS, themeHelpers } from '../../../../design-system/theme';
 import { BUTTON_TRANSITION_TIMING, Text } from '../../../../design-system';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PatternPropType } from '../../../types';
@@ -49,7 +49,7 @@ const Filter = styled.div`
 const Button = styled.button(
   ({ theme }) => css`
     border-radius: ${theme.borders.radius.small};
-    width: 60px;
+    width: 100%;
     height: 48px;
     position: relative;
     display: flex;
@@ -98,7 +98,9 @@ const Button = styled.button(
   `
 );
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 60px;
+`;
 
 const StyledText = styled(Text).attrs({
   forwardedAs: 'span',
