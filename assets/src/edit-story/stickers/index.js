@@ -17,6 +17,8 @@
  * Internal dependencies
  */
 import { default as sample } from './sampleSticker';
+import { default as beautyHeart } from './beautyHeart';
 export default {
   sample,
+  beautyHeart,
 };
