@@ -35,9 +35,12 @@ const isInitialHydrate = (previous, next) =>
 
 export const resetNavigationIndexOnOpen = (previous, next) => {
   const isOpening = !previous.isOpen && next.isOpen;
-  return {
-    navigationIndex: isOpening ? -1 : next.navigationIndex,
+  const isOpeningToTip = !previous.isOpeningToTip && next.isOpeningToTip;
+  const result = {
+    navigationIndex: isOpening && !isOpeningToTip ? -1 : next.navigationIndex,
   };
+
+  return result;
 };
 
 export const deriveBottomNavigation = (previous, next) => ({
@@ -121,6 +124,12 @@ export function deriveInitialUnreadTipsCount(persisted) {
         unreadTipsCount: persisted?.unreadTipsCount,
       }
     : {};
+}
+
+export function resetIsOpeningToTip(previous, next) {
+  return {
+    isOpeningToTip: next.isOpeningToTip && !previous.isOpeningToTip,
+  };
 }
 
 /**

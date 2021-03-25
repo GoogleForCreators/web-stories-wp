@@ -44,6 +44,7 @@ import {
   deriveAutoOpen,
   deriveInitialOpen,
   deriveInitialUnreadTipsCount,
+  resetIsOpeningToTip,
 } from './useHelpCenter/effects';
 
 /**
@@ -67,6 +68,7 @@ export const deriveState = composeEffects(
     deriveReadTip,
     deriveUnreadTipsCount,
     deriveAutoOpen,
+    resetIsOpeningToTip,
   ]
 );
 
@@ -87,6 +89,7 @@ const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
 
 export const initialState = {
   isOpen: false,
+  isOpeningToTip: false,
   navigationIndex: -1,
   navigationFlow: BASE_NAVIGATION_FLOW,
   isLeftToRightTransition: true,
@@ -123,6 +126,14 @@ export const initial = {
     goToTip: (key) => ({ navigationFlow }) => ({
       navigationIndex: navigationFlow.findIndex((v) => v === key),
     }),
+    openToUnreadTip: (key) => ({ navigationFlow, readTips }) =>
+      !readTips[key]
+        ? {
+            isOpen: true,
+            isOpeningToTip: true,
+            navigationIndex: navigationFlow.findIndex((v) => v === key),
+          }
+        : {},
     toggle: () => ({ isOpen }) => {
       trackEvent('help_center_toggled', {
         status: isOpen ? 'closed' : 'open',

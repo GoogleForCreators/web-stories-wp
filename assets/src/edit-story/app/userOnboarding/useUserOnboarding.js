@@ -21,7 +21,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 // import { useCurrentUser } from '../currentUser';
-// import { useHelpCenter } from '../helpCenter';
+import { useHelpCenter } from '../helpCenter';
 
 const TRIGGER_CONTEXTS = {
   SAFE_ZONE: 'safeZone',
@@ -38,19 +38,19 @@ export function useUserOnboarding(selector) {
   //   })
   // );
 
-  // const { goToTip } = useHelpCenter(({ actions }) => ({
-  //   goToTip: actions.goToTip,
-  // }));
+  const { openToUnreadTip } = useHelpCenter(({ actions }) => ({
+    openToUnreadTip: actions.openToUnreadTip,
+  }));
 
   const trigger = useCallback(() => {
     switch (triggerType) {
       case TRIGGER_CONTEXTS.SAFE_ZONE:
-        // console.log('TRIGGERED SAFE_ZONE');
+        openToUnreadTip('safeZone');
         break;
       default:
         return;
     }
-  }, [triggerType]);
+  }, [triggerType, openToUnreadTip]);
 
   return trigger;
 }
