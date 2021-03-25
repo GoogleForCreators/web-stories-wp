@@ -27,8 +27,6 @@ import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { useFocusOut } from '../../utils/';
 import { Input } from '../../../design-system';
 
-const Label = styled.label(visuallyHiddenStyles);
-
 const StyledInput = styled(Input)`
   div {
     height: auto;
@@ -87,8 +85,8 @@ const InlineInputForm = ({
   );
   return (
     <div ref={inputContainerRef}>
-      <Label htmlFor={`${id}`}>{label}</Label>
       <StyledInput
+        aria-label={label}
         id={`${id}`}
         data-testid="inline-input-form"
         value={newValue}

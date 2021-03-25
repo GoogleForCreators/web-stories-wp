@@ -206,10 +206,10 @@ function VideoControls({
       setIsPlaying(false);
       setShowControls(true);
     } else {
-      const playPromise = videoNode.play();
-      if (playPromise) {
-        playPromise.then(() => setIsPlaying(true)).catch(() => {});
-      }
+      videoNode
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
     }
   };
 

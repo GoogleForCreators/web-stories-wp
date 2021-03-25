@@ -143,6 +143,8 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   );
 }
 
+const TextSetWithRef = forwardRef(TextSet);
+
 TextSet.propTypes = {
   elements: PropTypes.array.isRequired,
   translateY: PropTypes.number.isRequired,
@@ -151,4 +153,4 @@ TextSet.propTypes = {
 
 TextSet.displayName = 'TextSet';
 
-export default forwardRef(TextSet);
+export default TextSetWithRef;

@@ -102,11 +102,16 @@ describe('PostLock', () => {
     document.documentElement.removeChild(modalWrapper);
     jest.runAllTimers();
   });
+
   it('should display take over dialog', async () => {
     const storyContextValue = {
       state: {
         story: {
-          lockUser: { id: 123, name: 'John Doe' },
+          lockUser: {
+            previewLink: 'http://www.example.com/preview',
+            id: 123,
+            name: 'John Doe',
+          },
         },
       },
     };

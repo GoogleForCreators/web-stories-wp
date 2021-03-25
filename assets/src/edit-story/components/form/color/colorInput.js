@@ -36,6 +36,7 @@ import {
   Tooltip as DefaultTooltip,
   Swatch,
   getOpaquePattern,
+  PLACEMENT,
 } from '../../../../design-system';
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
@@ -160,7 +161,7 @@ function ColorInput({
         <Preview ref={previewRef}>
           <Input
             aria-label={label}
-            value={value}
+            value={isMixed ? null : value}
             onChange={onChange}
             isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
@@ -195,7 +196,7 @@ function ColorInput({
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}
-        placement={'left-start'}
+        placement={PLACEMENT.LEFT_START}
         spacing={spacing}
       >
         <ColorPicker

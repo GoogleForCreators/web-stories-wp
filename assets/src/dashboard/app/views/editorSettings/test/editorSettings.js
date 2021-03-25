@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent, within } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -113,7 +114,7 @@ function createProviderValues({
 
 describe('Editor Settings: <Editor Settings />', function () {
   it('should render settings page with google analytics and publisher logo sections', function () {
-    const { getByText, getByRole, getByTestId } = renderWithProviders(
+    const { getByText, getByRole, getByTestId, container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -124,6 +125,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: {},
       })
     );
+    Modal.setAppElement(container);
 
     const googleAnalyticsHeading = getByText(GA_TEXT.SECTION_HEADING);
     expect(googleAnalyticsHeading).toBeInTheDocument();
@@ -141,7 +143,7 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page with publisher logos', function () {
-    const { queryAllByTestId } = renderWithProviders(
+    const { queryAllByTestId, container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -153,6 +155,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: rawPublisherLogos,
       })
     );
+    Modal.setAppElement(container);
 
     expect(queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
@@ -201,7 +204,7 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', function () {
-    const { queryByTestId } = renderWithProviders(
+    const { queryByTestId, container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -212,12 +215,13 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: {},
       })
     );
+    Modal.setAppElement(container);
 
     expect(queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 
   it('should render settings page with adsense', function () {
-    const { getByText } = renderWithProviders(
+    const { getByText, container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -232,6 +236,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: {},
       })
     );
+    Modal.setAppElement(container);
 
     const helperLink = getByText('how to monetize your Web Stories', {
       selector: 'a',

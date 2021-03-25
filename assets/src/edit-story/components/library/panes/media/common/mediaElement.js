@@ -160,11 +160,7 @@ function Element({
         if (mediaElement.current && hoverTimer == null) {
           const timer = setTimeout(() => {
             if (activeRef.current && src) {
-              const playPromise = mediaElement.current.play();
-              if (playPromise) {
-                // All supported browsers return promise but unit test runner does not.
-                playPromise.catch(() => {});
-              }
+              mediaElement.current.play().catch(() => {});
             }
           }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
           setHoverTimer(timer);

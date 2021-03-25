@@ -19,11 +19,17 @@
  */
 import { Input } from '../';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+import { noop } from '../../../utils';
 
 describe('Input', () => {
   it('should render the input', () => {
     const { getByPlaceholderText } = renderWithProviders(
-      <Input aria-label="test" placeholder="my placeholder" />
+      <Input
+        aria-label="test"
+        placeholder="my placeholder"
+        value=""
+        onChange={noop}
+      />
     );
 
     expect(getByPlaceholderText('my placeholder')).toBeInTheDocument();
@@ -31,7 +37,7 @@ describe('Input', () => {
 
   it('should render a label', () => {
     const { getByText } = renderWithProviders(
-      <Input label="This is my input label" />
+      <Input label="This is my input label" value="" onChange={noop} />
     );
 
     expect(getByText('This is my input label')).toBeInTheDocument();
@@ -39,7 +45,12 @@ describe('Input', () => {
 
   it('should render a hint', () => {
     const { getByText } = renderWithProviders(
-      <Input aria-label="test" hint="This is my input hint" />
+      <Input
+        aria-label="test"
+        hint="This is my input hint"
+        value=""
+        onChange={noop}
+      />
     );
 
     expect(getByText('This is my input hint')).toBeInTheDocument();
@@ -47,7 +58,7 @@ describe('Input', () => {
 
   it('should render a suffix', () => {
     const { getByText } = renderWithProviders(
-      <Input aria-label="test" suffix="suffix" />
+      <Input aria-label="test" suffix="suffix" value="" onChange={noop} />
     );
 
     const suffixElement = getByText('suffix');

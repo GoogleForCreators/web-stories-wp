@@ -65,6 +65,7 @@ import {
   PanLeftAnimation,
   PanAndZoomAnimation,
 } from './effectChooserElements';
+import { noop } from '../../../../utils/noop';
 
 const Container = styled.div`
   width: ${PANEL_WIDTH}px;
@@ -201,7 +202,7 @@ const BACKGROUND_EFFECTS_LIST = [
 
 export default function EffectChooser({
   onAnimationSelected,
-  onNoEffectSelected,
+  onNoEffectSelected = noop,
   onDismiss,
   isBackgroundEffects = false,
   disabledTypeOptionsMap,
@@ -817,7 +818,7 @@ export default function EffectChooser({
 
 EffectChooser.propTypes = {
   onAnimationSelected: PropTypes.func.isRequired,
-  onNoEffectSelected: PropTypes.func.isRequired,
+  onNoEffectSelected: PropTypes.func,
   direction: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,

@@ -174,6 +174,7 @@ describe('DropDown <DropDown />', () => {
   });
 
   it('should clean badly grouped data', () => {
+    // TODO: this causes prop type warnings due to bad input.
     const nestedOptions = [
       {
         label: 'section 1',

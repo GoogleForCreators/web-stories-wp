@@ -254,8 +254,8 @@ export function LeftRail() {
         </NavList>
         <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {sprintf(
-            /* translators: %s: Current Year, %v: App Version */
-            __('\u00A9 %s Google Version %v', 'web-stories'),
+            /* translators: 1: Current Year, 2: App Version */
+            __('\u00A9 %1$s Google Version %2$s', 'web-stories'),
             new Date().getFullYear(),
             version
           )}
