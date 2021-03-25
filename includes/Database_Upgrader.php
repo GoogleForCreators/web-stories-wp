@@ -27,9 +27,6 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Activateable;
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Class Database_Upgrader
@@ -38,7 +35,7 @@ use Google\Web_Stories\Infrastructure\Service;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader implements Service, Delayed, Registerable, Activateable {
+class Database_Upgrader extends Service implements Activateable {
 
 	/**
 	 * The slug of database option.

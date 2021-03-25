@@ -27,13 +27,13 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
 use Google\Web_Stories\Traits\Assets;
 
 /**
  * Class Activation_Notice.
  */
-class Activation_Notice implements Service, Registerable {
+class Activation_Notice implements ServiceInterface, Registerable {
 	use Assets;
 
 	/**

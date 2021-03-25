@@ -27,12 +27,12 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
 
 /**
  * Class Activation_Flag.
  */
-class Activation_Flag implements Service, Registerable {
+class Activation_Flag implements ServiceInterface, Registerable {
 	const OPTION_SHOW_ACTIVATION_NOTICE = 'web_stories_show_activation_notice';
 
 	/**
