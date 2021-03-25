@@ -46,6 +46,10 @@ const P = styled.p`
   margin: 0 0 8px 0;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+`;
+
 function ErrorActions({ error, errorInfo }) {
   const body = encodeURIComponent(`${error}${errorInfo.componentStack}`);
   const reportUrl = `https://github.com/google/web-stories-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
@@ -64,9 +68,9 @@ function ErrorActions({ error, errorInfo }) {
         )}
       </P>
       <P>{__('Apologies for the inconvenience.', 'web-stories')}</P>
-      <div>
+      <Wrapper>
         <Button
-          variant={BUTTON_VARIANTS.SQUARE}
+          variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.QUATERNARY}
           size={BUTTON_SIZES.SMALL}
           onClick={reload}
@@ -74,7 +78,7 @@ function ErrorActions({ error, errorInfo }) {
           {__('Reload', 'web-stories')}
         </Button>
         <Button
-          variant={BUTTON_VARIANTS.SQUARE}
+          variant={BUTTON_VARIANTS.RECTANGLE}
           type={BUTTON_TYPES.PRIMARY}
           size={BUTTON_SIZES.SMALL}
           href={reportUrl}
@@ -83,7 +87,7 @@ function ErrorActions({ error, errorInfo }) {
         >
           {__('Report Error', 'web-stories')}
         </Button>
-      </div>
+      </Wrapper>
     </Message>
   );
 }
