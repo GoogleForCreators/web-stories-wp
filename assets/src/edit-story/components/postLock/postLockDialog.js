@@ -56,9 +56,9 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
       actions={
         <>
           <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
-          <Plain href={previewLink} target="_blank" rel="noreferrer">
+          { previewLink && <Plain href={previewLink} target="_blank" rel="noreferrer">
             {__('Preview', 'web-stories')}
-          </Plain>
+          </Plain> }
           <Plain onClick={onClose}>{__('Take over', 'web-stories')}</Plain>
         </>
       }
@@ -77,7 +77,7 @@ PostLockDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
-  previewLink: PropTypes.string.isRequired,
+  previewLink: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };
 
