@@ -23,7 +23,7 @@ import styled, { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import { theme, THEME_CONSTANTS } from '../../../theme';
-import { MediaInput } from '../index';
+import { MediaInput as DefaultMediaInput } from '../index';
 import { shortDropDownOptions } from '../../../storybookUtils/sampleData';
 import { MEDIA_VARIANTS } from '../constants';
 import { Headline } from '../../typography/headline';
@@ -45,6 +45,16 @@ const Row = styled.div`
   margin: 20px 0;
   display: flex;
   justify-content: space-evenly;
+`;
+
+const MediaInput = styled(DefaultMediaInput)`
+  width: 64px;
+  height: 114px;
+`;
+
+const CircleMedia = styled(DefaultMediaInput)`
+  width: 64px;
+  height: 64px;
 `;
 
 const mediaProps = {
@@ -78,7 +88,7 @@ export const _default = () => (
             {'variant: circle'} <br />
             {'with image'}
           </Text>
-          <MediaInput
+          <CircleMedia
             value={image}
             variant={MEDIA_VARIANTS.CIRCLE}
             menuOptions={shortDropDownOptions}
@@ -104,7 +114,7 @@ export const _default = () => (
             {'variant: circle'} <br />
             {'without image'}
           </Text>
-          <MediaInput
+          <CircleMedia
             value={null}
             variant={MEDIA_VARIANTS.CIRCLE}
             menuOptions={shortDropDownOptions}
@@ -129,7 +139,7 @@ export const _default = () => (
             {'variant: rectangle'} <br />
             {'no menu'}
           </Text>
-          <MediaInput
+          <CircleMedia
             value={image}
             variant={MEDIA_VARIANTS.CIRCLE}
             {...mediaProps}

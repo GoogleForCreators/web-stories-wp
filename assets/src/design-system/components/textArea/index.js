@@ -39,6 +39,13 @@ const Container = styled.div`
   min-width: 100px;
 `;
 
+const CounterText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  forwardedAs: 'span',
+})`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
+
 const Label = styled(Text)`
   margin-bottom: 12px;
 `;
@@ -100,6 +107,10 @@ const StyledTextArea = styled.textarea(
 
     :active {
       color: ${theme.colors.fg.primary};
+    }
+
+    ::placeholder {
+      color: ${theme.colors.fg.tertiary};
     }
   `
 );
@@ -169,10 +180,7 @@ export const TextArea = forwardRef(
           />
           {hasCounter && (
             <Counter>
-              <Text
-                as="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              >{`${value.length}/${maxLength}`}</Text>
+              <CounterText>{`${value.length}/${maxLength}`}</CounterText>
             </Counter>
           )}
         </InputContainer>

@@ -29,7 +29,7 @@ import { Headline, Text, THEME_CONSTANTS } from '../../../design-system';
 import ShortcutLabel from './shortcutLabel';
 
 const Header = styled(Headline).attrs({
-  as: 'h2',
+  as: 'h3',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
 })`
   margin-top: 24px;

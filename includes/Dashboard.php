@@ -208,7 +208,7 @@ class Dashboard {
 		$preload_paths = [
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/users/me/',
-			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture%2Cprivate&_web_stories_envelope=true',
+			sprintf( '/web-stories/v1/web-story/?_embed=%s&context=edit&order=desc&orderby=modified&page=1&per_page=%d&status=%s&_web_stories_envelope=true', urlencode( 'wp:lock,wp:lockuser,author' ), 24, urlencode( 'publish,draft,future,private' ) ),
 		];
 
 		/**
@@ -336,6 +336,7 @@ class Dashboard {
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
 				'isRTL'                 => is_rtl(),
+				'userId'                => get_current_user_id(),
 				'locale'                => ( new Locale() )->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'editStoryURL'          => $edit_story_url,

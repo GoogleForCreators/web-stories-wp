@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useRef } from 'react';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -43,6 +43,11 @@ export const MIN_MAX = {
   },
 };
 
+const StyledMedia = styled(Media)`
+  height: 114px;
+  width: 64px;
+`;
+
 const InputsWrapper = styled.div`
   align-self: flex-start;
   margin-left: 16px;
@@ -58,7 +63,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
-  const { allowedImageMimeTypes } = useConfig();
+  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) => {
@@ -70,6 +75,17 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     },
     [pushUpdate, rawPoster]
   );
+
+  const posterErrorMessage = useMemo(() => {
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as a poster.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [allowedImageFileTypes]);
 
   // Used for focusing and highlighting the panel from the pre-publish checkist.
   const ref = useRef();
@@ -83,9 +99,10 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
       isPersistable={!highlight}
     >
       <Row>
-        <Media
+        <StyledMedia
           value={poster}
           onChange={handleChangePoster}
+          onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
           alt={__('Preview poster image', 'web-stories')}

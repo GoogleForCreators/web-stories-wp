@@ -491,6 +491,8 @@ class Story_Post_Type {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @return array
 	 */
 	public function get_editor_settings() {
@@ -512,6 +514,10 @@ class Story_Post_Type {
 			}
 		}
 
+		if ( $story_id ) {
+			$this->setup_lock( $story_id );
+		}
+
 		// Media settings.
 		$max_upload_size = wp_max_upload_size();
 		if ( ! $max_upload_size ) {
@@ -520,6 +526,27 @@ class Story_Post_Type {
 
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+		$dashboard_url = add_query_arg(
+			[
+				'post_type' => self::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard',
+			],
+			admin_url( 'edit.php' )
+		);
+
+		/** This filter is documented in wp-admin/includes/ajax-actions.php */
+		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+		$user = wp_get_current_user();
+		/** This filter is documented in wp-admin/includes/post.php */
+		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
+
+		$nonce = wp_create_nonce( 'wp_rest' );
+
+		$mime_types       = $this->get_allowed_mime_types();
+		$mime_image_types = $this->get_allowed_image_mime_types();
+
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -527,10 +554,12 @@ class Story_Post_Type {
 				'isRTL'                 => is_rtl(),
 				'locale'                => ( new Locale() )->get_locale_settings(),
 				'allowedFileTypes'      => $this->get_allowed_file_types(),
-				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
-				'allowedMimeTypes'      => $this->get_allowed_mime_types(),
+				'allowedImageFileTypes' => $this->get_file_type_exts( $mime_image_types ),
+				'allowedImageMimeTypes' => $mime_image_types,
+				'allowedMimeTypes'      => $mime_types,
 				'postType'              => self::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
+				'dashboardLink'         => $dashboard_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,
@@ -541,18 +570,24 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'                   => [
-					'users'       => '/web-stories/v1/users/',
-					'currentUser' => '/web-stories/v1/users/me/',
-					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'       => '/web-stories/v1/media/',
-					'link'        => '/web-stories/v1/link/',
-					'statusCheck' => '/web-stories/v1/status-check/',
-					'metaBoxes'   => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'users'        => '/web-stories/v1/users/',
+					'currentUser'  => '/web-stories/v1/users/me/',
+					'stories'      => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'        => '/web-stories/v1/media/',
+					'link'         => '/web-stories/v1/link/',
+					'statusCheck'  => '/web-stories/v1/status-check/',
+					'metaBoxes'    => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'storyLocking' => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
 				],
+				'postLock'              => [
+					'interval'         => $time_window,
+					'showLockedDialog' => $show_locked_dialog,
+				],
 				'version'               => WEBSTORIES_VERSION,
+				'nonce'                 => $nonce,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'metaBoxes'             => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'         => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
@@ -572,6 +607,43 @@ class Story_Post_Type {
 		 * @param array $settings Array of settings passed to web stories editor.
 		 */
 		return apply_filters( 'web_stories_editor_settings', $settings );
+	}
+
+	/**
+	 * Setup up post lock.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param int $story_id Post id of story.
+	 *
+	 * @return void
+	 */
+	protected function setup_lock( $story_id ) {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object instanceof WP_Post_Type ) {
+			return;
+		}
+
+		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
+			return;
+		}
+
+
+		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
+			return;
+		}
+		// Make sure these functions are loaded.
+		if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/post.php';
+		}
+
+		// Check current lock.
+		$lock_user_id = wp_check_post_lock( $story_id );
+		if ( ! $lock_user_id ) {
+			// If no lock set, create new lock.
+			wp_set_post_lock( $story_id );
+		}
 	}
 
 	/**

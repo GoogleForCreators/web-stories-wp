@@ -37,7 +37,16 @@ import getAllPageLayouts from './getAllPageLayouts';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck, metaBoxes, currentUser },
+    api: {
+      stories,
+      media,
+      link,
+      users,
+      statusCheck,
+      metaBoxes,
+      currentUser,
+      storyLocking,
+    },
     encodeMarkup,
     cdnURL,
     assetsURL,
@@ -47,13 +56,45 @@ function APIProvider({ children }) {
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
-        _embed: 'wp:featuredmedia,author',
+        _embed: 'wp:featuredmedia,wp:lockuser,author',
         web_stories_demo: false,
       });
 
       return apiFetch({ path });
     },
     [stories]
+  );
+
+  const getStoryLockById = useCallback(
+    (storyId) => {
+      const path = addQueryArgs(`${stories}${storyId}/lock`, {
+        _embed: 'author',
+      });
+
+      return apiFetch({ path });
+    },
+    [stories]
+  );
+
+  const setStoryLockById = useCallback(
+    (storyId) => {
+      const path = `${stories}${storyId}/lock`;
+
+      return apiFetch({ path, method: 'POST' });
+    },
+    [stories]
+  );
+
+  const deleteStoryLockById = useCallback(
+    (storyId, nonce) => {
+      const data = new window.FormData();
+      data.append('_wpnonce', nonce);
+
+      const url = addQueryArgs(storyLocking, { _method: 'DELETE' });
+
+      window.navigator.sendBeacon?.(url, data);
+    },
+    [storyLocking]
   );
 
   const getDemoStoryById = useCallback(
@@ -332,6 +373,9 @@ function APIProvider({ children }) {
       autoSaveById,
       getStoryById,
       getDemoStoryById,
+      getStoryLockById,
+      setStoryLockById,
+      deleteStoryLockById,
       getMedia,
       getLinkMetadata,
       saveStoryById,

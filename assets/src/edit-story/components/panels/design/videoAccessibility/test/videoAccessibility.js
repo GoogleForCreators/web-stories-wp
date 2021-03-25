@@ -25,6 +25,7 @@ import { fireEvent } from '@testing-library/react';
 import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
+import ConfigContext from '../../../../../app/config/context';
 
 jest.mock('../../../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {
@@ -33,14 +34,31 @@ jest.mock('../../../../mediaPicker', () => ({
   },
 }));
 
+function renderVideoAccessibility(selectedElements) {
+  const configValue = {
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
+  };
+
+  const wrapper = (params) => (
+    <ConfigContext.Provider value={configValue}>
+      {params.children}
+    </ConfigContext.Provider>
+  );
+
+  return renderPanel(VideoAccessibility, selectedElements, wrapper);
+}
+
 describe('Panels/VideoAccessibility', () => {
   const defaultElement = {
     type: 'video',
     resource: { posterId: 0, poster: '', alt: '' },
   };
-  function renderVideoAccessibility(...args) {
-    return renderPanel(VideoAccessibility, ...args);
-  }
 
   beforeAll(() => {
     localStorage.setItem(

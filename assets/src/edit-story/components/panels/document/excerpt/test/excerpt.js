@@ -41,7 +41,6 @@ function setupPanel() {
 
   return {
     getByRole,
-    updateStory,
   };
 }
 
@@ -69,9 +68,7 @@ describe('ExcerptPanel', () => {
     expect(input).toBeInTheDocument();
   });
 
-  // Skip reason: will be fixed in the excerpt-specific PR.
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should respect excerpt character limit', () => {
+  it('should respect excerpt character limit', () => {
     const { getByRole } = setupPanel();
     const input = getByRole('textbox', { name: 'Story Description' });
 

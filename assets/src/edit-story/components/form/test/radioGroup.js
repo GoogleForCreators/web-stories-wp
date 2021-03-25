@@ -31,12 +31,12 @@ describe('RadioGroup', () => {
   const options = [
     {
       value: 'a',
-      name: __('Option A', 'web-stories'),
+      label: __('Option A', 'web-stories'),
       helper: __('This is the best option', 'web-stories'),
     },
     {
       value: 'b',
-      name: __('Option B', 'web-stories'),
+      label: __('Option B', 'web-stories'),
       helper: __('Also a good option', 'web-stories'),
     },
   ];
@@ -44,6 +44,8 @@ describe('RadioGroup', () => {
   it('should render with correct options', () => {
     const { getByRole } = renderWithTheme(
       <RadioGroup
+        name="test"
+        groupLabel="test"
         onChange={() => null}
         options={options}
         value={options[0].value}
@@ -60,8 +62,11 @@ describe('RadioGroup', () => {
 
   it('should change the value when clicking', () => {
     const onChange = jest.fn();
+
     const { getByRole } = renderWithTheme(
       <RadioGroup
+        name="test"
+        groupLabel="test"
         onChange={onChange}
         options={options}
         value={options[0].value}
@@ -71,7 +76,6 @@ describe('RadioGroup', () => {
     fireEvent.click(optionB);
     expect(onChange).toHaveBeenCalledTimes(1);
 
-    const any = expect.anything();
-    expect(onChange).toHaveBeenCalledWith('b', any);
+    expect(onChange).toHaveBeenCalledWith(expect.any(Object));
   });
 });

@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
-export { default as useSnackbarContext } from './useSnackbarContext';
-export { default as SnackbarProvider } from './snackbarProvider';
-export { default as SnackbarContainer } from './snackbarContainer';
+/**
+ * Internal dependencies
+ */
+import { createContext } from '../../utils/context';
+
+export default createContext({});

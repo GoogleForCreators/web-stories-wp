@@ -29,7 +29,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     const testMissingPoster = metadataGuidelines.storyPosterAttached(testStory);
     expect(testMissingPoster).not.toBeUndefined();
     expect(testMissingPoster.message).toMatchInlineSnapshot(
-      `"Add poster image"`
+      `"Add cover image"`
     );
     expect(testMissingPoster.storyId).toStrictEqual(testStory.id);
   });
