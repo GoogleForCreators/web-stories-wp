@@ -70,8 +70,16 @@ const HueWrapper = styled.div`
 `;
 
 const AlphaWrapper = styled.div`
-  background: #fff;
   ${wrapperCSS}
+  div:first-child div:first-child div:first-child {
+    background-image: conic-gradient(
+      ${({ theme }) => theme.colors.fg.tertiary} 0.25turn,
+      transparent 0turn 0.5turn,
+      ${({ theme }) => theme.colors.fg.tertiary} 0turn 0.75turn,
+      transparent 0turn 1turn
+    ) !important;
+    background-size: 8px 8px !important;
+  }
 `;
 
 const Footer = styled.div`
