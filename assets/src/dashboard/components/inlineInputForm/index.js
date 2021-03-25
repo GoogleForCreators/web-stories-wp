@@ -61,7 +61,7 @@ const InlineInputForm = ({
 
   useEffect(() => {
     if (!noAutoFocus && inputContainerRef.current) {
-      inputContainerRef.current.firstChild?.focus();
+      inputContainerRef.current.querySelector('input')?.focus();
     }
   }, [noAutoFocus]);
 
