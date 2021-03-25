@@ -85,11 +85,6 @@ class Web_Stories_Block extends Embed_Base {
 			$this->get_script_settings()
 		);
 
-		// Check to see if block is already registered.
-		if ( $this->is_registered( self::BLOCK_NAME ) ) {
-			return;
-		}
-
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.
 		register_block_type(
@@ -347,17 +342,5 @@ class Web_Stories_Block extends Embed_Base {
 		}
 
 		return $query_args;
-	}
-
-	/**
-	 * Checks if a block type is registered.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @param string $name Block type name including namespace.
-	 * @return bool True if the block type is registered, false otherwise.
-	 */
-	protected function is_registered( $name ) {
-		return WP_Block_Type_Registry::get_instance()->is_registered( $name );
 	}
 }

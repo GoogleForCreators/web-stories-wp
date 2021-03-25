@@ -49,6 +49,7 @@ function setup_new_site() {
 	$database_upgrader->register();
 }
 
+
 /**
  * Handles plugin activation.
  *
@@ -63,8 +64,7 @@ function setup_new_site() {
  * @return void
  */
 function activate( $network_wide = false ) {
-	$web_stories = new Plugin();
-	$web_stories->activate( $network_wide );
+	get_plugin_instance()->activate( $network_wide );
 
 	do_action( 'web_stories_activation', $network_wide );
 }
@@ -130,8 +130,7 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
-	$web_stories = new Plugin();
-	$web_stories->deactivate( $network_wide );
+	get_plugin_instance()->deactivate( $network_wide );
 
 	do_action( 'web_stories_deactivation', $network_wide );
 }
@@ -242,10 +241,7 @@ function rest_preload_api_request( $memo, $path ) {
 	return $memo;
 }
 
-global $web_stories;
-
-$web_stories = new Plugin();
-$web_stories->register();
+get_plugin_instance()->register();
 
 /**
  * Web stories Plugin Instance
@@ -254,5 +250,10 @@ $web_stories->register();
  */
 function get_plugin_instance() {
 	global $web_stories;
+
+	if ( null === $web_stories ) {
+		$web_stories = new Plugin();
+	}
+
 	return $web_stories;
 }
