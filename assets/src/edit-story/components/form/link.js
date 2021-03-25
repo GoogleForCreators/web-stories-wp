@@ -80,13 +80,17 @@ function LinkInput({
 }
 
 LinkInput.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   description: PropTypes.string,
   hint: PropTypes.string,
-  hasError: PropTypes.boolean,
+  hasError: PropTypes.bool,
+};
+
+LinkInput.defaultProps = {
+  value: '',
 };
 
 export default LinkInput;

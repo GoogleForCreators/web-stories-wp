@@ -236,7 +236,7 @@ export const MediaInput = forwardRef(function Media(
 MediaInput.propTypes = {
   className: PropTypes.string,
   value: PropTypes.any,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   onBlur: PropTypes.func,
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,
@@ -246,4 +246,8 @@ MediaInput.propTypes = {
   onMenuOption: PropTypes.func,
   openMediaPicker: PropTypes.func.isRequired,
   menuProps: PropTypes.object,
+};
+
+MediaInput.defaultProps = {
+  onChange: () => {},
 };

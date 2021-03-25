@@ -284,12 +284,16 @@ function Slider({
 Slider.propTypes = {
   minorStep: PropTypes.number.isRequired,
   majorStep: PropTypes.number.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func,
   value: PropTypes.number.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
   thumbSize: PropTypes.number,
   suffix: PropTypes.string,
+};
+
+Slider.defaultProps = {
+  handleChange: () => {},
 };
 
 export { Slider };

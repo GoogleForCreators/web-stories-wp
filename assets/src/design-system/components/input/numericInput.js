@@ -101,3 +101,7 @@ NumericInput.propTypes = {
   min: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
+
+NumericInput.defaultProps = {
+  value: '',
+};

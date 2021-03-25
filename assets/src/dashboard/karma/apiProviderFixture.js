@@ -171,6 +171,10 @@ function getSettingsState() {
     googleAnalyticsId: '',
     publisherLogoIds: [],
     activePublisherLogoId: fillerPublisherLogoIds[0],
+    adSensePublisherId: '',
+    adSenseSlotId: '',
+    adManagerSlotId: '',
+    adNetwork: '',
   };
 }
 
