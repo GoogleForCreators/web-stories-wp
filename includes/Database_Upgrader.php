@@ -104,7 +104,7 @@ class Database_Upgrader implements Service, Delayed, Registerable, Activateable 
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action() {
-		return 'init';
+		return 'admin_init';
 	}
 
 	/**
