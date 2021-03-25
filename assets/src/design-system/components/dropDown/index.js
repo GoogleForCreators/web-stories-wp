@@ -52,6 +52,7 @@ import useDropDown from './useDropDown';
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
+ * @param {string} props.className Class name.
  * @return {*} The dropdown.
  */
 export const DropDown = ({
