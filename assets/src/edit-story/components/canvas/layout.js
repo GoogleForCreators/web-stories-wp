@@ -120,13 +120,13 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
     hasHorizontalOverflow ? 'flex-start' : 'center'};
   align-items: ${({ hasVerticalOverflow }) =>
     hasVerticalOverflow ? 'flex-start' : 'center'};
-  overflow: ${({ hideScrollbars }) =>
-    hideScrollbars ? 'hidden' : 'var(--overflow-x) var(--overflow-y)'};
+  overflow: ${({ overflow }) =>
+    overflow ?? 'var(--overflow-x) var(--overflow-y)'};
 
   ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
     isControlled &&
     css`
-      overflow: hidden;
+      overflow: ${({ overflow }) => overflow ?? 'hidden'};
       width: calc(100% - ${hasVerticalOverflow ? SCROLLBAR_WIDTH : 0}px);
       height: calc(100% - ${hasHorizontalOverflow ? SCROLLBAR_WIDTH : 0}px);
     `}
@@ -162,7 +162,6 @@ const PageClip = styled.div`
     `}
 `;
 
-// Overflow is not hidden for media edit layer.
 const PageAreaWithOverflow = styled.div`
   ${({ background }) => generatePatternStyles(background)}
   overflow: visible;
@@ -197,6 +196,7 @@ const PageAreaWithOverflow = styled.div`
     `}
 `;
 
+// Overflow is only hidden for display layer, not edit nor frames
 const PageAreaWithoutOverflow = styled.div`
   overflow: ${({ showOverflow }) => (showOverflow ? 'initial' : 'hidden')};
   position: relative;
@@ -328,7 +328,7 @@ const PageArea = forwardRef(function PageArea(
     overlay = [],
     background,
     isControlled = false,
-    hideScrollbars = false,
+    overflow,
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
@@ -347,7 +347,7 @@ const PageArea = forwardRef(function PageArea(
       data-testid="fullbleed"
       aria-label={__('Fullbleed area', 'web-stories')}
       role="region"
-      hideScrollbars={hideScrollbars}
+      overflow={overflow}
       isControlled={isControlled}
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
@@ -382,7 +382,7 @@ PageArea.propTypes = {
   overlay: PropTypes.node,
   background: PropTypes.object,
   isControlled: PropTypes.bool,
-  hideScrollbars: PropTypes.bool,
+  overflow: PropTypes.string,
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
