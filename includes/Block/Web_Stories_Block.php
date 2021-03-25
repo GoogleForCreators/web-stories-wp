@@ -86,7 +86,7 @@ class Web_Stories_Block extends Embed_Base {
 		);
 
 		// Check to see if block is already registered.
-		if ( $this->is_register( self::BLOCK_NAME ) ) {
+		if ( $this->is_registered( self::BLOCK_NAME ) ) {
 			return;
 		}
 
@@ -366,7 +366,7 @@ class Web_Stories_Block extends Embed_Base {
 	 * @param string $name Block type name including namespace.
 	 * @return bool True if the block type is registered, false otherwise.
 	 */
-	protected function is_register( $name ) {
+	protected function is_registered( $name ) {
 		return WP_Block_Type_Registry::get_instance()->is_registered( $name );
 	}
 }
