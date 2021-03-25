@@ -17,17 +17,6 @@
 /**
  * Internal dependencies
  */
-import { useContextSelector, identity } from '../../../design-system';
-import { SnackbarContext } from './snackbarProvider';
+import { createContext } from '../../utils/context';
 
-const useSnackbarContext = (selector = identity) => {
-  const context = useContextSelector(SnackbarContext, selector);
-  if (!context) {
-    throw new Error(
-      'useSnackbarContext() must be used within a <SnackbarProvider />'
-    );
-  }
-  return context;
-};
-
-export default useSnackbarContext;
+export default createContext({});

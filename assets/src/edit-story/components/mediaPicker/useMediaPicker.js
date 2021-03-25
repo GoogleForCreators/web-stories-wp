@@ -26,7 +26,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
-import { useSnackbar } from '../../app/snackbar';
+import { useSnackbar } from '../../../design-system';
 
 /**
  * Custom hook to open the WordPress media modal.

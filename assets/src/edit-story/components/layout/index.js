@@ -38,6 +38,7 @@ import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
+import { Snackbar, useSnackbar } from '../../../design-system';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -76,24 +77,34 @@ const MetaBoxesArea = styled(Area).attrs({
 `;
 
 function Layout() {
+  const snackbarState = useSnackbar(
+    ({ removeSnack, currentSnacks, placement }) => ({
+      onRemove: removeSnack,
+      notifications: currentSnacks,
+      placement,
+    })
+  );
   return (
-    <LayoutProvider>
-      <PrepublishChecklistProvider>
-        <HighlightsProvider>
-          <Editor zIndex={3}>
-            <CanvasProvider>
-              <Area area="lib">
-                <Library />
-              </Area>
-              <Workspace />
-            </CanvasProvider>
-            <MetaBoxesArea>
-              <MetaBoxes />
-            </MetaBoxesArea>
-          </Editor>
-        </HighlightsProvider>
-      </PrepublishChecklistProvider>
-    </LayoutProvider>
+    <>
+      <LayoutProvider>
+        <PrepublishChecklistProvider>
+          <HighlightsProvider>
+            <Editor zIndex={3}>
+              <CanvasProvider>
+                <Area area="lib">
+                  <Library />
+                </Area>
+                <Workspace />
+              </CanvasProvider>
+              <MetaBoxesArea>
+                <MetaBoxes />
+              </MetaBoxesArea>
+            </Editor>
+          </HighlightsProvider>
+        </PrepublishChecklistProvider>
+      </LayoutProvider>
+      <Snackbar.Container {...snackbarState} />
+    </>
   );
 }
 

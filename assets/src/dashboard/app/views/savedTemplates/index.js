@@ -26,7 +26,7 @@ import { Layout, ScrollToTop } from '../../../components';
 import { SAVED_TEMPLATES_STATUSES } from '../../../constants';
 import useStoryView from '../../../utils/useStoryView';
 import useApi from '../../api/useApi';
-import { DashboardSnackbar, PreviewStoryView } from '../';
+import { PreviewStoryView } from '../';
 import Header from './header';
 import Content from './content';
 
@@ -116,7 +116,6 @@ function SavedTemplates() {
       />
 
       <Layout.Fixed>
-        <DashboardSnackbar />
         <ScrollToTop />
       </Layout.Fixed>
     </Layout.Provider>

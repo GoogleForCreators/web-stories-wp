@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { identity, useContextSelector } from '../../../design-system';
-import Context from './context';
+import { css } from 'styled-components';
 
-function useSnackbar(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useSnackbar;
+export const transparentBg = css`
+  background-image: conic-gradient(
+    ${({ theme }) => theme.colors.fg.tertiary} 0.25turn,
+    transparent 0turn 0.5turn,
+    ${({ theme }) => theme.colors.fg.tertiary} 0turn 0.75turn,
+    transparent 0turn 1turn
+  );
+  background-size: 8px 8px;
+`;

@@ -36,7 +36,7 @@ import {
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
-import { SnackbarProvider } from '../../../../snackbar';
+import { SnackbarProvider } from '../../../../../../design-system';
 import Content from '../';
 import StoriesView from '../storiesView';
 

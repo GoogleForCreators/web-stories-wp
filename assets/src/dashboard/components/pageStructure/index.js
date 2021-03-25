@@ -55,8 +55,10 @@ import {
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
-  overflow-x: scroll;
-  min-width: 100%;
+  width: 100%;
+  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
+    width: ${MIN_DASHBOARD_WIDTH}px;
+  }
 `;
 
 export const PageContent = styled.div`
@@ -70,7 +72,6 @@ export const PageContent = styled.div`
   @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
     left: 0;
     width: 100%;
-    min-width: ${MIN_DASHBOARD_WIDTH}px;
   }
 `;
 
@@ -168,8 +169,10 @@ export function LeftRail() {
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <Header as="h1">
-          <LogoWithTypeCircleColor title={__('Web Stories', 'web-stories')} />
+        <Header forwardedAs="h2">
+          <LogoWithTypeCircleColor
+            title={__('Web Stories Dashboard', 'web-stories')}
+          />
         </Header>
         <Content>
           <Button

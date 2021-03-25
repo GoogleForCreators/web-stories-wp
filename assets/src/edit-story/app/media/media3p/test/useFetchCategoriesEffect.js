@@ -35,7 +35,7 @@ jest.mock('../api', () => ({
 }));
 
 const mockShowSnackbar = jest.fn();
-jest.mock('../../../snackbar', () => ({
+jest.mock('../../../../../design-system/contexts/snackbar/useSnackbar', () => ({
   useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 
