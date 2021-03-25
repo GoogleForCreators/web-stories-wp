@@ -168,8 +168,8 @@ export const ChevronIcon = styled(Chevron)`
   height: auto;
   margin: auto;
 
-  ${({ isMenuOpen }) =>
-    isMenuOpen &&
+  ${({ $isMenuOpen }) =>
+    $isMenuOpen &&
     css`
       transform: rotate(180deg);
     `}
