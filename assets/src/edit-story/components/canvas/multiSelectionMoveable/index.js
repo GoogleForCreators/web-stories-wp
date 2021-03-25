@@ -31,6 +31,7 @@ import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';
+import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
 import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
 import useResize from './useResize';
@@ -82,16 +83,8 @@ function MultiSelectionMoveable({ selectedElements }) {
     }
   }, [selectedElements, moveable, nodesById, scrollLeft, scrollTop]);
 
-  // If zoom ever updates, update rect now AND in a frame's time
-  useEffect(() => {
-    if (!moveable.current) {
-      return;
-    }
-    moveable.current.updateRect();
-    // Disable reason: Not necessary to cancel - only waits one frame
-    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    setTimeout(() => moveable.current.updateRect());
-  }, [zoomSetting]);
+  // If zoom ever updates, update selection rect
+  useUpdateSelectionRectangle(moveable, [zoomSetting]);
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({

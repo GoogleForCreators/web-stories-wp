@@ -66,7 +66,7 @@ function useZoomSetting(hasCanvasZoom) {
         hasPageNavigation: true,
         pagePadding: ZOOM_PADDING_NONE,
         viewportWidth: bestSize + ZOOM_PADDING_NONE,
-        viewportHeight: bestSize / PAGE_RATIO + ZOOM_PADDING_NONE,
+        viewportHeight: bestSize / FULLBLEED_RATIO + ZOOM_PADDING_NONE,
         workspaceWidth: workspaceSize.width,
         workspaceHeight: workspaceSize.height,
       };
