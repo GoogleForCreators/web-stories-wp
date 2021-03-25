@@ -26,9 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Status_Check_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
@@ -41,7 +38,7 @@ use Google\Web_Stories\REST_API\Stories_Users_Controller;
 /**
  * Class REST_API_Factory
  */
-class REST_API_Factory implements Service, Delayed, Registerable {
+class REST_API_Factory extends Service {
 	/**
 	 * Registers REST API routes.
 	 *

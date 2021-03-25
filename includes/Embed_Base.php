@@ -26,9 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -37,7 +34,7 @@ use Google\Web_Stories\Traits\Assets;
 /**
  * Embed block class.
  */
-class Embed_Base implements Service, Delayed, Registerable {
+class Embed_Base extends Service {
 	use Assets;
 
 	/**
@@ -84,15 +81,6 @@ class Embed_Base implements Service, Delayed, Registerable {
 		}
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
 	}
 
 	/**

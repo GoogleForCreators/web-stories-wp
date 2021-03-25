@@ -28,9 +28,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Types;
@@ -40,7 +37,7 @@ use WP_Screen;
 /**
  * Dashboard class.
  */
-class Dashboard implements Service, Delayed, Registerable {
+class Dashboard extends Service {
 	use Assets;
 	use Types;
 
@@ -107,24 +104,6 @@ class Dashboard implements Service, Delayed, Registerable {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

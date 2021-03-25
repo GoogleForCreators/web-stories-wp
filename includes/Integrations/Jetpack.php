@@ -27,9 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Service;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_Screen;
@@ -37,7 +35,7 @@ use WP_Screen;
 /**
  * Class Jetpack.
  */
-class Jetpack implements Service, Delayed, Registerable {
+class Jetpack extends Service {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -54,24 +52,6 @@ class Jetpack implements Service, Delayed, Registerable {
 		}
 
 		add_filter( 'jetpack_is_amp_request', [ $this, 'force_amp_request' ] );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

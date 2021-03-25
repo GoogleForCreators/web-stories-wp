@@ -28,9 +28,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Renderer\Image;
 use WP_Post;
@@ -40,7 +37,7 @@ use WP_Screen;
 /**
  * Admin class.
  */
-class Admin implements Service, Delayed, Registerable {
+class Admin extends Service {
 	/**
 	 * Initialize admin-related functionality.
 	 *
@@ -61,15 +58,6 @@ class Admin implements Service, Delayed, Registerable {
 	 */
 	public static function get_registration_action() {
 		return 'admin_init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

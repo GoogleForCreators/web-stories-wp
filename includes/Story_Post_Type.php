@@ -28,9 +28,6 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Deactivateable;
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -52,7 +49,7 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type implements Service, Delayed, Registerable, Activateable, Deactivateable {
+class Story_Post_Type extends Service implements Activateable, Deactivateable {
 	use Publisher;
 	use Types;
 	use Assets;
@@ -238,24 +235,6 @@ class Story_Post_Type implements Service, Delayed, Registerable, Activateable, D
 	public function deactivate( $network_wide ) {
 		$this->remove_caps_from_roles();
 		unregister_post_type( self::POST_TYPE_SLUG );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

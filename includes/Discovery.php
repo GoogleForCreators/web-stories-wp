@@ -28,9 +28,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Traits\Publisher;
 
 use WP_Post;
@@ -38,7 +35,7 @@ use WP_Post;
 /**
  * Discovery class.
  */
-class Discovery implements Service, Delayed, Registerable {
+class Discovery extends Service {
 	use Publisher;
 	/**
 	 * Initialize discovery functionality.
@@ -74,24 +71,6 @@ class Discovery implements Service, Delayed, Registerable {
 		} else {
 			add_action( 'web_stories_story_head', 'noindex', 1 );
 		}
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

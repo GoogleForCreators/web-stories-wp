@@ -26,9 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use WP_Post;
 use WP_Query;
 use WP_REST_Request;
@@ -37,7 +34,7 @@ use WP_Screen;
 /**
  * Class Media
  */
-class Media implements Service, Delayed, Registerable {
+class Media extends Service {
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
@@ -217,24 +214,6 @@ class Media implements Service, Delayed, Registerable {
 		add_filter( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
 		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_poster_attachments' ], 10, 2 );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

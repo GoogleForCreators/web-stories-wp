@@ -26,15 +26,13 @@
 
 namespace Google\Web_Stories\Integrations;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Service;
 use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class NextGen_Gallery.
  */
-class NextGen_Gallery implements Service, Delayed, Registerable {
+class NextGen_Gallery extends Service {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -44,15 +42,6 @@ class NextGen_Gallery implements Service, Delayed, Registerable {
 	 */
 	public function register() {
 		add_filter( 'run_ngg_resource_manager', [ $this, 'filter_run_ngg_resource_manager' ], PHP_INT_MAX );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
 	}
 
 	/**

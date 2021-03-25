@@ -26,15 +26,12 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use WP_Screen;
 
 /**
  * Class Meta_Boxes.
  */
-class Meta_Boxes implements Service, Delayed, Registerable {
+class Meta_Boxes extends Service {
 	/**
 	 * Supported meta box locations.
 	 *
@@ -58,24 +55,6 @@ class Meta_Boxes implements Service, Delayed, Registerable {
 	 */
 	public function register() {
 		add_action( 'add_meta_boxes_' . Story_Post_Type::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ], PHP_INT_MAX );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

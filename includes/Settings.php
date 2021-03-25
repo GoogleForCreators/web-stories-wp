@@ -28,14 +28,10 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
-
 /**
  * Settings class.
  */
-class Settings implements Service, Delayed, Registerable {
+class Settings extends Service {
 	/**
 	 * Settings group.
 	 *
@@ -115,15 +111,6 @@ class Settings implements Service, Delayed, Registerable {
 	 */
 	public function register() {
 		add_action( 'init', [ $this, 'register_settings' ] );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
 	}
 
 	/**

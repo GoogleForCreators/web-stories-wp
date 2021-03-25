@@ -28,12 +28,10 @@ namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Service;
 use WP_Post;
 use WP_Screen;
 
@@ -42,7 +40,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class AMP implements Service, Delayed, Registerable {
+class AMP extends Service {
 	use Publisher;
 
 	/**
@@ -68,24 +66,6 @@ class AMP implements Service, Delayed, Registerable {
 
 		// This filter is actually used in this plugin's `Sanitization` class.
 		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

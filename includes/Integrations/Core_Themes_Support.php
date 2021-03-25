@@ -27,9 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Customizer;
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Service;
 use Google\Web_Stories\Stories_Renderer\Renderer;
 use Google\Web_Stories\Traits\Assets;
 use function Google\Web_Stories\render_theme_stories;
@@ -37,7 +35,7 @@ use function Google\Web_Stories\render_theme_stories;
 /**
  * Class Core_Themes_Support.
  */
-class Core_Themes_Support implements Service, Delayed, Registerable {
+class Core_Themes_Support extends Service {
 	use Assets;
 
 	/**
@@ -143,14 +141,5 @@ class Core_Themes_Support implements Service, Delayed, Registerable {
 	 */
 	public static function get_registration_action() {
 		return 'after_setup_theme';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 }

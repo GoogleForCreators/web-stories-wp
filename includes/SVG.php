@@ -28,11 +28,8 @@ namespace Google\Web_Stories;
 
 use DOMDocument;
 use DOMElement;
-use Google\Web_Stories\Infrastructure\Delayed;
 use WP_Error;
 use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
-use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Conditional;
 
 /**
@@ -42,7 +39,7 @@ use Google\Web_Stories\Infrastructure\Conditional;
  *
  * @package Google\Web_Stories
  */
-class SVG implements Service, Delayed, Registerable, Conditional {
+class SVG extends Service implements Conditional {
 	/**
 	 * File extension.
 	 *
@@ -103,24 +100,6 @@ class SVG implements Service, Delayed, Registerable, Conditional {
 	public static function is_needed() {
 		$experiments = new Experiments();
 		return $experiments->is_experiment_enabled( 'enableSVG' );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**

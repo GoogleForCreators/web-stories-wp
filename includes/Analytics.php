@@ -26,14 +26,10 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
-
 /**
  * Class Analytics
  */
-class Analytics implements Service, Delayed, Registerable {
+class Analytics extends Service {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -43,24 +39,6 @@ class Analytics implements Service, Delayed, Registerable {
 	 */
 	public function register() {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_analytics_tag' ] );
-	}
-
-	/**
-	 * Get the action to use for registering the service.
-	 *
-	 * @return string Registration action to use.
-	 */
-	public static function get_registration_action() {
-		return 'init';
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority() {
-		return 10;
 	}
 
 	/**
