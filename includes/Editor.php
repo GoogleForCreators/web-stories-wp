@@ -37,12 +37,31 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
  * @package Google\Web_Stories
  */
 class Editor {
+
+	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Editor constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
 	/**
 	 * Init
 	 *
 	 * @return void
 	 */
 	public function init() {
+		if ( ! $this->experiments->is_experiment_enabled( 'videoOptimization' ) ) {
+			return;
+		}
 		add_action( 'admin_footer-post.php', [ $this, 'admin_footer' ] );
 		add_action( 'admin_footer-post-new.php', [ $this, 'admin_footer' ] );
 		add_action( 'load-post.php', [ $this, 'admin_header' ] );
@@ -58,12 +77,7 @@ class Editor {
 	 * @return void
 	 */
 	public function admin_header() {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
-			return;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -79,12 +93,7 @@ class Editor {
 	 * @return void
 	 */
 	public function admin_footer() {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
-			return;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -99,10 +108,9 @@ class Editor {
 		$map = [
 			'link'   => 'href',
 			'img'    => 'src',
+			'iframe' => 'src',
 			'script' => 'src',
 		];
-
-		$site_url = site_url();
 
 		foreach ( $map as $tag => $attribute ) {
 			$tags = $document->getElementsByTagName( $tag );
@@ -118,16 +126,7 @@ class Editor {
 					continue;
 				}
 
-				if ( $this->starts_with( $value, $site_url ) ) {
-					continue;
-				}
-
-				if ( $this->starts_with( $value, '/' ) ) {
-					continue;
-				}
-
-				$url  = esc_url( $value );
-				$html = str_replace( "{$attribute}='{$url}'", "crossorigin='anonymous' {$attribute}='{$url}'", $html );
+				$html = $this->add_attribute( $html, $attribute, $value );
 			}
 		}
 
@@ -144,28 +143,11 @@ class Editor {
 	 * @return string
 	 */
 	public function style_loader_tag( $tag, $handle, $href ) {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
+		if ( ! $this->is_edit_screen() ) {
 			return $tag;
 		}
 
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
-			return $tag;
-		}
-
-		$site_url = site_url();
-
-		if ( $this->starts_with( $href, $site_url ) ) {
-			return $tag;
-		}
-
-		if ( $this->starts_with( $href, '/' ) ) {
-			return $tag;
-		}
-
-		$tag = str_replace( "href='{$href}'", "crossorigin='anonymous' href='{$href}'", $tag );
-
-		return $tag;
+		return $this->add_attribute( $tag, 'href', $href );
 	}
 
 	/**
@@ -178,28 +160,11 @@ class Editor {
 	 * @return string
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
+		if ( ! $this->is_edit_screen() ) {
 			return $tag;
 		}
 
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
-			return $tag;
-		}
-
-		$site_url = site_url();
-
-		if ( $this->starts_with( $src, $site_url ) ) {
-			return $tag;
-		}
-
-		if ( $this->starts_with( $src, '/' ) ) {
-			return $tag;
-		}
-
-		$tag = str_replace( "src='{$src}'", "crossorigin='anonymous' src='{$src}'", $tag );
-
-		return $tag;
+		return $this->add_attribute( $tag, 'src', $src );
 	}
 
 	/**
@@ -219,29 +184,35 @@ class Editor {
 	 * @return string
 	 */
 	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
+		if ( ! $this->is_edit_screen() ) {
 			return $avatar;
 		}
 
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
-			return $avatar;
-		}
-		
+		return $this->add_attribute( $avatar, 'src', $args['url'] );
+	}
+
+	/**
+	 * Do replacement to add crossorigin attribute.
+	 *
+	 * @param string $html HTML string.
+	 * @param string $attribute Attribute to check for.
+	 * @param string $url URL.
+	 *
+	 * @return string
+	 */
+	protected function add_attribute( $html, $attribute, $url ) {
 		$site_url = site_url();
-		$src      = esc_url( $args['url'] );
+		$url      = esc_url( $url );
 
-		if ( $this->starts_with( $src, $site_url ) ) {
-			return $avatar;
+		if ( $this->starts_with( $url, $site_url ) ) {
+			return $html;
 		}
 
-		if ( $this->starts_with( $src, '/' ) ) {
-			return $avatar;
+		if ( $this->starts_with( $url, '/' ) ) {
+			return $html;
 		}
 
-		$avatar = str_replace( "src='{$src}'", "crossorigin='anonymous' src='{$src}'", $avatar );
-
-		return $avatar;
+		return (string) str_replace( "{$attribute}='{$url}'", "crossorigin='anonymous' {$attribute}='{$url}'", $html );
 	}
 
 	/**
@@ -256,6 +227,24 @@ class Editor {
 		$len = strlen( $start_string );
 
 		return ( substr( $string, 0, $len ) === $start_string );
+	}
+
+	/**
+	 * Is this the editor scrren.
+	 *
+	 * @return bool
+	 */
+	protected function is_edit_screen() {
+		$screen = $this->get_current_screen();
+		if ( ! $screen ) {
+			return false;
+		}
+
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

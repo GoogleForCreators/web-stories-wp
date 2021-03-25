@@ -250,7 +250,7 @@ class Plugin {
 		$this->meta_boxes = new Meta_Boxes();
 		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
 
-		$editor = new Editor();
+		$editor = new Editor( $this->experiments );
 		add_action( 'init', [ $editor, 'init' ] );
 
 		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
