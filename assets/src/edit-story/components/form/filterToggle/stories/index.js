@@ -96,7 +96,7 @@ export const _default = () => {
             isToggled={toggleValue === value}
             onClick={() => setValue(toggleValue)}
           >
-            <img src={dummyImage} />
+            <img src={dummyImage} alt={rest.label} />
           </FilterToggle>
         );
       })}
