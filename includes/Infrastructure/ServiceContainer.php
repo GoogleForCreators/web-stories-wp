@@ -44,6 +44,8 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	/**
 	 * Find a service of the container by its identifier and return it.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $id Identifier of the service to look for.
 	 *
 	 * @throws InvalidService If the service could not be found.
@@ -56,6 +58,8 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 * Check whether the container can return a service for the given
 	 * identifier.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $id Identifier of the service to look for.
 	 *
 	 * @return bool
@@ -64,6 +68,8 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 
 	/**
 	 * Put a service into the container for later retrieval.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string  $id      Identifier of the service to put into the
 	 *                         container.

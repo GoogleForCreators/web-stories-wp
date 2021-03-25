@@ -45,6 +45,8 @@ final class Services {
 	/**
 	 * Get a particular service out of the service container.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $service Service ID to retrieve.
 	 * @return Service
 	 */
@@ -55,6 +57,8 @@ final class Services {
 	/**
 	 * Check if a particular service has been registered in the service container.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $service Service ID to retrieve.
 	 * @return bool
 	 */
@@ -64,6 +68,8 @@ final class Services {
 
 	/**
 	 * Get an instance of the plugin.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return Plugin Plugin object instance.
 	 */
@@ -78,6 +84,8 @@ final class Services {
 	/**
 	 * Get an instance of the service container.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return ServiceContainer Service container object instance.
 	 */
 	public static function get_container() {
@@ -90,6 +98,8 @@ final class Services {
 
 	/**
 	 * Get an instance of the dependency injector.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return Injector|Service Dependency injector object instance.
 	 */

@@ -40,6 +40,8 @@ interface Deactivateable {
 	/**
 	 * Deactivate the service.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */

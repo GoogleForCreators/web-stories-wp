@@ -48,6 +48,8 @@ interface Injector extends Service {
 	/**
 	 * Make an object instance out of an interface or class.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string|class-string|object $interface_or_class Interface or class to make an object
 	 *                                   instance out of.
 	 * @param array                      $arguments          Optional. Additional arguments to pass
@@ -63,6 +65,8 @@ interface Injector extends Service {
 	 * Note: The implementation can be an interface as well, as long as it can
 	 * be resolved to an instantiatable class at runtime.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $from Interface or class to bind an implementation to.
 	 * @param string $to   Interface or class that provides the implementation.
 	 * @return Injector
@@ -71,6 +75,8 @@ interface Injector extends Service {
 
 	/**
 	 * Bind an argument for a class to a specific value.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $interface_or_class Interface or class to bind an argument
 	 *                                   for.
@@ -89,6 +95,8 @@ interface Injector extends Service {
 	 * Always reuse and share the same instance for the provided interface or
 	 * class.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $interface_or_class Interface or class to reuse.
 	 * @return Injector
 	 */
@@ -96,6 +104,8 @@ interface Injector extends Service {
 
 	/**
 	 * Delegate instantiation of an interface or class to a callable.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string   $interface_or_class Interface or class to delegate the
 	 *                                     instantiation of.

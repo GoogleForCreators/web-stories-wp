@@ -41,6 +41,8 @@ interface Conditional {
 	/**
 	 * Check whether the conditional object is currently needed.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
 	public static function is_needed();

@@ -45,7 +45,7 @@ class REST_API_Factory implements Service, Delayed, Registerable {
 	/**
 	 * Registers REST API routes.
 	 *
-	 * @since 1.0.0
+	 * @since 1.6.0
 	 *
 	 * @return void
 	 */

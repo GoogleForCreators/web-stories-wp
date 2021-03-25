@@ -44,6 +44,8 @@ final class SimpleServiceContainer
 	/**
 	 * Find a service of the container by its identifier and return it.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $id Identifier of the service to look for.
 	 *
 	 * @throws InvalidService If the service could not be found.

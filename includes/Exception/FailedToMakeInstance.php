@@ -50,6 +50,8 @@ final class FailedToMakeInstance
 	 * Create a new instance of the exception for an interface or class that
 	 * created a circular reference.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string         $interface_or_class         Interface or class name that
 	 *                                                   generated the circular
 	 *                                                   reference.
@@ -78,6 +80,8 @@ final class FailedToMakeInstance
 	 * Create a new instance of the exception for an interface that could not
 	 * be resolved to an instantiable class.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $interface Interface that was left unresolved.
 	 *
 	 * @return self
@@ -94,6 +98,8 @@ final class FailedToMakeInstance
 	/**
 	 * Create a new instance of the exception for an interface or class that
 	 * could not be reflected upon.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $interface_or_class Interface or class that could not be
 	 *                                   reflected upon.
@@ -112,6 +118,8 @@ final class FailedToMakeInstance
 	/**
 	 * Create a new instance of the exception for an argument that could not be
 	 * resolved.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $argument_name Name of the argument that could not be
 	 *                              resolved.
@@ -133,6 +141,8 @@ final class FailedToMakeInstance
 	 * Create a new instance of the exception for a class that was meant to be
 	 * reused but was not yet instantiated.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $class Class that was not yet instantiated.
 	 *
 	 * @return self
@@ -149,6 +159,8 @@ final class FailedToMakeInstance
 	/**
 	 * Create a new instance of the exception for a delegate that was requested
 	 * for a class that doesn't have one.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $class Class for which there is no delegate.
 	 *

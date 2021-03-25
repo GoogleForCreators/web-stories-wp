@@ -39,6 +39,8 @@ final class InvalidStopwatchEvent
 	 * Create a new instance of the exception for a stopwatch event name that is
 	 * not recognized but requested to be stopped.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $name Name of the event that was requested to be stopped.
 	 *
 	 * @return self

@@ -82,6 +82,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	/**
 	 * Instantiate a Theme object.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param bool|null             $enable_filters    Optional. Whether to
 	 *                                                 enable filtering of the
 	 *                                                 injector configuration.
@@ -122,6 +124,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	/**
 	 * Activate the plugin.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
@@ -141,6 +145,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Deactivate the plugin.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
@@ -162,6 +168,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	/**
 	 * Register the plugin with the WordPress system.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return void
 	 * @throws InvalidService If a service is not valid.
 	 */
@@ -178,6 +186,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Register the individual services of this plugin.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @throws InvalidService If a service is not valid.
 	 *
@@ -249,6 +259,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * As the array of services could be filtered, we need to ensure it is
 	 * always in a state where it doesn't throw PHP warnings or errors.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param mixed    $services Services to validate.
 	 * @param string[] $fallback Fallback value to use if $services is not
 	 *                           salvageable.
@@ -286,6 +298,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	/**
 	 * Generate a valid identifier for a provided FQCN.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $fqcn FQCN to use as base to generate an identifer.
 	 * @return string Identifier to use for the provided FQCN.
 	 */
@@ -306,6 +320,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Register a single service.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string              $id ID of the service to register.
 	 * @param class-string|object $class Class of the service to register.
@@ -332,6 +348,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * Get the service container that contains the services that make up the
 	 * plugin.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return ServiceContainer Service container of the plugin.
 	 */
 	public function get_container() {
@@ -340,6 +358,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 	/**
 	 * Instantiate a single service.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string|class-string|object $class Service class to instantiate.
 	 *
@@ -384,6 +404,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * or into configuration files.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param Injector $injector Injector instance to configure.
 	 * @return Injector Configured injector instance.
@@ -493,6 +515,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	/**
 	 * Get the list of services to register.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return array<string> Associative array of identifiers mapped to fully
 	 *                       qualified class names.
 	 */
@@ -506,6 +530,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * The bindings let you map interfaces (or classes) to the classes that
 	 * should be used to implement them.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return array<string> Associative array of fully qualified class names.
 	 */
 	protected function get_bindings() {
@@ -517,6 +543,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * The argument bindings let you map specific argument values for specific
 	 * classes.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return array<array> Associative array of arrays mapping argument names
 	 *                      to argument values.
@@ -534,6 +562,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * This effectively turns them into singletons, without any of the
 	 * drawbacks of the actual Singleton anti-pattern.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return array<string> Array of fully qualified class names.
 	 */
 	protected function get_shared_instances() {
@@ -546,6 +576,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * These are basically factories to provide custom instantiation logic for
 	 * classes.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return array<callable> Associative array of callables.
 	 */
 	protected function get_delegations() {
@@ -557,6 +589,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * Values that are passed through this method can optionally be provided as
 	 * callables instead of direct values and will be evaluated when needed.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param mixed $value Value to potentially resolve.
 	 * @return mixed Resolved or unchanged value.

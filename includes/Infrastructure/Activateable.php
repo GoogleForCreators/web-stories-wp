@@ -40,6 +40,8 @@ interface Activateable {
 	/**
 	 * Activate the service.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */

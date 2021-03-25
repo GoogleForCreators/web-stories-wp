@@ -39,6 +39,8 @@ final class InvalidService
 	 * Create a new instance of the exception for a service class name that is
 	 * not recognized.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string|object $service Class name of the service that was not
 	 *                               recognized.
 	 *

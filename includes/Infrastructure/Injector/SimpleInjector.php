@@ -81,6 +81,8 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Make an object instance out of an interface or class.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $interface_or_class Interface or class to make an object
 	 *                                   instance out of.
 	 * @param array  $arguments          Optional. Additional arguments to pass
@@ -129,6 +131,8 @@ final class SimpleInjector implements Injector {
 	 * Note: The implementation can be an interface as well, as long as it can
 	 * be resolved to an instantiatable class at runtime.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $from Interface or class to bind an implementation to.
 	 * @param string $to   Interface or class that provides the implementation.
 	 * @return Injector
@@ -141,6 +145,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Bind an argument for a class to a specific value.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $interface_or_class Interface or class to bind an argument
 	 *                                   for.
@@ -163,6 +169,8 @@ final class SimpleInjector implements Injector {
 	 * Always reuse and share the same instance for the provided interface or
 	 * class.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $interface_or_class Interface or class to reuse.
 	 * @return Injector
 	 */
@@ -174,6 +182,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Delegate instantiation of an interface or class to a callable.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string   $interface_or_class Interface or class to delegate the
 	 *                                     instantiation of.
@@ -188,6 +198,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Make an object instance out of an interface or class.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param InjectionChain $injection_chain    Injection chain to track
 	 *                                           resolutions.
@@ -235,6 +247,8 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Recursively resolve an interface to the class it should be bound to.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param InjectionChain $injection_chain    Injection chain to track
 	 *                                           resolutions.
 	 * @param string         $interface_or_class Interface or class to resolve.
@@ -267,6 +281,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Get the array of constructor dependencies for a given reflected class.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param InjectionChain  $injection_chain   Injection chain to track
 	 *                                           resolutions.
@@ -305,6 +321,8 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Ensure that a given reflected class is instantiable.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param ReflectionClass $reflection Reflected class to check.
 	 * @return void
 	 * @throws FailedToMakeInstance If the interface could not be resolved.
@@ -317,6 +335,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Resolve a given reflected argument.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param InjectionChain      $injection_chain  Injection chain to track
 	 *                                              resolutions.
@@ -379,6 +399,8 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Resolve a given reflected argument by its name.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string              $class     Class to resolve the argument for.
 	 * @param ReflectionParameter $parameter Argument to resolve by name.
 	 * @param array               $arguments Associative array of directly
@@ -432,6 +454,8 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Check whether a shared instance exists for a given class.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $class Class to check for a shared instance.
 	 * @return bool Whether a shared instance exists.
 	 */
@@ -442,6 +466,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Get the shared instance for a given class.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $class Class to get the shared instance for.
 	 * @return object Shared instance.
@@ -459,6 +485,8 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Check whether a delegate exists for a given class.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $class Class to check for a delegate.
 	 * @return bool Whether a delegate exists.
 	 */
@@ -468,6 +496,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Get the delegate for a given class.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $class Class to get the delegate for.
 	 * @return callable Delegate.
@@ -483,6 +513,8 @@ final class SimpleInjector implements Injector {
 
 	/**
 	 * Get the reflection for a class or throw an exception.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string|class-string $class Class to get the reflection for.
 	 * @return ReflectionClass Class reflection.

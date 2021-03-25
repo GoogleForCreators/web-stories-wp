@@ -106,6 +106,8 @@ class Plugin extends ServiceBasedPlugin {
 	 * The services array contains a map of <identifier> => <service class name>
 	 * associations.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return array<string> Associative array of identifiers mapped to fully
 	 *                       qualified class names.
 	 */
@@ -125,6 +127,8 @@ class Plugin extends ServiceBasedPlugin {
 	 * Whenever you ask the injector to "make()" an <interface>, it will resolve
 	 * these mappings and return an instance of the final <class> it found.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return array<string> Associative array of fully qualified class names.
 	 */
 	protected function get_bindings() {
@@ -140,6 +144,8 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * This effectively turns these FQCNs into a "singleton", without incurring
 	 * all the drawbacks of the Singleton design anti-pattern.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return array<string> Array of fully qualified class names.
 	 */
@@ -163,6 +169,8 @@ class Plugin extends ServiceBasedPlugin {
 	 * The <callable> is basically a factory to provide custom instantiation
 	 * logic for the given <class>.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return array<callable> Associative array of callables.
 	 */
 	protected function get_delegations() {
@@ -176,6 +184,8 @@ class Plugin extends ServiceBasedPlugin {
 	/**
 	 * Backward compatibility, old style class stored all classes instances as class properties.
 	 * Use a magic getting to populate these class properties.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $name property name.
 	 *

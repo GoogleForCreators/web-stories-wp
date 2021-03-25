@@ -54,6 +54,8 @@ final class InjectionChain {
 	/**
 	 * Add class to injection chain.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $class Class to add to injection chain.
 	 * @return self Modified injection chain.
 	 */
@@ -67,6 +69,8 @@ final class InjectionChain {
 	/**
 	 * Add resolution for circular reference detection.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $resolution Resolution to add.
 	 * @return self Modified injection chain.
 	 */
@@ -79,6 +83,8 @@ final class InjectionChain {
 
 	/**
 	 * Get the last class that was pushed to the injection chain.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return string Last class pushed to the injection chain.
 	 * @throws LogicException If the injection chain is accessed too early.
@@ -105,6 +111,8 @@ final class InjectionChain {
 	/**
 	 * Check whether the injection chain already has a given resolution.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $resolution Resolution to check for.
 	 * @return bool Whether the resolution was found.
 	 */
@@ -114,6 +122,8 @@ final class InjectionChain {
 
 	/**
 	 * Check whether the injection chain already encountered a class.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $class Class to check.
 	 * @return bool Whether the given class is already part of the chain.

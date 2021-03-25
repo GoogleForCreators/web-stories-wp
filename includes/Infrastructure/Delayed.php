@@ -41,6 +41,8 @@ interface Delayed {
 	/**
 	 * Get the action to use for registering the service.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action();
@@ -48,6 +50,8 @@ interface Delayed {
 
 	/**
 	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return int Registration action priority to use.
 	 */

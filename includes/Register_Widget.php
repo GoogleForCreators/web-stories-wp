@@ -37,6 +37,8 @@ class Register_Widget implements Service, Delayed, Registerable {
 	/**
 	 * Register Widgets.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return void
 	 */
 	public function register() {

@@ -54,6 +54,8 @@ final class LazilyInstantiatedService implements Service {
 	/**
 	 * Do the actual service instantiation and return the real service.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @throws InvalidService If the service could not be properly instantiated.
 	 *
 	 * @return Service Properly instantiated service.

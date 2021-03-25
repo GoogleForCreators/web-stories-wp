@@ -39,6 +39,8 @@ final class InvalidEventProperties
 	 * Create a new instance of the exception for a properties value that has
 	 * the wrong type.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param mixed $properties Properties value that has the wrong type.
 	 *
 	 * @return self
@@ -59,6 +61,8 @@ final class InvalidEventProperties
 	/**
 	 * Create a new instance of the exception for a properties value that has
 	 * the wrong key type for one or more of its elements.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param mixed $property Property element that has the wrong type.
 	 *

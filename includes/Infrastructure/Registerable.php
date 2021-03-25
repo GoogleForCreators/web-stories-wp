@@ -43,6 +43,8 @@ interface Registerable {
 	/**
 	 * Register the service.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return void
 	 */
 	public function register();
