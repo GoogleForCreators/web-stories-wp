@@ -28,12 +28,7 @@ import { renderWithTheme } from '../../../../testUtils';
 import DropDown from '../';
 import fontsListResponse from './fontsResponse';
 
-jest.mock('../../../popup/index.js', () => ({
-  ...jest.requireActual(
-    '../../../popup/index.js'
-  ),
-  Popup: ({ children, isOpen }) => (isOpen ? children : null),
-}));
+jest.mock('../../../popup/index.js', () => ({ children, isOpen }) => (isOpen ? children : null));
 
 const fonts = fontsListResponse.map((font) => {
   return { ...font, id: font.name };

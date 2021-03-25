@@ -114,7 +114,12 @@ function createProviderValues({
 
 describe('Editor Settings: <Editor Settings />', function () {
   it('should render settings page with google analytics and publisher logo sections', function () {
-    const { getByText, getByRole, getByTestId, container } = renderWithProviders(
+    const {
+      getByText,
+      getByRole,
+      getByTestId,
+      container,
+    } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',

@@ -68,7 +68,7 @@ describe('reducer', () => {
     );
 
     act(() => {
-      result.current.actions.setSelectedProvider( { provider: 'unsplash' } );
+      result.current.actions.setSelectedProvider({ provider: 'unsplash' });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -84,7 +84,7 @@ describe('reducer', () => {
     );
 
     act(() => {
-      result.current.actions.setSearchTerm( { searchTerm: 'cats' } );
+      result.current.actions.setSearchTerm({ searchTerm: 'cats' });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -100,7 +100,7 @@ describe('reducer', () => {
     );
 
     act(() => {
-      localMediaResult.current.actions.setSearchTerm( { searchTerm: 'cats' } );
+      localMediaResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
     });
 
     const { result: media3pResult } = renderHook(() =>
@@ -125,7 +125,7 @@ describe('reducer', () => {
     );
 
     act(() => {
-      media3pResult.current.actions.setSearchTerm( { searchTerm: 'cats' } );
+      media3pResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
     });
 
     const { result: localMediaResult } = renderHook(() =>

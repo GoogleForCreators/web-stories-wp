@@ -42,7 +42,6 @@ describe('CardTitle', () => {
   it('should render Card Title with an input field when edit mode is true', () => {
     const { getByDisplayValue, getByLabelText } = renderWithProviders(
       <CardTitle
-        id={123}
         title="Sample Story"
         displayDate="01/20/2020"
         onEditCancel={jest.fn}

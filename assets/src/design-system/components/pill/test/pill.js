@@ -56,7 +56,9 @@ describe('Pill', () => {
 
   it('should simulate a click on <Pill />', () => {
     const { getByText } = renderWithProviders(
-      <Pill onClick={onClickMock} isActive={false}>{pillText}</Pill>
+      <Pill onClick={onClickMock} isActive={false}>
+        {pillText}
+      </Pill>
     );
 
     const pil = getByText(pillText);

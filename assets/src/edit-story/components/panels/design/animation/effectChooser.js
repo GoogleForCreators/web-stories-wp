@@ -40,6 +40,7 @@ import {
   DIRECTION,
   SCALE_DIRECTION,
 } from '../../../../../animation';
+import { noop } from '../../../../utils/noop';
 import WithTooltip from '../../../tooltip';
 import {
   GRID_ITEM_HEIGHT,
@@ -65,7 +66,6 @@ import {
   PanLeftAnimation,
   PanAndZoomAnimation,
 } from './effectChooserElements';
-import { noop } from '../../../../utils/noop';
 
 const Container = styled.div`
   width: ${PANEL_WIDTH}px;
