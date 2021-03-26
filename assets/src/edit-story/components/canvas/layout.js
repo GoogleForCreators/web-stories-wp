@@ -25,12 +25,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useResizeEffect, THEME_CONSTANTS } from '../../../design-system';
 import {
-  FULLBLEED_RATIO,
-  HEADER_HEIGHT,
-  SCROLLBAR_WIDTH,
-} from '../../constants';
+  useResizeEffect,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '../../../design-system';
+import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useLayout } from '../../app';
@@ -127,8 +127,12 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
     isControlled &&
     css`
       overflow: ${({ overflow }) => overflow ?? 'hidden'};
-      width: calc(100% - ${hasVerticalOverflow ? SCROLLBAR_WIDTH : 0}px);
-      height: calc(100% - ${hasHorizontalOverflow ? SCROLLBAR_WIDTH : 0}px);
+      width: calc(
+        100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+      );
+      height: calc(
+        100% - ${hasHorizontalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
+      );
     `}
 `;
 
@@ -147,13 +151,13 @@ const PageClip = styled.div`
       overflow: hidden;
       width: ${hasHorizontalOverflow
         ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${SCROLLBAR_WIDTH}px)`};
+        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
       flex-basis: ${hasHorizontalOverflow
         ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${SCROLLBAR_WIDTH}px)`};
+        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
       height: ${hasVerticalOverflow
         ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-height-px) - ${SCROLLBAR_WIDTH}px)`};
+        : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
       flex-shrink: 0;
       flex-grow: 0;
       display: flex;

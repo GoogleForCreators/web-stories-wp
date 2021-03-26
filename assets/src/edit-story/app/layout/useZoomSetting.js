@@ -22,13 +22,13 @@ import { useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../../design-system';
 import {
   PAGE_WIDTH,
   PAGE_RATIO,
   FULLBLEED_RATIO,
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,
-  SCROLLBAR_WIDTH,
   PAGE_WIDTH_FACTOR,
 } from '../../constants';
 
@@ -80,11 +80,14 @@ function useZoomSetting(hasCanvasZoom) {
         if (workspaceRatio > FULLBLEED_RATIO) {
           // workspace is limited in the height, so use the width minus room for scrollbar
           maxPageWidth =
-            workspaceSize.width - SCROLLBAR_WIDTH - ZOOM_PADDING_LARGE;
+            workspaceSize.width -
+            themeHelpers.SCROLLBAR_WIDTH -
+            ZOOM_PADDING_LARGE;
         } else {
           // workspace is limited in the width, so use the height minus room for scrollbar converted
           maxPageWidth =
-            (workspaceSize.height - SCROLLBAR_WIDTH) * FULLBLEED_RATIO -
+            (workspaceSize.height - themeHelpers.SCROLLBAR_WIDTH) *
+              FULLBLEED_RATIO -
             ZOOM_PADDING_LARGE;
         }
         break;
