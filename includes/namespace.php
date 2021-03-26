@@ -38,17 +38,22 @@ use WP_Site;
  * @return void
  */
 function setup_new_site() {
-	$story = new Story_Post_Type( new Experiments(), new Meta_Boxes(), new Decoder() );
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
 	$story->register();
+	// TODO Register cap to roles within class itself.
 	$story->add_caps_to_roles();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 
-	$database_upgrader = new Database_Upgrader();
+	// TODO move this logic to Database_Upgrader class.
+	$database_upgrader = $injector->make( Database_Upgrader::class );
 	$database_upgrader->register();
 }
-
 
 /**
  * Handles plugin activation.
@@ -112,8 +117,14 @@ function remove_site( $error, $site ) {
 	if ( ! $site ) {
 		return;
 	}
+
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
+
 	$site_id = (int) $site->blog_id;
-	$story   = new Story_Post_Type( new Experiments(), new Meta_Boxes(), new Decoder() );
 	switch_to_blog( $site_id );
 	$story->remove_caps_from_roles();
 	restore_current_blog();

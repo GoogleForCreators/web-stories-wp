@@ -75,7 +75,7 @@ final class Services {
 	 */
 	public static function get_plugin() {
 		if ( null === self::$plugin ) {
-			self::$plugin = new Plugin();
+			self::$plugin = get_plugin_instance();
 		}
 
 		return self::$plugin;

@@ -47,6 +47,7 @@ class REST_API_Factory extends Service {
 	 * @return void
 	 */
 	public function register() {
+		// TODO refactor to be a little cleaner.
 
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();
