@@ -30,6 +30,7 @@ import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import { getDefinitionForType } from '../../elements';
+import { useTransform } from '../../components/transform';
 import useAddPastedElements from './useAddPastedElements';
 
 /**
@@ -77,6 +78,10 @@ function useCanvasKeys(ref) {
       };
     }
   );
+
+  const {
+    actions: { pushTransform },
+  } = useTransform();
 
   const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
     ({
@@ -141,7 +146,15 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect('delete', () => deleteSelectedElements(), [
     deleteSelectedElements,
   ]);
-  useGlobalKeyDownEffect('esc', () => clearSelection(), [clearSelection]);
+
+  useGlobalKeyDownEffect(
+    'esc',
+    () => {
+      selectedElementIds.forEach((id) => pushTransform(id, null));
+      clearSelection();
+    },
+    [clearSelection, selectedElementIds, pushTransform]
+  );
 
   useGlobalKeyDownEffect(
     { key: ['mod+a'] },
