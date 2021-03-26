@@ -56,9 +56,11 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
       actions={
         <>
           <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
-          { previewLink && <Plain href={previewLink} target="_blank" rel="noreferrer">
-            {__('Preview', 'web-stories')}
-          </Plain> }
+          {previewLink && (
+            <Plain href={previewLink} target="_blank" rel="noreferrer">
+              {__('Preview', 'web-stories')}
+            </Plain>
+          )}
           <Plain onClick={onClose}>{__('Take over', 'web-stories')}</Plain>
         </>
       }
