@@ -29,7 +29,7 @@ namespace Google\Web_Stories;
 /**
  * Class RegisterWidget
  */
-class Register_Widget extends Service {
+class Register_Widget extends Service_Base {
 	/**
 	 * Register Widgets.
 	 *

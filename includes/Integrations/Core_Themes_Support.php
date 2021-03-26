@@ -27,7 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Customizer;
-use Google\Web_Stories\Service;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Stories_Renderer\Renderer;
 use Google\Web_Stories\Traits\Assets;
 use function Google\Web_Stories\render_theme_stories;
@@ -35,7 +35,7 @@ use function Google\Web_Stories\render_theme_stories;
 /**
  * Class Core_Themes_Support.
  */
-class Core_Themes_Support extends Service {
+class Core_Themes_Support extends Service_Base {
 	use Assets;
 
 	/**

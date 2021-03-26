@@ -31,7 +31,7 @@ use WP_Screen;
 /**
  * Class Meta_Boxes.
  */
-class Meta_Boxes extends Service {
+class Meta_Boxes extends Service_Base {
 	/**
 	 * Supported meta box locations.
 	 *

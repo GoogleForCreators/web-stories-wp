@@ -29,7 +29,7 @@ namespace Google\Web_Stories;
 /**
  * Class AdSense
  */
-class AdSense extends Service {
+class AdSense extends Service_Base {
 	/**
 	 * Initializes all hooks.
 	 *

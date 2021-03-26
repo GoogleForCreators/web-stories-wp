@@ -33,7 +33,7 @@ use WP_Post_Type;
  *
  * Provides KSES utility methods to override the ones from core.
  */
-class KSES extends Service {
+class KSES extends Service_Base {
 	/**
 	 * Initializes KSES filters for all post types if user can edit stories.
 	 *

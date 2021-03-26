@@ -29,7 +29,7 @@ namespace Google\Web_Stories;
 /**
  * Class Ad_Manager
  */
-class Ad_Manager extends Service {
+class Ad_Manager extends Service_Base {
 	/**
 	 * Initializes all hooks.
 	 *

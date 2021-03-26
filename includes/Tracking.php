@@ -33,7 +33,7 @@ use Google\Web_Stories\Integrations\Site_Kit;
 /**
  * Tracking class.
  */
-class Tracking extends Service {
+class Tracking extends Service_Base {
 	/**
 	 * Web Stories tracking script handle.
 	 *

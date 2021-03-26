@@ -37,7 +37,7 @@ use WP_Screen;
 /**
  * Dashboard class.
  */
-class Dashboard extends Service {
+class Dashboard extends Service_Base {
 	use Assets;
 	use Types;
 

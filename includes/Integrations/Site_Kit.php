@@ -27,13 +27,13 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Analytics;
-use Google\Web_Stories\Service;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Site_Kit.
  */
-class Site_Kit extends Service {
+class Site_Kit extends Service_Base {
 	/**
 	 * Analytics instance.
 	 *

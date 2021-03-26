@@ -34,7 +34,7 @@ use WP_Screen;
 /**
  * Class Media
  */
-class Media extends Service {
+class Media extends Service_Base {
 	/**
 	 * The image size for the poster-portrait-src.
 	 *

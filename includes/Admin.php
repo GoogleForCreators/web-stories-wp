@@ -37,7 +37,7 @@ use WP_Screen;
 /**
  * Admin class.
  */
-class Admin extends Service {
+class Admin extends Service_Base {
 	/**
 	 * Initialize admin-related functionality.
 	 *

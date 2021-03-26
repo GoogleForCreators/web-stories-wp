@@ -38,7 +38,7 @@ use Google\Web_Stories\REST_API\Stories_Users_Controller;
 /**
  * Class REST_API_Factory
  */
-class REST_API_Factory extends Service {
+class REST_API_Factory extends Service_Base {
 	/**
 	 * Registers REST API routes.
 	 *

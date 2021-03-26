@@ -34,7 +34,7 @@ use Google\Web_Stories\Traits\Assets;
 /**
  * Embed block class.
  */
-class Embed_Base extends Service {
+class Embed_Base extends Service_Base {
 	use Assets;
 
 	/**

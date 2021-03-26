@@ -38,7 +38,7 @@ final class Services {
 	/**
 	 * Dependency injector object instance.
 	 *
-	 * @var Injector|Service
+	 * @var Injector|Service_Base
 	 */
 	private static $injector;
 
@@ -48,7 +48,8 @@ final class Services {
 	 * @since 1.6.0
 	 *
 	 * @param string $service Service ID to retrieve.
-	 * @return Service
+	 *
+	 * @return Service_Base
 	 */
 	public static function get( $service ) {
 		return self::get_container()->get( $service );
@@ -101,7 +102,7 @@ final class Services {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return Injector|Service Dependency injector object instance.
+	 * @return Injector|Service_Base Dependency injector object instance.
 	 */
 	public static function get_injector() {
 		if ( null === self::$injector ) {

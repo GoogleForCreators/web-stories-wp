@@ -31,7 +31,7 @@ namespace Google\Web_Stories;
 /**
  * Settings class.
  */
-class Settings extends Service {
+class Settings extends Service_Base {
 	/**
 	 * Settings group.
 	 *

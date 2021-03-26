@@ -31,7 +31,7 @@ use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Service;
+use Google\Web_Stories\Service_Base;
 use WP_Post;
 use WP_Screen;
 
@@ -40,7 +40,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class AMP extends Service {
+class AMP extends Service_Base {
 	use Publisher;
 
 	/**

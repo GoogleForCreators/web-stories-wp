@@ -27,14 +27,14 @@
 namespace Google\Web_Stories\Shortcode;
 
 use Google\Web_Stories\Story_Query as Stories;
-use Google\Web_Stories\Service;
+use Google\Web_Stories\Service_Base;
 
 /**
  * Class Stories_Shortcode
  *
  * @package Google\Web_Stories\Shortcode
  */
-class Stories_Shortcode extends Service {
+class Stories_Shortcode extends Service_Base {
 
 	/**
 	 * Shortcode name.

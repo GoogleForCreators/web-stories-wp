@@ -35,7 +35,7 @@ use Google\Web_Stories\Infrastructure\Activateable;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader extends Service implements Activateable {
+class Database_Upgrader extends Service_Base implements Activateable {
 
 	/**
 	 * The slug of database option.

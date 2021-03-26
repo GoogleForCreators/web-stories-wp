@@ -27,7 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
-use Google\Web_Stories\Service;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_Screen;
@@ -35,7 +35,7 @@ use WP_Screen;
 /**
  * Class Jetpack.
  */
-class Jetpack extends Service {
+class Jetpack extends Service_Base {
 	/**
 	 * Initializes all hooks.
 	 *

@@ -49,7 +49,7 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type extends Service implements Activateable, Deactivateable {
+class Story_Post_Type extends Service_Base implements Activateable, Deactivateable {
 	use Publisher;
 	use Types;
 	use Assets;

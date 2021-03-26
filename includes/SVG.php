@@ -39,7 +39,7 @@ use Google\Web_Stories\Infrastructure\Conditional;
  *
  * @package Google\Web_Stories
  */
-class SVG extends Service implements Conditional {
+class SVG extends Service_Base implements Conditional {
 	/**
 	 * File extension.
 	 *

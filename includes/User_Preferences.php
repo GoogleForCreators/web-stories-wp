@@ -31,7 +31,7 @@ namespace Google\Web_Stories;
 /**
  * User Preferences class.
  */
-class User_Preferences extends Service {
+class User_Preferences extends Service_Base {
 	/**
 	 * Name of the user meta key used for opt-in.
 	 *

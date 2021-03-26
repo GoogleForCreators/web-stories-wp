@@ -31,7 +31,7 @@ namespace Google\Web_Stories;
  *
  * Allows turning flags on/off via the admin UI.
  */
-class Experiments extends Service {
+class Experiments extends Service_Base {
 	/**
 	 * Settings page name.
 	 *

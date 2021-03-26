@@ -30,12 +30,12 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
+use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Class Service
  */
-abstract class Service implements ServiceInterface, Delayed, Registerable {
+abstract class Service_Base implements Service, Delayed, Registerable {
 	/**
 	 * Get the action to use for registering the service.
 	 *
