@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { render, act } from '@testing-library/react';
-import Moveable from 'react-moveable';
+import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
@@ -31,8 +31,6 @@ import CanvasContext from '../../../app/canvas/context';
 import Selection from '../selection';
 import StoryContext from '../../../app/story/context';
 import TransformProvider from '../../transform/transformProvider';
-
-jest.mock('react-moveable', () => jest.fn(() => ({ children }) => children));
 
 const pageSize = { width: 100, height: 100 };
 
@@ -100,7 +98,8 @@ describe('multiSelectionMoveable', () => {
   }
 
   function performRotation(rotateTo) {
-    const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
+    const moveable =
+      MockMoveable.mock.calls[MockMoveable.mock.calls.length - 1][0];
     moveable?.onRotateGroupStart({ events: [{ set: () => {} }] });
     moveable?.onRotateGroup({
       events: [
