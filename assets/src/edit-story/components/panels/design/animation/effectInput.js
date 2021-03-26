@@ -46,7 +46,7 @@ const StyledInput = styled(NumericInput)`
   height: ${INPUT_HEIGHT}px;
   div {
     height: calc(100% + 1px);
-    ${outerGridBordersCss};
+    ${outerGridBordersCss}
     &:focus-within {
       border-radius: ${({ theme }) => theme.borders.radius.small};
     }
@@ -56,9 +56,9 @@ const StyledInput = styled(NumericInput)`
 const StyledDropDown = styled(DropDown)`
   button {
     height: 46px;
-    ${outerGridBordersCss};
+    ${outerGridBordersCss}
     &:hover {
-      ${outerGridBordersCss};
+      ${outerGridBordersCss}
     }
     &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
       border-radius: ${({ theme }) => theme.borders.radius.small};
