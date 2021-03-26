@@ -1,8 +1,8 @@
 <?php
 /**
- * Class editor.
+ * Class Cross_Origin_Isolation.
  *
- * Editor class, with output buffer.
+ * Check if editor screen, add cross origin header and add crossorigin attribute to tags.
  *
  * @package   Google\Web_Stories\Traits
  * @copyright 2021 Google LLC
@@ -26,17 +26,20 @@
  * limitations under the License.
  */
 
+namespace Google\Web_Stories\Admin;
 
-namespace Google\Web_Stories;
-
+use Google\Web_Stories\User_Preferences;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories\Experiments;
+use WP_Screen;
 
 /**
- * Class Editor
+ * Class Cross_Origin_Isolation
  *
  * @package Google\Web_Stories
  */
-class Editor {
+class Cross_Origin_Isolation {
 
 	/**
 	 * Experiments instance.
@@ -46,7 +49,7 @@ class Editor {
 	private $experiments;
 
 	/**
-	 * Editor constructor.
+	 * Cross_Origin_Isolation constructor.
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 */
@@ -59,9 +62,10 @@ class Editor {
 	 * @return void
 	 */
 	public function init() {
-		if ( ! $this->experiments->is_experiment_enabled( 'videoOptimization' ) ) {
+		if ( ! $this->is_needed() ) {
 			return;
 		}
+
 		add_action( 'admin_footer-post.php', [ $this, 'admin_footer' ] );
 		add_action( 'admin_footer-post-new.php', [ $this, 'admin_footer' ] );
 		add_action( 'load-post.php', [ $this, 'admin_header' ] );
@@ -73,6 +77,8 @@ class Editor {
 
 	/**
 	 * Start output buffer and add headers.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return void
 	 */
@@ -89,6 +95,8 @@ class Editor {
 
 	/**
 	 * Do string replacement and output.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return void
 	 */
@@ -136,6 +144,8 @@ class Editor {
 	/**
 	 * Filters the HTML link tag of an enqueued style.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $tag    The link tag for the enqueued style.
 	 * @param string $handle The style's registered handle.
 	 * @param string $href   The stylesheet's source URL.
@@ -153,6 +163,8 @@ class Editor {
 	/**
 	 * Filters the HTML script tag of an enqueued script.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $tag    The `<script>` tag for the enqueued script.
 	 * @param string $handle The script's registered handle.
 	 * @param string $src    The script's source URL.
@@ -169,6 +181,8 @@ class Editor {
 
 	/**
 	 * Filter the avatar tag.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string $avatar      HTML for the user's avatar.
 	 * @param mixed  $id_or_email The avatar to retrieve. Accepts a user_id, Gravatar MD5 hash,
@@ -194,6 +208,8 @@ class Editor {
 	/**
 	 * Do replacement to add crossorigin attribute.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $html HTML string.
 	 * @param string $attribute Attribute to check for.
 	 * @param string $url URL.
@@ -218,6 +234,8 @@ class Editor {
 	/**
 	 * Does string start with.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $string       String to search.
 	 * @param string $start_string String to search with.
 	 *
@@ -230,7 +248,9 @@ class Editor {
 	}
 
 	/**
-	 * Is this the editor scrren.
+	 * Is this the editor screen.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return bool
 	 */
@@ -248,14 +268,37 @@ class Editor {
 	}
 
 	/**
+	 * Check to see if class is needed.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return bool
+	 */
+	protected function is_needed() {
+		if ( ! $this->experiments->is_experiment_enabled( 'videoOptimization' ) ) {
+			return false;
+		}
+
+		$user_id = get_current_user_id();
+		if ( ! $user_id ) {
+			return false;
+		}
+
+		return (bool) get_user_meta( $user_id, User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+
+	}
+
+	/**
 	 * Helper to get current screen.
 	 *
-	 * @return false|\WP_Screen
+	 * @since 1.6.0
+	 *
+	 * @return false|WP_Screen
 	 */
 	private function get_current_screen() {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
-		if ( ( $screen instanceof \WP_Screen ) ) {
+		if ( ( $screen instanceof WP_Screen ) ) {
 			return $screen;
 		}
 

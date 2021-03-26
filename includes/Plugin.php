@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Admin\Cross_Origin_Isolation;
 use Google\Web_Stories\Integrations\AMP;
 use Google\Web_Stories\Integrations\Jetpack;
 use Google\Web_Stories\Integrations\NextGen_Gallery;
@@ -250,8 +251,8 @@ class Plugin {
 		$this->meta_boxes = new Meta_Boxes();
 		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
 
-		$editor = new Editor( $this->experiments );
-		add_action( 'init', [ $editor, 'init' ] );
+		$coi = new Cross_Origin_Isolation( $this->experiments );
+		add_action( 'init', [ $coi, 'init' ], 11 );
 
 		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
 		add_action( 'init', [ $this->story, 'init' ] );
