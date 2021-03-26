@@ -110,7 +110,6 @@ const Collapse = styled.button`
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
-  border-radius: ${({ theme }) => theme.borders.radius.small};
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(
       theme.colors.border.focus,
@@ -234,6 +233,7 @@ function Title({
       >
         <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
+          isCollapsed={isCollapsed}
           id={panelTitleId}
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
         >
