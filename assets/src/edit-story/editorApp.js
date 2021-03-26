@@ -40,6 +40,7 @@ import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import StatusCheck from './components/statusCheck';
+import PostLock from './components/postLock';
 import Layout from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
@@ -64,8 +65,9 @@ function App({ config }) {
                     <SnackbarProvider>
                       <MetaBoxesProvider>
                         <StoryProvider storyId={storyId}>
-                          <FontProvider>
-                            <CurrentUserProvider>
+                          <CurrentUserProvider>
+                            <PostLock />
+                            <FontProvider>
                               <MediaProvider>
                                 <AutoSaveHandler />
                                 <TransformProvider>
@@ -81,8 +83,8 @@ function App({ config }) {
                                   </DropTargetsProvider>
                                 </TransformProvider>
                               </MediaProvider>
-                            </CurrentUserProvider>
-                          </FontProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
                         </StoryProvider>
                       </MetaBoxesProvider>
                     </SnackbarProvider>

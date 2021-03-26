@@ -210,6 +210,17 @@ class Experiments {
 		return [
 			/**
 			 * Author: @littlemilkstudio
+			 * Issue: 6708
+			 * Creation date: 2021-03-23
+			 */
+			[
+				'name'        => 'enableStickers',
+				'label'       => __( 'Enable Stickers', 'web-stories' ),
+				'description' => __( 'Appends sticker buttons to the bottom of the shapes panel in library.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
 			 * Issue: 6379
 			 * Creation date: 2021-03-09
 			 */
@@ -373,6 +384,18 @@ class Experiments {
 				'name'        => 'videoOptimization',
 				'label'       => __( 'Video optimization', 'web-stories' ),
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
+				'group'       => 'general',
+			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #3126
+			 * Creation date: 2021-02-02
+			 */
+			[
+				'name'        => 'enablePostLocking',
+				'label'       => __( 'Post locking', 'web-stories' ),
+				'description' => __( 'Enable post locking', 'web-stories' ),
 				'group'       => 'general',
 			],
 		];

@@ -66,9 +66,7 @@ export function getEffectDirection(effect = {}) {
 }
 const AnimationGrid = styled.div`
   display: grid;
-  grid-gap: 15px;
   grid-template-columns: auto auto;
-  grid-auto-rows: 32px;
 `;
 
 const AnimationGridField = styled.div(
