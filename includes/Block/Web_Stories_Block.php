@@ -32,7 +32,6 @@ use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 use WP_Post_Type;
-use WP_Block_Type_Registry;
 
 /**
  * Latest Stories block class.
