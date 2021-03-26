@@ -227,19 +227,21 @@ export const SubMenus = () => {
 };
 
 // eslint-disable-next-line react/display-name
-const RenderItemOverride = forwardRef(({ option, selected, ...rest }, ref) => (
-  <StyledEffectListItem
-    ref={ref}
-    width={option.width}
-    active={selected}
-    {...rest}
-  >
-    {option.label}
-  </StyledEffectListItem>
-));
+const RenderItemOverride = forwardRef(
+  ({ option, isSelected, ...rest }, ref) => (
+    <StyledEffectListItem
+      ref={ref}
+      width={option.width}
+      active={isSelected}
+      {...rest}
+    >
+      {option.label}
+    </StyledEffectListItem>
+  )
+);
 RenderItemOverride.propTypes = {
   option: DROP_DOWN_ITEM,
-  selected: PropTypes.bool,
+  isSelected: PropTypes.bool,
 };
 
 export const OverriddenAnimationProofOfConcept = () => {

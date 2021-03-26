@@ -18,12 +18,13 @@
  * External dependencies
  */
 import { forwardRef } from 'react';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
 import { Tooltip } from '../../../../../../design-system';
 import { AnimationListItem, ContentWrapper } from './styles';
-import { ANIMATION_DROPDOWN_OPTION_PROP_TYPE } from './dropdownConstants';
+import { ANIMATION_DROPDOWN_OPTION_PROP_TYPE } from './types';
 
 const DropDownItem = forwardRef(({ option, ...rest }, ref) => (
   <AnimationListItem
@@ -50,5 +51,5 @@ export default DropDownItem;
 DropDownItem.displayName = 'DropDownItem';
 
 DropDownItem.propTypes = {
-  option: ANIMATION_DROPDOWN_OPTION_PROP_TYPE,
+  option: PropTypes.shape(ANIMATION_DROPDOWN_OPTION_PROP_TYPE),
 };

@@ -32,8 +32,8 @@ import {
   NO_ANIMATION,
   foregroundEffectOptions,
   experimentalEffects,
-  ANIMATION_DIRECTION_PROP_TYPE,
 } from './dropdownConstants';
+import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
 import { getDirectionalEffect, getDisabledBackgroundEffects } from './utils';
 import {
   styleOverrideForSelectButton,
