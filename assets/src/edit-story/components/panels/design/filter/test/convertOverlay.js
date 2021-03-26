@@ -44,9 +44,9 @@ describe('convertOverlay', () => {
         rotation: 0,
         stops: [
           { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
-          { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
+          { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
         ],
-        alpha: 0.9,
+        alpha: 0.7,
       };
       expect(result).toStrictEqual(expected);
     });
@@ -55,12 +55,12 @@ describe('convertOverlay', () => {
       const result = convertOverlay(null, OverlayType.NONE, OverlayType.RADIAL);
       const expected = {
         type: 'radial',
-        size: { w: 0.8, h: 0.5 },
+        size: { w: 0.67, h: 0.67 },
         stops: [
           { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
-          { color: { r: 0, g: 0, b: 0, a: 0.7 }, position: 1 },
+          { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
         ],
-        alpha: 0.6,
+        alpha: 0.7,
       };
       expect(result).toStrictEqual(expected);
     });
@@ -94,9 +94,9 @@ describe('convertOverlay', () => {
       // expect 20% red vignette
       const expected = {
         type: 'radial',
-        size: { w: 0.8, h: 0.5 },
+        size: { w: 0.67, h: 0.67 },
         stops: [
-          { color: { r: 255, g: 0, b: 0, a: 0 }, position: 0.25 },
+          { color: { r: 255, g: 0, b: 0, a: 0 }, position: 0 },
           { color: { r: 255, g: 0, b: 0, a: 1 }, position: 1 },
         ],
         alpha: 0.2,
@@ -132,7 +132,7 @@ describe('convertOverlay', () => {
       const result = convertOverlay(gb, OverlayType.LINEAR, OverlayType.RADIAL);
       const expected = {
         type: 'radial',
-        size: { w: 0.8, h: 0.5 },
+        size: { w: 0.67, h: 0.67 },
         stops: gb.stops,
         alpha: gb.alpha,
       };
