@@ -53,6 +53,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	 */
 	public function test_is_needed() {
 		wp_set_current_user( self::$admin_id );
+		update_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'is_needed' );
 		$this->assertTrue( $result );

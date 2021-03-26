@@ -284,8 +284,9 @@ class Cross_Origin_Isolation {
 			return false;
 		}
 
-		return (bool) get_user_meta( $user_id, User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		$check = get_user_meta( $user_id, User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
+		return rest_sanitize_boolean( $check );
 	}
 
 	/**
