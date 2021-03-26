@@ -29,18 +29,18 @@ export class Filter extends AbstractPanel {
   }
 
   get none() {
-    return this.getByRole('button', { name: /Set filter: None/i });
+    return this.getByRole('button', { name: /Filter: None/i });
   }
 
   get solid() {
-    return this.getByRole('button', { name: /Set filter: Tint/i });
+    return this.getByRole('button', { name: /Filter: Tint/i });
   }
 
   get linear() {
-    return this.getByRole('button', { name: /Set filter: Linear/i });
+    return this.getByRole('button', { name: /Filter: Linear/i });
   }
 
   get radial() {
-    return this.getByRole('button', { name: /Set filter: Vignette/i });
+    return this.getByRole('button', { name: /Filter: Vignette/i });
   }
 }

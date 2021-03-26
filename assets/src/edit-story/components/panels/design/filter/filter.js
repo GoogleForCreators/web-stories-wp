@@ -66,7 +66,7 @@ function FilterPanel({ selectedElements, pushUpdate }) {
               filter={convertOverlay(overlay, OverlayType.NONE, type)}
               aria-label={sprintf(
                 /* translators: %s: Filter type */
-                __('Set filter: %s', 'web-stories'),
+                __('Filter: %s', 'web-stories'),
                 label
               )}
             >
