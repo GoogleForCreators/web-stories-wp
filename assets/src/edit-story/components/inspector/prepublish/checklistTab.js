@@ -23,17 +23,15 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_VARIANTS,
-  THEME_CONSTANTS,
-} from '../../../../design-system';
+import { Icons } from '../../../../design-system';
+import { useConfig } from '../../../app';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel } from '../../panels/panel';
 import { TEXT } from './constants';
 import EmptyChecklist from './emptyChecklist';
 import {
+  GoToIssue,
   IssueDescription,
   IssueTitle,
   NumberBadge,
@@ -41,12 +39,11 @@ import {
   PageGroup,
   PanelTitle,
   Row,
-  TitleWrapper,
 } from './styles';
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
-
+  const { isRTL } = useConfig();
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -114,7 +111,7 @@ const ChecklistTab = (props) => {
 
       return {
         onClick: () => setHighlights(args),
-        onKeyDown: (event) => {
+        onKeyUp: (event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
             setHighlights(args);
@@ -131,22 +128,19 @@ const ChecklistTab = (props) => {
       const prepublishProps = getOnPrepublishSelect(args);
       return (
         <Row key={id} pageGroup={pageGroup}>
-          <IssueTitle>{message}</IssueTitle>
+          <IssueTitle {...prepublishProps} tabIndex={0}>
+            {message}
+            {prepublishProps?.onClick && (
+              <GoToIssue aria-label={TEXT.ACCESSIBLE_LINK_TITLE}>
+                {isRTL ? <Icons.ArrowLeft /> : <Icons.ArrowRight />}
+              </GoToIssue>
+            )}
+          </IssueTitle>
           <IssueDescription>{help}</IssueDescription>
-          {prepublishProps?.onClick && (
-            <Button
-              variant={BUTTON_VARIANTS.LINK}
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              aria-label={TEXT.ACCESSIBLE_LINK_TITLE}
-              {...prepublishProps}
-            >
-              {TEXT.DISPLAY_LINK}
-            </Button>
-          )}
         </Row>
       );
     },
-    [getOnPrepublishSelect]
+    [getOnPrepublishSelect, isRTL]
   );
 
   const renderPageGroupedRow = useCallback(
@@ -189,11 +183,12 @@ const ChecklistTab = (props) => {
         <SimplePanel
           collapsedByDefault={false}
           name="checklist"
+          hasBadge
           title={
-            <TitleWrapper>
+            <>
               <PanelTitle>{TEXT.HIGH_PRIORITY_TITLE}</PanelTitle>
               <NumberBadge number={highPriorityLength} />
-            </TitleWrapper>
+            </>
           }
           ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
         >
@@ -204,11 +199,12 @@ const ChecklistTab = (props) => {
       {showRecommendedItems && (
         <SimplePanel
           name="checklist"
+          hasBadge
           title={
-            <TitleWrapper>
+            <>
               <PanelTitle isRecommended>{TEXT.RECOMMENDED_TITLE}</PanelTitle>
               <NumberBadge isRecommended number={recommendedLength} />
-            </TitleWrapper>
+            </>
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
         >

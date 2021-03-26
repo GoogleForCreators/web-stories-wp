@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 
@@ -63,6 +63,7 @@ const Heading = styled.span`
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   width: 100%;
   display: flex;
+  align-items: space-between;
   ${({ theme }) =>
     themeHelpers.expandPresetStyles({
       preset:
@@ -93,7 +94,11 @@ const Collapse = styled.button`
   color: ${({ theme, isCollapsed }) =>
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   height: 32px;
-  width: 100%;
+  ${({ hasBadge }) =>
+    hasBadge &&
+    css`
+      width: 100%;
+    `}
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   align-items: center;
@@ -105,6 +110,7 @@ const Collapse = styled.button`
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(
       theme.colors.border.focus,
@@ -139,6 +145,7 @@ Toggle.propTypes = {
 function Title({
   ariaLabel,
   children,
+  hasBadge,
   isPrimary,
   isSecondary,
   secondaryAction,
@@ -223,6 +230,7 @@ function Title({
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}
         isCollapsed={isCollapsed}
+        hasBadge={hasBadge}
       >
         <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
@@ -240,6 +248,7 @@ function Title({
 Title.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node,
+  hasBadge: PropTypes.bool,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,

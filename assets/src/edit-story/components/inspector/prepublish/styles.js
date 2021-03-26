@@ -47,6 +47,7 @@ export const NumberBadge = styled.span`
   border-radius: 50%;
   font-size: ${({ number }) =>
     number > MAX_NUMBER_FOR_BADGE ? '10px' : '12px'};
+  margin: auto 0 auto auto;
   &::after {
     content: ${({ number }) => `"${annotateNumber(number)}"`};
   }
@@ -58,12 +59,6 @@ NumberBadge.propTypes = {
   isRecommended: PropTypes.bool,
   number: PropTypes.number,
 };
-
-export const TitleWrapper = styled.span`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
 
 export const PanelTitle = styled(Headline).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
@@ -89,11 +84,26 @@ export const PageGroup = styled.div`
   }
 `;
 
+export const GoToIssue = styled.span`
+  height: 32px;
+  width: 32px;
+  margin: 0;
+  color: ${({ theme }) => theme.colors.fg.primary};
+  &:hover {
+    color: ${({ theme }) => theme.colors.fg.primaryHover};
+  }
+`;
+
 export const IssueTitle = styled(Headline).attrs({
   as: 'h3',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
+  display: inline-flex;
+  align-items: center;
   color: ${({ theme }) => theme.colors.standard.white};
+  cursor: pointer;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 export const IssueDescription = styled.div`
