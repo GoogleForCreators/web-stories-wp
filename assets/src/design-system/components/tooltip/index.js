@@ -83,7 +83,6 @@ function Tooltip({
   hasTail,
   placement = PLACEMENT.BOTTOM,
   children,
-  isMirrored = false,
   onPointerEnter = () => {},
   onPointerLeave = () => {},
   onFocus = () => {},
@@ -121,8 +120,8 @@ function Tooltip({
       getBoundingBoxCenter(anchorElBoundingBox) -
       getBoundingBoxCenter(tooltipElBoundingBox);
 
-    setArrowDelta((isMirrored ? -1 : 1) * delta);
-  }, [isMirrored]);
+    setArrowDelta(delta);
+  }, []);
 
   return (
     <>
@@ -190,7 +189,6 @@ function Tooltip({
 const TooltipPropTypes = {
   children: PropTypes.node.isRequired,
   hasTail: PropTypes.bool,
-  isMirrored: PropTypes.bool,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
