@@ -160,7 +160,12 @@ function OptionList({
   ]);
 
   const handleKeyPress = useCallback(
-    ({ key }) => {
+    (evt) => {
+      evt.stopPropagation();
+      evt.preventDefault();
+
+      const { key } = evt;
+
       if (key === 'Escape') {
         onClose();
       } else if (key === 'Enter') {
