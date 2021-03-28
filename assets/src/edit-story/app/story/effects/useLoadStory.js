@@ -25,6 +25,7 @@ import { migrate } from '@web-stories-wp/migration';
  */
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
+import getUniquePresets from '../../../utils/getUniquePresets';
 
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
@@ -76,6 +77,16 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           url: '',
         };
 
+        let lockUser = null;
+
+        if ('wp:lockuser' in embedded) {
+          lockUser = {
+            id: embedded['wp:lockuser'][0].id,
+            name: embedded['wp:lockuser'][0].name,
+            avatar: embedded['wp:lockuser'][0].avatar_urls?.['48'],
+          };
+        }
+
         if ('wp:featuredmedia' in embedded) {
           featuredMedia = {
             id: embedded['wp:featuredmedia'][0].id,
@@ -108,11 +119,18 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
 
         // Initialize color/style presets, if missing.
+        // Otherwise ensure the saved presets are unique.
         if (!globalStoryStyles.colors) {
           globalStoryStyles.colors = [];
+        } else {
+          globalStoryStyles.colors = getUniquePresets(globalStoryStyles.colors);
         }
         if (!globalStoryStyles.textStyles) {
           globalStoryStyles.textStyles = [];
+        } else {
+          globalStoryStyles.textStyles = getUniquePresets(
+            globalStoryStyles.textStyles
+          );
         }
 
         // Set story-global variables.
@@ -126,12 +144,17 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           excerpt,
           slug,
           link,
+          lockUser,
           featuredMedia,
           permalinkConfig,
           publisherLogoUrl,
           password,
           previewLink,
-          currentStoryStyles: storyData?.currentStoryStyles || { colors: [] },
+          currentStoryStyles: {
+            colors: storyData?.currentStoryStyles?.colors
+              ? getUniquePresets(storyData.currentStoryStyles.colors)
+              : [],
+          },
           globalStoryStyles,
           autoAdvance: storyData?.autoAdvance,
           defaultPageDuration: storyData?.defaultPageDuration,

@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import { SnackbarProvider } from '../../../../snackbar';
+import { SnackbarProvider } from '../../../../../../design-system';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
@@ -83,5 +83,139 @@ describe('My Stories <StoriesView />', function () {
     );
 
     expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
+  });
+
+  describe('Loading stories', () => {
+    it('should be able to hide the grid while the stories are loading', () => {
+      const { queryByTestId } = renderWithProviders(
+        <SnackbarProvider>
+          <StoriesView
+            filterValue="all"
+            sort={{
+              value: STORY_SORT_OPTIONS.NAME,
+              direction: SORT_DIRECTION.ASC,
+            }}
+            storyActions={{
+              createTemplateFromStory: jest.fn,
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+            stories={fakeStories}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 210, height: 316 },
+            }}
+            loading={{
+              isLoading: true,
+              showStoriesWhileLoading: { current: false },
+            }}
+          />
+        </SnackbarProvider>,
+        { features: { enableInProgressStoryActions: false } }
+      );
+
+      expect(queryByTestId(/^story-grid-item/)).not.toBeInTheDocument();
+    });
+
+    it('should be able to show the grid while stories are loading', () => {
+      const { queryAllByTestId } = renderWithProviders(
+        <SnackbarProvider>
+          <StoriesView
+            filterValue="all"
+            sort={{
+              value: STORY_SORT_OPTIONS.NAME,
+              direction: SORT_DIRECTION.ASC,
+            }}
+            storyActions={{
+              createTemplateFromStory: jest.fn,
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+            stories={fakeStories}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 210, height: 316 },
+            }}
+            loading={{
+              isLoading: true,
+              showStoriesWhileLoading: { current: true },
+            }}
+          />
+        </SnackbarProvider>,
+        { features: { enableInProgressStoryActions: false } }
+      );
+
+      expect(queryAllByTestId(/^story-grid-item/)).toHaveLength(
+        fakeStories.length
+      );
+    });
+
+    it('should hide stories in the list view when stories are loading', () => {
+      const { queryByTestId } = renderWithProviders(
+        <SnackbarProvider>
+          <StoriesView
+            filterValue="all"
+            sort={{
+              value: STORY_SORT_OPTIONS.NAME,
+              direction: SORT_DIRECTION.ASC,
+            }}
+            storyActions={{
+              createTemplateFromStory: jest.fn,
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+            stories={fakeStories}
+            view={{
+              style: VIEW_STYLE.LIST,
+              pageSize: { width: 210, height: 316 },
+            }}
+            loading={{
+              isLoading: true,
+              showStoriesWhileLoading: { current: false },
+            }}
+          />
+        </SnackbarProvider>,
+        { features: { enableInProgressStoryActions: false } }
+      );
+
+      expect(queryByTestId(/^story-list-item/)).not.toBeInTheDocument();
+    });
+
+    it('should be able to show the list while stories are loading', () => {
+      const { queryAllByTestId } = renderWithProviders(
+        <SnackbarProvider>
+          <StoriesView
+            filterValue="all"
+            sort={{
+              value: STORY_SORT_OPTIONS.NAME,
+              direction: SORT_DIRECTION.ASC,
+            }}
+            storyActions={{
+              createTemplateFromStory: jest.fn,
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+            stories={fakeStories}
+            view={{
+              style: VIEW_STYLE.LIST,
+              pageSize: { width: 210, height: 316 },
+            }}
+            loading={{
+              isLoading: true,
+              showStoriesWhileLoading: { current: true },
+            }}
+          />
+        </SnackbarProvider>,
+        { features: { enableInProgressStoryActions: false } }
+      );
+
+      expect(queryAllByTestId(/^story-list-item/)).toHaveLength(
+        fakeStories.length
+      );
+    });
   });
 });

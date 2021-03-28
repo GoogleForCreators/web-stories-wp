@@ -135,13 +135,8 @@ function getTextInlineStyles(content) {
   };
 }
 
-function getUniquePresets(presets) {
-  const list = presets.map((preset) => JSON.stringify(preset));
-  return Array.from(new Set(list)).map((preset) => JSON.parse(preset));
-}
-
 export function getTextPresets(elements, storyStyles, type) {
-  const allColors =
+  const colors =
     'style' === type
       ? []
       : elements
@@ -151,7 +146,7 @@ export function getTextPresets(elements, storyStyles, type) {
             (color) => color && !findMatchingColor(color, storyStyles, true)
           );
 
-  const allStyles =
+  const textStyles =
     'color' === type
       ? []
       : elements
@@ -163,8 +158,8 @@ export function getTextPresets(elements, storyStyles, type) {
           })
           .filter((preset) => !findMatchingStylePreset(preset, storyStyles));
   return {
-    colors: getUniquePresets(allColors),
-    textStyles: getUniquePresets(allStyles),
+    colors,
+    textStyles,
   };
 }
 
@@ -175,7 +170,7 @@ export function getShapePresets(elements, storyStyles) {
     })
     .filter((color) => color && !findMatchingColor(color, storyStyles, false));
   return {
-    colors: getUniquePresets(colors),
+    colors,
   };
 }
 

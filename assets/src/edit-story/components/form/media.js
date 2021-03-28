@@ -26,6 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useMediaPicker } from '../mediaPicker';
 import { MediaInput as Input } from '../../../design-system/components/mediaInput';
+import { MULTIPLE_VALUE } from '../../constants';
 
 const MediaInput = forwardRef(
   (
@@ -33,8 +34,13 @@ const MediaInput = forwardRef(
       buttonInsertText = __('Choose an image', 'web-stories'),
       menuOptions = [],
       onChange,
+      onChangeErrorText = __(
+        'Unable to use this file type, please select a valid image type.',
+        'web-stories'
+      ),
       title = __('Choose an image', 'web-stories'),
       type = 'image',
+      value,
       ...rest
     },
     forwardedRef
@@ -43,6 +49,7 @@ const MediaInput = forwardRef(
       title,
       buttonInsertText,
       onSelect: onChange,
+      onSelectErrorMessage: onChangeErrorText,
       type,
     });
 
@@ -53,10 +60,14 @@ const MediaInput = forwardRef(
       { label: __('Reset', 'web-stories'), value: 'reset' },
     ];
 
+    // No menu for mixed value.
     // Match the options from props, if none are matched, menu is not displayed.
-    const dropdownOptions = availableMenuOptions.filter(({ value }) =>
-      menuOptions.includes(value)
-    );
+    const dropdownOptions =
+      value === MULTIPLE_VALUE
+        ? []
+        : availableMenuOptions.filter(({ value: option }) =>
+            menuOptions.includes(option)
+          );
 
     const onOption = useCallback(
       (evt, opt) => {
@@ -81,6 +92,7 @@ const MediaInput = forwardRef(
         menuOptions={dropdownOptions}
         openMediaPicker={openMediaPicker}
         ref={forwardedRef}
+        value={value === MULTIPLE_VALUE ? null : value}
         {...rest}
       />
     );
@@ -88,11 +100,14 @@ const MediaInput = forwardRef(
 );
 
 MediaInput.propTypes = {
+  className: PropTypes.string,
   buttonInsertText: PropTypes.string,
   menuOptions: PropTypes.array,
   onChange: PropTypes.func.isRequired,
+  onChangeErrorText: PropTypes.string,
   type: PropTypes.string,
   title: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default MediaInput;

@@ -36,7 +36,6 @@ import {
   VideoAccessibilityPanel,
   ElementAlignmentPanel,
   VideoOptionsPanel,
-  VideoPosterPanel,
   StylePresetPanel,
   ColorPresetPanel,
 } from '../../panels/design';
@@ -147,8 +146,6 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
-        case PanelTypes.VIDEO_POSTER:
-          return { type, Panel: VideoPosterPanel };
         case PanelTypes.CAPTIONS:
           return { type, Panel: CaptionsPanel };
         case PanelTypes.VIDEO_ACCESSIBILITY:

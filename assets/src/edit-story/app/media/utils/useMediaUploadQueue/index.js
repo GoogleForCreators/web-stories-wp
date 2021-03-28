@@ -29,9 +29,11 @@ import {
  */
 import { useUploader } from '../../../uploader';
 import useReduction from '../../../../utils/useReduction';
-import useTranscodeVideo from '../useTranscodeVideo';
+import { createBlob } from '../../../../utils/blobs';
+import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
+import getImageDimensions from '../getImageDimensions';
 import * as reducer from './reducer';
 
 const initialState = {
@@ -47,7 +49,8 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
-  } = useTranscodeVideo();
+    getFirstFrameOfVideo,
+  } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
   const {
@@ -59,16 +62,17 @@ function useMediaUploadQueue() {
     replacePlaceholderResource,
   } = actions;
 
-  // TODO: add effect to generate poster via ffmpeg in case resource lacks dimensions.
-  // See https://github.com/google/web-stories-wp/issues/6399
-
-  // Try to update placeholder resources for freshly transcoded file.
+  // Try to update placeholder resources for freshly transcoded file if still missing.
   useEffect(() => {
     async function updateItems() {
       await Promise.all(
         state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
-          if (itemState !== 'TRANSCODED' || !resource.isPlaceholder) {
+          if (
+            itemState !== 'TRANSCODED' ||
+            !resource.isPlaceholder ||
+            resource.poster
+          ) {
             return;
           }
 
@@ -85,12 +89,59 @@ function useMediaUploadQueue() {
     updateItems();
   }, [state.queue, replacePlaceholderResource]);
 
+  // Try to get dimensions and poster for placeholder resources.
+  // This way we can show something more meaningful to the user before transcoding has finished.
+  useEffect(() => {
+    async function updateItems() {
+      await Promise.all(
+        state.queue.map(async (item) => {
+          const { id, file, state: itemState, resource } = item;
+          if ('PENDING' !== itemState || !resource.isPlaceholder) {
+            return;
+          }
+
+          if (
+            !isFeatureEnabled ||
+            !isTranscodingEnabled ||
+            !canTranscodeFile(file)
+          ) {
+            return;
+          }
+
+          try {
+            const videoFrame = await getFirstFrameOfVideo(file);
+            const poster = createBlob(videoFrame);
+            const { width, height } = await getImageDimensions(poster);
+            const newResource = {
+              ...resource,
+              poster,
+              width,
+              height,
+            };
+            replacePlaceholderResource({ id, resource: newResource });
+          } catch {
+            // Not interested in errors here.
+          }
+        })
+      );
+    }
+
+    updateItems();
+  }, [
+    state.queue,
+    isFeatureEnabled,
+    isTranscodingEnabled,
+    canTranscodeFile,
+    getFirstFrameOfVideo,
+    replacePlaceholderResource,
+  ]);
+
   // Upload files to server, optionally first transcoding them.
   useEffect(() => {
     async function uploadItems() {
       await Promise.all(
         state.queue.map(async (item) => {
-          const { id, file, state: itemState } = item;
+          const { id, file, state: itemState, resource } = item;
           if ('PENDING' !== itemState) {
             return;
           }
@@ -145,9 +196,19 @@ function useMediaUploadQueue() {
               media_source: 'video-optimization',
             });
 
+            // The newly uploaded file won't have a poster yet.
+            // However, we'll likely still have one on file.
+            // Add it back so we're never without one.
+            // The final poster will be uploaded later by uploadVideoPoster().
+            const newResource = getResourceFromAttachment(attachment);
+            const newResourceWithPoster = {
+              ...newResource,
+              poster: newResource.poster || resource.poster,
+            };
+
             finishUploading({
               id,
-              resource: getResourceFromAttachment(attachment),
+              resource: newResourceWithPoster,
             });
           } catch (error) {
             // Cancel uploading if there were any errors.

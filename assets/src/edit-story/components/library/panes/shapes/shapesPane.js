@@ -19,26 +19,45 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useFeatures } from 'flagged';
 import { MASKS } from '../../../../masks';
+import STICKERS from '../../../../stickers';
 import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
+import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import ShapePreview from './shapePreview';
+import StickerButton from './stickerButton';
 import paneId from './paneId';
 
 const SectionContent = styled.div`
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+
+  display: grid;
+  grid-column-gap: 12px;
+  grid-row-gap: 24px;
+  @media screen and (min-width: 1220px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media screen and (min-width: 1100px) and (max-width: 1220px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
+const STICKER_TYPES = Object.keys(STICKERS);
+
 function ShapesPane(props) {
-  const { showTextAndShapesSearchInput } = useFeatures();
+  const { showTextAndShapesSearchInput, enableStickers } = useFeatures();
+
+  const ref = useRef();
+  useRovingTabIndex({ ref });
   return (
     <Pane id={paneId} {...props}>
       {showTextAndShapesSearchInput && (
@@ -49,13 +68,22 @@ function ShapesPane(props) {
           disabled
         />
       )}
-      <Section title={__('Basic shapes', 'web-stories')}>
-        <SectionContent>
-          {MASKS.filter((mask) => mask.showInLibrary).map((mask) => (
-            <ShapePreview mask={mask} key={mask.type} isPreview />
+      <Section title={__('Shapes', 'web-stories')}>
+        <SectionContent ref={ref}>
+          {MASKS.filter((mask) => mask.showInLibrary).map((mask, i) => (
+            <ShapePreview mask={mask} key={mask.type} index={i} isPreview />
           ))}
         </SectionContent>
       </Section>
+      {enableStickers && (
+        <Section title={__('Stickers', 'web-stories')}>
+          <SectionContent>
+            {STICKER_TYPES.map((stickerType) => (
+              <StickerButton key={stickerType} stickerType={stickerType} />
+            ))}
+          </SectionContent>
+        </Section>
+      )}
     </Pane>
   );
 }

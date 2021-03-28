@@ -21,6 +21,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
+import getUniquePresets from '../../../../utils/getUniquePresets';
 import {
   areAllType,
   getPagePreset,
@@ -86,7 +87,7 @@ function useAddPreset({ presetType }) {
       updateStory({
         properties: {
           currentStoryStyles: {
-            colors: [...localColors, ...addedPresets.colors],
+            colors: getUniquePresets([...localColors, ...addedPresets.colors]),
           },
         },
       });
@@ -99,8 +100,11 @@ function useAddPreset({ presetType }) {
       updateStory({
         properties: {
           globalStoryStyles: {
-            textStyles: [...textStyles, ...addedPresets.textStyles],
-            colors: [...colors, ...addedPresets.colors],
+            textStyles: getUniquePresets([
+              ...textStyles,
+              ...addedPresets.textStyles,
+            ]),
+            colors: getUniquePresets([...colors, ...addedPresets.colors]),
           },
         },
       });

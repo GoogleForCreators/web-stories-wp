@@ -49,8 +49,8 @@ export const _default = () => (
             'this is my aria label giving my message context for screen reader users'
           )}
           customZIndex={number('customZIndex')}
-          handleAction={action('handle action clicked')}
-          handleDismiss={action('handle dismiss fired')}
+          onAction={action('on action clicked')}
+          onDismiss={action('on dismiss fired')}
           isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
           message={text('message', 'Sorry! File failed to upload.')}
         />
@@ -68,8 +68,8 @@ export const LightThemeDefault = () => (
         'this is my aria label giving my message context for screen reader users'
       )}
       customZIndex={number('customZIndex')}
-      handleAction={action('handle action clicked')}
-      handleDismiss={action('handle dismiss fired')}
+      onAction={action('on action clicked')}
+      onDismiss={action('on dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
     />
@@ -85,8 +85,8 @@ export const Action = () => (
         'this is my aria label giving my message context for screen reader users'
       )}
       customZIndex={number('customZIndex')}
-      handleAction={action('handle action clicked')}
-      handleDismiss={action('handle dismiss fired')}
+      onAction={action('on action clicked')}
+      onDismiss={action('on dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
       removeMessageTimeInterval={80000}
@@ -104,8 +104,8 @@ export const EarlyDismissWithAction = () => (
         'this is my aria label giving my message context for screen reader users'
       )}
       customZIndex={number('customZIndex')}
-      handleAction={action('handle action clicked')}
-      handleDismiss={action('handle dismiss fired')}
+      onAction={action('on action clicked')}
+      onDismiss={action('on dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
       removeMessageTimeInterval={80000}
@@ -122,8 +122,8 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
         'this is my aria label giving my message context for screen reader users'
       )}
       customZIndex={number('customZIndex')}
-      handleAction={action('handle action clicked')}
-      handleDismiss={action('handle dismiss fired')}
+      onAction={action('on action clicked')}
+      onDismiss={action('on dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text('message', 'Sorry! File failed to upload.')}
       removeMessageTimeInterval={80000}
@@ -141,8 +141,8 @@ export const LongMessage = () => (
         'this is my aria label giving my message context for screen reader users'
       )}
       customZIndex={number('customZIndex')}
-      handleAction={action('handle action clicked')}
-      handleDismiss={action('handle dismiss fired')}
+      onAction={action('on action clicked')}
+      onDismiss={action('on dismiss fired')}
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       message={text(
         'message',

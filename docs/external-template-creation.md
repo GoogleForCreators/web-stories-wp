@@ -34,3 +34,53 @@ This is an important note to make when naming images for upload into a story as 
 ## Adding Your Template
 
 Once you've added your template's raw story json to `packages/templates/src/raw/<template_name>.json`, you can import it into `packages/templates/src/getTemplates` and add to the function `loadTemplates(imageBaseUrl)`. It should then be accessible in `packages/templates/src/index`.
+
+
+## Adding Stickers To Your Template
+
+To add stickers to your template, it's as easy as going to the experiments and enabling the `enableStickers` flag. Once turned on, all available stickers in the codebase should be available for selection under our base shapes in the shapes library panel.
+
+## Creating New Stickers In The Codebase
+
+To add new stickers to the codebase, obtain the raw svg file, and view it in your code editor. Paste the contents of the raw svg file into a react component in `assets/src/edit-story/stickers/<sticker_name>.js`.
+
+Remove extraneous attributes on the base `svg` component and make sure your component takes a `style` property that it applies to the base svg element. Also make sure to remove any explicit `height` and `width` attributes and see that they only are applied to the viewbox. By the end, your component should look something like this:
+
+```js
+/* eslint-disable-next-line react/prop-types */
+function MySticker({ style }) {
+  return (
+    <svg
+      style={style}
+      viewBox="0 0 <width> <height>"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/*Contents*/}
+    </svg>
+  );
+}
+```
+
+At the bottom of the file, make sure there's one default export that exports the svg component and the aspect ratio based off the viewbox:
+
+```js
+export default {
+  aspectRatio: width / height,
+  svg: MySticker,
+};
+```
+
+The last step of this process is navigating to `assets/src/edit-story/stickers/index.js` and adding your new sticker to the default export object:
+
+```js
+//...
+/* eslint-disable-next-line import/no-unresolved */
+import { default as mySticker } from './mySticker';
+export default {
+  //...
+  mySticker,
+};
+```
+
+Once you've completed this step, your new sticker should now appear with the other stickers appended to the bottom of the shapes panel if the `enableStickers` feature flag is enabled.

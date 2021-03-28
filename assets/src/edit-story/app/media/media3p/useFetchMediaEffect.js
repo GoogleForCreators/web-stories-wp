@@ -22,7 +22,7 @@ import { useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useSnackbar } from '../../snackbar';
+import { useSnackbar } from '../../../../design-system';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
@@ -100,7 +100,10 @@ export default function useFetchMediaEffect({
         });
       } catch (e) {
         fetchMediaError({ provider, pageToken });
-        showSnackbar({ message: PROVIDERS[provider].fetchMediaErrorMessage });
+        showSnackbar({
+          message: PROVIDERS[provider].fetchMediaErrorMessage,
+          dismissable: true,
+        });
       }
     }
 

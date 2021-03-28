@@ -64,6 +64,7 @@ describe('APIProvider', () => {
         api: {
           media: 'mediaPath',
         },
+        postLock: { api: '' },
       },
     });
 
@@ -93,6 +94,7 @@ describe('APIProvider', () => {
         api: {},
         cdnURL,
         assetsURL,
+        postLock: { api: '' },
       },
     });
 

@@ -17,16 +17,11 @@
 /**
  * External dependencies
  */
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -35,6 +30,11 @@ import {
   isNullOrUndefinedOrEmptyString,
   useKeyDownEffect,
   useFocusOut,
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+  TOOLTIP_PLACEMENT,
+  Tooltip,
 } from '../../../../../design-system';
 import loadStylesheet from '../../../../utils/loadStylesheet';
 import { useConfig } from '../../../../app/config';
@@ -45,7 +45,6 @@ import {
   DIRECTION,
   SCALE_DIRECTION,
 } from '../../../../../animation';
-import WithTooltip from '../../../tooltip';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -68,10 +67,12 @@ import {
   PanRightAnimation,
   PanBottomAnimation,
   PanLeftAnimation,
+  PanAndZoomAnimation,
 } from './effectChooserElements';
 
+// Full panel width minus the padding & scrollbar.
 const Container = styled.div`
-  width: ${PANEL_WIDTH}px;
+  width: ${PANEL_WIDTH - 22}px;
 `;
 
 const ContentWrapper = styled.div`
@@ -81,20 +82,22 @@ const ContentWrapper = styled.div`
 const GridItem = styled.button.attrs({ role: 'listitem' })`
   border: none;
   background: ${({ active, theme }) =>
-    active ? theme.DEPRECATED_THEME.colors.accent.primary : '#333'};
-  border-radius: 4px;
+    active
+      ? theme.colors.interactiveBg.secondaryPress
+      : theme.colors.interactiveBg.secondaryNormal};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
   overflow: hidden;
   font-family: 'Teko', sans-serif;
-  font-size: 20px;
+  font-size: ${({ size = 28 }) => size}px;
   line-height: 1;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.fg.primary};
   text-transform: uppercase;
   transition: background 0.1s linear;
 
   &[aria-disabled='true'] {
-    opacity: 0.6;
+    background: ${({ theme }) => theme.colors.interactiveBg.disable};
   }
 
   &:hover:not([aria-disabled='true']) {
@@ -104,7 +107,9 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   &:hover:not([aria-disabled='true']),
   &:focus:not([aria-disabled='true']) {
     background: ${({ active, theme }) =>
-      active ? theme.DEPRECATED_THEME.colors.accent.primary : '#1C73E8'};
+      active
+        ? theme.colors.interactiveBg.secondaryPress
+        : theme.colors.interactiveBg.secondaryHover};
 
     ${BaseAnimationCell} {
       display: inline-block;
@@ -114,19 +119,15 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
       display: none;
     }
   }
+  ${themeHelpers.focusableOutlineCSS};
 `;
-
 const Grid = styled.div.attrs({ role: 'list' })`
   display: grid;
   justify-content: center;
-  gap: 15px 3px;
-  grid-template-columns: repeat(4, 58px);
-  padding: 15px;
+  gap: 12px 4px;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 16px 2px 16px 16px;
   position: relative;
-  /* Specify outline override here so we can give priority with extra selectors */
-  & > button[role='listitem']:focus {
-    outline: -webkit-focus-ring-color auto 1px !important;
-  }
 `;
 
 const GridItemFullRow = styled(GridItem)`
@@ -138,24 +139,8 @@ const GridItemHalfRow = styled(GridItem)`
 `;
 
 const NoEffect = styled(GridItemFullRow)`
-  ${({ theme }) => css`
-    padding: 8px 15px;
-    height: auto;
-    text-transform: capitalize;
-    font-family: ${theme.DEPRECATED_THEME.fonts.paragraph.small.family};
-    font-size: ${theme.DEPRECATED_THEME.fonts.paragraph.small.size};
-    line-height: ${theme.DEPRECATED_THEME.fonts.paragraph.small.lineHeight};
-    font-weight: normal;
-  `}
-`;
-const GridLabel = styled.div`
-  grid-column-start: span 4;
-  padding: 15px 15px 0 18px;
-  span {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-    font-weight: 500;
-    font-size: 14px;
-  }
+  height: 36px;
+  text-transform: none;
 `;
 
 /**
@@ -200,6 +185,7 @@ const BACKGROUND_EFFECTS_LIST = [
   PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
+  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
 ];
 
 export default function EffectChooser({
@@ -214,6 +200,7 @@ export default function EffectChooser({
   const { isRTL } = useConfig();
   const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
+  const { enableExperimentalAnimationEffects } = useFeatures();
 
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
@@ -335,9 +322,6 @@ export default function EffectChooser({
 
   return (
     <Container>
-      <GridLabel>
-        <span>{__('Select Animation', 'web-stories')}</span>
-      </GridLabel>
       <Grid
         ref={ref}
         aria-label={__('Available Animations To Select', 'web-stories')}
@@ -347,11 +331,14 @@ export default function EffectChooser({
           aria-label={__('None', 'web-stories')}
           active={activeEffectListIndex === 0}
         >
-          <span>{__('None', 'web-stories')}</span>
+          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('None', 'web-stories')}
+          </Text>
         </NoEffect>
         {isBackgroundEffects ? (
           <>
             <GridItem
+              size={16}
               aria-label={__('Pan Left Effect', 'web-stories')}
               onClick={(event) =>
                 handleOnSelect(event, PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT], {
@@ -364,7 +351,7 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 1}
             >
-              <WithTooltip
+              <Tooltip
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
@@ -374,15 +361,16 @@ export default function EffectChooser({
                       ]?.tooltip
                     : ''
                 }
-                placement="left"
+                placement={TOOLTIP_PLACEMENT.LEFT}
               >
                 <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
                 <PanLeftAnimation>
                   {__('Pan Left', 'web-stories')}
                 </PanLeftAnimation>
-              </WithTooltip>
+              </Tooltip>
             </GridItem>
             <GridItem
+              size={16}
               aria-label={__('Pan Right Effect', 'web-stories')}
               onClick={(event) =>
                 handleOnSelect(event, PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT], {
@@ -395,7 +383,7 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 2}
             >
-              <WithTooltip
+              <Tooltip
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
@@ -405,7 +393,7 @@ export default function EffectChooser({
                       ]?.tooltip
                     : ''
                 }
-                placement="left"
+                placement={TOOLTIP_PLACEMENT.LEFT}
               >
                 <ContentWrapper>
                   {__('Pan Right', 'web-stories')}
@@ -413,9 +401,10 @@ export default function EffectChooser({
                 <PanRightAnimation>
                   {__('Pan Right', 'web-stories')}
                 </PanRightAnimation>
-              </WithTooltip>
+              </Tooltip>
             </GridItem>
             <GridItem
+              size={16}
               aria-label={__('Pan Up Effect', 'web-stories')}
               onClick={(event) =>
                 handleOnSelect(event, PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP], {
@@ -428,7 +417,7 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 3}
             >
-              <WithTooltip
+              <Tooltip
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
@@ -438,15 +427,16 @@ export default function EffectChooser({
                       ]?.tooltip
                     : ''
                 }
-                placement="left"
+                placement={TOOLTIP_PLACEMENT.LEFT}
               >
                 <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
                 <PanBottomAnimation>
                   {__('Pan Up', 'web-stories')}
                 </PanBottomAnimation>
-              </WithTooltip>
+              </Tooltip>
             </GridItem>
             <GridItem
+              size={16}
               aria-label={__('Pan Down Effect', 'web-stories')}
               onClick={(event) =>
                 handleOnSelect(event, PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM], {
@@ -459,7 +449,7 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 4}
             >
-              <WithTooltip
+              <Tooltip
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
@@ -469,16 +459,17 @@ export default function EffectChooser({
                       ]?.tooltip
                     : ''
                 }
-                placement="left"
+                placement={TOOLTIP_PLACEMENT.LEFT}
               >
                 <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
                 <PanTopAnimation>
                   {__('Pan Down', 'web-stories')}
                 </PanTopAnimation>
-              </WithTooltip>
+              </Tooltip>
             </GridItem>
             <GridItemHalfRow
               aria-label={__('Zoom In Effect', 'web-stories')}
+              size={12}
               onClick={(event) =>
                 handleOnSelect(
                   event,
@@ -500,7 +491,7 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 5}
             >
-              <WithTooltip
+              <Tooltip
                 title={
                   disabledBackgroundEffects.includes(
                     getDirectionalEffect(
@@ -513,13 +504,13 @@ export default function EffectChooser({
                       ]?.tooltip
                     : ''
                 }
-                placement="left"
+                placement={TOOLTIP_PLACEMENT.LEFT}
               >
                 <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
                 <ZoomInAnimation>
                   {__('Zoom In', 'web-stories')}
                 </ZoomInAnimation>
-              </WithTooltip>
+              </Tooltip>
             </GridItemHalfRow>
             <GridItemHalfRow
               aria-label={__('Zoom Out Effect', 'web-stories')}
@@ -544,7 +535,7 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 6}
             >
-              <WithTooltip
+              <Tooltip
                 title={
                   disabledBackgroundEffects.includes(
                     getDirectionalEffect(
@@ -557,14 +548,60 @@ export default function EffectChooser({
                       ]?.tooltip
                     : ''
                 }
-                placement="left"
+                placement={TOOLTIP_PLACEMENT.LEFT}
               >
                 <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
                 <ZoomOutAnimation>
                   {__('Zoom Out', 'web-stories')}
                 </ZoomOutAnimation>
-              </WithTooltip>
+              </Tooltip>
             </GridItemHalfRow>
+            {enableExperimentalAnimationEffects && (
+              <GridItemFullRow
+                aria-label={__('Pan and Zoom Effect', 'web-stories')}
+                onClick={(event) => {
+                  handleOnSelect(
+                    event,
+                    BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                    {
+                      animation:
+                        BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
+                      zoomDirection: (
+                        disabledTypeOptionsMap[
+                          BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                        ]?.options || []
+                      ).includes(SCALE_DIRECTION.SCALE_OUT)
+                        ? SCALE_DIRECTION.SCALE_IN
+                        : SCALE_DIRECTION.SCALE_OUT,
+                    }
+                  );
+                }}
+                aria-disabled={disabledBackgroundEffects.includes(
+                  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                )}
+                active={activeEffectListIndex === 7}
+              >
+                <Tooltip
+                  title={
+                    disabledBackgroundEffects.includes(
+                      BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                    )
+                      ? disabledTypeOptionsMap[
+                          BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value
+                        ]?.tooltip
+                      : ''
+                  }
+                  placement={TOOLTIP_PLACEMENT.LEFT}
+                >
+                  <ContentWrapper>
+                    {__('Pan and Zoom', 'web-stories')}
+                  </ContentWrapper>
+                  <PanAndZoomAnimation>
+                    {__('Pan and Zoom', 'web-stories')}
+                  </PanAndZoomAnimation>
+                </Tooltip>
+              </GridItemFullRow>
+            )}
           </>
         ) : (
           <>
@@ -591,6 +628,7 @@ export default function EffectChooser({
               <FadeInAnimation>{__('Fade in', 'web-stories')}</FadeInAnimation>
             </GridItemFullRow>
             <GridItem
+              size={18}
               aria-label={__('Fly In from Left Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -606,6 +644,7 @@ export default function EffectChooser({
               </FlyInLeftAnimation>
             </GridItem>
             <GridItem
+              size={18}
               aria-label={__('Fly In from Top Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -621,6 +660,7 @@ export default function EffectChooser({
               </FlyInTopAnimation>
             </GridItem>
             <GridItem
+              size={18}
               aria-label={__('Fly In from Bottom Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -636,6 +676,7 @@ export default function EffectChooser({
               </FlyInBottomAnimation>
             </GridItem>
             <GridItem
+              size={18}
               aria-label={__('Fly In from Right Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -663,6 +704,7 @@ export default function EffectChooser({
               <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
             </GridItemFullRow>
             <GridItemHalfRow
+              size={18}
               aria-label={__('Rotate In Left Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -678,6 +720,7 @@ export default function EffectChooser({
               </RotateInLeftAnimation>
             </GridItemHalfRow>
             <GridItemHalfRow
+              size={18}
               aria-label={__('Rotate In Right Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -693,6 +736,7 @@ export default function EffectChooser({
               </RotateInRightAnimation>
             </GridItemHalfRow>
             <GridItemFullRow
+              size={26}
               aria-label={__('Twirl In Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -707,6 +751,7 @@ export default function EffectChooser({
               </TwirlInAnimation>
             </GridItemFullRow>
             <GridItemHalfRow
+              size={24}
               aria-label={__('Whoosh In from Left Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -722,6 +767,7 @@ export default function EffectChooser({
               </WhooshInLeftAnimation>
             </GridItemHalfRow>
             <GridItemHalfRow
+              size={24}
               aria-label={__('Whoosh In from Right Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
@@ -737,6 +783,7 @@ export default function EffectChooser({
               <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
             </GridItemHalfRow>
             <GridItemHalfRow
+              size={12}
               aria-label={__('Scale In Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({

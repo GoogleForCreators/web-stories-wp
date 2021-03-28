@@ -48,11 +48,19 @@ const DEFAULT_CONFIG = {
     video: ['video/mp4', 'video/ogg'],
   },
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
+  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
   capabilities: {
     hasUploadMediaAction: true,
     hasPublishAction: true,
     hasAssignAuthorAction: true,
   },
+  dashboardLink: 'https://www.example.com/dashboard',
+  postLock: {
+    interval: 150,
+    showLockedDialog: true,
+  },
+  nonce: '123456789',
   version: '1.0.0-alpha.9',
   isRTL: false,
   locale: {

@@ -60,4 +60,7 @@ SampleSticker.propTypes = {
   style: PropTypes.object,
 };
 
-export default SampleSticker;
+export default {
+  aspectRatio: 78 / 76,
+  svg: SampleSticker,
+};

@@ -37,7 +37,7 @@ export const SelectButton = styled.button(
     justify-content: space-between;
 
     border-radius: ${theme.borders.radius.small};
-    background-color: ${theme.colors.bg.primary};
+    background-color: ${theme.colors.opacity.footprint};
     border: 1px solid
       ${theme.colors.border[isOpen ? 'defaultActive' : 'defaultNormal']};
 
@@ -47,7 +47,10 @@ export const SelectButton = styled.button(
     text-overflow: ellipsis;
     cursor: pointer;
 
-    ${themeHelpers.focusableOutlineCSS};
+    ${themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )}
 
     &:hover {
       border-color: ${theme.colors.border[

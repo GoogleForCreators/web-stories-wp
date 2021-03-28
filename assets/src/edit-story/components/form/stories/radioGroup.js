@@ -39,23 +39,24 @@ export const _default = () => {
   const options = [
     {
       value: 'a',
-      name: __('Option A', 'web-stories'),
+      label: __('Option A', 'web-stories'),
       helper: __('This is the best option', 'web-stories'),
     },
     {
       value: 'b',
-      name: __('Option B', 'web-stories'),
+      label: __('Option B', 'web-stories'),
       helper: __('Also a good option', 'web-stories'),
     },
     {
       value: 'c',
-      name: __('Option C without description', 'web-stories'),
+      label: __('Option C without description', 'web-stories'),
     },
   ];
   const [value, setValue] = useState('a');
 
   return (
     <RadioGroup
+      name="test-group"
       options={options}
       onChange={(evt) => setValue(evt.target.value)}
       value={value}

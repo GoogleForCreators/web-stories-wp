@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { default as SampleSticker } from './sampleSticker';
+import { default as sample } from './sampleSticker';
 export default {
-  SampleSticker,
+  sample,
 };

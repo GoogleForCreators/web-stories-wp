@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
 import { useCallback, useRef, useState } from 'react';
 import { format, formatTime, is12Hour } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
@@ -26,53 +24,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { DateTime, Label, Row } from '../../../form';
+import { DateTime, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';
-import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../../../design-system';
 import useFocusOut from '../../../../utils/useFocusOut';
-
-const StyledButton = styled.button`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body2.letterSpacing};
-  display: flex;
-  flex-direction: row;
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
-  flex: 1;
-  padding: 2px;
-  border-radius: 4px;
-  border-color: transparent;
-`;
-
-const DateWrapper = styled.div`
-  padding: 5px 0px 5px 2px;
-  width: 100%;
-  text-align: left;
-`;
-
-const FieldLabel = styled(Label)`
-  flex-basis: 64px;
-`;
-
-const Date = styled.span`
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.86)};
-`;
-
-const Time = styled.span`
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.4)};
-  display: inline-block;
-`;
-
-const StyledToggleIcon = styled(ToggleIcon)`
-  height: 26px;
-  min-width: 25px;
-`;
+import DropDownSelect from '../../../../../design-system/components/dropDown/select';
 
 function PublishTime() {
   const { date, updateStory } = useStory(
@@ -119,13 +76,13 @@ function PublishTime() {
   return (
     <>
       <Row>
-        <FieldLabel>{__('Publish', 'web-stories')}</FieldLabel>
-        <StyledButton
+        <DropDownSelect
+          dropDownLabel={__('Publish', 'web-stories')}
           aria-pressed={showDatePicker}
           aria-haspopup
           aria-expanded={showDatePicker}
           aria-label={__('Story publish time', 'web-stories')}
-          onClick={(e) => {
+          onSelectClick={(e) => {
             e.preventDefault();
             if (!showDatePicker) {
               // Handle only opening the datepicker since onFocusOut deals with closing.
@@ -133,13 +90,10 @@ function PublishTime() {
             }
           }}
           ref={dateFieldRef}
-        >
-          <DateWrapper>
-            <Date>{format(date, shortDateFormat)}</Date>{' '}
-            <Time>{formatTime(date)}</Time>
-          </DateWrapper>
-          <StyledToggleIcon />
-        </StyledButton>
+          activeItemLabel={
+            format(date, shortDateFormat) + ' ' + formatTime(date)
+          }
+        />
       </Row>
       <Popup
         anchor={dateFieldRef}
