@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 `;
 
 const FlippableArrow = styled(Icons.ArrowLeftLarge)`
-  transform: rotate(${({ isLeft }) => (isLeft ? 0 : 0.5)}turn);
+  transform: rotate(${({ $isLeft }) => ($isLeft ? 0 : 0.5)}turn);
 `;
 
 function PageNav({ isNext = true }) {
@@ -94,7 +94,7 @@ function PageNav({ isNext = true }) {
         onClick={handleClick}
         onMouseDown={cancelMouseDown}
       >
-        <FlippableArrow isLeft={isLeft} />
+        <FlippableArrow $isLeft={isLeft} />
       </Button>
     </Wrapper>
   );
