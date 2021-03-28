@@ -23,16 +23,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as PlayIcon } from '../../icons/play.svg';
-import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
 import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
+import { Icons } from '../../../design-system';
 
-const PLAY_BUTTON_SIZE = 48;
+const PLAY_BUTTON_SIZE = 50;
+const ICON_SVG_SIZE = 72;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
 const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
 
@@ -78,17 +79,25 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   }
 `;
 
-const Play = styled(PlayIcon)`
-  width: 100%;
-  height: 100%;
-  opacity: 0.84;
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
+const iconCss = css`
+  width: ${ICON_SVG_SIZE}px;
+  height: ${ICON_SVG_SIZE}px;
+  pointer-events: none;
+  transform: translate(
+    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px,
+    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
+  );
+  color: ${({ theme }) => theme.colors.standard.white};
+  filter: drop-shadow(
+    0px 0px 10px ${({ theme }) => rgba(theme.colors.bg.primary, 0.4)}
+  );
 `;
-const Pause = styled(PauseIcon)`
-  width: 100%;
-  height: 100%;
-  opacity: 0.84;
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
+
+const Play = styled(Icons.PlayFilled)`
+  ${iconCss};
+`;
+const Pause = styled(Icons.StopFilled)`
+  ${iconCss};
 `;
 
 const playAboveSpacing = {
