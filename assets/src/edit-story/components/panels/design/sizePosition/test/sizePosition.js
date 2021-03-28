@@ -432,11 +432,11 @@ describe('panels/SizePosition', () => {
       const { getByRole, pushUpdate, submit } = renderSizePosition([image]);
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '2000' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+      fireEvent.blur(input);
       const [updateArg, submitArg] = pushUpdate.mock.calls[0];
       expect(updateArg()).toStrictEqual({
-        height: 2000,
-        width: 2000 * (100 / 80),
+        height: 1000,
+        width: 1000 * (100 / 80),
       });
       expect(submitArg).toBeTrue();
 

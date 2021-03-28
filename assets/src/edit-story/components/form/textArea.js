@@ -84,7 +84,6 @@ TextArea.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
-  maxLength: PropTypes.number,
   disabled: PropTypes.bool,
   rows: PropTypes.number,
   onChange: PropTypes.func.isRequired,
