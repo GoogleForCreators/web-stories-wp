@@ -165,6 +165,9 @@ const sharedConfig = {
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
+    splitChunks: {
+      automaticNameDelimiter: '-',
+    },
     minimizer: [
       new TerserPlugin({
         parallel: true,
@@ -245,9 +248,9 @@ const editorAndDashboard = {
     }),
   ],
   optimization: {
-    ...sharedConfig.optimization,
     splitChunks: {
       chunks: 'all',
+      automaticNameDelimiter: '-',
     },
   },
 };
