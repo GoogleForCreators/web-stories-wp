@@ -25,7 +25,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Icons, Text, THEME_CONSTANTS } from '../../../../design-system';
-import { useStory, useHistory, useConfig, useCanvas } from '../../../app';
+import { useStory, useHistory, useConfig, useLayout } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import PageMenuButton from './pageMenuButton';
 import AnimationToggle from './animationToggle';
@@ -81,8 +81,8 @@ function PageMenu() {
       };
     }
   );
-  const { pageSize } = useCanvas((state) => ({
-    pageSize: state.state.pageSize,
+  const { pageWidth } = useLayout((state) => ({
+    pageWidth: state.state.pageWidth,
   }));
   const { isRTL } = useConfig();
 
@@ -99,7 +99,7 @@ function PageMenu() {
     [addPage, currentPage]
   );
 
-  const isWidePage = pageSize.width > 280;
+  const isWidePage = pageWidth > 280;
 
   const handleUndo = useCallback(() => undo(), [undo]);
 
