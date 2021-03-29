@@ -16,7 +16,7 @@
 
 // @todo: only provide font family, and use font provider to fill the rest.
 export const TEXT_ELEMENT_DEFAULT_FONT = {
-  family: 'Roboto',
+  family: 'Google Sans',
   weights: [100, 300, 400, 500, 700, 900],
   styles: ['italic', 'regular'],
   variants: [

@@ -69,6 +69,7 @@ const DEFAULT_PRESET = {
   width: DEFAULT_WIDTH.DEFAULT,
   textAlign: 'center',
   borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+  fontFamily: 'Google Sans',
 };
 
 const PRESETS = [
