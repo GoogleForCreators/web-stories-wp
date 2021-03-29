@@ -126,11 +126,16 @@ const ChecklistTab = (props) => {
     (args) => {
       const { id, message, help, pageGroup } = args;
       const prepublishProps = getOnPrepublishSelect(args);
+      const isClickable = Boolean(prepublishProps?.onClick);
       return (
         <Row key={id} pageGroup={pageGroup}>
-          <IssueTitle {...prepublishProps} tabIndex={0}>
+          <IssueTitle
+            {...prepublishProps}
+            tabIndex={0}
+            $isClickable={isClickable}
+          >
             {message}
-            {prepublishProps?.onClick && (
+            {isClickable && (
               <GoToIssue aria-label={TEXT.ACCESSIBLE_LINK_TITLE}>
                 {isRTL ? <Icons.ArrowLeft /> : <Icons.ArrowRight />}
               </GoToIssue>

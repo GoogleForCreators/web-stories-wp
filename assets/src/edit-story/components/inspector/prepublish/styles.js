@@ -101,7 +101,7 @@ export const IssueTitle = styled(Headline).attrs({
   display: inline-flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.standard.white};
-  cursor: pointer;
+  cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   ${themeHelpers.focusableOutlineCSS};
 `;
