@@ -32,7 +32,6 @@ const TEXT = 'text';
 const TEXT_BOX = 'textBox';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
-const VIDEO_POSTER = 'videoPoster';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
 
@@ -53,11 +52,10 @@ const PanelTypes = {
   BORDER,
   LINK,
   VIDEO_OPTIONS,
-  VIDEO_POSTER,
   IMAGE_ACCESSIBILITY,
-  VIDEO_ACCESSIBILITY,
   CAPTIONS,
   ANIMATION,
+  VIDEO_ACCESSIBILITY,
 };
 
 export default PanelTypes;

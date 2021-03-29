@@ -41,7 +41,7 @@ describe('Filter Panel', () => {
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(media, 5, 5),
       down(),
-      moveRel(canvas, 5, 5),
+      moveRel(canvas, 10, 10),
       up(),
     ]);
 

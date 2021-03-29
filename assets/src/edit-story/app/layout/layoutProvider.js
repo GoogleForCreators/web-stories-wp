@@ -18,33 +18,35 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_RATIO } from '../../constants';
 import Context from './context';
+import useZoomSetting from './useZoomSetting';
+import useScrollOffset from './useScrollOffset';
 
 function LayoutProvider({ children }) {
-  const [canvasPageSize, setCanvasPageSize] = useState({
-    width: PAGE_WIDTH,
-    height: PAGE_WIDTH / PAGE_RATIO,
-  });
-
-  const state = useMemo(
-    () => ({
-      state: {
-        canvasPageSize,
-      },
-      actions: {
-        setCanvasPageSize,
-      },
-    }),
-    [canvasPageSize]
+  const { hasCanvasZoom } = useFeatures();
+  const zoomValue = useZoomSetting(hasCanvasZoom);
+  const offsetValue = useScrollOffset(
+    hasCanvasZoom,
+    zoomValue.state.zoomSetting
   );
 
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  const value = {
+    state: {
+      ...zoomValue.state,
+      ...offsetValue.state,
+    },
+    actions: {
+      ...zoomValue.actions,
+      ...offsetValue.actions,
+    },
+  };
+
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 LayoutProvider.propTypes = {
