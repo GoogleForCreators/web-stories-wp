@@ -256,7 +256,7 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(image, 5, 5),
       down(),
-      moveRel(canvas, 5, 5),
+      moveRel(canvas, 10, 10),
       up(),
     ]);
   }
