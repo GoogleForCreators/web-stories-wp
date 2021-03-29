@@ -333,20 +333,6 @@ const activationNotice = {
       color: '#fcd8ba',
     }),
   ],
-  optimization: {
-    ...sharedConfig.optimization,
-    splitChunks: {
-      automaticNameDelimiter: '-',
-      cacheGroups: {
-        stories: {
-          name: 'activation-notice',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
-  },
 };
 
 const widgetScript = {
