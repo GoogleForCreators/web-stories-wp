@@ -122,9 +122,10 @@ describe('Inspector Tabs integration', () => {
 
       await waitFor(() => {
         expect(
-          fixture.editor.inspector.checklistPanel.node.querySelector(
-            '[class^="checklistTab__Row-"]'
-          )
+          fixture.editor.inspector.checklistPanel.getByRole('button', {
+            name: /^High Priority$/,
+            expanded: true,
+          })
         ).not.toBeNull();
       });
     });
