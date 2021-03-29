@@ -83,7 +83,7 @@ describe('TextPane', () => {
         </FlagsProvider>
       );
 
-      fireEvent.click(getByRole('button', { name: 'Heading 1' }));
+      fireEvent.click(getByRole('button', { name: 'Title 1' }));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);
