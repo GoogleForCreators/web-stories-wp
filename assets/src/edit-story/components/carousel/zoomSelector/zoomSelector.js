@@ -26,7 +26,6 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
 import { DropDown, PLACEMENT } from '../../../../design-system';
-import DropdownItem from './dropdownItem';
 
 const StyledDropDown = styled(DropDown)`
   button {
@@ -76,8 +75,6 @@ function ZoomSelector() {
       placement={PLACEMENT.TOP_START}
       onMenuItemClick={handleSetZoom}
       selectedValue={zoomSetting}
-      renderItem={DropdownItem}
-      showChevron={false}
       popupFillWidth={false}
     />
   );
