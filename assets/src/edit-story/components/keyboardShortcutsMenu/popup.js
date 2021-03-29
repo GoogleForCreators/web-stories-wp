@@ -48,7 +48,7 @@ const transitionStyles = {
 const Controller = styled.div`
   position: absolute;
   top: -12px;
-  right: 0;
+  left: 0;
   opacity: 0;
   z-index: 1;
   transform: translateX(20px);

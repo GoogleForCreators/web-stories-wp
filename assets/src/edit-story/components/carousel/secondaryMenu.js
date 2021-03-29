@@ -38,7 +38,7 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 0 16px 16px;
+  margin: 0 16px 16px;
 `;
 
 const Box = styled.div`

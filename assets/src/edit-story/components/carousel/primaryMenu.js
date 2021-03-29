@@ -53,7 +53,7 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  margin: 0 16px 16px 0;
+  margin: 0 16px 16px;
 `;
 
 const Box = styled.div`
