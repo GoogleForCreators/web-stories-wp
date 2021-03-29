@@ -24,11 +24,6 @@ import styled from 'styled-components';
  */
 import { Headline, THEME_CONSTANTS } from '../../../../design-system';
 
-/**
- * Internal dependencies
- */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
-
 export const Container = styled.div`
   position: relative;
   margin-top: 28px;
