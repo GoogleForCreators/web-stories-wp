@@ -62,7 +62,7 @@ class Cross_Origin_Isolation {
 	 * @return void
 	 */
 	public function init() {
-		if ( ! $this->is_needed() ) {
+		if ( ! $this->is_needed() || ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -83,10 +83,6 @@ class Cross_Origin_Isolation {
 	 * @return void
 	 */
 	public function admin_header() {
-		if ( ! $this->is_edit_screen() ) {
-			return;
-		}
-
 		header( 'Cross-Origin-Opener-Policy: same-origin' );
 		header( 'Cross-Origin-Embedder-Policy: require-corp' );
 
@@ -101,10 +97,6 @@ class Cross_Origin_Isolation {
 	 * @return void
 	 */
 	public function admin_footer() {
-		if ( ! $this->is_edit_screen() ) {
-			return;
-		}
-
 		$html = (string) ob_get_clean();
 
 		$document = Document::fromHtml( $html );
@@ -153,10 +145,6 @@ class Cross_Origin_Isolation {
 	 * @return string
 	 */
 	public function style_loader_tag( $tag, $handle, $href ) {
-		if ( ! $this->is_edit_screen() ) {
-			return $tag;
-		}
-
 		return $this->add_attribute( $tag, 'href', $href );
 	}
 
@@ -172,10 +160,6 @@ class Cross_Origin_Isolation {
 	 * @return string
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
-		if ( ! $this->is_edit_screen() ) {
-			return $tag;
-		}
-
 		return $this->add_attribute( $tag, 'src', $src );
 	}
 
@@ -198,10 +182,6 @@ class Cross_Origin_Isolation {
 	 * @return string
 	 */
 	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
-		if ( ! $this->is_edit_screen() ) {
-			return $avatar;
-		}
-
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
 	}
 
@@ -284,9 +264,13 @@ class Cross_Origin_Isolation {
 			return false;
 		}
 
-		$check = get_user_meta( $user_id, User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		// Backwards compatible, default values added in WP 5.5.
+		$check = get_user_meta( $user_id, User_Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		if ( empty( $check ) ) {
+			return true;
+		}
 
-		return rest_sanitize_boolean( $check );
+		return rest_sanitize_boolean( $check[0] );
 	}
 
 	/**

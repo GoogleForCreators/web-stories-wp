@@ -252,7 +252,7 @@ class Plugin {
 		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
 
 		$coi = new Cross_Origin_Isolation( $this->experiments );
-		add_action( 'init', [ $coi, 'init' ], 11 );
+		add_action( 'current_screen', [ $coi, 'init' ], 11 );
 
 		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
 		add_action( 'init', [ $this->story, 'init' ] );
