@@ -33,7 +33,6 @@ import {
   BUTTON_VARIANTS,
 } from '../button';
 import { Pencil } from '../../icons';
-import { noop } from '../../utils';
 import { Menu } from '../menu';
 import { Tooltip } from '../tooltip';
 import { PLACEMENT, Popup } from '../popup';
@@ -157,8 +156,6 @@ export const MediaInput = forwardRef(function Media(
   {
     className,
     onBlur,
-    // eslint-disable-next-line no-unused-vars
-    onChange = noop,
     alt = __('Preview image', 'web-stories'),
     value,
     ariaLabel = __('Choose an image', 'web-stories'),
@@ -238,7 +235,6 @@ export const MediaInput = forwardRef(function Media(
 MediaInput.propTypes = {
   className: PropTypes.string,
   value: PropTypes.any,
-  onChange: PropTypes.func,
   onBlur: PropTypes.func,
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,
