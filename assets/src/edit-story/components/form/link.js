@@ -39,7 +39,7 @@ function LinkInput({
   onChange,
   onBlur,
   onFocus,
-  value,
+  value = '',
   description,
   hint,
   hasError,
@@ -87,10 +87,6 @@ LinkInput.propTypes = {
   description: PropTypes.string,
   hint: PropTypes.string,
   hasError: PropTypes.bool,
-};
-
-LinkInput.defaultProps = {
-  value: '',
 };
 
 export default LinkInput;

@@ -30,7 +30,7 @@ export const NumericInput = ({
   onChange,
   max,
   min,
-  value,
+  value = '',
   isIndeterminate: originalIsIndeterminate,
   ...props
 }) => {
@@ -100,8 +100,4 @@ NumericInput.propTypes = {
   max: PropTypes.number,
   min: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-};
-
-NumericInput.defaultProps = {
-  value: '',
 };
