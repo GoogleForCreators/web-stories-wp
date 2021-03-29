@@ -122,7 +122,7 @@ describe('Filter Panel', () => {
       expect(overlay).toBeTruthy();
       expect(overlay).toHaveStyle(
         'background-image',
-        'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.63) 100%)'
+        'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
       );
     });
 
@@ -133,7 +133,7 @@ describe('Filter Panel', () => {
       expect(overlay).toBeTruthy();
       expect(overlay).toHaveStyle(
         'background-image',
-        'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.42) 100%)'
+        'radial-gradient(67% 67%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
       );
     });
   });
