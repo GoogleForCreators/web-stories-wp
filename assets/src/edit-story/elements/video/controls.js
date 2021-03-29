@@ -44,6 +44,7 @@ const Controls = styled.div`
   top: ${({ y }) => `${y}px`};
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
+  pointer-events: none;
 `;
 
 const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`

@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export { default as TranslateWithMarkup } from './translateWithMarkup';
-export * from '@wordpress/i18n';
+export { default } from './zoomSelector';

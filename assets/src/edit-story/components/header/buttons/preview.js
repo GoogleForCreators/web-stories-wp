@@ -151,7 +151,7 @@ function Preview() {
       <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
         <Button
           variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.TERTIARY}
+          type={BUTTON_TYPES.QUATERNARY}
           size={BUTTON_SIZES.SMALL}
           onClick={openPreviewLink}
           disabled={isSaving || isUploading}

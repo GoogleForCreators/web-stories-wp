@@ -28,8 +28,9 @@ import { useLayout } from '../../../app/layout';
 import Context from './context';
 
 function PrepublishChecklistProvider({ children }) {
-  const { pageSize } = useLayout(({ state: { canvasPageSize } }) => ({
-    pageSize: canvasPageSize,
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
   }));
 
   const story = useStory(({ state: { story, pages } }) => {

@@ -234,7 +234,7 @@ describe('Background Copy & Paste', () => {
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(bgMedia, 5, 5),
       down(),
-      moveRel(canvas, 5, 5),
+      moveRel(canvas, 10, 10),
       up(),
     ]);
 

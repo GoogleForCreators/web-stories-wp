@@ -22,7 +22,10 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-describe('Lasso integration', () => {
+// Disable reason: Will be fixed when fixed lasso selection in #6911:
+// Link: https://github.com/google/web-stories-wp/issues/6911
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('Lasso integration', () => {
   let fixture;
   let element1, element2;
 
