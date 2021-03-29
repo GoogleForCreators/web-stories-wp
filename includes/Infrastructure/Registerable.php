@@ -7,7 +7,6 @@
  * @package Google\Web_Stories
  */
 
-
 namespace Google\Web_Stories\Infrastructure;
 
 /**
