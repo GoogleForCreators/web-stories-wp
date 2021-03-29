@@ -175,6 +175,35 @@ export const ShortMenu = () => {
   );
 };
 
+export const MenuWithNoChevron = () => {
+  const [selectedValue, setSelectedValue] = useState(null);
+
+  return (
+    <Container>
+      <DropDown
+        emptyText={'No options available'}
+        options={basicDropDownOptions}
+        hasError={boolean('hasError')}
+        hint={text('hint', 'default hint text')}
+        placeholder={text('placeholder', 'select a value')}
+        ariaLabel={text('ariaLabel')}
+        dropDownLabel={text('dropDownLabel', 'label')}
+        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+        isRTL={boolean('isRTL')}
+        disabled={boolean('disabled')}
+        selectedValue={selectedValue}
+        onMenuItemClick={(event, newValue) => {
+          action('onMenuItemClick', event);
+          setSelectedValue(newValue);
+        }}
+        placement={select('placement', Object.values(PLACEMENT))}
+        popupZIndex={number('popupZIndex')}
+        showChevron={false}
+      />
+    </Container>
+  );
+};
+
 export const NoOptionsMenu = () => {
   const [selectedValue, setSelectedValue] = useState(null);
 
