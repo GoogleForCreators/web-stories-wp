@@ -25,9 +25,9 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { SimplePanel } from '../../panels/panel';
+import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
-import { Label } from '../../form';
 import { useHighlights } from '../../../app/highlights';
 
 const MAX_NUMBER_FOR_BADGE = 99;
@@ -100,19 +100,14 @@ const HelperText = styled.span`
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
 `;
 
-const PageIndicator = styled(Label)`
-  &:not(:first-child) {
-    padding-top: 9px;
-  }
-  margin-bottom: 8px;
-  margin-left: 16px;
-  display: flex;
-  align-items: center;
-  svg {
-    height: 14px;
-    width: 9px;
-    margin-right: 6px;
-  }
+const PageIndicator = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  isBold: true,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  padding: 20px 0 8px;
+  display: inline-block;
 `;
 
 const EmptyLayout = styled.div`

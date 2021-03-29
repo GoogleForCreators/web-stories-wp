@@ -42,7 +42,7 @@ import { getAnimationEffectDefaults } from '../../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Note } from '../../shared';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
 
@@ -50,6 +50,10 @@ const ANIMATION_PROPERTY = 'animation';
 
 const StyledRow = styled(Row)`
   margin-bottom: -1px;
+`;
+
+const Note = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const GroupWrapper = styled.div`
@@ -218,7 +222,12 @@ function AnimationPanel({
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
-        <Note>{__('Group animation support coming soon.', 'web-stories')}</Note>
+        <Note
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {__('Group animation support coming soon.', 'web-stories')}
+        </Note>
       </Row>
     </SimplePanel>
   ) : (

@@ -39,7 +39,6 @@ function LinkInput({
   onBlur,
   onFocus,
   value,
-  description,
   hint,
   hasError,
   ...rest
