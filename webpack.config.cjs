@@ -169,7 +169,6 @@ const sharedConfig = {
   optimization: {
     sideEffects: true,
     splitChunks: {
-      chunks: 'all',
       automaticNameDelimiter: '-',
     },
     minimizer: [
@@ -249,7 +248,10 @@ const editorAndDashboard = {
     }),
   ],
   optimization: {
-    ...sharedConfig.optimization,
+    splitChunks: {
+      chunks: 'all',
+      automaticNameDelimiter: '-',
+    },
   },
 };
 
@@ -334,6 +336,7 @@ const activationNotice = {
   optimization: {
     ...sharedConfig.optimization,
     splitChunks: {
+      automaticNameDelimiter: '-',
       cacheGroups: {
         stories: {
           name: 'activation-notice',
