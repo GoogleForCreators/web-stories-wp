@@ -38,7 +38,7 @@ import { useSnackbar } from '../../../design-system';
  * @param {string} props.onSelectErrorMessage Text displayed when incorrect file type is selected.
  * @param {Function?} props.onClose Close Callback.
  * @param {Function?} props.onPermissionError Callback for when user does not have upload permissions.
- * @param {string|string[]} props.type Media type(s)s.
+ * @param {string|string[]} props.type Media type(s).
  * @param {boolean} props.multiple Whether multi-selection should be allowed.
  * @return {Function} Callback to open the media picker.
  */
