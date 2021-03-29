@@ -18,20 +18,37 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
+import styled from 'styled-components';
 import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
 import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
-import { DropDown } from '../../form';
-import { Placement } from '../../popup';
+import { DropDown, PLACEMENT } from '../../../../design-system';
+import DropdownItem from './dropdownItem';
+
+const StyledDropDown = styled(DropDown)`
+  button {
+    padding: 8px;
+
+    span {
+      padding: 0;
+    }
+  }
+`;
 
 const ZOOM_OPTIONS = [
-  { name: _x('100%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.SINGLE },
-  { name: _x('200%', 'zoom level', 'web-stories'), value: ZOOM_SETTING.DOUBLE },
-  { name: _x('Fill', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FILL },
-  { name: _x('Fit', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FIT },
+  {
+    label: _x('100%', 'zoom level', 'web-stories'),
+    value: ZOOM_SETTING.SINGLE,
+  },
+  {
+    label: _x('200%', 'zoom level', 'web-stories'),
+    value: ZOOM_SETTING.DOUBLE,
+  },
+  { label: _x('Fill', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FILL },
+  { label: _x('Fit', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FIT },
 ];
 
 function ZoomSelector() {
@@ -43,23 +60,25 @@ function ZoomSelector() {
   );
 
   const placeholder = useMemo(
-    () => ZOOM_OPTIONS.find(({ value }) => value === zoomSetting).name,
+    () => ZOOM_OPTIONS.find(({ value }) => value === zoomSetting).label,
     [zoomSetting]
   );
 
-  const handleSetZoom = useCallback(
-    (newSetting) => setZoomSetting(newSetting),
-    [setZoomSetting]
-  );
+  const handleSetZoom = useCallback((_event, value) => setZoomSetting(value), [
+    setZoomSetting,
+  ]);
 
   return (
-    <DropDown
+    <StyledDropDown
       aria-label={__('Select Zoom Level', 'web-stories')}
       placeholder={placeholder}
       options={ZOOM_OPTIONS}
-      placement={Placement.TOP}
-      value={zoomSetting}
-      onChange={handleSetZoom}
+      placement={PLACEMENT.TOP_START}
+      onMenuItemClick={handleSetZoom}
+      selectedValue={zoomSetting}
+      renderItem={DropdownItem}
+      showChevron={false}
+      popupFillWidth={false}
     />
   );
 }
