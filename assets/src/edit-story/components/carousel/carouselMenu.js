@@ -21,6 +21,7 @@ import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -38,6 +39,7 @@ import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import Modal from '../modal';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import GridView from './gridview';
+import ZoomSelector from './zoomSelector';
 
 const Wrapper = styled.div`
   display: flex;
@@ -81,6 +83,7 @@ function CarouselMenu() {
       return newIsOpen;
     });
   }, [setIsGridViewOpen]);
+  const { hasCanvasZoom } = useFeatures();
 
   const {
     metaBoxesVisible,
@@ -146,6 +149,7 @@ function CarouselMenu() {
               </Button>
             </Tooltip>
           </Box>
+          {hasCanvasZoom && <ZoomSelector />}
         </MenuItems>
       </Wrapper>
       <Modal

@@ -168,6 +168,9 @@ const sharedConfig = {
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
+    splitChunks: {
+      automaticNameDelimiter: '-',
+    },
     minimizer: [
       new TerserPlugin({
         parallel: true,
@@ -245,9 +248,9 @@ const editorAndDashboard = {
     }),
   ],
   optimization: {
-    ...sharedConfig.optimization,
     splitChunks: {
       chunks: 'all',
+      automaticNameDelimiter: '-',
     },
   },
 };
@@ -330,19 +333,6 @@ const activationNotice = {
       color: '#fcd8ba',
     }),
   ],
-  optimization: {
-    ...sharedConfig.optimization,
-    splitChunks: {
-      cacheGroups: {
-        stories: {
-          name: 'activation-notice',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
-  },
 };
 
 const widgetScript = {

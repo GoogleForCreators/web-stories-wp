@@ -135,9 +135,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           aria-label={__('Font size', 'web-stories')}
           isFloat
           value={fontSize}
-          onChange={(evt) =>
-            pushUpdate({ fontSize: Number(evt.target.value) }, true)
-          }
+          onChange={(evt, value) => pushUpdate({ fontSize: value }, true)}
           min={MIN_MAX.FONT_SIZE.MIN}
           max={MIN_MAX.FONT_SIZE.MAX}
           isIndeterminate={MULTIPLE_VALUE === fontSize}

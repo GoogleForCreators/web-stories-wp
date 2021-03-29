@@ -386,7 +386,6 @@ class Experiments {
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
 				'group'       => 'general',
 			],
-
 			/**
 			 * Author: @spacedmonkey
 			 * Issue: #3126
@@ -397,6 +396,17 @@ class Experiments {
 				'label'       => __( 'Post locking', 'web-stories' ),
 				'description' => __( 'Enable post locking', 'web-stories' ),
 				'group'       => 'general',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #4022
+			 * Creation date: 2021-03-25
+			 */
+			[
+				'name'        => 'hasCanvasZoom',
+				'label'       => __( 'Canvas Zoom', 'web-stories' ),
+				'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}
