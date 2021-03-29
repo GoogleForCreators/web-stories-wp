@@ -36,6 +36,7 @@ import {
   useGlobalKeyDownEffect,
   useFocusOut,
 } from '../../../design-system';
+import { useHelpCenter } from '../../app';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import DirectionAware from '../directionAware';
 import { Popup } from './popup';
@@ -50,23 +51,33 @@ function KeyboardShortcutsMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = useCallback(() => setIsOpen(false), [setIsOpen]);
+  const {
+    close: closeHelpCenter,
+  } = useHelpCenter(({ actions: { close } }) => ({ close }));
 
-  const toggleMenu = useCallback((e, showMenu) => {
-    e.preventDefault();
-    setIsOpen((prevIsOpen) => {
-      const menuOpen = showMenu ?? !prevIsOpen;
+  const toggleMenu = useCallback(
+    (e, showMenu) => {
+      e.preventDefault();
+      setIsOpen((prevIsOpen) => {
+        const menuOpen = showMenu ?? !prevIsOpen;
 
-      if (isKeyboardUser() && !menuOpen) {
-        // When menu closes, return focus to toggle menu button
-        anchorRef.current.focus?.();
-      }
+        if (menuOpen) {
+          closeHelpCenter();
+        }
 
-      trackEvent('shortcuts_menu_toggled', {
-        status: menuOpen ? 'open' : 'closed',
+        if (isKeyboardUser() && !menuOpen) {
+          // When menu closes, return focus to toggle menu button
+          anchorRef.current.focus?.();
+        }
+
+        trackEvent('shortcuts_menu_toggled', {
+          status: menuOpen ? 'open' : 'closed',
+        });
+        return menuOpen;
       });
-      return menuOpen;
-    });
-  }, []);
+    },
+    [closeHelpCenter]
+  );
 
   useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggleMenu, [toggleMenu]);
   useFocusOut(wrapperRef, closeMenu, []);
