@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../karma';
 
-describe('Video Poster Panel', () => {
+describe('Video Accessibility Panel', () => {
   let fixture;
   let vaPanel;
 
@@ -45,7 +45,7 @@ describe('Video Poster Panel', () => {
   describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Set different poster image', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.media.item(5)); // item 5 is a video
-      vaPanel = fixture.editor.inspector.designPanel.videoPoster;
+      vaPanel = fixture.editor.inspector.designPanel.videoAccessibility;
 
       // Create fake media browser
       window.wp = {

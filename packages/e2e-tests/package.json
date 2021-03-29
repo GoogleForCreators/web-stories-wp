@@ -10,7 +10,7 @@
     "@web-stories-wp/e2e-test-utils": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@wordpress/jest-puppeteer-axe": "^3.0.1",
-    "@wordpress/e2e-test-utils": "^5.0.3",
+    "@wordpress/e2e-test-utils": "^5.1.0",
     "@wordpress/jest-console": "^4.0.1",
     "@percy/puppeteer": "^1.1.0",
     "expect-puppeteer": "^4.4.0",

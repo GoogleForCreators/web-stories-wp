@@ -33,7 +33,7 @@ const VALUES = {
   OFF: 'OFF',
 };
 
-const VisuallyHiddenRadioGroupLabel = styled.h4`
+const VisuallyHiddenRadioGroupLabel = styled.h3`
   ${themeHelpers.visuallyHidden};
 `;
 

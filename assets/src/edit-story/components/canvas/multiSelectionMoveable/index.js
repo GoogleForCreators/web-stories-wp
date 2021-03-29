@@ -24,13 +24,14 @@ import { useRef, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import Moveable from '../../moveable';
-import { useStory, useCanvas } from '../../../app';
+import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';
+import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
 import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
 import useResize from './useResize';
@@ -60,6 +61,13 @@ function MultiSelectionMoveable({ selectedElements }) {
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
   }));
+  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
+    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
+      zoomSetting,
+      scrollLeft,
+      scrollTop,
+    })
+  );
 
   const {
     actions: { pushTransform },
@@ -73,7 +81,10 @@ function MultiSelectionMoveable({ selectedElements }) {
     if (moveable.current) {
       moveable.current.updateRect();
     }
-  }, [selectedElements, moveable, nodesById]);
+  }, [selectedElements, moveable, nodesById, scrollLeft, scrollTop]);
+
+  // If zoom ever updates, update selection rect
+  useUpdateSelectionRectangle(moveable, [zoomSetting]);
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
