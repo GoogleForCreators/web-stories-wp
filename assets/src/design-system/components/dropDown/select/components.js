@@ -31,7 +31,6 @@ export const SelectButton = styled.button(
   ({ theme, hasError, isOpen, selectButtonStylesOverride }) => css`
     width: 100%;
     height: 36px;
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;

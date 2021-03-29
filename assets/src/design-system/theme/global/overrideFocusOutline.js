@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 import 'focus-visible';
 
 /**
@@ -30,14 +30,19 @@ import 'focus-visible';
 export const FOCUS_VISIBLE_SELECTOR = 'focus-visible';
 export const FOCUS_VISIBLE_DATA_ATTRIBUTE = 'data-focus-visible-added';
 
-export const OverrideFocusOutline = createGlobalStyle`
-   /*
+export const overrideFocusOutlineStyles = css`
+  /*
     This will hide the focus indicator if the element receives focus via the mouse,
     but it will still show up on keyboard focus.
     */
-    .js-focus-visible :focus:not(.${FOCUS_VISIBLE_SELECTOR}):not([data-focus-visible-added]),
-    .js-focus-visible :focus-visible:not(.${FOCUS_VISIBLE_SELECTOR}):not([data-focus-visible-added]) {
-        outline: none;
-    }
+  .js-focus-visible
+    :focus:not(.${FOCUS_VISIBLE_SELECTOR}):not([data-focus-visible-added]),
+  .js-focus-visible
+    :focus-visible:not(.${FOCUS_VISIBLE_SELECTOR}):not([data-focus-visible-added]) {
+    outline: none;
+  }
+`;
 
+export const OverrideFocusOutline = createGlobalStyle`
+    ${overrideFocusOutlineStyles};
 `;

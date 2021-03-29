@@ -62,7 +62,7 @@ export const HelpCenter = () => {
   return enableQuickTips ? (
     <DirectionAware>
       <>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         <Wrapper ref={ref}>
           <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
             <Navigator
