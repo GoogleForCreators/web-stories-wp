@@ -42,7 +42,7 @@ class PluginActionLinks extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		$basename = plugin_basename( WEBSTORIES_PLUGIN_FILE );
 		add_filter( 'plugin_action_links_' . $basename, [ $this, 'action_links' ] );
 	}

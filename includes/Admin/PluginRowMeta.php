@@ -42,7 +42,7 @@ class PluginRowMeta extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_filter( 'plugin_row_meta', [ $this, 'get_plugin_row_meta' ], 10, 2 );
 	}
 
@@ -54,7 +54,7 @@ class PluginRowMeta extends Service_Base {
 	public static function get_registration_action() {
 		return 'admin_init';
 	}
-	
+
 	/**
 	 * Updates the plugin row meta with links to review plugin and get support.
 	 *
