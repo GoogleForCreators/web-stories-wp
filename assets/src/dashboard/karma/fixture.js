@@ -39,15 +39,16 @@ import actPromise from '../../karma-fixture/actPromise';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
-configure({
-  getElementError: (message) => {
-    const error = new Error(message);
-    error.name = 'TestingLibraryElementError';
-    error.stack = null;
-    return error;
-  },
-});
-
+if ('true' === process.env.CI) {
+  configure({
+    getElementError: (message) => {
+      const error = new Error(message);
+      error.name = 'TestingLibraryElementError';
+      error.stack = null;
+      return error;
+    },
+  });
+}
 const defaultConfig = {
   capabilities: {
     canManageSettings: true,

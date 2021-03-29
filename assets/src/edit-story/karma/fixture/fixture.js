@@ -45,14 +45,16 @@ import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
-configure({
-  getElementError: (message) => {
-    const error = new Error(message);
-    error.name = 'TestingLibraryElementError';
-    error.stack = null;
-    return error;
-  },
-});
+if ('true' === process.env.CI) {
+  configure({
+    getElementError: (message) => {
+      const error = new Error(message);
+      error.name = 'TestingLibraryElementError';
+      error.stack = null;
+      return error;
+    },
+  });
+}
 
 export const MEDIA_PER_PAGE = 20;
 const DEFAULT_CONFIG = {
