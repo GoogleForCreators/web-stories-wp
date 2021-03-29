@@ -2,6 +2,8 @@
 /**
  * Final class SimpleInjector.
  *
+ * Infrastructure code based on https://github.com/mwpd/basic-scaffold.
+ *
  * @package Google\Web_Stories
  */
 
