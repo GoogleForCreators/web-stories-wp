@@ -42,6 +42,7 @@ const DropDownSelect = (
     isOpen,
     onSelectClick,
     placeholder = '',
+    showChevron = true,
     ...rest
   },
   ref
@@ -72,9 +73,11 @@ const DropDownSelect = (
         </LabelText>
       )}
 
-      <ChevronWrap isOpen={isOpen}>
-        <StyledChevron />
-      </ChevronWrap>
+      {showChevron && (
+        <ChevronWrap isOpen={isOpen}>
+          <StyledChevron />
+        </ChevronWrap>
+      )}
     </Label>
   </SelectButton>
 );
@@ -89,4 +92,5 @@ DropDownSelect.propTypes = {
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   isOpen: PropTypes.bool,
+  showChevron: PropTypes.bool,
 };

@@ -50,6 +50,7 @@ import useDropDown from './useDropDown';
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
+ * @param {boolean} props.showChevron Determines whether to display the chevron in the button. [Default = true]
  *
  */
 
@@ -68,6 +69,7 @@ export const DropDown = ({
   isInline = false,
   selectedValue = '',
   className,
+  showChevron = true,
   ...rest
 }) => {
   const selectRef = useRef();
@@ -138,6 +140,7 @@ export const DropDown = ({
         isOpen={isOpen.value}
         onSelectClick={handleSelectClick}
         ref={selectRef}
+        showChevron={showChevron}
         {...rest}
       />
       {!disabled && isInline ? (
@@ -188,4 +191,5 @@ DropDown.propTypes = {
     PropTypes.bool,
     PropTypes.number,
   ]),
+  showChevron: PropTypes.bool,
 };
