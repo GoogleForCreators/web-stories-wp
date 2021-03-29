@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React, { useState, useRef, useMemo, useCallback } from 'react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -63,8 +63,8 @@ const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
 /**
  *
  * @param {Object} props The props
- * @param {React.Node} props.children The children to be rendered
- * @param {React.RefObject<HTMLElement>} props.forceAnchorRef The ref of the anchor where the tooltip will be shown [optional]
+ * @param {import('react').Node} props.children The children to be rendered
+ * @param {import('react').RefObject<HTMLElement>} props.forceAnchorRef The ref of the anchor where the tooltip will be shown [optional]
  * @param {boolean} props.hasTail Should the tooltip show a tail
  * @param {boolean} props.isMirrored Should the tail placement be mirrored over the y-axis (for Right-to-Left)
  * @param {Function} props.onBlur Blur event callback function
@@ -75,7 +75,7 @@ const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
  * @param {string} props.shortcut Shortcut text to display in tooltip
  * @param {string} props.title Text to display in tooltip
  * @param {Object} props.tooltipProps Props for <Tooltip /> component
- * @return {React.Component} Tooltip element
+ * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
   title,
