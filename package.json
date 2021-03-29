@@ -120,7 +120,7 @@
     "@storybook/client-logger": "^6.1.14",
     "@storybook/react": "^6.1.18",
     "@svgr/webpack": "^5.5.0",
-    "@testing-library/dom": "^7.29.6",
+    "@testing-library/dom": "^7.30.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/react-hooks": "^5.1.0",
