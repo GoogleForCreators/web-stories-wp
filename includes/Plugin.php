@@ -283,6 +283,9 @@ class Plugin {
 		$this->customizer = new Customizer();
 		add_action( 'init', [ $this->customizer, 'init' ] );
 
+		$oembed = new Oembed();
+		add_action( 'init', [ $oembed, 'init' ] );
+
 		// Frontend.
 		$this->discovery = new Discovery();
 		add_action( 'init', [ $this->discovery, 'init' ] );
