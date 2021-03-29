@@ -15,13 +15,13 @@
  */
 
 export { default as Color } from './color';
+export { default as FilterToggle } from './filterToggle';
 export { default as Label } from './label';
 export { default as LinkInput } from './link';
 export { default as Media } from './media';
 export { default as Row } from './row';
 export { default as Switch } from './switch';
 export { default as TextArea } from './textArea';
-export { default as ToggleButton } from './toggleButton';
 export { default as usePresubmitHandler } from './usePresubmitHandler';
 export { default as DropDown } from './dropDown';
 export { default as AdvancedDropDown } from './advancedDropDown';
