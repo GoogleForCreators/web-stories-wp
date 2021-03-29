@@ -18,24 +18,23 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback, useRef, useMemo } from 'react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useRef } from 'react';
-import { Row, usePresubmitHandler } from '../../../form';
+import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
-import {
-  getCommonValue,
-  useCommonObjectValue,
-  ExpandedTextInput,
-  Note,
-} from '../../shared';
+import { getCommonValue, useCommonObjectValue } from '../../shared';
+import { useConfig } from '../../../../app/config';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { styles, states, useFocusHighlight } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {
   alt: null,
+  poster: null,
 };
 
 export const MIN_MAX = {
@@ -43,6 +42,16 @@ export const MIN_MAX = {
     MAX: 1000,
   },
 };
+
+const StyledMedia = styled(Media)`
+  height: 114px;
+  width: 64px;
+`;
+
+const InputsWrapper = styled.div`
+  align-self: flex-start;
+  margin-left: 16px;
+`;
 
 function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
@@ -52,16 +61,33 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
-  usePresubmitHandler(
-    ({ resource: newResource }) => ({
-      resource: {
-        ...newResource,
-        alt: newResource.alt?.slice(0, MIN_MAX.ALT_TEXT.MAX),
-      },
-    }),
-    []
+  const rawPoster = getCommonValue(selectedElements, 'poster');
+  const poster = getCommonValue(selectedElements, 'poster', resource.poster);
+  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
+
+  const handleChangePoster = useCallback(
+    (image) => {
+      const newPoster = image?.sizes?.medium?.url || image?.url;
+      if (newPoster === rawPoster) {
+        return;
+      }
+      pushUpdate({ poster: newPoster }, true);
+    },
+    [pushUpdate, rawPoster]
   );
 
+  const posterErrorMessage = useMemo(() => {
+    return sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as a poster.', 'web-stories'),
+      allowedImageFileTypes.join(
+        /* translators: delimiter used in a list */
+        __(', ', 'web-stories')
+      )
+    );
+  }, [allowedImageFileTypes]);
+
+  // Used for focusing and highlighting the panel from the pre-publish checkist.
   const ref = useRef();
   const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
 
@@ -69,28 +95,47 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     <SimplePanel
       css={highlight && styles.FLASH}
       name="videoAccessibility"
-      title={__('Description', 'web-stories')}
+      title={__('Accessibility', 'web-stories')}
       isPersistable={!highlight}
     >
       <Row>
-        <ExpandedTextInput
-          ref={ref}
-          placeholder={__('Video description', 'web-stories')}
-          value={alt || ''}
-          onChange={(value) => pushUpdate({ alt: value || null })}
-          clear
-          aria-label={__('Video description', 'web-stories')}
-          maxLength={MIN_MAX.ALT_TEXT.MAX}
-          css={highlight?.showEffect && styles.OUTLINE}
+        <StyledMedia
+          value={poster}
+          onChange={handleChangePoster}
+          onChangeErrorText={posterErrorMessage}
+          title={__('Select as video poster', 'web-stories')}
+          buttonInsertText={__('Set as video poster', 'web-stories')}
+          alt={__('Preview poster image', 'web-stories')}
+          type={allowedImageMimeTypes}
+          ariaLabel={__('Video poster', 'web-stories')}
+          menuOptions={['edit', 'reset']}
         />
-      </Row>
-      <Row>
-        <Note>
-          {__(
-            'For indexability and accessibility. Include any burned-in text inside the video.',
-            'web-stories'
-          )}
-        </Note>
+        <InputsWrapper>
+          <TextArea
+            ref={ref}
+            placeholder={
+              alt === MULTIPLE_VALUE
+                ? MULTIPLE_DISPLAY_VALUE
+                : __(
+                    'Add assistive text for visually impaired users',
+                    'web-stories'
+                  )
+            }
+            value={alt || ''}
+            onChange={(evt) =>
+              pushUpdate(
+                {
+                  alt: evt?.target?.value?.trim() || null,
+                },
+                true
+              )
+            }
+            aria-label={__('Assistive text', 'web-stories')}
+            maxLength={MIN_MAX.ALT_TEXT.MAX}
+            rows={2}
+            isIndeterminate={alt === MULTIPLE_VALUE}
+          />
+        </InputsWrapper>
       </Row>
     </SimplePanel>
   );

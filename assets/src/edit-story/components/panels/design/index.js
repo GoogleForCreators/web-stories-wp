@@ -34,4 +34,3 @@ export { default as TextBoxPanel } from './textBox';
 export { default as TextStylePanel } from './textStyle';
 export { default as VideoAccessibilityPanel } from './videoAccessibility';
 export { default as VideoOptionsPanel } from './videoOptions';
-export { default as VideoPosterPanel } from './poster';

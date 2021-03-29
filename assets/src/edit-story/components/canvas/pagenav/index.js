@@ -32,7 +32,7 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
 } from '../../../../design-system';
-import { useConfig, useStory } from '../../../app';
+import { useConfig, useStory, useLayout } from '../../../app';
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,6 +68,19 @@ function PageNav({ isNext = true }) {
       setCurrentPage({ pageId: newPage.id });
     }
   }, [setCurrentPage, currentPageIndex, isNext, pages]);
+
+  const { hasPageNavigation } = useLayout(
+    ({ state: { hasPageNavigation } }) => ({
+      hasPageNavigation,
+    })
+  );
+
+  // Buttons are completely missing if there's no room for them
+  if (!hasPageNavigation) {
+    return false;
+  }
+
+  // If there's room, but it's inactive, just disable
   const displayNav =
     (isNext && currentPageIndex < pages.length - 1) ||
     (!isNext && currentPageIndex > 0);
