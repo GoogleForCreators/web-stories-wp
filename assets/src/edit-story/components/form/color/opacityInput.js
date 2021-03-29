@@ -41,11 +41,10 @@ function OpacityInput({ value, onChange }) {
 
   // Allow any input, but only persist non-NaN values up-chain
   const handleChange = useCallback(
-    (evt) => {
-      setInputValue(evt.target.value);
-      const val = parseInt(evt.target.value) / 100;
+    (evt, val) => {
+      setInputValue(val);
       if (!isNaN(val)) {
-        onChange(val);
+        onChange(val / 100);
       }
     },
     [onChange]

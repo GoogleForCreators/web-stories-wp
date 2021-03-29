@@ -14,5 +14,21 @@
  * limitations under the License.
  */
 
-export { default as TranslateWithMarkup } from './translateWithMarkup';
-export * from '@wordpress/i18n';
+/**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+
+function useUpdateSelectionRectangle(moveableRef, dependencies = []) {
+  // If deps ever update, update rect now AND in a frame's time
+  useEffect(() => {
+    const update = () => moveableRef.current?.updateRect?.();
+    update();
+    const timeout = setTimeout(update);
+    return () => clearTimeout(timeout);
+    // Disable reason: ref is stable, deps are the only thing that matters
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, dependencies);
+}
+
+export default useUpdateSelectionRectangle;

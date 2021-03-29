@@ -14,5 +14,24 @@
  * limitations under the License.
  */
 
-export { default as TranslateWithMarkup } from './translateWithMarkup';
-export * from '@wordpress/i18n';
+/**
+ * External dependencies
+ */
+import { useState, useEffect } from 'react';
+
+function useScrollOffset(zoomSetting) {
+  const [scrollOffset, setScrollOffset] = useState({ left: 0, top: 0 });
+  // Reset scroll offset whenever zoom setting changes
+  useEffect(() => {
+    setScrollOffset({ left: 0, top: 0 });
+  }, [zoomSetting]);
+  return {
+    state: {
+      scrollLeft: scrollOffset.left,
+      scrollTop: scrollOffset.top,
+    },
+    actions: { setScrollOffset },
+  };
+}
+
+export default useScrollOffset;

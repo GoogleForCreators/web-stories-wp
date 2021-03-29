@@ -76,8 +76,9 @@ function LibraryMoveable({
   const overlayRef = useRef(null);
   const moveable = useRef(null);
 
-  const { pageSize } = useLayout(({ state }) => ({
-    pageSize: state.canvasPageSize,
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
   }));
 
   const insertElement = useInsertElement();
