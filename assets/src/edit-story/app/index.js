@@ -27,6 +27,7 @@ import { useLocalMedia, useMedia } from './media';
 import { useStory } from './story';
 
 import { useCanvas } from './canvas';
+import { useLayout } from './layout';
 import { useCurrentUser } from './currentUser';
 
 export {
@@ -40,5 +41,6 @@ export {
   useLocalMedia,
   useMedia,
   useCanvas,
+  useLayout,
   useCurrentUser,
 };
