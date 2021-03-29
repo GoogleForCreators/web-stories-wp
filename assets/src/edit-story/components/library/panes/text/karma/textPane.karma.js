@@ -51,8 +51,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       expect(fixture.editor.library.text.textSets.length).toBeTruthy()
     );
 
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
 
     await fixture.snapshot('consecutively added different text presets');
@@ -104,21 +104,21 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     // Stagger all different text presets.
 
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
-    await verifyDefaultPosition('Heading 1', 'Heading 1');
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await verifyDefaultPosition('Title 1', 'Title 1');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 2'));
-    await verifyStaggeredPosition('Heading 2');
+    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+    await verifyStaggeredPosition('Title 2');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    // Heading 3 should be positioned in the default position again.
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
-    await verifyStaggeredPosition('Heading 3');
+    // Title 3 should be positioned in the default position again.
+    await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
+    await verifyStaggeredPosition('Title 3');
 
     await fixture.events.click(fixture.editor.library.text.preset('Caption'));
     await verifyStaggeredPosition('Caption');
