@@ -64,9 +64,7 @@ export const GRID_SIZING = {
 /**
  * Effects that are behind feature flag
  */
-export const experimentalEffects = [
-  BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
-];
+export const experimentalEffects = [];
 
 /**
  * Some effects are more complicated or have just 1 prebaked option in the effect drop down.
