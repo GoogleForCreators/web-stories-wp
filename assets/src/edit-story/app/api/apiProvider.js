@@ -364,9 +364,12 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
-  const getPageLayouts = useCallback(() => {
-    return getAllPageLayouts({ cdnURL, assetsURL });
-  }, [cdnURL, assetsURL]);
+  const getPageLayouts = useCallback(
+    ({ showImages = false } = {}) => {
+      return getAllPageLayouts({ cdnURL, assetsURL, showImages });
+    },
+    [cdnURL, assetsURL]
+  );
 
   const state = {
     actions: {

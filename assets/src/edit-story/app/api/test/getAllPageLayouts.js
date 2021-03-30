@@ -84,7 +84,11 @@ describe('getAllPageLayouts', () => {
   });
 
   it('should get templates w/ cdnURL and images replaced with placeholders', async () => {
-    const result = await getAllPageLayouts({ cdnURL, assetsURL });
+    const result = await getAllPageLayouts({
+      cdnURL,
+      assetsURL,
+      showImages: false,
+    });
 
     expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
     expect(result).toStrictEqual([
@@ -161,5 +165,16 @@ describe('getAllPageLayouts', () => {
         ],
       },
     ]);
+  });
+
+  it('should get templates w/ cdnURL and images', async () => {
+    const result = await getAllPageLayouts({
+      cdnURL,
+      assetsURL,
+      showImages: true,
+    });
+
+    expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
+    expect(result).toStrictEqual(templates);
   });
 });

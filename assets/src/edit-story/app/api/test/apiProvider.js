@@ -103,7 +103,11 @@ describe('APIProvider', () => {
       pageLayoutsResult = await result.current.actions.getPageLayouts();
     });
 
-    expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL, assetsURL });
+    expect(getAllPageLayouts).toHaveBeenCalledWith({
+      cdnURL,
+      assetsURL,
+      showImages: false,
+    });
     expect(pageLayoutsResult).toStrictEqual(pageLayouts);
   });
 });

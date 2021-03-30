@@ -67,12 +67,16 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
   };
 };
 
-export default async function getAllPageLayouts({ cdnURL, assetsURL }) {
+export default async function getAllPageLayouts({
+  cdnURL,
+  assetsURL,
+  showImages = true,
+}) {
   const templates = await getAllTemplates({ cdnURL });
   return templates.map((template) => ({
     ...template,
     pages: template.pages.map((page) =>
-      replacePageImagesWithPlaceholders(page, { assetsURL })
+      showImages ? page : replacePageImagesWithPlaceholders(page, { assetsURL })
     ),
   }));
 }

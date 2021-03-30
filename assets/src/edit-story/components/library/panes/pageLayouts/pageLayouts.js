@@ -44,7 +44,6 @@ import {
 } from '../shared/virtualizedPanelGrid';
 import {
   Headline,
-  noop,
   Text,
   THEME_CONSTANTS,
   Toggle,
@@ -69,7 +68,7 @@ const LayoutsToggle = styled.div`
   }
 `;
 
-function PageLayouts({ pages, parentRef }) {
+function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
   const { replaceCurrentPage, currentPage } = useStory(
     ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
       replaceCurrentPage,
@@ -199,8 +198,8 @@ function PageLayouts({ pages, parentRef }) {
             id={toggleId}
             aria-label={__('Show images in layouts', 'web-stories')}
             name={toggleId}
-            checked={false}
-            onChange={noop}
+            checked={showLayoutImages}
+            onChange={onToggleClick}
           />
         </LayoutsToggle>
       </ActionRow>
@@ -259,12 +258,14 @@ function PageLayouts({ pages, parentRef }) {
 }
 
 PageLayouts.propTypes = {
+  onToggleClick: PropTypes.func.isRequired,
   parentRef: PropTypes.object.isRequired,
   pages: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
     })
   ),
+  showLayoutImages: PropTypes.bool,
 };
 
 export default PageLayouts;
