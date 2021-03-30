@@ -103,7 +103,7 @@ class Cross_Origin_Isolation {
 	}
 
 	/**
-	 * Process a html string and add attribute attributes to required tags. 
+	 * Process a html string and add attribute attributes to required tags.
 	 *
 	 * @since 1.6.0
 	 *
@@ -135,7 +135,7 @@ class Cross_Origin_Isolation {
 				}
 
 				// If already processed tag, attribute and value before, skip.
-				if ( isset( $processed[ $tag ][ $attribute ] ) && in_array( $value, $processed[ $tag ][ $attribute ], true ) ) {
+				if ( isset( $processed[ $attribute ] ) && in_array( $value, $processed[ $attribute ], true ) ) {
 					continue;
 				}
 
@@ -145,7 +145,7 @@ class Cross_Origin_Isolation {
 					continue;
 				}
 
-				$processed[ $tag ][ $attribute ][] = $value;
+				$processed[ $attribute ][] = $value;
 
 				$html = $this->add_attribute( $html, $attribute, $value );
 			}

@@ -49,6 +49,32 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::init
+	 */
+	public function test_init() {
+		wp_set_current_user( self::$admin_id );
+		update_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+
+		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$coi = $this->get_coi_object();
+
+		$coi->init();
+
+		$this->assertSame( 10, has_action( 'admin_footer-post.php', [ $coi, 'admin_footer' ] ) );
+		$this->assertSame( 10, has_action( 'admin_footer-post-new.php', [ $coi, 'admin_footer' ] ) );
+		$this->assertSame( 10, has_action( 'load-post.php', [ $coi, 'admin_header' ] ) );
+		$this->assertSame( 10, has_action( 'load-post-new.php', [ $coi, 'admin_header' ] ) );
+
+		$this->assertSame( 10, has_filter( 'style_loader_tag', [ $coi, 'style_loader_tag' ] ) );
+		$this->assertSame( 10, has_filter( 'script_loader_tag', [ $coi, 'script_loader_tag' ] ) );
+		$this->assertSame( 10, has_filter( 'get_avatar', [ $coi, 'get_avatar' ] ) );
+
+		unset( $GLOBALS['current_screen'] );
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY );
+	}
+
+	/**
 	 * @covers ::is_needed
 	 */
 	public function test_is_needed() {
@@ -175,6 +201,8 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 		$this->assertContains( '<img alt="test" crossorigin="anonymous" src="http://www.example.com/test1.jpg" loading="eager" />', $result );
 		$this->assertContains( "<img crossorigin='anonymous' src='http://www.example.com/test2.jpg' alt='test' />", $result );
 		$this->assertContains( '<iframe crossorigin="anonymous" src="http://www.example.com"></iframe>', $result );
+		$this->assertContains( 'crossorigin="use-credentials"', $result );
+		$this->assertContains( '<a href="http://www.example.com/test1.jpg">Test</a>', $result );
 	}
 
 	/**
