@@ -13,4 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as Tooltip } from './tooltip';
+/**
+ * Internal dependencies
+ */
+import {
+  TOOLTIP_RTL_PLACEMENT,
+  Tooltip as BaseTooltip,
+  TooltipPropTypes,
+  TOOLTIP_PLACEMENT,
+} from '../../../design-system';
+import { useConfig } from '../../app/config';
+
+export default function Tooltip({
+  placement = TOOLTIP_PLACEMENT.BOTTOM,
+  ...props
+}) {
+  const { isRTL } = useConfig();
+  const derivedPlacement = isRTL ? TOOLTIP_RTL_PLACEMENT[placement] : placement;
+
+  return (
+    <BaseTooltip placement={derivedPlacement} isMirrored={isRTL} {...props} />
+  );
+}
+Tooltip.propTypes = TooltipPropTypes;

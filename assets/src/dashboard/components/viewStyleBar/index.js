@@ -24,12 +24,13 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { Icons, Tooltip, TOOLTIP_PLACEMENT } from '../../../design-system';
+import { Icons, TOOLTIP_PLACEMENT } from '../../../design-system';
 import {
   KEYBOARD_USER_SELECTOR,
   VIEW_STYLE,
   VIEW_STYLE_LABELS,
 } from '../../constants';
+import { Tooltip } from '../tooltip';
 
 const Container = styled.div`
   display: flex;
