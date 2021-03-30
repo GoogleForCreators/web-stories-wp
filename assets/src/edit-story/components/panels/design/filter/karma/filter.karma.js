@@ -62,16 +62,22 @@ describe('Filter Panel', () => {
   });
 
   describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Apply a solid or gradient overlay', () => {
-    it('should render panel when there is an image in the background', () => {
+    //TODO #6952
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should render panel when there is an image in the background', () => {
       expect(filterPanel).toBeTruthy();
     });
 
-    it('should not render an overlay when there is none', () => {
+    //TODO #6952
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should not render an overlay when there is none', () => {
       expect(filterPanel.none.getAttribute('aria-pressed')).toBeTruthy();
       expect(getBackgroundElementOverlay()).not.toBeTruthy();
     });
 
-    it('should correctly show focus border only when using keyboard', async () => {
+    // TODO #6951
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should correctly show focus border only when using keyboard', async () => {
       // Click solid button
       await fixture.events.click(filterPanel.solid);
 
@@ -106,16 +112,18 @@ describe('Filter Panel', () => {
         'BG has no overlay, "none" button is toggled and has visible focus'
       );
     });
-
-    it('should render correct overlay when clicking "solid"', async () => {
+    // TODO #6952
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should render correct overlay when clicking "solid"', async () => {
       await fixture.events.click(filterPanel.solid);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
       expect(overlay).toBeTruthy();
       expect(overlay).toHaveStyle('background-color', 'rgba(0, 0, 0, 0.5)');
     });
-
-    it('should render correct overlay when clicking "linear"', async () => {
+    // TODO #6952
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should render correct overlay when clicking "linear"', async () => {
       await fixture.events.click(filterPanel.linear);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
@@ -125,8 +133,9 @@ describe('Filter Panel', () => {
         'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
       );
     });
-
-    it('should render correct overlay when clicking "radial"', async () => {
+    // TODO #6952
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should render correct overlay when clicking "radial"', async () => {
       await fixture.events.click(filterPanel.radial);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
