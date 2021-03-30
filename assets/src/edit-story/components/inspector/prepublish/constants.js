@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
 
-export const BUTTON_TYPES = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  TERTIARY: 'tertiary',
-  QUATERNARY: 'quaternary',
-  PLAIN: 'plain',
+export const MAX_NUMBER_FOR_BADGE = 99;
+
+export const TEXT = {
+  DISPLAY_LINK: __('Link', 'web-stories'),
+  ACCESSIBLE_LINK_TITLE: __('Select offending element', 'web-stories'),
+  HIGH_PRIORITY_TITLE: __('High Priority', 'web-stories'),
+  RECOMMENDED_TITLE: __('Recommended', 'web-stories'),
+  EMPTY_TITLE: __('Awesome work!', 'web-stories'),
+  EMPTY_BODY: __('No Issues Found', 'web-stories'),
 };
-
-export const BUTTON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-};
-
-export const BUTTON_VARIANTS = {
-  CIRCLE: 'circle',
-  RECTANGLE: 'rectangle',
-  SQUARE: 'square',
-  ICON: 'icon',
-  LINK: 'link',
-};
-
-export const BUTTON_SIZE = 32;
-export const BUTTON_TRANSITION_TIMING = '0.3s ease 0s';

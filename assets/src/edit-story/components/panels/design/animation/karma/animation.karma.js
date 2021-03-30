@@ -45,12 +45,12 @@ describe('Animation Panel', function () {
 
     const effectChooser = panel.effectChooser;
     await fixture.events.click(effectChooser);
-
-    const fadeIn = fixture.screen.getByRole('option', {
-      name: /Fade In Effect$/,
+    await fixture.events.sleep(300);
+    const fadeIn = await fixture.screen.getByRole('option', {
+      name: /^Fade In Effect$/,
     });
     await fixture.events.click(fadeIn);
-
+    await fixture.events.sleep(300);
     expect(effectChooser.innerText).toBe('Fade In');
   });
   // TODO #6953

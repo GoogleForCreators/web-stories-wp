@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { THEME_CONSTANTS, Text } from '../../../../design-system';
+import { TEXT } from './constants';
+import { EmptyLayout, Checkmark, EmptyHeading } from './styles';
 
-export const BUTTON_TYPES = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  TERTIARY: 'tertiary',
-  QUATERNARY: 'quaternary',
-  PLAIN: 'plain',
+const EmptyChecklist = () => {
+  return (
+    <EmptyLayout>
+      <Checkmark />
+      <EmptyHeading>{TEXT.EMPTY_TITLE}</EmptyHeading>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {TEXT.EMPTY_BODY}
+      </Text>
+    </EmptyLayout>
+  );
 };
 
-export const BUTTON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-};
-
-export const BUTTON_VARIANTS = {
-  CIRCLE: 'circle',
-  RECTANGLE: 'rectangle',
-  SQUARE: 'square',
-  ICON: 'icon',
-  LINK: 'link',
-};
-
-export const BUTTON_SIZE = 32;
-export const BUTTON_TRANSITION_TIMING = '0.3s ease 0s';
+export default EmptyChecklist;
