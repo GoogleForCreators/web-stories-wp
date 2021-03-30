@@ -23,6 +23,7 @@ import createSolid from '../../../../../utils/createSolid';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { useStory } from '../../../../../app/story';
 import { DEFAULT_PRESET } from '../../../../library/panes/text/textPresets';
+import { PRESET_TYPES } from '../constants';
 
 describe('Panel: Style Presets', () => {
   let fixture;
@@ -38,7 +39,7 @@ describe('Panel: Style Presets', () => {
     fixture = new Fixture();
     await fixture.render();
     localStorage.setItem(
-      'web_stories_ui_panel_settings:stylepreset-style',
+      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.STYLE}`,
       JSON.stringify({ isCollapsed: false, height: 200 })
     );
   });
