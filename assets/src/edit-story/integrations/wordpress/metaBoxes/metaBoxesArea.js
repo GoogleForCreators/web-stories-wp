@@ -43,11 +43,6 @@ const Wrapper = styled.div`
     box-sizing: content-box;
   }
 
-  textarea,
-  input {
-    box-sizing: border-box;
-  }
-
   /* Match width and positioning of the meta boxes. Override default styles. */
   #poststuff {
     margin: 0 auto;
@@ -59,7 +54,6 @@ const Wrapper = styled.div`
   #poststuff h3.hndle,
   #poststuff .stuffbox > h3,
   #poststuff h2.hndle {
-    box-sizing: border-box;
     color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
     font-size: 14px;
     font-weight: 500;

@@ -15,14 +15,24 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
 import { FULLBLEED_RATIO } from '../../../constants';
 import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
-import { useCanvas, useLayout } from '../../../app';
+import { useCanvas, useLayout, useUserOnboarding } from '../../../app';
 
-function useSnapping({ canSnap, otherNodes, snappingOffsetX = null }) {
+function useSnapping({
+  canSnap,
+  otherNodes,
+  snappingOffsetX = null,
+  isDragging,
+}) {
   const { pageContainer, canvasContainer, designSpaceGuideline } = useCanvas(
     ({ state: { pageContainer, canvasContainer, designSpaceGuideline } }) => ({
       pageContainer,
@@ -40,9 +50,25 @@ function useSnapping({ canSnap, otherNodes, snappingOffsetX = null }) {
     activeDropTargetId: state.state.activeDropTargetId,
   }));
 
+  const triggerOnboarding = useUserOnboarding(({ SAFE_ZONE }) => SAFE_ZONE);
+
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
   canSnap = canSnap && !snapDisabled && !activeDropTargetId;
+
+  const handleSnap = useCallback(
+    ({ elements }) => {
+      const isSnappingDesignSpace = elements
+        .flat()
+        .some(
+          ({ center, element }) => element === designSpaceGuideline && !center
+        );
+      if (isDragging && isSnappingDesignSpace) {
+        triggerOnboarding();
+      }
+    },
+    [isDragging, designSpaceGuideline, triggerOnboarding]
+  );
 
   if (!canvasContainer || !pageContainer) {
     return {};
@@ -83,6 +109,7 @@ function useSnapping({ canSnap, otherNodes, snappingOffsetX = null }) {
     snapCenter: canSnap,
     snapGap: canSnap,
     isDisplaySnapDigit: false,
+    onSnap: handleSnap,
     horizontalGuidelines,
     verticalGuidelines,
     elementGuidelines,

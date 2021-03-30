@@ -28,10 +28,9 @@ import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
 export const SelectButton = styled.button(
-  ({ theme, hasError, isOpen }) => css`
+  ({ theme, hasError, isOpen, selectButtonStylesOverride }) => css`
     width: 100%;
     height: 36px;
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -47,10 +46,7 @@ export const SelectButton = styled.button(
     text-overflow: ellipsis;
     cursor: pointer;
 
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )}
+    ${themeHelpers.focusableOutlineCSS}
 
     &:hover {
       border-color: ${theme.colors.border[
@@ -86,6 +82,7 @@ export const SelectButton = styled.button(
         color: ${theme.colors.fg.disable};
       }
     }
+    ${selectButtonStylesOverride};
   `
 );
 

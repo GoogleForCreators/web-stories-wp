@@ -216,6 +216,7 @@ function SingleSelectionMoveable({
   const snapProps = useSnapping({
     otherNodes,
     canSnap: canSnap && actionsEnabled,
+    isDragging,
   });
 
   return (

@@ -19,11 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { Headline, THEME_CONSTANTS } from '../../../../design-system';
 
 export const Container = styled.div`
   position: relative;
@@ -35,8 +34,9 @@ export const Container = styled.div`
   }
 `;
 
-export const Title = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+export const Title = styled(Headline).attrs({
+  as: 'h2',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   flex: 1 1 auto;
   color: ${({ theme }) => theme.colors.fg.primary};

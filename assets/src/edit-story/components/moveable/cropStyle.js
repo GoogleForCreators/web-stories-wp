@@ -28,7 +28,6 @@ export const GlobalStyle = createGlobalStyle`
   .crop-moveable .moveable-control {
     background: ${({ theme }) => theme.colors.bg.primary} !important;
     border: none !important;
-    box-sizing: border-box !important;
   }
 
   .crop-moveable .moveable-control.moveable-n,
