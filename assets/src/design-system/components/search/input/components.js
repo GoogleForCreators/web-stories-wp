@@ -34,7 +34,6 @@ export const InputContainer = styled.div(
   ({ theme }) => css`
     display: flex;
     position: relative;
-    box-sizing: border-box;
     height: 36px;
     width: 100%;
     max-width: 400px;

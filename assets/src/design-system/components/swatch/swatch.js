@@ -72,7 +72,6 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
     height: 100%;
     border-radius: 50%;
     border: 1px solid ${({ theme }) => theme.colors.divider.primary};
-    box-sizing: border-box;
   }
 `;
 

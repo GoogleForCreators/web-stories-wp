@@ -152,9 +152,6 @@ const sharedConfig = {
   },
   plugins: [
     process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
-    new DependencyExtractionWebpackPlugin({
-      requestToExternal,
-    }),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
@@ -229,6 +226,9 @@ const editorAndDashboard = {
   },
   plugins: [
     ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      requestToExternal,
+    }),
     new WebpackBar({
       name: 'Editor & Dashboard',
     }),
@@ -262,15 +262,9 @@ const webStoriesScripts = {
     'carousel-view': './packages/stories-carousel/src/index.js',
   },
   plugins: [
-    process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
+    ...sharedConfig.plugins,
     new DependencyExtractionWebpackPlugin({
       injectPolyfill: true,
-    }),
-    new MiniCssExtractPlugin({
-      filename: '../css/[name].css',
-    }),
-    new RtlCssPlugin({
-      filename: `../css/[name]-rtl.css`,
     }),
     new WebpackBar({
       name: 'WP Frontend Scripts',
@@ -315,9 +309,6 @@ const webStoriesBlock = {
       color: '#357BB5',
     }),
   ].filter(Boolean),
-  optimization: {
-    ...sharedConfig.optimization,
-  },
 };
 
 const activationNotice = {
@@ -328,11 +319,14 @@ const activationNotice = {
   },
   plugins: [
     ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      requestToExternal,
+    }),
     new WebpackBar({
       name: 'Activation Notice',
       color: '#fcd8ba',
     }),
-  ],
+  ].filter(Boolean),
 };
 
 const widgetScript = {
@@ -341,15 +335,13 @@ const widgetScript = {
     'web-stories-widget': './packages/widget/src/index.js',
   },
   plugins: [
+    ...sharedConfig.plugins,
     new DependencyExtractionWebpackPlugin({}),
-    new MiniCssExtractPlugin({
-      filename: '../css/[name].css',
-    }),
     new WebpackBar({
       name: 'WP Widget Script',
       color: '#F757A5',
     }),
-  ],
+  ].filter(Boolean),
 };
 
 const storiesMCEButton = {
@@ -358,15 +350,13 @@ const storiesMCEButton = {
     'tinymce-button': './packages/tinymce-button/src/index.js',
   },
   plugins: [
+    ...sharedConfig.plugins,
     new DependencyExtractionWebpackPlugin({}),
-    new MiniCssExtractPlugin({
-      filename: '../css/[name].css',
-    }),
     new WebpackBar({
       name: 'WP TinyMCE Button',
       color: '#4deaa2',
     }),
-  ],
+  ].filter(Boolean),
 };
 
 module.exports = [
