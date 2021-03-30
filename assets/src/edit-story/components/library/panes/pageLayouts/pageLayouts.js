@@ -62,7 +62,8 @@ const ActionRow = styled.div`
 const LayoutsToggle = styled.div`
   display: flex;
 
-  p {
+  label {
+    cursor: pointer;
     margin: auto 12px;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
@@ -78,7 +79,7 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
 
   const containerRef = useRef();
   const pageRefs = useRef({});
-  const toggleId = useMemo(() => `toggle_text_sets_${uuidv4()}`, []);
+  const toggleId = useMemo(() => `toggle_page_layouts_${uuidv4()}`, []);
 
   const [selectedPage, setSelectedPage] = useState();
   const [isConfirming, setIsConfirming] = useState();
@@ -191,7 +192,11 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
           {__('Layouts', 'web-stories')}
         </Headline>
         <LayoutsToggle>
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text
+            as="label"
+            htmlFor={toggleId}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
             {__('Show Images', 'web-stories')}
           </Text>
           <Toggle
