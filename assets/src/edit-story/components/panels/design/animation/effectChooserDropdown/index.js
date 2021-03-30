@@ -14,10 +14,4 @@
  * limitations under the License.
  */
 
-export {
-  OverrideFocusOutline,
-  FOCUS_VISIBLE_SELECTOR,
-  FOCUS_VISIBLE_DATA_ATTRIBUTE,
-} from './overrideFocusOutline';
-export { OverrideScrollbarCSS } from './overrideScrollbarCSS';
-export { Styles } from './styles';
+export { default as EffectChooserDropdown } from './effectChooserDropdown';

@@ -44,11 +44,12 @@ describe('Animation Panel', function () {
     const panel = fixture.editor.inspector.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
-    await fixture.events.click(effectChooser, { clickCount: 1 });
+    await fixture.events.click(effectChooser);
 
-    await fixture.events.click(
-      fixture.screen.getByRole('listitem', { name: /Fade In Effect/ })
-    );
+    const fadeIn = fixture.screen.getByRole('option', {
+      name: /Fade In Effect$/,
+    });
+    await fixture.events.click(fadeIn);
 
     expect(effectChooser.innerText).toBe('Fade In');
   });
@@ -58,18 +59,16 @@ describe('Animation Panel', function () {
     const panel = fixture.editor.inspector.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
-    await fixture.events.click(effectChooser, { clickCount: 1 });
+    await fixture.events.click(effectChooser);
 
     await fixture.events.click(
-      fixture.screen.getByRole('listitem', { name: /Fade In Effect/ })
+      fixture.screen.getByRole('option', { name: /^Fade In Effect$/ })
     );
 
     expect(effectChooser.innerText).toBe('Fade In');
 
-    await fixture.events.click(effectChooser, { clickCount: 1 });
-
     await fixture.events.click(
-      fixture.screen.getByRole('listitem', { name: /Drop Effect/ })
+      fixture.screen.getByRole('option', { name: /^Drop Effect$/ })
     );
 
     expect(effectChooser.innerText).toBe('Drop');
@@ -83,10 +82,8 @@ describe('Animation Panel', function () {
     await fixture.events.click(effectChooser, { clickCount: 1 });
 
     await fixture.events.click(
-      fixture.screen.getByRole('listitem', { name: /Fade In Effect/ })
+      fixture.screen.getByRole('option', { name: /^Fade In Effect$/ })
     );
-    // Wait for the debounce
-    await fixture.events.sleep(200);
 
     const { animationState } = await fixture.renderHook(() =>
       useStory(({ state }) => {
