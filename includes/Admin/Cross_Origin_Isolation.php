@@ -99,10 +99,23 @@ class Cross_Origin_Isolation {
 	public function admin_footer() {
 		$html = (string) ob_get_clean();
 
+		echo $this->replace_in_dom( $html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Process a html string and add attribute attributes to required tags. 
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param string $html HTML document as string.
+	 *
+	 * @return string
+	 */
+	protected function replace_in_dom( $html ) {
 		$document = Document::fromHtml( $html );
 
 		if ( ! $document ) {
-			return;
+			return $html;
 		}
 
 		$map = [
@@ -112,6 +125,7 @@ class Cross_Origin_Isolation {
 			'script' => 'src',
 		];
 
+		$processed = [];
 		foreach ( $map as $tag => $attribute ) {
 			$tags = $document->getElementsByTagName( $tag );
 			foreach ( $tags as $node ) {
@@ -120,17 +134,24 @@ class Cross_Origin_Isolation {
 					continue;
 				}
 
-				$cross_origin = $node->getAttribute( 'crossorigin' );
+				// If already processed tag, attribute and value before, skip.
+				if ( isset( $processed[ $tag ][ $attribute ] ) && in_array( $value, $processed[ $tag ][ $attribute ], true ) ) {
+					continue;
+				}
 
+				// Check to see if tag already has attirbute.
+				$cross_origin = $node->getAttribute( 'crossorigin' );
 				if ( $cross_origin ) {
 					continue;
 				}
+
+				$processed[ $tag ][ $attribute ][] = $value;
 
 				$html = $this->add_attribute( $html, $attribute, $value );
 			}
 		}
 
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		return $html;
 	}
 
 	/**
@@ -208,7 +229,10 @@ class Cross_Origin_Isolation {
 			return $html;
 		}
 
-		return (string) str_replace( "{$attribute}='{$url}'", "crossorigin='anonymous' {$attribute}='{$url}'", $html );
+		$new_html = (string) str_replace( $attribute . '="' . $url . '"', 'crossorigin="anonymous" ' . $attribute . '="' . $url . '"', $html );
+		$new_html = (string) str_replace( "{$attribute}='{$url}'", "crossorigin='anonymous' {$attribute}='{$url}'", $new_html );
+
+		return $new_html;
 	}
 
 	/**

@@ -162,6 +162,32 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::replace_in_dom
+	 */
+	public function test_replace_in_dom() {
+		$html   = file_get_contents( __DIR__ . '/../../data/cross_origin_content.html' );
+		$html   = str_replace( '--SITE_URL--', site_url(), $html );
+		$object = $this->get_coi_object();
+		$result = $this->call_private_method( $object, 'replace_in_dom', [ $html ] );
+		$this->assertContains( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0.js"></script>', $result );
+		$this->assertContains( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>', $result );
+		$this->assertContains( '<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?display=swap&#038;family=Roboto" rel="stylesheet" />', $result );
+		$this->assertContains( '<img alt="test" crossorigin="anonymous" src="http://www.example.com/test1.jpg" loading="eager" />', $result );
+		$this->assertContains( "<img crossorigin='anonymous' src='http://www.example.com/test2.jpg' alt='test' />", $result );
+		$this->assertContains( '<iframe crossorigin="anonymous" src="http://www.example.com"></iframe>', $result );
+	}
+
+	/**
+	 * @covers ::replace_in_dom
+	 */
+	public function test_replace_in_dom_invalid() {
+		$html   = '<html><img src="http://www.example.com/test1.jpg" /><invalid /</html';
+		$object = $this->get_coi_object();
+		$result = $this->call_private_method( $object, 'replace_in_dom', [ $html ] );
+		$this->assertContains( '<img crossorigin="anonymous" src="http://www.example.com/test1.jpg" />', $result );
+	}
+
+	/**
 	 * @return \Google\Web_Stories\Admin\Cross_Origin_Isolation
 	 */
 	protected function get_coi_object() {
