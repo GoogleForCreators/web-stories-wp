@@ -20,6 +20,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
+import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -40,10 +42,32 @@ import {
   PANEL_GRID_ROW_GAP,
   VirtualizedWrapper,
 } from '../shared/virtualizedPanelGrid';
+import {
+  Headline,
+  noop,
+  Text,
+  THEME_CONSTANTS,
+  Toggle,
+} from '../../../../../design-system';
 import PageLayout from './pageLayout';
 import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
 
 const PAGE_LAYOUT_PANE_WIDTH = 158;
+
+const ActionRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 16px 22px 16px;
+`;
+
+const LayoutsToggle = styled.div`
+  display: flex;
+
+  p {
+    margin: auto 12px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+`;
 
 function PageLayouts({ pages, parentRef }) {
   const { replaceCurrentPage, currentPage } = useStory(
@@ -55,6 +79,7 @@ function PageLayouts({ pages, parentRef }) {
 
   const containerRef = useRef();
   const pageRefs = useRef({});
+  const toggleId = useMemo(() => `toggle_text_sets_${uuidv4()}`, []);
 
   const [selectedPage, setSelectedPage] = useState();
   const [isConfirming, setIsConfirming] = useState();
@@ -159,6 +184,26 @@ function PageLayouts({ pages, parentRef }) {
         height: pageSize.height,
       }}
     >
+      <ActionRow>
+        <Headline
+          as="h3"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
+        >
+          {__('Layouts', 'web-stories')}
+        </Headline>
+        <LayoutsToggle>
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__('Show Images', 'web-stories')}
+          </Text>
+          <Toggle
+            id={toggleId}
+            aria-label={__('Show images in layouts', 'web-stories')}
+            name={toggleId}
+            checked={false}
+            onChange={noop}
+          />
+        </LayoutsToggle>
+      </ActionRow>
       <VirtualizedWrapper height={rowVirtualizer.totalSize}>
         <VirtualizedContainer
           height={rowVirtualizer.totalSize}

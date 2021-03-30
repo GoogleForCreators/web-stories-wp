@@ -46,7 +46,8 @@ export const PaneInner = styled.div`
 `;
 
 export const PageLayoutsParentContainer = styled.div`
-  ${virtualPaneContainer}
+  ${virtualPaneContainer};
+  margin-top: 18px;
   overflow-x: hidden;
   overflow-y: scroll;
 `;
