@@ -53,7 +53,9 @@ describe('Styling single text field', () => {
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    it('should apply inline formatting correctly for single-style text field', async () => {
+    // TODO #6955
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should apply inline formatting correctly for single-style text field', async () => {
       const {
         bold,
         italic,
