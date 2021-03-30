@@ -234,7 +234,7 @@ describe('Background Copy & Paste', () => {
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(bgMedia, 5, 5),
       down(),
-      moveRel(canvas, 5, 5),
+      moveRel(canvas, 10, 10),
       up(),
     ]);
 
@@ -265,7 +265,10 @@ describe('Background Copy & Paste', () => {
     fixture.restore();
   });
 
-  it('works for all background animations', async () => {
+  // Disable reason: flakey tests.
+  // See https://github.com/google/web-stories-wp/issues/6936
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('works for all background animations', async () => {
     // open effect chooser
     await openEffectChooser();
 

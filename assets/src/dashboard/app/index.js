@@ -196,7 +196,7 @@ function App({ config }) {
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         <ConfigProvider config={config}>
           <ApiProvider>
             <NavProvider>

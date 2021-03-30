@@ -45,6 +45,7 @@ const Container = styled.div`
   border-radius: 8px;
   padding: 3px ${HORIZONTAL_PADDING}px;
   margin-top: 8px;
+  box-shadow: 0 0 3px white;
 `;
 
 const ScaleSlider = styled(Slider)`

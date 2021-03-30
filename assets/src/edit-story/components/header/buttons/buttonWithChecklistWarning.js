@@ -43,8 +43,9 @@ import {
 import { Tooltip } from '../../tooltip';
 
 const Button = styled(DefaultButton)`
+  padding: 4px 8px;
   svg {
-    margin-right: -10px;
+    margin-right: -2px;
     margin-left: 2px;
   }
 `;

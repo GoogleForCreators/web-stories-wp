@@ -39,7 +39,9 @@ import { CurrentUserProvider } from './app/currentUser';
 import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
+import { HelpCenterProvider } from './app/helpCenter';
 import StatusCheck from './components/statusCheck';
+import PostLock from './components/postLock';
 import Layout from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
@@ -64,25 +66,28 @@ function App({ config }) {
                     <SnackbarProvider>
                       <MetaBoxesProvider>
                         <StoryProvider storyId={storyId}>
-                          <FontProvider>
-                            <CurrentUserProvider>
+                          <CurrentUserProvider>
+                            <PostLock />
+                            <FontProvider>
                               <MediaProvider>
                                 <AutoSaveHandler />
                                 <TransformProvider>
                                   <DropTargetsProvider>
-                                    <GlobalStyle />
-                                    <DevTools />
-                                    <DefaultMoveableGlobalStyle />
-                                    <CropMoveableGlobalStyle />
-                                    <ModalGlobalStyle />
-                                    <CalendarStyle />
-                                    <KeyboardOnlyOutlines />
-                                    <Layout />
+                                    <HelpCenterProvider>
+                                      <GlobalStyle />
+                                      <DevTools />
+                                      <DefaultMoveableGlobalStyle />
+                                      <CropMoveableGlobalStyle />
+                                      <ModalGlobalStyle />
+                                      <CalendarStyle />
+                                      <KeyboardOnlyOutlines />
+                                      <Layout />
+                                    </HelpCenterProvider>
                                   </DropTargetsProvider>
                                 </TransformProvider>
                               </MediaProvider>
-                            </CurrentUserProvider>
-                          </FontProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
                         </StoryProvider>
                       </MetaBoxesProvider>
                     </SnackbarProvider>

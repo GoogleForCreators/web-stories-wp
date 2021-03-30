@@ -55,7 +55,7 @@ function SwitchToDraft() {
     <Tooltip title={label} hasTail>
       <Button
         variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
+        type={BUTTON_TYPES.QUATERNARY}
         size={BUTTON_SIZES.SMALL}
         onClick={handleUnPublish}
         disabled={isSaving || isUploading}

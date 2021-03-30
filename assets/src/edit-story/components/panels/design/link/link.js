@@ -228,6 +228,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         }
         isIndeterminate={isMultipleUrl}
         aria-label={__('Element link', 'web-stories')}
+        hasError={displayLinkGuidelines}
       />
       {displayLinkGuidelines && (
         <Row>

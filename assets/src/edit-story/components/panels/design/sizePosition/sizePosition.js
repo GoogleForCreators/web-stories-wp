@@ -166,10 +166,7 @@ function SizePositionPanel({
             value={x}
             min={minMaxXY.minX}
             max={minMaxXY.maxX}
-            onChange={(evt) => {
-              const value = Number(evt.target.value);
-              pushUpdate({ x: value }, true);
-            }}
+            onChange={(evt, value) => pushUpdate({ x: value }, true)}
             aria-label={__('X position', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(x)}
@@ -181,10 +178,7 @@ function SizePositionPanel({
             value={y}
             min={minMaxXY.minY}
             max={minMaxXY.maxY}
-            onChange={(evt) => {
-              const value = Number(evt.target.value);
-              pushUpdate({ y: value }, true);
-            }}
+            onChange={(evt, value) => pushUpdate({ y: value }, true)}
             aria-label={__('Y position', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(y)}
@@ -197,8 +191,8 @@ function SizePositionPanel({
             value={width}
             min={MIN_MAX.WIDTH.MIN}
             max={MIN_MAX.WIDTH.MAX}
-            onChange={(evt) => {
-              const newWidth = Number(evt.target.value);
+            onChange={(evt, value) => {
+              const newWidth = value;
               let newHeight = height;
               if (lockAspectRatio) {
                 if (newWidth === '') {
@@ -234,8 +228,8 @@ function SizePositionPanel({
             disabled={disableHeight}
             min={MIN_MAX.HEIGHT.MIN}
             max={MIN_MAX.HEIGHT.MAX}
-            onChange={(evt) => {
-              const newHeight = Number(evt.target.value);
+            onChange={(evt, value) => {
+              const newHeight = value;
               let newWidth = width;
               if (lockAspectRatio) {
                 if (newHeight === '') {
@@ -283,10 +277,9 @@ function SizePositionPanel({
             value={rotationAngle}
             min={MIN_MAX.ROTATION.MIN}
             max={MIN_MAX.ROTATION.MAX}
-            onChange={(evt) => {
-              const value = Number(evt.target.value);
-              pushUpdate({ rotationAngle: value }, true);
-            }}
+            onChange={(evt, value) =>
+              pushUpdate({ rotationAngle: value }, true)
+            }
             aria-label={__('Rotation', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(rotationAngle)}

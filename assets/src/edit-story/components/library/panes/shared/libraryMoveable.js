@@ -50,6 +50,7 @@ const TargetBox = styled.div`
     `};
   top: 0;
   z-index: 1;
+  cursor: pointer;
 `;
 
 function LibraryMoveable({
@@ -75,8 +76,9 @@ function LibraryMoveable({
   const overlayRef = useRef(null);
   const moveable = useRef(null);
 
-  const { pageSize } = useLayout(({ state }) => ({
-    pageSize: state.canvasPageSize,
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
   }));
 
   const insertElement = useInsertElement();

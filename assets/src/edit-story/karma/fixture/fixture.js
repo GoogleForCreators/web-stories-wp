@@ -55,6 +55,12 @@ const DEFAULT_CONFIG = {
     hasPublishAction: true,
     hasAssignAuthorAction: true,
   },
+  dashboardLink: 'https://www.example.com/dashboard',
+  postLock: {
+    interval: 150,
+    showLockedDialog: true,
+  },
+  nonce: '123456789',
   version: '1.0.0-alpha.9',
   isRTL: false,
   locale: {
