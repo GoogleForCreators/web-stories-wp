@@ -26,6 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../../../design-system';
 import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
 import { ReactComponent as SearchIcon } from '../../../icons/search.svg';
 import { noop } from '../../../utils/noop';
@@ -86,10 +87,7 @@ const Input = styled.input.attrs({
   border: 1px solid
     ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.24)};
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.lineHeight};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.weight};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.family};
+  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
 
   &::-ms-clear {
     display: none;

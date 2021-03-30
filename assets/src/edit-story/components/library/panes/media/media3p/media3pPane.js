@@ -27,6 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import {
@@ -47,12 +48,18 @@ import paneId from './paneId';
 import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   margin-top: 16px;
   margin-bottom: 16px;
   padding: 0 24px;
 `;
 
-const MediaSubheading = styled.div`
+const MediaSubheading = styled(Text).attrs(() => ({
+  forwardedAs: 'div',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+}))`
   margin-top: 24px;
   padding: 0 24px;
   ${(props) => props.shouldDisplay || 'display: none;'}

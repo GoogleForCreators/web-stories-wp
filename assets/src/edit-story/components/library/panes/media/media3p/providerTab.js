@@ -16,39 +16,14 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../../../../design-system';
+import { useKeyDownEffect, Pill } from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
-import { narrowPill } from './pill';
-
-const Tab = styled.button`
-  ${narrowPill};
-  padding: 6px 16px;
-  height: 32px;
-  display: inline-block;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  background-color: ${({ active, theme }) =>
-    active ? theme.DEPRECATED_THEME.colors.fg.primary : 'transparent'};
-  text-align: center;
-  opacity: 0.86;
-  cursor: pointer;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: ${({ active, theme }) =>
-    active
-      ? theme.DEPRECATED_THEME.colors.fg.gray8
-      : theme.DEPRECATED_THEME.colors.fg.primary};
-
-  &:last-child {
-    margin-right: 0;
-  }
-`;
 
 function ProviderTab({
   id,
@@ -92,17 +67,17 @@ function ProviderTab({
   );
 
   return (
-    <Tab
+    <Pill
       ref={ref}
       tabIndex={index == 0 ? 0 : -1}
       data-testid={'providerTab'}
       onClick={() => setSelectedProvider({ provider: providerType })}
       data-provider-type={providerType}
-      active={active}
+      isActive={active}
       id={id}
     >
       {name}
-    </Tab>
+    </Pill>
   );
 }
 
