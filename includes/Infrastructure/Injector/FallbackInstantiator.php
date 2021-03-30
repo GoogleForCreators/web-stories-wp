@@ -2,9 +2,17 @@
 /**
  * Final class FallbackInstantiator.
  *
- * Infrastructure code based on https://github.com/mwpd/basic-scaffold.
+ * @package   Google\Web_Stories
+ * @copyright 2019 Alain Schlesser
+ * @license   MIT
+ * @link      https://www.mwpd.io/
+ */
+
+/**
+ * Original code modified for this project.
  *
- * @package Google\Web_Stories
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
 namespace Google\Web_Stories\Infrastructure\Injector;
