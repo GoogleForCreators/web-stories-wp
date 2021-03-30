@@ -39,9 +39,9 @@ describe('Filter Panel', () => {
     const media = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.fullbleed.container;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(media, 5, 5),
+      moveRel(media, 10, 10),
       down(),
-      moveRel(canvas, 10, 10),
+      moveRel(canvas, 20, 20),
       up(),
     ]);
 
