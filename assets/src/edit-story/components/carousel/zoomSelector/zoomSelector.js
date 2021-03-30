@@ -28,8 +28,12 @@ import { useLayout } from '../../../app/layout';
 import { DropDown, PLACEMENT } from '../../../../design-system';
 
 const StyledDropDown = styled(DropDown)`
+  margin-right: 8px;
+
   button {
+    height: 32px;
     padding: 8px;
+    padding-right: 0;
 
     span {
       padding: 0;
