@@ -220,17 +220,6 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
-			 * Author: @samwhale
-			 * Issue: 6130
-			 * Creation date: 2021-03-30
-			 */
-			[
-				'name'        => 'enableToggleLayoutAssets',
-				'label'       => __( 'Toggle Layout Assets', 'web-stories' ),
-				'description' => __( 'Enable layouts to be previewed without their image assets.', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 6708
 			 * Creation date: 2021-03-23
