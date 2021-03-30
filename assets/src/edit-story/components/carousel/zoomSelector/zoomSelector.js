@@ -28,7 +28,7 @@ import { useLayout } from '../../../app/layout';
 import { DropDown, PLACEMENT } from '../../../../design-system';
 
 const selectButtonCSS = css`
-  height: 32px;
+  height: 36px;
   padding: 8px;
   padding-right: 0;
 

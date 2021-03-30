@@ -34,6 +34,7 @@ import {
 import { BEZIER } from '../../../../animation';
 
 const Button = styled(dsButton)`
+  height: 36px;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   padding: 8px;
   color: ${({ theme }) => theme.colors.fg.primary};
