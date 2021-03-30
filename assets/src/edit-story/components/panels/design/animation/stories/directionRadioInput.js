@@ -30,7 +30,7 @@ import {
 import { DirectionRadioInput } from '../directionRadioInput';
 
 export default {
-  title: 'Animations/Direction Radio Input',
+  title: 'Stories Editor/Components/Panels/Animations/Direction Radio Input',
   component: DirectionRadioInput,
 };
 

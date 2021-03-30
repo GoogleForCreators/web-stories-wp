@@ -28,7 +28,6 @@ import { Modal } from '../modal';
 import { Headline } from '../typography';
 
 const DialogBox = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

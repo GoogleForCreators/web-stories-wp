@@ -48,7 +48,6 @@ const inputCSS = css`
   transition: box-shadow 0.1s linear;
   border-radius: 4px;
   border: 1px solid #7e8993;
-  box-sizing: border-box;
   height: 28px;
   vertical-align: middle;
   background-color: #fff;

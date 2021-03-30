@@ -26,7 +26,6 @@ import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 
 const StyledPill = styled.button(
   ({ isActive, theme }) => css`
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-around;

@@ -37,7 +37,6 @@ const Base = styled.button(
     display: flex;
     align-items: center;
     justify-content: space-around;
-    box-sizing: border-box;
     padding: 0;
     margin: 0;
     background: transparent;

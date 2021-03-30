@@ -98,9 +98,7 @@ describe('Panel: Style Presets', () => {
         fixture.editor.library.text.preset('Paragraph')
       );
       // Add a heading.
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Heading 1')
-      );
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       // Select the paragraph as well.
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 
@@ -198,9 +196,7 @@ describe('Panel: Style Presets', () => {
 
       // Add a heading.
       await fixture.editor.library.textTab.click();
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Heading 1')
-      );
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
 
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.apply
@@ -219,9 +215,7 @@ describe('Panel: Style Presets', () => {
         fixture.editor.library.text.preset('Paragraph')
       );
       // Add a heading.
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Heading 1')
-      );
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );

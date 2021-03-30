@@ -42,7 +42,7 @@ export const Toggle = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <ThemeProvider theme={dsTheme}>
-      <ThemeGlobals.OverrideFocusOutline />
+      <ThemeGlobals.Styles />
       <Bg>
         <HelpCenterToggle
           isOpen={isOpen}

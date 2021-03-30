@@ -91,8 +91,8 @@ const IconContainer = styled.div(
 const ToggleContainer = styled.div(
   ({ theme }) => css`
     position: relative;
-    height: ${TOGGLE_HEIGHT}px;
-    width: ${TOGGLE_WIDTH}px;
+    height: ${TOGGLE_HEIGHT - BORDER_WIDTH * 2}px;
+    width: ${TOGGLE_WIDTH - BORDER_WIDTH * 2}px;
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.x_large};
 

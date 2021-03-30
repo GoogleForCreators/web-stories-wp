@@ -39,6 +39,7 @@ import { CurrentUserProvider } from './app/currentUser';
 import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
+import { HelpCenterProvider } from './app/helpCenter';
 import StatusCheck from './components/statusCheck';
 import PostLock from './components/postLock';
 import Layout from './components/layout';
@@ -72,14 +73,16 @@ function App({ config }) {
                                 <AutoSaveHandler />
                                 <TransformProvider>
                                   <DropTargetsProvider>
-                                    <GlobalStyle />
-                                    <DevTools />
-                                    <DefaultMoveableGlobalStyle />
-                                    <CropMoveableGlobalStyle />
-                                    <ModalGlobalStyle />
-                                    <CalendarStyle />
-                                    <KeyboardOnlyOutlines />
-                                    <Layout />
+                                    <HelpCenterProvider>
+                                      <GlobalStyle />
+                                      <DevTools />
+                                      <DefaultMoveableGlobalStyle />
+                                      <CropMoveableGlobalStyle />
+                                      <ModalGlobalStyle />
+                                      <CalendarStyle />
+                                      <KeyboardOnlyOutlines />
+                                      <Layout />
+                                    </HelpCenterProvider>
                                   </DropTargetsProvider>
                                 </TransformProvider>
                               </MediaProvider>
