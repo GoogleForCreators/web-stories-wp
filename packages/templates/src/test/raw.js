@@ -20,7 +20,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 
-describe('Raw template files', () => {
+describe('raw template files', () => {
   const templates = readdirSync(
     resolve(process.cwd(), 'packages/templates/src/raw')
   );
