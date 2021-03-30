@@ -27,7 +27,6 @@ const TIMELINE_HEIGHT = 180;
 
 export const TimelineContainer = styled.div`
   display: flex;
-  box-sizing: border-box;
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.family};
   height: ${TIMELINE_HEIGHT}px;
   background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v16};

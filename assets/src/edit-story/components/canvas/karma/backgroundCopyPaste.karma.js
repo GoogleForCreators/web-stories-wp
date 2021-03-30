@@ -163,14 +163,14 @@ describe('Background Copy Paste integration', () => {
     await addBackgroundImage(0);
     await fixture.events.sleep(100);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.filters.linear.button
+      fixture.editor.inspector.designPanel.filters.linear
     );
     await gotoPage(2);
     await setBackgroundColor('00FF00');
     await addBackgroundImage(1);
     await fixture.events.sleep(100);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.filters.radial.button
+      fixture.editor.inspector.designPanel.filters.radial
     );
 
     // Verify setup - 1 image on each page with correct overlay
@@ -181,14 +181,14 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%)'
+      'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
     );
     expect(await getNumElements()).toBe(1);
     await gotoPage(2);
     expect(await getCanvasBackgroundImage()).toHaveProperty('src', /curiosity/);
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
+      'radial-gradient(67% 67%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
     );
     expect(await getNumElements()).toBe(1);
 
@@ -207,7 +207,7 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
+      'radial-gradient(67% 67%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
     );
     await fixture.events.sleep(10000);
     expect(await getNumElements()).toBe(1);

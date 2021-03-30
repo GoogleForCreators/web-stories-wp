@@ -88,7 +88,6 @@ const MediaSizeText = styled.div`
 const Input = styled.input`
   background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.white};
   border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
-  box-sizing: border-box;
   border-radius: 4px;
   font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.family};
   line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.lineHeight};

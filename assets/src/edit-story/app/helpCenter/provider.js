@@ -17,16 +17,21 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useReducer, useEffect, useState, useMemo, useRef } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../../animation';
-import { useCurrentUser } from '../../../app';
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
-import { BASE_NAVIGATION_FLOW, TRANSITION_DURATION } from '../constants';
+import { clamp } from '../../../animation';
+import { useCurrentUser } from '..';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
+import {
+  BASE_NAVIGATION_FLOW,
+  TRANSITION_DURATION,
+} from '../../components/helpCenter/constants';
+import Context from './context';
 import {
   composeEffects,
   createDynamicNavigationFlow,
@@ -39,7 +44,8 @@ import {
   deriveAutoOpen,
   deriveInitialOpen,
   deriveInitialUnreadTipsCount,
-} from './effects';
+  resetIsOpeningToTip,
+} from './useHelpCenter/effects';
 
 /**
  * Performs any state updates that result from
@@ -62,6 +68,7 @@ export const deriveState = composeEffects(
     deriveReadTip,
     deriveUnreadTipsCount,
     deriveAutoOpen,
+    resetIsOpeningToTip,
   ]
 );
 
@@ -82,6 +89,7 @@ const persisted = localStore.getItemByKey(LOCAL_STORAGE_PREFIX.HELP_CENTER);
 
 export const initialState = {
   isOpen: false,
+  isOpeningToTip: false,
   navigationIndex: -1,
   navigationFlow: BASE_NAVIGATION_FLOW,
   isLeftToRightTransition: true,
@@ -118,6 +126,14 @@ export const initial = {
     goToTip: (key) => ({ navigationFlow }) => ({
       navigationIndex: navigationFlow.findIndex((v) => v === key),
     }),
+    openToUnreadTip: (key) => ({ navigationFlow, readTips }) =>
+      !readTips[key]
+        ? {
+            isOpen: true,
+            isOpeningToTip: true,
+            navigationIndex: navigationFlow.findIndex((v) => v === key),
+          }
+        : {},
     toggle: () => ({ isOpen }) => {
       trackEvent('help_center_toggled', {
         status: isOpen ? 'closed' : 'open',
@@ -171,7 +187,7 @@ const createBooleanMapFromKey = (key) =>
       {}
     );
 
-export function useHelpCenter() {
+function HelpCenterProvider({ children }) {
   const [store, dispatch] = useReducer(reducer, initial);
   const { currentUser, updateCurrentUser } = useCurrentUser(
     ({ state, actions }) => ({
@@ -294,7 +310,7 @@ export function useHelpCenter() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigationIndex]);
 
-  return useMemo(
+  const contextValue = useMemo(
     () => ({
       state: {
         ...store.state,
@@ -304,4 +320,12 @@ export function useHelpCenter() {
     }),
     [actions, store.state, navigationIndex]
   );
+
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
+
+HelpCenterProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default HelpCenterProvider;
