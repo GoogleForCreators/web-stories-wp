@@ -18,15 +18,15 @@
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
 |                                                                   | *[total]*                                        | 🚨 **41.18%** *(7 / 17)*    |
-| Creator Can Style Text                                            | Apply B                                          | 🛴 **89.47%** *(17 / 19)*   |
-|                                                                   | Apply I                                          | 🛴 **70.00%** *(7 / 10)*    |
-|                                                                   | Apply U                                          | 🛴 **66.67%** *(6 / 9)*     |
+| Creator Can Style Text                                            | Apply B                                          | 🛴 **84.21%** *(16 / 19)*   |
+|                                                                   | Apply I                                          | 🛴 **60.00%** *(6 / 10)*    |
+|                                                                   | Apply U                                          | 🛴 **55.56%** *(5 / 9)*     |
 |                                                                   | Select weight                                    | 🏆 **100.00%** *(9 / 9)*    |
-|                                                                   | Set kerning                                      | 🛴 **80.00%** *(4 / 5)*     |
+|                                                                   | Set kerning                                      | 🛴 **60.00%** *(3 / 5)*     |
 |                                                                   | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Set text color                                   | 🛴 **80.00%** *(4 / 5)*     |
+|                                                                   | Set text color                                   | 🛴 **60.00%** *(3 / 5)*     |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
-|                                                                   | *[total]*                                        | 🏔️ **91.67%** *(33 / 36)*  |
+|                                                                   | *[total]*                                        | 🛴 **88.89%** *(32 / 36)*   |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -75,4 +75,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **71.94%** *(282 / 392)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **70.41%** *(276 / 392)* |
