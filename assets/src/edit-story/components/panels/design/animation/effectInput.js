@@ -31,8 +31,8 @@ import { AnimationFormPropTypes } from '../../../../../animation/types';
 import {
   NumericInput,
   DropDown,
-} from '../../../../../design-system/components';
-import { ThemeGlobals } from '../../../../../design-system';
+  ThemeGlobals,
+} from '../../../../../design-system/';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
 

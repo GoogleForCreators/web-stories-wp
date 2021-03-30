@@ -57,7 +57,6 @@ const LabelContainer = styled.div`
 const RadioBorder = styled.span(
   ({ theme }) => css`
     display: inline-block;
-    box-sizing: border-box;
     height: ${RING_DIAMETER}px;
     width: ${RING_DIAMETER}px;
     border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
