@@ -56,7 +56,9 @@ const TitleBar = styled.div`
 
 const TextSetsToggle = styled.div`
   display: flex;
-  p {
+
+  label {
+    cursor: pointer;
     margin: auto 12px;
     color: ${({ theme }) => theme.colors.fg.secondary};
   }
@@ -154,7 +156,11 @@ function TextSetsPane({ paneRef }) {
           {PANE_TEXT.TITLE}
         </Headline>
         <TextSetsToggle>
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text
+            as="label"
+            htmlFor={toggleId}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
             {PANE_TEXT.SWITCH_LABEL}
           </Text>
           <Toggle
