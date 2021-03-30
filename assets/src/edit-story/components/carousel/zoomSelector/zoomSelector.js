@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
@@ -27,18 +27,18 @@ import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
 import { DropDown, PLACEMENT } from '../../../../design-system';
 
+const selectButtonCSS = css`
+  height: 32px;
+  padding: 8px;
+  padding-right: 0;
+
+  span {
+    padding: 0;
+  }
+`;
+
 const StyledDropDown = styled(DropDown)`
   margin-right: 8px;
-
-  button {
-    height: 32px;
-    padding: 8px;
-    padding-right: 0;
-
-    span {
-      padding: 0;
-    }
-  }
 `;
 
 const ZOOM_OPTIONS = [
@@ -80,6 +80,7 @@ function ZoomSelector() {
       onMenuItemClick={handleSetZoom}
       selectedValue={zoomSetting}
       popupFillWidth={false}
+      selectButtonStylesOverride={selectButtonCSS}
     />
   );
 }
