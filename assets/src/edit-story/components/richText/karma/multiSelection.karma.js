@@ -56,7 +56,9 @@ describe('Styling multiple text fields', () => {
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    it('should apply formatting correctly for identically styled text fields', async () => {
+    // TODO #6955
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should apply formatting correctly for identically styled text fields', async () => {
       const {
         bold,
         italic,
