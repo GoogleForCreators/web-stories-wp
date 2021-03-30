@@ -80,7 +80,7 @@ function useCanvasKeys(ref) {
   );
 
   const {
-    actions: { pushTransform },
+    actions: { clearTransforms },
   } = useTransform();
 
   const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
@@ -150,10 +150,10 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect(
     'esc',
     () => {
-      selectedElementIds.forEach((id) => pushTransform(id, null));
       clearSelection();
+      clearTransforms();
     },
-    [clearSelection, selectedElementIds, pushTransform]
+    [clearSelection, clearTransforms]
   );
 
   useGlobalKeyDownEffect(

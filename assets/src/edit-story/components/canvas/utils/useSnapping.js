@@ -22,11 +22,7 @@ import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
 import { useCanvas, useLayout } from '../../../app';
 
-function useSnapping({
-  canSnap,
-  otherNodes,
-  snappingOffsetX = null,
-}) {
+function useSnapping({ canSnap, otherNodes, snappingOffsetX = null }) {
   const { pageContainer, canvasContainer, designSpaceGuideline } = useCanvas(
     ({ state: { pageContainer, canvasContainer, designSpaceGuideline } }) => ({
       pageContainer,
