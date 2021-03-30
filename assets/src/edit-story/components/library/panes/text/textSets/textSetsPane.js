@@ -163,7 +163,6 @@ function TextSetsPane({ paneRef }) {
             name={toggleId}
             checked={showInUse}
             onChange={onChangeShowInUse}
-            label={PANE_TEXT.SWITCH_LABEL}
           />
         </TextSetsToggle>
       </TitleBar>
