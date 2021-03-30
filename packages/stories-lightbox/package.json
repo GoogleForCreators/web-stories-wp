@@ -10,6 +10,9 @@
   },
   "main": "./src/index.js",
   "type": "module",
+  "sideEffects": [
+    "./src/index.js"
+  ],
   "dependencies": {
     "@wordpress/dom-ready": "^2.12.0"
   },

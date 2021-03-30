@@ -1,0 +1,21 @@
+{
+  "name": "@web-stories-wp/testing-library",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "peerDependencies": {
+    "@testing-library/react": "^11.2.3"
+  }
+}

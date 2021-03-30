@@ -10,6 +10,9 @@
   },
   "main": "./src/index.js",
   "type": "module",
+  "sideEffects": [
+    "./src/index.js"
+  ],
   "dependencies": {
     "@wordpress/i18n": "^3.17.0",
     "@web-stories-wp/i18n": "*",

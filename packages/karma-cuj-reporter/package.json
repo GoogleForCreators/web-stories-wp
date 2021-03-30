@@ -1,13 +1,18 @@
 {
-  "name": "karma-cuj-reporter",
+  "name": "@web-stories-wp/karma-cuj-reporter",
   "private": true,
   "engines": {
     "node": ">= 15",
     "npm": "~7"
   },
-  "main": "./src/index.js",
+  "exports": {
+    "default": "./src/index.cjs"
+  },
+  "main": "./src/index.cjs",
   "dependencies": {
-    "karma": "^6.1.1",
     "markdown-table": "^2.0.0"
+  },
+  "peerDependencies": {
+    "karma": "^6.1.1"
   }
 }

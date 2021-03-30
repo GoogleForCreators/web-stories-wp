@@ -10,6 +10,7 @@
   },
   "main": "./src/index.js",
   "type": "module",
+  "sideEffects": false,
   "dependencies": {
     "@wordpress/i18n": "^3.17.0",
     "prop-types": "^15.7.2",

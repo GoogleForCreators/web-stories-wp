@@ -68,15 +68,19 @@
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
         "target": "./packages/migration/src/migrations",
-        "from": "./assets/src/edit-story",
+        "from": "./packages/story-editor/src",
         "except": [ "./migration/migrations" ]
       }, {
-        "target": "./assets/src/edit-story",
-        "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
+        "target": "./packages/story-editor/src",
+        "from": "./packages/story-editor/src/utils/useWhyDidYouUpdate.js"
       } ]
     } ],
     "import/dynamic-import-chunkname": [ "error", {
       "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
+    } ],
+    "import/no-cycle": "error",
+    "import/no-useless-path-segments": [ "error", {
+      "noUselessIndex": true
     } ],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
@@ -246,6 +250,7 @@
         "__mocks__/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
+        "**/testUtils/**/*.js",
         "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
@@ -283,7 +288,6 @@
     {
       "files": [
         "**/karma/**/*.js",
-        "assets/src/karma-*/**/*.js",
         "packages/karma-*/**/*.js"
       ],
       "extends": [
@@ -377,11 +381,11 @@
         "tests/js/*.js",
         "packages/e2e-tests/src/*.js",
         "packages/e2e-tests/src/config/*.js",
-        "assets/src/dashboard/karma-tests.cjs",
-        "assets/src/edit-story/karma-tests.cjs",
+        "packages/dashboard/src/karma-tests.cjs",
+        "packages/story-editor/src/karma-tests.cjs",
         "packages/migration/src/**/*.js",
-        "packages/fonts/**/*.js",
-        "packages/commander/**/*.js"
+        "packages/fonts/src/cli/**/*.js",
+        "packages/commander/src/**/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
@@ -435,16 +439,13 @@
     },
     {
       "files": [
-        "assets/src/animation/**/*.js",
-        "assets/src/dashboard/**/*.js",
-        "assets/src/design-system/**/*.js",
-        "assets/src/edit-story/**/*.js",
         "packages/**/*.js"
       ],
       "excludedFiles": [
         "packages/activation-notice/**/*.js",
         "packages/i18n/**/*.js",
-        "packages/tinymce-button/**/*.js"
+        "packages/tinymce-button/**/*.js",
+        "packages/web-stories-block/**/*.js"
       ],
       "rules":{
         "no-restricted-imports": [

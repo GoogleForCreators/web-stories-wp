@@ -1,12 +1,17 @@
 {
-  "name": "karma-puppeteer-client",
+  "name": "@web-stories-wp/karma-puppeteer-client",
   "private": true,
   "engines": {
     "node": ">= 15",
     "npm": "~7"
   },
-  "main": "./src/index.js",
+  "exports": {
+    "default": "./src/index.cjs"
+  },
+  "main": "./src/index.cjs",
   "dependencies": {
+  },
+  "peerDependencies": {
     "karma": "^6.1.1"
   }
 }

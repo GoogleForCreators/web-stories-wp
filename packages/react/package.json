@@ -1,0 +1,24 @@
+{
+  "name": "@web-stories-wp/react",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-pure-render": "^1.0.2",
+    "use-context-selector": "^1.2.11",
+    "use-debounce": "^3.4.3"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.2.3"
+  }
+}

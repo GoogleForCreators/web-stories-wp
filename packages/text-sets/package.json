@@ -10,6 +10,7 @@
   },
   "main": "./src/index.js",
   "type": "module",
+  "sideEffects": false,
   "dependencies": {
     "@web-stories-wp/migration": "*"
   },

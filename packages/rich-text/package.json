@@ -1,0 +1,27 @@
+{
+  "name": "@web-stories-wp/rich-text",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@web-stories-wp/react": "*",
+    "@web-stories-wp/patterns": "*",
+    "draft-js": "^0.11.7",
+    "draft-js-export-html": "^1.4.1",
+    "draft-js-import-html": "^1.4.1",
+    "draftjs-filters": "^2.5.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0"
+  },
+  "devDependencies": {
+    "react-dom": "^16.14.0"
+  }
+}

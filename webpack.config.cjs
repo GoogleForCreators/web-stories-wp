@@ -197,7 +197,7 @@ const templateContent = ({ htmlWebpackPlugin }) => {
     pathname.substr(pathname.lastIndexOf('/') + 1);
 
   const chunkName = htmlWebpackPlugin.options.chunks[0];
-  const omitPrimaryChunk = (f) => f != chunkName;
+  const omitPrimaryChunk = (f) => f !== chunkName;
 
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
@@ -221,8 +221,8 @@ const templateContent = ({ htmlWebpackPlugin }) => {
 const editorAndDashboard = {
   ...sharedConfig,
   entry: {
-    'edit-story': './assets/src/edit-story/index.js',
-    'stories-dashboard': './assets/src/dashboard/index.js',
+    'edit-story': './packages/wp-story-editor/src/index.js',
+    'stories-dashboard': './packages/wp-dashboard/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
@@ -278,7 +278,7 @@ const webStoriesScripts = {
 
 // Collect all core themes style sheet paths.
 const coreThemesBlockStylesPaths = glob.sync(
-  './assets/src/web-stories-block/css/core-themes/*.css'
+  './packages/web-stories-block/src/css/core-themes/*.css'
 );
 
 // Build entry object for the Core Themes Styles.
@@ -295,11 +295,11 @@ const webStoriesBlock = {
   ...sharedConfig,
   entry: {
     'web-stories-block': [
-      './assets/src/web-stories-block/index.js',
-      './assets/src/web-stories-block/block/edit.css',
+      './packages/web-stories-block/src/index.js',
+      './packages/web-stories-block/src/block/edit.css',
     ],
-    'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
-    'web-stories-embed': './assets/src/web-stories-block/css/embed.css',
+    'web-stories-list-styles': './packages/web-stories-block/src/css/style.css',
+    'web-stories-embed': './packages/web-stories-block/src/css/embed.css',
     ...coreThemeBlockStyles,
   },
   plugins: [

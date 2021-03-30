@@ -1,0 +1,621 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import * as React from 'react';
+const { useCallback, useMemo } = React;
+
+import { FlagsProvider } from 'flagged';
+import { render, screen, waitFor } from '@testing-library/react';
+import Modal from 'react-modal';
+import { DATA_VERSION } from '@web-stories-wp/migration';
+import { createPage } from '@web-stories-wp/elements';
+import {
+  FixtureEvents,
+  ComponentStub,
+  actPromise,
+} from '@web-stories-wp/karma-utils';
+
+/**
+ * Internal dependencies
+ */
+import App from '../../editorApp';
+import APIProvider from '../../app/api/apiProvider';
+import APIContext from '../../app/api/context';
+import Layout from '../../components/layout';
+import { formattedTemplatesArray } from '../../../../dashboard/src/storybookUtils';
+import getMediaResponse from './db/getMediaResponse';
+import { Editor as EditorContainer } from './containers';
+
+export const MEDIA_PER_PAGE = 20;
+const DEFAULT_CONFIG = {
+  storyId: 1,
+  api: {},
+  allowedMimeTypes: {
+    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+    video: ['video/mp4', 'video/ogg'],
+  },
+  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
+  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+  capabilities: {
+    hasUploadMediaAction: true,
+    hasPublishAction: true,
+    hasAssignAuthorAction: true,
+  },
+  version: '1.0.0-alpha.9',
+  isRTL: false,
+  locale: {
+    dateFormat: 'F j, Y',
+    timeFormat: 'g:i a',
+    gmtOffset: -4,
+    timezone: 'America/New_York',
+    weekStartsOn: 0,
+  },
+};
+
+/**
+ * The fixture mainly follows the `@testing-library/react` library pattern, but
+ * in the scope of the whole editor and the real browser. As such:
+ *
+ * - Call `set` and `stub` methods to configure the fixture before calling
+ * the `render()` method.
+ * - Call the `fixture.render()` method similarly to the
+ * `@testing-library/react`'s `render()` before doing the actual tests.
+ * - Call the `fixture.renderHook()` method similarly to the
+ * `@testing-library/react`'s `renderHook()` to render a hook in the context
+ * of the whole editor. A more fine-grained `renderHook()` can also be called
+ * on a component stub. See the `fixture.stubComponent()` for more info.
+ * - Call the `await fixture.act()` method similarly to the
+ * `@testing-library/react`'s `act()` method for any action. Notice that events
+ * automatically use `act()` internally.
+ * - Call the `await fixture.events` methods to drive the events similarly
+ * to the `@testing-library/react`'s `fireEvent`, except that these events will
+ * be executed natively in the browser.
+ */
+export class Fixture {
+  constructor() {
+    this._config = { ...DEFAULT_CONFIG };
+
+    this._componentStubs = new Map();
+    const origCreateElement = React.createElement;
+    //eslint-disable-next-line jasmine/no-unsafe-spy
+    spyOn(React, 'createElement').and.callFake((type, props, ...children) => {
+      if (!props?._wrapped) {
+        const stubs = this._componentStubs.get(type);
+        if (stubs) {
+          const match = stubs.find((stub) => {
+            if (!stub._matcher) {
+              return true;
+            }
+            return stub._matcher(props);
+          });
+          if (match) {
+            type = match._wrapper;
+          }
+        }
+      }
+      return origCreateElement(type, props, ...children);
+    });
+
+    this.apiProviderFixture_ = new APIProviderFixture();
+    this.stubComponent(APIProvider).callFake(
+      this.apiProviderFixture_.Component
+    );
+
+    this._layoutStub = this.stubComponent(Layout);
+
+    this._events = new FixtureEvents(this.act.bind(this));
+
+    this._container = null;
+
+    this._editor = null;
+
+    const panels = [
+      'animation',
+      'backgroundOverlay',
+      'borderRadius',
+      'borderStyle',
+      'captions',
+      'globalStoryStyles',
+      'colorPresets',
+      'filter',
+      'imageAccessibility',
+      'layerStyle',
+      'link',
+      'pageAttachment',
+      'pageBackground',
+      'videoPoster',
+      'size',
+      'shapeStyle',
+      'text',
+      'textBox',
+      'textStyle',
+      'videoOptions',
+      'videoAccessibility',
+      'elementAlignment',
+      'noselection',
+      'publishing',
+      'status',
+      'stylepreset-style',
+      'stylepreset-color',
+    ];
+    // Open all panels by default.
+    panels.forEach((panel) => {
+      localStorage.setItem(
+        `web_stories_ui_panel_settings:${panel}`,
+        JSON.stringify({ isCollapsed: false })
+      );
+    });
+  }
+
+  restore() {
+    window.location.hash = '#';
+    localStorage.clear();
+  }
+
+  get container() {
+    return this._container;
+  }
+
+  get document() {
+    return this._container.ownerDocument;
+  }
+
+  get screen() {
+    return this._screen;
+  }
+
+  get editor() {
+    return this._editor;
+  }
+
+  /**
+   * A fixture utility to fire native browser events. See `FixtureEvents` for
+   * more info.
+   *
+   * @return {FixtureEvents} fixture events that are executed on the native
+   * browser.
+   */
+  get events() {
+    return this._events;
+  }
+
+  /**
+   * Stubs a component. Can be used to render hooks on this component's level
+   * or even to completely replace the implementation of the component.
+   *
+   * All components must be stubbed before the `fixture.render()` is called.
+   *
+   * Use sparingly. See `ComponentStub` for more info.
+   *
+   * @param {Function} component Component to stub.
+   * @param {Function|undefined} matcher Matcher.
+   * @return {ComponentStub} The component's stub.
+   */
+  stubComponent(component, matcher) {
+    const stub = new ComponentStub(this, component, matcher);
+    let stubs = this._componentStubs.get(component);
+    if (!stubs) {
+      stubs = [];
+      this._componentStubs.set(component, stubs);
+    }
+    stubs.push(stub);
+    return stub;
+  }
+
+  /**
+   * Set the feature flags. See `flags.js` for the list of flags.
+   *
+   * For instance, to enable a flag in your test call `setFlags` before
+   * calling the `render()` method:
+   * ```
+   * beforeEach(async () => {
+   *   fixture = new Fixture();
+   *   fixture.setFlags({FEATURE_NAME: true});
+   *   await fixture.render();
+   * });
+   * ```
+   *
+   * @param {Object} flags Flags.
+   */
+  setFlags(flags) {
+    this._flags = { ...flags };
+  }
+
+  setConfig(config) {
+    this._config = { ...this._config, ...config };
+  }
+
+  /**
+   * @param {Array<Object>} pages Pages.
+   */
+  setPages(pages) {
+    this.apiProviderFixture_.setPages(pages);
+  }
+
+  /**
+   * Renders the editor similarly to the `@testing-library/react`'s `render()`
+   * method.
+   *
+   * @return {Promise} Yields when the editor rendering is complete.
+   */
+  async render() {
+    const root = document.querySelector('test-root');
+    root.setAttribute('dir', this._config.isRTL ? 'rtl' : 'ltr');
+
+    // see http://reactcommunity.org/react-modal/accessibility/
+    Modal.setAppElement(root);
+
+    const { container, getByRole } = render(
+      <FlagsProvider features={this._flags}>
+        <App key={Math.random()} config={this._config} />
+      </FlagsProvider>,
+      {
+        container: root,
+      }
+    );
+    // The editor should always be given 100%:100% size. The testing-library
+    // renders an extra container so it should be given the same size.
+    container.style.width = '100%';
+    container.style.height = '100%';
+    this._container = container;
+    this._screen = screen;
+
+    this._editor = new EditorContainer(
+      getByRole('region', { name: 'Web Stories Editor' }),
+      'editor'
+    );
+
+    // wait for the media gallery items to load, as many tests assume they're
+    // there
+    let mediaElements;
+    await waitFor(
+      () => {
+        mediaElements = this.querySelectorAll('[data-testid^=mediaElement]');
+        if (!mediaElements?.length) {
+          throw new Error(
+            `Not ready: only found ${mediaElements?.length} media elements`
+          );
+        }
+      },
+      { timeout: 5000 }
+    );
+
+    // Check to see if Roboto font is loaded.
+    await waitFor(async () => {
+      const weights = ['400', '700'];
+      const font = '12px Roboto';
+      const fonts = weights.map((weight) => `${weight} ${font}`);
+      await Promise.all(
+        fonts.map((thisFont) => {
+          document.fonts.load(thisFont, '');
+        })
+      );
+      fonts.forEach((thisFont) => {
+        if (!document.fonts.check(thisFont, '')) {
+          throw new Error('Not ready: Roboto font could not be loaded');
+        }
+      });
+    });
+
+    // @todo: find a stable way to wait for the story to fully render. Can be
+    // implemented via `waitFor`.
+  }
+
+  /**
+   * Calls a hook in the context of the whole editor.
+   *
+   * Similar to the `@testing-library/react`'s `renderHook()` method.
+   *
+   * @param {Function} func The hook function. E.g. `useStory`.
+   * @return {Promise<Object>} Resolves when the hook is rendered with the
+   * value of the hook.
+   */
+  renderHook(func) {
+    return this._layoutStub.renderHook(func);
+  }
+
+  /**
+   * Calls the specified callback and performs rendering actions on the
+   * whole editor.
+   *
+   * Similar to the `@testing-library/react`'s `act()` method.
+   *
+   * @param {Function} callback Callback.
+   * @return {Promise<Object>} Yields when the `act()` and all related
+   * editor rendering activity is complete. Resolves to the result of the
+   * callback.
+   */
+  act(callback) {
+    return actPromise(callback);
+  }
+
+  /**
+   * To be deprecated.
+   *
+   * @param {string} selector Selector.
+   * @return {Element|null} The found element or null.
+   */
+  querySelector(selector) {
+    return this._container.querySelector(selector);
+  }
+
+  /**
+   * To be deprecated?
+   *
+   * @param {string} selector Selector.
+   * @return {Array.<Element>} The potentially empty list of found elements.
+   */
+  querySelectorAll(selector) {
+    return this._container.querySelectorAll(selector);
+  }
+
+  /**
+   * @param {Element} element Element.
+   * @return {Promise} Yields when the element is displayed on the screen.
+   */
+  waitOnScreen(element) {
+    return new Promise((resolve) => {
+      const io = new IntersectionObserver((records) => {
+        records.forEach((record) => {
+          if (record.isIntersecting) {
+            resolve();
+            io.disconnect();
+          }
+        });
+      });
+      io.observe(element);
+    });
+  }
+
+  /**
+   * Makes a DOM snapshot of the current editor state. Karma must be run
+   * with the `--snapshots` option for the snapshotting to be enabled. When
+   * enabled, all snapshots are stored in the `/.test_artifacts/karma_snapshots`
+   * directory.
+   *
+   * @param {string} name Snapshot name.
+   * @return {Promise} Yields when the snapshot is completed.
+   */
+  snapshot(name) {
+    return karmaSnapshot(name);
+  }
+}
+
+/* eslint-disable jasmine/no-unsafe-spy */
+class APIProviderFixture {
+  constructor() {
+    this._pages = [];
+
+    // eslint-disable-next-line react/prop-types
+    const Comp = ({ children }) => {
+      const getStoryById = useCallback(
+        // @todo: put this to __db__/
+        () =>
+          asyncResponse({
+            title: { raw: '' },
+            status: 'draft',
+            author: 1,
+            slug: '',
+            date_gmt: '2020-05-06T22:32:37',
+            modified: '2020-05-06T22:32:37',
+            excerpt: { raw: '' },
+            link: 'http://stories.local/?post_type=web-story&p=1',
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
+            featured_media: 0,
+            featured_media_url: '',
+            publisher_logo_url:
+              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
+            permalink_template: 'http://stories3.local/stories/%pagename%/',
+            style_presets: { textStyles: [], colors: [] },
+            password: '',
+            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+          }),
+        []
+      );
+
+      const getDemoStoryById = useCallback(
+        // @todo: put this to __db__/
+        () =>
+          asyncResponse({
+            title: { raw: '' },
+            status: 'draft',
+            author: 1,
+            slug: '',
+            date_gmt: '2020-05-06T22:32:37',
+            modified: '2020-05-06T22:32:37',
+            excerpt: { raw: '' },
+            link: 'http://stories.local/?post_type=web-story&p=1',
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
+            featured_media: 0,
+            featured_media_url: '',
+            publisher_logo_url:
+              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
+            permalink_template: 'http://stories3.local/stories/%pagename%/',
+            style_presets: { textStyles: [], colors: [] },
+            password: '',
+            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+          }),
+        []
+      );
+
+      const autoSaveById = useCallback(
+        () => jasmine.createSpy('autoSaveById'),
+        []
+      );
+      const saveStoryById = useCallback(
+        () => jasmine.createSpy('saveStoryById'),
+        []
+      );
+
+      const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
+        const filterByMediaType = mediaType
+          ? ({ mime_type }) => mime_type.startsWith(mediaType)
+          : () => true;
+        const filterBySearchTerm = searchTerm
+          ? ({ alt_text }) => alt_text.includes(searchTerm)
+          : () => true;
+        // Generate 7*6=42 items, 3 pages
+        const clonedMedia = Array(6)
+          .fill(getMediaResponse)
+          .flat()
+          .map((media, i) => ({ ...media, id: i + 1 }));
+        return asyncResponse({
+          data: clonedMedia
+            .slice((pagingNum - 1) * MEDIA_PER_PAGE, pagingNum * MEDIA_PER_PAGE)
+            .filter(filterByMediaType)
+            .filter(filterBySearchTerm),
+          headers: { 'X-WP-TotalPages': 3 },
+        });
+      }, []);
+      const uploadMedia = useCallback(
+        () => jasmine.createSpy('uploadMedia'),
+        []
+      );
+      const updateMedia = useCallback(
+        () => jasmine.createSpy('updateMedia'),
+        []
+      );
+
+      const getLinkMetadata = useCallback(
+        () =>
+          asyncResponse({
+            url: 'https://example.com',
+            title: 'Example Site',
+            image: 'example.jpg',
+          }),
+        []
+      );
+
+      const getAllStatuses = useCallback(
+        () => jasmine.createSpy('getAllStatuses'),
+        []
+      );
+
+      const users = useMemo(
+        () => [
+          { id: 1, name: 'John Doe' },
+          { id: 2, name: 'Jane Doe' },
+        ],
+        []
+      );
+
+      const getAuthors = useCallback(() => asyncResponse(users), [users]);
+
+      const getCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
+      const updateCurrentUser = useCallback(
+        () =>
+          asyncResponse({
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: false,
+              web_stories_onboarding: {},
+              web_stories_media_optimization: true,
+            },
+          }),
+        []
+      );
+
+      const getStatusCheck = useCallback(
+        () =>
+          asyncResponse({
+            success: true,
+          }),
+        []
+      );
+
+      const getPageLayouts = useCallback(
+        () => asyncResponse(formattedTemplatesArray),
+        []
+      );
+
+      const state = {
+        actions: {
+          autoSaveById,
+          getStoryById,
+          getDemoStoryById,
+          getMedia,
+          getLinkMetadata,
+          saveStoryById,
+          getAllStatuses,
+          getAuthors,
+          uploadMedia,
+          updateMedia,
+          getStatusCheck,
+          getPageLayouts,
+          getCurrentUser,
+          updateCurrentUser,
+        },
+      };
+      return (
+        <APIContext.Provider value={state}>{children}</APIContext.Provider>
+      );
+    };
+    Comp.displayName = 'Fixture(APIProvider)';
+    this._comp = Comp;
+  }
+
+  /**
+   * @param {Array<Object>} pages Pages.
+   */
+  setPages(pages) {
+    this._pages = pages.map((page) => {
+      const result = createPage(page);
+      // Overwrite ID used in testing.
+      if (page.id !== undefined) {
+        result.id = page.id;
+      }
+      return result;
+    });
+  }
+
+  get Component() {
+    return this._comp;
+  }
+}
+/* eslint-enable jasmine/no-unsafe-spy */
+
+/**
+ * Wraps a fixture response in a promise. May additionally add `act()` calls as
+ * needed.
+ *
+ * @param {*} value The reponse value.
+ * @return {!Promise} The promise of the response.
+ */
+function asyncResponse(value) {
+  return Promise.resolve(value);
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@web-stories-wp/web-stories-block",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": [
+    "./src/index.js",
+    "*.css"
+  ],
+  "dependencies": {
+    "@web-stories-wp/dashboard": "*",
+    "@web-stories-wp/design-system": "*",
+    "@web-stories-wp/fonts": "*",
+    "@web-stories-wp/glider": "*",
+    "@web-stories-wp/preview": "*",
+    "@web-stories-wp/react": "*",
+    "@web-stories-wp/tracking": "*",
+    "@web-stories-wp/transform": "*",
+    "@web-stories-wp/units": "*",
+    "@wordpress/api-fetch": "^3.21.3",
+    "@wordpress/block-editor": "^5.2.6",
+    "@wordpress/blocks": "^7.0.6",
+    "@wordpress/components": "^13.0.0",
+    "@wordpress/compose": "^3.23.0",
+    "@wordpress/data": "^4.26.0",
+    "@wordpress/date": "^3.12.0",
+    "@wordpress/element": "^2.19.0",
+    "@wordpress/i18n": "^3.17.0",
+    "@wordpress/url": "^2.19.0",
+    "@wordpress/viewport": "^2.26.0",
+    "classnames": "^2.2.6",
+    "prop-types": "^15.7.2",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.2.3"
+  }
+}

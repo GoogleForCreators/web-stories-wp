@@ -1,0 +1,19 @@
+{
+  "name": "@web-stories-wp/karma-utils",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "@testing-library/react": "^11.2.3",
+    "karma": "^6.1.1",
+    "react": "^16.14.0"
+  }
+}

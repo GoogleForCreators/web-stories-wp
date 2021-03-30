@@ -27,23 +27,23 @@ import { useDirection } from 'storybook-rtl-addon';
 /**
  * Internal dependencies
  */
-import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
-import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/moveable/cropStyle';
-import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
+import theme, { GlobalStyle } from '../packages/story-editor/src/theme';
+import CropMoveableGlobalStyle from '../packages/moveable/src/cropStyle';
+import { GlobalStyle as ModalGlobalStyle } from '../packages/story-editor/src/components/modal';
 
 import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
-} from '../assets/src/dashboard/theme';
-import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
-import { ConfigProvider as DashboardConfigProvider } from '../assets/src/dashboard/app/config';
-import { ConfigProvider as EditorConfigProvider } from '../assets/src/edit-story/app/config';
-import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
+} from '../packages/dashboard/src/theme';
+import DashboardKeyboardOnlyOutline from '../packages/dashboard/src/utils/keyboardOnlyOutline';
+import { ConfigProvider as DashboardConfigProvider } from '../packages/dashboard/src/app/config';
+import { ConfigProvider as EditorConfigProvider } from '../packages/story-editor/src/app/config';
+import ApiProvider from '../packages/dashboard/src/app/api/apiProvider';
 
 import {
   theme as designSystemTheme,
   lightMode,
   ThemeGlobals,
-} from '../assets/src/design-system/theme';
+} from '../packages/design-system/src/theme';
 
 // @todo: Find better way to mock these.
 const wp = {};

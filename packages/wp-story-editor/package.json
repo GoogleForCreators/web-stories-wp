@@ -1,0 +1,28 @@
+{
+  "name": "@web-stories-wp/wp-story-editor",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": [
+    "./src/index.js",
+    "*.css"
+  ],
+  "dependencies": {
+    "@web-stories-wp/date": "*",
+    "@web-stories-wp/story-editor": "*",
+    "@web-stories-wp/tracking": "*",
+    "flagged": "^2.0.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-modal": "^3.12.1"
+  },
+  "devDependencies": {
+  }
+}

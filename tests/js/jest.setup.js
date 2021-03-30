@@ -23,6 +23,7 @@
 import 'jest-extended';
 import '@testing-library/jest-dom';
 import 'jest-axe/extend-expect';
+import { toBeDeepCloseTo, toMatchCloseTo } from 'jest-matcher-deep-close-to';
 import {
   toBeValidAMP,
   toBeValidAMPStoryElement,
@@ -33,4 +34,6 @@ expect.extend({
   toBeValidAMP,
   toBeValidAMPStoryElement,
   toBeValidAMPStoryPage,
+  toBeDeepCloseTo,
+  toMatchCloseTo,
 });

@@ -10,6 +10,9 @@
   },
   "main": "./src/index.js",
   "type": "module",
+  "sideEffects": [
+    "./src/index.js"
+  ],
   "dependencies": {
     "glider-js": "^1.7.3"
   },

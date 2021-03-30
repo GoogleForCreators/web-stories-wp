@@ -77,7 +77,6 @@ comment:
 
 # See https://docs.codecov.io/docs/ignoring-paths
 ignore:
-  - bin/commander.js
   - scoper.inc.php
   - web-stories.php
   - uninstall.php
@@ -85,9 +84,9 @@ ignore:
   - includes/compat
   - includes/polyfills
   - includes/templates
+  - packages/fonts/src/cli
+  - packages/karma-*
   - packages/migration/src/cli.js
-  - assets/src/karma-fixture
-  - packages/fonts/src/cli.js
   - includes/AMP/Integration/AMP_Story_Sanitizer.php
   - includes/REST_API/Stories_Settings_Controller.php
   - includes/REST_API/Stories_Users_Controller.php

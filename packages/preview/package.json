@@ -1,0 +1,27 @@
+{
+  "name": "@web-stories-wp/preview",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@web-stories-wp/animation": "*",
+    "@web-stories-wp/elements": "*",
+    "@web-stories-wp/masks": "*",
+    "@web-stories-wp/patterns": "*",
+    "@web-stories-wp/transform": "*",
+    "@web-stories-wp/units": "*",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+  }
+}
