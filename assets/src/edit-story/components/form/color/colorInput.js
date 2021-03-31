@@ -33,13 +33,14 @@ import {
   HexInput,
   Text,
   THEME_CONSTANTS,
-  Tooltip as DefaultTooltip,
   Swatch,
   getOpaquePattern,
+  PLACEMENT,
 } from '../../../../design-system';
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
+import { Tooltip as DefaultTooltip } from '../../tooltip';
 
 const Preview = styled.div`
   height: 36px;
@@ -160,8 +161,9 @@ function ColorInput({
         <Preview ref={previewRef}>
           <Input
             aria-label={label}
-            value={value}
+            value={isMixed ? null : value}
             onChange={onChange}
+            isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
           <ColorPreview>
@@ -194,19 +196,22 @@ function ColorInput({
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}
-        placement={'left-start'}
+        placement={PLACEMENT.LEFT_START}
         spacing={spacing}
-      >
-        <ColorPicker
-          color={isMixed ? null : value}
-          onChange={onChange}
-          hasGradient={hasGradient}
-          hasOpacity={hasOpacity}
-          onClose={onClose}
-          renderFooter={colorPickerActions}
-          changedStyle={changedStyle}
-        />
-      </Popup>
+        renderContents={({ propagateDimensionChange }) => (
+          <ColorPicker
+            color={isMixed ? null : value}
+            onChange={onChange}
+            hasGradient={hasGradient}
+            hasOpacity={hasOpacity}
+            onClose={onClose}
+            renderFooter={(props) =>
+              colorPickerActions?.(props, null, propagateDimensionChange)
+            }
+            changedStyle={changedStyle}
+          />
+        )}
+      />
     </>
   );
 }

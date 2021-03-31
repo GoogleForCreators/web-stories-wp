@@ -18,6 +18,7 @@ export const BUTTON_TYPES = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
   TERTIARY: 'tertiary',
+  QUATERNARY: 'quaternary',
   PLAIN: 'plain',
 };
 
@@ -31,7 +32,8 @@ export const BUTTON_VARIANTS = {
   RECTANGLE: 'rectangle',
   SQUARE: 'square',
   ICON: 'icon',
+  LINK: 'link',
 };
 
 export const BUTTON_SIZE = 32;
-export const BUTTON_TRANSITION_TIMING = '0.6s ease 0s';
+export const BUTTON_TRANSITION_TIMING = '0.3s ease 0s';

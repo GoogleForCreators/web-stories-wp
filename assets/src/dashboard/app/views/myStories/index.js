@@ -26,7 +26,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
-import { DashboardSnackbar, PreviewStoryView } from '..';
+import { PreviewStoryView } from '..';
 import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
@@ -75,8 +75,17 @@ function MyStories() {
     })
   );
 
-  const { filter, page, activePreview, search, sort, view } = useStoryView({
+  const {
+    filter,
+    page,
+    activePreview,
+    search,
+    sort,
+    view,
+    showStoriesWhileLoading,
+  } = useStoryView({
     filters: STORY_STATUSES,
+    isLoading,
     totalPages,
   });
 
@@ -132,6 +141,7 @@ function MyStories() {
   return (
     <Layout.Provider>
       <Header
+        isLoading={isLoading && !orderedStories.length}
         filter={filter}
         search={search}
         sort={sort}
@@ -158,10 +168,10 @@ function MyStories() {
         }}
         view={view}
         initialFocusStoryId={lastActiveStoryId}
+        showStoriesWhileLoading={showStoriesWhileLoading}
       />
 
       <Layout.Fixed>
-        <DashboardSnackbar />
         <ScrollToTop />
       </Layout.Fixed>
     </Layout.Provider>

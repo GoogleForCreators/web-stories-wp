@@ -95,6 +95,8 @@ const SET = [
     previewOffsetY: 0,
     textSetWidth: 333,
     textSetHeight: 304,
+    normalizedOffsetX: 0,
+    normalizedOffsetY: 0,
   },
   {
     opacity: 100,
@@ -174,6 +176,8 @@ const SET = [
     previewOffsetY: 30,
     textSetWidth: 333,
     textSetHeight: 304,
+    normalizedOffsetX: 0,
+    normalizedOffsetY: 0,
   },
 ];
 

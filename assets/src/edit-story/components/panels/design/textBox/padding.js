@@ -139,8 +139,7 @@ function PaddingControls({
     ? {
         suffix: __('Padding', 'web-stories'),
         'aria-label': __('Padding', 'web-stories'),
-        onChange: (evt) => {
-          const value = Number(evt?.target?.value);
+        onChange: (evt, value) => {
           handleChange((el) => {
             return {
               horizontal: value + getHiddenPadding(el, 'horizontal'),
@@ -153,8 +152,7 @@ function PaddingControls({
     : {
         suffix: __('Horizontal padding', 'web-stories'),
         'aria-label': __('Horizontal padding', 'web-stories'),
-        onChange: (evt) => {
-          const value = Number(evt?.target?.value);
+        onChange: (evt, value) => {
           handleChange((el) => ({
             horizontal: value + getHiddenPadding(el, 'horizontal'),
           }));
@@ -213,13 +211,10 @@ function PaddingControls({
             }
             suffix={__('Vertical padding', 'web-stories')}
             value={displayedPadding.vertical}
-            onChange={(evt) => {
-              const value = evt?.target?.value;
-              if (value) {
-                handleChange((el) => ({
-                  vertical: Number(value) + getHiddenPadding(el, 'vertical'),
-                }));
-              }
+            onChange={(evt, value) => {
+              handleChange((el) => ({
+                vertical: Number(value) + getHiddenPadding(el, 'vertical'),
+              }));
             }}
             aria-label={__('Vertical padding', 'web-stories')}
           />

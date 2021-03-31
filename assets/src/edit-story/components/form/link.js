@@ -86,7 +86,7 @@ LinkInput.propTypes = {
   onBlur: PropTypes.func,
   description: PropTypes.string,
   hint: PropTypes.string,
-  hasError: PropTypes.boolean,
+  hasError: PropTypes.bool,
 };
 
 export default LinkInput;

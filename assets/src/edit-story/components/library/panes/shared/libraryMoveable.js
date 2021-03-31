@@ -50,6 +50,7 @@ const TargetBox = styled.div`
     `};
   top: 0;
   z-index: 1;
+  cursor: pointer;
 `;
 
 function LibraryMoveable({
@@ -75,8 +76,9 @@ function LibraryMoveable({
   const overlayRef = useRef(null);
   const moveable = useRef(null);
 
-  const { pageSize } = useLayout(({ state }) => ({
-    pageSize: state.canvasPageSize,
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
   }));
 
   const insertElement = useInsertElement();
@@ -290,10 +292,10 @@ function LibraryMoveable({
             ref={moveable}
             className="default-moveable hide-handles"
             target={targetBoxRef.current}
-            edge={true}
-            draggable={true}
+            edge
+            draggable
             origin={false}
-            pinchable={true}
+            pinchable
             onDragStart={onDragStart}
             onDrag={onDrag}
             onDragEnd={onDragEnd}

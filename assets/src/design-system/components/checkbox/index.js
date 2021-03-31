@@ -66,6 +66,7 @@ const CheckboxContainer = styled.div(
       margin: 0;
       padding: 0;
       opacity: 0;
+      cursor: pointer;
 
       :disabled {
         ~ ${Border} {

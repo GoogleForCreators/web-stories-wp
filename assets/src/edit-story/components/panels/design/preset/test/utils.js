@@ -27,6 +27,7 @@ import {
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import objectWithout from '../../../../../utils/objectWithout';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
+import { PRESET_TYPES } from '../constants';
 
 describe('Panels/StylePreset/utils', () => {
   const TEST_COLOR = {
@@ -152,7 +153,7 @@ describe('Panels/StylePreset/utils', () => {
     ).not.toBeDefined();
   });
 
-  it('should get correct and unique text style presets from selected elements', () => {
+  it('should get correct text style presets from selected elements', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       font: {
@@ -171,13 +172,6 @@ describe('Panels/StylePreset/utils', () => {
           horizontal: 0,
         },
         content: '<span style="color: rgb(1,1,1)">Content</span>',
-      },
-      {
-        type: 'text',
-        x: 30,
-        content:
-          '<span style="font-weight: 700; font-style: italic; color: rgb(2,2,2)">Content</span>',
-        ...objectWithout(stylePreset, ['color']),
       },
       {
         type: 'text',
@@ -222,7 +216,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -244,7 +242,11 @@ describe('Panels/StylePreset/utils', () => {
       colors: [],
       textStyles: [],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'color');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.COLOR
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -282,7 +284,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -313,7 +319,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -351,7 +361,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -389,7 +403,7 @@ describe('Panels/StylePreset/utils', () => {
       colors: [],
       textStyles: [],
     };
-    const presets = getTextPresets(elements, colorPresets, 'color');
+    const presets = getTextPresets(elements, colorPresets, PRESET_TYPES.COLOR);
     expect(presets).toStrictEqual(expected);
   });
 
@@ -410,28 +424,6 @@ describe('Panels/StylePreset/utils', () => {
     };
     const expected = {
       colors: [TEST_COLOR, TEST_COLOR_2],
-    };
-    const presets = getShapePresets(elements, globalStoryStyles);
-    expect(presets).toStrictEqual(expected);
-  });
-
-  it('should get duplicate preset only once from shape', () => {
-    const elements = [
-      {
-        type: 'shape',
-        backgroundColor: TEST_COLOR,
-      },
-      {
-        type: 'shape',
-        backgroundColor: TEST_COLOR,
-      },
-    ];
-    const globalStoryStyles = {
-      textStyles: [],
-      colors: [],
-    };
-    const expected = {
-      colors: [TEST_COLOR],
     };
     const presets = getShapePresets(elements, globalStoryStyles);
     expect(presets).toStrictEqual(expected);

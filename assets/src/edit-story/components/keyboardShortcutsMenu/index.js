@@ -31,13 +31,13 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-  Tooltip,
   TOOLTIP_PLACEMENT,
   useGlobalKeyDownEffect,
   useFocusOut,
 } from '../../../design-system';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import DirectionAware from '../directionAware';
+import { Tooltip } from '../tooltip';
 import { Popup } from './popup';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';
@@ -86,7 +86,7 @@ function KeyboardShortcutsMenu() {
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
             aria-label={__('Keyboard Shortcuts', 'web-stories')}
-            aria-haspopup={true}
+            aria-haspopup
             aria-expanded={isOpen}
             onClick={toggleMenu}
           >

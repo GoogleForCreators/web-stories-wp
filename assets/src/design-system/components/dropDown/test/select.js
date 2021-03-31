@@ -47,7 +47,7 @@ describe('DropDown <DropDownSelect />', () => {
     const { getByText } = renderWithProviders(
       <DropDownSelect
         activeItemLabel={'chosen option'}
-        disabled={true}
+        disabled
         dropDownLabel={'my label'}
         onSelectClick={onClickMock}
         placeholder={'my placeholder'}

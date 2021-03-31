@@ -57,7 +57,9 @@ describe('Panels/Captions', () => {
 
   it('should render <Captions /> panel', () => {
     const { getByRole } = renderCaptions([defaultElement]);
-    const captionRegion = getByRole('region', { name: /Captions/i });
+    const captionRegion = getByRole('region', {
+      name: /Caption and subtitles/i,
+    });
     expect(captionRegion).toBeInTheDocument();
   });
 

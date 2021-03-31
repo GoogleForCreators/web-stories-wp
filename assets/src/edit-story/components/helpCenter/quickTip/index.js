@@ -73,8 +73,14 @@ const DoneContainer = styled.div`
   ${themeHelpers.centerContent}
   height: 180px;
   margin-bottom: ${GUTTER_WIDTH}px;
+  color: #f4f2ef;
+
   svg {
     display: block;
+
+    path {
+      color: #4285f4;
+    }
   }
 `;
 

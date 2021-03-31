@@ -32,8 +32,6 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Tooltip,
-  PLACEMENT,
 } from '../../../../../design-system';
 import { useConfig } from '../../../../app';
 import getBoundRect, {
@@ -41,6 +39,7 @@ import getBoundRect, {
 } from '../../../../utils/getBoundRect';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../../constants';
 import { Panel } from '../../panel';
+import { Tooltip } from '../../../tooltip';
 import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`
@@ -199,10 +198,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       ariaLabel={__('Alignment', 'web-stories')}
     >
       <ElementRow ref={ref}>
-        <Tooltip
-          title={__('Distribute horizontally', 'web-stories')}
-          placement={PLACEMENT.BOTTOM}
-        >
+        <Tooltip title={__('Distribute horizontally', 'web-stories')}>
           <AlignmentButton
             disabled={!isDistributionEnabled}
             onClick={() => handleHorizontalDistribution(boundRect, pushUpdate)}

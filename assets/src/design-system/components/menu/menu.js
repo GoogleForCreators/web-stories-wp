@@ -46,6 +46,7 @@ import { EmptyList, ListGroupings } from './list';
  * @param {string} props.activeValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
  * @param {string} props.menuAriaLabel Specific label to use as menu's aria label for screen readers.
  * @param {string} props.parentId if in a dropDownMenu, this is the id associated with the button that controls when the menu is visible.
+ * @param {boolean} props.isAbsolute If true, menu will be placed absolutely rather than statically.
  *
  */
 
@@ -65,6 +66,7 @@ const Menu = ({
   activeValue,
   menuAriaLabel,
   parentId,
+  isAbsolute = false,
 }) => {
   const listRef = useRef();
   const optionsRef = useRef([]);
@@ -117,6 +119,7 @@ const Menu = ({
       aria-label={menuAriaLabel}
       aria-labelledby={parentId}
       aria-expanded="true"
+      isAbsolute={isAbsolute}
     >
       {!options || options.length === 0 ? (
         <EmptyList emptyText={emptyText} />
@@ -152,6 +155,7 @@ Menu.propTypes = {
   renderItem: PropTypes.object,
   activeValue: DROP_DOWN_VALUE_TYPE,
   parentId: PropTypes.string.isRequired,
+  isAbsolute: PropTypes.bool,
 };
 
 export { Menu };

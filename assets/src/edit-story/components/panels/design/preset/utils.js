@@ -32,6 +32,7 @@ import {
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
 import { getHTMLInfo } from '../../../richText/htmlManipulation';
+import { PRESET_TYPES } from './constants';
 
 const TEXT_PRESET_STYLES = [
   'backgroundColor',
@@ -135,14 +136,9 @@ function getTextInlineStyles(content) {
   };
 }
 
-function getUniquePresets(presets) {
-  const list = presets.map((preset) => JSON.stringify(preset));
-  return Array.from(new Set(list)).map((preset) => JSON.parse(preset));
-}
-
 export function getTextPresets(elements, storyStyles, type) {
-  const allColors =
-    'style' === type
+  const colors =
+    PRESET_TYPES.STYLE === type
       ? []
       : elements
           .map(({ content }) => getHTMLInfo(content).color)
@@ -151,8 +147,8 @@ export function getTextPresets(elements, storyStyles, type) {
             (color) => color && !findMatchingColor(color, storyStyles, true)
           );
 
-  const allStyles =
-    'color' === type
+  const textStyles =
+    PRESET_TYPES.COLOR === type
       ? []
       : elements
           .map((text) => {
@@ -163,8 +159,8 @@ export function getTextPresets(elements, storyStyles, type) {
           })
           .filter((preset) => !findMatchingStylePreset(preset, storyStyles));
   return {
-    colors: getUniquePresets(allColors),
-    textStyles: getUniquePresets(allStyles),
+    colors,
+    textStyles,
   };
 }
 
@@ -175,7 +171,7 @@ export function getShapePresets(elements, storyStyles) {
     })
     .filter((color) => color && !findMatchingColor(color, storyStyles, false));
   return {
-    colors: getUniquePresets(colors),
+    colors,
   };
 }
 

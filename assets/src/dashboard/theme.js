@@ -24,15 +24,8 @@ import { useContext } from 'react';
  * Internal dependencies
  */
 import { themeHelpers } from '../design-system';
-import { DROPDOWN_TYPES } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
-	*,
-	*::after,
-	*::before {
-		box-sizing: border-box;
-    }
-    
   h1, h2, h3, h4, h5, h6, p, a {
     margin: 0;
   }
@@ -104,29 +97,6 @@ const theme = {
   button: {
     borderRadius: 100,
   },
-  dropdown: {
-    [DROPDOWN_TYPES.PANEL]: {
-      background: 'transparent',
-      activeBackground: colors.gray25,
-      borderRadius: 40,
-      border: borders.gray50,
-      arrowColor: colors.bluePrimary,
-    },
-    [DROPDOWN_TYPES.COLOR_PANEL]: {
-      background: 'transparent',
-      activeBackground: colors.gray25,
-      borderRadius: 40,
-      border: borders.gray50,
-      arrowColor: colors.bluePrimary,
-    },
-    [DROPDOWN_TYPES.MENU]: {
-      background: 'transparent',
-      activeBackground: 'transparent',
-      borderRadius: 4,
-      border: borders.transparent,
-      arrowColor: colors.gray300,
-    },
-  },
   leftRail: {
     logoMargin: '75px auto 20px',
   },
@@ -164,10 +134,6 @@ const theme = {
   cardItem: {
     previewOverlay:
       'linear-gradient(360deg, rgba(26, 29, 31, 0.8) 11.58%, rgba(26, 29, 31, 0) 124.43%)',
-  },
-  popoverPanel: {
-    desktopWidth: 595,
-    tabletWidth: 395,
   },
   typography: {
     family: { ...themeFonts },
@@ -219,11 +185,6 @@ const theme = {
         letterSpacing: 0.01,
       },
     },
-  },
-  detailViewContentGutter: {
-    desktop: 80,
-    tablet: 40,
-    min: 10,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',

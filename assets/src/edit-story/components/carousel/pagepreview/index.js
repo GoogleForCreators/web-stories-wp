@@ -20,7 +20,6 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 /**
  * Internal dependencies
@@ -92,7 +91,7 @@ function PagePreview({ page, ...props }) {
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
                 key={id}
-                previewMode={true}
+                previewMode
                 element={{ id, ...rest }}
                 page={page}
               />

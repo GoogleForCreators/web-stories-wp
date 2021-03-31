@@ -89,6 +89,7 @@ const CropVideo = styled.video`
   max-height: initial;
 `;
 
+//eslint-disable-next-line complexity
 function MediaEdit({ element, box }) {
   const {
     id,
@@ -229,14 +230,17 @@ function MediaEdit({ element, box }) {
       {isVideo && (
         //eslint-disable-next-line styled-components-a11y/media-has-caption -- Faded video doesn't need captions.
         <FadedVideo {...fadedMediaProps}>
-          <source src={resource.src} type={resource.mimeType} />
+          {resource.src && (
+            <source src={resource.src} type={resource.mimeType} />
+          )}
         </FadedVideo>
       )}
       <CropBox ref={setCropBox} {...borderProps}>
-        <WithMask element={element} fill={true} applyFlip={false} box={box}>
+        <WithMask element={element} fill applyFlip={false} box={box}>
           {/* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */}
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
+            /*eslint-disable-next-line styled-components-a11y/media-has-caption -- Tracks might not exist. Also, unwanted in edit mode. */
             <CropVideo {...cropMediaProps}>
               <source src={resource.src} type={resource.mimeType} />
             </CropVideo>

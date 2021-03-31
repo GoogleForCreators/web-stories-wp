@@ -48,7 +48,6 @@ const CloseButton = styled(Button)`
 `;
 
 const Container = styled.div`
-  box-sizing: border-box;
   display: grid;
   width: 100%;
   min-height: 60px;
@@ -120,7 +119,7 @@ export const Banner = forwardRef(
           aria-label={closeButtonLabel}
           onClick={onClose}
         >
-          <Cross aria-hidden={true} />
+          <Cross aria-hidden />
         </CloseButton>
         <Content>{children}</Content>
       </Container>

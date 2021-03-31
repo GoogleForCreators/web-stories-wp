@@ -41,6 +41,14 @@ export const Link = styled.a`
     :hover {
       color: ${theme.colors.fg.linkHover};
     }
+    :focus {
+      /* Override WordPress's common css */
+      color: ${theme.colors.fg.linkNormal} !important;
+    }
+
+    :focus {
+      color: ${theme.colors.fg.linkNormal};
+    }
 
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
   `};

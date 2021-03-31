@@ -46,7 +46,6 @@ module.exports = function (api) {
     ],
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
-      '@babel/plugin-transform-react-jsx',
       'babel-plugin-styled-components',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-private-methods', { loose: true }],

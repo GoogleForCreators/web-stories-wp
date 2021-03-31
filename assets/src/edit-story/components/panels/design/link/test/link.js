@@ -23,10 +23,11 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import ConfigContext from '../../../../../app/config/context';
-import LinkPanel from '../link';
 import StoryContext from '../../../../../app/story/context';
+import CanvasContext from '../../../../../app/canvas/context';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
+import LinkPanel from '../link';
 
 jest.mock('../../../../../elements');
 
@@ -34,6 +35,23 @@ function renderLinkPanel(selectedElements) {
   const configValue = {
     capabilities: {
       hasUploadMediaAction: true,
+    },
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
+  };
+
+  const canvasContext = {
+    state: {
+      displayLinkGuidelines: true,
+    },
+    actions: {
+      clearEditing: jest.fn(),
+      setDisplayLinkGuidelines: jest.fn(),
     },
   };
 
@@ -46,7 +64,9 @@ function renderLinkPanel(selectedElements) {
   const wrapper = (params) => (
     <ConfigContext.Provider value={configValue}>
       <StoryContext.Provider value={storyContextValue}>
-        {params.children}
+        <CanvasContext.Provider value={canvasContext}>
+          {params.children}
+        </CanvasContext.Provider>
       </StoryContext.Provider>
     </ConfigContext.Provider>
   );

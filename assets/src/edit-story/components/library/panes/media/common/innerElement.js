@@ -208,7 +208,7 @@ function InnerElement({
       [ContentType.VIDEO, ContentType.GIF].includes(type) &&
       !mediaElement.current?.paused
     ) {
-      mediaElement.current.pause();
+      mediaElement.current?.pause();
     }
     if (!draggingResource) {
       // Drop-targets handling.

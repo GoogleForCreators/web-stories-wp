@@ -103,7 +103,6 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
-		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 	}
 
 	/**
@@ -209,7 +208,7 @@ class Dashboard {
 		$preload_paths = [
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/users/me/',
-			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture%2Cprivate&_web_stories_envelope=true',
+			sprintf( '/web-stories/v1/web-story/?_embed=%s&context=edit&order=desc&orderby=modified&page=1&per_page=%d&status=%s&_web_stories_envelope=true', urlencode( 'wp:lock,wp:lockuser,author' ), 24, urlencode( 'publish,draft,future,private' ) ),
 		];
 
 		/**
@@ -234,19 +233,6 @@ class Dashboard {
 			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 			'after'
 		);
-	}
-
-	/**
-	 * Find status of site kit plugin in site.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return boolean
-	 */
-	public function is_site_kit_plugin_installed() {
-		$all_plugins = get_plugins();
-
-		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
 	}
 
 	/**
@@ -350,6 +336,7 @@ class Dashboard {
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
 				'isRTL'                 => is_rtl(),
+				'userId'                => get_current_user_id(),
 				'locale'                => ( new Locale() )->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'editStoryURL'          => $edit_story_url,

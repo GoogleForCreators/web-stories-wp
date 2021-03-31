@@ -22,15 +22,16 @@ import {
   COLOR_PRESETS_PER_ROW,
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
+import { PRESET_TYPES } from './constants';
 
 function useKeyboardNavigation({
   activeIndex,
   setActiveIndex,
   groupRef,
-  type = 'color',
+  type = PRESET_TYPES.COLOR,
 }) {
   const presetsPerRow =
-    'color' === type ? COLOR_PRESETS_PER_ROW : STYLE_PRESETS_PER_ROW;
+    PRESET_TYPES.COLOR === type ? COLOR_PRESETS_PER_ROW : STYLE_PRESETS_PER_ROW;
   const getIndexDiff = (key, rowLength) => {
     switch (key) {
       case 'ArrowUp':

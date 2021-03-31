@@ -18,6 +18,7 @@
  * External dependencies
  */
 const path = require('path');
+const glob = require('glob');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -151,9 +152,6 @@ const sharedConfig = {
   },
   plugins: [
     process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
-    new DependencyExtractionWebpackPlugin({
-      requestToExternal,
-    }),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
@@ -167,6 +165,9 @@ const sharedConfig = {
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
+    splitChunks: {
+      automaticNameDelimiter: '-',
+    },
     minimizer: [
       new TerserPlugin({
         parallel: true,
@@ -225,6 +226,9 @@ const editorAndDashboard = {
   },
   plugins: [
     ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      requestToExternal,
+    }),
     new WebpackBar({
       name: 'Editor & Dashboard',
     }),
@@ -244,47 +248,67 @@ const editorAndDashboard = {
     }),
   ],
   optimization: {
-    ...sharedConfig.optimization,
     splitChunks: {
       chunks: 'all',
+      automaticNameDelimiter: '-',
     },
   },
 };
 
-const storyEmbedBlock = {
+const webStoriesScripts = {
   ...sharedConfig,
   entry: {
-    'web-stories-embed-block': './assets/src/story-embed-block/index.js',
+    lightbox: './packages/stories-lightbox/src/index.js',
+    'carousel-view': './packages/stories-carousel/src/index.js',
   },
   plugins: [
-    process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
+    ...sharedConfig.plugins,
     new DependencyExtractionWebpackPlugin({
       injectPolyfill: true,
     }),
-    new MiniCssExtractPlugin({
-      filename: '../css/[name].css',
+    new WebpackBar({
+      name: 'WP Frontend Scripts',
+      color: '#EEE070',
     }),
-    new RtlCssPlugin({
-      filename: `../css/[name]-rtl.css`,
+  ].filter(Boolean),
+};
+
+// Collect all core themes style sheet paths.
+const coreThemesBlockStylesPaths = glob.sync(
+  './assets/src/web-stories-block/css/core-themes/*.css'
+);
+
+// Build entry object for the Core Themes Styles.
+const coreThemeBlockStyles = coreThemesBlockStylesPaths.reduce((acc, curr) => {
+  const fileName = path.parse(curr).name;
+
+  return {
+    ...acc,
+    [`web-stories-theme-style-${fileName}`]: curr,
+  };
+}, {});
+
+const webStoriesBlock = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-block': [
+      './assets/src/web-stories-block/index.js',
+      './assets/src/web-stories-block/block/edit.css',
+    ],
+    'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
+    'web-stories-embed': './assets/src/web-stories-block/css/embed.css',
+    ...coreThemeBlockStyles,
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      injectPolyfill: true,
     }),
     new WebpackBar({
       name: 'Web Stories Block',
       color: '#357BB5',
     }),
   ].filter(Boolean),
-  optimization: {
-    ...sharedConfig.optimization,
-    splitChunks: {
-      cacheGroups: {
-        stories: {
-          name: 'web-stories-embed-block',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
-  },
 };
 
 const activationNotice = {
@@ -295,24 +319,51 @@ const activationNotice = {
   },
   plugins: [
     ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      requestToExternal,
+    }),
     new WebpackBar({
       name: 'Activation Notice',
       color: '#fcd8ba',
     }),
-  ],
-  optimization: {
-    ...sharedConfig.optimization,
-    splitChunks: {
-      cacheGroups: {
-        stories: {
-          name: 'activation-notice',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
-  },
+  ].filter(Boolean),
 };
 
-module.exports = [editorAndDashboard, storyEmbedBlock, activationNotice];
+const widgetScript = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-widget': './packages/widget/src/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({}),
+    new WebpackBar({
+      name: 'WP Widget Script',
+      color: '#F757A5',
+    }),
+  ].filter(Boolean),
+};
+
+const storiesMCEButton = {
+  ...sharedConfig,
+  entry: {
+    'tinymce-button': './packages/tinymce-button/src/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({}),
+    new WebpackBar({
+      name: 'WP TinyMCE Button',
+      color: '#4deaa2',
+    }),
+  ].filter(Boolean),
+};
+
+module.exports = [
+  editorAndDashboard,
+  activationNotice,
+  webStoriesBlock,
+  webStoriesScripts,
+  widgetScript,
+  storiesMCEButton,
+];

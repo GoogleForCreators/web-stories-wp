@@ -25,13 +25,14 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { useBatchingCallback } from '../../../../design-system';
-import { useStory, useCanvas } from '../../../app';
+import { useStory, useCanvas, useLayout } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
 import useSnapping from '../utils/useSnapping';
+import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
 import useWindowResizeHandler from '../useWindowResizeHandler';
 import useDrag from './useDrag';
 import useResize from './useResize';
@@ -56,6 +57,13 @@ function SingleSelectionMoveable({
   const {
     actions: { pushTransform },
   } = useTransform();
+  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
+    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
+      zoomSetting,
+      scrollLeft,
+      scrollTop,
+    })
+  );
 
   const actionsEnabled = !selectedElement.isBackground;
 
@@ -70,6 +78,17 @@ function SingleSelectionMoveable({
   useEffect(() => {
     latestEvent.current = pushEvent;
   }, [pushEvent]);
+
+  // If scroll ever updates, update rect now
+  useEffect(() => {
+    if (!moveable.current) {
+      return;
+    }
+    moveable.current.updateRect();
+  }, [scrollLeft, scrollTop]);
+
+  // If zoom ever updates, update selection rect
+  useUpdateSelectionRectangle(moveable, [zoomSetting]);
 
   useEffect(() => {
     if (!moveable.current) {
@@ -206,7 +225,7 @@ function SingleSelectionMoveable({
       zIndex={0}
       ref={useCombinedRefs(moveable, editMoveableRef)}
       target={targetEl}
-      edge={true}
+      edge
       draggable={actionsEnabled}
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
@@ -215,7 +234,7 @@ function SingleSelectionMoveable({
       {...rotateProps}
       {...snapProps}
       origin={false}
-      pinchable={true}
+      pinchable
     />
   );
 }

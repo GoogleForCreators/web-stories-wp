@@ -21,14 +21,19 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackError } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
+import {
+  Text,
+  THEME_CONSTANTS,
+  useSnackbar,
+} from '../../../../../../design-system';
 import { useAPI } from '../../../../../app/api';
-import { Plain } from '../../../../button';
-import Dialog from '../../../../dialog';
-import { useSnackbar } from '../../../../../app/snackbar';
 import { useLocalMedia } from '../../../../../app/media';
+import { useStory } from '../../../../../app/story';
+import Dialog from '../../../../dialog';
 
 /**
  * Display a confirmation dialog for when a user wants to delete a media element.
@@ -47,19 +52,31 @@ function DeleteDialog({ mediaId, type, onClose }) {
   const { deleteMediaElement } = useLocalMedia((state) => ({
     deleteMediaElement: state.actions.deleteMediaElement,
   }));
+  const { deleteElementsByResourceId } = useStory((state) => ({
+    deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
+  }));
 
   const onDelete = useCallback(async () => {
     onClose();
     try {
       await deleteMedia(mediaId);
       deleteMediaElement({ id: mediaId });
+      deleteElementsByResourceId({ id: mediaId });
     } catch (err) {
       trackError('local_media_deletion', err.message);
       showSnackbar({
         message: __('Failed to delete media item.', 'web-stories'),
+        dismissable: true,
       });
     }
-  }, [deleteMedia, deleteMediaElement, mediaId, onClose, showSnackbar]);
+  }, [
+    deleteMedia,
+    deleteMediaElement,
+    deleteElementsByResourceId,
+    mediaId,
+    onClose,
+    showSnackbar,
+  ]);
 
   const imageDialogTitle = __('Delete Image?', 'web-stories');
   const videoDialogTitle = __('Delete Video?', 'web-stories');
@@ -77,19 +94,20 @@ function DeleteDialog({ mediaId, type, onClose }) {
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <Dialog
-      open={true}
+      open
       onClose={onClose}
       title={type === 'image' ? imageDialogTitle : videoDialogTitle}
-      actions={
-        <>
-          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={onDelete}>{__('Delete', 'web-stories')}</Plain>
-        </>
-      }
+      secondaryText={__('Cancel', 'web-stories')}
+      onPrimary={onDelete}
+      primaryText={__('Delete', 'web-stories')}
       maxWidth={512}
     >
-      {type === 'image' ? imageDialogDescription : videoDialogDescription}
-      <strong>{__('This action can not be undone.', 'web-stories')}</strong>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {type === 'image' ? imageDialogDescription : videoDialogDescription}
+      </Text>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} isBold>
+        {__('This action can not be undone.', 'web-stories')}
+      </Text>
     </Dialog>
   );
 }

@@ -80,10 +80,8 @@ describe('Canvas keys integration', () => {
   });
 
   it('should delete element from the design panel', async () => {
-    const firstToggle = fixture.querySelector(
-      '#inspector-tab-design input[type="checkbox"]'
-    );
-    await fixture.events.focus(firstToggle);
+    const bold = fixture.editor.inspector.designPanel.textStyle.bold.button;
+    await fixture.events.focus(bold);
     expect(await getSelection()).toEqual([element1.id]);
 
     await fixture.events.keyboard.press('Del');

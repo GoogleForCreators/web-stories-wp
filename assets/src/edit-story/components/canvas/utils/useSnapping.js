@@ -25,7 +25,7 @@ import { useCallback, useEffect } from 'react';
 import { FULLBLEED_RATIO } from '../../../constants';
 import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
-import { useCanvas } from '../../../app';
+import { useCanvas, useLayout, useUserOnboarding } from '../../../app';
 
 function useSnapping({
   isDragging,
@@ -33,31 +33,24 @@ function useSnapping({
   otherNodes,
   snappingOffsetX = null,
 }) {
-  const {
-    canvasWidth,
-    canvasHeight,
-    pageContainer,
-    canvasContainer,
-    designSpaceGuideline,
-  } = useCanvas(
-    ({
-      state: {
-        pageSize: { width: canvasWidth, height: canvasHeight },
-        pageContainer,
-        canvasContainer,
-        designSpaceGuideline,
-      },
-    }) => ({
-      canvasWidth,
-      canvasHeight,
+  const { pageContainer, canvasContainer, designSpaceGuideline } = useCanvas(
+    ({ state: { pageContainer, canvasContainer, designSpaceGuideline } }) => ({
       pageContainer,
       canvasContainer,
       designSpaceGuideline,
     })
   );
+  const { pageWidth, pageHeight } = useLayout(
+    ({ state: { pageWidth, pageHeight } }) => ({
+      pageWidth,
+      pageHeight,
+    })
+  );
   const { activeDropTargetId } = useDropTargets((state) => ({
     activeDropTargetId: state.state.activeDropTargetId,
   }));
+
+  const triggerOnboarding = useUserOnboarding(({ SAFE_ZONE }) => SAFE_ZONE);
 
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
@@ -67,10 +60,12 @@ function useSnapping({
     (visible) => {
       if (designSpaceGuideline) {
         designSpaceGuideline.style.visibility = visible ? 'visible' : 'hidden';
+        visible && triggerOnboarding();
       }
     },
-    [designSpaceGuideline]
+    [designSpaceGuideline, triggerOnboarding]
   );
+
   const handleSnap = useCallback(
     ({ elements }) =>
       // Show design space if we're snapping to any of its edges
@@ -106,18 +101,18 @@ function useSnapping({
   const offsetY = Math.floor(pageRect.y - canvasRect.y);
 
   const verticalGuidelines = canSnap
-    ? [offsetX, offsetX + canvasWidth / 2, offsetX + canvasWidth]
+    ? [offsetX, offsetX + pageWidth / 2, offsetX + pageWidth]
     : [];
 
-  const fullBleedOffset = (canvasWidth / FULLBLEED_RATIO - canvasHeight) / 2;
+  const fullBleedOffset = (pageWidth / FULLBLEED_RATIO - pageHeight) / 2;
 
   const horizontalGuidelines = canSnap
     ? [
         offsetY - fullBleedOffset,
         offsetY,
-        offsetY + canvasHeight / 2,
-        offsetY + canvasHeight,
-        offsetY + canvasHeight + fullBleedOffset,
+        offsetY + pageHeight / 2,
+        offsetY + pageHeight,
+        offsetY + pageHeight + fullBleedOffset,
       ]
     : [];
 

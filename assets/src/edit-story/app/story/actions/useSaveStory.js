@@ -29,7 +29,7 @@ import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useSnackbar } from '../../snackbar';
+import { useSnackbar } from '../../../../design-system';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
 
@@ -89,6 +89,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         .catch(() => {
           showSnackbar({
             message: __('Failed to save the story', 'web-stories'),
+            dismissable: true,
           });
         })
         .finally(() => {

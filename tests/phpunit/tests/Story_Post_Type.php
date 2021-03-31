@@ -67,7 +67,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
 				'post_parent'    => 0,
 				'post_mime_type' => 'image/jpeg',
 				'post_title'     => 'Test Image',
@@ -76,9 +76,26 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
+	public function setUp() {
+		parent::setUp();
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type->add_caps_to_roles();
+	}
+
 	public function tearDown() {
 		$this->set_permalink_structure( '' );
 		$_SERVER['REQUEST_URI'] = '';
+
+		delete_post_meta( self::$story_id, '_edit_lock' );
+
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type->remove_caps_from_roles();
 
 		parent::tearDown();
 	}
@@ -136,6 +153,41 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$results   = $post_type->get_editor_settings();
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
+
+
+	/**
+	 * @covers ::setup_lock
+	 */
+	public function test_setup_lock_admin() {
+		wp_set_current_user( self::$admin_id );
+		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+
+		$this->call_private_method( $story_post_type, 'setup_lock', [ self::$story_id ] );
+
+		$value = get_post_meta( self::$story_id, '_edit_lock', true );
+
+		$this->assertNotEmpty( $value );
+	}
+
+	/**
+	 * @covers ::setup_lock
+	 */
+	public function test_setup_lock_subscriber() {
+		wp_set_current_user( self::$subscriber_id );
+
+		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+
+		$this->call_private_method( $story_post_type, 'setup_lock', [ self::$story_id ] );
+
+		$value = get_post_meta( self::$story_id, '_edit_lock', true );
+
+		$this->assertEmpty( $value );
+	}
+
 
 	/**
 	 * @covers ::filter_rest_collection_params
@@ -473,7 +525,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$feed = $this->do_rss2();
 
 		$this->assertContains( '<img', $feed );
-		$this->assertContains( 'images/test-image.jpg', $feed );
+		$this->assertContains( 'images/canola.jpg', $feed );
 		$this->assertContains( 'wp-block-web-stories-embed', $feed );
 	}
 

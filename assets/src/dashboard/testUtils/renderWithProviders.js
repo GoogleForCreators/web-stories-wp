@@ -27,10 +27,10 @@ import { FlagsProvider } from 'flagged';
 import {
   theme as externalDesignSystemTheme,
   lightMode,
+  SnackbarProvider,
 } from '../../design-system';
 import theme from '../theme';
 import { ConfigProvider } from '../app/config';
-import { SnackbarProvider } from '../app/snackbar';
 import MockApiProvider from './mockApiProvider';
 
 const defaultProviderValues = {
@@ -47,26 +47,33 @@ const defaultProviderValues = {
   api: {},
 };
 
+const DefaultWrapper = ({ children }) => children;
+
 export const renderWithProviders = (
   ui,
   providerValues = {},
-  renderOptions = {}
+  renderOptions = {},
+  wrapper = DefaultWrapper
 ) => {
   const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
 
+  const ProvidedWrapper = wrapper;
+
   // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children }) => (
-    <FlagsProvider features={mergedProviderValues.features}>
-      <ThemeProvider theme={mergedProviderValues.theme}>
-        <ConfigProvider config={mergedProviderValues.config}>
-          <MockApiProvider value={mergedProviderValues.api}>
-            <SnackbarProvider value={mergedProviderValues.snackbar}>
-              {children}
-            </SnackbarProvider>
-          </MockApiProvider>
-        </ConfigProvider>
-      </ThemeProvider>
-    </FlagsProvider>
+    <ProvidedWrapper>
+      <FlagsProvider features={mergedProviderValues.features}>
+        <ThemeProvider theme={mergedProviderValues.theme}>
+          <ConfigProvider config={mergedProviderValues.config}>
+            <MockApiProvider value={mergedProviderValues.api}>
+              <SnackbarProvider value={mergedProviderValues.snackbar}>
+                {children}
+              </SnackbarProvider>
+            </MockApiProvider>
+          </ConfigProvider>
+        </ThemeProvider>
+      </FlagsProvider>
+    </ProvidedWrapper>
   );
 
   const mergedRenderOptions = { wrapper: Wrapper, ...renderOptions };

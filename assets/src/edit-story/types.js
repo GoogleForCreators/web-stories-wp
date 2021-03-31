@@ -380,6 +380,7 @@ export default StoryPropTypes;
  * @typedef {Resource} Resource Resource data for elements
  * @property {{ full: { height: number, width: number }, output: Object }} sizes The data for the full-size element
  * @property {boolean} local Whether the media was uploaded by the user
+ * @property {boolean} isPlaceholder Whether the resource is a placeholder and not fully uploaded yet.
  * @property {string} src The source string for the resource
  */
 

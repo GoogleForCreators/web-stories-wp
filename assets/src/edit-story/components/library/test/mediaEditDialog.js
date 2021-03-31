@@ -27,7 +27,7 @@ import MediaEditDialog from '../panes/media/local/mediaEditDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
-import SnackbarContext from '../../../app/snackbar/context';
+import { SnackbarContext } from '../../../../design-system';
 
 const updateMedia = jest.fn();
 const updateMediaElement = jest.fn();
@@ -116,7 +116,7 @@ describe('MediaEditDialog', () => {
     // Mock out `updateMediaElement`.
     let stateAltText = resource.alt;
     updateMediaElement.mockImplementation((update) => {
-      stateAltText = update.alt;
+      stateAltText = update.data.alt;
     });
 
     const input = getByLabelText('Assistive text');

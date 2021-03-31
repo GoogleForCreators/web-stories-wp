@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
@@ -26,23 +25,21 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout } from '../../../components';
-import { ALERT_SEVERITY } from '../../../constants';
 import { useTemplateView, usePagePreviewSize } from '../../../utils/';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
-import { useSnackbarContext } from '../../snackbar';
 import FontProvider from '../../font/fontProvider';
+import { useSnackbar } from '../../../../design-system';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
-import { DashboardSnackbar, PreviewStoryView } from '..';
+import { PreviewStoryView } from '..';
 import Header from './header';
 import Content from './content';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
-  const enableBookmarks = useFeature('enableBookmarkActions');
 
   const {
     state: {
@@ -51,11 +48,7 @@ function TemplateDetails() {
     actions,
   } = useRouteHistory();
 
-  const { addSnackbarMessage } = useSnackbarContext(
-    ({ actions: { addSnackbarMessage } }) => ({
-      addSnackbarMessage,
-    })
-  );
+  const { showSnackbar } = useSnackbar();
 
   const {
     isLoading,
@@ -120,10 +113,9 @@ function TemplateDetails() {
     templateFetchFn(id)
       .then(setTemplate)
       .catch(() => {
-        addSnackbarMessage({
+        showSnackbar({
           message: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE,
-          severity: ALERT_SEVERITY.ERROR,
-          id: Date.now(),
+          dismissable: true,
         });
       });
   }, [
@@ -134,7 +126,7 @@ function TemplateDetails() {
     isLocal,
     templateId,
     templates,
-    addSnackbarMessage,
+    showSnackbar,
   ]);
 
   const templatedId = template?.id;
@@ -183,8 +175,6 @@ function TemplateDetails() {
     [activeTemplateIndex, templatesOrderById, actions, templates]
   );
 
-  const handleBookmarkClickSelected = useCallback(() => {}, []);
-
   const onHandleCta = useCallback(() => {
     trackEvent('use_template', {
       name: template.title,
@@ -214,9 +204,7 @@ function TemplateDetails() {
       <TransformProvider>
         <Layout.Provider>
           <Header
-            onBookmarkClick={
-              enableBookmarks ? handleBookmarkClickSelected : null
-            }
+            templateTitle={template?.title}
             onHandleCtaClick={onHandleCta}
           />
           <Content
@@ -232,9 +220,6 @@ function TemplateDetails() {
               handlePreviewTemplate,
             }}
           />
-          <Layout.Fixed>
-            <DashboardSnackbar />
-          </Layout.Fixed>
         </Layout.Provider>
       </TransformProvider>
     </FontProvider>

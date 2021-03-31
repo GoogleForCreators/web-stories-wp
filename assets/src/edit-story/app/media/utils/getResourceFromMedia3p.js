@@ -270,6 +270,7 @@ function getImageResourceFromMedia3p(m) {
     title: m.description,
     alt: null,
     local: false,
+    isPlaceholder: false,
     sizes: imageUrls,
     attribution: getAttributionFromMedia3p(m),
   });
@@ -292,6 +293,7 @@ function getVideoResourceFromMedia3p(m) {
     title: m.description,
     alt: null,
     local: false,
+    isPlaceholder: false,
     sizes: videoUrls,
     attribution: getAttributionFromMedia3p(m),
   });
@@ -309,6 +311,7 @@ function getGifResourceFromMedia3p(m) {
     title: m.description,
     alt: null,
     local: false,
+    isPlaceholder: false,
     sizes: imageUrls,
     output: {
       mimeType: videoUrls.mp4.full.mime_type,

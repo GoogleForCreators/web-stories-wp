@@ -16,6 +16,7 @@
 
 export { default as Button } from './button';
 export { default as Color } from './color';
+export { default as FilterToggle } from './filterToggle';
 export { default as Input } from './input';
 export { default as Label } from './label';
 export { default as LinkInput } from './link';
@@ -27,7 +28,6 @@ export { default as Switch } from './switch';
 export { default as TextInput } from './text';
 export { default as TextArea } from './textArea';
 export { default as Toggle } from './toggle';
-export { default as ToggleButton } from './toggleButton';
 export { default as usePresubmitHandler } from './usePresubmitHandler';
 export { default as DropDown } from './dropDown';
 export { default as AdvancedDropDown } from './advancedDropDown';

@@ -31,12 +31,14 @@ import { Popup, PLACEMENT } from '../popup';
 import { DropDownContainer, Hint } from './components';
 import DropDownSelect from './select';
 import useDropDown from './useDropDown';
+
 /**
  *
  * @param {Object} props All props.
  * @param {string} props.ariaLabel Specific label to use as select button's aria label only.
  * @param {boolean} props.disabled If true, menu will not be openable
- * @param {string} props.dropdownLabel Text shown in button with selected value's label or placeholder. Will be used as aria label if no separate ariaLabel is passed in.
+ * @param {string} props.dropDownLabel Text shown in button with selected value's label or placeholder. Will be used as aria label if no separate ariaLabel is passed in.
+ * @param {boolean} props.hasError If true, input and hint (if present) will show error styles.
  * @param {string} props.emptyText If the array of options is empty this text will display when menu is expanded.
  * @param {string} props.hint Hint text to display below a dropdown (optional). If not present, no hint text will display.
  * @param {boolean} props.isKeepMenuOpenOnSelection If true, when a new selection is made the internal functionality to close the menu will not fire, by default is false.
@@ -46,12 +48,13 @@ import useDropDown from './useDropDown';
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
  * @param {number} props.popupFillWidth Allows for an override of how much of popup width to take up for dropDown.
  * @param {number} props.popupZIndex Allows for an override of the default popup z index (2).
+ * @param {boolean} props.isInline If true, will show menu inline rather than in a popup.
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
- *
+ * @param {string} props.className Class name.
+ * @return {*} The dropdown.
  */
-
 export const DropDown = ({
   ariaLabel,
   disabled,
@@ -64,7 +67,9 @@ export const DropDown = ({
   placement = PLACEMENT.BOTTOM,
   popupFillWidth = true,
   popupZIndex,
+  isInline = false,
   selectedValue = '',
+  className,
   ...rest
 }) => {
   const selectRef = useRef();
@@ -101,8 +106,26 @@ export const DropDown = ({
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const selectButtonId = useMemo(() => `select-button-${uuidv4()}`, []);
 
+  const menu = (
+    <Menu
+      activeValue={activeOption?.value}
+      parentId={selectButtonId}
+      listId={listId}
+      menuAriaLabel={sprintf(
+        /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
+        __('%s Option List Selector', 'web-stories'),
+        ariaLabel || dropDownLabel
+      )}
+      onDismissMenu={handleDismissMenu}
+      onMenuItemClick={handleMenuItemClick}
+      options={normalizedOptions}
+      isAbsolute={isInline}
+      {...rest}
+    />
+  );
+
   return (
-    <DropDownContainer>
+    <DropDownContainer className={className}>
       <DropDownSelect
         activeItemLabel={activeOption?.label}
         aria-pressed={isOpen.value}
@@ -119,7 +142,9 @@ export const DropDown = ({
         ref={selectRef}
         {...rest}
       />
-      {!disabled && (
+      {!disabled && isInline ? (
+        isOpen.value && menu
+      ) : (
         <Popup
           anchor={selectRef}
           isOpen={isOpen.value}
@@ -127,20 +152,7 @@ export const DropDown = ({
           fillWidth={popupFillWidth}
           zIndex={popupZIndex}
         >
-          <Menu
-            activeValue={activeOption?.value}
-            parentId={selectButtonId}
-            listId={listId}
-            menuAriaLabel={sprintf(
-              /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
-              __('%s Option List Selector', 'web-stories'),
-              ariaLabel || dropDownLabel
-            )}
-            onDismissMenu={handleDismissMenu}
-            onMenuItemClick={handleMenuItemClick}
-            options={normalizedOptions}
-            {...rest}
-          />
+          {menu}
         </Popup>
       )}
       {hint && (
@@ -159,6 +171,7 @@ DropDown.propTypes = {
   ariaLabel: PropTypes.string,
   disabled: PropTypes.bool,
   dropDownLabel: PropTypes.string,
+  className: PropTypes.string,
   hasError: PropTypes.bool,
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,
@@ -170,6 +183,7 @@ DropDown.propTypes = {
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   popupFillWidth: PropTypes.bool,
   popupZIndex: PropTypes.number,
+  isInline: PropTypes.bool,
   renderItem: PropTypes.object,
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,

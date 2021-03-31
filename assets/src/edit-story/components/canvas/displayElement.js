@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -49,6 +49,13 @@ const Wrapper = styled.div`
   ${elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
+
+  ${({ isBackground, theme }) =>
+    isBackground &&
+    css`
+      border-radius: ${theme.borders.radius.small};
+      overflow: hidden;
+    `}
 `;
 
 const BackgroundOverlay = styled.div`
@@ -151,11 +158,16 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   });
 
   return (
-    <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
+    <Wrapper
+      ref={wrapperRef}
+      data-element-id={id}
+      isBackground={element.isBackground}
+      {...box}
+    >
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
         <WithMask
           element={element}
-          fill={true}
+          fill
           box={box}
           style={{
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
@@ -179,7 +191,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             {replacementElement && (
               <WithMask
                 element={replacementElement}
-                fill={true}
+                fill
                 box={box}
                 style={{
                   opacity: opacity ? opacity / 100 : null,

@@ -17,11 +17,8 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
+import { FULLBLEED_HEIGHT, DANGER_ZONE_HEIGHT } from '../constants';
 import { getCorners } from './getBoundRect';
-
-const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 const isLinkBelowLimit = (element, verifyLink = true) => {
   if (verifyLink && !element.link?.url?.length > 0) {

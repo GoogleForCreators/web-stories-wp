@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import React, { useState, useMemo, forwardRef } from 'react';
+import { useState, useMemo, forwardRef } from 'react';
 import { act } from '@testing-library/react';
 
 export default class ComponentStub {
@@ -85,7 +85,7 @@ export default class ComponentStub {
       return (
         <>
           <HookExecutor key={refresher} hooks={hooks} />
-          <Impl _wrapped={true} ref={ref} {...props} />
+          <Impl _wrapped ref={ref} {...props} />
         </>
       );
     });

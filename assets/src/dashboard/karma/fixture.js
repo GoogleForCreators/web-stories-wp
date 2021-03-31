@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import * as React from 'react';
 import { FlagsProvider } from 'flagged';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
@@ -50,6 +50,7 @@ const defaultConfig = {
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',
   isRTL: false,
+  userId: 123,
   locale: {
     dateFormat: 'F j, Y',
     timeFormat: 'g:i a',

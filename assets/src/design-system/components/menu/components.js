@@ -27,16 +27,17 @@ import { DEFAULT_DROPDOWN_HEIGHT } from './constants';
 
 export const MenuContainer = styled.div(
   ({
-    dropdownHeight = DEFAULT_DROPDOWN_HEIGHT,
+    dropDownHeight = DEFAULT_DROPDOWN_HEIGHT,
     styleOverride = '',
     theme,
+    isAbsolute,
   }) => css`
     position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: calc(100% - 2px);
-    max-height: ${dropdownHeight}px;
+    max-height: ${dropDownHeight}px;
     overflow-x: visible;
     overflow-y: auto;
     overscroll-behavior: none auto;
@@ -46,12 +47,21 @@ export const MenuContainer = styled.div(
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.divider.primary};
+
+    ${isAbsolute &&
+    css`
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    `};
+
     ${styleOverride};
 
     ${themeHelpers.scrollbarCSS};
   `
 );
 MenuContainer.propTypes = {
-  dropdownHeight: PropTypes.number,
+  dropDownHeight: PropTypes.number,
   styleOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };

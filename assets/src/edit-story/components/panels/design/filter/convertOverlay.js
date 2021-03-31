@@ -24,7 +24,7 @@ function convertToSolid(currentOverlay, currentType) {
     case OverlayType.NONE:
       // default color
       return {
-        color: { r: 0, g: 0, b: 0, a: 0.3 },
+        color: { r: 0, g: 0, b: 0, a: 0.5 },
       };
 
     case OverlayType.LINEAR:
@@ -39,7 +39,7 @@ function convertToSolid(currentOverlay, currentType) {
         color: { r, g, b },
       } = stopsByAlpha[0];
       return {
-        color: { r, g, b, a: 0.3 },
+        color: { r, g, b, a: 0.5 },
       };
     }
 
@@ -55,10 +55,10 @@ function convertToLinear(currentOverlay, currentType) {
         type: 'linear',
         rotation: 0,
         stops: [
-          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.4 },
+          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
           { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
         ],
-        alpha: 0.9,
+        alpha: 0.7,
       };
 
     case OverlayType.SOLID: {
@@ -98,12 +98,12 @@ function convertToRadial(currentOverlay, currentType) {
       // default pattern
       return {
         type: 'radial',
-        size: { w: 0.8, h: 0.5 },
+        size: { w: 0.67, h: 0.67 },
         stops: [
-          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0.25 },
+          { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
           { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
         ],
-        alpha: 0.6,
+        alpha: 0.7,
       };
 
     case OverlayType.SOLID: {
@@ -113,9 +113,9 @@ function convertToRadial(currentOverlay, currentType) {
       } = currentOverlay;
       return {
         type: 'radial',
-        size: { w: 0.8, h: 0.5 },
+        size: { w: 0.67, h: 0.67 },
         stops: [
-          { color: { r, g, b, a: 0 }, position: 0.25 },
+          { color: { r, g, b, a: 0 }, position: 0 },
           { color: { r, g, b, a: 1 }, position: 1 },
         ],
         alpha: a,
@@ -127,7 +127,7 @@ function convertToRadial(currentOverlay, currentType) {
       const { stops, alpha } = currentOverlay;
       return {
         type: 'radial',
-        size: { w: 0.8, h: 0.5 },
+        size: { w: 0.67, h: 0.67 },
         stops,
         alpha,
       };

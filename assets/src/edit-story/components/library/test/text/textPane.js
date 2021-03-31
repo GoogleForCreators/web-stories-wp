@@ -54,7 +54,7 @@ describe('TextPane', () => {
     }));
   });
 
-  it('should insert text with preset text style on pressing a preset', async () => {
+  it('should insert text with preset text style on pressing a preset', () => {
     const availableCuratedFonts = fontsListResponse.filter(
       (font) => curatedFontNames.indexOf(font.name) > 0
     );
@@ -69,21 +69,22 @@ describe('TextPane', () => {
         ensureMenuFontsLoaded: () => {},
       },
     };
-    await act(() => {
-      const { getByRole } = renderWithTheme(
-        <FlagsProvider
-          features={{
-            showTextSets: false,
-            showTextAndShapesSearchInput: false,
-          }}
-        >
-          <FontContext.Provider value={fontContextValues}>
-            <TextPane isActive={true} />
-          </FontContext.Provider>
-        </FlagsProvider>
-      );
 
-      fireEvent.click(getByRole('button', { name: 'Heading 1' }));
+    const { getByRole } = renderWithTheme(
+      <FlagsProvider
+        features={{
+          showTextSets: false,
+          showTextAndShapesSearchInput: false,
+        }}
+      >
+        <FontContext.Provider value={fontContextValues}>
+          <TextPane isActive />
+        </FontContext.Provider>
+      </FlagsProvider>
+    );
+
+    act(() => {
+      fireEvent.click(getByRole('button', { name: 'Title 1' }));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);

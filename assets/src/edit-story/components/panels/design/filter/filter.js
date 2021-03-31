@@ -32,8 +32,9 @@ import {
   OverlayPreset,
   OverlayType,
 } from '../../../../utils/backgroundOverlay';
-import { Row, ToggleButton, Color } from '../../../form';
+import { Row, Color, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
+import { getDefinitionForType } from '../../../../elements';
 import convertOverlay from './convertOverlay';
 
 function FilterPanel({ selectedElements, pushUpdate }) {
@@ -47,28 +48,30 @@ function FilterPanel({ selectedElements, pushUpdate }) {
     [pushUpdate]
   );
 
+  const { LayerIcon } = getDefinitionForType(selectedElements[0].type);
   return (
     <SimplePanel name="filter" title={__('Filters', 'web-stories')}>
       <Row>
         {Object.keys(OverlayPreset).map((type) => {
-          const { label, icon } = OverlayPreset[type];
+          const { label } = OverlayPreset[type];
           return (
-            <ToggleButton
+            <FilterToggle
               key={type}
-              icon={icon}
+              element={selectedElements[0]}
               label={label}
-              value={overlayType === type}
-              onChange={() =>
+              isToggled={overlayType === type}
+              onClick={() =>
                 updateOverlay(convertOverlay(overlay, overlayType, type))
               }
-              iconWidth={22}
-              iconHeight={16}
+              filter={convertOverlay(overlay, OverlayType.NONE, type)}
               aria-label={sprintf(
                 /* translators: %s: Filter type */
-                __('Set filter: %s', 'web-stories'),
+                __('Filter: %s', 'web-stories'),
                 label
               )}
-            />
+            >
+              <LayerIcon element={selectedElements[0]} />
+            </FilterToggle>
           );
         })}
       </Row>

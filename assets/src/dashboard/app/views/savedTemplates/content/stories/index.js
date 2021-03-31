@@ -26,7 +26,7 @@ import { FlagsProvider } from 'flagged';
  */
 import { Layout } from '../../../../../components';
 import { VIEW_STYLE } from '../../../../../constants';
-import { SnackbarProvider } from '../../../../snackbar';
+import { SnackbarProvider } from '../../../../../../design-system';
 import {
   formattedStoriesArray,
   formattedTemplatesArray,
@@ -117,7 +117,7 @@ export const AllDataFetched = () => {
           <StorybookLayoutContainer>
             <Content
               {...defaultProps}
-              allPagesFetched={true}
+              allPagesFetched
               view={{ ...view, pageSize }}
             />
           </StorybookLayoutContainer>

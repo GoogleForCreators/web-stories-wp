@@ -305,6 +305,10 @@ class Embed_Controller extends WP_REST_Controller {
 	private function get_data_from_document( $html ) {
 		$xpath = $this->html_to_xpath( $html );
 
+		if ( ! $xpath ) {
+			return false;
+		}
+
 		$amp_story = $xpath->query( '//amp-story' );
 
 		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
