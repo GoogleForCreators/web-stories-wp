@@ -18,13 +18,14 @@
  */
 import styled from 'styled-components';
 
-export const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
-`;
+/**
+ * Internal dependencies
+ */
+import { Text, THEME_CONSTANTS } from '../../../design-system';
+
+export const Paragraph = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+});
 
 export const Img = styled.img`
   float: left;
