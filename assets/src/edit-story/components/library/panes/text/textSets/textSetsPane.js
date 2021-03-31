@@ -58,6 +58,7 @@ const TextSetsToggle = styled.div`
   display: flex;
   p {
     margin: auto 12px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
   }
 `;
 
@@ -87,7 +88,7 @@ function TextSetsPane({ paneRef }) {
   );
 
   const addIdToTextSets = useCallback(
-    (textSetsArray) =>
+    (textSetsArray = []) =>
       textSetsArray.map((elements) => {
         return {
           id: `text_set_${uuidv4()}`,
@@ -100,7 +101,7 @@ function TextSetsPane({ paneRef }) {
     if (showInUse) {
       return addIdToTextSets(getTextSetsForInUseFonts());
     }
-    return addIdToTextSets(selectedCat ? textSets[selectedCat] : allTextSets);
+    return addIdToTextSets(selectedCat ? textSets?.[selectedCat] : allTextSets);
   }, [
     selectedCat,
     textSets,
@@ -148,7 +149,7 @@ function TextSetsPane({ paneRef }) {
       <TitleBar>
         <Headline
           as="h3"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
         >
           {PANE_TEXT.TITLE}
         </Headline>

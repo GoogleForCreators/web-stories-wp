@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
@@ -26,17 +25,8 @@ import { trackClick } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { Plain } from '../button';
+import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
-import Link from '../link';
-
-const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
-`;
 
 const RECOMMENDATION_URL = __(
   'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
@@ -53,20 +43,17 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
       open={open}
       onClose={onClose}
       title={__('Missing title', 'web-stories')}
-      actions={
-        <>
-          <Plain onClick={onFix}>{__('Add a title', 'web-stories')}</Plain>
-          <Plain onClick={onIgnore}>
-            {__('Publish without title', 'web-stories')}
-          </Plain>
-        </>
-      }
+      onSecondary={onFix}
+      secondaryText={__('Add a title', 'web-stories')}
+      primaryText={__('Publish without title', 'web-stories')}
+      onPrimary={onIgnore}
     >
-      <Paragraph>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
             a: (
               <Link
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 href={RECOMMENDATION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -80,7 +67,7 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Paragraph>
+      </Text>
     </Dialog>
   );
 }

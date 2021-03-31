@@ -21,7 +21,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { Chip } from '..';
-import { renderWithProviders } from '../../../../dashboard/testUtils';
+import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Chip', () => {
   const chipText = 'Some chip text';

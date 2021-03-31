@@ -18,18 +18,20 @@
  * External dependencies
  */
 import { useState, useCallback } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import { select } from '@storybook/addon-knobs';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { theme, THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS } from '../../../theme';
 import { Headline, Text } from '../../typography';
 import { Cross } from '../../../icons';
-import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
+import { Button } from '../button';
+import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../constants';
 import { ToggleButton, LockToggle } from '../toggleButton';
+import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 
 export default {
   title: 'DesignSystem/Components/Button',
@@ -59,7 +61,11 @@ const Row = styled.div`
 `;
 
 function ButtonContent({ variant }) {
-  return variant === BUTTON_VARIANTS.RECTANGLE ? 'Standard Button' : <Cross />;
+  return [BUTTON_VARIANTS.RECTANGLE, BUTTON_VARIANTS.LINK].includes(variant) ? (
+    'Standard Button'
+  ) : (
+    <Cross />
+  );
 }
 
 ButtonContent.propTypes = {
@@ -158,9 +164,9 @@ const ButtonCombosToDisplay = () => (
 
 export const DarkTheme = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <DarkThemeProvider>
       <ButtonCombosToDisplay />
-    </ThemeProvider>
+    </DarkThemeProvider>
   );
 };
 
@@ -205,12 +211,12 @@ export const ToggleButtons = () => {
   return (
     <>
       <ToggleButtonContainer isToggled={isToggled} swapToggled={swapToggled} />
-      <ThemeProvider theme={theme}>
+      <DarkThemeProvider>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
         />
-      </ThemeProvider>
+      </DarkThemeProvider>
     </>
   );
 };
@@ -225,13 +231,13 @@ export const PrebakedButtons = () => {
           <LockToggle isLocked={isLocked} onClick={swapLocked} />
         </Row>
       </Container>
-      <ThemeProvider theme={theme}>
+      <DarkThemeProvider>
         <Container>
           <Row>
             <LockToggle isLocked={isLocked} onClick={swapLocked} />
           </Row>
         </Container>
-      </ThemeProvider>
+      </DarkThemeProvider>
     </>
   );
 };

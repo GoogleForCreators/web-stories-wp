@@ -24,7 +24,7 @@ import { useCallback, useMemo, useEffect } from 'react';
  */
 import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
-import { DashboardSnackbar, PreviewStoryView } from '../';
+import { PreviewStoryView } from '../';
 
 import useApi from '../../api/useApi';
 import Content from './content';
@@ -101,6 +101,7 @@ function ExploreTemplates() {
   return (
     <Layout.Provider>
       <Header
+        isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
         templates={orderedTemplates}
@@ -119,7 +120,6 @@ function ExploreTemplates() {
         templateActions={{ createStoryFromTemplate, handlePreviewTemplate }}
       />
       <Layout.Fixed>
-        <DashboardSnackbar />
         <ScrollToTop />
       </Layout.Fixed>
     </Layout.Provider>

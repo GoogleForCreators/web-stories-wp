@@ -23,16 +23,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { ReactComponent as PlayIcon } from '../../icons/play.svg';
-import { ReactComponent as PauseIcon } from '../../icons/pause.svg';
 import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
+import { Icons } from '../../../design-system';
 
-const PLAY_BUTTON_SIZE = 48;
+const PLAY_BUTTON_SIZE = 50;
+const ICON_SVG_SIZE = 72;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
 const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
 
@@ -43,6 +44,7 @@ const Controls = styled.div`
   top: ${({ y }) => `${y}px`};
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
+  pointer-events: none;
 `;
 
 const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
@@ -78,17 +80,25 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   }
 `;
 
-const Play = styled(PlayIcon)`
-  width: 100%;
-  height: 100%;
-  opacity: 0.84;
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
+const iconCss = css`
+  width: ${ICON_SVG_SIZE}px;
+  height: ${ICON_SVG_SIZE}px;
+  pointer-events: none;
+  transform: translate(
+    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px,
+    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
+  );
+  color: ${({ theme }) => theme.colors.standard.white};
+  filter: drop-shadow(
+    0px 0px 10px ${({ theme }) => rgba(theme.colors.bg.primary, 0.4)}
+  );
 `;
-const Pause = styled(PauseIcon)`
-  width: 100%;
-  height: 100%;
-  opacity: 0.84;
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.2));
+
+const Play = styled(Icons.PlayFilled)`
+  ${iconCss};
+`;
+const Pause = styled(Icons.StopFilled)`
+  ${iconCss};
 `;
 
 const playAboveSpacing = {
@@ -104,12 +114,13 @@ function VideoControls({
   elementRef,
   element,
 }) {
+  const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
     element.height < PLAY_ABOVE_BREAKPOINT_HEIGHT;
   const [hovering, setHovering] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(!isTransforming);
+  const [isPlaying, setIsPlaying] = useState(!isTransforming && hasVideoSrc);
   const { id } = element;
   const getVideoNode = useCallback(
     () => document.getElementById(`video-${id}`),
@@ -127,12 +138,12 @@ function VideoControls({
       setShowControls(false);
     }
     const syncTimer = setTimeout(() => {
-      if (isSelected && videoNode && !videoNode.paused) {
+      if (isSelected && videoNode && !videoNode.paused && hasVideoSrc) {
         setIsPlaying(true);
       }
     });
     return () => clearTimeout(syncTimer);
-  }, [getVideoNode, id, isSelected, isEditing]);
+  }, [getVideoNode, id, isSelected, isEditing, hasVideoSrc]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
@@ -177,7 +188,9 @@ function VideoControls({
     setShowControls(true);
     checkShowControls();
     const videoNode = getVideoNode();
-    setIsPlaying(!videoNode.paused);
+    if (videoNode) {
+      setIsPlaying(!videoNode.paused);
+    }
   }, 10);
 
   useEffect(() => {
@@ -203,10 +216,10 @@ function VideoControls({
       setIsPlaying(false);
       setShowControls(true);
     } else {
-      const playPromise = videoNode.play();
-      if (playPromise) {
-        playPromise.then(() => setIsPlaying(true)).catch(() => {});
-      }
+      videoNode
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
     }
   };
 

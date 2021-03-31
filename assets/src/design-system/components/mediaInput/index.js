@@ -40,8 +40,8 @@ import { ReactComponent as Landscape } from './landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
 
 const MediaRectangle = styled.section`
-  width: 64px;
-  height: 114px;
+  width: 100%;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.bg.primary};
   :focus {
     outline: -webkit-focus-ring-color auto 1px;
@@ -52,8 +52,8 @@ const MediaRectangle = styled.section`
 
 const MediaCircle = styled(MediaRectangle)`
   border-radius: 100px;
-  height: 54px;
-  width: 54px;
+  height: 100%;
+  width: 100%;
 `;
 
 const ImageWrapper = styled.div`
@@ -156,7 +156,6 @@ export const MediaInput = forwardRef(function Media(
   {
     className,
     onBlur,
-    onChange,
     alt = __('Preview image', 'web-stories'),
     value,
     ariaLabel = __('Choose an image', 'web-stories'),
@@ -236,7 +235,6 @@ export const MediaInput = forwardRef(function Media(
 MediaInput.propTypes = {
   className: PropTypes.string,
   value: PropTypes.any,
-  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,

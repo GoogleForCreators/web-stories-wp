@@ -23,6 +23,7 @@ import createSolid from '../../../../../utils/createSolid';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { useStory } from '../../../../../app/story';
 import { DEFAULT_PRESET } from '../../../../library/panes/text/textPresets';
+import { PRESET_TYPES } from '../constants';
 
 describe('Panel: Style Presets', () => {
   let fixture;
@@ -38,7 +39,7 @@ describe('Panel: Style Presets', () => {
     fixture = new Fixture();
     await fixture.render();
     localStorage.setItem(
-      'web_stories_ui_panel_settings:stylepreset-style',
+      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.STYLE}`,
       JSON.stringify({ isCollapsed: false, height: 200 })
     );
   });
@@ -98,9 +99,7 @@ describe('Panel: Style Presets', () => {
         fixture.editor.library.text.preset('Paragraph')
       );
       // Add a heading.
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Heading 1')
-      );
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       // Select the paragraph as well.
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 
@@ -198,9 +197,7 @@ describe('Panel: Style Presets', () => {
 
       // Add a heading.
       await fixture.editor.library.textTab.click();
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Heading 1')
-      );
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
 
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.apply
@@ -219,9 +216,7 @@ describe('Panel: Style Presets', () => {
         fixture.editor.library.text.preset('Paragraph')
       );
       // Add a heading.
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Heading 1')
-      );
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );

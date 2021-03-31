@@ -39,7 +39,7 @@ describe('date/formatTime', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedTime = formatTime(dateString);
 
-    expect(formattedTime).toStrictEqual('10:47 a.m.');
+    expect(formattedTime).toStrictEqual('10:47 am');
   });
 
   it('should return 5:47 PM with g:i A formatting options', () => {

@@ -26,12 +26,6 @@ import { useContext } from 'react';
 import { themeHelpers } from '../design-system';
 
 export const GlobalStyle = createGlobalStyle`
-	*,
-	*::after,
-	*::before {
-		box-sizing: border-box;
-    }
-    
   h1, h2, h3, h4, h5, h6, p, a {
     margin: 0;
   }
@@ -191,11 +185,6 @@ const theme = {
         letterSpacing: 0.01,
       },
     },
-  },
-  detailViewContentGutter: {
-    desktop: 80,
-    tablet: 40,
-    min: 10,
   },
   breakpoint: {
     desktop: 'screen and (max-width: 1280px)',

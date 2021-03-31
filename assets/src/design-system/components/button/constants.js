@@ -18,6 +18,7 @@ export const BUTTON_TYPES = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary',
   TERTIARY: 'tertiary',
+  QUATERNARY: 'quaternary',
   PLAIN: 'plain',
 };
 
@@ -31,6 +32,7 @@ export const BUTTON_VARIANTS = {
   RECTANGLE: 'rectangle',
   SQUARE: 'square',
   ICON: 'icon',
+  LINK: 'link',
 };
 
 export const BUTTON_SIZE = 32;

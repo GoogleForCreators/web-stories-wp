@@ -47,7 +47,9 @@ export function getEffectName(type) {
 }
 
 export function getEffectDirection(effect = {}) {
-  if (effect.zoomDirection) {
+  if (effect.zoomDirection && effect.panDir) {
+    return false;
+  } else if (effect.zoomDirection) {
     return effect.zoomDirection;
   } else if (effect.scaleDirection) {
     return effect.scaleDirection;
@@ -64,9 +66,7 @@ export function getEffectDirection(effect = {}) {
 }
 const AnimationGrid = styled.div`
   display: grid;
-  grid-gap: 15px;
   grid-template-columns: auto auto;
-  grid-auto-rows: 32px;
 `;
 
 const AnimationGridField = styled.div(

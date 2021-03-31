@@ -23,13 +23,14 @@ import PropTypes from 'prop-types';
  */
 import { useStory } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
-import usePrevious from '../../../utils/usePrevious';
+import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useLayout } from '../../../app/layout';
 import Context from './context';
 
 function PrepublishChecklistProvider({ children }) {
-  const { pageSize } = useLayout(({ state: { canvasPageSize } }) => ({
-    pageSize: canvasPageSize,
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
   }));
 
   const story = useStory(({ state: { story, pages } }) => {

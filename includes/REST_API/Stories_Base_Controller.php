@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Media;
 use stdClass;
 use WP_Error;
@@ -34,6 +35,7 @@ use WP_Post;
 use WP_REST_Posts_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
+use WP_REST_Server;
 
 /**
  * Stories_Base_Controller class.
@@ -47,6 +49,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @var Decoder Decoder instance.
 	 */
 	private $decoder;
+
 	/**
 	 * Constructor.
 	 *
@@ -142,6 +145,43 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
 
+	/**
+	 * Prepares links for the request.
+	 *
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return array Links for the given post.
+	 */
+	protected function prepare_links( $post ) {
+		$links = parent::prepare_links( $post );
+
+		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
+
+		$links['https://api.w.org/lock'] = [
+			'href'       => $lock_url,
+			'embeddable' => true,
+		];
+
+		$lock = get_post_meta( $post->ID, '_edit_lock', true );
+
+		if ( $lock ) {
+			$lock                 = explode( ':', $lock );
+			list ( $time, $user ) = $lock;
+
+			/** This filter is documented in wp-admin/includes/ajax-actions.php */
+			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+			if ( $time && $time > time() - $time_window ) {
+				$links['https://api.w.org/lockuser'] = [
+					'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'users/' ) . $user ),
+					'embeddable' => true,
+				];
+			}
+		}
+
+		return $links;
+	}
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.

@@ -74,6 +74,30 @@ describe('addElementToSelection', () => {
     expect(failedAttempt).toStrictEqual(initialState);
   });
 
+  it('should not allow adding video placeholder to non-empty selection', () => {
+    const { restore, addElementToSelection } = setupReducer();
+
+    // Set an initial state.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', resource: { isPlaceholder: true } },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e2', 'e3'],
+    });
+
+    // Toggle no element
+    const failedAttempt = addElementToSelection({ elementId: 'e1' });
+    expect(failedAttempt.selection).toStrictEqual(initialState.selection);
+  });
+
   it('should not allow adding background element to non-empty selection', () => {
     const { restore, addElementToSelection } = setupReducer();
 

@@ -48,4 +48,8 @@ export class VideoPoster extends AbstractPanel {
       name: /reset/i,
     });
   }
+
+  get panelTitle() {
+    return this.getByRole('button', { name: 'Accessibility' });
+  }
 }

@@ -25,6 +25,7 @@ import { fireEvent } from '@testing-library/react';
 import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
+import ConfigContext from '../../../../../app/config/context';
 
 jest.mock('../../../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {
@@ -33,14 +34,31 @@ jest.mock('../../../../mediaPicker', () => ({
   },
 }));
 
+function renderVideoAccessibility(selectedElements) {
+  const configValue = {
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
+  };
+
+  const wrapper = (params) => (
+    <ConfigContext.Provider value={configValue}>
+      {params.children}
+    </ConfigContext.Provider>
+  );
+
+  return renderPanel(VideoAccessibility, selectedElements, wrapper);
+}
+
 describe('Panels/VideoAccessibility', () => {
   const defaultElement = {
     type: 'video',
     resource: { posterId: 0, poster: '', alt: '' },
   };
-  function renderVideoAccessibility(...args) {
-    return renderPanel(VideoAccessibility, ...args);
-  }
 
   beforeAll(() => {
     localStorage.setItem(
@@ -54,20 +72,11 @@ describe('Panels/VideoAccessibility', () => {
   });
 
   it('should trim video description to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText, submit } = renderVideoAccessibility([
-      defaultElement,
-    ]);
-    const input = getByPlaceholderText('Video description');
-
-    const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
-
-    fireEvent.change(input, { target: { value: bigText } });
-    const submits = submit({
-      resource: { posterId: 0, poster: '', alt: bigText },
-    });
-    expect(submits[defaultElement.id].resource.alt).toHaveLength(
-      MIN_MAX.ALT_TEXT.MAX
+    const { getByPlaceholderText } = renderVideoAccessibility([defaultElement]);
+    const input = getByPlaceholderText(
+      'Add assistive text for visually impaired users'
     );
+    expect(input.maxLength).toBe(MIN_MAX.ALT_TEXT.MAX);
   });
 
   it('should display Mixed as placeholder in case of mixed value multi-selection', () => {
@@ -81,8 +90,20 @@ describe('Panels/VideoAccessibility', () => {
         },
       },
     ]);
-    const description = getByRole('textbox', { name: 'Video description' });
+    const description = getByRole('textbox', { name: 'Assistive text' });
     expect(description.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(description).toHaveValue('');
+  });
+
+  it('should simulate a click on <Poster />', () => {
+    const { getByRole, pushUpdate } = renderVideoAccessibility([
+      defaultElement,
+    ]);
+    const menuToggle = getByRole('button', { name: 'Video poster' });
+    fireEvent.click(menuToggle);
+    const editMenuItem = getByRole('menuitem', { name: 'Edit' });
+    fireEvent.click(editMenuItem);
+    expect(pushUpdate).toHaveBeenCalledTimes(1);
+    expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
   });
 });

@@ -11,7 +11,6 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/e2e-test-utils": "^5.0.3",
-    "uuid": "^8.3.2"
+    "@wordpress/e2e-test-utils": "^5.1.0"
   }
 }

@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { shallowEqual } from 'react-pure-render';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -43,9 +44,23 @@ import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { Note } from '../../shared';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
-import EffectChooserDropdown from './effectChooserDropdown';
+import { EffectChooserDropdown } from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
+
+const StyledRow = styled(Row)`
+  margin-bottom: -1px;
+`;
+
+const GroupWrapper = styled.div`
+  ${({ hasAnimation, theme }) =>
+    hasAnimation &&
+    `
+    border: 1px solid ${theme.colors.border.defaultNormal};
+    border-radius: ${theme.borders.radius.small};
+  `}
+  margin-bottom: 16px;
+`;
 
 const backgroundAnimationTooltip = __(
   'The background image is too small to animate. Double click on the bg & scale the image before applying the animation.',
@@ -130,7 +145,7 @@ function AnimationPanel({
   // the all the focus updates go through prevents the reset from
   // overriding this play call.
   const activeElement = document.activeElement;
-  const [dedbouncedUpdateAnimationState] = useDebouncedCallback(() => {
+  const [debouncedUpdateAnimationState] = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
         animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
@@ -138,11 +153,11 @@ function AnimationPanel({
       playUpdatedAnimation.current = false;
     }
   }, 100);
-  useEffect(dedbouncedUpdateAnimationState, [
+  useEffect(debouncedUpdateAnimationState, [
     selectedElementAnimations,
     updateAnimationState,
     activeElement,
-    dedbouncedUpdateAnimationState,
+    debouncedUpdateAnimationState,
   ]);
 
   const handleRemoveEffect = useCallback(() => {
@@ -183,11 +198,23 @@ function AnimationPanel({
             normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
           ].filter(Boolean),
         },
+        [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]: {
+          tooltip: backgroundAnimationTooltip,
+          options: [
+            !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
+            !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
+            !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
+            !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
+            normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
+            normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
+          ].filter(Boolean),
+        },
       };
     }
     return {};
   }, [selectedElements]);
 
+  const selectedEffectTitle = getEffectName(updatedAnimations[0]?.type);
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
@@ -196,24 +223,25 @@ function AnimationPanel({
     </SimplePanel>
   ) : (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-      <Row>
-        <EffectChooserDropdown
-          onAnimationSelected={handleAddOrUpdateElementEffect}
-          selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
-          onNoEffectSelected={handleRemoveEffect}
-          isBackgroundEffects={isBackground}
-          disabledTypeOptionsMap={disabledTypeOptionsMap}
-          direction={getEffectDirection(updatedAnimations[0])}
-          selectedEffectType={updatedAnimations[0]?.type}
-        />
-      </Row>
-      {updatedAnimations[0] && (
-        <EffectPanel
-          animation={updatedAnimations[0]}
-          onChange={handlePanelChange}
-          disabledTypeOptionsMap={disabledTypeOptionsMap}
-        />
-      )}
+      <GroupWrapper hasAnimation={selectedEffectTitle}>
+        <StyledRow>
+          <EffectChooserDropdown
+            onAnimationSelected={handleAddOrUpdateElementEffect}
+            onNoEffectSelected={handleRemoveEffect}
+            isBackgroundEffects={isBackground}
+            disabledTypeOptionsMap={disabledTypeOptionsMap}
+            direction={getEffectDirection(updatedAnimations[0])}
+            selectedEffectType={updatedAnimations[0]?.type}
+          />
+        </StyledRow>
+        {updatedAnimations[0] && (
+          <EffectPanel
+            animation={updatedAnimations[0]}
+            onChange={handlePanelChange}
+            disabledTypeOptionsMap={disabledTypeOptionsMap}
+          />
+        )}
+      </GroupWrapper>
     </SimplePanel>
   );
 }

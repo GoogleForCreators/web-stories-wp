@@ -29,13 +29,10 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import {
-  useKeyDownEffect,
-  Tooltip,
-  PLACEMENT,
-} from '../../../../../../design-system';
+import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
+import { Tooltip } from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 
@@ -159,12 +156,8 @@ function Element({
         setShowVideoDetail(false);
         if (mediaElement.current && hoverTimer == null) {
           const timer = setTimeout(() => {
-            if (activeRef.current) {
-              const playPromise = mediaElement.current.play();
-              if (playPromise) {
-                // All supported browsers return promise but unit test runner does not.
-                playPromise.catch(() => {});
-              }
+            if (activeRef.current && src) {
+              mediaElement.current.play().catch(() => {});
             }
           }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
           setHoverTimer(timer);
@@ -173,7 +166,7 @@ function Element({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current) {
+        if (mediaElement.current && src) {
           // Stop video and reset position.
           mediaElement.current.pause();
           mediaElement.current.currentTime = 0;
@@ -181,7 +174,7 @@ function Element({
       }
     }
     return resetHoverTime;
-  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
+  }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = (thumbnailUrl, baseColor) => () => {
     onInsert({ ...resource, baseColor }, thumbnailUrl);
@@ -297,10 +290,7 @@ function MediaElement(props) {
 
   if (isTranscoding) {
     return (
-      <Tooltip
-        placement={PLACEMENT.BOTTOM}
-        title={__('Video optimization in progress', 'web-stories')}
-      >
+      <Tooltip title={__('Video optimization in progress', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

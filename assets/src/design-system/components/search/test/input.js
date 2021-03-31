@@ -25,6 +25,7 @@ import { fireEvent } from '@testing-library/react';
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import SearchInput from '../input';
+import { noop } from '../../../utils';
 
 describe('Search <Input />', () => {
   const onClickMock = jest.fn();
@@ -40,6 +41,7 @@ describe('Search <Input />', () => {
         onClick={onClickMock}
         handleClearInput={handleClearInputMock}
         inputValue=""
+        onChange={noop}
       />
     );
 
@@ -56,6 +58,7 @@ describe('Search <Input />', () => {
         handleClearInput={handleClearInputMock}
         inputValue=""
         listId={1}
+        onChange={noop}
       />
     );
 
@@ -73,6 +76,7 @@ describe('Search <Input />', () => {
         placeholder="search placeholder"
         inputValue=""
         disabled
+        onChange={noop}
       />
     );
 
@@ -91,6 +95,7 @@ describe('Search <Input />', () => {
         handleClearInput={handleClearInputMock}
         inputValue="my input value"
         placeholder="search placeholder"
+        onChange={noop}
       />
     );
 

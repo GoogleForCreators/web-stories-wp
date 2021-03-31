@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import Moveable from 'react-moveable';
+import { render, act } from '@testing-library/react';
+import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -31,8 +31,6 @@ import CanvasContext from '../../../app/canvas/context';
 import Selection from '../selection';
 import StoryContext from '../../../app/story/context';
 import TransformProvider from '../../transform/transformProvider';
-
-jest.mock('react-moveable', () => jest.fn(() => ({ children }) => children));
 
 const pageSize = { width: 100, height: 100 };
 
@@ -100,9 +98,10 @@ describe('multiSelectionMoveable', () => {
   }
 
   function performRotation(rotateTo) {
-    const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
-    moveable.onRotateGroupStart({ events: [{ set: () => {} }] });
-    moveable.onRotateGroup({
+    const moveable =
+      MockMoveable.mock.calls[MockMoveable.mock.calls.length - 1][0];
+    moveable?.onRotateGroupStart({ events: [{ set: () => {} }] });
+    moveable?.onRotateGroup({
       events: [
         {
           target: target1,
@@ -116,7 +115,7 @@ describe('multiSelectionMoveable', () => {
         },
       ],
     });
-    moveable.onRotateGroupEnd({ targets: [target1, target2] });
+    moveable?.onRotateGroupEnd({ targets: [target1, target2] });
   }
 
   const rotateCases = [
@@ -130,7 +129,9 @@ describe('multiSelectionMoveable', () => {
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
 
-      performRotation(rotateTo);
+      act(() => {
+        performRotation(rotateTo);
+      });
 
       const func = updateElementsById.mock.calls[0][0].properties;
       expect(func(element1)).toStrictEqual({

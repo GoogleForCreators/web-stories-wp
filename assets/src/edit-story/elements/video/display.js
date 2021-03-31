@@ -85,13 +85,15 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
       previewMode={previewMode}
     >
       {previewMode ? (
-        <Image
-          src={poster || resource.poster}
-          alt={element.alt || resource.alt}
-          style={style}
-          {...videoProps}
-          ref={ref}
-        />
+        (poster || resource.poster) && (
+          <Image
+            src={poster || resource.poster}
+            alt={element.alt || resource.alt}
+            style={style}
+            {...videoProps}
+            ref={ref}
+          />
+        )
       ) : (
         <Video
           id={`video-${id}`}
@@ -104,7 +106,9 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-testid="videoElement"
           data-leaf-element="true"
         >
-          <source src={resource.src} type={resource.mimeType} />
+          {resource.src && (
+            <source src={resource.src} type={resource.mimeType} />
+          )}
           {tracks &&
             tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
               <track

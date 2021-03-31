@@ -27,7 +27,7 @@ import styled from 'styled-components';
 import MediaElement from '../mediaElement';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import SnackbarContext from '../../../../../../app/snackbar/context';
+import { SnackbarContext } from '../../../../../../../design-system';
 import testImage from '../../local/stories/test-image.jpg';
 import testPoster from './test-poster.png';
 import testVideo from './test-video.mp4';
@@ -78,6 +78,7 @@ export const _Image = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}
@@ -116,6 +117,7 @@ export const _Image_With_Attribution = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}
@@ -150,6 +152,7 @@ export const _Video = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}
@@ -190,6 +193,7 @@ export const _Video_With_Attribution = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}

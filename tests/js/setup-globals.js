@@ -59,3 +59,15 @@ global.matchMedia = jest.fn().mockImplementation((query) => ({
   removeEventListener: jest.fn(),
   dispatchEvent: jest.fn(),
 }));
+
+// jsdom doesn't support these, so we stub them to make tests work as expected.
+window.HTMLMediaElement.prototype.load = () => undefined;
+window.HTMLMediaElement.prototype.play = () => Promise.resolve();
+window.HTMLMediaElement.prototype.pause = () => undefined;
+
+// Prevent React warnings when setting the `muted` attribute on `<video>` elements.
+// See https://github.com/testing-library/react-testing-library/issues/470
+// See https://github.com/facebook/react/issues/10389
+Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
+  set: () => {},
+});
