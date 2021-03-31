@@ -20,6 +20,5 @@ export { ReactComponent as Dropdown } from './dropdown.svg';
 export { ReactComponent as KeyArrowUp } from './key_arrow_up.svg';
 export { ReactComponent as Media } from './media.svg';
 export { ReactComponent as More } from './more_horiz.svg';
-export { ReactComponent as Remove } from './remove.svg';
 export { ReactComponent as TurningLine } from './turning_line.svg';
 export { ReactComponent as Union } from './union.svg';
