@@ -106,7 +106,14 @@ const Strong = styled.span`
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
 `;
 
-function ColorPresetActions({ color, pushUpdate }) {
+/**
+ * @param {Object} properties Properties.
+ * @param {Object} properties.color Current color.
+ * @param {Function} properties.pushUpdate Update function.
+ * @param {Function} properties.onAction Function called when user initiates an action.
+ * @return {*} Element.
+ */
+function ColorPresetActions({ color, pushUpdate, onAction }) {
   const [showLocalColors, setShowLocalColors] = useState(true);
   const {
     selectedElements,
@@ -164,6 +171,7 @@ function ColorPresetActions({ color, pushUpdate }) {
         updateStory({
           properties: newProps,
         });
+        onAction?.();
       }
     },
     [
@@ -174,6 +182,7 @@ function ColorPresetActions({ color, pushUpdate }) {
       isText,
       globalColors,
       updateStory,
+      onAction,
     ]
   );
 
@@ -196,9 +205,10 @@ function ColorPresetActions({ color, pushUpdate }) {
           <StyledDropDown
             options={options}
             selectedValue={showLocalColors ? LOCAL : GLOBAL}
-            onMenuItemClick={(evt, value) =>
-              setShowLocalColors(value === LOCAL)
-            }
+            onMenuItemClick={(evt, value) => {
+              setShowLocalColors(value === LOCAL);
+              onAction?.();
+            }}
             isInline
             hasSearch={false}
             aria-label={__('Select color type', 'web-stories')}
@@ -244,6 +254,7 @@ function ColorPresetActions({ color, pushUpdate }) {
 ColorPresetActions.propTypes = {
   color: PatternPropType,
   pushUpdate: PropTypes.func,
+  onAction: PropTypes.func,
 };
 
 export default ColorPresetActions;

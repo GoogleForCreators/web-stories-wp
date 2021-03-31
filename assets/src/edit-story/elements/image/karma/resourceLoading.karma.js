@@ -33,7 +33,9 @@ describe('Image resource loading integration', () => {
     fixture.restore();
   });
 
-  it('should use cached thumbnail then switch to fullsize', async () => {
+  // TODO #6954
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should use cached thumbnail then switch to fullsize', async () => {
     // Sleep a bit to ensure the media gallery grid is properly laid out.
     await fixture.events.sleep(50);
 

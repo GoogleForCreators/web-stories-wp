@@ -36,6 +36,7 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
+import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
@@ -160,8 +161,8 @@ export class Fixture {
       'noselection',
       'publishing',
       'status',
-      'stylepreset-style',
-      'stylepreset-color',
+      `stylepreset-${PRESET_TYPES.STYLE}`,
+      `stylepreset-${PRESET_TYPES.COLOR}`,
     ];
     // Open all panels by default.
     panels.forEach((panel) => {

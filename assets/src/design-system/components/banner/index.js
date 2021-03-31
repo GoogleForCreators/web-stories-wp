@@ -48,7 +48,6 @@ const CloseButton = styled(Button)`
 `;
 
 const Container = styled.div`
-  box-sizing: border-box;
   display: grid;
   width: 100%;
   min-height: 60px;

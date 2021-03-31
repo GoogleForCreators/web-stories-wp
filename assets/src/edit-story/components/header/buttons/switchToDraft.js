@@ -29,10 +29,9 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Tooltip,
-  TOOLTIP_PLACEMENT,
   Icons,
 } from '../../../../design-system';
+import Tooltip from '../../tooltip';
 
 function SwitchToDraft() {
   const { isSaving, saveStory } = useStory(
@@ -53,7 +52,7 @@ function SwitchToDraft() {
 
   const label = __('Switch to Draft', 'web-stories');
   return (
-    <Tooltip title={label} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+    <Tooltip title={label} hasTail>
       <Button
         variant={BUTTON_VARIANTS.SQUARE}
         type={BUTTON_TYPES.QUATERNARY}

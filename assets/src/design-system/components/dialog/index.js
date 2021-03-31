@@ -28,7 +28,6 @@ import { Modal } from '../modal';
 import { Headline } from '../typography';
 
 const DialogBox = styled.div`
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -54,13 +53,19 @@ const DialogActions = styled.div`
   align-self: flex-end;
   margin: 0;
 
-  & > button {
+  & > button,
+  & > a {
     margin-right: 10px;
-    &:last-of-type {
+    margin-left: 6px;
+    &:last-child {
       margin-right: 0;
     }
   }
 `;
+/**
+ * Dialogs should be wrapped in a ThemeProvider
+ * and given the inverted theme to the app.
+ */
 
 export function Dialog({ children, title, actions, isOpen, onClose, ...rest }) {
   return (

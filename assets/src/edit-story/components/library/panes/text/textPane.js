@@ -42,6 +42,12 @@ const Pane = styled(SharedPane)`
   position: relative;
 `;
 
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+`;
+
 function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
@@ -84,17 +90,16 @@ function TextPane(props) {
       )}
 
       <Section title={__('Presets', 'web-stories')}>
-        {PRESETS.map(({ title, element }, i) => (
-          <FontPreview
-            key={
-              /* eslint-disable-next-line react/no-array-index-key */
-              i
-            }
-            title={title}
-            element={element}
-            onClick={() => onClick(title, element)}
-          />
-        ))}
+        <GridContainer>
+          {PRESETS.map(({ title, element }) => (
+            <FontPreview
+              key={title}
+              title={title}
+              element={element}
+              onClick={() => onClick(title, element)}
+            />
+          ))}
+        </GridContainer>
       </Section>
       {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>

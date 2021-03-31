@@ -41,9 +41,8 @@ import {
   Input,
   Text,
   THEME_CONSTANTS,
-  Tooltip,
-  TOOLTIP_PLACEMENT,
 } from '../../../../../design-system';
+import Tooltip from '../../../tooltip';
 
 const InputRow = styled.div`
   display: flex;
@@ -84,7 +83,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const isMixedValue = tracks === MULTIPLE_VALUE;
   const captionText = __('Upload a file', 'web-stories');
   const clearFileText = __('Remove file', 'web-stories');
-  /* @TODO: Implement error handling after removing modal and 
+  /* @TODO: Implement error handling after removing modal and
   using native browser upload. */
   const uploadError = false;
 
@@ -175,11 +174,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
                 disabled
               />
             </InputRow>
-            <Tooltip
-              hasTail
-              placement={TOOLTIP_PLACEMENT.BOTTOM}
-              title={clearFileText}
-            >
+            <Tooltip hasTail title={clearFileText}>
               <Button
                 aria-label={clearFileText}
                 type={BUTTON_TYPES.TERTIARY}

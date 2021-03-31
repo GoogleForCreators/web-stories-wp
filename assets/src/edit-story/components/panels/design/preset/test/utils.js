@@ -27,6 +27,7 @@ import {
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import objectWithout from '../../../../../utils/objectWithout';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
+import { PRESET_TYPES } from '../constants';
 
 describe('Panels/StylePreset/utils', () => {
   const TEST_COLOR = {
@@ -215,7 +216,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -237,7 +242,11 @@ describe('Panels/StylePreset/utils', () => {
       colors: [],
       textStyles: [],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'color');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.COLOR
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -275,7 +284,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -306,7 +319,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -344,7 +361,11 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, globalStoryStyles, 'style');
+    const presets = getTextPresets(
+      elements,
+      globalStoryStyles,
+      PRESET_TYPES.STYLE
+    );
     expect(presets).toStrictEqual(expected);
   });
 
@@ -382,7 +403,7 @@ describe('Panels/StylePreset/utils', () => {
       colors: [],
       textStyles: [],
     };
-    const presets = getTextPresets(elements, colorPresets, 'color');
+    const presets = getTextPresets(elements, colorPresets, PRESET_TYPES.COLOR);
     expect(presets).toStrictEqual(expected);
   });
 

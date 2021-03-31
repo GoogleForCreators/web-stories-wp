@@ -44,7 +44,7 @@ import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
-import EffectChooserDropdown from './effectChooserDropdown';
+import { EffectChooserDropdown } from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
 
@@ -149,7 +149,7 @@ function AnimationPanel({
   // the all the focus updates go through prevents the reset from
   // overriding this play call.
   const activeElement = document.activeElement;
-  const [dedbouncedUpdateAnimationState] = useDebouncedCallback(() => {
+  const [debouncedUpdateAnimationState] = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
         animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
@@ -157,11 +157,11 @@ function AnimationPanel({
       playUpdatedAnimation.current = false;
     }
   }, 100);
-  useEffect(dedbouncedUpdateAnimationState, [
+  useEffect(debouncedUpdateAnimationState, [
     selectedElementAnimations,
     updateAnimationState,
     activeElement,
-    dedbouncedUpdateAnimationState,
+    debouncedUpdateAnimationState,
   ]);
 
   const handleRemoveEffect = useCallback(() => {
@@ -236,7 +236,6 @@ function AnimationPanel({
         <StyledRow>
           <EffectChooserDropdown
             onAnimationSelected={handleAddOrUpdateElementEffect}
-            selectedEffectTitle={selectedEffectTitle}
             onNoEffectSelected={handleRemoveEffect}
             isBackgroundEffects={isBackground}
             disabledTypeOptionsMap={disabledTypeOptionsMap}

@@ -172,7 +172,9 @@ describe('Text Style Panel', () => {
         expect(fontWeight.value).toBe('Regular');
 
         await fixture.events.click(fontWeight.select);
-        await fixture.events.click(fontWeight.option('Bold'));
+
+        await fixture.events.sleep(TIMEOUT);
+        await fixture.events.click(await fontWeight.option('Bold'));
         await fixture.events.sleep(TIMEOUT);
         expect(fontWeight.value).toBe('Bold');
 
