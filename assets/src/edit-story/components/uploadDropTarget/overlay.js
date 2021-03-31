@@ -34,7 +34,7 @@ const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.v11, 0.6)};
+    rgba(theme.colors.bg.primary, 0.6)};
 `;
 
 function UploadDropTargetOverlayWithRef(props, ref) {
