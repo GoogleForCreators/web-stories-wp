@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-export * from './components';
-export * from './constants';
-export * from './parts';
-export * from './outputs';
-export * from './utils';
+/**
+ * External dependencies
+ */
+import { forwardRef } from 'react';
+
+// eslint-disable-next-line no-unused-vars
+export const MockMoveable = jest.fn((props, ref) => <div />);
+
+export default forwardRef(MockMoveable);

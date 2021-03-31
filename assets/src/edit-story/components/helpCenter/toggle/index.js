@@ -62,7 +62,7 @@ const Chevron = styled(Icons.ChevronUpSmall)`
   width: 32px;
   height: 32px;
   transform-origin: 50% 50%;
-  transform: rotate(${({ isOpen }) => (isOpen ? 0 : 180)}deg);
+  transform: rotate(${({ $isOpen }) => ($isOpen ? 0 : 180)}deg);
   transition: transform 300ms ${BEZIER.default};
 
   @media ${({ theme }) => theme.breakpoint.mobile} {
@@ -114,7 +114,7 @@ function Toggle({
           <NotificationBubble notificationCount={notificationCount} />
         </NotificationWrapper>
       ) : (
-        <Chevron isOpen={isOpen} />
+        <Chevron $isOpen={isOpen} />
       )}
     </Button>
   );

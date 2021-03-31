@@ -56,7 +56,7 @@ describe('<SavedTemplates />', function () {
           sort={{ value: STORY_SORT_OPTIONS.CREATED_BY, set: setSortFn }}
           view={{
             style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
+            pageSize: { width: 200, height: 300, containerHeight: 300 },
           }}
         />
       </LayoutProvider>,
@@ -80,7 +80,7 @@ describe('<SavedTemplates />', function () {
           }}
           view={{
             style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
+            pageSize: { width: 200, height: 300, containerHeight: 300 },
           }}
         />
       </LayoutProvider>,

@@ -27,7 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { DateTime, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';
-import { useKeyDownEffect } from '../../../../../design-system';
+import { PLACEMENT, useKeyDownEffect } from '../../../../../design-system';
 import useFocusOut from '../../../../utils/useFocusOut';
 import DropDownSelect from '../../../../../design-system/components/dropDown/select';
 
@@ -98,7 +98,7 @@ function PublishTime() {
       <Popup
         anchor={dateFieldRef}
         isOpen={showDatePicker}
-        placement={'bottom-end'}
+        placement={PLACEMENT.BOTTOM_END}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime
             value={date}

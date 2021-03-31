@@ -26,7 +26,7 @@ import InlineInputForm from '../';
 
 describe('InlineInputForm', () => {
   it('should render a text input field', () => {
-    const { getByRole, getByText } = renderWithProviders(
+    const { getByRole } = renderWithProviders(
       <InlineInputForm
         onEditComplete={jest.fn}
         onEditCancel={jest.fn}
@@ -36,13 +36,10 @@ describe('InlineInputForm', () => {
       />
     );
 
-    const label = getByText('my hidden input label');
     const input = getByRole('textbox');
-    const labelPosition = window.getComputedStyle(label).position;
-
-    expect(labelPosition).toBe('absolute');
     expect(input).toBeInTheDocument();
   });
+
   it('should call onEditCancel when focus is removed from input', () => {
     const mockCancel = jest.fn();
 
