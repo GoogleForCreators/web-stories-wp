@@ -62,11 +62,6 @@ const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
   min-height: 90vh;
   height: calc(100% - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
-
-  &:focus {
-    border: ${({ theme }) => theme.DEPRECATED_THEME.borders.bluePrimary};
-    border-width: 2px;
-  }
 `;
 
 const HelperText = styled(Text)`
