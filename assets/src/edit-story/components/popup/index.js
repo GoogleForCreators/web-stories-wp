@@ -19,7 +19,13 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import { useLayoutEffect, useCallback, useState, useRef } from 'react';
+import {
+  useLayoutEffect,
+  useEffect,
+  useCallback,
+  useState,
+  useRef,
+} from 'react';
 /**
  * Internal dependencies
  */
@@ -63,6 +69,8 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
+  overflow-y: scroll;
+  max-height: 100vh;
 `;
 
 function Popup({
@@ -93,10 +101,21 @@ function Popup({
       }
       setPopupState({
         offset: getOffset(placement, spacing, anchor, dock, popup),
+        height: popup.current?.getBoundingClientRect()?.height,
       });
     },
     [anchor, dock, placement, spacing, mounted]
   );
+
+  useEffect(() => {
+    // If the popup height changes meanwhile, let's update the popup, too.
+    if (
+      popupState?.height &&
+      popupState.height !== popup.current?.getBoundingClientRect()?.height
+    ) {
+      positionPopup();
+    }
+  }, [popupState?.height, positionPopup]);
 
   useLayoutEffect(() => {
     setMounted(true);

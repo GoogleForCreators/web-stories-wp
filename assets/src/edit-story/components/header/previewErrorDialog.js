@@ -23,23 +23,21 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Plain } from '../button';
+import { Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
-
 function PreviewErrorDialog({ open, onClose, onRetry }) {
   return (
     <Dialog
       open={open}
       onClose={onClose}
       title={__('Open preview', 'web-stories')}
-      actions={
-        <>
-          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={onRetry}>{__('Try again', 'web-stories')}</Plain>
-        </>
-      }
+      secondaryText={__('Cancel', 'web-stories')}
+      onPrimary={onRetry}
+      primaryText={__('Try again', 'web-stories')}
     >
-      {__('The preview window failed to open.', 'web-stories')}
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {__('The preview window failed to open.', 'web-stories')}
+      </Text>
     </Dialog>
   );
 }
