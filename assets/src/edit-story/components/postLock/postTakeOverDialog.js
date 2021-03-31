@@ -24,7 +24,12 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import Dialog from '../dialog';
-import { Plain } from '../button';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../design-system';
 import { Img, Paragraph } from './shared';
 
 /**
@@ -53,7 +58,14 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
       contentLabel={dialogTile}
       onClose={onClose}
       actions={
-        <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
+        <Button
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          href={dashboardLink}
+        >
+          {__('My Stories', 'web-stories')}
+        </Button>
       }
     >
       <Paragraph>
