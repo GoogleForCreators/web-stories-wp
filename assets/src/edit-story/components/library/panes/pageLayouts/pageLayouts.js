@@ -201,7 +201,6 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
           </Text>
           <Toggle
             id={toggleId}
-            aria-label={__('Show images in layouts', 'web-stories')}
             name={toggleId}
             checked={showLayoutImages}
             onChange={onToggleClick}
