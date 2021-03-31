@@ -23,7 +23,7 @@ namespace Google\Web_Stories\Infrastructure;
  * This way, a more elaborate mechanism can be plugged in, like using
  * ProxyManager to instantiate proxies instead of actual objects.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Instantiator {

@@ -26,7 +26,7 @@ namespace Google\Web_Stories\Infrastructure;
  * This way, we can just add the simple interface marker and not worry about how
  * to wire up the code to reach that part during the static deactivation hook.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Deactivateable {

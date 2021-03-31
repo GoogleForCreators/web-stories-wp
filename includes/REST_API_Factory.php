@@ -3,13 +3,13 @@
  * Class REST_API_Factory.
  *
  * @package   Google\Web_Stories
- * @copyright 2020 Google LLC
+ * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
  */
 
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,6 +83,8 @@ class REST_API_Factory extends Service_Base {
 	/**
 	 * Get the action to use for registering the service.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action() {
@@ -91,6 +93,8 @@ class REST_API_Factory extends Service_Base {
 
 	/**
 	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return int Registration action priority to use.
 	 */

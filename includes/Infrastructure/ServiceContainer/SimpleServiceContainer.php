@@ -28,7 +28,7 @@ use ArrayObject;
  * We extend ArrayObject so we have default implementations for iterators and
  * array access.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 final class SimpleServiceContainer
@@ -66,6 +66,8 @@ final class SimpleServiceContainer
 	 * Check whether the container can return a service for the given
 	 * identifier.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $id Identifier of the service to look for.
 	 *
 	 * @return bool
@@ -76,6 +78,8 @@ final class SimpleServiceContainer
 
 	/**
 	 * Put a service into the container for later retrieval.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param string  $id      Identifier of the service to put into the
 	 *                         container.

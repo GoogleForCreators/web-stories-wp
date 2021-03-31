@@ -2,7 +2,10 @@
 /**
  * Exception InvalidService.
  *
- * @package Google\Web_Stories
+ * @package   Google\Web_Stories
+ * @copyright 2019 Alain Schlesser
+ * @license   MIT
+ * @link      https://www.mwpd.io/
  */
 
 /**
@@ -28,7 +31,7 @@ use InvalidArgumentException;
 /**
  * Exception thrown when an invalid service was requested.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 final class InvalidService

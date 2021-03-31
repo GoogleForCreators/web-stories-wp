@@ -27,7 +27,7 @@ namespace Google\Web_Stories\Infrastructure;
  * This allows for a more systematic and automated optimization of how the
  * different parts of the plugin are enabled or disabled.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Conditional {

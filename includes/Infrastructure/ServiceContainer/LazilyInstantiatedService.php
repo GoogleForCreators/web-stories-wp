@@ -24,7 +24,7 @@ use Google\Web_Stories\Infrastructure\Service;
  * A service that only gets properly instantiated when it is actually being
  * retrieved from the container.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 final class LazilyInstantiatedService implements Service {

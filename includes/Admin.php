@@ -54,7 +54,8 @@ class Admin extends Service_Base {
 	/**
 	 * Get the action to use for registering the service.
 	 *
-	 * @return string Registration action to use.
+ * @since 1.6.0
+ * @internal
 	 */
 	public static function get_registration_action() {
 		return 'admin_init';

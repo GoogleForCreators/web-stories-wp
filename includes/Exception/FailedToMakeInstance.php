@@ -2,7 +2,10 @@
 /**
  * Exception FailedToMakeInstance.
  *
- * @package Google\Web_Stories
+ * @package   Google\Web_Stories
+ * @copyright 2019 Alain Schlesser
+ * @license   MIT
+ * @link      https://www.mwpd.io/
  */
 
 /**
@@ -30,7 +33,7 @@ use RuntimeException;
  * Exception thrown when the injector couldn't instantiate a given class or
  * interface.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 final class FailedToMakeInstance

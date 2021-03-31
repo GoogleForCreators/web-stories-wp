@@ -27,7 +27,7 @@ namespace Google\Web_Stories\Infrastructure;
  * requirements are met, like registering a frontend rendering service only
  * after the loop has been set up.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Delayed {

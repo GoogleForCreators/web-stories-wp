@@ -31,7 +31,7 @@ namespace Google\Web_Stories\Infrastructure;
  * collects all the services it is made up of. This allows direct access to the
  * services to outside code if needed.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Plugin extends Activateable, Deactivateable, Registerable {

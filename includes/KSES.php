@@ -69,6 +69,8 @@ class KSES extends Service_Base {
 	/**
 	 * Get the action priority to use for registering the service.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @return int Registration action priority to use.
 	 */
 	public static function get_registration_action_priority() {

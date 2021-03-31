@@ -2,7 +2,10 @@
 /**
  * Interface WebStoriesException.
  *
- * @package Google\Web_Stories
+ * @package   Google\Web_Stories
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
  */
 
 /**
@@ -30,7 +33,7 @@ namespace Google\Web_Stories\Exception;
  * This allows you to not only catch individual exceptions, but also catch "all
  * exceptions from the Web_Stories plugin".
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface WebStoriesException {

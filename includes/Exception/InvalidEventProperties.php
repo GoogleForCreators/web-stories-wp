@@ -2,7 +2,10 @@
 /**
  * Exception InvalidEventProperties.
  *
- * @package Google\Web_Stories
+ * @package   Google\Web_Stories
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
  */
 
 /**
@@ -28,7 +31,7 @@ use InvalidArgumentException;
 /**
  * Exception thrown when an invalid properties are added to an Event.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 final class InvalidEventProperties

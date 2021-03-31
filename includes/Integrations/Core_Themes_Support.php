@@ -137,6 +137,7 @@ class Core_Themes_Support extends Service_Base {
 	/**
 	 * Get the action to use for registering the service.
 	 *
+	 * @since 1.6.0
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action() {

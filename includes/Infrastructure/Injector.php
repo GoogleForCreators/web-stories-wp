@@ -34,7 +34,7 @@ namespace Google\Web_Stories\Infrastructure;
  * (always returning a fresh new instance on each subsequent call). This
  * effectively gets rid of the dreaded Singletons.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Injector extends Service {

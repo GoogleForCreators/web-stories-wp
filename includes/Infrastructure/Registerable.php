@@ -29,7 +29,7 @@ namespace Google\Web_Stories\Infrastructure;
  * Registering such an object is the explicit act of making it known to the
  * overarching system.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Registerable {

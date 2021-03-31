@@ -3,9 +3,9 @@
  * Final class FallbackInstantiator.
  *
  * @package   Google\Web_Stories
- * @copyright 2019 Alain Schlesser
- * @license   MIT
- * @link      https://www.mwpd.io/
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
  */
 
 /**
@@ -22,7 +22,7 @@ use Google\Web_Stories\Infrastructure\Instantiator;
 /**
  * Fallback instantiator to use in case none was provided.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 final class FallbackInstantiator implements Instantiator {

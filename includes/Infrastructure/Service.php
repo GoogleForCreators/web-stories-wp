@@ -24,7 +24,7 @@ namespace Google\Web_Stories\Infrastructure;
  * assembling a plugin more systematic and scalable and lowers the cognitive
  * load when the code base increases in size.
  *
- * @since 1.6
+ * @since 1.6.0
  * @internal
  */
 interface Service {
