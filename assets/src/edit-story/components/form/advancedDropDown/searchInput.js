@@ -28,6 +28,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
 import { ReactComponent as SearchIcon } from '../../../icons/search.svg';
+import { noop } from '../../../utils/noop';
 
 const SearchContainer = styled.div`
   position: relative;
@@ -113,13 +114,17 @@ const SearchInput = forwardRef(function SearchInput(
     onClose,
     value,
     onChange,
-    focusFontListFirstOption = () => {},
+    focusFontListFirstOption = noop,
     ...rest
   },
   ref
 ) {
   const handleKeyPress = useCallback(
-    ({ key }) => {
+    (evt) => {
+      evt.stopPropagation();
+
+      const { key } = evt;
+
       if (key === 'Escape') {
         onClose();
       } else if (key === 'ArrowDown') {

@@ -22,14 +22,19 @@ import { render } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import StoryCard from '../components/storyCard';
+import StoryCard from '../storyCard';
 
-const title = 'Stories in AMP';
-const poster = 'https://amp.dev/static/samples/img/story_dog2_portrait.jpg';
-const date = '2020-11-18T13:36:35';
-const author = 'Admin';
-const excerpt =
-  'Ullamcorper integer senectus netus dapibus consectetur orci imperdiet gravida volutpat nulla, aliquet penatibus elit sollicitudin turpis aenean suscipit vel a, at et congue nullam tincidunt semper eget auctor vehicula. Netus commodo mauris pharetra non diam fusce convallis nibh tempor nisi fringilla, lorem bibendum aenean nostra dis congue mus primis sapien vivamus tortor proin, metus leo quam arcu et augue lacinia integer suscipit ridiculus. Nulla diam viverra fringilla nostra, neque augue cubilia blandit felis, habitant leo aliquam. Fusce dictumst cursus nibh penatibus interdum duis natoque sed, lacinia ut convallis nam scelerisque lorem cubilia curabitur vel, mollis aliquam mattis commodo litora pretium suscipit.';
+jest.mock('@wordpress/element', () => {
+  const originalModule = jest.requireActual('react');
+  return {
+    ...originalModule,
+    concatChildren: jest.fn(),
+    createInterpolateElement: jest.fn(() => null),
+    RawHTML: jest.fn(({ children, className }) => (
+      <div className={className}>{children}</div>
+    )),
+  };
+});
 
 jest.mock('@wordpress/date', () => ({
   /* eslint-disable no-unused-vars */
@@ -42,6 +47,13 @@ jest.mock('@wordpress/date', () => ({
   }),
   /* eslint-enable no-unused-vars */
 }));
+
+const title = 'Stories in AMP';
+const poster = 'https://amp.dev/static/samples/img/story_dog2_portrait.jpg';
+const date = '2020-11-18T13:36:35';
+const author = 'Admin';
+const excerpt =
+  'Ullamcorper integer senectus netus dapibus consectetur orci imperdiet gravida volutpat nulla, aliquet penatibus elit sollicitudin turpis aenean suscipit vel a, at et congue nullam tincidunt semper eget auctor vehicula. Netus commodo mauris pharetra non diam fusce convallis nibh tempor nisi fringilla, lorem bibendum aenean nostra dis congue mus primis sapien vivamus tortor proin, metus leo quam arcu et augue lacinia integer suscipit ridiculus. Nulla diam viverra fringilla nostra, neque augue cubilia blandit felis, habitant leo aliquam. Fusce dictumst cursus nibh penatibus interdum duis natoque sed, lacinia ut convallis nam scelerisque lorem cubilia curabitur vel, mollis aliquam mattis commodo litora pretium suscipit.';
 
 describe('StoryCard', () => {
   it('should render only empty div elements when nothing is provided', () => {

@@ -33,11 +33,12 @@ import ColorPresetPanel from './colorPreset/colorPresetPanel';
 import useDeletePreset from './useDeletePreset';
 import StyleGroup from './stylePreset/styleGroup';
 import useApplyColor from './colorPreset/useApplyColor';
+import { PRESET_TYPES } from './constants';
 import useApplyStyle from './stylePreset/useApplyStyle';
 
 function PresetPanel({ presetType, title, pushUpdate }) {
-  const isStyle = 'style' === presetType;
-  const isColor = 'color' === presetType;
+  const isStyle = PRESET_TYPES.STYLE === presetType;
+  const isColor = PRESET_TYPES.COLOR === presetType;
   const { currentStoryStyles, selectedElements, globalStoryStyles } = useStory(
     ({
       state: {

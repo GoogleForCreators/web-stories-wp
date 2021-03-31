@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
@@ -26,17 +25,9 @@ import { trackClick } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { Plain } from '../button';
-import Dialog from '../dialog';
-import Link from '../link';
 
-const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
-`;
+import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
+import Dialog from '../dialog';
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
   const onAddToPostClick = useCallback((evt) => {
@@ -52,20 +43,17 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
       open={open}
       onClose={onClose}
       title={__('Story published!', 'web-stories')}
-      actions={
-        <>
-          <Plain onClick={onClose}>{__('Dismiss', 'web-stories')}</Plain>
-          <Plain href={confirmURL} onClick={onAddToPostClick}>
-            {__('Add to new post', 'web-stories')}
-          </Plain>
-        </>
-      }
+      secondaryText={__('Dismiss', 'web-stories')}
+      primaryText={__('Add to new post', 'web-stories')}
+      onPrimary={onAddToPostClick}
+      primaryRest={{ href: confirmURL }}
     >
-      <Paragraph>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         <TranslateWithMarkup
           mapping={{
             a: (
               <Link
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 href={storyURL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -79,10 +67,10 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
             'web-stories'
           )}
         </TranslateWithMarkup>
-      </Paragraph>
-      <Paragraph>
+      </Text>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('Would you like to include it on a new post?', 'web-stories')}
-      </Paragraph>
+      </Text>
     </Dialog>
   );
 }

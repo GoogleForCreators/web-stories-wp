@@ -30,7 +30,7 @@ export const NumericInput = ({
   onChange,
   max,
   min,
-  value,
+  value = '',
   isIndeterminate: originalIsIndeterminate,
   ...props
 }) => {

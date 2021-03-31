@@ -39,7 +39,7 @@ const fakeStories = [
     title: 'Story A',
     pages: [{ id: '10' }],
     centerTargetAction: () => {},
-    bottomTargetAction: () => {},
+    bottomTargetAction: 'https://example.com',
     editStoryLink: () => {},
   },
   {
@@ -48,7 +48,7 @@ const fakeStories = [
     title: 'Story B',
     pages: [{ id: '20' }],
     centerTargetAction: () => {},
-    bottomTargetAction: () => {},
+    bottomTargetAction: 'https://example.com',
     editStoryLink: () => {},
   },
   {
@@ -57,7 +57,7 @@ const fakeStories = [
     title: 'Story C',
     pages: [{ id: '30' }],
     centerTargetAction: () => {},
-    bottomTargetAction: () => {},
+    bottomTargetAction: 'https://example.com',
     editStoryLink: () => {},
   },
 ];

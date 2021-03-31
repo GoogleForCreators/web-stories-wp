@@ -26,6 +26,7 @@ import { getTabId } from './utils';
 
 const InspectorPane = styled.div.attrs({ role: 'tabpanel' })`
   height: 100%;
+  overflow: overlay;
 `;
 
 const InspectorPanes = styled.section`

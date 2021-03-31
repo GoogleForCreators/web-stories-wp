@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -47,9 +47,11 @@ describe('reducer', () => {
       useMediaReducer(media3pReducer, media3pActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
-      provider: 'unsplash',
-      media: [{ id: 'id' }],
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'unsplash',
+        media: [{ id: 'id' }],
+      });
     });
 
     expect(result.current.state.unsplash).toStrictEqual(
@@ -65,7 +67,9 @@ describe('reducer', () => {
       useMediaReducer(media3pReducer, media3pActionsToWrap)
     );
 
-    result.current.actions.setSelectedProvider({ provider: 'unsplash' });
+    act(() => {
+      result.current.actions.setSelectedProvider({ provider: 'unsplash' });
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -79,7 +83,9 @@ describe('reducer', () => {
       useMediaReducer(media3pReducer, media3pActionsToWrap)
     );
 
-    result.current.actions.setSearchTerm({ searchTerm: 'cats' });
+    act(() => {
+      result.current.actions.setSearchTerm({ searchTerm: 'cats' });
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -93,7 +99,9 @@ describe('reducer', () => {
       useMediaReducer(localReducer, localMediaActionsToWrap)
     );
 
-    localMediaResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
+    act(() => {
+      localMediaResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
+    });
 
     const { result: media3pResult } = renderHook(() =>
       useMediaReducer(media3pReducer, media3pActionsToWrap)
@@ -116,7 +124,9 @@ describe('reducer', () => {
       useMediaReducer(media3pReducer, media3pActionsToWrap)
     );
 
-    media3pResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
+    act(() => {
+      media3pResult.current.actions.setSearchTerm({ searchTerm: 'cats' });
+    });
 
     const { result: localMediaResult } = renderHook(() =>
       useMediaReducer(localReducer, localMediaActionsToWrap)

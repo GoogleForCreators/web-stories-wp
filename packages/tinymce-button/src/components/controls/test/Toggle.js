@@ -21,7 +21,16 @@ import renderer from 'react-test-renderer';
 /**
  * Internal dependencies
  */
-import TinyMCEToggle from '../../controls/Toggle';
+import TinyMCEToggle from '../Toggle';
+
+jest.mock('@wordpress/element', () => {
+  const originalModule = jest.requireActual('react');
+  return {
+    ...originalModule,
+    concatChildren: jest.fn(),
+    createInterpolateElement: jest.fn(() => null),
+  };
+});
 
 describe('compare TinyMCEToggle snapshots', () => {
   it('tinyMCEToggle control with hidden attrs true', () => {

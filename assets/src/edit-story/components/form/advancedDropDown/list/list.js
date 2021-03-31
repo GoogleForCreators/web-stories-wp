@@ -140,7 +140,7 @@ function OptionList({
           (option) => option && observer.unobserve(option)
         );
       }
-      // clear exisiting option references before next update to filteredGroup
+      // clear existing option references before next update to filteredGroup
       optionsRef.current = [];
     };
   }, [observer, onObserve, filteredListGroups]);
@@ -160,7 +160,12 @@ function OptionList({
   ]);
 
   const handleKeyPress = useCallback(
-    ({ key }) => {
+    (evt) => {
+      evt.stopPropagation();
+      evt.preventDefault();
+
+      const { key } = evt;
+
       if (key === 'Escape') {
         onClose();
       } else if (key === 'Enter') {
@@ -228,7 +233,7 @@ function OptionList({
         return (
           group.options.length > 0 && (
             <Group
-              key={group.label}
+              key={groupLabelId}
               role="group"
               aria-labelledby={groupLabelId}
             >

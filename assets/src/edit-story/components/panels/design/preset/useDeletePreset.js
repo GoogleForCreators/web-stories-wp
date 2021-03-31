@@ -22,6 +22,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
+import { PRESET_TYPES } from './constants';
 
 function useDeletePreset({ presetType, setIsEditMode }) {
   const { currentStoryStyles, globalStoryStyles, updateStory } = useStory(
@@ -39,8 +40,8 @@ function useDeletePreset({ presetType, setIsEditMode }) {
     }
   );
 
-  const isColor = 'color' === presetType;
-  const isStyle = 'style' === presetType;
+  const isColor = PRESET_TYPES.COLOR === presetType;
+  const isStyle = PRESET_TYPES.STYLE === presetType;
 
   const { colors, textStyles } = globalStoryStyles;
   const globalStyles = isColor ? colors : textStyles;
