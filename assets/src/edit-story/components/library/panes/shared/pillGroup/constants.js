@@ -15,6 +15,7 @@
  */
 export const PILL_HEIGHT = 36;
 export const PILL_TOP_MARGIN = 16;
-export const PILL_BOTTOM_MARGIN = 30;
+export const PILL_BOTTOM_MARGIN = 20;
+export const FOCUS_SPACING = 4;
 export const PILL_COLLAPSED_FULL_HEIGHT =
   PILL_HEIGHT + PILL_TOP_MARGIN + PILL_BOTTOM_MARGIN;

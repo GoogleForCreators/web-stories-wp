@@ -18,24 +18,30 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { ArrowDown } from '../../../../button';
-import { useKeyDownEffect } from '../../../../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Pill,
+  useKeyDownEffect,
+} from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import Pill from './pill';
 
 /**
  * Internal dependencies
  */
 import {
+  FOCUS_SPACING,
   PILL_COLLAPSED_FULL_HEIGHT,
   PILL_BOTTOM_MARGIN,
   PILL_TOP_MARGIN,
@@ -46,8 +52,7 @@ import useHandleRowVisibility from './useHandleRowVisibility';
 const Section = styled.div`
   height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
   min-height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.workspace, 0.8)};
+  background-color: ${({ theme }) => theme.colors.divider.tertiary};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -59,7 +64,7 @@ const Section = styled.div`
 // This hides the pills unless expanded
 const Container = styled.div`
   overflow: hidden;
-  margin: ${PILL_TOP_MARGIN}px 12px ${PILL_BOTTOM_MARGIN}px 24px;
+  margin: ${PILL_TOP_MARGIN}px 12px ${PILL_BOTTOM_MARGIN - FOCUS_SPACING}px 24px;
 `;
 
 const InnerContainer = styled.div`
@@ -67,26 +72,40 @@ const InnerContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   position: relative;
+  padding: 4px 0;
   transition: transform 0.2s;
+  gap: 8px;
 `;
 
 // Flips the button upside down when expanded;
-// Important: the visibily is 'inherit' when props.visible because otherwise
+// Important: the visibility is 'inherit' when props.visible because otherwise
 // it gets shown even when the provider is not the selectedProvider!
-const ExpandButton = styled(ArrowDown)`
+const ExpandButton = styled(Button).attrs({
+  type: BUTTON_TYPES.TERTIARY,
+  size: BUTTON_SIZES.SMALL,
+  variant: BUTTON_VARIANTS.CIRCLE,
+})`
   display: flex;
   position: absolute;
-  bottom: -16px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray16};
+  bottom: -24px;
+  background: ${({ theme }) => theme.colors.bg.tertiary};
   max-height: none;
   width: 32px;
   height: 32px;
-  border-radius: 16px;
   ${({ isExpanded }) => isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'}
   visibility: inherit;
   align-self: center;
   justify-content: center;
   align-items: center;
+`;
+
+const StyledPill = styled(Pill)`
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  background-color: ${({ isActive, theme }) =>
+    isActive
+      ? theme.colors.interactiveBg.secondaryNormal
+      : theme.colors.opacity.footprint};
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
@@ -99,14 +118,22 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
 
   const [focusedRowOffset, setFocusedRowOffset] = useState(0);
 
-  const handleClick = (selected, id) => {
-    if (selected) {
-      deselectItem();
-    } else {
-      setIsExpanded(false);
-      selectItem(id);
-    }
-  };
+  const handleClick = useCallback(
+    (selected, id) => {
+      if (selected && id !== null) {
+        deselectItem();
+      } else {
+        setIsExpanded(false);
+        selectItem(id);
+      }
+    },
+    [deselectItem, selectItem]
+  );
+
+  const handleExpandClick = useCallback(
+    () => setIsExpanded((currentExpanded) => !currentExpanded),
+    []
+  );
 
   useExpandAnimation({
     sectionRef,
@@ -151,31 +178,35 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
               {items.map((item, i) => {
                 const { id, label } = item;
                 const selected = id === selectedItemId;
+
                 return (
-                  <Pill
-                    itemRef={(el) => {
+                  <StyledPill
+                    key={id}
+                    role="option"
+                    ref={(el) => {
                       itemRefs.current[id] = el;
                     }}
-                    index={i}
-                    isSelected={selected}
-                    isExpanded={isExpanded}
-                    setIsExpanded={setIsExpanded}
-                    key={id}
+                    isActive={selected}
                     onClick={() => handleClick(selected, id)}
+                    // The first or selected category will be in focus for roving
+                    // (arrow-based) navigation initially.
+                    tabIndex={i === 0 || selected ? 0 : -1}
                   >
                     {label}
-                  </Pill>
+                  </StyledPill>
                 );
               })}
             </InnerContainer>
           </Container>
           <ExpandButton
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={handleExpandClick}
             isExpanded={isExpanded}
             aria-controls={containerId}
             aria-expanded={isExpanded}
             aria-label={__('Expand', 'web-stories')}
-          />
+          >
+            <Icons.ChevronUp />
+          </ExpandButton>
         </>
       )}
     </Section>

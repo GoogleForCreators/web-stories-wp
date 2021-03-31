@@ -26,6 +26,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import {
   THEME_CONSTANTS,
   Text,
@@ -113,6 +114,7 @@ function TextSetsPane({ paneRef }) {
 
   const categories = useMemo(
     () => [
+      { id: null, label: __('All', 'web-stories') },
       ...Object.keys(textSets).map((category) => ({
         id: category,
         label: CATEGORIES[category] ?? category,
