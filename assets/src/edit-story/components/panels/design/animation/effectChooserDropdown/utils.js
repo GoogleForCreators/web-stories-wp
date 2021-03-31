@@ -28,6 +28,9 @@ import {
 
 // Because some animations have the same effect name we have to specify based on direction
 export const getDirectionalEffect = (effect, direction) => {
+  if (effectValueExceptions.includes(effect)) {
+    return effect;
+  }
   return direction ? `${effect} ${direction}`.trim() : effect;
 };
 
