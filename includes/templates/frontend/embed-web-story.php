@@ -27,13 +27,22 @@ use Google\Web_Stories\Model\Story;
  * limitations under the License.
  */
 
-the_post();
+get_header( 'embed' );
 
-$current_post = get_post();
+if ( have_posts() ) :
+	while ( have_posts() ) :
+		the_post();
+		$current_post = get_post();
 
-if ( $current_post instanceof WP_Post ) {
-	$story = new Story();
-	$story->load_from_post( $current_post );
-	$renderer = new Image( $story );
-	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
+		if ( $current_post instanceof WP_Post ) {
+			$story = new Story();
+			$story->load_from_post( $current_post );
+			$renderer = new Image( $story );
+			echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+	endwhile;
+else :
+	get_template_part( 'embed', '404' );
+endif;
+
+get_footer( 'embed' );

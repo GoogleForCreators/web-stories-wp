@@ -200,6 +200,7 @@ class Story_Post_Type {
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
+
 		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
@@ -669,18 +670,18 @@ class Story_Post_Type {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string   $template  Path to the template. See locate_template().
+	 * @param string $template  Path to the template. See locate_template().
 	 *
 	 * @return string $template
 	 */
 	public function filter_embed_template( $template ) {
-		if ( get_post_type() === Story_Post_Type::POST_TYPE_SLUG && has_post_thumbnail() ) {
+		if ( get_post_type() === self::POST_TYPE_SLUG && has_post_thumbnail() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/embed-web-story.php';
 		}
 
 		return $template;
 	}
-
+	
 	/**
 	 * Handles redirects to the post type archive.
 	 *
