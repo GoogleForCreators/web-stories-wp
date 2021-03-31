@@ -107,8 +107,8 @@ describe('PostLock', () => {
     const storyContextValue = {
       state: {
         story: {
+          previewLink: 'http://www.example.com/preview',
           lockUser: {
-            previewLink: 'http://www.example.com/preview',
             id: 123,
             name: 'John Doe',
           },
