@@ -25,7 +25,6 @@ import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
 export const ListGroup = styled.ul`
-  box-sizing: border-box;
   list-style-type: none;
   margin: 6px 0;
   display: block;

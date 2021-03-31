@@ -24,6 +24,7 @@ export {
   default as CardGridItem,
 } from './cardGridItem';
 export { default as ColorList } from './colorList';
+export { default as Dialog } from './dialog';
 export { StandardViewContentGutter } from './contentGutter';
 export { default as FileUpload } from './fileUpload';
 export { default as InfiniteScroller } from './infiniteScroller';
@@ -69,4 +70,4 @@ export {
   TypographyPresets,
 } from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
-export { default as Tooltip } from './tooltip';
+export { Tooltip } from './tooltip';

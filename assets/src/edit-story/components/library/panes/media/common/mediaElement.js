@@ -29,13 +29,10 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import {
-  useKeyDownEffect,
-  Tooltip,
-  PLACEMENT,
-} from '../../../../../../design-system';
+import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
+import { Tooltip } from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 
@@ -160,11 +157,7 @@ function Element({
         if (mediaElement.current && hoverTimer == null) {
           const timer = setTimeout(() => {
             if (activeRef.current && src) {
-              const playPromise = mediaElement.current.play();
-              if (playPromise) {
-                // All supported browsers return promise but unit test runner does not.
-                playPromise.catch(() => {});
-              }
+              mediaElement.current.play().catch(() => {});
             }
           }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
           setHoverTimer(timer);
@@ -297,10 +290,7 @@ function MediaElement(props) {
 
   if (isTranscoding) {
     return (
-      <Tooltip
-        placement={PLACEMENT.BOTTOM}
-        title={__('Video optimization in progress', 'web-stories')}
-      >
+      <Tooltip title={__('Video optimization in progress', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

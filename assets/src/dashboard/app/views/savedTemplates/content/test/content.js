@@ -50,7 +50,7 @@ describe('Saved Templates <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300 },
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
             }}
             actions={{
               createStoryFromTemplate: jest.fn,
@@ -80,7 +80,7 @@ describe('Saved Templates <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300 },
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
             }}
             actions={{
               createStoryFromTemplate: jest.fn,
@@ -110,7 +110,7 @@ describe('Saved Templates <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300 },
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
             }}
             actions={{
               createStoryFromTemplate: jest.fn,

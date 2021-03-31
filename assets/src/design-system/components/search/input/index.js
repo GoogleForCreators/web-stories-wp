@@ -110,7 +110,7 @@ const SearchInput = (
         aria-hidden={activeInput}
         isVisible={!activeInput && inputValue.length > 0}
       >
-        <ChevronIcon isMenuOpen={isOpen} data-testid="chevron-search-icon" />
+        <ChevronIcon $isMenuOpen={isOpen} data-testid="chevron-search-icon" />
       </ChevronDecoration>
     </InputContainer>
   );

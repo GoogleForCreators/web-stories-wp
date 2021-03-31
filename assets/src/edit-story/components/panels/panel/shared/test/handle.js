@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
 /**
@@ -25,6 +24,7 @@ import { fireEvent } from '@testing-library/react';
  */
 import DragHandle from '../handle';
 import { renderWithTheme } from '../../../../../testUtils';
+import { noop } from '../../../../../utils/noop';
 
 describe('DragHandle', () => {
   describe('should raise handleHeightChange when up or down key is pressed', () => {
@@ -34,7 +34,14 @@ describe('DragHandle', () => {
     beforeEach(() => {
       handleHeightChange.mockReset();
       slider = renderWithTheme(
-        <DragHandle handleHeightChange={handleHeightChange} />
+        <DragHandle
+          handleHeightChange={handleHeightChange}
+          handleExpandToHeightChange={noop}
+          handleDoubleClick={noop}
+          height={100}
+          maxHeight={200}
+          minHeight={50}
+        />
       ).getByRole('slider');
     });
 

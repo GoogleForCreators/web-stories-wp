@@ -32,6 +32,7 @@ export const BUTTON_VARIANTS = {
   RECTANGLE: 'rectangle',
   SQUARE: 'square',
   ICON: 'icon',
+  LINK: 'link',
 };
 
 export const BUTTON_SIZE = 32;

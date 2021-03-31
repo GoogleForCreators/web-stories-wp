@@ -19,6 +19,7 @@
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
+import { PRESET_TYPES } from '../constants';
 
 describe('Panel: Color Presets', () => {
   let fixture;
@@ -27,7 +28,7 @@ describe('Panel: Color Presets', () => {
     fixture = new Fixture();
     await fixture.render();
     localStorage.setItem(
-      'web_stories_ui_panel_settings:stylepreset-color',
+      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.COLOR}`,
       JSON.stringify({ isCollapsed: false, height: 200 })
     );
   });

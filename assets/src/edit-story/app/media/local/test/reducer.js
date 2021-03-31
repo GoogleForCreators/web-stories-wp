@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -33,9 +33,11 @@ describe('reducer', () => {
       useMediaReducer(reducer, { ...localActionsToWrap, commonFetchMediaStart })
     );
 
-    result.current.actions.commonFetchMediaStart({
-      provider: 'unsplash',
-      pageToken: 'page2',
+    act(() => {
+      result.current.actions.commonFetchMediaStart({
+        provider: 'unsplash',
+        pageToken: 'page2',
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -51,7 +53,9 @@ describe('reducer', () => {
       useMediaReducer(reducer, localActionsToWrap)
     );
 
-    result.current.actions.fetchMediaStart({ pageToken: 'page2' });
+    act(() => {
+      result.current.actions.fetchMediaStart({ pageToken: 'page2' });
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -66,10 +70,12 @@ describe('reducer', () => {
       useMediaReducer(reducer, localActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
-      media: [{ id: 'id' }],
-      searchTerm: '',
-      mediaType: '',
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        media: [{ id: 'id' }],
+        searchTerm: '',
+        mediaType: '',
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -84,11 +90,16 @@ describe('reducer', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, localActionsToWrap)
     );
-    result.current.actions.setSearchTerm({ searchTerm: 'search term 1' });
 
-    result.current.actions.fetchMediaSuccess({
-      searchTerm: 'search term 2',
-      media: [{ id: 'id' }],
+    act(() => {
+      result.current.actions.setSearchTerm({ searchTerm: 'search term 1' });
+    });
+
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        searchTerm: 'search term 2',
+        media: [{ id: 'id' }],
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -104,11 +115,16 @@ describe('reducer', () => {
     const { result } = renderHook(() =>
       useMediaReducer(reducer, localActionsToWrap)
     );
-    result.current.actions.setMediaType({ mediaType: 'image' });
 
-    result.current.actions.fetchMediaSuccess({
-      mediaType: 'video',
-      media: [{ id: 'id' }],
+    act(() => {
+      result.current.actions.setMediaType({ mediaType: 'image' });
+    });
+
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        mediaType: 'video',
+        media: [{ id: 'id' }],
+      });
     });
 
     expect(result.current.state).toStrictEqual(

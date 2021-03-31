@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -62,11 +63,13 @@ describe('Preview Story within Dashboard', function () {
   const onClose = jest.fn();
 
   it('should render a modal, button, and iframe for preview', function () {
-    const { getByRole, getByTestId } = renderPreviewInContext({
+    const { getByRole, getByTestId, container } = renderPreviewInContext({
       previewMarkup: '<p>some mark up goes here</p>',
       hasStory: true,
       onClose,
     });
+
+    Modal.setAppElement(container);
 
     expect(getByRole('dialog')).toBeInTheDocument();
     expect(getByRole('button')).toBeInTheDocument();
@@ -77,12 +80,19 @@ describe('Preview Story within Dashboard', function () {
   });
 
   it('should render a modal, button, iframe, and loading message when error and previewMarkup are not present and isLoading is true', function () {
-    const { getByRole, getByTestId, getByText } = renderPreviewInContext({
+    const {
+      getByRole,
+      getByTestId,
+      getByText,
+      container,
+    } = renderPreviewInContext({
       previewMarkup: '',
       hasStory: true,
       isLoading: true,
       onClose,
     });
+
+    Modal.setAppElement(container);
 
     expect(getByRole('dialog')).toBeInTheDocument();
     expect(getByRole('button')).toBeInTheDocument();
@@ -96,12 +106,15 @@ describe('Preview Story within Dashboard', function () {
       getAllByRole,
       queryByTestId,
       getByText,
+      container,
     } = renderPreviewInContext({
       previewMarkup: '',
       hasStory: true,
       errorText: 'error message title',
       onClose,
     });
+
+    Modal.setAppElement(container);
 
     const closeButtons = getAllByRole('button');
     expect(closeButtons).toHaveLength(2);

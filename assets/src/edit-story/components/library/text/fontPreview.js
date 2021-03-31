@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { useEffect } from 'react';
 
 /**
@@ -28,25 +27,32 @@ import { useEffect } from 'react';
 import { useFont } from '../../../app';
 import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
+import { Text, themeHelpers } from '../../../../design-system';
 
 const Preview = styled.button`
-  background: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.1)};
-  padding: 12px 16px;
-  margin-bottom: 12px;
-  border-radius: 4px;
+  background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  padding: 8px 16px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   width: 100%;
   border: none;
   cursor: pointer;
   text-align: left;
+
+  :hover {
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
+  }
+
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
-const Text = styled.span`
-  background: none;
+const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`
+  color: ${({ theme }) => theme.colors.fg.primary};
   font-size: ${({ fontSize }) => fontSize}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  line-height: normal;
 `;
 
 function FontPreview({ title, element, onClick }) {
@@ -67,13 +73,9 @@ function FontPreview({ title, element, onClick }) {
 
   return (
     <Preview onClick={onClick}>
-      <Text
-        fontSize={fontSize}
-        fontWeight={fontWeight}
-        fontFamily={font.family}
-      >
+      <PreviewText font={font} fontSize={fontSize} fontWeight={fontWeight}>
         {title}
-      </Text>
+      </PreviewText>
     </Preview>
   );
 }

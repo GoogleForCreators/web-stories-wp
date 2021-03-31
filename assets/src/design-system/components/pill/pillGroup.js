@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
@@ -50,7 +51,7 @@ function PillGroup({ options, value, onSelect }) {
 
 PillGroup.propTypes = {
   options: PropTypes.array.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

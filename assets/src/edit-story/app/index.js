@@ -29,6 +29,8 @@ import { useStory } from './story';
 import { useCanvas } from './canvas';
 import { useLayout } from './layout';
 import { useCurrentUser } from './currentUser';
+import { useHelpCenter } from './helpCenter';
+import { useUserOnboarding } from './userOnboarding';
 
 export {
   useHistory,
@@ -43,4 +45,6 @@ export {
   useCanvas,
   useLayout,
   useCurrentUser,
+  useHelpCenter,
+  useUserOnboarding,
 };

@@ -56,7 +56,9 @@ describe('Library Media Tab', () => {
   });
 
   describe('CUJ: Creator Can Add Image/Video to Page: Can edit/delete media', () => {
-    it('should open the edit/delete menu', async () => {
+    // TODO #6950
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should open the edit/delete menu', async () => {
       const mediaItem = fixture.editor.library.media.item(0);
       // Hover the media
       await fixture.events.mouse.moveRel(mediaItem, 10, 10, { steps: 2 });

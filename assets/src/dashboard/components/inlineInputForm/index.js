@@ -20,6 +20,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
@@ -85,6 +86,7 @@ const InlineInputForm = ({
   return (
     <div ref={inputContainerRef}>
       <StyledInput
+        aria-label={label}
         id={`${id}`}
         data-testid="inline-input-form"
         value={newValue}
