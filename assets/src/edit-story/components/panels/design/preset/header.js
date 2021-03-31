@@ -17,52 +17,21 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+} from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
 import { PRESET_TYPES } from './constants';
-
-const buttonCSS = css`
-  border: none;
-  background: transparent;
-  width: 32px;
-  height: 32px;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.84)};
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  svg {
-    width: 32px;
-    height: 32px;
-  }
-`;
-
-const AddPresetButton = styled.button`
-  ${buttonCSS}
-`;
-
-const EditMode = styled.button`
-  ${buttonCSS}
-
-  ${({ isEditMode }) =>
-    isEditMode &&
-    css`
-      color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-      font-size: 12px;
-      line-height: 14px;
-      padding: 7px;
-      height: initial;
-    `}
-`;
 
 function PresetsHeader({
   title,
@@ -81,7 +50,10 @@ function PresetsHeader({
     return (
       <>
         {hasPresets && (
-          <EditMode
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            variant={BUTTON_VARIANTS.SQUARE}
             onClick={(evt) => {
               evt.stopPropagation();
               setIsEditMode(!isEditMode);
@@ -92,15 +64,18 @@ function PresetsHeader({
             isEditMode={isEditMode}
           >
             {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
-          </EditMode>
+          </Button>
         )}
         {!isEditMode && !isColor && (
-          <AddPresetButton
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            variant={BUTTON_VARIANTS.SQUARE}
             onClick={handleAddPreset}
             aria-label={__('Add style', 'web-stories')}
           >
             <Icons.Plus />
-          </AddPresetButton>
+          </Button>
         )}
       </>
     );
