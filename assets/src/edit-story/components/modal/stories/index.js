@@ -23,12 +23,17 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { Primary } from '../../button';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../../design-system';
 import Modal from '../';
 
 export default {
   title: 'Stories Editor/Components/Modal',
-  component: Primary,
+  component: Button,
 };
 
 export const _default = () => {
@@ -40,7 +45,14 @@ export const _default = () => {
 
   return (
     <>
-      <Primary onClick={openModal}>{'Open Modal'}</Primary>
+      <Button
+        type={BUTTON_TYPES.PRIMARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+        onClick={openModal}
+      >
+        {'Open Modal'}
+      </Button>
       <Modal open={open} onClose={closeModal} contentLabel={contentLabel}>
         {'Content goes here'}
       </Modal>
