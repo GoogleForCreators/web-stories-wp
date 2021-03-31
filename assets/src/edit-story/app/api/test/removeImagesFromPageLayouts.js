@@ -21,12 +21,11 @@ import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies
  */
-import getAllPageLayouts from '../getAllPageLayouts';
+import removeImagesFromPageLayouts from '../removeImagesFromPageLayouts';
 
 jest.mock('@web-stories-wp/templates');
 
-describe('getAllPageLayouts', () => {
-  const cdnURL = 'https://test.url';
+describe('removeImagesFromPageLayouts', () => {
   const assetsURL = 'https://plugin.url/assets/';
   const templates = [
     {
@@ -83,14 +82,13 @@ describe('getAllPageLayouts', () => {
     getAllTemplates.mockResolvedValue(templates);
   });
 
-  it('should get templates w/ cdnURL and images replaced with placeholders', async () => {
-    const result = await getAllPageLayouts({
-      cdnURL,
+  it('should replace images with placeholders', async () => {
+    const result = await removeImagesFromPageLayouts({
       assetsURL,
       showImages: false,
+      templates,
     });
 
-    expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
     expect(result).toStrictEqual([
       {
         id: 'templateid',
@@ -165,16 +163,5 @@ describe('getAllPageLayouts', () => {
         ],
       },
     ]);
-  });
-
-  it('should get templates w/ cdnURL and images', async () => {
-    const result = await getAllPageLayouts({
-      cdnURL,
-      assetsURL,
-      showImages: true,
-    });
-
-    expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
-    expect(result).toStrictEqual(templates);
   });
 });

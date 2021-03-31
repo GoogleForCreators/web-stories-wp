@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import getAllTemplates from '@web-stories-wp/templates';
 
 /**
  * Internal dependencies
@@ -67,16 +66,14 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
   };
 };
 
-export default async function getAllPageLayouts({
-  cdnURL,
+export default function removeImagesFromPageLayouts({
+  templates = [],
   assetsURL,
-  showImages = true,
 }) {
-  const templates = await getAllTemplates({ cdnURL });
   return templates.map((template) => ({
     ...template,
     pages: template.pages.map((page) =>
-      showImages ? page : replacePageImagesWithPlaceholders(page, { assetsURL })
+      replacePageImagesWithPlaceholders(page, { assetsURL })
     ),
   }));
 }
