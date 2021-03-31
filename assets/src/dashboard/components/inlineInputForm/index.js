@@ -95,7 +95,6 @@ const InlineInputForm = ({
         placeholder={placeholder}
         hasError={Boolean(error)}
         hint={error}
-        aria-label={label}
       />
     </div>
   );
