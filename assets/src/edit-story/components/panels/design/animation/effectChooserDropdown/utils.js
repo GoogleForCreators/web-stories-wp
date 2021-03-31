@@ -20,6 +20,7 @@
 import {
   BACKGROUND_ANIMATION_EFFECTS,
   SCALE_DIRECTION,
+  DIRECTION,
 } from '../../../../../../animation';
 import {
   effectValueExceptions,
@@ -59,6 +60,14 @@ export const hasDynamicProperty = (animation) => {
 };
 
 export const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
+  // we don't want to have a disbaled direction initially selected either.
+  const panDirection =
+    animation.panDirection && !disabledOptions.includes(animation.panDirection)
+      ? animation.panDirection
+      : Object.values(DIRECTION).filter(
+          (direction) => !disabledOptions.includes(direction)
+        )?.[0] || undefined;
+
   switch (animation.value) {
     case BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value:
       return {
@@ -67,6 +76,7 @@ export const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
         zoomDirection: disabledOptions.includes(SCALE_DIRECTION.SCALE_IN)
           ? SCALE_DIRECTION.SCALE_OUT
           : SCALE_DIRECTION.SCALE_IN,
+        panDirection,
       };
     default:
       return animation;
