@@ -28,6 +28,7 @@ import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { getTextPresets, areAllType, getPanelInitialHeight } from '../utils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
+import { PRESET_TYPES } from '../constants';
 
 jest.mock('../utils');
 
@@ -128,7 +129,7 @@ describe('Panels/Preset', () => {
 
   beforeAll(() => {
     localStorage.setItem(
-      'web_stories_ui_panel_settings:stylepreset-style',
+      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.STYLE}`,
       JSON.stringify({ isCollapsed: false })
     );
   });

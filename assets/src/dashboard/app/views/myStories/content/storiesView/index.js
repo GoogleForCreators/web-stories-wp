@@ -26,12 +26,10 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import {
-  Dialog,
-  Button,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
   LoadingSpinner,
   useSnackbar,
+  Text,
+  THEME_CONSTANTS,
 } from '../../../../../../design-system';
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
@@ -40,6 +38,7 @@ import {
   ViewPropTypes,
   ShowStoriesWhileLoadingPropType,
 } from '../../../../../utils/useStoryView';
+import { Dialog, LoadingContainer } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
@@ -47,7 +46,6 @@ import {
   STORY_CONTEXT_MENU_ITEMS,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
-import { LoadingContainer } from '../../../../../components';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -300,43 +298,31 @@ function StoriesView({
             setFocusedStory({ id: activeStory.id });
             setActiveDialog('');
           }}
-          actions={
-            <>
-              <Button
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={() => {
-                  setFocusedStory({ id: activeStory.id });
-                  setActiveDialog('');
-                }}
-                aria-label={sprintf(
-                  /* translators: %s: story title */
-                  __('Cancel deleting story "%s"', 'web-stories'),
-                  titleFormatted(activeStory.title)
-                )}
-              >
-                {__('Cancel', 'web-stories')}
-              </Button>
-              <Button
-                type={BUTTON_TYPES.PRIMARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={handleOnDeleteStory}
-                aria-label={sprintf(
-                  /* translators: %s: story title */
-                  __('Confirm deleting story "%s"', 'web-stories'),
-                  titleFormatted(activeStory.title)
-                )}
-              >
-                {__('Delete', 'web-stories')}
-              </Button>
-            </>
-          }
+          secondaryText={__('Cancel', 'web-stories')}
+          secondaryRest={{
+            ['aria-label']: sprintf(
+              /* translators: %s: story title */
+              __('Cancel deleting story "%s"', 'web-stories'),
+              titleFormatted(activeStory.title)
+            ),
+          }}
+          primaryText={__('Delete', 'web-stories')}
+          onPrimary={handleOnDeleteStory}
+          primaryRest={{
+            ['aria-label']: sprintf(
+              /* translators: %s: story title */
+              __('Confirm deleting story "%s"', 'web-stories'),
+              titleFormatted(activeStory.title)
+            ),
+          }}
         >
-          {sprintf(
-            /* translators: %s: story title. */
-            __('Are you sure you want to delete "%s"?', 'web-stories'),
-            titleFormatted(activeStory.title)
-          )}
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {sprintf(
+              /* translators: %s: story title. */
+              __('Are you sure you want to delete "%s"?', 'web-stories'),
+              titleFormatted(activeStory.title)
+            )}
+          </Text>
         </Dialog>
       )}
     </>

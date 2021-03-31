@@ -44,7 +44,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     fixture.restore();
   });
 
-  it('should add text presets below each other if added consecutively', async () => {
+  // TODO #6956
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should add text presets below each other if added consecutively', async () => {
     await fixture.editor.library.textTab.click();
 
     await waitFor(() =>

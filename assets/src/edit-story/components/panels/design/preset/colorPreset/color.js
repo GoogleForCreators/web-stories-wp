@@ -25,13 +25,13 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import {
   Swatch,
-  Tooltip,
   Icons,
   hasOpacity,
   hasGradient,
 } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { areAllType } from '../utils';
+import { Tooltip } from '../../../../tooltip';
 
 function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
   const { currentPage, selectedElements } = useStory(

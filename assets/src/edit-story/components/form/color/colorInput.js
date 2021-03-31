@@ -33,7 +33,6 @@ import {
   HexInput,
   Text,
   THEME_CONSTANTS,
-  Tooltip as DefaultTooltip,
   Swatch,
   getOpaquePattern,
   PLACEMENT,
@@ -41,6 +40,7 @@ import {
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
+import { Tooltip as DefaultTooltip } from '../../tooltip';
 
 const Preview = styled.div`
   height: 36px;
@@ -198,17 +198,20 @@ function ColorInput({
         isOpen={pickerOpen}
         placement={PLACEMENT.LEFT_START}
         spacing={spacing}
-      >
-        <ColorPicker
-          color={isMixed ? null : value}
-          onChange={onChange}
-          hasGradient={hasGradient}
-          hasOpacity={hasOpacity}
-          onClose={onClose}
-          renderFooter={colorPickerActions}
-          changedStyle={changedStyle}
-        />
-      </Popup>
+        renderContents={({ propagateDimensionChange }) => (
+          <ColorPicker
+            color={isMixed ? null : value}
+            onChange={onChange}
+            hasGradient={hasGradient}
+            hasOpacity={hasOpacity}
+            onClose={onClose}
+            renderFooter={(props) =>
+              colorPickerActions?.(props, null, propagateDimensionChange)
+            }
+            changedStyle={changedStyle}
+          />
+        )}
+      />
     </>
   );
 }

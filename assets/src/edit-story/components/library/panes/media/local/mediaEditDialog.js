@@ -26,13 +26,17 @@ import { trackError } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import {
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  useSnackbar,
+} from '../../../../../../design-system';
 import { useAPI } from '../../../../../app/api';
-import Dialog from '../../../../dialog';
-import { Plain } from '../../../../button';
 import { useLocalMedia } from '../../../../../app/media';
-import { useSnackbar } from '../../../../../../design-system';
 import StoryPropTypes from '../../../../../types';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
+import Dialog from '../../../../dialog';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -59,54 +63,15 @@ const DialogBody = styled.div`
 const MetadataTextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0 4px;
 `;
 
-const MediaDateText = styled.div`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.family};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.lineHeight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.size};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.date.weight};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
+const DateText = styled(Text)`
   margin-bottom: 8px;
 `;
 
-const MediaTitleText = styled.div`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.family};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.lineHeight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.size};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.title.weight};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v9};
-`;
-
-const MediaSizeText = styled.div`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v11};
-`;
-
-const Input = styled.input`
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.white};
-  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
-  border-radius: 4px;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.family};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.lineHeight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.input.size};
-  padding: 7px 10px;
-  margin-top: 20px;
-  margin-bottom: 4px;
-`;
-
-const DialogDescription = styled.p`
-  font-family: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.description.family};
-  line-height: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.description.lineHeight};
-  font-weight: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.description.weight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.description.size};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.grayout};
-  margin: 0;
+const AssistiveTextInput = styled(Input)`
+  margin: 20px 0 4px;
 `;
 
 const imageDialogTitle = __('Edit Image', 'web-stories');
@@ -180,13 +145,9 @@ function MediaEditDialog({ resource, onClose }) {
       open
       onClose={onClose}
       title={isImage ? imageDialogTitle : videoDialogTitle}
-      actions={
-        <>
-          <Plain onClick={onClose}>{__('Cancel', 'web-stories')}</Plain>
-          <Plain onClick={updateMediaItem}>{__('Save', 'web-stories')}</Plain>
-        </>
-      }
-      maxWidth={530}
+      secondaryText={__('Cancel', 'web-stories')}
+      onPrimary={updateMediaItem}
+      primaryText={__('Save', 'web-stories')}
     >
       <DialogBody>
         {type === 'image' ? (
@@ -202,33 +163,42 @@ function MediaEditDialog({ resource, onClose }) {
         )}
         <MetadataTextContainer>
           {isValid(parsedDate) && (
-            <MediaDateText>
+            <DateText
+              forwardedAs="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            >
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
                 formatDate(creationDate)
               )}
-            </MediaDateText>
+            </DateText>
           )}
-          <MediaTitleText>{title}</MediaTitleText>
-          <MediaSizeText>
+          <Text
+            as="span"
+            isBold
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+          >
+            {title}
+          </Text>
+          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
               /* translators: 1: image width. 2: image height. */
               __('%1$d x %2$d pixels', 'web-stories'),
               width,
               height
             )}
-          </MediaSizeText>
-          <Input
+          </Text>
+          <AssistiveTextInput
             value={altText}
             aria-label={isImage ? imageInputTitle : videoInputTitle}
             type="text"
             placeholder={isImage ? imageInputTitle : videoInputTitle}
             onChange={handleAltTextChange}
           />
-          <DialogDescription>
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {isImage ? imageDialogDescription : videoDialogDescription}
-          </DialogDescription>
+          </Text>
         </MetadataTextContainer>
       </DialogBody>
     </Dialog>

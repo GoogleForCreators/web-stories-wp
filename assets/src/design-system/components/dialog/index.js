@@ -53,13 +53,19 @@ const DialogActions = styled.div`
   align-self: flex-end;
   margin: 0;
 
-  & > button {
+  & > button,
+  & > a {
     margin-right: 10px;
-    &:last-of-type {
+    margin-left: 6px;
+    &:last-child {
       margin-right: 0;
     }
   }
 `;
+/**
+ * Dialogs should be wrapped in a ThemeProvider
+ * and given the inverted theme to the app.
+ */
 
 export function Dialog({
   children,
