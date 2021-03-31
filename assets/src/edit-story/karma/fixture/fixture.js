@@ -21,7 +21,13 @@ import * as React from 'react';
 const { useCallback, useState, useMemo, forwardRef } = React;
 
 import { FlagsProvider } from 'flagged';
-import { render, act, screen, waitFor } from '@testing-library/react';
+import {
+  configure,
+  render,
+  act,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import Modal from 'react-modal';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
@@ -41,6 +47,17 @@ import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
+
+if ('true' === process.env.CI) {
+  configure({
+    getElementError: (message) => {
+      const error = new Error(message);
+      error.name = 'TestingLibraryElementError';
+      error.stack = null;
+      return error;
+    },
+  });
+}
 
 export const MEDIA_PER_PAGE = 20;
 const DEFAULT_CONFIG = {
@@ -659,6 +676,7 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
+            preview_link: 'http://stories.local/?post_type=web-story&p=1',
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,
@@ -687,6 +705,7 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
+            preview_link: 'http://stories.local/?post_type=web-story&p=1',
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,

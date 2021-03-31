@@ -165,6 +165,10 @@ function PostLock() {
     return () => clearInterval(timeout);
   }, [postLockInterval, currentUserLoaded]);
 
+  if (!enablePostLocking || !showLockedDialog) {
+    return null;
+  }
+
   // On first load, display dialog with option to take over.
   if (isFirstTime) {
     return (
