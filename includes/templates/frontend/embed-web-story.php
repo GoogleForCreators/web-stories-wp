@@ -34,11 +34,13 @@ if ( have_posts() ) :
 		the_post();
 		$current_post = get_post();
 
-		if ( $current_post instanceof WP_Post ) {
+		if ( $current_post instanceof WP_Post && has_post_thumbnail( $current_post ) ) {
 			$story = new Story();
 			$story->load_from_post( $current_post );
 			$renderer = new Image( $story );
 			echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		} else {
+			get_template_part( 'embed', 'content' );
 		}
 	endwhile;
 else :

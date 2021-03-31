@@ -675,13 +675,13 @@ class Story_Post_Type {
 	 * @return string $template
 	 */
 	public function filter_embed_template( $template ) {
-		if ( get_post_type() === self::POST_TYPE_SLUG && has_post_thumbnail() ) {
+		if ( get_post_type() === self::POST_TYPE_SLUG ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/embed-web-story.php';
 		}
 
 		return $template;
 	}
-	
+
 	/**
 	 * Handles redirects to the post type archive.
 	 *
