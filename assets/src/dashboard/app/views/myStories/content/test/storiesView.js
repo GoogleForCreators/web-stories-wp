@@ -28,7 +28,7 @@ import {
 } from '../../../../../constants';
 import StoriesView from '../storiesView';
 import { TransformProvider } from '../../../../../../edit-story/components/transform';
-import FontProvider from '../../../../font/fontProvider';
+import FontContext from '../../../../../../edit-story/app/font/context';
 
 const fakeStories = [
   {
@@ -66,9 +66,33 @@ const fakeStories = [
   },
 ];
 
+function render(ui, providerValues = {}, renderOptions = {}) {
+  const fontContextValue = {
+    state: {
+      fonts: [],
+    },
+    actions: {
+      maybeEnqueueFontStyle: jest.fn(),
+    },
+  };
+
+  return renderWithProviders(
+    ui,
+    providerValues,
+    renderOptions,
+    ({ children }) => (
+      <TransformProvider>
+        <FontContext.Provider value={fontContextValue}>
+          {children}
+        </FontContext.Provider>
+      </TransformProvider>
+    )
+  );
+}
+
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
-    const { getAllByTestId } = renderWithProviders(
+    const { getAllByTestId } = render(
       <SnackbarProvider>
         <StoriesView
           filterValue={STORY_STATUS.ALL}
@@ -92,12 +116,7 @@ describe('My Stories <StoriesView />', function () {
         />
       </SnackbarProvider>,
       { features: { enableInProgressStoryActions: false } },
-      {},
-      ({ children }) => (
-        <TransformProvider>
-          <FontProvider>{children}</FontProvider>
-        </TransformProvider>
-      )
+      {}
     );
 
     expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
@@ -105,7 +124,7 @@ describe('My Stories <StoriesView />', function () {
 
   describe('Loading stories', () => {
     it('should be able to hide the grid while the stories are loading', () => {
-      const { queryByTestId } = renderWithProviders(
+      const { queryByTestId } = render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -133,19 +152,14 @@ describe('My Stories <StoriesView />', function () {
           />
         </SnackbarProvider>,
         { features: { enableInProgressStoryActions: false } },
-        {},
-        ({ children }) => (
-          <TransformProvider>
-            <FontProvider>{children}</FontProvider>
-          </TransformProvider>
-        )
+        {}
       );
 
       expect(queryByTestId(/^story-grid-item/)).not.toBeInTheDocument();
     });
 
     it('should be able to show the grid while stories are loading', () => {
-      const { queryAllByTestId } = renderWithProviders(
+      const { queryAllByTestId } = render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -173,12 +187,7 @@ describe('My Stories <StoriesView />', function () {
           />
         </SnackbarProvider>,
         { features: { enableInProgressStoryActions: false } },
-        {},
-        ({ children }) => (
-          <TransformProvider>
-            <FontProvider>{children}</FontProvider>
-          </TransformProvider>
-        )
+        {}
       );
 
       expect(queryAllByTestId(/^story-grid-item/)).toHaveLength(
@@ -187,7 +196,7 @@ describe('My Stories <StoriesView />', function () {
     });
 
     it('should hide stories in the list view when stories are loading', () => {
-      const { queryByTestId } = renderWithProviders(
+      const { queryByTestId } = render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -215,19 +224,14 @@ describe('My Stories <StoriesView />', function () {
           />
         </SnackbarProvider>,
         { features: { enableInProgressStoryActions: false } },
-        {},
-        ({ children }) => (
-          <TransformProvider>
-            <FontProvider>{children}</FontProvider>
-          </TransformProvider>
-        )
+        {}
       );
 
       expect(queryByTestId(/^story-list-item/)).not.toBeInTheDocument();
     });
 
     it('should be able to show the list while stories are loading', () => {
-      const { queryAllByTestId } = renderWithProviders(
+      const { queryAllByTestId } = render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -255,12 +259,7 @@ describe('My Stories <StoriesView />', function () {
           />
         </SnackbarProvider>,
         { features: { enableInProgressStoryActions: false } },
-        {},
-        ({ children }) => (
-          <TransformProvider>
-            <FontProvider>{children}</FontProvider>
-          </TransformProvider>
-        )
+        {}
       );
 
       expect(queryAllByTestId(/^story-list-item/)).toHaveLength(

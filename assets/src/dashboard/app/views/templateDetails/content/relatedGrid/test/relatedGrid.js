@@ -22,11 +22,35 @@ import { renderWithProviders } from '../../../../../../testUtils';
 import LayoutProvider from '../../../../../../components/layout/provider';
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';
 import { TransformProvider } from '../../../../../../../edit-story/components/transform';
-import FontProvider from '../../../../../font/fontProvider';
+import FontContext from '../../../../../../../edit-story/app/font/context';
+
+function render(ui, providerValues = {}, renderOptions = {}) {
+  const fontContextValue = {
+    state: {
+      fonts: [],
+    },
+    actions: {
+      maybeEnqueueFontStyle: jest.fn(),
+    },
+  };
+
+  return renderWithProviders(
+    ui,
+    providerValues,
+    renderOptions,
+    ({ children }) => (
+      <TransformProvider>
+        <FontContext.Provider value={fontContextValue}>
+          {children}
+        </FontContext.Provider>
+      </TransformProvider>
+    )
+  );
+}
 
 describe('Template Details <RelatedGrid />', () => {
   it('should render a grid of related templates', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryAllByRole } = render(
       <LayoutProvider>
         <RelatedGrid
           pageSize={{ width: 200, height: 350, containerHeight: 350 }}
@@ -38,12 +62,7 @@ describe('Template Details <RelatedGrid />', () => {
         />
       </LayoutProvider>,
       {},
-      {},
-      ({ children }) => (
-        <TransformProvider>
-          <FontProvider>{children}</FontProvider>
-        </TransformProvider>
-      )
+      {}
     );
 
     const gridItems = queryAllByRole('listitem');
@@ -52,7 +71,7 @@ describe('Template Details <RelatedGrid />', () => {
   });
 
   it('should not render a grid of related templates when there are no related templates', () => {
-    const { queryByRole } = renderWithProviders(
+    const { queryByRole } = render(
       <LayoutProvider>
         <RelatedGrid
           pageSize={{ width: 200, height: 350, containerHeight: 350 }}
