@@ -38,7 +38,7 @@ function LinkInput({
   onChange,
   onBlur,
   onFocus,
-  value,
+  value = '',
   hint,
   hasError,
   ...rest
@@ -75,7 +75,7 @@ function LinkInput({
 }
 
 LinkInput.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,

@@ -93,7 +93,7 @@ const presetCSS = css`
 `;
 const SwatchItem = styled.div`
   ${presetCSS}
-  ${({ pattern }) => generatePatternStyles(pattern)}
+  ${({ $pattern }) => generatePatternStyles($pattern)}
   transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
 
   svg {
@@ -141,7 +141,7 @@ function Swatch({
     <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
-        pattern={pattern}
+        $pattern={pattern}
         disabled={isDisabled}
         displaySplit={displaySplit}
       >

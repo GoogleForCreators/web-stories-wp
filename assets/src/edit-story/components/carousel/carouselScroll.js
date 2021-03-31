@@ -35,7 +35,7 @@ import { useConfig } from '../../app';
 import useCarousel from './useCarousel';
 
 const FlippableArrow = styled(Icons.ArrowLeft)`
-  transform: rotate(${({ isLeft }) => (isLeft ? 0 : 0.5)}turn);
+  transform: rotate(${({ $isLeft }) => ($isLeft ? 0 : 0.5)}turn);
 `;
 
 function CarouselScrollButton({ isNext = false }) {
@@ -85,7 +85,7 @@ function CarouselScrollButton({ isNext = false }) {
       onClick={onClick}
       aria-label={label}
     >
-      <FlippableArrow isLeft={isLeft} />
+      <FlippableArrow $isLeft={isLeft} />
     </Button>
   );
 }

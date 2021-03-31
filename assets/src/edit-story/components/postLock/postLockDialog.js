@@ -101,7 +101,7 @@ PostLockDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
-  previewLink: PropTypes.string.isRequired,
+  previewLink: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };
 

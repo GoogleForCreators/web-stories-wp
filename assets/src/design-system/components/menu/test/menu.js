@@ -45,6 +45,8 @@ describe('<Menu />', () => {
   it('should render a <Menu /> list with 12 items', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
       <Menu
+        listId="foo"
+        parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
         options={groupedOptions}
@@ -64,6 +66,8 @@ describe('<Menu />', () => {
   it('should return an emptyText message when there are no items to display', () => {
     const { getByText } = renderWithProviders(
       <Menu
+        listId="foo"
+        parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
         options={[]}
@@ -80,6 +84,8 @@ describe('<Menu />', () => {
   it('should trigger onMenuItemClick when list item is clicked', () => {
     const { queryAllByRole } = renderWithProviders(
       <Menu
+        listId="foo"
+        parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
         options={groupedOptions}
@@ -112,6 +118,8 @@ describe('<Menu />', () => {
 
     const { queryAllByText, getByText } = renderWithProviders(
       <Menu
+        listId="foo"
+        parentId="bar"
         hasMenuRole={false}
         emptyText={'No options available'}
         options={groupedOptions}

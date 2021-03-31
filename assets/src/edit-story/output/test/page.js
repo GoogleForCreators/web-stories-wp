@@ -162,8 +162,13 @@ describe('Page output', () => {
         page: {
           id: '123',
           animations: [
-            { targets: ['123', '124'], type: 'bounce', duration: 1000 },
-            { targets: ['123'], type: 'spin', duration: 1000 },
+            {
+              id: '123',
+              targets: ['123', '124'],
+              type: 'bounce',
+              duration: 1000,
+            },
+            { id: '124', targets: ['123'], type: 'spin', duration: 1000 },
           ],
           elements: [
             {
@@ -655,6 +660,7 @@ describe('Page output', () => {
               y: 1,
               width: 1,
               height: 1,
+              rotationAngle: 0,
             },
           ],
         },
@@ -1043,7 +1049,9 @@ describe('Page output', () => {
           backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
           page: {
             id: '123',
-            animations: [{ targets: ['123'], type: 'bounce', duration: 1000 }],
+            animations: [
+              { id: '123', targets: ['123'], type: 'bounce', duration: 1000 },
+            ],
             elements: [
               {
                 type: 'text',
