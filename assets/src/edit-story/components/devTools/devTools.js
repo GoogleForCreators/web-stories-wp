@@ -37,7 +37,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 35%;
   height: 50%;
-  border: 6px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.panel};
+  border: 6px solid ${({ theme }) => theme.colors.bg.secondary};
   background: ${({ theme }) => theme.colors.bg.primary};
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v2};
 `;
