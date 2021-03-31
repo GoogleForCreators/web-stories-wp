@@ -1,4 +1,4 @@
-# Developer Manual
+# Web Stories Embeds
 
 Theme developers can add varying degrees of support for Web Stories based on their requirements since version 1.5.
 

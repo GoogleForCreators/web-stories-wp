@@ -39,3 +39,7 @@
 
 * [Local Environment](./local-environment.md)
 * [Workflows](./workflows.md)
+
+## WordPress Developers
+
+* [Embeds](./web-stories-embeds.md)
