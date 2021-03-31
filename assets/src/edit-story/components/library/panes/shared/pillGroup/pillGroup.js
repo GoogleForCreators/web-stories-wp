@@ -105,7 +105,7 @@ const StyledPill = styled(Pill)`
     isActive
       ? theme.colors.interactiveBg.secondaryNormal
       : theme.colors.opacity.footprint};
-  color: ${({ theme }) => theme.colors.fg.secondary};
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
