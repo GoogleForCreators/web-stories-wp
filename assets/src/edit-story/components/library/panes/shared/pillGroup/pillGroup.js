@@ -18,24 +18,23 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  Chip,
-  Icons,
-  useKeyDownEffect,
-} from '../../../../../../design-system';
+import { ArrowDown } from '../../../../button';
+import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import Pill from './pill';
+
+/**
+ * Internal dependencies
+ */
 import {
   PILL_COLLAPSED_FULL_HEIGHT,
   PILL_BOTTOM_MARGIN,
@@ -47,7 +46,8 @@ import useHandleRowVisibility from './useHandleRowVisibility';
 const Section = styled.div`
   height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
   min-height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
-  background-color: ${({ theme }) => theme.colors.divider.tertiary};
+  background-color: ${({ theme }) =>
+    rgba(theme.DEPRECATED_THEME.colors.bg.workspace, 0.8)};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -67,27 +67,21 @@ const InnerContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   position: relative;
-  padding: 4px 0;
   transition: transform 0.2s;
-  column-gap: 8px;
-  row-gap: 14px;
 `;
 
 // Flips the button upside down when expanded;
-// Important: the visibility is 'inherit' when props.visible because otherwise
+// Important: the visibily is 'inherit' when props.visible because otherwise
 // it gets shown even when the provider is not the selectedProvider!
-const ExpandButton = styled(Button).attrs({
-  type: BUTTON_TYPES.TERTIARY,
-  size: BUTTON_SIZES.SMALL,
-  variant: BUTTON_VARIANTS.CIRCLE,
-})`
+const ExpandButton = styled(ArrowDown)`
   display: flex;
   position: absolute;
-  bottom: -24px;
-  background: ${({ theme }) => theme.colors.bg.tertiary};
+  bottom: -16px;
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray16};
   max-height: none;
   width: 32px;
   height: 32px;
+  border-radius: 16px;
   ${({ isExpanded }) => isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'}
   visibility: inherit;
   align-self: center;
@@ -105,22 +99,14 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
 
   const [focusedRowOffset, setFocusedRowOffset] = useState(0);
 
-  const handleClick = useCallback(
-    (selected, id) => {
-      if (selected && id !== null) {
-        deselectItem();
-      } else {
-        setIsExpanded(false);
-        selectItem(id);
-      }
-    },
-    [deselectItem, selectItem]
-  );
-
-  const handleExpandClick = useCallback(
-    () => setIsExpanded((currentExpanded) => !currentExpanded),
-    []
-  );
+  const handleClick = (selected, id) => {
+    if (selected) {
+      deselectItem();
+    } else {
+      setIsExpanded(false);
+      selectItem(id);
+    }
+  };
 
   useExpandAnimation({
     sectionRef,
@@ -165,36 +151,31 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
               {items.map((item, i) => {
                 const { id, label } = item;
                 const selected = id === selectedItemId;
-
                 return (
-                  <Chip
-                    key={id}
-                    role="option"
-                    ref={(el) => {
+                  <Pill
+                    itemRef={(el) => {
                       itemRefs.current[id] = el;
                     }}
-                    active={selected}
-                    aria-selected={selected}
+                    index={i}
+                    isSelected={selected}
+                    isExpanded={isExpanded}
+                    setIsExpanded={setIsExpanded}
+                    key={id}
                     onClick={() => handleClick(selected, id)}
-                    // The first or selected category will be in focus for roving
-                    // (arrow-based) navigation initially.
-                    tabIndex={i === 0 || selected ? 0 : -1}
                   >
                     {label}
-                  </Chip>
+                  </Pill>
                 );
               })}
             </InnerContainer>
           </Container>
           <ExpandButton
-            onClick={handleExpandClick}
+            onClick={() => setIsExpanded(!isExpanded)}
             isExpanded={isExpanded}
             aria-controls={containerId}
             aria-expanded={isExpanded}
             aria-label={__('Expand', 'web-stories')}
-          >
-            <Icons.ChevronUp />
-          </ExpandButton>
+          />
         </>
       )}
     </Section>

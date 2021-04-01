@@ -17,10 +17,6 @@
  * External dependencies
  */
 import { useLayoutEffect } from 'react';
-/**
- * Internal dependencies
- */
-import { FOCUS_BORDER_SPACING } from './constants';
 
 function useHandleRowVisibility({
   innerContainerRef,
@@ -37,8 +33,7 @@ function useHandleRowVisibility({
     const selectedItem = itemRefs.current?.[selectedItemId]
       ? itemRefs.current[selectedItemId]
       : null;
-    const selectedItemOffsetTop =
-      selectedItem?.offsetTop - FOCUS_BORDER_SPACING || 0;
+    const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
     if (!isExpanded && selectedItem) {
       setFocusedRowOffset(selectedItemOffsetTop);
