@@ -34,7 +34,7 @@ import {
   Headline,
 } from '../../../../../../design-system';
 import { FullWidthWrapper } from '../../common/styles';
-import PillGroup from '../../shared/pillGroup';
+import { ChipGroup } from '../../shared';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
@@ -170,7 +170,7 @@ function TextSetsPane({ paneRef }) {
         </TextSetsToggle>
       </TitleBar>
       <FullWidthWrapper>
-        <PillGroup
+        <ChipGroup
           items={categories}
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}
