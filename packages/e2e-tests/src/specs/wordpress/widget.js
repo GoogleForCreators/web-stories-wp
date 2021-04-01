@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { deleteWidgets, clickButton } from '@web-stories-wp/e2e-test-utils';
+import { deleteWidgets } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * WordPress dependencies
@@ -79,16 +79,21 @@ describe('Web Stories Widget', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('customize.php');
 
-      await page.waitForSelector('.control-panel-widgets');
       await expect(page).toClick('li', { text: 'Widgets' });
 
-      await page.waitForSelector('.control-panel-widgets.current-panel');
       await expect(page).toMatchElement('.control-panel-widgets.current-panel');
-
-      // expect(page).toClick(...) doesn't seem to work.
-      await clickButton(
+      await expect(page).toMatchElement(
         '#accordion-section-sidebar-widgets-sidebar-1 .accordion-section-title'
       );
+
+      // expect(page).toClick(...) doesn't seem to work.
+      await page.evaluate(() => {
+        document
+          .querySelector(
+            '#accordion-section-sidebar-widgets-sidebar-1 .accordion-section-title'
+          )
+          .click();
+      });
 
       await expect(page).toClick('button', { text: 'Add a Widget' });
       await expect(page).toMatch('Web Stories');
@@ -112,8 +117,7 @@ describe('Web Stories Widget', () => {
         visible: false,
       });
 
-      await clickButton('#save');
-      await page.waitForSelector('#save[value="Published"]');
+      await expect(page).toClick('#save');
       await expect(page).toMatchElement('#save[value="Published"]');
 
       // TODO: Ensure this works reliably in tests.
