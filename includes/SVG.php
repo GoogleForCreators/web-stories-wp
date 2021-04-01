@@ -70,6 +70,8 @@ class SVG extends Service_Base {
 	/**
 	 * Experiments instance.
 	 *
+	 * @since 1.3.0
+	 *
 	 * @var Experiments Experiments instance.
 	 */
 	private $experiments;
