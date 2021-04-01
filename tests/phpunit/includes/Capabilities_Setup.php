@@ -24,8 +24,9 @@ trait Capabilities_Setup {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
 		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale      = $this->createMock( \Google\Web_Stories\Locale::class );
 
-		return new Story_Post_type( $experiments, $meta_boxes, $decoder );
+		return new Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
 	}
 
 	public function add_caps_to_roles() {

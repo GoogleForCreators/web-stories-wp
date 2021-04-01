@@ -77,6 +77,13 @@ class Dashboard extends Service_Base {
 	private $decoder;
 
 	/**
+	 * Locale instance.
+	 *
+	 * @var Locale Locale instance.
+	 */
+	private $locale;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -84,11 +91,13 @@ class Dashboard extends Service_Base {
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Site_Kit    $site_kit    Site_Kit instance.
 	 * @param Decoder     $decoder Decoder instance.
+	 * @param Locale      $locale Locale instance.
 	 */
-	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder, Locale $locale ) {
 		$this->experiments = $experiments;
 		$this->decoder     = $decoder;
 		$this->site_kit    = $site_kit;
+		$this->locale      = $locale;
 	}
 
 	/**
@@ -338,7 +347,7 @@ class Dashboard extends Service_Base {
 			'config'     => [
 				'isRTL'                 => is_rtl(),
 				'userId'                => get_current_user_id(),
-				'locale'                => ( new Locale() )->get_locale_settings(),
+				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'editStoryURL'          => $edit_story_url,
 				'wpListURL'             => $classic_wp_list_url,

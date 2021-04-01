@@ -156,6 +156,7 @@ class Plugin extends ServiceBasedPlugin {
 		return [
 			Experiments::class,
 			Meta_Boxes::class,
+			Locale::class,
 			Activation_Flag::class,
 			Integrations\Site_Kit::class,
 			Analytics::class,

@@ -30,7 +30,6 @@ use DOMDocument;
 use DOMElement;
 use WP_Error;
 use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
-use Google\Web_Stories\Infrastructure\Conditional;
 
 /**
  * Class SVG
@@ -39,7 +38,7 @@ use Google\Web_Stories\Infrastructure\Conditional;
  *
  * @package Google\Web_Stories
  */
-class SVG extends Service_Base implements Conditional {
+class SVG extends Service_Base {
 	/**
 	 * File extension.
 	 *
@@ -69,6 +68,22 @@ class SVG extends Service_Base implements Conditional {
 	protected $svgs = [];
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Cross_Origin_Isolation constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+
+	/**
 	 * Register filters and actions.
 	 *
 	 * @since 1.3.0
@@ -76,6 +91,10 @@ class SVG extends Service_Base implements Conditional {
 	 * @return void
 	 */
 	public function register() {
+		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) ) {
+			return;
+		}
+
 		add_filter( 'web_stories_allowed_mime_types', [ $this, 'web_stories_allowed_mime_types' ] );
 
 		// Check if svg uploads, already enabled.
@@ -90,16 +109,6 @@ class SVG extends Service_Base implements Conditional {
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'wp_generate_attachment_metadata' ], 10, 3 );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'wp_check_filetype_and_ext' ], 10, 5 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
-	}
-
-	/**
-	 * Check whether the conditional object is currently needed.
-	 *
-	 * @return bool Whether the conditional object is needed.
-	 */
-	public static function is_needed() {
-		$experiments = new Experiments();
-		return $experiments->is_experiment_enabled( 'enableSVG' );
 	}
 
 	/**

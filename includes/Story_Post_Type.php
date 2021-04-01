@@ -104,6 +104,13 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	private $meta_boxes;
 
 	/**
+	 * Locale instance.
+	 *
+	 * @var Locale Locale instance.
+	 */
+	private $locale;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -111,11 +118,13 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
 	 * @param Decoder     $decoder Decoder instance.
+	 * @param Locale      $locale Locale instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder ) {
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
 		$this->experiments = $experiments;
 		$this->meta_boxes  = $meta_boxes;
 		$this->decoder     = $decoder;
+		$this->locale      = $locale;
 	}
 
 	/**
@@ -572,7 +581,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			'config'     => [
 				'autoSaveInterval'      => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'                 => is_rtl(),
-				'locale'                => ( new Locale() )->get_locale_settings(),
+				'locale'                => $this->locale->get_locale_settings(),
 				'allowedFileTypes'      => $this->get_allowed_file_types(),
 				'allowedImageFileTypes' => $this->get_file_type_exts( $mime_image_types ),
 				'allowedImageMimeTypes' => $mime_image_types,
