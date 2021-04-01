@@ -69,7 +69,6 @@ function useFFmpeg() {
   /**
    * Whether the video optimization feature is enabled.
    *
-   * @todo Check for window.crossOriginIsolated
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
