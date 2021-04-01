@@ -88,7 +88,7 @@ const RightBar = styled.div`
 `;
 
 const TextWrapper = styled.span`
-  font-family: Google Sans;
+  font-family: 'Google Sans';
   font-size: 16px;
   line-height: 16px;
   overflow: hidden;

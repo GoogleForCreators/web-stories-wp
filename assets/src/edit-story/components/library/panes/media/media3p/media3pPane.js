@@ -27,7 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
+import { Headline, THEME_CONSTANTS } from '../../../../../../design-system';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import {
@@ -56,9 +56,9 @@ const ProviderTabSection = styled.div`
   padding: 0 24px;
 `;
 
-const MediaSubheading = styled(Text).attrs(() => ({
-  forwardedAs: 'div',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+const MediaSubheading = styled(Headline).attrs(() => ({
+  as: 'h2',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
 }))`
   margin-top: 24px;
   padding: 0 24px;
