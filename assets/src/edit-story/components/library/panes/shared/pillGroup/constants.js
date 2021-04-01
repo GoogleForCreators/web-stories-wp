@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const PILL_HEIGHT = 36;
+export const FOCUS_BORDER_SPACING = 4;
+export const PILL_HEIGHT = 36 + FOCUS_BORDER_SPACING * 2; // Chip height + focus box-shadow spacing
 export const PILL_TOP_MARGIN = 16;
 export const PILL_BOTTOM_MARGIN = 20;
-export const FOCUS_SPACING = 4;
 export const PILL_COLLAPSED_FULL_HEIGHT =
   PILL_HEIGHT + PILL_TOP_MARGIN + PILL_BOTTOM_MARGIN;

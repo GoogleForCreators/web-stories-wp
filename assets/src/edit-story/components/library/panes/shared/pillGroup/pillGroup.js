@@ -31,17 +31,12 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  Chip,
   Icons,
-  Pill,
   useKeyDownEffect,
 } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-
-/**
- * Internal dependencies
- */
 import {
-  FOCUS_SPACING,
   PILL_COLLAPSED_FULL_HEIGHT,
   PILL_BOTTOM_MARGIN,
   PILL_TOP_MARGIN,
@@ -64,7 +59,7 @@ const Section = styled.div`
 // This hides the pills unless expanded
 const Container = styled.div`
   overflow: hidden;
-  margin: ${PILL_TOP_MARGIN}px 12px ${PILL_BOTTOM_MARGIN - FOCUS_SPACING}px 24px;
+  margin: ${PILL_TOP_MARGIN}px 12px ${PILL_BOTTOM_MARGIN}px 24px;
 `;
 
 const InnerContainer = styled.div`
@@ -74,7 +69,8 @@ const InnerContainer = styled.div`
   position: relative;
   padding: 4px 0;
   transition: transform 0.2s;
-  gap: 8px;
+  column-gap: 8px;
+  row-gap: 14px;
 `;
 
 // Flips the button upside down when expanded;
@@ -97,15 +93,6 @@ const ExpandButton = styled(Button).attrs({
   align-self: center;
   justify-content: center;
   align-items: center;
-`;
-
-const StyledPill = styled(Pill)`
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  background-color: ${({ isActive, theme }) =>
-    isActive
-      ? theme.colors.interactiveBg.secondaryNormal
-      : theme.colors.opacity.footprint};
-  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
@@ -180,20 +167,21 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                 const selected = id === selectedItemId;
 
                 return (
-                  <StyledPill
+                  <Chip
                     key={id}
                     role="option"
                     ref={(el) => {
                       itemRefs.current[id] = el;
                     }}
-                    isActive={selected}
+                    active={selected}
+                    aria-selected={selected}
                     onClick={() => handleClick(selected, id)}
                     // The first or selected category will be in focus for roving
                     // (arrow-based) navigation initially.
                     tabIndex={i === 0 || selected ? 0 : -1}
                   >
                     {label}
-                  </StyledPill>
+                  </Chip>
                 );
               })}
             </InnerContainer>

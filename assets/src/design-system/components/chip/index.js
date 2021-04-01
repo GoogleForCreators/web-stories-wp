@@ -119,6 +119,7 @@ export const Chip = forwardRef(
 Chip.displayName = 'Chip';
 
 Chip.propTypes = {
+  active: PropTypes.bool,
   children: PropTypes.node,
   disabled: PropTypes.bool,
   prefix: PropTypes.node,
