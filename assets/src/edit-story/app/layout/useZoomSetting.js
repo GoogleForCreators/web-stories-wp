@@ -138,10 +138,6 @@ function calculateViewportProperties(
       maxPageWidth = 2 * PAGE_WIDTH;
       break;
     }
-    case ZOOM_SETTING.TRIPLE: {
-      maxPageWidth = 3 * PAGE_WIDTH;
-      break;
-    }
     default:
       break;
   }
