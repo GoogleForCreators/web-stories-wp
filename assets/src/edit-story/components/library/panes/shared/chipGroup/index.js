@@ -18,14 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
 
-/**
- * Internal dependencies
- */
 /**
  * Internal dependencies
  */
@@ -149,7 +146,7 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     [isExpanded, hasItems]
   );
 
-  const containerId = `pill-group-${uuidv4()}`;
+  const containerId = useMemo(() => `pill-group-${uuidv4()}`, []);
   return (
     <Section ref={sectionRef}>
       {hasItems && (
