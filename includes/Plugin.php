@@ -72,6 +72,7 @@ class Plugin extends ServiceBasedPlugin {
 		'ad_manager'                   => Ad_Manager::class,
 		'admin'                        => Admin::class,
 		'analytics'                    => Analytics::class,
+		'coi'                          => Cross_Origin_Isolation::class,
 		'customizer'                   => Customizer::class,
 		'dashboard'                    => Dashboard::class,
 		'database_upgrader'            => Database_Upgrader::class,
