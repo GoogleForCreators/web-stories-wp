@@ -26,8 +26,7 @@ import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { Pane } from '../shared';
-import PillGroup from '../shared/pillGroup';
+import { Pane, PillGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
