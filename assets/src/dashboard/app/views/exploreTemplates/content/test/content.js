@@ -32,7 +32,7 @@ const fakeTemplates = [
     status: 'template',
     pages: [{ id: '10' }],
     centerTargetAction: () => {},
-    bottomTargetAction: () => {},
+    bottomTargetAction: 'https://example.com',
   },
   {
     id: 2,
@@ -43,7 +43,7 @@ const fakeTemplates = [
     status: 'template',
     pages: [{ id: '20' }],
     centerTargetAction: () => {},
-    bottomTargetAction: () => {},
+    bottomTargetAction: 'https://example.com',
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ const fakeTemplates = [
     status: 'template',
     pages: [{ id: '30' }],
     centerTargetAction: () => {},
-    bottomTargetAction: () => {},
+    bottomTargetAction: 'https://example.com',
   },
 ];
 
@@ -84,7 +84,7 @@ describe('Explore Templates <Content />', function () {
           }}
           view={{
             style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
+            pageSize: { width: 200, height: 300, containerHeight: 300 },
           }}
         />
       </LayoutProvider>
@@ -108,7 +108,7 @@ describe('Explore Templates <Content />', function () {
           }}
           view={{
             style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
+            pageSize: { width: 200, height: 300, containerHeight: 300 },
           }}
         />
       </LayoutProvider>
@@ -129,7 +129,7 @@ describe('Explore Templates <Content />', function () {
           }}
           view={{
             style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
+            pageSize: { width: 200, height: 300, containerHeight: 300 },
           }}
         />
       </LayoutProvider>

@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import Moveable from 'react-moveable';
+import { render, act } from '@testing-library/react';
+import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -31,8 +31,6 @@ import CanvasContext from '../../../app/canvas/context';
 import Selection from '../selection';
 import StoryContext from '../../../app/story/context';
 import TransformProvider from '../../transform/transformProvider';
-
-jest.mock('react-moveable', () => jest.fn(() => ({ children }) => children));
 
 const pageSize = { width: 100, height: 100 };
 
@@ -97,13 +95,14 @@ describe('singleSelectionMoveable', () => {
   }
 
   function performRotation(rotateTo) {
-    const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
-    moveable.onRotateStart({ set: () => {} });
-    moveable.onRotate({
+    const moveable =
+      MockMoveable.mock.calls[MockMoveable.mock.calls.length - 1][0];
+    moveable?.onRotateStart({ set: () => {} });
+    moveable?.onRotate({
       target,
       beforeRotate: rotateTo,
     });
-    moveable.onRotateEnd({ target });
+    moveable?.onRotateEnd({ target });
   }
 
   const rotateCases = [
@@ -116,7 +115,9 @@ describe('singleSelectionMoveable', () => {
     'should rotate %p',
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
-      performRotation(rotateTo);
+      act(() => {
+        performRotation(rotateTo);
+      });
 
       expect(updateSelectedElements).toHaveBeenLastCalledWith({
         properties: { rotationAngle: expectedRotationAngle },

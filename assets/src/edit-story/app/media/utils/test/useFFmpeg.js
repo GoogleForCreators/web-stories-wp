@@ -62,7 +62,19 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
 
 describe('useFFmpeg', () => {
   describe('isFeatureEnabled', () => {
-    it('should return true if feature is enabled', () => {
+    afterEach(() => {
+      delete window.crossOriginIsolated;
+    });
+
+    it('should return true if feature is enabled but has no cross-origin isolation', () => {
+      const { result } = arrange({
+        isFeatureEnabled: true,
+      });
+      expect(result.current.isFeatureEnabled).toBeFalse();
+    });
+
+    it('should return true if feature is enabled and has cross-origin isolation', () => {
+      window.crossOriginIsolated = true;
       const { result } = arrange({
         isFeatureEnabled: true,
       });

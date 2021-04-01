@@ -224,5 +224,5 @@ export const SearchPropTypes = PropTypes.shape({
 });
 
 export const ShowStoriesWhileLoadingPropType = PropTypes.shape({
-  current: PropTypes.boolean,
+  current: PropTypes.bool,
 });

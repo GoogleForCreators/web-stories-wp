@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -32,9 +32,11 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaStart({
-      provider: 'provider',
-      pageToken: 'page2',
+    act(() => {
+      result.current.actions.fetchMediaStart({
+        provider: 'provider',
+        pageToken: 'page2',
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -50,9 +52,11 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
-      provider: 'provider',
-      media: [{ id: 'id' }],
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'provider',
+        media: [{ id: 'id' }],
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -68,11 +72,13 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
-      provider: 'provider',
-      media: [{ id: 'id' }],
-      nextPageToken: 'page2',
-      totalPages: 10,
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'provider',
+        media: [{ id: 'id' }],
+        nextPageToken: 'page2',
+        totalPages: 10,
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -91,19 +97,23 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
-      provider: 'provider',
-      media: [{ id: 'id1' }],
-      nextPageToken: 'page2',
-      totalPages: 10,
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'provider',
+        media: [{ id: 'id1' }],
+        nextPageToken: 'page2',
+        totalPages: 10,
+      });
     });
 
-    result.current.actions.fetchMediaSuccess({
-      provider: 'provider',
-      media: [{ id: 'id2' }],
-      pageToken: 'page2',
-      nextPageToken: 'page3',
-      totalPages: 10,
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'provider',
+        media: [{ id: 'id2' }],
+        pageToken: 'page2',
+        nextPageToken: 'page3',
+        totalPages: 10,
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -121,16 +131,20 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
-      media: [{ id: 'id1' }],
-      nextPageToken: 'page2',
-      totalPages: 10,
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        media: [{ id: 'id1' }],
+        nextPageToken: 'page2',
+        totalPages: 10,
+      });
     });
 
-    result.current.actions.fetchMediaSuccess({
-      media: [{ id: 'id2' }],
-      nextPageToken: 'page2',
-      totalPages: 10,
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        media: [{ id: 'id2' }],
+        nextPageToken: 'page2',
+        totalPages: 10,
+      });
     });
 
     expect(result.current.state).toStrictEqual(
@@ -148,7 +162,9 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaError({ provider: 'provider' });
+    act(() => {
+      result.current.actions.fetchMediaError({ provider: 'provider' });
+    });
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
@@ -163,22 +179,30 @@ describe('reducer', () => {
       useMediaReducer(reducer, commonActionsToWrap)
     );
 
-    result.current.actions.fetchMediaSuccess({
-      provider: 'provider',
-      media: [{ id: 'id' }],
-      nextPageToken: 'page2',
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'provider',
+        media: [{ id: 'id' }],
+        nextPageToken: 'page2',
+      });
     });
 
-    result.current.actions.setNextPage({ provider: 'provider' });
+    act(() => {
+      result.current.actions.setNextPage({ provider: 'provider' });
+    });
+
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
     );
 
-    result.current.actions.fetchMediaSuccess({
-      provider: 'provider',
-      media: [{ id: 'id' }],
-      nextPageToken: 'page3',
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'provider',
+        media: [{ id: 'id' }],
+        nextPageToken: 'page3',
+      });
     });
+
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page3' })
     );

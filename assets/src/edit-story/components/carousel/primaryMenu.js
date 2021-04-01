@@ -32,11 +32,11 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-  Tooltip,
   PLACEMENT,
 } from '../../../design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import Modal from '../modal';
+import { Tooltip } from '../tooltip';
 import GridView from './gridview';
 import ZoomSelector from './zoomSelector';
 
