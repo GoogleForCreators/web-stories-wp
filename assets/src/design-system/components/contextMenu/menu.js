@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -121,9 +121,10 @@ const MenuList = styled.ul(
   `
 );
 
-const Menu = ({ items, ...props }) => {
-  const [focusedIndex, setFocusedIndex] = useState(-1);
+const Menu = ({ items, isOpen, ...props }) => {
+  const focusedIndex = useRef(-1);
   const listRef = useRef(null);
+  const menuWasAlreadyOpen = useRef(isOpen);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   const totalIndex = useMemo(() => items.length - 1, [items]);
@@ -137,7 +138,7 @@ const Menu = ({ items, ...props }) => {
   const handleKeyboardNav = useCallback(
     ({ key }) => {
       const isAscending = key === KEYS.UP;
-      let index = focusedIndex + (isAscending ? -1 : 1);
+      let index = focusedIndex.current + (isAscending ? -1 : 1);
       let terminate = isAscending ? index < 0 : index > totalIndex;
 
       while (!terminate) {
@@ -147,7 +148,8 @@ const Menu = ({ items, ...props }) => {
           FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
           !element?.disabled
         ) {
-          setFocusedIndex(index);
+          focusedIndex.current = index;
+          element.focus();
           return;
         }
 
@@ -155,8 +157,46 @@ const Menu = ({ items, ...props }) => {
         terminate = isAscending ? index < 0 : index > totalIndex;
       }
     },
-    [focusedIndex, totalIndex]
+    [totalIndex]
   );
+
+  useEffect(() => {
+    // focus first 'focusable' element if menu is opened and no element is focused
+    if (
+      isOpen &&
+      !menuWasAlreadyOpen.current &&
+      listRef?.current &&
+      focusedIndex.current === -1
+    ) {
+      let index = 0;
+
+      while (index <= totalIndex) {
+        const element = listRef.current?.children?.[index]?.children?.[0];
+
+        if (
+          FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+          !element?.disabled
+        ) {
+          focusedIndex.current = index;
+          element.focus(); // commenting this line out makes it work in firefox but wtf.
+          return;
+        }
+
+        index++;
+      }
+
+      menuWasAlreadyOpen.current = true;
+    }
+  }, [isOpen, totalIndex]);
+
+  useEffect(() => {
+    // reset state when menu is closed. This component does not unmount so
+    // we need to reset the state manually
+    if (!isOpen) {
+      focusedIndex.current = -1;
+      menuWasAlreadyOpen.current = false;
+    }
+  }, [isOpen]);
 
   useKeyDownEffect(listRef, { key: ['down', 'up'] }, handleKeyboardNav, [
     handleKeyboardNav,
@@ -174,12 +214,7 @@ const Menu = ({ items, ...props }) => {
               ''
             }
           >
-            <MenuItem
-              setFocusedIndex={setFocusedIndex}
-              focusedIndex={focusedIndex}
-              index={index}
-              {...itemProps}
-            />
+            <MenuItem {...itemProps} />
           </li>
         ))}
       </MenuList>
@@ -194,6 +229,7 @@ export const MenuPropTypes = {
       separator: PropTypes.oneOf(['bottom', 'top']),
     }).isRequired
   ),
+  isOpen: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;
