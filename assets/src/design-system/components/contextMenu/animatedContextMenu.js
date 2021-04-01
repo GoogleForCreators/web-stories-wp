@@ -34,7 +34,8 @@ const PERCENTAGE_OFFSET = {
   [DIRECTIONS.LEFT]: -50,
 };
 
-const transition = `transform 0.175s ${BEZIER.default}`;
+const animationTimeSeconds = 0.175;
+const transition = `transform ${animationTimeSeconds}s ${BEZIER.default}`;
 const initialScale = 0.5;
 const fullSize = css`
   top: 0;
@@ -48,7 +49,8 @@ const MenuWrapper = styled.div`
 `;
 
 const MenuRevealer = styled.div`
-  overflow: hidden;
+  overflow: ${({ animationFinished }) =>
+    animationFinished ? 'normal' : 'hidden'};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   ${fullSize}
 `;
@@ -204,6 +206,7 @@ ButtonInner.propTypes = {
 function AnimationContainer({ children, isOpen, ...props }) {
   const [align, setAlign] = useState(null);
   const [isReady, setIsReady] = useState(false);
+  const [animationFinished, setAnimationFinished] = useState(true);
   const menuPositionRef = useRef(null);
   const menuTogglePositionRef = useRef(null);
 
@@ -238,6 +241,21 @@ function AnimationContainer({ children, isOpen, ...props }) {
     setAlign(CORNER_DIRECTIONS[`${alignVertical}_${alignHorizontal}`]);
   }, [isOpen]);
 
+  useEffect(() => {
+    // some styles depend on the animation being finished. Set a timeout to set this variable
+    // once the animation has finished.
+    let timeoutId;
+    if (isOpen) {
+      setAnimationFinished(false);
+      timeoutId = setTimeout(
+        () => setAnimationFinished(true),
+        animationTimeSeconds * 1000
+      );
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [isOpen]);
+
   /**
    * Seems funky, but we need 1 full render where the proper
    * alignment is set before we animate in. This prevents react
@@ -258,7 +276,7 @@ function AnimationContainer({ children, isOpen, ...props }) {
       {...props}
     >
       <MenuWrapper>
-        <MenuRevealer>
+        <MenuRevealer animationFinished={isOpen && animationFinished}>
           <MenuCounterRevealer ref={menuPositionRef}>
             {children}
           </MenuCounterRevealer>
