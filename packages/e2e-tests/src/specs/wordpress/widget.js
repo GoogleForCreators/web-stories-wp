@@ -75,7 +75,7 @@ describe('Web Stories Widget', () => {
     });
   });
 
-  describe('Customizer', () => {
+  describe.skip('Customizer', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('customize.php');
 
