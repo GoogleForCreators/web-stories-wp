@@ -122,13 +122,13 @@ jobs:
           WP_VERSION: ${{ matrix.wp }}
 
       - name: Run E2E tests with percy
-        run:  DEBUG="puppeteer:*" npm run test:e2e:percy
+        run:  DEBUG="puppeteer:*" npm run test:e2e:percy packages/e2e-tests/src/specs/wordpress/widget.js
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
         if: ( matrix.coverage ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run:  DEBUG="puppeteer:*" npm run test:e2e
+        run:  DEBUG="puppeteer:*" npm run test:e2e packages/e2e-tests/src/specs/wordpress/widget.js
         if: ( ! matrix.coverage ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
