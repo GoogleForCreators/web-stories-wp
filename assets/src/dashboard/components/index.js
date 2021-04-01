@@ -29,7 +29,6 @@ export { default as FileUpload } from './fileUpload';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { default as InlineInputForm } from './inlineInputForm';
 export { default as Layout, useLayoutContext } from './layout';
-export { default as MultiPartPill } from './multiPartPill';
 export { default as NavProvider, useNavContext } from './navProvider';
 export {
   AppFrame,
@@ -38,7 +37,6 @@ export {
   PageContent,
   NavMenuButton,
 } from './pageStructure';
-export { default as PopoverMenu } from './popoverMenu';
 export { default as ScrollToTop } from './scrollToTop';
 export { default as StoryMenu, MoreVerticalButton } from './storyMenu';
 export {
@@ -60,13 +58,6 @@ export {
   TableStatusHeaderCell,
   TableStatusCell,
 } from './table';
-export {
-  DefaultParagraph1,
-  Heading1,
-  Heading2,
-  Paragraph1,
-  Paragraph2,
-  TypographyPresets,
-} from './typography';
+export { TypographyPresets } from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
 export { Tooltip } from './tooltip';
