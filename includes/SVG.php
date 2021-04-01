@@ -75,9 +75,13 @@ class SVG extends Service_Base {
 	private $experiments;
 
 	/**
-	 * Cross_Origin_Isolation constructor.
+	 * SVG constructor.
+	 *
+	 * @since 1.3.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
+	 *
+	 * @return void
 	 */
 	public function __construct( Experiments $experiments ) {
 		$this->experiments = $experiments;
