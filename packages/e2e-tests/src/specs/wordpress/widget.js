@@ -82,6 +82,7 @@ describe('Web Stories Widget', () => {
       await page.waitForSelector('.control-panel-widgets');
       await expect(page).toClick('li', { text: 'Widgets' });
 
+      await page.waitForSelector('.control-panel-widgets.current-panel');
       await expect(page).toMatchElement('.control-panel-widgets.current-panel');
 
       // expect(page).toClick(...) doesn't seem to work.
@@ -111,9 +112,8 @@ describe('Web Stories Widget', () => {
         visible: false,
       });
 
-      await expect(page).toClick('button', { text: 'Done' });
-
       await clickButton('#save');
+      await page.waitForSelector('#save[value="Published"]');
       await expect(page).toMatchElement('#save[value="Published"]');
 
       // TODO: Ensure this works reliably in tests.
