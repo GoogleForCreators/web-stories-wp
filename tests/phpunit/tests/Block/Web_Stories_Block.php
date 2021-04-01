@@ -30,7 +30,7 @@ class Web_Stories_Block extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
 	public function test_registers_block_type() {
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( \Google\Web_Stories\Block\Web_Stories_Block::BLOCK_NAME ) );
