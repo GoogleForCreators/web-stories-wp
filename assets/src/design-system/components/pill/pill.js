@@ -19,7 +19,6 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
@@ -60,22 +59,13 @@ const StyledPill = styled.button(
   `
 );
 
-const Pill = forwardRef(function Pill(
-  { children, isActive, onClick, ...rest },
-  ref
-) {
+function Pill({ children, isActive, onClick, ...rest }) {
   return (
-    <StyledPill
-      ref={ref}
-      isActive={isActive}
-      aria-selected={isActive}
-      onClick={onClick}
-      {...rest}
-    >
+    <StyledPill isActive={isActive} onClick={onClick} {...rest}>
       {children}
     </StyledPill>
   );
-});
+}
 
 Pill.propTypes = {
   children: PropTypes.node.isRequired,
