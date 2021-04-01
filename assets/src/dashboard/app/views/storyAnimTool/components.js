@@ -44,7 +44,7 @@ export const ActiveCard = styled.div(
       .map(
         (elementId) => `
           [data-element-id='${elementId}'] {
-            border: 2px solid ${theme.DEPRECATED_THEME.colors.bluePrimary};
+            border: 2px solid ${theme.colors.border.selection};
           }
         `
       )
