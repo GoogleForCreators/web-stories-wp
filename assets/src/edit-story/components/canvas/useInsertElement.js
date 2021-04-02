@@ -29,6 +29,7 @@ import { DEFAULT_MASK } from '../../masks';
 import STICKERS from '../../stickers';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import useFocusCanvas from './useFocusCanvas';
 
 function useInsertElement() {
@@ -156,12 +157,12 @@ function getElementProperties(
   width = size.width;
   height = size.height;
 
-  // X and y defaults: in the top corner of the page.
+  // X and y defaults: in the center of the page.
   if (!isNum(x)) {
-    x = 48;
+    x = PAGE_WIDTH / 2 - width / 2;
   }
   if (!isNum(y)) {
-    y = 0;
+    y = PAGE_HEIGHT / 2 - height / 2;
   }
 
   x = dataPixels(x);
