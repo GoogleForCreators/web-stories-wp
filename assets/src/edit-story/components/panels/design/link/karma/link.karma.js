@@ -110,7 +110,7 @@ fdescribe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    it('should display the link tooltip correctly', async () => {
+    fit('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
@@ -120,17 +120,17 @@ fdescribe('Link Panel', () => {
       await fixture.events.sleep(1200);
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
-
+      await fixture.events.keyboard.press('tab');
       // Unselect element.
       const fullbleed = fixture.container.querySelector(
         '[data-testid="fullbleed"]'
       );
       const { left, top } = fullbleed.getBoundingClientRect();
-      await fixture.events.mouse.click(left - 20, top - 20);
+      await fixture.events.mouse.click(left - 5, top - 5);
 
       // Move mouse to hover over the element.
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
-      await fixture.events.mouse.moveRel(frame, 20, 20);
+      await fixture.events.mouse.moveRel(frame, 10, 10);
 
       expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
       await fixture.snapshot(
@@ -146,8 +146,8 @@ fdescribe('Link Panel', () => {
       await fixture.events.keyboard.press('del');
 
       // Verify that the description is not displayed when hovering without url.
-      await fixture.events.mouse.click(left - 10, top - 10);
-      await fixture.events.mouse.moveRel(frame, 20, 20);
+      await fixture.events.mouse.click(left - 5, top - 5);
+      await fixture.events.mouse.moveRel(frame, 10, 10);
       const removedDescription = fixture.screen.queryByText(linkDescription);
       expect(removedDescription).toBeNull();
       await fixture.snapshot(
