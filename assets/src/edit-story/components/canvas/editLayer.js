@@ -94,12 +94,7 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea
-        ref={pageAreaRef}
-        isControlled
-        showOverflow
-        overflow="visible"
-      >
+      <EditPageArea ref={pageAreaRef} isControlled showOverflow>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

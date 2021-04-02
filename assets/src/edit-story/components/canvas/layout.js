@@ -111,7 +111,7 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageAreaFullbleedContainer = styled(Area).attrs({
+const PageAreaContainer = styled(Area).attrs({
   area: 'p',
   canOverflow: true,
 })`
@@ -120,13 +120,11 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
     hasHorizontalOverflow ? 'flex-start' : 'center'};
   align-items: ${({ hasVerticalOverflow }) =>
     hasVerticalOverflow ? 'flex-start' : 'center'};
-  overflow: ${({ overflow }) =>
-    overflow ?? 'var(--overflow-x) var(--overflow-y)'};
+  overflow: var(--overflow-x) var(--overflow-y);
 
   ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
     isControlled &&
     css`
-      overflow: ${({ overflow }) => overflow ?? 'hidden'};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
@@ -166,7 +164,7 @@ const PageClip = styled.div`
     `}
 `;
 
-const PageAreaWithOverflow = styled.div`
+const FullbleedContainer = styled.div`
   ${({ background }) => generatePatternStyles(background)}
   overflow: visible;
   position: relative;
@@ -332,7 +330,6 @@ const PageArea = forwardRef(function PageArea(
     overlay = [],
     background,
     isControlled = false,
-    overflow,
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
@@ -346,8 +343,8 @@ const PageArea = forwardRef(function PageArea(
     })
   );
   return (
-    <PageAreaFullbleedContainer
-      overflow={overflow}
+    <PageAreaContainer
+      showOverflow={showOverflow}
       isControlled={isControlled}
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
@@ -358,7 +355,7 @@ const PageArea = forwardRef(function PageArea(
         hasVerticalOverflow={hasVerticalOverflow}
       >
         <PaddedPage>
-          <PageAreaWithOverflow
+          <FullbleedContainer
             aria-label={__('Fullbleed area', 'web-stories')}
             role="region"
             ref={fullbleedRef}
@@ -372,11 +369,11 @@ const PageArea = forwardRef(function PageArea(
                 {children}
               </PageAreaSafeZone>
             </PageAreaWithoutOverflow>
-          </PageAreaWithOverflow>
+          </FullbleedContainer>
         </PaddedPage>
       </PageClip>
       {overlay}
-    </PageAreaFullbleedContainer>
+    </PageAreaContainer>
   );
 });
 
@@ -386,7 +383,6 @@ PageArea.propTypes = {
   overlay: PropTypes.node,
   background: PropTypes.object,
   isControlled: PropTypes.bool,
-  overflow: PropTypes.string,
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
