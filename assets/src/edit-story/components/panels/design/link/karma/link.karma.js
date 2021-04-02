@@ -22,7 +22,7 @@ import useInsertElement from '../../../../canvas/useInsertElement';
 import createSolidFromString from '../../../../../utils/createSolidFromString';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
-describe('Link Panel', () => {
+fdescribe('Link Panel', () => {
   let fixture;
   let linkPanel;
   let safezone;
@@ -42,7 +42,7 @@ describe('Link Panel', () => {
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
-      moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+      moveBy(0, safezoneHeight - frameHeight - 5, { steps: 10 }),
       up(),
     ]);
   };
@@ -110,9 +110,7 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // TODO #6950
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should display the link tooltip correctly', async () => {
+    it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
@@ -128,11 +126,11 @@ describe('Link Panel', () => {
         '[data-testid="fullbleed"]'
       );
       const { left, top } = fullbleed.getBoundingClientRect();
-      await fixture.events.mouse.click(left - 5, top - 5);
+      await fixture.events.mouse.click(left - 20, top - 20);
 
       // Move mouse to hover over the element.
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
-      await fixture.events.mouse.moveRel(frame, 10, 10);
+      await fixture.events.mouse.moveRel(frame, 20, 20);
 
       expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
       await fixture.snapshot(
@@ -148,8 +146,8 @@ describe('Link Panel', () => {
       await fixture.events.keyboard.press('del');
 
       // Verify that the description is not displayed when hovering without url.
-      await fixture.events.mouse.click(left - 5, top - 5);
-      await fixture.events.mouse.moveRel(frame, 10, 10);
+      await fixture.events.mouse.click(left - 10, top - 10);
+      await fixture.events.mouse.moveRel(frame, 20, 20);
       const removedDescription = fixture.screen.queryByText(linkDescription);
       expect(removedDescription).toBeNull();
       await fixture.snapshot(
