@@ -67,7 +67,7 @@ describe('Library Media Tab', () => {
       );
       const moreButton = fixture.screen.getByRole('button', { name: 'More' });
       await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(moreButton, 5, 5),
+        moveRel(moreButton, 20, 20),
         down(),
         up(),
       ]);
