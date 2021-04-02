@@ -113,20 +113,19 @@ const Area = styled.div`
 // mechanisms.
 const PageAreaContainer = styled(Area).attrs({
   area: 'p',
-  showOverflow: true,
 })`
   display: flex;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
   align-items: ${({ hasVerticalOverflow }) =>
     hasVerticalOverflow ? 'flex-start' : 'center'};
-  overflow: ${({ overflow }) =>
-    overflow ?? 'var(--overflow-x) var(--overflow-y)'};
+  overflow: ${({ showOverflow }) =>
+    showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
 
   ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
     isControlled &&
     css`
-      overflow: ${({ overflow }) => overflow ?? 'hidden'};
+      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
@@ -220,7 +219,7 @@ const PageAreaSafeZone = styled.div`
 
 const HeadArea = styled(Area).attrs({ area: 'h' })``;
 
-const MenuArea = styled(Area).attrs({ area: 'm', showOverflow: true })``;
+const MenuArea = styled(Area).attrs({ area: 'm' })``;
 
 const NavArea = styled(Area)`
   display: flex;
@@ -230,17 +229,14 @@ const NavArea = styled(Area)`
 
 const NavPrevArea = styled(NavArea).attrs({
   area: 'b',
-  showOverflow: true,
 })``;
 
 const NavNextArea = styled(NavArea).attrs({
   area: 'f',
-  showOverflow: true,
 })``;
 
 const CarouselArea = styled(Area).attrs({
   area: 'c',
-  showOverflow: true,
 })``;
 
 /**
@@ -332,7 +328,6 @@ const PageArea = forwardRef(function PageArea(
     overlay = [],
     background,
     isControlled = false,
-    overflow,
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
@@ -345,10 +340,9 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow,
     })
   );
-  console.log(overflow, showOverflow);
   return (
     <PageAreaContainer
-      overflow={overflow}
+      showOverflow={showOverflow}
       isControlled={isControlled}
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
