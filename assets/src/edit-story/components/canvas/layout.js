@@ -136,8 +136,6 @@ const PageAreaContainer = styled(Area).attrs({
 `;
 
 const PaddedPage = styled.div`
-  width: calc(var(--page-width-px) + var(--page-padding-px));
-  height: calc(var(--fullbleed-height-px) + var(--page-padding-px));
   padding: calc(0.5 * var(--page-padding-px));
 `;
 
