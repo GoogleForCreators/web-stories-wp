@@ -178,7 +178,7 @@ const Menu = ({ items, isOpen, ...props }) => {
           !element?.disabled
         ) {
           focusedIndex.current = index;
-          element.focus(); // commenting this line out makes it work in firefox but wtf.
+          element.focus();
           return;
         }
 

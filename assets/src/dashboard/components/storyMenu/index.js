@@ -25,6 +25,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
@@ -97,7 +98,7 @@ export default function StoryMenu({
         tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
-        aria-label="More Options"
+        aria-label={__('More Options', 'web-stories')}
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
         <MoreVerticalSvg />
