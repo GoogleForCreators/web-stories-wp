@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 
-fdescribe('Filter Panel', () => {
+describe('Filter Panel', () => {
   let fixture;
   let bgImageId;
   let filterPanel;

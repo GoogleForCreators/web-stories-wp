@@ -33,16 +33,14 @@ describe('Image resource loading integration', () => {
     fixture.restore();
   });
 
-  // TODO #6954
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should use cached thumbnail then switch to fullsize', async () => {
+  it('should use cached thumbnail then switch to fullsize', async () => {
     // Sleep a bit to ensure the media gallery grid is properly laid out.
     await fixture.events.sleep(50);
 
     const image = fixture.screen.getAllByLabelText(
       'image with transparent background'
     );
-    await fixture.events.mouse.clickOn(image[0], 10, 10);
+    await fixture.events.mouse.clickOn(image[0], 20, 20);
 
     // We don't check for immediately cached value here because we would have to set a timeout of about 100ms in image/display in order to catch it here
     // expect(resourceList.get(2).type).toEqual('cached');
