@@ -73,7 +73,7 @@ describe('Background Copy Paste integration', () => {
 
   // TODO #6948
   // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy pattern background to page with image', async () => {
+  it('should correctly copy pattern background to page with image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -115,7 +115,7 @@ describe('Background Copy Paste integration', () => {
 
   // TODO #6948
   // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page without image', async () => {
+  it('should correctly copy image to page without image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -162,7 +162,7 @@ describe('Background Copy Paste integration', () => {
 
   // TODO #6948
   // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page with existing image', async () => {
+  it('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -262,7 +262,7 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(image, 5, 5),
       down(),
-      moveRel(canvas, 10, 10),
+      moveRel(canvas, 5, 5),
       up(),
     ]);
   }
@@ -356,8 +356,6 @@ describe('Background Copy Paste integration', () => {
   }
 
   function getPageArea() {
-    return fixture.querySelector(
-      '[data-testid="fullbleed"] [class^="layout__PageAreaWithOverflow"]'
-    );
+    return fixture.querySelector('[data-testid="fullbleed"]');
   }
 });
