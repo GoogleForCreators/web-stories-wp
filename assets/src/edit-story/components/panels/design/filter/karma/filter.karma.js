@@ -51,7 +51,7 @@ fdescribe('Filter Panel', () => {
     } = await fixture.renderHook(() => useStory());
     bgImageId = elements[0].id;
 
-    filterPanel = fixture.editor.inspector.designPanel.filters;
+    //filterPanel = fixture.editor.inspector.designPanel.filters;
     getBackgroundElementOverlay = () =>
       fixture.editor.canvas.displayLayer.display(bgImageId).overlay;
   });
