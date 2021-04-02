@@ -260,9 +260,9 @@ describe('Background Copy Paste integration', () => {
     const canvas = fixture.editor.canvas.fullbleed.container;
 
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(image, 5, 5),
+      moveRel(image, 20, 20),
       down(),
-      moveRel(canvas, 5, 5),
+      moveRel(canvas, 10, 10),
       up(),
     ]);
   }
