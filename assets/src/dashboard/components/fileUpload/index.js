@@ -54,9 +54,7 @@ const UploadFormArea = styled.div`
   padding: 40px 0;
   border-radius: 4px;
   border: ${({ isDragging, theme }) =>
-    isDragging
-      ? theme.DEPRECATED_THEME.borders.bluePrimary
-      : theme.DEPRECATED_THEME.borders.gray100};
+    isDragging ? theme.colors.border.focus : theme.colors.border.defaultNormal};
   border-style: dashed;
 
   transition: border-color 300ms ease-in;
@@ -77,7 +75,7 @@ const LoadingIndicator = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
+  background-color: ${({ theme }) => theme.colors.standard.white};
   opacity: ${({ isLoading }) => (isLoading ? 0.6 : 0)};
   z-index: ${({ isLoading }) => (isLoading ? '100' : '0')};
   pointer-events: none;
