@@ -35,9 +35,6 @@ import { Popup } from './popup';
 import { forceFocusCompanion } from './utils';
 
 const Wrapper = styled.div`
-  position: absolute;
-  bottom: 16px;
-  left: 8px;
   /**
    * sibling inherits parent z-index of Z_INDEX.EDIT
    * so this needs to be placed above that while still

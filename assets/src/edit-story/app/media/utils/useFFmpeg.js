@@ -64,14 +64,16 @@ function useFFmpeg() {
   const {
     state: { currentUser },
   } = useCurrentUser();
+
+  const isFeatureSupported = Boolean(window?.crossOriginIsolated);
   /**
    * Whether the video optimization feature is enabled.
    *
-   * @todo Check for window.crossOriginIsolated
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
-  const isFeatureEnabled = useFeature('videoOptimization');
+  const isFeatureEnabled =
+    useFeature('videoOptimization') && isFeatureSupported;
 
   async function getFFmpegInstance(file) {
     const { createFFmpeg, fetchFile } = await import(
