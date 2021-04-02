@@ -36,7 +36,7 @@ export const AnimationList = styled.div(
     width: 100%;
     height: 100%;
     overflow: scroll;
-    background-color: ${theme.DEPRECATED_THEME.colors.gray25};
+    background-color: ${theme.colors.gray[5]};
   `
 );
 
@@ -81,7 +81,7 @@ export const DeleteIcon = styled(CloseIconBase).attrs({
   width: 12,
   height: 12,
 })`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray700};
+  color: ${({ theme }) => theme.colors.gray[90]};
 `;
 
 export const LabelButton = styled.button(
@@ -93,7 +93,7 @@ export const LabelButton = styled.button(
     ${
       isActive &&
       `
-        color: ${theme.DEPRECATED_THEME.colors.bluePrimary};
+        color: ${theme.colors.blue[50]};
         font-weight: 700;
       `
     }
@@ -128,7 +128,7 @@ export const TimelineAnimation = styled.div(
     align-items: center;
     width: 100%;
     border: none;
-    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.gray600};
+    border-bottom: 1px solid ${theme.colors.gray[60]};
     margin-bottom: 10px;
   `
 );
@@ -141,8 +141,8 @@ export const TimelineLabel = styled.div(
     position: relative;
     width: 100px;
     padding: 20px 0;
-    border-right: 1px solid ${theme.DEPRECATED_THEME.colors.gray600};
-    background-color: ${theme.DEPRECATED_THEME.colors.white};
+    border-right: 1px solid ${theme.colors.gray[60]};
+    background-color: ${theme.colors.standard.white};
   `
 );
 
@@ -156,7 +156,7 @@ export const TimelineBarContainer = styled.div(
       content: '';
       width: 100%;
       height: 1px;
-      background-color: ${theme.DEPRECATED_THEME.colors.gray300};
+      background-color: ${theme.colors.gray[30]};
     }
   `
 );
@@ -169,6 +169,6 @@ export const TimelineBar = styled.button(
     left: ${offset}%;
     width: ${width}%;
     height: 20px;
-    background-color: ${theme.DEPRECATED_THEME.colors.bluePrimary};
+    background-color: ${theme.colors.blue[50]};
   `
 );
