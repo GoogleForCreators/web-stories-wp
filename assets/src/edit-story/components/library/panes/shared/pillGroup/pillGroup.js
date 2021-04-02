@@ -30,18 +30,13 @@ import { __ } from '@web-stories-wp/i18n';
 import { ArrowDown } from '../../../../button';
 import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import { useExpandAnimation, useHandleRowVisibility } from '../hooks';
 import Pill from './pill';
-
-/**
- * Internal dependencies
- */
 import {
   PILL_COLLAPSED_FULL_HEIGHT,
   PILL_BOTTOM_MARGIN,
   PILL_TOP_MARGIN,
 } from './constants';
-import useExpandAnimation from './useExpandAnimation';
-import useHandleRowVisibility from './useHandleRowVisibility';
 
 const Section = styled.div`
   height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
@@ -71,7 +66,7 @@ const InnerContainer = styled.div`
 `;
 
 // Flips the button upside down when expanded;
-// Important: the visibily is 'inherit' when props.visible because otherwise
+// Important: the visibility is 'inherit' when props.visible because otherwise
 // it gets shown even when the provider is not the selectedProvider!
 const ExpandButton = styled(ArrowDown)`
   display: flex;
@@ -113,6 +108,9 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     innerContainerRef,
     isExpanded,
     setFocusedRowOffset,
+    collapsedHeight: PILL_COLLAPSED_FULL_HEIGHT,
+    bottomMargin: PILL_BOTTOM_MARGIN,
+    topMargin: PILL_TOP_MARGIN,
   });
 
   useHandleRowVisibility({

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,14 @@
  */
 import { useLayoutEffect } from 'react';
 
-/**
- * Internal dependencies
- */
-import {
-  CHIP_COLLAPSED_FULL_HEIGHT,
-  CHIP_BOTTOM_MARGIN,
-  CHIP_TOP_MARGIN,
-} from './constants';
-
 function useExpandAnimation({
   sectionRef,
   innerContainerRef,
   isExpanded,
   setFocusedRowOffset,
+  collapsedHeight,
+  bottomMargin,
+  topMargin,
 }) {
   // Handles expand and contract animation.
   // We calculate the actual height of the categories list, and set its explicit
@@ -42,12 +36,10 @@ function useExpandAnimation({
     }
     let height;
     if (!isExpanded) {
-      height = `${CHIP_COLLAPSED_FULL_HEIGHT}px`;
+      height = `${collapsedHeight}px`;
     } else {
       height = `${
-        innerContainerRef.current.offsetHeight +
-        CHIP_TOP_MARGIN +
-        CHIP_BOTTOM_MARGIN
+        innerContainerRef.current.offsetHeight + topMargin + bottomMargin
       }px`;
     }
     // Safari has some strange issues with flex-shrink that require setting
@@ -56,7 +48,15 @@ function useExpandAnimation({
     sectionRef.current.style.minHeight = height;
 
     setFocusedRowOffset(0);
-  }, [sectionRef, innerContainerRef, isExpanded, setFocusedRowOffset]);
+  }, [
+    bottomMargin,
+    collapsedHeight,
+    innerContainerRef,
+    isExpanded,
+    sectionRef,
+    setFocusedRowOffset,
+    topMargin,
+  ]);
 }
 
 export default useExpandAnimation;

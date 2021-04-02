@@ -30,7 +30,7 @@ import { focusableOutlineCSS } from '../../theme/helpers';
 const getChipBackgroundColor = ({ theme, active, disabled }) =>
   active && !disabled
     ? theme.colors.interactiveBg.secondaryNormal
-    : theme.colors.bg.primary;
+    : 'transparent';
 
 const Infix = styled.div`
   display: inline-block;

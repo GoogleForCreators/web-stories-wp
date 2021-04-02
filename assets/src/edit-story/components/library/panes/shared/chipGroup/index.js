@@ -36,13 +36,13 @@ import {
   useKeyDownEffect,
 } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import { useExpandAnimation, useHandleRowVisibility } from '../hooks';
 import {
   CHIP_COLLAPSED_FULL_HEIGHT,
   CHIP_BOTTOM_MARGIN,
   CHIP_TOP_MARGIN,
+  FOCUS_BORDER_SPACING,
 } from './constants';
-import useExpandAnimation from './useExpandAnimation';
-import useHandleRowVisibility from './useHandleRowVisibility';
 
 const Section = styled.div`
   height: ${CHIP_COLLAPSED_FULL_HEIGHT}px;
@@ -88,7 +88,7 @@ const ExpandButton = styled(Button).attrs({
   max-height: none;
   width: 32px;
   height: 32px;
-  ${({ isExpanded }) => isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'}
+  ${({ isExpanded }) => isExpanded && 'transform: scaleY(-1);'}
   visibility: inherit;
   align-self: center;
   justify-content: center;
@@ -127,6 +127,9 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     innerContainerRef,
     isExpanded,
     setFocusedRowOffset,
+    collapsedHeight: CHIP_COLLAPSED_FULL_HEIGHT,
+    bottomMargin: CHIP_BOTTOM_MARGIN,
+    topMargin: CHIP_TOP_MARGIN,
   });
 
   useHandleRowVisibility({
@@ -135,6 +138,7 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     selectedItemId,
     setFocusedRowOffset,
     itemRefs,
+    offsetSpacing: FOCUS_BORDER_SPACING,
   });
 
   const hasItems = items.length > 0;
@@ -162,7 +166,7 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
               ref={innerContainerRef}
               style={{ transform: `translateY(-${focusedRowOffset}px` }}
             >
-              {items.map((item, i) => {
+              {items.map((item) => {
                 const { id, label } = item;
                 const selected = id === selectedItemId;
 
@@ -176,9 +180,6 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                     active={selected}
                     aria-selected={selected}
                     onClick={() => handleClick(selected, id)}
-                    // The first or selected category will be in focus for roving
-                    // (arrow-based) navigation initially.
-                    tabIndex={i === 0 || selected ? 0 : -1}
                   >
                     {label}
                   </Chip>
