@@ -347,8 +347,6 @@ const PageArea = forwardRef(function PageArea(
   );
   return (
     <PageAreaFullbleedContainer
-      aria-label={__('Fullbleed area', 'web-stories')}
-      role="region"
       overflow={overflow}
       isControlled={isControlled}
       hasHorizontalOverflow={hasHorizontalOverflow}
@@ -361,6 +359,8 @@ const PageArea = forwardRef(function PageArea(
       >
         <PaddedPage>
           <PageAreaWithOverflow
+            aria-label={__('Fullbleed area', 'web-stories')}
+            role="region"
             ref={fullbleedRef}
             data-testid="fullbleed"
             background={background}
