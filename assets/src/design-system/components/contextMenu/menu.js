@@ -129,9 +129,6 @@ const Menu = ({ items, isOpen, ...props }) => {
 
   const totalIndex = useMemo(() => items.length - 1, [items]);
 
-  /**
-   * Sets state to track the
-   */
   const handleFocusItem = useCallback((ev, itemIndex, callback) => {
     setFocusedIndex(itemIndex);
     callback?.(ev);
@@ -194,10 +191,6 @@ const Menu = ({ items, isOpen, ...props }) => {
       menuWasAlreadyOpen.current = true;
     }
   }, [focusedIndex, isOpen, totalIndex]);
-
-  useEffect(() => {
-    // focus item when
-  }, [focusedIndex]);
 
   useEffect(() => {
     // reset state when menu is closed. This component does not unmount so
