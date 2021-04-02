@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -87,6 +87,12 @@ function SelectionCanvas({ children }) {
       };
     }
   );
+
+  const lassoReferenceContainer = useMemo(
+    () => fullbleedContainer?.querySelector('[data-lasso-reference]'),
+    [fullbleedContainer]
+  );
+
   const { editorToDataX, editorToDataY } = useUnits((state) => ({
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
@@ -178,10 +184,17 @@ function SelectionCanvas({ children }) {
         offsetTop,
         offsetHeight,
         offsetWidth,
+      } = lassoReferenceContainer;
+      const {
+        offsetLeft: fullbleedLeft,
+        offsetTop: fullbleedTop,
       } = fullbleedContainer;
       // Offset from the fullbleed to the safe zone.
-      const dx = offsetLeft;
-      const dy = offsetTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
+      const dx = offsetLeft + fullbleedLeft;
+      const dy =
+        offsetTop +
+        fullbleedTop +
+        (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
       const x = editorToDataX(lx - dx);
       const y = editorToDataY(ly - dy);
       const width = editorToDataX(lwidth);

@@ -366,6 +366,7 @@ const PageArea = forwardRef(function PageArea(
             background={background}
             isControlled={isControlled}
             isBackgroundSelected={isBackgroundSelected}
+            data-lasso-reference
           >
             <PageAreaWithoutOverflow showOverflow={showOverflow}>
               <PageAreaSafeZone ref={ref} data-testid="safezone">
