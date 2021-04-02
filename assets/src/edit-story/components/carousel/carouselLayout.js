@@ -24,7 +24,8 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { CarouselScrollForward, CarouselScrollBack } from './carouselScroll';
-import CarouselMenu from './carouselMenu';
+import PrimaryMenu from './primaryMenu';
+import SecondaryMenu from './secondaryMenu';
 import CarouselList from './carouselList';
 import useCarousel from './useCarousel';
 import { MENU_GUTTER, BUTTON_WIDTH, BUTTON_GAP } from './constants';
@@ -34,7 +35,7 @@ const Wrapper = styled.section`
   display: grid;
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
-    '. . prev-navigation . carousel . next-navigation . menu' auto /
+    'secondary . prev-navigation . carousel . next-navigation . primary' auto /
     ${MENU_GUTTER}px
     1fr
     ${BUTTON_WIDTH}px
@@ -74,8 +75,11 @@ function CarouselLayout() {
       <Area area="next-navigation">
         <CarouselScrollForward />
       </Area>
-      <Area area="menu">
-        <CarouselMenu />
+      <Area area="primary">
+        <PrimaryMenu />
+      </Area>
+      <Area area="secondary">
+        <SecondaryMenu />
       </Area>
     </Wrapper>
   );

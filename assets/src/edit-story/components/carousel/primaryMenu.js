@@ -36,7 +36,6 @@ import {
 } from '../../../design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import Modal from '../modal';
-import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { Tooltip } from '../tooltip';
 import GridView from './gridview';
 import ZoomSelector from './zoomSelector';
@@ -54,7 +53,7 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  margin: 0 16px 16px 0;
+  margin: 0 16px 16px;
 `;
 
 const Box = styled.div`
@@ -69,7 +68,7 @@ const Space = styled.span`
   width: 8px;
 `;
 
-function CarouselMenu() {
+function PrimaryMenu() {
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
 
   const toggleModal = useCallback(() => {
@@ -129,10 +128,6 @@ function CarouselMenu() {
             </>
           )}
           <Box>
-            <KeyboardShortcutsMenu />
-          </Box>
-          <Space />
-          <Box>
             <Tooltip
               title={__('Grid View', 'web-stories')}
               placement={PLACEMENT.TOP}
@@ -170,4 +165,4 @@ function CarouselMenu() {
   );
 }
 
-export default CarouselMenu;
+export default PrimaryMenu;
