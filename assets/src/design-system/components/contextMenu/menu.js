@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -122,12 +122,20 @@ const MenuList = styled.ul(
 );
 
 const Menu = ({ items, isOpen, ...props }) => {
-  const focusedIndex = useRef(-1);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
   const menuWasAlreadyOpen = useRef(isOpen);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   const totalIndex = useMemo(() => items.length - 1, [items]);
+
+  /**
+   * Sets state to track the
+   */
+  const handleFocusItem = useCallback((ev, itemIndex, callback) => {
+    setFocusedIndex(itemIndex);
+    callback?.(ev);
+  }, []);
 
   /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
@@ -138,7 +146,7 @@ const Menu = ({ items, isOpen, ...props }) => {
   const handleKeyboardNav = useCallback(
     ({ key }) => {
       const isAscending = key === KEYS.UP;
-      let index = focusedIndex.current + (isAscending ? -1 : 1);
+      let index = focusedIndex + (isAscending ? -1 : 1);
       let terminate = isAscending ? index < 0 : index > totalIndex;
 
       while (!terminate) {
@@ -148,8 +156,7 @@ const Menu = ({ items, isOpen, ...props }) => {
           FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
           !element?.disabled
         ) {
-          focusedIndex.current = index;
-          element.focus();
+          setFocusedIndex(index);
           return;
         }
 
@@ -157,7 +164,7 @@ const Menu = ({ items, isOpen, ...props }) => {
         terminate = isAscending ? index < 0 : index > totalIndex;
       }
     },
-    [totalIndex]
+    [focusedIndex, totalIndex]
   );
 
   useEffect(() => {
@@ -166,7 +173,7 @@ const Menu = ({ items, isOpen, ...props }) => {
       isOpen &&
       !menuWasAlreadyOpen.current &&
       listRef?.current &&
-      focusedIndex.current === -1
+      focusedIndex === -1
     ) {
       let index = 0;
 
@@ -177,8 +184,7 @@ const Menu = ({ items, isOpen, ...props }) => {
           FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
           !element?.disabled
         ) {
-          focusedIndex.current = index;
-          element.focus();
+          setFocusedIndex(index);
           return;
         }
 
@@ -187,13 +193,17 @@ const Menu = ({ items, isOpen, ...props }) => {
 
       menuWasAlreadyOpen.current = true;
     }
-  }, [isOpen, totalIndex]);
+  }, [focusedIndex, isOpen, totalIndex]);
+
+  useEffect(() => {
+    // focus item when
+  }, [focusedIndex]);
 
   useEffect(() => {
     // reset state when menu is closed. This component does not unmount so
     // we need to reset the state manually
     if (!isOpen) {
-      focusedIndex.current = -1;
+      setFocusedIndex(-1);
       menuWasAlreadyOpen.current = false;
     }
   }, [isOpen]);
@@ -205,7 +215,7 @@ const Menu = ({ items, isOpen, ...props }) => {
   return (
     <MenuWrapper>
       <MenuList ref={listRef} {...props}>
-        {items.map(({ separator, ...itemProps }, index) => (
+        {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li
             key={ids[index]}
             className={
@@ -214,7 +224,12 @@ const Menu = ({ items, isOpen, ...props }) => {
               ''
             }
           >
-            <MenuItem {...itemProps} />
+            <MenuItem
+              focusedIndex={focusedIndex}
+              index={index}
+              onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
+              {...itemProps}
+            />
           </li>
         ))}
       </MenuList>

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -41,13 +41,22 @@ const Shortcut = styled(Text)(
 
 export const MenuItem = ({
   disabled,
+  focusedIndex,
   href,
+  index,
   label,
   newTab,
   onClick,
+  onFocus,
   shortcut,
 }) => {
   const itemRef = useRef(null);
+
+  useEffect(() => {
+    if (focusedIndex === index) {
+      itemRef.current?.focus();
+    }
+  }, [focusedIndex, index]);
 
   const textContent = useMemo(
     () => (
@@ -85,6 +94,7 @@ export const MenuItem = ({
         aria-label={label}
         href={href}
         onClick={onClick}
+        onFocus={onFocus}
         {...newTabProps}
       >
         {textContent}
@@ -99,6 +109,7 @@ export const MenuItem = ({
         aria-label={label}
         disabled={disabled}
         onClick={onClick}
+        onFocus={onFocus}
       >
         {textContent}
       </Button>
@@ -156,7 +167,12 @@ export const MenuItemProps = {
   label: PropTypes.string.isRequired,
   newTab: PropTypes.bool,
   onClick: PropTypes.func,
+  onFocus: PropTypes.func,
   shortcut: PropTypes.string,
 };
 
-MenuItem.propTypes = MenuItemProps;
+MenuItem.propTypes = {
+  ...MenuItemProps,
+  index: PropTypes.number,
+  focusedIndex: PropTypes.number,
+};
