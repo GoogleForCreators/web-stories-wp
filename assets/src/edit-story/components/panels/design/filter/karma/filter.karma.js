@@ -65,6 +65,7 @@ fdescribe('Filter Panel', () => {
     // eslint-disable-next-line jasmine/no-disabled-tests
     fit('should render panel when there is an image in the background', async () => {
       await fixture.snapshot('TESTING!');
+      //expect(filterPanel).toBeTruthy();
     });
 
     //TODO #6952
