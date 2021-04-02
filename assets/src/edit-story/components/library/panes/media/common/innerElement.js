@@ -18,7 +18,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -31,6 +31,8 @@ import LibraryMoveable from '../../shared/libraryMoveable';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
+import getInsertedElementSize from '../../../../../utils/getInsertedElementSize';
+import { useUnits } from '../../../../../units';
 
 const styledTiles = css`
   width: 100%;
@@ -93,6 +95,10 @@ function InnerElement({
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
 
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
   const {
     state: { draggingResource },
     actions: { handleDrag, handleDrop, setDraggingResource },
@@ -130,24 +136,42 @@ function InnerElement({
   const posterSrc = type === ContentType.GIF ? output.poster : poster;
   const displayPoster = posterSrc ?? newVideoPosterRef.current;
 
+  // Get the same size for the clone as it will be when inserted.
+  const size = useMemo(
+    () =>
+      getInsertedElementSize(
+        type,
+        null,
+        null,
+        { type },
+        resource.width / resource.height,
+        resource
+      ),
+    [resource, type]
+  );
+
   const commonProps = {
-    width: width,
-    height: height,
     alt: alt,
     'aria-label': alt,
   };
   const cloneProps = {
     ...commonProps,
+    width: dataToEditorX(size.width),
+    height: dataToEditorY(size.height),
     loading: 'lazy',
     draggable: false,
   };
   const imageProps = {
     ...cloneProps,
+    width,
+    height,
     src: thumbnailURL,
     onLoad: makeMediaVisible,
   };
   const videoProps = {
     ...commonProps,
+    width,
+    height,
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'none',
@@ -245,6 +269,10 @@ function InnerElement({
         )}
         cloneElement={CloneImg}
         cloneProps={cloneProps}
+        previewSize={{
+          width,
+          height,
+        }}
       />
     </>
   );
