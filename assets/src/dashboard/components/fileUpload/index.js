@@ -53,9 +53,11 @@ const UploadFormArea = styled.div`
   min-height: 153px;
   padding: 40px 0;
   border-radius: 4px;
-  border: ${({ isDragging, theme }) =>
-    isDragging ? theme.colors.border.focus : theme.colors.border.defaultNormal};
-  border-style: dashed;
+  border: 1px dashed
+    ${({ isDragging, theme }) =>
+      isDragging
+        ? theme.colors.border.focus
+        : theme.colors.border.defaultNormal};
 
   transition: border-color 300ms ease-in;
 `;
