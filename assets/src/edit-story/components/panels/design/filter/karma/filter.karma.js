@@ -39,11 +39,11 @@ fdescribe('Filter Panel', () => {
     const media = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.fullbleed.container;
     await fixture.events.mouse.moveRel(media, 25, 25);
-    await fixture.snapshot('TESTING menu visibility!');
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(media, 25, 25),
       down(),
       moveRel(canvas, 5, 5),
+      up(),
     ]);
 
     const {
@@ -53,7 +53,7 @@ fdescribe('Filter Panel', () => {
     } = await fixture.renderHook(() => useStory());
     bgImageId = elements[0].id;
 
-    //filterPanel = fixture.editor.inspector.designPanel.filters;
+    filterPanel = fixture.editor.inspector.designPanel.filters;
     getBackgroundElementOverlay = () =>
       fixture.editor.canvas.displayLayer.display(bgImageId).overlay;
   });
@@ -63,23 +63,16 @@ fdescribe('Filter Panel', () => {
   });
 
   describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Apply a solid or gradient overlay', () => {
-    //TODO #6952
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    fit('should render panel when there is an image in the background', async () => {
-      await fixture.snapshot('TESTING!');
-      //expect(filterPanel).toBeTruthy();
+    it('should render panel when there is an image in the background', () => {
+      expect(filterPanel).toBeTruthy();
     });
 
-    //TODO #6952
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should not render an overlay when there is none', () => {
+    it('should not render an overlay when there is none', () => {
       expect(filterPanel.none.getAttribute('aria-pressed')).toBeTruthy();
       expect(getBackgroundElementOverlay()).not.toBeTruthy();
     });
 
-    // TODO #6951
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should correctly show focus border only when using keyboard', async () => {
+    it('should correctly show focus border only when using keyboard', async () => {
       // Click solid button
       await fixture.events.click(filterPanel.solid);
 
@@ -114,18 +107,14 @@ fdescribe('Filter Panel', () => {
         'BG has no overlay, "none" button is toggled and has visible focus'
       );
     });
-    // TODO #6952
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should render correct overlay when clicking "solid"', async () => {
+    it('should render correct overlay when clicking "solid"', async () => {
       await fixture.events.click(filterPanel.solid);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
       expect(overlay).toBeTruthy();
       expect(overlay).toHaveStyle('background-color', 'rgba(0, 0, 0, 0.5)');
     });
-    // TODO #6952
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should render correct overlay when clicking "linear"', async () => {
+    it('should render correct overlay when clicking "linear"', async () => {
       await fixture.events.click(filterPanel.linear);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
@@ -135,9 +124,7 @@ fdescribe('Filter Panel', () => {
         'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
       );
     });
-    // TODO #6952
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should render correct overlay when clicking "radial"', async () => {
+    it('should render correct overlay when clicking "radial"', async () => {
       await fixture.events.click(filterPanel.radial);
 
       const overlay = await waitFor(getBackgroundElementOverlay);
