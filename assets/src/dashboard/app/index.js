@@ -35,7 +35,7 @@ import {
   SnackbarProvider,
   Snackbar,
 } from '../../design-system';
-import theme, { GlobalStyle } from '../theme';
+import { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
   APP_ROUTES,
@@ -189,7 +189,6 @@ function App({ config }) {
   const { isRTL } = config;
   // TODO strip local dashboard theme out and rely on theme from design-system
   const activeTheme = {
-    DEPRECATED_THEME: theme,
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
