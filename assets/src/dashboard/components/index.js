@@ -60,5 +60,4 @@ export {
   TableStatusCell,
 } from './table';
 export { Tooltip } from './tooltip';
-export { TypographyPresets } from './typography';
 export { default as ViewStyleBar } from './viewStyleBar';
