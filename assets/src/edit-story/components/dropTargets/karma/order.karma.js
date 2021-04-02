@@ -36,9 +36,8 @@ describe('Drop-Target order', () => {
   afterEach(() => {
     fixture.restore();
   });
-  // TODO #6952
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should replace top image when bg image is set and another one is on top', async () => {
+
+  it('should replace top image when bg image is set and another one is on top', async () => {
     // Drag first media element straight to canvas edge to set as background
     const bgMedia = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.fullbleed.container;

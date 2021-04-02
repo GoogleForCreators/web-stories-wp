@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-fdescribe('Background Copy Paste integration', () => {
+describe('Background Copy Paste integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -71,8 +71,6 @@ fdescribe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  // TODO #6948
-  // eslint-disable-next-line jasmine/no-disabled-tests
   it('should correctly copy pattern background to page with image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
@@ -113,8 +111,6 @@ fdescribe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  // TODO #6948
-  // eslint-disable-next-line jasmine/no-disabled-tests
   it('should correctly copy image to page without image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
@@ -160,8 +156,6 @@ fdescribe('Background Copy Paste integration', () => {
     expect(await getCanvasBackgroundElement()).toBeEmpty();
   });
 
-  // TODO #6948
-  // eslint-disable-next-line jasmine/no-disabled-tests
   it('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
