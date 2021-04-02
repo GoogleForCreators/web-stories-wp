@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('Background Copy Paste integration', () => {
+fdescribe('Background Copy Paste integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -71,9 +71,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  // TODO #6948
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy pattern background to page with image', async () => {
+  it('should correctly copy pattern background to page with image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -113,9 +111,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  // TODO #6948
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page without image', async () => {
+  it('should correctly copy image to page without image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -160,9 +156,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getCanvasBackgroundElement()).toBeEmpty();
   });
 
-  // TODO #6948
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page with existing image', async () => {
+  it('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
