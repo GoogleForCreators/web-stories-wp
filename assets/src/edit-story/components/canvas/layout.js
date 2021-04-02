@@ -237,6 +237,7 @@ const NavNextArea = styled(NavArea).attrs({
 
 const CarouselArea = styled(Area).attrs({
   area: 'c',
+  showOverflow: true,
 })``;
 
 /**
