@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('Background Copy Paste integration', () => {
+fdescribe('Background Copy Paste integration', () => {
   let fixture;
 
   beforeEach(async () => {
