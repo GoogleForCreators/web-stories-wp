@@ -42,7 +42,7 @@ describe('Drop-Target order', () => {
     const canvas = fixture.editor.canvas.fullbleed.container;
 
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(bgMedia, 5, 5),
+      moveRel(bgMedia, 20, 20),
       down(),
       moveRel(canvas, 10, 10),
       up(),
