@@ -1,4 +1,104 @@
 {
+  "current": "a378f919-785d-4ff2-8f8c-e7922a221cbf",
+  "selection": [],
+  "story": {
+    "globalStoryStyles": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 21,
+              "b": 21
+            }
+          },
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 35,
+          "lineHeight": 1,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "fontWeight": 400,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
+      "colors": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          }
+        },
+        {
+          "color": {
+            "r": 22,
+            "g": 114,
+            "b": 175
+          }
+        },
+        {
+          "color": {
+            "r": 27,
+            "g": 219,
+            "b": 79
+          }
+        },
+        {
+          "color": {
+            "r": 196,
+            "g": 208,
+            "b": 215
+          }
+        },
+        {
+          "color": {
+            "r": 196,
+            "g": 196,
+            "b": 196
+          }
+        }
+      ]
+    }
+  },
   "version": 25,
   "pages": [
     {
@@ -123,11 +223,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "type": "shape",
           "id": "900a850f-fb71-4262-84f0-d6b803224ac7",
@@ -135,10 +246,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -147,7 +267,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-4" },
+          "mask": {
+            "type": "grid-4"
+          },
           "id": "8de785a5-9d22-46db-97ad-ae0e46f3320f"
         },
         {
@@ -156,14 +278,25 @@
           "width": 413,
           "height": 441,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 180,
           "focalX": 49.92453232830327,
           "focalY": 44.16425931048792,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "8f4fcc58-2834-46af-a2cb-64e139f333d5",
           "resource": {
@@ -186,7 +319,10 @@
           "width": 280,
           "height": 130,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -207,7 +343,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.88,
           "textAlign": "center",
           "scale": 100,
@@ -217,11 +359,17 @@
           "id": "be108bc9-3a51-48c4-b495-24be6163e44c",
           "content": "<span style=\"font-weight: 700; color: #fff\">Food &amp; Stuff</span>",
           "fontSize": 74,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -254,8 +402,14 @@
       ],
       "type": "page",
       "id": "dd6a669f-ff4b-4633-8eb4-c601e98b40f1",
-      "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
-      "pageTemplateType": "cover"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 146,
+          "b": 46
+        }
+      },
+      "pageLayoutType": "cover"
     },
     {
       "animations": [
@@ -365,11 +519,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "b8ea29e5-ce25-4204-8660-afe56bb6b952",
           "type": "shape",
@@ -381,14 +546,25 @@
           "width": 371,
           "height": 686,
           "opacity": 15,
-          "flip": { "vertical": false, "horizontal": true },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 110,
           "focalX": 65.53717192208168,
           "focalY": 54.5046354516614,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "26a03b9b-d49f-4f87-930d-9ac98798895f",
           "resource": {
@@ -407,10 +583,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -419,7 +604,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-4" },
+          "mask": {
+            "type": "grid-4"
+          },
           "id": "0271cd7e-24f8-4e8a-87c4-dac93382d742"
         },
         {
@@ -428,7 +615,10 @@
           "width": 265,
           "height": 156,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -449,7 +639,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.1,
           "textAlign": "center",
           "scale": 100,
@@ -459,7 +655,10 @@
           "id": "5ad5b20a-e1ef-4341-a9ea-afc442cca079",
           "content": "<span style=\"color: #fff9ee\">“Take a moment out of the day to enjoy what's on your plate.”</span>",
           "fontSize": 36,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 75.5,
@@ -467,7 +666,10 @@
           "width": 261,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -488,7 +690,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.2,
           "textAlign": "center",
           "scale": 100,
@@ -499,13 +707,22 @@
           "id": "d3bb1cdf-9ab7-4444-a71b-e4a5bfd27410",
           "content": "<span style=\"color: #fff9ee\">- Anonymous</span>",
           "fontSize": 18,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "type": "page",
       "id": "434c112e-3463-4dc6-aa8e-cb97f13a4e8e",
-      "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
-      "pageTemplateType": "quote"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 146,
+          "b": 46
+        }
+      },
+      "pageLayoutType": "quote"
     },
     {
       "animations": [
@@ -560,141 +777,34 @@
           "fill": "both"
         },
         {
-          "id": "0aaf3778-7c9b-4c11-9a0b-1c0f8ec1fd6c",
+          "id": "68161fce-926d-48d4-830c-4b6d037809ee",
+          "type": "effect-fade-in",
           "targets": ["ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "-50%",
-          "offsetY": "-50%",
-          "duration": 1401,
-          "delay": 101,
-          "direction": "normal",
-          "easingPreset": "inOutQuart",
-          "fill": "both"
-        },
-        {
-          "id": "fa189b44-1a8e-41e8-83f9-f306749b5864",
-          "targets": ["ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "100%",
-          "offsetY": "100%",
           "duration": 1400,
-          "delay": 100,
-          "direction": "normal",
-          "easingPreset": "inOutQuart",
-          "fill": "both"
+          "delay": 0
         },
         {
-          "id": "5be2327a-950c-49b3-a8a5-15d57cc00390",
-          "targets": ["ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "-50%",
-          "offsetY": "-50%",
-          "duration": 1400,
-          "delay": 100,
-          "direction": "normal",
-          "easingPreset": "inOutQuart",
-          "fill": "both"
-        },
-        {
-          "id": "1c096b2d-ca5f-4bdd-83c1-53dfaea54316",
-          "targets": ["6c29ba73-482b-4759-bbc0-2a503f075b61"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "-110%",
-          "duration": 800,
-          "delay": 1000,
-          "direction": "normal",
-          "easingPreset": "outExpo",
-          "fill": "both"
-        },
-        {
-          "id": "6000f35e-1854-43b1-be17-3342e76a3e37",
-          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 401,
-          "delay": 800,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "3ca5d7f0-dfba-4c18-bef0-d5076593272c",
+          "id": "033820d0-6f24-4228-982d-a5ed820e9873",
+          "type": "effect-fade-in",
           "targets": ["b5b11ecb-74eb-49e7-b5f4-317758de2b56"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "105%",
-          "offsetY": 0,
-          "duration": 800,
-          "delay": 1000,
-          "direction": "normal",
-          "easingPreset": "outQuint",
-          "fill": "both"
+          "duration": 1400,
+          "delay": 0
         },
         {
-          "id": "c5afba75-236c-403d-bd68-71aff345db2f",
-          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-40px",
-          "offsetY": 0,
-          "duration": 801,
-          "delay": 600,
-          "direction": "normal",
-          "easingPreset": "outSine",
-          "fill": "both"
-        },
-        {
-          "id": "f845b087-08c2-48df-92a1-80e8edb66312",
-          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"],
-          "type": "spin",
-          "rotation": "-90deg",
-          "duration": 802,
-          "delay": 601,
-          "direction": "normal",
-          "easingPreset": "outSine",
-          "fill": "both"
-        },
-        {
-          "id": "b3f2f4cc-42fb-463c-851f-9bdb709eef07",
+          "id": "e087ba53-961a-4bef-81e7-079c54264751",
+          "type": "effect-fly-in",
           "targets": ["31272720-81e0-416c-b7e6-870d7c68bf81"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "-20px",
-          "duration": 800,
-          "delay": 800,
-          "direction": "normal",
-          "easingPreset": "inOutQuart",
-          "fill": "both"
+          "flyInDir": "bottomToTop",
+          "duration": 600,
+          "delay": 1100
         },
         {
-          "id": "108a3a8d-5487-4fea-8545-6c8ca3108ce6",
-          "targets": ["31272720-81e0-416c-b7e6-870d7c68bf81"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 500,
-          "delay": 1101,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "e80dc96b-d36f-4e8f-98e7-ba31fdba1e20",
-          "targets": ["bb94cc1e-f262-41b6-9505-398a280d3777"],
-          "type": "spin",
-          "rotation": "-90",
-          "duration": 7000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
+          "id": "76911023-5376-4bf1-8b3c-3a892bea167e",
+          "type": "effect-fly-in",
+          "targets": ["6c29ba73-482b-4759-bbc0-2a503f075b61"],
+          "flyInDir": "bottomToTop",
+          "duration": 600,
+          "delay": 1100
         }
       ],
       "elements": [
@@ -704,11 +814,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 249,
+              "b": 238
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "268f9f40-cce2-4d37-899e-ea2422f8df7b",
           "type": "shape",
@@ -720,14 +841,25 @@
           "width": 412,
           "height": 436,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 160,
           "focalX": 50.94203518720969,
           "focalY": 40.15889802797264,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "4b496f17-b72e-4ead-aaa9-92936156e01f",
           "resource": {
@@ -746,10 +878,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "type": "shape",
           "x": 294,
           "y": 454,
@@ -758,15 +899,26 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "b5b11ecb-74eb-49e7-b5f4-317758de2b56"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -775,42 +927,10 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-2" },
-          "id": "ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"
-        },
-        {
-          "x": 47,
-          "y": 393.5,
-          "width": 40,
-          "height": 41,
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_persimmon.png",
-            "width": 220,
-            "height": 228,
-            "posterId": 0,
-            "id": 450,
-            "title": "cooking_icon_persimmon",
-            "alt": "cooking_icon_persimmon",
-            "local": false,
-            "sizes": []
-          },
           "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+            "type": "grid-2"
           },
-          "type": "image",
-          "id": "bb94cc1e-f262-41b6-9505-398a280d3777"
+          "id": "ffa2c0e5-9b0b-4e98-82a1-8c1d7217d94e"
         },
         {
           "x": 123,
@@ -818,7 +938,10 @@
           "width": 245,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -830,16 +953,22 @@
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [1, 400],
               [0, 500],
-              [1, 500],
               [0, 600],
-              [1, 600],
               [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -847,9 +976,12 @@
           "focalY": 50,
           "type": "text",
           "id": "6c29ba73-482b-4759-bbc0-2a503f075b61",
-          "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Dan Williams</span></span>",
+          "content": "<span style=\"font-weight: 700\">Dan Williams</span>",
           "fontSize": 32,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -857,7 +989,10 @@
           "width": 241,
           "height": 105,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -869,7 +1004,13 @@
             "styles": ["regular"],
             "variants": [[0, 400]]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.37,
           "textAlign": "initial",
           "scale": 100,
@@ -879,7 +1020,10 @@
           "id": "31272720-81e0-416c-b7e6-870d7c68bf81",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">We go behind the scene of his famous Soho restaurant, where Dan will show us what inspires him this season and how he plans his menu accordingly.</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 310,
@@ -887,7 +1031,10 @@
           "width": 59,
           "height": 26,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -912,7 +1059,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "center",
           "scale": 100,
@@ -923,14 +1076,26 @@
           "id": "d189d8f5-809a-4775-8043-4f1ff432a932",
           "content": "<span style=\"color: rgba(255, 249, 238, 1)\">VIEW\nMORE</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 328.5,
           "y": 549,
@@ -939,14 +1104,43 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "arrow-1" },
+          "mask": {
+            "type": "arrow-1"
+          },
           "id": "73e1420c-19bc-4d3f-a23e-643fe10c6f64"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 49,
+          "y": 396,
+          "width": 40,
+          "height": 41,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cooking3Tomato"
+          },
+          "id": "29b36832-c213-469c-b4e1-3a544c87c044"
         }
       ],
       "type": "page",
       "id": "a378f919-785d-4ff2-8f8c-e7922a221cbf",
-      "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageTemplateType": "editorial"
+      "backgroundColor": {
+        "color": {
+          "r": 254,
+          "g": 249,
+          "b": 239
+        }
+      },
+      "pageLayoutType": "editorial"
     },
     {
       "animations": [
@@ -1314,11 +1508,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 249,
+              "b": 238
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "10cd0ef0-78ac-41f8-9e90-810376fb7a0e",
           "type": "shape",
@@ -1326,10 +1531,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -1338,7 +1552,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-3" },
+          "mask": {
+            "type": "grid-3"
+          },
           "id": "abc0e784-8214-40f0-a1b8-dc8662711a83"
         },
         {
@@ -1347,7 +1563,10 @@
           "width": 99,
           "height": 140,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1381,7 +1600,10 @@
           "width": 177,
           "height": 192,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1415,7 +1637,10 @@
           "width": 82,
           "height": 85,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1449,7 +1674,10 @@
           "width": 140,
           "height": 143,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 10,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1483,7 +1711,10 @@
           "width": 244,
           "height": 65,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1504,7 +1735,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -1514,7 +1751,10 @@
           "id": "30276475-9eaf-4f66-824b-4619e28b788f",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Radishes</span></span>",
           "fontSize": 50,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 96,
@@ -1522,7 +1762,10 @@
           "width": 220,
           "height": 65,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1543,7 +1786,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -1554,7 +1803,10 @@
           "id": "2312c664-2f6e-4aa7-a179-2d76900b7ab1",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Carrots</span></span>",
           "fontSize": 50,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 32,
@@ -1562,7 +1814,10 @@
           "width": 350,
           "height": 65,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1583,7 +1838,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -1594,7 +1855,10 @@
           "id": "1ea46b67-82b6-43dc-9b68-761f60b23367",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Persimmons</span></span>",
           "fontSize": 50,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 31,
@@ -1602,7 +1866,10 @@
           "width": 350,
           "height": 65,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1623,7 +1890,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -1634,7 +1907,10 @@
           "id": "429d7f44-4a17-4bbe-af08-6786b3b122f2",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Artichokes</span></span>",
           "fontSize": 50,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 29.5,
@@ -1642,7 +1918,10 @@
           "width": 353,
           "height": 28,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1663,7 +1942,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -1674,7 +1959,10 @@
           "id": "b4b4b005-1524-4a37-ba21-0ef518581240",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">Currently in season</span></span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 194,
@@ -1682,14 +1970,25 @@
           "width": 26,
           "height": 2,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "5fe7e903-115a-4e30-99fc-89216a2c16cc",
           "id": "d3799e22-bfe3-4d56-8bb4-5f5603ecaeae"
@@ -1700,14 +1999,25 @@
           "width": 26,
           "height": 2,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "d3799e22-bfe3-4d56-8bb4-5f5603ecaeae",
           "id": "ea9de973-d615-466a-bf7e-7f6539688a63"
@@ -1718,14 +2028,25 @@
           "width": 26,
           "height": 2,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "d3799e22-bfe3-4d56-8bb4-5f5603ecaeae",
           "id": "2645174d-c03f-4e45-b801-a92cf39cccfb"
@@ -1733,8 +2054,14 @@
       ],
       "type": "page",
       "id": "e6314f4e-5a59-425c-a6a3-b0a3ecff301c",
-      "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageTemplateType": "list"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 249,
+          "b": 238
+        }
+      },
+      "pageLayoutType": "list"
     },
     {
       "animations": [
@@ -1832,7 +2159,10 @@
           "width": 206,
           "height": 366,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 130,
@@ -1863,10 +2193,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -1875,7 +2214,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-3" },
+          "mask": {
+            "type": "grid-3"
+          },
           "id": "a64c8822-02b6-4b0e-ab54-b7d8a0e35528"
         },
         {
@@ -1884,7 +2225,10 @@
           "width": 364,
           "height": 346,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1905,7 +2249,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 0.84,
           "textAlign": "center",
           "scale": 100,
@@ -1915,7 +2265,10 @@
           "id": "b93db3ac-4bbd-4189-90fa-c509f358a954",
           "content": "<span style=\"font-weight: 700; color: #fff9ee\">Pers</span>\n<span style=\"font-weight: 700; color: #fff9ee\">imm</span>\n<span style=\"font-weight: 700; color: #fff9ee\">on</span>",
           "fontSize": 138,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 29.5,
@@ -1923,7 +2276,10 @@
           "width": 353,
           "height": 28,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1944,7 +2300,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -1954,7 +2316,10 @@
           "id": "a6b673a3-db8d-48a2-9469-1892e6266eb3",
           "content": "<span style=\"color: rgba(255, 249, 238, 1)\"><span style=\"font-weight: 700\">The ultimate recipe guide on</span></span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         }
       ],
       "type": "page",
@@ -1966,16 +2331,30 @@
         "width": 1,
         "height": 1,
         "rotationAngle": 0,
-        "mask": { "type": "rectangle" },
+        "mask": {
+          "type": "rectangle"
+        },
         "backgroundColor": {
-          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
+          "color": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
         },
         "isBackground": true,
         "isDefaultBackground": true,
         "id": "e59627e9-eb83-4ce5-bf83-17f22851ed1c"
       },
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } },
-      "pageTemplateType": "section"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        }
+      },
+      "pageLayoutType": "section"
     },
     {
       "animations": [
@@ -2336,11 +2715,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 249,
+              "b": 238
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "353201ca-58e7-487f-b6f7-6360c5b72aa9",
           "type": "shape",
@@ -2352,14 +2742,25 @@
           "width": 189,
           "height": 414,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -90,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 130,
           "focalX": 46.3086913086913,
           "focalY": 38.18681318681318,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "15c7cc7e-e144-43db-bb67-1a8d4b6a561e",
           "resource": {
@@ -2382,14 +2783,25 @@
           "width": 360,
           "height": 131,
           "opacity": 40,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 42, "g": 41, "b": 40 } },
+          "backgroundColor": {
+            "color": {
+              "r": 42,
+              "g": 41,
+              "b": 40
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "id": "eb9552a0-9023-46e9-8440-84051e67e5d2"
         },
@@ -2399,23 +2811,43 @@
           "width": 360,
           "height": 65,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "id": "91a27bce-42e9-43c7-b6c3-b0891a89d19e"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -2424,7 +2856,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-6" },
+          "mask": {
+            "type": "grid-6"
+          },
           "id": "2ddd78f5-7e55-41bd-88d6-50a31170acfc"
         },
         {
@@ -2433,7 +2867,10 @@
           "width": 94,
           "height": 11,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2458,7 +2895,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2469,14 +2912,26 @@
           "id": "7979d059-fcdd-4a43-b92c-a9700cab7519",
           "content": "<span style=\"color: rgba(255, 249, 238, 1)\">DISCOVER THEM</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 233,
           "y": 580.5,
@@ -2485,7 +2940,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "arrow-1" },
+          "mask": {
+            "type": "arrow-1"
+          },
           "id": "1b9a0953-562b-4a49-aeed-f8ab0ff0b277"
         },
         {
@@ -2494,7 +2951,10 @@
           "width": 259,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2515,7 +2975,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -2526,7 +2992,10 @@
           "id": "38be890d-5627-4041-b008-2f24707bf749",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Persimmon Salsa Tacos</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 104,
@@ -2534,7 +3003,10 @@
           "width": 259,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2555,7 +3027,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -2566,7 +3044,10 @@
           "id": "127f9ed4-f754-45f1-9bc5-60fee6cbc90c",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Steamed Persimmon Pudding</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 104,
@@ -2574,7 +3055,10 @@
           "width": 259,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2595,7 +3079,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -2606,7 +3096,10 @@
           "id": "260c32cf-161f-4d2c-9b0b-f9d04cbf57f9",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Persimmon and Brie Crostini</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 104,
@@ -2614,7 +3107,10 @@
           "width": 282,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2635,7 +3131,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -2646,7 +3148,10 @@
           "id": "9aa100d8-d095-4c1a-8430-1b3a5bbbc5b4",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Persimmon, Beet, and Citrus Salad</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 104,
@@ -2654,7 +3159,10 @@
           "width": 259,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2675,7 +3183,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -2686,7 +3200,10 @@
           "id": "e3681a5a-e2a2-4754-b9d2-5a466a46c218",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Persimmon and Bresaola Bites</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 104,
@@ -2694,7 +3211,10 @@
           "width": 259,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2715,7 +3235,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -2726,7 +3252,10 @@
           "id": "1094fc63-1577-4c24-a4b2-3b41857e6ac7",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Squash Soup with Persimmon</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -2734,7 +3263,10 @@
           "width": 23,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2755,7 +3287,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2766,7 +3304,10 @@
           "id": "c65251ab-3347-4658-a18a-1425b12b7081",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\">1</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -2774,7 +3315,10 @@
           "width": 23,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2795,7 +3339,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2806,7 +3356,10 @@
           "id": "3d65fd5b-fc80-4b1a-90ba-d866036d934a",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\">2</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -2814,7 +3367,10 @@
           "width": 23,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2835,7 +3391,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2846,7 +3408,10 @@
           "id": "87a59266-ad7d-43cd-a626-0d2a0126828d",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\">3</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -2854,7 +3419,10 @@
           "width": 23,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2875,7 +3443,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2886,7 +3460,10 @@
           "id": "050e9d9e-6b37-44ef-9f9c-a516ea88c8a4",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\">4</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -2894,7 +3471,10 @@
           "width": 23,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2915,7 +3495,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2926,7 +3512,10 @@
           "id": "86a51872-f144-4332-8b93-13b189f1d30b",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\">5</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -2934,7 +3523,10 @@
           "width": 23,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2955,7 +3547,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -2966,7 +3564,10 @@
           "id": "ac878a4a-4cf7-41be-8269-c1f317f3fef6",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\">6</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 47,
@@ -2974,7 +3575,10 @@
           "width": 23,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2995,7 +3599,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -3006,7 +3616,10 @@
           "id": "0b59089d-80b3-4422-aff7-13f068d3051d",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\">7</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 44,
@@ -3014,7 +3627,10 @@
           "width": 161,
           "height": 65,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3035,7 +3651,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -3045,7 +3667,10 @@
           "id": "c0040186-618e-4b75-bbda-ec1803464e6e",
           "content": "<span style=\"color: rgba(255, 249, 238, 1)\"><span style=\"font-weight: 700\">Top 8</span></span>",
           "fontSize": 50,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 214,
@@ -3053,7 +3678,10 @@
           "width": 155,
           "height": 43,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3074,7 +3702,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -3084,13 +3718,19 @@
           "id": "88dd72fa-b6d4-4749-85f7-a5430f7e51c2",
           "content": "<span style=\"font-weight: 700; color: #fff9ee\">recipes with</span>\n<span style=\"font-weight: 700; color: #fff9ee\">persimmon</span>",
           "fontSize": 22,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "width": 259,
           "height": 20,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3111,7 +3751,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -3120,7 +3766,10 @@
           "type": "text",
           "content": "<span style=\"color: #676461\">Frozen Persimmon Custard</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 },
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
           "basedOn": "e3681a5a-e2a2-4754-b9d2-5a466a46c218",
           "id": "1e5d493d-dbfa-40b9-afa2-6b0c4312cb25",
           "x": 104,
@@ -3129,8 +3778,14 @@
       ],
       "type": "page",
       "id": "4ce57acc-c58e-40ab-8a3d-87f6dc5fb106",
-      "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageTemplateType": "list"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 249,
+          "b": 238
+        }
+      },
+      "pageLayoutType": "list"
     },
     {
       "animations": [
@@ -3373,11 +4028,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 249,
+              "b": 238
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "9b628714-3fa2-490a-b766-4cf019ebe394",
           "type": "shape",
@@ -3389,14 +4055,25 @@
           "width": 412,
           "height": 394,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 130,
           "focalX": 53.015125503173735,
           "focalY": 37.93949798730505,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -3416,10 +4093,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -3428,7 +4114,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-7" },
+          "mask": {
+            "type": "grid-7"
+          },
           "id": "a969874e-8d75-47eb-b8f5-ed3726cb1269"
         },
         {
@@ -3437,14 +4125,25 @@
           "width": 92,
           "height": 161,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "43e46644-1442-41a2-9248-bb29050d806d",
           "id": "41fd386c-f6cb-413d-9dd0-808ffaa7467a"
@@ -3455,7 +4154,10 @@
           "width": 81,
           "height": 26,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -3480,7 +4182,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -3491,7 +4199,10 @@
           "id": "962ba57a-da00-4ea0-8ac9-649c7996768d",
           "content": "<span style=\"color: #fff9ee; letter-spacing: 0.25em\">LEARN</span>\n<span style=\"color: #fff9ee; letter-spacing: 0.25em\">MORE</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 44,
@@ -3499,7 +4210,10 @@
           "width": 302,
           "height": 66,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3520,7 +4234,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
           "scale": 100,
@@ -3531,7 +4251,10 @@
           "id": "f4b2e739-5428-4639-8b71-b25630dac775",
           "content": "<span style=\"font-weight: 700; color: #ff922e\">Squash Soup&nbsp;</span>\n<span style=\"font-weight: 700; color: #ff922e\">with Persimmon</span>",
           "fontSize": 33,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 44,
@@ -3539,7 +4262,10 @@
           "width": 73,
           "height": 11,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3564,7 +4290,13 @@
             "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -3574,7 +4306,10 @@
           "id": "33d395dd-462d-4457-97c0-7b82f8c7c5d8",
           "content": "<span style=\"color: #ff922e; letter-spacing: 0.25em\">YIELD</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 44,
@@ -3582,7 +4317,10 @@
           "width": 88,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3603,7 +4341,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -3614,7 +4358,10 @@
           "id": "6eff8e7e-7799-456b-9bd3-5abe4fffac5d",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">4-6 people</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 44,
@@ -3622,7 +4369,10 @@
           "width": 73,
           "height": 11,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3647,7 +4397,13 @@
             "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -3658,7 +4414,10 @@
           "id": "a5f5f1d9-015f-4f74-8bb7-a92e3ec3ea9a",
           "content": "<span style=\"color: #ff922e; letter-spacing: 0.25em\">TYPE</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 44,
@@ -3666,7 +4425,10 @@
           "width": 93,
           "height": 20,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3687,7 +4449,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -3698,7 +4466,10 @@
           "id": "5ac12eaa-a7f3-4ded-8273-ba0d9f73955e",
           "content": "<span style=\"color: #676461\">Vegetarian</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 170,
@@ -3706,7 +4477,10 @@
           "width": 73,
           "height": 11,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3731,7 +4505,13 @@
             "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -3742,7 +4522,10 @@
           "id": "296554e7-af85-41ab-8f40-44b091a1b3a8",
           "content": "<span style=\"color: #ff922e; letter-spacing: 0.25em\">TIME</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 170,
@@ -3750,7 +4533,10 @@
           "width": 92,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3771,7 +4557,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -3782,7 +4574,10 @@
           "id": "b6d08619-ca6a-4466-8f40-e4845ec26eda",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">40 minutes</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 170,
@@ -3790,7 +4585,10 @@
           "width": 73,
           "height": 11,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3815,7 +4613,13 @@
             "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
             "service": "fonts.google.com"
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -3826,7 +4630,10 @@
           "id": "36968290-c6c8-4de1-bb7b-b8faf7a5872e",
           "content": "<span style=\"color: #ff922e; letter-spacing: 0.25em\">LEVEL</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 170,
@@ -3834,7 +4641,10 @@
           "width": 73,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3855,7 +4665,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.25,
           "textAlign": "initial",
           "scale": 100,
@@ -3866,14 +4682,26 @@
           "id": "a3d09960-be5c-4ce2-b6ef-669d2efa927b",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Beginner</span>",
           "fontSize": 17,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 329,
           "y": 557,
@@ -3882,14 +4710,22 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "arrow-1" },
+          "mask": {
+            "type": "arrow-1"
+          },
           "id": "ab4f040a-1984-45ca-a546-dbfa67a33223"
         }
       ],
       "type": "page",
       "id": "c0a40237-d827-4aa3-b3ca-01e668dc90aa",
-      "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageTemplateType": "table"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 249,
+          "b": 238
+        }
+      },
+      "pageLayoutType": "table"
     },
     {
       "animations": [
@@ -4066,11 +4902,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 249,
+              "b": 238
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "7805eaf2-f323-4b3e-8c2b-a328f3e95056",
           "type": "shape",
@@ -4082,14 +4929,25 @@
           "width": 412,
           "height": 436,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 130,
           "focalX": 57.60565118552531,
           "focalY": 38.56528948869127,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -4110,14 +4968,25 @@
           "width": 92,
           "height": 162,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "basedOn": "41fd386c-f6cb-413d-9dd0-808ffaa7467a",
           "id": "fe2ebca2-28fb-46b8-aa64-f680f580d867",
@@ -4130,23 +4999,43 @@
           "width": 81,
           "height": 77,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "shape",
           "id": "96433920-00d6-4bbd-ab58-91961e1b3631"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 0,
@@ -4155,7 +5044,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-2" },
+          "mask": {
+            "type": "grid-2"
+          },
           "id": "57d6505e-c94f-4b2b-ba7a-778e05a891ca"
         },
         {
@@ -4164,7 +5055,10 @@
           "width": 222,
           "height": 24,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4185,7 +5079,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -4196,7 +5096,10 @@
           "id": "6b49808a-0de8-4ef8-87a0-0ee0781dab8a",
           "content": "<span style=\"font-weight: 700; color: #ff922e\">Prep the Squash</span>",
           "fontSize": 24,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 43,
@@ -4204,7 +5107,10 @@
           "width": 48,
           "height": 32,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4225,7 +5131,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -4236,7 +5148,10 @@
           "id": "4377060a-594e-4d7d-a544-d6ab79b91c99",
           "content": "<span style=\"color: #fff9ee\">3</span>",
           "fontSize": 32,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 46,
@@ -4244,7 +5159,10 @@
           "width": 235,
           "height": 105,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -4256,7 +5174,13 @@
             "styles": ["regular"],
             "variants": [[0, 400]]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.37,
           "textAlign": "initial",
           "scale": 100,
@@ -4267,13 +5191,19 @@
           "id": "e474a0ae-051d-4788-8578-b5888531dac8",
           "content": "<span style=\"color: #676461\">Rinse and dry your squash. Slice off the stem and bottom ends of the squash, so that both ends are flat. Slice the squash in half and lightly salt.</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "width": 66,
           "height": 28,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -4298,7 +5228,13 @@
               [1, 900]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
@@ -4307,7 +5243,10 @@
           "type": "text",
           "content": "<span style=\"color: #fff9ee; letter-spacing: 0.25em\">VIEW</span>\n<span style=\"color: #fff9ee; letter-spacing: 0.25em\">MORE</span>",
           "fontSize": 11,
-          "padding": { "horizontal": 0, "vertical": 0 },
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
           "basedOn": "962ba57a-da00-4ea0-8ac9-649c7996768d",
           "id": "e0681907-a6fa-4d61-a7b1-ad71fc8b6335",
           "x": 307,
@@ -4315,10 +5254,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 329,
           "y": 556,
@@ -4327,14 +5275,22 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "arrow-1" },
+          "mask": {
+            "type": "arrow-1"
+          },
           "id": "0f15f2e3-4213-4e4d-b38b-1485a22212b6"
         }
       ],
       "type": "page",
       "id": "11f60c54-4345-4979-8f10-edf4b43c7f44",
-      "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageTemplateType": "steps"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 249,
+          "b": 238
+        }
+      },
+      "pageLayoutType": "steps"
     },
     {
       "animations": [
@@ -4605,11 +5561,22 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-          "mask": { "type": "rectangle" },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 249,
+              "b": 238
+            }
+          },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "id": "25cbd8d2-adac-46e7-8cbb-24ef7536a9f5",
           "type": "shape",
@@ -4619,14 +5586,25 @@
           "width": 104,
           "height": 104,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": true },
+          "flip": {
+            "vertical": false,
+            "horizontal": true
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 150,
           "focalX": 66.39097470744551,
           "focalY": 64.85345906426349,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -4652,14 +5630,25 @@
           "width": 104,
           "height": 104,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -4683,14 +5672,25 @@
           "width": 104,
           "height": 104,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -4714,14 +5714,25 @@
           "width": 104,
           "height": 104,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 130,
           "focalX": 50,
           "focalY": 57.634470218345214,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -4745,14 +5756,25 @@
           "width": 104,
           "height": 104,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "backgroundColor": {
+            "color": {
+              "r": 51,
+              "g": 51,
+              "b": 51
+            }
+          },
           "scale": 150,
           "focalX": 66.39097470744551,
           "focalY": 64.85345906426349,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "type": "image",
           "id": "f5d57c6a-fc29-4136-ba9d-08d3119d1cd2",
           "resource": {
@@ -4771,10 +5793,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 146,
+              "b": 46
+            }
+          },
           "type": "shape",
           "x": 26,
           "y": 4.5,
@@ -4783,7 +5814,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "grid-8" },
+          "mask": {
+            "type": "grid-8"
+          },
           "id": "e045b954-58fb-4292-84e3-dd36f8da4a2a"
         },
         {
@@ -4792,7 +5825,10 @@
           "width": 232,
           "height": 33,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4813,7 +5849,13 @@
               [1, 700]
             ]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -4824,7 +5866,10 @@
           "id": "a2be26e3-7314-4fc5-aa65-c69d390a173f",
           "content": "<span style=\"color: rgba(255, 146, 46, 1)\"><span style=\"font-weight: 700\">More stories</span></span>",
           "fontSize": 33,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 147,
@@ -4832,7 +5877,10 @@
           "width": 234,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4844,7 +5892,13 @@
             "styles": ["regular"],
             "variants": [[0, 400]]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.37,
           "textAlign": "initial",
           "scale": 100,
@@ -4855,7 +5909,10 @@
           "id": "c4a34697-400c-4b45-8646-b81c1ada574f",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Our best taco recipes to date</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 147,
@@ -4863,7 +5920,10 @@
           "width": 234,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4875,7 +5935,13 @@
             "styles": ["regular"],
             "variants": [[0, 400]]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.37,
           "textAlign": "initial",
           "scale": 100,
@@ -4886,7 +5952,10 @@
           "id": "8b2ad361-4db2-41ef-9f96-142b4f150556",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Comfort food for all occasions</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 147,
@@ -4894,7 +5963,10 @@
           "width": 234,
           "height": 21,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4906,7 +5978,13 @@
             "styles": ["regular"],
             "variants": [[0, 400]]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.37,
           "textAlign": "initial",
           "scale": 100,
@@ -4917,7 +5995,10 @@
           "id": "55aae5bd-87d3-4ecb-add2-ed214ce75805",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Desserts you can’t live without</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "x": 147,
@@ -4925,7 +6006,10 @@
           "width": 180,
           "height": 42,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4937,7 +6021,13 @@
             "styles": ["regular"],
             "variants": [[0, 400]]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.37,
           "textAlign": "initial",
           "scale": 100,
@@ -4948,13 +6038,19 @@
           "id": "21aed5d1-b061-4a20-87e8-3e9c9b804d41",
           "content": "<span style=\"color: rgba(103, 100, 97, 1)\">Easy brunch recipes that will impress your guests</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 }
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
         },
         {
           "width": 174,
           "height": 22,
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4966,7 +6062,13 @@
             "styles": ["regular"],
             "variants": [[0, 400]]
           },
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.37,
           "textAlign": "initial",
           "scale": 100,
@@ -4975,7 +6077,10 @@
           "type": "text",
           "content": "<span style=\"color: #676461\">Easy steak tacos</span>",
           "fontSize": 16,
-          "padding": { "horizontal": 0, "vertical": 0 },
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
           "basedOn": "21aed5d1-b061-4a20-87e8-3e9c9b804d41",
           "id": "cf0ee6ac-7b90-4c56-b5d4-0062726c42e1",
           "x": 148,
@@ -4984,10 +6089,14 @@
       ],
       "type": "page",
       "id": "e8a21c0b-1db7-4777-b25d-b7d9a51b10fe",
-      "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageTemplateType": "list"
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 249,
+          "b": 238
+        }
+      },
+      "pageLayoutType": "list"
     }
-  ],
-  "autoAdvance": true,
-  "defaultPageDuration": 7
+  ]
 }
