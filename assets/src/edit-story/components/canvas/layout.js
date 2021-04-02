@@ -102,7 +102,7 @@ const Area = styled.div`
   ${pointerEventsCss}
 
   grid-area: ${({ area }) => area};
-  overflow: ${({ canOverflow }) => (canOverflow ? 'visible' : 'hidden')};
+  overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
   position: relative;
   width: 100%;
   height: 100%;
@@ -113,18 +113,20 @@ const Area = styled.div`
 // mechanisms.
 const PageAreaContainer = styled(Area).attrs({
   area: 'p',
-  canOverflow: true,
+  showOverflow: true,
 })`
   display: flex;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
   align-items: ${({ hasVerticalOverflow }) =>
     hasVerticalOverflow ? 'flex-start' : 'center'};
-  overflow: var(--overflow-x) var(--overflow-y);
+  overflow: ${({ overflow }) =>
+    overflow ?? 'var(--overflow-x) var(--overflow-y)'};
 
   ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
     isControlled &&
     css`
+      overflow: ${({ overflow }) => overflow ?? 'hidden'};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
@@ -218,7 +220,7 @@ const PageAreaSafeZone = styled.div`
 
 const HeadArea = styled(Area).attrs({ area: 'h' })``;
 
-const MenuArea = styled(Area).attrs({ area: 'm', canOverflow: true })``;
+const MenuArea = styled(Area).attrs({ area: 'm', showOverflow: true })``;
 
 const NavArea = styled(Area)`
   display: flex;
@@ -228,17 +230,17 @@ const NavArea = styled(Area)`
 
 const NavPrevArea = styled(NavArea).attrs({
   area: 'b',
-  canOverflow: true,
+  showOverflow: true,
 })``;
 
 const NavNextArea = styled(NavArea).attrs({
   area: 'f',
-  canOverflow: true,
+  showOverflow: true,
 })``;
 
 const CarouselArea = styled(Area).attrs({
   area: 'c',
-  canOverflow: true,
+  showOverflow: true,
 })``;
 
 /**
@@ -330,6 +332,7 @@ const PageArea = forwardRef(function PageArea(
     overlay = [],
     background,
     isControlled = false,
+    overflow,
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
@@ -342,9 +345,10 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow,
     })
   );
+  console.log(overflow, showOverflow);
   return (
     <PageAreaContainer
-      showOverflow={showOverflow}
+      overflow={overflow}
       isControlled={isControlled}
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
