@@ -36,6 +36,7 @@ describe('Drop-Target order', () => {
   afterEach(() => {
     fixture.restore();
   });
+
   it('should replace top image when bg image is set and another one is on top', async () => {
     // Drag first media element straight to canvas edge to set as background
     const bgMedia = fixture.editor.library.media.item(0);
