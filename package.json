@@ -109,7 +109,7 @@
     "@babel/preset-react": "^7.13.13",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@prettier/plugin-xml": "^0.13.0",
-    "@storybook/addon-a11y": "^6.1.14",
+    "@storybook/addon-a11y": "^6.2.2",
     "@storybook/addon-actions": "^6.1.14",
     "@storybook/addon-backgrounds": "^6.1.18",
     "@storybook/addon-docs": "^6.1.18",
