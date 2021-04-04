@@ -31,6 +31,7 @@ use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Service_Base;
 use WP_Post;
 use WP_Screen;
 
@@ -39,7 +40,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class AMP {
+class AMP extends Service_Base {
 	use Publisher;
 
 	/**
@@ -56,7 +57,7 @@ class AMP {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
