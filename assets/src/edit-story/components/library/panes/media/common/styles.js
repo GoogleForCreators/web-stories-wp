@@ -24,6 +24,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { Pane, PANE_PADDING } from '../../shared';
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 
 export const PaneInner = styled.div`
   height: 100%;
@@ -71,18 +72,12 @@ export const MediaGalleryLoadingPill = styled.div`
   border-radius: 100px;
 `;
 
-export const MediaGalleryMessage = styled.div`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+export const MediaGalleryMessage = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
   padding: 1em;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.family};
-  font-style: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.style};
-  line-height: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.mediaError.lineHeight};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.weight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.mediaError.size};
-  text-align: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.mediaError.textAlign};
-  opacity: 0.54;
+  text-align: center;
 `;
 
 export const StyledPane = styled(Pane)`
