@@ -40,7 +40,7 @@ import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import resourceList from '../../../../../utils/resourceList';
-import { PillGroup } from '../../shared';
+import { ChipGroup } from '../../shared';
 import TermsDialog from './termsDialog';
 
 import paneId from './paneId';
@@ -197,7 +197,7 @@ function Media3pPane(props) {
         id={`provider-bottom-wrapper-${providerType}`}
       >
         {PROVIDERS[providerType].supportsCategories && (
-          <PillGroup
+          <ChipGroup
             items={state.categories.categories}
             selectedItemId={state.categories.selectedCategoryId}
             selectItem={actions.selectCategory}
