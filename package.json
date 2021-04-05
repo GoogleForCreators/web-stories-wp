@@ -82,7 +82,7 @@
     "react-color": "^2.19.3",
     "react-dom": "^17.0.2",
     "react-modal": "^3.12.1",
-    "react-moveable": "^0.21.6",
+    "react-moveable": "^0.27.6",
     "react-photo-gallery": "^8.0.0",
     "react-pure-render": "^1.0.2",
     "react-transition-group": "^4.4.1",
