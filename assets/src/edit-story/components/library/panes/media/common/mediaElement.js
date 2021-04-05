@@ -68,12 +68,7 @@ const gradientAnimation = keyframes`
 
 const UploadingIndicator = styled.div`
   height: 4px;
-  background: linear-gradient(
-    270deg,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 15%,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.secondary} 50%,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 85%
-  );
+  background: linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%);
   background-size: 400% 400%;
   position: absolute;
   bottom: 10px;
