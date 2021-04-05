@@ -19,8 +19,6 @@
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import { useInsertElement } from '../../../components/canvas';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('TextEdit integration', () => {
   let fixture;
@@ -46,22 +44,12 @@ describe('TextEdit integration', () => {
     let frame;
 
     beforeEach(async () => {
-      const insertElement = await fixture.renderHook(() => useInsertElement());
-      element = await fixture.act(() =>
-        insertElement('text', {
-          font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: 'hello world!',
-          x: 40,
-          y: 40,
-          width: 250,
-        })
-      );
-
-      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
+      await fixture.events.click(fixture.editor.library.textAdd);
+      frame = fixture.editor.canvas.framesLayer.frames[1].node;
     });
 
     it('should render initial content', () => {
-      expect(frame.textContent).toEqual('hello world!');
+      expect(frame.textContent).toEqual('Fill in some text');
     });
 
     describe('edit mode', () => {
@@ -70,7 +58,7 @@ describe('TextEdit integration', () => {
       let boldToggle;
 
       beforeEach(async () => {
-        await fixture.events.click(frame);
+        await fixture.events.keyboard.press('Enter');
         editor = fixture.querySelector('[data-testid="textEditor"]');
         editLayer = fixture.querySelector('[data-testid="editLayer"]');
         boldToggle = fixture.editor.inspector.designPanel.textStyle.bold;
@@ -110,13 +98,13 @@ describe('TextEdit integration', () => {
         const storyContext = await fixture.renderHook(() => useStory());
         expect(storyContext.state.selectedElementIds).toEqual([element.id]);
         expect(storyContext.state.selectedElements[0].content).toEqual(
-          '<span style="font-weight: 700">hello world!</span>'
+          '<span style="font-weight: 700">Fill in some text</span>'
         );
 
         // The content is updated in the frame.
         // @todo: What to do with `<p>` and containers?
         expect(frame.querySelector('p').innerHTML).toEqual(
-          '<span style="font-weight: 700">hello world!</span>'
+          '<span style="font-weight: 700">Fill in some text</span>'
         );
       });
     });
@@ -138,60 +126,31 @@ describe('TextEdit integration', () => {
   });
 
   describe('add a multiline text element', () => {
-    let element;
     let frame;
+    let textElement;
+    let initialHeight;
     const text = '\n\nThis is some test text.\n\nThis is more test text.\n\n';
 
-    beforeEach(async () => {
-      const insertElement = await fixture.renderHook(() => useInsertElement());
-      element = await fixture.act(() =>
-        insertElement('text', {
-          font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: text,
-          x: 40,
-          y: 40,
-          width: 300,
-        })
-      );
-
-      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-    });
-
-    it('should render initial content', () => {
-      expect(frame.textContent).toEqual(text);
-    });
-
     describe('edit mode', () => {
-      let textElement;
-      let initialHeight;
+      it('should not change height when entering and exiting edit mode', async () => {
+        await fixture.events.click(fixture.editor.library.textAdd);
+        frame = fixture.editor.canvas.framesLayer.frames[1].node;
+        await fixture.events.keyboard.press('Enter');
+        await fixture.events.keyboard.type(text);
 
-      beforeEach(async () => {
-        await fixture.events.click(frame);
+        // Get the initial height.
         textElement = fixture.querySelector('[data-testid="textEditor"]');
         initialHeight = textElement.getBoundingClientRect()?.height;
-      });
 
-      it('should not change height when entering and exiting edit mode', async () => {
-        await fixture.snapshot(
-          'Trailing and leading newlines, before editmode'
-        );
-
-        // Enter into editing the text
-        await fixture.events.click(frame);
-
-        await fixture.snapshot(
-          'Trailing and leading newlines, during editmode'
-        );
-
-        expect(textElement.getBoundingClientRect().height).toEqual(
-          initialHeight
-        );
+        await fixture.snapshot('Trailing and leading newlines, in edit mode');
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
         await fixture.events.keyboard.press('Esc');
 
-        await fixture.snapshot('Trailing and leading newlines, after editmode');
+        await fixture.snapshot(
+          'Trailing and leading newlines, after edit mode'
+        );
 
         const {
           height: heightAfterExitingEditMode,
