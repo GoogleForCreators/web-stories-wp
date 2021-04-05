@@ -31,7 +31,7 @@ export default {
 };
 
 const Container = styled.div`
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bg.v3};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   padding: 1em;
 `;
 

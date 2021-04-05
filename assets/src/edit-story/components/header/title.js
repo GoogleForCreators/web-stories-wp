@@ -31,14 +31,11 @@ import { styles, states, useFocusHighlight } from '../../app/highlights';
 import useHeader from './use';
 
 const Input = styled.input`
-  color: ${({ theme }) =>
-    `${theme.DEPRECATED_THEME.colors.fg.white} !important`};
+  color: ${({ theme }) => `${theme.colors.fg.primary} !important`};
   margin: 0;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
+  font-family: ${({ theme }) => theme.typography.family.primary};
+  font-size: 14px;
+  line-height: 20px;
   background: ${({ isHighlighted }) => !isHighlighted && 'none !important'};
   border: none !important;
   text-align: start;
