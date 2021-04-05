@@ -92,7 +92,7 @@ export function initHelpers(data) {
     // Assume text is in edit-mode - click inside editable text field
     // and then press "up" a number of times to ensure cursor is at start
     const textEditor = data.fixture.editor.canvas.editLayer.text;
-    await data.fixture.events.click(textEditor);
+    await data.fixture.events.mouse.clickOn(textEditor, 30, 5);
     await repeatPress('ArrowUp', 10);
     // Move to start of selection and hold shift while selecting
     await repeatPress('ArrowRight', startOffset);
