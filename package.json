@@ -99,7 +99,7 @@
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.7.5",
-    "@babel/core": "^7.13.13",
+    "@babel/core": "^7.13.14",
     "@babel/eslint-parser": "^7.13.14",
     "@babel/eslint-plugin": "^7.13.10",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
