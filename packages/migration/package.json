@@ -19,6 +19,6 @@
   },
   "devDependencies": {
     "rollup": "^2.39.0",
-    "@rollup/plugin-node-resolve": "^11.1.1"
+    "@rollup/plugin-node-resolve": "^11.2.1"
   }
 }
