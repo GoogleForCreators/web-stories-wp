@@ -34,8 +34,7 @@ import DatePicker from './datePicker';
 const DateTimeWrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0 3px 30px rgba(25, 30, 35, 0.1);
-  border: 1px solid
-    ${({ theme }) => rgba(theme.colors.standard.black, 0.2)};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.standard.black, 0.2)};
   background-color: ${({ theme }) => theme.colors.standard.white};
   width: 100%;
   padding: 4px;
