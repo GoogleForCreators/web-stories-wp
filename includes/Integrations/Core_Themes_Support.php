@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Customizer;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Stories_Renderer\Renderer;
 use Google\Web_Stories\Traits\Assets;
 use function Google\Web_Stories\render_theme_stories;
@@ -34,7 +35,7 @@ use function Google\Web_Stories\render_theme_stories;
 /**
  * Class Core_Themes_Support.
  */
-class Core_Themes_Support {
+class Core_Themes_Support extends Service_Base {
 	use Assets;
 
 	/**
@@ -114,7 +115,7 @@ class Core_Themes_Support {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 
 		if ( ! in_array( get_stylesheet(), self::$supported_themes, true ) ) {
 			return;
@@ -131,5 +132,15 @@ class Core_Themes_Support {
 
 		add_filter( 'body_class', [ $this, 'add_core_theme_classes' ] );
 		add_action( 'wp_body_open', [ $this, 'embed_web_stories' ] );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'after_setup_theme';
 	}
 }

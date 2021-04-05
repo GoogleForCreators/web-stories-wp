@@ -24,9 +24,9 @@ class TinyMCE extends \WP_UnitTestCase {
 	use Private_Access;
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$tinymce = $this->createPartialMock(
 			\Google\Web_Stories\TinyMCE::class,
 			[ 'is_block_editor' ]
@@ -34,7 +34,7 @@ class TinyMCE extends \WP_UnitTestCase {
 
 		$tinymce->method( 'is_block_editor' )
 				->willReturn( true );
-		$tinymce->init();
+		$tinymce->register();
 
 		$this->assertSame( 10, has_filter( 'mce_buttons', [ $tinymce, 'tinymce_web_stories_button' ] ) );
 		$this->assertSame( 10, has_filter( 'mce_external_plugins', [ $tinymce, 'web_stories_mce_plugin' ] ) );

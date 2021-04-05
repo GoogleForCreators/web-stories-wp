@@ -29,7 +29,7 @@ namespace Google\Web_Stories;
 /**
  * Class Ad_Manager
  */
-class Ad_Manager {
+class Ad_Manager extends Service_Base {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -37,7 +37,7 @@ class Ad_Manager {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_ad_manager_tag' ] );
 	}
 

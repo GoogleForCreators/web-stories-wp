@@ -45,11 +45,11 @@ class Experiments extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$experiments = new \Google\Web_Stories\Experiments();
-		$experiments->init();
+		$experiments->register();
 
 		// Because WEBSTORIES_DEV_MODE is false by default.
 		$this->assertFalse( has_action( 'admin_menu', [ $experiments, 'add_menu_page' ] ) );

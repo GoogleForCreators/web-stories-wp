@@ -49,7 +49,7 @@ class User_Preferences extends \WP_UnitTestCase {
 
 	public function setUp() {
 		$up = new \Google\Web_Stories\User_Preferences();
-		$up->init();
+		$up->register();
 		parent::setUp();
 	}
 
@@ -61,7 +61,7 @@ class User_Preferences extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api() {
@@ -84,7 +84,7 @@ class User_Preferences extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api_for_author_user() {
@@ -107,7 +107,7 @@ class User_Preferences extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_enables_author_user_to_update_meta_field() {
@@ -142,7 +142,7 @@ class User_Preferences extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_enables_author_user_to_invalid_type() {

@@ -51,7 +51,7 @@ import { TOGGLE_SHORTCUTS_MENU, TOP_MARGIN } from './constants';
 const BORDER_WIDTH = 1;
 const Container = styled.div`
   position: absolute;
-  right: 0;
+  left: 0;
   bottom: 0;
   width: 352px;
   border-radius: ${({ theme }) => theme.borders.radius.small};

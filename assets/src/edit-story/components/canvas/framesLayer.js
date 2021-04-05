@@ -34,9 +34,7 @@ import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
 
-const FramesPageArea = styled(PageArea).attrs({
-  showOverflow: true,
-})`
+const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
 `;
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
