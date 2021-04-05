@@ -283,7 +283,7 @@ function LibraryMoveable({
           <InOverlay
             ref={overlayRef}
             zIndex={1}
-            pointerEvents="initial"
+            pointerEvents="none"
             render={() => {
               return <CloneElement ref={cloneRef} {...cloneProps} />;
             }}
