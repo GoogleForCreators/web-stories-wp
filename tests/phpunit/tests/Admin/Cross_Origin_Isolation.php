@@ -45,13 +45,13 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 		parent::setUp();
 
 		$user_perferences = new \Google\Web_Stories\User_Preferences();
-		$user_perferences->init();
+		$user_perferences->register();
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		wp_set_current_user( self::$admin_id );
 		update_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
@@ -59,7 +59,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 
 		$coi = $this->get_coi_object();
 
-		$coi->init();
+		$coi->register();
 
 		$this->assertSame( 10, has_action( 'admin_footer-post.php', [ $coi, 'admin_footer' ] ) );
 		$this->assertSame( 10, has_action( 'admin_footer-post-new.php', [ $coi, 'admin_footer' ] ) );

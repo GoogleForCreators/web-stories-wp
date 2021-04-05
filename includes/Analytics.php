@@ -29,7 +29,7 @@ namespace Google\Web_Stories;
 /**
  * Class Analytics
  */
-class Analytics {
+class Analytics extends Service_Base {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -37,7 +37,7 @@ class Analytics {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_analytics_tag' ] );
 	}
 

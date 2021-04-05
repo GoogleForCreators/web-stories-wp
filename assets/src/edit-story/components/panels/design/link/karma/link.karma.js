@@ -42,7 +42,7 @@ describe('Link Panel', () => {
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
-      moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+      moveBy(0, safezoneHeight - frameHeight - 5, { steps: 10 }),
       up(),
     ]);
   };
@@ -110,9 +110,7 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // TODO #6950
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should display the link tooltip correctly', async () => {
+    it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
@@ -122,7 +120,7 @@ describe('Link Panel', () => {
       await fixture.events.sleep(1200);
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
-
+      await fixture.events.keyboard.press('tab');
       // Unselect element.
       const fullbleed = fixture.container.querySelector(
         '[data-testid="fullbleed"]'

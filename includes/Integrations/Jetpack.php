@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_Screen;
@@ -34,7 +35,7 @@ use WP_Screen;
 /**
  * Class Jetpack.
  */
-class Jetpack {
+class Jetpack extends Service_Base {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -42,7 +43,7 @@ class Jetpack {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );

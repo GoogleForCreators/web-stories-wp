@@ -31,7 +31,7 @@ use Google\Web_Stories\REST_API\Stories_Base_Controller;
 /**
  * Class Template_Post_Type.
  */
-class Template_Post_Type {
+class Template_Post_Type extends Service_Base {
 	/**
 	 * The slug of the template post type.
 	 *
@@ -46,7 +46,7 @@ class Template_Post_Type {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[

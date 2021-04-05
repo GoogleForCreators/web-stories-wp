@@ -31,7 +31,7 @@ namespace Google\Web_Stories;
 /**
  * User Preferences class.
  */
-class User_Preferences {
+class User_Preferences extends Service_Base {
 	/**
 	 * Name of the user meta key used for opt-in.
 	 *
@@ -62,7 +62,7 @@ class User_Preferences {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_meta(
 			'user',
 			static::OPTIN_META_KEY,
