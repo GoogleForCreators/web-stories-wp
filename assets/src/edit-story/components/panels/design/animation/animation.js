@@ -152,7 +152,7 @@ function AnimationPanel({
       });
       playUpdatedAnimation.current = false;
     }
-  }, 100);
+  }, 300);
   useEffect(debouncedUpdateAnimationState, [
     selectedElementAnimations,
     updateAnimationState,

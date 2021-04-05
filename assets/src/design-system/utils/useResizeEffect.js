@@ -38,11 +38,18 @@ function useResizeEffect(ref, handler, deps = undefined) {
       }
 
       const observer = new ResizeObserver((entries) => {
-        const last = entries.length > 0 ? entries[entries.length - 1] : null;
-        if (last) {
-          const { width, height } = last.contentRect;
-          handler({ width, height });
-        }
+        // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
+        // https://stackoverflow.com/a/58701523/13078978
+        window.requestAnimationFrame(() => {
+          if (!Array.isArray(entries) || !entries.length) {
+            return;
+          }
+          const last = entries.length > 0 ? entries[entries.length - 1] : null;
+          if (last) {
+            const { width, height } = last.contentRect;
+            handler({ width, height });
+          }
+        });
       });
 
       observer.observe(node);
