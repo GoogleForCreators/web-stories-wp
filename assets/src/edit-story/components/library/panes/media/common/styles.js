@@ -59,6 +59,7 @@ export const MediaGalleryInnerContainer = styled.div`
 `;
 
 export const MediaGalleryLoadingPill = styled.div`
+  display: block;
   position: absolute;
   bottom: 20px;
   left: 60px;
@@ -66,12 +67,8 @@ export const MediaGalleryLoadingPill = styled.div`
   width: 240px;
   text-align: center;
   padding: 8px 80px;
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.4)};
+  background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.4)};
   border-radius: 100px;
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.lineHeight};
-  font-weight: 500;
 `;
 
 export const MediaGalleryMessage = styled.div`

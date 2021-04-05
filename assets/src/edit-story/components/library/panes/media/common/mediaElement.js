@@ -55,7 +55,7 @@ const InnerContainer = styled.div`
   display: flex;
   margin-bottom: 10px;
   background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
+    rgba(theme.colors.standard.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
