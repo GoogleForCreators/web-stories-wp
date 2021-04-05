@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Class Experiments
  *
  * @package   Google\Web_Stories
- * @copyright 2020 Google LLCLLCLLCloglogloGooGooGoogleglogloglogle le LLC
+ * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
  */
@@ -33,7 +32,6 @@ namespace Google\Web_Stories;
  * Allows turning flags on/off via the admin UI.
  */
 class Experiments extends Service_Base {
-
 	/**
 	 * Settings page name.
 	 *
@@ -68,7 +66,7 @@ class Experiments extends Service_Base {
 	 * @return int Registration action priority to use.
 	 */
 	public static function get_registration_action_priority() {
-		 return 7;
+		return 7;
 	}
 
 	/**
@@ -165,7 +163,14 @@ class Experiments extends Service_Base {
 		$disabled              = $is_enabled_by_default ? 'disabled' : '';
 		?>
 		<label for="<?php echo esc_attr( $args['id'] ); ?>">
-			<input type="checkbox" name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', Settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>" id="<?php echo esc_attr( $args['id'] ); ?>" value="1" <?php echo esc_attr( $disabled ); ?> <?php checked( $checked ); ?> />
+			<input
+				type="checkbox"
+				name="<?php echo esc_attr( sprintf( '%1$s[%2$s]', Settings::SETTING_NAME_EXPERIMENTS, $args['id'] ) ); ?>"
+				id="<?php echo esc_attr( $args['id'] ); ?>"
+				value="1"
+				<?php echo esc_attr( $disabled ); ?>
+				<?php checked( $checked ); ?>
+			/>
 			<?php echo esc_html( $args['label'] ); ?>
 		</label>
 		<?php
@@ -178,7 +183,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function display_experiment_section() {      
+	public function display_experiment_section() {
 		?>
 		<p>
 			<?php
@@ -213,186 +218,208 @@ class Experiments extends Service_Base {
 	 * @return array List of experiments by group.
 	 */
 	public function get_experiments() {
-		 return [
-			 /**
-			  * Author: @littlemilkstudio
-			  * Issue: 6708
-			  * Creation date: 2021-03-23
-			  */
-			 [
-				 'name'        => 'enableStickers',
-				 'label'       => __( 'Enable Stickers', 'web-stories' ),
-				 'description' => __( 'Appends sticker buttons to the bottom of the shapes panel in library.', 'web-stories' ),
-				 'group'       => 'editor',
-			 ],
-			 /**
-			  * Author: @littlemilkstudio
-			  * Issue: 6379
-			  * Creation date: 2021-03-09
-			  */
-			 [
-				 'name'        => 'enableExperimentalAnimationEffects',
-				 'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
-				 'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
-				 'group'       => 'editor',
-			 ],
-			 /**
-			  * Author: @littlemilkstudio
-			  * Issue: 5880
-			  * Creation date: 2021-01-19
-			  */
-			 [
-				 'name'        => 'enableQuickTips',
-				 'label'       => __( 'Quick Tips', 'web-stories' ),
-				 'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
-				 'group'       => 'editor',
-				 'default'     => true,
-			 ],
-			 /**
-			  * Author: @carlos-kelly
-			  * Issue: 2081
-			  * Creation date: 2020-05-28
-			  */
-			 [
-				 'name'        => 'enableInProgressViews',
-				 'label'       => __( 'Views', 'web-stories' ),
-				 'description' => __( 'Enable in-progress views to be accessed', 'web-stories' ),
-				 'group'       => 'dashboard',
-			 ],
-			 /**
-			  * Author: @brittanyirl
-			  * Issue: 2344
-			  * Creation date: 2020-06-10
-			  */
-			 [
-				 'name'        => 'enableInProgressStoryActions',
-				 'label'       => __( 'Actions', 'web-stories' ),
-				 'description' => __( 'Enable in-progress story actions', 'web-stories' ),
-				 'group'       => 'dashboard',
-			 ],
-			 /**
-			  * Author: @brittanyirl
-			  * Issue: 2381
-			  * Creation date: 2020-06-11
-			  */
-			 [
-				 'name'        => 'enableInProgressTemplateActions',
-				 'label'       => __( 'Template Actions', 'web-stories' ),
-				 'description' => __( 'Enable in-progress template actions', 'web-stories' ),
-				 'group'       => 'dashboard',
-			 ],
-			 /**
-			  * Author: @brittanyirl
-			  * Issue: 2292
-			  * Creation date: 2020-06-11
-			  */
-			 [
-				 'name'        => 'enableBookmarkActions',
-				 'label'       => __( 'Bookmarks', 'web-stories' ),
-				 'description' => __( 'Enable bookmark actions', 'web-stories' ),
-				 'group'       => 'dashboard',
-			 ],
-			 /**
-			  * Author: @dmmulroy
-			  * Issue: #2098
-			  * Creation date: 2020-06-04
-			  */
-			 [
-				 'name'        => 'showTextAndShapesSearchInput',
-				 'label'       => __( 'Library Search', 'web-stories' ),
-				 'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
-				 'group'       => 'editor',
-			 ],
-			 /**
-			  * Author: @diegovar
-			  * Issue: #2616
-			  * Creation date: 2020-06-23
-			  */
-			 [
-				 'name'        => 'showElementsTab',
-				 'label'       => __( 'Elements tab', 'web-stories' ),
-				 'description' => __( 'Enable elements tab', 'web-stories' ),
-				 'group'       => 'editor',
-			 ],
-			 /**
-			  * Author: @diegovar
-			  * Issue: #3206
-			  * Creation date: 2020-07-15
-			  */
-			 [
-				 'name'        => 'incrementalSearchDebounceMedia',
-				 'label'       => __( 'Incremental Search', 'web-stories' ),
-				 'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
-				 'group'       => 'editor',
-			 ],
-			 /**
-			  * Author: @spacedmonkey
-			  * Issue: #798
-			  * Creation date: 2020-11-02
-			  */
-			 [
-				 'name'        => 'enableSVG',
-				 'label'       => __( 'SVG upload', 'web-stories' ),
-				 'description' => __( 'Enable SVG upload', 'web-stories' ),
-				 'group'       => 'general',
-			 ],
-			 /**
-			  * Author: @swissspidy
-			  * Issue: #3134
-			  * Creation date: 2020-10-28
-			  */
-			 [
-				 'name'        => 'customMetaBoxes',
-				 'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
-				 'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
-				 'group'       => 'editor',
-				 'default'     => true,
-			 ],
-			 /**
-			  * Author: @swissspidy
-			  * Issue: #4081
-			  * Creation date: 2020-10-28
-			  */
-			 [
-				 'name'        => 'eyeDropper',
-				 'label'       => __( 'Eyedropper', 'web-stories' ),
-				 'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
-				 'group'       => 'editor',
-			 ],
-			 /**
-			  * Author: @swissspidy
-			  * Issue: #5669
-			  * Creation date: 2021-01-21
-			  */
-			 [
-				 'name'        => 'videoOptimization',
-				 'label'       => __( 'Video optimization', 'web-stories' ),
-				 'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
-				 'group'       => 'general',
-			 ],
-			 /**
-			  * Author: @spacedmonkey
-			  * Issue: #3126
-			  * Creation date: 2021-02-02
-			  */
-			 [
-				 'name'        => 'enablePostLocking',
-				 'label'       => __( 'Post locking', 'web-stories' ),
-				 'description' => __( 'Enable post locking', 'web-stories' ),
-				 'group'       => 'general',
-			 ],
-			 /**
-			  * Author: @barklund
-			  * Issue: #4022
-			  * Creation date: 2021-03-25
-			  */
-			 [
-				 'name'        => 'hasCanvasZoom',
-				 'label'       => __( 'Canvas Zoom', 'web-stories' ),
-				 'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
-				 'group'       => 'editor',
-			 ],
-		 ];
+		return [
+			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 6708
+			 * Creation date: 2021-03-23
+			 */
+			[
+				'name'        => 'enableStickers',
+				'label'       => __( 'Enable Stickers', 'web-stories' ),
+				'description' => __( 'Appends sticker buttons to the bottom of the shapes panel in library.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 6379
+			 * Creation date: 2021-03-09
+			 */
+			[
+				'name'        => 'enableExperimentalAnimationEffects',
+				'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
+				'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 5880
+			 * Creation date: 2021-01-19
+			 */
+			[
+				'name'        => 'enableQuickTips',
+				'label'       => __( 'Quick Tips', 'web-stories' ),
+				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @carlos-kelly
+			 * Issue: 2081
+			 * Creation date: 2020-05-28
+			 */
+			[
+				'name'        => 'enableInProgressViews',
+				'label'       => __( 'Views', 'web-stories' ),
+				'description' => __( 'Enable in-progress views to be accessed', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 2344
+			 * Creation date: 2020-06-10
+			 */
+			[
+				'name'        => 'enableInProgressStoryActions',
+				'label'       => __( 'Actions', 'web-stories' ),
+				'description' => __( 'Enable in-progress story actions', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 2381
+			 * Creation date: 2020-06-11
+			 */
+			[
+				'name'        => 'enableInProgressTemplateActions',
+				'label'       => __( 'Template Actions', 'web-stories' ),
+				'description' => __( 'Enable in-progress template actions', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 2292
+			 * Creation date: 2020-06-11
+			 */
+			[
+				'name'        => 'enableBookmarkActions',
+				'label'       => __( 'Bookmarks', 'web-stories' ),
+				'description' => __( 'Enable bookmark actions', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 3390
+			 * Creation date: 2020-07-08
+			 */
+			[
+				'name'        => 'enableTemplatePreviews',
+				'label'       => __( 'Template Previews', 'web-stories' ),
+				'description' => __( 'Enable template preview functionality', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @brittanyirl
+			 * Issue: 3391
+			 * Creation date: 2020-08-06
+			 */
+			[
+				'name'        => 'enableStoryPreviews',
+				'label'       => __( 'Story Previews', 'web-stories' ),
+				'description' => __( 'Enable story preview functionality', 'web-stories' ),
+				'group'       => 'dashboard',
+			],
+			/**
+			 * Author: @dmmulroy
+			 * Issue: #2098
+			 * Creation date: 2020-06-04
+			 */
+			[
+				'name'        => 'showTextAndShapesSearchInput',
+				'label'       => __( 'Library Search', 'web-stories' ),
+				'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @diegovar
+			 * Issue: #2616
+			 * Creation date: 2020-06-23
+			 */
+			[
+				'name'        => 'showElementsTab',
+				'label'       => __( 'Elements tab', 'web-stories' ),
+				'description' => __( 'Enable elements tab', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @diegovar
+			 * Issue: #3206
+			 * Creation date: 2020-07-15
+			 */
+			[
+				'name'        => 'incrementalSearchDebounceMedia',
+				'label'       => __( 'Incremental Search', 'web-stories' ),
+				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #798
+			 * Creation date: 2020-11-02
+			 */
+			[
+				'name'        => 'enableSVG',
+				'label'       => __( 'SVG upload', 'web-stories' ),
+				'description' => __( 'Enable SVG upload', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #3134
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'customMetaBoxes',
+				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
+				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #4081
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'eyeDropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #5669
+			 * Creation date: 2021-01-21
+			 */
+			[
+				'name'        => 'videoOptimization',
+				'label'       => __( 'Video optimization', 'web-stories' ),
+				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #3126
+			 * Creation date: 2021-02-02
+			 */
+			[
+				'name'        => 'enablePostLocking',
+				'label'       => __( 'Post locking', 'web-stories' ),
+				'description' => __( 'Enable post locking', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #4022
+			 * Creation date: 2021-03-25
+			 */
+			[
+				'name'        => 'hasCanvasZoom',
+				'label'       => __( 'Canvas Zoom', 'web-stories' ),
+				'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
+				'group'       => 'editor',
+			],
+		];
 	}
 
 	/**
