@@ -5,7 +5,7 @@
  * @package Google\Web_Stories
  */
 
-namespace Google\Web_Stories\PhpStan;
+namespace PHPStan\WordPress;
 
 use Google\Web_Stories\Plugin;
 use Google\Web_Stories\Infrastructure\Injector;
