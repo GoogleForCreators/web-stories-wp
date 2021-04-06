@@ -586,7 +586,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 				'allowedImageMimeTypes' => $mime_image_types,
 				'allowedMimeTypes'      => $mime_types,
 				'postType'              => self::POST_TYPE_SLUG,
-				'siteUrl'               => site_url(),
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
