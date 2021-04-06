@@ -273,7 +273,6 @@ function LibraryMoveable({
         ref={targetBoxRef}
         width={width}
         height={height}
-        onClick={onClick}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
         isDragging={isDragging || hover}
