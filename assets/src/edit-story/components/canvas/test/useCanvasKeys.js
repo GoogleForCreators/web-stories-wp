@@ -22,10 +22,11 @@ import { render, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import useCanvasKeys from '../../../app/canvas/useCanvasKeys';
 import StoryContext from '../../../app/story/context.js';
 import CanvasContext from '../../../app/canvas/context.js';
+import TransformContext from '../../transform/context';
 
 const Canvas = () => {
   const ref = useRef(null);
@@ -119,19 +120,26 @@ describe('useCanvasKeys', function () {
 
   it('should deselect items when the "Escape" key is pressed.', () => {
     const clearSelection = jest.fn();
+    const clearTransforms = jest.fn();
 
     const { container } = render(
-      <StoryContext.Provider
+      <TransformContext.Provider
         value={{
-          state: {
-            currentPage: { elements: [{ id: '123' }] },
-            selectedElements: [{ id: '123' }],
-          },
-          actions: { clearSelection },
+          actions: { clearTransforms },
         }}
       >
-        <Canvas />
-      </StoryContext.Provider>
+        <StoryContext.Provider
+          value={{
+            state: {
+              currentPage: { elements: [{ id: '123' }] },
+              selectedElements: [{ id: '123' }],
+            },
+            actions: { clearSelection },
+          }}
+        >
+          <Canvas />
+        </StoryContext.Provider>
+      </TransformContext.Provider>
     );
 
     fireEvent.keyDown(container, {
@@ -140,5 +148,6 @@ describe('useCanvasKeys', function () {
     });
 
     expect(clearSelection).toHaveBeenCalledWith();
+    expect(clearTransforms).toHaveBeenCalledWith();
   });
 });
