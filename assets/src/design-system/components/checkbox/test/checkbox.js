@@ -23,11 +23,12 @@
  */
 import { Checkbox } from '../';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+import { noop } from '../../../utils';
 
 describe('Checkbox', () => {
   it('should render the checkbox', () => {
     const { getByTestId } = renderWithProviders(
-      <Checkbox data-testid="checkbox" />
+      <Checkbox data-testid="checkbox" onChange={noop} />
     );
 
     expect(getByTestId('checkbox')).toBeInTheDocument();
@@ -35,7 +36,7 @@ describe('Checkbox', () => {
 
   it('should render the checkmark if the checkbox is checked', () => {
     const { getByTestId } = renderWithProviders(
-      <Checkbox data-testid="checkbox" checked />
+      <Checkbox data-testid="checkbox" onChange={noop} checked />
     );
 
     expect(getByTestId('checkbox-checkmark')).toBeInTheDocument();
@@ -43,7 +44,7 @@ describe('Checkbox', () => {
 
   it('should not render the checkmark if the checkbox is not checked', () => {
     const { queryByTestId } = renderWithProviders(
-      <Checkbox data-testid="checkbox" />
+      <Checkbox data-testid="checkbox" onChange={noop} />
     );
 
     expect(queryByTestId('checkbox-checkmark')).not.toBeInTheDocument();

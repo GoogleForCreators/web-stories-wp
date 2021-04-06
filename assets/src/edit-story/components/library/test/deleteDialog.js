@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { waitFor, fireEvent } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -53,7 +54,7 @@ function setup() {
 
   const snackbarValue = { showSnackbar };
 
-  const { queryByText, getByRole } = renderWithTheme(
+  return renderWithTheme(
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
@@ -62,12 +63,12 @@ function setup() {
       </MediaContext.Provider>
     </SnackbarContext.Provider>
   );
-  return { queryByText, getByRole };
 }
 
 describe('DeleteDialog', () => {
   it('should render', () => {
-    const { queryByText, getByRole } = setup();
+    const { queryByText, getByRole, container } = setup();
+    Modal.setAppElement(container);
 
     expect(queryByText('Delete Image?')).toBeInTheDocument();
     expect(getByRole('button', { name: /cancel/i })).toBeInTheDocument();
@@ -75,7 +76,8 @@ describe('DeleteDialog', () => {
   });
 
   it('should update server and internal state on delete', async () => {
-    const { getByRole } = setup();
+    const { getByRole, container } = setup();
+    Modal.setAppElement(container);
 
     // Mock out `deleteMedia`.
     let serverDeleted = false;
@@ -99,7 +101,8 @@ describe('DeleteDialog', () => {
   });
 
   it('should show snackbar if error on delete from server', async () => {
-    const { getByRole } = setup();
+    const { getByRole, container } = setup();
+    Modal.setAppElement(container);
 
     // Mock out `deleteMedia`.
     deleteMedia.mockImplementation(() => {
@@ -114,7 +117,8 @@ describe('DeleteDialog', () => {
   });
 
   it('should show snackbar if error on delete from state', async () => {
-    const { getByRole } = setup();
+    const { getByRole, container } = setup();
+    Modal.setAppElement(container);
 
     // Mock out `deleteMediaElement`.
     deleteMediaElement.mockImplementation(() => {

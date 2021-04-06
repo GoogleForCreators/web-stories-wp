@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import Moveable from 'react-moveable';

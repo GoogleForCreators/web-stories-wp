@@ -27,13 +27,14 @@
 namespace Google\Web_Stories\Shortcode;
 
 use Google\Web_Stories\Story_Query as Stories;
+use Google\Web_Stories\Service_Base;
 
 /**
  * Class Stories_Shortcode
  *
  * @package Google\Web_Stories\Shortcode
  */
-class Stories_Shortcode {
+class Stories_Shortcode extends Service_Base {
 
 	/**
 	 * Shortcode name.
@@ -49,7 +50,7 @@ class Stories_Shortcode {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_shortcode( self::SHORTCODE_NAME, [ $this, 'render_stories' ] );
 	}
 

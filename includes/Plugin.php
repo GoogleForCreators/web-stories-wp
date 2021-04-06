@@ -28,390 +28,189 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Integrations\AMP;
-use Google\Web_Stories\Integrations\Jetpack;
-use Google\Web_Stories\Integrations\NextGen_Gallery;
-use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\REST_API\Embed_Controller;
-use Google\Web_Stories\REST_API\Status_Check_Controller;
-use Google\Web_Stories\REST_API\Stories_Lock_Controller;
-use Google\Web_Stories\REST_API\Stories_Media_Controller;
-use Google\Web_Stories\REST_API\Link_Controller;
-use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
-use Google\Web_Stories\REST_API\Stories_Settings_Controller;
-use Google\Web_Stories\REST_API\Stories_Users_Controller;
-use Google\Web_Stories\Shortcode\Embed_Shortcode;
-use Google\Web_Stories\Shortcode\Stories_Shortcode;
-use Google\Web_Stories\Block\Web_Stories_Block;
-use Google\Web_Stories\Integrations\Core_Themes_Support;
-use Google\Web_Stories\TinyMCE;
-use Google\Web_Stories\Admin\PluginRowMeta;
-use Google\Web_Stories\Admin\PluginActionLinks;
+use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
+use Google\Web_Stories\Infrastructure\Injector;
 
 /**
  * Plugin class.
- *
- * @SuppressWarnings(PHPMD.TooManyFields)
  */
-class Plugin {
-	/**
-	 * Media object.
-	 *
-	 * @var Media
-	 */
-	public $media;
+class Plugin extends ServiceBasedPlugin {
 
 	/**
-	 * Story Post Type object.
+	 * The "plugin" is only a tool to hook arbitrary code up to the WordPress
+	 * execution flow.
 	 *
-	 * @var  Story_Post_Type
+	 * The main structure we use to modularize our code is "services". These are
+	 * what makes up the actual plugin, and they provide self-contained pieces
+	 * of code that can work independently.
+	 *
+	 * @var boolean
 	 */
-	public $story;
+	const ENABLE_FILTERS_DEFAULT = false;
 
 	/**
-	 * Template object.
+	 * Prefix to use for all actions and filters.
 	 *
-	 * @var Template_Post_Type
+	 * This is used to make the filters for the dependency injector unique.
+	 *
+	 * @var string
 	 */
-	public $template;
+	const HOOK_PREFIX = 'web_stories_';
 
 	/**
-	 * Dashboard.
+	 * List of services.
 	 *
-	 * @var Dashboard
+	 * The services array contains a map of <identifier> => <service class name>
+	 * associations.
+	 *
+	 * @var string[]
 	 */
-	public $dashboard;
+	const SERVICES = [
+		'activation_flag'              => Activation_Flag::class,
+		'activation_notice'            => Activation_Notice::class,
+		'adsense'                      => AdSense::class,
+		'ad_manager'                   => Ad_Manager::class,
+		'admin'                        => Admin::class,
+		'analytics'                    => Analytics::class,
+		'coi'                          => Admin\Cross_Origin_Isolation::class,
+		'customizer'                   => Customizer::class,
+		'dashboard'                    => Dashboard::class,
+		'database_upgrader'            => Database_Upgrader::class,
+		'discovery'                    => Discovery::class,
+		'embed_base'                   => Embed_Base::class,
+		'embed_shortcode'              => Shortcode\Embed_Shortcode::class,
+		'experiments'                  => Experiments::class,
+		'integrations.amp'             => Integrations\AMP::class,
+		'integrations.jetpack'         => Integrations\Jetpack::class,
+		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
+		'integrations.sitekit'         => Integrations\Site_Kit::class,
+		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
+		'kses'                         => KSES::class,
+		'media'                        => Media::class,
+		'plugin_row_meta'              => Admin\PluginRowMeta::class,
+		'plugin_action_links'          => Admin\PluginActionLinks::class,
+		'meta_boxes'                   => Meta_Boxes::class,
+		'settings'                     => Settings::class,
+		'story_post_type'              => Story_Post_Type::class,
+		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
+		'svg'                          => SVG::class,
+		'template_post_type'           => Template_Post_Type::class,
+		'tracking'                     => Tracking::class,
+		'tinymce'                      => TinyMCE::class,
+		'register.widget'              => Register_Widget::class,
+		'rest_api_factory'             => REST_API_Factory::class,
+		'user_preferences'             => User_Preferences::class,
+		'web_stories_block'            => Block\Web_Stories_Block::class,
+	];
 
 	/**
-	 * Settings.
+	 * Get the list of services to register.
 	 *
-	 * @var Settings
+	 * The services array contains a map of <identifier> => <service class name>
+	 * associations.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return array<string> Associative array of identifiers mapped to fully
+	 *                       qualified class names.
 	 */
-	public $settings;
-
-	/**
-	 * Admin-related functionality.
-	 *
-	 * @var Admin
-	 */
-	public $admin;
-
-	/**
-	 * Web Stories Block.
-	 *
-	 * @var Web_Stories_Block
-	 */
-	public $web_stories_block;
-
-	/**
-	 * Embed shortcode
-	 *
-	 * @var Embed_Shortcode
-	 */
-	public $embed_shortcode;
-
-	/**
-	 * Embed base
-	 *
-	 * @var Embed_Base
-	 */
-	public $embed_base;
-
-	/**
-	 * Frontend.
-	 *
-	 * @var Discovery
-	 */
-	public $discovery;
-
-	/**
-	 * Tracking.
-	 *
-	 * @var Tracking
-	 */
-	public $tracking;
-
-	/**
-	 * Database Upgrader.
-	 *
-	 * @var Database_Upgrader
-	 */
-	public $database_upgrader;
-
-	/**
-	 * Analytics.
-	 *
-	 * @var Analytics
-	 */
-	public $analytics;
-
-	/**
-	 * AdSense.
-	 *
-	 * @var AdSense
-	 */
-	public $adsense;
-
-	/**
-	 * Ad Manager.
-	 *
-	 * @var Ad_Manager
-	 */
-	public $ad_manager;
-
-	/**
-	 * Experiments.
-	 *
-	 * @var Experiments
-	 */
-	public $experiments;
-
-	/**
-	 * 3P integrations.
-	 *
-	 * @var array
-	 */
-	public $integrations = [];
-
-	/**
-	 * Meta boxes.
-	 *
-	 * @var Meta_Boxes
-	 */
-	public $meta_boxes;
-
-	/**
-	 * SVG.
-	 *
-	 * @var SVG
-	 */
-	public $svg;
-
-	/**
-	 * User_Preferences.
-	 *
-	 * @var User_Preferences
-	 */
-	public $user_preferences;
-
-	/**
-	 * KSES.
-	 *
-	 * @var KSES
-	 */
-	public $kses;
-
-	/**
-	 * Customizer object.
-	 *
-	 * @var Customizer
-	 */
-	public $customizer;
-
-	/**
-	 * Initialize plugin functionality.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
-	 * @return void
-	 */
-	public function register() {
-		// Plugin compatibility / polyfills.
-		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
-		add_action( 'init', [ $this, 'includes' ] );
-
-		// Settings.
-		$this->settings = new Settings();
-		add_action( 'init', [ $this->settings, 'init' ], 5 );
-
-		$this->experiments = new Experiments();
-		add_action( 'init', [ $this->experiments, 'init' ], 7 );
-
-		// Admin-related functionality.
-
-		// Migrations.
-		$this->database_upgrader = new Database_Upgrader();
-		add_action( 'admin_init', [ $this->database_upgrader, 'init' ], 5 );
-
-		$this->admin = new Admin();
-		add_action( 'admin_init', [ $this->admin, 'init' ] );
-
-		$this->media = new Media();
-		add_action( 'init', [ $this->media, 'init' ] );
-
-		// KSES
-		// High priority to load after Story_Post_Type.
-		$this->kses = new KSES();
-		add_action( 'init', [ $this->kses, 'init' ], 11 );
-
-		$this->template = new Template_Post_Type();
-		add_action( 'init', [ $this->template, 'init' ] );
-
-		$this->meta_boxes = new Meta_Boxes();
-		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
-
-		$plugin_row_meta = new PluginRowMeta();
-		add_action( 'admin_init', [ $plugin_row_meta, 'init' ] );
-
-		$plugin_actoin_links = new PluginActionLinks();
-		add_action( 'admin_init', [ $plugin_actoin_links, 'init' ] );
-
-		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
-		add_action( 'init', [ $this->story, 'init' ] );
-
-		// REST API endpoints.
-		// High priority so it runs after create_initial_rest_routes().
-		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
-
-		// Embed base.
-		$this->embed_base = new Embed_Base();
-		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
-
-		// Gutenberg Blocks.
-		$this->web_stories_block = new Web_Stories_Block();
-		add_action( 'init', [ $this->web_stories_block, 'init' ] );
-
-		// Embed shortcode.
-		$this->embed_shortcode = new Embed_Shortcode();
-		add_action( 'init', [ $this->embed_shortcode, 'init' ] );
-
-		$story_shortcode = new Stories_Shortcode();
-		add_action( 'init', [ $story_shortcode, 'init' ] );
-
-		$this->customizer = new Customizer();
-		add_action( 'init', [ $this->customizer, 'init' ] );
-
-		// Frontend.
-		$this->discovery = new Discovery();
-		add_action( 'init', [ $this->discovery, 'init' ] );
-
-		$this->analytics = new Analytics();
-		add_action( 'init', [ $this->analytics, 'init' ] );
-
-		$this->adsense = new AdSense();
-		add_action( 'init', [ $this->adsense, 'init' ] );
-
-		$this->ad_manager = new Ad_Manager();
-		add_action( 'init', [ $this->ad_manager, 'init' ] );
-
-		$this->user_preferences = new User_Preferences();
-		add_action( 'init', [ $this->user_preferences, 'init' ] );
-
-		$this->svg = new SVG( $this->experiments );
-		add_action( 'init', [ $this->svg, 'init' ] );
-
-		// Register activation flag logic outside of 'init' since it hooks into
-		// plugin activation.
-		$activation_flag = new Activation_Flag();
-		$activation_flag->init();
-
-		$activation_notice = new Activation_Notice( $activation_flag );
-		$activation_notice->init();
-
-		$amp = new AMP();
-		add_action( 'init', [ $amp, 'init' ] );
-		$this->integrations['amp'] = $amp;
-
-		$jetpack = new Jetpack();
-		add_action( 'init', [ $jetpack, 'init' ] );
-		$this->integrations['jetpack'] = $jetpack;
-
-		// This runs at init priority -2 because NextGEN inits at -1.
-		$nextgen_gallery = new NextGen_Gallery();
-		add_action( 'init', [ $nextgen_gallery, 'init' ], -2 );
-		$this->integrations['nextgen_gallery'] = $nextgen_gallery;
-
-		$site_kit = new Site_Kit( $this->analytics );
-		add_action( 'init', [ $site_kit, 'init' ] );
-		$this->integrations['site-kit'] = $site_kit;
-
-		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
-		add_action( 'init', [ $this->dashboard, 'init' ] );
-
-		$this->tracking = new Tracking( $this->experiments, $site_kit );
-		add_action( 'admin_init', [ $this->tracking, 'init' ] );
-
-		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
-
-		$tinymce = new TinyMCE();
-		add_action( 'admin_enqueue_scripts', [ $tinymce, 'init' ] );
-
-		// Embed Webstories using customizer settings for core themes.
-		$webstories_core_themes_support = new Core_Themes_Support();
-		add_action( 'after_setup_theme', [ $webstories_core_themes_support, 'init' ] );
-		$this->integrations['webstories_core_themes_support'] = $webstories_core_themes_support;
+	protected function get_service_classes() {
+		return self::SERVICES;
 	}
 
 	/**
-	 * Initializes functionality to improve compatibility with the AMP plugin.
+	 * Get the bindings for the dependency injector.
 	 *
-	 * Loads a separate PHP file that allows defining functions in the global namespace.
+	 * The bindings array contains a map of <interface> => <implementation>
+	 * mappings, both of which should be fully qualified class names (FQCNs).
 	 *
-	 * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
+	 * The <interface> does not need to be the actual PHP `interface` language
+	 * construct, it can be a `class` as well.
 	 *
-	 * @return void
+	 * Whenever you ask the injector to "make()" an <interface>, it will resolve
+	 * these mappings and return an instance of the final <class> it found.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return array<string> Associative array of fully qualified class names.
 	 */
-	public function load_amp_plugin_compat() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
+	protected function get_bindings() {
+		return [];
 	}
 
 	/**
-	 * Include necessary files.
+	 * Get the shared instances for the dependency injector.
 	 *
-	 * @return void
+	 * The shared instances array contains a list of FQCNs that are meant to be
+	 * reused. For multiple "make()" requests, the injector will return the same
+	 * instance reference for these, instead of always returning a new one.
+	 *
+	 * This effectively turns these FQCNs into a "singleton", without incurring
+	 * all the drawbacks of the Singleton design anti-pattern.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return array<string> Array of fully qualified class names.
 	 */
-	public function includes() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
+	protected function get_shared_instances() {
+		return [
+			Experiments::class,
+			Meta_Boxes::class,
+			Locale::class,
+			Activation_Flag::class,
+			Integrations\Site_Kit::class,
+			Analytics::class,
+			Decoder::class,
+		];
 	}
 
 	/**
-	 * Registers REST API routes.
+	 * Get the delegations for the dependency injector.
 	 *
-	 * @since 1.0.0
+	 * The delegations array contains a map of <class> => <callable>
+	 * mappings.
 	 *
-	 * @return void
+	 * The <callable> is basically a factory to provide custom instantiation
+	 * logic for the given <class>.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return array<callable> Associative array of callables.
 	 */
-	public function register_rest_routes() {
-
-		$link_controller = new Link_Controller();
-		$link_controller->register_routes();
-
-		$status_check = new Status_Check_Controller();
-		$status_check->register_routes();
-
-		$embed_controller = new Embed_Controller();
-		$embed_controller->register_routes();
-
-		$templates_autosaves = new Stories_Autosaves_Controller( Template_Post_Type::POST_TYPE_SLUG );
-		$templates_autosaves->register_routes();
-
-		$stories_autosaves = new Stories_Autosaves_Controller( Story_Post_Type::POST_TYPE_SLUG );
-		$stories_autosaves->register_routes();
-
-		$templates_lock = new Stories_Lock_Controller( Template_Post_Type::POST_TYPE_SLUG );
-		$templates_lock->register_routes();
-
-		$stories_lock = new Stories_Lock_Controller( Story_Post_Type::POST_TYPE_SLUG );
-		$stories_lock->register_routes();
-
-		$stories_media = new Stories_Media_Controller( 'attachment' );
-		$stories_media->register_routes();
-
-		$stories_users = new Stories_Users_Controller();
-		$stories_users->register_routes();
-
-		$stories_settings = new Stories_Settings_Controller();
-		$stories_settings->register_routes();
+	protected function get_delegations() {
+		return [
+			Injector::class => static function () {
+				return Services::get( 'injector' );
+			},
+		];
 	}
 
 	/**
-	 * Register Widgets.
+	 * Backward compatibility, old style class stored all classes instances as class properties.
+	 * Use a magic getting to populate these class properties.
 	 *
-	 * @return void
+	 * @since 1.6.0
+	 *
+	 * @param string $name property name.
+	 *
+	 * @return mixed
 	 */
-	public function register_widgets() {
-		register_widget( __NAMESPACE__ . '\Widgets\Stories' );
+	public function __get( $name ) {
+		$services = $this->get_service_classes();
+		if ( isset( $services[ $name ] ) ) {
+			return $this->instantiate_service( $services[ $name ] );
+		}
+
+		if ( 'integrations' === $name ) {
+			return [
+				'webstories_core_themes_support' => $this->instantiate_service( $services['integrations.themes_support'] ),
+				'site-kit'                       => $this->instantiate_service( $services['integrations.sitekit'] ),
+				'nextgen_gallery'                => $this->instantiate_service( $services['integrations.nextgen_gallery'] ),
+				'jetpack'                        => $this->instantiate_service( $services['integrations.jetpack'] ),
+				'amp'                            => $this->instantiate_service( $services['integrations.amp'] ),
+			];
+		}
+
+		return $this->$name;
 	}
 }

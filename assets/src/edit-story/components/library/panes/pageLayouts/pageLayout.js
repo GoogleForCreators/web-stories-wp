@@ -127,6 +127,8 @@ function PageLayout(
   );
 }
 
+const PageLayoutWithRef = forwardRef(PageLayout);
+
 PageLayout.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
@@ -137,4 +139,4 @@ PageLayout.propTypes = {
 
 PageLayout.displayName = 'PageLayout';
 
-export default forwardRef(PageLayout);
+export default PageLayoutWithRef;

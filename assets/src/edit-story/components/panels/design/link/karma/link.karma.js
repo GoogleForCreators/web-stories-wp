@@ -42,7 +42,7 @@ describe('Link Panel', () => {
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
-      moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+      moveBy(0, safezoneHeight - frameHeight - 5, { steps: 10 }),
       up(),
     ]);
   };
@@ -53,7 +53,7 @@ describe('Link Panel', () => {
     );
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type(link);
-    await input.dispatchEvent(new window.Event('blur'));
+    await fixture.events.keyboard.press('tab');
   };
 
   async function clickOnTarget(target, key = false) {
@@ -98,7 +98,7 @@ describe('Link Panel', () => {
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
 
-      await linkPanel.address.dispatchEvent(new window.Event('blur'));
+      await fixture.events.keyboard.press('tab');
       expect(linkPanel.address.value).toBe('http://example.com');
     });
 
@@ -106,11 +106,11 @@ describe('Link Panel', () => {
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('https://example.com');
 
-      await linkPanel.address.dispatchEvent(new window.Event('blur'));
+      await fixture.events.keyboard.press('tab');
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // TODO #6950
+    // Disable reason: flaky. See https://github.com/google/web-stories-wp/issues/6950
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
@@ -122,7 +122,7 @@ describe('Link Panel', () => {
       await fixture.events.sleep(1200);
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
-
+      await fixture.events.keyboard.press('tab');
       // Unselect element.
       const fullbleed = fixture.container.querySelector(
         '[data-testid="fullbleed"]'
@@ -312,7 +312,7 @@ describe('Link Panel', () => {
 
       await fixture.events.keyboard.type('http://google.com');
 
-      await linkPanel.address.dispatchEvent(new window.Event('blur'));
+      await fixture.events.keyboard.press('tab');
 
       // Click the elements separately to verify having the new link set.
       await clickOnTarget(frame1);

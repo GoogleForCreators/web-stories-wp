@@ -22,11 +22,11 @@ namespace Google\Web_Stories\Tests;
  */
 class Activation_Flag extends \WP_UnitTestCase {
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$activation_flag = new \Google\Web_Stories\Activation_Flag();
-		$activation_flag->init();
+		$activation_flag->register();
 
 		$this->assertSame( 10, has_action( 'web_stories_activation', [ $activation_flag, 'set_activation_flag' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_deactivation', [ $activation_flag, 'delete_activation_flag' ] ) );

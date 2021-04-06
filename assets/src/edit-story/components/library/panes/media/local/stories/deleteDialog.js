@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -21,7 +22,6 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import React from 'react';
 import DeleteDialog from '../deleteDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';

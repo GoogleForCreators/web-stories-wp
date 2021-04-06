@@ -102,7 +102,7 @@ describe('Grid view', () => {
     const inputLength = input.value.length;
 
     for (let iter = 0; iter < inputLength; iter++) {
-      // disable eslint to prevet overlapping .act calls
+      // disable eslint to prevent overlapping .act calls
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('Backspace');
     }

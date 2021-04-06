@@ -19,7 +19,6 @@
  */
 import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 /**
  * Internal dependencies

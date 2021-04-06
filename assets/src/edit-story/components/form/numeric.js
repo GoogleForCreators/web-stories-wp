@@ -311,7 +311,7 @@ function Numeric({
 
   useEffect(() => {
     return () => {
-      // Make sure we clearout any remaining timeouts on unmount
+      // Make sure we clear out any remaining timeouts on unmount
       window.clearTimeout(submitOnChangeTimeout.current);
     };
   }, []);

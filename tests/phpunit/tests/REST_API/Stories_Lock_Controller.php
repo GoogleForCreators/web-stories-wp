@@ -17,8 +17,7 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Capabilities_Setup;
 use Google\Web_Stories\Tests\Private_Access;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -27,7 +26,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
 class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
-	use Private_Access;
+	use Private_Access, Capabilities_Setup;
 
 	protected $server;
 
@@ -67,11 +66,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
-		$story_post_type->add_caps_to_roles();
+		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
@@ -79,11 +74,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
-		$story_post_type->remove_caps_from_roles();
+		$this->remove_caps_from_roles();
 
 		parent::tearDown();
 	}
@@ -318,7 +309,7 @@ class Stories_Lock_Controller extends \WP_Test_REST_TestCase {
 	 * @covers ::get_lock
 	 */
 	public function test_get_lock() {
-		$controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller( Story_Post_Type::POST_TYPE_SLUG );
+		$controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$story      = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,

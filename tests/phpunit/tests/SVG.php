@@ -24,11 +24,11 @@ class SVG extends \WP_UnitTestCase {
 	use Private_Access;
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$svg = $this->get_svg_object();
-		$svg->init();
+		$svg->register();
 
 		$this->assertSame(
 			10,
@@ -81,7 +81,7 @@ class SVG extends \WP_UnitTestCase {
 	 */
 	public function test_upload_mimes_add_svg() {
 		$svg = $this->get_svg_object();
-		$svg->init();
+		$svg->register();
 		$allowed_mime_types = wp_get_mime_types();
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
@@ -96,7 +96,7 @@ class SVG extends \WP_UnitTestCase {
 	 */
 	public function test_mime_types_add_svg() {
 		$svg = $this->get_svg_object();
-		$svg->init();
+		$svg->register();
 		$allowed_mime_types = get_allowed_mime_types();
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
@@ -123,7 +123,7 @@ class SVG extends \WP_UnitTestCase {
 	 */
 	public function test_filter_list_of_allowed_filetypes() {
 		$svg = $this->get_svg_object();
-		$svg->init();
+		$svg->register();
 		$setting = get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 
 		$this->assertContains( 'svg', $setting );
@@ -144,7 +144,7 @@ class SVG extends \WP_UnitTestCase {
 		);
 
 		$svg = $this->get_svg_object();
-		$svg->init();
+		$svg->register();
 
 		$attachment_metadata = wp_generate_attachment_metadata( $svg_attachment_id, get_attached_file( $svg_attachment_id ) );
 		$this->assertArrayHasKey( 'width', $attachment_metadata );
@@ -272,7 +272,7 @@ class SVG extends \WP_UnitTestCase {
 	 */
 	public function test_wp_check_filetype_and_ext() {
 		$svg = $this->get_svg_object();
-		$svg->init();
+		$svg->register();
 		$filepath = __DIR__ . '/../data/animated.svg';
 		$data     = wp_check_filetype_and_ext( $filepath, $filepath );
 		$this->assertArrayHasKey( 'ext', $data );

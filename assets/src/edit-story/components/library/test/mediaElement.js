@@ -53,9 +53,12 @@ const renderMediaElement = (resource, providerType) => {
     <StoryContext.Provider value={storyContext}>
       <CanvasContext.Provider value={canvasContext}>
         <MediaElement
+          index={0}
           resource={resource}
           onInsert={() => {}}
           providerType={providerType}
+          width={150}
+          height={150}
         />
       </CanvasContext.Provider>
     </StoryContext.Provider>
@@ -68,6 +71,7 @@ describe('MediaElement', () => {
       id: 123,
       src: 'http://image-url.com',
       type: 'image',
+      mimeType: 'image/png',
       width: 100,
       height: 100,
       local: false, // Already uploaded
@@ -91,6 +95,7 @@ describe('MediaElement', () => {
       id: 456,
       src: 'http://video-url.com',
       type: 'video',
+      mimeType: 'video/mp4',
       width: 100,
       height: 100,
       local: false, // Already uploaded
@@ -114,6 +119,7 @@ describe('MediaElement', () => {
       id: 789,
       src: 'http://image-url.com',
       type: 'image',
+      mimeType: 'image/png',
       width: 100,
       height: 100,
       local: true, // Not yet uploaded
@@ -137,6 +143,7 @@ describe('MediaElement', () => {
       id: 987,
       src: 'http://video-url.com',
       type: 'video',
+      mimeType: 'video/mp4',
       width: 100,
       height: 100,
       local: true, // Not yet uploaded

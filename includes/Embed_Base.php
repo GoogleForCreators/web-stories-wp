@@ -34,7 +34,7 @@ use Google\Web_Stories\Traits\Assets;
 /**
  * Embed block class.
  */
-class Embed_Base {
+class Embed_Base extends Service_Base {
 	use Assets;
 
 	/**
@@ -58,7 +58,7 @@ class Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		wp_register_script( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
@@ -81,6 +81,17 @@ class Embed_Base {
 		}
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 9;
 	}
 
 	/**

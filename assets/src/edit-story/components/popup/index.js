@@ -56,7 +56,7 @@ export const Placement = {
 };
 
 const Container = styled.div.attrs(
-  ({ x, y, width, height, fillWidth, fillHeight, placement }) => ({
+  ({ $offset: { x, y, width, height }, fillWidth, fillHeight, placement }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
@@ -78,7 +78,7 @@ function Popup({
   dock,
   children,
   renderContents,
-  placement = 'bottom',
+  placement = Placement.BOTTOM,
   spacing,
   isOpen,
   fillWidth = false,
@@ -137,10 +137,10 @@ function Popup({
     ? createPortal(
         <Container
           ref={popup}
-          {...popupState.offset}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
+          $offset={popupState.offset}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

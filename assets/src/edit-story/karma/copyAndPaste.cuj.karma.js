@@ -232,9 +232,9 @@ describe('Background Copy & Paste', () => {
     const bgMedia = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.fullbleed.container;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(bgMedia, 5, 5),
+      moveRel(bgMedia, 20, 20),
       down(),
-      moveRel(canvas, 10, 10),
+      moveRel(canvas, 5, 5),
       up(),
     ]);
 
@@ -315,18 +315,12 @@ describe('Background Copy & Paste', () => {
       );
       expect(pasted.elementAnimations.length).toEqual(1);
 
-      // Coppied and Pasted anims should share all attributes
-      // Except `id` & `targets`
-      const {
-        id: cId,
-        targets: cTargets,
-        ...cPersisted
-      } = copied.elementAnimations[0];
-      const {
-        id: pId,
-        targets: pTargets,
-        ...pPersisted
-      } = pasted.elementAnimations[0];
+      // Copied and Pasted animations should share all attributes
+      // except `id` & `targets`
+      const { id: cId, targets: cTargets, ...cPersisted } =
+        copied.elementAnimations[0] || {};
+      const { id: pId, targets: pTargets, ...pPersisted } =
+        pasted.elementAnimations[0] || {};
       expect(cPersisted).toEqual(pPersisted);
 
       // pasted animations should contain the newly pasted

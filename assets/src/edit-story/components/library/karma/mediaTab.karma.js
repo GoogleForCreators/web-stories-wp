@@ -44,7 +44,7 @@ describe('Library Media Tab', () => {
       const { width } = mediaItem.getBoundingClientRect();
 
       await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(mediaItem, 10, 10),
+        moveRel(mediaItem, 20, 20),
         down(),
         moveRel(bgFrame, -width, 0, { steps: 30 }),
         up(),
@@ -56,12 +56,10 @@ describe('Library Media Tab', () => {
   });
 
   describe('CUJ: Creator Can Add Image/Video to Page: Can edit/delete media', () => {
-    // TODO #6950
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should open the edit/delete menu', async () => {
+    it('should open the edit/delete menu', async () => {
       const mediaItem = fixture.editor.library.media.item(0);
       // Hover the media
-      await fixture.events.mouse.moveRel(mediaItem, 10, 10, { steps: 2 });
+      await fixture.events.mouse.moveRel(mediaItem, 20, 20, { steps: 2 });
       await waitFor(() =>
         expect(
           fixture.screen.getByRole('button', { name: 'More' })
@@ -69,7 +67,7 @@ describe('Library Media Tab', () => {
       );
       const moreButton = fixture.screen.getByRole('button', { name: 'More' });
       await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(moreButton, 5, 5),
+        moveRel(moreButton, 20, 20),
         down(),
         up(),
       ]);
