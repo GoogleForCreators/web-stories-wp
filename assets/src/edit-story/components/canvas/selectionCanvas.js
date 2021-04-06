@@ -88,8 +88,11 @@ function SelectionCanvas({ children }) {
     }
   );
 
-  const lassoReferenceContainer = useMemo(
-    () => fullbleedContainer?.querySelector('[data-lasso-reference]'),
+  const { scrollContainer, paddedContainer } = useMemo(
+    () => ({
+      scrollContainer: fullbleedContainer?.closest('[data-scroll-container]'),
+      paddedContainer: fullbleedContainer?.closest('[data-padded-container]'),
+    }),
     [fullbleedContainer]
   );
 
@@ -184,17 +187,12 @@ function SelectionCanvas({ children }) {
         offsetTop,
         offsetHeight,
         offsetWidth,
-      } = lassoReferenceContainer;
-      const {
-        offsetLeft: fullbleedLeft,
-        offsetTop: fullbleedTop,
-      } = fullbleedContainer;
+      } = scrollContainer;
+      const { offsetLeft: paddedLeft, offsetTop: paddedTop } = paddedContainer;
       // Offset from the fullbleed to the safe zone.
-      const dx = offsetLeft + fullbleedLeft;
+      const dx = offsetLeft + paddedLeft;
       const dy =
-        offsetTop +
-        fullbleedTop +
-        (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
+        offsetTop + paddedTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
       const x = editorToDataX(lx - dx);
       const y = editorToDataY(ly - dy);
       const width = editorToDataX(lwidth);

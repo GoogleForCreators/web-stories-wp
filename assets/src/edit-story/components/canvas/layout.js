@@ -376,13 +376,14 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
       className={className}
+      data-scroll-container
       {...rest}
     >
       <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
       >
-        <PaddedPage>
+        <PaddedPage data-padded-container>
           <FullbleedContainer
             aria-label={__('Fullbleed area', 'web-stories')}
             role="region"
@@ -391,7 +392,6 @@ const PageArea = forwardRef(function PageArea(
             background={background}
             isControlled={isControlled}
             isBackgroundSelected={isBackgroundSelected}
-            data-lasso-reference
           >
             <PageAreaWithoutOverflow showOverflow={showOverflow}>
               <PageAreaSafeZone ref={ref} data-testid="safezone">
