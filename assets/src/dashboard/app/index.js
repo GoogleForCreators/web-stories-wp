@@ -187,7 +187,6 @@ const AppContent = () => {
 
 function App({ config }) {
   const { isRTL } = config;
-  // TODO strip local dashboard theme out and rely on theme from design-system
   const activeTheme = {
     ...externalDesignSystemTheme,
     colors: lightMode,
