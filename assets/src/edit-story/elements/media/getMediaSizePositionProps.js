@@ -23,7 +23,6 @@
  * @param {number} scale      Scale, 100 is the default.
  * @param {number} focalX     X axis focal point.
  * @param {number} focalY     Y axis focal point.
- * @param {string} crossOrigin  Cross Origin value.
  * @return {Object} Media properties.
  */
 function getMediaSizePositionProps(
