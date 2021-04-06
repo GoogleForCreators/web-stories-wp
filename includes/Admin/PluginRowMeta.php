@@ -28,10 +28,12 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Service_Base;
+
 /**
  * Updates the plugin row meta for the plugin.
  */
-class PluginRowMeta {
+class PluginRowMeta extends Service_Base {
 
 	/**
 	 * Runs on instantiation.
@@ -40,8 +42,19 @@ class PluginRowMeta {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_filter( 'plugin_row_meta', [ $this, 'get_plugin_row_meta' ], 10, 2 );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_init';
 	}
 
 	/**

@@ -17,11 +17,19 @@
 /**
  * Internal dependencies
  */
-import { effectValueExceptions } from './dropdownConstants';
+import {
+  BACKGROUND_ANIMATION_EFFECTS,
+  SCALE_DIRECTION,
+  DIRECTION,
+} from '../../../../../../animation';
+import {
+  effectValueExceptions,
+  DYNAMIC_PROPERTY_VALUE,
+} from './dropdownConstants';
 
 // Because some animations have the same effect name we have to specify based on direction
 export const getDirectionalEffect = (effect, direction) => {
-  if (effectValueExceptions.indexOf(effect) > -1) {
+  if (effectValueExceptions.includes(effect)) {
     return effect;
   }
   return direction ? `${effect} ${direction}`.trim() : effect;
@@ -32,6 +40,8 @@ export const getDisabledBackgroundEffects = (
   disabledTypeOptionsMap
 ) => {
   const disabledDirectionalEffects = Object.entries(disabledTypeOptionsMap)
+    // rn we don't ever disable the exceptions, but do dynamic props instead.
+    .filter(([effect]) => effectValueExceptions.indexOf(effect) === -1)
     .map(([effect, val]) => [effect, val.options])
     .reduce(
       (directionalEffects, [effect, directions]) => [
@@ -43,4 +53,41 @@ export const getDisabledBackgroundEffects = (
   return Object.keys(backgroundEffectOptions).filter((directionalEffect) =>
     disabledDirectionalEffects.includes(directionalEffect)
   );
+};
+
+export const hasDynamicProperty = (animation) => {
+  return Object.values(animation).includes(DYNAMIC_PROPERTY_VALUE);
+};
+
+export const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
+  // we don't want to have a disbaled direction initially selected either.
+  const panDirection =
+    animation.panDirection && !disabledOptions.includes(animation.panDirection)
+      ? animation.panDirection
+      : Object.values(DIRECTION).filter(
+          (direction) => !disabledOptions.includes(direction)
+        )?.[0] || undefined;
+
+  switch (animation.value) {
+    case BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value:
+      return {
+        ...animation,
+        // Defautl zoomDirection to scale in unless disabled
+        zoomDirection: disabledOptions.includes(SCALE_DIRECTION.SCALE_IN)
+          ? SCALE_DIRECTION.SCALE_OUT
+          : SCALE_DIRECTION.SCALE_IN,
+        panDirection,
+      };
+    default:
+      return animation;
+  }
+};
+
+export const generateDynamicProps = ({ animation, disabledTypeOptionsMap }) => {
+  return hasDynamicProperty(animation)
+    ? updateDynamicProps({
+        animation,
+        disabledOptions: disabledTypeOptionsMap[animation.value]?.options,
+      })
+    : animation;
 };

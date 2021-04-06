@@ -29,11 +29,12 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Service_Base;
 
 /**
  * Updates the plugin action links for the plugin.
  */
-class PluginActionLinks {
+class PluginActionLinks extends Service_Base {
 	/**
 	 * Runs on instantiation.
 	 *
@@ -41,9 +42,20 @@ class PluginActionLinks {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		$basename = plugin_basename( WEBSTORIES_PLUGIN_FILE );
 		add_filter( 'plugin_action_links_' . $basename, [ $this, 'action_links' ] );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_init';
 	}
 
 	/**

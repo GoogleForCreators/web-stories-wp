@@ -42,11 +42,11 @@ class Meta_Boxes extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$meta_boxes = new \Google\Web_Stories\Meta_Boxes();
-		$meta_boxes->init();
+		$meta_boxes->register();
 		$has_action = has_action(
 			'add_meta_boxes_' . Story_Post_Type::POST_TYPE_SLUG,
 			[

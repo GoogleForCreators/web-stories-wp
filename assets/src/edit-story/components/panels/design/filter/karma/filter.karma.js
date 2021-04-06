@@ -106,6 +106,7 @@ describe('Filter Panel', () => {
         'BG has no overlay, "none" button is toggled and has visible focus'
       );
     });
+
     it('should render correct overlay when clicking "solid"', async () => {
       await fixture.events.click(filterPanel.solid);
 
@@ -113,6 +114,7 @@ describe('Filter Panel', () => {
       expect(overlay).toBeTruthy();
       expect(overlay).toHaveStyle('background-color', 'rgba(0, 0, 0, 0.5)');
     });
+
     it('should render correct overlay when clicking "linear"', async () => {
       await fixture.events.click(filterPanel.linear);
 
@@ -123,6 +125,7 @@ describe('Filter Panel', () => {
         'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
       );
     });
+
     it('should render correct overlay when clicking "radial"', async () => {
       await fixture.events.click(filterPanel.radial);
 

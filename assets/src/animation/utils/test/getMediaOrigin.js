@@ -80,6 +80,18 @@ describe('getMediaOrigin', () => {
         vertical: 50,
       },
     ],
+    [
+      {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      },
+      {
+        horizontal: 50,
+        vertical: 50,
+      },
+    ],
   ])('given %p returns %p', (offset, origin) => {
     expect(getMediaOrigin(offset)).toStrictEqual(origin);
   });

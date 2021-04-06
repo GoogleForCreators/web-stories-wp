@@ -71,26 +71,26 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests init with core theme.
+	 * Tests register with core theme.
 	 *
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
-		$this->stub->init();
+	public function test_register() {
+		$this->stub->register();
 
 		$this->assertEquals( 10, has_filter( 'body_class', [ $this->stub, 'add_core_theme_classes' ] ) );
 		$this->assertEquals( 10, has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
 	}
 
 	/**
-	 * Tests init with non-core theme.
+	 * Tests register with non-core theme.
 	 *
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init_non_core_theme() {
+	public function test_register_non_core_theme() {
 		update_option( 'stylesheet', '' );
 
-		$this->stub->init();
+		$this->stub->register();
 
 		$this->assertFalse( has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
 	}
@@ -125,7 +125,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 * @covers ::extend_theme_support
 	 */
 	public function test_extend_theme_support() {
-		$this->stub->init();
+		$this->stub->register();
 
 		$this->assertTrue( get_theme_support( 'web-stories' ) );
 	}
@@ -137,7 +137,7 @@ class Core_Themes_Support extends \WP_UnitTestCase {
 	 */
 	public function test_extend_theme_support_non_core_themes() {
 		update_option( 'stylesheet', '' );
-		$this->stub->init();
+		$this->stub->register();
 
 		$this->assertFalse( get_theme_support( 'web-stories' ) );
 	}

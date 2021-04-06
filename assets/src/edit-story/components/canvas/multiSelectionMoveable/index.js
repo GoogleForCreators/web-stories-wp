@@ -205,7 +205,6 @@ function MultiSelectionMoveable({ selectedElements }) {
   );
 
   const snapProps = useSnapping({
-    isDragging,
     canSnap: true,
     otherNodes,
   });

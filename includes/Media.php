@@ -34,7 +34,7 @@ use WP_Screen;
 /**
  * Class Media
  */
-class Media {
+class Media extends Service_Base {
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
@@ -133,7 +133,7 @@ class Media {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_taxonomy(
 			self::STORY_MEDIA_TAXONOMY,
 			'attachment',
