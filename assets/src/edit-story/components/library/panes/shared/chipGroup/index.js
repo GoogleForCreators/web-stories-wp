@@ -166,9 +166,11 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
               ref={innerContainerRef}
               style={{ transform: `translateY(-${focusedRowOffset}px` }}
             >
-              {items.map((item) => {
+              {items.map((item, index) => {
                 const { id, label } = item;
                 const selected = id === selectedItemId;
+                const tabIndex =
+                  selected || (!selected && index === 0) ? 0 : -1;
 
                 return (
                   <Chip
@@ -180,6 +182,7 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                     active={selected}
                     aria-selected={selected}
                     onClick={() => handleClick(selected, id)}
+                    tabIndex={tabIndex}
                   >
                     {label}
                   </Chip>
