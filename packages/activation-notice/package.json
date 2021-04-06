@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@wordpress/i18n": "^3.17.0",
+    "@wordpress/i18n": "^3.19.1",
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/tracking": "*",
     "flagged": "^2.0.1",

@@ -16,7 +16,7 @@
     "@wordpress/components": "^13.0.0",
     "@wordpress/data": "^4.26.0",
     "@wordpress/element": "^2.19.0",
-    "@wordpress/i18n": "^3.17.0"
+    "@wordpress/i18n": "^3.19.1"
   },
   "devDependencies": {
     "react-test-renderer": "^16.14.0"
