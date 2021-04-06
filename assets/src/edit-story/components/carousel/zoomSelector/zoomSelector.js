@@ -30,7 +30,6 @@ import { DropDown, PLACEMENT } from '../../../../design-system';
 const selectButtonCSS = css`
   height: 36px;
   padding: 8px;
-  padding-right: 0;
 
   span {
     padding: 0;
