@@ -27,6 +27,7 @@ import { useRef } from 'react';
 import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
+import { useConfig } from '../../app/config';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -59,6 +60,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     loop,
   } = element;
   const ref = useRef();
+  const { siteUrl } = useConfig();
   let style = {};
   if (isBackground) {
     const styleProps = getBackgroundStyle();
@@ -76,6 +78,10 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalX,
     focalY
   );
+
+  if (resource.src && !resource.src.startsWith(siteUrl)) {
+    videoProps.crossOrigin = 'anonymous';
+  }
 
   return (
     <MediaDisplay

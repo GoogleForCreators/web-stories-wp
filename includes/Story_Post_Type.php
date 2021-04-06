@@ -575,7 +575,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		$mime_types       = $this->get_allowed_mime_types();
 		$mime_image_types = $this->get_allowed_image_mime_types();
 
-
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
@@ -587,6 +586,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 				'allowedImageMimeTypes' => $mime_image_types,
 				'allowedMimeTypes'      => $mime_types,
 				'postType'              => self::POST_TYPE_SLUG,
+				'siteUrl'               => site_url(),
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),

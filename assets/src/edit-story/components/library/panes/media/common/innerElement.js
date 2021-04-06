@@ -31,6 +31,7 @@ import LibraryMoveable from '../../shared/libraryMoveable';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
+import { useConfig } from '../../../../../app';
 
 const styledTiles = css`
   width: 100%;
@@ -98,6 +99,8 @@ function InnerElement({
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
+  const { siteUrl } = useConfig();
+
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
   const setAverageColor = (color) => {
@@ -134,20 +137,31 @@ function InnerElement({
     width: width,
     height: height,
     alt: alt,
-    'aria-label': alt,
   };
-  const cloneProps = {
+
+  if (src && !src.startsWith(siteUrl)) {
+    commonProps.crossOrigin = 'anonymous';
+  }
+
+  const commonImageProps = {
     ...commonProps,
+    onLoad: makeMediaVisible,
     loading: 'lazy',
+  };
+
+  const cloneProps = {
+    ...commonImageProps,
     draggable: false,
   };
+
   const imageProps = {
     ...cloneProps,
     src: thumbnailURL,
-    onLoad: makeMediaVisible,
+    'aria-label': alt,
   };
   const videoProps = {
     ...commonProps,
+    'aria-label': alt,
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'none',
@@ -190,7 +204,7 @@ function InnerElement({
           <HiddenPosterImage
             ref={hiddenPoster}
             src={posterSrc}
-            onLoad={makeMediaVisible}
+            {...commonImageProps}
           />
         )}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}

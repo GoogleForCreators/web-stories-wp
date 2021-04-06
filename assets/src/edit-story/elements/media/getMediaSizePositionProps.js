@@ -23,6 +23,7 @@
  * @param {number} scale      Scale, 100 is the default.
  * @param {number} focalX     X axis focal point.
  * @param {number} focalY     Y axis focal point.
+ * @param {string} crossOrigin  Cross Origin value.
  * @return {Object} Media properties.
  */
 function getMediaSizePositionProps(
@@ -51,6 +52,11 @@ function getMediaSizePositionProps(
     Math.min(mediaHeight * focalY * 0.01 - height * 0.5, mediaHeight - height)
   );
 
+  let crossOrigin = null;
+  if (resource.src && !resource.src.startsWith(siteUrl)) {
+    crossOrigin = 'anonymous';
+  }
+
   return {
     width: mediaWidth,
     height: mediaHeight,
@@ -59,6 +65,7 @@ function getMediaSizePositionProps(
     scale,
     focalX,
     focalY,
+    crossOrigin,
   };
 }
 

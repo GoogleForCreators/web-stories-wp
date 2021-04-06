@@ -75,6 +75,7 @@ const DEFAULT_CONFIG = {
     hasPublishAction: true,
     hasAssignAuthorAction: true,
   },
+  siteUrl: 'https://www.example.com/',
   dashboardLink: 'https://www.example.com/dashboard',
   postLock: {
     interval: 150,

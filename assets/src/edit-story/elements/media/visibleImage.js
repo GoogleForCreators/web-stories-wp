@@ -18,6 +18,10 @@
  * External dependencies
  */
 import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../app/config';
 
 const Image = styled.img`
   display: block;
@@ -28,6 +32,10 @@ const Image = styled.img`
 `;
 
 function VisibleImage({ ...attrs }) {
+  const { siteUrl } = useConfig();
+  if (attrs.src && !attrs.src.startsWith(siteUrl)) {
+    attrs.crossOrigin = 'anonymous';
+  }
   return <Image {...attrs} />;
 }
 
