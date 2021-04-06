@@ -25,7 +25,6 @@ import MediaElement from '../panes/media/common/mediaElement';
 import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../../app/canvas/context';
 import StoryContext from '../../../app/story/context';
-import { ConfigProvider } from '../../../app/config';
 
 const renderMediaElement = (resource, providerType) => {
   const canvasContext = {
@@ -50,24 +49,19 @@ const renderMediaElement = (resource, providerType) => {
       addElement: jest.fn(),
     },
   };
-  const configState = {
-    siteUrl: 'http://www.example.com',
-  };
   return renderWithTheme(
-    <ConfigProvider config={configState}>
-      <StoryContext.Provider value={storyContext}>
-        <CanvasContext.Provider value={canvasContext}>
-          <MediaElement
-            index={0}
-            resource={resource}
-            onInsert={() => {}}
-            providerType={providerType}
-            width={150}
-            height={150}
-          />
-        </CanvasContext.Provider>
-      </StoryContext.Provider>
-    </ConfigProvider>
+    <StoryContext.Provider value={storyContext}>
+      <CanvasContext.Provider value={canvasContext}>
+        <MediaElement
+          index={0}
+          resource={resource}
+          onInsert={() => {}}
+          providerType={providerType}
+          width={150}
+          height={150}
+        />
+      </CanvasContext.Provider>
+    </StoryContext.Provider>
   );
 };
 
