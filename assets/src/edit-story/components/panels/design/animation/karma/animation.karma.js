@@ -55,9 +55,8 @@ describe('Animation Panel', function () {
     await fixture.events.sleep(300);
     expect(effectChooser.innerText).toBe('Fade In');
   });
-  // TODO #6953
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('replaces an existing effect with a new one.', async function () {
+
+  it('replaces an existing effect with a new one.', async function () {
     await fixture.events.click(fixture.editor.library.textAdd);
     const panel = fixture.editor.inspector.designPanel.animation;
 
