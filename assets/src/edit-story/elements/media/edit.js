@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { elementFillContent, elementWithFlip } from '../shared';
-import { useConfig, useStory } from '../../app';
+import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
@@ -112,8 +112,6 @@ function MediaEdit({ element, box }) {
   const isUpdatedLocally = useRef(false);
   const lastLocalProperties = useRef({ scale });
 
-  const { siteUrl } = useConfig();
-
   const updateLocalProperties = useCallback((properties) => {
     const newProps = {
       ...lastLocalProperties.current,
@@ -159,10 +157,7 @@ function MediaEdit({ element, box }) {
   );
 
   mediaProps.transformFlip = getTransformFlip(flip);
-
-  if (resource.src && !resource.src.startsWith(siteUrl)) {
-    mediaProps.crossOrigin = 'anonymous';
-  }
+  mediaProps.crossOrigin = 'anonymous';
 
   const fadedMediaProps = {
     ref: setFullMedia,

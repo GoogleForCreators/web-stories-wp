@@ -58,7 +58,13 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
     >
       <Paragraph>
         {user.avatar && (
-          <Img src={user.avatar} alt={user.name} height={48} width={48} />
+          <Img
+            src={user.avatar}
+            alt={user.name}
+            height={48}
+            width={48}
+            crossOrigin="anonymous"
+          />
         )}
         {dialogContent}
       </Paragraph>

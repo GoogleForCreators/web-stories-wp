@@ -27,7 +27,6 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../../types';
 import { preloadImage } from '../../app/media/utils';
 import resourceList from '../../utils/resourceList';
-import { useConfig } from '../../app/config';
 import {
   calculateSrcSet,
   getSmallestUrlForWidth,
@@ -45,7 +44,6 @@ function ImageDisplay({ element, box, previewMode }) {
   const { resource, scale, focalX, focalY } = element;
   const { width, height } = box;
   const ref = useRef();
-  const { siteUrl } = useConfig();
 
   let initialSrcType = 'smallest';
   let initialSrc = getSmallestUrlForWidth(0, resource);
@@ -73,9 +71,7 @@ function ImageDisplay({ element, box, previewMode }) {
     focalY
   );
 
-  if (src && !src.startsWith(siteUrl)) {
-    imgProps.crossOrigin = 'anonymous';
-  }
+  imgProps.crossOrigin = 'anonymous';
 
   useEffect(() => {
     let timeout;
