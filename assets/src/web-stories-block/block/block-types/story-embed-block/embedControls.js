@@ -128,9 +128,7 @@ const EmbedControls = (props) => {
                 <BaseControl.VisualLabel className="web-stories-embed-poster-label">
                   {__('Poster image', 'web-stories')}
                 </BaseControl.VisualLabel>
-                {hasPoster && (
-                  <img src={poster} alt="" crossOrigin="anonymous" />
-                )}
+                {hasPoster && <img src={poster} alt="" crossOrigin="anonymous" />}
                 <MediaUpload
                   title={__('Select poster image', 'web-stories')}
                   onSelect={onSelectPoster}
