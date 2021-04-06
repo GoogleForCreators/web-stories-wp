@@ -383,7 +383,7 @@ const PageArea = forwardRef(function PageArea(
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
       >
-        <PaddedPage data-padded-container>
+        <PaddedPage>
           <FullbleedContainer
             aria-label={__('Fullbleed area', 'web-stories')}
             role="region"

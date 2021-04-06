@@ -88,11 +88,8 @@ function SelectionCanvas({ children }) {
     }
   );
 
-  const { scrollContainer, paddedContainer } = useMemo(
-    () => ({
-      scrollContainer: fullbleedContainer?.closest('[data-scroll-container]'),
-      paddedContainer: fullbleedContainer?.closest('[data-padded-container]'),
-    }),
+  const scrollContainer = useMemo(
+    () => fullbleedContainer?.closest('[data-scroll-container]'),
     [fullbleedContainer]
   );
 
@@ -187,12 +184,12 @@ function SelectionCanvas({ children }) {
         offsetTop,
         offsetHeight,
         offsetWidth,
-      } = scrollContainer;
-      const { offsetLeft: paddedLeft, offsetTop: paddedTop } = paddedContainer;
+      } = fullbleedContainer;
+      const { offsetLeft: scrollLeft, offsetTop: scrollTop } = scrollContainer;
       // Offset from the fullbleed to the safe zone.
-      const dx = offsetLeft + paddedLeft;
+      const dx = offsetLeft + scrollLeft;
       const dy =
-        offsetTop + paddedTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
+        offsetTop + scrollTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
       const x = editorToDataX(lx - dx);
       const y = editorToDataY(ly - dy);
       const width = editorToDataX(lwidth);
