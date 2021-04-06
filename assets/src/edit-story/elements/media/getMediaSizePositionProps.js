@@ -52,11 +52,6 @@ function getMediaSizePositionProps(
     Math.min(mediaHeight * focalY * 0.01 - height * 0.5, mediaHeight - height)
   );
 
-  let crossOrigin = null;
-  if (resource.src && !resource.src.startsWith(siteUrl)) {
-    crossOrigin = 'anonymous';
-  }
-
   return {
     width: mediaWidth,
     height: mediaHeight,
@@ -65,7 +60,6 @@ function getMediaSizePositionProps(
     scale,
     focalX,
     focalY,
-    crossOrigin,
   };
 }
 
