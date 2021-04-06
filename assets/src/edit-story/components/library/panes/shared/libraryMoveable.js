@@ -276,13 +276,14 @@ function LibraryMoveable({
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
         isDragging={isDragging || hover}
+        onClick={onClick}
       />
       {(isDragging || active || hover) && (
         <>
           <InOverlay
             ref={overlayRef}
             zIndex={1}
-            pointerEvents="none"
+            pointerEvents="initial"
             render={() => {
               return <CloneElement ref={cloneRef} {...cloneProps} />;
             }}
