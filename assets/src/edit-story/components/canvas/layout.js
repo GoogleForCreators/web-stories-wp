@@ -330,6 +330,7 @@ const PageArea = forwardRef(function PageArea(
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
+    ...rest
   },
   ref
 ) {
@@ -375,6 +376,7 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
       className={className}
+      {...rest}
     >
       <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}
