@@ -11,6 +11,14 @@ services:
     class: PHPStan\WordPress\GetPostsDynamicFunctionReturnTypeExtension
     tags:
       - phpstan.broker.dynamicFunctionReturnTypeExtension
+  -
+    class: Google\Web_Stories\PhpStan\ServiceContainerDynamicReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicMethodReturnTypeExtension
+  -
+    class: Google\Web_Stories\PhpStan\ServicesDynamicReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
 parameters:
   level: 8
@@ -21,6 +29,7 @@ parameters:
     - includes/
   excludes_analyse:
     - includes/vendor/*
+    - includes/PhpStan/*
     - includes/polyfills/*
   scanDirectories:
     - third-party/

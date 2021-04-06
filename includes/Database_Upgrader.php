@@ -297,11 +297,7 @@ class Database_Upgrader extends Service_Base implements Activateable {
 	 * @return void
 	 */
 	protected function add_stories_caps() {
-		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return;
-		}
-		$story_post_type = $injector->make( Story_Post_Type::class );
+		$story_post_type = Services::get( 'story_post_type' );
 		$story_post_type->add_caps_to_roles();
 	}
 
