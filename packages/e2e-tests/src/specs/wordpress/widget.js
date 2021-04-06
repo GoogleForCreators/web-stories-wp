@@ -75,6 +75,9 @@ describe('Web Stories Widget', () => {
     });
   });
 
+  // Disable reason: Flakey test that needs to be investigated.
+  // See https://github.com/google/web-stories-wp/issues/6879
+  // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('Customizer', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('customize.php');
