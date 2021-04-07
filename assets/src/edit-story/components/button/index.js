@@ -37,10 +37,6 @@ const Base = styled.button.attrs(({ isDisabled }) => ({
   max-height: 30px;
   padding: 0 10px;
   cursor: pointer;
-  text-decoration: none;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  line-height: 28px;
 
   &:active {
     outline: none;
@@ -65,7 +61,7 @@ const StyledButton = styled(Base)`
   height: ${({ height }) => height}px;
   min-width: initial;
   visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.standard.white};
 
   svg {
     width: ${({ width }) => width}px;
