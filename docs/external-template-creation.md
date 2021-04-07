@@ -3,8 +3,8 @@
 ## Where things are stored
 
 - The **story JSON representation** for each template is stored in [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw) (in the `main` branch).
-- The **SVGs** used in each template is stored in [`assets/src/edit-story/stickers/`](https://github.com/google/web-stories-wp/tree/main/assets/src/edit-story/stickers) (in the `main` branch).
-- The (non-SVG) **image &amp; video files** used in each template is stored in [`public/static/main/images/templates/`](https://github.com/google/web-stories-wp/tree/static-site/public/static/main/images/templates) (in the `static-site` branch, using [Git LFS](https://git-lfs.github.com/)).
+- The **SVGs** used in each template are stored in [`assets/src/edit-story/stickers/`](https://github.com/google/web-stories-wp/tree/main/assets/src/edit-story/stickers) (in the `main` branch).
+- The (non-SVG) **image &amp; video files** used in each template are stored in [`public/static/main/images/templates/`](https://github.com/google/web-stories-wp/tree/static-site/public/static/main/images/templates) (in the `static-site` branch, using [Git LFS](https://git-lfs.github.com/)).
 
 ## Overview
 
@@ -15,7 +15,8 @@ To add a new template to the editor:
     - SVGs should already be available in the Stickers panel from step (1) &mdash; click on a sticker to insert it into the story. If you can't find the Stickers Panel, make sure the `enableStickers` experiment is turned on.
     - Upload (drag & drop) images and videos into the story to add them.
 3. [Engineer] Commit all images & videos used in the template to the codebase.
-    - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) as an example.
+    - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
+    - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) for an example.
     - Make sure videos are 720p.
 4. [Engineer] Get the story JSON ([details](#get-the-story-json)) and commit it to the codebase.
     - Replace image & video URLs in the JSON with the `replaceme.com` placeholder.
@@ -75,23 +76,31 @@ Once you've completed this step, your new sticker should now appear with the oth
 
 ### Inserting stickers (SVGs) into a story
 
-To add stickers to your template, it's as easy as going to the experiments and enabling the `enableStickers` flag. Once turned on, all available stickers in the codebase should be available for selection under our base shapes in the shapes library panel.
+To add stickers to your template story, go to the `Experiments` page (in the left-hand sidebar under the `Stories` section) and check the `Enable Stickers` checkbox. 
+
+Once turned on, all available stickers in the codebase should be available for selection under our base shapes in the shapes library panel.
 
 ### Get the story JSON
 
-To get the raw story json, simply open up a story in the web story editor with the devtools network tab open and press `save`. You should see the the story's json show up in the network tab. In that json, right click the `story_data` field and click `Store as global variable`. Go to the devtools console and type 
+To get the JSON representation of a story in the editor:
 
-```javascript
-copy(temp1)
-```
+1. In the editor, open the story.
+2. Open `Chrome DevTools > Network`.
+3. In the editor, click the "Save draft" button. 
+4. You should see a POST XHR with JSON in the request payload. In that payload JSON, find and right-click the `story_data` field and click `Copy value`. 
+5. The story JSON should now be copied to your clipboard and ready to paste into a new file.
 
-When you press enter the story data should now be copied to your clipboard and ready to paste where you need.
-
-**Note**: `Command+Shift+Option+J / Control+Shift+Alt+J` in the story editor opens up a dialog you can copy/paste raw story json to/from. However this is missing some fields `story_data` contains which are necessary for versioning the external templates.
+**Note**: `Command+Shift+Option+J / Control+Shift+Alt+J` in the editor opens up a dialog you can copy/paste story JSON. However, this is missing some necessary fields for versioning.
 
 ### Adding story JSON to the codebase as a new template
 
-Once you've added your template's raw story json to `packages/templates/src/raw/<template_name>.json`, you can import it into `packages/templates/src/getTemplates` and add to the function `loadTemplates(imageBaseUrl)`. It should then be accessible in `packages/templates/src/index`.
+Once you have the story JSON, several code changes are needed to add it to the list of default templates in the editor.
+
+1. In [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw), commit your template's story JSON as a new file e.g. `<template_name>.json`.
+2. In [`packages/templates/src/getTemplates.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function. 
+3. In [`packages/template/src/index.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/index.js), add a new JS object corresponding to the new template with properties `id`, `title`, `tags`, `colors`, etc.
+4. Verify in your local environment that the new template is visible in the editor's "Explore Templates" section.
+5. Create a single pull request with all of the changes in steps 1-3.
 
 ## Appendix
 
