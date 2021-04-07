@@ -399,6 +399,17 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @spacedmonkey
+			 * Issue: #6943
+			 * Creation date: 2021-04-07
+			 */
+			[
+				'name'        => 'videoOptimizationPublished',
+				'label'       => __( 'Video optimization pre-publish checklist', 'web-stories' ),
+				'description' => __( 'Transcode already uploaded videos.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
 			 * Issue: #3126
 			 * Creation date: 2021-02-02
 			 */
