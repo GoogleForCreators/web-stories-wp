@@ -108,7 +108,6 @@ export function QuickTip({
               muted
               noControls
               preload="true"
-              crossOrigin="anonymous"
             >
               <source src={`${cdnURL}${figureSrc}.webm`} type="video/webm" />
               <source src={`${cdnURL}${figureSrc}.mp4`} type="video/mp4" />
