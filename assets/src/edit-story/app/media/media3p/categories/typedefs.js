@@ -22,8 +22,7 @@
  * @typedef {(payload: {provider: string}) => undefined} FetchCategoriesErrorFn
  * @typedef {(payload: {provider: string, categories: Array.<Category>}) =>
  * undefined} FetchCategoriesSuccessFn
- * @typedef {(payload: {provider: string, categoryId: string}) => undefined}
- * SelectCategoryFn
+ * @typedef {(payload: {provider: string, categoryId: string}) => undefined} SelectCategoryFn
  */
 
 /**
