@@ -44,6 +44,7 @@ There are a few custom matchers inspired by Jest and `jest-dom`:
 * `toBeEmpty`
 * `toHaveFocus`
 * `toHaveStyle`
+* `toHaveTextContent`
 * `toHaveProperty`
 * `toBeOneOf`
 
