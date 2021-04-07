@@ -120,6 +120,13 @@ class Media extends Service_Base {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * The trancoded video id post meta key.
+	 *
+	 * @var string
+	 */
+	const TRANSCODED_ID_POST_META_KEY = 'web_stories_transcoded_id';
+
+	/**
 	 * Key for media post type.
 	 *
 	 * @var string
@@ -153,6 +160,20 @@ class Media extends Service_Base {
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
 				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => 0,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+
+		register_meta(
+			'post',
+			self::TRANSCODED_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Attachment id of transcoded video id.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
@@ -461,6 +482,8 @@ class Media extends Service_Base {
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}
+
+		$response['media_source'] = $this->get_callback_media_source( $response );
 
 		return $response;
 	}
