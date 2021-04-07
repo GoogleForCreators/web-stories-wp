@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { Container } from './container';
+import { Select } from './common';
 
 /**
  * The page carousel.
@@ -48,6 +49,14 @@ export class Carousel extends Container {
 
   get gridViewToggle() {
     return this.getByRole('button', { name: 'Grid View' });
+  }
+
+  get zoomSelector() {
+    return this._get(
+      this.getByRole('button', { name: 'Select Zoom Level' }),
+      'zoomSelector',
+      Select
+    );
   }
 }
 
