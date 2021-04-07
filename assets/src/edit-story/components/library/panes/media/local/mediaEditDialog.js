@@ -158,7 +158,13 @@ function MediaEditDialog({ resource, onClose }) {
             crossOrigin="anonymous"
           />
         ) : (
-          <Video key={src} crossOrigin="anonymous" poster={poster} preload="none" muted>
+          <Video
+            key={src}
+            crossOrigin="anonymous"
+            poster={poster}
+            preload="none"
+            muted
+          >
             <source src={src} type={mimeType} />
           </Video>
         )}
