@@ -37,8 +37,6 @@ import useReduction from '../../utils/useReduction';
 const ZOOM_PADDING_LARGE = 72;
 const ZOOM_PADDING_NONE = 12;
 
-const LEGACY_PAGE_WIDTHS = [412, 268, 223];
-
 const INITIAL_STATE = {
   zoomSetting: ZOOM_SETTING.FIT,
   workspaceSize: {
@@ -75,27 +73,6 @@ function calculateViewportProperties(
   workspaceSize,
   zoomSetting
 ) {
-  if (!hasCanvasZoom) {
-    // Use the old legacy method of calculating possible page size:
-    const maxWidth = workspaceSize.width - PAGE_NAV_WIDTH * 2;
-    const maxHeight = workspaceSize.height;
-
-    const bestSize =
-      LEGACY_PAGE_WIDTHS.find(
-        (size) => size <= maxWidth && size / FULLBLEED_RATIO <= maxHeight
-      ) || LEGACY_PAGE_WIDTHS[LEGACY_PAGE_WIDTHS.length - 1];
-
-    return {
-      pageWidth: bestSize,
-      pageHeight: bestSize / PAGE_RATIO,
-      hasHorizontalOverflow: false,
-      hasVerticalOverflow: false,
-      hasPageNavigation: true,
-      pagePadding: ZOOM_PADDING_NONE,
-      viewportWidth: bestSize + ZOOM_PADDING_NONE,
-      viewportHeight: bestSize / FULLBLEED_RATIO + ZOOM_PADDING_NONE,
-    };
-  }
   // Calculate page size based on zoom setting
   let maxPageWidth;
   const workspaceRatio = workspaceSize.width / workspaceSize.height;

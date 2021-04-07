@@ -21,7 +21,6 @@ import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -82,7 +81,6 @@ function PrimaryMenu() {
       return newIsOpen;
     });
   }, [setIsGridViewOpen]);
-  const { hasCanvasZoom } = useFeatures();
 
   const {
     metaBoxesVisible,
@@ -144,7 +142,7 @@ function PrimaryMenu() {
               </Button>
             </Tooltip>
           </Box>
-          {hasCanvasZoom && <ZoomSelector />}
+          <ZoomSelector />
         </MenuItems>
       </Wrapper>
       <Modal
