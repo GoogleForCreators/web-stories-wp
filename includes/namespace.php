@@ -38,7 +38,11 @@ use WP_Site;
  * @return void
  */
 function setup_new_site() {
-	$story = Services::get( 'story_post_type' );
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
 	$story->register();
 	// TODO Register cap to roles within class itself.
 	$story->add_caps_to_roles();
@@ -47,7 +51,7 @@ function setup_new_site() {
 	}
 
 	// TODO move this logic to Database_Upgrader class.
-	$database_upgrader = Services::get( 'database_upgrader' );
+	$database_upgrader = $injector->make( Database_Upgrader::class );
 	$database_upgrader->register();
 }
 
@@ -114,8 +118,11 @@ function remove_site( $error, $site ) {
 		return;
 	}
 
-	$story = Services::get( 'story_post_type' );
-
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
 
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
