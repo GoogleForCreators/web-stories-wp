@@ -46,7 +46,8 @@ export const PaneInner = styled.div`
 `;
 
 export const PageLayoutsParentContainer = styled.div`
-  ${virtualPaneContainer}
+  ${virtualPaneContainer};
+  margin-top: 18px;
   overflow-x: hidden;
   overflow-y: scroll;
 `;
@@ -57,6 +58,7 @@ function PageLayoutsPane(props) {
   } = useAPI();
   const [pageLayouts, setPageLayouts] = useState([]);
   const [selectedPageLayoutType, setSelectedPageLayoutType] = useState(null);
+  const [showLayoutImages, setShowLayoutImages] = useState(false);
 
   const pageLayoutsParentRef = useRef();
 
@@ -64,12 +66,12 @@ function PageLayoutsPane(props) {
   useEffect(() => {
     async function loadPageLayouts() {
       const trackTiming = getTimeTracker('load_page_layouts');
-      setPageLayouts(await getPageLayouts());
+      setPageLayouts(await getPageLayouts({ showImages: showLayoutImages }));
       trackTiming();
     }
 
     loadPageLayouts();
-  }, [getPageLayouts, setPageLayouts]);
+  }, [getPageLayouts, showLayoutImages, setPageLayouts]);
 
   const pills = useMemo(
     () =>
@@ -122,6 +124,10 @@ function PageLayoutsPane(props) {
     });
   }, []);
 
+  const handleToggleClick = useCallback(() => {
+    setShowLayoutImages((currentValue) => !currentValue);
+  }, []);
+
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -134,8 +140,10 @@ function PageLayoutsPane(props) {
         <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
           {pageLayoutsParentRef.current && (
             <PageLayouts
+              onToggleClick={handleToggleClick}
               parentRef={pageLayoutsParentRef}
               pages={filteredPages}
+              showImages={showLayoutImages}
             />
           )}
         </PageLayoutsParentContainer>
