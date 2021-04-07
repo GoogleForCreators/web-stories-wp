@@ -251,7 +251,7 @@ describe('Background Copy Paste integration', () => {
   async function addBackgroundImage(index) {
     // Drag image to canvas corner to set as background
     const image = fixture.editor.library.media.item(index);
-    const canvas = fixture.editor.canvas.fullbleed.container;
+    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
 
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(image, 20, 20),

@@ -64,7 +64,7 @@ describe('Autoplay video', () => {
       .node.querySelector('video');
     expect(video1El.paused).toBe(false);
 
-    const fullbleed = fixture.editor.canvas.fullbleed.container;
+    const fullbleed = fixture.editor.canvas.framesLayer.fullbleed;
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(videoFrame, '10%', '10%'),
       down(),

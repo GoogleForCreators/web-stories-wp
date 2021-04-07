@@ -230,7 +230,7 @@ describe('Background Copy & Paste', () => {
     // Navigate back to previous page and add Background image
     await goToPreviousPage();
     const bgMedia = fixture.editor.library.media.item(0);
-    const canvas = fixture.editor.canvas.fullbleed.container;
+    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(bgMedia, 20, 20),
       down(),
