@@ -68,11 +68,7 @@ const reducer = {
   }),
 };
 
-function calculateViewportProperties(
-  hasCanvasZoom,
-  workspaceSize,
-  zoomSetting
-) {
+function calculateViewportProperties(workspaceSize, zoomSetting) {
   // Calculate page size based on zoom setting
   let maxPageWidth;
   const workspaceRatio = workspaceSize.width / workspaceSize.height;
@@ -156,14 +152,13 @@ function calculateViewportProperties(
   };
 }
 
-function useZoomSetting(hasCanvasZoom) {
+function useZoomSetting() {
   const [state, actions] = useReduction(INITIAL_STATE, reducer);
   const { zoomSetting, workspaceSize, scrollOffset } = state;
 
   const viewportProperties = useMemo(
-    () =>
-      calculateViewportProperties(hasCanvasZoom, workspaceSize, zoomSetting),
-    [hasCanvasZoom, workspaceSize, zoomSetting]
+    () => calculateViewportProperties(workspaceSize, zoomSetting),
+    [workspaceSize, zoomSetting]
   );
 
   return {
