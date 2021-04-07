@@ -72,7 +72,7 @@ function ZoomSelector() {
 
   return (
     <StyledDropDown
-      aria-label={__('Select Zoom Level', 'web-stories')}
+      ariaLabel={__('Zoom Level', 'web-stories')}
       placeholder={placeholder}
       options={ZOOM_OPTIONS}
       placement={PLACEMENT.TOP_START}

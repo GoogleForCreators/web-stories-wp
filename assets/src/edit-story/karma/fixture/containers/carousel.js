@@ -53,7 +53,7 @@ export class Carousel extends Container {
 
   get zoomSelector() {
     return this._get(
-      this.getByRole('button', { name: 'Select Zoom Level' }),
+      this.getByRole('button', { name: 'Zoom Level' }),
       'zoomSelector',
       Select
     );
