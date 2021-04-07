@@ -25,24 +25,17 @@ import { useFeatures } from 'flagged';
  */
 import Context from './context';
 import useZoomSetting from './useZoomSetting';
-import useScrollOffset from './useScrollOffset';
 
 function LayoutProvider({ children }) {
   const { hasCanvasZoom } = useFeatures();
   const zoomValue = useZoomSetting(hasCanvasZoom);
-  const offsetValue = useScrollOffset(
-    hasCanvasZoom,
-    zoomValue.state.zoomSetting
-  );
 
   const value = {
     state: {
       ...zoomValue.state,
-      ...offsetValue.state,
     },
     actions: {
       ...zoomValue.actions,
-      ...offsetValue.actions,
     },
   };
 

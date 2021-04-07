@@ -88,7 +88,6 @@ function FramesLayer() {
       ref={ref}
       data-testid="FramesLayer"
       pointerEvents="initial"
-      onScroll={onScroll}
       // Use `-1` to ensure that there's a default target to focus if
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
@@ -96,7 +95,7 @@ function FramesLayer() {
       aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
-        <FramesPageArea>
+        <FramesPageArea onScroll={onScroll}>
           {currentPage &&
             currentPage.elements.map(({ id, ...rest }) => {
               return <FrameElement key={id} element={{ id, ...rest }} />;
