@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
+use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -47,7 +49,7 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type {
+class Story_Post_Type extends Service_Base implements Activateable, Deactivateable {
 	use Publisher;
 	use Types;
 	use Assets;
@@ -102,17 +104,27 @@ class Story_Post_Type {
 	private $meta_boxes;
 
 	/**
+	 * Locale instance.
+	 *
+	 * @var Locale Locale instance.
+	 */
+	private $locale;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
+	 * @param Decoder     $decoder Decoder instance.
+	 * @param Locale      $locale Locale instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes ) {
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
 		$this->experiments = $experiments;
 		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = new Decoder();
+		$this->decoder     = $decoder;
+		$this->locale      = $locale;
 	}
 
 	/**
@@ -126,7 +138,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -191,10 +203,6 @@ class Story_Post_Type {
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-		// Custom Meta Boxes Support.
-		$metabox = new Meta_Boxes();
-		$metabox->init();
-
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
@@ -215,6 +223,27 @@ class Story_Post_Type {
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->add_caps_to_roles();
+	}
+
+	/**
+	 * Deactivate the service.
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function deactivate( $network_wide ) {
+		$this->remove_caps_from_roles();
+		unregister_post_type( self::POST_TYPE_SLUG );
 	}
 
 	/**
@@ -552,7 +581,7 @@ class Story_Post_Type {
 			'config'     => [
 				'autoSaveInterval'      => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'                 => is_rtl(),
-				'locale'                => ( new Locale() )->get_locale_settings(),
+				'locale'                => $this->locale->get_locale_settings(),
 				'allowedFileTypes'      => $this->get_allowed_file_types(),
 				'allowedImageFileTypes' => $this->get_file_type_exts( $mime_image_types ),
 				'allowedImageMimeTypes' => $mime_image_types,

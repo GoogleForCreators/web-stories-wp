@@ -46,7 +46,7 @@ class Embed_Shortcode extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_shortcode( self::SHORTCODE_NAME, [ $this, 'render_shortcode' ] );
 	}
 

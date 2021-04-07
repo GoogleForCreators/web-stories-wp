@@ -38,7 +38,7 @@ use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
  *
  * @package Google\Web_Stories
  */
-class SVG {
+class SVG extends Service_Base {
 	/**
 	 * File extension.
 	 *
@@ -96,7 +96,7 @@ class SVG {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) ) {
 			return;
 		}

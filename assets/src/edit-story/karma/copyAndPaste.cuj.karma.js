@@ -232,9 +232,9 @@ describe('Background Copy & Paste', () => {
     const bgMedia = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.fullbleed.container;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(bgMedia, 5, 5),
+      moveRel(bgMedia, 20, 20),
       down(),
-      moveRel(canvas, 10, 10),
+      moveRel(canvas, 5, 5),
       up(),
     ]);
 

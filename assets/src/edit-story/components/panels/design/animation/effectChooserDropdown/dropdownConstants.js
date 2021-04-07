@@ -53,6 +53,8 @@ import { getDirectionalEffect } from './utils';
 
 export const NO_ANIMATION = 'none';
 
+export const DYNAMIC_PROPERTY_VALUE = 'dynamicPropertyValue';
+
 /**
  * GRID_SIZING is used for how to present effect options visually in dropDown
  */
@@ -211,7 +213,7 @@ export const backgroundEffectOptions = {
     animation: {
       ariaLabel: __('Pan and Zoom Effect', 'web-stories'),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
-      zoomDirection: 'extremely specific, look at effect chooser',
+      zoomDirection: DYNAMIC_PROPERTY_VALUE,
       Effect: PanAndZoomAnimation,
       size: 26,
     },

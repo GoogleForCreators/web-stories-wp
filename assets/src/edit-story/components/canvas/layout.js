@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef, createRef } from 'react';
+import { forwardRef, createRef, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -102,7 +102,7 @@ const Area = styled.div`
   ${pointerEventsCss}
 
   grid-area: ${({ area }) => area};
-  overflow: ${({ canOverflow }) => (canOverflow ? 'visible' : 'hidden')};
+  overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
   position: relative;
   width: 100%;
   height: 100%;
@@ -111,22 +111,21 @@ const Area = styled.div`
 
 // Page area is not `overflow:hidden` by default to allow different clipping
 // mechanisms.
-const PageAreaFullbleedContainer = styled(Area).attrs({
+const PageAreaContainer = styled(Area).attrs({
   area: 'p',
-  canOverflow: true,
 })`
   display: flex;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
   align-items: ${({ hasVerticalOverflow }) =>
     hasVerticalOverflow ? 'flex-start' : 'center'};
-  overflow: ${({ overflow }) =>
-    overflow ?? 'var(--overflow-x) var(--overflow-y)'};
+  overflow: ${({ showOverflow }) =>
+    showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
 
   ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
     isControlled &&
     css`
-      overflow: ${({ overflow }) => overflow ?? 'hidden'};
+      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
@@ -137,8 +136,6 @@ const PageAreaFullbleedContainer = styled(Area).attrs({
 `;
 
 const PaddedPage = styled.div`
-  width: calc(var(--page-width-px) + var(--page-padding-px));
-  height: calc(var(--fullbleed-height-px) + var(--page-padding-px));
   padding: calc(0.5 * var(--page-padding-px));
 `;
 
@@ -166,7 +163,7 @@ const PageClip = styled.div`
     `}
 `;
 
-const PageAreaWithOverflow = styled.div`
+const FullbleedContainer = styled.div`
   ${({ background }) => generatePatternStyles(background)}
   overflow: visible;
   position: relative;
@@ -220,7 +217,7 @@ const PageAreaSafeZone = styled.div`
 
 const HeadArea = styled(Area).attrs({ area: 'h' })``;
 
-const MenuArea = styled(Area).attrs({ area: 'm', canOverflow: true })``;
+const MenuArea = styled(Area).attrs({ area: 'm' })``;
 
 const NavArea = styled(Area)`
   display: flex;
@@ -230,17 +227,15 @@ const NavArea = styled(Area)`
 
 const NavPrevArea = styled(NavArea).attrs({
   area: 'b',
-  canOverflow: true,
 })``;
 
 const NavNextArea = styled(NavArea).attrs({
   area: 'f',
-  canOverflow: true,
 })``;
 
 const CarouselArea = styled(Area).attrs({
   area: 'c',
-  canOverflow: true,
+  showOverflow: true,
 })``;
 
 /**
@@ -332,37 +327,67 @@ const PageArea = forwardRef(function PageArea(
     overlay = [],
     background,
     isControlled = false,
-    overflow,
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
+    ...rest
   },
   ref
 ) {
-  const { hasVerticalOverflow, hasHorizontalOverflow } = useLayout(
-    ({ state: { hasVerticalOverflow, hasHorizontalOverflow } }) => ({
+  const {
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    zoomSetting,
+    scrollLeft,
+    scrollTop,
+  } = useLayout(
+    ({
+      state: {
+        hasVerticalOverflow,
+        hasHorizontalOverflow,
+        zoomSetting,
+        scrollLeft,
+        scrollTop,
+      },
+    }) => ({
       hasVerticalOverflow,
       hasHorizontalOverflow,
+      zoomSetting,
+      scrollLeft,
+      scrollTop,
     })
   );
+
+  // We need to ref scroll, because scroll changes should not update a non-controlled layer
+  const scroll = useRef();
+  scroll.current = { top: scrollTop, left: scrollLeft };
+  // If zoom setting changes for a non-controlled layer, make sure to reset actual scroll inside container
+  useEffect(() => {
+    if (!isControlled) {
+      fullbleedRef.current.scrollTop = scroll.current.top;
+      fullbleedRef.current.scrollLeft = scroll.current.left;
+    }
+  }, [isControlled, zoomSetting, fullbleedRef]);
+
   return (
-    <PageAreaFullbleedContainer
-      ref={fullbleedRef}
-      data-testid="fullbleed"
-      aria-label={__('Fullbleed area', 'web-stories')}
-      role="region"
-      overflow={overflow}
+    <PageAreaContainer
+      showOverflow={showOverflow}
       isControlled={isControlled}
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
       className={className}
+      {...rest}
     >
       <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
       >
         <PaddedPage>
-          <PageAreaWithOverflow
+          <FullbleedContainer
+            aria-label={__('Fullbleed area', 'web-stories')}
+            role="region"
+            ref={fullbleedRef}
+            data-testid="fullbleed"
             background={background}
             isControlled={isControlled}
             isBackgroundSelected={isBackgroundSelected}
@@ -372,11 +397,11 @@ const PageArea = forwardRef(function PageArea(
                 {children}
               </PageAreaSafeZone>
             </PageAreaWithoutOverflow>
-          </PageAreaWithOverflow>
+          </FullbleedContainer>
         </PaddedPage>
       </PageClip>
       {overlay}
-    </PageAreaFullbleedContainer>
+    </PageAreaContainer>
   );
 });
 
@@ -386,7 +411,6 @@ PageArea.propTypes = {
   overlay: PropTypes.node,
   background: PropTypes.object,
   isControlled: PropTypes.bool,
-  overflow: PropTypes.string,
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,

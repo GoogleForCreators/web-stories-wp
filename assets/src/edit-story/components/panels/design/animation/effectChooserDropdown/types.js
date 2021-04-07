@@ -32,10 +32,7 @@ const ANIMATION_OPTION_PROP_TYPE = {
   size: PropTypes.number,
   scaleDirection: PropTypes.oneOf(Object.values(SCALE_DIRECTION)),
   panDirection: PropTypes.oneOf(Object.values(DIRECTION)),
-  zoomDirection: PropTypes.oneOf([
-    ...Object.values(SCALE_DIRECTION),
-    'extremely specific, look at effect chooser', // specific for current iteration of pan and zoom
-  ]),
+  zoomDirection: PropTypes.oneOf(Object.values(SCALE_DIRECTION)),
   flyInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
   rotateInDirection: PropTypes.oneOf(Object.values(DIRECTION)),
   whooshInDirection: PropTypes.oneOf(Object.values(DIRECTION)),

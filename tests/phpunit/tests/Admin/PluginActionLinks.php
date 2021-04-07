@@ -35,11 +35,11 @@ namespace Google\Web_Stories\Tests\Admin;
  */
 class PluginActionLinks extends \WP_UnitTestCase {
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$instance = new \Google\Web_Stories\Admin\PluginActionLinks();
-		$instance->init();
+		$instance->register();
 
 		$basename = plugin_basename( WEBSTORIES_PLUGIN_FILE );
 

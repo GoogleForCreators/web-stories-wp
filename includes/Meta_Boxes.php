@@ -31,7 +31,7 @@ use WP_Screen;
 /**
  * Class Meta_Boxes.
  */
-class Meta_Boxes {
+class Meta_Boxes extends Service_Base {
 	/**
 	 * Supported meta box locations.
 	 *
@@ -53,7 +53,7 @@ class Meta_Boxes {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'add_meta_boxes_' . Story_Post_Type::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ], PHP_INT_MAX );
 	}
 

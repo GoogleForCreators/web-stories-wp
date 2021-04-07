@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\User_Preferences;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
@@ -39,7 +40,7 @@ use WP_Screen;
  *
  * @package Google\Web_Stories
  */
-class Cross_Origin_Isolation {
+class Cross_Origin_Isolation extends Service_Base {
 
 	/**
 	 * Experiments instance.
@@ -61,7 +62,7 @@ class Cross_Origin_Isolation {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		if ( ! $this->is_needed() || ! $this->is_edit_screen() ) {
 			return;
 		}
@@ -73,6 +74,28 @@ class Cross_Origin_Isolation {
 		add_filter( 'style_loader_tag', [ $this, 'style_loader_tag' ], 10, 3 );
 		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
 		add_filter( 'get_avatar', [ $this, 'get_avatar' ], 10, 6 );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'current_screen';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 11;
 	}
 
 	/**
