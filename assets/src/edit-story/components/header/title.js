@@ -24,6 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../../design-system';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
@@ -33,9 +34,9 @@ import useHeader from './use';
 const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.primary} !important`};
   margin: 0;
-  font-family: ${({ theme }) => theme.typography.family.primary};
-  font-size: 14px;
-  line-height: 20px;
+  ${themeHelpers.expandTextPreset(
+    ({ paragraph }, { MEDIUM }) => paragraph[MEDIUM]
+  )}
   background: ${({ isHighlighted }) => !isHighlighted && 'none !important'};
   border: none !important;
   text-align: start;

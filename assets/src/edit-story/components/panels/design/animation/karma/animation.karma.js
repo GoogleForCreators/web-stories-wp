@@ -39,7 +39,9 @@ describe('Animation Panel', function () {
     expect(panel).not.toBeNull();
   });
 
-  it('can click the animation chooser and select an effect.', async function () {
+  // TODO #6953
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('can click the animation chooser and select an effect.', async function () {
     await fixture.events.click(fixture.editor.library.textAdd);
     const panel = fixture.editor.inspector.designPanel.animation;
 

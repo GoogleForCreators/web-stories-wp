@@ -25,10 +25,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../../../design-system';
 import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
 import { ReactComponent as SearchIcon } from '../../../icons/search.svg';
 import { noop } from '../../../utils/noop';
-import { themeHelpers } from '../../../../design-system';
 
 const SearchContainer = styled.div`
   position: relative;

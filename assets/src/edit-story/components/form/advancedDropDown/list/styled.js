@@ -39,7 +39,6 @@ export const List = styled.div`
   font-size: 14px;
   text-align: left;
   list-style: none;
-  ${themeHelpers.scrollbarCSS};
 `;
 
 export const Group = styled.ul`
