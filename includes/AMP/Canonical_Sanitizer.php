@@ -71,9 +71,11 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 		// Ensure rel=canonical link.
 		if ( empty( $links['canonical'] ) ) {
 			$rel_canonical = $this->dom->createElement( Tag::LINK );
-			$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
-			$rel_canonical->setAttribute( Attribute::HREF, (string) wp_get_canonical_url() );
-			$this->dom->head->appendChild( $rel_canonical );
+			if ( $rel_canonical ) {
+				$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
+				$rel_canonical->setAttribute( Attribute::HREF, (string) wp_get_canonical_url() );
+				$this->dom->head->appendChild( $rel_canonical );
+			}
 		}
 	}
 }
