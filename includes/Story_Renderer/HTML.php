@@ -77,7 +77,7 @@ class HTML {
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
 		$markup = $this->print_analytics( $markup );
-		$markup = $this->print_bookend( $markup );
+		$markup = $this->print_social_share( $markup );
 
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
@@ -267,15 +267,15 @@ class HTML {
 	}
 
 	/**
-	 * Print amp-story-bookend before closing `</amp-story>`.
+	 * Print amp-story-social-share before closing `</amp-story>`.
 	 *
-	 * @since 1.3.0
+	 * @since 1.6.0
 	 *
 	 * @param string $content String to replace.
 	 *
 	 * @return string
 	 */
-	protected function print_bookend( $content ) {
+	protected function print_social_share( $content ) {
 		$share_providers = [
 			[
 				'provider' => 'twitter',
@@ -296,7 +296,6 @@ class HTML {
 		 *
 		 * @since 1.3.0
 		 *
-		 * @link https://amp.dev/documentation/components/amp-story-bookend/#social-sharing
 		 * @link https://amp.dev/documentation/components/amp-social-share/?format=stories#pre-configured-providers
 		 *
 		 * @param array[] $share_providers List of sharing providers.
@@ -307,17 +306,16 @@ class HTML {
 			return $content;
 		}
 
-		$config  = [
-			'bookendVersion' => 'v1.0',
-			'components'     => [],
+		$config       = [
 			'shareProviders' => $share_providers,
 		];
-		$bookend = sprintf(
-			'<amp-story-bookend layout="nodisplay"><script type="application/json">%s</script></amp-story-bookend>',
+		$social_share = sprintf(
+			'<amp-story-social-share layout="nodisplay"><script type="application/json">%s</script></amp-story-social-share>',
 			wp_json_encode( $config )
 		);
 
-		return str_replace( '</amp-story>', $bookend . '</amp-story>', $content );
+
+		return str_replace( '</amp-story>', $social_share . '</amp-story>', $content );
 	}
 
 	/**
