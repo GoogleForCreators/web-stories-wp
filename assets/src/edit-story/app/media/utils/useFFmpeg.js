@@ -52,11 +52,11 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  *
  * @return {{
  * isFeatureEnabled: boolean,
- * isFileTooLarge: (function(File): boolean),
+ * isFileTooLarge: (file: File) => boolean,
  * isTranscodingEnabled: boolean,
- * canTranscodeFile: (function(File): boolean),
- * transcodeVideo: (function(File): Promise<File>)
- * getFirstFrameOfVideo: (function(File): Promise<File>)
+ * canTranscodeFile: (file: File) => boolean,
+ * transcodeVideo: (file: File) => Promise<File>,
+ * getFirstFrameOfVideo: (file: File) => Promise<File>
  * }} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
