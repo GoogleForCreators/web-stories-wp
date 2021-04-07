@@ -13,40 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, SCALE_DIRECTION } from '../../constants';
-import zoomAnimationProps, {
-  ZoomEffectInputPropTypes,
-} from '../backgroundZoom/animationProps';
-import panAnimationProps, {
-  PanEffectInputPropTypes,
+export {
+  default,
+  PanEffectInputPropTypes as PanAndZoomEffectInputPropTypes,
 } from '../backgroundPan/animationProps';
-
-export const PanAndZoomEffectInputPropTypes = {
-  ...PanEffectInputPropTypes,
-  ...ZoomEffectInputPropTypes,
-};
-
-const zoomAnimationPropsWithDropdown = {
-  ...zoomAnimationProps,
-  zoomDirection: {
-    ...zoomAnimationProps.zoomDirection,
-    type: FIELD_TYPES.DROPDOWN,
-    values: [
-      { value: SCALE_DIRECTION.SCALE_IN, name: __('Zoom in', 'web-stories') },
-      { value: SCALE_DIRECTION.SCALE_OUT, name: __('Zoom out', 'web-stories') },
-    ],
-  },
-};
-
-export default {
-  ...panAnimationProps,
-  ...zoomAnimationPropsWithDropdown,
-};
