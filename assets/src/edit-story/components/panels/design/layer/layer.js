@@ -38,8 +38,9 @@ const LayerButton = styled(Button).attrs({
   // Because the layer panel is aria-hidden, we need something else to select by
   'data-testid': 'layer-option',
 })`
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 42px 1fr;
+
   border: 0;
   padding: 0;
   background: transparent;
@@ -49,6 +50,7 @@ const LayerButton = styled(Button).attrs({
   align-items: center;
   user-select: none;
   border-radius: 0;
+  padding-left: 8px;
   transition: background-color 0.3s;
 
   :hover {
@@ -70,15 +72,13 @@ const LayerIconWrapper = styled.div`
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: 8px;
-  margin-right: 12px;
+  justify-content: flex-start;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const LayerDescription = styled.div`
   position: relative;
-  width: calc(100% - 60px);
+  width: 100%;
   display: flex;
   align-items: center;
   margin-left: 0;
