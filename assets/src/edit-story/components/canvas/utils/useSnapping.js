@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -28,10 +28,10 @@ import { useDropTargets } from '../../dropTargets';
 import { useCanvas, useLayout, useUserOnboarding } from '../../../app';
 
 function useSnapping({
-  isDragging,
   canSnap,
   otherNodes,
   snappingOffsetX = null,
+  isDragging,
 }) {
   const { pageContainer, canvasContainer, designSpaceGuideline } = useCanvas(
     ({ state: { pageContainer, canvasContainer, designSpaceGuideline } }) => ({
@@ -56,37 +56,19 @@ function useSnapping({
   const snapDisabled = useGlobalIsKeyPressed('meta');
   canSnap = canSnap && !snapDisabled && !activeDropTargetId;
 
-  const toggleDesignSpace = useCallback(
-    (visible) => {
-      if (designSpaceGuideline) {
-        designSpaceGuideline.style.visibility = visible ? 'visible' : 'hidden';
-        visible && triggerOnboarding();
+  const handleSnap = useCallback(
+    ({ elements }) => {
+      const isSnappingDesignSpace = elements
+        .flat()
+        .some(
+          ({ center, element }) => element === designSpaceGuideline && !center
+        );
+      if (isDragging && isSnappingDesignSpace) {
+        triggerOnboarding();
       }
     },
-    [designSpaceGuideline, triggerOnboarding]
+    [isDragging, designSpaceGuideline, triggerOnboarding]
   );
-
-  const handleSnap = useCallback(
-    ({ elements }) =>
-      // Show design space if we're snapping to any of its edges
-      toggleDesignSpace(
-        isDragging &&
-          elements
-            .flat()
-            .some(
-              ({ center, element }) =>
-                element === designSpaceGuideline && !center
-            )
-      ),
-    [toggleDesignSpace, isDragging, designSpaceGuideline]
-  );
-
-  // Always hide design space guideline when dragging stops
-  useEffect(() => {
-    if (!isDragging) {
-      toggleDesignSpace(false);
-    }
-  }, [isDragging, toggleDesignSpace]);
 
   if (!canvasContainer || !pageContainer) {
     return {};

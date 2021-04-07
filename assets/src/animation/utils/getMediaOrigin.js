@@ -35,13 +35,28 @@ export function getMediaOrigin(
     left: 0,
   }
 ) {
+  // If both offsets are 0, we want the origin to be in the middle.
+  // Otherwise we want the percentage of one offset relative to the
+  // other
+  let vertical = 0.5;
+  const absOffsets = Object.entries(offsets).reduce(
+    (accum, [key, val]) => ({
+      ...accum,
+      [key]: Math.abs(val),
+    }),
+    {}
+  );
+  if (!(absOffsets.top < 0.01 && absOffsets.bottom < 0.01)) {
+    vertical = absOffsets.top / (absOffsets.top + absOffsets.bottom);
+  }
+  let horizontal = 0.5;
+  if (!(absOffsets.left < 0.01 && absOffsets.right < 0.01)) {
+    horizontal = absOffsets.left / (absOffsets.left + absOffsets.right);
+  }
+
   const progress = {
-    vertical:
-      Math.abs(offsets.top) /
-      (Math.abs(offsets.top) + Math.abs(offsets.bottom)),
-    horizontal:
-      Math.abs(offsets.left) /
-      (Math.abs(offsets.left) + Math.abs(offsets.right)),
+    vertical,
+    horizontal,
   };
 
   return {
