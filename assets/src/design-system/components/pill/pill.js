@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 /**
@@ -59,13 +60,15 @@ const StyledPill = styled.button(
   `
 );
 
-function Pill({ children, isActive, onClick, ...rest }) {
+function Pill({ children, isActive, onClick, ...rest }, ref) {
   return (
-    <StyledPill isActive={isActive} onClick={onClick} {...rest}>
+    <StyledPill ref={ref} isActive={isActive} onClick={onClick} {...rest}>
       {children}
     </StyledPill>
   );
 }
+
+const PillWithRef = forwardRef(Pill);
 
 Pill.propTypes = {
   children: PropTypes.node.isRequired,
@@ -73,4 +76,4 @@ Pill.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default Pill;
+export default PillWithRef;
