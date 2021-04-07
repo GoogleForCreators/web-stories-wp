@@ -19,15 +19,14 @@
  */
 import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import { _x, sprintf } from '@web-stories-wp/i18n';
+import { _x, sprintf, __ } from '@web-stories-wp/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { Pane } from '../shared';
-import PillGroup from '../shared/pillGroup';
+import { Pane, ChipGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import paneId from './paneId';
 import PageLayouts from './pageLayouts';
@@ -74,11 +73,13 @@ function PageLayoutsPane(props) {
   }, [getPageLayouts, showLayoutImages, setPageLayouts]);
 
   const pills = useMemo(
-    () =>
-      Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
+    () => [
+      { id: null, label: __('All', 'web-stories') },
+      ...Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
         id: key,
         label: name,
       })),
+    ],
     []
   );
 
@@ -131,7 +132,7 @@ function PageLayoutsPane(props) {
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
-        <PillGroup
+        <ChipGroup
           items={pills}
           selectedItemId={selectedPageLayoutType}
           selectItem={handleSelectPageLayoutType}

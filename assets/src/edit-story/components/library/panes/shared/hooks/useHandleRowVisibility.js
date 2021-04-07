@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ function useHandleRowVisibility({
   setFocusedRowOffset,
   selectedItemId,
   itemRefs,
+  offsetSpacing = 0,
 }) {
   // Handles setting which row will be seen, by manipulating translateY.
   useLayoutEffect(() => {
@@ -33,7 +34,7 @@ function useHandleRowVisibility({
     const selectedItem = itemRefs.current?.[selectedItemId]
       ? itemRefs.current[selectedItemId]
       : null;
-    const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
+    const selectedItemOffsetTop = selectedItem?.offsetTop - offsetSpacing || 0;
 
     if (!isExpanded && selectedItem) {
       setFocusedRowOffset(selectedItemOffsetTop);
@@ -41,9 +42,10 @@ function useHandleRowVisibility({
   }, [
     innerContainerRef,
     isExpanded,
+    itemRefs,
+    offsetSpacing,
     selectedItemId,
     setFocusedRowOffset,
-    itemRefs,
   ]);
 
   // Handles fading rows in and out depending on the selected item.
