@@ -53,6 +53,8 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 * @link https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/?format=websites
 	 * @link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/#optimize-the-amp-runtime-loading
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.1.0
 	 *
 	 * @return void
@@ -67,13 +69,16 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 
 		if ( ! $style ) {
 			$style = $this->dom->createElement( Tag::STYLE );
-			$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
-			$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[0] ) );
+			if ( $style ) {
+				$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
+				$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[0] ) );
+			}
 		} elseif ( $style->parentNode ) {
 			$style->parentNode->removeChild( $style ); // So we can move it.
 		}
-
-		$this->dom->head->appendChild( $style );
+		if ( $style ) {
+			$this->dom->head->appendChild( $style );
+		}
 
 		$noscript  = null;
 		$noscripts = $this->dom->xpath->query( './noscript[ style[ @amp-boilerplate ] ]', $this->dom->head );
@@ -85,14 +90,18 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 		if ( ! $noscript ) {
 			$noscript = $this->dom->createElement( Tag::NOSCRIPT );
 			$style    = $this->dom->createElement( Tag::STYLE );
-			$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
-			$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[1] ) );
-			$noscript->appendChild( $style );
+			if ( $style && $noscript ) {
+				$style->setAttribute( Attribute::AMP_BOILERPLATE, '' );
+				$style->appendChild( $this->dom->createTextNode( $this->get_boilerplate_stylesheets()[1] ) );
+				$noscript->appendChild( $style );
+			}
 		} elseif ( $noscript->parentNode ) {
 			$noscript->parentNode->removeChild( $noscript ); // So we can move it.
 		}
 
-		$this->dom->head->appendChild( $noscript );
+		if ( $noscript ) {
+			$this->dom->head->appendChild( $noscript );
+		}
 	}
 
 	/**
