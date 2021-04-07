@@ -19,8 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -33,19 +33,50 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
 } from '../../../../../design-system';
+import { useCommonObjectValue } from '../../shared';
+import { useLocalMedia } from '../../../../app/media';
+
+const DEFAULT_RESOURCE = {
+  id: null,
+  src: null,
+  poster: null,
+  mimeType: null,
+  isTranscoded: false,
+  alt: '',
+  title: '',
+};
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
 `;
 
-function VideoProcessingPanel({ selectedElements, pushUpdate }) {
+function VideoProcessingPanel({ selectedElements }) {
+  const resource = useCommonObjectValue(
+    selectedElements,
+    'resource',
+    DEFAULT_RESOURCE
+  );
   const isFeatureEnabled = useFeature('videoOptimization');
+
+  const { regenerateVideo } = useLocalMedia((state) => ({
+    regenerateVideo: state.actions.regenerateVideo,
+  }));
+
+  const handleUpdateVideo = useCallback(() => {
+    regenerateVideo({ resource });
+  }, [resource, regenerateVideo]);
+
   if (!isFeatureEnabled) {
     return null;
   }
   if (selectedElements.length > 1) {
     return null;
   }
+
+  if (resource.isTranscoded) {
+    return null;
+  }
+
   return (
     <SimplePanel
       name="VideoProcessing"
@@ -55,7 +86,7 @@ function VideoProcessingPanel({ selectedElements, pushUpdate }) {
         <Button
           type={BUTTON_TYPES.SECONDARY}
           size={BUTTON_SIZES.SMALL}
-          onClick={() => {}}
+          onClick={handleUpdateVideo}
         >
           {__('Reprocess Video', 'web-stories')}
         </Button>
@@ -66,7 +97,6 @@ function VideoProcessingPanel({ selectedElements, pushUpdate }) {
 
 VideoProcessingPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
-  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default VideoProcessingPanel;

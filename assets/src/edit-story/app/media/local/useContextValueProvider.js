@@ -25,6 +25,7 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
  */
 import { useAPI, useConfig } from '../..';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
+import useProcessVideo from '../utils/useProcessVideo';
 import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
@@ -157,6 +158,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
+  const { regenerateVideo } = useProcessVideo({
+    uploadVideoPoster,
+    uploadMedia,
+  });
+
   const generateMissingPosters = useCallback(
     ({ mimeType, posterId, id, src, local }) => {
       if (
@@ -193,6 +199,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadVideoPoster,
       deleteMediaElement,
       updateMediaElement,
+      regenerateVideo,
     },
   };
 }

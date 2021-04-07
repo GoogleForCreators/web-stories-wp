@@ -49,6 +49,7 @@ function getResourceFromAttachment(attachment) {
       generated: posterGenerated,
     },
     alt_text: alt,
+    media_source: mediaSource,
   } = attachment;
   return createResource({
     mimeType,
@@ -70,6 +71,7 @@ function getResourceFromAttachment(attachment) {
     title,
     sizes,
     local: false,
+    isTranscoded: 'video-optimization' === mediaSource,
   });
 }
 

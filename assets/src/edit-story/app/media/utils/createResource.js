@@ -58,6 +58,7 @@ import getTypeFromMime from './getTypeFromMime';
  * resource.
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
+ * @property {boolean} isTranscoded Whether the resource has been already transcoded.
  * @property {Object} sizes Object of image sizes.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  */
@@ -128,6 +129,7 @@ function createResource({
   output,
   local,
   isPlaceholder,
+  isTranscoded = false,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -148,6 +150,7 @@ function createResource({
     output,
     local,
     isPlaceholder,
+    isTranscoded,
   };
 }
 
