@@ -151,6 +151,7 @@ describe('useMedia3pApi', () => {
           lengthFormatted: undefined,
           local: false,
           isPlaceholder: false,
+          isTranscoded: false,
           mimeType: 'image/jpeg',
           output: undefined,
           poster: undefined,
