@@ -32,18 +32,17 @@ const Tab = styled.button`
   padding: 6px 16px;
   height: 32px;
   display: inline-block;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.family};
   background-color: ${({ active, theme }) =>
-    active ? theme.DEPRECATED_THEME.colors.fg.primary : 'transparent'};
+    active
+      ? theme.colors.interactiveBg.primaryNormal
+      : theme.colors.opacity.footprint};
   text-align: center;
   opacity: 0.86;
   cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${({ active, theme }) =>
-    active
-      ? theme.DEPRECATED_THEME.colors.fg.gray8
-      : theme.DEPRECATED_THEME.colors.fg.primary};
+    active ? theme.colors.bg.primary : theme.colors.fg.primary};
 
   &:last-child {
     margin-right: 0;
