@@ -34,7 +34,7 @@ const defaults = {
 
 export function EffectBackgroundPanAndZoom({
   element,
-  zoomDirection = SCALE_DIRECTION.SCALE_OUT,
+  zoomDirection = SCALE_DIRECTION.SCALE_IN,
   panDir = DIRECTION.RIGHT_TO_LEFT,
   duration = 1000,
   delay,
