@@ -138,7 +138,7 @@ describe('Zoom selector', () => {
     await fixture.events.sleep(300);
 
     const { scrollContainer, fullbleed } = fixture.editor.canvas.framesLayer;
-    // 200% still isn't big enough to force a vertical scrollbar
+    // 200% still isn't big enough to force a horizontal scrollbar
     expect(scrollContainer).toBeVerticallyScrollable();
     expect(scrollContainer).not.toBeHorizontallyScrollable();
 
