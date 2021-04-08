@@ -47,23 +47,29 @@ function PresetsHeader({
     ? __('Edit colors', 'web-stories')
     : __('Edit styles', 'web-stories');
   const getActions = () => {
+    const buttonProps = {
+      type: BUTTON_TYPES.TERTIARY,
+      size: BUTTON_SIZES.SMALL,
+      variant: BUTTON_VARIANTS.SQUARE,
+      onClick: (evt) => {
+        evt.stopPropagation();
+        setIsEditMode(!isEditMode);
+      },
+      isEditMode,
+    };
     return (
       <>
-        {hasPresets && (
+        {hasPresets && isEditMode && (
           <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.SQUARE}
-            onClick={(evt) => {
-              evt.stopPropagation();
-              setIsEditMode(!isEditMode);
-            }}
-            aria-label={
-              isEditMode ? __('Exit edit mode', 'web-stories') : editLabel
-            }
-            isEditMode={isEditMode}
+            {...buttonProps}
+            aria-label={__('Exit edit mode', 'web-stories')}
           >
-            {isEditMode ? __('Done', 'web-stories') : <Icons.Pencil />}
+            {__('Done', 'web-stories')}
+          </Button>
+        )}
+        {hasPresets && !isEditMode && (
+          <Button {...buttonProps} aria-label={editLabel}>
+            <Icons.Pencil />
           </Button>
         )}
         {!isEditMode && !isColor && (
