@@ -79,6 +79,7 @@ const LayerIconWrapper = styled.div`
 const LayerDescription = styled.div`
   position: relative;
   width: 100%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   margin-left: 0;
