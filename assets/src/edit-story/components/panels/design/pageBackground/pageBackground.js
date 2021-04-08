@@ -82,7 +82,11 @@ const Text = styled(DefaultText)`
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   const {
     state: { currentPage },
-    actions: { updateCurrentPageProperties },
+    actions: {
+      clearBackgroundElement,
+      setSelectedElementsById,
+      updateCurrentPageProperties,
+    },
   } = useStory();
 
   const updateBackgroundColor = useCallback(
@@ -91,10 +95,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     },
     [updateCurrentPageProperties]
   );
-
-  const { clearBackgroundElement } = useStory((state) => ({
-    clearBackgroundElement: state.actions.clearBackgroundElement,
-  }));
 
   const removeAsBackground = useCallback(() => {
     pushUpdate(
@@ -106,7 +106,15 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       true
     );
     clearBackgroundElement();
-  }, [pushUpdate, clearBackgroundElement]);
+    setSelectedElementsById({
+      elementIds: [currentPage.defaultBackgroundElement.id],
+    });
+  }, [
+    pushUpdate,
+    clearBackgroundElement,
+    setSelectedElementsById,
+    currentPage,
+  ]);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
