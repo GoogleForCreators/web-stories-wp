@@ -33,7 +33,7 @@ import Modal from '../';
 
 export default {
   title: 'Stories Editor/Components/Modal',
-  component: Button,
+  component: Modal,
 };
 
 export const _default = () => {

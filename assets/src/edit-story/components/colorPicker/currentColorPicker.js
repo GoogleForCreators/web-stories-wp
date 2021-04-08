@@ -124,7 +124,6 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
-  // const { eyeDropper } = useFeatures();
   return (
     <Container>
       <Body showOpacity={showOpacity}>

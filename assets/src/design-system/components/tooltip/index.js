@@ -90,7 +90,7 @@ function Tooltip({
   onBlur = () => {},
   forceAnchorRef = null,
   tooltipProps = null,
-  className,
+  className = null,
   ...props
 }) {
   const [shown, setShown] = useState(false);
