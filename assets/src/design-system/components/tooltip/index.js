@@ -32,7 +32,10 @@ import { RTL_PLACEMENT } from '../popup/constants';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
+// For how many milliseconds is a delayed tooltip waiting to appear?
 const DELAY_MS = 3000;
+// For how many milliseconds will triggering another delayed tooltip show instantly?
+const REPEAT_DELAYED_MS = 2000;
 
 const Wrapper = styled.div`
   position: relative;
@@ -60,6 +63,8 @@ const TooltipText = styled(Text)`
 `;
 
 const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
+
+let lastVisibleDelayedTooltip = null;
 
 /**
  *
@@ -136,7 +141,13 @@ function Tooltip({
         onPointerEnter(evt);
       };
       if (isDelayed) {
+        const now = performance.now();
+        if (now - lastVisibleDelayedTooltip < REPEAT_DELAYED_MS) {
+          // Show instantly
+          handle();
+        }
         clearTimeout(delay.current);
+        // Invoke in DELAY_MS
         delay.current = setTimeout(handle, DELAY_MS);
       } else {
         handle();
@@ -148,9 +159,12 @@ function Tooltip({
     (evt) => {
       setShown(false);
       onPointerLeave(evt);
-      clearTimeout(delay.current);
+      if (isDelayed) {
+        clearTimeout(delay.current);
+        lastVisibleDelayedTooltip = performance.now();
+      }
     },
-    [onPointerLeave]
+    [isDelayed, onPointerLeave]
   );
 
   return (
