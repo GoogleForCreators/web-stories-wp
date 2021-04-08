@@ -30,13 +30,10 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  themeHelpers,
+  Text,
+  THEME_CONSTANTS,
 } from '../../../design-system';
 import { Img } from './shared';
-
-const Content = styled.p`
-  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
-`;
 
 /**
  * @param {Object} props Component props.
@@ -74,12 +71,12 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
         </Button>
       }
     >
-      <Content>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {user.avatar && (
           <Img src={user.avatar} alt={user.name} height={48} width={48} />
         )}
         {dialogContent}
-      </Content>
+      </Text>
     </Dialog>
   );
 }
