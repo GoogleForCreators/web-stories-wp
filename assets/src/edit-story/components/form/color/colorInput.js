@@ -40,7 +40,7 @@ import {
 import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
-import { Tooltip as DefaultTooltip } from '../../tooltip';
+import DefaultTooltip from '../../tooltip';
 
 const Preview = styled.div`
   height: 36px;

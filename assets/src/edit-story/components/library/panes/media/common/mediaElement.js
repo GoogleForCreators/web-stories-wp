@@ -32,7 +32,7 @@ import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline
 import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
-import { Tooltip } from '../../../../tooltip';
+import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 
@@ -54,8 +54,7 @@ const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
+  background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
@@ -69,12 +68,7 @@ const gradientAnimation = keyframes`
 
 const UploadingIndicator = styled.div`
   height: 4px;
-  background: linear-gradient(
-    270deg,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 15%,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.secondary} 50%,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 85%
-  );
+  background: linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%);
   background-size: 400% 400%;
   position: absolute;
   bottom: 10px;

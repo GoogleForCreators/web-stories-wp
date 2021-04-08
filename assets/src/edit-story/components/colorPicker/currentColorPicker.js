@@ -22,18 +22,15 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
-import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Eyedropper } from '../button';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
 const CONTAINER_PADDING = 16;
-const EYEDROPPER_ICON_SIZE = 15;
 const HEADER_FOOTER_HEIGHT = 36;
 const BODY_HEIGHT = 156;
 const CONTROLS_HEIGHT = 28;
@@ -101,11 +98,6 @@ const HexValue = styled.div`
   width: ${HEX_WIDTH}px;
 `;
 
-const EyedropperButton = styled(Eyedropper)`
-  line-height: ${EYEDROPPER_ICON_SIZE}px;
-  grid-area: eyedropper;
-`;
-
 const Opacity = styled.div`
   grid-area: opacity;
   display: flex;
@@ -131,8 +123,6 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       onChange({ ...rgb, a: isNaN(value) ? 1 : parseInt(value) / 100 }),
     [rgb, onChange]
   );
-
-  const { eyeDropper } = useFeatures();
 
   return (
     <Container>
@@ -182,14 +172,6 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         )}
       </Body>
       <Footer>
-        {eyeDropper && (
-          <EyedropperButton
-            width={EYEDROPPER_ICON_SIZE}
-            height={EYEDROPPER_ICON_SIZE}
-            aria-label={__('Select color', 'web-stories')}
-            isDisabled
-          />
-        )}
         <HexValue>
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}

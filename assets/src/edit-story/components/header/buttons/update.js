@@ -32,7 +32,7 @@ import {
   useGlobalKeyDownEffect,
   Icons,
 } from '../../../../design-system';
-import { Tooltip } from '../../tooltip';
+import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {

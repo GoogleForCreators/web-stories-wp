@@ -27,6 +27,7 @@ import {
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -39,8 +40,16 @@ import {
   addUniqueEntry,
   getInset,
 } from '../utils';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import { List, Group, GroupLabel, NoResult } from './styled';
 import DefaultRenderer from './defaultRenderer';
+
+const StyledLabel = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
 
 function OptionList({
   keyword = '',
@@ -239,7 +248,7 @@ function OptionList({
             >
               {group.label && (
                 <GroupLabel id={groupLabelId} role="presentation">
-                  {group.label}
+                  <StyledLabel>{group.label}</StyledLabel>
                 </GroupLabel>
               )}
               {group.options.map((option, j) => {

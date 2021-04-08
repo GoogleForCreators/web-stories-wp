@@ -17,7 +17,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -48,11 +47,6 @@ export const Group = styled.ul`
 
 export const GroupLabel = styled.li`
   background: transparent;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
-  line-height: 14px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
   padding: 8px;
   margin: 0;
 `;
@@ -67,9 +61,10 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   margin: 6px 0 0 0;
   ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
   white-space: nowrap;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  line-height: 1;
   cursor: pointer;
   background-clip: padding-box;
+  color: ${({ theme }) => theme.colors.fg.primary};
 
   :first-of-type {
     margin-top: 0;
@@ -78,12 +73,11 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   :hover,
   :focus {
     background-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.1)};
+      theme.colors.interactiveBg.tertiaryHover};
+    border-radius: ${({ theme }) => theme.borders.radius.small};
   }
 
   :focus {
-    border: 2px solid
-      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
     outline: none;
   }
 `;
@@ -93,16 +87,15 @@ export const Selected = styled(Checkmark)`
   width: 8px;
   height: auto;
   margin-right: 8px;
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 export const NoResult = styled(Text).attrs(() => ({
-  forwardedAs: 'div',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 }))`
   width: 100%;
   padding: 13px 11px;
   margin: 0;
   text-align: center;
-  color: ${({ theme }) => theme.colors.fg.disable};
-  line-height: 14px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;

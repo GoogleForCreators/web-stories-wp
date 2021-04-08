@@ -42,7 +42,7 @@ export const _default = () => {
   };
   return (
     <LinkInput
-      description={__('Type an address to add a link', 'web-stories')}
+      hint={__('Type an address to add a link', 'web-stories')}
       onChange={onChange}
       onFocus={() => {}}
       value={value}
