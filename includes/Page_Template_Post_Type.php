@@ -26,15 +26,15 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Page_Template_Controller;
+use Google\Web_Stories\REST_API\Stories_Base_Controller;
 
 /**
  * Class Page_Template_Post_Type.
  */
 class Page_Template_Post_Type extends Service_Base {
 	/**
-	 * The slug of the page template post type. 
-	 * Limited to web-story-page as web-story-page-template goes over character limit. 
+	 * The slug of the page template post type.
+	 * Limited to web-story-page as web-story-page-template goes over character limit.
 	 *
 	 * @var string
 	 */
@@ -112,7 +112,7 @@ class Page_Template_Post_Type extends Service_Base {
 				'public'                => false,
 				'show_ui'               => false,
 				'show_in_rest'          => true,
-				'rest_controller_class' => Stories_Page_Template_Controller::class,
+				'rest_controller_class' => Stories_Base_Controller::class,
 			]
 		);
 	}
