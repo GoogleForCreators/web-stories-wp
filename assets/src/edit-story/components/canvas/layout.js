@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef, createRef } from 'react';
+import { forwardRef, createRef, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -330,15 +330,45 @@ const PageArea = forwardRef(function PageArea(
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
+    ...rest
   },
   ref
 ) {
-  const { hasVerticalOverflow, hasHorizontalOverflow } = useLayout(
-    ({ state: { hasVerticalOverflow, hasHorizontalOverflow } }) => ({
+  const {
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    zoomSetting,
+    scrollLeft,
+    scrollTop,
+  } = useLayout(
+    ({
+      state: {
+        hasVerticalOverflow,
+        hasHorizontalOverflow,
+        zoomSetting,
+        scrollLeft,
+        scrollTop,
+      },
+    }) => ({
       hasVerticalOverflow,
       hasHorizontalOverflow,
+      zoomSetting,
+      scrollLeft,
+      scrollTop,
     })
   );
+
+  // We need to ref scroll, because scroll changes should not update a non-controlled layer
+  const scroll = useRef();
+  scroll.current = { top: scrollTop, left: scrollLeft };
+  // If zoom setting changes for a non-controlled layer, make sure to reset actual scroll inside container
+  useEffect(() => {
+    if (!isControlled) {
+      fullbleedRef.current.scrollTop = scroll.current.top;
+      fullbleedRef.current.scrollLeft = scroll.current.left;
+    }
+  }, [isControlled, zoomSetting, fullbleedRef]);
+
   return (
     <PageAreaContainer
       showOverflow={showOverflow}
@@ -346,6 +376,8 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
       className={className}
+      data-scroll-container
+      {...rest}
     >
       <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}

@@ -22,6 +22,11 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import {
+  themeHelpers,
+  THEME_CONSTANTS,
+  Text,
+} from '../../../../../design-system';
 import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
 
 export const List = styled.div`
@@ -60,12 +65,8 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   position: relative;
   padding: 8px 16px;
   margin: 6px 0 0 0;
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
+  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
   white-space: nowrap;
-  line-height: 1;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   cursor: pointer;
   background-clip: padding-box;
@@ -94,12 +95,14 @@ export const Selected = styled(Checkmark)`
   margin-right: 8px;
 `;
 
-export const NoResult = styled.div`
+export const NoResult = styled(Text).attrs(() => ({
+  forwardedAs: 'div',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+}))`
   width: 100%;
   padding: 13px 11px;
   margin: 0;
   text-align: center;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.75)};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
+  color: ${({ theme }) => theme.colors.fg.disable};
   line-height: 14px;
 `;

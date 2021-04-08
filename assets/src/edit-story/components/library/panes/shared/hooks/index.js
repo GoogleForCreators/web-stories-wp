@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { useState, useEffect } from 'react';
-
-function useScrollOffset(zoomSetting) {
-  const [scrollOffset, setScrollOffset] = useState({ left: 0, top: 0 });
-  // Reset scroll offset whenever zoom setting changes
-  useEffect(() => {
-    setScrollOffset({ left: 0, top: 0 });
-  }, [zoomSetting]);
-  return {
-    state: {
-      scrollLeft: scrollOffset.left,
-      scrollTop: scrollOffset.top,
-    },
-    actions: { setScrollOffset },
-  };
-}
-
-export default useScrollOffset;
+export { default as useExpandAnimation } from './useExpandAnimation';
+export { default as useHandleRowVisibility } from './useHandleRowVisibility';

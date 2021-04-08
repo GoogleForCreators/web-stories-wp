@@ -34,10 +34,6 @@ exports[`TermsDialog should render 1`] = `
   color: #4F7ED9 !important;
 }
 
-.c0:focus {
-  color: #4F7ED9;
-}
-
 .c0.focus-visible,
 .c0[data-focus-visible-added] {
   outline: none;

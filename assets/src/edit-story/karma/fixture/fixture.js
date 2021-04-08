@@ -325,10 +325,10 @@ export class Fixture {
       { timeout: 5000 }
     );
 
-    // Check to see if Roboto font is loaded.
+    // Check to see if Google Sans font is loaded.
     await waitFor(async () => {
       const weights = ['400', '700'];
-      const font = '12px Roboto';
+      const font = '12px "Google Sans"';
       const fonts = weights.map((weight) => `${weight} ${font}`);
       await Promise.all(
         fonts.map((thisFont) => {
@@ -337,7 +337,7 @@ export class Fixture {
       );
       fonts.forEach((thisFont) => {
         if (!document.fonts.check(thisFont, '')) {
-          throw new Error('Not ready: Roboto font could not be loaded');
+          throw new Error('Not ready: Google Sans font could not be loaded');
         }
       });
     });
