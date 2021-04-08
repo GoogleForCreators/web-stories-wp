@@ -69,6 +69,17 @@ class TinyMCE extends Service_Base {
 	}
 
 	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_enqueue_scripts';
+	}
+
+	/**
 	 * Add web stories button in TinyMCE editor.
 	 *
 	 * @since 1.5.0
