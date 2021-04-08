@@ -108,8 +108,8 @@ class Page_Template_Post_Type extends Service_Base {
 					'excerpt',
 				],
 				'capabilities'          => $capabilities,
-				'public'                => true,
-				'show_ui'               => true,
+				'public'                => false,
+				'show_ui'               => false,
 				'show_in_rest'          => true,
 				'rest_controller_class' => Stories_Page_Template_Controller::class,
 			]
