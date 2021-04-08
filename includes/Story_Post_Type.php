@@ -322,6 +322,9 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_capabilities = array_filter( $all_capabilities, function ( $value ) {
+			return 'read' !== $value;
+		} );
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 		foreach ( $roles as $role ) {
@@ -489,12 +492,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		// Force media model to load.
 		wp_enqueue_media();
 
-		wp_register_style( 
-			'google-fonts', 
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap', 
-			[], 
-			WEBSTORIES_VERSION 
-		); 
+		wp_register_style(
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
@@ -503,7 +506,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] ); 
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
