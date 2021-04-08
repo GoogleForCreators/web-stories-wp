@@ -18,15 +18,6 @@
  */
 import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { Text, THEME_CONSTANTS } from '../../../design-system';
-
-export const Paragraph = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-});
-
 export const Img = styled.img`
   float: left;
   margin: 0px 10px 10px 0px;

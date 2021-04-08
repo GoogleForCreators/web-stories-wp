@@ -19,6 +19,7 @@
  */
 import { __, sprintf } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -29,8 +30,12 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  themeHelpers,
 } from '../../../design-system';
-import { Img, Paragraph } from './shared';
+import { Img } from './shared';
+const Content = styled.div`
+  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
+`;
 
 /**
  * @param {Object} props Component props.
@@ -68,12 +73,12 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
         </Button>
       }
     >
-      <Paragraph>
+      <Content>
         {user.avatar && (
           <Img src={user.avatar} alt={user.name} height={48} width={48} />
         )}
         {dialogContent}
-      </Paragraph>
+      </Content>
     </Dialog>
   );
 }
