@@ -322,9 +322,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
-		$all_capabilities = array_filter( $all_capabilities, function ( $value ) {
-			return 'read' !== $value;
-		} );
+		$all_capabilities = array_filter(
+			$all_capabilities,
+			function ( $value ) {
+				return 'read' !== $value;
+			} 
+		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 		foreach ( $roles as $role ) {
