@@ -443,6 +443,12 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_capabilities = array_filter(
+			$all_capabilities,
+			function ( $value ) {
+				return 'read' !== $value;
+			}
+		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 
@@ -450,6 +456,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 			foreach ( $all_capabilities as $cap ) {
 				$this->assertFalse( $role->has_cap( $cap ) );
 			}
+			$this->assertTrue( $role->has_cap( 'read' ) );
 		}
 		// Add back roles after test.
 		$story_post_type->add_caps_to_roles();
