@@ -14,18 +14,30 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import { default as wellbeingArrowDark } from './wellbeingArrowDark';
-import { default as wellbeingArrowLight } from './wellbeingArrowLight';
-import { default as wellbeingCTA } from './wellbeingCTA';
+import PropTypes from 'prop-types';
+
+const WellbeingArrow = ({ style }) => (
+  <svg
+    style={style}
+    viewBox="0 0 205 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M.333008 6.49949L204 6.49947M199.193.875L204 6.7086l-4.807 5.8336"
+      stroke="#fff"
+      strokeWidth="1.09867"
+    />
+  </svg>
+);
+
+WellbeingArrow.propTypes = {
+  style: PropTypes.object,
+};
 
 export default {
-  sample,
-  beautyHeart,
-  wellbeingArrowDark,
-  wellbeingArrowLight,
-  wellbeingCTA,
+  aspectRatio: 205 / 13,
+  svg: WellbeingArrow,
 };
