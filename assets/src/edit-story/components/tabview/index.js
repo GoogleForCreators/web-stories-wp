@@ -33,6 +33,7 @@ import {
   ThemeGlobals,
 } from '../../../design-system';
 import { useConfig } from '../../app';
+import Tooltip from '../tooltip';
 
 const ALERT_ICON_SIZE = 28;
 
@@ -52,7 +53,7 @@ const Tabs = styled.ul.attrs({
   border-bottom: 1px solid ${({ theme }) => theme.colors.divider.secondary};
 `;
 
-const Tab = styled.li.attrs(({ isActive }) => ({
+const TabElement = styled.li.attrs(({ isActive }) => ({
   tabIndex: isActive ? 0 : -1,
   role: 'tab',
   'aria-selected': isActive,
@@ -149,6 +150,18 @@ const TabText = styled(Headline).attrs({
 
 const noop = () => {};
 
+function Tab({ children, tooltip = null, ...rest }) {
+  const tab = <TabElement {...rest}>{children}</TabElement>;
+  if (tooltip !== null) {
+    return (
+      <Tooltip title={tooltip} isDelayed>
+        {tab}
+      </Tooltip>
+    );
+  }
+  return tab;
+}
+
 function TabView({
   getTabId = (id) => id,
   getAriaControlsId,
@@ -219,7 +232,7 @@ function TabView({
 
   return (
     <Tabs aria-label={label} ref={ref} {...rest}>
-      {tabs.map(({ id, title, icon: Icon }) => (
+      {tabs.map(({ id, title, tooltip, icon: Icon }) => (
         <Tab
           key={id}
           ref={(tabRef) => (tabRefs.current[id] = tabRef)}
@@ -228,6 +241,7 @@ function TabView({
           aria-controls={getAriaControlsId ? getAriaControlsId(id) : null}
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
+          tooltip={tooltip}
         >
           {Boolean(title) && <TabText>{title}</TabText>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}

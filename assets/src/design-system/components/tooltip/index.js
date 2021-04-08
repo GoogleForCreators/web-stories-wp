@@ -32,6 +32,7 @@ import { RTL_PLACEMENT } from '../popup/constants';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
+const DELAY_MS = 3000;
 
 const Wrapper = styled.div`
   position: relative;
@@ -76,6 +77,7 @@ const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
  * @param {string} props.title Text to display in tooltip
  * @param {Object} props.tooltipProps Props for <Tooltip /> component
  * @param {string} props.className Classname.
+ * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
@@ -88,6 +90,7 @@ function Tooltip({
   onPointerLeave = () => {},
   onFocus = () => {},
   onBlur = () => {},
+  isDelayed = false,
   forceAnchorRef = null,
   tooltipProps = null,
   className = null,
@@ -125,17 +128,36 @@ function Tooltip({
     setArrowDelta(delta);
   }, []);
 
+  const delay = useRef();
+  const onHover = useCallback(
+    (evt) => {
+      const handle = () => {
+        setShown(true);
+        onPointerEnter(evt);
+      };
+      if (isDelayed) {
+        clearTimeout(delay.current);
+        delay.current = setTimeout(handle, DELAY_MS);
+      } else {
+        handle();
+      }
+    },
+    [isDelayed, onPointerEnter]
+  );
+  const onHoverOut = useCallback(
+    (evt) => {
+      setShown(false);
+      onPointerLeave(evt);
+      clearTimeout(delay.current);
+    },
+    [onPointerLeave]
+  );
+
   return (
     <>
       <Wrapper
-        onPointerEnter={(e) => {
-          setShown(true);
-          onPointerEnter(e);
-        }}
-        onPointerLeave={(e) => {
-          setShown(false);
-          onPointerLeave(e);
-        }}
+        onPointerEnter={onHover}
+        onPointerLeave={onHoverOut}
         onFocus={(e) => {
           setShown(true);
           onFocus(e);
@@ -199,6 +221,7 @@ const TooltipPropTypes = {
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,
+  isDelayed: PropTypes.bool,
 };
 Tooltip.propTypes = TooltipPropTypes;
 

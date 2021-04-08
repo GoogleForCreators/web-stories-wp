@@ -22,6 +22,7 @@ import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -35,13 +36,39 @@ import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageLayoutsPane, PageLayoutsIcon } from './panes/pageLayouts';
 import { getPaneId, Pane as SharedPane } from './panes/shared';
 
-const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
-const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
-const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
-const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
-const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
+const MEDIA = {
+  icon: MediaIcon,
+  tooltip: __('WordPress media', 'web-stories'),
+  Pane: MediaPane,
+  id: 'media',
+};
+const MEDIA3P = {
+  icon: Media3pIcon,
+  tooltip: __('Thirdparty media', 'web-stories'),
+  Pane: Media3pPane,
+  id: 'media3p',
+};
+const TEXT = {
+  icon: TextIcon,
+  tooltip: __('Text', 'web-stories'),
+  Pane: TextPane,
+  id: 'text',
+};
+const SHAPES = {
+  icon: ShapesIcon,
+  tooltip: __('Shapes', 'web-stories'),
+  Pane: ShapesPane,
+  id: 'shapes',
+};
+const ELEMS = {
+  icon: ElementsIcon,
+  tooltip: __('Elements', 'web-stories'),
+  Pane: ElementsPane,
+  id: 'elements',
+};
 const PAGE_LAYOUTS = {
   icon: PageLayoutsIcon,
+  tooltip: __('Page templates', 'web-stories'),
   Pane: PageLayoutsPane,
   id: 'pageLayouts',
 };
@@ -68,15 +95,15 @@ function LibraryProvider({ children }) {
     () =>
       [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_LAYOUTS]
         .filter(Boolean)
-        .map(({ icon, Pane, id }) => {
+        .map(({ Pane, id, ...rest }) => {
           const isLazyTab = LAZY_TABS.includes(id);
           const isActiveTab = tab === id;
           const hasBeenRendered = renderedTabs.current[id];
           const shouldRenderPane = !isLazyTab || isActiveTab || hasBeenRendered;
           return {
             id,
-            icon,
             Pane: shouldRenderPane ? Pane : renderEmptyPane(id),
+            ...rest,
           };
         }),
     [tab, showElementsTab, renderEmptyPane]
