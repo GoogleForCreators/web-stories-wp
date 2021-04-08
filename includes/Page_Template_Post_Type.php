@@ -33,7 +33,8 @@ use Google\Web_Stories\REST_API\Stories_Page_Template_Controller;
  */
 class Page_Template_Post_Type extends Service_Base {
 	/**
-	 * The slug of the page template post type.
+	 * The slug of the page template post type. 
+	 * Limited to web-story-page as web-story-page-template goes over character limit. 
 	 *
 	 * @var string
 	 */
