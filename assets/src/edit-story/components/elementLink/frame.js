@@ -63,7 +63,7 @@ const LinkDesc = styled.span`
   overflow: hidden;
 `;
 
-function WithLink({ element, children, active }) {
+function WithLink({ element, active, children, anchorRef }) {
   const link = getLinkFromElement(element);
 
   const tooltipContent =
@@ -75,6 +75,7 @@ function WithLink({ element, children, active }) {
     ) : null;
   return (
     <StyledTooltip
+      forceAnchorRef={anchorRef}
       placement={TOOLTIP_PLACEMENT.TOP_START}
       title={tooltipContent}
     >
@@ -85,6 +86,7 @@ function WithLink({ element, children, active }) {
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  anchorRef: PropTypes.object,
   active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
 };
