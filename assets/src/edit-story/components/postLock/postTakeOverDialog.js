@@ -33,7 +33,8 @@ import {
   themeHelpers,
 } from '../../../design-system';
 import { Img } from './shared';
-const Content = styled.div`
+
+const Content = styled.p`
   ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
 `;
 
