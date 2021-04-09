@@ -78,20 +78,25 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return $prepared_post;
 		}
 
-		// Ensure that content and story_data are updated together.
-		if (
-			( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
-			( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
-		) {
-			return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
-		}
+		$schema = $this->get_item_schema();
+		// Post content.
+		if ( ! empty( $schema['properties']['content'] ) && isset( $request['content'] ) ) {
 
-		if ( isset( $request['content'] ) ) {
-			$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
+			// Ensure that content and story_data are updated together.
+			if (
+				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
+				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
+			) {
+				return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
+			}
+
+			if ( isset( $request['content'] ) ) {
+				$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
+			}
 		}
 
 		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
-		if ( isset( $request['story_data'] ) ) {
+		if ( ! empty( $schema['properties']['story_data'] ) && isset( $request['story_data'] ) ) {
 			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
 		}
 
