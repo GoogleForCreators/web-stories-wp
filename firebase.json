@@ -18,20 +18,7 @@
         ]
       },
       {
-        "source": "static/**/*.@(jpg|jpeg|gif|png)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "max-age=604800"
-          },
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          }
-        ]
-      },
-      {
-        "source": "static/**/*.@(js|wasm)",
+        "source": "static/**/*.@(jpg|jpeg|gif|png|mp4|webm|js|wasm)",
         "headers": [
           {
             "key": "Cache-Control",
