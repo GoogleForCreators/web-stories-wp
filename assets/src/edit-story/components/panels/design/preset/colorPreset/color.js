@@ -31,7 +31,7 @@ import {
 } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { areAllType } from '../utils';
-import { Tooltip } from '../../../../tooltip';
+import Tooltip from '../../../../tooltip';
 
 function Color({ color, i, activeIndex, handleOnClick, isEditMode, isLocal }) {
   const { currentPage, selectedElements } = useStory(

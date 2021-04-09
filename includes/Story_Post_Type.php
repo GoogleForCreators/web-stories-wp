@@ -322,6 +322,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_capabilities = array_filter(
+			$all_capabilities,
+			function ( $value ) {
+				return 'read' !== $value;
+			} 
+		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 		foreach ( $roles as $role ) {
@@ -490,8 +496,8 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		wp_enqueue_media();
 
 		wp_register_style(
-			'roboto',
-			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
 			[],
 			WEBSTORIES_VERSION
 		);
@@ -503,7 +509,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,

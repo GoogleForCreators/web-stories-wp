@@ -40,7 +40,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../../../design-system';
-import { Tooltip } from '../../tooltip';
+import Tooltip from '../../tooltip';
 
 const Button = styled(DefaultButton)`
   padding: 4px 8px;
