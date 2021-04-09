@@ -29,11 +29,13 @@ class TinyMCE extends \WP_UnitTestCase {
 	public function test_register() {
 		$tinymce = $this->createPartialMock(
 			\Google\Web_Stories\TinyMCE::class,
-			[ 'is_block_editor' ]
+			[ 'is_block_editor', 'is_edit_screen' ]
 		);
 
 		$tinymce->method( 'is_block_editor' )
-				->willReturn( true );
+				->willReturn( false );
+		$tinymce->method( 'is_edit_screen' )
+		        ->willReturn( false );
 		$tinymce->register();
 
 		$this->assertSame( 10, has_filter( 'mce_buttons', [ $tinymce, 'tinymce_web_stories_button' ] ) );
