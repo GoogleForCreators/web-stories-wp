@@ -52,7 +52,7 @@ const Container = withOverlay(styled.div`
 const Lasso = styled.div`
   display: none;
   position: absolute;
-  border: 1px dotted ${({ theme }) => theme.DEPRECATED_THEME.colors.selection};
+  border: 1px dotted ${({ theme }) => theme.colors.border.selection};
   z-index: 1;
 `;
 

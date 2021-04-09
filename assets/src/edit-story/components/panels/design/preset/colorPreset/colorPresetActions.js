@@ -46,12 +46,12 @@ const ActionsWrapper = styled.div`
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
+  color: ${({ theme }) => theme.colors.fg.secondary};
   cursor: pointer;
   padding: 0;
   line-height: 20px;
   svg {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    color: ${({ theme }) => theme.colors.fg.secondary};
     width: 32px;
     height: 32px;
   }
@@ -60,10 +60,10 @@ const AddColorPreset = styled.button`
 const CtaWrapper = styled.div`
   font-size: 14px;
   line-height: 32px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
 
   svg {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    color: ${({ theme }) => theme.colors.standard.white};
     width: 32px;
     height: 32px;
     vertical-align: bottom;
@@ -103,7 +103,7 @@ const ButtonWrapper = styled.div`
 
 const Strong = styled.span`
   font-size: 24px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.standard.white};
 `;
 
 /**

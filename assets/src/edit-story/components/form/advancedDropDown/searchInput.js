@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { forwardRef, useCallback } from 'react';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
@@ -53,8 +52,8 @@ const inputIconStyles = css`
   > svg {
     height: 100%;
     width: auto;
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-    fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    color: ${({ theme }) => theme.colors.fg.primary};
+    fill: ${({ theme }) => theme.colors.fg.primary};
   }
 `;
 
@@ -82,12 +81,13 @@ const Input = styled.input.attrs({
 })`
   width: 100%;
   padding: 6px 20px 6px 30px;
-  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.border.radius.default};
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.input};
-  border: 1px solid
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.24)};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background: ${({ theme }) => theme.colors.bg.primary};
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultActive};
+  color: ${({ theme }) => theme.colors.fg.primary};
+  ${themeHelpers.expandTextPreset(
+    ({ paragraph }, { SMALL }) => paragraph[SMALL]
+  )}
 
   &::-ms-clear {
     display: none;
@@ -101,8 +101,7 @@ const Input = styled.input.attrs({
   }
 
   &:focus {
-    border-color: ${({ theme }) =>
-      theme.DEPRECATED_THEME.colors.accent.secondary};
+    border-color: ${({ theme }) => theme.colors.border.focus};
   }
 `;
 

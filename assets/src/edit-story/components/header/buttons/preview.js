@@ -33,7 +33,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '../../../../design-system';
-import { Tooltip } from '../../tooltip';
+import Tooltip from '../../tooltip';
 
 const PREVIEW_TARGET = 'story-preview';
 
