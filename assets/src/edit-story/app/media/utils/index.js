@@ -23,5 +23,4 @@ export { default as getResourceFromMedia3p } from './getResourceFromMedia3p';
 export { default as getTypeFromMime } from './getTypeFromMime';
 export { default as useMediaUploadQueue } from './useMediaUploadQueue';
 export { default as useUploadVideoFrame } from './useUploadVideoFrame';
-export { default as useProcessVideo } from './useProcessVideo';
 export { default as preloadImage } from './preloadImage';
