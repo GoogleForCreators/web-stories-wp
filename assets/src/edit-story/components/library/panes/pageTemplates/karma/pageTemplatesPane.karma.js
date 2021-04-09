@@ -123,7 +123,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
     await fixture.snapshot('applied page template');
   });
 
-  it('should confirm and apply layout to a page with changes', async () => {
+  it('should confirm and apply template to a page with changes', async () => {
     // Insert element to make the page have changes
     const insertElement = await fixture.renderHook(() => useInsertElement());
     await fixture.act(() =>

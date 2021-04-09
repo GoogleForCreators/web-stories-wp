@@ -132,7 +132,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 **Release Date:** January 19, 2021.
 
 * New feature: support for monetization through Google AdSense and Google Ad Manager.
-* New feature: page layouts.
+* New feature: page templates.
 * UI improvements in the editor
 * Bug fixes and performance improvements.
 
