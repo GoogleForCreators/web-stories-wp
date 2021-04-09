@@ -32,6 +32,7 @@ use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Traits\Screen;
 use WP_Post;
 use WP_Screen;
 
@@ -42,6 +43,7 @@ use WP_Screen;
  */
 class AMP extends Service_Base {
 	use Publisher;
+	use Screen;
 
 	/**
 	 * Slug of the AMP validated URL post type.
@@ -236,7 +238,7 @@ class AMP extends Service_Base {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
 		}
 
-		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$current_screen = $this->get_current_screen();
 
 		if ( $current_screen instanceof WP_Screen ) {
 			$current_post = get_post();

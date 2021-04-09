@@ -29,6 +29,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
 /**
@@ -39,6 +40,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
 class TinyMCE extends Service_Base {
 	use Stories_Script_Data;
 	use Assets;
+	use Screen;
 
 	/**
 	 * Web Stories tinymce script handle.
@@ -55,7 +57,7 @@ class TinyMCE extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( $this->is_block_editor() ) {
+		if ( $this->is_block_editor() || $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -172,22 +174,5 @@ class TinyMCE extends Service_Base {
 		?>
 		<div id="web-stories-tinymce"></div>
 		<?php
-	}
-
-	/**
-	 * Check if current screen is block editor.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return bool
-	 */
-	private function is_block_editor() {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-
-		if ( ( $screen instanceof \WP_Screen ) ) {
-			return $screen->is_block_editor();
-		}
-
-		return false;
 	}
 }

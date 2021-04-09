@@ -34,11 +34,11 @@ use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Role;
 use WP_Post_Type;
-use WP_Screen;
 
 /**
  * Class Story_Post_Type.
@@ -53,6 +53,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	use Publisher;
 	use Types;
 	use Assets;
+	use Screen;
 
 	/**
 	 * The slug of the stories post type.
@@ -471,13 +472,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -489,12 +484,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		// Force media model to load.
 		wp_enqueue_media();
 
-		wp_register_style( 
-			'google-fonts', 
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap', 
-			[], 
-			WEBSTORIES_VERSION 
-		); 
+		wp_register_style(
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
@@ -503,7 +498,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] ); 
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
