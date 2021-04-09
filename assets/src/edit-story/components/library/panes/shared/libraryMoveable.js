@@ -292,7 +292,6 @@ function LibraryMoveable({
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
         isDragging={isDragging || hover}
-        onClick={onClick}
       />
       {(isDragging || active || hover) && (
         <>
