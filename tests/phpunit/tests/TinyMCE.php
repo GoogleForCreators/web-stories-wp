@@ -95,6 +95,7 @@ class TinyMCE extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::is_block_editor
+	 * @covers \Google\Web_Stories\Traits\Screen::is_block_editor
 	 */
 	public function test_is_block_editor() {
 		$tinymce = new \Google\Web_Stories\TinyMCE();
