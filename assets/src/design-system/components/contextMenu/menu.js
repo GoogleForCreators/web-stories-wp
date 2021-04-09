@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
 import { useKeyDownEffect } from '../keyboard';
-import { KEYS } from '../../utils/constants';
+import { KEYS } from '../../utils';
 import { MenuItem, MenuItemProps } from './menuItem';
 
 const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
@@ -121,7 +121,7 @@ const MenuList = styled.ul(
   `
 );
 
-const Menu = ({ items, isOpen, ...props }) => {
+const Menu = ({ items, isOpen, onDismiss, ...props }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
   const menuWasAlreadyOpen = useRef(isOpen);
@@ -221,6 +221,7 @@ const Menu = ({ items, isOpen, ...props }) => {
               focusedIndex={focusedIndex}
               index={index}
               onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
+              onDismiss={onDismiss}
               {...itemProps}
             />
           </li>
@@ -238,6 +239,7 @@ export const MenuPropTypes = {
     }).isRequired
   ),
   isOpen: PropTypes.bool,
+  onDismiss: PropTypes.func,
 };
 
 Menu.propTypes = MenuPropTypes;

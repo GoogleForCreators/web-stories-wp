@@ -24,6 +24,7 @@ import styled, { css } from 'styled-components';
  */
 import { BEZIER } from '../../../animation/constants';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../utils/directions';
+import Mask from './mask';
 import Menu, { MenuPropTypes } from './menu';
 import { Popover, Shadow } from './styled';
 
@@ -292,9 +293,12 @@ AnimationContainer.propTypes = {
 };
 
 const AnimatedContextMenu = ({ items, ...props }) => (
-  <AnimationContainer isOpen={props.isOpen}>
-    <Menu items={items} {...props} />
-  </AnimationContainer>
+  <>
+    {props.isOpen && <Mask onDismiss={props.onDismiss} />}
+    <AnimationContainer isOpen={props.isOpen}>
+      <Menu items={items} {...props} />
+    </AnimationContainer>
+  </>
 );
 AnimatedContextMenu.propTypes = {
   ...MenuPropTypes,

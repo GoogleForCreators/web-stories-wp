@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -28,7 +28,6 @@ import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
-import useFocusOut from '../../utils/useFocusOut';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 import { AnimatedContextMenu, MenuItemProps } from '../../../design-system';
 
@@ -81,19 +80,14 @@ export default function StoryMenu({
   itemActive,
   tabIndex,
 }) {
-  const containerRef = useRef(null);
-
-  const handleFocusOut = useCallback(() => {
-    if (contextMenuId === story.id) {
-      onMoreButtonSelected(-1);
-    }
-  }, [contextMenuId, onMoreButtonSelected, story.id]);
-  useFocusOut(containerRef, handleFocusOut, [contextMenuId]);
-
   const isPopoverMenuOpen = contextMenuId === story.id;
 
+  const handleDismiss = useCallback(() => onMoreButtonSelected(-1), [
+    onMoreButtonSelected,
+  ]);
+
   return (
-    <MenuContainer ref={containerRef} verticalAlign={verticalAlign}>
+    <MenuContainer verticalAlign={verticalAlign}>
       <MoreVerticalButton
         tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
@@ -103,7 +97,11 @@ export default function StoryMenu({
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
-      <AnimatedContextMenu isOpen={isPopoverMenuOpen} items={menuItems} />
+      <AnimatedContextMenu
+        isOpen={isPopoverMenuOpen}
+        items={menuItems}
+        onDismiss={handleDismiss}
+      />
     </MenuContainer>
   );
 }

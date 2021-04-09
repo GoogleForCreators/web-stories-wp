@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -26,6 +26,7 @@ import { Button } from '../button';
 import { Link } from '../typography/link';
 import { Text } from '../typography/text';
 import { THEME_CONSTANTS } from '../../theme';
+import { noop } from '../../utils';
 
 const ItemText = styled(Text)`
   width: 200px;
@@ -47,10 +48,22 @@ export const MenuItem = ({
   label,
   newTab,
   onClick,
+  onDismiss = noop,
   onFocus,
   shortcut,
 }) => {
   const itemRef = useRef(null);
+
+  /**
+   * Close the menu after clicking.
+   */
+  const handleClick = useCallback(
+    (ev) => {
+      onClick(ev);
+      onDismiss();
+    },
+    [onClick, onDismiss]
+  );
 
   useEffect(() => {
     if (focusedIndex === index) {
@@ -93,7 +106,7 @@ export const MenuItem = ({
         ref={itemRef}
         aria-label={label}
         href={href}
-        onClick={onClick}
+        onClick={handleClick}
         onFocus={onFocus}
         {...newTabProps}
       >
@@ -108,23 +121,7 @@ export const MenuItem = ({
         ref={itemRef}
         aria-label={label}
         disabled={disabled}
-        /* Weird bug fix - Firefox bug:
-
-        Clicking the menu button in the story grid does not
-        set the `relatedTarget` to be the first element in the list.
-        The StoryGrid remains as the `relatedTarget`.
-
-        The `useFocusOut` util checks to see if the `relatedTarget`
-        is within the node where the event listeners are attached.
-
-        In firefox - the relatedTarget didn't change, so mouseDown on the menu
-        calls the focusout event handler for the container.
-
-        Fix: set click event handler on `mouseDown`. This allows the click event
-        handler to be called before the menu closes since the `focusout` event runs
-        before the user could `mouseUp`.
-        */
-        onMouseDown={onClick}
+        onClick={handleClick}
         onFocus={onFocus}
       >
         {textContent}
@@ -183,6 +180,7 @@ export const MenuItemProps = {
   label: PropTypes.string.isRequired,
   newTab: PropTypes.bool,
   onClick: PropTypes.func,
+  onDismiss: PropTypes.func,
   onFocus: PropTypes.func,
   shortcut: PropTypes.string,
 };

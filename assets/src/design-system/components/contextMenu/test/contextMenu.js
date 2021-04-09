@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { act, fireEvent } from '@testing-library/react';
+/**
  * Internal dependencies
  */
 import { ContextMenu } from '..';
@@ -42,6 +46,20 @@ describe('ContextMenu', () => {
 
     expect(getByRole('button')).toBeInTheDocument();
     expect(getByRole('link')).toBeInTheDocument();
+  });
+
+  it('clicking away from context menu should call onDismiss', () => {
+    const onDismiss = jest.fn();
+    const { getByTestId } = renderWithProviders(
+      <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+    );
+
+    const mask = getByTestId('context-menu-mask');
+    act(() => {
+      fireEvent.click(mask);
+    });
+
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -74,6 +92,21 @@ describe('MenuItem', () => {
     expect(getByText('my label')).toBeInTheDocument();
     expect(queryByRole('button')).not.toBeInTheDocument();
     expect(queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('should call onClick and onDismiss when a clickable item is clicked', () => {
+    const onClick = jest.fn();
+    const onDismiss = jest.fn();
+    const { getByRole } = renderWithProviders(
+      <MenuItem label="my label" onClick={onClick} onDismiss={onDismiss} />
+    );
+
+    const button = getByRole('button');
+
+    fireEvent.click(button);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
 
