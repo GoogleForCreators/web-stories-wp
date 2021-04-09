@@ -35,6 +35,9 @@ import useUploadMedia from '../../useUploadMedia';
 jest.mock('../../utils/useUploadVideoFrame');
 import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 
+jest.mock('../../utils/useProcessVideo');
+import useProcessVideo from '../../utils/useProcessVideo';
+
 // Media List representation in state based on GET_MEDIA_RESPONSE_BODY.
 const MEDIA_LIST_FROM_GET_MEDIA = [
   {
@@ -52,6 +55,8 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     title: 'IMAGE',
     alt: 'IMAGE',
     local: false,
+    isPlaceholder: undefined,
+    isTranscoded: false,
     sizes: {
       medium: {
         file: 'IMAGE-146x300.jpg',
@@ -208,6 +213,11 @@ describe('useContextValueProvider', () => {
       uploadVideoFrame: jest.fn(),
     };
     useUploadVideoFrame.mockImplementation(() => useUploadVideoFrameResult);
+
+    const useProcessVideoResult = {
+      regenerateVideo: jest.fn(),
+    };
+    useProcessVideo.mockImplementation(() => useProcessVideoResult);
   });
 
   it('resetWithFetch calls getMedia with cacheBust:true and then fetchMediaSuccess', async () => {
