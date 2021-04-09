@@ -410,7 +410,7 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @miina
-			 * Issue: 7055
+			 * Issue: #7055
 			 * Creation date: 2021-04-09
 			 */
 			[
