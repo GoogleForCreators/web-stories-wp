@@ -58,7 +58,7 @@ trait Screen {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param WP_Screen|False $screen Screen value, defaults to null.
+	 * @param WP_Screen|false $screen Screen value, defaults to null.
 	 *
 	 * @return bool
 	 */
@@ -83,10 +83,14 @@ trait Screen {
 	 *
 	 * @since 1.6.0
 	 *
+	 * @param WP_Screen|false $screen Screen value, defaults to null.
+	 *
 	 * @return bool
 	 */
-	protected function is_block_editor() {
-		$screen = $this->get_current_screen();
+	protected function is_block_editor( $screen = null ) {
+		if ( is_null( $screen ) ) {
+			$screen = $this->get_current_screen();
+		}
 		if ( ! $screen ) {
 			return false;
 		}
