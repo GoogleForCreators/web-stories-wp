@@ -34,7 +34,7 @@ import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
-import { Tooltip } from '../../../tooltip';
+import Tooltip from '../../../tooltip';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
