@@ -80,7 +80,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		$schema = $this->get_item_schema();
 		// Post content.
-		if ( ! empty( $schema['properties']['content'] ) && isset( $request['content'] ) ) {
+		if ( ! empty( $schema['properties']['content'] ) ) {
 
 			// Ensure that content and story_data are updated together.
 			if (
