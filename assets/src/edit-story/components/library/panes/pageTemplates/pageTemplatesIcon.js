@@ -15,7 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+
+/**
  * Internal dependencies
  */
-export { default as PageLayoutsPane } from './pageLayoutsPane';
-export { default as PageLayoutsIcon } from './pageLayoutsIcon';
+import { Icons } from '../../../../../design-system';
+
+function PageLayoutsIcon() {
+  return (
+    <Icons.Box4Alternate
+      aria-label={__('Page templates library', 'web-stories')}
+    />
+  );
+}
+
+export default PageLayoutsIcon;

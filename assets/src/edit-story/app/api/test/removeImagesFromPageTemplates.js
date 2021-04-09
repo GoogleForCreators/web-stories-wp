@@ -21,7 +21,7 @@ import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies
  */
-import removeImagesFromPageLayouts from '../removeImagesFromPageLayouts';
+import removeImagesFromPageLayouts from '../removeImagesFromPageTemplates';
 
 jest.mock('@web-stories-wp/templates');
 

@@ -17,6 +17,5 @@
 /**
  * Internal dependencies
  */
-import { getPaneId } from '../shared';
-
-export default getPaneId('pageLayouts');
+export { default as PageTemplatesPane } from './pageTemplatesPane';
+export { default as PageTemplatesIcon } from './pageTemplatesIcon';

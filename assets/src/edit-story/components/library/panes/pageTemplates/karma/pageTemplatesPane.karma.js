@@ -28,7 +28,7 @@ import { formattedTemplatesArray } from '../../../../../../dashboard/storybookUt
 import objectWithout from '../../../../../utils/objectWithout';
 import useInsertElement from '../../../../../components/canvas/useInsertElement';
 
-const expectPageLayoutEqual = (currentPage, template) => {
+const expectPageTemplateEqual = (currentPage, template) => {
   expect(currentPage.id).not.toEqual(template.id);
   expect(currentPage.elements.length).toEqual(template.elements.length);
   template.elements.forEach((element, index) => {
@@ -41,7 +41,7 @@ const expectPageLayoutEqual = (currentPage, template) => {
   );
 };
 
-describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
+describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
   let fixture;
   let originalTimeout;
 
@@ -57,16 +57,16 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
     fixture.restore();
   });
 
-  it('should apply page layout to an empty page', async () => {
-    await fixture.editor.library.pageLayoutsTab.click();
+  it('should apply page template to an empty page', async () => {
+    await fixture.editor.library.pageTemplatesTab.click();
 
     await waitFor(() =>
       expect(
-        fixture.editor.library.pageLayoutsPane.pageLayouts.length
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBeTruthy()
     );
     await fixture.events.click(
-      fixture.editor.library.pageLayoutsPane.pageLayout('Cooking Cover')
+      fixture.editor.library.pageTemplatesPane.pageTemplate('Cooking Cover')
     );
 
     // check that all elements have been applied
@@ -77,32 +77,32 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
       (t) => t.title === 'Cooking'
     );
     const coverPage = cookingTemplate.pages.find(
-      (p) => p.pageLayoutType === 'cover'
+      (p) => p.pageTemplateType === 'cover'
     );
-    expectPageLayoutEqual(currentPage, coverPage);
+    expectPageTemplateEqual(currentPage, coverPage);
 
-    await fixture.snapshot('applied page layout');
+    await fixture.snapshot('applied page template');
   });
 
-  it('should apply page layout to an empty page using keyboard', async () => {
-    await fixture.editor.library.pageLayoutsTab.click();
+  it('should apply page template to an empty page using keyboard', async () => {
+    await fixture.editor.library.pageTemplatesTab.click();
 
     await waitFor(() =>
       expect(
-        fixture.editor.library.pageLayoutsPane.pageLayouts.length
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBeTruthy()
     );
 
-    const { pageLayouts } = fixture.editor.library.pageLayoutsPane;
+    const { pageTemplates } = fixture.editor.library.pageTemplatesPane;
     await fixture.events.focus(
-      fixture.editor.library.pageLayoutsPane.pageLayouts[0]
+      fixture.editor.library.pageTemplatesPane.pageTemplates[0]
     );
 
     await fixture.events.keyboard.press('right');
 
     await fixture.events.keyboard.press('down');
 
-    const activeTextSetId = pageLayouts[3].getAttribute('data-testid');
+    const activeTextSetId = pageTemplates[3].getAttribute('data-testid');
     const documentTestId = document.activeElement.getAttribute('data-testid');
 
     expect(activeTextSetId).toBe(documentTestId);
@@ -116,11 +116,11 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
       (t) => t.title === 'Cooking'
     );
     const coverPage = cookingTemplate.pages.find(
-      (p) => p.pageLayoutType === 'cover'
+      (p) => p.pageTemplateType === 'cover'
     );
-    expectPageLayoutEqual(currentPage, coverPage);
+    expectPageTemplateEqual(currentPage, coverPage);
 
-    await fixture.snapshot('applied page layout');
+    await fixture.snapshot('applied page template');
   });
 
   it('should confirm and apply layout to a page with changes', async () => {
@@ -136,15 +136,15 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
       })
     );
 
-    await fixture.editor.library.pageLayoutsTab.click();
+    await fixture.editor.library.pageTemplatesTab.click();
 
     await waitFor(() =>
       expect(
-        fixture.editor.library.pageLayoutsPane.pageLayouts.length
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBeTruthy()
     );
     await fixture.events.click(
-      fixture.editor.library.pageLayoutsPane.pageLayout('Cooking Cover')
+      fixture.editor.library.pageTemplatesPane.pageTemplate('Cooking Cover')
     );
 
     // confirm changes
@@ -152,7 +152,7 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
       expect(fixture.screen.getByRole('dialog')).toBeTruthy();
     });
     await fixture.events.click(
-      fixture.screen.getByRole('button', { name: 'Apply Page Layout' })
+      fixture.screen.getByRole('button', { name: 'Apply Page Template' })
     );
 
     // check that all elements have been applied
@@ -163,11 +163,11 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
       (t) => t.title === 'Cooking'
     );
     const coverPage = cookingTemplate.pages.find(
-      (p) => p.pageLayoutType === 'cover'
+      (p) => p.pageTemplateType === 'cover'
     );
-    expectPageLayoutEqual(currentPage, coverPage);
+    expectPageTemplateEqual(currentPage, coverPage);
 
-    await fixture.snapshot('applied page layout');
+    await fixture.snapshot('applied page template');
   });
 
   it('should confirm and cancel applying to a page with changes', async () => {
@@ -183,15 +183,15 @@ describe('CUJ: Page Layouts: Creator can Apply a Page Layout', () => {
       })
     );
 
-    await fixture.editor.library.pageLayoutsTab.click();
+    await fixture.editor.library.pageTemplatesTab.click();
 
     await waitFor(() =>
       expect(
-        fixture.editor.library.pageLayoutsPane.pageLayouts.length
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBeTruthy()
     );
     await fixture.events.click(
-      fixture.editor.library.pageLayoutsPane.pageLayout('Cooking Cover')
+      fixture.editor.library.pageTemplatesPane.pageTemplate('Cooking Cover')
     );
 
     // confirm changes
