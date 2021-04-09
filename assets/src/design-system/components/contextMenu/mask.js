@@ -30,11 +30,19 @@ const ScreenMask = styled.div`
   width: 100%;
   top: 0;
   left: 0;
+  /* allow pointer events to pass through if there's no 'onDismiss' */
+  pointer-events: ${({ hasOnDismiss }) => (hasOnDismiss ? 'auto' : 'none')};
   z-index: ${POPOVER_Z_INDEX - 1};
 `;
 
-export default function Mask({ onDismiss = noop }) {
-  return <ScreenMask data-testid="context-menu-mask" onClick={onDismiss} />;
+export default function Mask({ onDismiss }) {
+  return (
+    <ScreenMask
+      data-testid="context-menu-mask"
+      hasOnDismiss={Boolean(onDismiss)}
+      onClick={onDismiss || noop}
+    />
+  );
 }
 
 Mask.propTypes = {
