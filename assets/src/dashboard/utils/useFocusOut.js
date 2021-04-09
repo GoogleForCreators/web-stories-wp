@@ -23,18 +23,14 @@ function useFocusOut(ref, callback, deps) {
   const isMouseDownInNode = useRef(false);
 
   useLayoutEffect(() => {
-    const node = ref.current;
+    const node = ref?.current;
     if (!node) {
       return undefined;
     }
 
     const onFocusOut = (evt) => {
       // If focus moves somewhere outside the node, callback time!
-      if (
-        evt.relatedTarget &&
-        node.contains(evt.relatedTarget) && // check if node used to have focus
-        !node.contains(evt.currentTarget) // check if focusing away
-      ) {
+      if (evt.relatedTarget && !node.contains(evt.relatedTarget)) {
         callback();
       }
     };

@@ -108,7 +108,23 @@ export const MenuItem = ({
         ref={itemRef}
         aria-label={label}
         disabled={disabled}
-        onClick={onClick}
+        /* Weird bug fix - Firefox bug:
+
+        Clicking the menu button in the story grid does not
+        set the `relatedTarget` to be the first element in the list.
+        The StoryGrid remains as the `relatedTarget`.
+
+        The `useFocusOut` util checks to see if the `relatedTarget`
+        is within the node where the event listeners are attached.
+
+        In firefox - the relatedTarget didn't change, so mouseDown on the menu
+        calls the focusout event handler for the container.
+
+        Fix: set click event handler on `mouseDown`. This allows the click event
+        handler to be called before the menu closes since the `focusout` event runs
+        before the user could `mouseUp`.
+        */
+        onMouseDown={onClick}
         onFocus={onFocus}
       >
         {textContent}
