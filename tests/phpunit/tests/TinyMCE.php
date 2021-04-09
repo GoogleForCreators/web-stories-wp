@@ -35,7 +35,7 @@ class TinyMCE extends \WP_UnitTestCase {
 		$tinymce->method( 'is_block_editor' )
 				->willReturn( false );
 		$tinymce->method( 'is_edit_screen' )
-		        ->willReturn( false );
+				->willReturn( false );
 		$tinymce->register();
 
 		$this->assertSame( 10, has_filter( 'mce_buttons', [ $tinymce, 'tinymce_web_stories_button' ] ) );
