@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-function BeautyHeartFlat({ style }) {
+function Beauty4Heart({ style }) {
   return (
     <svg
       style={style}
@@ -39,11 +39,11 @@ function BeautyHeartFlat({ style }) {
   );
 }
 
-BeautyHeartFlat.propTypes = {
+Beauty4Heart.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 32 / 26,
-  svg: BeautyHeartFlat,
+  svg: Beauty4Heart,
 };
