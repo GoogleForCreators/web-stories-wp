@@ -117,6 +117,7 @@ export default function EffectChooserDropdown({
       event.preventDefault();
       if (value === NO_ANIMATION) {
         onNoEffectSelected();
+        return;
       }
 
       const selectedAnimation = animationOptionsObject[value]?.animation;

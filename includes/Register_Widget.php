@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Widgets\Stories;
+
 /**
  * Class RegisterWidget
  */
@@ -38,7 +40,7 @@ class Register_Widget extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		register_widget( __NAMESPACE__ . '\Widgets\Stories' );
+		register_widget( Stories::class );
 	}
 
 	/**

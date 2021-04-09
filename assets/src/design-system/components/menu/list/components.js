@@ -46,7 +46,7 @@ export const ListItem = styled.li(
     position: relative;
     display: grid;
     grid-template-columns: 32px 1fr;
-    padding: 6px 2px 6px 8px;
+    padding: 6px 8px;
     margin: 4px 8px;
     border-radius: ${theme.borders.radius.small};
     align-items: center;

@@ -18,8 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
+import getAllTemplates from '@web-stories-wp/templates';
 
 /**
  * WordPress dependencies
@@ -33,7 +34,7 @@ import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import getAllPageLayouts from './getAllPageLayouts';
+import removeImagesFromPageLayouts from './removeImagesFromPageLayouts';
 
 function APIProvider({ children }) {
   const {
@@ -51,6 +52,11 @@ function APIProvider({ children }) {
     cdnURL,
     assetsURL,
   } = useConfig();
+
+  const pageLayouts = useRef({
+    base: [],
+    withoutImages: [],
+  });
 
   const getStoryById = useCallback(
     (storyId) => {
@@ -364,9 +370,22 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
-  const getPageLayouts = useCallback(() => {
-    return getAllPageLayouts({ cdnURL, assetsURL });
-  }, [cdnURL, assetsURL]);
+  const getPageLayouts = useCallback(
+    async ({ showImages = false } = {}) => {
+      // check if pageLayouts have been loaded yet
+      if (pageLayouts.current.base.length === 0) {
+        pageLayouts.current.base = await getAllTemplates({ cdnURL });
+        pageLayouts.current.withoutImages = removeImagesFromPageLayouts({
+          templates: pageLayouts.current.base,
+          assetsURL,
+          showImages,
+        });
+      }
+
+      return pageLayouts.current[showImages ? 'base' : 'withoutImages'];
+    },
+    [cdnURL, assetsURL]
+  );
 
   const state = {
     actions: {

@@ -157,26 +157,15 @@
  * `useMediaReducer`.
  *
  * @typedef {Object} Media3pReducerActions
- * @property {DeleteMediaElementFn} deleteMediaElement Action dispatched when
- * media element is deleted
- * @property {import('./categories/typedefs').DeselectCategoryFn} deselectCategory
- * Action dispatched when current category is deselected
- * @property {import('./categories/typedefs').FetchCategoriesStartFn}
- * fetchCategoriesStart Action dispatched when fetching categories starts
- * @property {import('./categories/typedefs').FetchCategoriesErrorFn}
- * fetchCategoriesError Action dispatched when fetching categories returns an
- * error
- * @property {import('./categories/typedefs').FetchCategoriesSuccessFn}
- * fetchCategoriesSuccess Action dispatched when categories fetching is
- * successful
- * @property {FetchMediaErrorFn} fetchMediaError Action dispatched when media
- * fetching returns an error
- * @property {FetchMediaStartFn} fetchMediaStart Action dispatched when media
- * fetching starts
- * @property {FetchMediaSuccessFn} fetchMediaSuccess Action dispatched when
- * media succesfully fetched
- * @property {import('./categories/typedefs').SelectCategoryFn} selectCategory
- * Selects current category
+ * @property {DeleteMediaElementFn} deleteMediaElement Action dispatched when media element is deleted
+ * @property {import('./categories/typedefs').DeselectCategoryFn} deselectCategory Action dispatched when current category is deselected
+ * @property {import('./categories/typedefs').FetchCategoriesStartFn} fetchCategoriesStart Action dispatched when fetching categories starts
+ * @property {import('./categories/typedefs').FetchCategoriesErrorFn} fetchCategoriesError Action dispatched when fetching categories returns an error
+ * @property {import('./categories/typedefs').FetchCategoriesSuccessFn} fetchCategoriesSuccess Action dispatched when categories fetching is successful
+ * @property {FetchMediaErrorFn} fetchMediaError Action dispatched when media fetching returns an error
+ * @property {FetchMediaStartFn} fetchMediaStart Action dispatched when media fetching starts
+ * @property {FetchMediaSuccessFn} fetchMediaSuccess Action dispatched when media successfully fetched
+ * @property {import('./categories/typedefs').SelectCategoryFn} selectCategory Selects current category
  * @property {SetNextPageFn} setNextPage Sets next page token
  * @property {SetSearchTermFn} setSearchTerm Sets search term
  * @property {SetSelectedProviderFn} setSelectedProvider Sets current provider
