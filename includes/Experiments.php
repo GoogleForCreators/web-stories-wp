@@ -416,7 +416,7 @@ class Experiments extends Service_Base {
 			[
 				'name'        => 'customPageTemplates',
 				'label'       => __( 'Custom Page Templates', 'web-stories' ),
-				'description' => __( 'Enable adding custom Page Templates', 'web-stories' ),
+				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];
