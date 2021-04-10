@@ -1,86 +1,10 @@
 {
-  "current": "5c295574-87a0-4ae7-b548-699e0bd47fdf",
-  "selection": ["3d4ecfbb-db87-4575-95f3-ad04b65645c9"],
+  "current": "6a6ddf2d-7f98-405a-8c95-76b0440f9b30",
+  "selection": [],
   "story": {
     "globalStoryStyles": {
-      "textStyles": [
-        {
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto",
-            "weights": [100, 300, 400, 500, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 100],
-              [1, 100],
-              [0, 300],
-              [1, 300],
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700],
-              [0, 900],
-              [1, 900]
-            ],
-            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 2048,
-              "asc": 1900,
-              "des": -500,
-              "tAsc": 1536,
-              "tDes": -512,
-              "tLGap": 102,
-              "wAsc": 1946,
-              "wDes": 512,
-              "xH": 1082,
-              "capH": 1456,
-              "yMin": -555,
-              "yMax": 2163,
-              "hAsc": 1900,
-              "hDes": -500,
-              "lGap": 0
-            }
-          },
-          "fontSize": 16.2,
-          "lineHeight": 1.5,
-          "padding": {
-            "vertical": 0,
-            "horizontal": 0,
-            "locked": true
-          },
-          "textAlign": "center",
-          "color": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "fontWeight": 400,
-          "isItalic": false,
-          "isUnderline": false,
-          "letterSpacing": 0
-        }
-      ],
-      "colors": [
-        {
-          "color": {
-            "r": 0,
-            "g": 0,
-            "b": 0
-          }
-        }
-      ]
+      "colors": [],
+      "textStyles": []
     }
   },
   "version": 25,
@@ -88,25 +12,20 @@
     {
       "animations": [
         {
-          "id": "e80d81a1-b027-41d5-9884-b25354f7050e",
-          "targets": ["b8f9eb9a-5007-4642-aca3-750cdb7c7463"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "100%",
-          "duration": 600,
-          "delay": 400,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
           "id": "a8999305-4627-4178-a503-4ef3ca840e8e",
           "type": "effect-fly-in",
           "targets": ["4e256c35-5e30-45f5-9095-d8ce0a230b21"],
           "flyInDir": "bottomToTop",
           "duration": 1000,
           "delay": 0
+        },
+        {
+          "id": "7d2b1997-86ab-46e1-8d63-43003b447711",
+          "type": "effect-fly-in",
+          "targets": ["b8f9eb9a-5007-4642-aca3-750cdb7c7463"],
+          "flyInDir": "topToBottom",
+          "duration": 600,
+          "delay": 400
         }
       ],
       "elements": [
@@ -182,7 +101,7 @@
           "x": 41,
           "y": 233,
           "width": 330,
-          "height": 268,
+          "height": 267,
           "font": {
             "service": "fonts.google.com",
             "family": "Anton",
@@ -276,9 +195,9 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "orangeCross"
+            "type": "diyOrangeCross"
           },
-          "id": "c6bc8ba8-9cf2-4586-8dff-c5f28d95894d"
+          "id": "dd79f48f-9313-4641-b95e-1216d6699868"
         }
       ],
       "type": "page",
@@ -478,120 +397,6 @@
     {
       "animations": [
         {
-          "id": "288ae67a-c39d-4d46-abff-66941e14128f",
-          "targets": ["ec867712-86cf-4681-a2f9-48fe633cfb4c"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 1200,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "outSine",
-          "fill": "both"
-        },
-        {
-          "id": "53538a51-e964-4ab6-a065-fdb2eb7bad6e",
-          "targets": ["ec867712-86cf-4681-a2f9-48fe633cfb4c"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "75%",
-          "duration": 800,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "16a47232-aa4f-4bb7-b39b-5516bf5d1248",
-          "targets": ["1788ced3-50fc-495e-9944-9f7a205b3107"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "100%",
-          "duration": 1000,
-          "delay": 100,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "5247d898-dd5b-457c-b0b5-9f158a324e94",
-          "targets": ["7d8bae39-0d48-4424-b7ac-f95231a7c688"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-100%",
-          "offsetY": 0,
-          "duration": 800,
-          "delay": 800,
-          "direction": "normal",
-          "easingPreset": "inCubic",
-          "fill": "both"
-        },
-        {
-          "id": "84058db1-d19f-47ed-b0b1-3bee05e19119",
-          "targets": ["7d8bae39-0d48-4424-b7ac-f95231a7c688"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "100%",
-          "offsetY": 0,
-          "duration": 800,
-          "delay": 800,
-          "direction": "normal",
-          "easingPreset": "inCubic",
-          "fill": "both"
-        },
-        {
-          "id": "72334562-fe5d-4434-9402-14cda99f4c2c",
-          "targets": ["a9bf183b-8951-4fdc-8bfd-fa6a71736a28"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-100%",
-          "offsetY": 0,
-          "duration": 800,
-          "delay": 1050,
-          "direction": "normal",
-          "easingPreset": "inCubic",
-          "fill": "both"
-        },
-        {
-          "id": "3378de67-db0c-4a5b-8beb-d3fb0962951e",
-          "targets": ["a9bf183b-8951-4fdc-8bfd-fa6a71736a28"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "100%",
-          "offsetY": 0,
-          "duration": 800,
-          "delay": 1050,
-          "direction": "normal",
-          "easingPreset": "inCubic",
-          "fill": "both"
-        },
-        {
-          "id": "8bd25129-dce9-488c-9005-23739630d3b8",
-          "targets": ["7d8bae39-0d48-4424-b7ac-f95231a7c688"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 300,
-          "delay": 800,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "28ebf44c-29f2-4591-bda4-eb5d10ef0860",
-          "targets": ["a9bf183b-8951-4fdc-8bfd-fa6a71736a28"],
-          "type": "fade",
-          "fadeFrom": 0,
-          "fadeTo": 1,
-          "duration": 300,
-          "delay": 1050,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
           "id": "e968c1da-02df-49cd-8ea4-0e3a940f315f",
           "type": "effect-zoom",
           "targets": ["7a20f7e7-fe90-46b3-9382-7204473f2724"],
@@ -606,6 +411,42 @@
           "scaleDirection": "scaleOut",
           "duration": 800,
           "delay": 1500
+        },
+        {
+          "id": "fa5f6052-f8ce-4e58-9163-186e2769cb13",
+          "type": "effect-fly-in",
+          "targets": ["ec867712-86cf-4681-a2f9-48fe633cfb4c"],
+          "flyInDir": "topToBottom",
+          "duration": 1200,
+          "delay": 0
+        },
+        {
+          "delete": true,
+          "targets": ["1788ced3-50fc-495e-9944-9f7a205b3107"]
+        },
+        {
+          "id": "7b9857a3-6c57-4952-9c1b-141f8fefbd2f",
+          "type": "effect-fly-in",
+          "targets": ["1788ced3-50fc-495e-9944-9f7a205b3107"],
+          "flyInDir": "topToBottom",
+          "duration": 1000,
+          "delay": 100
+        },
+        {
+          "id": "8d61e0c1-7264-4311-ab7f-280224e497fb",
+          "type": "effect-fly-in",
+          "targets": ["a9bf183b-8951-4fdc-8bfd-fa6a71736a28"],
+          "flyInDir": "topToBottom",
+          "duration": 1000,
+          "delay": 100
+        },
+        {
+          "id": "17668082-c754-491e-89b9-3dfbf68b880f",
+          "type": "effect-fly-in",
+          "targets": ["7d8bae39-0d48-4424-b7ac-f95231a7c688"],
+          "flyInDir": "topToBottom",
+          "duration": 1000,
+          "delay": 100
         }
       ],
       "elements": [
@@ -1054,82 +895,6 @@
     {
       "animations": [
         {
-          "id": "c93ac4f8-27e1-402c-ab45-f81978b1c31a",
-          "targets": ["f7404703-d0bd-418d-8df5-5db492686c59"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "-100%",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "9275b276-cfe4-4fc9-aab0-dacf563add1b",
-          "targets": ["f7404703-d0bd-418d-8df5-5db492686c59"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "100%",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "1099ae83-8516-475a-bcdc-97b589faceb5",
-          "targets": ["f7404703-d0bd-418d-8df5-5db492686c59"],
-          "type": "zoom",
-          "zoomFrom": 2,
-          "zoomTo": 1.1,
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutQuad",
-          "fill": "both"
-        },
-        {
-          "id": "63d56d4f-cf9c-4747-b959-d8c52e8da14e",
-          "targets": ["f7404703-d0bd-418d-8df5-5db492686c59"],
-          "type": "zoom",
-          "zoomFrom": 1,
-          "zoomTo": 0.91,
-          "duration": 5000,
-          "delay": 1000,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "655c541d-59da-4f94-b92c-eaca629488fc",
-          "targets": ["4496cff1-60d7-4f33-9231-9fb423308319"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-100%",
-          "offsetY": 0,
-          "duration": 1000,
-          "delay": 200,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "a51bfb67-b5c3-44b5-844d-ec8b98ef2f24",
-          "targets": ["4496cff1-60d7-4f33-9231-9fb423308319"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "100%",
-          "offsetY": 0,
-          "duration": 1000,
-          "delay": 200,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
           "id": "ca39ec5b-3237-4fbc-b857-746b186843f8",
           "type": "effect-fly-in",
           "targets": ["88038fd9-5e4e-41f2-a831-a79e990695ce"],
@@ -1160,6 +925,20 @@
           "flyInDir": "leftToRight",
           "duration": 800,
           "delay": 600
+        },
+        {
+          "id": "a2054244-e6cd-4b6a-a668-507fc00f63ef",
+          "type": "effect-fade-in",
+          "targets": ["f7404703-d0bd-418d-8df5-5db492686c59"],
+          "duration": 3000,
+          "delay": 0
+        },
+        {
+          "id": "9ca86ca1-2c59-4bd7-b6b1-b7e120c4bd89",
+          "type": "effect-fade-in",
+          "targets": ["4496cff1-60d7-4f33-9231-9fb423308319"],
+          "duration": 3000,
+          "delay": 0
         }
       ],
       "elements": [
@@ -1738,82 +1517,6 @@
     {
       "animations": [
         {
-          "id": "c93ac4f8-27e1-402c-ab45-f81978b1c31a",
-          "targets": ["6994410a-4350-4d7e-bb52-1efe7a952e3c"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "-100%",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "fc905d7e-d9bb-4e58-a722-f8aeb2186fde",
-          "targets": ["6994410a-4350-4d7e-bb52-1efe7a952e3c"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "100%",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "b9d03819-337e-4106-93f6-8065e5f6a773",
-          "targets": ["6994410a-4350-4d7e-bb52-1efe7a952e3c"],
-          "type": "zoom",
-          "zoomFrom": 2,
-          "zoomTo": 1.1,
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "d6f89570-7917-4dd0-b6c1-a4a31038ebb5",
-          "targets": ["6994410a-4350-4d7e-bb52-1efe7a952e3c"],
-          "type": "zoom",
-          "zoomFrom": 1,
-          "zoomTo": 0.91,
-          "duration": 5000,
-          "delay": 1000,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "0d8b4665-d01c-4202-9a24-e78da02789f7",
-          "targets": ["92f6281c-d00a-4207-a95c-9a6bd40da7d9"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": "-100%",
-          "offsetY": 0,
-          "duration": 1000,
-          "delay": 200,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "31b9d096-0fec-4d6d-8ad2-a3175df04b2f",
-          "targets": ["92f6281c-d00a-4207-a95c-9a6bd40da7d9"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": "100%",
-          "offsetY": 0,
-          "duration": 1000,
-          "delay": 200,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
           "id": "9299670e-b785-4db1-8fbd-7cf601af326a",
           "type": "effect-fly-in",
           "targets": ["9c0db82d-9759-4a90-8c97-3d1eb8f370e3"],
@@ -1828,6 +1531,20 @@
           "flyInDir": "bottomToTop",
           "duration": 1000,
           "delay": 500
+        },
+        {
+          "id": "669c1986-7470-4736-aec7-db0fa19e93d3",
+          "type": "effect-fade-in",
+          "targets": ["6994410a-4350-4d7e-bb52-1efe7a952e3c"],
+          "duration": 3000,
+          "delay": 0
+        },
+        {
+          "id": "dd0f09ff-d555-4117-a2e6-330198d20f4a",
+          "type": "effect-fade-in",
+          "targets": ["92f6281c-d00a-4207-a95c-9a6bd40da7d9"],
+          "duration": 3000,
+          "delay": 0
         }
       ],
       "elements": [
@@ -1859,7 +1576,7 @@
           "isDefaultBackground": true
         },
         {
-          "x": -1,
+          "x": 0,
           "y": -58,
           "width": 413,
           "height": 554,
@@ -2051,11 +1768,10 @@
       "animations": [
         {
           "id": "e90c415c-a655-4a33-9111-f69c6ed9508b",
-          "type": "effect-fly-in",
+          "type": "effect-fade-in",
           "targets": ["4b5a41ea-1f3c-4f52-8ee7-6e314d66e9f2"],
-          "flyInDir": "topToBottom",
-          "duration": 1000,
-          "delay": 500
+          "duration": 3000,
+          "delay": 0
         },
         {
           "id": "8519830d-3ea3-4466-bcc4-7fdfb86c0b06",
@@ -2698,75 +2414,23 @@
     {
       "animations": [
         {
-          "id": "2d5f0d5d-4929-4f4f-889b-8d70adad3597",
-          "targets": ["1b7b64ba-ee71-4edf-be38-d30753ac39ef"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "100%",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "3f2cc222-cda2-4b07-a702-764a4fa28e45",
-          "targets": ["1b7b64ba-ee71-4edf-be38-d30753ac39ef"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "-100%",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "be98e6af-8f6a-4ba4-b655-9025906fce2e",
-          "targets": ["1b7b64ba-ee71-4edf-be38-d30753ac39ef"],
-          "type": "zoom",
-          "zoomFrom": 2,
-          "zoomTo": 1.1,
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
-          "id": "b6307e55-6ff0-483b-a40b-5f8ba3fdb610",
-          "targets": ["1b7b64ba-ee71-4edf-be38-d30753ac39ef"],
-          "type": "zoom",
-          "zoomFrom": 1,
-          "zoomTo": 0.91,
-          "duration": 5000,
-          "delay": 1000,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "d8090713-5665-4c6c-b794-cbe2b6dd16c1",
-          "targets": ["d38b12e9-ba7a-4a62-9e65-b03305beae30"],
-          "type": "move",
-          "overflowHidden": false,
-          "offsetX": 0,
-          "offsetY": "-100%",
-          "duration": 800,
-          "delay": 200,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
           "id": "054bb91f-0bf5-49b2-8cfa-21261d675868",
           "type": "effect-fly-in",
           "targets": ["7b86d9a0-7674-4172-8abb-ddd27f241376"],
           "flyInDir": "topToBottom",
           "duration": 800,
           "delay": 650
+        },
+        {
+          "delete": true,
+          "targets": ["d38b12e9-ba7a-4a62-9e65-b03305beae30"]
+        },
+        {
+          "id": "7af6017c-f9c9-4d3d-9762-d8254586954d",
+          "type": "effect-fade-in",
+          "targets": ["d38b12e9-ba7a-4a62-9e65-b03305beae30"],
+          "duration": 3000,
+          "delay": 0
         }
       ],
       "elements": [
@@ -2980,19 +2644,6 @@
     {
       "animations": [
         {
-          "id": "4b30c1ca-591c-43ed-8a95-4e33004a46c2",
-          "targets": ["f92aa000-0cfa-40ea-a9dd-dfee946477ab"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "-100%",
-          "duration": 1000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCubic",
-          "fill": "both"
-        },
-        {
           "id": "0b51f17f-3fd6-4ece-a2ae-88e0cc847743",
           "type": "effect-fly-in",
           "targets": ["3d4ecfbb-db87-4575-95f3-ad04b65645c9"],
@@ -3103,6 +2754,17 @@
           "flyInDir": "bottomToTop",
           "duration": 800,
           "delay": 900
+        },
+        {
+          "delete": true,
+          "targets": ["f92aa000-0cfa-40ea-a9dd-dfee946477ab"]
+        },
+        {
+          "id": "ac758432-e1e9-4ec1-93e1-7a128f06c463",
+          "type": "effect-fade-in",
+          "targets": ["f92aa000-0cfa-40ea-a9dd-dfee946477ab"],
+          "duration": 3000,
+          "delay": 0
         }
       ],
       "elements": [
