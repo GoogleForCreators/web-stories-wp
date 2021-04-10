@@ -75,6 +75,7 @@ const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
  * @param {string} props.shortcut Shortcut text to display in tooltip
  * @param {string} props.title Text to display in tooltip
  * @param {Object} props.tooltipProps Props for <Tooltip /> component
+ * @param {string} props.className Classname.
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
@@ -89,6 +90,7 @@ function Tooltip({
   onBlur = () => {},
   forceAnchorRef = null,
   tooltipProps = null,
+  className = null,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -156,15 +158,13 @@ function Tooltip({
         onPositionUpdate={positionArrow}
       >
         <TooltipContainer
+          className={className}
           ref={tooltipRef}
           placement={placement}
           shown={shown}
           {...tooltipProps}
         >
-          <TooltipText
-            forwardedAs="span"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          >
+          <TooltipText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
             {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
           </TooltipText>
           {hasTail && (
@@ -198,6 +198,7 @@ const TooltipPropTypes = {
   title: PropTypes.string,
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
+  className: PropTypes.string,
 };
 Tooltip.propTypes = TooltipPropTypes;
 

@@ -41,11 +41,10 @@ const Container = styled.div`
   top: ${({ y, height }) => `${y + height + OFFSET_Y}px`};
   width: ${({ width }) => `${Math.max(width, MIN_WIDTH)}px`};
   height: ${HEIGHT}px;
-  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.t.bg};
+  background: ${({ theme }) => theme.colors.bg.primary};
   border-radius: 8px;
   padding: 3px ${HORIZONTAL_PADDING}px;
   margin-top: 8px;
-  box-shadow: 0 0 3px white;
 `;
 
 const ScaleSlider = styled(Slider)`

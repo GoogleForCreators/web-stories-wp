@@ -42,7 +42,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
-import { Tooltip } from '../../../tooltip';
+import Tooltip from '../../../tooltip';
 
 const InputRow = styled.div`
   display: flex;
@@ -83,7 +83,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const isMixedValue = tracks === MULTIPLE_VALUE;
   const captionText = __('Upload a file', 'web-stories');
   const clearFileText = __('Remove file', 'web-stories');
-  /* @TODO: Implement error handling after removing modal and 
+  /* @TODO: Implement error handling after removing modal and
   using native browser upload. */
   const uploadError = false;
 

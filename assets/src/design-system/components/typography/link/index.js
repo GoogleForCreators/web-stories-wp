@@ -46,10 +46,6 @@ export const Link = styled.a`
       color: ${theme.colors.fg.linkNormal} !important;
     }
 
-    :focus {
-      color: ${theme.colors.fg.linkNormal};
-    }
-
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
   `};
 `;

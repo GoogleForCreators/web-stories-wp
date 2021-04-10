@@ -60,7 +60,7 @@ const StyledMedia = styled(Media)`
 const Error = styled.span`
   font-size: 12px;
   line-height: 16px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.warning};
+  color: ${({ theme }) => theme.colors.fg.negative};
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {

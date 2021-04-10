@@ -39,7 +39,9 @@ describe('Animation Panel', function () {
     expect(panel).not.toBeNull();
   });
 
-  it('can click the animation chooser and select an effect.', async function () {
+  // TODO #6953
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('can click the animation chooser and select an effect.', async function () {
     await fixture.events.click(fixture.editor.library.textAdd);
     const panel = fixture.editor.inspector.designPanel.animation;
 
@@ -53,9 +55,8 @@ describe('Animation Panel', function () {
     await fixture.events.sleep(300);
     expect(effectChooser.innerText).toBe('Fade In');
   });
-  // TODO #6953
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('replaces an existing effect with a new one.', async function () {
+
+  it('replaces an existing effect with a new one.', async function () {
     await fixture.events.click(fixture.editor.library.textAdd);
     const panel = fixture.editor.inspector.designPanel.animation;
 
@@ -75,9 +76,7 @@ describe('Animation Panel', function () {
     expect(effectChooser.innerText).toBe('Drop');
   });
 
-  // TODO #6953
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('plays the animation when a control in the panel is changed.', async function () {
+  it('plays the animation when a control in the panel is changed.', async function () {
     await fixture.events.click(fixture.editor.library.textAdd);
     const panel = fixture.editor.inspector.designPanel.animation;
 
@@ -87,6 +86,7 @@ describe('Animation Panel', function () {
     await fixture.events.click(
       fixture.screen.getByRole('option', { name: /^Fade In Effect$/ })
     );
+    await fixture.events.sleep(300);
 
     const { animationState } = await fixture.renderHook(() =>
       useStory(({ state }) => {
