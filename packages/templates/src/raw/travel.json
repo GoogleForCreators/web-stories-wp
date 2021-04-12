@@ -1,5 +1,5 @@
 {
-  "current": "9a45a0b2-0261-4298-aef7-c08b99771787",
+  "current": "c2d56aca-cb1a-41eb-bbdc-41dc2c4f597c",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -1206,6 +1206,13 @@
           "flyInDir": "leftToRight",
           "duration": 600,
           "delay": 600
+        },
+        {
+          "id": "c706ce0e-80f8-4676-96f0-95fc3090022f",
+          "type": "effect-fade-in",
+          "targets": ["a26880a7-7949-4522-8006-71a3be643a06"],
+          "duration": 2000,
+          "delay": 0
         }
       ],
       "elements": [
@@ -1699,7 +1706,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page8_bg.jpg",
+            "src": "https://wp.stories.google/static/main//images/templates/travel/travel_page8_bg.jpg",
             "width": 220,
             "height": 147,
             "poster": "",
