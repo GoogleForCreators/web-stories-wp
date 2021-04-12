@@ -217,6 +217,8 @@ class AMP extends Service_Base {
 	 *
 	 * @link https://github.com/google/web-stories-wp/issues/7131
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param bool $skipped Whether the post should be skipped from AMP.
 	 * @param int  $post    Post ID.
 	 *
