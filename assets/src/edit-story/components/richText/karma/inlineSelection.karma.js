@@ -112,15 +112,14 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
 
       // Press escape to leave input field (does not leave edit-mode)
       await data.fixture.events.keyboard.press('Escape');
-      // */
 
       // Verify all styles, now expected to be updated
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
       expect(underline.checked).toBe(true);
-      /*expect(fontWeight.value).toBe('Black');
+      expect(fontWeight.value).toBe('Black');
       expect(letterSpacing.value).toBe('50%');
-      expect(fontColor.hex.value).toBe('FF6600');
+      /*expect(fontColor.hex.value).toBe('FF6600');
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
       await setSelection(6, 9);
