@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-const TravelTwitterIcon = ({ style }) => (
+const TwitterIcon = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 28 23"
@@ -32,11 +32,11 @@ const TravelTwitterIcon = ({ style }) => (
   </svg>
 );
 
-TravelTwitterIcon.propTypes = {
+TwitterIcon.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 28 / 23,
-  svg: TravelTwitterIcon,
+  svg: TwitterIcon,
 };

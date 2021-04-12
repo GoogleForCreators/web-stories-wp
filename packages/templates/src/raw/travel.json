@@ -1,5 +1,5 @@
 {
-  "current": "1659f169-eb29-498a-bd00-6aea80d7ace7",
+  "current": "9a45a0b2-0261-4298-aef7-c08b99771787",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -1343,7 +1343,7 @@
           "sticker": {
             "type": "travelMap"
           },
-          "id": "edc186ab-7cb2-4519-a7e1-8ae73591cf08"
+          "id": "a26880a7-7949-4522-8006-71a3be643a06"
         }
       ],
       "type": "page",
@@ -3092,14 +3092,14 @@
           "x": 77,
           "y": 576,
           "width": 13,
-          "height": 25,
+          "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "sticker": {
             "type": "travelFacebookIcon"
           },
-          "id": "dc76b1c0-7d2a-462b-8ee4-148333aeb169"
+          "id": "c6a706c8-7f36-4b04-bb5c-3d3d9d30498a"
         },
         {
           "opacity": 100,
@@ -3120,7 +3120,7 @@
           "sticker": {
             "type": "travelInstagramIcon"
           },
-          "id": "d36bdc91-79cb-4fb8-aa15-8cfe6f06d005"
+          "id": "3e52ff79-b15b-4f2c-ba7d-daba7f967904"
         },
         {
           "opacity": 100,
@@ -3141,7 +3141,7 @@
           "sticker": {
             "type": "travelYouTubeIcon"
           },
-          "id": "4a16ef87-0211-4209-a4e5-98efd1b1bd1e"
+          "id": "276d0d4c-e1d1-47c9-99bf-fe3ebc86615d"
         },
         {
           "opacity": 100,
@@ -3155,14 +3155,14 @@
           "x": 309,
           "y": 579,
           "width": 26,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "sticker": {
             "type": "travelTwitterIcon"
           },
-          "id": "8e5c9063-ebe2-41f6-8001-8aa25138e5c5"
+          "id": "ce560b5f-13b9-4a5e-85ff-cbc41ea982e8"
         }
       ],
       "type": "page",

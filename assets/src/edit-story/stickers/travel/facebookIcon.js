@@ -18,25 +18,25 @@
  */
 import PropTypes from 'prop-types';
 
-const TravelYouTubeIcon = ({ style }) => (
+const FacebookIcon = ({ style }) => (
   <svg
     style={style}
-    viewBox="0 0 30 20"
+    viewBox="0 0 14 26"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M21.9665.0332031H8.20109C.666016.0332031.666016 2.13357.666016 7.30199v5.05021c0 4.9158 1.067524 7.2688 7.535074 7.2688H21.9686c5.8411 0 7.535-1.3771 7.535-7.2688V7.30199c-.002-5.43937-.2871-7.2687869-7.5371-7.2687869zM12.1382 13.6663V5.73741l7.7723 3.9522-7.7723 3.97669z"
+      d="M8.68442 25.349V13.7867h3.74108l.5612-4.506H8.68442V6.40194c0-1.30378.35013-2.19452 2.15348-2.19452h2.2999V.176657C12.7397.121918 11.3751 0 9.78517 0 6.46854 0 4.19991 2.09998 4.19991 5.95657V9.2807H.449219v4.506H4.19991V25.349h4.48451z"
       fill="#094228"
     />
   </svg>
 );
 
-TravelYouTubeIcon.propTypes = {
+FacebookIcon.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
-  aspectRatio: 30 / 20,
-  svg: TravelYouTubeIcon,
+  aspectRatio: 14 / 26,
+  svg: FacebookIcon,
 };

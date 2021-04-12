@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-const TravelInstagramIcon = ({ style }) => (
+const InstagramIcon = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 27 27"
@@ -36,11 +36,11 @@ const TravelInstagramIcon = ({ style }) => (
   </svg>
 );
 
-TravelInstagramIcon.propTypes = {
+InstagramIcon.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 27 / 27,
-  svg: TravelInstagramIcon,
+  svg: InstagramIcon,
 };

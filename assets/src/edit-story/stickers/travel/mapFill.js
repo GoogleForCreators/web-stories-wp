@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-const TravelMap = ({ style }) => (
+const MapFill = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 256 430"
@@ -41,11 +41,11 @@ const TravelMap = ({ style }) => (
   </svg>
 );
 
-TravelMap.propTypes = {
+MapFill.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 256 / 430,
-  svg: TravelMap,
+  svg: MapFill,
 };
