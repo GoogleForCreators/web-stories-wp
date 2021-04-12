@@ -26,10 +26,13 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
+
 /**
  * Class Activation_Flag.
  */
-class Activation_Flag {
+class Activation_Flag implements ServiceInterface, Registerable {
 	const OPTION_SHOW_ACTIVATION_NOTICE = 'web_stories_show_activation_notice';
 
 	/**
@@ -39,7 +42,7 @@ class Activation_Flag {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'web_stories_activation', [ $this, 'set_activation_flag' ] );
 		add_action( 'web_stories_deactivation', [ $this, 'delete_activation_flag' ] );
 	}

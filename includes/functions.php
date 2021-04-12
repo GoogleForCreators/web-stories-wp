@@ -63,6 +63,7 @@ function get_stories( array $attrs = [], array $query_args = [] ) {
  * @return void
  */
 function render_theme_stories() {
+	$customizer = Services::get( 'customizer' );
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo get_plugin_instance()->customizer->render_stories();
+	echo $customizer->render_stories();
 }

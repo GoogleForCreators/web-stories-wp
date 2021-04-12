@@ -85,12 +85,25 @@ function LibraryMoveable({
   const { backgroundElement } = useStory((state) => ({
     backgroundElement: state.state.currentPage?.elements?.[0] ?? {},
   }));
-  const { fullbleedContainer, nodesById, pageContainer } = useCanvas(
-    (state) => ({
-      fullbleedContainer: state.state.fullbleedContainer,
-      pageContainer: state.state.pageContainer,
-      nodesById: state.state.nodesById,
-    })
+  const {
+    fullbleedContainer,
+    nodesById,
+    pageContainer,
+    designSpaceGuideline,
+  } = useCanvas((state) => ({
+    fullbleedContainer: state.state.fullbleedContainer,
+    pageContainer: state.state.pageContainer,
+    nodesById: state.state.nodesById,
+    designSpaceGuideline: state.state.designSpaceGuideline,
+  }));
+
+  const toggleDesignSpace = useCallback(
+    (visible) => {
+      if (designSpaceGuideline) {
+        designSpaceGuideline.style.visibility = visible ? 'visible' : null;
+      }
+    },
+    [designSpaceGuideline]
   );
 
   const {
@@ -138,6 +151,7 @@ function LibraryMoveable({
   const onDrag = ({ beforeTranslate, inputEvent }) => {
     // This is needed if the user clicks "Esc" but continues dragging.
     if (didManuallyReset) {
+      toggleDesignSpace(false);
       return false;
     }
     frame.translate = beforeTranslate;
@@ -146,6 +160,7 @@ function LibraryMoveable({
       cloneRef.current &&
       inputEvent.timeStamp - eventTracker.current.timeStamp > 300
     ) {
+      toggleDesignSpace(true);
       if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
         // We're not doing it in `onDragStart` since otherwise on clicking it would appear, too.
         cloneRef.current.style.opacity = 1;
@@ -214,6 +229,7 @@ function LibraryMoveable({
   };
 
   const onDragEnd = ({ inputEvent }) => {
+    toggleDesignSpace(false);
     if (didManuallyReset) {
       return false;
     }
@@ -273,7 +289,6 @@ function LibraryMoveable({
         ref={targetBoxRef}
         width={width}
         height={height}
-        onClick={onClick}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
         isDragging={isDragging || hover}
@@ -283,7 +298,7 @@ function LibraryMoveable({
           <InOverlay
             ref={overlayRef}
             zIndex={1}
-            pointerEvents="initial"
+            pointerEvents="none"
             render={() => {
               return <CloneElement ref={cloneRef} {...cloneProps} />;
             }}

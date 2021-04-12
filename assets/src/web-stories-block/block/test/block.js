@@ -30,6 +30,9 @@ jest.mock('@wordpress/element', () => {
     ...originalModule,
     concatChildren: jest.fn(),
     createInterpolateElement: jest.fn(() => null),
+    Platform: {
+      OS: 'web',
+    },
   };
 });
 

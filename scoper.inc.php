@@ -97,14 +97,15 @@ return [
 				->append( [ 'vendor/ampproject/amp-wp/composer.json' ] ),
 
 		// AMP PHP Toolbox (Common + Optimizer).
+		// Not just including /src folder because we also need the /resources folder.
 		Finder::create()
 			->files()
 			->ignoreVCS( true )
 			->ignoreDotFiles( true )
-			->notName( '/LICENSE|.*\\.md|.*\\.svg|.*\\.xml|.*\\.dist|composer\\.json|composer\\.lock/' )
 			->in(
 				[
 					'vendor/ampproject/amp-toolbox/src',
+					'vendor/ampproject/amp-toolbox/resources',
 				]
 			)
 			->append( [ 'vendor/ampproject/amp-toolbox/composer.json' ] ),

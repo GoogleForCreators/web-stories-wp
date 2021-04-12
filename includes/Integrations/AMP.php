@@ -31,6 +31,8 @@ use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Traits\Screen;
 use WP_Post;
 use WP_Screen;
 
@@ -39,8 +41,9 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
-class AMP {
+class AMP extends Service_Base {
 	use Publisher;
+	use Screen;
 
 	/**
 	 * Slug of the AMP validated URL post type.
@@ -56,12 +59,13 @@ class AMP {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
 		add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
+		add_filter( 'amp_skip_post', [ $this, 'filter_amp_skip_post' ], 10, 2 );
 
 		// This filter is actually used in this plugin's `Sanitization` class.
 		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
@@ -207,6 +211,36 @@ class AMP {
 	}
 
 	/**
+	 * Filters whether to skip the post from AMP.
+	 *
+	 * Skips the post if the AMP plugin's version is lower than what is bundled in this plugin.
+	 * Prevents issues where this plugin uses newer features that the plugin doesn't know about yet,
+	 * causing false positives with validation.
+	 *
+	 * @link https://github.com/google/web-stories-wp/issues/7131
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param bool $skipped Whether the post should be skipped from AMP.
+	 * @param int  $post    Post ID.
+	 *
+	 * @return bool Whether post should be skipped from AMP.
+	 */
+	public function filter_amp_skip_post( $skipped, $post ) {
+		if (
+			'web-story' === get_post_type( $post )
+			&&
+			defined( '\AMP__VERSION' )
+			&&
+			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>=' )
+		) {
+			return true;
+		}
+
+		return $skipped;
+	}
+
+	/**
 	 * Get the post type for the current request.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -235,7 +269,7 @@ class AMP {
 			return $this->get_validated_url_post_type( (int) $_GET['post'] );
 		}
 
-		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$current_screen = $this->get_current_screen();
 
 		if ( $current_screen instanceof WP_Screen ) {
 			$current_post = get_post();

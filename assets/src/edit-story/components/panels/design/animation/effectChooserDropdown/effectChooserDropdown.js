@@ -34,7 +34,11 @@ import {
   experimentalEffects,
 } from './dropdownConstants';
 import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
-import { getDirectionalEffect, getDisabledBackgroundEffects } from './utils';
+import {
+  getDirectionalEffect,
+  getDisabledBackgroundEffects,
+  generateDynamicProps,
+} from './utils';
 import {
   styleOverrideForSelectButton,
   styleOverrideForAnimationEffectMenu,
@@ -113,20 +117,30 @@ export default function EffectChooserDropdown({
       event.preventDefault();
       if (value === NO_ANIMATION) {
         onNoEffectSelected();
+        return;
       }
 
       const selectedAnimation = animationOptionsObject[value]?.animation;
+      const animationWithDynamicProps = generateDynamicProps({
+        animation: selectedAnimation,
+        disabledTypeOptionsMap,
+      });
       onAnimationSelected({
-        animation: selectedAnimation.value,
-        panDir: selectedAnimation?.panDirection,
-        zoomDirection: selectedAnimation?.zoomDirection,
-        flyInDir: selectedAnimation?.flyInDirection,
-        rotateInDir: selectedAnimation?.rotateInDirection,
-        whooshInDir: selectedAnimation?.whooshInDirection,
-        scaleDirection: selectedAnimation?.scaleDirection,
+        animation: animationWithDynamicProps.value,
+        panDir: animationWithDynamicProps?.panDirection,
+        zoomDirection: animationWithDynamicProps?.zoomDirection,
+        flyInDir: animationWithDynamicProps?.flyInDirection,
+        rotateInDir: animationWithDynamicProps?.rotateInDirection,
+        whooshInDir: animationWithDynamicProps?.whooshInDirection,
+        scaleDirection: animationWithDynamicProps?.scaleDirection,
       });
     },
-    [animationOptionsObject, onAnimationSelected, onNoEffectSelected]
+    [
+      animationOptionsObject,
+      onAnimationSelected,
+      onNoEffectSelected,
+      disabledTypeOptionsMap,
+    ]
   );
 
   return (

@@ -28,13 +28,15 @@ import { dataFontEm, dataPixels } from '../../../../../units';
 import stripHTML from '../../../../../utils/stripHTML';
 import { PRESETS } from '../textPresets';
 
+const TIMEOUT_INTERVAL = 300000;
+
 describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => {
   let fixture;
   let originalTimeout;
 
   beforeEach(async () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT_INTERVAL;
     fixture = new Fixture();
     await fixture.render();
   });
@@ -44,13 +46,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     fixture.restore();
   });
 
-  // TODO #6956
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should add text presets below each other if added consecutively', async () => {
+  it('should add text presets below each other if added consecutively', async () => {
     await fixture.editor.library.textTab.click();
 
-    await waitFor(() =>
-      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+    await waitFor(
+      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      { timeout: TIMEOUT_INTERVAL / 3 }
     );
 
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
@@ -100,8 +101,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     await fixture.editor.library.textTab.click();
 
-    await waitFor(() =>
-      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+    await waitFor(
+      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      {
+        timeout: TIMEOUT_INTERVAL / 3,
+      }
     );
 
     // Stagger all different text presets.

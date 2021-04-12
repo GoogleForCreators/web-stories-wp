@@ -11,10 +11,19 @@ services:
     class: PHPStan\WordPress\GetPostsDynamicFunctionReturnTypeExtension
     tags:
       - phpstan.broker.dynamicFunctionReturnTypeExtension
+  -
+    class: PHPStan\WordPress\ServiceContainerDynamicReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicMethodReturnTypeExtension
+  -
+    class: PHPStan\WordPress\ServicesDynamicReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
 parameters:
   level: 8
   inferPrivatePropertyTypeFromConstructor: true
+  checkGenericClassInNonGenericObjectType: false
   checkMissingIterableValueType: false
   paths:
     - includes/

@@ -19,7 +19,13 @@
  */
 import * as React from 'react';
 import { FlagsProvider } from 'flagged';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  configure,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -33,6 +39,16 @@ import actPromise from '../../karma-fixture/actPromise';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
+if ('true' === process.env.CI) {
+  configure({
+    getElementError: (message) => {
+      const error = new Error(message);
+      error.name = 'TestingLibraryElementError';
+      error.stack = null;
+      return error;
+    },
+  });
+}
 const defaultConfig = {
   capabilities: {
     canManageSettings: true,

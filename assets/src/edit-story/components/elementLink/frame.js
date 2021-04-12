@@ -26,79 +26,66 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import Popup from '../popup';
+import Tooltip from '../tooltip';
+import { TOOLTIP_PLACEMENT } from '../../../design-system/components/tooltip';
 import { getLinkFromElement } from './index';
 
-const Tooltip = styled.div`
-  position: relative;
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.mg.v3};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: 14px;
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
-  padding: 6px;
-  border-radius: 6px;
+const StyledTooltip = styled(Tooltip)`
   box-shadow: 0px 6px 10px
-    ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  max-width: 200px;
-  pointer-events: all;
-
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    border-top: 6px solid
-      ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    box-shadow: 0px 6px 10px
-      ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.1)};
+    ${({ theme }) => rgba(theme.colors.standard.black, 0.1)};
+  align-items: center;
+  p {
+    display: flex;
+    max-width: 100%;
   }
 `;
 
-const BrandIcon = styled.img`
+const IconWrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.fg.secondary};
   width: 24px;
   height: 24px;
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.v3};
-  border: none;
   border-radius: 50%;
   margin-right: 8px;
+  display: inline-block;
+`;
+
+const BrandIcon = styled.img`
+  width: 100%;
+  height: 100%;
+  border: none;
 `;
 
 const LinkDesc = styled.span`
+  padding-top: 2px;
   flex: 1;
+  max-width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 `;
 
-const spacing = { y: 16 };
-
 function WithLink({ element, active, children, anchorRef }) {
   const link = getLinkFromElement(element);
 
-  return (
-    <>
-      {children}
-      <Popup
-        anchor={anchorRef}
-        isOpen={active}
-        placement={'top'}
-        spacing={spacing}
-      >
-        {Boolean(link?.url) && (
-          <Tooltip>
+  const tooltipContent =
+    link?.url && active ? (
+      <>
+        <IconWrapper>
+          {link?.icon && (
             <BrandIcon src={link.icon} alt={__('Site Icon', 'web-stories')} />
-            <LinkDesc>{link.desc || link.url}</LinkDesc>
-          </Tooltip>
-        )}
-      </Popup>
-    </>
+          )}
+        </IconWrapper>
+        <LinkDesc>{link.desc || link.url}</LinkDesc>
+      </>
+    ) : null;
+  return (
+    <StyledTooltip
+      forceAnchorRef={anchorRef}
+      placement={TOOLTIP_PLACEMENT.TOP_START}
+      title={tooltipContent}
+    >
+      {children}
+    </StyledTooltip>
   );
 }
 

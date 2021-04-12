@@ -337,25 +337,25 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::print_bookend
+	 * @covers ::print_social_share
 	 */
-	public function test_print_bookend() {
+	public function test_print_social_share() {
 		$source   = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
-		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-bookend layout="nodisplay"><script type="application/json">{"bookendVersion":"v1.0","components":[],"shareProviders":[{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-bookend></amp-story></body></html>';
+		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-social-share layout="nodisplay"><script type="application/json">{"shareProviders":[{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-social-share></amp-story></body></html>';
 
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
-		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
+		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
-		$this->assertContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
+		$this->assertContains( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $expected, $actual );
 	}
 
 	/**
-	 * @covers ::print_bookend
+	 * @covers ::print_social_share
 	 */
-	public function test_print_bookend_filter() {
+	public function test_print_social_share_filter() {
 		add_filter( 'web_stories_share_providers', '__return_empty_array' );
 
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
@@ -363,9 +363,9 @@ class HTML extends WP_UnitTestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
-		$actual = $this->call_private_method( $renderer, 'print_bookend', [ $source ] );
+		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
-		$this->assertNotContains( '<amp-story-bookend layout="nodisplay"><script type="application/json">', $actual );
+		$this->assertNotContains( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $source, $actual );
 
 		remove_filter( 'web_stories_share_providers', '__return_empty_array' );

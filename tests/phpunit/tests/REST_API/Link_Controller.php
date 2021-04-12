@@ -2,14 +2,14 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Capabilities_Setup;
 use Spy_REST_Server;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
 
 class Link_Controller extends \WP_Test_REST_TestCase {
+	use Capabilities_Setup;
 	/**
 	 * @var WP_REST_Server
 	 */
@@ -64,11 +64,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 
 		$this->request_count = 0;
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
-		$story_post_type->add_caps_to_roles();
+		$this->add_caps_to_roles();
 	}
 
 	public function tearDown() {
@@ -78,11 +74,7 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
-		$story_post_type->remove_caps_from_roles();
+		$this->remove_caps_from_roles();
 
 		parent::tearDown();
 	}

@@ -33,7 +33,7 @@ use Google\Web_Stories\Integrations\Site_Kit;
 /**
  * Tracking class.
  */
-class Tracking {
+class Tracking extends Service_Base {
 	/**
 	 * Web Stories tracking script handle.
 	 *
@@ -91,7 +91,7 @@ class Tracking {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		// By not passing an actual script src we can print only the inline script.
 		wp_register_script(
 			self::SCRIPT_HANDLE,
@@ -105,6 +105,17 @@ class Tracking {
 			self::SCRIPT_HANDLE,
 			'window.webStoriesTrackingSettings = ' . wp_json_encode( $this->get_settings() ) . ';'
 		);
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_init';
 	}
 
 	/**
