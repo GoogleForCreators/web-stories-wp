@@ -76,7 +76,7 @@ fdescribe('TextEdit integration', () => {
         //await fixture.events.mouse.clickOn(draft, 30, 5, { clickCount: 3 });
         //expect(boldToggle.checked).toEqual(false);
 
-        await fixture.snapshot('before mod+b');
+        /*await fixture.snapshot('before mod+b');
 
         await fixture.events.keyboard.shortcut('mod+b');
 
@@ -88,7 +88,7 @@ fdescribe('TextEdit integration', () => {
         await fixture.events.mouse.seq(({ moveRel, down }) => [
           moveRel(editor, -10),
           down(),
-        ]);
+        ]);*/
 
        /* expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
