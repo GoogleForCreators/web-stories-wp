@@ -78,6 +78,7 @@ fdescribe('TextEdit integration', () => {
 
         await fixture.snapshot('before mod+b');
 
+        // THIS LINE CAUSES FAILURE
         await fixture.events.keyboard.shortcut('mod+b');
 
         await fixture.snapshot('after mod+b');
