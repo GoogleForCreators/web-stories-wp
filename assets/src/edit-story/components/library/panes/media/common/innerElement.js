@@ -136,7 +136,6 @@ function InnerElement({
     width: width,
     height: height,
     alt: alt,
-    'aria-label': alt,
     crossOrigin: 'anonymous',
   };
 
@@ -155,6 +154,7 @@ function InnerElement({
   const imageProps = {
     ...commonImageProps,
     src: thumbnailURL,
+    'aria-label': alt,
   };
   const videoProps = {
     ...commonProps,
