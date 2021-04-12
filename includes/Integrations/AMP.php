@@ -226,7 +226,7 @@ class AMP extends Service_Base {
 		if (
 			'web-story' === get_post_type( $post )
 			&&
-			defined( 'AMP__VERSION' )
+			defined( '\AMP__VERSION' )
 			&&
 			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>=' )
 		) {
