@@ -48,9 +48,11 @@ function setup_new_site() {
 
 	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
 	// TODO move this logic to Database_Upgrader class.
-	$injector          = Services::get_injector();
-	$database_upgrader = $injector->make( Database_Upgrader::class );
-	$database_upgrader->register();
+	$injector = Services::get_injector();
+	if ( method_exists( $injector, 'make' ) ) {
+		$database_upgrader = $injector->make( Database_Upgrader::class );
+		$database_upgrader->register();
+	}
 }
 
 /**
