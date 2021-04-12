@@ -33,7 +33,7 @@ const DEFAULT_POPUP_Z_INDEX = 11;
 
 const Container = styled.div.attrs(
   ({
-    offset: { x, y, width, height },
+    $offset: { x, y, width, height },
     fillWidth,
     fillHeight,
     placement,
@@ -83,7 +83,8 @@ function Popup({
         return;
       }
       setPopupState({
-        offset: getOffset(placement, spacing, anchor, dock, popup),
+        offset:
+          anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
       });
     },
     [anchor, dock, placement, spacing, mounted]
@@ -114,7 +115,7 @@ function Popup({
           fillHeight={fillHeight}
           placement={placement}
           zIndex={zIndex}
-          offset={popupState.offset}
+          $offset={popupState.offset}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

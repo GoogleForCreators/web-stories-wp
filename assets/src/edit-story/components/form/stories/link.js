@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -50,7 +50,7 @@ export const _default = () => {
   return (
     <Container>
       <LinkInput
-        description={__('Type an address to add a link', 'web-stories')}
+        hint={__('Type an address to add a link', 'web-stories')}
         onChange={onChange}
         onFocus={() => {}}
         value={value}

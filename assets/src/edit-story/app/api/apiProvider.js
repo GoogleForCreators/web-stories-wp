@@ -18,8 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
+import getAllTemplates from '@web-stories-wp/templates';
 
 /**
  * WordPress dependencies
@@ -33,27 +34,73 @@ import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import getAllPageLayouts from './getAllPageLayouts';
+import removeImagesFromPageLayouts from './removeImagesFromPageLayouts';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck, metaBoxes, currentUser },
+    api: {
+      stories,
+      media,
+      link,
+      users,
+      statusCheck,
+      metaBoxes,
+      currentUser,
+      storyLocking,
+    },
     encodeMarkup,
     cdnURL,
     assetsURL,
   } = useConfig();
 
+  const pageLayouts = useRef({
+    base: [],
+    withoutImages: [],
+  });
+
   const getStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
-        _embed: 'wp:featuredmedia,author',
+        _embed: 'wp:featuredmedia,wp:lockuser,author',
         web_stories_demo: false,
       });
 
       return apiFetch({ path });
     },
     [stories]
+  );
+
+  const getStoryLockById = useCallback(
+    (storyId) => {
+      const path = addQueryArgs(`${stories}${storyId}/lock`, {
+        _embed: 'author',
+      });
+
+      return apiFetch({ path });
+    },
+    [stories]
+  );
+
+  const setStoryLockById = useCallback(
+    (storyId) => {
+      const path = `${stories}${storyId}/lock`;
+
+      return apiFetch({ path, method: 'POST' });
+    },
+    [stories]
+  );
+
+  const deleteStoryLockById = useCallback(
+    (storyId, nonce) => {
+      const data = new window.FormData();
+      data.append('_wpnonce', nonce);
+
+      const url = addQueryArgs(storyLocking, { _method: 'DELETE' });
+
+      window.navigator.sendBeacon?.(url, data);
+    },
+    [storyLocking]
   );
 
   const getDemoStoryById = useCallback(
@@ -323,15 +370,31 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
-  const getPageLayouts = useCallback(() => {
-    return getAllPageLayouts({ cdnURL, assetsURL });
-  }, [cdnURL, assetsURL]);
+  const getPageLayouts = useCallback(
+    async ({ showImages = false } = {}) => {
+      // check if pageLayouts have been loaded yet
+      if (pageLayouts.current.base.length === 0) {
+        pageLayouts.current.base = await getAllTemplates({ cdnURL });
+        pageLayouts.current.withoutImages = removeImagesFromPageLayouts({
+          templates: pageLayouts.current.base,
+          assetsURL,
+          showImages,
+        });
+      }
+
+      return pageLayouts.current[showImages ? 'base' : 'withoutImages'];
+    },
+    [cdnURL, assetsURL]
+  );
 
   const state = {
     actions: {
       autoSaveById,
       getStoryById,
       getDemoStoryById,
+      getStoryLockById,
+      setStoryLockById,
+      deleteStoryLockById,
       getMedia,
       getLinkMetadata,
       saveStoryById,

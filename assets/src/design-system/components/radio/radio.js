@@ -41,7 +41,7 @@ const Container = styled.div`
   padding: 8px 0;
 `;
 
-const ButtonContainer = styled.div`
+const RadioInputContainer = styled.div`
   position: relative;
   height: ${RING_DIAMETER}px;
   width: ${RING_DIAMETER}px;
@@ -57,7 +57,6 @@ const LabelContainer = styled.div`
 const RadioBorder = styled.span(
   ({ theme }) => css`
     display: inline-block;
-    box-sizing: border-box;
     height: ${RING_DIAMETER}px;
     width: ${RING_DIAMETER}px;
     border: ${BORDER_WIDTH}px solid ${theme.colors.border.defaultNormal};
@@ -166,11 +165,11 @@ export const Radio = forwardRef(function RadioButton(
 
   return (
     <Container className={className}>
-      <ButtonContainer>
+      <RadioInputContainer>
         <HiddenInput id={inputId} ref={ref} {...props} />
         <RadioBorder />
         <InnerButton />
-      </ButtonContainer>
+      </RadioInputContainer>
 
       <LabelContainer>
         <Text

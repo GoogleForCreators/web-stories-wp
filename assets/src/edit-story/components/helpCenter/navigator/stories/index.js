@@ -47,7 +47,7 @@ export const Navigator = () => {
   const [visible, setVisible] = useState(false);
   return (
     <ThemeProvider theme={dsTheme}>
-      <ThemeGlobals.OverrideFocusOutline />
+      <ThemeGlobals.Styles />
       <Bg>
         <Wrapper>
           <HelpCenterNavigator

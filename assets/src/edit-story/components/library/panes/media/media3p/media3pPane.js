@@ -27,6 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { Headline, THEME_CONSTANTS } from '../../../../../../design-system';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import {
@@ -40,19 +41,25 @@ import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import resourceList from '../../../../../utils/resourceList';
-import { PillGroup } from '../../shared';
+import { ChipGroup } from '../../shared';
 import TermsDialog from './termsDialog';
 
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   margin-top: 16px;
   margin-bottom: 16px;
   padding: 0 24px;
 `;
 
-const MediaSubheading = styled.div`
+const MediaSubheading = styled(Headline).attrs(() => ({
+  as: 'h2',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+}))`
   margin-top: 24px;
   padding: 0 24px;
   ${(props) => props.shouldDisplay || 'display: none;'}
@@ -197,7 +204,7 @@ function Media3pPane(props) {
         id={`provider-bottom-wrapper-${providerType}`}
       >
         {PROVIDERS[providerType].supportsCategories && (
-          <PillGroup
+          <ChipGroup
             items={state.categories.categories}
             selectedItemId={state.categories.selectedCategoryId}
             selectItem={actions.selectCategory}

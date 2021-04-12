@@ -38,15 +38,14 @@ import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
+import { Snackbar, useSnackbar, themeHelpers } from '../../../design-system';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
 })`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
+  ${themeHelpers.expandTextPreset(
+    ({ paragraph }, { MEDIUM }) => paragraph[MEDIUM]
+  )}
   background-color: ${({ theme }) => theme.colors.bg.primary};
 
   position: relative;
@@ -76,24 +75,34 @@ const MetaBoxesArea = styled(Area).attrs({
 `;
 
 function Layout() {
+  const snackbarState = useSnackbar(
+    ({ removeSnack, currentSnacks, placement }) => ({
+      onRemove: removeSnack,
+      notifications: currentSnacks,
+      placement,
+    })
+  );
   return (
-    <LayoutProvider>
-      <PrepublishChecklistProvider>
-        <HighlightsProvider>
-          <Editor zIndex={3}>
-            <CanvasProvider>
-              <Area area="lib">
-                <Library />
-              </Area>
-              <Workspace />
-            </CanvasProvider>
-            <MetaBoxesArea>
-              <MetaBoxes />
-            </MetaBoxesArea>
-          </Editor>
-        </HighlightsProvider>
-      </PrepublishChecklistProvider>
-    </LayoutProvider>
+    <>
+      <LayoutProvider>
+        <PrepublishChecklistProvider>
+          <HighlightsProvider>
+            <Editor zIndex={3}>
+              <CanvasProvider>
+                <Area area="lib">
+                  <Library />
+                </Area>
+                <Workspace />
+              </CanvasProvider>
+              <MetaBoxesArea>
+                <MetaBoxes />
+              </MetaBoxesArea>
+            </Editor>
+          </HighlightsProvider>
+        </PrepublishChecklistProvider>
+      </LayoutProvider>
+      <Snackbar.Container {...snackbarState} />
+    </>
   );
 }
 

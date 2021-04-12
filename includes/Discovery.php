@@ -35,7 +35,7 @@ use WP_Post;
 /**
  * Discovery class.
  */
-class Discovery {
+class Discovery extends Service_Base {
 	use Publisher;
 	/**
 	 * Initialize discovery functionality.
@@ -44,7 +44,7 @@ class Discovery {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );

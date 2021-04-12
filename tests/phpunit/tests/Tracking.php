@@ -39,7 +39,7 @@ class Tracking extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
 	public function test_register_tracking_script() {
 		$site_kit = $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class );
@@ -57,7 +57,7 @@ class Tracking extends \WP_UnitTestCase {
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
 
 		$tracking = new \Google\Web_Stories\Tracking( $experiments, $site_kit );
-		$tracking->init();
+		$tracking->register();
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ]->src );
 		$after = wp_scripts()->get_data( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'after' );

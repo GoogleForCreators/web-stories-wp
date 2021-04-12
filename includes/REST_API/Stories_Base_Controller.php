@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
-use Google\Web_Stories\Media;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -47,6 +46,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @var Decoder Decoder instance.
 	 */
 	private $decoder;
+
 	/**
 	 * Constructor.
 	 *
@@ -78,20 +78,25 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return $prepared_post;
 		}
 
-		// Ensure that content and story_data are updated together.
-		if (
-			( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
-			( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
-		) {
-			return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
-		}
+		$schema = $this->get_item_schema();
+		// Post content.
+		if ( ! empty( $schema['properties']['content'] ) ) {
 
-		if ( isset( $request['content'] ) ) {
-			$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
+			// Ensure that content and story_data are updated together.
+			if (
+				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
+				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
+			) {
+				return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
+			}
+
+			if ( isset( $request['content'] ) ) {
+				$prepared_post->post_content = $this->decoder->base64_decode( $prepared_post->post_content );
+			}
 		}
 
 		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
-		if ( isset( $request['story_data'] ) ) {
+		if ( ! empty( $schema['properties']['story_data'] ) && isset( $request['story_data'] ) ) {
 			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
 		}
 
@@ -121,11 +126,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
-		if ( in_array( 'featured_media_url', $fields, true ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
-			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
-		}
-
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
@@ -141,7 +141,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		/* This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
-
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
@@ -160,17 +159,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$schema['properties']['story_data'] = [
 			'description' => __( 'Story data stored as a JSON object. Stored in post_content_filtered field.', 'web-stories' ),
 			'type'        => 'object',
-			'context'     => [ 'edit' ],
+			'context'     => [ 'view', 'edit' ],
 			'default'     => [],
-		];
-
-		$schema['properties']['featured_media_url'] = [
-			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
-			'type'        => 'string',
-			'format'      => 'uri',
-			'context'     => [ 'view', 'edit', 'embed' ],
-			'readonly'    => true,
-			'default'     => '',
 		];
 
 		$this->schema = $schema;

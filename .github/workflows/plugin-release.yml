@@ -55,7 +55,7 @@ jobs:
           fi
 
       - name: Ensure RC exists for stable release
-        if: ${{ ! env.IS_RC }}
+        if: ${{ ! contains(github.event.inputs.version, 'rc') }}
         run: |
           if ! git describe --abbrev=0 --tags --match "$TAG_NAME-rc.*" &>/dev/null; then
             echo "No RC exists for this planned stable release"
@@ -120,6 +120,8 @@ jobs:
         with:
           ref: static-site
           lfs: true
+          # Needed so the below commits will trigger a website deployment.
+          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       # For release candidates of new major releases:
       #
@@ -265,6 +267,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
+          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Download assets version
         uses: actions/download-artifact@v2
@@ -577,6 +580,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
+          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"

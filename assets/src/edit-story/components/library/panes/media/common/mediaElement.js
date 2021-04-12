@@ -29,13 +29,10 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import {
-  useKeyDownEffect,
-  Tooltip,
-  PLACEMENT,
-} from '../../../../../../design-system';
+import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
+import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 
@@ -57,8 +54,7 @@ const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.3)};
+  background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
@@ -72,12 +68,7 @@ const gradientAnimation = keyframes`
 
 const UploadingIndicator = styled.div`
   height: 4px;
-  background: linear-gradient(
-    270deg,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 15%,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.secondary} 50%,
-    ${({ theme }) => theme.DEPRECATED_THEME.colors.loading.primary} 85%
-  );
+  background: linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%);
   background-size: 400% 400%;
   position: absolute;
   bottom: 10px;
@@ -159,12 +150,8 @@ function Element({
         setShowVideoDetail(false);
         if (mediaElement.current && hoverTimer == null) {
           const timer = setTimeout(() => {
-            if (activeRef.current) {
-              const playPromise = mediaElement.current.play();
-              if (playPromise) {
-                // All supported browsers return promise but unit test runner does not.
-                playPromise.catch(() => {});
-              }
+            if (activeRef.current && src) {
+              mediaElement.current.play().catch(() => {});
             }
           }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
           setHoverTimer(timer);
@@ -173,7 +160,7 @@ function Element({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current) {
+        if (mediaElement.current && src) {
           // Stop video and reset position.
           mediaElement.current.pause();
           mediaElement.current.currentTime = 0;
@@ -181,7 +168,7 @@ function Element({
       }
     }
     return resetHoverTime;
-  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
+  }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = (thumbnailUrl, baseColor) => () => {
     onInsert({ ...resource, baseColor }, thumbnailUrl);
@@ -297,10 +284,7 @@ function MediaElement(props) {
 
   if (isTranscoding) {
     return (
-      <Tooltip
-        placement={PLACEMENT.BOTTOM}
-        title={__('Video optimization in progress', 'web-stories')}
-      >
+      <Tooltip title={__('Video optimization in progress', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

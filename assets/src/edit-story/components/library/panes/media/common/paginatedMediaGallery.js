@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, {
+import {
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -27,22 +27,28 @@ import React, {
 } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import MediaGallery from '../common/mediaGallery';
+import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import {
   MediaGalleryContainer,
   MediaGalleryInnerContainer,
   MediaGalleryLoadingPill,
   MediaGalleryMessage,
-} from '../common/styles';
-import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+} from './styles';
 
 const ROOT_MARGIN = 300;
 
 const SHOW_LOADING_PILL_DELAY_MS = 1000;
+
+const StyledText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
 
 function PaginatedMediaGallery({
   providerType,
@@ -174,7 +180,12 @@ function PaginatedMediaGallery({
       </MediaGalleryContainer>
       {showLoadingPill && (
         <MediaGalleryLoadingPill data-testid={'loading-pill'}>
-          {__('Loading…', 'web-stories')}
+          <StyledText
+            forwardedAs="span"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
+            {__('Loading…', 'web-stories')}
+          </StyledText>
         </MediaGalleryLoadingPill>
       )}
       {!showLoadingPill && attribution}

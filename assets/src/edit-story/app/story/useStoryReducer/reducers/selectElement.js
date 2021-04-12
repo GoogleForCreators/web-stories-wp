@@ -31,9 +31,13 @@ function selectElement(state, { elementId }) {
 
   const currentPage = state.pages.find(({ id }) => id === state.current);
   const isBackgroundElement = currentPage.elements[0].id === elementId;
+  const element = currentPage.elements.find(({ id }) => id === elementId);
+  const isVideoPlaceholder = element?.resource?.isPlaceholder;
   const hasExistingSelection = state.selection.length > 0;
-  // The bg element can't be added to non-empty selection
-  if (isBackgroundElement && hasExistingSelection) {
+
+  // The bg element can't be added to non-empty selection.
+  // Same goes for video elements with placeholder resources.
+  if ((isBackgroundElement || isVideoPlaceholder) && hasExistingSelection) {
     return state;
   }
 

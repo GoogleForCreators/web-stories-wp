@@ -24,6 +24,14 @@ import { render, screen } from '@testing-library/react';
  */
 import EmbedLoading from '../embedLoading';
 
+jest.mock('@wordpress/element', () => {
+  const originalModule = jest.requireActual('react');
+  return {
+    ...originalModule,
+    concatChildren: jest.fn(),
+  };
+});
+
 describe('EmbedLoading', () => {
   it('should display spinner', () => {
     render(<EmbedLoading />);

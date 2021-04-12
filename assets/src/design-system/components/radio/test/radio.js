@@ -22,24 +22,23 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Radio', () => {
   it('should render a radio button', () => {
-    const { getByRole } = renderWithProviders(
-      <Radio onChange={noop} value="1" />
+    const { getByRole, getByText } = renderWithProviders(
+      <Radio name="foo" label="this is my label" onChange={noop} value="1" />
     );
 
     expect(getByRole('radio')).toBeInTheDocument();
-  });
-
-  it('should render a label', () => {
-    const { getByText } = renderWithProviders(
-      <Radio label="this is my label" onChange={noop} value="1" />
-    );
-
     expect(getByText('this is my label')).toBeInTheDocument();
   });
 
   it('should render a hint', () => {
     const { getByText } = renderWithProviders(
-      <Radio hint="this is my hint" onChange={noop} value="1" />
+      <Radio
+        name="foo"
+        label="this is my label"
+        hint="this is my hint"
+        onChange={noop}
+        value="1"
+      />
     );
 
     expect(getByText('this is my hint')).toBeInTheDocument();

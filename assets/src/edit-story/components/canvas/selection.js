@@ -51,6 +51,12 @@ function Selection() {
     return null;
   }
 
+  // No need for displaying non-functional frame for video placeholders.
+  const isVideoPlaceholder = selectedElements[0]?.resource?.isPlaceholder;
+  if (isVideoPlaceholder) {
+    return null;
+  }
+
   // Do not show selection for in editing mode.
   if (editingElement || isAnimating) {
     return null;

@@ -31,6 +31,9 @@ import {
   theme as externalDesignSystemTheme,
   lightMode,
   ThemeGlobals,
+  useSnackbar,
+  SnackbarProvider,
+  Snackbar,
 } from '../../design-system';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
@@ -42,19 +45,19 @@ import {
 } from '../constants';
 
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
+import usePrevious from '../../design-system/utils/usePrevious';
 import ApiProvider from './api/apiProvider';
 import { ConfigProvider } from './config';
 import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
-import { SnackbarProvider } from './snackbar';
 import {
   EditorSettingsView,
   ExploreTemplatesView,
   MyStoriesView,
   SavedTemplatesView,
-  StoryAnimTool,
   TemplateDetailsView,
 } from './views';
 import useApi from './api/useApi';
+import useApiAlerts from './api/useApiAlerts';
 
 const AppContent = () => {
   const {
@@ -63,6 +66,7 @@ const AppContent = () => {
       queryParams: { id: templateId },
     },
   } = useRouteHistory();
+
   const { currentTemplate } = useApi(
     ({
       state: {
@@ -115,43 +119,64 @@ const AppContent = () => {
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
     matchPath(currentPath, NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL);
 
+  useApiAlerts();
+  const {
+    clearSnackbar,
+    removeSnack,
+    placement,
+    currentSnacks,
+  } = useSnackbar();
+
+  // if the current path changes clear the snackbar
+  const prevPath = usePrevious(currentPath);
+
+  useEffect(() => {
+    if (currentPath !== prevPath) {
+      clearSnackbar();
+    }
+  }, [clearSnackbar, currentPath, prevPath]);
+
   return (
-    <AppFrame>
-      {!hideLeftRail && <LeftRail />}
-      <PageContent fullWidth={hideLeftRail}>
-        <Route
-          exact
-          path={APP_ROUTES.MY_STORIES}
-          component={<MyStoriesView />}
-        />
-        <Route
-          exact
-          path={APP_ROUTES.TEMPLATES_GALLERY}
-          component={<ExploreTemplatesView />}
-        />
-        <Route
-          path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
-          component={<TemplateDetailsView />}
-        />
-        <Route
-          exact
-          path={APP_ROUTES.SAVED_TEMPLATES}
-          component={<SavedTemplatesView />}
-        />
-        <Route
-          path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
-          component={<TemplateDetailsView />}
-        />
-        <Route
-          path={APP_ROUTES.EDITOR_SETTINGS}
-          component={<EditorSettingsView />}
-        />
-        <Route
-          path={APP_ROUTES.STORY_ANIM_TOOL}
-          component={<StoryAnimTool />}
-        />
-      </PageContent>
-    </AppFrame>
+    <>
+      <AppFrame>
+        {!hideLeftRail && <LeftRail />}
+        <PageContent fullWidth={hideLeftRail}>
+          <Route
+            exact
+            path={APP_ROUTES.MY_STORIES}
+            component={<MyStoriesView />}
+          />
+          <Route
+            exact
+            path={APP_ROUTES.TEMPLATES_GALLERY}
+            component={<ExploreTemplatesView />}
+          />
+          <Route
+            path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
+            component={<TemplateDetailsView />}
+          />
+          <Route
+            exact
+            path={APP_ROUTES.SAVED_TEMPLATES}
+            component={<SavedTemplatesView />}
+          />
+          <Route
+            path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
+            component={<TemplateDetailsView />}
+          />
+          <Route
+            path={APP_ROUTES.EDITOR_SETTINGS}
+            component={<EditorSettingsView />}
+          />
+        </PageContent>
+      </AppFrame>
+      <Snackbar.Container
+        notifications={currentSnacks}
+        onRemove={removeSnack}
+        placement={placement}
+        max={1}
+      />
+    </>
   );
 };
 
@@ -166,7 +191,7 @@ function App({ config }) {
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         <ConfigProvider config={config}>
           <ApiProvider>
             <NavProvider>

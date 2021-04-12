@@ -40,7 +40,7 @@ import {
 import { useDashboardResultsLabel } from '../../../../utils';
 import { PageHeading, BodyViewOptions } from '../../shared';
 
-function Header({ filter, totalTemplates, sort, view }) {
+function Header({ filter, isLoading, totalTemplates, sort, view }) {
   const enableInProgressTemplateActions = useFeature(
     'enableInProgressTemplateActions'
   );
@@ -59,6 +59,7 @@ function Header({ filter, totalTemplates, sort, view }) {
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
+        isLoading={isLoading}
         pageSortOptions={TEMPLATES_GALLERY_SORT_MENU_ITEMS}
         showSortDropdown={enableInProgressTemplateActions}
         handleSortChange={enableInProgressTemplateActions ? sort.set : () => {}}
@@ -73,6 +74,7 @@ function Header({ filter, totalTemplates, sort, view }) {
 
 Header.propTypes = {
   filter: FilterPropTypes.isRequired,
+  isLoading: PropTypes.bool,
   sort: SortPropTypes.isRequired,
   totalTemplates: PropTypes.number,
   view: ViewPropTypes.isRequired,

@@ -17,9 +17,17 @@
 /**
  * External dependencies
  */
-import React, { useCallback, useState, useMemo, forwardRef } from 'react';
+import * as React from 'react';
+const { useCallback, useState, useMemo, forwardRef } = React;
+
 import { FlagsProvider } from 'flagged';
-import { render, act, screen, waitFor } from '@testing-library/react';
+import {
+  configure,
+  render,
+  act,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import Modal from 'react-modal';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
@@ -36,8 +44,20 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
+import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
+
+if ('true' === process.env.CI) {
+  configure({
+    getElementError: (message) => {
+      const error = new Error(message);
+      error.name = 'TestingLibraryElementError';
+      error.stack = null;
+      return error;
+    },
+  });
+}
 
 export const MEDIA_PER_PAGE = 20;
 const DEFAULT_CONFIG = {
@@ -48,11 +68,19 @@ const DEFAULT_CONFIG = {
     video: ['video/mp4', 'video/ogg'],
   },
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
+  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
   capabilities: {
     hasUploadMediaAction: true,
     hasPublishAction: true,
     hasAssignAuthorAction: true,
   },
+  dashboardLink: 'https://www.example.com/dashboard',
+  postLock: {
+    interval: 150,
+    showLockedDialog: true,
+  },
+  nonce: '123456789',
   version: '1.0.0-alpha.9',
   isRTL: false,
   locale: {
@@ -152,8 +180,8 @@ export class Fixture {
       'noselection',
       'publishing',
       'status',
-      'stylepreset-style',
-      'stylepreset-color',
+      `stylepreset-${PRESET_TYPES.STYLE}`,
+      `stylepreset-${PRESET_TYPES.COLOR}`,
     ];
     // Open all panels by default.
     panels.forEach((panel) => {
@@ -297,10 +325,10 @@ export class Fixture {
       { timeout: 5000 }
     );
 
-    // Check to see if Roboto font is loaded.
+    // Check to see if Google Sans font is loaded.
     await waitFor(async () => {
       const weights = ['400', '700'];
-      const font = '12px Roboto';
+      const font = '12px "Google Sans"';
       const fonts = weights.map((weight) => `${weight} ${font}`);
       await Promise.all(
         fonts.map((thisFont) => {
@@ -309,7 +337,7 @@ export class Fixture {
       );
       fonts.forEach((thisFont) => {
         if (!document.fonts.check(thisFont, '')) {
-          throw new Error('Not ready: Roboto font could not be loaded');
+          throw new Error('Not ready: Google Sans font could not be loaded');
         }
       });
     });
@@ -648,6 +676,7 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
+            preview_link: 'http://stories.local/?post_type=web-story&p=1',
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,
@@ -676,6 +705,7 @@ class APIProviderFixture {
             modified: '2020-05-06T22:32:37',
             excerpt: { raw: '' },
             link: 'http://stories.local/?post_type=web-story&p=1',
+            preview_link: 'http://stories.local/?post_type=web-story&p=1',
             story_data: {
               version: DATA_VERSION,
               pages: this._pages,

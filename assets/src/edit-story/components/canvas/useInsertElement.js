@@ -26,6 +26,7 @@ import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useLocalMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
+import STICKERS from '../../stickers';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
 import useFocusCanvas from './useFocusCanvas';
@@ -91,7 +92,7 @@ function useInsertElement() {
         handleRegisterUsage(resource);
       }
       // Auto-play on insert.
-      if (type === 'video') {
+      if (type === 'video' && resource?.src && !resource.isPlaceholder) {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
@@ -129,12 +130,15 @@ function getElementProperties(
     scale = 100,
     focalX = 50,
     focalY = 50,
+    sticker,
     ...rest
   }
 ) {
   const { isMaskable } = getDefinitionForType(type);
 
   const attrs = { type, ...rest };
+
+  const stickerRatio = sticker && STICKERS?.[sticker?.type]?.aspectRatio;
 
   // Width and height defaults. Width takes precedence.
   const ratio =
@@ -146,7 +150,7 @@ function getElementProperties(
     width,
     height,
     attrs,
-    ratio,
+    stickerRatio || ratio,
     resource
   );
   width = size.width;
@@ -186,6 +190,7 @@ function getElementProperties(
           mask: mask || DEFAULT_MASK,
         }
       : {}),
+    ...(sticker ? { sticker } : {}),
   };
 }
 

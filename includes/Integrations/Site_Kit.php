@@ -27,12 +27,13 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Analytics;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Site_Kit.
  */
-class Site_Kit {
+class Site_Kit extends Service_Base {
 	/**
 	 * Analytics instance.
 	 *
@@ -56,7 +57,7 @@ class Site_Kit {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 
 		if ( $this->is_analytics_module_active() ) {

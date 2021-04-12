@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useSnackbar } from '../../snackbar';
+import { useSnackbar } from '../../../../design-system';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 
@@ -30,14 +30,10 @@ import { PROVIDERS } from './providerConfiguration';
  * @typedef {Object} FetchCategoriesEffectParams
  * @property {string} provider provider name
  * @property {string} selectedProvider current selected provider
- * @property {Array.<import('./categories/typedefs').Category>} categories
- * list of categories
- * @property {import('./categories/typedefs').FetchCategoriesStartFn}
- * fetchCategoriesStart action dispatched when fetching process starts
- * @property {import('./categories/typedefs').FetchCategoriesSuccessFn}
- * fetchCategoriesSuccess action dispatched when fetching is sucessful
- * @property {import('./categories/typedefs').FetchCategoriesErrorFn}
- * fetchCategoriesError action dispatched when fetching returns an error
+ * @property {Array.<import('./categories/typedefs').Category>} categories list of categories
+ * @property {import('./categories/typedefs').FetchCategoriesStartFn} fetchCategoriesStart action dispatched when fetching process starts
+ * @property {import('./categories/typedefs').FetchCategoriesSuccessFn} fetchCategoriesSuccess action dispatched when fetching is sucessful
+ * @property {import('./categories/typedefs').FetchCategoriesErrorFn} fetchCategoriesError action dispatched when fetching returns an error
  */
 
 /**
@@ -71,6 +67,7 @@ export default function useFetchCategoriesEffect({
         fetchCategoriesError({ provider });
         showSnackbar({
           message: PROVIDERS[provider].fetchCategoriesErrorMessage,
+          dismissable: true,
         });
       }
     }

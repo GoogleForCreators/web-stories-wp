@@ -27,13 +27,22 @@ export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
 
+export const ZOOM_SETTING = {
+  SINGLE: 'SINGLE',
+  DOUBLE: 'DOUBLE',
+  FILL: 'FILL',
+  FIT: 'FIT',
+};
+
 export const PAGE_RATIO = 2 / 3;
 export const PAGE_WIDTH = 412;
-export const PAGE_HEIGHT = 618;
-
-export const ALLOWED_EDITOR_PAGE_WIDTHS = [412, 268, 223];
+export const PAGE_HEIGHT = PAGE_WIDTH / PAGE_RATIO;
+export const PAGE_WIDTH_FACTOR = 12;
 
 export const FULLBLEED_RATIO = 9 / 16;
+
+export const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
+export const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 export const DESIGN_SPACE_MARGIN = 48;
 

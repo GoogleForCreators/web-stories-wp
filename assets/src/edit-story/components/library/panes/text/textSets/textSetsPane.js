@@ -26,6 +26,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import {
   THEME_CONSTANTS,
   Text,
@@ -33,7 +34,7 @@ import {
   Headline,
 } from '../../../../../../design-system';
 import { FullWidthWrapper } from '../../common/styles';
-import PillGroup from '../../shared/pillGroup';
+import { ChipGroup } from '../../shared';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
@@ -56,8 +57,11 @@ const TitleBar = styled.div`
 
 const TextSetsToggle = styled.div`
   display: flex;
-  p {
+
+  label {
+    cursor: pointer;
     margin: auto 12px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
   }
 `;
 
@@ -112,6 +116,7 @@ function TextSetsPane({ paneRef }) {
 
   const categories = useMemo(
     () => [
+      { id: null, label: __('All', 'web-stories') },
       ...Object.keys(textSets).map((category) => ({
         id: category,
         label: CATEGORIES[category] ?? category,
@@ -148,12 +153,16 @@ function TextSetsPane({ paneRef }) {
       <TitleBar>
         <Headline
           as="h3"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
         >
           {PANE_TEXT.TITLE}
         </Headline>
         <TextSetsToggle>
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <Text
+            as="label"
+            htmlFor={toggleId}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
             {PANE_TEXT.SWITCH_LABEL}
           </Text>
           <Toggle
@@ -162,12 +171,11 @@ function TextSetsPane({ paneRef }) {
             name={toggleId}
             checked={showInUse}
             onChange={onChangeShowInUse}
-            label={PANE_TEXT.SWITCH_LABEL}
           />
         </TextSetsToggle>
       </TitleBar>
       <FullWidthWrapper>
-        <PillGroup
+        <ChipGroup
           items={categories}
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}

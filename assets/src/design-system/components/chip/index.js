@@ -30,7 +30,7 @@ import { focusableOutlineCSS } from '../../theme/helpers';
 const getChipBackgroundColor = ({ theme, active, disabled }) =>
   active && !disabled
     ? theme.colors.interactiveBg.secondaryNormal
-    : theme.colors.bg.primary;
+    : 'transparent';
 
 const Infix = styled.div`
   display: inline-block;
@@ -50,7 +50,6 @@ const StyledChip = styled.span`
 
 const ChipContainer = styled.button(
   ({ theme, disabled }) => css`
-    box-sizing: border-box;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -120,6 +119,7 @@ export const Chip = forwardRef(
 Chip.displayName = 'Chip';
 
 Chip.propTypes = {
+  active: PropTypes.bool,
   children: PropTypes.node,
   disabled: PropTypes.bool,
   prefix: PropTypes.node,

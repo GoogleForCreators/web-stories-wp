@@ -99,6 +99,7 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
+    previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     originalStoryData: {
       id: 167,
       date: '2020-05-21T23:25:51',
@@ -112,6 +113,7 @@ const formattedStoriesArray = [
       status: 'publish',
       type: 'web-story',
       link: 'http://localhost:8899/web-stories/orange-shapes',
+      preview_link: 'http://localhost:8899/web-stories/orange-shapes',
       title: {
         raw: 'ORANGE SHAPES',
         rendered: 'ORANGE SHAPES',
@@ -392,6 +394,7 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
+    previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
     originalStoryData: {
       id: 165,
       date: '2020-05-21T23:25:22',
@@ -405,6 +408,7 @@ const formattedStoriesArray = [
       status: 'draft',
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=165',
+      preview_link: 'http://localhost:8899/?post_type=web-story&p=165',
       title: {
         raw: 'GREEN SHAPES',
         rendered: 'GREEN SHAPES',
@@ -832,6 +836,7 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
+    previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
     originalStoryData: {
       id: 163,
       date: '2020-05-21T23:24:47',
@@ -845,6 +850,7 @@ const formattedStoriesArray = [
       status: 'draft',
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=163',
+      preview_link: 'http://localhost:8899/?post_type=web-story&p=163',
       title: {
         raw: 'RED SHAPES',
         rendered: 'RED SHAPES',
@@ -1329,6 +1335,7 @@ const formattedStoriesArray = [
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
+    previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
     originalStoryData: {
       id: 161,
       date: '2020-05-21T23:24:06',
@@ -1342,6 +1349,7 @@ const formattedStoriesArray = [
       status: 'draft',
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=161',
+      preview_link: 'http://localhost:8899/?post_type=web-story&p=161',
       title: {
         raw: 'BLUE SHAPES',
         rendered: 'BLUE SHAPES',

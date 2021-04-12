@@ -251,9 +251,11 @@ class Sanitization {
 			unset( $amp_scripts[ Amp::RUNTIME ] );
 		} else {
 			$script = $document->createElement( Tag::SCRIPT );
-			$script->setAttribute( Attribute::ASYNC, '' );
-			$script->setAttribute( Attribute::SRC, $runtime_src );
-			$ordered_scripts[ Amp::RUNTIME ] = $script;
+			if ( $script ) {
+				$script->setAttribute( Attribute::ASYNC, '' );
+				$script->setAttribute( Attribute::SRC, $runtime_src );
+				$ordered_scripts[ Amp::RUNTIME ] = $script;
+			}
 		}
 
 		/*

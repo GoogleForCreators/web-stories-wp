@@ -77,6 +77,16 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           url: '',
         };
 
+        let lockUser = null;
+
+        if ('wp:lockuser' in embedded) {
+          lockUser = {
+            id: embedded['wp:lockuser'][0].id,
+            name: embedded['wp:lockuser'][0].name,
+            avatar: embedded['wp:lockuser'][0].avatar_urls?.['48'],
+          };
+        }
+
         if ('wp:featuredmedia' in embedded) {
           featuredMedia = {
             id: embedded['wp:featuredmedia'][0].id,
@@ -134,6 +144,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           excerpt,
           slug,
           link,
+          lockUser,
           featuredMedia,
           permalinkConfig,
           publisherLogoUrl,

@@ -217,7 +217,7 @@ function GridView({ onClose }) {
           majorStep={1}
           minorStep={1}
           value={pagesPerRow}
-          onChange={(evt) => setPagesPerRow(evt.target.valueAsNumber)}
+          handleChange={(newValue) => setPagesPerRow(newValue)}
           aria-label={__('Pages per row', 'web-stories')}
         />
         <NoButton />

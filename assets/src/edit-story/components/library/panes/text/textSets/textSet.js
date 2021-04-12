@@ -26,7 +26,11 @@ import { useCallback, forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../../../design-system';
+import {
+  BUTTON_TRANSITION_TIMING,
+  ThemeGlobals,
+  themeHelpers,
+} from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
@@ -49,9 +53,12 @@ const TextSetItem = styled.div`
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  cursor: default;
+  cursor: pointer;
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
 
-  &:hover {
+  &:hover,
+  &:focus,
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
     background-color: ${({ theme }) =>
       theme.colors.interactiveBg.secondaryHover};
   }
@@ -74,9 +81,12 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
     insertTextSet: state.actions.insertTextSet,
   }));
 
-  const { canvasPageSize } = useLayout(({ state }) => ({
-    canvasPageSize: state.canvasPageSize,
-  }));
+  const { pageWidth, pageHeight } = useLayout(
+    ({ state: { pageWidth, pageHeight } }) => ({
+      pageWidth,
+      pageHeight,
+    })
+  );
 
   const onClick = useCallback(() => {
     insertTextSet(elements);
@@ -93,7 +103,6 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   );
 
   const { textSetHeight, textSetWidth } = elements[0];
-  const { width: pageWidth, height: pageHeight } = canvasPageSize;
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
@@ -136,6 +145,8 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   );
 }
 
+const TextSetWithRef = forwardRef(TextSet);
+
 TextSet.propTypes = {
   elements: PropTypes.array.isRequired,
   translateY: PropTypes.number.isRequired,
@@ -144,4 +155,4 @@ TextSet.propTypes = {
 
 TextSet.displayName = 'TextSet';
 
-export default forwardRef(TextSet);
+export default TextSetWithRef;

@@ -36,7 +36,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  *
  * @package Google\Web_Stories
  */
-class TinyMCE {
+class TinyMCE extends Service_Base {
 	use Stories_Script_Data;
 	use Assets;
 
@@ -54,7 +54,7 @@ class TinyMCE {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		if ( $this->is_block_editor() ) {
 			return;
 		}

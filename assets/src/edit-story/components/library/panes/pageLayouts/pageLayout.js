@@ -63,7 +63,7 @@ PreviewPageWrapper.propTypes = {
 const PageLayoutTitle = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.grayout};
+  background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   border-top-right-radius: 0;
   border-top-left-radius: 0;
@@ -127,6 +127,8 @@ function PageLayout(
   );
 }
 
+const PageLayoutWithRef = forwardRef(PageLayout);
+
 PageLayout.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
@@ -137,4 +139,4 @@ PageLayout.propTypes = {
 
 PageLayout.displayName = 'PageLayout';
 
-export default forwardRef(PageLayout);
+export default PageLayoutWithRef;

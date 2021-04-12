@@ -25,11 +25,11 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
-import { useSnackbar } from '../snackbar';
+import { useSnackbar } from '../../../design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { useMediaUploadQueue } from './utils';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
-import useTranscodeVideo from './utils/useTranscodeVideo';
+import useFFmpeg from './utils/useFFmpeg';
 
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
@@ -70,7 +70,7 @@ function useUploadMedia({
     isTranscodingEnabled,
     canTranscodeFile,
     isFileTooLarge,
-  } = useTranscodeVideo();
+  } = useFFmpeg();
 
   /**
    * @type {import('react').MutableRefObject<Array<Object<*>>>} mediaRef Ref for current media items.
@@ -89,6 +89,7 @@ function useUploadMedia({
     if (isTranscoding && isDialogDismissed) {
       showSnackbar({
         message: __('Video optimization in progress.', 'web-stories'),
+        dismissable: true,
       });
     }
   }, [isTranscoding, showSnackbar]);
@@ -169,6 +170,7 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
+        dismissable: true,
       });
     }
   }, [failures, deleteMediaElement, removeItem, showSnackbar]);
@@ -209,6 +211,7 @@ function useUploadMedia({
           } catch (e) {
             showSnackbar({
               message: e.message,
+              dismissable: true,
             });
 
             return;

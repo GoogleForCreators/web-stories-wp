@@ -242,7 +242,9 @@ function TextEdit({
 
   const updateContent = useCallback(() => {
     const newHeight = editorHeightRef.current;
-    wrapperRef.current.style.height = '';
+    if (wrapperRef.current) {
+      wrapperRef.current.style.height = '';
+    }
     if (contentRef.current) {
       // Remove manual line breaks and remember to trim any trailing non-breaking space.
       const properties = { content: contentRef.current };

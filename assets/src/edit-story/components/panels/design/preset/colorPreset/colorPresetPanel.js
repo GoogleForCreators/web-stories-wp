@@ -26,12 +26,13 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useStory } from '../../../../../app/story';
 import useAddPreset from '../useAddPreset';
+import { PRESET_TYPES } from '../constants';
 import EmptyPanel from './emptyPanel';
 import ColorGroup from './colorGroup';
 
 const Title = styled.div`
   font-size: 14px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   margin-bottom: 10px;
 `;
 
@@ -40,7 +41,7 @@ const GroupWrapper = styled.div`
 `;
 
 function ColorPresetPanel({ isEditMode, handlePresetClick }) {
-  const presetType = 'color';
+  const presetType = PRESET_TYPES.COLOR;
   const { currentStoryStyles, globalStoryStyles } = useStory(
     ({
       state: {

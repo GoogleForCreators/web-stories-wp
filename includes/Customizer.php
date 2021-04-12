@@ -39,7 +39,7 @@ use WP_Error;
  *
  * @package Google\Web_Stories
  */
-class Customizer {
+class Customizer extends Service_Base {
 	use Theme_Support;
 	use Layout;
 
@@ -77,7 +77,7 @@ class Customizer {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'customize_register', [ $this, 'register_customizer_settings' ] );
 	}
 

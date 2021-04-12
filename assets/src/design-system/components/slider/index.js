@@ -27,6 +27,7 @@ import PropTypes from 'prop-types';
 import { useKeyDownEffect } from '../keyboard';
 import { Tooltip } from '../tooltip';
 import { PLACEMENT } from '../popup';
+import { noop } from '../../utils';
 
 const DEFAULT_SIZE = 24;
 const rangeThumb = css`
@@ -201,7 +202,7 @@ const FakeThumb = styled.div`
 function Slider({
   minorStep,
   majorStep,
-  handleChange,
+  handleChange = noop,
   value,
   min = 0,
   max = 500,
@@ -284,7 +285,7 @@ function Slider({
 Slider.propTypes = {
   minorStep: PropTypes.number.isRequired,
   majorStep: PropTypes.number.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func,
   value: PropTypes.number.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,

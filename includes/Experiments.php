@@ -31,7 +31,7 @@ namespace Google\Web_Stories;
  *
  * Allows turning flags on/off via the admin UI.
  */
-class Experiments {
+class Experiments extends Service_Base {
 	/**
 	 * Settings page name.
 	 *
@@ -51,11 +51,22 @@ class Experiments {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		if ( WEBSTORIES_DEV_MODE ) {
 			add_action( 'admin_menu', [ $this, 'add_menu_page' ], 25 );
 			add_action( 'admin_init', [ $this, 'initialize_settings' ] );
 		}
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 7;
 	}
 
 	/**
@@ -210,6 +221,17 @@ class Experiments {
 		return [
 			/**
 			 * Author: @littlemilkstudio
+			 * Issue: 6708
+			 * Creation date: 2021-03-23
+			 */
+			[
+				'name'        => 'enableStickers',
+				'label'       => __( 'Enable Stickers', 'web-stories' ),
+				'description' => __( 'Appends sticker buttons to the bottom of the shapes panel in library.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @littlemilkstudio
 			 * Issue: 6379
 			 * Creation date: 2021-03-09
 			 */
@@ -355,17 +377,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @swissspidy
-			 * Issue: #4081
-			 * Creation date: 2020-10-28
-			 */
-			[
-				'name'        => 'eyeDropper',
-				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @swissspidy
 			 * Issue: #5669
 			 * Creation date: 2021-01-21
 			 */
@@ -374,6 +385,39 @@ class Experiments {
 				'label'       => __( 'Video optimization', 'web-stories' ),
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
 				'group'       => 'general',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #3126
+			 * Creation date: 2021-02-02
+			 */
+			[
+				'name'        => 'enablePostLocking',
+				'label'       => __( 'Post locking', 'web-stories' ),
+				'description' => __( 'Enable post locking', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #4022
+			 * Creation date: 2021-03-25
+			 */
+			[
+				'name'        => 'hasCanvasZoom',
+				'label'       => __( 'Canvas Zoom', 'web-stories' ),
+				'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @miina
+			 * Issue: #7055
+			 * Creation date: 2021-04-09
+			 */
+			[
+				'name'        => 'customPageTemplates',
+				'label'       => __( 'Custom Page Templates', 'web-stories' ),
+				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}

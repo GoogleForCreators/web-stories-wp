@@ -27,26 +27,3 @@ import { PAGE_WRAPPER } from '../../constants';
 export const StandardViewContentGutter = styled.div`
   margin: 0 ${PAGE_WRAPPER.GUTTER}px;
 `;
-
-export const DetailViewContentGutter = styled.div(
-  ({ theme }) => `
-    padding-top: ${
-      theme.DEPRECATED_THEME.navBar.height +
-      theme.DEPRECATED_THEME.detailViewContentGutter.desktop / 2
-    }px;
-    margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.desktop}px;
-
-
-    @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
-      padding-top: ${
-        theme.DEPRECATED_THEME.navBar.height +
-        theme.DEPRECATED_THEME.detailViewContentGutter.tablet / 2
-      }px;
-      margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.tablet}px;
-    }
-
-    @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.min}px;
-    }
-  `
-);

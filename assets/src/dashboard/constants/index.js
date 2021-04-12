@@ -48,7 +48,6 @@ export const APP_ROUTES = {
     'https://wordpress.org/support/plugin/web-stories/',
     'web-stories'
   ),
-  STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
 export const NESTED_APP_ROUTES = {
@@ -116,6 +115,7 @@ export const VIEW_STYLE_LABELS = {
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
+  LOCK: { width: 16, height: 16 },
   TELEMETRY_BANNER_EXIT: { width: 10, height: 10 },
 };
 

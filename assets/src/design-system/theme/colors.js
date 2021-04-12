@@ -106,11 +106,13 @@ const opacity = {
   white16: rgba(standard.white, 0.16),
   white8: rgba(standard.white, 0.08),
   black64: rgba(standard.black, 0.64),
+  black32: rgba(standard.black, 0.32),
   black24: rgba(standard.black, 0.24),
   black10: rgba(standard.black, 0.1),
   blue24: rgba(brand.blue[30], 0.24),
   violet24: rgba(brand.violet[30], 0.24),
   overlay: rgba('#1E1F1F', 0.5),
+  overlayDark: rgba(standard.black, 0.47),
 };
 
 const darkTheme = {
@@ -154,6 +156,7 @@ const darkTheme = {
     tertiaryNormal: opacity.footprint,
     tertiaryHover: brand.gray[70],
     tertiaryPress: brand.gray[60],
+    quaternaryNormal: opacity.footprint,
     negativeNormal: brand.red[40],
     negativeHover: brand.red[30],
     negativePress: brand.red[20],
@@ -161,6 +164,7 @@ const darkTheme = {
     positiveHover: brand.green[30],
     positivePress: brand.green[20],
     previewOverlay: opacity.black10,
+    modalScrim: opacity.white8,
   },
   border: {
     focus: brand.blue[30],
@@ -173,6 +177,10 @@ const darkTheme = {
     positiveHover: brand.green[30],
     positivePress: brand.green[20],
     positiveActive: brand.green[10],
+    quaternaryNormal: brand.gray[70],
+    quaternaryHover: brand.gray[40],
+    quaternaryPress: standard.black,
+    quaternaryActive: brand.gray[30],
     negativeNormal: brand.red[40],
     negativeHover: brand.red[30],
     negativePress: brand.red[20],
@@ -233,6 +241,7 @@ const lightTheme = {
     tertiaryNormal: opacity.footprint,
     tertiaryHover: brand.gray[10],
     tertiaryPress: brand.gray[20],
+    quaternaryNormal: opacity.footprint,
     negativeNormal: brand.red[20],
     negativeHover: brand.red[30],
     negativePress: brand.red[40],
@@ -240,6 +249,7 @@ const lightTheme = {
     positiveHover: brand.green[30],
     positivePress: brand.green[40],
     previewOverlay: opacity.white16,
+    modalScrim: opacity.black32,
   },
   border: {
     focus: brand.blue[40],
@@ -256,6 +266,10 @@ const lightTheme = {
     negativeHover: brand.red[30],
     negativePress: brand.red[40],
     negativeActive: brand.red[90],
+    quaternaryNormal: brand.gray[20],
+    quaternaryHover: brand.gray[30],
+    quaternaryPress: standard.white,
+    quaternaryActive: brand.gray[40],
     selection: brand.blue[40],
   },
   divider: {

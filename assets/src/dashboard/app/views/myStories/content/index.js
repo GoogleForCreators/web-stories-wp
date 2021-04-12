@@ -45,6 +45,7 @@ import {
   ViewPropTypes,
   PagePropTypes,
   SortPropTypes,
+  ShowStoriesWhileLoadingPropType,
 } from '../../../../utils/useStoryView';
 import FontProvider from '../../../font/fontProvider';
 import { EmptyContentMessage } from '../../shared';
@@ -61,6 +62,7 @@ function Content({
   storyActions,
   view,
   initialFocusStoryId,
+  showStoriesWhileLoading,
 }) {
   return (
     <Layout.Scrollable>
@@ -77,11 +79,16 @@ function Content({
                 <>
                   <StoriesView
                     filterValue={filter.value}
+                    isLoading={isLoading}
                     sort={sort}
                     storyActions={storyActions}
                     stories={stories}
                     view={view}
                     initialFocusStoryId={initialFocusStoryId}
+                    loading={{
+                      isLoading,
+                      showStoriesWhileLoading,
+                    }}
                   />
                   <InfiniteScroller
                     canLoadMore={!allPagesFetched}
@@ -137,6 +144,7 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   view: ViewPropTypes,
   initialFocusStoryId: PropTypes.number,
+  showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
 };
 
 export default Content;

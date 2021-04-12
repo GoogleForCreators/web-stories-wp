@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { Toggle } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -30,34 +29,18 @@ export class Filter extends AbstractPanel {
   }
 
   get none() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Set filter: None/i }),
-      'none',
-      Toggle
-    );
+    return this.getByRole('button', { name: /Filter: None/i });
   }
 
   get solid() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Set filter: Tint/i }),
-      'solid',
-      Toggle
-    );
+    return this.getByRole('button', { name: /Filter: Tint/i });
   }
 
   get linear() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Set filter: Linear/i }),
-      'linear',
-      Toggle
-    );
+    return this.getByRole('button', { name: /Filter: Linear/i });
   }
 
   get radial() {
-    return this._get(
-      this.getByRole('checkbox', { name: /Set filter: Vignette/i }),
-      'radial',
-      Toggle
-    );
+    return this.getByRole('button', { name: /Filter: Vignette/i });
   }
 }
