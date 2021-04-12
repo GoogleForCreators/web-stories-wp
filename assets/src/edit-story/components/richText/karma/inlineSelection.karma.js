@@ -122,6 +122,11 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(fontColor.hex.value).toBe('FF6600');
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
+      await data.fixture.events.mouse.clickOn(
+        data.fixture.editor.canvas.framesLayer.frames[0].node,
+        20,
+        5
+      );
       await setSelection(6, 9);
       // Verify that the toggles are off (as to be expected with mixed styles)
       await data.fixture.events.click(underline.button);
