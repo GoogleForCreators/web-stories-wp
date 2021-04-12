@@ -81,33 +81,31 @@ fdescribe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      fit('should handle a command, exit and save', async () => {
-        const draft = editor.querySelector('[contenteditable="true"]');
+      it('should handle a command, exit and save', async () => {
         // Select all.
         await fixture.events.keyboard.press('Enter');
         await repeatPress('ArrowUp', 10);
         await fixture.events.keyboard.down('shift');
         await repeatPress('ArrowRight', 15);
         await fixture.events.keyboard.up('shift');
-        await fixture.snapshot('TEST!!!');
+
         expect(boldToggle.checked).toEqual(false);
 
         await fixture.snapshot('before mod+b');
 
-        // THIS LINE CAUSES FAILURE
         await fixture.events.keyboard.shortcut('mod+b');
 
-        //await fixture.snapshot('after mod+b');
+        await fixture.snapshot('after mod+b');
 
         expect(boldToggle.checked).toEqual(true);
 
         // Exit edit mode by clicking right outside the editor.
-        /*await fixture.events.mouse.seq(({ moveRel, down }) => [
+        await fixture.events.mouse.seq(({ moveRel, down }) => [
           moveRel(editor, -10),
           down(),
-        ]);*/
+        ]);
 
-       /* expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+        expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
         // The element is still selected and updated.
         const storyContext = await fixture.renderHook(() => useStory());
@@ -119,7 +117,7 @@ fdescribe('TextEdit integration', () => {
         // @todo: What to do with `<p>` and containers?
         expect(frame.querySelector('p').innerHTML).toEqual(
           '<span style="font-weight: 700">Fill in some text</span>'
-        );*/
+        );
       });
     });
 
