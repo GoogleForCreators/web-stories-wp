@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-const WellbeingCTA = ({ style }) => (
+const Cta = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 61 61"
@@ -45,11 +45,11 @@ const WellbeingCTA = ({ style }) => (
   </svg>
 );
 
-WellbeingCTA.propTypes = {
+Cta.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 61 / 61,
-  svg: WellbeingCTA,
+  svg: Cta,
 };

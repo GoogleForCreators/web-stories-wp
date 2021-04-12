@@ -18,6 +18,6 @@
  */
 import { default as wellbeingArrowDark } from './arrowDark';
 import { default as wellbeingArrowLight } from './arrowLight';
-import { default as wellbeingCTA } from './wellbeingCTA';
+import { default as wellbeingCTA } from './cta';
 
 export { wellbeingArrowDark, wellbeingArrowLight, wellbeingCTA };
