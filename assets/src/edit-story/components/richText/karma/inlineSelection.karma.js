@@ -130,7 +130,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(underline.checked).toBe(false);
 
       const actual = getTextContent();
-      expect(actual).toBe('');
+      expect(actual).toBe('123');
 
       // Expect font weight, letter spacing and font color to be "multiple"
       /*expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
