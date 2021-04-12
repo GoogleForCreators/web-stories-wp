@@ -23,6 +23,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerpl
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\PreloadHeroImage;
 use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\RewriteAmpUrls;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Optimization
@@ -99,7 +100,6 @@ class Optimization extends \WP_UnitTestCase {
 		$transformers = [
 			AmpBoilerplate::class,
 			ReorderHead::class,
-			PreloadHeroImage::class,
 		];
 
 		$this->assertCount( 1, $config_array );
