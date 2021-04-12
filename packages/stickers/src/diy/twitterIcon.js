@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-function DIYTwitterIcon({ style }) {
+function TwitterIcon({ style }) {
   return (
     <svg
       style={style}
@@ -34,11 +34,11 @@ function DIYTwitterIcon({ style }) {
   );
 }
 
-DIYTwitterIcon.propTypes = {
+TwitterIcon.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 27 / 21,
-  svg: DIYTwitterIcon,
+  svg: TwitterIcon,
 };

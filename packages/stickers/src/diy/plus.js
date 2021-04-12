@@ -18,27 +18,31 @@
  */
 import PropTypes from 'prop-types';
 
-function DIYYoutubeIcon({ style }) {
+function Plus({ style }) {
   return (
     <svg
       style={style}
-      viewBox="0 0 28 19"
+      viewBox="0 0 23 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M20.2878 0H7.17684C0 0 0 2.00053 0 6.92327V11.7335C0 16.4156 1.01677 18.6567 7.17684 18.6567H20.2898C25.8533 18.6567 27.4666 17.345 27.4666 11.7335V6.92327C27.4647 1.74246 27.1931 0 20.2878 0ZM10.9268 12.985V5.43306L18.3296 9.19739L10.9268 12.985Z"
-        fill="#FAF4EA"
+        d="M0.5 10.4H10.4V0.5L12.6 0.5V10.4H22.5V12.6H0.5L0.5 10.4Z"
+        fill="white"
+      />
+      <path
+        d="M12.6 23.0566L12.6 14.8591H10.4L10.4 23.0566H12.6Z"
+        fill="white"
       />
     </svg>
   );
 }
 
-DIYYoutubeIcon.propTypes = {
+Plus.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
-  aspectRatio: 28 / 19,
-  svg: DIYYoutubeIcon,
+  aspectRatio: 23 / 24,
+  svg: Plus,
 };

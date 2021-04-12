@@ -1,5 +1,5 @@
 {
-  "current": "6a6ddf2d-7f98-405a-8c95-76b0440f9b30",
+  "current": "5c295574-87a0-4ae7-b548-699e0bd47fdf",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -197,7 +197,7 @@
           "sticker": {
             "type": "diyOrangeCross"
           },
-          "id": "dd79f48f-9313-4641-b95e-1216d6699868"
+          "id": "4baca404-e3f5-41d6-b4b0-36e2ecaee696"
         }
       ],
       "type": "page",
@@ -903,14 +903,6 @@
           "delay": 800
         },
         {
-          "id": "465ab608-558d-4c13-98fa-1eccd6c28669",
-          "type": "effect-fly-in",
-          "targets": ["a6fcfe31-b421-4e1d-9119-be4dfbc30419"],
-          "flyInDir": "leftToRight",
-          "duration": 800,
-          "delay": 800
-        },
-        {
           "id": "dcb2a902-3c03-4b69-a967-b52afdb9d469",
           "type": "effect-fly-in",
           "targets": ["67f45a53-bf09-4235-95f0-680ad1bc9e66"],
@@ -1174,7 +1166,7 @@
           "sticker": {
             "type": "diyRightArrow"
           },
-          "id": "a6fcfe31-b421-4e1d-9119-be4dfbc30419"
+          "id": "5352f504-967c-4164-a048-c26176120773"
         }
       ],
       "type": "page",
@@ -1225,15 +1217,6 @@
           "id": "bf7b9bc5-d238-4843-a80f-43473f5dcca1",
           "type": "effect-pulse",
           "targets": ["e7d91e07-214b-4718-9b8a-32f13e0e0d01"],
-          "scale": 0.5,
-          "iterations": 1,
-          "duration": 3000,
-          "delay": 0
-        },
-        {
-          "id": "885ca85e-8f69-4bd5-a0c6-85e5869ad71d",
-          "type": "effect-pulse",
-          "targets": ["0ad448e6-3528-4519-accc-06f1ace225d4"],
           "scale": 0.5,
           "iterations": 1,
           "duration": 3000,
@@ -1468,7 +1451,7 @@
           "lockAspectRatio": true,
           "type": "sticker",
           "x": 325,
-          "y": 529,
+          "y": 527,
           "width": 22,
           "height": 22,
           "scale": 100,
@@ -1477,7 +1460,7 @@
           "sticker": {
             "type": "diyPlus"
           },
-          "id": "0ad448e6-3528-4519-accc-06f1ace225d4"
+          "id": "bba481a4-e128-4b73-8f1a-8ddc09609a88"
         }
       ],
       "type": "page",
@@ -1857,14 +1840,6 @@
           "id": "48c89f88-86ff-4084-880b-5cf2f66cc066",
           "type": "effect-fly-in",
           "targets": ["1f552208-c803-40aa-8eaf-8c7356196a87"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 900
-        },
-        {
-          "id": "15f5f26c-a360-46d6-9fbf-5373662595c3",
-          "type": "effect-fly-in",
-          "targets": ["96346a38-1403-4fc7-98a1-60e4868da9e6"],
           "flyInDir": "leftToRight",
           "duration": 1000,
           "delay": 900
@@ -2397,7 +2372,7 @@
           "sticker": {
             "type": "diyRightArrow"
           },
-          "id": "96346a38-1403-4fc7-98a1-60e4868da9e6"
+          "id": "9c424d4b-b135-429e-b880-2815f72a4093"
         }
       ],
       "type": "page",
@@ -2552,48 +2527,6 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
-          "x": 81,
-          "y": 240,
-          "width": 56,
-          "height": 56,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "diyOrangeDot"
-          },
-          "id": "cfcda18c-7afa-4081-ace7-52531eb89e17"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 99,
-          "y": 438,
-          "width": 56,
-          "height": 56,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "diyOrangeDot"
-          },
-          "id": "72dba44b-5aed-4adc-95e4-95200cf35b20"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
           "x": 282,
           "y": 253,
           "width": 56,
@@ -2604,7 +2537,66 @@
           "sticker": {
             "type": "diyOrangeDot"
           },
-          "id": "ede937e7-4f6c-4c8e-b492-46d2ab5bfe3a"
+          "id": "7ad8800a-9b13-4856-b5b9-52ecf10388ef",
+          "link": {
+            "url": "http://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 56,
+          "height": 56,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "diyOrangeDot"
+          },
+          "link": {
+            "url": "http://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          },
+          "basedOn": "7ad8800a-9b13-4856-b5b9-52ecf10388ef",
+          "id": "13b9e040-b2f7-4376-ab05-2e790ac4f906",
+          "x": 99,
+          "y": 438
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 56,
+          "height": 56,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "diyOrangeDot"
+          },
+          "link": {
+            "url": "http://example.com",
+            "icon": null,
+            "desc": "Example Domain"
+          },
+          "basedOn": "13b9e040-b2f7-4376-ab05-2e790ac4f906",
+          "id": "ed0b7813-6d43-4e9e-9818-d9f8b52e178f",
+          "x": 81,
+          "y": 240
         }
       ],
       "type": "page",
@@ -2722,38 +2714,6 @@
           "flyInDir": "topToBottom",
           "duration": 1000,
           "delay": 405
-        },
-        {
-          "id": "a183385f-1940-479a-9842-86d0df3f57e6",
-          "type": "effect-fly-in",
-          "targets": ["32f7bb24-c009-4847-9df6-022c39f18340"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
-          "delay": 900
-        },
-        {
-          "id": "3ef92074-c132-4cbc-9a71-fc62dc5d3cc1",
-          "type": "effect-fly-in",
-          "targets": ["e88d4f35-b6ea-418b-b7e4-fda42052a4c5"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
-          "delay": 900
-        },
-        {
-          "id": "13e1ef9e-e04b-4a3b-ae17-8228cff75500",
-          "type": "effect-fly-in",
-          "targets": ["9c640247-c679-47dd-845b-9df22148c8ec"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
-          "delay": 900
-        },
-        {
-          "id": "3e0bf578-e8cc-47e6-aeec-dc4e67b78dd6",
-          "type": "effect-fly-in",
-          "targets": ["7ce98864-abe7-4b5a-9458-31fc4ef68efe"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
-          "delay": 900
         },
         {
           "delete": true,
@@ -3248,17 +3208,38 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
-          "x": 317,
-          "y": 568,
-          "width": 13,
-          "height": 25,
+          "x": 59,
+          "y": 571,
+          "width": 26,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "diyFacebookIcon"
+            "type": "diyTwitterIcon"
           },
-          "id": "7ce98864-abe7-4b5a-9458-31fc4ef68efe"
+          "id": "b3313c8a-776c-44f2-a3ee-fd4d27cc74f1"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 148,
+          "y": 571,
+          "width": 27,
+          "height": 18,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "diyYouTubeIcon"
+          },
+          "id": "06861f8b-4684-4204-8500-892a85c70abc"
         },
         {
           "opacity": 100,
@@ -3279,7 +3260,7 @@
           "sticker": {
             "type": "diyInstagramIcon"
           },
-          "id": "9c640247-c679-47dd-845b-9df22148c8ec"
+          "id": "e69ad458-2707-41ac-91d4-99aa820a211c"
         },
         {
           "opacity": 100,
@@ -3290,38 +3271,17 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
-          "x": 148,
-          "y": 571,
-          "width": 27,
-          "height": 18,
+          "x": 317,
+          "y": 568,
+          "width": 13,
+          "height": 25,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "diyYoutubeIcon"
+            "type": "diyFacebookIcon"
           },
-          "id": "e88d4f35-b6ea-418b-b7e4-fda42052a4c5"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 59,
-          "y": 571,
-          "width": 26,
-          "height": 20,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "diyTwitterIcon"
-          },
-          "id": "32f7bb24-c009-4847-9df6-022c39f18340"
+          "id": "7427d556-c992-447b-9c66-222ba6224d25"
         }
       ],
       "type": "page",

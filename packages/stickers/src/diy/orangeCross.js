@@ -18,31 +18,35 @@
  */
 import PropTypes from 'prop-types';
 
-function DIYRightArrow({ style }) {
+function OrangeCross({ style }) {
   return (
     <svg
       style={style}
-      viewBox="0 0 18 17"
+      viewBox="0 0 18 19"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M16.8371 7.04675L10.4371 0.24707L8.83708 1.75308L13.4942 6.70109H0.0371094V8.89842H16.0371C16.4754 8.89842 16.8718 8.63788 17.0457 8.23551C17.2195 7.83314 17.1376 7.36593 16.8371 7.04675Z"
-        fill="#F9F3E9"
+        d="M3.17925e-05 16.3241L15.5375 0.786638L17.0913 2.34039L1.55378 17.8779L3.17925e-05 16.3241Z"
+        fill="#FF7324"
       />
       <path
-        d="M14.1383 9.78401L8.85498 15.3973L10.3635 17L15.6468 11.3867L14.1383 9.78401Z"
-        fill="#F9F3E9"
+        d="M1.55375 0.786621L9.79375 9.02662L8.24 10.5804L0 2.34037L1.55375 0.786621Z"
+        fill="#FF7324"
+      />
+      <path
+        d="M11.6948 10.9278L17.4843 16.7174L15.9306 18.2711L10.1411 12.4816L11.6948 10.9278Z"
+        fill="#FF7324"
       />
     </svg>
   );
 }
 
-DIYRightArrow.propTypes = {
+OrangeCross.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
-  aspectRatio: 18 / 17,
-  svg: DIYRightArrow,
+  aspectRatio: 18 / 19,
+  svg: OrangeCross,
 };

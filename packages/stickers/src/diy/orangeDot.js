@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-function DIYOrangeDot({ style }) {
+function OrangeDot({ style }) {
   return (
     <svg
       style={style}
@@ -39,11 +39,11 @@ function DIYOrangeDot({ style }) {
   );
 }
 
-DIYOrangeDot.propTypes = {
+OrangeDot.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 64 / 64,
-  svg: DIYOrangeDot,
+  svg: OrangeDot,
 };

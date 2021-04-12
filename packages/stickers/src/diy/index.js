@@ -16,20 +16,22 @@
 /**
  * Internal dependencies
  */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as diyStickers from './diy';
-import * as fashionStickers from './fashion';
-import * as travelStickers from './travel';
-import * as wellbeingStickers from './wellbeing';
+import { default as diyFacebookIcon } from './facebookIcon';
+import { default as diyInstagramIcon } from './instagramIcon';
+import { default as diyOrangeCross } from './orangeCross';
+import { default as diyOrangeDot } from './orangeDot';
+import { default as diyPlus } from './plus';
+import { default as diyRightArrow } from './rightArrow';
+import { default as diyTwitterIcon } from './twitterIcon';
+import { default as diyYouTubeIcon } from './youTubeIcon';
 
-export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...diyStickers,
-  ...fashionStickers,
-  ...travelStickers,
-  ...wellbeingStickers,
+export {
+  diyFacebookIcon,
+  diyInstagramIcon,
+  diyOrangeCross,
+  diyOrangeDot,
+  diyPlus,
+  diyRightArrow,
+  diyTwitterIcon,
+  diyYouTubeIcon,
 };

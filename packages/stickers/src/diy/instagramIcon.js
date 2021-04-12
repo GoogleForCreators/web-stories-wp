@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-function DIYInstagramIcon({ style }) {
+function InstagramIcon({ style }) {
   return (
     <svg
       style={style}
@@ -42,11 +42,11 @@ function DIYInstagramIcon({ style }) {
   );
 }
 
-DIYInstagramIcon.propTypes = {
+InstagramIcon.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 25 / 25,
-  svg: DIYInstagramIcon,
+  svg: InstagramIcon,
 };
