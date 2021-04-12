@@ -136,6 +136,7 @@ function InnerElement({
     width: width,
     height: height,
     alt: alt,
+    'aria-label': alt,
     crossOrigin: 'anonymous',
   };
 
@@ -143,18 +144,17 @@ function InnerElement({
     ...commonProps,
     onLoad: makeMediaVisible,
     loading: 'lazy',
+    draggable: false,
   };
 
   const cloneProps = {
     ...commonImageProps,
-    draggable: false,
     onLoad: undefined,
   };
 
   const imageProps = {
-    ...cloneProps,
+    ...commonImageProps,
     src: thumbnailURL,
-    'aria-label': alt,
   };
   const videoProps = {
     ...commonProps,
