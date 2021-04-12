@@ -26,7 +26,7 @@ import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
-describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
+fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
   const {
@@ -53,7 +53,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    it('should apply inline formats correctly for both single style and multiple styles', async () => {
+    fit('should apply inline formats correctly for both single style and multiple styles', async () => {
       const {
         bold,
         italic,
