@@ -16,22 +16,6 @@
 /**
  * Internal dependencies
  */
-import { default as sample } from './sampleSticker';
-import * as beautyStickers from './beauty';
-import * as cookingStickers from './cooking';
-import * as diyStickers from './diy';
-import * as fashionStickers from './fashion';
-import * as fitnessStickers from './fitness';
-import * as travelStickers from './travel';
-import * as wellbeingStickers from './wellbeing';
+import { default as fitnessCTA } from './cta';
 
-export default {
-  sample,
-  ...beautyStickers,
-  ...cookingStickers,
-  ...diyStickers,
-  ...fashionStickers,
-  ...fitnessStickers,
-  ...travelStickers,
-  ...wellbeingStickers,
-};
+export { fitnessCTA };
