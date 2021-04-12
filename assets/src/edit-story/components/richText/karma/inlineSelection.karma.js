@@ -125,6 +125,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.sleep(300);
       const actual = getTextContent();
+      await data.fixture.events.sleep(300);
       expect(actual).toBe('123');
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
