@@ -63,6 +63,7 @@ class AMP extends Service_Base {
 		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
 		add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
+		add_filter( 'amp_skip_post', [ $this, 'filter_amp_skip_post' ], 10, 2 );
 
 		// This filter is actually used in this plugin's `Sanitization` class.
 		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
@@ -205,6 +206,34 @@ class AMP extends Service_Base {
 		}
 
 		return $excluded;
+	}
+
+	/**
+	 * Filters whether to skip the post from AMP.
+	 *
+	 * Skips the post if the AMP plugin's version is lower than what is bundled in this plugin.
+	 * Prevents issues where this plugin uses newer features that the plugin doesn't know about yet,
+	 * causing false positives with validation.
+	 *
+	 * @link https://github.com/google/web-stories-wp/issues/7131
+	 *
+	 * @param bool $skipped Whether the post should be skipped from AMP.
+	 * @param int  $post    Post ID.
+	 *
+	 * @return bool Whether post should be skipped from AMP.
+	 */
+	public function filter_amp_skip_post( $skipped, $post ) {
+		if (
+			'web-story' === get_post_type( $post )
+			&&
+			defined( 'AMP__VERSION' )
+			&&
+			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>=' )
+		) {
+			return true;
+		}
+
+		return $skipped;
 	}
 
 	/**
