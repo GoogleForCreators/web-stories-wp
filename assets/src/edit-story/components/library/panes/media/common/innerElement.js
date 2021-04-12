@@ -148,6 +148,7 @@ function InnerElement({
   const cloneProps = {
     ...commonImageProps,
     draggable: false,
+    onLoad: undefined,
   };
 
   const imageProps = {
