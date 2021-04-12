@@ -29,6 +29,7 @@ const Image = styled.img`
 `;
 
 function VisibleImage({ ...attrs }) {
+  // eslint-disable-next-line styled-components-a11y/alt-text
   return <Image {...attrs} />;
 }
 

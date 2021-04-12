@@ -203,6 +203,9 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
 
       return (
         <MenuItem
+          // TODO: Investigate
+          // See https://github.com/google/web-stories-wp/issues/6671
+          // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
           tabIndex={0}
           key={`${item.value}_${index}`}
           isHovering={index === hoveredIndex}

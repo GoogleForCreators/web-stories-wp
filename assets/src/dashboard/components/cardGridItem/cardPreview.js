@@ -178,6 +178,11 @@ const CardPreviewContainer = ({
         </PreviewErrorBoundary>
         {children}
       </PreviewPane>
+      {/*
+        TODO: Investigate
+        See https://github.com/google/web-stories-wp/issues/6671
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
       <EditControls
         aria-label={ariaLabel}
         data-testid="card-action-container"
