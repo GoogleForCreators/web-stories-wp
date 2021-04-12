@@ -28,7 +28,7 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
 } from '../../../../design-system';
-import { Tooltip } from '../../tooltip';
+import Tooltip from '../../tooltip';
 
 function PageMenuButton({ children, title, shortcut, ...rest }) {
   return (

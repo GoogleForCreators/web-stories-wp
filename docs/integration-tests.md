@@ -96,3 +96,25 @@ See [Puppeteer issue 4752](https://github.com/puppeteer/puppeteer/issues/4752).
 ```sh
 sudo codesign --force --deep --sign - ./node_modules/puppeteer/.local-chromium/mac-*/chrome-mac/Chromium.app
 ```
+
+### Test failure: ResizeObserver loop limit exceeded
+
+See [ResizeObserver#observe() firing the callback immediately results in an infinite loop](https://github.com/WICG/resize-observer/issues/38#issuecomment-422126006).
+
+If you are creating a new `observe()` event using the `resize-observer-polyfill` package, wrapping the body of the function which is provided to the `ResizeObserver` constructor with `window.requestAnimationFrame` will prevent the `ResizeObserver loop limit exceeded` error.
+
+e.g.
+
+```javascript
+      const observer = new ResizeObserver(() => {
+        // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
+        // https://stackoverflow.com/a/58701523/13078978
+        window.requestAnimationFrame(() => {
+          // handle resize observation
+        });
+      });
+
+      observer.observe(node);
+```
+
+There is also a `design-system` util called `useResizeEffect` which takes a node ref and a handler function which should be sufficient for resize observation requirements.

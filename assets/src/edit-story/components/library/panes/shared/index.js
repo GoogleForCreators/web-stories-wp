@@ -39,4 +39,4 @@ function getTabId(tab) {
 
 export { Pane, getPaneId, getTabId };
 
-export { default as PillGroup } from './pillGroup';
+export { default as ChipGroup } from './chipGroup';

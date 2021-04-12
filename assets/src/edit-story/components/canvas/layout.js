@@ -376,6 +376,7 @@ const PageArea = forwardRef(function PageArea(
       hasHorizontalOverflow={hasHorizontalOverflow}
       hasVerticalOverflow={hasVerticalOverflow}
       className={className}
+      data-scroll-container
       {...rest}
     >
       <PageClip

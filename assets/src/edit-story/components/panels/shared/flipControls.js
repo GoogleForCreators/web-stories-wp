@@ -31,7 +31,7 @@ import {
   ToggleButton,
   Icons,
 } from '../../../../design-system';
-import { Tooltip } from '../../tooltip';
+import Tooltip from '../../tooltip';
 
 const ControlsContainer = styled.div`
   display: flex;

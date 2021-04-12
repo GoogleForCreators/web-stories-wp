@@ -377,17 +377,6 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @swissspidy
-			 * Issue: #4081
-			 * Creation date: 2020-10-28
-			 */
-			[
-				'name'        => 'eyeDropper',
-				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @swissspidy
 			 * Issue: #5669
 			 * Creation date: 2021-01-21
 			 */
@@ -417,6 +406,17 @@ class Experiments extends Service_Base {
 				'name'        => 'hasCanvasZoom',
 				'label'       => __( 'Canvas Zoom', 'web-stories' ),
 				'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @miina
+			 * Issue: #7055
+			 * Creation date: 2021-04-09
+			 */
+			[
+				'name'        => 'customPageTemplates',
+				'label'       => __( 'Custom Page Templates', 'web-stories' ),
+				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

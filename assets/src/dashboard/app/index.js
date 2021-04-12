@@ -54,7 +54,6 @@ import {
   ExploreTemplatesView,
   MyStoriesView,
   SavedTemplatesView,
-  StoryAnimTool,
   TemplateDetailsView,
 } from './views';
 import useApi from './api/useApi';
@@ -168,10 +167,6 @@ const AppContent = () => {
           <Route
             path={APP_ROUTES.EDITOR_SETTINGS}
             component={<EditorSettingsView />}
-          />
-          <Route
-            path={APP_ROUTES.STORY_ANIM_TOOL}
-            component={<StoryAnimTool />}
           />
         </PageContent>
       </AppFrame>

@@ -24,8 +24,8 @@ import ChecklistTab from '../prepublish/checklistTab';
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors.bg.primary};
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
+  color: ${({ theme }) => theme.colors.fg.primary};
+  font-family: ${({ theme }) => theme.typography.family.primary};
   width: 280px;
 `;
 
