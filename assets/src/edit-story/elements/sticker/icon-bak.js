@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-export default function reshapeStoryPreview(storyProps = {}) {
-  const story = {
-    ...storyProps,
-  };
-  const pages = [...storyProps.pages];
-  const metadata = {
-    publisher: {
-      name: '',
-    },
-  };
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+/**
+ * Internal dependencies
+ */
+import { Media } from '../../icons';
 
-  return {
-    story,
-    pages,
-    metadata,
-  };
+function StickerIcon() {
+  const alt = __('Sticker element', 'web-stories');
+  return <Media aria-label={alt} />;
 }
+
+export default StickerIcon;

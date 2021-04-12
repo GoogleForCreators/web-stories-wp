@@ -23,7 +23,6 @@ export const DEFAULT_STORY_PAGE_ADVANCE_DURATION = 2000;
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
-  PREVIEW: 'preview-action',
   RENAME: 'rename-action',
   DUPLICATE: 'duplicate-action',
   CREATE_TEMPLATE: 'create-template-action',
@@ -37,11 +36,6 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in editor', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
-  },
-  {
-    label: __('Preview', 'web-stories'),
-    value: STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
-    inProgress: true,
   },
   {
     label: __('Open in new tab', 'web-stories'),
