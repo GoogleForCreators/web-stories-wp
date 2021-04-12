@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { default as beautyCta } from './heartCta';
+import { default as beautyCta } from './cta';
 import { default as beautyHeart } from './heart';
 
 export { beautyCta, beautyHeart };
