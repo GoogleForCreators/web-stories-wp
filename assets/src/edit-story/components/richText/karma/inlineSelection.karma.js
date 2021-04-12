@@ -123,11 +123,14 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
       await setSelection(6, 9);
-
+      await data.fixture.events.sleep(300);
       // Verify that the toggles are off (as to be expected with mixed styles)
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
+
+      const actual = getTextContent();
+      expect(actual).toBe('');
 
       // Expect font weight, letter spacing and font color to be "multiple"
       /*expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
