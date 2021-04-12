@@ -70,7 +70,7 @@ fdescribe('TextEdit integration', () => {
       });
 
       fit('should handle a command, exit and save', async () => {
-        //const draft = editor.querySelector('[contenteditable="true"]');
+        const draft = editor.querySelector('[contenteditable="true"]');
         // Select all.
         await fixture.snapshot('TEST!!!');
         //await fixture.events.mouse.clickOn(draft, 30, 5, { clickCount: 3 });
