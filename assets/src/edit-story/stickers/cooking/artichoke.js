@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-function Cooking4Artichoke({ style }) {
+function Artichoke({ style }) {
   return (
     <svg
       style={style}
@@ -418,11 +418,11 @@ function Cooking4Artichoke({ style }) {
   );
 }
 
-Cooking4Artichoke.propTypes = {
+Artichoke.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 105 / 111,
-  svg: Cooking4Artichoke,
+  svg: Artichoke,
 };

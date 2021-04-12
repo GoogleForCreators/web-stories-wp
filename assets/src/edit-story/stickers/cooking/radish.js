@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-function Cooking4Radish({ style }) {
+function Radish({ style }) {
   return (
     <svg
       style={style}
@@ -374,11 +374,11 @@ function Cooking4Radish({ style }) {
   );
 }
 
-Cooking4Radish.propTypes = {
+Radish.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 109 / 170,
-  svg: Cooking4Radish,
+  svg: Radish,
 };

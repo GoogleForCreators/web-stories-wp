@@ -18,12 +18,10 @@
  */
 import PropTypes from 'prop-types';
 
-function Cooking2Radish({ style }) {
+function RadishLarge({ style }) {
   return (
     <svg
       style={style}
-      width="324"
-      height="692"
       viewBox="0 0 324 692"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -378,11 +376,11 @@ function Cooking2Radish({ style }) {
   );
 }
 
-Cooking2Radish.propTypes = {
+RadishLarge.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 324 / 692,
-  svg: Cooking2Radish,
+  svg: RadishLarge,
 };

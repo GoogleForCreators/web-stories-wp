@@ -1,5 +1,5 @@
 {
-  "current": "e8a21c0b-1db7-4777-b25d-b7d9a51b10fe",
+  "current": "dd6a669f-ff4b-4633-8eb4-c601e98b40f1",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -219,13 +219,6 @@
           "flyInDir": "bottomToTop",
           "duration": 1400,
           "delay": 200
-        },
-        {
-          "id": "b42cddf3-a63e-4536-9f8c-2db0f6fefe1c",
-          "type": "effect-fade-in",
-          "targets": ["ca5c54d7-86c3-4608-bf06-8899b82c983e"],
-          "duration": 3000,
-          "delay": 0
         }
       ],
       "elements": [
@@ -255,27 +248,6 @@
           "id": "b8ea29e5-ce25-4204-8660-afe56bb6b952",
           "type": "shape",
           "isDefaultBackground": true
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 94,
-          "y": -57,
-          "width": 486,
-          "height": 688,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "cooking2Radish"
-          },
-          "id": "ca5c54d7-86c3-4608-bf06-8899b82c983e"
         },
         {
           "x": 73.5,
@@ -379,6 +351,27 @@
             "horizontal": 0,
             "vertical": 0
           }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 76,
+          "y": -62,
+          "width": 371,
+          "height": 792,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cookingRadishLarge"
+          },
+          "id": "5f7724b1-43dc-4e3f-bf37-eaec61cb1788"
         }
       ],
       "type": "page",
@@ -645,25 +638,18 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 58,
-              "g": 86,
-              "b": 110
-            }
-          },
-          "type": "shape",
-          "x": 328.5,
-          "y": 549,
-          "width": 22,
-          "height": 10,
+          "type": "sticker",
+          "x": 47,
+          "y": 393,
+          "width": 40,
+          "height": 41,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "arrow-1"
+          "sticker": {
+            "type": "cookingPersimmon"
           },
-          "id": "73e1420c-19bc-4d3f-a23e-643fe10c6f64"
+          "id": "195514c6-04e5-4f4e-8791-dbb85f9b4d53"
         },
         {
           "opacity": 100,
@@ -674,17 +660,17 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
-          "x": 49,
-          "y": 396,
-          "width": 40,
-          "height": 41,
+          "x": 328,
+          "y": 549,
+          "width": 22,
+          "height": 11,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "cooking3Tomato"
+            "type": "cookingArrow"
           },
-          "id": "29b36832-c213-469c-b4e1-3a544c87c044"
+          "id": "b836b3b3-3030-4f5e-a998-77cd464ad80f"
         }
       ],
       "type": "page",
@@ -792,90 +778,6 @@
           "id": "10cd0ef0-78ac-41f8-9e90-810376fb7a0e",
           "type": "shape",
           "isDefaultBackground": true
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 100,
-          "y": 179,
-          "width": 139,
-          "height": 192,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "cooking4Carrot"
-          },
-          "id": "7b7d8c49-e883-48e5-b730-10691b379396"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 285,
-          "y": 383,
-          "width": 81,
-          "height": 85,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "cooking3Tomato"
-          },
-          "id": "5da74151-9f88-4aaa-af4e-bb788142543a"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 44,
-          "y": 493,
-          "width": 104,
-          "height": 110,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "cooking4Artichoke"
-          },
-          "id": "13f2c584-7e9f-49b5-b8d9-60da07bb31e3"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 258,
-          "y": 61,
-          "width": 108,
-          "height": 169,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "cooking4Radish"
-          },
-          "id": "6b6e0012-0357-4d35-956e-0f94e08a8fe2"
         },
         {
           "x": 84,
@@ -1150,9 +1052,9 @@
           "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+              "r": 255,
+              "g": 146,
+              "b": 46
             }
           },
           "scale": 100,
@@ -1179,9 +1081,9 @@
           "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+              "r": 255,
+              "g": 146,
+              "b": 46
             }
           },
           "scale": 100,
@@ -1208,9 +1110,9 @@
           "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+              "r": 255,
+              "g": 146,
+              "b": 46
             }
           },
           "scale": 100,
@@ -1222,6 +1124,90 @@
           "type": "shape",
           "basedOn": "d3799e22-bfe3-4d56-8bb4-5f5603ecaeae",
           "id": "2645174d-c03f-4e45-b801-a92cf39cccfb"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 275,
+          "y": 76,
+          "width": 107,
+          "height": 168,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cookingRadish"
+          },
+          "id": "cabe6f42-c5d0-4944-8d0d-411b52803c80"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 96,
+          "y": 182,
+          "width": 133,
+          "height": 183,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cookingCarrot"
+          },
+          "id": "7fa4fe54-aeb8-45d0-a45c-acef91f0a3ac"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 285,
+          "y": 383,
+          "width": 90,
+          "height": 94,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cookingPersimmon"
+          },
+          "id": "c7788d92-d48c-45c5-b58f-41db7c6878c5"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 47,
+          "y": 498,
+          "width": 103,
+          "height": 108,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cookingArtichoke"
+          },
+          "id": "8d30661a-2cb7-4ba0-bbfc-49d37b51a1bc"
         }
       ],
       "type": "page",
@@ -1663,34 +1649,6 @@
             "horizontal": 0,
             "vertical": 0
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 58,
-              "g": 86,
-              "b": 110
-            }
-          },
-          "type": "shape",
-          "x": 237,
-          "y": 580.5,
-          "width": 22,
-          "height": 10,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "arrow-1"
-          },
-          "id": "1b9a0953-562b-4a49-aeed-f8ab0ff0b277"
         },
         {
           "x": 104,
@@ -2417,6 +2375,27 @@
           "id": "1e5d493d-dbfa-40b9-afa2-6b0c4312cb25",
           "x": 104,
           "y": 425.5
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 237,
+          "y": 580,
+          "width": 22,
+          "height": 11,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cookingArrow"
+          },
+          "id": "76fc4a93-22cd-492c-8081-96f52259a907"
         }
       ],
       "type": "page",
@@ -3129,25 +3108,18 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 58,
-              "g": 86,
-              "b": 110
-            }
-          },
-          "type": "shape",
+          "type": "sticker",
           "x": 329,
           "y": 557,
           "width": 22,
-          "height": 10,
+          "height": 11,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "arrow-1"
+          "sticker": {
+            "type": "cookingArrow"
           },
-          "id": "ab4f040a-1984-45ca-a546-dbfa67a33223"
+          "id": "d360e57c-0318-4a5b-816f-9f89cefad82b"
         }
       ],
       "type": "page",
@@ -3416,34 +3388,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 58,
-              "g": 86,
-              "b": 110
-            }
-          },
-          "type": "shape",
-          "x": 329,
-          "y": 556,
-          "width": 22,
-          "height": 10,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "arrow-1"
-          },
-          "id": "0f15f2e3-4213-4e4d-b38b-1485a22212b6"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Gelasio",
@@ -3511,6 +3455,27 @@
           "focalX": 50,
           "focalY": 50,
           "id": "7781e785-f40d-440e-a76d-f6ae7c75f7a1"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 329,
+          "y": 556,
+          "width": 22,
+          "height": 11,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "cookingArrow"
+          },
+          "id": "362aebb0-27dd-452a-9f21-db3a5c6dd59e"
         }
       ],
       "type": "page",

@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 
-function Cooking4Carrot({ style }) {
+function Carrot({ style }) {
   return (
     <svg
       style={style}
@@ -326,11 +326,11 @@ function Cooking4Carrot({ style }) {
   );
 }
 
-Cooking4Carrot.propTypes = {
+Carrot.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
-  svg: Cooking4Carrot,
+  svg: Carrot,
   aspectRatio: 135 / 186,
 };
