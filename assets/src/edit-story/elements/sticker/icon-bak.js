@@ -17,26 +17,15 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
+import { Media } from '../../icons';
 
-const IconContainer = styled.div`
-  height: auto;
-  width: 28px;
-  overflow: hidden;
-  /* icon is bigger than icon container, so we need to center manually. */
-  margin-left: -1px;
-`;
-
-function TextIcon() {
-  return (
-    <IconContainer>
-      <Icons.LetterT height="30px" width="30px" />
-    </IconContainer>
-  );
+function StickerIcon() {
+  const alt = __('Sticker element', 'web-stories');
+  return <Media aria-label={alt} />;
 }
 
-export default TextIcon;
+export default StickerIcon;
