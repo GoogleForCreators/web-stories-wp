@@ -30,6 +30,7 @@ use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\CachedRemoteG
 use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\WpHttpRemoteGetRequest;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\DefaultConfiguration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Error;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\ErrorCollection;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
@@ -155,6 +156,6 @@ class Optimization {
 		 */
 		$configuration = apply_filters( 'web_stories_amp_optimizer_config', $configuration );
 
-		return new Configuration( $configuration );
+		return new DefaultConfiguration( $configuration );
 	}
 }
