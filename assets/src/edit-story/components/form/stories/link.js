@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useState } from 'react';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -35,19 +36,27 @@ export default {
   },
 };
 
+const Container = styled.div`
+  padding: 20px 50px;
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
+  border: 1px solid ${({ theme }) => theme.colors.standard.black};
+`;
+
 export const _default = () => {
-  const [value, setValue] = useState('http://test.com');
+  const [value, setValue] = useState('https://test.com');
   const onChange = (newValue) => {
     setValue(newValue);
   };
   return (
-    <LinkInput
-      hint={__('Type an address to add a link', 'web-stories')}
-      onChange={onChange}
-      onFocus={() => {}}
-      value={value}
-      clear
-      aria-label={__('Test URL', 'web-stories')}
-    />
+    <Container>
+      <LinkInput
+        hint={__('Type an address to add a link', 'web-stories')}
+        onChange={onChange}
+        onFocus={() => {}}
+        value={value}
+        clear
+        aria-label={__('Test URL', 'web-stories')}
+      />
+    </Container>
   );
 };
