@@ -204,7 +204,7 @@ function InnerElement({
             {...commonImageProps}
           />
         )}
-        {showVideoDetail && (
+        {type === ContentType.VIDEO && showVideoDetail && (
           <DurationWrapper>
             <Duration>{lengthFormatted}</Duration>
           </DurationWrapper>
