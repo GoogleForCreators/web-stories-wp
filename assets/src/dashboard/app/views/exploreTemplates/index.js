@@ -17,14 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
-import { PreviewStoryView } from '../';
 
 import useApi from '../../api/useApi';
 import Content from './content';
@@ -68,7 +67,7 @@ function ExploreTemplates() {
     })
   );
 
-  const { filter, page, activePreview, search, sort, view } = useTemplateView({
+  const { filter, page, search, sort, view } = useTemplateView({
     totalPages,
   });
 
@@ -81,22 +80,6 @@ function ExploreTemplates() {
       return templates[templateId];
     });
   }, [templatesOrderById, templates]);
-
-  const handlePreviewTemplate = useCallback(
-    (e, template) => {
-      activePreview.set(e, template);
-    },
-    [activePreview]
-  );
-
-  if (activePreview.value) {
-    return (
-      <PreviewStoryView
-        story={activePreview.value}
-        handleClose={handlePreviewTemplate}
-      />
-    );
-  }
 
   return (
     <Layout.Provider>
@@ -117,7 +100,7 @@ function ExploreTemplates() {
         totalTemplates={totalTemplates}
         search={search}
         view={view}
-        templateActions={{ createStoryFromTemplate, handlePreviewTemplate }}
+        templateActions={{ createStoryFromTemplate }}
       />
       <Layout.Fixed>
         <ScrollToTop />
