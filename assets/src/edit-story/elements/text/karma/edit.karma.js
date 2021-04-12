@@ -84,7 +84,7 @@ fdescribe('TextEdit integration', () => {
       fit('should handle a command, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
         // Select all.
-        await fixture.events.mouse.clickOn(draft, 30, 5, { clickCount: 2 });
+        await fixture.events.keyboard.press('Enter');
         await repeatPress('ArrowUp', 10);
         await fixture.events.keyboard.down('shift');
         await repeatPress('ArrowRight', 15);
