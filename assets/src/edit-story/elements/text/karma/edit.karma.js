@@ -76,19 +76,19 @@ fdescribe('TextEdit integration', () => {
         await fixture.snapshot('TEST!!!');
         expect(boldToggle.checked).toEqual(false);
 
-        /*await fixture.snapshot('before mod+b');
+        await fixture.snapshot('before mod+b');
 
         await fixture.events.keyboard.shortcut('mod+b');
 
         await fixture.snapshot('after mod+b');
 
-        //expect(boldToggle.checked).toEqual(true);
+        expect(boldToggle.checked).toEqual(true);
 
         // Exit edit mode by clicking right outside the editor.
         await fixture.events.mouse.seq(({ moveRel, down }) => [
           moveRel(editor, -10),
           down(),
-        ]);*/
+        ]);
 
        /* expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
 
