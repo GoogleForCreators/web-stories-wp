@@ -119,7 +119,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(underline.checked).toBe(true);
       expect(fontWeight.value).toBe('Black');
       expect(letterSpacing.value).toBe('50%');
-      /*expect(fontColor.hex.value).toBe('FF6600');
+      expect(fontColor.hex.value).toBe('FF6600');
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
       await setSelection(6, 9);
