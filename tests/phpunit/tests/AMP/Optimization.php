@@ -100,8 +100,6 @@ class Optimization extends \WP_UnitTestCase {
 		$transformers = [
 			AmpBoilerplate::class,
 			ReorderHead::class,
-			PreloadHeroImage::class,
-			RewriteAmpUrls::class,
 		];
 
 		$this->assertCount( 1, $config_array );
