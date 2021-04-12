@@ -18,32 +18,31 @@
  */
 import PropTypes from 'prop-types';
 
-function Beauty4Heart({ style }) {
+function HeartCta({ style }) {
   return (
     <svg
       style={style}
-      width="32"
-      height="26"
-      viewBox="0 0 32 26"
+      viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <circle cx="30" cy="30" r="30" fill="#fff" fillOpacity=".5" />
       <path
-        d="M30.5424 11.0704C29.0928 15.0251 15.9933 24.999 15.9933 24.999C15.9933 24.999 2.89388 15.0251 1.44424 11.0704C-0.00539374 7.11564 2.2086 2.78781 6.39937 1.41982C10.1157 0.201059 14.1483 1.71829 16.0197 4.82736C17.8647 1.71829 21.8973 0.201059 25.6137 1.41982C29.8044 2.78781 32.0184 7.11564 30.5424 11.0704Z"
+        d="M44.5424 28.0704C43.0928 32.0251 29.9933 41.999 29.9933 41.999s-13.0994-9.9739-14.5491-13.9286c-1.4496-3.9548.7644-8.2826 4.9552-9.6506 3.7163-1.2187 7.7489.2985 9.6203 3.4076 1.845-3.1091 5.8776-4.6263 9.594-3.4076 4.1907 1.368 6.4047 5.6958 4.9287 9.6506z"
         fill="#F3D9E1"
         stroke="#28292B"
-        strokeWidth="1.49999"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
       />
     </svg>
   );
 }
 
-Beauty4Heart.propTypes = {
+HeartCta.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
-  aspectRatio: 32 / 26,
-  svg: Beauty4Heart,
+  aspectRatio: 60 / 60,
+  svg: HeartCta,
 };

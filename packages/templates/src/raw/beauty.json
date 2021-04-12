@@ -249,49 +249,8 @@
           "delay": 1000
         },
         {
-          "id": "86bad41a-1ac5-4b21-b837-3b5fa6a082d7",
-          "type": "effect-pulse",
-          "targets": ["bd8f9376-7962-44a0-b2b7-175ab75b9d58"],
-          "scale": 0.3,
-          "iterations": 1,
-          "duration": 1000,
-          "delay": 200
-        },
-        {
-          "id": "b8d21e72-0ac0-468a-963e-70f3eb559e28",
-          "type": "effect-pulse",
-          "targets": ["254ac1ec-228e-424f-ab2f-392364e08947"],
-          "scale": 0.4,
-          "iterations": 1,
-          "duration": 1000,
-          "delay": 280
-        },
-        {
-          "id": "ea106de2-790d-4fd9-bf91-435246cb1653",
-          "type": "effect-pulse",
-          "targets": ["3797ec08-e931-4774-a4bd-9f91af2439f5"],
-          "scale": 0.4,
-          "iterations": 1,
-          "duration": 1000,
-          "delay": 330
-        },
-        {
-          "id": "0a5bfb31-4e6f-49d1-99a0-41b6639cf5e2",
-          "type": "effect-pulse",
-          "targets": ["98375f28-5877-481d-a08d-a0b525af943c"],
-          "scale": 0.35,
-          "iterations": 1,
-          "duration": 1000,
-          "delay": 550
-        },
-        {
-          "id": "3fa39775-04b1-4642-a17b-6550f2a1e643",
-          "type": "effect-pulse",
-          "targets": ["19df8224-87e4-4d81-a452-43b6d0a218f5"],
-          "scale": 0.45,
-          "iterations": 1,
-          "duration": 1000,
-          "delay": 500
+          "delete": true,
+          "targets": ["19df8224-87e4-4d81-a452-43b6d0a218f5"]
         }
       ],
       "elements": [
@@ -814,58 +773,31 @@
     {
       "animations": [
         {
-          "id": "5f8055f6-735e-40a4-a4d2-f75755932088",
+          "id": "17e6fcb3-d3e9-43b8-9e10-67b386af4912",
           "type": "effect-pulse",
-          "targets": ["b000d6e9-edcb-4121-9800-0e0755e0beaf"],
+          "targets": ["ba504f4a-7eee-4e86-add7-6fb6c15166c7"],
           "scale": 0.3,
           "iterations": 1,
           "duration": 1600,
-          "delay": 400
+          "delay": 600
         },
         {
-          "id": "4fbc612c-aeac-4fe5-9a68-3647fd8967ec",
+          "id": "0239d43e-460f-4b5e-9924-59557ffd97c9",
           "type": "effect-pulse",
-          "targets": ["4b924f3a-045c-4675-9b79-383ebdd1466a"],
+          "targets": ["44e92a2d-e8ce-47fb-a081-5d84792272ce"],
           "scale": 0.3,
           "iterations": 1,
           "duration": 1601,
           "delay": 500
         },
         {
-          "id": "ab70ef64-029c-4c7e-afdb-a76c4f542050",
+          "id": "c884fc80-6cb0-444f-89b5-482ccb4bb350",
           "type": "effect-pulse",
-          "targets": ["315a02bf-d411-4cdd-aec6-2713950b1c63"],
-          "scale": 0.3,
-          "iterations": 1,
-          "duration": 1600,
-          "delay": 600
-        },
-        {
-          "id": "b0242357-753d-4bdf-81cb-6a254b5b3c59",
-          "type": "effect-pulse",
-          "targets": ["ad9135a2-6d40-49c8-ae0e-df95062e1bb2"],
+          "targets": ["6e2c6c31-800c-40b4-8b4c-423e875fa897"],
           "scale": 0.3,
           "iterations": 1,
           "duration": 1600,
           "delay": 400
-        },
-        {
-          "id": "499980ca-1297-4fba-8578-7556fe5cd166",
-          "type": "effect-pulse",
-          "targets": ["fa70d312-a9cf-467f-be27-199ce1cc9f73"],
-          "scale": 0.3,
-          "iterations": 1,
-          "duration": 1600,
-          "delay": 600
-        },
-        {
-          "id": "8f82ab75-bcb3-4692-bd9f-f636ad063b1f",
-          "type": "effect-pulse",
-          "targets": ["15633901-f6a8-401c-96c7-1adc6902f377"],
-          "scale": 0.3,
-          "iterations": 1,
-          "duration": 1600,
-          "delay": 500
         }
       ],
       "elements": [
@@ -912,8 +844,6 @@
           "focalY": 50
         },
         {
-          "width": 60,
-          "height": 60,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -921,69 +851,53 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255,
-              "a": 0.5
-            }
-          },
+          "type": "sticker",
+          "width": 60,
+          "height": 60,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "circle"
+          "sticker": {
+            "type": "beautyCta"
           },
-          "type": "shape",
-          "basedOn": "315a02bf-d411-4cdd-aec6-2713950b1c63",
-          "id": "b000d6e9-edcb-4121-9800-0e0755e0beaf",
+          "basedOn": "44e92a2d-e8ce-47fb-a081-5d84792272ce",
+          "id": "6e2c6c31-800c-40b4-8b4c-423e875fa897",
           "x": 164,
           "y": 125,
           "link": {
-            "url": "https://example.com",
+            "url": "http://example.com",
             "icon": null,
             "desc": "Example Domain"
           }
         },
         {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 60,
+          "height": 60,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "beautyCta"
+          },
+          "basedOn": "ba504f4a-7eee-4e86-add7-6fb6c15166c7",
+          "id": "44e92a2d-e8ce-47fb-a081-5d84792272ce",
           "x": 102,
           "y": 302,
-          "width": 60,
-          "height": 60,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255,
-              "a": 0.5
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "98791375-1a20-4b01-8e12-cb8c3f9932ba",
-          "id": "4b924f3a-045c-4675-9b79-383ebdd1466a",
           "link": {
-            "url": "https://example.com",
+            "url": "http://example.com",
             "icon": null,
             "desc": "Example Domain"
           }
         },
         {
-          "width": 60,
-          "height": 60,
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -991,93 +905,23 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255,
-              "a": 0.5
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "4b924f3a-045c-4675-9b79-383ebdd1466a",
-          "id": "315a02bf-d411-4cdd-aec6-2713950b1c63",
+          "type": "sticker",
           "x": 71,
           "y": 416,
+          "width": 60,
+          "height": 60,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "beautyCta"
+          },
+          "id": "ba504f4a-7eee-4e86-add7-6fb6c15166c7",
           "link": {
-            "url": "https://example.com",
+            "url": "http://example.com",
             "icon": null,
             "desc": "Example Domain"
           }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 180,
-          "y": 144,
-          "width": 30,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "beauty4Heart"
-          },
-          "id": "ad9135a2-6d40-49c8-ae0e-df95062e1bb2"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 117,
-          "y": 321,
-          "width": 30,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "beauty4Heart"
-          },
-          "id": "15633901-f6a8-401c-96c7-1adc6902f377"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "type": "sticker",
-          "x": 87,
-          "y": 435,
-          "width": 30,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "sticker": {
-            "type": "beauty4Heart"
-          },
-          "id": "fa70d312-a9cf-467f-be27-199ce1cc9f73"
         }
       ],
       "type": "page",
@@ -1175,7 +1019,7 @@
           "x": 0,
           "y": 235,
           "width": 413,
-          "height": 409,
+          "height": 440,
           "opacity": 100,
           "flip": {
             "vertical": false,
