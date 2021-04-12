@@ -121,6 +121,11 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(letterSpacing.value).toBe('50%');
       expect(fontColor.hex.value).toBe('FF6600');
 
+      // Move selection to characters 6-9 (partially overlapping new styles and no styles)
+      await setSelection(6, 9);
+      // Verify that the toggles are off (as to be expected with mixed styles)
+      await data.fixture.events.click(underline.button);
+      await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.sleep(300);
@@ -128,10 +133,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       await data.fixture.events.sleep(300);
       expect(actual).toBe('123');
 
-      // Move selection to characters 6-9 (partially overlapping new styles and no styles)
-      /*await setSelection(6, 9);
-      // Verify that the toggles are off (as to be expected with mixed styles)
-      expect(bold.checked).toBe(false);
+      /*expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);*/
 
