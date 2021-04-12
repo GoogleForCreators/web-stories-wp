@@ -20,17 +20,6 @@
           "delay": 100
         },
         {
-          "id": "02a54d03-9a7d-497f-a757-00e1aad57fbe",
-          "targets": ["a413ec38-e047-4458-927f-14364d513d52"],
-          "type": "spin",
-          "rotation": "10",
-          "duration": 6000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
           "id": "ce52f6c4-c7f7-4e3d-bff1-cca289f4f61e",
           "type": "effect-fly-in",
           "targets": ["8b9f4705-fd93-41ad-bb6e-a47cfee940c4"],
@@ -308,17 +297,6 @@
     {
       "animations": [
         {
-          "id": "145b90b7-c7e5-4b54-b214-a8a039d8c4f6",
-          "targets": ["8d31d477-7e91-4214-b263-c72d0a726be1"],
-          "type": "spin",
-          "rotation": "10",
-          "duration": 6000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
           "id": "7a2f3891-9118-408c-b00e-f5d4592119e7",
           "type": "effect-fly-in",
           "targets": ["6977e93f-f8f3-40ee-ba03-40a671211636"],
@@ -335,16 +313,16 @@
           "delay": 100
         },
         {
-          "delete": true,
-          "targets": ["643dd508-0499-4c8e-adab-b48039c98296"]
-        },
-        {
           "id": "27ee3963-f352-4a8c-b9f7-b46192165497",
           "type": "effect-fly-in",
           "targets": ["643dd508-0499-4c8e-adab-b48039c98296"],
           "flyInDir": "bottomToTop",
           "duration": 800,
           "delay": 200
+        },
+        {
+          "delete": true,
+          "targets": ["8d31d477-7e91-4214-b263-c72d0a726be1"]
         }
       ],
       "elements": [
@@ -2601,9 +2579,9 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "wellbeingArrow"
+            "type": "wellbeingArrowLight"
           },
-          "id": "10f9a4ce-0909-4503-9dda-bb8aae11ca99"
+          "id": "9e36fe4f-00c1-42eb-b613-9e8c31be8eca"
         }
       ],
       "type": "page",
