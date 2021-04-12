@@ -11,7 +11,7 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-toolbox": "^0.2",
+    "ampproject/amp-toolbox": "dev-main",
     "ampproject/amp-wp": "dev-develop",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
