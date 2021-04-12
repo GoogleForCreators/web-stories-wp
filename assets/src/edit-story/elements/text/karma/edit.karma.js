@@ -33,6 +33,18 @@ fdescribe('TextEdit integration', () => {
     fixture.restore();
   });
 
+  function repeatPress(key, count) {
+    let remaining = count;
+    const press = () => {
+      if (remaining === 0) {
+        return Promise.resolve(true);
+      }
+      remaining--;
+      return fixture.events.keyboard.press(key).then(press);
+    };
+    return press();
+  }
+
   it('should render ok', () => {
     expect(
       fixture.container.querySelector('[data-testid="fullbleed"]')
@@ -72,18 +84,22 @@ fdescribe('TextEdit integration', () => {
       fit('should handle a command, exit and save', async () => {
         const draft = editor.querySelector('[contenteditable="true"]');
         // Select all.
-        await fixture.events.mouse.clickOn(draft, 30, 5, { clickCount: 3 });
+        await fixture.events.mouse.clickOn(draft, 30, 5, { clickCount: 2 });
+        await repeatPress('ArrowUp', 10);
+        await fixture.events.keyboard.down('shift');
+        await repeatPress('ArrowRight', 15);
+        await fixture.events.keyboard.up('shift');
         await fixture.snapshot('TEST!!!');
-        //expect(boldToggle.checked).toEqual(false);
+        expect(boldToggle.checked).toEqual(false);
 
-        //await fixture.snapshot('before mod+b');
+        await fixture.snapshot('before mod+b');
 
         // THIS LINE CAUSES FAILURE
-        //await fixture.events.keyboard.shortcut('mod+b');
+        await fixture.events.keyboard.shortcut('mod+b');
 
         //await fixture.snapshot('after mod+b');
 
-        // expect(boldToggle.checked).toEqual(true);
+        expect(boldToggle.checked).toEqual(true);
 
         // Exit edit mode by clicking right outside the editor.
         /*await fixture.events.mouse.seq(({ moveRel, down }) => [
