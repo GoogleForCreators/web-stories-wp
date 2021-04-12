@@ -36,8 +36,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.black};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.font};
 `;
 
 /**

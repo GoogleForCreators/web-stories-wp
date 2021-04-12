@@ -63,13 +63,12 @@ const SavedTemplateGridView = ({
   pageSize,
   templateMenu,
   actions,
-  initialFocusId = null,
 }) => {
   const { isRTL } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-  const [activeGridItemId, setActiveGridItemId] = useState(initialFocusId);
+  const [activeGridItemId, setActiveGridItemId] = useState();
 
   // eslint-disable-next-line no-unused-vars
   const bottomTargetAction = useCallback(
@@ -202,7 +201,6 @@ SavedTemplateGridView.propTypes = {
   // bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
   templateMenu: StoryMenuPropType,
-  initialFocusId: PropTypes.number,
 };
 
 export default SavedTemplateGridView;

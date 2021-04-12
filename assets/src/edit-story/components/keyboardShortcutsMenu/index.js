@@ -38,7 +38,7 @@ import {
 import { useHelpCenter } from '../../app';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import DirectionAware from '../directionAware';
-import { Tooltip } from '../tooltip';
+import Tooltip from '../tooltip';
 import { Popup } from './popup';
 import ShortcutMenu from './shortcutMenu';
 import { TOGGLE_SHORTCUTS_MENU } from './constants';

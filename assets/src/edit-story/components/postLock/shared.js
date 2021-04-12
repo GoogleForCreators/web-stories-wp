@@ -18,14 +18,6 @@
  */
 import styled from 'styled-components';
 
-export const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.size};
-  line-height: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.body1.letterSpacing};
-`;
-
 export const Img = styled.img`
   float: left;
   margin: 0px 10px 10px 0px;

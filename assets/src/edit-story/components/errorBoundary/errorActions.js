@@ -24,7 +24,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Outline, Primary } from '../button';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../../design-system';
 
 const Message = styled.div`
   color: #fff;
@@ -39,6 +44,10 @@ const Message = styled.div`
 
 const P = styled.p`
   margin: 0 0 8px 0;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
 `;
 
 function ErrorActions({ error, errorInfo }) {
@@ -59,12 +68,26 @@ function ErrorActions({ error, errorInfo }) {
         )}
       </P>
       <P>{__('Apologies for the inconvenience.', 'web-stories')}</P>
-      <div>
-        <Outline onClick={reload}>{__('Reload', 'web-stories')}</Outline>
-        <Primary as="a" href={reportUrl} target="_blank" rel="noreferrer">
+      <Wrapper>
+        <Button
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.QUATERNARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={reload}
+        >
+          {__('Reload', 'web-stories')}
+        </Button>
+        <Button
+          variant={BUTTON_VARIANTS.RECTANGLE}
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          href={reportUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
           {__('Report Error', 'web-stories')}
-        </Primary>
-      </div>
+        </Button>
+      </Wrapper>
     </Message>
   );
 }

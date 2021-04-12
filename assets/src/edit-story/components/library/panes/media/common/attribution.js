@@ -22,6 +22,16 @@ import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useState } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
+
+const StyledText = styled(Text)`
+  color: ${({ theme, active }) =>
+    rgba(theme.colors.standard.white, active ? 1.0 : 0.6)};
+`;
+
 const Link = styled.a`
   display: block;
   position: absolute;
@@ -29,16 +39,8 @@ const Link = styled.a`
   bottom: 0;
   width: 100%;
   padding: 8px;
-  color: ${({ theme, active }) =>
-    rgba(theme.DEPRECATED_THEME.colors.fg.white, active ? 1.0 : 0.6)};
   background-color: ${({ theme, active }) =>
     rgba(theme.colors.bg.primary, active ? 0.8 : 0.6)};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.size};
-  line-height: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.duration.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.duration.letterSpacing};
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -62,7 +64,12 @@ const Attribution = ({ author, url }) => {
       target="_blank"
       rel="noreferrer"
     >
-      {author}
+      <StyledText
+        forwardedAs="span"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+      >
+        {author}
+      </StyledText>
     </Link>
   );
 };
