@@ -175,14 +175,17 @@ function TextDisplay({
   useTransformHandler(id, (transform) => {
     // Ref is set in case of high-light mode only, use the fgRef if that's missing.
     const target = ref?.current || fgRef.current;
-    const updatedFontSize = transform?.updates?.fontSize;
-    target.style.fontSize = updatedFontSize
-      ? `${dataToEditorY(updatedFontSize)}px`
-      : '';
-    const updatedMargin = transform?.updates?.marginOffset;
-    target.style.margin = updatedMargin
-      ? `${dataToEditorY(-updatedMargin) / 2}px 0`
-      : '';
+    if (target) {
+      const updatedFontSize = transform?.updates?.fontSize;
+      target.style.fontSize = updatedFontSize
+        ? `${dataToEditorY(updatedFontSize)}px`
+        : '';
+
+      const updatedMargin = transform?.updates?.marginOffset;
+      target.style.margin = updatedMargin
+        ? `${dataToEditorY(-updatedMargin) / 2}px 0`
+        : '';
+    }
 
     if (outerBorderRef.current || bgRef.current) {
       // Depending on the background mode, choose the element that has border assigned to it.
