@@ -30,9 +30,9 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post_Type;
-use WP_Screen;
 
 /**
  * Dashboard class.
@@ -40,6 +40,7 @@ use WP_Screen;
 class Dashboard extends Service_Base {
 	use Assets;
 	use Types;
+	use Screen;
 
 	/**
 	 * Script handle.
@@ -398,17 +399,16 @@ class Dashboard extends Service_Base {
 	 * @return void
 	 */
 	public function display_link_to_dashboard() {
-		$screen = get_current_screen();
+		$screen = $this->get_current_screen();
+		if ( ! $screen ) {
+			return;
+		}
 
-		if ( ! $screen instanceof WP_Screen ) {
+		if ( ! $this->is_edit_screen( $screen ) ) {
 			return;
 		}
 
 		if ( 'edit' !== $screen->base ) {
-			return;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
 			return;
 		}
 
