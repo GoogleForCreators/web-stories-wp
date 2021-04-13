@@ -22,11 +22,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { _n, sprintf, __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import {
   THEME_CONSTANTS,
   Text,
@@ -92,9 +92,23 @@ function TextSetsPane({ paneRef }) {
 
   const addIdToTextSets = useCallback(
     (textSetsArray = []) =>
-      textSetsArray.map((elements) => {
+      textSetsArray.map(({ textSetFonts = [], textSetCategory, elements }) => {
         return {
           id: `text_set_${uuidv4()}`,
+          title: sprintf(
+            /* translators: 1: text set title. 2: text set category. */
+            _n(
+              'Text set %1$s with %2$s font',
+              'Text set %1$s with %2$s fonts',
+              textSetFonts.length,
+              'web-stories'
+            ),
+            textSetCategory,
+            textSetFonts.join(
+              /* translators: delimiter used in a list */
+              __(', ', 'web-stories')
+            )
+          ),
           elements,
         };
       }),
