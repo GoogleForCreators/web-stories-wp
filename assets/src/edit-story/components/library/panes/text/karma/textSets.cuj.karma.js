@@ -96,7 +96,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     );
 
     const textSet = fixture.editor.library.text.textSets[1];
-    const page = fixture.editor.canvas.fullbleed.container;
+    const page = fixture.editor.canvas.framesLayer.fullbleed;
 
     textSet.scrollIntoView();
     await fixture.events.mouse.moveRel(textSet, 25, 25);
