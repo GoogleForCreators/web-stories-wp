@@ -129,9 +129,9 @@ const Menu = ({ items, isOpen, onDismiss, ...props }) => {
 
   const totalIndex = useMemo(() => items.length - 1, [items]);
 
-  const handleFocusItem = useCallback((ev, itemIndex, callback) => {
+  const handleFocusItem = useCallback((ev, itemIndex, focusCallback) => {
     setFocusedIndex(itemIndex);
-    callback?.(ev);
+    focusCallback?.(ev);
   }, []);
 
   /**
@@ -141,8 +141,9 @@ const Menu = ({ items, isOpen, onDismiss, ...props }) => {
    * @return {void} void
    */
   const handleKeyboardNav = useCallback(
-    ({ key }) => {
-      const isAscending = key === KEYS.UP;
+    ({ key, shiftKey }) => {
+      const isAscending =
+        [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
       let index = focusedIndex + (isAscending ? -1 : 1);
       let terminate = isAscending ? index < 0 : index > totalIndex;
 
@@ -153,6 +154,7 @@ const Menu = ({ items, isOpen, onDismiss, ...props }) => {
           FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
           !element?.disabled
         ) {
+          element?.focus();
           setFocusedIndex(index);
           return;
         }
@@ -160,18 +162,20 @@ const Menu = ({ items, isOpen, onDismiss, ...props }) => {
         index = isAscending ? index - 1 : index + 1;
         terminate = isAscending ? index < 0 : index > totalIndex;
       }
+
+      // If we didn't find a focusable element or get to the start/end
+      // of the list then **tabbing should close the menu**
+      if (key === KEYS.TAB) {
+        onDismiss?.();
+      }
     },
-    [focusedIndex, totalIndex]
+    [focusedIndex, onDismiss, totalIndex]
   );
 
   useEffect(() => {
-    // focus first 'focusable' element if menu is opened and no element is focused
-    if (
-      isOpen &&
-      !menuWasAlreadyOpen.current &&
-      listRef?.current &&
-      focusedIndex === -1
-    ) {
+    // focus first 'focusable' element if menu is opened and no element is focused.
+    // close the menu if there's no focusable element
+    if (isOpen && !menuWasAlreadyOpen.current && listRef?.current) {
       let index = 0;
 
       while (index <= totalIndex) {
@@ -181,7 +185,9 @@ const Menu = ({ items, isOpen, onDismiss, ...props }) => {
           FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
           !element?.disabled
         ) {
+          element?.focus();
           setFocusedIndex(index);
+          menuWasAlreadyOpen.current = true;
           return;
         }
 
@@ -201,9 +207,12 @@ const Menu = ({ items, isOpen, onDismiss, ...props }) => {
     }
   }, [isOpen]);
 
-  useKeyDownEffect(listRef, { key: ['down', 'up'] }, handleKeyboardNav, [
+  useKeyDownEffect(
+    listRef,
+    { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
     handleKeyboardNav,
-  ]);
+    [handleKeyboardNav]
+  );
 
   return (
     <MenuWrapper>

@@ -61,6 +61,20 @@ describe('ContextMenu', () => {
 
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
+
+  it('should focus the first focusable element when the menu is opened', () => {
+    // need menu to start closed since focus gets changed
+    // when the menu goes from closed -> open
+    const { queryByRole, rerender } = renderWithProviders(
+      <ContextMenu isOpen={false} items={items} />
+    );
+
+    rerender(<ContextMenu isOpen items={items} />);
+
+    // opening the menu should focus the first focusable item
+    const firstButton = queryByRole('button', { name: items[0].label });
+    expect(firstButton).toHaveFocus();
+  });
 });
 
 describe('MenuItem', () => {

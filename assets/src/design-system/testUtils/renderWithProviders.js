@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { render } from '@testing-library/react';
+import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -25,10 +26,25 @@ import { ThemeProvider } from 'styled-components';
  */
 import { lightMode, theme } from '../theme';
 
-export const renderWithProviders = (children) => {
-  return render(
+const ProviderWrapper = ({ children }) => {
+  return (
     <ThemeProvider theme={{ ...theme, colors: { ...lightMode } }}>
       {children}
     </ThemeProvider>
   );
+};
+ProviderWrapper.propTypes = {
+  children: PropTypes.node,
+};
+
+export const renderWithProviders = (children) => {
+  const { rerender, ...result } = render(
+    <ProviderWrapper>{children}</ProviderWrapper>
+  );
+  return {
+    ...result,
+    // rerender needs to be wrapped in the providers too
+    rerender: (rerenderedChildren) =>
+      rerender(<ProviderWrapper>{rerenderedChildren}</ProviderWrapper>),
+  };
 };
