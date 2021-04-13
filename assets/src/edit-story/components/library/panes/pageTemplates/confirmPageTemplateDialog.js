@@ -26,7 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import Dialog from '../../../dialog';
 
-function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
+function ConfirmPageTemplateDialog({ onClose, onConfirm }) {
   return (
     <Dialog
       isOpen
@@ -46,9 +46,9 @@ function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
   );
 }
 
-ConfirmPageLayoutDialog.propTypes = {
+ConfirmPageTemplateDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
 };
 
-export default ConfirmPageLayoutDialog;
+export default ConfirmPageTemplateDialog;

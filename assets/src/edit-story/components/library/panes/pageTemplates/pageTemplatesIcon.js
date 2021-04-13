@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Icons } from '../../../../../design-system';
 
-function PageLayoutsIcon() {
+function PageTemplatesIcon() {
   return (
     <Icons.Box4Alternate
       aria-label={__('Page templates library', 'web-stories')}
@@ -32,4 +32,4 @@ function PageLayoutsIcon() {
   );
 }
 
-export default PageLayoutsIcon;
+export default PageTemplatesIcon;
