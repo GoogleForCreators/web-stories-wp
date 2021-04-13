@@ -26,7 +26,7 @@ import { Fixture } from '../../../karma';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { initHelpers } from './_utils';
 
-fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
+describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
   const {
@@ -53,7 +53,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    fit('should apply inline formats correctly for both single style and multiple styles', async () => {
+    it('should apply inline formats correctly for both single style and multiple styles', async () => {
       const {
         bold,
         italic,
@@ -122,28 +122,16 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(fontColor.hex.value).toBe('FF6600');
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
-      await data.fixture.events.mouse.clickOn(
-        data.fixture.editor.canvas.framesLayer.frames[0].node,
-        10,
-        5
-      );
+      // @todo For some reason this is not selecting 6-9 properly!
       await setSelection(6, 9);
-      // Verify that the toggles are off (as to be expected with mixed styles)
-      await data.fixture.events.click(underline.button);
-      await richTextHasFocus();
-      await data.fixture.events.keyboard.press('Escape');
-      await data.fixture.events.keyboard.press('Escape');
-      await data.fixture.events.sleep(300);
-      const actual = getTextContent();
-      await data.fixture.events.sleep(300);
-      expect(actual).toBe('123');
 
-      /*expect(bold.checked).toBe(false);
+      // Verify that the toggles are off (as to be expected with mixed styles)
+      expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
-      expect(underline.checked).toBe(false);*/
+      expect(underline.checked).toBe(false);
 
       // Expect font weight, letter spacing and font color to be "multiple"
-      /*expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(fontColor.output).toBe('');
@@ -194,7 +182,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
         'letter-spacing: 1em',
       ].join('; ');
       const expected = `Fill <span style="${firstCSS}">i</span><span style="${secondCSS}">n</span><span style="${secondCSS}"> s</span>ome text`;
-      expect(actual).toBe(expected);*/
+      expect(actual).toBe(expected);
     });
   });
 
