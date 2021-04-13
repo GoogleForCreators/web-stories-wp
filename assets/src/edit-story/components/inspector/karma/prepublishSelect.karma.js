@@ -61,7 +61,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
   }
 
   describe('Prepublish checklist tab', () => {
-    it('should select the offending image elements', async () => {
+    // #7108 Check no longer exists
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should select the offending image elements', async () => {
       await fixture.events.click(fixture.editor.library.media.item(0));
 
       let storyContext = await fixture.renderHook(() => useStory());
