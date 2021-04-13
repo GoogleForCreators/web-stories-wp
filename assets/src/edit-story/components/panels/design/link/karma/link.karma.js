@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -112,12 +116,17 @@ describe('Link Panel', () => {
 
     it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
+      // make sure address input exists
+      await waitFor(() => linkPanel.address);
+
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
 
       // Debounce time for populating meta-data.
       await fixture.events.keyboard.press('tab');
       await fixture.events.sleep(1200);
+      // make sure description input exists
+      await waitFor(() => linkPanel.description);
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
       await fixture.events.keyboard.press('tab');
@@ -139,6 +148,7 @@ describe('Link Panel', () => {
 
       // Select the element again.
       await fixture.events.click(frame);
+      await waitFor(() => fixture.editor.inspector.designPanel.link.address);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.link.address,
         { clickCount: 3 }

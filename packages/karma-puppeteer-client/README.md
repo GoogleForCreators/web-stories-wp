@@ -1,9 +1,9 @@
 # karma-puppeteer-client
 
 The karma-puppeteer-launcher exposes a few Puppeteer APIs, mainly related to native
-events and nantive browser support. The APIs are exposed via `karmaPuppeteer` global.
+events and native browser support. The APIs are exposed via `karmaPuppeteer` global.
 
-Notice, that all exposed Puppeeter APIs that accept an element selector, also
+Notice, that all exposed Puppeteer APIs that accept an element selector, also
 accept the element reference in its place. Thus, both of these forms are valid:
 
 ```js
