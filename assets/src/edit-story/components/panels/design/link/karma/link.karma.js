@@ -99,7 +99,7 @@ describe('Link Panel', () => {
       await fixture.events.keyboard.type('example.com');
 
       await fixture.events.keyboard.press('tab');
-      expect(linkPanel.address.value).toBe('http://example.com');
+      expect(linkPanel.address.value).toBe('https://example.com');
     });
 
     it('should not add additional protocol if already present', async () => {

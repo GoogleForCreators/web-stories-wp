@@ -25,13 +25,16 @@ import { Icons } from '../../../design-system';
 
 const IconContainer = styled.div`
   height: auto;
-  width: 32px;
+  width: 28px;
+  overflow: hidden;
+  /* icon is bigger than icon container, so we need to center manually. */
+  margin-left: -1px;
 `;
 
 function TextIcon() {
   return (
     <IconContainer>
-      <Icons.LetterT />
+      <Icons.LetterT height="30px" width="30px" />
     </IconContainer>
   );
 }
