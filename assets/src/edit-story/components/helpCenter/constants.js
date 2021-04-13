@@ -27,6 +27,7 @@ export const KEYS = {
   PREVIEW_STORY: 'previewStory',
   ADD_LINKS: 'addLinks',
   ENABLE_SWIPE: 'enableSwipe',
+  EMBED_WEB_STORIES: 'embedWebStories',
   DONE: 'done',
 };
 
@@ -101,6 +102,20 @@ export const TIPS = {
     description: [
       __(
         'Go to the Design tab. Navigate to <strong>Page Attachment</strong> and enter a web address and a call to action to describe the link.',
+        'web-stories'
+      ),
+    ],
+  },
+  [KEYS.EMBED_WEB_STORIES]: {
+    title: __('Embed Web Stories', 'web-stories'),
+    /* `figureSrcImg` and `figureAlt` are temporary until
+    we get an animation. Once we have the animation then these
+    attributes should be removed. */
+    figureSrcImg: 'images/help-center/story_embed_module_1',
+    figureAlt: __('Embed web story graphic', 'web-stories'),
+    description: [
+      __(
+        'When you create a new post in WordPress, you can embed any of your Stories. <a>Learn more</a>',
         'web-stories'
       ),
     ],
