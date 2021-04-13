@@ -112,8 +112,8 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 **Release Date:** April 13, 2021.
 
-* New feature: automated video optimization during upload.
-* New feature: canvas zoom levels, to allow for pixel-perfect designs.
+* New feature: automated video optimization during upload, enabling support for MOV files.
+* New feature: canvas zoom for pixel-perfect designs.
 * New feature: toggle images in page layouts.
 * Refreshed UI in the editor and dashboard.
 * Bug fixes and performance improvements.
@@ -186,7 +186,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.6.0 =
 
-New built-in video optimization, canvas zoom, updated UI, bug fixes and performance improvements.
+Automated video optimization, canvas zoom, updated UI, bug fixes and performance improvements.
 
 = 1.5.0 =
 
