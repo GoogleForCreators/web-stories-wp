@@ -21,6 +21,7 @@ import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import { _x, sprintf, __ } from '@web-stories-wp/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -38,7 +39,7 @@ const PageTemplatesParentContainer = styled.div`
   overflow-y: scroll;
 `;
 
-function DefaultTemplates() {
+function DefaultTemplates({ pageSize }) {
   const {
     actions: { getPageTemplates },
   } = useAPI();
@@ -132,6 +133,7 @@ function DefaultTemplates() {
       <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
         {pageTemplatesParentRef.current && (
           <PageTemplates
+            pageSize={pageSize}
             onToggleClick={handleToggleClick}
             parentRef={pageTemplatesParentRef}
             pages={filteredPages}
@@ -142,5 +144,9 @@ function DefaultTemplates() {
     </>
   );
 }
+
+DefaultTemplates.propTypes = {
+  pageSize: PropTypes.object.isRequired,
+};
 
 export default DefaultTemplates;

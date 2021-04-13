@@ -29,7 +29,6 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../../../app';
-import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { duplicatePage } from '../../../../elements';
 
 import { UnitsProvider } from '../../../../units';
@@ -50,8 +49,7 @@ import {
 } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
-
-const PAGE_TEMPLATE_PANE_WIDTH = 158;
+import TemplateSave from './templateSave';
 
 const ActionRow = styled.div`
   display: flex;
@@ -74,6 +72,7 @@ function PageTemplates({
   pages,
   parentRef,
   showTemplateImages,
+  pageSize,
 }) {
   const { replaceCurrentPage, currentPage } = useStory(
     ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
@@ -95,13 +94,6 @@ function PageTemplates({
     () => currentPage && !isDefaultPage(currentPage),
     [currentPage]
   );
-
-  const pageSize = useMemo(() => {
-    const width = PAGE_TEMPLATE_PANE_WIDTH;
-    const height = Math.round(width / PAGE_RATIO);
-    const containerHeight = Math.round(width / FULLBLEED_RATIO);
-    return { width, height, containerHeight };
-  }, []);
 
   const handleApplyPageTemplate = useCallback(
     (page) => {
@@ -223,6 +215,7 @@ function PageTemplates({
           role="list"
           aria-label={__('Page Template Options', 'web-stories')}
         >
+          <TemplateSave pageSize={pageSize} />
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {
               const pageIndex = getVirtualizedItemIndex({
@@ -275,6 +268,7 @@ PageTemplates.propTypes = {
     })
   ),
   showTemplateImages: PropTypes.bool,
+  pageSize: PropTypes.object.isRequired,
 };
 
 export default PageTemplates;

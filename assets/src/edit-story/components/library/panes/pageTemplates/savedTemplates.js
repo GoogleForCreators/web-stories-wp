@@ -13,8 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function SavedTemplates() {
-  return null;
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import TemplateSave from './templateSave';
+
+function SavedTemplates({ pageSize }) {
+  return <TemplateSave pageSize={pageSize} />;
 }
+
+SavedTemplates.propTypes = {
+  pageSize: PropTypes.object.isRequired,
+};
 
 export default SavedTemplates;

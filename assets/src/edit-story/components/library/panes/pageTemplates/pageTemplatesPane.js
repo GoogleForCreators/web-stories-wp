@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
@@ -25,9 +25,9 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-
 import { Pane } from '../shared';
 import { DropDown } from '../../../../../design-system';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
@@ -42,6 +42,7 @@ export const PaneInner = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const DropDownWrapper = styled.div`
@@ -64,6 +65,7 @@ const StyledDropDown = styled(DropDown)`
 
 const DEFAULT = 'default';
 const SAVED = 'saved';
+const PAGE_TEMPLATE_PANE_WIDTH = 158;
 
 function PageTemplatesPane(props) {
   const { customPageTemplates } = useFeatures();
@@ -79,6 +81,13 @@ function PageTemplatesPane(props) {
       label: __('Saved templates', 'web-stories'),
     },
   ];
+
+  const pageSize = useMemo(() => {
+    const width = PAGE_TEMPLATE_PANE_WIDTH;
+    const height = Math.round(width / PAGE_RATIO);
+    const containerHeight = Math.round(width / FULLBLEED_RATIO);
+    return { width, height, containerHeight };
+  }, []);
 
   return (
     <StyledPane id={paneId} {...props}>
@@ -97,7 +106,11 @@ function PageTemplatesPane(props) {
         </DropDownWrapper>
       )}
       <PaneInner>
-        {showDefaultTemplates ? <DefaultTemplates /> : <SavedTemplates />}
+        {showDefaultTemplates ? (
+          <DefaultTemplates pageSize={pageSize} />
+        ) : (
+          <SavedTemplates pageSize={pageSize} />
+        )}
       </PaneInner>
     </StyledPane>
   );
