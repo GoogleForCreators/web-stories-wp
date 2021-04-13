@@ -12,28 +12,12 @@
     {
       "animations": [
         {
-          "id": "fe6678b8-de0a-4683-b121-d6b58333e75f",
-          "targets": ["9ecb248e-2adc-4834-a270-01325263a30e"],
-          "type": "zoom",
-          "zoomFrom": 1.4,
-          "zoomTo": 1,
-          "duration": 1400,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "inOutCirc",
-          "fill": "both"
-        },
-        {
           "id": "bbcea49d-b6dc-41ff-a07a-a1290910d95e",
           "type": "effect-fly-in",
           "targets": ["9f187764-e909-416f-8820-9d24ac15f192"],
           "flyInDir": "leftToRight",
           "duration": 920,
           "delay": 480
-        },
-        {
-          "delete": true,
-          "targets": ["25b6f99b-3f69-4351-9e18-31b8ef1d1a61"]
         },
         {
           "id": "265b4c7e-94ab-4461-9404-dfbbb7975f55",
@@ -43,6 +27,14 @@
           "iterations": 1,
           "duration": 1400,
           "delay": 480
+        },
+        {
+          "id": "819f408a-195a-4d7b-8b51-d8546a4c37ca",
+          "type": "effect-background-zoom",
+          "targets": ["9ecb248e-2adc-4834-a270-01325263a30e"],
+          "zoomDirection": "scaleOut",
+          "duration": 800,
+          "delay": 0
         }
       ],
       "elements": [
@@ -518,6 +510,14 @@
           "targets": ["254e9e10-3f62-4e5a-8184-35f7aa9f15b8"],
           "duration": 3000,
           "delay": 100
+        },
+        {
+          "id": "d61b5acc-03ab-42f9-893d-aa7a1765f607",
+          "type": "effect-fly-in",
+          "targets": ["9f1b4f10-f779-4a36-9833-baef0c4530a4"],
+          "flyInDir": "rightToLeft",
+          "duration": 1400,
+          "delay": 0
         }
       ],
       "elements": [
