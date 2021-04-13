@@ -363,6 +363,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Video optimization', 'web-stories' ),
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
