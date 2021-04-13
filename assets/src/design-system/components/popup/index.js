@@ -83,7 +83,8 @@ function Popup({
         return;
       }
       setPopupState({
-        offset: getOffset(placement, spacing, anchor, dock, popup),
+        offset:
+          anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
       });
     },
     [anchor, dock, placement, spacing, mounted]

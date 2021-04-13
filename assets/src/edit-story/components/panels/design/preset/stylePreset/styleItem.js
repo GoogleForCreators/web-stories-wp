@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -27,16 +26,16 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { generatePresetStyle } from '../utils';
-import { Remove } from '../../../../../icons';
 import stripHTML from '../../../../../utils/stripHTML';
 import { useStory } from '../../../../../app/story';
 import generatePatternStyles from '../../../../../utils/generatePatternStyles';
+import { Icons } from '../../../../../../design-system';
 
-const REMOVE_ICON_SIZE = 16;
+const REMOVE_ICON_SIZE = 32;
 
 const PresetButton = styled.button`
   background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.16)};
+    theme.colors.interactiveBg.secondaryNormal};
   border-color: transparent;
   position: relative;
   cursor: pointer;
@@ -54,7 +53,8 @@ const PresetButton = styled.button`
     position: absolute;
     top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
     left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.primary};
+    color: ${({ theme }) => theme.colors.fg.primary};
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
   }
 `;
 
@@ -124,7 +124,7 @@ function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
       }
     >
       {getStylePresetText()}
-      {isEditMode && <Remove />}
+      {isEditMode && <Icons.Cross />}
     </PresetButton>
   );
 }

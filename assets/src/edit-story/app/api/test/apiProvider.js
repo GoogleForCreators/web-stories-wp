@@ -22,6 +22,7 @@ import apiFetch from '@wordpress/api-fetch';
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
+import getAllTemplatesMock from '@web-stories-wp/templates';
 
 /**
  * Internal dependencies
@@ -30,12 +31,13 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../getAllPageLayouts');
-import getAllPageLayouts from '../getAllPageLayouts';
+jest.mock('../removeImagesFromPageLayouts');
+import removeImagesFromPageLayouts from '../removeImagesFromPageLayouts';
 
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
+jest.mock('@web-stories-wp/templates');
 
 const renderApiProvider = ({ configValue }) => {
   return renderHook(() => useAPI(), {
@@ -50,6 +52,8 @@ const renderApiProvider = ({ configValue }) => {
 
 describe('APIProvider', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
+
     apiFetch.mockReturnValue(
       Promise.resolve({
         body: GET_MEDIA_RESPONSE_BODY,
@@ -85,7 +89,39 @@ describe('APIProvider', () => {
 
   it('getPageLayouts gets pageLayouts w/ cdnURL', async () => {
     const pageLayouts = [{ id: 'templateid' }];
-    getAllPageLayouts.mockResolvedValue(pageLayouts);
+    getAllTemplatesMock.mockReturnValue(pageLayouts);
+
+    const cdnURL = 'https://test.url';
+    const assetsURL = 'https://plugin.url/assets/';
+    const { result } = renderApiProvider({
+      configValue: {
+        api: {},
+        cdnURL,
+        assetsURL,
+        postLock: { api: '' },
+      },
+    });
+
+    let pageLayoutsResult;
+    await act(async () => {
+      pageLayoutsResult = await result.current.actions.getPageLayouts({
+        showImages: true,
+      });
+    });
+
+    expect(removeImagesFromPageLayouts).toHaveBeenCalledWith({
+      assetsURL,
+      showImages: true,
+      templates: pageLayouts,
+    });
+    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
+  });
+
+  it('getPageLayouts gets pageLayouts w/ cdnURL and replaces images', async () => {
+    const pageLayouts = [{ id: 'templateid' }];
+    const formattedPageLayouts = [{ id: 'templateid', result: 'formatted' }];
+    getAllTemplatesMock.mockReturnValue(pageLayouts);
+    removeImagesFromPageLayouts.mockReturnValue(formattedPageLayouts);
 
     const cdnURL = 'https://test.url';
     const assetsURL = 'https://plugin.url/assets/';
@@ -103,7 +139,46 @@ describe('APIProvider', () => {
       pageLayoutsResult = await result.current.actions.getPageLayouts();
     });
 
-    expect(getAllPageLayouts).toHaveBeenCalledWith({ cdnURL, assetsURL });
+    expect(removeImagesFromPageLayouts).toHaveBeenCalledWith({
+      assetsURL,
+      showImages: false,
+      templates: pageLayouts,
+    });
+    expect(pageLayoutsResult).toStrictEqual(formattedPageLayouts);
+  });
+
+  it('getPageLayouts should memoize the templates if they have already been fetched', async () => {
+    const pageLayouts = [{ id: 'templateid' }];
+    getAllTemplatesMock.mockReturnValue(pageLayouts);
+
+    const cdnURL = 'https://test.url';
+    const assetsURL = 'https://plugin.url/assets/';
+    const { result } = renderApiProvider({
+      configValue: {
+        api: {},
+        cdnURL,
+        assetsURL,
+        postLock: { api: '' },
+      },
+    });
+
+    let pageLayoutsResult;
+    await act(async () => {
+      pageLayoutsResult = await result.current.actions.getPageLayouts({
+        showImages: true,
+      });
+    });
+
+    expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
+    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
+
+    await act(async () => {
+      pageLayoutsResult = await result.current.actions.getPageLayouts({
+        showImages: true,
+      });
+    });
+
+    expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
     expect(pageLayoutsResult).toStrictEqual(pageLayouts);
   });
 });

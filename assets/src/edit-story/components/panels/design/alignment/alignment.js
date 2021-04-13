@@ -39,7 +39,7 @@ import getBoundRect, {
 } from '../../../../utils/getBoundRect';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../../constants';
 import { Panel } from '../../panel';
-import { Tooltip } from '../../../tooltip';
+import Tooltip from '../../../tooltip';
 import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`

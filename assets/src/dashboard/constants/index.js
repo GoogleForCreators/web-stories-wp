@@ -48,7 +48,6 @@ export const APP_ROUTES = {
     'https://wordpress.org/support/plugin/web-stories/',
     'web-stories'
   ),
-  STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
 export const NESTED_APP_ROUTES = {
