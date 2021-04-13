@@ -376,17 +376,6 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @barklund
-			 * Issue: #4022
-			 * Creation date: 2021-03-25
-			 */
-			[
-				'name'        => 'hasCanvasZoom',
-				'label'       => __( 'Canvas Zoom', 'web-stories' ),
-				'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @miina
 			 * Issue: #7055
 			 * Creation date: 2021-04-09
