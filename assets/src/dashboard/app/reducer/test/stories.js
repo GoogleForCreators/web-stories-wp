@@ -29,7 +29,6 @@ describe('storyReducer', () => {
     storiesOrderById: [],
     totalStoriesByStatus: {},
     totalPages: null,
-    previewMarkup: '',
   };
 
   const MOCK_ERROR_ID = Date.now();
@@ -452,73 +451,6 @@ describe('storyReducer', () => {
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
       },
-    });
-  });
-
-  it(`should update isLoading when ${ACTION_TYPES.CREATING_STORY_PREVIEW} is called`, () => {
-    const result = storyReducer(
-      { ...initialState },
-      {
-        type: ACTION_TYPES.CREATING_STORY_PREVIEW,
-        payload: true,
-      }
-    );
-
-    expect(result).toMatchObject({
-      ...initialState,
-      isLoading: true,
-    });
-  });
-
-  it(`should update error to empty object and set previewMarkup when ${ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS} is called`, () => {
-    const result = storyReducer(
-      { ...initialState },
-      {
-        type: ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS,
-        payload: 'markup to render preview',
-      }
-    );
-
-    expect(result).toMatchObject({
-      ...initialState,
-      error: {},
-      previewMarkup: 'markup to render preview',
-    });
-  });
-
-  it(`should update error when ${ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE} is called`, () => {
-    const result = storyReducer(
-      { ...initialState },
-      {
-        type: ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
-        payload: {
-          message: ERRORS.RENDER_PREVIEW.MESSAGE,
-          code: 'my_error_code',
-        },
-      }
-    );
-
-    expect(result).toMatchObject({
-      ...initialState,
-      error: {
-        message: ERRORS.RENDER_PREVIEW.MESSAGE,
-        id: MOCK_ERROR_ID,
-        code: 'my_error_code',
-      },
-    });
-  });
-
-  it(`should update previewMarkup to empty string when ${ACTION_TYPES.CLEAR_STORY_PREVIEW} is called`, () => {
-    const result = storyReducer(
-      { ...initialState },
-      {
-        type: ACTION_TYPES.CLEAR_STORY_PREVIEW,
-      }
-    );
-
-    expect(result).toMatchObject({
-      ...initialState,
-      previewMarkup: '',
     });
   });
 });

@@ -168,6 +168,8 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	/**
 	 * @covers ::is_edit_screen
 	 * @covers ::get_current_screen
+	 * @covers \Google\Web_Stories\Traits\Screen::is_edit_screen
+	 * @covers \Google\Web_Stories\Traits\Screen::get_current_screen
 	 */
 	public function test_is_edit_screen() {
 		$object                    = $this->get_coi_object();
@@ -180,6 +182,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::get_current_screen
+	 * @covers \Google\Web_Stories\Traits\Screen::get_current_screen
 	 */
 	public function test_get_current_screen() {
 		$object = $this->get_coi_object();

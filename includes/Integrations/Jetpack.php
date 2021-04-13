@@ -26,11 +26,8 @@
 
 namespace Google\Web_Stories\Integrations;
 
-use DOMElement;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use WP_Post;
-use WP_Screen;
 
 /**
  * Class Jetpack.

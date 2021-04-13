@@ -38,11 +38,7 @@ use WP_Site;
  * @return void
  */
 function setup_new_site() {
-	$injector = Services::get_injector();
-	if ( ! method_exists( $injector, 'make' ) ) {
-		return;
-	}
-	$story = $injector->make( Story_Post_Type::class );
+	$story = Services::get( 'story_post_type' );
 	$story->register();
 	// TODO Register cap to roles within class itself.
 	$story->add_caps_to_roles();
@@ -50,9 +46,13 @@ function setup_new_site() {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 
+	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
 	// TODO move this logic to Database_Upgrader class.
-	$database_upgrader = $injector->make( Database_Upgrader::class );
-	$database_upgrader->register();
+	$injector = Services::get_injector();
+	if ( method_exists( $injector, 'make' ) ) {
+		$database_upgrader = $injector->make( Database_Upgrader::class );
+		$database_upgrader->register();
+	}
 }
 
 /**
@@ -118,11 +118,7 @@ function remove_site( $error, $site ) {
 		return;
 	}
 
-	$injector = Services::get_injector();
-	if ( ! method_exists( $injector, 'make' ) ) {
-		return;
-	}
-	$story = $injector->make( Story_Post_Type::class );
+	$story = Services::get( 'story_post_type' );
 
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );

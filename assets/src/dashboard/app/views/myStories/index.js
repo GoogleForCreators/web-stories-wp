@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useCallback, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,6 @@ import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
-import { PreviewStoryView } from '..';
 import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
@@ -78,7 +77,6 @@ function MyStories() {
   const {
     filter,
     page,
-    activePreview,
     search,
     sort,
     view,
@@ -109,34 +107,11 @@ function MyStories() {
     view.style,
   ]);
 
-  const [lastActiveStoryId, setLastActiveStoryId] = useState(null);
-
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
       return stories[storyId];
     });
   }, [stories, storiesOrderById]);
-
-  const handlePreviewStory = useCallback(
-    (e, story) => {
-      activePreview.set(e, story);
-      setLastActiveStoryId(story?.id);
-    },
-    [activePreview]
-  );
-
-  const handleClose = useCallback(
-    (e) => {
-      activePreview.set(e, undefined);
-    },
-    [activePreview]
-  );
-
-  if (activePreview.value) {
-    return (
-      <PreviewStoryView story={activePreview.value} handleClose={handleClose} />
-    );
-  }
 
   return (
     <Layout.Provider>
@@ -164,10 +139,8 @@ function MyStories() {
           duplicateStory,
           trashStory,
           updateStory,
-          handlePreviewStory,
         }}
         view={view}
-        initialFocusStoryId={lastActiveStoryId}
         showStoriesWhileLoading={showStoriesWhileLoading}
       />
 
