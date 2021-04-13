@@ -124,7 +124,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
       await data.fixture.events.mouse.clickOn(
         data.fixture.editor.canvas.framesLayer.frames[0].node,
-        20,
+        10,
         5
       );
       await setSelection(6, 9);
