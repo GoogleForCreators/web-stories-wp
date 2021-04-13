@@ -184,7 +184,7 @@ export const MediaInput = forwardRef(function Media(
     <StyledMedia ref={ref} className={className} {...rest}>
       <ImageWrapper variant={variant}>
         {value ? (
-          <Img src={value} alt={alt} />
+          <Img src={value} alt={alt} crossOrigin="anonymous" />
         ) : (
           <DefaultImageWrapper>
             <DefaultImage />
