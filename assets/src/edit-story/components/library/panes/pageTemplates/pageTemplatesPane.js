@@ -45,14 +45,21 @@ export const PaneInner = styled.div`
 `;
 
 const DropDownWrapper = styled.div`
-  width: 145px;
+  width: 170px;
   text-align: left;
   position: relative;
+  height: 36px;
+  margin-bottom: 17px;
+  margin-top: 28px;
 `;
 
+// @todo Replace this when SimpleDropdown gets ready.
 const StyledDropDown = styled(DropDown)`
   background-color: transparent;
   border: 0;
+  button {
+    border: none;
+  }
 `;
 
 const DEFAULT = 'default';
