@@ -108,7 +108,7 @@ export const TIPS = {
   },
   [KEYS.EMBED_WEB_STORIES]: {
     title: __('Embed Web Stories', 'web-stories'),
-    /* `figureSrcImg` and `figureAlt` are temporary until
+    /* TODO #7212 `figureSrcImg` and `figureAlt` are temporary until
     we get an animation. Once we have the animation then these
     attributes should be removed. */
     figureSrcImg: 'images/help-center/story_embed_module_1',
