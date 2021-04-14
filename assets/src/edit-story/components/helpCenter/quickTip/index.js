@@ -55,11 +55,7 @@ const Overflow = styled.div`
 const Video = styled.video`
   height: 180px;
   margin-bottom: ${GUTTER_WIDTH}px;
-`;
-
-const Image = styled.img`
-  height: 180px;
-  margin-bottom: ${GUTTER_WIDTH}px;
+  max-width: 100%;
 `;
 
 const Title = styled.h1`
@@ -126,7 +122,12 @@ export function QuickTip({
           {/* `figureSrcImg` is temporary until we get an animation for the embed quick tip.
           Once we have the animation then the .png image won't be necessary */}
           {figureSrcImg && (
-            <Image alt={figureAlt} src={`${cdnURL}${figureSrcImg}.png`} />
+            <Video
+              as="img"
+              alt={figureAlt}
+              src={`${cdnURL}${figureSrcImg}.png`}
+              crossOrigin="anonymous"
+            />
           )}
           {isDone && (
             <DoneContainer>
