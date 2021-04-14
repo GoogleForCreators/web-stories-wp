@@ -1,5 +1,5 @@
 {
-  "current": "c2d56aca-cb1a-41eb-bbdc-41dc2c4f597c",
+  "current": "1659f169-eb29-498a-bd00-6aea80d7ace7",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -20,20 +20,8 @@
           "targets": ["ca140433-52d1-4423-896f-2e5c856cb22f"]
         },
         {
-          "id": "1de8f06a-033f-4699-a41f-a64586e0e5cf",
-          "type": "effect-fly-in",
-          "targets": ["7de325ef-2490-4e19-9c9c-7031bffa4b05"],
-          "flyInDir": "leftToRight",
-          "duration": 600,
-          "delay": 1000
-        },
-        {
-          "id": "b5d0fa29-3a62-48d4-a489-95a5d269909e",
-          "type": "effect-fly-in",
-          "targets": ["a6b25c2c-a676-404b-ab44-5bd5b49598f5"],
-          "flyInDir": "leftToRight",
-          "duration": 600,
-          "delay": 1000
+          "delete": true,
+          "targets": ["a6b25c2c-a676-404b-ab44-5bd5b49598f5"]
         }
       ],
       "elements": [
@@ -993,8 +981,8 @@
       "animations": [
         {
           "id": "3bcb7063-d1cf-4a1f-925f-572eab6f3238",
-          "type": "effect-background-pan",
-          "panDir": "leftToRight",
+          "type": "effect-background-zoom",
+          "zoomDirection": "scaleOut",
           "duration": 1000,
           "delay": 0,
           "targets": ["3b0ede46-334e-4bc5-abb7-f09dec3d6d48"]
@@ -1679,12 +1667,8 @@
           "delay": 600
         },
         {
-          "id": "3e9dae0d-4095-4b01-95e0-d2e4ab020295",
-          "type": "effect-fly-in",
-          "targets": ["f60ae332-db13-481f-ace7-107885b1c202"],
-          "flyInDir": "leftToRight",
-          "duration": 600,
-          "delay": 500
+          "delete": true,
+          "targets": ["f60ae332-db13-481f-ace7-107885b1c202"]
         }
       ],
       "elements": [
@@ -1706,7 +1690,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://wp.stories.google/static/main//images/templates/travel/travel_page8_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/travel/travel_page8_bg.jpg",
             "width": 220,
             "height": 147,
             "poster": "",
