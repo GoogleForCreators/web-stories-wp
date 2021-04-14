@@ -121,11 +121,11 @@ class Media extends Service_Base {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
-	 * The trancoded video id post meta key.
+	 * The optimized video id post meta key.
 	 *
 	 * @var string
 	 */
-	const TRANSCODED_ID_POST_META_KEY = 'web_stories_transcoded_id';
+	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
 
 	/**
 	 * Key for media post type.
@@ -170,11 +170,11 @@ class Media extends Service_Base {
 
 		register_meta(
 			'post',
-			self::TRANSCODED_ID_POST_META_KEY,
+			self::OPTIMIZED_ID_POST_META_KEY,
 			[
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
-				'description'       => __( 'Attachment id of transcoded video id.', 'web-stories' ),
+				'description'       => __( 'Attachment id of optimized video id.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,

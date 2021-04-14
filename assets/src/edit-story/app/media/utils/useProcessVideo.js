@@ -56,7 +56,7 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster }) {
     async (oldId, newId) => {
       await updateMedia(oldId, {
         meta: {
-          web_stories_transcoded_id: newId,
+          web_stories_optimized_id: newId,
         },
       });
     },
