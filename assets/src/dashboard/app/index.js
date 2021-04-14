@@ -65,17 +65,36 @@ const AppContent = () => {
       currentPath,
       queryParams: { id: templateId },
     },
+    actions: { push },
   } = useRouteHistory();
 
-  const { currentTemplate } = useApi(
+  const { currentTemplate, addInitialFetchListener } = useApi(
     ({
+      actions: {
+        storyApi: { addInitialFetchListener },
+      },
       state: {
+        stories: { stories },
         templates: { templates },
       },
     }) => ({
+      stories,
       currentTemplate:
         templateId !== undefined ? templates[templateId]?.title : undefined,
+      addInitialFetchListener,
     })
+  );
+
+  // Direct user to templates on first load if they
+  // have no stories created.
+  useEffect(
+    () =>
+      addInitialFetchListener((storyStatuses) => {
+        if (storyStatuses?.all <= 0) {
+          push(APP_ROUTES.TEMPLATES_GALLERY);
+        }
+      }),
+    [addInitialFetchListener, push]
   );
 
   const fullPath = useMemo(() => {
