@@ -21,7 +21,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useStory, useAPI } from '../../';
-import getFileFromUrl from './getFileFromUrl';
+import fetchRemoteFile from './fetchRemoteFile';
 
 function useProcessVideo({ uploadMedia, uploadVideoPoster }) {
   const { updateElementsByResourceId } = useStory((state) => ({
@@ -76,7 +76,7 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster }) {
       };
 
       const process = async () => {
-        const file = await getFileFromUrl(url, mimeType);
+        const file = await fetchRemoteFile(url, mimeType);
         uploadMedia([file], {
           onUploadSuccess,
           additionalData: { alt: oldResource.alt, title: oldResource.title },

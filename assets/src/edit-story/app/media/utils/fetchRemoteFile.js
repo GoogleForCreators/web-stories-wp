@@ -23,7 +23,7 @@ function getUrlExtension(url) {
   return url.split(/[#?]/)[0].split('.').pop().trim();
 }
 
-async function getFileFromUrl(url, mimeType) {
+async function fetchRemoteFile(url, mimeType) {
   const name = uuidv4() + '.' + getUrlExtension(url);
   const response = await fetch(url);
   const data = await response.blob();
@@ -32,4 +32,4 @@ async function getFileFromUrl(url, mimeType) {
   });
 }
 
-export default getFileFromUrl;
+export default fetchRemoteFile;
