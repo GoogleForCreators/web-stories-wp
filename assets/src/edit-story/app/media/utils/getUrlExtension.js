@@ -13,31 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
-import getUrlExtension from './getUrlExtension';
-
-/**
- * Helper to get remote file using fetch.
+ * Helper to get file extension from URL.
  *
- * @param {string} url URL of file.
- * @param {string} mimeType Mime type of file.
- * @return {Promise<File>} File object.
+ * @param {string} url URL.
+ * @return {string} extension or empty string.
  */
-async function fetchRemoteFile(url, mimeType) {
-  const name = uuidv4() + '.' + getUrlExtension(url);
-  const response = await fetch(url);
-  const data = await response.blob();
-  return new File([data], name, {
-    type: mimeType,
-  });
+function getUrlExtension(url) {
+  return url.split('/').pop().split(/[#?]/)[0].split('.').pop().trim();
 }
 
-export default fetchRemoteFile;
+export default getUrlExtension;

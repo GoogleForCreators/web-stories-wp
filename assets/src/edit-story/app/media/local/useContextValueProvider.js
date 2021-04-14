@@ -63,7 +63,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     deleteMediaElement,
   } = reducerActions;
   const {
-    actions: { getMedia },
+    actions: { getMedia, updateMedia },
   } = useAPI();
 
   const fetchMedia = useCallback(
@@ -161,6 +161,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   const { regenerateVideo } = useProcessVideo({
     uploadVideoPoster,
     uploadMedia,
+    updateMedia,
   });
 
   const generateMissingPosters = useCallback(

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,29 +15,20 @@
  */
 
 /**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
-
-/**
  * Internal dependencies
  */
-import getUrlExtension from './getUrlExtension';
+import getUrlExtension from '../getUrlExtension';
 
-/**
- * Helper to get remote file using fetch.
- *
- * @param {string} url URL of file.
- * @param {string} mimeType Mime type of file.
- * @return {Promise<File>} File object.
- */
-async function fetchRemoteFile(url, mimeType) {
-  const name = uuidv4() + '.' + getUrlExtension(url);
-  const response = await fetch(url);
-  const data = await response.blob();
-  return new File([data], name, {
-    type: mimeType,
+describe('getUrlExtension', () => {
+  it('should return ext', () => {
+    expect(getUrlExtension('http://www.example.com/test.jpg')).toBe('jpg');
   });
-}
 
-export default fetchRemoteFile;
+  it('should return ext from relative path', () => {
+    expect(getUrlExtension('/test.jpg')).toBe('jpg');
+  });
+
+  it('should return nothng', () => {
+    expect(getUrlExtension('http://www.example.com/')).toBe('');
+  });
+});

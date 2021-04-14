@@ -20,17 +20,13 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory, useAPI } from '../../';
+import { useStory } from '../../';
 import fetchRemoteFile from './fetchRemoteFile';
 
-function useProcessVideo({ uploadMedia, uploadVideoPoster }) {
+function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
-
-  const {
-    actions: { updateMedia },
-  } = useAPI();
 
   const updateElement = useCallback(
     ({ oldResource, resource }) => {
@@ -53,8 +49,8 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster }) {
   );
 
   const updateOldVideo = useCallback(
-    async (oldId, newId) => {
-      await updateMedia(oldId, {
+    (oldId, newId) => {
+      updateMedia(oldId, {
         meta: {
           web_stories_optimized_id: newId,
         },
@@ -76,11 +72,15 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster }) {
       };
 
       const process = async () => {
-        const file = await fetchRemoteFile(url, mimeType);
-        uploadMedia([file], {
-          onUploadSuccess,
-          additionalData: { alt: oldResource.alt, title: oldResource.title },
-        });
+        try {
+          const file = await fetchRemoteFile(url, mimeType);
+          await uploadMedia([file], {
+            onUploadSuccess,
+            additionalData: { alt: oldResource.alt, title: oldResource.title },
+          });
+        } catch (e) {
+          // Ignore for now.
+        }
       };
       process();
     },
