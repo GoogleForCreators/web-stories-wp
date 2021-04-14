@@ -38,6 +38,10 @@ import { ReactComponent as DoneCheckmark } from './doneCheckmark.svg';
 const Panel = styled.div`
   width: 100%;
   padding-bottom: ${NAVIGATION_HEIGHT}px;
+
+  * {
+    user-select: text;
+  }
 `;
 
 const Overflow = styled.div`

@@ -33,6 +33,10 @@ const Container = styled.div`
   padding: 0 ${GUTTER_WIDTH}px;
   max-height: 60vh;
   overflow-y: scroll;
+
+  * {
+    user-select: text;
+  }
 `;
 
 export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
