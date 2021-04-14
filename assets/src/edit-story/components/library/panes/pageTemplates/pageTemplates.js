@@ -67,6 +67,15 @@ const TemplatesToggle = styled.div`
   }
 `;
 
+const GRID_GAP = 12;
+const FirstRow = styled.div`
+  display: flex;
+  position: relative;
+  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  margin-left: 1em;
+  margin-bottom: ${GRID_GAP}px;
+`;
+
 function PageTemplates({
   onToggleClick,
   pages,
@@ -88,7 +97,10 @@ function PageTemplates({
   const [selectedPage, setSelectedPage] = useState();
   const [isConfirming, setIsConfirming] = useState();
 
-  const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
+  const [firstPage, ...virtualListPages] = pages;
+  const pageIds = useMemo(() => virtualListPages.map((page) => page.id), [
+    virtualListPages,
+  ]);
 
   const requiresConfirmation = useMemo(
     () => currentPage && !isDefaultPage(currentPage),
@@ -132,7 +144,7 @@ function PageTemplates({
   }, [selectedPage, handleApplyPageTemplate]);
 
   const rowVirtualizer = useVirtual({
-    size: Math.ceil((pages || []).length / 2),
+    size: Math.ceil((virtualListPages || []).length / 2),
     parentRef,
     estimateSize: useCallback(
       () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
@@ -204,6 +216,21 @@ function PageTemplates({
           />
         </TemplatesToggle>
       </ActionRow>
+      <FirstRow pageSize={pageSize}>
+        <TemplateSave pageSize={pageSize} />
+        <PageTemplate
+          key={0}
+          data-testid={`page_template_${firstPage.id}`}
+          page={firstPage}
+          pageSize={pageSize}
+          isActive={activeGridItemId === firstPage.id && isGridFocused}
+          onFocus={() => handleGridItemFocus(firstPage.id)}
+          onClick={() => handlePageClick(firstPage)}
+          onKeyUp={(event) => handleKeyboardPageClick(event, firstPage)}
+          translateY={0}
+          translateX={pageSize.width + GRID_GAP}
+        />
+      </FirstRow>
       <VirtualizedWrapper height={rowVirtualizer.totalSize}>
         <VirtualizedContainer
           height={rowVirtualizer.totalSize}
@@ -215,7 +242,6 @@ function PageTemplates({
           role="list"
           aria-label={__('Page Template Options', 'web-stories')}
         >
-          <TemplateSave pageSize={pageSize} />
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {
               const pageIndex = getVirtualizedItemIndex({
@@ -223,7 +249,7 @@ function PageTemplates({
                 rowIndex: virtualRow.index,
               });
 
-              const page = pages[pageIndex];
+              const page = virtualListPages[pageIndex];
 
               if (!page) {
                 return null;
