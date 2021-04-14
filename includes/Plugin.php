@@ -87,6 +87,7 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
 		'kses'                         => KSES::class,
 		'media'                        => Media::class,
+		'page_template_post_type'      => Page_Template_Post_Type::class,
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,
 		'meta_boxes'                   => Meta_Boxes::class,

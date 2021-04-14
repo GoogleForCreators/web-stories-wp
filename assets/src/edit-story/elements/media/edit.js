@@ -157,6 +157,7 @@ function MediaEdit({ element, box }) {
   );
 
   mediaProps.transformFlip = getTransformFlip(flip);
+  mediaProps.crossOrigin = 'anonymous';
 
   const fadedMediaProps = {
     ref: setFullMedia,

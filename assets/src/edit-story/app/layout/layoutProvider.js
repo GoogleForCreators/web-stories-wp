@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -27,8 +26,7 @@ import Context from './context';
 import useZoomSetting from './useZoomSetting';
 
 function LayoutProvider({ children }) {
-  const { hasCanvasZoom } = useFeatures();
-  const zoomValue = useZoomSetting(hasCanvasZoom);
+  const zoomValue = useZoomSetting();
 
   const value = {
     state: {

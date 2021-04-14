@@ -71,6 +71,8 @@ function ImageDisplay({ element, box, previewMode }) {
     focalY
   );
 
+  imgProps.crossOrigin = 'anonymous';
+
   useEffect(() => {
     let timeout;
     let mounted = true;

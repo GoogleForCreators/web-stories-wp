@@ -34,8 +34,10 @@ async function loadTemplate(title, imageBaseUrl) {
           elem.resource.sizes = [];
         }
         if (elem?.resource?.src) {
+          // imageBaseUrl (cdnURL) will always have a trailing slash,
+          // so make sure to avoid double slashes when replacing.
           elem.resource.src = elem.resource.src.replace(
-            '__WEB_STORIES_TEMPLATE_BASE_URL__',
+            '__WEB_STORIES_TEMPLATE_BASE_URL__/',
             imageBaseUrl
           );
         }

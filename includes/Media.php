@@ -26,15 +26,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Screen;
 use WP_Post;
 use WP_Query;
 use WP_REST_Request;
-use WP_Screen;
 
 /**
  * Class Media
  */
 class Media extends Service_Base {
+	use Screen;
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
@@ -301,9 +302,9 @@ class Media extends Service_Base {
 	 * @return void
 	 */
 	public function filter_poster_attachments( &$query ) {
-		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		$current_screen = $this->get_current_screen();
 
-		if ( ! $current_screen instanceof WP_Screen ) {
+		if ( ! $current_screen ) {
 			return;
 		}
 
