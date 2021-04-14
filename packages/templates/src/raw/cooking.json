@@ -1,5 +1,5 @@
 {
-  "current": "dd6a669f-ff4b-4633-8eb4-c601e98b40f1",
+  "current": "e8a21c0b-1db7-4777-b25d-b7d9a51b10fe",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -18,14 +18,6 @@
           "flyInDir": "bottomToTop",
           "duration": 1400,
           "delay": 250
-        },
-        {
-          "id": "960b0e98-62da-4a47-9525-3aca47d50ec7",
-          "type": "effect-fly-in",
-          "targets": ["779cea6f-ac5b-41d1-9bb1-75511614c04d"],
-          "flyInDir": "bottomToTop",
-          "duration": 1400,
-          "delay": 650
         },
         {
           "id": "e026f02d-a8d0-4cd9-8147-dc73c611bdf6",
@@ -218,7 +210,7 @@
           "targets": ["d3bb1cdf-9ab7-4444-a71b-e4a5bfd27410"],
           "flyInDir": "bottomToTop",
           "duration": 1400,
-          "delay": 200
+          "delay": 400
         }
       ],
       "elements": [
@@ -392,16 +384,16 @@
           "type": "effect-fly-in",
           "targets": ["31272720-81e0-416c-b7e6-870d7c68bf81"],
           "flyInDir": "bottomToTop",
-          "duration": 600,
-          "delay": 100
+          "duration": 1400,
+          "delay": 200
         },
         {
           "id": "76911023-5376-4bf1-8b3c-3a892bea167e",
           "type": "effect-fly-in",
           "targets": ["6c29ba73-482b-4759-bbc0-2a503f075b61"],
           "flyInDir": "bottomToTop",
-          "duration": 600,
-          "delay": 100
+          "duration": 1400,
+          "delay": 200
         },
         {
           "id": "51ce0813-345b-4fc4-948e-496e0650b529",
@@ -1228,7 +1220,7 @@
           "type": "effect-fly-in",
           "targets": ["b93db3ac-4bbd-4189-90fa-c509f358a954"],
           "flyInDir": "bottomToTop",
-          "duration": 900,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -1236,7 +1228,7 @@
           "type": "effect-fly-in",
           "targets": ["a6b673a3-db8d-48a2-9469-1892e6266eb3"],
           "flyInDir": "bottomToTop",
-          "duration": 900,
+          "duration": 1400,
           "delay": 0
         }
       ],
@@ -1423,42 +1415,42 @@
           "type": "effect-fly-in",
           "targets": ["e3681a5a-e2a2-4754-b9d2-5a466a46c218"],
           "flyInDir": "bottomToTop",
-          "duration": 800,
+          "duration": 1400,
           "delay": 200
         },
         {
           "id": "e57a8b53-a484-4c90-bcf9-08afffaba694",
           "type": "effect-fade-in",
           "targets": ["3d65fd5b-fc80-4b1a-90ba-d866036d934a"],
-          "duration": 1500,
+          "duration": 1400,
           "delay": 0
         },
         {
           "id": "1baa685e-11eb-4fdb-a012-f63aa7fca3df",
           "type": "effect-fade-in",
           "targets": ["87a59266-ad7d-43cd-a626-0d2a0126828d"],
-          "duration": 1500,
+          "duration": 1400,
           "delay": 0
         },
         {
           "id": "66ae6fb1-fa17-480c-9313-35b508f22224",
           "type": "effect-fade-in",
           "targets": ["050e9d9e-6b37-44ef-9f9c-a516ea88c8a4"],
-          "duration": 1500,
+          "duration": 1400,
           "delay": 0
         },
         {
           "id": "c09a1c2f-c891-4b42-ad1e-0dc4bd310650",
           "type": "effect-fade-in",
           "targets": ["86a51872-f144-4332-8b93-13b189f1d30b"],
-          "duration": 1500,
+          "duration": 1400,
           "delay": 0
         },
         {
           "id": "598ce217-814c-4518-88b4-eecf7cd597d6",
           "type": "effect-fade-in",
           "targets": ["ac878a4a-4cf7-41be-8269-c1f317f3fef6"],
-          "duration": 1500,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -1466,7 +1458,7 @@
           "type": "effect-fly-in",
           "targets": ["38be890d-5627-4041-b008-2f24707bf749"],
           "flyInDir": "bottomToTop",
-          "duration": 800,
+          "duration": 1400,
           "delay": 200
         },
         {
@@ -1474,7 +1466,7 @@
           "type": "effect-fly-in",
           "targets": ["127f9ed4-f754-45f1-9bc5-60fee6cbc90c"],
           "flyInDir": "bottomToTop",
-          "duration": 800,
+          "duration": 1400,
           "delay": 200
         },
         {
@@ -1482,7 +1474,7 @@
           "type": "effect-fly-in",
           "targets": ["260c32cf-161f-4d2c-9b0b-f9d04cbf57f9"],
           "flyInDir": "bottomToTop",
-          "duration": 800,
+          "duration": 1400,
           "delay": 200
         },
         {
@@ -1490,7 +1482,7 @@
           "type": "effect-fly-in",
           "targets": ["9aa100d8-d095-4c1a-8430-1b3a5bbbc5b4"],
           "flyInDir": "bottomToTop",
-          "duration": 800,
+          "duration": 1400,
           "delay": 200
         },
         {
@@ -1498,30 +1490,28 @@
           "type": "effect-fly-in",
           "targets": ["1e5d493d-dbfa-40b9-afa2-6b0c4312cb25"],
           "flyInDir": "bottomToTop",
-          "duration": 800,
+          "duration": 1400,
           "delay": 200
         },
         {
           "id": "2fc44d58-5d5c-41bf-b2e8-2b497263bda6",
-          "type": "effect-fly-in",
+          "type": "effect-fade-in",
           "targets": ["c0040186-618e-4b75-bbda-ec1803464e6e"],
-          "flyInDir": "topToBottom",
-          "duration": 800,
-          "delay": 200
+          "duration": 3000,
+          "delay": 0
         },
         {
           "id": "d42a0368-016d-402c-bb10-dc23061ab408",
-          "type": "effect-fly-in",
+          "type": "effect-fade-in",
           "targets": ["88dd72fa-b6d4-4749-85f7-a5430f7e51c2"],
-          "flyInDir": "topToBottom",
-          "duration": 800,
-          "delay": 300
+          "duration": 3000,
+          "delay": 0
         },
         {
           "id": "a3a68672-be31-45a4-91ed-85f17216ecda",
           "type": "effect-fade-in",
           "targets": ["c65251ab-3347-4658-a18a-1425b12b7081"],
-          "duration": 1500,
+          "duration": 1400,
           "delay": 0
         }
       ],
@@ -1754,6 +1744,58 @@
             "horizontal": 0,
             "vertical": 0
           }
+        },
+        {
+          "width": 259,
+          "height": 20,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Gelasio",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.25,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"color: #676461\">Frozen Persimmon Custard</span>",
+          "fontSize": 17,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "basedOn": "e3681a5a-e2a2-4754-b9d2-5a466a46c218",
+          "id": "1e5d493d-dbfa-40b9-afa2-6b0c4312cb25",
+          "x": 104,
+          "y": 425.5
         },
         {
           "x": 104,
@@ -2326,58 +2368,6 @@
           }
         },
         {
-          "width": 259,
-          "height": 20,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Gelasio",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 600],
-              [1, 600],
-              [0, 700],
-              [1, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.25,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "content": "<span style=\"color: #676461\">Frozen Persimmon Custard</span>",
-          "fontSize": 17,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "basedOn": "e3681a5a-e2a2-4754-b9d2-5a466a46c218",
-          "id": "1e5d493d-dbfa-40b9-afa2-6b0c4312cb25",
-          "x": 104,
-          "y": 425.5
-        },
-        {
           "opacity": 100,
           "flip": {
             "vertical": false,
@@ -2417,7 +2407,7 @@
           "type": "effect-fly-in",
           "targets": ["a3d09960-be5c-4ce2-b6ef-669d2efa927b"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2425,7 +2415,7 @@
           "type": "effect-fly-in",
           "targets": ["f4b2e739-5428-4639-8b71-b25630dac775"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2433,7 +2423,7 @@
           "type": "effect-fly-in",
           "targets": ["6eff8e7e-7799-456b-9bd3-5abe4fffac5d"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2441,7 +2431,7 @@
           "type": "effect-fly-in",
           "targets": ["33d395dd-462d-4457-97c0-7b82f8c7c5d8"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2449,7 +2439,7 @@
           "type": "effect-fly-in",
           "targets": ["296554e7-af85-41ab-8f40-44b091a1b3a8"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2457,7 +2447,7 @@
           "type": "effect-fly-in",
           "targets": ["b6d08619-ca6a-4466-8f40-e4845ec26eda"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2465,7 +2455,7 @@
           "type": "effect-fly-in",
           "targets": ["a5f5f1d9-015f-4f74-8bb7-a92e3ec3ea9a"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2473,7 +2463,7 @@
           "type": "effect-fly-in",
           "targets": ["5ac12eaa-a7f3-4ded-8273-ba0d9f73955e"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -2481,7 +2471,7 @@
           "type": "effect-fly-in",
           "targets": ["36968290-c6c8-4de1-bb7b-b8faf7a5872e"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -3141,7 +3131,7 @@
           "type": "effect-fly-in",
           "targets": ["e474a0ae-051d-4788-8578-b5888531dac8"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         },
         {
@@ -3156,7 +3146,7 @@
           "type": "effect-fly-in",
           "targets": ["7781e785-f40d-440e-a76d-f6ae7c75f7a1"],
           "flyInDir": "topToBottom",
-          "duration": 800,
+          "duration": 1400,
           "delay": 0
         }
       ],
@@ -3496,48 +3486,47 @@
           "id": "ae17c7f8-43a6-44d5-9bcc-0031581bd5bf",
           "type": "effect-fly-in",
           "targets": ["55aae5bd-87d3-4ecb-add2-ed214ce75805"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
+          "flyInDir": "leftToRight",
+          "duration": 1400,
           "delay": 200
         },
         {
           "id": "0f81ea24-0ea8-4278-b65e-d35ee5ac35e5",
           "type": "effect-fly-in",
           "targets": ["21aed5d1-b061-4a20-87e8-3e9c9b804d41"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
+          "flyInDir": "leftToRight",
+          "duration": 1400,
           "delay": 200
         },
         {
           "id": "4bf00d38-ea58-4f10-875a-823ee78c5813",
-          "type": "effect-fly-in",
+          "type": "effect-fade-in",
           "targets": ["a2be26e3-7314-4fc5-aa65-c69d390a173f"],
-          "flyInDir": "topToBottom",
-          "duration": 500,
+          "duration": 3000,
           "delay": 0
         },
         {
           "id": "745d0f25-de58-48d2-a0bc-8065b9ebabf3",
           "type": "effect-fly-in",
           "targets": ["c4a34697-400c-4b45-8646-b81c1ada574f"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
+          "flyInDir": "leftToRight",
+          "duration": 1400,
           "delay": 100
         },
         {
           "id": "7af36104-93cd-4157-8e25-a50e33c0702b",
           "type": "effect-fly-in",
           "targets": ["8b2ad361-4db2-41ef-9f96-142b4f150556"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
+          "flyInDir": "leftToRight",
+          "duration": 1400,
           "delay": 200
         },
         {
           "id": "1513a478-27d9-48cb-ae2d-3e47601bcfd9",
           "type": "effect-fly-in",
           "targets": ["cf0ee6ac-7b90-4c56-b5d4-0062726c42e1"],
-          "flyInDir": "bottomToTop",
-          "duration": 800,
+          "flyInDir": "leftToRight",
+          "duration": 1400,
           "delay": 200
         },
         {
@@ -3545,7 +3534,7 @@
           "type": "effect-whoosh-in",
           "targets": ["f5d57c6a-fc29-4136-ba9d-08d3119d1cd2"],
           "whooshInDir": "leftToRight",
-          "duration": 600,
+          "duration": 1400,
           "delay": 100
         },
         {
@@ -3553,7 +3542,7 @@
           "type": "effect-whoosh-in",
           "targets": ["90256502-5ed3-4354-90f3-16ef1e0d1d3a"],
           "whooshInDir": "leftToRight",
-          "duration": 750,
+          "duration": 1400,
           "delay": 250
         },
         {
@@ -3561,7 +3550,7 @@
           "type": "effect-whoosh-in",
           "targets": ["73ba04c5-2f32-44c3-9c96-a9300e9c4e89"],
           "whooshInDir": "leftToRight",
-          "duration": 700,
+          "duration": 1400,
           "delay": 300
         },
         {
@@ -3569,7 +3558,7 @@
           "type": "effect-whoosh-in",
           "targets": ["2729ff59-dfa0-4d0d-9023-de6d26f812ac"],
           "whooshInDir": "leftToRight",
-          "duration": 700,
+          "duration": 1400,
           "delay": 350
         },
         {
@@ -3577,7 +3566,7 @@
           "type": "effect-whoosh-in",
           "targets": ["3e2b3e2f-40a7-4301-9dae-4a8772ecad92"],
           "whooshInDir": "leftToRight",
-          "duration": 700,
+          "duration": 1400,
           "delay": 400
         }
       ],
