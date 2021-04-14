@@ -1,6 +1,6 @@
 {
   "current": "17fa9c85-89c7-47d0-a7a8-29f6ef56e161",
-  "selection": [],
+  "selection": ["9f187764-e909-416f-8820-9d24ac15f192"],
   "story": {
     "globalStoryStyles": {
       "colors": [],
@@ -11,14 +11,6 @@
   "pages": [
     {
       "animations": [
-        {
-          "id": "bbcea49d-b6dc-41ff-a07a-a1290910d95e",
-          "type": "effect-fly-in",
-          "targets": ["9f187764-e909-416f-8820-9d24ac15f192"],
-          "flyInDir": "leftToRight",
-          "duration": 920,
-          "delay": 480
-        },
         {
           "id": "265b4c7e-94ab-4461-9404-dfbbb7975f55",
           "type": "effect-pulse",
@@ -969,15 +961,6 @@
           "delay": 350
         },
         {
-          "id": "e6d11233-945d-4769-8a4f-45befeec501e",
-          "type": "effect-pulse",
-          "targets": ["65b49662-1ad8-4478-8fe9-98a7b60b2ea4"],
-          "scale": 0.3,
-          "iterations": 1,
-          "duration": 1600,
-          "delay": 0
-        },
-        {
           "id": "d7012c1e-a1aa-422a-b101-a3fc935d1c17",
           "type": "effect-pulse",
           "targets": ["e4be23ed-5219-4df3-8cde-5a9a2e571f8f"],
@@ -1095,6 +1078,7 @@
           "content": "<span style=\"color: #28292b; letter-spacing: 0.09em\">GIFTS</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">FOR</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">UNDER</span>",
           "fontSize": 55,
           "padding": {
+            "hasHiddenPadding": false,
             "horizontal": 0,
             "vertical": 0
           }
@@ -1615,18 +1599,16 @@
         },
         {
           "id": "dcd834e8-23ae-4725-bbdb-bf81276e0f9a",
-          "type": "effect-fly-in",
+          "type": "effect-fade-in",
           "targets": ["ca75cd7a-c9d1-48ac-8d4a-1268023e88d3"],
-          "flyInDir": "rightToLeft",
-          "duration": 1400,
+          "duration": 3000,
           "delay": 0
         },
         {
-          "id": "7af027ec-e6ae-4963-988d-17ad52b3a2da",
-          "type": "effect-fly-in",
+          "id": "d0778698-92fd-40a0-a2a4-a047ae014cea",
+          "type": "effect-fade-in",
           "targets": ["8e829ac4-0b1a-42b5-b519-a7941b98b768"],
-          "flyInDir": "leftToRight",
-          "duration": 1200,
+          "duration": 3000,
           "delay": 200
         }
       ],
@@ -2227,35 +2209,32 @@
         },
         {
           "id": "37f59a5b-2a14-459d-977b-03c6c4fac785",
-          "type": "effect-pulse",
-          "targets": ["7ad20266-6a32-4038-8ed7-d84b8f697532"],
-          "scale": 0.15,
-          "iterations": 1,
-          "duration": 1000,
-          "delay": 0
-        },
-        {
-          "id": "3b25cf0f-4e47-488c-90bb-c8824d600f6f",
           "type": "effect-fade-in",
-          "targets": ["1fd9e47b-c054-4966-8b5e-8288726a1463"],
+          "targets": ["7ad20266-6a32-4038-8ed7-d84b8f697532"],
           "duration": 3000,
-          "delay": 50
+          "delay": 250
         },
         {
           "id": "b5afd6f6-6762-48ee-98bd-278d76e55974",
-          "type": "effect-pulse",
+          "type": "effect-fade-in",
           "targets": ["7d267050-70a4-4fdb-849e-f91092d8fda4"],
-          "scale": 0.15,
-          "iterations": 1,
-          "duration": 1001,
-          "delay": 250
+          "duration": 3000,
+          "delay": 100
         },
         {
           "id": "491a005e-b439-401a-aae3-41fda4460fd4",
           "type": "effect-fade-in",
           "targets": ["3eafb106-5681-4bba-9eef-b162d3364486"],
-          "duration": 1000,
-          "delay": 50
+          "duration": 3500,
+          "delay": 400
+        },
+        {
+          "id": "cd55eb72-dbab-49e8-a079-bd6ee00302e8",
+          "type": "effect-fly-in",
+          "targets": ["1fd9e47b-c054-4966-8b5e-8288726a1463"],
+          "flyInDir": "leftToRight",
+          "duration": 1400,
+          "delay": 0
         }
       ],
       "elements": [
