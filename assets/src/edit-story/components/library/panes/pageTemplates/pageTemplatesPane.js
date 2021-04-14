@@ -42,16 +42,13 @@ export const PaneInner = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
 `;
 
 const DropDownWrapper = styled.div`
   width: 170px;
   text-align: left;
-  position: relative;
   height: 36px;
-  margin-bottom: 17px;
-  margin-top: 28px;
+  margin: 28px 0 17px 1em;
 `;
 
 // @todo Replace this when SimpleDropdown gets ready.
@@ -91,21 +88,21 @@ function PageTemplatesPane(props) {
 
   return (
     <StyledPane id={paneId} {...props}>
-      {customPageTemplates && (
-        <DropDownWrapper>
-          <StyledDropDown
-            options={options}
-            selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-            onMenuItemClick={(evt, value) =>
-              setShowDefaultTemplates(value === DEFAULT)
-            }
-            isInline
-            hasSearch={false}
-            aria-label={__('Select templates type', 'web-stories')}
-          />
-        </DropDownWrapper>
-      )}
       <PaneInner>
+        {customPageTemplates && (
+          <DropDownWrapper>
+            <StyledDropDown
+              options={options}
+              selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+              onMenuItemClick={(evt, value) =>
+                setShowDefaultTemplates(value === DEFAULT)
+              }
+              isInline
+              hasSearch={false}
+              aria-label={__('Select templates type', 'web-stories')}
+            />
+          </DropDownWrapper>
+        )}
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
         ) : (

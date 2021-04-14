@@ -20,6 +20,8 @@
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -38,13 +40,13 @@ import { ReactComponent as Icon } from './illustration.svg';
 const Wrapper = styled.div`
   position: absolute;
   top: 0;
-  height: ${({ pageSize }) => pageSize.containerHeight}px;
-  width: ${({ pageSize }) => pageSize.width}px;
+  height: ${({ pageSize }) => pageSize.containerHeight - 2}px;
+  width: ${({ pageSize }) => pageSize.width - 2}px;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  transform: ${({ translateX, translateY }) =>
-    `translateX(${translateX}px) translateY(${translateY}px)`};
+  align-items: center;
 
   ${themeHelpers.focusableOutlineCSS};
 `;
@@ -52,14 +54,36 @@ const Wrapper = styled.div`
 const IconWrapper = styled.div`
   width: 80px;
   height: 106px;
+  margin-top: 34px;
+  svg {
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+
+    path:nth-child(2) {
+      fill: ${({ theme }) => theme.colors.fg.secondary};
+    }
+    path:nth-child(3) {
+      fill: ${({ theme }) => theme.colors.fg.primary};
+    }
+  }
 `;
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 8px;
+`;
+
+const StyledButton = styled(Button)`
+  height: 32px;
 `;
 
 function TemplateSave({ pageSize }) {
+  const { customPageTemplates } = useFeatures();
   const handleSaveTemplate = useCallback(() => {}, []);
+  if (!customPageTemplates) {
+    return null;
+  }
   return (
     <Wrapper pageSize={pageSize}>
       <IconWrapper>
@@ -68,17 +92,21 @@ function TemplateSave({ pageSize }) {
       <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('Save current page as template', 'web-stories')}
       </StyledText>
-      <Button
+      <StyledButton
         onClick={handleSaveTemplate}
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.TERTIARY}
-        size={BUTTON_SIZES.MEDIUM}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
         aria-label={__('Save new template', 'web-stories')}
       >
         {__('Save', 'web-stories')}
-      </Button>
+      </StyledButton>
     </Wrapper>
   );
 }
+
+TemplateSave.propTypes = {
+  pageSize: PropTypes.object.isRequired,
+};
 
 export default TemplateSave;

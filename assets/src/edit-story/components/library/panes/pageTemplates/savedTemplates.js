@@ -18,14 +18,24 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import TemplateSave from './templateSave';
 
+const Wrapper = styled.div`
+  position: relative;
+  margin-left: 1em;
+`;
+
 function SavedTemplates({ pageSize }) {
-  return <TemplateSave pageSize={pageSize} />;
+  return (
+    <Wrapper>
+      <TemplateSave pageSize={pageSize} />
+    </Wrapper>
+  );
 }
 
 SavedTemplates.propTypes = {
