@@ -22,6 +22,11 @@ import { useCallback, useEffect, useRef } from 'react';
 /**
  * Add messages to an ARIA live region.
  *
+ * It’s possible that all the region content will be announced after an update
+ * if the ARIA live region is too large.
+ *
+ * Please only provide users with just a simple, concise message.
+ *
  * @param {?string} politeness Optional. Politeness. Either 'polite', or 'assertive'. Default 'polite'.
  *
  * @return {Function} Function to speak a message.

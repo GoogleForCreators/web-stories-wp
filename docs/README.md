@@ -15,6 +15,7 @@
 
 ## Development
 
+* [Accessibility Guidelines](./accessibility-guidelines.md)
 * [Architecture](./architecture.md)
 * [Browser and device support](./browser-support.md)
 * [Code Style](./code-style.md)
