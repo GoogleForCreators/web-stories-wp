@@ -103,7 +103,7 @@ function TextSetsPane({ paneRef }) {
               textSetFonts.length,
               'web-stories'
             ),
-            textSetCategory,
+            CATEGORIES[textSetCategory],
             textSetFonts.join(
               /* translators: delimiter used in a list */
               __(', ', 'web-stories')
