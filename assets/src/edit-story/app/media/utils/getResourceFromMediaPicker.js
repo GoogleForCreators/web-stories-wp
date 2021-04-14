@@ -78,7 +78,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     title,
     sizes,
     local: false,
-    isTranscoded: 'video-optimization' === mediaSource,
+    isOptimized: 'video-optimization' === mediaSource,
   });
 };
 

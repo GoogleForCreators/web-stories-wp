@@ -71,7 +71,7 @@ function getResourceFromAttachment(attachment) {
     title,
     sizes,
     local: false,
-    isTranscoded: 'video-optimization' === mediaSource,
+    isOptimized: 'video-optimization' === mediaSource,
   });
 }
 

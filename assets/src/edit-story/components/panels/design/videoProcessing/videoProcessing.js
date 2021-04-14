@@ -41,7 +41,7 @@ const DEFAULT_RESOURCE = {
   src: null,
   poster: null,
   mimeType: null,
-  isTranscoded: false,
+  isOptimized: false,
   alt: '',
   title: '',
 };
@@ -73,7 +73,7 @@ function VideoProcessingPanel({ selectedElements }) {
     return null;
   }
 
-  if (resource.isTranscoded) {
+  if (resource.isOptimized) {
     return null;
   }
 
