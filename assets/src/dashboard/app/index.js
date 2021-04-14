@@ -87,7 +87,7 @@ const AppContent = () => {
   // have no stories created.
   useEffect(
     () =>
-      addInitialFetchListener((storyStatuses) => {
+      addInitialFetchListener?.((storyStatuses) => {
         if (storyStatuses?.all <= 0) {
           push(APP_ROUTES.TEMPLATES_GALLERY);
         }
