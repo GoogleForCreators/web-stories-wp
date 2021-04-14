@@ -175,6 +175,9 @@ function TextDisplay({
   useTransformHandler(id, (transform) => {
     // Ref is set in case of high-light mode only, use the fgRef if that's missing.
     const target = ref?.current || fgRef.current;
+    if (!target) {
+      return;
+    }
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`

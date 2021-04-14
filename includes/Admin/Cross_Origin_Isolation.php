@@ -29,11 +29,11 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User_Preferences;
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Experiments;
-use WP_Screen;
+
 
 /**
  * Class Cross_Origin_Isolation
@@ -41,7 +41,7 @@ use WP_Screen;
  * @package Google\Web_Stories
  */
 class Cross_Origin_Isolation extends Service_Base {
-
+	use Screen;
 	/**
 	 * Experiments instance.
 	 *
@@ -275,26 +275,6 @@ class Cross_Origin_Isolation extends Service_Base {
 	}
 
 	/**
-	 * Is this the editor screen.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return bool
-	 */
-	protected function is_edit_screen() {
-		$screen = $this->get_current_screen();
-		if ( ! $screen ) {
-			return false;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * Check to see if class is needed.
 	 *
 	 * @since 1.6.0
@@ -318,22 +298,5 @@ class Cross_Origin_Isolation extends Service_Base {
 		}
 
 		return rest_sanitize_boolean( $check[0] );
-	}
-
-	/**
-	 * Helper to get current screen.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return false|WP_Screen
-	 */
-	private function get_current_screen() {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-
-		if ( ( $screen instanceof WP_Screen ) ) {
-			return $screen;
-		}
-
-		return false;
 	}
 }

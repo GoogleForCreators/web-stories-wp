@@ -55,10 +55,6 @@ describe('generateStoryMenu', () => {
         onClick: expect.any(Function),
       }),
       expect.objectContaining({
-        label: 'Preview',
-        onClick: expect.any(Function),
-      }),
-      expect.objectContaining({
         href: 'preview-link',
         label: 'Open in new tab',
         newTab: true,

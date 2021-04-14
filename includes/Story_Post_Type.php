@@ -34,11 +34,11 @@ use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Role;
 use WP_Post_Type;
-use WP_Screen;
 
 /**
  * Class Story_Post_Type.
@@ -53,6 +53,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	use Publisher;
 	use Types;
 	use Assets;
+	use Screen;
 
 	/**
 	 * The slug of the stories post type.
@@ -477,13 +478,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
