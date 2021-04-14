@@ -74,11 +74,9 @@ const AppContent = () => {
         storyApi: { addInitialFetchListener },
       },
       state: {
-        stories: { stories },
         templates: { templates },
       },
     }) => ({
-      stories,
       currentTemplate:
         templateId !== undefined ? templates[templateId]?.title : undefined,
       addInitialFetchListener,
