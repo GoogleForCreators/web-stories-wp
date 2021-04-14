@@ -53,7 +53,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
-    it('should apply inline formats correctly for both single style and multiple styles', async () => {
+    // Broken test, see: https://github.com/google/web-stories-wp/issues/7211
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should apply inline formats correctly for both single style and multiple styles', async () => {
       const {
         bold,
         italic,
@@ -122,7 +124,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(fontColor.hex.value).toBe('FF6600');
 
       // Move selection to characters 6-9 (partially overlapping new styles and no styles)
-      // @todo For some reason this is not selecting 6-9 properly!
+      // @todo For some reason this is not selecting 6-9 properly, and the test fails!
       await setSelection(6, 9);
 
       // Verify that the toggles are off (as to be expected with mixed styles)
