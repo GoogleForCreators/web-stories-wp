@@ -49,6 +49,7 @@ export const _default = () => (
               'this is my aria label giving my message context for screen reader users'
             ),
             customZIndex: number('customZIndex'),
+            dismissable: boolean('dismissable'),
             isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
             message: text('message', 'Sorry! File failed to upload.'),
             onAction: action('on action clicked'),
@@ -70,6 +71,7 @@ export const LightThemeDefault = () => (
           'this is my aria label giving my message context for screen reader users'
         ),
         customZIndex: number('customZIndex'),
+        dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
@@ -89,12 +91,12 @@ export const Action = () => (
           'this is my aria label giving my message context for screen reader users'
         ),
         customZIndex: number('customZIndex'),
+        dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
         message: text('message', 'Sorry! File failed to upload.'),
         removeMessageTimeInterval: 80000,
-        showCloseButton: false,
       },
     ]}
   />
@@ -110,6 +112,7 @@ export const EarlyDismissWithAction = () => (
           'this is my aria label giving my message context for screen reader users'
         ),
         customZIndex: number('customZIndex'),
+        dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
@@ -130,12 +133,12 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
           'this is my aria label giving my message context for screen reader users'
         ),
         customZIndex: number('customZIndex'),
+        dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
         message: text('message', 'Sorry! File failed to upload.'),
         removeMessageTimeInterval: 80000,
-        showCloseButton: false,
       },
     ]}
   />
@@ -151,6 +154,7 @@ export const LongMessage = () => (
           'this is my aria label giving my message context for screen reader users'
         ),
         customZIndex: number('customZIndex'),
+        dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
         isPreventAutoDismiss: boolean('isPreventAutoDismiss'),

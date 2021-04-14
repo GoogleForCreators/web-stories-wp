@@ -133,7 +133,7 @@ export const SnackbarContainer = ({
             preventActionDismiss,
             preventAutoDismiss,
             timeout,
-            ...rest
+            ...notificationProps
           } = notification;
 
           return (
@@ -146,17 +146,17 @@ export const SnackbarContainer = ({
             >
               <ChildContainer placement={placement}>
                 <Component
+                  {...notificationProps}
                   aria-label={message}
                   placement={placement}
                   onDismiss={handleDismiss(notification)}
                   onAction={onAction}
                   actionLabel={actionLabel}
                   message={message}
-                  showCloseButton={Boolean(dismissable)}
+                  showCloseButton={dismissable}
                   removeMessageTimeInterval={timeout}
                   isPreventAutoDismiss={preventAutoDismiss}
                   isPreventActionDismiss={preventActionDismiss}
-                  {...rest}
                 />
               </ChildContainer>
             </CSSTransition>
