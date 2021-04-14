@@ -1,5 +1,5 @@
 {
-  "current": "050444c7-6097-410f-8147-0c195b051a27",
+  "current": "a9ed1626-720d-4b66-bfbd-40441c83390c",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -44,7 +44,7 @@
           "type": "effect-fly-in",
           "targets": ["a32c17e0-a46b-4821-bbdb-8dc064ac097d"],
           "flyInDir": "leftToRight",
-          "duration": 6000,
+          "duration": 1500,
           "delay": 0
         }
       ],
@@ -274,7 +274,7 @@
           "type": "effect-fly-in",
           "targets": ["d773925c-2f95-44c0-9b0e-0743d45476f2"],
           "flyInDir": "leftToRight",
-          "duration": 1000,
+          "duration": 1500,
           "delay": 0
         },
         {
@@ -286,7 +286,7 @@
           "type": "effect-fly-in",
           "targets": ["61d23551-31e3-4aad-ac15-b8fc5e4be2ec"],
           "flyInDir": "leftToRight",
-          "duration": 600,
+          "duration": 1000,
           "delay": 200
         },
         {
@@ -2603,14 +2603,6 @@
     {
       "animations": [
         {
-          "id": "81162b1c-f91b-4127-a6f2-92f091cad78b",
-          "type": "effect-rotate-in",
-          "targets": ["a6cfa456-0bf9-4b93-9e67-c985317b2c46"],
-          "rotateInDir": "rightToLeft",
-          "duration": 2000,
-          "delay": 0
-        },
-        {
           "id": "2fa6bf69-df37-4614-aeae-ae96f6912cf7",
           "type": "effect-fly-in",
           "targets": ["9ce78e9e-7568-45de-bef3-1f9438a11568"],
@@ -3185,7 +3177,7 @@
           "type": "effect-fly-in",
           "targets": ["faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5"],
           "flyInDir": "leftToRight",
-          "duration": 6000,
+          "duration": 1500,
           "delay": 0
         },
         {
@@ -3400,7 +3392,7 @@
           "type": "effect-fly-in",
           "targets": ["421f76ac-4c4d-4a44-ad77-622facf57db5"],
           "flyInDir": "leftToRight",
-          "duration": 1000,
+          "duration": 1500,
           "delay": 0
         },
         {
@@ -3408,7 +3400,7 @@
           "type": "effect-fly-in",
           "targets": ["1043803d-625c-4b7a-a5ad-1cdecfbb1c62"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 200
         },
         {
@@ -3416,7 +3408,7 @@
           "type": "effect-fly-in",
           "targets": ["d01ae69c-43cc-455e-bb63-250642795201"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 200
         },
         {
@@ -3424,7 +3416,7 @@
           "type": "effect-fly-in",
           "targets": ["c77c788b-cba9-421d-8a9a-2e8b604e99b8"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 250
         },
         {
@@ -3432,7 +3424,7 @@
           "type": "effect-fly-in",
           "targets": ["87b77bd3-8bc3-44ca-af6f-661e45522a7c"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 250
         },
         {
@@ -3440,7 +3432,7 @@
           "type": "effect-fly-in",
           "targets": ["ba68ba92-edcd-4c5c-a4fe-5263fc994e2b"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 300
         },
         {
@@ -3448,7 +3440,7 @@
           "type": "effect-fly-in",
           "targets": ["44e7aa5c-3fe0-43db-8d46-c0a4425eeb18"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 300
         },
         {
@@ -3456,7 +3448,7 @@
           "type": "effect-fly-in",
           "targets": ["40d8eaeb-1fad-4346-b56b-eef002fcb4db"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 350
         },
         {
@@ -3464,7 +3456,7 @@
           "type": "effect-fly-in",
           "targets": ["0785511b-324d-4a52-90bc-1fa6d5a8a0e6"],
           "flyInDir": "leftToRight",
-          "duration": 800,
+          "duration": 1000,
           "delay": 350
         }
       ],
