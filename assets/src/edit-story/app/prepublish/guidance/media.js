@@ -17,11 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
-import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-
-const SAFE_ZONE_AREA = PAGE_HEIGHT * PAGE_WIDTH;
 
 const MAX_VIDEO_WIDTH = 3840;
 const MAX_VIDEO_HEIGHT = 2160;
@@ -35,89 +31,6 @@ const MAX_VIDEO_LENGTH_SECONDS = 60;
  * @typedef {import('../../../types').Element} Element
  * @typedef {import('../types').Guidance} Guidance
  */
-
-/**
- * Compare an element's size to the safe zone area it is overlapping
- * If the element takes up <50% of the safe zone, return guidance. Otherwise return undefined.
- *
- * @param {Element} element The element being checked for guidelines
- * @return {Guidance|undefined} The guidance object for consumption
- */
-export function mediaElementSizeOnPage(element) {
-  // Background elements behave differently since they will always be full screen. They have rect
-  // information that's not valid when the image is applied as a background.
-  if (element.isBackground) {
-    return undefined;
-  }
-
-  // use the bounding rectangle for rotated elements
-  const { startX, startY, endX, endY } = getBoundRect([element]);
-  // get the intersecting area of the element's rectangle and the safe zone's rectangle
-  const safeZone = {
-      left: 0,
-      right: PAGE_WIDTH,
-      bottom: PAGE_HEIGHT,
-      top: 0,
-    },
-    elemRect = {
-      left: startX,
-      right: endX,
-      bottom: endY,
-      top: startY,
-    };
-  const xOverlap = Math.max(
-    0,
-    Math.min(safeZone.right, elemRect.right) -
-      Math.max(safeZone.left, elemRect.left)
-  );
-  const yOverlap = Math.max(
-    0,
-    Math.min(safeZone.bottom, elemRect.bottom) -
-      Math.max(safeZone.top, elemRect.top)
-  );
-
-  const elementArea = xOverlap * yOverlap;
-
-  const isTooSmallOnPage = elementArea < SAFE_ZONE_AREA / 2;
-
-  if (isTooSmallOnPage) {
-    return {
-      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      elementId: element.id,
-      message: MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.MAIN_TEXT,
-      help: MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.HELPER_TEXT,
-    };
-  }
-
-  return undefined;
-}
-
-/**
- * If there is only one video on the page, check it for its size on the page.
- *
- * Note: when using this check, make sure not to check video elements individually to avoid
- * duplicate checks.
- *
- * @param {Page} page The page being checked
- * @return {Guidance|undefined} The guidance object for consumption
- */
-export function videoElementSizeOnPage(page) {
-  const videoElementsOnPage = page.elements.filter(
-    ({ type }) => type === 'video'
-  );
-  if (videoElementsOnPage.length === 1) {
-    const [videoElement] = videoElementsOnPage;
-    const sizeOnPageMessage = mediaElementSizeOnPage(videoElement);
-
-    return (
-      sizeOnPageMessage && {
-        pageId: page.id,
-        ...sizeOnPageMessage,
-      }
-    );
-  }
-  return undefined;
-}
 
 /**
  * Check an element's resolution. If the resolution is not within guidelines, return guidance.
