@@ -16,10 +16,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
@@ -100,6 +101,8 @@ export const SnackbarContainer = ({
   placement = PLACEMENT.BOTTOM,
   max = 10,
 }) => {
+  const ids = useMemo(() => notifications.map(() => uuidv4()), [notifications]);
+
   const orderedNotifications =
     placement.indexOf('top') === 0
       ? [...notifications].reverse()
@@ -124,7 +127,7 @@ export const SnackbarContainer = ({
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
-        {orderedNotifications.map((notification) => {
+        {orderedNotifications.map((notification, index) => {
           const {
             actionLabel,
             dismissable,
@@ -139,7 +142,7 @@ export const SnackbarContainer = ({
           return (
             <CSSTransition
               in
-              key={notification.key}
+              key={notification.key || ids[index]}
               timeout={300}
               unmountOnExit
               classNames="react-snackbar-alert__snackbar-container"

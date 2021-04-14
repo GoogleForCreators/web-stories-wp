@@ -50,7 +50,7 @@ export const _default = () => (
             ),
             customZIndex: number('customZIndex'),
             dismissable: boolean('dismissable'),
-            isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
+            preventAutoDismiss: boolean('preventAutoDismiss'),
             message: text('message', 'Sorry! File failed to upload.'),
             onAction: action('on action clicked'),
             onDismiss: action('on dismiss fired'),
@@ -66,15 +66,11 @@ export const LightThemeDefault = () => (
     notifications={[
       {
         actionLabel: text('actionLabel', ''),
-        'aria-label': text(
-          'aria-label',
-          'this is my aria label giving my message context for screen reader users'
-        ),
         customZIndex: number('customZIndex'),
         dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
+        preventAutoDismiss: boolean('preventAutoDismiss'),
         message: text('message', 'Sorry! File failed to upload.'),
       },
     ]}
@@ -86,17 +82,13 @@ export const Action = () => (
     notifications={[
       {
         actionLabel: text('actionLabel', 'Retry'),
-        'aria-label': text(
-          'aria-label',
-          'this is my aria label giving my message context for screen reader users'
-        ),
         customZIndex: number('customZIndex'),
         dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
+        preventAutoDismiss: boolean('preventAutoDismiss'),
         message: text('message', 'Sorry! File failed to upload.'),
-        removeMessageTimeInterval: 80000,
+        timeout: 80000,
       },
     ]}
   />
@@ -107,17 +99,13 @@ export const EarlyDismissWithAction = () => (
     notifications={[
       {
         actionLabel: text('actionLabel', 'Retry'),
-        'aria-label': text(
-          'aria-label',
-          'this is my aria label giving my message context for screen reader users'
-        ),
         customZIndex: number('customZIndex'),
         dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
+        preventAutoDismiss: boolean('preventAutoDismiss'),
         message: text('message', 'Sorry! File failed to upload.'),
-        removeMessageTimeInterval: 80000,
+        timeout: 80000,
       },
     ]}
   />
@@ -128,17 +116,13 @@ export const NoActionWithRemoveMessageTimingOverride = () => (
     notifications={[
       {
         actionLabel: text('actionLabel', ''),
-        'aria-label': text(
-          'aria-label',
-          'this is my aria label giving my message context for screen reader users'
-        ),
         customZIndex: number('customZIndex'),
         dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
+        preventAutoDismiss: boolean('preventAutoDismiss'),
         message: text('message', 'Sorry! File failed to upload.'),
-        removeMessageTimeInterval: 80000,
+        timeout: 80000,
       },
     ]}
   />
@@ -149,15 +133,11 @@ export const LongMessage = () => (
     notifications={[
       {
         actionLabel: text('actionLabel', 'Retry'),
-        'aria-label': text(
-          'aria-label',
-          'this is my aria label giving my message context for screen reader users'
-        ),
         customZIndex: number('customZIndex'),
         dismissable: boolean('dismissable'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        isPreventAutoDismiss: boolean('isPreventAutoDismiss'),
+        preventAutoDismiss: boolean('preventAutoDismiss'),
         message: text(
           'message',
           'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
