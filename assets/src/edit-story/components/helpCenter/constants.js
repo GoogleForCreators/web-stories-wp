@@ -119,6 +119,7 @@ export const TIPS = {
         'web-stories'
       ),
     ],
+    href: 'https://wordpress.org/support/article/embeds/',
   },
 };
 

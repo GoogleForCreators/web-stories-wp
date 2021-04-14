@@ -97,6 +97,7 @@ export function QuickTip({
   figureSrc,
   figureSrcImg,
   figureAlt,
+  href,
   isDone = false,
   ...transitionProps
 }) {
@@ -146,7 +147,7 @@ export function QuickTip({
                       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                       rel="noreferrer noopener"
                       target="_blank"
-                      href="/"
+                      href={href}
                     />
                   ),
                   screenreader: <VisuallyHidden />,
@@ -168,6 +169,7 @@ QuickTip.propTypes = {
   figureAlt: PropTypes.string,
   figureSrc: PropTypes.string,
   figureSrcImg: PropTypes.string,
+  href: PropTypes.string,
   isDone: PropTypes.bool,
   title: PropTypes.string.isRequired,
   description: PropTypes.arrayOf(PropTypes.string).isRequired,
