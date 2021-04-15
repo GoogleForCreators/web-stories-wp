@@ -1,5 +1,5 @@
 {
-  "current": "5c295574-87a0-4ae7-b548-699e0bd47fdf",
+  "current": "7dc22ed5-579e-4988-9f9c-97b2cd2ff068",
   "selection": [],
   "story": {
     "globalStoryStyles": {
@@ -396,22 +396,6 @@
     },
     {
       "animations": [
-        {
-          "id": "e968c1da-02df-49cd-8ea4-0e3a940f315f",
-          "type": "effect-zoom",
-          "targets": ["7a20f7e7-fe90-46b3-9382-7204473f2724"],
-          "scaleDirection": "scaleOut",
-          "duration": 800,
-          "delay": 1500
-        },
-        {
-          "id": "2a1aeacc-3c84-46b0-b61a-9e8b9c8260fb",
-          "type": "effect-zoom",
-          "targets": ["b767306b-6b92-4b2a-935d-00954a502681"],
-          "scaleDirection": "scaleOut",
-          "duration": 800,
-          "delay": 1500
-        },
         {
           "id": "fa5f6052-f8ce-4e58-9163-186e2769cb13",
           "type": "effect-fly-in",
@@ -894,14 +878,6 @@
     },
     {
       "animations": [
-        {
-          "id": "ca39ec5b-3237-4fbc-b857-746b186843f8",
-          "type": "effect-fly-in",
-          "targets": ["88038fd9-5e4e-41f2-a831-a79e990695ce"],
-          "flyInDir": "leftToRight",
-          "duration": 800,
-          "delay": 800
-        },
         {
           "id": "dcb2a902-3c03-4b69-a967-b52afdb9d469",
           "type": "effect-fly-in",
@@ -1835,14 +1811,6 @@
           "flyInDir": "topToBottom",
           "duration": 1000,
           "delay": 300
-        },
-        {
-          "id": "48c89f88-86ff-4084-880b-5cf2f66cc066",
-          "type": "effect-fly-in",
-          "targets": ["1f552208-c803-40aa-8eaf-8c7356196a87"],
-          "flyInDir": "leftToRight",
-          "duration": 1000,
-          "delay": 900
         }
       ],
       "elements": [
