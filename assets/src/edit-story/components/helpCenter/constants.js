@@ -119,7 +119,7 @@ export const TIPS = {
         'web-stories'
       ),
     ],
-    href: 'https://wp.stories.google/docs/',
+    href: __('https://wp.stories.google/docs/', 'web-stories'),
   },
 };
 
