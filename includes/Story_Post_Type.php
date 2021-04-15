@@ -160,11 +160,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'attributes'               => __( 'Story Attributes', 'web-stories' ),
 					'insert_into_item'         => __( 'Insert into story', 'web-stories' ),
 					'uploaded_to_this_item'    => __( 'Uploaded to this story', 'web-stories' ),
-					'featured_image'           => __( 'Featured Image', 'web-stories' ),
-					'set_featured_image'       => __( 'Set featured image', 'web-stories' ),
-					'remove_featured_image'    => __( 'Remove featured image', 'web-stories' ),
-					'use_featured_image'       => __( 'Use as featured image', 'web-stories' ),
+					'featured_image'           => _x( 'Featured Image', 'story', 'web-stories' ),
+					'set_featured_image'       => _x( 'Set featured image', 'story', 'web-stories' ),
+					'remove_featured_image'    => _x( 'Remove featured image', 'story', 'web-stories' ),
+					'use_featured_image'       => _x( 'Use as featured image', 'story', 'web-stories' ),
 					'filter_items_list'        => __( 'Filter stories list', 'web-stories' ),
+					'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
 					'items_list_navigation'    => __( 'Stories list navigation', 'web-stories' ),
 					'items_list'               => __( 'Stories list', 'web-stories' ),
 					'item_published'           => __( 'Story published.', 'web-stories' ),
@@ -174,6 +175,8 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'item_updated'             => __( 'Story updated.', 'web-stories' ),
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
+					'item_link'                => _x( 'Story Link', 'navigation link block title', 'web-stories' ),
+					'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
 				],
 				'menu_icon'             => $this->get_post_type_icon(),
 				'supports'              => [
@@ -327,7 +330,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			$all_capabilities,
 			function ( $value ) {
 				return 'read' !== $value;
-			} 
+			}
 		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
