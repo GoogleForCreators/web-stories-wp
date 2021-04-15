@@ -16,16 +16,19 @@
 /**
  * External dependencies
  */
-import { useMemo, useState } from 'react';
+import { sprintf, _n, __ } from '@web-stories-wp/i18n';
+import { useEffect, useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies
  */
 import { getOptions } from '../menu/utils';
+import { useLiveRegion } from '../../utils';
 
 export default function useDropDown({ options = [], selectedValue }) {
   const [_isOpen, _setIsOpen] = useState(false);
+  const speak = useLiveRegion('assertive');
 
   const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
     leading: true,
@@ -61,6 +64,27 @@ export default function useDropDown({ options = [], selectedValue }) {
         );
       });
   }, [selectedValue, normalizedOptions]);
+
+  /* Announce changes to the length of the list */
+  useEffect(() => {
+    //announce %d results found, use up and down arrow keys to navigate / ... / No results found
+    if (isOpen.value) {
+      const message = options.length
+        ? sprintf(
+            /* translators: %d number of options in dropdown */
+            _n(
+              '%d result found, use left and right or up and down arrow keys to navigate.',
+              '%d results found, use left and right or up and down arrow keys to navigate.',
+              options.length,
+              'web-stories'
+            ),
+            options.length
+          )
+        : __('No results found.', 'web-stories');
+
+      speak(message);
+    }
+  }, [isOpen.value, options.length, speak]);
 
   return { activeOption, normalizedOptions, isOpen };
 }

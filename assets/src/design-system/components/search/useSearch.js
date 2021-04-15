@@ -30,7 +30,7 @@ export default function useSearch({
   selectedValue,
   options,
 }) {
-  const speak = useLiveRegion();
+  const speak = useLiveRegion('assertive');
 
   /**
    *Control when associated menu of search should be visible.
