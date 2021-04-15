@@ -45,7 +45,7 @@ use WP_REST_Server;
  *
  * Override the WP_REST_Autosaves_Controller class.
  */
-class Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable {
+abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable {
 	use Register_Routes;
 
 	/**
