@@ -290,7 +290,7 @@ function StoriesView({
           secondaryText={__('Cancel', 'web-stories')}
           secondaryRest={{
             ['aria-label']: sprintf(
-              /* translators: %s: story title */
+              /* translators: %s: story title. */
               __('Cancel deleting story "%s"', 'web-stories'),
               titleFormatted(activeStory.title)
             ),
@@ -299,7 +299,7 @@ function StoriesView({
           onPrimary={handleOnDeleteStory}
           primaryRest={{
             ['aria-label']: sprintf(
-              /* translators: %s: story title */
+              /* translators: %s: story title. */
               __('Confirm deleting story "%s"', 'web-stories'),
               titleFormatted(activeStory.title)
             ),
