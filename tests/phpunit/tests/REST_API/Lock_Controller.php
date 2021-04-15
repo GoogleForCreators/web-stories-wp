@@ -24,6 +24,8 @@ use WP_REST_Request;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\REST_API\Lock_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Template_Lock_Controller
  */
 class Lock_Controller extends \WP_Test_REST_TestCase {
 	use Private_Access, Capabilities_Setup;
@@ -309,7 +311,7 @@ class Lock_Controller extends \WP_Test_REST_TestCase {
 	 * @covers ::get_lock
 	 */
 	public function test_get_lock() {
-		$controller = new \Google\Web_Stories\REST_API\Lock_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+		$controller = new \Google\Web_Stories\REST_API\Stories_Lock_Controller();
 		$story      = self::factory()->post->create(
 			[
 				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
