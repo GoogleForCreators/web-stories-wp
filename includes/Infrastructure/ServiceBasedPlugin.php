@@ -19,6 +19,7 @@ namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
+use Google\Web_Stories\Traits\Rewrite_Flush;
 
 /**
  * This abstract base plugin provides all the boilerplate code for working with
@@ -27,6 +28,7 @@ use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 abstract class ServiceBasedPlugin implements Plugin {
+	use Rewrite_Flush;
 
 	// Main filters to control the flow of the plugin from outside code.
 	const SERVICES_FILTER         = 'services';
@@ -132,9 +134,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-			\flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-		}
+		$this->rewrite_flush();
 	}
 
 	/**
@@ -154,9 +154,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-			\flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-		}
+		$this->rewrite_flush();
 	}
 
 	/**
