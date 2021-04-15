@@ -41,6 +41,7 @@ const Tab = styled.button`
   border: none;
   color: ${({ theme }) => theme.colors.fg.secondary};
   position: relative;
+  cursor: pointer;
 
   :hover {
     color: ${({ theme }) => theme.colors.fg.primary};
