@@ -96,20 +96,37 @@ jobs:
       - name: Bundle regular version
         run: npm run workflow:build-plugin
 
+      # Check if as many strings as expected were found.
+      # Fail job if `wp i18n make-pot` returns any warnings.
+      # Some false positive warnings are removed due to a bug in the string extraction.
+      # That's why this step is unfortunately a bit more complex.
+      # See https://github.com/wp-cli/i18n-command/issues/154
       - name: Generate POT file
         run: |
-          WARNINGS=$((wp i18n make-pot build/web-stories web-stories.pot) 2>&1 >/dev/null)
           EXPECTED_NUMBER_OF_STRINGS=1000
           NUMBER_OF_FOUND_STRINGS=$(grep -o msgstr web-stories.pot | wc -l | xargs)
+          HAS_ERROR=false
 
           if (( "$NUMBER_OF_FOUND_STRINGS" < "$EXPECTED_NUMBER_OF_STRINGS" )); then
+          HAS_ERROR=true
             echo "String extraction found only $NUMBER_OF_FOUND_STRINGS translatable strings. Expected at least $EXPECTED_NUMBER_OF_STRINGS."
-            exit 1
           fi
 
-          WARNINGS=$((wp i18n make-pot build/web-stories web-stories.pot) 2>&1 >/dev/null)
+          IFS=$'\n'
+          declare -a WARNINGS=($((wp i18n make-pot build/web-stories web-stories.pot) 2>&1 >/dev/null))
+          unset IFS
 
-          if [[ ! -z "$WARNINGS" ]]; then
-            echo "$WARNINGS"
+          for WARNING in "${WARNINGS[@]}" do
+            # Filter false positives.
+            if [[ $WARNING == *"translator comment"* ]] && [[ $WARNING != *"%s"* ]]; then
+              continue
+            fi
+
+            HAS_ERROR=true
+
+          	echo $WARNING
+          done
+
+          if [[ "$HAS_ERROR" = true ]]; then
             exit 1
           fi
