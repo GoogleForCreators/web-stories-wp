@@ -6,10 +6,10 @@ on:
     - cron: '0 12 * * 1-5'
   push:
     paths:
-      - 'lint-i18n.yml'
+      - '.github/workflows/lint-i18n.yml'
   pull_request:
     paths:
-      - 'lint-i18n.yml'
+      - '.github/workflows/lint-i18n.yml'
 
 jobs:
   lint:
