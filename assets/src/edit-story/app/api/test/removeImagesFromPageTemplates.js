@@ -21,11 +21,11 @@ import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies
  */
-import removeImagesFromPageLayouts from '../removeImagesFromPageTemplates';
+import removeImagesFromPageTemplates from '../removeImagesFromPageTemplates';
 
 jest.mock('@web-stories-wp/templates');
 
-describe('removeImagesFromPageLayouts', () => {
+describe('removeImagesFromPageTemplates', () => {
   const assetsURL = 'https://plugin.url/assets/';
   const templates = [
     {
@@ -83,7 +83,7 @@ describe('removeImagesFromPageLayouts', () => {
   });
 
   it('should replace images with placeholders', async () => {
-    const result = await removeImagesFromPageLayouts({
+    const result = await removeImagesFromPageTemplates({
       assetsURL,
       showImages: false,
       templates,
