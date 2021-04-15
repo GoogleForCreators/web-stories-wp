@@ -131,7 +131,7 @@ export default function useSearch({
 
   /* Announce changes to the length of the list */
   useEffect(() => {
-    if (isOpen.value) {
+    if (isOpen.value && inputState.value?.length) {
       const message = options.length
         ? sprintf(
             /* translators: %d number of options in dropdown */
@@ -147,7 +147,7 @@ export default function useSearch({
 
       speak(message);
     }
-  }, [isOpen.value, options.length, speak]);
+  }, [inputState.value, isOpen.value, options.length, speak]);
 
   return {
     activeOption,
