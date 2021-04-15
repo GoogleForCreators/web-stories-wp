@@ -103,7 +103,7 @@ function Content({
                   >
                     {search?.keyword
                       ? sprintf(
-                          /* translators: %s: search term. */
+                          /* translators: %s: search termtesttesttest. */
                           __(
                             'Sorry, we couldn\'t find any results matching "%s"',
                             'web-stories'
