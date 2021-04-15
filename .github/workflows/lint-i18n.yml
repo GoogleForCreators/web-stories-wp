@@ -7,6 +7,8 @@ on:
   push:
     paths:
       - '.github/workflows/lint-i18n.yml'
+    branches:
+      - main
   pull_request:
     paths:
       - '.github/workflows/lint-i18n.yml'
@@ -29,6 +31,7 @@ jobs:
       - name: Install WP-CLI
         run: |
           curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli-nightly.phar
+          mv wp-cli-nightly.phar wp-cli.phar
           chmod +x wp-cli.phar
           mkdir -p bin
           mv wp-cli.phar bin/wp
