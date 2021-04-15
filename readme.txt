@@ -114,7 +114,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 * New feature: automated video optimization during upload, enabling support for MOV files.
 * New feature: canvas zoom for pixel-perfect designs.
-* New feature: toggle images in page layouts.
+* New feature: toggle images in page templates.
 * Refreshed UI in the editor and dashboard.
 * Bug fixes and performance improvements.
 
