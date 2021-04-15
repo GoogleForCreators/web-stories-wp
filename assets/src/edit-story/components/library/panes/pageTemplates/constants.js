@@ -19,7 +19,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 
-export const PAGE_LAYOUT_TYPES = {
+export const PAGE_TEMPLATE_TYPES = {
   cover: { name: __('Cover', 'web-stories') },
   section: { name: __('Section', 'web-stories') },
   quote: { name: __('Quote', 'web-stories') },

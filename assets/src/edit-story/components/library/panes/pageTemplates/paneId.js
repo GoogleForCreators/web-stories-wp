@@ -15,25 +15,8 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
-import ConfirmPageLayoutDialog from '../confirmPageLayoutDialog';
+import { getPaneId } from '../shared';
 
-export default {
-  title: 'Stories Editor/Components/Dialog/Confirm Page Layout',
-  component: ConfirmPageLayoutDialog,
-};
-
-export const _default = () => {
-  return (
-    <ConfirmPageLayoutDialog
-      onConfirm={action('confirmed')}
-      onClose={action('closed')}
-    />
-  );
-};
+export default getPaneId('pageTemplates');

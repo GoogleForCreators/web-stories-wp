@@ -19,16 +19,16 @@
  */
 import { Container } from '../container';
 
-export default class PageLayouts extends Container {
+export default class PageTemplates extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
-  get pageLayouts() {
+  get pageTemplates() {
     return this.getAllByRole('listitem');
   }
 
-  pageLayout(name) {
+  pageTemplate(name) {
     return this.getByRole('listitem', { name });
   }
 }

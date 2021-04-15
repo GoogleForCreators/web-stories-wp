@@ -15,7 +15,25 @@
  */
 
 /**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+
+/**
  * Internal dependencies
  */
-export { default as PageLayoutsPane } from './pageLayoutsPane';
-export { default as PageLayoutsIcon } from './pageLayoutsIcon';
+import ConfirmPageTemplateDialog from '../confirmPageTemplateDialog';
+
+export default {
+  title: 'Stories Editor/Components/Dialog/Confirm Page Template',
+  component: ConfirmPageTemplateDialog,
+};
+
+export const _default = () => {
+  return (
+    <ConfirmPageTemplateDialog
+      onConfirm={action('confirmed')}
+      onClose={action('closed')}
+    />
+  );
+};
