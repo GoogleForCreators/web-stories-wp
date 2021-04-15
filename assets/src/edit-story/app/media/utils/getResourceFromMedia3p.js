@@ -281,6 +281,7 @@ function getVideoResourceFromMedia3p(m) {
   const length = parseInt(m.videoMetadata.duration.trimEnd('s'));
   return createResource({
     id: m.name,
+    posterId: m.name,
     type: m.type.toLowerCase(),
     mimeType: videoUrls.full.mime_type,
     creationDate: m.createTime,

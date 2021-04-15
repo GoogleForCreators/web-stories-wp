@@ -108,6 +108,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.6.0 =
+
+**Release Date:** April 13, 2021.
+
+* New feature: automated video optimization during upload, enabling support for MOV files.
+* New feature: canvas zoom for pixel-perfect designs.
+* New feature: toggle images in page layouts.
+* Refreshed UI in the editor and dashboard.
+* Bug fixes and performance improvements.
+
 = 1.5.0 =
 
 **Release Date:** March 18, 2021.
@@ -173,6 +183,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+
+Automated video optimization, canvas zoom, updated UI, bug fixes and performance improvements.
 
 = 1.5.0 =
 

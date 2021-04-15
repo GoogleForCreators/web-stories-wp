@@ -155,9 +155,16 @@ function MediaEditDialog({ resource, onClose }) {
             src={getSmallestUrlForWidth(THUMBNAIL_WIDTH, resource)}
             alt={alt}
             loading={'lazy'}
+            crossOrigin="anonymous"
           />
         ) : (
-          <Video key={src} poster={poster} preload="none" muted>
+          <Video
+            key={src}
+            crossOrigin="anonymous"
+            poster={poster}
+            preload="none"
+            muted
+          >
             <source src={src} type={mimeType} />
           </Video>
         )}
