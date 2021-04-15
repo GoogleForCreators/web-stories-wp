@@ -35,7 +35,10 @@ jobs:
           chmod +x wp-cli.phar
           mkdir -p bin
           mv wp-cli.phar bin/wp
-          echo "WP_CLI_BIN_DIR=${PWD}/bin" >> $GITHUB_ENV
+          echo "${PWD}/bin" >> $GITHUB_PATH
+
+      - name: WP-CLI Info
+        run: wp cli info
 
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
