@@ -97,7 +97,7 @@ jobs:
           NUMBER_OF_FOUND_STRINGS=$(grep -o msgstr web-stories.pot | wc -l | xargs)
 
           if (( "$NUMBER_OF_FOUND_STRINGS" < "$EXPECTED_NUMBER_OF_STRINGS" )); then
-            echo "String extraction found only $NUMBER_OF_FOUND_STRINGS strings. Expected at least $EXPECTED_NUMBER_OF_STRINGS"
+            echo "String extraction found only $NUMBER_OF_FOUND_STRINGS translatable strings. Expected at least $EXPECTED_NUMBER_OF_STRINGS."
             exit 1
           fi
 
