@@ -52,6 +52,27 @@ class Database_Upgrader extends Service_Base implements Activateable {
 	const PREVIOUS_OPTION = 'web_stories_previous_db_version';
 
 	/**
+	 * Array of classes to run migration routines.
+	 *
+	 * @var array
+	 */
+	const ROUTINES = [
+		'1.0.0' => Migrations\Update_1::class,
+		'2.0.0' => Migrations\Replace_Conic_Style_Presets::class,
+		'2.0.1' => Migrations\V2_Add_Term::class,
+		'2.0.2' => Migrations\Remove_Broken_Text_Styles::class,
+		'2.0.3' => Migrations\Unify_Color_Presets::class,
+		'2.0.4' => Migrations\Update_Publisher_Logos::class,
+		'3.0.0' => Migrations\Add_Stories_Caps::class,
+		'3.0.1' => Migrations\Rewrite_Flush::class,
+		'3.0.2' => Migrations\Rewrite_Flush::class,
+		'3.0.3' => Migrations\Yoast_Reindex_Stories::class,
+		'3.0.4' => Migrations\Add_Poster_Generation_Media_Source::class,
+		'3.0.5' => Migrations\Remove_Unneeded_Attachment_Meta::class,
+		'3.0.6' => Migrations\V3_Add_Term::class,
+	];
+
+	/**
 	 * Injector instance.
 	 *
 	 * @var Injector|Service Locale instance.
@@ -66,22 +87,6 @@ class Database_Upgrader extends Service_Base implements Activateable {
 	 * @return void
 	 */
 	public function register() {
-		$routines = [
-			'1.0.0' => Migrations\Update_1::class,
-			'2.0.0' => Migrations\Replace_Conic_Style_Presets::class,
-			'2.0.1' => Migrations\V2_Add_Term::class,
-			'2.0.2' => Migrations\Remove_Broken_Text_Styles::class,
-			'2.0.3' => Migrations\Unify_Color_Presets::class,
-			'2.0.4' => Migrations\Update_Publisher_Logos::class,
-			'3.0.0' => Migrations\Add_Stories_Caps::class,
-			'3.0.1' => Migrations\Rewrite_Flush::class,
-			'3.0.2' => Migrations\Rewrite_Flush::class,
-			'3.0.3' => Migrations\Yoast_Reindex_Stories::class,
-			'3.0.4' => Migrations\Add_Poster_Generation_Media_Source::class,
-			'3.0.5' => Migrations\Remove_Unneeded_Attachment_Meta::class,
-			'3.0.6' => Migrations\V3_Add_Term::class,
-		];
-
 		$version = get_option( self::OPTION, '0.0.0' );
 
 		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {
@@ -90,6 +95,7 @@ class Database_Upgrader extends Service_Base implements Activateable {
 
 		$this->injector = Services::get_injector();
 
+		$routines = self::ROUTINES;
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
 		$this->finish_up( $version );
 	}
