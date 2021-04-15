@@ -1,8 +1,8 @@
 <?php
 /**
- * Class Stories_Users_Controller
+ * Trait Register_Routes
  *
- * @package   Google\Web_Stories
+ * @package   Google\Web_Stories\Traits
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
@@ -24,29 +24,44 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\REST_API;
-
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Traits\Register_Routes;
-use WP_REST_Users_Controller;
+namespace Google\Web_Stories\Traits;
 
 /**
- * Stories_Users_Controller class.
+ * Trait Register_Routes
+ *
+ * @package Google\Web_Stories\Traits
  */
-class Stories_Users_Controller extends WP_REST_Users_Controller implements Service, Delayed, Registerable {
-	use Register_Routes;
+trait Register_Routes {
 	/**
-	 * Constructor.
+	 * Register the service.
 	 *
-	 * Override the namespace.
+	 * @since 1.7.0
 	 *
-	 * @since 1.2.0
+	 * @return void
 	 */
-	public function __construct() {
-		parent::__construct();
-		$this->namespace = 'web-stories/v1';
+	public function register() {
+		$this->register_routes();
 	}
 
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'rest_api_init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 100;
+	}
 }

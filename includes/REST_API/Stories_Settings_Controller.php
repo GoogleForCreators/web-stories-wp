@@ -26,12 +26,18 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Traits\Register_Routes;
 use WP_REST_Settings_Controller;
 
 /**
  * Stories_Settings_Controller class.
  */
-class Stories_Settings_Controller extends WP_REST_Settings_Controller {
+class Stories_Settings_Controller extends WP_REST_Settings_Controller implements Service, Delayed, Registerable {
+	use Register_Routes;
+
 	/**
 	 * Constructor.
 	 *

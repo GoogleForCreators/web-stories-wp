@@ -41,7 +41,7 @@ use WP_REST_Server;
  *
  * Class Link_Controller
  */
-class Link_Controller extends WP_REST_Controller {
+class Link_Controller extends REST_Controller {
 	use Document_Parser;
 	/**
 	 * Constructor.

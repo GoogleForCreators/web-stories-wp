@@ -26,28 +26,32 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Infrastructure\Delayed;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Media;
+use Google\Web_Stories\Traits\Register_Routes;
 use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
+use WP_REST_Attachments_Controller;
 
 /**
  * Stories_Media_Controller class.
  */
-class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
+class Stories_Media_Controller extends WP_REST_Attachments_Controller implements Service, Delayed, Registerable {
 	use Types;
+	use Register_Routes;
 	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param string $post_type Post type.
 	 */
-	public function __construct( $post_type ) {
-		parent::__construct( $post_type );
+	public function __construct() {
+		parent::__construct( 'attachment' );
 		$this->namespace = 'web-stories/v1';
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Stories_Users_Controller
+ * Class Template_Autosaves_Controller
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -26,27 +26,20 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Traits\Register_Routes;
-use WP_REST_Users_Controller;
+use Google\Web_Stories\Template_Post_Type;
 
 /**
- * Stories_Users_Controller class.
+ * Template_Autosaves_Controller class.
+ *
+ * Override the WP_REST_Autosaves_Controller class.
  */
-class Stories_Users_Controller extends WP_REST_Users_Controller implements Service, Delayed, Registerable {
-	use Register_Routes;
+class Template_Autosaves_Controller extends Autosaves_Controller {
 	/**
 	 * Constructor.
 	 *
-	 * Override the namespace.
-	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function __construct() {
-		parent::__construct();
-		$this->namespace = 'web-stories/v1';
+		parent::__construct( Template_Post_Type::POST_TYPE_SLUG );
 	}
-
 }

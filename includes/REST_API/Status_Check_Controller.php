@@ -40,7 +40,7 @@ use WP_Post_Type;
  *
  * Class Status_Check_Controller
  */
-class Status_Check_Controller extends WP_REST_Controller {
+class Status_Check_Controller extends REST_Controller {
 	/**
 	 * Decoder instance.
 	 *
@@ -50,11 +50,13 @@ class Status_Check_Controller extends WP_REST_Controller {
 
 	/**
 	 * Constructor.
+	 *
+	 * @param Decoder $decoder Decoder instance.
 	 */
-	public function __construct() {
+	public function __construct( Decoder $decoder ) {
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'status-check';
-		$this->decoder   = new Decoder();
+		$this->decoder   = $decoder;
 	}
 
 	/**
