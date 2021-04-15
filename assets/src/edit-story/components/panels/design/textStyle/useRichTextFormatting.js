@@ -167,9 +167,17 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     };
   }, [hasCurrentEditor, selectionActions, push, clearEditing, queuePush]);
 
+  const hasText = useCallback(() => {
+    const texts = selectedElements.filter(({ type }) => type === 'text');
+    return texts.length > 0;
+  }, [selectedElements]);
+
   useGlobalKeyDownEffect(
     { key: ['mod+b', 'mod+u', 'mod+i'] },
     ({ key }) => {
+      if (!hasText) {
+        return;
+      }
       switch (key) {
         case 'b':
           handlers.handleClickBold();
@@ -184,7 +192,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
           break;
       }
     },
-    [handlers]
+    [handlers, hasText]
   );
 
   return {
