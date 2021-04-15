@@ -15,6 +15,7 @@
 
 ## Development
 
+* [Accessibility Guidelines](./accessibility-guidelines.md)
 * [Architecture](./architecture.md)
 * [Browser and device support](./browser-support.md)
 * [Code Style](./code-style.md)
@@ -32,7 +33,7 @@
 * [Unit Tests](./unit-tests.md)
 * [Integration Tests (Karma)](./integration-tests.md)
 * [End-to-End Tests](./e2e-tests.md)
-* [Accessibility Testing](./accessibility-testiing.md)
+* [Accessibility Testing](./accessibility-testing.md)
 * [Testing Environments](./testing-environments.md)
 
 ## Tooling & Infrastructure
