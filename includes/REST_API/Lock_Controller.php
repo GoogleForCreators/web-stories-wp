@@ -35,11 +35,11 @@ use WP_REST_Server;
 use WP_Error;
 
 /**
- * Class Stories_Lock_Controller
+ * Class Lock_Controller
  *
  * @package Google\Web_Stories\REST_API
  */
-class Lock_Controller extends REST_Controller {
+abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Parent post controller.
 	 *
