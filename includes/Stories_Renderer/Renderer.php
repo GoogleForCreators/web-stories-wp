@@ -601,7 +601,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<?php if ( ! empty( $story->get_author() ) ) { ?>
 				<div class="story-content-overlay__author">
 					<?php
-						/* translators: %s: author name. */
+						/* translators: byline. %s: author name. */
 						echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story->get_author() ) );
 					?>
 				</div>

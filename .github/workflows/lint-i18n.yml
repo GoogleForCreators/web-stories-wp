@@ -99,12 +99,12 @@ jobs:
       - name: Generate POT file
         run: |
           WARNINGS=$((wp i18n make-pot build/web-stories web-stories.pot) 2>&1 >/dev/null)
-          EXPECTED_NUMBER_OF_STRINGS=10000
+          EXPECTED_NUMBER_OF_STRINGS=1000
           NUMBER_OF_FOUND_STRINGS=$(grep -o msgstr web-stories.pot | wc -l | xargs)
 
           if (( "$NUMBER_OF_FOUND_STRINGS" < "$EXPECTED_NUMBER_OF_STRINGS" )); then
             echo "String extraction found only $NUMBER_OF_FOUND_STRINGS translatable strings. Expected at least $EXPECTED_NUMBER_OF_STRINGS."
-            #exit 1
+            exit 1
           fi
 
           WARNINGS=$((wp i18n make-pot build/web-stories web-stories.pot) 2>&1 >/dev/null)
