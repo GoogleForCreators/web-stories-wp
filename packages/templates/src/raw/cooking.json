@@ -255,7 +255,7 @@
       "type": "page",
       "id": "dd6a669f-ff4b-4633-8eb4-c601e98b40f1",
       "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
-      "pageLayoutType": "cover"
+      "pageTemplateType": "cover"
     },
     {
       "animations": [
@@ -505,7 +505,7 @@
       "type": "page",
       "id": "434c112e-3463-4dc6-aa8e-cb97f13a4e8e",
       "backgroundColor": { "color": { "r": 255, "g": 146, "b": 46 } },
-      "pageLayoutType": "quote"
+      "pageTemplateType": "quote"
     },
     {
       "animations": [
@@ -946,7 +946,7 @@
       "type": "page",
       "id": "a378f919-785d-4ff2-8f8c-e7922a221cbf",
       "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -1734,7 +1734,7 @@
       "type": "page",
       "id": "e6314f4e-5a59-425c-a6a3-b0a3ecff301c",
       "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     },
     {
       "animations": [
@@ -1975,7 +1975,7 @@
         "id": "e59627e9-eb83-4ce5-bf83-17f22851ed1c"
       },
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } },
-      "pageLayoutType": "section"
+      "pageTemplateType": "section"
     },
     {
       "animations": [
@@ -3130,7 +3130,7 @@
       "type": "page",
       "id": "4ce57acc-c58e-40ab-8a3d-87f6dc5fb106",
       "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     },
     {
       "animations": [
@@ -3889,7 +3889,7 @@
       "type": "page",
       "id": "c0a40237-d827-4aa3-b3ca-01e668dc90aa",
       "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageLayoutType": "table"
+      "pageTemplateType": "table"
     },
     {
       "animations": [
@@ -4334,7 +4334,7 @@
       "type": "page",
       "id": "11f60c54-4345-4979-8f10-edf4b43c7f44",
       "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageLayoutType": "steps"
+      "pageTemplateType": "steps"
     },
     {
       "animations": [
@@ -4985,7 +4985,7 @@
       "type": "page",
       "id": "e8a21c0b-1db7-4777-b25d-b7d9a51b10fe",
       "backgroundColor": { "color": { "r": 255, "g": 249, "b": 238 } },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     }
   ],
   "autoAdvance": true,

@@ -23,6 +23,7 @@ export { default as useBatchingCallback } from './useBatchingCallback';
 export { default as useContextSelector } from './useContextSelector';
 export { default as useFocusOut } from './useFocusOut';
 export { default as useInputEventHandlers } from './useInputEventHandlers';
+export { default as useLiveRegion } from './useLiveRegion';
 export { default as useResizeEffect } from './useResizeEffect';
 export * from './constants';
 export * from './directions';

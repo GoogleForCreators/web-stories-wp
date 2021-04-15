@@ -17,25 +17,6 @@
 /**
  * Internal dependencies
  */
-import { AbstractPanel } from './abstractPanel';
+import { getPaneId } from '../shared';
 
-/**
- * The page background panel containing inputs flipping and detaching images as well as setting bg color.
- */
-export class PageBackground extends AbstractPanel {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get flipVertical() {
-    return this.getByRole('button', { name: /Flip vertically/i });
-  }
-
-  get flipHorizontal() {
-    return this.getByRole('button', { name: /Flip horizontally/i });
-  }
-
-  get detachBg() {
-    return this.getByRole('button', { name: /Detach background/i });
-  }
-}
+export default getPaneId('pageTemplates');

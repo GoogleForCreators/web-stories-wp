@@ -384,7 +384,7 @@
           "b": 46
         }
       },
-      "pageLayoutType": "cover"
+      "pageTemplateType": "cover"
     },
     {
       "animations": [
@@ -727,7 +727,7 @@
           "b": 255
         }
       },
-      "pageLayoutType": "quote"
+      "pageTemplateType": "quote"
     },
     {
       "animations": [
@@ -1162,7 +1162,7 @@
           "b": 46
         }
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -1583,7 +1583,7 @@
           "a": 1
         }
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -2043,7 +2043,7 @@
           "b": 255
         }
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -2386,7 +2386,7 @@
           "a": 1
         }
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -2648,7 +2648,7 @@
           "a": 1
         }
       },
-      "pageLayoutType": "section"
+      "pageTemplateType": "section"
     },
     {
       "animations": [
@@ -3225,7 +3225,7 @@
           "b": 46
         }
       },
-      "pageLayoutType": "steps"
+      "pageTemplateType": "steps"
     },
     {
       "animations": [
@@ -4043,7 +4043,7 @@
           "b": 255
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     },
     {
       "animations": [
@@ -4748,7 +4748,7 @@
           "b": 255
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     }
   ]
 }
