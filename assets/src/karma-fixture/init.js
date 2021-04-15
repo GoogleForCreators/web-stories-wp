@@ -237,6 +237,18 @@ beforeAll(() => {
         };
       },
     }),
+    toHaveTextContent: (util, customEqualityTesters) => ({
+      compare: function (element, expected) {
+        const actual = element.textContent.trim();
+        const pass = util.equals(actual, expected, customEqualityTesters);
+        return {
+          pass,
+          message: pass
+            ? `Expected element to not have text content "${expected}"`
+            : `Expected element to have text content "${expected}" but found "${actual}"`,
+        };
+      },
+    }),
     toBeOneOf: (util, customEqualityTesters) => ({
       compare: function (actual, expecteds) {
         const passer = (expected) =>

@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -230,7 +234,7 @@ describe('Background Copy & Paste', () => {
     // Navigate back to previous page and add Background image
     await goToPreviousPage();
     const bgMedia = fixture.editor.library.media.item(0);
-    const canvas = fixture.editor.canvas.fullbleed.container;
+    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
       moveRel(bgMedia, 20, 20),
       down(),
@@ -250,6 +254,7 @@ describe('Background Copy & Paste', () => {
     // Click twice to enter edit mode
     await fixture.events.click(bgFrame);
     await fixture.events.click(bgFrame);
+    await waitFor(() => fixture.editor.canvas.editLayer.sizeSlider);
     const slider = fixture.editor.canvas.editLayer.sizeSlider;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(slider, 5, 5),
@@ -265,24 +270,21 @@ describe('Background Copy & Paste', () => {
     fixture.restore();
   });
 
-  // Disable reason: flakey tests.
-  // See https://github.com/google/web-stories-wp/issues/6936
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('works for all background animations', async () => {
+  it('works for all background animations', async () => {
     // open effect chooser
     await openEffectChooser();
 
     // see that effect chooser is open
-    const effectChooser = fixture.screen.getByRole('list', {
-      name: /Available Animations To Select/,
+    const effectChooser = fixture.screen.getByRole('listbox', {
+      name: /Animation: Effect Chooser Option List Selector/,
     });
 
     // iterate through children with process
     await sequencedForEach(effectChooser.children, async (_, i) => {
       // need to regrab the button because we're openeing
       // and closing effect chooser causing karma ids to change
-      const effectButton = fixture.screen.getByRole('list', {
-        name: /Available Animations To Select/,
+      const effectButton = fixture.screen.getByRole('listbox', {
+        name: /Animation: Effect Chooser Option List Selector/,
       }).children[i];
 
       // first button is `none` and doesn't apply animation
@@ -321,6 +323,17 @@ describe('Background Copy & Paste', () => {
         copied.elementAnimations[0] || {};
       const { id: pId, targets: pTargets, ...pPersisted } =
         pasted.elementAnimations[0] || {};
+
+      // animation properties are explicitly passed as of #6888
+      // https://github.com/google/web-stories-wp/pull/6888/files#diff-e2509f6271734915fc6fb3d6b0fd1a78d6d34df81e215f0a79f2fce50586bb86R119
+      // so undefined properties are removed to check for object equality
+      Object.keys(cPersisted).forEach((key) =>
+        cPersisted[key] === undefined ? delete cPersisted[key] : {}
+      );
+      Object.keys(pPersisted).forEach((key) =>
+        pPersisted[key] === undefined ? delete pPersisted[key] : {}
+      );
+
       expect(cPersisted).toEqual(pPersisted);
 
       // pasted animations should contain the newly pasted
